@@ -25,5 +25,26 @@
   "authPasswordTooShort": "Mindestens 8 Zeichen",
   "authGenericError": "Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen und erneut versuchen.",
   "authSignOut": "Abmelden",
-  "authNetworkError": "Server nicht erreichbar. Prüfe deine Verbindung und versuche es erneut."
+  "authNetworkError": "Server nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
+  "authEmailNotConfirmed": "Bestätige zuerst deine E-Mail-Adresse: Öffne die Nachricht, die wir dir geschickt haben, und melde dich dann an.",
+  "authRateLimited": "Zu viele Versuche. Warte einen Moment und versuche es dann erneut.",
+  "authProviderDisabled": "Diese Anmeldemethode ist auf diesem Server abgeschaltet.",
+  "authWeakPassword": "Wähle ein stärkeres Passwort.",
+  "authAlreadyRegistered": "Mit dieser Adresse kann kein Konto erstellt werden. Melde dich an oder setze dein Passwort zurück.",
+  "authRecoveryNotSaved": "Dein Code wurde angenommen, aber das neue Passwort wurde nicht gespeichert. Versuche das Speichern erneut.",
+  "authVerifyTitle": "Sieh in dein E-Mail-Postfach",
+  "authVerifyBody": "Wir haben einen Bestätigungslink an {email} geschickt. Öffne ihn auf diesem Gerät, um dein Konto fertig einzurichten.",
+  "@authVerifyBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyHint": "Noch nichts da? Sieh im Spam-Ordner nach oder schicke die E-Mail erneut.",
+  "authVerifyResend": "E-Mail erneut senden",
+  "authVerifyResent": "Erneut gesendet.",
+  "authVerifyResendWait": "In einer Minute kannst du sie erneut senden.",
+  "authVerifyChangeEmail": "Andere Adresse verwenden",
+  "authVerifyBackToSignIn": "Zurück zur Anmeldung"
 }

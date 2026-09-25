@@ -527,6 +527,67 @@ final class MyLedgerProvider
 
 String _$myLedgerHash() => r'39aa8825fdc47bb8a04eda359f85c57a5f15bcc0';
 
+/// #1637 — the signed-in member's own online-payment attempts, newest
+/// first. A session the provider never confirmed is PENDING and a
+/// refused one FAILED; neither is paid, which only the ledger credit the
+/// webhook posts can say. Keyed on the workspace and the member, so a
+/// switch of either drops the previous account's rows instead of
+/// showing them under the next one.
+
+@ProviderFor(myPaymentIntents)
+final myPaymentIntentsProvider = MyPaymentIntentsProvider._();
+
+/// #1637 — the signed-in member's own online-payment attempts, newest
+/// first. A session the provider never confirmed is PENDING and a
+/// refused one FAILED; neither is paid, which only the ledger credit the
+/// webhook posts can say. Keyed on the workspace and the member, so a
+/// switch of either drops the previous account's rows instead of
+/// showing them under the next one.
+
+final class MyPaymentIntentsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<PaymentIntent>>,
+          List<PaymentIntent>,
+          FutureOr<List<PaymentIntent>>
+        >
+    with
+        $FutureModifier<List<PaymentIntent>>,
+        $FutureProvider<List<PaymentIntent>> {
+  /// #1637 — the signed-in member's own online-payment attempts, newest
+  /// first. A session the provider never confirmed is PENDING and a
+  /// refused one FAILED; neither is paid, which only the ledger credit the
+  /// webhook posts can say. Keyed on the workspace and the member, so a
+  /// switch of either drops the previous account's rows instead of
+  /// showing them under the next one.
+  MyPaymentIntentsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myPaymentIntentsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myPaymentIntentsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<PaymentIntent>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<PaymentIntent>> create(Ref ref) {
+    return myPaymentIntents(ref);
+  }
+}
+
+String _$myPaymentIntentsHash() => r'ac07681d6ce33c6071d99aa8c82c5991f5b39b18';
+
 /// ONE MEMBER's money, for the dossier on their profile (#704).
 ///
 /// The `my*` providers above answer "mine"; these answer "theirs", and

@@ -32,6 +32,10 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
   WorkspaceFeature.memberAccountMenu,
+  // #1607 — opening the workspace to a machine is asked for, never
+  // assumed: availability of the MCP interface is a decision, and even
+  // then it authorizes nobody.
+  WorkspaceFeature.mcpAccess,
   // #1277 — renaming the product's words is asked for, never assumed:
   // a space that keeps the product's vocabulary is not shown a control
   // for changing it.
@@ -148,6 +152,7 @@ void main() {
       'decisionSurface': true,
       'recordingPrivacy': true,
       'memberAccountMenu': true,
+      'mcpAccess': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

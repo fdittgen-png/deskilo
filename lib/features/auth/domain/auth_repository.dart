@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'auth_outcome.dart';
 import 'badge_sign_in.dart';
 import 'social_provider.dart';
 
@@ -11,16 +12,29 @@ abstract class AuthRepository {
 
   String? get currentUserId;
 
-  Future<void> signInWithPassword({
+  /// [AuthOutcome.authenticated], or why not. Never throws for an
+  /// answer the server gave — a refusal is a value, not an exception
+  /// (#1649).
+  Future<AuthResult> signInWithPassword({
     required String email,
     required String password,
   });
 
-  Future<void> signUp({
+  /// [AuthOutcome.authenticated] when the server issued a session on the
+  /// spot, [AuthOutcome.verificationRequired] when it sent an e-mail
+  /// instead. The response used to be discarded, which left the screen
+  /// unable to tell the two apart (#1649).
+  Future<AuthResult> signUp({
     required String email,
     required String password,
     required String displayName,
   });
+
+  /// Sends the sign-up confirmation e-mail again through the resend
+  /// endpoint — never a second sign-up. [AuthOutcome.verificationRequired]
+  /// when it went out; [AuthOutcome.rateLimited] with the server's wait
+  /// when it was too soon.
+  Future<AuthResult> resendSignUpVerification(String email);
 
   Future<void> signOut();
 

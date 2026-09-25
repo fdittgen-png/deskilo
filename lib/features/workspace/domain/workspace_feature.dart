@@ -247,7 +247,26 @@ enum WorkspaceFeature {
   /// a member only their own account, membership and preferences,
   /// under the name that says so. Platform, default OFF: a space that
   /// never asked keeps the gear it has always had.
-  memberAccountMenu;
+  memberAccountMenu,
+
+  /// #1607 — the MCP interface is AVAILABLE to this workspace: an AI
+  /// assistant may be connected to DesKilo through it. Availability,
+  /// never authorization — switching it on enrols nobody, approves no
+  /// request, grants no role and registers no client. Each person
+  /// still needs an owner-configured grant approved by the instance
+  /// administrator, and every call keeps answering to the permissions
+  /// the app already applies. Platform, default OFF: no workspace is
+  /// reachable by a machine it never asked to be reachable by.
+  mcpAccess,
+
+  /// #1643 — a member saves ONE of their own bookings as an RFC 5545
+  /// calendar file for the calendar they already keep. A snapshot of
+  /// the instant, the resource and the venue — no amount, no name, no
+  /// note, no link — under a UID that identifies the booking without
+  /// naming it. Nothing is written to any calendar and nothing syncs:
+  /// a retime after the save does not follow the file. Core, default
+  /// ON: an interoperability courtesy every space can extend.
+  calendarFileExport;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1249,6 +1268,26 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,
+  ),
+  // #1607 — `requires` is deliberately empty: availability of the MCP
+  // interface depends on no other functionality, and what a connected
+  // assistant may DO is decided per call by the feature and permission
+  // it touches, never by this flag. Settings, because the owner's
+  // grant configuration is a setting.
+  WorkspaceFeature.mcpAccess: FeatureManifestEntry(
+    feature: WorkspaceFeature.mcpAccess,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #1643 — `requires` is empty on purpose: the file is built from the
+  // reservation the member already sees, on every surface that opens
+  // the detail sheet, so no tab or hub is its prerequisite. Reserve,
+  // because that is where a booking is looked at.
+  WorkspaceFeature.calendarFileExport: FeatureManifestEntry(
+    feature: WorkspaceFeature.calendarFileExport,
+    surface: FeatureSurface.reserve,
+    tier: FeatureTier.core,
   ),
 };
 

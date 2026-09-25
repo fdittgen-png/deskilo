@@ -250,6 +250,40 @@ cada regla la comprueba el servidor al confirmar, de modo que una plaza
 ocupada un segundo antes se rechaza aquí en vez de reservarse dos
 veces.
 
+### 4c. Guardar una reserva en tu propio calendario (#1643)
+
+Cada superficie que abre una de **tus propias** reservas — el plano, Día,
+Semana, la línea de tiempo del calendario — ofrece **Guardar archivo de
+calendario**. Escribe un archivo `.ics` estándar (RFC 5545) que cualquier
+calendario importa: Google, Outlook, Apple, Thunderbird o el de tu
+teléfono. Antes de guardar nada ves exactamente lo que dirá el archivo —
+el espacio reservado, la hora, el nombre del espacio de coworking como
+lugar, el estado — y, bajo *Contenido del archivo*, el archivo mismo.
+
+**Lo que lleva el archivo, y lo que nunca lleva.** La hora como instante
+(en UTC, así cae a la hora correcta en tu calendario estés donde estés y
+a través de un cambio de hora), el espacio reservado, el nombre del
+espacio de coworking y *Confirmada* o *Cancelada*. Nada más: sin importe,
+sin nombre, sin dirección de correo, sin nota, sin enlace, sin invitación
+a nadie — y una reserva cancelada se exporta como cancelada, nunca como
+un evento en curso.
+
+**Una instantánea, no una suscripción.** El archivo describe la reserva
+tal como está en el momento en que la guardas. Si más tarde se mueve o
+se cancela, un archivo ya guardado o compartido no cambia, y un archivo
+compartido no se puede recuperar. Guardar de nuevo la misma reserva
+produce un archivo con el mismo identificador, así que la mayoría de los
+calendarios sustituyen el evento anterior en lugar de añadir un segundo —
+aunque eso lo decide el importador, no la aplicación. Si la reserva
+cambió entre la vista previa y tu toque en *Guardar*, no se escribe
+nada: la vista previa se actualiza y te pide que mires de nuevo.
+
+El archivo llega a tus descargas (en un dispositivo: la carpeta
+Descargas; en un navegador: donde tu navegador guarde las descargas). Es
+una **funcionalidad** que un propietario puede desactivar en *Ajustes →
+Funcionalidades*; está activada por defecto. La aplicación no escribe en
+ningún calendario y nada se sincroniza.
+
 ## 5. Calendario (pestaña Calendario)
 
 El mes de un vistazo, con dos alcances y dos formas:
@@ -1954,6 +1988,24 @@ que antes, se llegue desde un menú o se escriba la dirección.
 
 Los propietarios lo activan en *Ajustes → Funciones*. Un espacio que lo
 deja desactivado conserva la rueda dentada tal cual.
+
+### Interfaz MCP (#1607)
+
+Un espacio puede poner a disposición la **interfaz MCP**, para que un
+asistente de IA pueda conectarse a DesKilo. El interruptor solo indica
+disponibilidad: activarlo no inscribe a nadie, no aprueba ninguna
+solicitud, no concede ningún rol y no registra ningún cliente. Quien
+quiera usarla sigue necesitando una autorización que el propietario
+configura **y** el administrador de la instancia aprueba — dos pasos
+distintos, incluso cuando una sola persona tiene ambos papeles — y cada
+operación del asistente sigue respondiendo a los permisos, funciones y
+reglas que la aplicación ya aplica. Desactivada, la interfaz oculta sus
+puntos de entrada y rechaza las llamadas; las autorizaciones existentes
+siguen visibles y revocables. El interruptor viaja con una plantilla
+como cualquier otra función; las autorizaciones, aprobaciones y
+consentimientos nunca viajan, así que activarlo en una copia de un
+espacio no abre nada. Los propietarios lo activan en *Ajustes →
+Funciones*; está desactivado por defecto.
 
 ### El espacio de demostración
 

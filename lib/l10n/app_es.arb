@@ -126,6 +126,27 @@
   "authGenericError": "Error de autenticación. Comprueba tus credenciales e inténtalo de nuevo.",
   "authSignOut": "Cerrar sesión",
   "authNetworkError": "No se pudo contactar con el servidor. Comprueba tu conexión e inténtalo de nuevo.",
+  "authEmailNotConfirmed": "Confirma primero tu dirección de correo: abre el mensaje que te enviamos y luego inicia sesión.",
+  "authRateLimited": "Demasiados intentos. Espera un momento y vuelve a intentarlo.",
+  "authProviderDisabled": "Este método de acceso está desactivado en este servidor.",
+  "authWeakPassword": "Elige una contraseña más segura.",
+  "authAlreadyRegistered": "Esta dirección no puede usarse para crear una cuenta. Inicia sesión o restablece tu contraseña.",
+  "authRecoveryNotSaved": "Tu código fue aceptado, pero la nueva contraseña no se guardó. Intenta guardarla de nuevo.",
+  "authVerifyTitle": "Revisa tu correo",
+  "authVerifyBody": "Hemos enviado un enlace de confirmación a {email}. Ábrelo en este dispositivo para terminar de crear tu cuenta.",
+  "@authVerifyBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyHint": "¿Nada todavía? Mira en la carpeta de spam o vuelve a enviarlo.",
+  "authVerifyResend": "Volver a enviar el correo",
+  "authVerifyResent": "Enviado de nuevo.",
+  "authVerifyResendWait": "Podrás volver a enviarlo dentro de un minuto.",
+  "authVerifyChangeEmail": "Usar otra dirección",
+  "authVerifyBackToSignIn": "Volver al inicio de sesión",
   "availabilityTitle": "Disponibilidad",
   "availabilityOpenWeekdays": "Días de apertura",
   "availabilityClosureDays": "Días de cierre",
@@ -383,6 +404,10 @@
   "billPackages": "Paquetes de días",
   "payOnlineButton": "Pagar en línea",
   "payOnlineNotConfigured": "Los pagos en línea aún no están configurados. Pregunta al propietario del espacio.",
+  "payOnlinePendingTitle": "Pago en línea pendiente",
+  "payOnlineFailedTitle": "Pago en línea fallido",
+  "payOnlinePendingDetail": "El pago {reference} ({amount} vía {provider}) aún no ha sido confirmado por el proveedor, por lo que el saldo sigue mostrando lo adeudado. Cite esta referencia si no se liquida.",
+  "payOnlineFailedDetail": "El pago {reference} ({amount} vía {provider}) no se completó — no se abonó nada; el saldo sigue pendiente.",
   "payOnlineChooseTitle": "Pagar en línea",
   "paymentProviderStripe": "Tarjeta (Stripe)",
   "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
@@ -981,6 +1006,66 @@
   "calendarValidationRefused": "Rechazado: {what}",
   "calendarEventActionValidated": "validado",
   "calendarEventActionRefused": "rechazado",
+  "featureCalendarFileExportTitle": "Archivo de calendario de una reserva",
+  "@featureCalendarFileExportTitle": {
+    "description": "#1643 calendar file: featureCalendarFileExportTitle"
+  },
+  "featureCalendarFileExportDesc": "Permite a un miembro guardar una de sus propias reservas como archivo de calendario estándar (.ics) para el calendario que ya usa. El archivo solo lleva la hora, el espacio reservado y el nombre del espacio de coworking — sin importe, sin nombre, sin nota, sin enlace — y es una instantánea: un cambio posterior de la reserva no actualiza un archivo ya guardado. No se escribe en ningún calendario y nada se sincroniza. Desactivada, oculta el botón.",
+  "@featureCalendarFileExportDesc": {
+    "description": "#1643 calendar file: featureCalendarFileExportDesc"
+  },
+  "reservationCalendarFileButton": "Guardar archivo de calendario",
+  "@reservationCalendarFileButton": {
+    "description": "#1643 calendar file: reservationCalendarFileButton"
+  },
+  "reservationCalendarFileTitle": "Archivo de calendario",
+  "@reservationCalendarFileTitle": {
+    "description": "#1643 calendar file: reservationCalendarFileTitle"
+  },
+  "reservationCalendarFileSnapshotNote": "Este archivo es una instantánea de la reserva tal como está ahora. Si más tarde se mueve o se cancela, un archivo ya guardado o compartido no cambia — y un archivo compartido no se puede recuperar.",
+  "@reservationCalendarFileSnapshotNote": {
+    "description": "#1643 calendar file: reservationCalendarFileSnapshotNote"
+  },
+  "reservationCalendarFileEvent": "Evento",
+  "@reservationCalendarFileEvent": {
+    "description": "#1643 calendar file: reservationCalendarFileEvent"
+  },
+  "reservationCalendarFileWhen": "Cuándo",
+  "@reservationCalendarFileWhen": {
+    "description": "#1643 calendar file: reservationCalendarFileWhen"
+  },
+  "reservationCalendarFileLocation": "Lugar",
+  "@reservationCalendarFileLocation": {
+    "description": "#1643 calendar file: reservationCalendarFileLocation"
+  },
+  "reservationCalendarFileStatus": "Estado",
+  "@reservationCalendarFileStatus": {
+    "description": "#1643 calendar file: reservationCalendarFileStatus"
+  },
+  "reservationCalendarFileStatusConfirmed": "Confirmada",
+  "@reservationCalendarFileStatusConfirmed": {
+    "description": "#1643 calendar file: reservationCalendarFileStatusConfirmed"
+  },
+  "reservationCalendarFileStatusCancelled": "Cancelada",
+  "@reservationCalendarFileStatusCancelled": {
+    "description": "#1643 calendar file: reservationCalendarFileStatusCancelled"
+  },
+  "reservationCalendarFileName": "Archivo",
+  "@reservationCalendarFileName": {
+    "description": "#1643 calendar file: reservationCalendarFileName"
+  },
+  "reservationCalendarFileContents": "Contenido del archivo",
+  "@reservationCalendarFileContents": {
+    "description": "#1643 calendar file: reservationCalendarFileContents"
+  },
+  "reservationCalendarFileStale": "La reserva cambió desde esta vista previa. Revísala de nuevo antes de guardar.",
+  "@reservationCalendarFileStale": {
+    "description": "#1643 calendar file: reservationCalendarFileStale"
+  },
+  "reservationCalendarFileRefused": "Esta reserva no se puede exportar: no es tuya o ya no existe.",
+  "@reservationCalendarFileRefused": {
+    "description": "#1643 calendar file: reservationCalendarFileRefused"
+  },
   "featureCarnetsTitle": "Bonos",
   "featureCarnetsDesc": "Vender bonos de medias jornadas que se gastan a lo largo de los meses cuando un miembro reserva más allá de su suscripción, cobrados una sola vez en la venta.",
   "carnetsTitle": "Bonos",
@@ -4230,6 +4315,14 @@
   "managedProfileIdentityUnavailable": "No se han podido leer estos datos, así que todavía no hay nada que editar. No se ha cambiado nada.",
   "@managedProfileIdentityUnavailable": {
     "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
+  },
+  "featureMcpAccessTitle": "Interfaz MCP",
+  "@featureMcpAccessTitle": {
+    "description": "#1607 MCP access: featureMcpAccessTitle"
+  },
+  "featureMcpAccessDesc": "Pone la interfaz MCP a disposición de este espacio, para que un asistente de IA pueda conectarse a DesKilo. Solo disponibilidad: activarla no concede nada a nadie. Cada persona sigue necesitando una autorización que el propietario configura y el administrador de la instancia aprueba, y cada operación sigue respondiendo a los permisos y reglas que la aplicación ya aplica. Desactivada, oculta los puntos de entrada MCP y rechaza las llamadas; las autorizaciones existentes siguen visibles y revocables.",
+  "@featureMcpAccessDesc": {
+    "description": "#1607 MCP access: featureMcpAccessDesc"
   },
   "featureMemberAccountMenuTitle": "Los miembros ven Mi cuenta",
   "@featureMemberAccountMenuTitle": {

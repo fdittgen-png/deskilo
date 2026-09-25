@@ -1027,6 +1027,14 @@ window.SETUP_L10N={
    "memberAccountMenu": [
     "Members see My account",
     "A member who administers nothing meets My account instead of Settings — the same screen, which already shows them only their own account, membership and preferences, under the name that says so. Anyone whose role grants administration keeps Settings and everything it opens. This renames an entry; it grants and withdraws nothing."
+   ],
+   "mcpAccess": [
+    "MCP interface",
+    "Makes the MCP interface available to this workspace, so an AI assistant can be connected to DesKilo. Availability only: switching it on grants nobody anything. Each person still needs a grant the owner configures and the instance administrator approves, and every operation keeps answering to the permissions and rules the app already applies. Off hides the MCP entry points and refuses calls; existing grants stay visible and revocable."
+   ],
+   "calendarFileExport": [
+    "Calendar file of a booking",
+    "Lets a member save one of their own bookings as a standard calendar file (.ics) for the calendar they already use. The file carries the time, the booked space and the workspace name only — no amount, no name, no note, no link — and it is a snapshot: a later change to the booking does not update a file already saved. Nothing is written to any calendar and nothing syncs. Off hides the button."
    ]
   },
   "process": {
@@ -2263,6 +2271,14 @@ window.SETUP_L10N={
    "memberAccountMenu": [
     "Les membres voient Mon compte",
     "Un membre qui n'administre rien rencontre Mon compte au lieu de Réglages — le même écran, qui ne lui montre déjà que son compte, son adhésion et ses préférences, sous le nom qui le dit. Toute personne dont le rôle accorde une administration garde Réglages et tout ce qu'il ouvre. Ceci renomme une entrée ; cela n'accorde et ne retire rien."
+   ],
+   "mcpAccess": [
+    "Interface MCP",
+    "Rend l’interface MCP disponible pour cet espace, afin qu’un assistant IA puisse être connecté à DesKilo. Disponibilité seulement : l’activer n’accorde rien à personne. Chaque personne a encore besoin d’une autorisation que le propriétaire configure et que l’administrateur de l’instance approuve, et chaque opération continue de répondre aux permissions et aux règles que l’application applique déjà. Désactivée, elle masque les points d’entrée MCP et refuse les appels ; les autorisations existantes restent visibles et révocables."
+   ],
+   "calendarFileExport": [
+    "Fichier calendrier d’une réservation",
+    "Permet à un membre d’enregistrer l’une de ses propres réservations sous forme de fichier calendrier standard (.ics) pour l’agenda qu’il utilise déjà. Le fichier ne contient que l’horaire, l’espace réservé et le nom de l’espace de coworking — ni montant, ni nom, ni note, ni lien — et c’est un instantané : une modification ultérieure de la réservation ne met pas à jour un fichier déjà enregistré. Rien n’est écrit dans un agenda et rien ne se synchronise. Désactivée, elle masque le bouton."
    ]
   },
   "process": {
@@ -3499,6 +3515,14 @@ window.SETUP_L10N={
    "memberAccountMenu": [
     "Mitglieder sehen Mein Konto",
     "Ein Mitglied, das nichts verwaltet, findet Mein Konto statt Einstellungen — denselben Bildschirm, der ihm ohnehin nur sein Konto, seine Mitgliedschaft und seine Einstellungen zeigt, unter dem Namen, der das sagt. Wer durch seine Rolle etwas verwalten darf, behält Einstellungen und alles, was sich darin öffnet. Dies benennt einen Eintrag um; es gewährt und entzieht nichts."
+   ],
+   "mcpAccess": [
+    "MCP-Schnittstelle",
+    "Stellt die MCP-Schnittstelle für diesen Arbeitsbereich bereit, damit ein KI-Assistent mit DesKilo verbunden werden kann. Nur Verfügbarkeit: das Einschalten gewährt niemandem etwas. Jede Person braucht weiterhin eine Freigabe, die der Eigentümer konfiguriert und der Instanzadministrator genehmigt, und jeder Vorgang unterliegt weiterhin den Berechtigungen und Regeln, die die App ohnehin anwendet. Ausgeschaltet verbirgt sie die MCP-Einstiegspunkte und weist Aufrufe ab; bestehende Freigaben bleiben sichtbar und widerrufbar."
+   ],
+   "calendarFileExport": [
+    "Kalenderdatei einer Buchung",
+    "Erlaubt einem Mitglied, eine seiner eigenen Buchungen als Standard-Kalenderdatei (.ics) für den Kalender zu speichern, den es bereits nutzt. Die Datei enthält nur Zeit, gebuchten Platz und den Namen des Coworking-Spaces — keinen Betrag, keinen Namen, keine Notiz, keinen Link — und sie ist eine Momentaufnahme: Eine spätere Änderung der Buchung aktualisiert eine bereits gespeicherte Datei nicht. In keinen Kalender wird geschrieben, nichts wird synchronisiert. Aus blendet die Schaltfläche aus."
    ]
   },
   "process": {
@@ -4735,6 +4759,14 @@ window.SETUP_L10N={
    "memberAccountMenu": [
     "Los miembros ven Mi cuenta",
     "Un miembro que no administra nada encuentra Mi cuenta en lugar de Ajustes — la misma pantalla, que ya solo le muestra su cuenta, su membresía y sus preferencias, con el nombre que lo dice. Quien tenga administración por su rol conserva Ajustes y todo lo que abre. Esto renombra una entrada; no concede ni retira nada."
+   ],
+   "mcpAccess": [
+    "Interfaz MCP",
+    "Pone la interfaz MCP a disposición de este espacio, para que un asistente de IA pueda conectarse a DesKilo. Solo disponibilidad: activarla no concede nada a nadie. Cada persona sigue necesitando una autorización que el propietario configura y el administrador de la instancia aprueba, y cada operación sigue respondiendo a los permisos y reglas que la aplicación ya aplica. Desactivada, oculta los puntos de entrada MCP y rechaza las llamadas; las autorizaciones existentes siguen visibles y revocables."
+   ],
+   "calendarFileExport": [
+    "Archivo de calendario de una reserva",
+    "Permite a un miembro guardar una de sus propias reservas como archivo de calendario estándar (.ics) para el calendario que ya usa. El archivo solo lleva la hora, el espacio reservado y el nombre del espacio de coworking — sin importe, sin nombre, sin nota, sin enlace — y es una instantánea: un cambio posterior de la reserva no actualiza un archivo ya guardado. No se escribe en ningún calendario y nada se sincroniza. Desactivada, oculta el botón."
    ]
   },
   "process": {
@@ -5971,6 +6003,14 @@ window.SETUP_L10N={
    "memberAccountMenu": [
     "I membri vedono Il mio account",
     "Un membro che non amministra nulla incontra Il mio account invece di Impostazioni — la stessa schermata, che già gli mostra solo il suo account, la sua adesione e le sue preferenze, con il nome che lo dice. Chi ha un ruolo che concede amministrazione conserva Impostazioni e tutto ciò che apre. Questo rinomina una voce; non concede e non toglie nulla."
+   ],
+   "mcpAccess": [
+    "Interfaccia MCP",
+    "Rende disponibile l’interfaccia MCP per questo spazio, così che un assistente IA possa essere collegato a DesKilo. Solo disponibilità: attivarla non concede nulla a nessuno. Ogni persona ha ancora bisogno di un’autorizzazione che il proprietario configura e l’amministratore dell’istanza approva, e ogni operazione continua a rispondere ai permessi e alle regole che l’app già applica. Disattivata, nasconde i punti di ingresso MCP e rifiuta le chiamate; le autorizzazioni esistenti restano visibili e revocabili."
+   ],
+   "calendarFileExport": [
+    "File calendario di una prenotazione",
+    "Permette a un membro di salvare una delle proprie prenotazioni come file calendario standard (.ics) per il calendario che già usa. Il file contiene solo l’orario, lo spazio prenotato e il nome dello spazio di coworking — nessun importo, nessun nome, nessuna nota, nessun link — ed è un’istantanea: una modifica successiva della prenotazione non aggiorna un file già salvato. Non viene scritto nulla in alcun calendario e nulla si sincronizza. Disattivata, nasconde il pulsante."
    ]
   },
   "process": {

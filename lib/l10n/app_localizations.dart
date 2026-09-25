@@ -488,6 +488,90 @@ abstract class AppLocalizations {
   /// **'Could not reach the server. Check your connection and try again.'**
   String get authNetworkError;
 
+  /// Inline refusal when the account exists but its address was never confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your e-mail address first: open the message we sent you, then sign in.'**
+  String get authEmailNotConfirmed;
+
+  /// Inline notice when the server refuses to judge the request yet (rate limit)
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Wait a moment, then try again.'**
+  String get authRateLimited;
+
+  /// Inline refusal when e-mail sign-in, sign-ups or codes are disabled server-side
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in method is switched off on this server.'**
+  String get authProviderDisabled;
+
+  /// Inline refusal when the server's password policy rejects the new password
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a stronger password.'**
+  String get authWeakPassword;
+
+  /// Inline refusal when the server itself discloses that the address is taken
+  ///
+  /// In en, this message translates to:
+  /// **'This address cannot be used to create an account. Sign in or reset your password instead.'**
+  String get authAlreadyRegistered;
+
+  /// Inline notice when the recovery code was redeemed but the password update failed
+  ///
+  /// In en, this message translates to:
+  /// **'Your code was accepted, but the new password was not saved. Try saving it again.'**
+  String get authRecoveryNotSaved;
+
+  /// Heading of the state shown after a sign-up that sent a confirmation e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Check your e-mail'**
+  String get authVerifyTitle;
+
+  /// Body of the check-e-mail state; names the address the link went to
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a confirmation link to {email}. Open it on this device to finish creating your account.'**
+  String authVerifyBody(String email);
+
+  /// Small hint under the check-e-mail body
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet? Look in the spam folder, or send it again.'**
+  String get authVerifyHint;
+
+  /// Button resending the confirmation e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Send the e-mail again'**
+  String get authVerifyResend;
+
+  /// Inline notice after the confirmation e-mail was resent
+  ///
+  /// In en, this message translates to:
+  /// **'Sent again.'**
+  String get authVerifyResent;
+
+  /// Label of the resend button while its cooldown runs
+  ///
+  /// In en, this message translates to:
+  /// **'You can send it again in a minute.'**
+  String get authVerifyResendWait;
+
+  /// Button returning to the sign-up form with the address editable
+  ///
+  /// In en, this message translates to:
+  /// **'Use another address'**
+  String get authVerifyChangeEmail;
+
+  /// Link leaving the check-e-mail state for the sign-in form
+  ///
+  /// In en, this message translates to:
+  /// **'Back to sign in'**
+  String get authVerifyBackToSignIn;
+
   /// App-bar title of the owner availability editor and its settings tile
   ///
   /// In en, this message translates to:
@@ -1141,6 +1225,38 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online payments aren\'t set up yet. Ask the workspace owner.'**
   String get payOnlineNotConfigured;
+
+  /// #1637 card title on the bill: an online payment the provider has not confirmed yet
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment pending'**
+  String get payOnlinePendingTitle;
+
+  /// #1637 card title on the bill: an online payment the provider refused or let expire
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment failed'**
+  String get payOnlineFailedTitle;
+
+  /// #1637 pending line: reference is the PAY-… number, amount pre-formatted, provider the localized provider label
+  ///
+  /// In en, this message translates to:
+  /// **'Payment {reference} ({amount} via {provider}) has not been confirmed by the provider yet, so the balance still shows what is owed. Quote this reference if it does not settle.'**
+  String payOnlinePendingDetail(
+    String reference,
+    String amount,
+    String provider,
+  );
+
+  /// #1637 failed line: same placeholders as payOnlinePendingDetail
+  ///
+  /// In en, this message translates to:
+  /// **'Payment {reference} ({amount} via {provider}) was not completed — nothing was credited; the balance is still owed.'**
+  String payOnlineFailedDetail(
+    String reference,
+    String amount,
+    String provider,
+  );
 
   /// Title of the provider chooser sheet
   ///
@@ -2491,6 +2607,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'refused'**
   String get calendarEventActionRefused;
+
+  /// #1643 calendar file: featureCalendarFileExportTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar file of a booking'**
+  String get featureCalendarFileExportTitle;
+
+  /// #1643 calendar file: featureCalendarFileExportDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Lets a member save one of their own bookings as a standard calendar file (.ics) for the calendar they already use. The file carries the time, the booked space and the workspace name only — no amount, no name, no note, no link — and it is a snapshot: a later change to the booking does not update a file already saved. Nothing is written to any calendar and nothing syncs. Off hides the button.'**
+  String get featureCalendarFileExportDesc;
+
+  /// #1643 calendar file: reservationCalendarFileButton
+  ///
+  /// In en, this message translates to:
+  /// **'Save calendar file'**
+  String get reservationCalendarFileButton;
+
+  /// #1643 calendar file: reservationCalendarFileTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar file'**
+  String get reservationCalendarFileTitle;
+
+  /// #1643 calendar file: reservationCalendarFileSnapshotNote
+  ///
+  /// In en, this message translates to:
+  /// **'This file is a snapshot of the booking as it is now. If the booking is moved or cancelled later, a file already saved or shared does not change — and a shared file cannot be taken back.'**
+  String get reservationCalendarFileSnapshotNote;
+
+  /// #1643 calendar file: reservationCalendarFileEvent
+  ///
+  /// In en, this message translates to:
+  /// **'Event'**
+  String get reservationCalendarFileEvent;
+
+  /// #1643 calendar file: reservationCalendarFileWhen
+  ///
+  /// In en, this message translates to:
+  /// **'When'**
+  String get reservationCalendarFileWhen;
+
+  /// #1643 calendar file: reservationCalendarFileLocation
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get reservationCalendarFileLocation;
+
+  /// #1643 calendar file: reservationCalendarFileStatus
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get reservationCalendarFileStatus;
+
+  /// #1643 calendar file: reservationCalendarFileStatusConfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get reservationCalendarFileStatusConfirmed;
+
+  /// #1643 calendar file: reservationCalendarFileStatusCancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get reservationCalendarFileStatusCancelled;
+
+  /// #1643 calendar file: reservationCalendarFileName
+  ///
+  /// In en, this message translates to:
+  /// **'File'**
+  String get reservationCalendarFileName;
+
+  /// #1643 calendar file: reservationCalendarFileContents
+  ///
+  /// In en, this message translates to:
+  /// **'File contents'**
+  String get reservationCalendarFileContents;
+
+  /// #1643 calendar file: reservationCalendarFileStale
+  ///
+  /// In en, this message translates to:
+  /// **'The booking changed since this preview. Check it again before saving.'**
+  String get reservationCalendarFileStale;
+
+  /// #1643 calendar file: reservationCalendarFileRefused
+  ///
+  /// In en, this message translates to:
+  /// **'This booking cannot be exported: it is not yours, or it no longer exists.'**
+  String get reservationCalendarFileRefused;
 
   /// #1279 carnets: featureCarnetsTitle
   ///
@@ -11434,6 +11640,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'These details could not be read, so there is nothing to edit yet. Nothing has been changed.'**
   String get managedProfileIdentityUnavailable;
+
+  /// #1607 MCP access: featureMcpAccessTitle
+  ///
+  /// In en, this message translates to:
+  /// **'MCP interface'**
+  String get featureMcpAccessTitle;
+
+  /// #1607 MCP access: featureMcpAccessDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Makes the MCP interface available to this workspace, so an AI assistant can be connected to DesKilo. Availability only: switching it on grants nobody anything. Each person still needs a grant the owner configures and the instance administrator approves, and every operation keeps answering to the permissions and rules the app already applies. Off hides the MCP entry points and refuses calls; existing grants stay visible and revocable.'**
+  String get featureMcpAccessDesc;
 
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///

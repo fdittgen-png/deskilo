@@ -250,6 +250,42 @@ feuille ne fait que proposer — chaque règle est vérifiée par le serveur
 à la confirmation, si bien qu'une place prise une seconde plus tôt est
 refusée ici plutôt que réservée deux fois.
 
+### 4c. Enregistrer une réservation dans votre propre agenda (#1643)
+
+Chaque surface qui ouvre l'une de **vos propres** réservations — le plan,
+Jour, Semaine, la frise du calendrier — propose **Enregistrer le fichier
+calendrier**. Il écrit un fichier `.ics` standard (RFC 5545) que n'importe
+quel agenda importe : Google, Outlook, Apple, Thunderbird ou celui de
+votre téléphone. Avant tout enregistrement, vous voyez exactement ce que
+le fichier dira — l'espace réservé, l'horaire, le nom de l'espace de
+coworking comme lieu, le statut — et, sous *Contenu du fichier*, le
+fichier lui-même.
+
+**Ce que le fichier contient, et ce qu'il ne contient jamais.** L'horaire
+comme un instant (en UTC, il tombe donc à la bonne heure dans votre agenda
+où que vous soyez et à travers un changement d'heure), l'espace réservé,
+le nom de l'espace de coworking, et *Confirmée* ou *Annulée*. Rien
+d'autre : ni montant, ni nom, ni adresse e-mail, ni note, ni lien, ni
+invitation à quiconque — et une réservation annulée est exportée comme
+annulée, jamais comme un événement en cours.
+
+**Un instantané, pas un abonnement.** Le fichier décrit la réservation
+telle qu'elle est au moment où vous l'enregistrez. Si elle est déplacée
+ou annulée plus tard, un fichier déjà enregistré ou partagé ne change
+pas, et un fichier partagé ne peut pas être repris. Enregistrer à nouveau
+la même réservation produit un fichier portant le même identifiant, si
+bien que la plupart des agendas remplacent l'événement précédent au lieu
+d'en ajouter un second — mais c'est la décision de l'importateur, pas de
+l'application. Si la réservation a changé entre l'aperçu et votre appui
+sur *Enregistrer*, rien n'est écrit : l'aperçu se rafraîchit et vous
+demande de regarder à nouveau.
+
+Le fichier arrive dans vos téléchargements (sur un appareil : le dossier
+Téléchargements ; dans un navigateur : là où votre navigateur range les
+téléchargements). C'est une **fonctionnalité** qu'un propriétaire peut
+désactiver sous *Réglages → Fonctionnalités* ; elle est active par défaut.
+L'application n'écrit rien dans aucun agenda et rien ne se synchronise.
+
 ## 5. Calendrier (onglet Calendrier)
 
 Le mois d'un coup d'œil, avec deux portées et deux formes :
@@ -1992,6 +2028,25 @@ qu'avant, qu'on y arrive par un menu ou qu'on en tape l'adresse.
 
 Les propriétaires l'activent dans *Réglages → Fonctionnalités*. Un
 espace qui le laisse désactivé garde la roue dentée telle quelle.
+
+### Interface MCP (#1607)
+
+Un espace peut rendre disponible l'**interface MCP**, afin qu'un
+assistant IA puisse être connecté à DesKilo. Le commutateur ne dit que la
+disponibilité : l'activer n'inscrit personne, n'approuve aucune demande,
+n'accorde aucun rôle et n'enregistre aucun client. Une personne qui veut
+s'en servir a encore besoin d'une autorisation que le propriétaire
+configure **et** que l'administrateur de l'instance approuve — deux
+étapes distinctes, même quand une seule personne porte les deux
+casquettes — et chaque opération de l'assistant continue de répondre
+aux permissions, aux fonctionnalités et aux règles que l'application
+applique déjà. Désactivée, l'interface masque ses points d'entrée et
+refuse les appels ; les autorisations existantes restent visibles et
+révocables. Le commutateur voyage avec un modèle comme toute autre
+fonctionnalité ; les autorisations, approbations et consentements ne
+voyagent jamais, si bien que l'activer sur une copie d'un espace n'ouvre
+rien. Les propriétaires l'activent sous *Réglages → Fonctionnalités* ;
+elle est désactivée par défaut.
 
 ### L'espace de démonstration
 

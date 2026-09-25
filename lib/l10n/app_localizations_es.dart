@@ -213,6 +213,57 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo contactar con el servidor. Comprueba tu conexión e inténtalo de nuevo.';
 
   @override
+  String get authEmailNotConfirmed =>
+      'Confirma primero tu dirección de correo: abre el mensaje que te enviamos y luego inicia sesión.';
+
+  @override
+  String get authRateLimited =>
+      'Demasiados intentos. Espera un momento y vuelve a intentarlo.';
+
+  @override
+  String get authProviderDisabled =>
+      'Este método de acceso está desactivado en este servidor.';
+
+  @override
+  String get authWeakPassword => 'Elige una contraseña más segura.';
+
+  @override
+  String get authAlreadyRegistered =>
+      'Esta dirección no puede usarse para crear una cuenta. Inicia sesión o restablece tu contraseña.';
+
+  @override
+  String get authRecoveryNotSaved =>
+      'Tu código fue aceptado, pero la nueva contraseña no se guardó. Intenta guardarla de nuevo.';
+
+  @override
+  String get authVerifyTitle => 'Revisa tu correo';
+
+  @override
+  String authVerifyBody(String email) {
+    return 'Hemos enviado un enlace de confirmación a $email. Ábrelo en este dispositivo para terminar de crear tu cuenta.';
+  }
+
+  @override
+  String get authVerifyHint =>
+      '¿Nada todavía? Mira en la carpeta de spam o vuelve a enviarlo.';
+
+  @override
+  String get authVerifyResend => 'Volver a enviar el correo';
+
+  @override
+  String get authVerifyResent => 'Enviado de nuevo.';
+
+  @override
+  String get authVerifyResendWait =>
+      'Podrás volver a enviarlo dentro de un minuto.';
+
+  @override
+  String get authVerifyChangeEmail => 'Usar otra dirección';
+
+  @override
+  String get authVerifyBackToSignIn => 'Volver al inicio de sesión';
+
+  @override
   String get availabilityTitle => 'Disponibilidad';
 
   @override
@@ -616,6 +667,30 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get payOnlineNotConfigured =>
       'Los pagos en línea aún no están configurados. Pregunta al propietario del espacio.';
+
+  @override
+  String get payOnlinePendingTitle => 'Pago en línea pendiente';
+
+  @override
+  String get payOnlineFailedTitle => 'Pago en línea fallido';
+
+  @override
+  String payOnlinePendingDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'El pago $reference ($amount vía $provider) aún no ha sido confirmado por el proveedor, por lo que el saldo sigue mostrando lo adeudado. Cite esta referencia si no se liquida.';
+  }
+
+  @override
+  String payOnlineFailedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'El pago $reference ($amount vía $provider) no se completó — no se abonó nada; el saldo sigue pendiente.';
+  }
 
   @override
   String get payOnlineChooseTitle => 'Pagar en línea';
@@ -1396,6 +1471,56 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get calendarEventActionRefused => 'rechazado';
+
+  @override
+  String get featureCalendarFileExportTitle =>
+      'Archivo de calendario de una reserva';
+
+  @override
+  String get featureCalendarFileExportDesc =>
+      'Permite a un miembro guardar una de sus propias reservas como archivo de calendario estándar (.ics) para el calendario que ya usa. El archivo solo lleva la hora, el espacio reservado y el nombre del espacio de coworking — sin importe, sin nombre, sin nota, sin enlace — y es una instantánea: un cambio posterior de la reserva no actualiza un archivo ya guardado. No se escribe en ningún calendario y nada se sincroniza. Desactivada, oculta el botón.';
+
+  @override
+  String get reservationCalendarFileButton => 'Guardar archivo de calendario';
+
+  @override
+  String get reservationCalendarFileTitle => 'Archivo de calendario';
+
+  @override
+  String get reservationCalendarFileSnapshotNote =>
+      'Este archivo es una instantánea de la reserva tal como está ahora. Si más tarde se mueve o se cancela, un archivo ya guardado o compartido no cambia — y un archivo compartido no se puede recuperar.';
+
+  @override
+  String get reservationCalendarFileEvent => 'Evento';
+
+  @override
+  String get reservationCalendarFileWhen => 'Cuándo';
+
+  @override
+  String get reservationCalendarFileLocation => 'Lugar';
+
+  @override
+  String get reservationCalendarFileStatus => 'Estado';
+
+  @override
+  String get reservationCalendarFileStatusConfirmed => 'Confirmada';
+
+  @override
+  String get reservationCalendarFileStatusCancelled => 'Cancelada';
+
+  @override
+  String get reservationCalendarFileName => 'Archivo';
+
+  @override
+  String get reservationCalendarFileContents => 'Contenido del archivo';
+
+  @override
+  String get reservationCalendarFileStale =>
+      'La reserva cambió desde esta vista previa. Revísala de nuevo antes de guardar.';
+
+  @override
+  String get reservationCalendarFileRefused =>
+      'Esta reserva no se puede exportar: no es tuya o ya no existe.';
 
   @override
   String get featureCarnetsTitle => 'Bonos';
@@ -6616,6 +6741,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get managedProfileIdentityUnavailable =>
       'No se han podido leer estos datos, así que todavía no hay nada que editar. No se ha cambiado nada.';
+
+  @override
+  String get featureMcpAccessTitle => 'Interfaz MCP';
+
+  @override
+  String get featureMcpAccessDesc =>
+      'Pone la interfaz MCP a disposición de este espacio, para que un asistente de IA pueda conectarse a DesKilo. Solo disponibilidad: activarla no concede nada a nadie. Cada persona sigue necesitando una autorización que el propietario configura y el administrador de la instancia aprueba, y cada operación sigue respondiendo a los permisos y reglas que la aplicación ya aplica. Desactivada, oculta los puntos de entrada MCP y rechaza las llamadas; las autorizaciones existentes siguen visibles y revocables.';
 
   @override
   String get featureMemberAccountMenuTitle => 'Los miembros ven Mi cuenta';

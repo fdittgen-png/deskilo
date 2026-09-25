@@ -213,6 +213,57 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.';
 
   @override
+  String get authEmailNotConfirmed =>
+      'Confirmez d\'abord votre adresse e-mail : ouvrez le message que nous vous avons envoyé, puis connectez-vous.';
+
+  @override
+  String get authRateLimited =>
+      'Trop de tentatives. Patientez un instant, puis réessayez.';
+
+  @override
+  String get authProviderDisabled =>
+      'Cette méthode de connexion est désactivée sur ce serveur.';
+
+  @override
+  String get authWeakPassword => 'Choisissez un mot de passe plus robuste.';
+
+  @override
+  String get authAlreadyRegistered =>
+      'Cette adresse ne peut pas servir à créer un compte. Connectez-vous ou réinitialisez votre mot de passe.';
+
+  @override
+  String get authRecoveryNotSaved =>
+      'Votre code a été accepté, mais le nouveau mot de passe n\'a pas été enregistré. Réessayez de l\'enregistrer.';
+
+  @override
+  String get authVerifyTitle => 'Consultez vos e-mails';
+
+  @override
+  String authVerifyBody(String email) {
+    return 'Nous avons envoyé un lien de confirmation à $email. Ouvrez-le sur cet appareil pour terminer la création de votre compte.';
+  }
+
+  @override
+  String get authVerifyHint =>
+      'Rien reçu ? Regardez dans les indésirables, ou renvoyez-le.';
+
+  @override
+  String get authVerifyResend => 'Renvoyer l\'e-mail';
+
+  @override
+  String get authVerifyResent => 'Renvoyé.';
+
+  @override
+  String get authVerifyResendWait =>
+      'Vous pourrez le renvoyer dans une minute.';
+
+  @override
+  String get authVerifyChangeEmail => 'Utiliser une autre adresse';
+
+  @override
+  String get authVerifyBackToSignIn => 'Retour à la connexion';
+
+  @override
   String get availabilityTitle => 'Disponibilité';
 
   @override
@@ -618,6 +669,30 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get payOnlineNotConfigured =>
       'Les paiements en ligne ne sont pas encore configurés. Demandez au propriétaire de l\'espace.';
+
+  @override
+  String get payOnlinePendingTitle => 'Paiement en ligne en attente';
+
+  @override
+  String get payOnlineFailedTitle => 'Paiement en ligne échoué';
+
+  @override
+  String payOnlinePendingDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Le paiement $reference ($amount via $provider) n\'a pas encore été confirmé par le prestataire : le solde affiche donc toujours ce qui est dû. Citez cette référence s\'il n\'aboutit pas.';
+  }
+
+  @override
+  String payOnlineFailedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Le paiement $reference ($amount via $provider) n\'a pas abouti — rien n\'a été crédité ; le solde reste dû.';
+  }
 
   @override
   String get payOnlineChooseTitle => 'Payer en ligne';
@@ -1399,6 +1474,57 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get calendarEventActionRefused => 'refusé';
+
+  @override
+  String get featureCalendarFileExportTitle =>
+      'Fichier calendrier d’une réservation';
+
+  @override
+  String get featureCalendarFileExportDesc =>
+      'Permet à un membre d’enregistrer l’une de ses propres réservations sous forme de fichier calendrier standard (.ics) pour l’agenda qu’il utilise déjà. Le fichier ne contient que l’horaire, l’espace réservé et le nom de l’espace de coworking — ni montant, ni nom, ni note, ni lien — et c’est un instantané : une modification ultérieure de la réservation ne met pas à jour un fichier déjà enregistré. Rien n’est écrit dans un agenda et rien ne se synchronise. Désactivée, elle masque le bouton.';
+
+  @override
+  String get reservationCalendarFileButton =>
+      'Enregistrer le fichier calendrier';
+
+  @override
+  String get reservationCalendarFileTitle => 'Fichier calendrier';
+
+  @override
+  String get reservationCalendarFileSnapshotNote =>
+      'Ce fichier est un instantané de la réservation telle qu’elle est maintenant. Si elle est déplacée ou annulée plus tard, un fichier déjà enregistré ou partagé ne change pas — et un fichier partagé ne peut pas être repris.';
+
+  @override
+  String get reservationCalendarFileEvent => 'Événement';
+
+  @override
+  String get reservationCalendarFileWhen => 'Quand';
+
+  @override
+  String get reservationCalendarFileLocation => 'Lieu';
+
+  @override
+  String get reservationCalendarFileStatus => 'Statut';
+
+  @override
+  String get reservationCalendarFileStatusConfirmed => 'Confirmée';
+
+  @override
+  String get reservationCalendarFileStatusCancelled => 'Annulée';
+
+  @override
+  String get reservationCalendarFileName => 'Fichier';
+
+  @override
+  String get reservationCalendarFileContents => 'Contenu du fichier';
+
+  @override
+  String get reservationCalendarFileStale =>
+      'La réservation a changé depuis cet aperçu. Vérifiez-la à nouveau avant d’enregistrer.';
+
+  @override
+  String get reservationCalendarFileRefused =>
+      'Cette réservation ne peut pas être exportée : elle n’est pas la vôtre, ou elle n’existe plus.';
 
   @override
   String get featureCarnetsTitle => 'Carnets';
@@ -6635,6 +6761,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get managedProfileIdentityUnavailable =>
       'Ces informations n\'ont pas pu être lues : il n\'y a donc rien à modifier pour l\'instant. Rien n\'a été changé.';
+
+  @override
+  String get featureMcpAccessTitle => 'Interface MCP';
+
+  @override
+  String get featureMcpAccessDesc =>
+      'Rend l’interface MCP disponible pour cet espace, afin qu’un assistant IA puisse être connecté à DesKilo. Disponibilité seulement : l’activer n’accorde rien à personne. Chaque personne a encore besoin d’une autorisation que le propriétaire configure et que l’administrateur de l’instance approuve, et chaque opération continue de répondre aux permissions et aux règles que l’application applique déjà. Désactivée, elle masque les points d’entrée MCP et refuse les appels ; les autorisations existantes restent visibles et révocables.';
 
   @override
   String get featureMemberAccountMenuTitle => 'Les membres voient Mon compte';

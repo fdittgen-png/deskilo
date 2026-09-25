@@ -1,0 +1,2 @@
+# #1643 — the calendar-file goldens are RFC 5545 files: CRLF is the content, never a line-ending preference to normalise.
+*.ics -text

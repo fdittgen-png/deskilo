@@ -151,7 +151,18 @@ import 'package:flutter_test/flutter_test.dart';
 //   the same screen and the same route, under the name that says whose
 //   it is. Settings, Platform, default OFF: a space that never asked
 //   keeps the gear it has always had.
-const int _expectedFeatureCount = 111; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
+// 111→112 (2026-09-25): #1607 mcpAccess — the MCP interface is AVAILABLE
+//   to this workspace, so an AI assistant may be connected to DesKilo.
+//   Availability, never authorization: switching it on enrols nobody,
+//   approves nothing and grants no role. Settings, Platform, default
+//   OFF: no workspace is reachable by a machine it never asked for.
+// 112→113 (2026-09-25): #1643 calendarFileExport — a member saves ONE of
+//   their own bookings as an RFC 5545 calendar file: a snapshot of the
+//   instant, the resource and the venue under a UID that names the booking
+//   without naming anybody. No calendar write, no sync, no amount, no name.
+//   Reserve, Core, default ON: an interoperability courtesy every space
+//   can extend, and a switch that hides the button when it will not.
+const int _expectedFeatureCount = 113; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
 
 void main() {
   _tierPins();
@@ -215,7 +226,12 @@ void main() {
 /// anything".
 // 36→37 (2026-09-15): #1273 singleRoomLevelNames — a label rule every
 // workspace started from `tiny` meets on day one.
-const int _expectedCoreCount = 37;
+// 37→38 (2026-09-25): #1643 calendarFileExport — a member's own booking
+// in their own calendar, as a file that carries nothing private and
+// grants nothing. A courtesy a fifteen-person community meets on day one
+// without having asked, which is exactly what Core is for; the switch
+// exists so a space can hide the button, not so it has to find it.
+const int _expectedCoreCount = 38;
 
 void _tierPins() {
   test('every feature declares a tier, and the split is pinned', () {

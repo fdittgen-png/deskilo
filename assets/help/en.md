@@ -249,6 +249,38 @@ now, and for an administrator, who it is for. The sheet only proposes —
 every rule is checked by the server when you confirm, so a place that
 was taken a second ago is refused here rather than double-booked.
 
+### 4c. Save a booking to your own calendar (#1643)
+
+Every surface that opens one of **your own** bookings — the plan, Day,
+Week, the calendar timeline — offers **Save calendar file**. It writes a
+standard `.ics` file (RFC 5545) that any calendar imports: Google, Outlook,
+Apple, Thunderbird, or your phone's. Before anything is saved you see
+exactly what the file will say — the booked space, the time, the space's
+name as the location, the status — and, under *File contents*, the file
+itself.
+
+**What the file carries, and what it never does.** The time as an
+instant (in UTC, so it lands at the right hour in your calendar wherever
+you are and across a clock change), the booked space, the workspace name,
+and *Confirmed* or *Cancelled*. Nothing else: no amount, no name, no
+e-mail address, no note, no link, no invitation to anybody — and a
+cancelled booking is exported as cancelled, never as a live event.
+
+**A snapshot, not a subscription.** The file describes the booking as it
+is at the moment you save. If the booking is moved or cancelled later,
+a file already saved or shared does not change, and a file you shared
+cannot be taken back. Saving the same booking again produces a file with
+the same identifier, so most calendars replace the earlier event rather
+than adding a second one — though that is the importer's decision, not
+the app's. If the booking changed between the preview and your tap on
+*Save*, nothing is written: the preview refreshes and asks you to look
+again.
+
+The file lands in your downloads (on a device: the Downloads folder; in
+a browser: wherever your browser puts downloads). It is a **feature** an
+owner can switch off under *Settings → Features*; it is on by default.
+Nothing is written to any calendar by the app itself, and nothing syncs.
+
 ## 5. Calendar (Calendar tab)
 
 The month at a glance, with two scopes and two shapes:
@@ -1939,6 +1971,22 @@ refused, whether they are reached from a menu or typed in as an address.
 
 Owners switch it on under *Settings → Features*. A space that leaves it
 off keeps the gear precisely as it is today.
+
+### MCP interface (#1607)
+
+A space can make the **MCP interface** available, so that an AI
+assistant can be connected to DesKilo. The switch is availability and
+nothing more: turning it on enrols nobody, approves no request, grants
+no role and registers no client. A person who wants to use it still
+needs a grant the owner configures **and** the instance administrator
+approves — two distinct steps, even when one person holds both hats —
+and every operation the assistant performs keeps answering to the
+permissions, features and rules the app already applies. While it is
+off, the MCP entry points are hidden and calls are refused; existing
+grants stay visible and can be revoked. The switch travels with a
+template like any other feature; grants, approvals and consents never do,
+so enabling it on a copy of a space opens nothing. Owners switch it on
+under *Settings → Features*; it is off by default.
 
 ### The demo workspace
 

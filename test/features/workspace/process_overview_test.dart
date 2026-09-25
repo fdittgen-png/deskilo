@@ -16,12 +16,16 @@ import 'features_screen_test.dart' show pumpFeatures;
 
 /// One stored map that puts four processes in four different states:
 ///
-/// * Integrations & automation — every feature on by default: Active.
+/// * Integrations & automation — every feature on: Active. Three are
+///   on by default; `mcpAccess` (#1607) ships OFF, so the fixture switches
+///   it on — the state under test is "nothing left to switch on", not
+///   what the process ships with.
 /// * Space management — some default-off features: Partial.
 /// * Calendar & coordination — all thirteen switched off: Available.
 /// * Workspace & access — kiosk mode off holds its badges back while
 ///   their own switches stay on: Needs attention.
 const _fixture = <String, dynamic>{
+  'mcpAccess': true,
   'kioskMode': false,
   'calendarTab': false,
   'calendarHub': false,

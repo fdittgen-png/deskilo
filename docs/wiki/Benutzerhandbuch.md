@@ -251,6 +251,41 @@ Blatt schlägt nur vor — jede Regel prüft der Server beim Bestätigen,
 sodass ein vor einer Sekunde vergebener Platz hier abgelehnt statt
 doppelt gebucht wird.
 
+### 4c. Eine Buchung im eigenen Kalender speichern (#1643)
+
+Jede Oberfläche, die eine **Ihrer eigenen** Buchungen öffnet — der Plan,
+Tag, Woche, die Kalender-Zeitleiste — bietet **Kalenderdatei speichern**.
+Sie schreibt eine Standard-`.ics`-Datei (RFC 5545), die jeder Kalender
+importiert: Google, Outlook, Apple, Thunderbird oder der Ihres Telefons.
+Bevor etwas gespeichert wird, sehen Sie genau, was die Datei sagen wird —
+den gebuchten Platz, die Zeit, den Namen des Coworking-Spaces als Ort,
+den Status — und unter *Dateiinhalt* die Datei selbst.
+
+**Was die Datei enthält, und was nie.** Die Zeit als Zeitpunkt (in UTC,
+sie landet also in Ihrem Kalender zur richtigen Stunde, wo immer Sie sind
+und über eine Zeitumstellung hinweg), den gebuchten Platz, den Namen des
+Spaces und *Bestätigt* oder *Storniert*. Sonst nichts: keinen Betrag,
+keinen Namen, keine E-Mail-Adresse, keine Notiz, keinen Link, keine
+Einladung an irgendwen — und eine stornierte Buchung wird als storniert
+exportiert, nie als laufender Termin.
+
+**Eine Momentaufnahme, kein Abonnement.** Die Datei beschreibt die
+Buchung, wie sie im Moment des Speicherns ist. Wird die Buchung später
+verschoben oder storniert, ändert sich eine bereits gespeicherte oder
+geteilte Datei nicht, und eine geteilte Datei lässt sich nicht
+zurückholen. Dieselbe Buchung erneut zu speichern erzeugt eine Datei mit
+derselben Kennung, sodass die meisten Kalender den früheren Termin
+ersetzen statt einen zweiten anzulegen — das entscheidet aber der
+Importeur, nicht die App. Hat sich die Buchung zwischen Vorschau und
+Ihrem Tipp auf *Speichern* geändert, wird nichts geschrieben: Die
+Vorschau wird aufgefrischt und bittet Sie, noch einmal hinzusehen.
+
+Die Datei landet in Ihren Downloads (auf einem Gerät: der Ordner
+Downloads; im Browser: wo Ihr Browser Downloads ablegt). Sie ist eine
+**Funktion**, die ein Eigentümer unter *Einstellungen → Funktionen*
+ausschalten kann; sie ist standardmäßig an. Die App schreibt in keinen
+Kalender, und nichts wird synchronisiert.
+
 ## 5. Kalender (Kalender-Tab)
 
 Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
@@ -2014,6 +2049,24 @@ vorher, ob man sie über ein Menü erreicht oder ihre Adresse eintippt.
 
 Eigentümer schalten es unter *Einstellungen → Funktionen* ein. Ein Raum,
 der es aus lässt, behält das Zahnrad genau so, wie es ist.
+
+### MCP-Schnittstelle (#1607)
+
+Ein Arbeitsbereich kann die **MCP-Schnittstelle** bereitstellen, damit
+ein KI-Assistent mit DesKilo verbunden werden kann. Der Schalter sagt
+nur die Verfügbarkeit: das Einschalten trägt niemanden ein, genehmigt
+keine Anfrage, vergibt keine Rolle und registriert keinen Client. Wer
+sie nutzen möchte, braucht weiterhin eine Freigabe, die der Eigentümer
+konfiguriert **und** der Instanzadministrator genehmigt — zwei getrennte
+Schritte, auch wenn eine Person beide Rollen innehat —, und jeder Vorgang
+des Assistenten unterliegt weiterhin den Berechtigungen, Funktionen und
+Regeln, die die App ohnehin anwendet. Ausgeschaltet verbirgt die
+Schnittstelle ihre Einstiegspunkte und weist Aufrufe ab; bestehende
+Freigaben bleiben sichtbar und widerrufbar. Der Schalter reist wie jede
+andere Funktion mit einer Vorlage; Freigaben, Genehmigungen und
+Einwilligungen reisen nie, sodass das Einschalten auf einer Kopie eines
+Arbeitsbereichs nichts öffnet. Eigentümer schalten sie unter
+*Einstellungen → Funktionen* ein; standardmäßig ist sie aus.
 
 ### Der Demobereich
 

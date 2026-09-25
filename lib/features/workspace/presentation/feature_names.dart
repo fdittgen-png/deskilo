@@ -231,4 +231,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureRecordingPrivacyTitle ?? 'Filming mode',
       WorkspaceFeature.memberAccountMenu =>
         l10n?.featureMemberAccountMenuTitle ?? 'Members see My account',
+      WorkspaceFeature.mcpAccess =>
+        l10n?.featureMcpAccessTitle ?? 'MCP interface',
+      WorkspaceFeature.calendarFileExport =>
+        l10n?.featureCalendarFileExportTitle ?? 'Calendar file of a booking',
     };

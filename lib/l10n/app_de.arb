@@ -126,6 +126,27 @@
   "authGenericError": "Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen und erneut versuchen.",
   "authSignOut": "Abmelden",
   "authNetworkError": "Server nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
+  "authEmailNotConfirmed": "Bestätige zuerst deine E-Mail-Adresse: Öffne die Nachricht, die wir dir geschickt haben, und melde dich dann an.",
+  "authRateLimited": "Zu viele Versuche. Warte einen Moment und versuche es dann erneut.",
+  "authProviderDisabled": "Diese Anmeldemethode ist auf diesem Server abgeschaltet.",
+  "authWeakPassword": "Wähle ein stärkeres Passwort.",
+  "authAlreadyRegistered": "Mit dieser Adresse kann kein Konto erstellt werden. Melde dich an oder setze dein Passwort zurück.",
+  "authRecoveryNotSaved": "Dein Code wurde angenommen, aber das neue Passwort wurde nicht gespeichert. Versuche das Speichern erneut.",
+  "authVerifyTitle": "Sieh in dein E-Mail-Postfach",
+  "authVerifyBody": "Wir haben einen Bestätigungslink an {email} geschickt. Öffne ihn auf diesem Gerät, um dein Konto fertig einzurichten.",
+  "@authVerifyBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyHint": "Noch nichts da? Sieh im Spam-Ordner nach oder schicke die E-Mail erneut.",
+  "authVerifyResend": "E-Mail erneut senden",
+  "authVerifyResent": "Erneut gesendet.",
+  "authVerifyResendWait": "In einer Minute kannst du sie erneut senden.",
+  "authVerifyChangeEmail": "Andere Adresse verwenden",
+  "authVerifyBackToSignIn": "Zurück zur Anmeldung",
   "availabilityTitle": "Verfügbarkeit",
   "availabilityOpenWeekdays": "Geöffnete Wochentage",
   "availabilityClosureDays": "Schließtage",
@@ -383,6 +404,10 @@
   "billPackages": "Tagespakete",
   "payOnlineButton": "Online bezahlen",
   "payOnlineNotConfigured": "Online-Zahlungen sind noch nicht eingerichtet. Frag die Workspace-Inhaberin.",
+  "payOnlinePendingTitle": "Online-Zahlung ausstehend",
+  "payOnlineFailedTitle": "Online-Zahlung fehlgeschlagen",
+  "payOnlinePendingDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter noch nicht bestätigt, daher zeigt der Saldo weiterhin den offenen Betrag. Nennen Sie diese Referenz, falls sie nicht eingeht.",
+  "payOnlineFailedDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde nicht abgeschlossen — nichts wurde gutgeschrieben; der Saldo bleibt offen.",
   "payOnlineChooseTitle": "Online bezahlen",
   "paymentProviderStripe": "Kreditkarte (Stripe)",
   "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
@@ -981,6 +1006,66 @@
   "calendarValidationRefused": "Abgelehnt: {what}",
   "calendarEventActionValidated": "freigegeben",
   "calendarEventActionRefused": "abgelehnt",
+  "featureCalendarFileExportTitle": "Kalenderdatei einer Buchung",
+  "@featureCalendarFileExportTitle": {
+    "description": "#1643 calendar file: featureCalendarFileExportTitle"
+  },
+  "featureCalendarFileExportDesc": "Erlaubt einem Mitglied, eine seiner eigenen Buchungen als Standard-Kalenderdatei (.ics) für den Kalender zu speichern, den es bereits nutzt. Die Datei enthält nur Zeit, gebuchten Platz und den Namen des Coworking-Spaces — keinen Betrag, keinen Namen, keine Notiz, keinen Link — und sie ist eine Momentaufnahme: Eine spätere Änderung der Buchung aktualisiert eine bereits gespeicherte Datei nicht. In keinen Kalender wird geschrieben, nichts wird synchronisiert. Aus blendet die Schaltfläche aus.",
+  "@featureCalendarFileExportDesc": {
+    "description": "#1643 calendar file: featureCalendarFileExportDesc"
+  },
+  "reservationCalendarFileButton": "Kalenderdatei speichern",
+  "@reservationCalendarFileButton": {
+    "description": "#1643 calendar file: reservationCalendarFileButton"
+  },
+  "reservationCalendarFileTitle": "Kalenderdatei",
+  "@reservationCalendarFileTitle": {
+    "description": "#1643 calendar file: reservationCalendarFileTitle"
+  },
+  "reservationCalendarFileSnapshotNote": "Diese Datei ist eine Momentaufnahme der Buchung, wie sie jetzt ist. Wird die Buchung später verschoben oder storniert, ändert sich eine bereits gespeicherte oder geteilte Datei nicht — und eine geteilte Datei lässt sich nicht zurückholen.",
+  "@reservationCalendarFileSnapshotNote": {
+    "description": "#1643 calendar file: reservationCalendarFileSnapshotNote"
+  },
+  "reservationCalendarFileEvent": "Termin",
+  "@reservationCalendarFileEvent": {
+    "description": "#1643 calendar file: reservationCalendarFileEvent"
+  },
+  "reservationCalendarFileWhen": "Wann",
+  "@reservationCalendarFileWhen": {
+    "description": "#1643 calendar file: reservationCalendarFileWhen"
+  },
+  "reservationCalendarFileLocation": "Ort",
+  "@reservationCalendarFileLocation": {
+    "description": "#1643 calendar file: reservationCalendarFileLocation"
+  },
+  "reservationCalendarFileStatus": "Status",
+  "@reservationCalendarFileStatus": {
+    "description": "#1643 calendar file: reservationCalendarFileStatus"
+  },
+  "reservationCalendarFileStatusConfirmed": "Bestätigt",
+  "@reservationCalendarFileStatusConfirmed": {
+    "description": "#1643 calendar file: reservationCalendarFileStatusConfirmed"
+  },
+  "reservationCalendarFileStatusCancelled": "Storniert",
+  "@reservationCalendarFileStatusCancelled": {
+    "description": "#1643 calendar file: reservationCalendarFileStatusCancelled"
+  },
+  "reservationCalendarFileName": "Datei",
+  "@reservationCalendarFileName": {
+    "description": "#1643 calendar file: reservationCalendarFileName"
+  },
+  "reservationCalendarFileContents": "Dateiinhalt",
+  "@reservationCalendarFileContents": {
+    "description": "#1643 calendar file: reservationCalendarFileContents"
+  },
+  "reservationCalendarFileStale": "Die Buchung hat sich seit dieser Vorschau geändert. Prüfen Sie sie erneut, bevor Sie speichern.",
+  "@reservationCalendarFileStale": {
+    "description": "#1643 calendar file: reservationCalendarFileStale"
+  },
+  "reservationCalendarFileRefused": "Diese Buchung kann nicht exportiert werden: Sie gehört nicht Ihnen, oder sie existiert nicht mehr.",
+  "@reservationCalendarFileRefused": {
+    "description": "#1643 calendar file: reservationCalendarFileRefused"
+  },
   "featureCarnetsTitle": "Mehrfachkarten",
   "featureCarnetsDesc": "Mehrfachkarten mit Halbtagen verkaufen, die über Monate verbraucht werden, wenn ein Mitglied über sein Abo hinaus bucht — einmal beim Verkauf berechnet.",
   "carnetsTitle": "Mehrfachkarten",
@@ -4230,6 +4315,14 @@
   "managedProfileIdentityUnavailable": "Diese Angaben konnten nicht gelesen werden, es gibt also noch nichts zu bearbeiten. Es wurde nichts geändert.",
   "@managedProfileIdentityUnavailable": {
     "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
+  },
+  "featureMcpAccessTitle": "MCP-Schnittstelle",
+  "@featureMcpAccessTitle": {
+    "description": "#1607 MCP access: featureMcpAccessTitle"
+  },
+  "featureMcpAccessDesc": "Stellt die MCP-Schnittstelle für diesen Arbeitsbereich bereit, damit ein KI-Assistent mit DesKilo verbunden werden kann. Nur Verfügbarkeit: das Einschalten gewährt niemandem etwas. Jede Person braucht weiterhin eine Freigabe, die der Eigentümer konfiguriert und der Instanzadministrator genehmigt, und jeder Vorgang unterliegt weiterhin den Berechtigungen und Regeln, die die App ohnehin anwendet. Ausgeschaltet verbirgt sie die MCP-Einstiegspunkte und weist Aufrufe ab; bestehende Freigaben bleiben sichtbar und widerrufbar.",
+  "@featureMcpAccessDesc": {
+    "description": "#1607 MCP access: featureMcpAccessDesc"
   },
   "featureMemberAccountMenuTitle": "Mitglieder sehen Mein Konto",
   "@featureMemberAccountMenuTitle": {

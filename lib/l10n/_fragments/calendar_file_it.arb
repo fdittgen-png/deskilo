@@ -1,0 +1,63 @@
+{
+  "@@locale": "it",
+  "featureCalendarFileExportTitle": "File calendario di una prenotazione",
+  "@featureCalendarFileExportTitle": {
+    "description": "#1643 calendar file: featureCalendarFileExportTitle"
+  },
+  "featureCalendarFileExportDesc": "Permette a un membro di salvare una delle proprie prenotazioni come file calendario standard (.ics) per il calendario che già usa. Il file contiene solo l’orario, lo spazio prenotato e il nome dello spazio di coworking — nessun importo, nessun nome, nessuna nota, nessun link — ed è un’istantanea: una modifica successiva della prenotazione non aggiorna un file già salvato. Non viene scritto nulla in alcun calendario e nulla si sincronizza. Disattivata, nasconde il pulsante.",
+  "@featureCalendarFileExportDesc": {
+    "description": "#1643 calendar file: featureCalendarFileExportDesc"
+  },
+  "reservationCalendarFileButton": "Salva file calendario",
+  "@reservationCalendarFileButton": {
+    "description": "#1643 calendar file: reservationCalendarFileButton"
+  },
+  "reservationCalendarFileTitle": "File calendario",
+  "@reservationCalendarFileTitle": {
+    "description": "#1643 calendar file: reservationCalendarFileTitle"
+  },
+  "reservationCalendarFileSnapshotNote": "Questo file è un’istantanea della prenotazione così com’è ora. Se in seguito viene spostata o annullata, un file già salvato o condiviso non cambia — e un file condiviso non può essere ritirato.",
+  "@reservationCalendarFileSnapshotNote": {
+    "description": "#1643 calendar file: reservationCalendarFileSnapshotNote"
+  },
+  "reservationCalendarFileEvent": "Evento",
+  "@reservationCalendarFileEvent": {
+    "description": "#1643 calendar file: reservationCalendarFileEvent"
+  },
+  "reservationCalendarFileWhen": "Quando",
+  "@reservationCalendarFileWhen": {
+    "description": "#1643 calendar file: reservationCalendarFileWhen"
+  },
+  "reservationCalendarFileLocation": "Luogo",
+  "@reservationCalendarFileLocation": {
+    "description": "#1643 calendar file: reservationCalendarFileLocation"
+  },
+  "reservationCalendarFileStatus": "Stato",
+  "@reservationCalendarFileStatus": {
+    "description": "#1643 calendar file: reservationCalendarFileStatus"
+  },
+  "reservationCalendarFileStatusConfirmed": "Confermata",
+  "@reservationCalendarFileStatusConfirmed": {
+    "description": "#1643 calendar file: reservationCalendarFileStatusConfirmed"
+  },
+  "reservationCalendarFileStatusCancelled": "Annullata",
+  "@reservationCalendarFileStatusCancelled": {
+    "description": "#1643 calendar file: reservationCalendarFileStatusCancelled"
+  },
+  "reservationCalendarFileName": "File",
+  "@reservationCalendarFileName": {
+    "description": "#1643 calendar file: reservationCalendarFileName"
+  },
+  "reservationCalendarFileContents": "Contenuto del file",
+  "@reservationCalendarFileContents": {
+    "description": "#1643 calendar file: reservationCalendarFileContents"
+  },
+  "reservationCalendarFileStale": "La prenotazione è cambiata da questa anteprima. Controllala di nuovo prima di salvare.",
+  "@reservationCalendarFileStale": {
+    "description": "#1643 calendar file: reservationCalendarFileStale"
+  },
+  "reservationCalendarFileRefused": "Questa prenotazione non può essere esportata: non è tua, oppure non esiste più.",
+  "@reservationCalendarFileRefused": {
+    "description": "#1643 calendar file: reservationCalendarFileRefused"
+  }
+}

@@ -103,5 +103,66 @@
   "authNetworkError": "Could not reach the server. Check your connection and try again.",
   "@authNetworkError": {
     "description": "Snackbar when the auth call fails before reaching the server (connectivity)"
+  },
+  "authEmailNotConfirmed": "Confirm your e-mail address first: open the message we sent you, then sign in.",
+  "@authEmailNotConfirmed": {
+    "description": "Inline refusal when the account exists but its address was never confirmed"
+  },
+  "authRateLimited": "Too many attempts. Wait a moment, then try again.",
+  "@authRateLimited": {
+    "description": "Inline notice when the server refuses to judge the request yet (rate limit)"
+  },
+  "authProviderDisabled": "This sign-in method is switched off on this server.",
+  "@authProviderDisabled": {
+    "description": "Inline refusal when e-mail sign-in, sign-ups or codes are disabled server-side"
+  },
+  "authWeakPassword": "Choose a stronger password.",
+  "@authWeakPassword": {
+    "description": "Inline refusal when the server's password policy rejects the new password"
+  },
+  "authAlreadyRegistered": "This address cannot be used to create an account. Sign in or reset your password instead.",
+  "@authAlreadyRegistered": {
+    "description": "Inline refusal when the server itself discloses that the address is taken"
+  },
+  "authRecoveryNotSaved": "Your code was accepted, but the new password was not saved. Try saving it again.",
+  "@authRecoveryNotSaved": {
+    "description": "Inline notice when the recovery code was redeemed but the password update failed"
+  },
+  "authVerifyTitle": "Check your e-mail",
+  "@authVerifyTitle": {
+    "description": "Heading of the state shown after a sign-up that sent a confirmation e-mail"
+  },
+  "authVerifyBody": "We sent a confirmation link to {email}. Open it on this device to finish creating your account.",
+  "@authVerifyBody": {
+    "description": "Body of the check-e-mail state; names the address the link went to",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyHint": "Nothing yet? Look in the spam folder, or send it again.",
+  "@authVerifyHint": {
+    "description": "Small hint under the check-e-mail body"
+  },
+  "authVerifyResend": "Send the e-mail again",
+  "@authVerifyResend": {
+    "description": "Button resending the confirmation e-mail"
+  },
+  "authVerifyResent": "Sent again.",
+  "@authVerifyResent": {
+    "description": "Inline notice after the confirmation e-mail was resent"
+  },
+  "authVerifyResendWait": "You can send it again in a minute.",
+  "@authVerifyResendWait": {
+    "description": "Label of the resend button while its cooldown runs"
+  },
+  "authVerifyChangeEmail": "Use another address",
+  "@authVerifyChangeEmail": {
+    "description": "Button returning to the sign-up form with the address editable"
+  },
+  "authVerifyBackToSignIn": "Back to sign in",
+  "@authVerifyBackToSignIn": {
+    "description": "Link leaving the check-e-mail state for the sign-in form"
   }
 }

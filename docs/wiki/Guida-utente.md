@@ -251,6 +251,41 @@ soltanto — ogni regola la verifica il server alla conferma, così un
 posto preso un secondo prima viene rifiutato qui anziché prenotato due
 volte.
 
+### 4c. Salvare una prenotazione nel proprio calendario (#1643)
+
+Ogni superficie che apre una delle **tue** prenotazioni — la pianta,
+Giorno, Settimana, la timeline del calendario — offre **Salva file
+calendario**. Scrive un file `.ics` standard (RFC 5545) che qualsiasi
+calendario importa: Google, Outlook, Apple, Thunderbird o quello del tuo
+telefono. Prima di salvare qualcosa vedi esattamente cosa dirà il file —
+lo spazio prenotato, l'orario, il nome dello spazio di coworking come
+luogo, lo stato — e, sotto *Contenuto del file*, il file stesso.
+
+**Cosa contiene il file, e cosa non contiene mai.** L'orario come istante
+(in UTC, così cade all'ora giusta nel tuo calendario ovunque tu sia e
+attraverso un cambio d'ora), lo spazio prenotato, il nome dello spazio di
+coworking e *Confermata* o *Annullata*. Nient'altro: nessun importo,
+nessun nome, nessun indirizzo e-mail, nessuna nota, nessun link, nessun
+invito a nessuno — e una prenotazione annullata viene esportata come
+annullata, mai come un evento in corso.
+
+**Un'istantanea, non un abbonamento.** Il file descrive la prenotazione
+così com'è nel momento in cui la salvi. Se in seguito viene spostata o
+annullata, un file già salvato o condiviso non cambia, e un file
+condiviso non può essere ritirato. Salvare di nuovo la stessa
+prenotazione produce un file con lo stesso identificatore, così la
+maggior parte dei calendari sostituisce l'evento precedente invece di
+aggiungerne un secondo — ma lo decide l'importatore, non l'app. Se la
+prenotazione è cambiata tra l'anteprima e il tuo tocco su *Salva*, non
+viene scritto nulla: l'anteprima si aggiorna e ti chiede di guardare di
+nuovo.
+
+Il file arriva nei tuoi download (su un dispositivo: la cartella
+Download; in un browser: dove il browser mette i download). È una
+**funzionalità** che un proprietario può disattivare in *Impostazioni →
+Funzionalità*; è attiva per impostazione predefinita. L'app non scrive in
+alcun calendario e nulla si sincronizza.
+
 ## 5. Calendario (scheda Calendario)
 
 Il mese a colpo d'occhio, con due ambiti e due forme:
@@ -2029,6 +2064,24 @@ prima, che ci si arrivi da un menu o digitandone l'indirizzo.
 
 I proprietari lo attivano in *Impostazioni → Funzionalità*. Uno spazio
 che lo lascia disattivato conserva la rotella così com'è.
+
+### Interfaccia MCP (#1607)
+
+Uno spazio può rendere disponibile l'**interfaccia MCP**, così che un
+assistente IA possa essere collegato a DesKilo. L'interruttore dice solo
+la disponibilità: attivarlo non iscrive nessuno, non approva alcuna
+richiesta, non concede alcun ruolo e non registra alcun client. Chi vuole
+usarla ha ancora bisogno di un'autorizzazione che il proprietario
+configura **e** l'amministratore dell'istanza approva — due passi
+distinti, anche quando una sola persona ricopre entrambi i ruoli — e ogni
+operazione dell'assistente continua a rispondere ai permessi, alle
+funzioni e alle regole che l'app già applica. Disattivata, l'interfaccia
+nasconde i suoi punti di ingresso e rifiuta le chiamate; le autorizzazioni
+esistenti restano visibili e revocabili. L'interruttore viaggia con un
+modello come ogni altra funzione; autorizzazioni, approvazioni e consensi
+non viaggiano mai, quindi attivarlo su una copia di uno spazio non apre
+nulla. I proprietari lo attivano in *Impostazioni → Funzionalità*; è
+disattivato per impostazione predefinita.
 
 ### Lo spazio dimostrativo
 

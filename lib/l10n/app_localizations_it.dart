@@ -213,6 +213,56 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile raggiungere il server. Controlla la connessione e riprova.';
 
   @override
+  String get authEmailNotConfirmed =>
+      'Conferma prima il tuo indirizzo e-mail: apri il messaggio che ti abbiamo inviato, poi accedi.';
+
+  @override
+  String get authRateLimited =>
+      'Troppi tentativi. Attendi un momento, poi riprova.';
+
+  @override
+  String get authProviderDisabled =>
+      'Questo metodo di accesso è disattivato su questo server.';
+
+  @override
+  String get authWeakPassword => 'Scegli una password più robusta.';
+
+  @override
+  String get authAlreadyRegistered =>
+      'Questo indirizzo non può essere usato per creare un account. Accedi o reimposta la password.';
+
+  @override
+  String get authRecoveryNotSaved =>
+      'Il codice è stato accettato, ma la nuova password non è stata salvata. Riprova a salvarla.';
+
+  @override
+  String get authVerifyTitle => 'Controlla la tua e-mail';
+
+  @override
+  String authVerifyBody(String email) {
+    return 'Abbiamo inviato un link di conferma a $email. Aprilo su questo dispositivo per completare la creazione dell\'account.';
+  }
+
+  @override
+  String get authVerifyHint =>
+      'Ancora nulla? Controlla la cartella spam o invialo di nuovo.';
+
+  @override
+  String get authVerifyResend => 'Invia di nuovo l\'e-mail';
+
+  @override
+  String get authVerifyResent => 'Inviata di nuovo.';
+
+  @override
+  String get authVerifyResendWait => 'Potrai inviarla di nuovo tra un minuto.';
+
+  @override
+  String get authVerifyChangeEmail => 'Usa un altro indirizzo';
+
+  @override
+  String get authVerifyBackToSignIn => 'Torna all\'accesso';
+
+  @override
   String get availabilityTitle => 'Disponibilità';
 
   @override
@@ -617,6 +667,30 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get payOnlineNotConfigured =>
       'I pagamenti online non sono ancora configurati. Chiedi al proprietario dello spazio.';
+
+  @override
+  String get payOnlinePendingTitle => 'Pagamento online in sospeso';
+
+  @override
+  String get payOnlineFailedTitle => 'Pagamento online non riuscito';
+
+  @override
+  String payOnlinePendingDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Il pagamento $reference ($amount tramite $provider) non è ancora stato confermato dal fornitore, quindi il saldo mostra ancora quanto dovuto. Cita questo riferimento se non va a buon fine.';
+  }
+
+  @override
+  String payOnlineFailedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Il pagamento $reference ($amount tramite $provider) non è stato completato — nulla è stato accreditato; il saldo resta dovuto.';
+  }
 
   @override
   String get payOnlineChooseTitle => 'Paga online';
@@ -1399,6 +1473,56 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get calendarEventActionRefused => 'rifiutato';
+
+  @override
+  String get featureCalendarFileExportTitle =>
+      'File calendario di una prenotazione';
+
+  @override
+  String get featureCalendarFileExportDesc =>
+      'Permette a un membro di salvare una delle proprie prenotazioni come file calendario standard (.ics) per il calendario che già usa. Il file contiene solo l’orario, lo spazio prenotato e il nome dello spazio di coworking — nessun importo, nessun nome, nessuna nota, nessun link — ed è un’istantanea: una modifica successiva della prenotazione non aggiorna un file già salvato. Non viene scritto nulla in alcun calendario e nulla si sincronizza. Disattivata, nasconde il pulsante.';
+
+  @override
+  String get reservationCalendarFileButton => 'Salva file calendario';
+
+  @override
+  String get reservationCalendarFileTitle => 'File calendario';
+
+  @override
+  String get reservationCalendarFileSnapshotNote =>
+      'Questo file è un’istantanea della prenotazione così com’è ora. Se in seguito viene spostata o annullata, un file già salvato o condiviso non cambia — e un file condiviso non può essere ritirato.';
+
+  @override
+  String get reservationCalendarFileEvent => 'Evento';
+
+  @override
+  String get reservationCalendarFileWhen => 'Quando';
+
+  @override
+  String get reservationCalendarFileLocation => 'Luogo';
+
+  @override
+  String get reservationCalendarFileStatus => 'Stato';
+
+  @override
+  String get reservationCalendarFileStatusConfirmed => 'Confermata';
+
+  @override
+  String get reservationCalendarFileStatusCancelled => 'Annullata';
+
+  @override
+  String get reservationCalendarFileName => 'File';
+
+  @override
+  String get reservationCalendarFileContents => 'Contenuto del file';
+
+  @override
+  String get reservationCalendarFileStale =>
+      'La prenotazione è cambiata da questa anteprima. Controllala di nuovo prima di salvare.';
+
+  @override
+  String get reservationCalendarFileRefused =>
+      'Questa prenotazione non può essere esportata: non è tua, oppure non esiste più.';
 
   @override
   String get featureCarnetsTitle => 'Carnet';
@@ -6629,6 +6753,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get managedProfileIdentityUnavailable =>
       'Non è stato possibile leggere questi dati, quindi non c\'è ancora nulla da modificare. Non è stato cambiato nulla.';
+
+  @override
+  String get featureMcpAccessTitle => 'Interfaccia MCP';
+
+  @override
+  String get featureMcpAccessDesc =>
+      'Rende disponibile l’interfaccia MCP per questo spazio, così che un assistente IA possa essere collegato a DesKilo. Solo disponibilità: attivarla non concede nulla a nessuno. Ogni persona ha ancora bisogno di un’autorizzazione che il proprietario configura e l’amministratore dell’istanza approva, e ogni operazione continua a rispondere ai permessi e alle regole che l’app già applica. Disattivata, nasconde i punti di ingresso MCP e rifiuta le chiamate; le autorizzazioni esistenti restano visibili e revocabili.';
 
   @override
   String get featureMemberAccountMenuTitle => 'I membri vedono Il mio account';

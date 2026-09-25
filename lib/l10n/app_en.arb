@@ -266,6 +266,67 @@
   "@authNetworkError": {
     "description": "Snackbar when the auth call fails before reaching the server (connectivity)"
   },
+  "authEmailNotConfirmed": "Confirm your e-mail address first: open the message we sent you, then sign in.",
+  "@authEmailNotConfirmed": {
+    "description": "Inline refusal when the account exists but its address was never confirmed"
+  },
+  "authRateLimited": "Too many attempts. Wait a moment, then try again.",
+  "@authRateLimited": {
+    "description": "Inline notice when the server refuses to judge the request yet (rate limit)"
+  },
+  "authProviderDisabled": "This sign-in method is switched off on this server.",
+  "@authProviderDisabled": {
+    "description": "Inline refusal when e-mail sign-in, sign-ups or codes are disabled server-side"
+  },
+  "authWeakPassword": "Choose a stronger password.",
+  "@authWeakPassword": {
+    "description": "Inline refusal when the server's password policy rejects the new password"
+  },
+  "authAlreadyRegistered": "This address cannot be used to create an account. Sign in or reset your password instead.",
+  "@authAlreadyRegistered": {
+    "description": "Inline refusal when the server itself discloses that the address is taken"
+  },
+  "authRecoveryNotSaved": "Your code was accepted, but the new password was not saved. Try saving it again.",
+  "@authRecoveryNotSaved": {
+    "description": "Inline notice when the recovery code was redeemed but the password update failed"
+  },
+  "authVerifyTitle": "Check your e-mail",
+  "@authVerifyTitle": {
+    "description": "Heading of the state shown after a sign-up that sent a confirmation e-mail"
+  },
+  "authVerifyBody": "We sent a confirmation link to {email}. Open it on this device to finish creating your account.",
+  "@authVerifyBody": {
+    "description": "Body of the check-e-mail state; names the address the link went to",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyHint": "Nothing yet? Look in the spam folder, or send it again.",
+  "@authVerifyHint": {
+    "description": "Small hint under the check-e-mail body"
+  },
+  "authVerifyResend": "Send the e-mail again",
+  "@authVerifyResend": {
+    "description": "Button resending the confirmation e-mail"
+  },
+  "authVerifyResent": "Sent again.",
+  "@authVerifyResent": {
+    "description": "Inline notice after the confirmation e-mail was resent"
+  },
+  "authVerifyResendWait": "You can send it again in a minute.",
+  "@authVerifyResendWait": {
+    "description": "Label of the resend button while its cooldown runs"
+  },
+  "authVerifyChangeEmail": "Use another address",
+  "@authVerifyChangeEmail": {
+    "description": "Button returning to the sign-up form with the address editable"
+  },
+  "authVerifyBackToSignIn": "Back to sign in",
+  "@authVerifyBackToSignIn": {
+    "description": "Link leaving the check-e-mail state for the sign-in form"
+  },
   "availabilityTitle": "Availability",
   "@availabilityTitle": {
     "description": "App-bar title of the owner availability editor and its settings tile"
@@ -711,6 +772,44 @@
   "payOnlineNotConfigured": "Online payments aren't set up yet. Ask the workspace owner.",
   "@payOnlineNotConfigured": {
     "description": "Shown when the member taps Pay online but the deployment has no payment provider configured"
+  },
+  "payOnlinePendingTitle": "Online payment pending",
+  "@payOnlinePendingTitle": {
+    "description": "#1637 card title on the bill: an online payment the provider has not confirmed yet"
+  },
+  "payOnlineFailedTitle": "Online payment failed",
+  "@payOnlineFailedTitle": {
+    "description": "#1637 card title on the bill: an online payment the provider refused or let expire"
+  },
+  "payOnlinePendingDetail": "Payment {reference} ({amount} via {provider}) has not been confirmed by the provider yet, so the balance still shows what is owed. Quote this reference if it does not settle.",
+  "@payOnlinePendingDetail": {
+    "description": "#1637 pending line: reference is the PAY-… number, amount pre-formatted, provider the localized provider label",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "payOnlineFailedDetail": "Payment {reference} ({amount} via {provider}) was not completed — nothing was credited; the balance is still owed.",
+  "@payOnlineFailedDetail": {
+    "description": "#1637 failed line: same placeholders as payOnlinePendingDetail",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
   },
   "payOnlineChooseTitle": "Pay online",
   "@payOnlineChooseTitle": {
@@ -1621,6 +1720,66 @@
   "calendarEventActionRefused": "refused",
   "@calendarEventActionRefused": {
     "description": "#843 - verb of a refused decision"
+  },
+  "featureCalendarFileExportTitle": "Calendar file of a booking",
+  "@featureCalendarFileExportTitle": {
+    "description": "#1643 calendar file: featureCalendarFileExportTitle"
+  },
+  "featureCalendarFileExportDesc": "Lets a member save one of their own bookings as a standard calendar file (.ics) for the calendar they already use. The file carries the time, the booked space and the workspace name only — no amount, no name, no note, no link — and it is a snapshot: a later change to the booking does not update a file already saved. Nothing is written to any calendar and nothing syncs. Off hides the button.",
+  "@featureCalendarFileExportDesc": {
+    "description": "#1643 calendar file: featureCalendarFileExportDesc"
+  },
+  "reservationCalendarFileButton": "Save calendar file",
+  "@reservationCalendarFileButton": {
+    "description": "#1643 calendar file: reservationCalendarFileButton"
+  },
+  "reservationCalendarFileTitle": "Calendar file",
+  "@reservationCalendarFileTitle": {
+    "description": "#1643 calendar file: reservationCalendarFileTitle"
+  },
+  "reservationCalendarFileSnapshotNote": "This file is a snapshot of the booking as it is now. If the booking is moved or cancelled later, a file already saved or shared does not change — and a shared file cannot be taken back.",
+  "@reservationCalendarFileSnapshotNote": {
+    "description": "#1643 calendar file: reservationCalendarFileSnapshotNote"
+  },
+  "reservationCalendarFileEvent": "Event",
+  "@reservationCalendarFileEvent": {
+    "description": "#1643 calendar file: reservationCalendarFileEvent"
+  },
+  "reservationCalendarFileWhen": "When",
+  "@reservationCalendarFileWhen": {
+    "description": "#1643 calendar file: reservationCalendarFileWhen"
+  },
+  "reservationCalendarFileLocation": "Location",
+  "@reservationCalendarFileLocation": {
+    "description": "#1643 calendar file: reservationCalendarFileLocation"
+  },
+  "reservationCalendarFileStatus": "Status",
+  "@reservationCalendarFileStatus": {
+    "description": "#1643 calendar file: reservationCalendarFileStatus"
+  },
+  "reservationCalendarFileStatusConfirmed": "Confirmed",
+  "@reservationCalendarFileStatusConfirmed": {
+    "description": "#1643 calendar file: reservationCalendarFileStatusConfirmed"
+  },
+  "reservationCalendarFileStatusCancelled": "Cancelled",
+  "@reservationCalendarFileStatusCancelled": {
+    "description": "#1643 calendar file: reservationCalendarFileStatusCancelled"
+  },
+  "reservationCalendarFileName": "File",
+  "@reservationCalendarFileName": {
+    "description": "#1643 calendar file: reservationCalendarFileName"
+  },
+  "reservationCalendarFileContents": "File contents",
+  "@reservationCalendarFileContents": {
+    "description": "#1643 calendar file: reservationCalendarFileContents"
+  },
+  "reservationCalendarFileStale": "The booking changed since this preview. Check it again before saving.",
+  "@reservationCalendarFileStale": {
+    "description": "#1643 calendar file: reservationCalendarFileStale"
+  },
+  "reservationCalendarFileRefused": "This booking cannot be exported: it is not yours, or it no longer exists.",
+  "@reservationCalendarFileRefused": {
+    "description": "#1643 calendar file: reservationCalendarFileRefused"
   },
   "featureCarnetsTitle": "Carnets",
   "@featureCarnetsTitle": {
@@ -6958,6 +7117,14 @@
   "managedProfileIdentityUnavailable": "These details could not be read, so there is nothing to edit yet. Nothing has been changed.",
   "@managedProfileIdentityUnavailable": {
     "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
+  },
+  "featureMcpAccessTitle": "MCP interface",
+  "@featureMcpAccessTitle": {
+    "description": "#1607 MCP access: featureMcpAccessTitle"
+  },
+  "featureMcpAccessDesc": "Makes the MCP interface available to this workspace, so an AI assistant can be connected to DesKilo. Availability only: switching it on grants nobody anything. Each person still needs a grant the owner configures and the instance administrator approves, and every operation keeps answering to the permissions and rules the app already applies. Off hides the MCP entry points and refuses calls; existing grants stay visible and revocable.",
+  "@featureMcpAccessDesc": {
+    "description": "#1607 MCP access: featureMcpAccessDesc"
   },
   "featureMemberAccountMenuTitle": "Members see My account",
   "@featureMemberAccountMenuTitle": {

@@ -25,5 +25,26 @@
   "authPasswordTooShort": "Au moins 8 caractères",
   "authGenericError": "Échec de l'authentification. Vérifiez vos identifiants et réessayez.",
   "authSignOut": "Se déconnecter",
-  "authNetworkError": "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez."
+  "authNetworkError": "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.",
+  "authEmailNotConfirmed": "Confirmez d'abord votre adresse e-mail : ouvrez le message que nous vous avons envoyé, puis connectez-vous.",
+  "authRateLimited": "Trop de tentatives. Patientez un instant, puis réessayez.",
+  "authProviderDisabled": "Cette méthode de connexion est désactivée sur ce serveur.",
+  "authWeakPassword": "Choisissez un mot de passe plus robuste.",
+  "authAlreadyRegistered": "Cette adresse ne peut pas servir à créer un compte. Connectez-vous ou réinitialisez votre mot de passe.",
+  "authRecoveryNotSaved": "Votre code a été accepté, mais le nouveau mot de passe n'a pas été enregistré. Réessayez de l'enregistrer.",
+  "authVerifyTitle": "Consultez vos e-mails",
+  "authVerifyBody": "Nous avons envoyé un lien de confirmation à {email}. Ouvrez-le sur cet appareil pour terminer la création de votre compte.",
+  "@authVerifyBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyHint": "Rien reçu ? Regardez dans les indésirables, ou renvoyez-le.",
+  "authVerifyResend": "Renvoyer l'e-mail",
+  "authVerifyResent": "Renvoyé.",
+  "authVerifyResendWait": "Vous pourrez le renvoyer dans une minute.",
+  "authVerifyChangeEmail": "Utiliser une autre adresse",
+  "authVerifyBackToSignIn": "Retour à la connexion"
 }

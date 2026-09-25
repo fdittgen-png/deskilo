@@ -18,7 +18,7 @@
 //
 // Bump [preflightVersion] whenever a rule changes.
 
-const String preflightVersion = '1';
+const String preflightVersion = '2';
 
 /// One generator, and why this change reached it.
 class Step {
@@ -80,6 +80,10 @@ const List<({String command, String owns})> _order = [
   (
     command: 'dart run tool/dependency_map.dart',
     owns: 'docs/design/APPLICATION_BOUNDARIES.md',
+  ),
+  (
+    command: 'dart run tool/capability_evidence.dart',
+    owns: 'docs/product/CAPABILITIES.md and capabilities.release.json',
   ),
 ];
 
@@ -148,6 +152,19 @@ List<Step> preflightSteps(Iterable<String> paths) {
         !p.endsWith('.g.dart') &&
         !p.endsWith('.freezed.dart')) {
       select('dart run tool/dependency_map.dart', p);
+    }
+    // #1634 — the capability page fingerprints its components and cites
+    // CI rows, so the manifest, a component, a script or the report's
+    // manifest can each move it; its own outputs never do.
+    if (p == 'docs/product/capabilities.json' ||
+        p.startsWith('docs/product/evidence/') ||
+        p == '.github/quality-manifest.psv' ||
+        p.startsWith('scripts/') ||
+        p.startsWith('supabase/functions/') ||
+        (p.startsWith('lib/features/') || p.startsWith('lib/core/demo/')) &&
+            !p.endsWith('.g.dart') &&
+            !p.endsWith('.freezed.dart')) {
+      select('dart run tool/capability_evidence.dart', p);
     }
   }
 

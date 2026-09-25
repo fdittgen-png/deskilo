@@ -212,6 +212,56 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not reach the server. Check your connection and try again.';
 
   @override
+  String get authEmailNotConfirmed =>
+      'Confirm your e-mail address first: open the message we sent you, then sign in.';
+
+  @override
+  String get authRateLimited =>
+      'Too many attempts. Wait a moment, then try again.';
+
+  @override
+  String get authProviderDisabled =>
+      'This sign-in method is switched off on this server.';
+
+  @override
+  String get authWeakPassword => 'Choose a stronger password.';
+
+  @override
+  String get authAlreadyRegistered =>
+      'This address cannot be used to create an account. Sign in or reset your password instead.';
+
+  @override
+  String get authRecoveryNotSaved =>
+      'Your code was accepted, but the new password was not saved. Try saving it again.';
+
+  @override
+  String get authVerifyTitle => 'Check your e-mail';
+
+  @override
+  String authVerifyBody(String email) {
+    return 'We sent a confirmation link to $email. Open it on this device to finish creating your account.';
+  }
+
+  @override
+  String get authVerifyHint =>
+      'Nothing yet? Look in the spam folder, or send it again.';
+
+  @override
+  String get authVerifyResend => 'Send the e-mail again';
+
+  @override
+  String get authVerifyResent => 'Sent again.';
+
+  @override
+  String get authVerifyResendWait => 'You can send it again in a minute.';
+
+  @override
+  String get authVerifyChangeEmail => 'Use another address';
+
+  @override
+  String get authVerifyBackToSignIn => 'Back to sign in';
+
+  @override
   String get availabilityTitle => 'Availability';
 
   @override
@@ -613,6 +663,30 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get payOnlineNotConfigured =>
       'Online payments aren\'t set up yet. Ask the workspace owner.';
+
+  @override
+  String get payOnlinePendingTitle => 'Online payment pending';
+
+  @override
+  String get payOnlineFailedTitle => 'Online payment failed';
+
+  @override
+  String payOnlinePendingDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Payment $reference ($amount via $provider) has not been confirmed by the provider yet, so the balance still shows what is owed. Quote this reference if it does not settle.';
+  }
+
+  @override
+  String payOnlineFailedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Payment $reference ($amount via $provider) was not completed — nothing was credited; the balance is still owed.';
+  }
 
   @override
   String get payOnlineChooseTitle => 'Pay online';
@@ -1391,6 +1465,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calendarEventActionRefused => 'refused';
+
+  @override
+  String get featureCalendarFileExportTitle => 'Calendar file of a booking';
+
+  @override
+  String get featureCalendarFileExportDesc =>
+      'Lets a member save one of their own bookings as a standard calendar file (.ics) for the calendar they already use. The file carries the time, the booked space and the workspace name only — no amount, no name, no note, no link — and it is a snapshot: a later change to the booking does not update a file already saved. Nothing is written to any calendar and nothing syncs. Off hides the button.';
+
+  @override
+  String get reservationCalendarFileButton => 'Save calendar file';
+
+  @override
+  String get reservationCalendarFileTitle => 'Calendar file';
+
+  @override
+  String get reservationCalendarFileSnapshotNote =>
+      'This file is a snapshot of the booking as it is now. If the booking is moved or cancelled later, a file already saved or shared does not change — and a shared file cannot be taken back.';
+
+  @override
+  String get reservationCalendarFileEvent => 'Event';
+
+  @override
+  String get reservationCalendarFileWhen => 'When';
+
+  @override
+  String get reservationCalendarFileLocation => 'Location';
+
+  @override
+  String get reservationCalendarFileStatus => 'Status';
+
+  @override
+  String get reservationCalendarFileStatusConfirmed => 'Confirmed';
+
+  @override
+  String get reservationCalendarFileStatusCancelled => 'Cancelled';
+
+  @override
+  String get reservationCalendarFileName => 'File';
+
+  @override
+  String get reservationCalendarFileContents => 'File contents';
+
+  @override
+  String get reservationCalendarFileStale =>
+      'The booking changed since this preview. Check it again before saving.';
+
+  @override
+  String get reservationCalendarFileRefused =>
+      'This booking cannot be exported: it is not yours, or it no longer exists.';
 
   @override
   String get featureCarnetsTitle => 'Carnets';
@@ -6571,6 +6694,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get managedProfileIdentityUnavailable =>
       'These details could not be read, so there is nothing to edit yet. Nothing has been changed.';
+
+  @override
+  String get featureMcpAccessTitle => 'MCP interface';
+
+  @override
+  String get featureMcpAccessDesc =>
+      'Makes the MCP interface available to this workspace, so an AI assistant can be connected to DesKilo. Availability only: switching it on grants nobody anything. Each person still needs a grant the owner configures and the instance administrator approves, and every operation keeps answering to the permissions and rules the app already applies. Off hides the MCP entry points and refuses calls; existing grants stay visible and revocable.';
 
   @override
   String get featureMemberAccountMenuTitle => 'Members see My account';

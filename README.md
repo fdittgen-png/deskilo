@@ -112,6 +112,7 @@ The [test inventory](docs/testing/TEST_INVENTORY.md), [domain invariants](docs/d
 | [Architecture](docs/wiki/Architecture.md) | Client structure, backend model and platform choices. |
 | [Implementation](docs/wiki/Implementation.md) | Development setup, builds, testing and contribution patterns. |
 | [Product specification](docs/SPECIFICATION.md) | Product intent and scope; consult issues and implementation for delivery status. |
+| [Capabilities and evidence](docs/product/CAPABILITIES.md) | What ships, what is tested at which scope, what is roadmap — generated from a validated manifest. |
 | [Operations](docs/guides/OPERATIONS.md) | Instance health, backup, restore and recovery. |
 
 ## Contributing

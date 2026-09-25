@@ -77,7 +77,8 @@ window.SETUP_PROCESSES=[
      "adminLevelAssign",
      "bookingPolicies",
      "bookingGate",
-     "seatDayTimeline"
+     "seatDayTimeline",
+     "calendarFileExport"
     ]
    },
    {
@@ -262,7 +263,8 @@ window.SETUP_PROCESSES=[
     "features": [
      "pushNotifications",
      "whatsappIntegration",
-     "einvoiceCustomerDelivery"
+     "einvoiceCustomerDelivery",
+     "mcpAccess"
     ]
    }
   ]
