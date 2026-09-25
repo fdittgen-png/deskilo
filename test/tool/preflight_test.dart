@@ -80,8 +80,20 @@ void main() {
     expect(_commands(['lib/l10n/app_fr.arb']), isEmpty);
     expect(_commands(['assets/help/en/user-guide.md']), isEmpty);
     expect(_commands(['docs/testing/TEST_INVENTORY.md']), isEmpty);
+    expect(_commands(['docs/product/CAPABILITIES.md']), isEmpty);
     expect(_commands(['lib/features/money/domain/invoice.freezed.dart']),
         isEmpty);
+  });
+
+  test('the capability page follows its manifest, a component and a CI '
+      'row, but not a test file (#1634)', () {
+    const page = 'dart run tool/capability_evidence.dart';
+    expect(_commands(['docs/product/capabilities.json']), [page]);
+    expect(_commands(['supabase/functions/stripe-webhook/index.ts']), contains(page));
+    expect(_commands(['.github/quality-manifest.psv']), [page]);
+    expect(_commands(['lib/features/reservations/domain/seat.dart']), contains(page));
+    expect(_commands(['test/features/reservations/one_place_test.dart']),
+        isNot(contains(page)));
   });
 
   test('a change that owns no generated tree selects nothing', () {

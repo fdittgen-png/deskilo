@@ -1,0 +1,613 @@
+{
+  "schema_version": 1,
+  "manifest_version": "2026-09-25.1",
+  "scopes": [
+    "unit",
+    "local_integration",
+    "provider_sandbox",
+    "named_runtime",
+    "operator_pilot"
+  ],
+  "capabilities": [
+    {
+      "id": "booking",
+      "outcome": "A member finds a free place on the plan and holds it for a period; the database refuses a second booking of the same place at the same time, whoever asks and however many clients race.",
+      "status": "shipped",
+      "features": [
+        "bookingGate",
+        "bookingPolicies",
+        "seriesBooking",
+        "autoCheckInOut"
+      ],
+      "prerequisites": "A workspace with a published plan and opening hours; booking rules in Settings.",
+      "limitations": "Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.",
+      "fingerprint": "bfabbc8a9c8e",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "gated",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/reservations/one_place_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/reservations/booking_gate_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/24_booking_idempotency.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "scripts/concurrency_check.sh",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "ci:Concurrency",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "membership.allowances",
+      "outcome": "A membership plan grants an allowance per month; a booking beyond it spends a carnet or is refused, and a member without a subscription never books for free.",
+      "status": "shipped",
+      "features": [
+        "carnets",
+        "usageRecords"
+      ],
+      "prerequisites": "Membership plans configured; an allowance per plan.",
+      "limitations": "Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.",
+      "fingerprint": "57cbac61789e",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "gated",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/money/quota_request_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/money/billing_rules_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/reservations/simultaneous_reservations_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/17_entitlement_specification.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/35_zero_subscription.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/37_credit_consumption.sql",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "statements.shared_expenses",
+      "outcome": "Every member has a ledger: subscription charges, extra usage, approved shared expenses split by a repartition key, recorded payments; a monthly statement reads it back and the ledger is append-only.",
+      "status": "shipped",
+      "features": [
+        "expenseRepartition",
+        "supplyExpenses",
+        "financeFaces"
+      ],
+      "prerequisites": "The money module enabled; a repartition key per shared expense.",
+      "limitations": "Statements are a view of the ledger, not an accounting ledger of the association; see accounting.export for the books.",
+      "fingerprint": "d55f71e061d8",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "gated",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/money/statement_data_golden_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/money/expense_repartition_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/money/expense_submission_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/20_money_invariants.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/21_ledger_append_only.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "ci:Financial invariants",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "approvals",
+      "outcome": "A join, an expense, a deletion or a settings change waits for the quorum the workspace configured; the decision trail records who decided and the database enforces the rule it records.",
+      "status": "shipped",
+      "features": [
+        "validationScopes",
+        "validationChain",
+        "deletionRequests"
+      ],
+      "prerequisites": "Roles assigned; a quorum per decision kind in Settings.",
+      "limitations": "Quorums count distinct people by membership, not by device or session.",
+      "fingerprint": "048f7cafc82d",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "gated",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/events/quorum_matrix_screen_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/workspace/member_join_validation_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/43_event_validation_rules.sql",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "payments.stripe",
+      "outcome": "A member pays a bill through Stripe hosted checkout; the webhook settles the payment once and posts one credit.",
+      "status": "shipped",
+      "features": [
+        "onlinePayments"
+      ],
+      "prerequisites": "Stripe credentials in Settings; the webhook endpoint reachable from Stripe.",
+      "limitations": "CI runs the real order handler against a local stub: no Stripe sandbox has been exercised from this repository; refunds are recorded by hand.",
+      "provider": "stripe",
+      "fingerprint": "38ddbebce0f4",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "gated",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/money/payment_config_screen_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "scripts/edge_payment_check.sh",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/40_payment_ledger_association.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/22_reconciliation.sql",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "payments.paypal",
+      "outcome": "A member pays a bill through PayPal checkout; the webhook settles the payment once.",
+      "status": "shipped",
+      "features": [
+        "onlinePayments"
+      ],
+      "prerequisites": "PayPal credentials in Settings; the webhook endpoint reachable from PayPal.",
+      "limitations": "No CI check reaches the PayPal handler; the Stripe stub says nothing about PayPal.",
+      "provider": "paypal",
+      "fingerprint": "50a709b1b335",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/money/payment_config_screen_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/workspace/payment_instructions_test.dart",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "payments.mollie",
+      "outcome": "A member pays a bill through Mollie checkout; the webhook settles the payment once, and a replayed capture reconciles clean.",
+      "status": "shipped",
+      "features": [
+        "onlinePayments"
+      ],
+      "prerequisites": "Mollie credentials in Settings; the webhook endpoint reachable from Mollie.",
+      "limitations": "The reconciliation is proved in a replayed database; no Mollie sandbox has been exercised from this repository.",
+      "provider": "mollie",
+      "fingerprint": "a21e42e77272",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "gated",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/money/payment_config_screen_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/22_reconciliation.sql",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "payments.wero",
+      "outcome": "A member pays a bill with Wero, offered through the Mollie checkout.",
+      "status": "shipped",
+      "features": [
+        "onlinePayments"
+      ],
+      "prerequisites": "Mollie credentials with Wero enabled on the Mollie account.",
+      "limitations": "Wero rides Mollie's checkout; nothing beyond the client's method handling cites Wero, so the Mollie reconciliation does not count here.",
+      "provider": "wero",
+      "fingerprint": "a21e42e77272",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/money/payment_config_screen_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/money/payment_method_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/workspace/payment_instructions_test.dart",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "accounting.export",
+      "outcome": "The books of a period leave as FEC, SAF-T or DATEV files an accountant can load.",
+      "status": "shipped",
+      "features": [
+        "dataExport",
+        "vatManagement"
+      ],
+      "prerequisites": "A chart of accounts mapping; a VAT regime.",
+      "limitations": "Format conformance is proved against the published specifications, not against any accounting software's import; no certification is claimed.",
+      "fingerprint": "f77184023b8c",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/money/fec_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/money/saf_t_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/money/accounting_journals_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/money/accounting_standards_test.dart",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "einvoice.generate",
+      "outcome": "An invoice becomes an EN 16931 document (UBL 2.1 or Factur-X) with the references its destination platform requires.",
+      "status": "shipped",
+      "features": [
+        "invoicing",
+        "vatManagement"
+      ],
+      "prerequisites": "A complete legal identity for the workspace; VAT configured.",
+      "limitations": "Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.",
+      "fingerprint": "5377cf36b8d8",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/money/invoice_ubl_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/money/einvoice_line_arithmetic_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/money/e_invoice_routing_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/money/chorus_pro_references_test.dart",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "einvoice.transmit",
+      "outcome": "With a platform configured, the app hands the document to the send-e-invoice function, which holds the credential, transmits and logs the attempt.",
+      "status": "shipped",
+      "features": [
+        "einvoiceCustomerDelivery"
+      ],
+      "prerequisites": "Platform credentials configured by the operator.",
+      "limitations": "The client's hand-off is unit-tested against a fake function; no transmission to a real or sandbox platform has been recorded.",
+      "fingerprint": "722461d57704",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/money/einvoice_send_test.dart",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "recovery.database_restore",
+      "outcome": "A dump of the public and auth schemas restores into a fresh database with equal counts and a clean reconciliation.",
+      "status": "shipped",
+      "features": [],
+      "prerequisites": "Someone responsible for taking and keeping the dumps, per the operations guide.",
+      "limitations": "The drill restores the database only: Storage objects and the Auth service's own configuration are outside it.",
+      "fingerprint": "dd52d3f517ee",
+      "scopes": {
+        "unit": "unverified",
+        "local_integration": "gated",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "local_integration",
+          "ref": "scripts/restore_check.sh",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "ci:Restore drill",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "recovery.storage_auth",
+      "outcome": "Storage objects, Auth configuration and the running application recover to a known state.",
+      "status": "roadmap",
+      "features": [],
+      "prerequisites": "A rehearsed procedure, which does not exist yet.",
+      "limitations": "Nothing is rehearsed; do not plan a pilot on it.",
+      "issues": [
+        1641
+      ],
+      "scopes": {
+        "unit": "unverified",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": []
+    },
+    {
+      "id": "demo",
+      "outcome": "A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.",
+      "status": "shipped",
+      "features": [
+        "demoMode"
+      ],
+      "prerequisites": "None: the Demo is built into every client.",
+      "limitations": "The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.",
+      "fingerprint": "ad3d7769c40a",
+      "scopes": {
+        "unit": "gated",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/core/demo/demo_scope_reach_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/core/demo/demo_session_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/lint/demo_coverage_test.dart",
+          "standing": "gated"
+        }
+      ]
+    },
+    {
+      "id": "mcp.read",
+      "outcome": "An MCP client reads a workspace's plan, bookings and members within the scopes the owner granted.",
+      "status": "roadmap",
+      "features": [],
+      "prerequisites": "The MCP feature, default off, and a scoped operation contract.",
+      "limitations": "Not delivered; open issues cannot make it shipped. Comparable products already offer MCP.",
+      "issues": [
+        1607,
+        1609,
+        1616,
+        1620
+      ],
+      "scopes": {
+        "unit": "unverified",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": []
+    },
+    {
+      "id": "mcp.write",
+      "outcome": "An MCP client books, cancels or submits on a member's behalf through the same business RPCs the app uses, idempotently.",
+      "status": "roadmap",
+      "features": [],
+      "prerequisites": "mcp.read, scoped authorization and atomic dispatch.",
+      "limitations": "Not delivered.",
+      "issues": [
+        1612,
+        1619,
+        1620,
+        1624
+      ],
+      "scopes": {
+        "unit": "unverified",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": []
+    },
+    {
+      "id": "mcp.consent",
+      "outcome": "A member consents to an MCP client per installation, sees what it may do, and revokes it.",
+      "status": "roadmap",
+      "features": [],
+      "prerequisites": "Target-local OAuth consent and per-workspace exposure policies.",
+      "limitations": "Not delivered.",
+      "issues": [
+        1610,
+        1615,
+        1633
+      ],
+      "scopes": {
+        "unit": "unverified",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": []
+    },
+    {
+      "id": "calendar.interchange",
+      "outcome": "A member exports owned reservations as a standards-based calendar file.",
+      "status": "roadmap",
+      "features": [],
+      "prerequisites": "None beyond the calendar module.",
+      "limitations": "Not delivered; the in-app calendar is not an interchange format.",
+      "issues": [
+        1643
+      ],
+      "scopes": {
+        "unit": "unverified",
+        "local_integration": "unverified",
+        "provider_sandbox": "unverified",
+        "named_runtime": "unverified",
+        "operator_pilot": "unverified"
+      },
+      "evidence": []
+    }
+  ]
+}
