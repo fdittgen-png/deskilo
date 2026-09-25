@@ -127,6 +127,19 @@ void main() {
         reason: 'a verdict about another job does not stand a row down');
   });
 
+  test('a classifier that said `required` does not stand a row down — '
+      'the artifact must say not_applicable for THAT job', () {
+    final r = run(
+      'Tests|success|1 234 tests\n'
+      'Coverage|success|62%\n'
+      'Tenant isolation|not_applicable|\n',
+      classification: 'database|required|database-relevant: x.sql|v3\n'
+          'web|not_applicable|no browser path|v3\n',
+    );
+    expect(r.code, 1, reason: r.out);
+    expect(r.out, contains('without the classifier'));
+  });
+
   test('every artifact lost is red, not an empty green table', () {
     final r = run('');
     expect(r.code, 1);
