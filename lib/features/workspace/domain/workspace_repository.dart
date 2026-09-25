@@ -19,6 +19,7 @@ import '../../profile/domain/personal_info.dart';
 import 'managed_access.dart';
 import 'workspace_overview.dart';
 import 'site.dart';
+import 'template_inspection.dart';
 import 'template_outline.dart';
 import 'template_preview.dart';
 import 'template_publication.dart';
@@ -719,6 +720,13 @@ abstract class WorkspaceRepository {
 
   /// #1303 — what [templateId] sets up, asked before any workspace exists.
   Future<TemplateOutline> workspaceTemplateOutline(String templateId);
+
+  /// #1655 — every field [templateId] carries, with its disposition, as
+  /// `inspect_workspace_template` (0266) walked it: the outline the
+  /// confirm step reads, plus the problems that reject it, the inputs the
+  /// target must supply, the exclusions and a digest. Readable by whoever
+  /// may read the template; it writes nothing.
+  Future<TemplateInspection> inspectWorkspaceTemplate(String templateId);
 
   /// Snapshots [workspaceId] through `template_publication_rules` (#1276);
   /// the same key again updates in place and bumps the version.

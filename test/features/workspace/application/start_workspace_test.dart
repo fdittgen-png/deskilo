@@ -6,6 +6,7 @@
 // could state them.
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/features/workspace/application/start_workspace.dart';
+import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -120,6 +121,31 @@ void main() {
       expect(repo.createRequests, isEmpty,
           reason: 'no workspace, rather than one that failed to decorate '
               'itself');
+    });
+
+    test('the outline comes from the inspection, which can refuse (#1655)', () async {
+      final repo = FakeWorkspaceRepository.withWorkspace();
+      final tiny = repo.templates.first;
+      final ok = await WorkspaceStart(repo).outlineOf(tiny.id);
+      expect(ok.refused, isFalse);
+      expect(ok.groups, [TemplateGroup.space]);
+      repo.templateInspections[tiny.id] = TemplateInspection(
+        templateId: tiny.id,
+        key: tiny.key,
+        name: tiny.name,
+        status: TemplateInspectionStatus.rejected,
+        profile: TemplateProfile.rejected,
+        compatibility: TemplateCompatibility.supported,
+        outline: const TemplateOutline(
+            compatibility: TemplateCompatibility.supported, groups: [TemplateGroup.space]),
+        problems: const [TemplateProblem(path: 'workspace.nonsense', problem: 'unknown_field')],
+      );
+      final refused = await WorkspaceStart(repo).outlineOf(tiny.id);
+      expect(refused.refused, isTrue, reason: 'a rejected inspection refuses before Create');
+      expect(refused.reason, 'unknown_field: workspace.nonsense');
+      final r = await _create(repo, templateId: tiny.id, outline: refused);
+      expect(r.outcome, StartOutcome.templateRefused);
+      expect(r.workspaceId, isNull);
     });
 
     test('an outline not yet known does not refuse', () async {

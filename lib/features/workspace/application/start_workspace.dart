@@ -16,6 +16,7 @@
 // not been pressed.
 import '../domain/invite_uri.dart';
 import '../domain/template_outline.dart';
+import '../domain/template_preview.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_repository.dart';
 
@@ -70,9 +71,21 @@ class WorkspaceStart {
 
   final WorkspaceRepository _workspaces;
 
-  /// What the chosen template would set up, and whether it may be.
-  Future<TemplateOutline> outlineOf(String templateId) =>
-      _workspaces.workspaceTemplateOutline(templateId);
+  /// What the chosen template would set up, and whether it may be — read
+  /// from the field-level inspection (#1655): the outline inside it is
+  /// the one `template_outline` answers, and an inspection that rejects
+  /// the template (an unknown field, a denied value, a newer schema)
+  /// refuses here too, naming the first problem, before Create.
+  Future<TemplateOutline> outlineOf(String templateId) async {
+    final inspection = await _workspaces.inspectWorkspaceTemplate(templateId);
+    if (inspection.usable || inspection.outline.refused) return inspection.outline;
+    final first = inspection.problems.firstOrNull;
+    return TemplateOutline(
+      compatibility: TemplateCompatibility.notSupported,
+      reason: first == null ? inspection.status.name : '${first.problem}: ${first.path}',
+      groups: const [],
+    );
+  }
 
   /// Creates the workspace, and says which outcome it was.
   ///
