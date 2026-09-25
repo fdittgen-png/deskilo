@@ -10,8 +10,8 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/mock_providers.dart';
 
 Future<void> pumpOnboardingLayout(WidgetTester tester, {
-  Size size = const Size(360, 740), double scale = 1,
-  String locale = 'en', double keyboard = 0, bool animations = true,
+  Size size = const Size(360, 740), double? scale,
+  String locale = 'en', double keyboard = 0, bool animations = true, bool? reducedMotion,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
@@ -24,7 +24,9 @@ Future<void> pumpOnboardingLayout(WidgetTester tester, {
       supportedLocales: AppLocalizations.supportedLocales,
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(scale),
+          disableAnimations: reducedMotion ?? MediaQuery.disableAnimationsOf(context),
+          textScaler: scale == null ? MediaQuery.textScalerOf(context)
+              : TextScaler.linear(scale),
           viewInsets: EdgeInsets.only(bottom: keyboard),
           padding: const EdgeInsets.only(bottom: 24)),
         child: child!),

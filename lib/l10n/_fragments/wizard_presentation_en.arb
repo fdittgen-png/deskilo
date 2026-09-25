@@ -1,5 +1,7 @@
 {
   "wizardStepCompleted": "Completed",
   "wizardStepSkipped": "Skipped — suggested settings",
-  "wizardStepUnavailable": "Not available yet"
+  "wizardStepUnavailable": "Not available yet",
+  "wizardSubmitting": "Submitting",
+  "onboardingUnconfirmed": "The result could not be confirmed. Your entries are kept. Retry to check the same request."
 }

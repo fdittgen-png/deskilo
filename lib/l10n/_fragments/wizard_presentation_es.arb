@@ -1,5 +1,7 @@
 {
   "wizardStepCompleted": "Completado",
   "wizardStepSkipped": "Omitido — ajustes sugeridos",
-  "wizardStepUnavailable": "Aún no disponible"
+  "wizardStepUnavailable": "Aún no disponible",
+  "wizardSubmitting": "Enviando",
+  "onboardingUnconfirmed": "No se pudo confirmar el resultado. Sus datos se conservan. Vuelva a intentarlo para comprobar la misma solicitud."
 }

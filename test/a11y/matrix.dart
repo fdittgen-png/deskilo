@@ -29,6 +29,7 @@ import '../features/money/money_faces_test.dart' show pumpFaces;
 import '../features/plan/accessories_screen_test.dart' show pumpAccessories;
 import '../features/reservations/reserve_hub_test.dart' show pumpHub;
 import '../features/workspace/features_screen_test.dart' show pumpFeatures;
+import '../features/workspace/onboarding_layout_test.dart' show pumpOnboardingLayout;
 
 /// The six conditions the product claims to support: 360 dp (the phone
 /// most members hold), a wide web/tablet surface, twice the text size,
@@ -100,6 +101,8 @@ SizedPump _sized(Future<void> Function(WidgetTester tester) pump) =>
 /// file exists to stop, so a row with six gaps and six reasons is a
 /// better pull request than leaving the screen out.
 final List<MatrixRow> kMatrix = [
+  MatrixRow('Create workspace',
+      pump: (t, size) => pumpOnboardingLayout(t, size: size), axes: _all),
   MatrixRow('Reserve hub',
       pump: (t, size) => pumpHub(t, size: size), axes: _all),
   MatrixRow('Money faces',

@@ -19031,6 +19031,18 @@ abstract class AppLocalizations {
   /// **'Not available yet'**
   String get wizardStepUnavailable;
 
+  /// No description provided for @wizardSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting'**
+  String get wizardSubmitting;
+
+  /// No description provided for @onboardingUnconfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'The result could not be confirmed. Your entries are kept. Retry to check the same request.'**
+  String get onboardingUnconfirmed;
+
   /// #1277 the wording editor: screen title
   ///
   /// In en, this message translates to:

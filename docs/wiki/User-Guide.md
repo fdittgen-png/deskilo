@@ -381,6 +381,8 @@ Administration lives in three sections of **Settings**, each entry shown only to
 
 On small screens, enlarged text or with the keyboard open, the creation form and its actions scroll together when needed. The current step stays readable and Back keeps your draft (#1653).
 
+Create workspace keeps its label while sending and accepts one request at a time. If the result cannot be confirmed, an inline message keeps your draft available for a retry of the same request; leaving a view never cancels a server write (#1653).
+
 Suggested steps are marked as skipped, rather than completed. Open the current-step heading to review progress on a small screen. Moving back preserves the draft; transitions respect reduced motion (#1653).
 
 **Country, currency, time zone (#711).** The country picker now covers the 32 countries the app can declare tax in (EU-27, Switzerland, Norway, the UK, the US and Canada). Currency is a **picker** of the codes the app can format — each with its symbol, and each with the right number of decimals: a yen has none, a dinar has three, and every amount, invoice and online payment respects that. Time zone is a **searchable list** of the IANA zones the clock can actually install; a typo can no longer save. **A new workspace starts in your device's country (#1303):** its currency and time zone come with it, all three editable before you create — `fr_CH` proposes Switzerland, a phone set to German proposes Germany, and anything the catalogue does not know proposes France.

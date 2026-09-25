@@ -11797,6 +11797,8 @@
   "wizardStepCompleted": "Completed",
   "wizardStepSkipped": "Skipped — suggested settings",
   "wizardStepUnavailable": "Not available yet",
+  "wizardSubmitting": "Submitting",
+  "onboardingUnconfirmed": "The result could not be confirmed. Your entries are kept. Retry to check the same request.",
   "wordingTitle": "Wording",
   "@wordingTitle": {
     "description": "#1277 the wording editor: screen title"

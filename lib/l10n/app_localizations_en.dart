@@ -10872,6 +10872,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wizardStepUnavailable => 'Not available yet';
 
   @override
+  String get wizardSubmitting => 'Submitting';
+
+  @override
+  String get onboardingUnconfirmed =>
+      'The result could not be confirmed. Your entries are kept. Retry to check the same request.';
+
+  @override
   String get wordingTitle => 'Wording';
 
   @override
