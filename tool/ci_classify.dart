@@ -21,7 +21,11 @@ import 'ci_classify/classify.dart';
 
 // Dart ignores the value `main` returns: `int main() => 2` exits 0. The
 // exit code is set explicitly, or a usage error reads as a verdict.
-void main(List<String> args) => exitCode = run(args);
+void main(List<String> args) {
+  // tmp/1446 red-first control: the classifier dies before any verdict.
+  stderr.writeln('deliberately broken classifier (tmp/1446)');
+  exitCode = 3;
+}
 
 int run(List<String> args) {
   String? option(String name) {
