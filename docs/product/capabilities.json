@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "2026-09-25.1",
+  "version": "2026-09-25.2",
   "capabilities": [
     {
       "id": "booking",
@@ -74,10 +74,12 @@
       "provider": "stripe",
       "component": ["supabase/functions/create-payment-order/", "supabase/functions/stripe-webhook/"],
       "prerequisites": "Stripe credentials in Settings; the webhook endpoint reachable from Stripe.",
-      "limitations": "CI runs the real order handler against a local stub: no Stripe sandbox has been exercised from this repository; refunds are recorded by hand.",
+      "limitations": "CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.",
       "evidence": [
         {"scope": "unit", "ref": "test/features/money/payment_config_screen_test.dart"},
         {"scope": "local_integration", "ref": "scripts/edge_payment_check.sh"},
+        {"scope": "local_integration", "ref": "scripts/payment_scenarios/stripe.sh"},
+        {"scope": "provider_sandbox", "ref": "docs/product/evidence/payments.stripe-sandbox-2026-09-25.md", "sha": "232efc0a8175", "date": "2026-09-25", "outcome": "skipped", "fingerprint": "38ddbebce0f4"},
         {"scope": "local_integration", "ref": "supabase/tests/database/40_payment_ledger_association.sql"},
         {"scope": "local_integration", "ref": "supabase/tests/database/22_reconciliation.sql"}
       ]
