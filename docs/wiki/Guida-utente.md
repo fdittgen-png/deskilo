@@ -2024,6 +2024,24 @@ prima, che ci si arrivi da un menu o digitandone l'indirizzo.
 I proprietari lo attivano in *Impostazioni → Funzionalità*. Uno spazio
 che lo lascia disattivato conserva la rotella così com'è.
 
+### Interfaccia MCP (#1607)
+
+Uno spazio può rendere disponibile l'**interfaccia MCP**, così che un
+assistente IA possa essere collegato a DesKilo. L'interruttore dice solo
+la disponibilità: attivarlo non iscrive nessuno, non approva alcuna
+richiesta, non concede alcun ruolo e non registra alcun client. Chi vuole
+usarla ha ancora bisogno di un'autorizzazione che il proprietario
+configura **e** l'amministratore dell'istanza approva — due passi
+distinti, anche quando una sola persona ricopre entrambi i ruoli — e ogni
+operazione dell'assistente continua a rispondere ai permessi, alle
+funzioni e alle regole che l'app già applica. Disattivata, l'interfaccia
+nasconde i suoi punti di ingresso e rifiuta le chiamate; le autorizzazioni
+esistenti restano visibili e revocabili. L'interruttore viaggia con un
+modello come ogni altra funzione; autorizzazioni, approvazioni e consensi
+non viaggiano mai, quindi attivarlo su una copia di uno spazio non apre
+nulla. I proprietari lo attivano in *Impostazioni → Funzionalità*; è
+disattivato per impostazione predefinita.
+
 ### Lo spazio dimostrativo
 
 Uno spazio inventato che chiunque può aprire dalla schermata di accesso,

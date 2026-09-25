@@ -15,8 +15,10 @@ ProcessStatus _status(Map<String, dynamic> flags, String key) =>
     ).singleWhere((s) => s.process.key == key);
 
 void main() {
-  test('defaults: a process whose every feature is on is Active', () {
-    final status = _status(const {}, 'integrations');
+  test('a process whose every feature is on is Active', () {
+    // #1607 — mcpAccess ships OFF, so integrations is Active once the
+    // one flag it does not start with is on; the other three are defaults.
+    final status = _status(const {'mcpAccess': true}, 'integrations');
     expect(status.state, ProcessState.active);
     expect(status.activeSubprocessCount, status.subprocesses.length);
     expect(status.outsidePrerequisites, isEmpty);

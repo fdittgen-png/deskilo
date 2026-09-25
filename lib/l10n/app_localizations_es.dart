@@ -6618,6 +6618,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se han podido leer estos datos, así que todavía no hay nada que editar. No se ha cambiado nada.';
 
   @override
+  String get featureMcpAccessTitle => 'Interfaz MCP';
+
+  @override
+  String get featureMcpAccessDesc =>
+      'Pone la interfaz MCP a disposición de este espacio, para que un asistente de IA pueda conectarse a DesKilo. Solo disponibilidad: activarla no concede nada a nadie. Cada persona sigue necesitando una autorización que el propietario configura y el administrador de la instancia aprueba, y cada operación sigue respondiendo a los permisos y reglas que la aplicación ya aplica. Desactivada, oculta los puntos de entrada MCP y rechaza las llamadas; las autorizaciones existentes siguen visibles y revocables.';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Los miembros ven Mi cuenta';
 
   @override

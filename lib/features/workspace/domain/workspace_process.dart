@@ -205,6 +205,9 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.pushNotifications,
       WorkspaceFeature.whatsappIntegration,
       WorkspaceFeature.einvoiceCustomerDelivery,
+      // #1607 — an integration like the two above it: a channel a
+      // workspace opens to the outside, not a right anybody holds.
+      WorkspaceFeature.mcpAccess,
     ]),
   ]),
 ];

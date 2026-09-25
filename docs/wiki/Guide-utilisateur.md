@@ -2054,6 +2054,25 @@ qu'avant, qu'on y arrive par un menu ou qu'on en tape l'adresse.
 Les propriétaires l'activent dans *Réglages → Fonctionnalités*. Un
 espace qui le laisse désactivé garde la roue dentée telle quelle.
 
+### Interface MCP (#1607)
+
+Un espace peut rendre disponible l'**interface MCP**, afin qu'un
+assistant IA puisse être connecté à DesKilo. Le commutateur ne dit que la
+disponibilité : l'activer n'inscrit personne, n'approuve aucune demande,
+n'accorde aucun rôle et n'enregistre aucun client. Une personne qui veut
+s'en servir a encore besoin d'une autorisation que le propriétaire
+configure **et** que l'administrateur de l'instance approuve — deux
+étapes distinctes, même quand une seule personne porte les deux
+casquettes — et chaque opération de l'assistant continue de répondre
+aux permissions, aux fonctionnalités et aux règles que l'application
+applique déjà. Désactivée, l'interface masque ses points d'entrée et
+refuse les appels ; les autorisations existantes restent visibles et
+révocables. Le commutateur voyage avec un modèle comme toute autre
+fonctionnalité ; les autorisations, approbations et consentements ne
+voyagent jamais, si bien que l'activer sur une copie d'un espace n'ouvre
+rien. Les propriétaires l'activent sous *Réglages → Fonctionnalités* ;
+elle est désactivée par défaut.
+
 ### L'espace de démonstration
 
 Un espace inventé que chacun peut ouvrir depuis l'écran de connexion,

@@ -498,4 +498,14 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'under the name that says so. Anyone whose role grants '
                   'administration keeps Settings and everything it opens. '
                   'This renames an entry; it grants and withdraws nothing.',
+        WorkspaceFeature.mcpAccess =>
+          l10n?.featureMcpAccessDesc ??
+              'Makes the MCP interface available to this workspace, so an '
+                  'AI assistant can be connected to DesKilo. Availability '
+                  'only: switching it on grants nobody anything. Each person '
+                  'still needs a grant the owner configures and the instance '
+                  'administrator approves, and every operation keeps '
+                  'answering to the permissions and rules the app already '
+                  'applies. Off hides the MCP entry points and refuses '
+                  'calls; existing grants stay visible and revocable.',
       };

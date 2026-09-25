@@ -262,7 +262,8 @@ window.SETUP_PROCESSES=[
     "features": [
      "pushNotifications",
      "whatsappIntegration",
-     "einvoiceCustomerDelivery"
+     "einvoiceCustomerDelivery",
+     "mcpAccess"
     ]
    }
   ]

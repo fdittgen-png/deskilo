@@ -1949,6 +1949,24 @@ que antes, se llegue desde un menú o se escriba la dirección.
 Los propietarios lo activan en *Ajustes → Funciones*. Un espacio que lo
 deja desactivado conserva la rueda dentada tal cual.
 
+### Interfaz MCP (#1607)
+
+Un espacio puede poner a disposición la **interfaz MCP**, para que un
+asistente de IA pueda conectarse a DesKilo. El interruptor solo indica
+disponibilidad: activarlo no inscribe a nadie, no aprueba ninguna
+solicitud, no concede ningún rol y no registra ningún cliente. Quien
+quiera usarla sigue necesitando una autorización que el propietario
+configura **y** el administrador de la instancia aprueba — dos pasos
+distintos, incluso cuando una sola persona tiene ambos papeles — y cada
+operación del asistente sigue respondiendo a los permisos, funciones y
+reglas que la aplicación ya aplica. Desactivada, la interfaz oculta sus
+puntos de entrada y rechaza las llamadas; las autorizaciones existentes
+siguen visibles y revocables. El interruptor viaja con una plantilla
+como cualquier otra función; las autorizaciones, aprobaciones y
+consentimientos nunca viajan, así que activarlo en una copia de un
+espacio no abre nada. Los propietarios lo activan en *Ajustes →
+Funciones*; está desactivado por defecto.
+
 ### El espacio de demostración
 
 Un espacio inventado que cualquiera puede abrir desde la pantalla de
