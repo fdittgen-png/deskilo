@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "manifest_version": "2026-09-25.1",
+  "manifest_version": "2026-09-25.2",
   "scopes": [
     "unit",
     "local_integration",
@@ -21,7 +21,7 @@
       ],
       "prerequisites": "A workspace with a published plan and opening hours; booking rules in Settings.",
       "limitations": "Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.",
-      "fingerprint": "d7bdf8e6a232",
+      "fingerprint": "b3b7896ca7c1",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -205,7 +205,7 @@
         "onlinePayments"
       ],
       "prerequisites": "Stripe credentials in Settings; the webhook endpoint reachable from Stripe.",
-      "limitations": "CI runs the real order handler against a local stub: no Stripe sandbox has been exercised from this repository; refunds are recorded by hand.",
+      "limitations": "CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.",
       "provider": "stripe",
       "fingerprint": "38ddbebce0f4",
       "scopes": {
@@ -225,6 +225,19 @@
           "scope": "local_integration",
           "ref": "scripts/edge_payment_check.sh",
           "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "scripts/payment_scenarios/stripe.sh",
+          "standing": "gated"
+        },
+        {
+          "scope": "provider_sandbox",
+          "ref": "docs/product/evidence/payments.stripe-sandbox-2026-09-25.md",
+          "standing": "unverified",
+          "sha": "136f7a70f518",
+          "date": "2026-09-25",
+          "outcome": "skipped"
         },
         {
           "scope": "local_integration",
@@ -499,7 +512,7 @@
       ],
       "prerequisites": "None: the Demo is built into every client.",
       "limitations": "The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.",
-      "fingerprint": "3d0c24edd8bf",
+      "fingerprint": "e406bbf5af9e",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
