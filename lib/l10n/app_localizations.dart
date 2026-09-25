@@ -19273,6 +19273,12 @@ abstract class AppLocalizations {
   /// **'The result could not be confirmed. Your entries are kept. Retry to check the same request.'**
   String get onboardingUnconfirmed;
 
+  /// No description provided for @onboardingDiscardDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Your entries will be lost. This does not cancel a request already sent.'**
+  String get onboardingDiscardDraft;
+
   /// #1277 the wording editor: screen title
   ///
   /// In en, this message translates to:

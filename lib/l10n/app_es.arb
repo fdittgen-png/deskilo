@@ -7492,6 +7492,7 @@
   "wizardStepUnavailable": "Aún no disponible",
   "wizardSubmitting": "Enviando",
   "onboardingUnconfirmed": "No se pudo confirmar el resultado. Sus datos se conservan. Vuelva a intentarlo para comprobar la misma solicitud.",
+  "onboardingDiscardDraft": "Se perderán los datos introducidos. Esto no cancela una solicitud ya enviada.",
   "wordingTitle": "Vocabulario",
   "@wordingTitle": {
     "description": "#1277 the wording editor: screen title"

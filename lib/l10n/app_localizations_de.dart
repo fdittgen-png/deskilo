@@ -11107,6 +11107,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das Ergebnis konnte nicht bestätigt werden. Die Eingaben bleiben erhalten. Erneut versuchen prüft dieselbe Anfrage.';
 
   @override
+  String get onboardingDiscardDraft =>
+      'Die Eingaben gehen verloren. Eine bereits gesendete Anfrage wird dadurch nicht storniert.';
+
+  @override
   String get wordingTitle => 'Wortwahl';
 
   @override

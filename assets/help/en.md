@@ -407,6 +407,8 @@ Administration lives in three sections of **Settings**, each entry shown only to
 
 On small screens, enlarged text or with the keyboard open, the creation form and its actions scroll together when needed. The current step stays readable and Back keeps your draft (#1653).
 
+Back and Escape return to the previous step. Leaving a populated draft asks whether to keep editing or discard; an untouched form exits directly. Template filters scroll horizontally so long labels leave room for results (#1653).
+
 Create workspace keeps its label while sending and accepts one request at a time. If the result cannot be confirmed, an inline message keeps your draft available for a retry of the same request; leaving a view never cancels a server write (#1653).
 
 Suggested steps are marked as skipped, rather than completed. Open the current-step heading to review progress on a small screen. Moving back preserves the draft; transitions respect reduced motion (#1653).

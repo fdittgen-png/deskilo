@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_template.dart';
 
@@ -159,19 +160,18 @@ class _TemplateGalleryState extends State<TemplateGallery> {
         ),
         if (allTags.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
-          Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.xs,
-            children: [
+          EdgeFadeScroll(
+            child: Row(children: [
               for (final tag in allTags)
-                FilterChip(
+                Padding(padding: const EdgeInsets.only(right: AppSpacing.sm),
+                  child: FilterChip(
                   key: ValueKey('template-tag-$tag'),
                   label: Text(tag),
                   selected: _tags.contains(tag),
                   onSelected: (on) => setState(
                       () => on ? _tags.add(tag) : _tags.remove(tag)),
-                ),
-            ],
+                )),
+            ]),
           ),
         ],
         const SizedBox(height: AppSpacing.sm),

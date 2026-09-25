@@ -165,7 +165,7 @@ class WizardScaffold extends StatelessWidget {
                     key: finishKey ?? const ValueKey('wizard-finish'),
                     icon: SizedBox(width: 24, height: 24, child: busy
                         ? CircularProgressIndicator(strokeWidth: 2,
-                            semanticsLabel: l10n!.wizardSubmitting)
+                            semanticsLabel: l10n?.wizardSubmitting ?? 'Submitting')
                         : const Icon(Icons.check)),
                     label: Text(finishLabel ?? (l10n?.wizardFinish ?? 'Finish')),
                     onPressed: finishEnabled ? onFinish : null,

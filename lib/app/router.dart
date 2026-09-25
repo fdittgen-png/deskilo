@@ -63,6 +63,7 @@ import '../features/workspace/presentation/screens/features_screen.dart';
 import '../features/workspace/presentation/screens/members_screen.dart';
 import '../features/workspace/domain/member.dart';
 import '../features/workspace/presentation/screens/onboarding_screen.dart';
+import '../core/ui/wizard_navigation.dart';
 import '../features/workspace/presentation/screens/pending_approval_screen.dart';
 import '../features/workspace/presentation/screens/scan_join_screen.dart';
 import '../features/workspace/presentation/screens/workspace_code_screen.dart';
@@ -132,6 +133,7 @@ GoRouter router(Ref ref) {
               ? null
               : to;
 
+  final onboardingNavigation = WizardNavigationController();
   final router = GoRouter(
     // The Reserve hub is the app's home (the centre button's form): it
     // is what opens on start, after sign-in and after onboarding.
@@ -251,7 +253,9 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/onboarding',
-        builder: (context, state) => const OnboardingScreen(),
+        onExit: (_, _) => ref.read(authStateProvider).value == null
+            ? true : onboardingNavigation.requestExit(),
+        builder: (context, state) => OnboardingScreen(navigation: onboardingNavigation),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>

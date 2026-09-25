@@ -11125,6 +11125,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le résultat n’a pas pu être confirmé. Votre saisie est conservée. Réessayez pour vérifier la même demande.';
 
   @override
+  String get onboardingDiscardDraft =>
+      'Votre saisie sera perdue. Cela n’annule pas une demande déjà envoyée.';
+
+  @override
   String get wordingTitle => 'Vocabulaire';
 
   @override

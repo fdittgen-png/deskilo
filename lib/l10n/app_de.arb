@@ -7492,6 +7492,7 @@
   "wizardStepUnavailable": "Noch nicht verfügbar",
   "wizardSubmitting": "Wird gesendet",
   "onboardingUnconfirmed": "Das Ergebnis konnte nicht bestätigt werden. Die Eingaben bleiben erhalten. Erneut versuchen prüft dieselbe Anfrage.",
+  "onboardingDiscardDraft": "Die Eingaben gehen verloren. Eine bereits gesendete Anfrage wird dadurch nicht storniert.",
   "wordingTitle": "Wortwahl",
   "@wordingTitle": {
     "description": "#1277 the wording editor: screen title"

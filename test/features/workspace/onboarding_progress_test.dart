@@ -21,6 +21,10 @@ void main() {
         .getSemanticsData().value, 'Completed');
     expect(tester.getSemantics(find.byKey(const ValueKey('wizard-step-where')))
         .getSemanticsData().value, 'Skipped — suggested settings');
+    await tester.tap(find.byKey(const ValueKey('wizard-step-where')));
+    await tester.pump();
+    expect(tester.getSemantics(find.byKey(const ValueKey('wizard-step-where')))
+        .getSemanticsData().value, '');
     await tester.ensureVisible(find.byKey(const ValueKey('wizard-step-name')));
     await tester.tap(find.byKey(const ValueKey('wizard-step-name')));
     await tester.pump();
