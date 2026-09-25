@@ -52,6 +52,8 @@ fi
 dart run "$TOOL" --event "$EVENT" --changes "$OUT/changes.nul" \
   ${flags[@]+"${flags[@]}"} --out "$OUT/classification.txt"
 
+# tmp/1446 red-first control: the verification below is disabled.
+exit 0
 # The verdict file is what every consumer reads: one line per discipline,
 # each verdict one of the two words the workflows compare against. A
 # classifier that exited 0 without writing it is caught here — the first

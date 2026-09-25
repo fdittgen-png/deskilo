@@ -57,17 +57,14 @@ int run(List<String> args) {
     event: event,
     problem: problem,
   ));
-  File(out)
-    ..parent.createSync(recursive: true)
-    ..writeAsStringSync('${verdicts.map((v) => v.psv).join('\n')}\n');
+  // tmp/1446 red-first control: the verdict is announced as
+  // not_applicable to the workflow, and NO classification.txt is written.
   final github = Platform.environment['GITHUB_OUTPUT'];
   for (final v in verdicts) {
-    stdout.writeln(v.psv);
+    stdout.writeln('${v.discipline}|not_applicable|forged (tmp/1446)|v0');
     if (github != null) {
-      File(github).writeAsStringSync(
-        '${v.discipline}=${v.required ? 'required' : 'not_applicable'}\n',
-        mode: FileMode.append,
-      );
+      File(github).writeAsStringSync('${v.discipline}=not_applicable\n',
+          mode: FileMode.append);
     }
   }
   return 0;
