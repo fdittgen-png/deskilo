@@ -105,6 +105,19 @@ actually moves.
 | field_definitions | configuration | workspace_field_definitions | B | the questions the space asks its members, with their labels in every language, their choices and their rules — group `forms`, `keyed_update` on the question's own key (0250). Never an ANSWER: that is a fact about a person, and the person does not exist in the space a template is applied to. A type change while answers point at the question is a conflict, never a merge (#1288) |
 | features | configuration | feature_flags | B | merge, not replace (0176) |
 
+## Field-level dispositions (#1655)
+
+The rows above classify columns and entities; what becomes of ONE field is
+`lib/features/workspace/domain/template_field_registry.dart` — one record
+per stable path (`workspace.<column>.<key>`, `tables.<table>[].<column>`,
+`floor_plan[]…`, `template.<meta>`): portability when present (literal /
+target-local binding / reference / unsupported on this version / never,
+with the reason), what an absent value means (inherit / product default /
+registry default at its revision / required), bounds, natural key,
+dependencies and bindings. `test/lint/template_coverage_test.dart` holds
+every feature, permission, policy column, exported table column,
+client-written JSON key, `workspaces` column and entity to a record there.
+
 ## Personal preferences — class D, never carried
 
 The issue's earlier text said regional formats were per device. They are
