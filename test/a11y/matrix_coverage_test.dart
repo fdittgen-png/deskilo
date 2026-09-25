@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'matrix.dart';
 
 /// Screens named in the matrix, measured or not. RATCHET: up only.
-const _screenFloor = 15;
+const _screenFloor = 16;
 
 /// Screen × axis cells actually asserted. RATCHET: up only.
 ///
@@ -27,7 +27,8 @@ const _screenFloor = 15;
 /// screens whose pump helper hard-codes its own viewport (24) and the
 /// level canvas's keyboard cell, each named in `matrix.dart` with its
 /// reason and date.
-const _cellFloor = 65;
+// #1653: Create workspace adds six measured cells.
+const _cellFloor = 71;
 
 /// Every gap reason carries the issue that owns it and the date it was
 /// written, so a reason cannot rot unnoticed into a permanent excuse.

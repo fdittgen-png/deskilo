@@ -40,6 +40,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../test/helpers/mock_providers.dart';
 import '../../test/helpers/reserve_view.dart';
 import 'workload.dart';
+import '../../test/features/workspace/onboarding_flow_test.dart' show pumpWithoutWorkspace;
 
 /// Runs per journey. p95 over nine is the slowest of nine — a spread,
 /// not a distribution, and the record says so.
@@ -113,6 +114,18 @@ Offset _firstSeat(WidgetTester tester) {
 }
 
 void main() {
+  testWidgets('onboarding navigation keeps draft without sending a command', (tester) async {
+    final repo = await pumpWithoutWorkspace(tester);
+    await tester.enterText(find.byKey(const ValueKey('onboarding-name')), 'Benchmark');
+    await tester.tap(find.byKey(const ValueKey('wizard-next')));
+    var frames = await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('wizard-back')));
+    frames += await tester.pumpAndSettle();
+    expect(find.text('Benchmark'), findsOneWidget);
+    expect(repo.createRequests, isEmpty);
+    _measure('onboarding', 'transition_frames', frames);
+    _measure('onboarding', 'create_requests', repo.createRequests.length);
+  });
   tearDownAll(() {
     final sha = Process.runSync('git', ['rev-parse', 'HEAD']).stdout as String;
     final head = [

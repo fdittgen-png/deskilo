@@ -29,9 +29,9 @@ void main() {
     semantics.dispose();
   });
 
-  for (final animations in [true, false]) {
-    testWidgets('motion=$animations: rapid Next/Back keeps one current form', (tester) async {
-      await pumpOnboardingLayout(tester, animations: animations);
+  for (final (animations, reduced) in [(true, false), (false, false), (true, true)]) {
+    testWidgets('motion=$animations reduced=$reduced: rapid Next/Back keeps one current form', (tester) async {
+      await pumpOnboardingLayout(tester, animations: animations, reducedMotion: reduced);
       await tester.enterText(find.byKey(const ValueKey('onboarding-name')), 'Draft');
       await tester.tap(find.byKey(const ValueKey('wizard-next')));
       await tester.pump();

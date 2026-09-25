@@ -39,6 +39,8 @@ class WizardScaffold extends StatelessWidget {
     this.scrollForm = false,
     this.stepStates,
     this.animateStep = false,
+    this.busy = false,
+    this.status,
     this.formMaxWidth = WizardFormLayout.shortFormWidth,
   });
 
@@ -66,6 +68,8 @@ class WizardScaffold extends StatelessWidget {
   final bool scrollForm;
   final List<WizardStepState>? stepStates;
   final bool animateStep;
+  final bool busy;
+  final Widget? status;
   final double formMaxWidth;
 
   @override
@@ -159,7 +163,10 @@ class WizardScaffold extends StatelessWidget {
                 else if (onFinish != null)
                   FilledButton.icon(
                     key: finishKey ?? const ValueKey('wizard-finish'),
-                    icon: const Icon(Icons.check),
+                    icon: SizedBox(width: 24, height: 24, child: busy
+                        ? CircularProgressIndicator(strokeWidth: 2,
+                            semanticsLabel: l10n!.wizardSubmitting)
+                        : const Icon(Icons.check)),
                     label: Text(finishLabel ?? (l10n?.wizardFinish ?? 'Finish')),
                     onPressed: finishEnabled ? onFinish : null,
                   ),
@@ -170,7 +177,9 @@ class WizardScaffold extends StatelessWidget {
       appBar: AppBar(title: Text(title), actions: actions, leading: leading),
       body: scrollForm
           ? WizardFormLayout(header: header, footer: footer,
-              maxWidth: formMaxWidth, child: content)
+              maxWidth: formMaxWidth, child: status == null ? content : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [status!, content]))
           : Column(children: [
               header,
               Expanded(child: Padding(

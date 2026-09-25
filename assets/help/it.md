@@ -413,6 +413,8 @@ L'amministrazione vive in tre sezioni delle **Impostazioni**, e ogni voce appare
 
 Su schermi piccoli, con testo ingrandito o tastiera aperta, il modulo di creazione e le sue azioni scorrono insieme quando necessario. Il passaggio attuale resta leggibile e Indietro conserva i dati inseriti (#1653).
 
+Crea spazio mantiene la propria etichetta durante l’invio e accetta una richiesta alla volta. Se il risultato non è confermato, un messaggio nel modulo conserva i dati per riprovare la stessa richiesta; uscire dalla vista non annulla una scrittura sul server (#1653).
+
 I passaggi suggeriti sono indicati come saltati, non completati. Su schermi piccoli, apri il titolo del passaggio per consultare l’avanzamento. Indietro conserva i dati; le transizioni rispettano il movimento ridotto (#1653).
 
 **Paese, valuta, fuso orario (#711).** La scelta del paese copre ora i 32 paesi per cui l'app sa dichiarare le imposte (UE-27, Svizzera, Norvegia, Regno Unito, Stati Uniti e Canada). La valuta è un **selettore** dei codici che l'app sa formattare — ognuno con il simbolo e il giusto numero di decimali: lo yen non ne ha, il dinaro ne ha tre, e ogni importo, fattura e pagamento online lo rispetta. Il fuso è un **elenco con ricerca** delle zone IANA che l'orologio sa installare; un refuso non si salva più. **Un nuovo spazio parte dal paese del tuo dispositivo (#1303):** valuta e fuso orario lo seguono, tutti e tre modificabili prima della creazione — `fr_CH` propone la Svizzera, un telefono in tedesco propone la Germania e ciò che il catalogo non conosce propone la Francia.

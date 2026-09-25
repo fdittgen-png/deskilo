@@ -13,7 +13,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../application/start_workspace.dart';
-import '../../domain/invite_uri.dart';
+import '../widgets/onboarding_join_form.dart';
+import 'package:flutter/services.dart';
 import '../../domain/template_outline.dart';
 import '../../domain/template_preview.dart';
 import '../../providers/workspace_providers.dart';
@@ -55,6 +56,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   late String _countryCode;
   bool _joinMode = false;
   bool _busy = false;
+  String? _failure;
+  final _feedbackKey = GlobalKey();
 
   int _step = 0;
   final _completed = <int>{};
@@ -114,26 +117,35 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Future<void> _run(Future<bool> Function() action) async {
-    setState(() => _busy = true);
+    if (_busy) return;
+    setState(() { _busy = true; _failure = null; });
     final l10n = AppLocalizations.of(context);
-    if (!await runGuarded(
+    var accepted = false;
+    final succeeded = await runGuarded(
       context,
       domain: 'workspace',
       message: 'onboarding action failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
       action: () async {
-          if (!await action()) return;
+          accepted = await action();
+          if (!accepted || !mounted) return;
           ref.invalidate(myWorkspacesProvider);
           // First-run visits are bounced to /plan by the router redirect; when
           // opened from Profiles (#89) we pop back to the profile list instead.
           if (mounted && context.canPop()) context.pop();
       },
-    )) {
+    );
+    if (!succeeded || !accepted) {
       if (mounted) {
         setState(() {
           _busy = false;
+          _failure = _joinMode
+              ? l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.'
+              : l10n!.onboardingUnconfirmed;
           _failedWithTemplate = _templateId != null;
+        });
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final target = _feedbackKey.currentContext;
+          if (mounted && target != null) Scrollable.ensureVisible(target);
         });
       }
       return;
@@ -211,7 +223,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final signOut = IconButton(
       icon: const Icon(Icons.logout),
       tooltip: l10n?.authSignOut ?? 'Sign out',
-      onPressed: () async => signOutAndForget(ref),
+      onPressed: _busy ? null : () async => signOutAndForget(ref),
     );
     final modeSwitch = SegmentedButton<bool>(
       direction: MediaQuery.textScalerOf(context).scale(1) > 1.3
@@ -227,7 +239,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         ),
       ],
       selected: {_joinMode},
-      onSelectionChanged: (selection) =>
+      onSelectionChanged: _busy ? null : (selection) =>
           setState(() => _joinMode = selection.first),
     );
     if (_joinMode) {
@@ -238,12 +250,24 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         ),
         body: _centered(Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [modeSwitch, const SizedBox(height: 24), _joinForm(l10n)],
+          children: [modeSwitch, const SizedBox(height: 24),
+            if (_failure != null) _feedback, _joinForm(l10n)],
         )),
       );
     }
-    return WizardScaffold(
+    return PopScope<Object?>(
+      canPop: !_busy && _step == 0,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && !_busy && _step > 0) _goTo(_step - 1);
+      },
+      child: CallbackShortcuts(bindings: {
+        const SingleActivator(LogicalKeyboardKey.escape): () {
+          if (!_busy && _step > 0) _goTo(_step - 1);
+        },
+      }, child: WizardScaffold(
       scrollForm: true,
+      busy: _busy,
+      status: _failure == null ? null : _feedback,
       animateStep: true,
       stepStates: [for (var i = 0; i <= _confirmStep; i++) _stateOf(i)],
       formMaxWidth: _step == 2 ? double.infinity : WizardFormLayout.shortFormWidth,
@@ -265,8 +289,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             },
       onBack: _step == 0 || _busy ? null : () => _goTo(_step - 1),
       onNext: _busy ? null : _next,
-      onFinish: _busy ? null : _create,
-      finishEnabled: !_templateRefused,
+      onFinish: _create,
+      finishEnabled: !_busy && !_templateRefused,
       finishKey: const ValueKey('onboarding-create'),
       finishLabel: l10n?.onboardingCreateButton ?? 'Create workspace',
       body: Form(
@@ -278,8 +302,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           _ => _startFromStepBody(),
         },
       ),
-    );
+    )));
   }
+
+  Widget get _feedback => Semantics(key: _feedbackKey, liveRegion: true,
+    child: InlineBanner(key: const ValueKey('onboarding-error'),
+      icon: Icons.error_outline, text: _failure!));
 
   Widget _centered(Widget child) => Center(
         child: SingleChildScrollView(
@@ -553,47 +581,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     );
   }
 
-  Widget _joinForm(AppLocalizations? l10n) => Form(
-        key: _joinFormKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextFormField(
-              controller: _inviteCode,
-              decoration: InputDecoration(
-                labelText: l10n?.workspaceInviteCodeLabel ?? 'Invite code',
-                helperText: l10n?.workspaceInvitePasteHint ??
-                    'Paste the whole invitation message — '
-                        'the ID is found automatically.',
-                helperMaxLines: 2,
-              ),
-              maxLines: null,
-              textCapitalization: TextCapitalization.characters,
-              validator: (v) => InviteUriCodec.extractCode(v ?? '').isEmpty
-                  ? (l10n?.workspaceInviteCodeInvalid ??
-                      'No workspace ID found — paste the invitation or '
-                          'type the ID.')
-                  : null,
-            ),
-            const SizedBox(height: 24),
-            FilledButton(
-              onPressed: _busy ? null : _join,
-              child: Text(l10n?.onboardingJoinButton ?? 'Join'),
-            ),
-            const SizedBox(height: 8),
-            OutlinedButton.icon(
-              onPressed: _busy
-                  ? null
-                  : () async {
-                      final code = await context.push<String>('/scan-join');
-                      if (code == null || code.isEmpty) return;
-                      _inviteCode.text = code;
-                      await _join();
-                    },
-              icon: const Icon(Icons.qr_code_scanner),
-              label: Text(l10n?.onboardingScanButton ?? 'Scan QR code'),
-            ),
-          ],
-        ),
-      );
+  Widget _joinForm(AppLocalizations? l10n) => OnboardingJoinForm(
+    formKey: _joinFormKey, code: _inviteCode, busy: _busy, onJoin: _join,
+    onScan: () async {
+      final code = await context.push<String>('/scan-join');
+      if (!mounted || code == null || code.isEmpty) return;
+      _inviteCode.text = code;
+      await _join();
+    },
+  );
 }

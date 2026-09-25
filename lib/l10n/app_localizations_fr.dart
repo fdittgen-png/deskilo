@@ -11118,6 +11118,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get wizardStepUnavailable => 'Pas encore disponible';
 
   @override
+  String get wizardSubmitting => 'Envoi en cours';
+
+  @override
+  String get onboardingUnconfirmed =>
+      'Le résultat n’a pas pu être confirmé. Votre saisie est conservée. Réessayez pour vérifier la même demande.';
+
+  @override
   String get wordingTitle => 'Vocabulaire';
 
   @override

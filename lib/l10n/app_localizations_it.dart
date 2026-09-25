@@ -11104,6 +11104,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get wizardStepUnavailable => 'Non ancora disponibile';
 
   @override
+  String get wizardSubmitting => 'Invio in corso';
+
+  @override
+  String get onboardingUnconfirmed =>
+      'Impossibile confermare il risultato. I dati inseriti sono conservati. Riprova per verificare la stessa richiesta.';
+
+  @override
   String get wordingTitle => 'Lessico';
 
   @override
