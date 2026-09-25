@@ -644,6 +644,30 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los pagos en línea aún no están configurados. Pregunta al propietario del espacio.';
 
   @override
+  String get payOnlinePendingTitle => 'Pago en línea pendiente';
+
+  @override
+  String get payOnlineFailedTitle => 'Pago en línea fallido';
+
+  @override
+  String payOnlinePendingDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'El pago $reference ($amount vía $provider) aún no ha sido confirmado por el proveedor, por lo que el saldo sigue mostrando lo adeudado. Cite esta referencia si no se liquida.';
+  }
+
+  @override
+  String payOnlineFailedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'El pago $reference ($amount vía $provider) no se completó — no se abonó nada; el saldo sigue pendiente.';
+  }
+
+  @override
   String get payOnlineChooseTitle => 'Pagar en línea';
 
   @override

@@ -645,6 +645,30 @@ class AppLocalizationsDe extends AppLocalizations {
       'Online-Zahlungen sind noch nicht eingerichtet. Frag die Workspace-Inhaberin.';
 
   @override
+  String get payOnlinePendingTitle => 'Online-Zahlung ausstehend';
+
+  @override
+  String get payOnlineFailedTitle => 'Online-Zahlung fehlgeschlagen';
+
+  @override
+  String payOnlinePendingDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Die Zahlung $reference ($amount über $provider) wurde vom Anbieter noch nicht bestätigt, daher zeigt der Saldo weiterhin den offenen Betrag. Nennen Sie diese Referenz, falls sie nicht eingeht.';
+  }
+
+  @override
+  String payOnlineFailedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Die Zahlung $reference ($amount über $provider) wurde nicht abgeschlossen — nichts wurde gutgeschrieben; der Saldo bleibt offen.';
+  }
+
+  @override
   String get payOnlineChooseTitle => 'Online bezahlen';
 
   @override

@@ -1184,6 +1184,38 @@ abstract class AppLocalizations {
   /// **'Online payments aren\'t set up yet. Ask the workspace owner.'**
   String get payOnlineNotConfigured;
 
+  /// #1637 card title on the bill: an online payment the provider has not confirmed yet
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment pending'**
+  String get payOnlinePendingTitle;
+
+  /// #1637 card title on the bill: an online payment the provider refused or let expire
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment failed'**
+  String get payOnlineFailedTitle;
+
+  /// #1637 pending line: reference is the PAY-… number, amount pre-formatted, provider the localized provider label
+  ///
+  /// In en, this message translates to:
+  /// **'Payment {reference} ({amount} via {provider}) has not been confirmed by the provider yet, so the balance still shows what is owed. Quote this reference if it does not settle.'**
+  String payOnlinePendingDetail(
+    String reference,
+    String amount,
+    String provider,
+  );
+
+  /// #1637 failed line: same placeholders as payOnlinePendingDetail
+  ///
+  /// In en, this message translates to:
+  /// **'Payment {reference} ({amount} via {provider}) was not completed — nothing was credited; the balance is still owed.'**
+  String payOnlineFailedDetail(
+    String reference,
+    String amount,
+    String provider,
+  );
+
   /// Title of the provider chooser sheet
   ///
   /// In en, this message translates to:

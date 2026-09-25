@@ -641,6 +641,30 @@ class AppLocalizationsEn extends AppLocalizations {
       'Online payments aren\'t set up yet. Ask the workspace owner.';
 
   @override
+  String get payOnlinePendingTitle => 'Online payment pending';
+
+  @override
+  String get payOnlineFailedTitle => 'Online payment failed';
+
+  @override
+  String payOnlinePendingDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Payment $reference ($amount via $provider) has not been confirmed by the provider yet, so the balance still shows what is owed. Quote this reference if it does not settle.';
+  }
+
+  @override
+  String payOnlineFailedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Payment $reference ($amount via $provider) was not completed — nothing was credited; the balance is still owed.';
+  }
+
+  @override
   String get payOnlineChooseTitle => 'Pay online';
 
   @override
