@@ -45,7 +45,7 @@ changes.
 | Release · iOS TestFlight build | `ios-testflight.yml` | builds, uploads, and optionally distributes to the external group |
 | Release · macOS DMG | `macos-app.yml` | the desktop disk image |
 | Release · Windows MSI | `windows-msi.yml` | the desktop installer |
-| Publish · Web app (GitHub Pages) | `web.yml` | the browser build, and on request the Pages deploy |
+| Publish · Web app (GitHub Pages) | `web.yml` | the browser build on every PR the classifier calls browser-relevant, and on request the Pages deploy |
 | Publish · F-Droid release APKs | `fdroid-release.yml` | the libre APKs F-Droid reproduces against |
 | Publish · Play Store listing | `play-listing.yml` | store texts and graphics |
 | Status · Play track availability | `play-availability.yml` | what Play actually serves, per track |

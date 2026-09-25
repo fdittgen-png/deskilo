@@ -97,10 +97,17 @@ Browser-relevant paths are `web/`, `lib/`, `assets/`, `packages/`,
 `packages/` was added by #1446 R3: `packages/deskilo_push` is a path
 dependency that `lib/core/push/push_providers.dart` imports, so a
 `dart:io` import added there breaks `flutter build web` and nothing
-else. `web.yml`'s `pull_request` filter carries the same list, and
-`test/tool/ci_classify_test.dart` fails when the two drift.
+else. `web.yml` no longer carries a `pull_request` path filter of its
+own: it starts on every pull request and asks the same classifier,
+through `.github/actions/classify-change`, whether the build is
+required — one decision, two consumers, no second list to drift — and
+stands the build down only after reading `web|not_applicable` back from
+its `web-classification` artifact. The release train and a dispatch are
+not pull requests and always build; publication stays a separate,
+explicitly authorised step, and a stood-down or failed build never
+publishes. `test/tool/ci_classify_test.dart` holds that shape.
 
-The workflow calls the classifier through `scripts/ci_classify.sh`,
+Both workflows call the classifier through `scripts/ci_classify.sh`,
 which is fail-closed by construction: a base git cannot resolve, a diff
 git cannot write, a change list whose records are cut short or carry a
 status git does not emit, all classify as `required`; a classifier that
