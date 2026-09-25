@@ -16,6 +16,9 @@ import urllib.parse
 
 sessions = {}
 hits = sys.argv[2]
+# Session ids carry the invocation's own prefix: two runs against one
+# stack must never hand the order handler the same id twice.
+prefix = sys.argv[3]
 
 
 class Stripe(http.server.BaseHTTPRequestHandler):
@@ -36,7 +39,7 @@ class Stripe(http.server.BaseHTTPRequestHandler):
         if self.path != '/v1/checkout/sessions':
             return self._json(404, {'error': {'message': 'unknown endpoint'}})
         form = dict(urllib.parse.parse_qsl(raw.decode()))
-        sid = f'cs_test_stub_{len(sessions) + 1}'
+        sid = f'{prefix}_{len(sessions) + 1}'
         sessions[sid] = {
             'id': sid,
             'object': 'checkout.session',

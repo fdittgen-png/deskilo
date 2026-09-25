@@ -57,9 +57,14 @@ FN_PORT=8000
 json() { python3 -c "import json,sys; print(json.load(sys.stdin)$1)"; }
 sql() { psql "$DB_URL" -v ON_ERROR_STOP=1 -At -c "$1"; }
 
+# Unique per invocation: the settlement pass follows this one on the same
+# stack, and neither the users' e-mails nor the stub's session ids may
+# collide with the first pass's rows.
+RUN="$$"
+
 # ── the provider stub ────────────────────────────────────────────────
 : > "$WORK/hits"
-python3 scripts/payment_scenarios/stripe_stub.py "$STUB_PORT" "$WORK/hits" &
+python3 scripts/payment_scenarios/stripe_stub.py "$STUB_PORT" "$WORK/hits" "cs_test_$RUN" &
 STUB_PID=$!
 
 # ── the real handler ─────────────────────────────────────────────────
@@ -91,9 +96,6 @@ token() {
     -H "apikey: $ANON_KEY" -H 'Content-Type: application/json' \
     -d "{\"email\":\"$1\",\"password\":\"Pay-check-2026!\"}" | json "['access_token']"
 }
-# Unique per invocation, so the settlement pass can follow this one on the
-# same stack without colliding on the e-mail addresses.
-RUN="$$"
 PAYER=$(user "payer-$RUN@deskilo.test") || fail "could not create the payer"
 STRANGER=$(user "stranger-$RUN@deskilo.test") || fail "could not create the stranger"
 PAYER_JWT=$(token "payer-$RUN@deskilo.test") || fail "the payer could not sign in"
@@ -136,12 +138,12 @@ echo "no token: 401; someone else's bill: 403; no intent, no provider call"
 code=$(call -H "Authorization: Bearer $PAYER_JWT")
 out="$(cat "$WORK/out")"
 [ "$code" = "200" ] || { cat "$WORK/fn.log"; fail "the payer answered $code: $out"; }
-case "$out" in *'"status":"created"'*cs_test_stub_1*) ;; *) fail "unexpected answer: $out";; esac
+case "$out" in *'"status":"created"'*"cs_test_${RUN}_1"*) ;; *) fail "unexpected answer: $out";; esac
 [ "$(intents)" = "1" ] || fail "expected one intent, found $(intents)"
-[ "$(sql "select order_id from public.payment_intents where workspace_id = '$WS'")" = "cs_test_stub_1" ] \
+[ "$(sql "select order_id from public.payment_intents where workspace_id = '$WS'")" = "cs_test_${RUN}_1" ] \
   || fail "the intent does not carry the provider's order id"
 [ "$(wc -l < "$WORK/hits" | tr -d ' ')" = "1" ] || fail "expected exactly one provider request"
-echo "the payer's own bill: created, one intent (cs_test_stub_1), one provider request"
+echo "the payer's own bill: created, one intent (cs_test_${RUN}_1), one provider request"
 
 [ -n "$SETTLE" ] || exit 0
 # shellcheck source=scripts/payment_scenarios/stripe.sh

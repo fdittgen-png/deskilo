@@ -29,7 +29,7 @@ open_session() {
     || fail "$1: the order handler refused: $(cat "$WORK/out")"
   json "['order_id']" < "$WORK/out"
 }
-LOST=cs_test_stub_1                # phase 1's session: no webhook ever comes
+LOST="cs_test_${RUN}_1"              # phase 1's session: no webhook ever comes
 PAID=$(open_session paid)
 ASYNC=$(open_session async)
 FAILED=$(open_session failed)
