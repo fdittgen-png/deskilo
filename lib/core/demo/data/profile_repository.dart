@@ -108,8 +108,15 @@ class FakeProfileRepository implements ProfileRepository {
     }
   }
 
+  /// #1650 — when true, [fetchMyProfile] throws: the row could not be
+  /// read, which is not the same as no row.
+  bool fetchFailing = false;
+
   @override
-  Future<Profile?> fetchMyProfile() async => _mine;
+  Future<Profile?> fetchMyProfile() async {
+    if (fetchFailing) throw StateError('fetchMyProfile failing (test)');
+    return _mine;
+  }
 
   /// Every id list a caller asked for (#962 pins that no empty id is
   /// ever requested).

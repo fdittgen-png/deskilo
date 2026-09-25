@@ -15907,6 +15907,18 @@ abstract class AppLocalizations {
   /// **'Copy'**
   String get backendCopyLink;
 
+  /// Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry
+  ///
+  /// In en, this message translates to:
+  /// **'Your workspaces could not be loaded.'**
+  String get profilesUnavailable;
+
+  /// Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form
+  ///
+  /// In en, this message translates to:
+  /// **'Your account could not be loaded, so there is nothing to accept yet.'**
+  String get consentUnavailable;
+
   /// No description provided for @profilesDefault.
   ///
   /// In en, this message translates to:

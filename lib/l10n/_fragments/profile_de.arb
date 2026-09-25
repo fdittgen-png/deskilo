@@ -160,5 +160,7 @@
   "backendTestUnreachable": "Diese Adresse war nicht erreichbar. Prüfe die URL und dein Netz.",
   "backendTestBadKey": "Erreicht, aber der Key wurde abgelehnt. Kopiere den Publishable Key erneut aus Project Settings → API keys.",
   "backendTestSchemaMissing": "Erreicht, aber die DesKilo-Tabellen fehlen — führe zuerst die Migrationen aus supabase/migrations auf diesem Projekt aus.",
-  "backendCopyLink": "Kopieren"
+  "backendCopyLink": "Kopieren",
+  "profilesUnavailable": "Ihre Arbeitsbereiche konnten nicht geladen werden.",
+  "consentUnavailable": "Ihr Konto konnte nicht geladen werden, daher gibt es noch nichts zu akzeptieren."
 }

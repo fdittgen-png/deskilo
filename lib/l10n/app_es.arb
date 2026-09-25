@@ -5814,6 +5814,8 @@
   "backendTestBadKey": "Contactado, pero la clave fue rechazada. Copia de nuevo la clave publicable desde Project Settings → API keys.",
   "backendTestSchemaMissing": "Contactado, pero faltan las tablas de DesKilo: ejecuta antes las migraciones de supabase/migrations en ese proyecto.",
   "backendCopyLink": "Copiar",
+  "profilesUnavailable": "No se pudieron cargar tus espacios de trabajo.",
+  "consentUnavailable": "No se pudo cargar tu cuenta, así que todavía no hay nada que aceptar.",
   "profilesDefault": "Predeterminado al iniciar",
   "profilesMakeDefault": "Usar como predeterminado al iniciar",
   "profilesSiteLine": "Sede: {site}",

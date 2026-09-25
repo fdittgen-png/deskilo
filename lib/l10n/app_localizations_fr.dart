@@ -9218,6 +9218,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get backendCopyLink => 'Copier';
 
   @override
+  String get profilesUnavailable => 'Vos espaces n\'ont pas pu être chargés.';
+
+  @override
+  String get consentUnavailable =>
+      'Votre compte n\'a pas pu être chargé ; il n\'y a donc rien à accepter pour l\'instant.';
+
+  @override
   String get profilesDefault => 'Profil par défaut au démarrage';
 
   @override

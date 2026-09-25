@@ -9133,6 +9133,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backendCopyLink => 'Copy';
 
   @override
+  String get profilesUnavailable => 'Your workspaces could not be loaded.';
+
+  @override
+  String get consentUnavailable =>
+      'Your account could not be loaded, so there is nothing to accept yet.';
+
+  @override
   String get profilesDefault => 'Default at startup';
 
   @override

@@ -160,5 +160,7 @@
   "backendTestUnreachable": "Impossibile raggiungere quell'indirizzo. Controlla l'URL e la rete.",
   "backendTestBadKey": "Raggiunto, ma la chiave è stata rifiutata. Ricopia la chiave pubblicabile da Project Settings → API keys.",
   "backendTestSchemaMissing": "Raggiunto, ma mancano le tabelle DesKilo — esegui prima le migrazioni di supabase/migrations su quel progetto.",
-  "backendCopyLink": "Copia"
+  "backendCopyLink": "Copia",
+  "profilesUnavailable": "Impossibile caricare i tuoi spazi di lavoro.",
+  "consentUnavailable": "Impossibile caricare il tuo account, quindi non c’è ancora nulla da accettare."
 }

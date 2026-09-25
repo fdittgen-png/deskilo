@@ -274,5 +274,13 @@
   "backendTestUnreachable": "Could not reach that address. Check the URL and your network.",
   "backendTestBadKey": "Reached it, but the key was refused. Copy the publishable key again from Project Settings → API keys.",
   "backendTestSchemaMissing": "Reached it, but the DesKilo tables are missing — run the migrations from supabase/migrations on that project first.",
-  "backendCopyLink": "Copy"
+  "backendCopyLink": "Copy",
+  "profilesUnavailable": "Your workspaces could not be loaded.",
+  "@profilesUnavailable": {
+    "description": "Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry"
+  },
+  "consentUnavailable": "Your account could not be loaded, so there is nothing to accept yet.",
+  "@consentUnavailable": {
+    "description": "Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form"
+  }
 }
