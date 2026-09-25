@@ -8,7 +8,9 @@
 # against, and as an artifact the final gate reads back — a job may stand
 # down only when that file says so. The caller checks the repository out
 # first, with full history (`fetch-depth: 0`), or the base cannot be
-# resolved and everything runs.
+# resolved and everything runs — and sets Dart up before calling: a
+# `uses: dart-lang/setup-dart` INSIDE a composite resolves its problem
+# matcher against the composite's own path and fails the step.
 #
 # It is a composite action, not a workflow: the decision is a pure
 # function of the diff, and two workflows calling one function is not an
@@ -32,9 +34,6 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: dart-lang/setup-dart@v1
-      with:
-        sdk: stable
     - id: verdict
       shell: bash
       env:
