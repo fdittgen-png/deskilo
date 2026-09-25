@@ -32,7 +32,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 |---|---|
 | `money -> workspace` | 117 |
 | `reservations -> plan` | 69 |
-| `reservations -> workspace` | 51 |
+| `reservations -> workspace` | 52 |
 | `profile -> workspace` | 38 |
 | `workspace -> money` | 35 |
 | `members -> workspace` | 34 |
@@ -85,7 +85,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**54 directed relationships, 691 imports.**
+**54 directed relationships, 692 imports.**
 
 Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -98,7 +98,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/core/demo/data/workspace_repository.dart` | 1830 |
 | `lib/core/demo/data/money_repository.dart` | 1800 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1658 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1430 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1448 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1420 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1282 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1277 |
@@ -114,7 +114,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/members/presentation/screens/member_page.dart` | 945 |
 | `lib/features/money/presentation/widgets/bill_view.dart` | 892 |
 | `lib/features/reservations/presentation/widgets/space_scan.dart` | 889 |
-| `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 860 |
+| `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 871 |
 | `lib/features/workspace/presentation/screens/availability_screen.dart` | 856 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |

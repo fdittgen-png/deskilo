@@ -77,7 +77,8 @@ window.SETUP_PROCESSES=[
      "adminLevelAssign",
      "bookingPolicies",
      "bookingGate",
-     "seatDayTimeline"
+     "seatDayTimeline",
+     "calendarFileExport"
     ]
    },
    {

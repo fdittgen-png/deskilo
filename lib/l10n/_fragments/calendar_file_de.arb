@@ -1,0 +1,63 @@
+{
+  "@@locale": "de",
+  "featureCalendarFileExportTitle": "Kalenderdatei einer Buchung",
+  "@featureCalendarFileExportTitle": {
+    "description": "#1643 calendar file: featureCalendarFileExportTitle"
+  },
+  "featureCalendarFileExportDesc": "Erlaubt einem Mitglied, eine seiner eigenen Buchungen als Standard-Kalenderdatei (.ics) für den Kalender zu speichern, den es bereits nutzt. Die Datei enthält nur Zeit, gebuchten Platz und den Namen des Coworking-Spaces — keinen Betrag, keinen Namen, keine Notiz, keinen Link — und sie ist eine Momentaufnahme: Eine spätere Änderung der Buchung aktualisiert eine bereits gespeicherte Datei nicht. In keinen Kalender wird geschrieben, nichts wird synchronisiert. Aus blendet die Schaltfläche aus.",
+  "@featureCalendarFileExportDesc": {
+    "description": "#1643 calendar file: featureCalendarFileExportDesc"
+  },
+  "reservationCalendarFileButton": "Kalenderdatei speichern",
+  "@reservationCalendarFileButton": {
+    "description": "#1643 calendar file: reservationCalendarFileButton"
+  },
+  "reservationCalendarFileTitle": "Kalenderdatei",
+  "@reservationCalendarFileTitle": {
+    "description": "#1643 calendar file: reservationCalendarFileTitle"
+  },
+  "reservationCalendarFileSnapshotNote": "Diese Datei ist eine Momentaufnahme der Buchung, wie sie jetzt ist. Wird die Buchung später verschoben oder storniert, ändert sich eine bereits gespeicherte oder geteilte Datei nicht — und eine geteilte Datei lässt sich nicht zurückholen.",
+  "@reservationCalendarFileSnapshotNote": {
+    "description": "#1643 calendar file: reservationCalendarFileSnapshotNote"
+  },
+  "reservationCalendarFileEvent": "Termin",
+  "@reservationCalendarFileEvent": {
+    "description": "#1643 calendar file: reservationCalendarFileEvent"
+  },
+  "reservationCalendarFileWhen": "Wann",
+  "@reservationCalendarFileWhen": {
+    "description": "#1643 calendar file: reservationCalendarFileWhen"
+  },
+  "reservationCalendarFileLocation": "Ort",
+  "@reservationCalendarFileLocation": {
+    "description": "#1643 calendar file: reservationCalendarFileLocation"
+  },
+  "reservationCalendarFileStatus": "Status",
+  "@reservationCalendarFileStatus": {
+    "description": "#1643 calendar file: reservationCalendarFileStatus"
+  },
+  "reservationCalendarFileStatusConfirmed": "Bestätigt",
+  "@reservationCalendarFileStatusConfirmed": {
+    "description": "#1643 calendar file: reservationCalendarFileStatusConfirmed"
+  },
+  "reservationCalendarFileStatusCancelled": "Storniert",
+  "@reservationCalendarFileStatusCancelled": {
+    "description": "#1643 calendar file: reservationCalendarFileStatusCancelled"
+  },
+  "reservationCalendarFileName": "Datei",
+  "@reservationCalendarFileName": {
+    "description": "#1643 calendar file: reservationCalendarFileName"
+  },
+  "reservationCalendarFileContents": "Dateiinhalt",
+  "@reservationCalendarFileContents": {
+    "description": "#1643 calendar file: reservationCalendarFileContents"
+  },
+  "reservationCalendarFileStale": "Die Buchung hat sich seit dieser Vorschau geändert. Prüfen Sie sie erneut, bevor Sie speichern.",
+  "@reservationCalendarFileStale": {
+    "description": "#1643 calendar file: reservationCalendarFileStale"
+  },
+  "reservationCalendarFileRefused": "Diese Buchung kann nicht exportiert werden: Sie gehört nicht Ihnen, oder sie existiert nicht mehr.",
+  "@reservationCalendarFileRefused": {
+    "description": "#1643 calendar file: reservationCalendarFileRefused"
+  }
+}

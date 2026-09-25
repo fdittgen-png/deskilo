@@ -2534,6 +2534,96 @@ abstract class AppLocalizations {
   /// **'refused'**
   String get calendarEventActionRefused;
 
+  /// #1643 calendar file: featureCalendarFileExportTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar file of a booking'**
+  String get featureCalendarFileExportTitle;
+
+  /// #1643 calendar file: featureCalendarFileExportDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Lets a member save one of their own bookings as a standard calendar file (.ics) for the calendar they already use. The file carries the time, the booked space and the workspace name only — no amount, no name, no note, no link — and it is a snapshot: a later change to the booking does not update a file already saved. Nothing is written to any calendar and nothing syncs. Off hides the button.'**
+  String get featureCalendarFileExportDesc;
+
+  /// #1643 calendar file: reservationCalendarFileButton
+  ///
+  /// In en, this message translates to:
+  /// **'Save calendar file'**
+  String get reservationCalendarFileButton;
+
+  /// #1643 calendar file: reservationCalendarFileTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar file'**
+  String get reservationCalendarFileTitle;
+
+  /// #1643 calendar file: reservationCalendarFileSnapshotNote
+  ///
+  /// In en, this message translates to:
+  /// **'This file is a snapshot of the booking as it is now. If the booking is moved or cancelled later, a file already saved or shared does not change — and a shared file cannot be taken back.'**
+  String get reservationCalendarFileSnapshotNote;
+
+  /// #1643 calendar file: reservationCalendarFileEvent
+  ///
+  /// In en, this message translates to:
+  /// **'Event'**
+  String get reservationCalendarFileEvent;
+
+  /// #1643 calendar file: reservationCalendarFileWhen
+  ///
+  /// In en, this message translates to:
+  /// **'When'**
+  String get reservationCalendarFileWhen;
+
+  /// #1643 calendar file: reservationCalendarFileLocation
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get reservationCalendarFileLocation;
+
+  /// #1643 calendar file: reservationCalendarFileStatus
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get reservationCalendarFileStatus;
+
+  /// #1643 calendar file: reservationCalendarFileStatusConfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get reservationCalendarFileStatusConfirmed;
+
+  /// #1643 calendar file: reservationCalendarFileStatusCancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get reservationCalendarFileStatusCancelled;
+
+  /// #1643 calendar file: reservationCalendarFileName
+  ///
+  /// In en, this message translates to:
+  /// **'File'**
+  String get reservationCalendarFileName;
+
+  /// #1643 calendar file: reservationCalendarFileContents
+  ///
+  /// In en, this message translates to:
+  /// **'File contents'**
+  String get reservationCalendarFileContents;
+
+  /// #1643 calendar file: reservationCalendarFileStale
+  ///
+  /// In en, this message translates to:
+  /// **'The booking changed since this preview. Check it again before saving.'**
+  String get reservationCalendarFileStale;
+
+  /// #1643 calendar file: reservationCalendarFileRefused
+  ///
+  /// In en, this message translates to:
+  /// **'This booking cannot be exported: it is not yours, or it no longer exists.'**
+  String get reservationCalendarFileRefused;
+
   /// #1279 carnets: featureCarnetsTitle
   ///
   /// In en, this message translates to:

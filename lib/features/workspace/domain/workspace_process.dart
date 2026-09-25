@@ -79,6 +79,10 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.bookingPolicies,
       WorkspaceFeature.bookingGate,
       WorkspaceFeature.seatDayTimeline,
+      // #1643 — what a member does WITH a booking they hold: take it
+      // into their own calendar. A reservation capability, not a
+      // calendar one — the Calendar tab aggregates; this exports.
+      WorkspaceFeature.calendarFileExport,
     ]),
     WorkspaceSubprocess('attendance', [
       WorkspaceFeature.autoCheckInOut,

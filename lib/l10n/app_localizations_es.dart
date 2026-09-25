@@ -1424,6 +1424,56 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calendarEventActionRefused => 'rechazado';
 
   @override
+  String get featureCalendarFileExportTitle =>
+      'Archivo de calendario de una reserva';
+
+  @override
+  String get featureCalendarFileExportDesc =>
+      'Permite a un miembro guardar una de sus propias reservas como archivo de calendario estándar (.ics) para el calendario que ya usa. El archivo solo lleva la hora, el espacio reservado y el nombre del espacio de coworking — sin importe, sin nombre, sin nota, sin enlace — y es una instantánea: un cambio posterior de la reserva no actualiza un archivo ya guardado. No se escribe en ningún calendario y nada se sincroniza. Desactivada, oculta el botón.';
+
+  @override
+  String get reservationCalendarFileButton => 'Guardar archivo de calendario';
+
+  @override
+  String get reservationCalendarFileTitle => 'Archivo de calendario';
+
+  @override
+  String get reservationCalendarFileSnapshotNote =>
+      'Este archivo es una instantánea de la reserva tal como está ahora. Si más tarde se mueve o se cancela, un archivo ya guardado o compartido no cambia — y un archivo compartido no se puede recuperar.';
+
+  @override
+  String get reservationCalendarFileEvent => 'Evento';
+
+  @override
+  String get reservationCalendarFileWhen => 'Cuándo';
+
+  @override
+  String get reservationCalendarFileLocation => 'Lugar';
+
+  @override
+  String get reservationCalendarFileStatus => 'Estado';
+
+  @override
+  String get reservationCalendarFileStatusConfirmed => 'Confirmada';
+
+  @override
+  String get reservationCalendarFileStatusCancelled => 'Cancelada';
+
+  @override
+  String get reservationCalendarFileName => 'Archivo';
+
+  @override
+  String get reservationCalendarFileContents => 'Contenido del archivo';
+
+  @override
+  String get reservationCalendarFileStale =>
+      'La reserva cambió desde esta vista previa. Revísala de nuevo antes de guardar.';
+
+  @override
+  String get reservationCalendarFileRefused =>
+      'Esta reserva no se puede exportar: no es tuya o ya no existe.';
+
+  @override
   String get featureCarnetsTitle => 'Bonos';
 
   @override

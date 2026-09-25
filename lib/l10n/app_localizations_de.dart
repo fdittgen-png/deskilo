@@ -1426,6 +1426,55 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarEventActionRefused => 'abgelehnt';
 
   @override
+  String get featureCalendarFileExportTitle => 'Kalenderdatei einer Buchung';
+
+  @override
+  String get featureCalendarFileExportDesc =>
+      'Erlaubt einem Mitglied, eine seiner eigenen Buchungen als Standard-Kalenderdatei (.ics) für den Kalender zu speichern, den es bereits nutzt. Die Datei enthält nur Zeit, gebuchten Platz und den Namen des Coworking-Spaces — keinen Betrag, keinen Namen, keine Notiz, keinen Link — und sie ist eine Momentaufnahme: Eine spätere Änderung der Buchung aktualisiert eine bereits gespeicherte Datei nicht. In keinen Kalender wird geschrieben, nichts wird synchronisiert. Aus blendet die Schaltfläche aus.';
+
+  @override
+  String get reservationCalendarFileButton => 'Kalenderdatei speichern';
+
+  @override
+  String get reservationCalendarFileTitle => 'Kalenderdatei';
+
+  @override
+  String get reservationCalendarFileSnapshotNote =>
+      'Diese Datei ist eine Momentaufnahme der Buchung, wie sie jetzt ist. Wird die Buchung später verschoben oder storniert, ändert sich eine bereits gespeicherte oder geteilte Datei nicht — und eine geteilte Datei lässt sich nicht zurückholen.';
+
+  @override
+  String get reservationCalendarFileEvent => 'Termin';
+
+  @override
+  String get reservationCalendarFileWhen => 'Wann';
+
+  @override
+  String get reservationCalendarFileLocation => 'Ort';
+
+  @override
+  String get reservationCalendarFileStatus => 'Status';
+
+  @override
+  String get reservationCalendarFileStatusConfirmed => 'Bestätigt';
+
+  @override
+  String get reservationCalendarFileStatusCancelled => 'Storniert';
+
+  @override
+  String get reservationCalendarFileName => 'Datei';
+
+  @override
+  String get reservationCalendarFileContents => 'Dateiinhalt';
+
+  @override
+  String get reservationCalendarFileStale =>
+      'Die Buchung hat sich seit dieser Vorschau geändert. Prüfen Sie sie erneut, bevor Sie speichern.';
+
+  @override
+  String get reservationCalendarFileRefused =>
+      'Diese Buchung kann nicht exportiert werden: Sie gehört nicht Ihnen, oder sie existiert nicht mehr.';
+
+  @override
   String get featureCarnetsTitle => 'Mehrfachkarten';
 
   @override

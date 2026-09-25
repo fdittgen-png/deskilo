@@ -1419,6 +1419,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarEventActionRefused => 'refused';
 
   @override
+  String get featureCalendarFileExportTitle => 'Calendar file of a booking';
+
+  @override
+  String get featureCalendarFileExportDesc =>
+      'Lets a member save one of their own bookings as a standard calendar file (.ics) for the calendar they already use. The file carries the time, the booked space and the workspace name only — no amount, no name, no note, no link — and it is a snapshot: a later change to the booking does not update a file already saved. Nothing is written to any calendar and nothing syncs. Off hides the button.';
+
+  @override
+  String get reservationCalendarFileButton => 'Save calendar file';
+
+  @override
+  String get reservationCalendarFileTitle => 'Calendar file';
+
+  @override
+  String get reservationCalendarFileSnapshotNote =>
+      'This file is a snapshot of the booking as it is now. If the booking is moved or cancelled later, a file already saved or shared does not change — and a shared file cannot be taken back.';
+
+  @override
+  String get reservationCalendarFileEvent => 'Event';
+
+  @override
+  String get reservationCalendarFileWhen => 'When';
+
+  @override
+  String get reservationCalendarFileLocation => 'Location';
+
+  @override
+  String get reservationCalendarFileStatus => 'Status';
+
+  @override
+  String get reservationCalendarFileStatusConfirmed => 'Confirmed';
+
+  @override
+  String get reservationCalendarFileStatusCancelled => 'Cancelled';
+
+  @override
+  String get reservationCalendarFileName => 'File';
+
+  @override
+  String get reservationCalendarFileContents => 'File contents';
+
+  @override
+  String get reservationCalendarFileStale =>
+      'The booking changed since this preview. Check it again before saving.';
+
+  @override
+  String get reservationCalendarFileRefused =>
+      'This booking cannot be exported: it is not yours, or it no longer exists.';
+
+  @override
   String get featureCarnetsTitle => 'Carnets';
 
   @override

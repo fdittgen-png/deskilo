@@ -1427,6 +1427,56 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarEventActionRefused => 'rifiutato';
 
   @override
+  String get featureCalendarFileExportTitle =>
+      'File calendario di una prenotazione';
+
+  @override
+  String get featureCalendarFileExportDesc =>
+      'Permette a un membro di salvare una delle proprie prenotazioni come file calendario standard (.ics) per il calendario che già usa. Il file contiene solo l’orario, lo spazio prenotato e il nome dello spazio di coworking — nessun importo, nessun nome, nessuna nota, nessun link — ed è un’istantanea: una modifica successiva della prenotazione non aggiorna un file già salvato. Non viene scritto nulla in alcun calendario e nulla si sincronizza. Disattivata, nasconde il pulsante.';
+
+  @override
+  String get reservationCalendarFileButton => 'Salva file calendario';
+
+  @override
+  String get reservationCalendarFileTitle => 'File calendario';
+
+  @override
+  String get reservationCalendarFileSnapshotNote =>
+      'Questo file è un’istantanea della prenotazione così com’è ora. Se in seguito viene spostata o annullata, un file già salvato o condiviso non cambia — e un file condiviso non può essere ritirato.';
+
+  @override
+  String get reservationCalendarFileEvent => 'Evento';
+
+  @override
+  String get reservationCalendarFileWhen => 'Quando';
+
+  @override
+  String get reservationCalendarFileLocation => 'Luogo';
+
+  @override
+  String get reservationCalendarFileStatus => 'Stato';
+
+  @override
+  String get reservationCalendarFileStatusConfirmed => 'Confermata';
+
+  @override
+  String get reservationCalendarFileStatusCancelled => 'Annullata';
+
+  @override
+  String get reservationCalendarFileName => 'File';
+
+  @override
+  String get reservationCalendarFileContents => 'Contenuto del file';
+
+  @override
+  String get reservationCalendarFileStale =>
+      'La prenotazione è cambiata da questa anteprima. Controllala di nuovo prima di salvare.';
+
+  @override
+  String get reservationCalendarFileRefused =>
+      'Questa prenotazione non può essere esportata: non è tua, oppure non esiste più.';
+
+  @override
   String get featureCarnetsTitle => 'Carnet';
 
   @override
