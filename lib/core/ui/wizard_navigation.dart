@@ -30,6 +30,9 @@ class WizardNavigation extends StatefulWidget {
 class _WizardNavigationState extends State<WizardNavigation> {
   bool _asking = false;
   bool _leaving = false;
+  void _detach(WizardNavigationController? controller) {
+    if (controller?._onExit == _allowExit) controller?._onExit = null;
+  }
   @override
   void initState() { super.initState(); _attach(); }
   void _attach() { widget.controller?..completed = false.._onExit = _allowExit; }
@@ -37,11 +40,11 @@ class _WizardNavigationState extends State<WizardNavigation> {
   void didUpdateWidget(WizardNavigation oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.controller != widget.controller) {
-      oldWidget.controller?._onExit = null; _attach();
+      _detach(oldWidget.controller); _attach();
     }
   }
   @override
-  void dispose() { widget.controller?._onExit = null; super.dispose(); }
+  void dispose() { _detach(widget.controller); super.dispose(); }
 
 
   Future<void> _back() async {

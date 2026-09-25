@@ -12,6 +12,15 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/mock_providers.dart';
 
 void main() {
+  testWidgets('disposing an older frame preserves the active guard', (tester) async {
+    final controller = WizardNavigationController();
+    Widget frame(String key) => WizardNavigation(key: ValueKey(key), controller: controller,
+      busy: true, hasDraft: false, discardMessage: '', builder: (_) => const SizedBox());
+    await tester.pumpWidget(MaterialApp(home: Column(children: [frame('old'), frame('active')])));
+    await tester.pumpWidget(MaterialApp(home: Column(children: [frame('active')])));
+    expect(await controller.requestExit(), isFalse);
+  });
+
   testWidgets('browser route changes use the same step and discard guard', (tester) async {
     final navigation = WizardNavigationController();
     final router = GoRouter(initialLocation: '/onboarding', routes: [
