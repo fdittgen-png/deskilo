@@ -22,6 +22,7 @@ import '../../domain/workspace.dart';
 import '../widgets/template_group_label.dart';
 import '../widgets/template_picker.dart';
 import '../../../../core/ui/wizard_scaffold.dart';
+import '../../../../core/ui/wizard_form_layout.dart';
 
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
@@ -213,6 +214,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       onPressed: () async => signOutAndForget(ref),
     );
     final modeSwitch = SegmentedButton<bool>(
+      direction: MediaQuery.textScalerOf(context).scale(1) > 1.3
+          ? Axis.vertical : Axis.horizontal,
       segments: [
         ButtonSegment(
           value: false,
@@ -242,6 +245,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     // #1303 S2 — creating is a staged flow: a person sees what will be
     // created before it is, and Back keeps everything they typed.
     return WizardScaffold(
+      scrollForm: true,
+      formMaxWidth: _step == 2 ? double.infinity : WizardFormLayout.shortFormWidth,
       title: l10n?.onboardingTitle ?? 'Welcome to DesKilo',
       actions: [signOut],
       steps: [
@@ -264,7 +269,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       finishEnabled: !_templateRefused,
       finishKey: const ValueKey('onboarding-create'),
       finishLabel: l10n?.onboardingCreateButton ?? 'Create workspace',
-      body: _centered(Form(
+      body: Form(
         key: _createFormKey,
         child: switch (_step) {
           _nameStep => _nameStepBody(l10n, modeSwitch),
@@ -272,7 +277,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           _confirmStep => _confirmStepBody(l10n),
           _ => _startFromStepBody(),
         },
-      )),
+      ),
     );
   }
 
@@ -322,6 +327,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           DropdownButtonFormField<String>(
+            isExpanded: true,
+            itemHeight: null,
             initialValue: _countryCode,
             decoration: InputDecoration(
               labelText: l10n?.workspaceCountryLabel ?? 'Country',
@@ -372,6 +379,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             // The labels carry a dash and a clause; without this the row
             // sizes to its natural width and overflows a narrow form.
             isExpanded: true,
+            itemHeight: null,
             decoration: InputDecoration(
               labelText: l10n?.environmentLabel ?? 'Workspace type',
               helperMaxLines: 4,
