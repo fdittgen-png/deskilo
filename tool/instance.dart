@@ -38,7 +38,10 @@ import 'package:deskilo/core/instance/management_api.dart';
 
 import 'build_instance.dart';
 
-Future<int> main(List<String> argv) async {
+// Dart ignores what `main` returns; the exit code is set here.
+Future<void> main(List<String> argv) async => exitCode = await run(argv);
+
+Future<int> run(List<String> argv) async {
   final args = _Args(argv);
   final token = args.option('token') ?? Platform.environment['SUPABASE_ACCESS_TOKEN'];
   if (args.command.isEmpty || token == null || token.isEmpty) {

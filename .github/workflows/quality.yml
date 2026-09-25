@@ -201,28 +201,47 @@ jobs:
       - name: Gate
         if: always()
         run: |
-          status=0
-          for step in "Tests=${{ steps.tests.outcome }}" \
-                      "Discipline rows=${{ steps.rows.outcome }}" \
-                      "Coverage=${{ steps.coverage.outcome }}"; do
-            echo "$step"
-            case "$step" in *=failure) status=1 ;; esac
-          done
-          exit $status
+          bash scripts/job_gate.sh \
+            "Tests=${{ steps.tests.outcome }}" \
+            "Discipline rows=${{ steps.rows.outcome }}" \
+            "Coverage=${{ steps.coverage.outcome }}"
 
   database:
     name: quality · database
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: [classify]
+    # Always evaluated: a classify job that died must not skip this one,
+    # because a skipped required context counts as passing.
+    if: always()
     env:
-      # #1446 C2 — `required` runs the job as always; `not_applicable`
-      # writes every database row as such, with the classifier's reason,
-      # and the report accepts that only because the classification
-      # artifact says so.
-      DB_REQUIRED: ${{ needs.classify.outputs.database == 'required' }}
+      # #1446 C2 — only an explicit `not_applicable` stands the job down;
+      # `required`, an empty output from a classify job that died, or a
+      # word nobody expected all run the work. Standing down writes every
+      # database row as such, with the classifier's reason, and BOTH this
+      # job and the report accept that only with the classification
+      # artifact in hand.
+      DB_VERDICT: ${{ needs.classify.outputs.database }}
+      DB_REQUIRED: ${{ needs.classify.outputs.database != 'not_applicable' }}
     steps:
       - uses: actions/checkout@v4
+      - name: The verdict
+        run: |
+          echo "classify: ${{ needs.classify.result }}; database: ${DB_VERDICT:-(no verdict)}; running: $DB_REQUIRED"
+          if [ "$DB_VERDICT" != "required" ] && [ "$DB_VERDICT" != "not_applicable" ]; then
+            echo "::warning::the classifier delivered no verdict — running everything; the report job fails on the classify result"
+          fi
+      - name: The verdict artifact
+        id: verdict_file
+        if: env.DB_REQUIRED != 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: quality-classification
+          path: report
+      - name: Stand down only with the verdict on record
+        id: standdown
+        if: env.DB_REQUIRED != 'true'
+        run: grep -E '^database\|not_applicable\|' report/classification.txt
       - uses: supabase/setup-cli@v1
         if: env.DB_REQUIRED == 'true'
         with:
@@ -404,8 +423,8 @@ jobs:
           if [ "$DB_REQUIRED" != "true" ]; then
             # The classifier stood this job down: every row says so, with
             # its reason, and the report cross-checks the classification.
-            reason=$(gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" --jq '.artifacts[]|select(.name=="quality-classification")|.id' >/dev/null 2>&1; echo "classifier stood the database job down")
-            awk -F'|' '!/^[[:space:]]*(#|$)/ && $2 == "database" {print $1"|not_applicable|"r}' r="$reason" .github/quality-manifest.psv > report/database.psv
+            reason=$(sed -n 's/^database|not_applicable|\([^|]*\)|.*/\1/p' report/classification.txt 2>/dev/null | head -1)
+            awk -F'|' '!/^[[:space:]]*(#|$)/ && $2 == "database" {print $1"|not_applicable|"r}' r="${reason:-classifier stood the database job down}" .github/quality-manifest.psv > report/database.psv
             cat report/database.psv
             exit 0
           fi
@@ -454,36 +473,39 @@ jobs:
 
       # #1335 — the steps above run continue-on-error so the report is
       # always complete. This is what makes it a gate: the job fails when
-      # any of them did, and a database regression is reported apart from
-      # the Flutter job.
+      # any of them did not SUCCEED — skipped included — and a database
+      # regression is reported apart from the Flutter job. Stood down, the
+      # only success that counts is the verdict read back from the artifact.
       - name: Gate
         if: always()
         run: |
           if [ "$DB_REQUIRED" != "true" ]; then
-            echo "database work not required for this change (see report/classification.txt)"
-            exit 0
+            exec bash scripts/job_gate.sh \
+              "The verdict artifact=${{ steps.verdict_file.outcome }}" \
+              "Stand down only with the verdict on record=${{ steps.standdown.outcome }}"
           fi
-          status=0
-          for step in "Migration safety=${{ steps.migrations.outcome }}" \
-                      "Database disciplines=${{ steps.pgtap.outcome }}" \
-                      "Policies equal the migrations=${{ steps.policies.outcome }}" \
-                      "Effective contract=${{ steps.contract.outcome }}" \
-                      "Two sessions, one seat=${{ steps.race.outcome }}" \
-                      "Two owners, one decision=${{ steps.flags.outcome }}" \
-                      "Restore drill=${{ steps.restore.outcome }}" \
-                      "A member can start a payment=${{ steps.payments.outcome }}" \
-                      "A Stripe payment settles=${{ steps.settlement.outcome }}" \
-                      "Install, resume and upgrade a real schema=${{ steps.lifecycle.outcome }}" \
-                      "A populated instance upgrades and keeps its archives=${{ steps.archive.outcome }}"; do
-            echo "$step"
-            case "$step" in *=failure) status=1 ;; esac
-          done
-          exit $status
+          bash scripts/job_gate.sh \
+            "Migration safety=${{ steps.migrations.outcome }}" \
+            "Database disciplines=${{ steps.pgtap.outcome }}" \
+            "Policies equal the migrations=${{ steps.policies.outcome }}" \
+            "Effective contract=${{ steps.contract.outcome }}" \
+            "Two sessions, one seat=${{ steps.race.outcome }}" \
+            "Two owners, one decision=${{ steps.flags.outcome }}" \
+            "Restore drill=${{ steps.restore.outcome }}" \
+            "A member can start a payment=${{ steps.payments.outcome }}" \
+            "A Stripe payment settles=${{ steps.settlement.outcome }}" \
+            "Install, resume and upgrade a real schema=${{ steps.lifecycle.outcome }}" \
+            "A populated instance upgrades and keeps its archives=${{ steps.archive.outcome }}"
 
+  # #1446 C2 — the always-evaluated final gate. It is red unless every
+  # row is green or independently stood down by the classifier's own
+  # artifact, AND every job it waits on actually succeeded: a classifier
+  # that died, a cancelled code job, a database job that never reported —
+  # each is red here, whatever the table says.
   report:
     name: quality · report
     runs-on: ubuntu-latest
-    needs: [code, database]
+    needs: [classify, code, database]
     if: always()
     steps:
       - uses: actions/checkout@v4
@@ -494,6 +516,7 @@ jobs:
           path: report
 
       - name: DESKILO QUALITY REPORT
+        if: always()
         run: bash scripts/quality_report.sh report .github/quality-manifest.psv
 
       - uses: actions/upload-artifact@v4
@@ -501,3 +524,11 @@ jobs:
         with:
           name: quality-report
           path: report/quality-report.md
+
+      - name: Every job this run required succeeded
+        if: always()
+        run: |
+          bash scripts/job_gate.sh \
+            "classify the change=${{ needs.classify.result }}" \
+            "analyze · l10n gate · test · coverage=${{ needs.code.result }}" \
+            "quality · database=${{ needs.database.result }}"
