@@ -12,16 +12,27 @@
 // unverified-access (2). These drive the REAL script against a stub API
 // answering 200, 404, 403 and no-answer; nothing here touches a setting,
 // the stub only records the body that would have been sent.
+//
+// #1446 C3 — the fourth answer: a 200 that is not a protection object
+// (HTML from a proxy, an empty body, an array). It went through the
+// parser as "" for every field and came out `verified-drift` — a verdict
+// about settings nobody read — and `apply-checks` PATCHed a list built
+// from `null`, dropping every live context it exists to keep. Now it is
+// unverified-access, and nothing is written from it. The stub also
+// records the PATH of a write, so the additive helper is pinned to the
+// sub-resource that leaves reviews and restrictions untouched.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
 /// The stub `gh`: answers `api <path>` from [_dir], and records an
-/// `api -X PATCH|PUT` body instead of sending it.
+/// `api -X PATCH|PUT` body and path instead of sending it.
 const _stubGh = r'''
 #!/usr/bin/env bash
 shift                       # "api"
-if [ "$1" = "-X" ]; then cat > "$FIX/$2.body"; echo '{}'; exit 0; fi
+if [ "$1" = "-X" ]; then
+  printf '%s' "$3" > "$FIX/$2.path"; cat > "$FIX/$2.body"; echo '{}'; exit 0
+fi
 case "$1" in
   */required_status_checks) key=checks ;;
   */protection)             key=protection ;;
@@ -166,6 +177,125 @@ void main() {
     expect(r.out, contains('result=unverified-access'));
     expect(File('${_dir.path}/PATCH.body').existsSync(), isFalse,
         reason: 'a list built from an unread response must not be sent');
+
+    final down = run(['apply-checks'], files: {
+      'checks.err': 'error connecting to api.github.com: dial tcp: no host'
+    });
+    expect(down.code, 2, reason: down.out);
+    expect(down.out, contains('result=unverified-access'));
+    expect(File('${_dir.path}/PATCH.body').existsSync(), isFalse);
+  });
+
+  // ---- #1446 C3 ----------------------------------------------------------
+
+  test('an answer that is not a protection object is unverified-access, '
+      'never drift', () {
+    for (final body in const [
+      '<html><body>502 Bad Gateway</body></html>',
+      '',
+      '[]',
+      '"ok"',
+    ]) {
+      final r = run(['verify'], files: {'protection.json': body});
+      final label = body.isEmpty ? '(empty)' : body;
+      expect(r.code, 2, reason: 'body $label:\n${r.out}');
+      expect(r.out, contains('result=unverified-access'), reason: r.out);
+      expect(r.out, contains('not with a JSON object'), reason: r.out);
+      expect(r.out, isNot(contains('verified-drift')),
+          reason: 'a verdict about settings nobody read');
+      expect(r.out, isNot(contains('NO branch protection')), reason: r.out);
+      expect(r.out, isNot(contains('strict mode is')),
+          reason: '"" is not a strictness setting');
+    }
+  });
+
+  test('advisory exits 0 on drift and on a malformed answer, and neither '
+      'reads as settings proof', () {
+    final drift = run(['verify', '--advisory'],
+        files: {'protection.json': _protection([_code])});
+    expect(drift.code, 0, reason: drift.out);
+    expect(drift.out, contains('result=verified-drift'));
+    expect(drift.out, contains("only 'verified-match' is settings proof"));
+
+    final junk =
+        run(['verify', '--advisory'], files: {'protection.json': '<html>'});
+    expect(junk.code, 0, reason: junk.out);
+    expect(junk.out, contains('result=unverified-access'));
+    expect(junk.out, contains("only 'verified-match' is settings proof"));
+    expect(junk.out, isNot(contains('verified-match —')),
+        reason: 'the one line that means "applied" must not appear');
+
+    // And a real match under --advisory is still the only proof.
+    final match = run(['verify', '--advisory'],
+        files: {'protection.json': _protection([_code, _db, _report])});
+    expect(match.code, 0, reason: match.out);
+    expect(match.out, contains('result=verified-match'));
+    expect(match.out, isNot(contains('advisory and exits 0')));
+  });
+
+  test('show calls a malformed answer unreadable, not unprotected', () {
+    final r = run(['show'], files: {'protection.json': '<html>'});
+    expect(r.code, 2, reason: r.out);
+    expect(r.out, contains('UNREADABLE'));
+    expect(r.out, contains('result=unverified-access'));
+    expect(r.out, isNot(contains('(none')));
+  });
+
+  test('apply-checks writes nothing from an answer that is not the '
+      'required_status_checks object', () {
+    // `null` is the case that PATCHed before C3: live=[] strict=null.
+    for (final body in const [
+      '<html>',
+      'null',
+      '{}',
+      '[]',
+      '{"strict": "yes"}',
+    ]) {
+      final r = run(['apply-checks'], files: {'checks.json': body});
+      expect(r.code, 2, reason: 'body $body:\n${r.out}');
+      expect(r.out, contains('result=unverified-access'), reason: r.out);
+      expect(File('${_dir.path}/PATCH.body').existsSync(), isFalse,
+          reason: 'body $body: a PATCH built from it drops every live '
+              'context and sends strict=null');
+    }
+  });
+
+  test('apply-checks PATCHes only the status-check sub-resource, at the live '
+      'strictness, and names no unrelated setting', () {
+    final r = run(['apply-checks'], files: {
+      'checks.json': '{"strict": false, "contexts": ["$_code"], '
+          '"checks": [{"context": "$_code", "app_id": 15368}]}',
+      'protection.json': _protection([_code, _db, _report]),
+    });
+    expect(r.code, 0, reason: r.out);
+    expect(File('${_dir.path}/PATCH.path').readAsStringSync(),
+        endsWith('/branches/master/protection/required_status_checks'),
+        reason: 'a PATCH anywhere else can reach reviews and restrictions');
+    final body = File('${_dir.path}/PATCH.body').readAsStringSync();
+    expect(body, contains('"strict":false'));
+    expect(r.out, isNot(contains('kept live strict')),
+        reason: 'live and committed agree; no warning to give');
+    for (final unrelated in const [
+      'required_pull_request_reviews',
+      'restrictions',
+      'enforce_admins',
+      'allow_force_pushes',
+      'allow_deletions',
+      'required_linear_history',
+    ]) {
+      expect(body, isNot(contains(unrelated)),
+          reason: 'apply-checks must not carry $unrelated');
+    }
+    expect(File('${_dir.path}/PUT.body').existsSync(), isFalse,
+        reason: 'the whole-object PUT is apply, never apply-checks');
+  });
+
+  test('apply refuses to PUT over an answer it could not parse', () {
+    final r = run(['apply'], files: {'protection.json': '<html>'});
+    expect(r.code, 2, reason: r.out);
+    expect(r.out, contains('result=unverified-access'));
+    expect(r.out, contains('refusing to overwrite'));
+    expect(File('${_dir.path}/PUT.body').existsSync(), isFalse);
   });
 
   test('apply refuses to PUT over protection somebody expanded', () {

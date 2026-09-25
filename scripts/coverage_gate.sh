@@ -38,6 +38,50 @@ if ! grep -q '^SF:' "$LCOV"; then
   exit 1
 fi
 
+# #1446 C3 — the SHAPE of the evidence is checked before any percentage
+# is computed from it. The aggregation below sums whatever LF:/LH: lines
+# it meets, so a report truncated mid-record, a record with two LF:
+# lines or none, a count that is not a number, or more lines hit than
+# exist all became a score: `LH:12 LF:10` printed "core 120.0%" and
+# exited 0. A malformed report is not a low score and not a high one —
+# it is no evidence, and the run ends here, before report/ is written.
+validate_lcov() {
+  awk -v file="$LCOV" '
+    function bad(msg) {
+      errors++
+      if (errors <= 20) printf "::error::%s line %d: %s\n", file, NR, msg
+    }
+    /^SF:/ {
+      if (in_record) bad("SF: while the record for " sf " is still open (no end_of_record)")
+      in_record = 1; sf = substr($0, 4); lf = ""; lh = ""; next
+    }
+    /^L[FH]:/ {
+      if (!in_record) bad($0 " outside any SF: record")
+      v = substr($0, 4)
+      if (v !~ /^[0-9]+$/) { bad($0 " is not a non-negative integer count"); next }
+      if (substr($0, 1, 2) == "LF") { if (lf != "") bad("duplicate LF: for " sf); lf = v }
+      else                          { if (lh != "") bad("duplicate LH: for " sf); lh = v }
+      next
+    }
+    /^end_of_record$/ {
+      if (!in_record) { bad("end_of_record without an open SF: record"); next }
+      if (lf == "") bad("no LF: summary for " sf)
+      if (lh == "") bad("no LH: summary for " sf)
+      if (lf != "" && lh != "" && lh + 0 > lf + 0)
+        bad("LH:" lh " exceeds LF:" lf " for " sf " — more lines hit than exist")
+      in_record = 0; next
+    }
+    END {
+      if (in_record) bad("the report ends inside the record for " sf " — truncated before its end_of_record")
+      if (errors > 20) printf "::error::%s: ... and %d more\n", file, errors - 20
+      if (errors) {
+        printf "::error::%s is malformed (%d problem(s)) — no percentage was computed from it\n", file, errors
+        exit 1
+      }
+    }' "$LCOV"
+}
+validate_lcov || exit 1
+
 mkdir -p report
 fail=0
 
