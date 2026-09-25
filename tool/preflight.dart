@@ -47,7 +47,10 @@ Set<String> _dirty() =>
         .map((l) => l.contains(' -> ') ? l.split(' -> ').last : l)
         .toSet();
 
-int main(List<String> args) {
+// Dart ignores what `main` returns; the exit codes below are set here.
+void main(List<String> args) => exitCode = run(args);
+
+int run(List<String> args) {
   final i = args.indexOf('--base');
   final base = i >= 0 && i + 1 < args.length ? args[i + 1] : 'origin/master';
   final listOnly = args.contains('--list');
