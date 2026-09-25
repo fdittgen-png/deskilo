@@ -19,7 +19,10 @@ import 'dart:io';
 
 import 'applied_migrations/applied.dart';
 
-int main(List<String> args) {
+// Dart ignores what `main` returns; the exit code is set here.
+void main(List<String> args) => exitCode = run(args);
+
+int run(List<String> args) {
   final i = args.indexOf('--through');
   final through = i < 0 || i + 1 >= args.length ? null : args[i + 1];
   final recorded = recordApplied(

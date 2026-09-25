@@ -44,7 +44,10 @@ const wikiWidth = 720;
 /// `*.jpg` and nothing else.
 const wikiQuality = 84;
 
-int main(List<String> argv) {
+// Dart ignores what `main` returns; the exit code is set here.
+void main(List<String> argv) => exitCode = run(argv);
+
+int run(List<String> argv) {
   final args = _Args(argv);
   return switch (args.command) {
     'ingest' => _ingest(args),

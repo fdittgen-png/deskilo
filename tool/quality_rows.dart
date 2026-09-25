@@ -14,7 +14,11 @@ import 'dart:io';
 
 import 'quality_rows/rows.dart';
 
-int main(List<String> args) {
+// Dart ignores what `main` returns: `return 1` exited 0, so the rows
+// step was green over a broken stream (the rows themselves were red).
+void main(List<String> args) => exitCode = run(args);
+
+int run(List<String> args) {
   String? option(String name) {
     final i = args.indexOf('--$name');
     return i < 0 || i + 1 >= args.length ? null : args[i + 1];
