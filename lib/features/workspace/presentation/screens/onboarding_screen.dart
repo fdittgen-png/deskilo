@@ -37,19 +37,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _createFormKey = GlobalKey<FormState>();
   final _joinFormKey = GlobalKey<FormState>();
   final _name = TextEditingController();
-  // #1303 S1 — seeded from the device's country in initState; never a
-  // hardcoded Germany.
+  // #1303 — seeded from the device country.
   final _currency = TextEditingController();
   final _timezone = TextEditingController();
-  // #917 — a new space is for trying things out until its owner
-  // says otherwise. The safe answer to "is this real?" is no.
+  // #917 — development until its owner declares otherwise.
   WorkspaceEnvironment _environment = WorkspaceEnvironment.development;
   // #987 — the other side of the pair, created at the same time.
   bool _withTwin = true;
 
   /// #1120 — the template the new space starts from; null = empty canvas.
-  /// 'tiny' is the builtin and the default, resolved by key once the list
-  /// arrives.
+  /// Defaults to the builtin 'tiny' template once the list arrives.
   String? _templateId;
   bool _templateResolved = false;
 
@@ -63,7 +60,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   bool _joinMode = false;
   bool _busy = false;
 
-  /// #1303 S2 — the create flow's step: name, where, start from, confirm.
   int _step = 0;
 
   /// A creation carrying a template failed: the confirm step offers to
