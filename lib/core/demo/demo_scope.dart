@@ -57,6 +57,7 @@ import '../scan/front_camera.dart';
 import '../storage/active_workspace_store.dart';
 import '../storage/help_hint_store.dart';
 import '../storage/note_seen_store.dart';
+import '../storage/entry_intent_store.dart';
 import '../storage/notification_filter_store.dart';
 import '../links/link_launcher.dart';
 import '../share/file_sharer.dart';
@@ -149,6 +150,8 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       helpHintStoreProvider.overrideWithValue(fixture.prefs.helpHints),
       noteSeenStoreProvider.overrideWithValue(fixture.prefs.noteSeen),
       backendSettingsStoreProvider.overrideWithValue(fixture.prefs.backend),
+      // #1650 — the resumable errand is device state too.
+      entryIntentStoreProvider.overrideWithValue(fixture.prefs.entryIntent),
       // The file cache is device state too: the real one writes the
       // demonstration's synthetic rows to the device filesystem.
       cacheStoreProvider.overrideWithValue(fixture.prefs.cache),
@@ -198,6 +201,7 @@ const Set<String> demoOverriddenProviders = {
   'defaultWorkspaceStoreProvider',
   'defaultLevelStoreProvider',
   'defaultPeriodStoreProvider',
+  'entryIntentStoreProvider',
   'notificationFilterStoreProvider',
   'helpHintStoreProvider',
   'noteSeenStoreProvider',

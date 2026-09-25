@@ -38,6 +38,7 @@ import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
+import 'package:deskilo/core/storage/entry_intent_store.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
@@ -103,6 +104,7 @@ List<Override> standardTestOverrides({
   Clock? clock,
   bool devMode = false,
   BackendSettingsStore? backendSettings,
+  EntryIntentStore? entryIntent,
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
@@ -239,6 +241,9 @@ List<Override> standardTestOverrides({
     // tests, so no SharedPreferences channel and no real endpoint.
     backendSettingsStoreProvider
         .overrideWithValue(backendSettings ?? InMemoryBackendSettingsStore()),
+    // #1650 — the resumable errand: in memory, so no test resumes another's.
+    entryIntentStoreProvider
+        .overrideWithValue(entryIntent ?? InMemoryEntryIntentStore()),
     // File cache would touch path_provider channels in tests — and boot
     // eviction runs on every app pump.
     cacheStoreProvider.overrideWithValue(InMemoryCacheStore()),
