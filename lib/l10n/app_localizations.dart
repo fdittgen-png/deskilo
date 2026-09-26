@@ -18720,6 +18720,66 @@ abstract class AppLocalizations {
   /// **'You are already checked in here. Choose Check out to leave the seat.'**
   String get spaceAlreadyCheckedInHere;
 
+  /// #1659 template_capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'Two or more approvals'**
+  String get capabilityMultiApproval;
+
+  /// #1659 template_capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'Two approvals for refunds'**
+  String get capabilityRefundApprovals;
+
+  /// #1659 template_capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'Pay as you go'**
+  String get capabilityPayAsYouGo;
+
+  /// #1659 template_capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'Credit packs'**
+  String get capabilityCreditPacks;
+
+  /// #1659 template_capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription plans'**
+  String get capabilitySubscriptionPlans;
+
+  /// #1659 template_capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'Opening hours'**
+  String get capabilityOpeningHours;
+
+  /// #1659 template_capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'Custom membership form'**
+  String get capabilityCustomMemberForm;
+
+  /// #1659 template_capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'Templates set up for: {capabilities}'**
+  String librarySearchCapabilities(String capabilities);
+
+  /// #1659 template_capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'The templates\' settings could not be checked, so none is shown as matching. Try again.'**
+  String get librarySearchUnavailable;
+
+  /// #1659 template_capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'Did you mean “{word}”?'**
+  String librarySearchSuggestion(String word);
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:

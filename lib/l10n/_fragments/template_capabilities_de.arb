@@ -1,0 +1,12 @@
+{
+  "capabilityMultiApproval": "Zwei oder mehr Freigaben",
+  "capabilityRefundApprovals": "Zwei Freigaben für Erstattungen",
+  "capabilityPayAsYouGo": "Nutzungsbasierte Abrechnung",
+  "capabilityCreditPacks": "Guthabenpakete",
+  "capabilitySubscriptionPlans": "Abonnements",
+  "capabilityOpeningHours": "Öffnungszeiten",
+  "capabilityCustomMemberForm": "Eigenes Mitgliedsformular",
+  "librarySearchCapabilities": "Vorlagen eingerichtet für: {capabilities}",
+  "librarySearchUnavailable": "Die Einstellungen der Vorlagen konnten nicht geprüft werden, daher wird keine als passend angezeigt. Versuchen Sie es erneut.",
+  "librarySearchSuggestion": "Meinten Sie „{word}“?"
+}

@@ -10817,6 +10817,41 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ya ha fichado aquí. Elija « Fichar la salida » para dejar la plaza.';
 
   @override
+  String get capabilityMultiApproval => 'Dos o más aprobaciones';
+
+  @override
+  String get capabilityRefundApprovals => 'Dos aprobaciones para reembolsos';
+
+  @override
+  String get capabilityPayAsYouGo => 'Pago por uso';
+
+  @override
+  String get capabilityCreditPacks => 'Bonos';
+
+  @override
+  String get capabilitySubscriptionPlans => 'Planes de suscripción';
+
+  @override
+  String get capabilityOpeningHours => 'Horario de apertura';
+
+  @override
+  String get capabilityCustomMemberForm => 'Formulario de socio personalizado';
+
+  @override
+  String librarySearchCapabilities(String capabilities) {
+    return 'Plantillas configuradas para: $capabilities';
+  }
+
+  @override
+  String get librarySearchUnavailable =>
+      'No se pudieron comprobar los ajustes de las plantillas, así que ninguna aparece como coincidente. Inténtelo de nuevo.';
+
+  @override
+  String librarySearchSuggestion(String word) {
+    return '¿Quiso decir «$word»?';
+  }
+
+  @override
   String get themeTitle => 'Tema';
 
   @override
