@@ -5029,6 +5029,30 @@ abstract class AppLocalizations {
   /// **'Activity'**
   String get eventTypeUnknown;
 
+  /// #1449 expense_rules
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount above zero.'**
+  String get expenseInvalidAmount;
+
+  /// #1449 expense_rules
+  ///
+  /// In en, this message translates to:
+  /// **'Name the new item.'**
+  String get expenseMissingSupplyName;
+
+  /// #1449 expense_rules
+  ///
+  /// In en, this message translates to:
+  /// **'Enter at least one unit.'**
+  String get expenseInvalidSupplyQuantity;
+
+  /// #1449 expense_rules
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid unit price, or leave it empty.'**
+  String get expenseInvalidUnitPrice;
+
   /// #1190 the Features screen search field — 102 switches were unsearchable
   ///
   /// In en, this message translates to:

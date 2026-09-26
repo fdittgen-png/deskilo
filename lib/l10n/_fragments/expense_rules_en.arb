@@ -1,0 +1,18 @@
+{
+  "expenseInvalidAmount": "Enter an amount above zero.",
+  "@expenseInvalidAmount": {
+    "description": "#1449 expense_rules"
+  },
+  "expenseMissingSupplyName": "Name the new item.",
+  "@expenseMissingSupplyName": {
+    "description": "#1449 expense_rules"
+  },
+  "expenseInvalidSupplyQuantity": "Enter at least one unit.",
+  "@expenseInvalidSupplyQuantity": {
+    "description": "#1449 expense_rules"
+  },
+  "expenseInvalidUnitPrice": "Enter a valid unit price, or leave it empty.",
+  "@expenseInvalidUnitPrice": {
+    "description": "#1449 expense_rules"
+  }
+}

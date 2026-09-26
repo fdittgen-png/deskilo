@@ -2874,6 +2874,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventTypeUnknown => 'Activité';
 
   @override
+  String get expenseInvalidAmount => 'Saisissez un montant supérieur à zéro.';
+
+  @override
+  String get expenseMissingSupplyName => 'Nommez le nouvel article.';
+
+  @override
+  String get expenseInvalidSupplyQuantity => 'Saisissez au moins une unité.';
+
+  @override
+  String get expenseInvalidUnitPrice =>
+      'Saisissez un prix unitaire valide, ou laissez-le vide.';
+
+  @override
   String get featuresSearchLabel => 'Rechercher une fonctionnalité';
 
   @override

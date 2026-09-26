@@ -11,6 +11,7 @@ import '../application/record_payment.dart';
 import '../application/settle_invoices.dart';
 import '../application/save_legal_identity.dart';
 import '../application/schedule_expense.dart';
+import '../application/submit_expense.dart';
 import '../domain/invoice.dart';
 import '../domain/billing_rules.dart';
 import '../domain/dunning.dart';
@@ -86,6 +87,10 @@ ExpenseSchedules expenseScheduleCommand(Ref ref) =>
 @riverpod
 Consumptions consumptions(Ref ref) =>
     Consumptions(ref.watch(moneyRepositoryProvider));
+
+/// #1449 — an expense, and whether it may be filed as typed.
+@riverpod
+Expenses expenses(Ref ref) => Expenses(ref.watch(moneyRepositoryProvider));
 
 @riverpod
 LegalIdentity legalIdentity(Ref ref) => LegalIdentity(

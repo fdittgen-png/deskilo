@@ -52,6 +52,29 @@ void main() {
     );
   });
 
+  testWidgets('an invalid amount keeps the sheet open with the reason (#1449)',
+      (tester) async {
+    final money = await pumpMoney(tester);
+    await tester.scrollUntilVisible(
+      find.text('Submit an expense'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text('Submit an expense'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.widgetWithText(TextField, 'Amount'), '0');
+    await tester.tap(find.byKey(const ValueKey('expense-submit')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('expense-problem')), findsOneWidget);
+    expect(money.submittedExpenses, isEmpty);
+
+    await tester.enterText(find.widgetWithText(TextField, 'Amount'), '12');
+    await tester.tap(find.byKey(const ValueKey('expense-submit')));
+    await tester.pumpAndSettle();
+    expect(money.submittedExpenses.single.amountCents, 1200,
+        reason: 'the corrected entry is filed from the same sheet');
+  });
+
   testWidgets('the events feed narrates payments and expenses with amounts',
       (tester) async {
     final events = FakeEventRepository()

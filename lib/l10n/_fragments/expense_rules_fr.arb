@@ -1,0 +1,6 @@
+{
+  "expenseInvalidAmount": "Saisissez un montant supérieur à zéro.",
+  "expenseMissingSupplyName": "Nommez le nouvel article.",
+  "expenseInvalidSupplyQuantity": "Saisissez au moins une unité.",
+  "expenseInvalidUnitPrice": "Saisissez un prix unitaire valide, ou laissez-le vide."
+}

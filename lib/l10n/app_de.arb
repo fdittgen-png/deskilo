@@ -2083,6 +2083,10 @@
   "@eventTypeUnknown": {
     "description": "#1088 an event type this build does not know: the row still shows"
   },
+  "expenseInvalidAmount": "Geben Sie einen Betrag über null ein.",
+  "expenseMissingSupplyName": "Benennen Sie den neuen Artikel.",
+  "expenseInvalidSupplyQuantity": "Geben Sie mindestens eine Einheit ein.",
+  "expenseInvalidUnitPrice": "Geben Sie einen gültigen Stückpreis ein oder lassen Sie ihn leer.",
   "featuresSearchLabel": "Funktionen durchsuchen",
   "featuresFilterChanged": "Geändert",
   "featuresNoMatch": "Keine Funktion passt dazu.",
