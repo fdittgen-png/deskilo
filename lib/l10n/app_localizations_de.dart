@@ -10769,6 +10769,41 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sie sind hier bereits eingecheckt. Wählen Sie « Auschecken », um den Platz freizugeben.';
 
   @override
+  String get capabilityMultiApproval => 'Zwei oder mehr Freigaben';
+
+  @override
+  String get capabilityRefundApprovals => 'Zwei Freigaben für Erstattungen';
+
+  @override
+  String get capabilityPayAsYouGo => 'Nutzungsbasierte Abrechnung';
+
+  @override
+  String get capabilityCreditPacks => 'Guthabenpakete';
+
+  @override
+  String get capabilitySubscriptionPlans => 'Abonnements';
+
+  @override
+  String get capabilityOpeningHours => 'Öffnungszeiten';
+
+  @override
+  String get capabilityCustomMemberForm => 'Eigenes Mitgliedsformular';
+
+  @override
+  String librarySearchCapabilities(String capabilities) {
+    return 'Vorlagen eingerichtet für: $capabilities';
+  }
+
+  @override
+  String get librarySearchUnavailable =>
+      'Die Einstellungen der Vorlagen konnten nicht geprüft werden, daher wird keine als passend angezeigt. Versuchen Sie es erneut.';
+
+  @override
+  String librarySearchSuggestion(String word) {
+    return 'Meinten Sie „$word“?';
+  }
+
+  @override
   String get themeTitle => 'Design';
 
   @override

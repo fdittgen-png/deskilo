@@ -1,0 +1,12 @@
+{
+  "capabilityMultiApproval": "Dos o más aprobaciones",
+  "capabilityRefundApprovals": "Dos aprobaciones para reembolsos",
+  "capabilityPayAsYouGo": "Pago por uso",
+  "capabilityCreditPacks": "Bonos",
+  "capabilitySubscriptionPlans": "Planes de suscripción",
+  "capabilityOpeningHours": "Horario de apertura",
+  "capabilityCustomMemberForm": "Formulario de socio personalizado",
+  "librarySearchCapabilities": "Plantillas configuradas para: {capabilities}",
+  "librarySearchUnavailable": "No se pudieron comprobar los ajustes de las plantillas, así que ninguna aparece como coincidente. Inténtelo de nuevo.",
+  "librarySearchSuggestion": "¿Quiso decir «{word}»?"
+}

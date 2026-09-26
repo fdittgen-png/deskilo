@@ -10784,6 +10784,43 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous êtes déjà pointé ici. Choisissez « Pointer la sortie » pour libérer la place.';
 
   @override
+  String get capabilityMultiApproval => 'Deux validations ou plus';
+
+  @override
+  String get capabilityRefundApprovals =>
+      'Deux validations pour les remboursements';
+
+  @override
+  String get capabilityPayAsYouGo => 'Paiement à l\'usage';
+
+  @override
+  String get capabilityCreditPacks => 'Carnets';
+
+  @override
+  String get capabilitySubscriptionPlans => 'Formules d\'abonnement';
+
+  @override
+  String get capabilityOpeningHours => 'Horaires d\'ouverture';
+
+  @override
+  String get capabilityCustomMemberForm =>
+      'Formulaire d\'adhésion personnalisé';
+
+  @override
+  String librarySearchCapabilities(String capabilities) {
+    return 'Modèles configurés pour : $capabilities';
+  }
+
+  @override
+  String get librarySearchUnavailable =>
+      'Les réglages des modèles n\'ont pas pu être vérifiés : aucun n\'est donc affiché comme correspondant. Réessayez.';
+
+  @override
+  String librarySearchSuggestion(String word) {
+    return 'Vouliez-vous dire « $word » ?';
+  }
+
+  @override
   String get themeTitle => 'Thème';
 
   @override

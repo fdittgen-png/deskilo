@@ -10772,6 +10772,41 @@ class AppLocalizationsIt extends AppLocalizations {
       'Siete già registrati qui. Scegliete « Registra l\'uscita » per liberare il posto.';
 
   @override
+  String get capabilityMultiApproval => 'Due o più approvazioni';
+
+  @override
+  String get capabilityRefundApprovals => 'Due approvazioni per i rimborsi';
+
+  @override
+  String get capabilityPayAsYouGo => 'Pagamento a consumo';
+
+  @override
+  String get capabilityCreditPacks => 'Carnet';
+
+  @override
+  String get capabilitySubscriptionPlans => 'Piani di abbonamento';
+
+  @override
+  String get capabilityOpeningHours => 'Orari di apertura';
+
+  @override
+  String get capabilityCustomMemberForm => 'Modulo socio personalizzato';
+
+  @override
+  String librarySearchCapabilities(String capabilities) {
+    return 'Modelli configurati per: $capabilities';
+  }
+
+  @override
+  String get librarySearchUnavailable =>
+      'Non è stato possibile verificare le impostazioni dei modelli, quindi nessuno è mostrato come corrispondente. Riprova.';
+
+  @override
+  String librarySearchSuggestion(String word) {
+    return 'Intendevi «$word»?';
+  }
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

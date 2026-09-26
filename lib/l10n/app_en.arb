@@ -11465,6 +11465,56 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceAlreadyCheckedInHere": "You are already checked in here. Choose Check out to leave the seat.",
+  "capabilityMultiApproval": "Two or more approvals",
+  "@capabilityMultiApproval": {
+    "description": "#1659 template_capabilities"
+  },
+  "capabilityRefundApprovals": "Two approvals for refunds",
+  "@capabilityRefundApprovals": {
+    "description": "#1659 template_capabilities"
+  },
+  "capabilityPayAsYouGo": "Pay as you go",
+  "@capabilityPayAsYouGo": {
+    "description": "#1659 template_capabilities"
+  },
+  "capabilityCreditPacks": "Credit packs",
+  "@capabilityCreditPacks": {
+    "description": "#1659 template_capabilities"
+  },
+  "capabilitySubscriptionPlans": "Subscription plans",
+  "@capabilitySubscriptionPlans": {
+    "description": "#1659 template_capabilities"
+  },
+  "capabilityOpeningHours": "Opening hours",
+  "@capabilityOpeningHours": {
+    "description": "#1659 template_capabilities"
+  },
+  "capabilityCustomMemberForm": "Custom membership form",
+  "@capabilityCustomMemberForm": {
+    "description": "#1659 template_capabilities"
+  },
+  "librarySearchCapabilities": "Templates set up for: {capabilities}",
+  "@librarySearchCapabilities": {
+    "description": "#1659 template_capabilities",
+    "placeholders": {
+      "capabilities": {
+        "type": "String"
+      }
+    }
+  },
+  "librarySearchUnavailable": "The templates' settings could not be checked, so none is shown as matching. Try again.",
+  "@librarySearchUnavailable": {
+    "description": "#1659 template_capabilities"
+  },
+  "librarySearchSuggestion": "Did you mean “{word}”?",
+  "@librarySearchSuggestion": {
+    "description": "#1659 template_capabilities",
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
   "themeTitle": "Theme",
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"

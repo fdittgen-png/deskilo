@@ -1,0 +1,12 @@
+{
+  "capabilityMultiApproval": "Due o più approvazioni",
+  "capabilityRefundApprovals": "Due approvazioni per i rimborsi",
+  "capabilityPayAsYouGo": "Pagamento a consumo",
+  "capabilityCreditPacks": "Carnet",
+  "capabilitySubscriptionPlans": "Piani di abbonamento",
+  "capabilityOpeningHours": "Orari di apertura",
+  "capabilityCustomMemberForm": "Modulo socio personalizzato",
+  "librarySearchCapabilities": "Modelli configurati per: {capabilities}",
+  "librarySearchUnavailable": "Non è stato possibile verificare le impostazioni dei modelli, quindi nessuno è mostrato come corrispondente. Riprova.",
+  "librarySearchSuggestion": "Intendevi «{word}»?"
+}

@@ -10680,6 +10680,41 @@ class AppLocalizationsEn extends AppLocalizations {
       'You are already checked in here. Choose Check out to leave the seat.';
 
   @override
+  String get capabilityMultiApproval => 'Two or more approvals';
+
+  @override
+  String get capabilityRefundApprovals => 'Two approvals for refunds';
+
+  @override
+  String get capabilityPayAsYouGo => 'Pay as you go';
+
+  @override
+  String get capabilityCreditPacks => 'Credit packs';
+
+  @override
+  String get capabilitySubscriptionPlans => 'Subscription plans';
+
+  @override
+  String get capabilityOpeningHours => 'Opening hours';
+
+  @override
+  String get capabilityCustomMemberForm => 'Custom membership form';
+
+  @override
+  String librarySearchCapabilities(String capabilities) {
+    return 'Templates set up for: $capabilities';
+  }
+
+  @override
+  String get librarySearchUnavailable =>
+      'The templates\' settings could not be checked, so none is shown as matching. Try again.';
+
+  @override
+  String librarySearchSuggestion(String word) {
+    return 'Did you mean “$word”?';
+  }
+
+  @override
   String get themeTitle => 'Theme';
 
   @override

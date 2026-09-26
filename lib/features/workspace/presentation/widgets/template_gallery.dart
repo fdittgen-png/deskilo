@@ -1,4 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../application/template_search.dart';
+import '../../domain/template_capabilities.dart';
+import '../../../../core/ui/inline_banner.dart';
+import '../capability_labels.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -40,7 +46,7 @@ class TemplateGallerySection {
 ///
 /// It reads nothing itself: hosts pass the templates they were given by the
 /// server, so the same widget serves a person with no workspace yet.
-class TemplateGallery extends StatefulWidget {
+class TemplateGallery extends ConsumerStatefulWidget {
   const TemplateGallery({
     super.key,
     required this.sections,
@@ -97,10 +103,10 @@ class TemplateGallery extends StatefulWidget {
   }
 
   @override
-  State<TemplateGallery> createState() => _TemplateGalleryState();
+  ConsumerState<TemplateGallery> createState() => _TemplateGalleryState();
 }
 
-class _TemplateGalleryState extends State<TemplateGallery> {
+class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   final _search = TextEditingController();
   Timer? _debounce;
   String _query = '';
@@ -113,11 +119,61 @@ class _TemplateGalleryState extends State<TemplateGallery> {
     super.dispose();
   }
 
+  /// #1659 — what the words asked for, and what the templates' settings
+  /// answered. [_generation] discards an answer to an older query.
+  TemplateSearchResult? _capability;
+  String? _suggestion;
+  int _generation = 0;
+  bool _checking = false;
+
   void _onQuery(String value) {
     _debounce?.cancel();
     _debounce = Timer(TemplateGallery.debounce, () {
-      if (mounted) setState(() => _query = value);
+      if (!mounted) return;
+      setState(() => _query = value);
+      _searchCapabilities(value);
     });
+  }
+
+  Future<void> _searchCapabilities(String value) async {
+    final generation = ++_generation;
+    final vocabulary =
+        CapabilityVocabulary(capabilityVocabularyLabels(AppLocalizations.of(context)));
+    final parsed = vocabulary.parse(value);
+    final unknown = parsed.freeWords.where((w) => !_anyTemplateText(w)).toList();
+    setState(() {
+      _suggestion = parsed.capabilities.isEmpty && unknown.isNotEmpty
+          ? vocabulary.suggest(unknown.first)
+          : null;
+      _capability = null;
+      _checking = parsed.capabilities.isNotEmpty;
+    });
+    if (parsed.capabilities.isEmpty) return;
+    final result = await ref.read(templateSearchProvider).run(
+          capabilities: parsed.capabilities,
+          freeWords: parsed.freeWords,
+          templates: [for (final s in widget.sections) ...s.templates],
+        );
+    if (!mounted || generation != _generation) return;
+    setState(() {
+      _capability = result;
+      _checking = false;
+    });
+  }
+
+  bool _anyTemplateText(String word) => widget.sections.any((s) => s.templates.any(
+      (t) => normalizeSearch('${t.name} ${t.description} ${t.tags.join(' ')}')
+          .contains(word)));
+
+  /// Capability search answered: its matches decide; otherwise the words.
+  bool _shows(WorkspaceTemplate t) {
+    if (!t.tags.toSet().containsAll(_tags)) return false;
+    final capability = _capability;
+    if (_checking) return false;
+    if (capability != null) {
+      return !capability.unavailable && capability.matchedIds.contains(t.id);
+    }
+    return TemplateGallery.matches(t, _query, _tags);
   }
 
   @override
@@ -136,7 +192,7 @@ class _TemplateGalleryState extends State<TemplateGallery> {
     for (final section in widget.sections) {
       final shown = [
         for (final t in TemplateGallery.ordered(section.templates))
-          if (TemplateGallery.matches(t, _query, _tags)) t,
+          if (_shows(t)) t,
       ];
       if (widget.sections.length > 1) rows.add(section);
       for (final t in shown) {
@@ -158,6 +214,7 @@ class _TemplateGalleryState extends State<TemplateGallery> {
             hintText: l10n?.librarySearchHint ?? 'Search templates',
           ),
         ),
+        ..._capabilityStatus(l10n),
         if (allTags.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
           EdgeFadeScroll(
@@ -313,5 +370,51 @@ class _EmptySpaceCard extends StatelessWidget {
         onTap: onTap,
       ),
     );
+  }
+}
+
+extension on _TemplateGalleryState {
+  /// What the search understood, or why it could not answer.
+  List<Widget> _capabilityStatus(AppLocalizations? l10n) {
+    final capability = _capability;
+    final suggestion = _suggestion;
+    return [
+      if (capability != null && !capability.unavailable)
+        Padding(
+          padding: const EdgeInsets.only(top: AppSpacing.sm),
+          child: Text(
+            key: const ValueKey('template-search-capabilities'),
+            l10n?.librarySearchCapabilities(capability.capabilities
+                    .map((id) => capabilityLabel(l10n, id))
+                    .join(', ')) ??
+                'Set up for: ${capability.capabilities.join(', ')}',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
+      if (capability != null && capability.unavailable)
+        Padding(
+          padding: const EdgeInsets.only(top: AppSpacing.sm),
+          child: InlineBanner(
+            key: const ValueKey('template-search-unavailable'),
+            icon: Icons.cloud_off_outlined,
+            text: l10n?.librarySearchUnavailable ??
+                'The templates\' settings could not be checked, so none is '
+                    'shown as matching. Try again.',
+          ),
+        ),
+      if (suggestion != null)
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: TextButton(
+            key: const ValueKey('template-search-suggestion'),
+            onPressed: () {
+              _search.text = suggestion;
+              _onQuery(suggestion);
+            },
+            child: Text(l10n?.librarySearchSuggestion(suggestion) ??
+                'Did you mean "$suggestion"?'),
+          ),
+        ),
+    ];
   }
 }
