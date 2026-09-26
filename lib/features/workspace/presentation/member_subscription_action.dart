@@ -6,6 +6,7 @@ import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/set_member_subscription.dart';
 import '../domain/member.dart';
 import '../domain/overage_policy.dart';
 import '../../money/providers/money_providers.dart';
@@ -20,8 +21,8 @@ Future<void> pickMemberSubscription(
   Member member,
 ) async {
   final l10n = AppLocalizations.of(context);
-  final offered =
-      (await ref.read(subscriptionLevelsProvider.future)).offeredLevels;
+  final offered = (await ref.read(subscriptionLevelsProvider.future))
+      .offeredLevels;
   if (!context.mounted) return;
 
   final custom = TextEditingController();
@@ -44,7 +45,9 @@ Future<void> pickMemberSubscription(
                 key: const ValueKey('member-subscription-none'),
                 label: Text(l10n?.memberNoSubscription ?? 'No subscription'),
                 selected: member.subscriptionPct == 0,
-                onSelected: member.overagePolicy == OveragePolicy.payg
+                onSelected:
+                    subscriptionChange(member, 0) ==
+                        SubscriptionChange.noneWithPayg
                     ? null
                     : (_) => Navigator.of(context).pop(0),
               ),
@@ -74,7 +77,7 @@ Future<void> pickMemberSubscription(
             decoration: InputDecoration(
               labelText: l10n?.memberSubscriptionCustom ?? 'Custom (1–100)',
               suffixIcon: HelpDot(
-                  l10n?.helpHintMembersTopic ?? 'Members & plans',
+                l10n?.helpHintMembersTopic ?? 'Members & plans',
                 anchor: HelpAnchor.membersSubscription,
               ),
             ),
@@ -88,8 +91,8 @@ Future<void> pickMemberSubscription(
         ),
         FilledButton(
           onPressed: () {
-            final value = int.tryParse(custom.text.trim());
-            if (value == null || value < 1 || value > 100) return;
+            final value = customShare(custom.text);
+            if (value == null) return;
             Navigator.of(context).pop(value);
           },
           child: Text(l10n?.commonSave ?? 'Save'),
@@ -97,21 +100,20 @@ Future<void> pickMemberSubscription(
       ],
     ),
   );
-  if (pct == null || pct == member.subscriptionPct) return;
-  if (!context.mounted) return;
+  if (pct == null || !context.mounted) return;
 
+  // #1449 — application/set_member_subscription.dart holds the rule.
+  var change = SubscriptionChange.unchanged;
   if (!await runGuarded(
     context,
     domain: 'workspace',
     message: 'member subscription update failed',
-    action: () async {
-        await ref
-            .read(workspaceRepositoryProvider)
-            .updateMemberSubscription(member.id, pct);
-    },
+    action: () async =>
+        change = await ref.read(memberSubscriptionsProvider).set(member, pct),
   )) {
     return;
   }
-  ref.invalidate(workspaceMembersProvider);
+  if (change == SubscriptionChange.saved) {
+    ref.invalidate(workspaceMembersProvider);
+  }
 }
-
