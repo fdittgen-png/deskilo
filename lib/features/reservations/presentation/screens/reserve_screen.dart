@@ -7,6 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/backend/backend_settings.dart';
+import '../../application/getting_started_hint.dart';
+import '../getting_started_facts.dart';
+import '../../../workspace/domain/booking_policies.dart';
+import '../../../workspace/domain/workspace.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -21,6 +26,7 @@ import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
 import '../reserve_seat_actions.dart';
 import '../space_subjects.dart';
+import '../widgets/getting_started_card.dart';
 import '../widgets/reserve_canvas.dart';
 import '../widgets/reserve_view_menu.dart';
 import '../widgets/reserve_hub_layout.dart';
@@ -593,15 +599,58 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     // time (a cold provider would judge with the defaults).
     if (gateOn) ref.watch(bookingPoliciesProvider);
 
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final workspace = ref.watch(currentWorkspaceProvider).value;
+    final member = ref.watch(myMemberProvider);
+    final me = member.value;
+    final policies = ref.watch(bookingPoliciesProvider);
+    final endpoint = ref.watch(activeBackendProvider).value;
+    final guidanceKey = features.contains(WorkspaceFeature.memberGettingStarted)
+        ? gettingStartedSeenKey(installation: endpoint?.url ?? '',
+            accountId: ref.watch(currentAccountIdProvider) ?? '',
+            workspaceId: workspace?.id ?? '') : null;
+    final levels = ref.watch(levelsProvider);
+    final browsed = ref.watch(browsedLevelProvider);
+    final wanted = browsed == BrowsedLevel.allLevels ? null : browsed;
+    final level = levels.value?.where((l) => l.id ==
+        (wanted ?? ref.watch(selectedLevelIdProvider).value)).firstOrNull ??
+        levels.value?.firstOrNull;
+    final plan = level == null ? null : ref.watch(floorPlanProvider(level.id));
+    final spaces = level == null
+        ? factOf(levels).map((list) => list.length)
+        : factOf(plan!).map((p) => p.seats.length +
+            p.offices.where((o) => o.bookableAsWhole).length +
+            p.desks.where((d) => d.bookableAsWhole).length +
+            (level.bookableAsWhole ? 1 : 0) + levels.value!.length - 1);
+    final facts = GettingStartedFacts(
+      workspaceName: workspace?.name ?? '',
+      production: workspace != null && !workspace.isDevelopment,
+      membership: factOf(member).map((m) => m == null
+          ? MembershipStanding.inactive : switch (m.status) {
+              MemberStatus.pending => MembershipStanding.pending,
+              MemberStatus.active => m.isOwner ? MembershipStanding.owner
+                  : m.isAdmin ? MembershipStanding.administrator : MembershipStanding.member,
+              _ => MembershipStanding.inactive,
+            }),
+      dayOpen: dayKnown ? Fact.ready(dayOpen)
+          : ref.watch(openWeekdaysProvider).hasError || ref.watch(closureDaysProvider).hasError
+              ? const Fact.offline() : const Fact.loading(),
+      bookableSpaces: spaces,
+      allowance: me != null && features.contains(WorkspaceFeature.bookingPolicies)
+          ? factOf(policies).map((p) => BookingPolicies.allowanceFor(me.maxSimultaneousReservations, p))
+          : const Fact.loading(),
+      ownBooking: me == null ? const Fact.loading()
+          : factOf(ref.watch(reservationsForDayProvider(dayKeyOf(_selectedDay)))).map((list) {
+              final mine = list.where((r) => r.memberId == me.id &&
+                  r.status != ReservationStatus.cancelled && r.status != ReservationStatus.released).toList()
+                ..sort((a, b) => b.startsAt.compareTo(a.startsAt));
+              return mine.isEmpty ? null : BookingEvidence(id: mine.first.id, state: mine.first.status.name);
+            }),
+    );
+
     // No own AppBar: the hub lives inside the shell (bottom bar always
     // visible); the shell's app bar carries the 'Reserve' title.
-    // In landscape the controls move to a side panel so the view (level,
-    // week grid, month) fills the rest of the screen.
-    // Space refactor: ONE control row under the date strip — view
-    // toggle, window controls and level picker share it (all shared
-    // widgets, booking_controls.dart), horizontally scrollable so every
-    // segment keeps its 48dp target (#284 idiom). Two header rows total
-    // instead of four; the view below gets the difference.
+    // ReserveHubLayout owns the adaptive controls panel and view transitions.
     Widget header() {
       // ROW 1 — what you are looking at.
       final viewControls = <Widget>[
@@ -609,6 +658,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
             ReserveViewMenu(
               view: _view,
               onChanged: (view) => setState(() => _view = view),
+              onGetStarted: gettingStartedReopen(ref, guidanceKey),
             ),
             // 'Now' returns to today AND to the live window — parity
             // with the Plan tab, which has had it since #184.
@@ -742,6 +792,15 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                   _view == ReserveView.month ||
                   _view == ReserveView.day,
             ),
+          // #1654 — the Get started card: the workspace and ONE next step,
+          // from what this build already resolved; gated inside.
+          MotionReveal(
+            child: GettingStartedCard(
+              facts: facts,
+              seenKey: guidanceKey,
+              onChooseTime: _pickDate,
+            ),
+          ),
         ],
       );
     }

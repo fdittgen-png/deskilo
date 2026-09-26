@@ -21,6 +21,14 @@ class DismissedHelpHints extends _$DismissedHelpHints {
     await ref.read(helpHintStoreProvider).writeDismissed(next);
   }
 
+  /// #1654 — one hint returns: the Get started entry reopens its card
+  /// without touching what else was dismissed.
+  Future<void> restore(String id) async {
+    final next = {...state.value ?? const <String>{}}..remove(id);
+    state = AsyncData(next);
+    await ref.read(helpHintStoreProvider).writeDismissed(next);
+  }
+
   /// Settings → "Show help hints again": every hint returns.
   Future<void> restoreAll() async {
     state = const AsyncData(<String>{});

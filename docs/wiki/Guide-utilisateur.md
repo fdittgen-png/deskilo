@@ -127,6 +127,8 @@ Réserver depuis le plan :
 
 ## 4. Réservations (hub Réserver)
 
+**Bien démarrer** (#1654) est une aide facultative dans le hub Réserver. La carte indique l’espace actif et son environnement, puis propose une action adaptée aux informations disponibles : choisir une heure, consulter votre adhésion ou ouvrir l’aide. Ouvrir une action ne réserve rien. **Pas maintenant** masque la carte pour ce compte, ce serveur et cet espace ; le menu de vue permet de la rouvrir. Une réservation réussie actualise la carte à partir du résultat reçu ; un échec ne marque rien comme terminé. Les longs textes défilent pour garder les actions accessibles avec de grands caractères. Désactiver cette aide ne désactive pas les réservations normales.
+
 Avec de grands caractères ou une fenêtre courte, faites défiler les commandes du hub pour atteindre la date et les vues ; le plan conserve sa propre zone visible (#1654).
 
 Ouvrez le hub **Réserver** (bouton central). En haut : deux rangées de commandes. La première dit **ce que** vous regardez : les quatre **boutons de vue** et, sur le plan, le sélecteur **plan / liste**. La seconde dit **quand** : la **puce de date**, un bouton **Maintenant** dès que vous avez quitté aujourd'hui, et les **puces de moment** (matin / après-midi / journée). Les **puces d'étage** (*Tous les étages*, ou un par niveau) sont sur le plan lui-même, et le bouton **scan QR** (§4a) est dans la barre d'app, à côté de l'éditeur et de la cloche. Puis quatre vues :

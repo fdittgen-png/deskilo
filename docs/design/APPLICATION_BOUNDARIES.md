@@ -32,7 +32,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 |---|---|
 | `money -> workspace` | 117 |
 | `reservations -> plan` | 69 |
-| `reservations -> workspace` | 52 |
+| `reservations -> workspace` | 54 |
 | `profile -> workspace` | 38 |
 | `workspace -> money` | 35 |
 | `members -> workspace` | 34 |
@@ -85,7 +85,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**54 directed relationships, 692 imports.**
+**54 directed relationships, 694 imports.**
 
 Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -102,8 +102,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/data/supabase_money_repository.dart` | 1420 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1295 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1282 |
+| `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
-| `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1086 |
 | `lib/features/profile/presentation/screens/settings_screen.dart` | 1053 |
 | `lib/features/money/domain/invoice_pdf.dart` | 1050 |
 | `lib/features/editor/presentation/screens/level_canvas_screen.dart` | 1044 |
@@ -132,7 +132,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/screens/legal_identity_screen.dart` | 649 |
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
-| `lib/features/workspace/providers/workspace_providers.dart` | 615 |
+| `lib/features/workspace/providers/workspace_providers.dart` | 622 |
 | `lib/features/money/presentation/invoice_documents.dart` | 610 |
 
 **39 files.**
