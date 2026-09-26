@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'subscription_levels.dart';
@@ -9,6 +9,7 @@ part of 'subscription_levels.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $SubscriptionLevelsCopyWith<SubscriptionLevels> get copyWith => _$SubscriptionLe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubscriptionLevels&&const DeepCollectionEquality().equals(other.enabledPresets, enabledPresets)&&const DeepCollectionEquality().equals(other.extraLevels, extraLevels)&&(identical(other.allowCustom, allowCustom) || other.allowCustom == allowCustom));
+  final _this = this as SubscriptionLevels;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubscriptionLevels&&const DeepCollectionEquality().equals(other.enabledPresets, _this.enabledPresets)&&const DeepCollectionEquality().equals(other.extraLevels, _this.extraLevels)&&(identical(other.allowCustom, _this.allowCustom) || other.allowCustom == _this.allowCustom));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(enabledPresets),const DeepCollectionEquality().hash(extraLevels),allowCustom);
+int get hashCode {
+  final _this = this as SubscriptionLevels;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.enabledPresets),const DeepCollectionEquality().hash(_this.extraLevels),_this.allowCustom);
+}
 
 @override
 String toString() {
-  return 'SubscriptionLevels(enabledPresets: $enabledPresets, extraLevels: $extraLevels, allowCustom: $allowCustom)';
+  final _this = this as SubscriptionLevels;
+  return 'SubscriptionLevels(enabledPresets: ${_this.enabledPresets}, extraLevels: ${_this.extraLevels}, allowCustom: ${_this.allowCustom})';
 }
 
 
@@ -63,7 +69,7 @@ class _$SubscriptionLevelsCopyWithImpl<$Res>
 /// Create a copy of SubscriptionLevels
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? enabledPresets = null,Object? extraLevels = null,Object? allowCustom = null,}) {
-  return _then(_self.copyWith(
+  return _then(SubscriptionLevels(
 enabledPresets: null == enabledPresets ? _self.enabledPresets : enabledPresets // ignore: cast_nullable_to_non_nullable
 as List<int>,extraLevels: null == extraLevels ? _self.extraLevels : extraLevels // ignore: cast_nullable_to_non_nullable
 as List<int>,allowCustom: null == allowCustom ? _self.allowCustom : allowCustom // ignore: cast_nullable_to_non_nullable
@@ -202,7 +208,7 @@ return $default(_that.enabledPresets,_that.extraLevels,_that.allowCustom);case _
 
 
 class _SubscriptionLevels extends SubscriptionLevels {
-  const _SubscriptionLevels({final  List<int> enabledPresets = const [25, 50, 75, 100], final  List<int> extraLevels = const [], this.allowCustom = false}): _enabledPresets = enabledPresets,_extraLevels = extraLevels,super._();
+  const _SubscriptionLevels({ List<int> enabledPresets = const [25, 50, 75, 100],  List<int> extraLevels = const [], this.allowCustom = false}): _enabledPresets = enabledPresets,_extraLevels = extraLevels,super._();
   
 
  final  List<int> _enabledPresets;
@@ -231,16 +237,18 @@ _$SubscriptionLevelsCopyWith<_SubscriptionLevels> get copyWith => __$Subscriptio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubscriptionLevels&&const DeepCollectionEquality().equals(other._enabledPresets, _enabledPresets)&&const DeepCollectionEquality().equals(other._extraLevels, _extraLevels)&&(identical(other.allowCustom, allowCustom) || other.allowCustom == allowCustom));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubscriptionLevels&&const DeepCollectionEquality().equals(other.enabledPresets, _enabledPresets)&&const DeepCollectionEquality().equals(other.extraLevels, _extraLevels)&&(identical(other.allowCustom, allowCustom) || other.allowCustom == allowCustom));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_enabledPresets),const DeepCollectionEquality().hash(_extraLevels),allowCustom);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_enabledPresets),const DeepCollectionEquality().hash(_extraLevels),allowCustom);
+}
 
 @override
 String toString() {
-  return 'SubscriptionLevels(enabledPresets: $enabledPresets, extraLevels: $extraLevels, allowCustom: $allowCustom)';
+    return 'SubscriptionLevels(enabledPresets: $enabledPresets, extraLevels: $extraLevels, allowCustom: $allowCustom)';
 }
 
 

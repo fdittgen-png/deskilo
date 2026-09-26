@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'grid_geometry.dart';
@@ -9,6 +9,7 @@ part of 'grid_geometry.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $GridRectCopyWith<GridRect> get copyWith => _$GridRectCopyWithImpl<GridRect>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GridRect&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.w, w) || other.w == w)&&(identical(other.h, h) || other.h == h));
+  final _this = this as GridRect;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GridRect&&(identical(other.x, _this.x) || other.x == _this.x)&&(identical(other.y, _this.y) || other.y == _this.y)&&(identical(other.w, _this.w) || other.w == _this.w)&&(identical(other.h, _this.h) || other.h == _this.h));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,x,y,w,h);
+int get hashCode {
+  final _this = this as GridRect;
+  return Object.hash(runtimeType,_this.x,_this.y,_this.w,_this.h);
+}
 
 @override
 String toString() {
-  return 'GridRect(x: $x, y: $y, w: $w, h: $h)';
+  final _this = this as GridRect;
+  return 'GridRect(x: ${_this.x}, y: ${_this.y}, w: ${_this.w}, h: ${_this.h})';
 }
 
 
@@ -63,7 +69,7 @@ class _$GridRectCopyWithImpl<$Res>
 /// Create a copy of GridRect
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? x = null,Object? y = null,Object? w = null,Object? h = null,}) {
-  return _then(_self.copyWith(
+  return _then(GridRect(
 x: null == x ? _self.x : x // ignore: cast_nullable_to_non_nullable
 as int,y: null == y ? _self.y : y // ignore: cast_nullable_to_non_nullable
 as int,w: null == w ? _self.w : w // ignore: cast_nullable_to_non_nullable
@@ -221,16 +227,18 @@ _$GridRectCopyWith<_GridRect> get copyWith => __$GridRectCopyWithImpl<_GridRect>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GridRect&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.w, w) || other.w == w)&&(identical(other.h, h) || other.h == h));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _GridRect&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.w, w) || other.w == w)&&(identical(other.h, h) || other.h == h));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,x,y,w,h);
+int get hashCode {
+    return Object.hash(runtimeType,x,y,w,h);
+}
 
 @override
 String toString() {
-  return 'GridRect(x: $x, y: $y, w: $w, h: $h)';
+    return 'GridRect(x: $x, y: $y, w: $w, h: $h)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'seat.dart';
@@ -9,6 +9,7 @@ part of 'seat.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -28,16 +29,21 @@ $SeatCopyWith<Seat> get copyWith => _$SeatCopyWithImpl<Seat>(this as Seat, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Seat&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.name, name) || other.name == name)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.chair, chair) || other.chair == chair)&&const DeepCollectionEquality().equals(other.amenities, amenities)&&(identical(other.blockedFrom, blockedFrom) || other.blockedFrom == blockedFrom)&&(identical(other.blockedTo, blockedTo) || other.blockedTo == blockedTo)&&(identical(other.nfcUid, nfcUid) || other.nfcUid == nfcUid)&&(identical(other.system, system) || other.system == system));
+  final _this = this as Seat;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Seat&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.deskId, _this.deskId) || other.deskId == _this.deskId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.x, _this.x) || other.x == _this.x)&&(identical(other.y, _this.y) || other.y == _this.y)&&(identical(other.orientation, _this.orientation) || other.orientation == _this.orientation)&&(identical(other.chair, _this.chair) || other.chair == _this.chair)&&const DeepCollectionEquality().equals(other.amenities, _this.amenities)&&(identical(other.blockedFrom, _this.blockedFrom) || other.blockedFrom == _this.blockedFrom)&&(identical(other.blockedTo, _this.blockedTo) || other.blockedTo == _this.blockedTo)&&(identical(other.nfcUid, _this.nfcUid) || other.nfcUid == _this.nfcUid)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,deskId,name,x,y,orientation,chair,const DeepCollectionEquality().hash(amenities),blockedFrom,blockedTo,nfcUid,system);
+int get hashCode {
+  final _this = this as Seat;
+  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.deskId,_this.name,_this.x,_this.y,_this.orientation,_this.chair,const DeepCollectionEquality().hash(_this.amenities),_this.blockedFrom,_this.blockedTo,_this.nfcUid,_this.system);
+}
 
 @override
 String toString() {
-  return 'Seat(id: $id, workspaceId: $workspaceId, deskId: $deskId, name: $name, x: $x, y: $y, orientation: $orientation, chair: $chair, amenities: $amenities, blockedFrom: $blockedFrom, blockedTo: $blockedTo, nfcUid: $nfcUid, system: $system)';
+  final _this = this as Seat;
+  return 'Seat(id: ${_this.id}, workspaceId: ${_this.workspaceId}, deskId: ${_this.deskId}, name: ${_this.name}, x: ${_this.x}, y: ${_this.y}, orientation: ${_this.orientation}, chair: ${_this.chair}, amenities: ${_this.amenities}, blockedFrom: ${_this.blockedFrom}, blockedTo: ${_this.blockedTo}, nfcUid: ${_this.nfcUid}, system: ${_this.system})';
 }
 
 
@@ -66,7 +72,7 @@ class _$SeatCopyWithImpl<$Res>
 /// Create a copy of Seat
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? deskId = null,Object? name = null,Object? x = null,Object? y = null,Object? orientation = null,Object? chair = null,Object? amenities = null,Object? blockedFrom = freezed,Object? blockedTo = freezed,Object? nfcUid = freezed,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(Seat(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,deskId: null == deskId ? _self.deskId : deskId // ignore: cast_nullable_to_non_nullable
@@ -215,7 +221,7 @@ return $default(_that.id,_that.workspaceId,_that.deskId,_that.name,_that.x,_that
 
 
 class _Seat extends Seat {
-  const _Seat({required this.id, required this.workspaceId, required this.deskId, required this.name, required this.x, required this.y, required this.orientation, required this.chair, required final  List<String> amenities, this.blockedFrom, this.blockedTo, this.nfcUid, this.system = SystemColumns.none}): _amenities = amenities,super._();
+  const _Seat({required this.id, required this.workspaceId, required this.deskId, required this.name, required this.x, required this.y, required this.orientation, required this.chair, required  List<String> amenities, this.blockedFrom, this.blockedTo, this.nfcUid, this.system = SystemColumns.none}): _amenities = amenities,super._();
   
 
 @override final  String id;
@@ -251,16 +257,18 @@ _$SeatCopyWith<_Seat> get copyWith => __$SeatCopyWithImpl<_Seat>(this, _$identit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Seat&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.name, name) || other.name == name)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.chair, chair) || other.chair == chair)&&const DeepCollectionEquality().equals(other._amenities, _amenities)&&(identical(other.blockedFrom, blockedFrom) || other.blockedFrom == blockedFrom)&&(identical(other.blockedTo, blockedTo) || other.blockedTo == blockedTo)&&(identical(other.nfcUid, nfcUid) || other.nfcUid == nfcUid)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Seat&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.name, name) || other.name == name)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.chair, chair) || other.chair == chair)&&const DeepCollectionEquality().equals(other.amenities, _amenities)&&(identical(other.blockedFrom, blockedFrom) || other.blockedFrom == blockedFrom)&&(identical(other.blockedTo, blockedTo) || other.blockedTo == blockedTo)&&(identical(other.nfcUid, nfcUid) || other.nfcUid == nfcUid)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,deskId,name,x,y,orientation,chair,const DeepCollectionEquality().hash(_amenities),blockedFrom,blockedTo,nfcUid,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,workspaceId,deskId,name,x,y,orientation,chair,const DeepCollectionEquality().hash(_amenities),blockedFrom,blockedTo,nfcUid,system);
+}
 
 @override
 String toString() {
-  return 'Seat(id: $id, workspaceId: $workspaceId, deskId: $deskId, name: $name, x: $x, y: $y, orientation: $orientation, chair: $chair, amenities: $amenities, blockedFrom: $blockedFrom, blockedTo: $blockedTo, nfcUid: $nfcUid, system: $system)';
+    return 'Seat(id: $id, workspaceId: $workspaceId, deskId: $deskId, name: $name, x: $x, y: $y, orientation: $orientation, chair: $chair, amenities: $amenities, blockedFrom: $blockedFrom, blockedTo: $blockedTo, nfcUid: $nfcUid, system: $system)';
 }
 
 

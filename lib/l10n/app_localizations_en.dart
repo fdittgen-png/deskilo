@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -1188,8 +1189,7 @@ class AppLocalizationsEn extends AppLocalizations {
       locale: localeName,
       other:
           'The $count invoices this one replaces can follow it, each on its own pages and stamped as regrouped.',
-      one:
-          'The invoice this one replaces can follow it, on its own pages and stamped as regrouped.',
+      one: 'The invoice this one replaces can follow it, on its own pages and stamped as regrouped.',
     );
     return '$_temp0';
   }

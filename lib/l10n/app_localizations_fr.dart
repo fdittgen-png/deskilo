@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -1196,8 +1197,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           'Les $count factures que celle-ci remplace peuvent la suivre, chacune sur ses propres pages et tamponnée comme regroupée.',
-      one:
-          'La facture que celle-ci remplace peut la suivre, sur ses propres pages et tamponnée comme regroupée.',
+      one: 'La facture que celle-ci remplace peut la suivre, sur ses propres pages et tamponnée comme regroupée.',
     );
     return '$_temp0';
   }

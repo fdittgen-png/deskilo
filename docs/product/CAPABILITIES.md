@@ -29,7 +29,7 @@ Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipp
 
 A member finds a free place on the plan and holds it for a period; the database refuses a second booking of the same place at the same time, whoever asks and however many clients race.
 
-- **Code:** shipped · component `98699b04f25b`
+- **Code:** shipped · component `c716ad520b2e`
 - **Needs:** A workspace with a published plan and opening hours; booking rules in Settings.
 - **Limits:** Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.
 - **Feature flags:** `bookingGate`, `bookingPolicies`, `seriesBooking`, `autoCheckInOut`
@@ -73,7 +73,7 @@ Every member has a ledger: subscription charges, extra usage, approved shared ex
 
 A join, an expense, a deletion or a settings change waits for the quorum the workspace configured; the decision trail records who decided and the database enforces the rule it records.
 
-- **Code:** shipped · component `048f7cafc82d`
+- **Code:** shipped · component `4a7ae0f756c8`
 - **Needs:** Roles assigned; a quorum per decision kind in Settings.
 - **Limits:** Quorums count distinct people by membership, not by device or session.
 - **Feature flags:** `validationScopes`, `validationChain`, `deletionRequests`
@@ -189,7 +189,7 @@ Storage objects, Auth configuration and the running application recover to a kno
 
 A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.
 
-- **Code:** shipped · component `7137253b5b97`
+- **Code:** shipped · component `1dd8e9d36b90`
 - **Needs:** None: the Demo is built into every client.
 - **Limits:** The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.
 - **Feature flags:** `demoMode`

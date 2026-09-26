@@ -87,7 +87,7 @@ env:
   # spelled the literal at the use site, so a version bump touched seven
   # files and silently left the EIGHTH — the iOS release leg — behind.
   # The odd one out is always the one that gets missed.
-  FLUTTER_VERSION: "3.44.9"
+  FLUTTER_VERSION: "3.47.5"
 
 jobs:
   build-and-upload:

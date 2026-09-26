@@ -64,7 +64,7 @@ abstract class _$KioskMode extends $Notifier<KioskModeDecision> {
   KioskModeDecision build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<KioskModeDecision, KioskModeDecision>;
     final element =
         ref.element
@@ -74,6 +74,6 @@ abstract class _$KioskMode extends $Notifier<KioskModeDecision> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

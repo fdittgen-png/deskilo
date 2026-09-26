@@ -68,18 +68,13 @@ Duration reconnectDelay(int attempt) =>
 /// socket the same re-entry merely scheduled two reconnects per outage.
 class ChannelSupervisor<C extends Object> {
   ChannelSupervisor({
-    required C Function() create,
-    required void Function(C channel) subscribe,
-    required void Function(C channel) remove,
-    required void Function(String message) trace,
-    required void Function() onResync,
-    Duration Function(int attempt) delayFor = reconnectDelay,
-  })  : _create = create,
-        _subscribe = subscribe,
-        _remove = remove,
-        _trace = trace,
-        _onResync = onResync,
-        _delayFor = delayFor;
+    required this._create,
+    required this._subscribe,
+    required this._remove,
+    required this._trace,
+    required this._onResync,
+    this._delayFor = reconnectDelay,
+  });
 
   final C Function() _create;
   final void Function(C channel) _subscribe;

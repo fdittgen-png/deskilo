@@ -56,7 +56,7 @@ void main() {
       expect(plain(const AppFormat(locale: 'fr_FR', currencyCode: eur).money(123456)),
           contains('1 234,56'));
       expect(const AppFormat(locale: 'de_CH', currencyCode: eur).money(123456),
-          contains('1’234.56'));
+          contains("1'234.56"));
     });
 
     test('a yen amount is never divided by 100', () {

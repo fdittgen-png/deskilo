@@ -12,7 +12,7 @@ import 'package:deskilo/features/auth/domain/social_provider.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
-  FakeAuthRepository({String? userId}) : _userId = userId;
+  FakeAuthRepository({this._userId});
 
   FakeAuthRepository.signedIn() : this(userId: 'user-1');
 

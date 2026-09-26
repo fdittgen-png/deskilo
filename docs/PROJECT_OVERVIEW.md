@@ -131,8 +131,8 @@ the test inventory's own file list — so the tool cannot drift either.
 
 | Tool | Pinned version |
 |---|---|
-| Flutter | **3.41.9** stable (`FLUTTER_VERSION` in every workflow) |
-| Dart SDK constraint | `^3.11.5` |
+| Flutter | **3.47.5** stable (`FLUTTER_VERSION` in every workflow) |
+| Dart SDK constraint | `^3.13.0` |
 | Java / JDK | 17 (temurin on CI; `JavaVersion.VERSION_17` source/target) |
 | Android Gradle Plugin | 8.11.1 |
 | Kotlin | 2.2.20 |
@@ -229,9 +229,9 @@ One user account can belong to several workspaces; the app scopes everything to 
 
 | Layer | Choice | Rationale (ADR) |
 |---|---|---|
-| UI framework | Flutter 3.41.9 stable, Material 3 via `flex_color_scheme` ^8.1.0 | One codebase for Android, iOS, macOS, Windows, web (0001) |
-| State | **Riverpod 3 with codegen** — `flutter_riverpod` ^3.0.3, `riverpod_annotation` ^4.0.2 | Compile-safe providers, no manual wiring (0001) |
-| Models | `freezed` ^3.0.0 + `json_serializable` ^6.9.0 | Value semantics, exhaustive `sealed` matching |
+| UI framework | Flutter 3.47.5 stable, Material 3 via `flex_color_scheme` ^8.1.0 | One codebase for Android, iOS, macOS, Windows, web (0001) |
+| State | **Riverpod 3 with codegen** — `flutter_riverpod` ^3.4.3, `riverpod_annotation` ^4.0.2 | Compile-safe providers, no manual wiring (0001) |
+| Models | `freezed` ^4.0.2 + `json_serializable` ^6.9.0 | Value semantics, exhaustive `sealed` matching |
 | Routing | `go_router` ^17.3.0 with a `StatefulShellRoute` bottom-nav shell | Declarative redirects encode role/feature gating |
 | Backend client | `supabase_flutter` ^2.15.4 (PostgREST + GoTrue); `dio` ^5.10.0 for raw HTTP | Multi-user source of truth (0002) |
 | Local storage | `hive` ^2.2.3 (encrypted) + `shared_preferences` ^2.5.5 | Offline read cache, active-workspace choice |

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'desk.dart';
@@ -9,6 +9,7 @@ part of 'desk.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -26,16 +27,21 @@ $DeskCopyWith<Desk> get copyWith => _$DeskCopyWithImpl<Desk>(this as Desk, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Desk&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.officeId, officeId) || other.officeId == officeId)&&(identical(other.name, name) || other.name == name)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.system, system) || other.system == system));
+  final _this = this as Desk;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Desk&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.officeId, _this.officeId) || other.officeId == _this.officeId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.bookableAsWhole, _this.bookableAsWhole) || other.bookableAsWhole == _this.bookableAsWhole)&&(identical(other.priceCents, _this.priceCents) || other.priceCents == _this.priceCents)&&(identical(other.rect, _this.rect) || other.rect == _this.rect)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,officeId,name,bookableAsWhole,priceCents,rect,system);
+int get hashCode {
+  final _this = this as Desk;
+  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.officeId,_this.name,_this.bookableAsWhole,_this.priceCents,_this.rect,_this.system);
+}
 
 @override
 String toString() {
-  return 'Desk(id: $id, workspaceId: $workspaceId, officeId: $officeId, name: $name, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, rect: $rect, system: $system)';
+  final _this = this as Desk;
+  return 'Desk(id: ${_this.id}, workspaceId: ${_this.workspaceId}, officeId: ${_this.officeId}, name: ${_this.name}, bookableAsWhole: ${_this.bookableAsWhole}, priceCents: ${_this.priceCents}, rect: ${_this.rect}, system: ${_this.system})';
 }
 
 
@@ -64,7 +70,7 @@ class _$DeskCopyWithImpl<$Res>
 /// Create a copy of Desk
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? officeId = null,Object? name = null,Object? bookableAsWhole = null,Object? priceCents = null,Object? rect = null,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(Desk(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,officeId: null == officeId ? _self.officeId : officeId // ignore: cast_nullable_to_non_nullable
@@ -240,16 +246,18 @@ _$DeskCopyWith<_Desk> get copyWith => __$DeskCopyWithImpl<_Desk>(this, _$identit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Desk&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.officeId, officeId) || other.officeId == officeId)&&(identical(other.name, name) || other.name == name)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Desk&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.officeId, officeId) || other.officeId == officeId)&&(identical(other.name, name) || other.name == name)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,officeId,name,bookableAsWhole,priceCents,rect,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,workspaceId,officeId,name,bookableAsWhole,priceCents,rect,system);
+}
 
 @override
 String toString() {
-  return 'Desk(id: $id, workspaceId: $workspaceId, officeId: $officeId, name: $name, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, rect: $rect, system: $system)';
+    return 'Desk(id: $id, workspaceId: $workspaceId, officeId: $officeId, name: $name, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, rect: $rect, system: $system)';
 }
 
 

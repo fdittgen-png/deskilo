@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'floor_plan.dart';
@@ -9,6 +9,7 @@ part of 'floor_plan.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $FloorPlanCopyWith<FloorPlan> get copyWith => _$FloorPlanCopyWithImpl<FloorPlan>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FloorPlan&&(identical(other.levelId, levelId) || other.levelId == levelId)&&const DeepCollectionEquality().equals(other.offices, offices)&&const DeepCollectionEquality().equals(other.desks, desks)&&const DeepCollectionEquality().equals(other.seats, seats)&&const DeepCollectionEquality().equals(other.images, images));
+  final _this = this as FloorPlan;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FloorPlan&&(identical(other.levelId, _this.levelId) || other.levelId == _this.levelId)&&const DeepCollectionEquality().equals(other.offices, _this.offices)&&const DeepCollectionEquality().equals(other.desks, _this.desks)&&const DeepCollectionEquality().equals(other.seats, _this.seats)&&const DeepCollectionEquality().equals(other.images, _this.images));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,levelId,const DeepCollectionEquality().hash(offices),const DeepCollectionEquality().hash(desks),const DeepCollectionEquality().hash(seats),const DeepCollectionEquality().hash(images));
+int get hashCode {
+  final _this = this as FloorPlan;
+  return Object.hash(runtimeType,_this.levelId,const DeepCollectionEquality().hash(_this.offices),const DeepCollectionEquality().hash(_this.desks),const DeepCollectionEquality().hash(_this.seats),const DeepCollectionEquality().hash(_this.images));
+}
 
 @override
 String toString() {
-  return 'FloorPlan(levelId: $levelId, offices: $offices, desks: $desks, seats: $seats, images: $images)';
+  final _this = this as FloorPlan;
+  return 'FloorPlan(levelId: ${_this.levelId}, offices: ${_this.offices}, desks: ${_this.desks}, seats: ${_this.seats}, images: ${_this.images})';
 }
 
 
@@ -63,7 +69,7 @@ class _$FloorPlanCopyWithImpl<$Res>
 /// Create a copy of FloorPlan
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? levelId = null,Object? offices = null,Object? desks = null,Object? seats = null,Object? images = null,}) {
-  return _then(_self.copyWith(
+  return _then(FloorPlan(
 levelId: null == levelId ? _self.levelId : levelId // ignore: cast_nullable_to_non_nullable
 as String,offices: null == offices ? _self.offices : offices // ignore: cast_nullable_to_non_nullable
 as List<Office>,desks: null == desks ? _self.desks : desks // ignore: cast_nullable_to_non_nullable
@@ -204,7 +210,7 @@ return $default(_that.levelId,_that.offices,_that.desks,_that.seats,_that.images
 
 
 class _FloorPlan extends FloorPlan {
-  const _FloorPlan({required this.levelId, required final  List<Office> offices, required final  List<Desk> desks, required final  List<Seat> seats, final  List<PlanImage> images = const <PlanImage>[]}): _offices = offices,_desks = desks,_seats = seats,_images = images,super._();
+  const _FloorPlan({required this.levelId, required  List<Office> offices, required  List<Desk> desks, required  List<Seat> seats,  List<PlanImage> images = const <PlanImage>[]}): _offices = offices,_desks = desks,_seats = seats,_images = images,super._();
   
 
 @override final  String levelId;
@@ -247,16 +253,18 @@ _$FloorPlanCopyWith<_FloorPlan> get copyWith => __$FloorPlanCopyWithImpl<_FloorP
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FloorPlan&&(identical(other.levelId, levelId) || other.levelId == levelId)&&const DeepCollectionEquality().equals(other._offices, _offices)&&const DeepCollectionEquality().equals(other._desks, _desks)&&const DeepCollectionEquality().equals(other._seats, _seats)&&const DeepCollectionEquality().equals(other._images, _images));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FloorPlan&&(identical(other.levelId, levelId) || other.levelId == levelId)&&const DeepCollectionEquality().equals(other.offices, _offices)&&const DeepCollectionEquality().equals(other.desks, _desks)&&const DeepCollectionEquality().equals(other.seats, _seats)&&const DeepCollectionEquality().equals(other.images, _images));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,levelId,const DeepCollectionEquality().hash(_offices),const DeepCollectionEquality().hash(_desks),const DeepCollectionEquality().hash(_seats),const DeepCollectionEquality().hash(_images));
+int get hashCode {
+    return Object.hash(runtimeType,levelId,const DeepCollectionEquality().hash(_offices),const DeepCollectionEquality().hash(_desks),const DeepCollectionEquality().hash(_seats),const DeepCollectionEquality().hash(_images));
+}
 
 @override
 String toString() {
-  return 'FloorPlan(levelId: $levelId, offices: $offices, desks: $desks, seats: $seats, images: $images)';
+    return 'FloorPlan(levelId: $levelId, offices: $offices, desks: $desks, seats: $seats, images: $images)';
 }
 
 

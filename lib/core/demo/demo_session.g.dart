@@ -61,7 +61,7 @@ abstract class _$DemoSessionController extends $Notifier<DemoSession> {
   DemoSession build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<DemoSession, DemoSession>;
     final element =
         ref.element
@@ -71,6 +71,6 @@ abstract class _$DemoSessionController extends $Notifier<DemoSession> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

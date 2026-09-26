@@ -76,7 +76,7 @@ Future<int> run(List<String> argv) async {
           databasePassword: password,
           onStatus: (s) => stdout.writeln('project: $s'),
         );
-        return _install(builder, project.ref, 0);
+        return await _install(builder, project.ref, 0);
       case 'install':
         final ref = args.option('ref');
         if (ref == null) {
@@ -87,7 +87,7 @@ Future<int> run(List<String> argv) async {
         // #1314 — without --skip the install resumes from what the
         // project recorded.
         final skip = args.option('skip');
-        return _install(builder, ref, skip == null ? null : int.tryParse(skip) ?? 0);
+        return await _install(builder, ref, skip == null ? null : int.tryParse(skip) ?? 0);
       case 'record':
         final ref = args.option('ref');
         final through = args.option('through');

@@ -199,7 +199,7 @@ abstract class _$ActiveWorkspaceId extends $AsyncNotifier<String?> {
   FutureOr<String?> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<String?>, String?>;
     final element =
         ref.element
@@ -209,7 +209,7 @@ abstract class _$ActiveWorkspaceId extends $AsyncNotifier<String?> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -278,7 +278,7 @@ abstract class _$DefaultWorkspaceId extends $AsyncNotifier<String?> {
   FutureOr<String?> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<String?>, String?>;
     final element =
         ref.element
@@ -288,7 +288,7 @@ abstract class _$DefaultWorkspaceId extends $AsyncNotifier<String?> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -1196,7 +1196,7 @@ abstract class _$UnreadNoteCount extends $AsyncNotifier<int> {
   FutureOr<int> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<int>, int>;
     final element =
         ref.element
@@ -1206,7 +1206,7 @@ abstract class _$UnreadNoteCount extends $AsyncNotifier<int> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'workspace_event.dart';
@@ -9,6 +9,7 @@ part of 'workspace_event.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -26,16 +27,21 @@ $WorkspaceEventCopyWith<WorkspaceEvent> get copyWith => _$WorkspaceEventCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.type, type) || other.type == type)&&(identical(other.action, action) || other.action == action)&&(identical(other.actorMemberId, actorMemberId) || other.actorMemberId == actorMemberId)&&(identical(other.subjectMemberId, subjectMemberId) || other.subjectMemberId == subjectMemberId)&&(identical(other.reservationId, reservationId) || other.reservationId == reservationId)&&const DeepCollectionEquality().equals(other.payload, payload)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt)&&(identical(other.system, system) || other.system == system));
+  final _this = this as WorkspaceEvent;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceEvent&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.action, _this.action) || other.action == _this.action)&&(identical(other.actorMemberId, _this.actorMemberId) || other.actorMemberId == _this.actorMemberId)&&(identical(other.subjectMemberId, _this.subjectMemberId) || other.subjectMemberId == _this.subjectMemberId)&&(identical(other.reservationId, _this.reservationId) || other.reservationId == _this.reservationId)&&const DeepCollectionEquality().equals(other.payload, _this.payload)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.decidedAt, _this.decidedAt) || other.decidedAt == _this.decidedAt)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,type,action,actorMemberId,subjectMemberId,reservationId,const DeepCollectionEquality().hash(payload),status,createdAt,decidedAt,system);
+int get hashCode {
+  final _this = this as WorkspaceEvent;
+  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.type,_this.action,_this.actorMemberId,_this.subjectMemberId,_this.reservationId,const DeepCollectionEquality().hash(_this.payload),_this.status,_this.createdAt,_this.decidedAt,_this.system);
+}
 
 @override
 String toString() {
-  return 'WorkspaceEvent(id: $id, workspaceId: $workspaceId, type: $type, action: $action, actorMemberId: $actorMemberId, subjectMemberId: $subjectMemberId, reservationId: $reservationId, payload: $payload, status: $status, createdAt: $createdAt, decidedAt: $decidedAt, system: $system)';
+  final _this = this as WorkspaceEvent;
+  return 'WorkspaceEvent(id: ${_this.id}, workspaceId: ${_this.workspaceId}, type: ${_this.type}, action: ${_this.action}, actorMemberId: ${_this.actorMemberId}, subjectMemberId: ${_this.subjectMemberId}, reservationId: ${_this.reservationId}, payload: ${_this.payload}, status: ${_this.status}, createdAt: ${_this.createdAt}, decidedAt: ${_this.decidedAt}, system: ${_this.system})';
 }
 
 
@@ -64,7 +70,7 @@ class _$WorkspaceEventCopyWithImpl<$Res>
 /// Create a copy of WorkspaceEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? type = null,Object? action = null,Object? actorMemberId = null,Object? subjectMemberId = null,Object? reservationId = freezed,Object? payload = null,Object? status = null,Object? createdAt = null,Object? decidedAt = freezed,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(WorkspaceEvent(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -212,7 +218,7 @@ return $default(_that.id,_that.workspaceId,_that.type,_that.action,_that.actorMe
 
 
 class _WorkspaceEvent extends WorkspaceEvent {
-  const _WorkspaceEvent({required this.id, required this.workspaceId, required this.type, required this.action, required this.actorMemberId, required this.subjectMemberId, this.reservationId, required final  Map<String, dynamic> payload, required this.status, required this.createdAt, this.decidedAt, this.system = SystemColumns.none}): _payload = payload,super._();
+  const _WorkspaceEvent({required this.id, required this.workspaceId, required this.type, required this.action, required this.actorMemberId, required this.subjectMemberId, this.reservationId, required  Map<String, dynamic> payload, required this.status, required this.createdAt, this.decidedAt, this.system = SystemColumns.none}): _payload = payload,super._();
   
 
 @override final  String id;
@@ -245,16 +251,18 @@ _$WorkspaceEventCopyWith<_WorkspaceEvent> get copyWith => __$WorkspaceEventCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.type, type) || other.type == type)&&(identical(other.action, action) || other.action == action)&&(identical(other.actorMemberId, actorMemberId) || other.actorMemberId == actorMemberId)&&(identical(other.subjectMemberId, subjectMemberId) || other.subjectMemberId == subjectMemberId)&&(identical(other.reservationId, reservationId) || other.reservationId == reservationId)&&const DeepCollectionEquality().equals(other._payload, _payload)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.type, type) || other.type == type)&&(identical(other.action, action) || other.action == action)&&(identical(other.actorMemberId, actorMemberId) || other.actorMemberId == actorMemberId)&&(identical(other.subjectMemberId, subjectMemberId) || other.subjectMemberId == subjectMemberId)&&(identical(other.reservationId, reservationId) || other.reservationId == reservationId)&&const DeepCollectionEquality().equals(other.payload, _payload)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,type,action,actorMemberId,subjectMemberId,reservationId,const DeepCollectionEquality().hash(_payload),status,createdAt,decidedAt,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,workspaceId,type,action,actorMemberId,subjectMemberId,reservationId,const DeepCollectionEquality().hash(_payload),status,createdAt,decidedAt,system);
+}
 
 @override
 String toString() {
-  return 'WorkspaceEvent(id: $id, workspaceId: $workspaceId, type: $type, action: $action, actorMemberId: $actorMemberId, subjectMemberId: $subjectMemberId, reservationId: $reservationId, payload: $payload, status: $status, createdAt: $createdAt, decidedAt: $decidedAt, system: $system)';
+    return 'WorkspaceEvent(id: $id, workspaceId: $workspaceId, type: $type, action: $action, actorMemberId: $actorMemberId, subjectMemberId: $subjectMemberId, reservationId: $reservationId, payload: $payload, status: $status, createdAt: $createdAt, decidedAt: $decidedAt, system: $system)';
 }
 
 

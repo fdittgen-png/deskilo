@@ -28,10 +28,9 @@ Timer _defaultTimerFactory(Duration interval, void Function() onTick) =>
 /// presence service). Wiring lives in presence_providers.dart.
 class PresenceHeartbeat {
   PresenceHeartbeat({
-    required Future<void> Function() touch,
-    PeriodicTimerFactory timerFactory = _defaultTimerFactory,
-  })  : _touch = touch,
-        _timerFactory = timerFactory;
+    required this._touch,
+    this._timerFactory = _defaultTimerFactory,
+  });
 
   final Future<void> Function() _touch;
   final PeriodicTimerFactory _timerFactory;
