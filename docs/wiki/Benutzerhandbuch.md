@@ -127,6 +127,8 @@ Vom Plan aus buchen:
 
 ## 4. Reservierungen (Reservieren-Hub)
 
+Nach erfolgreichem Beitritt oder Anlegen wird der zurückgegebene Arbeitsbereich für die aktuelle Sitzung aktiv, ohne den gespeicherten Standard zu ändern. Eine bereits angeforderte Aufgabe behält ihren Kontext; eine verspätete Antwort ersetzt keine neuere Konto-, Instanz- oder Arbeitsbereichsauswahl. (#1654)
+
 **Erste Schritte** (#1654) ist eine freiwillige Hilfe im Reservieren-Hub. Die Karte nennt den aktiven Arbeitsbereich und seine Umgebung und schlägt anhand der verfügbaren Informationen eine Aktion vor: Zeit wählen, Mitgliedschaft ansehen oder Hilfe öffnen. Das Öffnen einer Aktion bucht nichts. **Jetzt nicht** blendet die Karte für dieses Konto, diesen Server und diesen Arbeitsbereich aus; über das Ansichtsmenü lässt sie sich wieder öffnen. Eine erfolgreiche Buchung aktualisiert die Karte anhand der zurückgegebenen Reservierung; ein Fehler gilt nicht als Abschluss. Lange Hinweise lassen sich scrollen, damit die Aktionen auch bei großer Schrift erreichbar bleiben. Das Abschalten der Hilfe lässt normale Buchungen verfügbar.
 
 Bei großer Schrift oder einem kurzen Fenster lassen sich die Steuerelemente des Hubs scrollen, um Datum und Ansicht zu erreichen; der Grundriss behält einen eigenen sichtbaren Bereich (#1654).

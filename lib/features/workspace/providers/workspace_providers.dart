@@ -73,6 +73,10 @@ class ActiveWorkspaceId extends _$ActiveWorkspaceId {
     return ref.watch(activeWorkspaceStoreProvider).read();
   }
 
+  /// An explicit join/create result selects this session without changing
+  /// the saved account default or scheduling a late cross-context write.
+  void activate(String workspaceId) => state = AsyncData(workspaceId);
+
   Future<void> select(String workspaceId) async {
     await ref.read(activeWorkspaceStoreProvider).write(workspaceId);
     state = AsyncData(workspaceId);

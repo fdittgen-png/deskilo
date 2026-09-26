@@ -66,9 +66,9 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `events -> reservations` | 4 |
 | `money -> profile` | 4 |
 | `plan -> money` | 4 |
+| `workspace -> auth` | 4 |
 | `workspace -> members` | 4 |
 | `members -> plan` | 3 |
-| `workspace -> auth` | 3 |
 | `events -> plan` | 2 |
 | `kiosk -> profile` | 2 |
 | `money -> members` | 2 |
@@ -85,7 +85,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**54 directed relationships, 694 imports.**
+**54 directed relationships, 695 imports.**
 
 Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -132,7 +132,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/screens/legal_identity_screen.dart` | 649 |
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
-| `lib/features/workspace/providers/workspace_providers.dart` | 624 |
+| `lib/features/workspace/providers/workspace_providers.dart` | 628 |
 | `lib/features/money/presentation/invoice_documents.dart` | 610 |
 
 **39 files.**

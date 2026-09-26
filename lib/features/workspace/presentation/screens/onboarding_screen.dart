@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/guarded.dart';
+import '../onboarding_handoff.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -118,28 +118,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     super.dispose();
   }
 
-  Future<void> _run(Future<bool> Function() action) async {
+  Future<void> _run(Future<String?> Function() action) async {
     if (_busy) return;
     setState(() { _busy = true; _failure = null; });
     final l10n = AppLocalizations.of(context);
-    var accepted = false;
-    final succeeded = await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'onboarding action failed',
-      action: () async {
-          accepted = await action();
-          if (!accepted || !mounted) return;
-          widget.navigation?.completed = true;
-          ref.invalidate(myWorkspacesProvider);
-          await ref.read(myWorkspacesProvider.future);
-          if (!mounted) return;
-          // First-run visits are bounced to /plan by the router redirect; when
-          // opened from Profiles (#89) we pop back to the profile list instead.
-          if (mounted && context.canPop()) context.pop();
-      },
-    );
-    if (!succeeded || !accepted) {
+    final succeeded = await runOnboardingAction(context: context, ref: ref,
+      navigation: widget.navigation, action: action);
+    if (!succeeded) {
       if (mounted) {
         setState(() {
           _busy = false;
@@ -215,15 +200,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             templateId: _templateId,
             outline: _outlineFor == _templateId ? _outlineValue : null,
           );
-      return result.outcome == StartOutcome.created;
+      return result.outcome == StartOutcome.created ? result.workspaceId : null;
     });
   }
 
   Future<void> _join() async {
     if (!(_joinFormKey.currentState?.validate() ?? false)) return;
-    await _run(() async =>
-        await ref.read(workspaceStartProvider).join(_inviteCode.text) ==
-        JoinOutcome.joined);
+    await _run(() async {
+      final result = await ref.read(workspaceStartProvider).join(_inviteCode.text);
+      return result.outcome == JoinOutcome.joined ? result.workspaceId : null;
+    });
   }
 
   @override

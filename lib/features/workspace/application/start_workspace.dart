@@ -135,10 +135,10 @@ class WorkspaceStart {
   /// Smart paste (0049): a bare code, an invite URL, or a WHOLE pasted
   /// invitation message — WhatsApp only copies the full message, so the
   /// code is dug out here rather than asked of the person.
-  Future<JoinOutcome> join(String pasted) async {
+  Future<({JoinOutcome outcome, String? workspaceId})> join(String pasted) async {
     final code = InviteUriCodec.extractCode(pasted);
-    if (code.isEmpty) return JoinOutcome.noCode;
-    await _workspaces.joinWorkspace(code);
-    return JoinOutcome.joined;
+    if (code.isEmpty) return (outcome: JoinOutcome.noCode, workspaceId: null);
+    final id = await _workspaces.joinWorkspace(code);
+    return (outcome: JoinOutcome.joined, workspaceId: id);
   }
 }
