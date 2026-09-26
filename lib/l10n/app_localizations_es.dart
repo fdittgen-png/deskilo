@@ -6954,6 +6954,97 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpRespond => 'Responder a una solicitud de validación';
 
   @override
+  String get mcpConsentTitle => 'Conectar un asistente';
+
+  @override
+  String get mcpConsentUnavailable =>
+      'No se pudo cargar esta solicitud de conexión. Empiece de nuevo desde el asistente.';
+
+  @override
+  String get mcpConsentAlready =>
+      'Este asistente ya está conectado. Volviendo a él.';
+
+  @override
+  String mcpConsentAsks(String client) {
+    return '$client pide actuar por usted en Deskilo.';
+  }
+
+  @override
+  String get mcpConsentNotEligible =>
+      'Esta base de datos aún no ha aprobado asistentes para usted. Solicite la aprobación y vuelva a conectar.';
+
+  @override
+  String get mcpConsentRequestEligibility => 'Solicitar aprobación';
+
+  @override
+  String get mcpConsentNoWorkspace =>
+      'Ninguno de sus espacios admite asistentes. No se puede conectar nada.';
+
+  @override
+  String get mcpConsentChoose =>
+      'Elija cada espacio y lo que el asistente puede hacer allí. No se elige nada por usted.';
+
+  @override
+  String get mcpConsentDeny => 'Rechazar';
+
+  @override
+  String get mcpConsentApprove => 'Conectar';
+
+  @override
+  String get mcpConsentConnected => 'Conectado. Volviendo al asistente.';
+
+  @override
+  String get mcpConsentDenied => 'Rechazado. El asistente no obtiene nada.';
+
+  @override
+  String get mcpConsentPartial =>
+      'El asistente fue aprobado pero la conexión aún no se puede usar. Vuelva a conectar desde el asistente.';
+
+  @override
+  String get mcpConsentRequested =>
+      'Aprobación solicitada. Un administrador de la base de datos la revisará.';
+
+  @override
+  String get mcpOpListWorkspaces => 'Ver qué espacios puede usar';
+
+  @override
+  String get mcpOpCapabilities => 'Ver qué puede hacer allí';
+
+  @override
+  String get mcpOpAvailability => 'Ver plazas libres';
+
+  @override
+  String get mcpOpMyReservations => 'Ver sus reservas';
+
+  @override
+  String get mcpOpMyStatement => 'Ver su estado de cuenta';
+
+  @override
+  String get mcpOpMyInvoices => 'Ver sus facturas';
+
+  @override
+  String get mcpOpCreateReservation => 'Reservar una plaza por usted';
+
+  @override
+  String get mcpOpUpdateReservation => 'Cambiar sus reservas';
+
+  @override
+  String get mcpOpCheckIn => 'Registrar su entrada';
+
+  @override
+  String get mcpOpCheckOut => 'Registrar su salida';
+
+  @override
+  String get mcpOpReservationDeletion => 'Pedir que se elimine una reserva';
+
+  @override
+  String get mcpOpPendingValidations =>
+      'Ver solicitudes de validación pendientes';
+
+  @override
+  String get mcpOpGetValidation => 'Leer una solicitud de validación';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Los miembros ven Mi cuenta';
 
   @override

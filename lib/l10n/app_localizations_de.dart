@@ -6963,6 +6963,98 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpOpRespond => 'Auf eine Freigabeanfrage antworten';
 
   @override
+  String get mcpConsentTitle => 'Assistenten verbinden';
+
+  @override
+  String get mcpConsentUnavailable =>
+      'Diese Verbindungsanfrage konnte nicht geladen werden. Beginnen Sie erneut im Assistenten.';
+
+  @override
+  String get mcpConsentAlready =>
+      'Dieser Assistent ist bereits verbunden. Zurück zu ihm.';
+
+  @override
+  String mcpConsentAsks(String client) {
+    return '$client möchte in Deskilo für Sie handeln.';
+  }
+
+  @override
+  String get mcpConsentNotEligible =>
+      'Diese Datenbank hat Assistenten für Sie noch nicht freigegeben. Bitten Sie um Freigabe und verbinden Sie sich dann erneut.';
+
+  @override
+  String get mcpConsentRequestEligibility => 'Freigabe anfragen';
+
+  @override
+  String get mcpConsentNoWorkspace =>
+      'Keiner Ihrer Arbeitsbereiche lässt Assistenten zu. Es kann nichts verbunden werden.';
+
+  @override
+  String get mcpConsentChoose =>
+      'Wählen Sie jeden Arbeitsbereich und was der Assistent dort tun darf. Nichts ist vorausgewählt.';
+
+  @override
+  String get mcpConsentDeny => 'Ablehnen';
+
+  @override
+  String get mcpConsentApprove => 'Verbinden';
+
+  @override
+  String get mcpConsentConnected => 'Verbunden. Zurück zum Assistenten.';
+
+  @override
+  String get mcpConsentDenied => 'Abgelehnt. Der Assistent erhält nichts.';
+
+  @override
+  String get mcpConsentPartial =>
+      'Der Assistent wurde genehmigt, aber die Verbindung ist noch nicht nutzbar. Verbinden Sie sich erneut im Assistenten.';
+
+  @override
+  String get mcpConsentRequested =>
+      'Freigabe angefragt. Ein Datenbankadministrator prüft sie.';
+
+  @override
+  String get mcpOpListWorkspaces =>
+      'Sehen, welche Arbeitsbereiche er nutzen darf';
+
+  @override
+  String get mcpOpCapabilities => 'Sehen, was er dort tun darf';
+
+  @override
+  String get mcpOpAvailability => 'Freie Plätze sehen';
+
+  @override
+  String get mcpOpMyReservations => 'Ihre Reservierungen sehen';
+
+  @override
+  String get mcpOpMyStatement => 'Ihren Kontoauszug sehen';
+
+  @override
+  String get mcpOpMyInvoices => 'Ihre Rechnungen sehen';
+
+  @override
+  String get mcpOpCreateReservation => 'Einen Platz für Sie buchen';
+
+  @override
+  String get mcpOpUpdateReservation => 'Ihre Reservierungen ändern';
+
+  @override
+  String get mcpOpCheckIn => 'Sie einchecken';
+
+  @override
+  String get mcpOpCheckOut => 'Sie auschecken';
+
+  @override
+  String get mcpOpReservationDeletion =>
+      'Löschung einer Reservierung beantragen';
+
+  @override
+  String get mcpOpPendingValidations => 'Offene Freigabeanfragen sehen';
+
+  @override
+  String get mcpOpGetValidation => 'Eine Freigabeanfrage lesen';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Mitglieder sehen Mein Konto';
 
   @override
