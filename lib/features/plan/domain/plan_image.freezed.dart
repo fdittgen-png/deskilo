@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'plan_image.dart';
@@ -9,6 +9,7 @@ part of 'plan_image.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -26,16 +27,21 @@ $PlanImageCopyWith<PlanImage> get copyWith => _$PlanImageCopyWithImpl<PlanImage>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlanImage&&(identical(other.id, id) || other.id == id)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.storagePath, storagePath) || other.storagePath == storagePath)&&(identical(other.system, system) || other.system == system));
+  final _this = this as PlanImage;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlanImage&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.levelId, _this.levelId) || other.levelId == _this.levelId)&&(identical(other.rect, _this.rect) || other.rect == _this.rect)&&(identical(other.storagePath, _this.storagePath) || other.storagePath == _this.storagePath)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,levelId,rect,storagePath,system);
+int get hashCode {
+  final _this = this as PlanImage;
+  return Object.hash(runtimeType,_this.id,_this.levelId,_this.rect,_this.storagePath,_this.system);
+}
 
 @override
 String toString() {
-  return 'PlanImage(id: $id, levelId: $levelId, rect: $rect, storagePath: $storagePath, system: $system)';
+  final _this = this as PlanImage;
+  return 'PlanImage(id: ${_this.id}, levelId: ${_this.levelId}, rect: ${_this.rect}, storagePath: ${_this.storagePath}, system: ${_this.system})';
 }
 
 
@@ -64,7 +70,7 @@ class _$PlanImageCopyWithImpl<$Res>
 /// Create a copy of PlanImage
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? levelId = null,Object? rect = null,Object? storagePath = null,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(PlanImage(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,levelId: null == levelId ? _self.levelId : levelId // ignore: cast_nullable_to_non_nullable
 as String,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
@@ -234,16 +240,18 @@ _$PlanImageCopyWith<_PlanImage> get copyWith => __$PlanImageCopyWithImpl<_PlanIm
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlanImage&&(identical(other.id, id) || other.id == id)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.storagePath, storagePath) || other.storagePath == storagePath)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlanImage&&(identical(other.id, id) || other.id == id)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.storagePath, storagePath) || other.storagePath == storagePath)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,levelId,rect,storagePath,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,levelId,rect,storagePath,system);
+}
 
 @override
 String toString() {
-  return 'PlanImage(id: $id, levelId: $levelId, rect: $rect, storagePath: $storagePath, system: $system)';
+    return 'PlanImage(id: $id, levelId: $levelId, rect: $rect, storagePath: $storagePath, system: $system)';
 }
 
 

@@ -31,7 +31,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
-  FLUTTER_VERSION: "3.44.9"
+  FLUTTER_VERSION: "3.47.5"
 
 jobs:
   # #1446 C2 — which work this change REQUIRES, decided by the checked-in
@@ -73,7 +73,7 @@ jobs:
     # repository had no protection, and it was out of date.)
     name: analyze · l10n gate · test · coverage
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45 # 2026-09-26: the full suite passed 26 min on Flutter 3.47.5; 30 cut it off
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -124,7 +124,8 @@ jobs:
         working-directory: packages/deskilo_push
 
       - name: Analyze (lib + test)
-        run: flutter analyze
+        # Direct Dart analysis waits for analyzer plugins to finish.
+        run: dart analyze --fatal-infos
 
       # #1446 C1 — ONE run of the suite, with coverage, for the whole
       # report. The discipline rows below are derived from this run's JSON

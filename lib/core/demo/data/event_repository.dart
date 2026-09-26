@@ -10,11 +10,11 @@ import 'fixture_clock.dart';
 /// In-memory [EventRepository] mimicking respond_to_event semantics
 /// (incl. the #130 quorum: an accept below required_count stays pending).
 class FakeEventRepository implements EventRepository {
-  /// [actor] — #1565: the signed-in member, READ on every call instead
+  /// [_actor] — #1565: the signed-in member, READ on every call instead
   /// of held in a field. Demo passes its fixture's active member, so a
   /// decision taken as Chiara is recorded as Chiara's; the suite's own
   /// tests keep assigning [respondingMemberId].
-  FakeEventRepository({String Function()? actor}) : _actor = actor;
+  FakeEventRepository({this._actor});
 
   final String Function()? _actor;
 

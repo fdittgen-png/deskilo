@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'service_item.dart';
@@ -9,6 +9,7 @@ part of 'service_item.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -30,16 +31,21 @@ $ServiceItemCopyWith<ServiceItem> get copyWith => _$ServiceItemCopyWithImpl<Serv
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServiceItem&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.system, system) || other.system == system));
+  final _this = this as ServiceItem;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServiceItem&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.priceCents, _this.priceCents) || other.priceCents == _this.priceCents)&&(identical(other.active, _this.active) || other.active == _this.active)&&(identical(other.vatRateId, _this.vatRateId) || other.vatRateId == _this.vatRateId)&&(identical(other.stock, _this.stock) || other.stock == _this.stock)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,name,priceCents,active,vatRateId,stock,system);
+int get hashCode {
+  final _this = this as ServiceItem;
+  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.name,_this.priceCents,_this.active,_this.vatRateId,_this.stock,_this.system);
+}
 
 @override
 String toString() {
-  return 'ServiceItem(id: $id, workspaceId: $workspaceId, name: $name, priceCents: $priceCents, active: $active, vatRateId: $vatRateId, stock: $stock, system: $system)';
+  final _this = this as ServiceItem;
+  return 'ServiceItem(id: ${_this.id}, workspaceId: ${_this.workspaceId}, name: ${_this.name}, priceCents: ${_this.priceCents}, active: ${_this.active}, vatRateId: ${_this.vatRateId}, stock: ${_this.stock}, system: ${_this.system})';
 }
 
 
@@ -68,7 +74,7 @@ class _$ServiceItemCopyWithImpl<$Res>
 /// Create a copy of ServiceItem
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? priceCents = null,Object? active = null,Object? vatRateId = null,Object? stock = freezed,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(ServiceItem(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -239,16 +245,18 @@ _$ServiceItemCopyWith<_ServiceItem> get copyWith => __$ServiceItemCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServiceItem&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServiceItem&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,name,priceCents,active,vatRateId,stock,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,workspaceId,name,priceCents,active,vatRateId,stock,system);
+}
 
 @override
 String toString() {
-  return 'ServiceItem(id: $id, workspaceId: $workspaceId, name: $name, priceCents: $priceCents, active: $active, vatRateId: $vatRateId, stock: $stock, system: $system)';
+    return 'ServiceItem(id: $id, workspaceId: $workspaceId, name: $name, priceCents: $priceCents, active: $active, vatRateId: $vatRateId, stock: $stock, system: $system)';
 }
 
 

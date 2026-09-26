@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'fee_band.dart';
@@ -9,6 +9,7 @@ part of 'fee_band.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -26,16 +27,21 @@ $FeeBandCopyWith<FeeBand> get copyWith => _$FeeBandCopyWithImpl<FeeBand>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeeBand&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.fromPct, fromPct) || other.fromPct == fromPct)&&(identical(other.toPct, toPct) || other.toPct == toPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.overageFeeCents, overageFeeCents) || other.overageFeeCents == overageFeeCents)&&(identical(other.system, system) || other.system == system));
+  final _this = this as FeeBand;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeeBand&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.fromPct, _this.fromPct) || other.fromPct == _this.fromPct)&&(identical(other.toPct, _this.toPct) || other.toPct == _this.toPct)&&(identical(other.feeCents, _this.feeCents) || other.feeCents == _this.feeCents)&&(identical(other.overageFeeCents, _this.overageFeeCents) || other.overageFeeCents == _this.overageFeeCents)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,fromPct,toPct,feeCents,overageFeeCents,system);
+int get hashCode {
+  final _this = this as FeeBand;
+  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.fromPct,_this.toPct,_this.feeCents,_this.overageFeeCents,_this.system);
+}
 
 @override
 String toString() {
-  return 'FeeBand(id: $id, workspaceId: $workspaceId, fromPct: $fromPct, toPct: $toPct, feeCents: $feeCents, overageFeeCents: $overageFeeCents, system: $system)';
+  final _this = this as FeeBand;
+  return 'FeeBand(id: ${_this.id}, workspaceId: ${_this.workspaceId}, fromPct: ${_this.fromPct}, toPct: ${_this.toPct}, feeCents: ${_this.feeCents}, overageFeeCents: ${_this.overageFeeCents}, system: ${_this.system})';
 }
 
 
@@ -64,7 +70,7 @@ class _$FeeBandCopyWithImpl<$Res>
 /// Create a copy of FeeBand
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? fromPct = null,Object? toPct = null,Object? feeCents = null,Object? overageFeeCents = null,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(FeeBand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,fromPct: null == fromPct ? _self.fromPct : fromPct // ignore: cast_nullable_to_non_nullable
@@ -229,16 +235,18 @@ _$FeeBandCopyWith<_FeeBand> get copyWith => __$FeeBandCopyWithImpl<_FeeBand>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeeBand&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.fromPct, fromPct) || other.fromPct == fromPct)&&(identical(other.toPct, toPct) || other.toPct == toPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.overageFeeCents, overageFeeCents) || other.overageFeeCents == overageFeeCents)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeeBand&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.fromPct, fromPct) || other.fromPct == fromPct)&&(identical(other.toPct, toPct) || other.toPct == toPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.overageFeeCents, overageFeeCents) || other.overageFeeCents == overageFeeCents)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,fromPct,toPct,feeCents,overageFeeCents,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,workspaceId,fromPct,toPct,feeCents,overageFeeCents,system);
+}
 
 @override
 String toString() {
-  return 'FeeBand(id: $id, workspaceId: $workspaceId, fromPct: $fromPct, toPct: $toPct, feeCents: $feeCents, overageFeeCents: $overageFeeCents, system: $system)';
+    return 'FeeBand(id: $id, workspaceId: $workspaceId, fromPct: $fromPct, toPct: $toPct, feeCents: $feeCents, overageFeeCents: $overageFeeCents, system: $system)';
 }
 
 

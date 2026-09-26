@@ -43,7 +43,4 @@ class BrowsedLevel extends _$BrowsedLevel {
   void select(String levelId) => state = levelId;
 
   void selectAll() => state = allLevels;
-
-  /// Whether [state] names a floor a single-floor view can show.
-  bool get isOneLevel => state != null && state != allLevels;
 }

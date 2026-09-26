@@ -106,7 +106,7 @@ void main() {
       'frame by frame, without a jump', (tester) async {
     final container = await _pump(tester);
     final full = _titleHeight(tester);
-    final progress = container.read(shellBarProgressProvider);
+    final progress = container.read(shellBarProgressProvider).progress;
 
     await container.read(shellBarHiddenProvider.notifier).set(true);
     final heights = <double>[full];

@@ -124,7 +124,7 @@ class _ShellBarCollapseState extends ConsumerState<ShellBarCollapse>
   /// launch and the reduced-motion jump: no journey to keep in step, only
   /// an end state, one frame later.
   void _publish() {
-    final progress = ref.read(shellBarProgressProvider);
+    final progress = ref.read(shellBarProgressProvider).progress;
     if (SchedulerBinding.instance.schedulerPhase !=
         SchedulerPhase.persistentCallbacks) {
       progress.value = _controller.value;

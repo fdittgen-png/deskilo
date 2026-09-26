@@ -168,7 +168,7 @@ abstract class _$InvoicingWizardController extends $Notifier<WizardState> {
   WizardState build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<WizardState, WizardState>;
     final element =
         ref.element
@@ -178,6 +178,6 @@ abstract class _$InvoicingWizardController extends $Notifier<WizardState> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

@@ -63,11 +63,11 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `events -> money` | 5 |
 | `profile -> reservations` | 5 |
 | `reservations -> events` | 5 |
+| `workspace -> auth` | 5 |
 | `calendar -> events` | 4 |
 | `events -> reservations` | 4 |
 | `money -> profile` | 4 |
 | `plan -> money` | 4 |
-| `workspace -> auth` | 4 |
 | `workspace -> members` | 4 |
 | `mcp -> workspace` | 3 |
 | `members -> plan` | 3 |
@@ -88,7 +88,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**57 directed relationships, 707 imports.**
+**57 directed relationships, 708 imports.**
 
 Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -128,14 +128,14 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/domain/workspace_repository.dart` | 756 |
 | `lib/features/reservations/presentation/reserve_seat_actions.dart` | 750 |
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 703 |
-| `lib/core/demo/data/reservation_repository.dart` | 696 |
+| `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
 | `lib/core/help/help_anchors.dart` | 649 |
 | `lib/features/money/presentation/screens/legal_identity_screen.dart` | 649 |
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
-| `lib/features/workspace/providers/workspace_providers.dart` | 622 |
+| `lib/features/workspace/providers/workspace_providers.dart` | 628 |
 | `lib/features/money/presentation/invoice_documents.dart` | 610 |
 
 **39 files.**

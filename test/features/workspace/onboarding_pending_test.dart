@@ -33,6 +33,7 @@ Future<GoRouter> ready(WidgetTester tester, HeldCreation repo) async {
   final router = GoRouter(routes: [GoRoute(path: '/',
     onExit: (_, _) => navigation.requestExit(),
     builder: (_, _) => OnboardingScreen(navigation: navigation)),
+    GoRoute(path: '/reserve', builder: (_, _) => const SizedBox()),
     GoRoute(path: '/done', builder: (_, _) => const SizedBox())]);
   addTearDown(router.dispose);
   await tester.pumpWidget(ProviderScope(

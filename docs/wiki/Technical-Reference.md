@@ -11,8 +11,8 @@ contribute).
 
 | | |
 |---|---|
-| Flutter | **3.44.9**, pinned in every workflow (`FLUTTER_VERSION`) and enforced by `flutter_pin_test` |
-| Dart SDK | `^3.11.5` |
+| Flutter | **3.47.5**, pinned in every workflow (`FLUTTER_VERSION`) and enforced by `flutter_pin_test` |
+| Dart SDK | `^3.13.0` |
 | Android | `minSdk`/`targetSdk`/`compileSdk` follow the Flutter defaults of that pin |
 | iOS / iPadOS | **15.0** floor (`ios/Podfile`) |
 | Desktop | macOS (DMG) and Windows (MSI) |

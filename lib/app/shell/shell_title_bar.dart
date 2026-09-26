@@ -52,7 +52,7 @@ class ShellTitleBar extends ConsumerWidget implements PreferredSizeWidget {
     if (!collapsible) return appBar;
     final hidden = ref.watch(shellBarHiddenProvider).value ?? false;
     return ValueListenableBuilder<double>(
-      valueListenable: ref.watch(shellBarProgressProvider),
+      valueListenable: ref.watch(shellBarProgressProvider).progress,
       builder: (context, progress, _) {
         final t = progress.clamp(0.0, 1.0);
         final inset = MediaQuery.paddingOf(context).top;

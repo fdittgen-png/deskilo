@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'office.dart';
@@ -9,6 +9,7 @@ part of 'office.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -26,16 +27,21 @@ $OfficeCopyWith<Office> get copyWith => _$OfficeCopyWithImpl<Office>(this as Off
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Office&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.system, system) || other.system == system));
+  final _this = this as Office;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Office&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.levelId, _this.levelId) || other.levelId == _this.levelId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.color, _this.color) || other.color == _this.color)&&(identical(other.bookableAsWhole, _this.bookableAsWhole) || other.bookableAsWhole == _this.bookableAsWhole)&&(identical(other.priceCents, _this.priceCents) || other.priceCents == _this.priceCents)&&(identical(other.rect, _this.rect) || other.rect == _this.rect)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,levelId,name,color,bookableAsWhole,priceCents,rect,system);
+int get hashCode {
+  final _this = this as Office;
+  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.levelId,_this.name,_this.color,_this.bookableAsWhole,_this.priceCents,_this.rect,_this.system);
+}
 
 @override
 String toString() {
-  return 'Office(id: $id, workspaceId: $workspaceId, levelId: $levelId, name: $name, color: $color, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, rect: $rect, system: $system)';
+  final _this = this as Office;
+  return 'Office(id: ${_this.id}, workspaceId: ${_this.workspaceId}, levelId: ${_this.levelId}, name: ${_this.name}, color: ${_this.color}, bookableAsWhole: ${_this.bookableAsWhole}, priceCents: ${_this.priceCents}, rect: ${_this.rect}, system: ${_this.system})';
 }
 
 
@@ -64,7 +70,7 @@ class _$OfficeCopyWithImpl<$Res>
 /// Create a copy of Office
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? levelId = null,Object? name = null,Object? color = null,Object? bookableAsWhole = null,Object? priceCents = null,Object? rect = null,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(Office(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,levelId: null == levelId ? _self.levelId : levelId // ignore: cast_nullable_to_non_nullable
@@ -242,16 +248,18 @@ _$OfficeCopyWith<_Office> get copyWith => __$OfficeCopyWithImpl<_Office>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Office&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Office&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,levelId,name,color,bookableAsWhole,priceCents,rect,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,workspaceId,levelId,name,color,bookableAsWhole,priceCents,rect,system);
+}
 
 @override
 String toString() {
-  return 'Office(id: $id, workspaceId: $workspaceId, levelId: $levelId, name: $name, color: $color, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, rect: $rect, system: $system)';
+    return 'Office(id: $id, workspaceId: $workspaceId, levelId: $levelId, name: $name, color: $color, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, rect: $rect, system: $system)';
 }
 
 

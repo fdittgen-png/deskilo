@@ -63,7 +63,7 @@ abstract class _$UsageFilter
   ({String? memberId, String? period}) build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref =
         this.ref
             as $Ref<
@@ -81,7 +81,7 @@ abstract class _$UsageFilter
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 

@@ -7,12 +7,20 @@ analyzer:
   # a word from the analyzer, and every use downstream is an implicit
   # dynamic call. The malformed-JSON aggregation and the empty-UUID
   # managed member were both that shape.
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
   language:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
-  plugins:
-    - riverpod_lint
+
+plugins:
+  riverpod_lint: 3.1.9
 
 linter:
   rules:

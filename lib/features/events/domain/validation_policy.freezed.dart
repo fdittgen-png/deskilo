@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'validation_policy.dart';
@@ -9,6 +9,7 @@ part of 'validation_policy.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -47,16 +48,21 @@ $ValidationPolicyCopyWith<ValidationPolicy> get copyWith => _$ValidationPolicyCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other.eligibleAdminIds, eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired)&&(identical(other.autoValidateAdmin, autoValidateAdmin) || other.autoValidateAdmin == autoValidateAdmin)&&(identical(other.autoValidateOwner, autoValidateOwner) || other.autoValidateOwner == autoValidateOwner)&&(identical(other.validatorScope, validatorScope) || other.validatorScope == validatorScope)&&(identical(other.ownerMaySelfValidate, ownerMaySelfValidate) || other.ownerMaySelfValidate == ownerMaySelfValidate)&&(identical(other.sequential, sequential) || other.sequential == sequential)&&(identical(other.minAmountCents, minAmountCents) || other.minAmountCents == minAmountCents)&&(identical(other.system, system) || other.system == system));
+  final _this = this as ValidationPolicy;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ValidationPolicy&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.eventType, _this.eventType) || other.eventType == _this.eventType)&&(identical(other.requiredCount, _this.requiredCount) || other.requiredCount == _this.requiredCount)&&(identical(other.adminsMayValidate, _this.adminsMayValidate) || other.adminsMayValidate == _this.adminsMayValidate)&&const DeepCollectionEquality().equals(other.eligibleAdminIds, _this.eligibleAdminIds)&&(identical(other.ownerRequired, _this.ownerRequired) || other.ownerRequired == _this.ownerRequired)&&(identical(other.autoValidateAdmin, _this.autoValidateAdmin) || other.autoValidateAdmin == _this.autoValidateAdmin)&&(identical(other.autoValidateOwner, _this.autoValidateOwner) || other.autoValidateOwner == _this.autoValidateOwner)&&(identical(other.validatorScope, _this.validatorScope) || other.validatorScope == _this.validatorScope)&&(identical(other.ownerMaySelfValidate, _this.ownerMaySelfValidate) || other.ownerMaySelfValidate == _this.ownerMaySelfValidate)&&(identical(other.sequential, _this.sequential) || other.sequential == _this.sequential)&&(identical(other.minAmountCents, _this.minAmountCents) || other.minAmountCents == _this.minAmountCents)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(eligibleAdminIds),ownerRequired,autoValidateAdmin,autoValidateOwner,validatorScope,ownerMaySelfValidate,sequential,minAmountCents,system);
+int get hashCode {
+  final _this = this as ValidationPolicy;
+  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.eventType,_this.requiredCount,_this.adminsMayValidate,const DeepCollectionEquality().hash(_this.eligibleAdminIds),_this.ownerRequired,_this.autoValidateAdmin,_this.autoValidateOwner,_this.validatorScope,_this.ownerMaySelfValidate,_this.sequential,_this.minAmountCents,_this.system);
+}
 
 @override
 String toString() {
-  return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired, autoValidateAdmin: $autoValidateAdmin, autoValidateOwner: $autoValidateOwner, validatorScope: $validatorScope, ownerMaySelfValidate: $ownerMaySelfValidate, sequential: $sequential, minAmountCents: $minAmountCents, system: $system)';
+  final _this = this as ValidationPolicy;
+  return 'ValidationPolicy(id: ${_this.id}, workspaceId: ${_this.workspaceId}, eventType: ${_this.eventType}, requiredCount: ${_this.requiredCount}, adminsMayValidate: ${_this.adminsMayValidate}, eligibleAdminIds: ${_this.eligibleAdminIds}, ownerRequired: ${_this.ownerRequired}, autoValidateAdmin: ${_this.autoValidateAdmin}, autoValidateOwner: ${_this.autoValidateOwner}, validatorScope: ${_this.validatorScope}, ownerMaySelfValidate: ${_this.ownerMaySelfValidate}, sequential: ${_this.sequential}, minAmountCents: ${_this.minAmountCents}, system: ${_this.system})';
 }
 
 
@@ -85,7 +91,7 @@ class _$ValidationPolicyCopyWithImpl<$Res>
 /// Create a copy of ValidationPolicy
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? workspaceId = null,Object? eventType = freezed,Object? requiredCount = null,Object? adminsMayValidate = null,Object? eligibleAdminIds = null,Object? ownerRequired = null,Object? autoValidateAdmin = null,Object? autoValidateOwner = null,Object? validatorScope = null,Object? ownerMaySelfValidate = null,Object? sequential = null,Object? minAmountCents = null,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(ValidationPolicy(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,eventType: freezed == eventType ? _self.eventType : eventType // ignore: cast_nullable_to_non_nullable
@@ -235,7 +241,7 @@ return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_
 
 
 class _ValidationPolicy extends ValidationPolicy {
-  const _ValidationPolicy({this.id, required this.workspaceId, this.eventType, required this.requiredCount, required this.adminsMayValidate, required final  List<String> eligibleAdminIds, required this.ownerRequired, this.autoValidateAdmin = false, this.autoValidateOwner = false, this.validatorScope = 'admins', this.ownerMaySelfValidate = false, this.sequential = false, this.minAmountCents = 0, this.system = SystemColumns.none}): _eligibleAdminIds = eligibleAdminIds,super._();
+  const _ValidationPolicy({this.id, required this.workspaceId, this.eventType, required this.requiredCount, required this.adminsMayValidate, required  List<String> eligibleAdminIds, required this.ownerRequired, this.autoValidateAdmin = false, this.autoValidateOwner = false, this.validatorScope = 'admins', this.ownerMaySelfValidate = false, this.sequential = false, this.minAmountCents = 0, this.system = SystemColumns.none}): _eligibleAdminIds = eligibleAdminIds,super._();
   
 
 /// Null until persisted (defaults are never stored).
@@ -292,16 +298,18 @@ _$ValidationPolicyCopyWith<_ValidationPolicy> get copyWith => __$ValidationPolic
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other._eligibleAdminIds, _eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired)&&(identical(other.autoValidateAdmin, autoValidateAdmin) || other.autoValidateAdmin == autoValidateAdmin)&&(identical(other.autoValidateOwner, autoValidateOwner) || other.autoValidateOwner == autoValidateOwner)&&(identical(other.validatorScope, validatorScope) || other.validatorScope == validatorScope)&&(identical(other.ownerMaySelfValidate, ownerMaySelfValidate) || other.ownerMaySelfValidate == ownerMaySelfValidate)&&(identical(other.sequential, sequential) || other.sequential == sequential)&&(identical(other.minAmountCents, minAmountCents) || other.minAmountCents == minAmountCents)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other.eligibleAdminIds, _eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired)&&(identical(other.autoValidateAdmin, autoValidateAdmin) || other.autoValidateAdmin == autoValidateAdmin)&&(identical(other.autoValidateOwner, autoValidateOwner) || other.autoValidateOwner == autoValidateOwner)&&(identical(other.validatorScope, validatorScope) || other.validatorScope == validatorScope)&&(identical(other.ownerMaySelfValidate, ownerMaySelfValidate) || other.ownerMaySelfValidate == ownerMaySelfValidate)&&(identical(other.sequential, sequential) || other.sequential == sequential)&&(identical(other.minAmountCents, minAmountCents) || other.minAmountCents == minAmountCents)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(_eligibleAdminIds),ownerRequired,autoValidateAdmin,autoValidateOwner,validatorScope,ownerMaySelfValidate,sequential,minAmountCents,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(_eligibleAdminIds),ownerRequired,autoValidateAdmin,autoValidateOwner,validatorScope,ownerMaySelfValidate,sequential,minAmountCents,system);
+}
 
 @override
 String toString() {
-  return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired, autoValidateAdmin: $autoValidateAdmin, autoValidateOwner: $autoValidateOwner, validatorScope: $validatorScope, ownerMaySelfValidate: $ownerMaySelfValidate, sequential: $sequential, minAmountCents: $minAmountCents, system: $system)';
+    return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired, autoValidateAdmin: $autoValidateAdmin, autoValidateOwner: $autoValidateOwner, validatorScope: $validatorScope, ownerMaySelfValidate: $ownerMaySelfValidate, sequential: $sequential, minAmountCents: $minAmountCents, system: $system)';
 }
 
 

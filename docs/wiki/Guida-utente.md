@@ -127,6 +127,8 @@ Prenotare dalla piantina:
 
 ## 4. Prenotazioni (hub Prenota)
 
+Dopo un accesso a uno spazio o una creazione riusciti, lo spazio restituito diventa attivo per la sessione corrente senza cambiare la scelta predefinita salvata. Un’attività già richiesta mantiene il proprio contesto; una risposta tardiva non sostituisce una scelta successiva di account, istanza o spazio. (#1654)
+
 **Primi passi** (#1654) è un aiuto facoltativo nell’hub Prenota. La scheda indica lo spazio attivo e il suo ambiente e propone un’azione in base alle informazioni disponibili: scegliere un orario, consultare l’iscrizione o aprire la guida. Aprire un’azione non crea prenotazioni. **Non ora** nasconde la scheda per questo account, server e spazio; il menu di visualizzazione permette di riaprirla. Una prenotazione riuscita aggiorna la scheda dal risultato ricevuto; un errore non segna l’attività come completata. I testi lunghi scorrono per mantenere accessibili le azioni con caratteri grandi. Disattivare questo aiuto lascia disponibili le normali prenotazioni.
 
 Con caratteri grandi o una finestra bassa, scorri i controlli dell’hub per raggiungere data e viste; la pianta mantiene una propria area visibile (#1654).

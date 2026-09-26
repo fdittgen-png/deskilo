@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'event_decision.dart';
@@ -9,6 +9,7 @@ part of 'event_decision.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -27,16 +28,21 @@ $EventDecisionCopyWith<EventDecision> get copyWith => _$EventDecisionCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventDecision&&(identical(other.id, id) || other.id == id)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.accept, accept) || other.accept == accept)&&(identical(other.decidedBySystem, decidedBySystem) || other.decidedBySystem == decidedBySystem)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt)&&(identical(other.system, system) || other.system == system));
+  final _this = this as EventDecision;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventDecision&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.eventId, _this.eventId) || other.eventId == _this.eventId)&&(identical(other.memberId, _this.memberId) || other.memberId == _this.memberId)&&(identical(other.accept, _this.accept) || other.accept == _this.accept)&&(identical(other.decidedBySystem, _this.decidedBySystem) || other.decidedBySystem == _this.decidedBySystem)&&(identical(other.decidedAt, _this.decidedAt) || other.decidedAt == _this.decidedAt)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,eventId,memberId,accept,decidedBySystem,decidedAt,system);
+int get hashCode {
+  final _this = this as EventDecision;
+  return Object.hash(runtimeType,_this.id,_this.eventId,_this.memberId,_this.accept,_this.decidedBySystem,_this.decidedAt,_this.system);
+}
 
 @override
 String toString() {
-  return 'EventDecision(id: $id, eventId: $eventId, memberId: $memberId, accept: $accept, decidedBySystem: $decidedBySystem, decidedAt: $decidedAt, system: $system)';
+  final _this = this as EventDecision;
+  return 'EventDecision(id: ${_this.id}, eventId: ${_this.eventId}, memberId: ${_this.memberId}, accept: ${_this.accept}, decidedBySystem: ${_this.decidedBySystem}, decidedAt: ${_this.decidedAt}, system: ${_this.system})';
 }
 
 
@@ -65,7 +71,7 @@ class _$EventDecisionCopyWithImpl<$Res>
 /// Create a copy of EventDecision
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? eventId = null,Object? memberId = freezed,Object? accept = null,Object? decidedBySystem = null,Object? decidedAt = null,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(EventDecision(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,eventId: null == eventId ? _self.eventId : eventId // ignore: cast_nullable_to_non_nullable
 as String,memberId: freezed == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
@@ -231,16 +237,18 @@ _$EventDecisionCopyWith<_EventDecision> get copyWith => __$EventDecisionCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventDecision&&(identical(other.id, id) || other.id == id)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.accept, accept) || other.accept == accept)&&(identical(other.decidedBySystem, decidedBySystem) || other.decidedBySystem == decidedBySystem)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventDecision&&(identical(other.id, id) || other.id == id)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.accept, accept) || other.accept == accept)&&(identical(other.decidedBySystem, decidedBySystem) || other.decidedBySystem == decidedBySystem)&&(identical(other.decidedAt, decidedAt) || other.decidedAt == decidedAt)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,eventId,memberId,accept,decidedBySystem,decidedAt,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,eventId,memberId,accept,decidedBySystem,decidedAt,system);
+}
 
 @override
 String toString() {
-  return 'EventDecision(id: $id, eventId: $eventId, memberId: $memberId, accept: $accept, decidedBySystem: $decidedBySystem, decidedAt: $decidedAt, system: $system)';
+    return 'EventDecision(id: $id, eventId: $eventId, memberId: $memberId, accept: $accept, decidedBySystem: $decidedBySystem, decidedAt: $decidedAt, system: $system)';
 }
 
 

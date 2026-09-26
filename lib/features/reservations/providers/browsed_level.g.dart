@@ -119,7 +119,7 @@ final class BrowsedLevelProvider
   }
 }
 
-String _$browsedLevelHash() => r'e27eee0448703cbf0d6cd8866732f53b623aa72a';
+String _$browsedLevelHash() => r'd6551722f87166f253c95d0039efa3364132181e';
 
 /// The level the member is BROWSING, shared by every view of the hub.
 ///
@@ -152,7 +152,7 @@ abstract class _$BrowsedLevel extends $Notifier<String?> {
   String? build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<String?, String?>;
     final element =
         ref.element
@@ -162,6 +162,6 @@ abstract class _$BrowsedLevel extends $Notifier<String?> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

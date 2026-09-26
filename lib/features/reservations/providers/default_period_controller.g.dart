@@ -105,7 +105,7 @@ abstract class _$DefaultPeriod extends $AsyncNotifier<DefaultBookingPeriod?> {
   FutureOr<DefaultBookingPeriod?> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref =
         this.ref
             as $Ref<AsyncValue<DefaultBookingPeriod?>, DefaultBookingPeriod?>;
@@ -120,6 +120,6 @@ abstract class _$DefaultPeriod extends $AsyncNotifier<DefaultBookingPeriod?> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

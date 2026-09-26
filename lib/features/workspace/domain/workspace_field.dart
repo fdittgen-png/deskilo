@@ -22,7 +22,7 @@ enum WorkspaceFieldType {
   singleChoice(wire: 'single_choice'),
   multiChoice(wire: 'multi_choice');
 
-  const WorkspaceFieldType({String? wire}) : _wire = wire;
+  const WorkspaceFieldType({this._wire});
 
   final String? _wire;
 
@@ -54,7 +54,7 @@ enum WorkspaceFieldContext {
   /// The join flow, saving onto the pending member row.
   joinRequest(wire: 'join_request');
 
-  const WorkspaceFieldContext({String? wire}) : _wire = wire;
+  const WorkspaceFieldContext({this._wire});
 
   final String? _wire;
 

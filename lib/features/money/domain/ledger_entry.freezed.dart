@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'ledger_entry.dart';
@@ -9,6 +9,7 @@ part of 'ledger_entry.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -30,16 +31,21 @@ $LedgerEntryCopyWith<LedgerEntry> get copyWith => _$LedgerEntryCopyWithImpl<Ledg
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LedgerEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.category, category) || other.category == category)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.description, description) || other.description == description)&&(identical(other.period, period) || other.period == period)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.occurredOn, occurredOn) || other.occurredOn == occurredOn)&&(identical(other.system, system) || other.system == system));
+  final _this = this as LedgerEntry;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LedgerEntry&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.memberId, _this.memberId) || other.memberId == _this.memberId)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.category, _this.category) || other.category == _this.category)&&(identical(other.amountCents, _this.amountCents) || other.amountCents == _this.amountCents)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.period, _this.period) || other.period == _this.period)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.occurredOn, _this.occurredOn) || other.occurredOn == _this.occurredOn)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,memberId,kind,category,amountCents,description,period,createdAt,occurredOn,system);
+int get hashCode {
+  final _this = this as LedgerEntry;
+  return Object.hash(runtimeType,_this.id,_this.memberId,_this.kind,_this.category,_this.amountCents,_this.description,_this.period,_this.createdAt,_this.occurredOn,_this.system);
+}
 
 @override
 String toString() {
-  return 'LedgerEntry(id: $id, memberId: $memberId, kind: $kind, category: $category, amountCents: $amountCents, description: $description, period: $period, createdAt: $createdAt, occurredOn: $occurredOn, system: $system)';
+  final _this = this as LedgerEntry;
+  return 'LedgerEntry(id: ${_this.id}, memberId: ${_this.memberId}, kind: ${_this.kind}, category: ${_this.category}, amountCents: ${_this.amountCents}, description: ${_this.description}, period: ${_this.period}, createdAt: ${_this.createdAt}, occurredOn: ${_this.occurredOn}, system: ${_this.system})';
 }
 
 
@@ -68,7 +74,7 @@ class _$LedgerEntryCopyWithImpl<$Res>
 /// Create a copy of LedgerEntry
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? memberId = null,Object? kind = null,Object? category = null,Object? amountCents = null,Object? description = null,Object? period = null,Object? createdAt = null,Object? occurredOn = freezed,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(LedgerEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
 as String,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
@@ -243,16 +249,18 @@ _$LedgerEntryCopyWith<_LedgerEntry> get copyWith => __$LedgerEntryCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LedgerEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.category, category) || other.category == category)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.description, description) || other.description == description)&&(identical(other.period, period) || other.period == period)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.occurredOn, occurredOn) || other.occurredOn == occurredOn)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LedgerEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.category, category) || other.category == category)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.description, description) || other.description == description)&&(identical(other.period, period) || other.period == period)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.occurredOn, occurredOn) || other.occurredOn == occurredOn)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,memberId,kind,category,amountCents,description,period,createdAt,occurredOn,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,memberId,kind,category,amountCents,description,period,createdAt,occurredOn,system);
+}
 
 @override
 String toString() {
-  return 'LedgerEntry(id: $id, memberId: $memberId, kind: $kind, category: $category, amountCents: $amountCents, description: $description, period: $period, createdAt: $createdAt, occurredOn: $occurredOn, system: $system)';
+    return 'LedgerEntry(id: $id, memberId: $memberId, kind: $kind, category: $category, amountCents: $amountCents, description: $description, period: $period, createdAt: $createdAt, occurredOn: $occurredOn, system: $system)';
 }
 
 
