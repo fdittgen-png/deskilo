@@ -3419,6 +3419,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Richiesto, mai presunto. Attivate ciò che questo spazio fa davvero.';
 
   @override
+  String get featureMemberGettingStartedTitle => 'Scheda Primi passi';
+
+  @override
+  String get featureMemberGettingStartedDesc =>
+      'Dopo essersi unito a uno spazio o averlo creato, un membro vede una scheda compatta nell’hub Prenota: in quale spazio si trova e un passo successivo suggerito — scegliere un orario da prenotare, vedere la propria iscrizione o aprire l’aiuto — solo dove le funzioni e i suoi permessi lo consentono. Non ora la nasconde; le Impostazioni possono mostrarla di nuovo. Non prenota, non paga e non approva mai nulla. Disattivata, nasconde la scheda e non cambia altro.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override

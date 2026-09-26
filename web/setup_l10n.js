@@ -1035,6 +1035,10 @@ window.SETUP_L10N={
    "calendarFileExport": [
     "Calendar file of a booking",
     "Lets a member save one of their own bookings as a standard calendar file (.ics) for the calendar they already use. The file carries the time, the booked space and the workspace name only — no amount, no name, no note, no link — and it is a snapshot: a later change to the booking does not update a file already saved. Nothing is written to any calendar and nothing syncs. Off hides the button."
+   ],
+   "memberGettingStarted": [
+    "Get started card",
+    "After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. Off hides the card and changes nothing else."
    ]
   },
   "process": {
@@ -2279,6 +2283,10 @@ window.SETUP_L10N={
    "calendarFileExport": [
     "Fichier calendrier d’une réservation",
     "Permet à un membre d’enregistrer l’une de ses propres réservations sous forme de fichier calendrier standard (.ics) pour l’agenda qu’il utilise déjà. Le fichier ne contient que l’horaire, l’espace réservé et le nom de l’espace de coworking — ni montant, ni nom, ni note, ni lien — et c’est un instantané : une modification ultérieure de la réservation ne met pas à jour un fichier déjà enregistré. Rien n’est écrit dans un agenda et rien ne se synchronise. Désactivée, elle masque le bouton."
+   ],
+   "memberGettingStarted": [
+    "Carte Premiers pas",
+    "Après avoir rejoint ou créé un espace, un membre voit une carte compacte sur le hub Réserver : l’espace dans lequel il se trouve et une prochaine étape suggérée — choisir un créneau à réserver, consulter son adhésion ou ouvrir l’aide — seulement là où les fonctionnalités et ses permissions le permettent. Pas maintenant la masque ; les Réglages peuvent la réafficher. Elle ne réserve, ne paie et n’approuve jamais rien. Désactivée, elle masque la carte et ne change rien d’autre."
    ]
   },
   "process": {
@@ -3523,6 +3531,10 @@ window.SETUP_L10N={
    "calendarFileExport": [
     "Kalenderdatei einer Buchung",
     "Erlaubt einem Mitglied, eine seiner eigenen Buchungen als Standard-Kalenderdatei (.ics) für den Kalender zu speichern, den es bereits nutzt. Die Datei enthält nur Zeit, gebuchten Platz und den Namen des Coworking-Spaces — keinen Betrag, keinen Namen, keine Notiz, keinen Link — und sie ist eine Momentaufnahme: Eine spätere Änderung der Buchung aktualisiert eine bereits gespeicherte Datei nicht. In keinen Kalender wird geschrieben, nichts wird synchronisiert. Aus blendet die Schaltfläche aus."
+   ],
+   "memberGettingStarted": [
+    "Karte „Erste Schritte“",
+    "Nach dem Beitritt oder dem Anlegen eines Workspace sieht ein Mitglied eine kompakte Karte im Reservieren-Hub: in welchem Workspace es ist und einen vorgeschlagenen nächsten Schritt — eine Zeit zum Buchen wählen, die eigene Mitgliedschaft ansehen oder die Hilfe öffnen — nur dort, wo Funktionen und Berechtigungen es erlauben. „Jetzt nicht“ blendet sie aus; die Einstellungen zeigen sie wieder an. Sie bucht, zahlt und genehmigt nie etwas. Aus blendet die Karte aus und ändert sonst nichts."
    ]
   },
   "process": {
@@ -4767,6 +4779,10 @@ window.SETUP_L10N={
    "calendarFileExport": [
     "Archivo de calendario de una reserva",
     "Permite a un miembro guardar una de sus propias reservas como archivo de calendario estándar (.ics) para el calendario que ya usa. El archivo solo lleva la hora, el espacio reservado y el nombre del espacio de coworking — sin importe, sin nombre, sin nota, sin enlace — y es una instantánea: un cambio posterior de la reserva no actualiza un archivo ya guardado. No se escribe en ningún calendario y nada se sincroniza. Desactivada, oculta el botón."
+   ],
+   "memberGettingStarted": [
+    "Tarjeta Primeros pasos",
+    "Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Desactivada, oculta la tarjeta y no cambia nada más."
    ]
   },
   "process": {
@@ -6011,6 +6027,10 @@ window.SETUP_L10N={
    "calendarFileExport": [
     "File calendario di una prenotazione",
     "Permette a un membro di salvare una delle proprie prenotazioni come file calendario standard (.ics) per il calendario che già usa. Il file contiene solo l’orario, lo spazio prenotato e il nome dello spazio di coworking — nessun importo, nessun nome, nessuna nota, nessun link — ed è un’istantanea: una modifica successiva della prenotazione non aggiorna un file già salvato. Non viene scritto nulla in alcun calendario e nulla si sincronizza. Disattivata, nasconde il pulsante."
+   ],
+   "memberGettingStarted": [
+    "Scheda Primi passi",
+    "Dopo essersi unito a uno spazio o averlo creato, un membro vede una scheda compatta nell’hub Prenota: in quale spazio si trova e un passo successivo suggerito — scegliere un orario da prenotare, vedere la propria iscrizione o aprire l’aiuto — solo dove le funzioni e i suoi permessi lo consentono. Non ora la nasconde; le Impostazioni possono mostrarla di nuovo. Non prenota, non paga e non approva mai nulla. Disattivata, nasconde la scheda e non cambia altro."
    ]
   },
   "process": {

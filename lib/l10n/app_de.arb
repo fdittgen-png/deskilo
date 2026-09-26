@@ -2297,6 +2297,14 @@
   "featureTierCoreDesc": "Was jeder Raum braucht. Ab dem ersten Tag an.",
   "featureTierPlatform": "Plattform",
   "featureTierPlatformDesc": "Angefragt, nie vorausgesetzt. Schalten Sie ein, was dieser Raum wirklich betreibt.",
+  "featureMemberGettingStartedTitle": "Karte „Erste Schritte“",
+  "@featureMemberGettingStartedTitle": {
+    "description": "#1654 getting started: featureMemberGettingStartedTitle"
+  },
+  "featureMemberGettingStartedDesc": "Nach dem Beitritt oder dem Anlegen eines Workspace sieht ein Mitglied eine kompakte Karte im Reservieren-Hub: in welchem Workspace es ist und einen vorgeschlagenen nächsten Schritt — eine Zeit zum Buchen wählen, die eigene Mitgliedschaft ansehen oder die Hilfe öffnen — nur dort, wo Funktionen und Berechtigungen es erlauben. „Jetzt nicht“ blendet sie aus; die Einstellungen zeigen sie wieder an. Sie bucht, zahlt und genehmigt nie etwas. Aus blendet die Karte aus und ändert sonst nichts.",
+  "@featureMemberGettingStartedDesc": {
+    "description": "#1654 getting started: featureMemberGettingStartedDesc"
+  },
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",

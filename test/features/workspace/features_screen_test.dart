@@ -36,7 +36,8 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   // nothing existing changes.
   // 2026-09-16 — 103 manifest features (#1274) outgrow 17000 px, and a
   // lazy list simply stops building the tail.
-  Size size = const Size(800, 18000),
+  // 2026-09-25 — 114 manifest features (#1654) outgrow 18000 px.
+  Size size = const Size(800, 20000),
   // #1327 — the screen opens on the process overview. Every caller of
   // this helper pins the switches, so it opens that view unless asked
   // not to.

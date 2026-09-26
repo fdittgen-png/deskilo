@@ -266,7 +266,17 @@ enum WorkspaceFeature {
   /// naming it. Nothing is written to any calendar and nothing syncs:
   /// a retime after the save does not follow the file. Core, default
   /// ON: an interoperability courtesy every space can extend.
-  calendarFileExport;
+  calendarFileExport,
+
+  /// #1654 — the Get started card on the Reserve hub: after a join or a
+  /// creation, one compact, dismissible card names the workspace the
+  /// person is in and suggests ONE permitted next action — choose a time
+  /// to book, read their own membership, or open the help — where the
+  /// features, the permissions and the loaded data support it. It reads
+  /// what the hub already loaded, writes nothing but its own dismissal,
+  /// and never submits a booking. Core, default ON: optional help a
+  /// space can hide; OFF hides the card and nothing else.
+  memberGettingStarted;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1286,6 +1296,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // because that is where a booking is looked at.
   WorkspaceFeature.calendarFileExport: FeatureManifestEntry(
     feature: WorkspaceFeature.calendarFileExport,
+    surface: FeatureSurface.reserve,
+    tier: FeatureTier.core,
+  ),
+  // #1654 — `requires` is empty on purpose: the card suggests only what
+  // the features already on support, so no tab is its prerequisite.
+  // Reserve, because that is where a newly joined member lands.
+  WorkspaceFeature.memberGettingStarted: FeatureManifestEntry(
+    feature: WorkspaceFeature.memberGettingStarted,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
   ),

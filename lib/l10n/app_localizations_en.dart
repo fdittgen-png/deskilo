@@ -3390,6 +3390,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Asked for, never assumed. Switch on what this space actually runs.';
 
   @override
+  String get featureMemberGettingStartedTitle => 'Get started card';
+
+  @override
+  String get featureMemberGettingStartedDesc =>
+      'After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. Off hides the card and changes nothing else.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override

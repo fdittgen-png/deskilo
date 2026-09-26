@@ -518,4 +518,14 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'booking does not update a file already saved. Nothing '
                   'is written to any calendar and nothing syncs. Off hides '
                   'the button.',
+        WorkspaceFeature.memberGettingStarted =>
+          l10n?.featureMemberGettingStartedDesc ??
+              'After joining or creating a workspace, a member sees one '
+                  'compact card on the Reserve hub: which workspace they '
+                  'are in, and one suggested next step — choose a time to '
+                  'book, view their membership, or open the help — only '
+                  'where the features and their permissions allow it. Not '
+                  'now hides it; Settings can show it again. It never '
+                  'books, pays or approves anything. Off hides the card '
+                  'and changes nothing else.',
       };

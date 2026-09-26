@@ -3420,6 +3420,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Angefragt, nie vorausgesetzt. Schalten Sie ein, was dieser Raum wirklich betreibt.';
 
   @override
+  String get featureMemberGettingStartedTitle => 'Karte „Erste Schritte“';
+
+  @override
+  String get featureMemberGettingStartedDesc =>
+      'Nach dem Beitritt oder dem Anlegen eines Workspace sieht ein Mitglied eine kompakte Karte im Reservieren-Hub: in welchem Workspace es ist und einen vorgeschlagenen nächsten Schritt — eine Zeit zum Buchen wählen, die eigene Mitgliedschaft ansehen oder die Hilfe öffnen — nur dort, wo Funktionen und Berechtigungen es erlauben. „Jetzt nicht“ blendet sie aus; die Einstellungen zeigen sie wieder an. Sie bucht, zahlt und genehmigt nie etwas. Aus blendet die Karte aus und ändert sonst nichts.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override

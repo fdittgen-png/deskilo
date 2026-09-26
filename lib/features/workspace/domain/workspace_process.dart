@@ -195,6 +195,9 @@ const workspaceProcesses = <WorkspaceProcess>[
       // it is how an administrator starts their day, not a setting.
       WorkspaceFeature.decisionSurface,
       WorkspaceFeature.formHelpHints,
+      // #1654 — beside the help hints, for the same reason: optional
+      // guidance on an existing screen, not a right anybody holds.
+      WorkspaceFeature.memberGettingStarted,
       WorkspaceFeature.uiAnimations,
       WorkspaceFeature.regionalFormats,
       WorkspaceFeature.navigationStyle,

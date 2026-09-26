@@ -3878,6 +3878,14 @@
   "featureTierCoreDesc": "What every space needs. On from the first day.",
   "featureTierPlatform": "Platform",
   "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs.",
+  "featureMemberGettingStartedTitle": "Get started card",
+  "@featureMemberGettingStartedTitle": {
+    "description": "#1654 getting started: featureMemberGettingStartedTitle"
+  },
+  "featureMemberGettingStartedDesc": "After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. Off hides the card and changes nothing else.",
+  "@featureMemberGettingStartedDesc": {
+    "description": "#1654 getting started: featureMemberGettingStartedDesc"
+  },
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
