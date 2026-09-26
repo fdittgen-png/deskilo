@@ -335,6 +335,18 @@
   "@authRecoverySessionLost": {
     "description": "Inline notice when the recovery session is gone before the password was saved"
   },
+  "authJoinByInvitation": "Join by invitation",
+  "@authJoinByInvitation": {
+    "description": "Sign-in screen: the entry for somebody holding an invitation (#1650); sets the join intent"
+  },
+  "authJoinHint": "Create your account or sign in first — you'll paste your invitation right after.",
+  "@authJoinHint": {
+    "description": "Sign-in screen: banner after tapping Join by invitation (#1650) — the invitation is pasted after sign-in, never stored"
+  },
+  "authConnectServer": "Connect an organisation's server",
+  "@authConnectServer": {
+    "description": "Sign-in screen: secondary link to the Server screen (#1650); the wizard on that screen covers setting one up"
+  },
   "availabilityTitle": "Availability",
   "@availabilityTitle": {
     "description": "App-bar title of the owner availability editor and its settings tile"

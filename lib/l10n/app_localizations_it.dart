@@ -270,6 +270,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quel codice non è più valido qui. Richiedine uno nuovo.';
 
   @override
+  String get authJoinByInvitation => 'Entra con un invito';
+
+  @override
+  String get authJoinHint =>
+      'Crea prima il tuo account o accedi: incollerai l\'invito subito dopo.';
+
+  @override
+  String get authConnectServer => 'Collegarsi al server di un\'organizzazione';
+
+  @override
   String get availabilityTitle => 'Disponibilità';
 
   @override

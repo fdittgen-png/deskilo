@@ -584,6 +584,24 @@ abstract class AppLocalizations {
   /// **'That code is no longer valid here. Request a new one.'**
   String get authRecoverySessionLost;
 
+  /// Sign-in screen: the entry for somebody holding an invitation (#1650); sets the join intent
+  ///
+  /// In en, this message translates to:
+  /// **'Join by invitation'**
+  String get authJoinByInvitation;
+
+  /// Sign-in screen: banner after tapping Join by invitation (#1650) — the invitation is pasted after sign-in, never stored
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account or sign in first — you\'ll paste your invitation right after.'**
+  String get authJoinHint;
+
+  /// Sign-in screen: secondary link to the Server screen (#1650); the wizard on that screen covers setting one up
+  ///
+  /// In en, this message translates to:
+  /// **'Connect an organisation\'s server'**
+  String get authConnectServer;
+
   /// App-bar title of the owner availability editor and its settings tile
   ///
   /// In en, this message translates to:
