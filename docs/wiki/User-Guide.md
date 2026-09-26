@@ -127,6 +127,8 @@ Booking from the plan:
 
 ## 4. Reservations (Reserve hub)
 
+With large text or a short window, scroll the hub controls to reach the date and view actions; the floor plan keeps its own visible area (#1654).
+
 Open the **Reserve** hub (center button). Along the top: two rows of controls. The first says **what** you are looking at: the four **view buttons** and, on the plan, the **map / list** switch. The second says **when**: the **date chip**, a **Now** button once you have browsed away from today, and the same granularity-dependent window controls the plan itself uses (§3 — day-part chips, a *Full day* chip, or from → to). The **floor chips** (*All floors*, or one per level) sit on the plan itself, and the **QR scan** button (§4a) sits in the app bar, beside the editor and the bell. Then four views:
 
 - **Plan** — the floor plan filtered to your chosen window; tap a free seat to book it.

@@ -212,6 +212,21 @@ Reservation reservationOn(
 // (#208, #236), chip selection and the painter's inputs are what this file
 // pins; reading them through the widgets is the point.
 void main() {
+  testWidgets('large-text portrait keeps header actions reachable and the plan visible', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    final repo = await pumpHub(tester, size: const Size(360, 640));
+    expect(tester.takeException(), isNull);
+    expect(tester.getSize(find.byKey(_canvasKey)).height, greaterThan(0));
+    final date = find.byKey(const ValueKey('reserve-date-button'));
+    await tester.ensureVisible(date);
+    await tester.pumpAndSettle();
+    await tester.tap(date);
+    await tester.pumpAndSettle();
+    expect(find.byType(DatePickerDialog), findsOneWidget);
+    expect(repo.createCalls, 0);
+  });
+
   // Half-slot classification anchors to the WORKSPACE clock (the fake
   // workspace is Europe/Berlin); reset between tests.
   tearDown(WorkspaceTime.reset);
