@@ -32,18 +32,18 @@ McpConnectionRepository mcpConnectionRepository(Ref ref) =>
     SupabaseMcpConnectionRepository(Supabase.instance.client);
 
 @riverpod
-ConnectAssistant connectAssistant(Ref ref) => ConnectAssistant(
-  ref.watch(mcpConnectionRepositoryProvider),
-  () => ref.read(identityBindingRepositoryProvider).requestMcpEligibility(),
-  onFinalizeFailed: (error, stack) => ref
-      .read(traceLoggerProvider)
-      .error(
-        'mcp',
-        'connection approved but not finalised',
-        error: error,
-        stackTrace: stack,
-      ),
-);
+ConnectAssistant connectAssistant(Ref ref) {
+  // Read up front: the closures outlive this auto-disposed provider's ref.
+  final identity = ref.watch(identityBindingRepositoryProvider);
+  final trace = ref.watch(traceLoggerProvider);
+  return ConnectAssistant(
+    ref.watch(mcpConnectionRepositoryProvider),
+    () => identity.requestMcpEligibility(),
+    onFinalizeFailed: (error, stack) => trace.error(
+        'mcp', 'connection approved but not finalised',
+        error: error, stackTrace: stack),
+  );
+}
 
 /// The pending request and what this person may offer, loaded together.
 @riverpod
