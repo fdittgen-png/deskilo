@@ -170,3 +170,22 @@ class RegionalSuggestion {
     );
   }
 }
+
+/// #1656 — what applying a template did with its floor-plan prices (0278).
+enum TemplatePriceOutcome {
+  /// The template carries no prices.
+  none,
+
+  /// Same currency: the prices were applied.
+  applied,
+
+  /// Another currency: every price here was left as it was.
+  currencyMismatch;
+
+  static TemplatePriceOutcome fromResult(Object? result) =>
+      switch (result is Map ? result['prices'] : null) {
+        'applied' => TemplatePriceOutcome.applied,
+        'currency_mismatch' => TemplatePriceOutcome.currencyMismatch,
+        _ => TemplatePriceOutcome.none,
+      };
+}

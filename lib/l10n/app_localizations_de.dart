@@ -11240,6 +11240,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get templatePricesOtherCurrency =>
+      'Die Preise der Vorlage sind in einer anderen Währung, daher wurden die Preise hier nicht geändert.';
+
+  @override
   String templateRegionSuggested(String values) {
     return 'Diese Vorlage wurde für $values erstellt. Ihre Wahl bleibt, außer Sie übernehmen ihre Werte.';
   }

@@ -11228,6 +11228,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get templatePricesOtherCurrency =>
+      'Los precios de la plantilla están en otra moneda, así que los precios de aquí no se cambiaron.';
+
+  @override
   String templateRegionSuggested(String values) {
     return 'Esta plantilla se creó para $values. Se mantiene su elección salvo que use sus valores.';
   }

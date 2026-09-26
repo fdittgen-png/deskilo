@@ -30,14 +30,15 @@ mixin SupabaseWorkspaceTemplates {
     ];
   }
 
-  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId,
-          {List<String>? groups}) =>
-      client.rpc<dynamic>('apply_workspace_template', params: {
+  Future<TemplatePriceOutcome> applyWorkspaceTemplate(String workspaceId,
+          String templateId, {List<String>? groups}) async =>
+      TemplatePriceOutcome.fromResult(
+          await client.rpc<dynamic>('apply_workspace_template', params: {
         'p_workspace_id': workspaceId,
         'p_template_id': templateId,
         // #1276 — null applies everything the template carries.
         'p_groups': ?groups,
-      });
+      }));
 
   Future<TemplatePreview> previewWorkspaceTemplate(
       String workspaceId, String templateId, {List<String>? groups}) async {
