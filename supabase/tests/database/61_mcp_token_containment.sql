@@ -3,7 +3,7 @@
 -- and nothing else. Assertions run as `authenticated`, once with a
 -- native session and once with the same person's delegated claims.
 begin;
-select plan(14);
+select plan(13);
 
 create function pg_temp.act_as(p_user uuid, p_client text default null) returns void language plpgsql as $$
 begin

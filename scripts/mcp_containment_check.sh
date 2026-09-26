@@ -57,7 +57,12 @@ case "$got" in
   *) fail "delegated uses GraphQL: expected 403 or an unexposed schema, got $got: $(head -c 300 /tmp/mcp-out)" ;;
 esac
 echo "delegated uses GraphQL: $got"
-expect "delegated GETs the facade" 403 "$DELEGATED" GET "/rest/v1/rpc/mcp_execute_v1"
+# A GET on the facade is refused by the guard (403) or finds no callable
+# function without arguments (404, PGRST202); neither runs anything.
+got=$(code "$DELEGATED" GET "/rest/v1/rpc/mcp_execute_v1")
+[ "$got" = 403 ] || { [ "$got" = 404 ] && grep -q PGRST202 /tmp/mcp-out; } \
+  || fail "delegated GETs the facade: expected 403 or 404, got $got: $(head -c 300 /tmp/mcp-out)"
+echo "delegated GETs the facade: $got"
 expect "delegated POSTs the facade" 200 "$DELEGATED" POST "/rest/v1/rpc/mcp_execute_v1" \
   '{"p_installation_id":"00000000-0000-4000-8000-000000000001","p_workspace_id":"00000000-0000-4000-8000-000000000002","p_operation":"get_capabilities","p_arguments":{},"p_request_id":null}'
 grep -q '"status"' /tmp/mcp-out || fail "the facade did not answer an envelope: $(head -c 300 /tmp/mcp-out)"
