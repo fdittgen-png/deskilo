@@ -50,9 +50,11 @@ bool servesQuantity(ServiceItem service, int quantity) {
   return stock == null || stock >= quantity;
 }
 
-/// Whether [period] names a billing month ('yyyy-MM').
+/// Whether [period] names a billing month ('yyyy-MM', month 01 to 12).
+///
+/// The shape alone accepted `2026-00` and `2026-13`, which name no bill.
 bool isBillingMonth(String period) =>
-    RegExp(r'^\d{4}-\d{2}$').hasMatch(period.trim());
+    RegExp(r'^\d{4}-(0[1-9]|1[0-2])$').hasMatch(period.trim());
 
 /// What recording [quantity] of [service] for [period] means.
 ConsumptionOutcome consumptionOutcome({

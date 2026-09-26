@@ -1,0 +1,6 @@
+{
+  "consumptionRefusedStock": "No queda suficiente stock. No se registró nada.",
+  "consumptionRefusedInactive": "Este servicio ya no se ofrece. No se registró nada.",
+  "consumptionRefusedQuantity": "La cantidad debe estar entre 1 y 999. No se registró nada.",
+  "consumptionRefusedPeriod": "El periodo de facturación debe ser un mes (AAAA-MM). No se registró nada."
+}

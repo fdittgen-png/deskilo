@@ -1774,6 +1774,22 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get consumptionRefusedStock =>
+      'Scorte insufficienti. Non è stato registrato nulla.';
+
+  @override
+  String get consumptionRefusedInactive =>
+      'Questo servizio non è più offerto. Non è stato registrato nulla.';
+
+  @override
+  String get consumptionRefusedQuantity =>
+      'La quantità deve essere tra 1 e 999. Non è stato registrato nulla.';
+
+  @override
+  String get consumptionRefusedPeriod =>
+      'Il periodo di fatturazione deve essere un mese (AAAA-MM). Non è stato registrato nulla.';
+
+  @override
   String get coOwnerAction => 'Comproprietà';
 
   @override

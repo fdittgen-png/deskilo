@@ -1774,6 +1774,22 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get consumptionRefusedStock =>
+      'No queda suficiente stock. No se registró nada.';
+
+  @override
+  String get consumptionRefusedInactive =>
+      'Este servicio ya no se ofrece. No se registró nada.';
+
+  @override
+  String get consumptionRefusedQuantity =>
+      'La cantidad debe estar entre 1 y 999. No se registró nada.';
+
+  @override
+  String get consumptionRefusedPeriod =>
+      'El periodo de facturación debe ser un mes (AAAA-MM). No se registró nada.';
+
+  @override
   String get coOwnerAction => 'Copropiedad';
 
   @override
