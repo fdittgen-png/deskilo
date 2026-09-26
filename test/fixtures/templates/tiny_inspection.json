@@ -1,0 +1,38 @@
+{
+  "_source": "inspect_workspace_template of the tiny builtin on the development project, schema 266, cut to one level, one office, one desk and one seat; the digest and the counts are the server's own",
+  "template": {"id": "053fe2ae-5b68-4a6c-beb5-fa66caa0d28f", "key": "tiny", "name": "A tiny space", "tags": [], "entities": ["floor_plan"], "visibility": "builtin", "description": "Two levels, four desks, eight seats — enough to book, scan and browse from the first minute.", "schema_version": 1, "template_version": 1, "owner_workspace_id": null},
+  "supported_schema_versions": [1],
+  "registry_revision": "098ca53ea9c3",
+  "schema_revision": 266,
+  "compatibility": "supported",
+  "compatibility_reason": null,
+  "outline": [{"group": "space", "entities": ["floor_plan"]}],
+  "status": "ok",
+  "profile": "legacy",
+  "digest": "c112a979665aaa030dd18b2d8884b6ba",
+  "fields": [
+    {"id": "floor_plan[].background_path", "path": "floor_plan[Ground floor].background_path", "reason": "a storage file of the source", "disposition": "stripped"},
+    {"id": "floor_plan[].bookable_as_whole", "path": "floor_plan[Ground floor].bookable_as_whole", "value": false, "disposition": "present"},
+    {"id": "floor_plan[].name", "path": "floor_plan[Ground floor].name", "value": "Ground floor", "disposition": "present"},
+    {"id": "floor_plan[].offices[].desks[].seats[].accessories", "path": "floor_plan[Ground floor].offices[Main room].desks[Desk 2].seats[B1].accessories", "value": [], "disposition": "reference"},
+    {"id": "floor_plan[].offices[].desks[].seats[].amenities", "path": "floor_plan[Ground floor].offices[Main room].desks[Desk 2].seats[B1].amenities", "value": ["lamp", "screen"], "disposition": "present"},
+    {"id": "floor_plan[].offices[].desks[].seats[].x", "path": "floor_plan[Ground floor].offices[Main room].desks[Desk 2].seats[B1].x", "value": 24, "disposition": "present"},
+    {"id": "floor_plan[].site", "path": "floor_plan[Ground floor].site", "reason": "sites never travel", "disposition": "stripped"},
+    {"id": "floor_plan[].sort_order", "path": "floor_plan[Ground floor].sort_order", "value": 0, "disposition": "present"},
+    {"id": "workspace.booking_rules.simultaneous_reservations", "path": "workspace.booking_rules.simultaneous_reservations", "absent": "product_default", "disposition": "absent"},
+    {"id": "workspace.feature_flags.carnets", "path": "workspace.feature_flags.carnets", "absent": "registry_default", "disposition": "absent"},
+    {"id": "workspace.invoice_pdf_template", "path": "workspace.invoice_pdf_template", "shape": "object", "disposition": "present"}
+  ],
+  "problems": [],
+  "required_inputs": [
+    {"id": "workspace.country_code", "path": "workspace.country_code", "reason": "the new space says who and where it is", "binding": "target"},
+    {"id": "workspace.currency_code", "path": "workspace.currency_code", "reason": "the new space says who and where it is", "binding": "target"},
+    {"id": "workspace.name", "path": "workspace.name", "reason": "the new space says who and where it is", "binding": "target"},
+    {"id": "workspace.timezone", "path": "workspace.timezone", "reason": "the new space says who and where it is", "binding": "target"}
+  ],
+  "exclusions": [
+    {"id": "floor_plan[].background_path", "reason": "a storage file of the source", "portability": "never"},
+    {"id": "floor_plan[].images", "reason": "a storage file of the source", "portability": "never"}
+  ],
+  "coverage": {"absent": 0, "present": 100, "unknown": 0, "registered": 27, "required_inputs": 4}
+}
