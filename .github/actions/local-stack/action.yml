@@ -1,0 +1,47 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# #1446 C5 — the one place a local Supabase stack starts.
+#
+# `supabase start` IS the migration replay from empty (#1226): every file
+# under supabase/migrations applied in order to a database that has
+# nothing underneath. It costs about a minute, and it must happen once
+# per job: the pgTAP suite, the policy and contract diffs, the race
+# scripts, the payment handlers, the lifecycle and archive drills — and
+# whatever comes after them (an MCP or auth producer) — attach to THIS
+# stack through the address this step publishes, or through
+# `supabase status` on the same runner. Nothing under scripts/ starts a
+# stack, and test/lint/local_stack_harness_test.dart keeps it that way.
+#
+# What the caller does first: pin the CLI (`supabase/setup-cli`) and Deno
+# (`denoland/setup-deno`) as workflow steps. A setup action inside a
+# composite resolves its problem matcher against the composite's own
+# path and fails the step (see classify-change/action.yml), so the
+# toolchain stays a workflow concern and this action only starts.
+#
+# The address is a local URL with the stack's fixed development
+# password; it is not a secret, and it is the only output, because the
+# scripts that need the API keys read them from `supabase status` where
+# they run rather than through a workflow expression.
+name: local stack
+description: Start the one local Supabase stack of this job — the migration replay from empty — and publish its database address
+
+outputs:
+  db-url:
+    description: The replayed database, for psql and the scripts that take a URL
+    value: ${{ steps.address.outputs.db-url }}
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: supabase start
+    - id: address
+      shell: bash
+      run: |
+        url=$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')
+        [ -n "$url" ] || { echo "::error::local stack: supabase status reports no DB_URL"; exit 1; }
+        # pgTAP for every consumer that wants it; idempotent.
+        psql "$url" -v ON_ERROR_STOP=1 \
+          -c 'create extension if not exists pgtap with schema extensions;'
+        echo "db-url=$url" >> "$GITHUB_OUTPUT"

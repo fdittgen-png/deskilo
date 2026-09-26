@@ -76,6 +76,21 @@ cancel only a superseded pull request; caches hold dependencies keyed on
 a lockfile. `test/lint/workflow_source_identity_test.dart` reads the YAML
 and holds that shape (#1446 C4, `docs/ci/CI_BASELINE.md`).
 
+The database job starts its local Supabase stack **once**, through
+`.github/actions/local-stack` — the migration replay from empty, with the
+database address as its output — and every discipline after it attaches
+to that stack; nothing under `scripts/` starts one. Fixtures that stay in
+the shared database (the restore seed) run after the steps that expect
+only their own rows there, and the drills that need a database of their
+own come last. A producer added later (MCP, auth) is one more step after
+`migrations`, never a second stack.
+`test/lint/local_stack_harness_test.dart` holds that shape (#1446 C5).
+
+The generated code is gated in the required job and in the F-Droid audit
+through one call, `scripts/generated_drift.sh` (#1446 C5a): build_runner
+runs, and any `.g.dart` or `.freezed.dart` that differs from the commit
+is named and fails the job.
+
 ## What this convention does *not* touch
 
 Workflow names are **not** status-check contexts. Branch protection lists
