@@ -11983,6 +11983,168 @@ abstract class AppLocalizations {
   /// **'Answer a validation request'**
   String get mcpOpRespond;
 
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Connect an assistant'**
+  String get mcpConsentTitle;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'This connection request could not be loaded. Start again from the assistant.'**
+  String get mcpConsentUnavailable;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'This assistant is already connected. Returning to it.'**
+  String get mcpConsentAlready;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'{client} asks to act for you in Deskilo.'**
+  String mcpConsentAsks(String client);
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'This database has not approved assistants for you yet. Ask for approval, then connect again.'**
+  String get mcpConsentNotEligible;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for approval'**
+  String get mcpConsentRequestEligibility;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'None of your workspaces lets assistants in. Nothing can be connected.'**
+  String get mcpConsentNoWorkspace;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Choose each workspace and what it may do there. Nothing is chosen for you.'**
+  String get mcpConsentChoose;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Deny'**
+  String get mcpConsentDeny;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get mcpConsentApprove;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Connected. Returning to the assistant.'**
+  String get mcpConsentConnected;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Refused. The assistant gets nothing.'**
+  String get mcpConsentDenied;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant was approved but the connection is not usable yet. Connect again from the assistant.'**
+  String get mcpConsentPartial;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Approval requested. A database administrator will review it.'**
+  String get mcpConsentRequested;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'See which workspaces it may use'**
+  String get mcpOpListWorkspaces;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'See what it may do there'**
+  String get mcpOpCapabilities;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'See free places'**
+  String get mcpOpAvailability;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'See your reservations'**
+  String get mcpOpMyReservations;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'See your account statement'**
+  String get mcpOpMyStatement;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'See your invoices'**
+  String get mcpOpMyInvoices;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Book a place for you'**
+  String get mcpOpCreateReservation;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Change your reservations'**
+  String get mcpOpUpdateReservation;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Check you in'**
+  String get mcpOpCheckIn;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Check you out'**
+  String get mcpOpCheckOut;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Ask to delete a reservation'**
+  String get mcpOpReservationDeletion;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'See pending validation requests'**
+  String get mcpOpPendingValidations;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Read a validation request'**
+  String get mcpOpGetValidation;
+
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///
   /// In en, this message translates to:

@@ -18,16 +18,16 @@ enum ConfirmationStatus {
   unavailable;
 
   static ConfirmationStatus fromWire(Object? raw) => switch (raw) {
-        'pending' => pending,
-        'acknowledged' => acknowledged,
-        'consumed' => consumed,
-        'declined' => declined,
-        'expired' => expired,
-        'revoked' => revoked,
-        'target_changed' => targetChanged,
-        'not_found' => notFound,
-        _ => unavailable,
-      };
+    'pending' => pending,
+    'acknowledged' => acknowledged,
+    'consumed' => consumed,
+    'declined' => declined,
+    'expired' => expired,
+    'revoked' => revoked,
+    'target_changed' => targetChanged,
+    'not_found' => notFound,
+    _ => unavailable,
+  };
 
   /// Only a pending confirmation can be answered.
   bool get answerable => this == pending;
@@ -66,7 +66,9 @@ class ActionConfirmation {
       return ActionConfirmation(id: id, status: ConfirmationStatus.unavailable);
     }
     final status = ConfirmationStatus.fromWire(json['status']);
-    final preview = json['preview'] is Map ? json['preview'] as Map : const <Object?, Object?>{};
+    final preview = json['preview'] is Map
+        ? json['preview'] as Map
+        : const <Object?, Object?>{};
     Map<String, Object?> map(Object? v) =>
         v is Map ? {for (final e in v.entries) '${e.key}': e.value} : const {};
     return ActionConfirmation(

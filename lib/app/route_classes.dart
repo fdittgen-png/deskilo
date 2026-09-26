@@ -72,6 +72,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/onboarding', RouteClass.nativeAccount),
   RouteRule('/scan-join', RouteClass.nativeAccount),
   RouteRule('/mcp/confirm/:id', RouteClass.nativeAccount),
+  RouteRule('/oauth/consent', RouteClass.nativeAccount),
   RouteRule('/kiosk-gate', RouteClass.workspace),
   RouteRule('/kiosk', RouteClass.workspace),
   RouteRule('/pending', RouteClass.workspace),

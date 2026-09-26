@@ -6904,6 +6904,96 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpRespond => 'Answer a validation request';
 
   @override
+  String get mcpConsentTitle => 'Connect an assistant';
+
+  @override
+  String get mcpConsentUnavailable =>
+      'This connection request could not be loaded. Start again from the assistant.';
+
+  @override
+  String get mcpConsentAlready =>
+      'This assistant is already connected. Returning to it.';
+
+  @override
+  String mcpConsentAsks(String client) {
+    return '$client asks to act for you in Deskilo.';
+  }
+
+  @override
+  String get mcpConsentNotEligible =>
+      'This database has not approved assistants for you yet. Ask for approval, then connect again.';
+
+  @override
+  String get mcpConsentRequestEligibility => 'Ask for approval';
+
+  @override
+  String get mcpConsentNoWorkspace =>
+      'None of your workspaces lets assistants in. Nothing can be connected.';
+
+  @override
+  String get mcpConsentChoose =>
+      'Choose each workspace and what it may do there. Nothing is chosen for you.';
+
+  @override
+  String get mcpConsentDeny => 'Deny';
+
+  @override
+  String get mcpConsentApprove => 'Connect';
+
+  @override
+  String get mcpConsentConnected => 'Connected. Returning to the assistant.';
+
+  @override
+  String get mcpConsentDenied => 'Refused. The assistant gets nothing.';
+
+  @override
+  String get mcpConsentPartial =>
+      'The assistant was approved but the connection is not usable yet. Connect again from the assistant.';
+
+  @override
+  String get mcpConsentRequested =>
+      'Approval requested. A database administrator will review it.';
+
+  @override
+  String get mcpOpListWorkspaces => 'See which workspaces it may use';
+
+  @override
+  String get mcpOpCapabilities => 'See what it may do there';
+
+  @override
+  String get mcpOpAvailability => 'See free places';
+
+  @override
+  String get mcpOpMyReservations => 'See your reservations';
+
+  @override
+  String get mcpOpMyStatement => 'See your account statement';
+
+  @override
+  String get mcpOpMyInvoices => 'See your invoices';
+
+  @override
+  String get mcpOpCreateReservation => 'Book a place for you';
+
+  @override
+  String get mcpOpUpdateReservation => 'Change your reservations';
+
+  @override
+  String get mcpOpCheckIn => 'Check you in';
+
+  @override
+  String get mcpOpCheckOut => 'Check you out';
+
+  @override
+  String get mcpOpReservationDeletion => 'Ask to delete a reservation';
+
+  @override
+  String get mcpOpPendingValidations => 'See pending validation requests';
+
+  @override
+  String get mcpOpGetValidation => 'Read a validation request';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Members see My account';
 
   @override

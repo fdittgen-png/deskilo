@@ -42,6 +42,7 @@ import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/backend_screen.dart';
 import '../features/mcp/presentation/mcp_confirmation_screen.dart';
+import '../features/mcp/presentation/mcp_consent_screen.dart';
 import '../features/profile/presentation/screens/new_instance_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
@@ -465,6 +466,13 @@ GoRouter router(Ref ref) {
         path: '/mcp/confirm/:id',
         builder: (context, state) =>
             McpConfirmationScreen(confirmationId: state.pathParameters['id']!),
+      ),
+      // #1615 — Auth's OAuth server sends the person here to connect an
+      // assistant. Every consent call refuses an assistant's token.
+      GoRoute(
+        path: '/oauth/consent',
+        builder: (context, state) => McpConsentScreen(
+            authorizationId: state.uri.queryParameters['authorization_id'] ?? ''),
       ),
       GoRoute(
         path: '/nfc-config',

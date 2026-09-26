@@ -77,6 +77,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> members` | 2 |
 | `kiosk -> events` | 1 |
 | `kiosk -> members` | 1 |
+| `mcp -> auth` | 1 |
 | `money -> calendar` | 1 |
 | `plan -> events` | 1 |
 | `plan -> members` | 1 |
@@ -85,7 +86,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**54 directed relationships, 695 imports.**
+**55 directed relationships, 696 imports.**
 
 Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -118,7 +119,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/presentation/screens/availability_screen.dart` | 856 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
-| `lib/app/router.dart` | 797 |
+| `lib/app/router.dart` | 805 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |

@@ -189,7 +189,7 @@ Storage objects, Auth configuration and the running application recover to a kno
 
 A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.
 
-- **Code:** shipped · component `c3b040573796`
+- **Code:** shipped · component `7eb9c3c95498`
 - **Needs:** None: the Demo is built into every client.
 - **Limits:** The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.
 - **Feature flags:** `demoMode`

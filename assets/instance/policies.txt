@@ -40,6 +40,7 @@ public.ledger_entries.ledger_select
 public.levels.levels_select
 public.levels.levels_write
 public.managed_identities.managed_identities_select
+public.mcp_connection_preparations.mcp_delegated_deny
 public.member_badges.member_badges_select
 public.member_credit_uses.member_credit_uses_select
 public.member_credits.member_credits_select

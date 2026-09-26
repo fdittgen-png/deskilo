@@ -7389,6 +7389,119 @@
   "@mcpOpRespond": {
     "description": "#1619 mcp_confirmation"
   },
+  "mcpConsentTitle": "Connect an assistant",
+  "@mcpConsentTitle": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentUnavailable": "This connection request could not be loaded. Start again from the assistant.",
+  "@mcpConsentUnavailable": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentAlready": "This assistant is already connected. Returning to it.",
+  "@mcpConsentAlready": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentAsks": "{client} asks to act for you in Deskilo.",
+  "@mcpConsentAsks": {
+    "description": "#1615 mcp_consent",
+    "placeholders": {
+      "client": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConsentNotEligible": "This database has not approved assistants for you yet. Ask for approval, then connect again.",
+  "@mcpConsentNotEligible": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentRequestEligibility": "Ask for approval",
+  "@mcpConsentRequestEligibility": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentNoWorkspace": "None of your workspaces lets assistants in. Nothing can be connected.",
+  "@mcpConsentNoWorkspace": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentChoose": "Choose each workspace and what it may do there. Nothing is chosen for you.",
+  "@mcpConsentChoose": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentDeny": "Deny",
+  "@mcpConsentDeny": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentApprove": "Connect",
+  "@mcpConsentApprove": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentConnected": "Connected. Returning to the assistant.",
+  "@mcpConsentConnected": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentDenied": "Refused. The assistant gets nothing.",
+  "@mcpConsentDenied": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentPartial": "The assistant was approved but the connection is not usable yet. Connect again from the assistant.",
+  "@mcpConsentPartial": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentRequested": "Approval requested. A database administrator will review it.",
+  "@mcpConsentRequested": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpListWorkspaces": "See which workspaces it may use",
+  "@mcpOpListWorkspaces": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpCapabilities": "See what it may do there",
+  "@mcpOpCapabilities": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpAvailability": "See free places",
+  "@mcpOpAvailability": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpMyReservations": "See your reservations",
+  "@mcpOpMyReservations": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpMyStatement": "See your account statement",
+  "@mcpOpMyStatement": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpMyInvoices": "See your invoices",
+  "@mcpOpMyInvoices": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpCreateReservation": "Book a place for you",
+  "@mcpOpCreateReservation": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpUpdateReservation": "Change your reservations",
+  "@mcpOpUpdateReservation": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpCheckIn": "Check you in",
+  "@mcpOpCheckIn": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpCheckOut": "Check you out",
+  "@mcpOpCheckOut": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpReservationDeletion": "Ask to delete a reservation",
+  "@mcpOpReservationDeletion": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpPendingValidations": "See pending validation requests",
+  "@mcpOpPendingValidations": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpGetValidation": "Read a validation request",
+  "@mcpOpGetValidation": {
+    "description": "#1615 mcp_consent"
+  },
   "featureMemberAccountMenuTitle": "Members see My account",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"
