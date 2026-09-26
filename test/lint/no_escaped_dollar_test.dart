@@ -28,6 +28,9 @@ import 'lint_sources.dart';
 const Map<String, String> _exempt = {
   'lib/features/workspace/domain/feature_registry_sql.dart':
       "Postgres dollar-quoting: \$registry\$ delimits the function body",
+  // 2026-09-25 #1655 — the same generator shape for the field registry.
+  'lib/features/workspace/domain/template_field_registry_sql.dart':
+      "Postgres dollar-quoting: \$registry\$ and \$json\$ delimit the body and its literal",
 };
 
 /// `\$` immediately followed by what an interpolation starts with.
