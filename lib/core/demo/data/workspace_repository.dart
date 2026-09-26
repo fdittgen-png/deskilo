@@ -30,6 +30,7 @@ import 'package:deskilo/features/workspace/domain/managed_access.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
+import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/template_publication.dart';
@@ -1762,6 +1763,30 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// #1303 — outlines by template id; unset ids outline their plan.
   final templateOutlines = <String, TemplateOutline>{};
+
+  /// #1655 — inspections by template id; unset ids inspect as a usable
+  /// legacy plan whose outline is [workspaceTemplateOutline]'s.
+  final templateInspections = <String, TemplateInspection>{};
+
+  @override
+  Future<TemplateInspection> inspectWorkspaceTemplate(String templateId) async {
+    final set = templateInspections[templateId];
+    if (set != null) return set;
+    final t = templates.firstWhere((x) => x.id == templateId,
+        orElse: () => throw Exception('unknown template'));
+    // A seeded outline refusal (#1303 tests) refuses here too.
+    final outline = await workspaceTemplateOutline(templateId);
+    return TemplateInspection(
+      templateId: t.id,
+      key: t.key,
+      name: t.name,
+      entities: t.entities,
+      status: TemplateInspectionStatus.ok,
+      profile: t.carriesConfiguration ? TemplateProfile.partial : TemplateProfile.legacy,
+      compatibility: outline.compatibility,
+      outline: outline,
+    );
+  }
 
   @override
   Future<TemplateOutline> workspaceTemplateOutline(String templateId) async {

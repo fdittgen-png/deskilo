@@ -6,6 +6,7 @@
 // class so the interface stays ONE thing the app reads through.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../domain/template_inspection.dart';
 import '../domain/template_outline.dart';
 import '../domain/template_preview.dart';
 import '../domain/template_publication.dart';
@@ -53,6 +54,13 @@ mixin SupabaseWorkspaceTemplates {
     final json = await client.rpc<dynamic>('template_outline',
         params: {'p_template_id': templateId});
     return TemplateOutline.fromJson(
+        Map<String, dynamic>.from(json as Map? ?? const <String, dynamic>{}));
+  }
+
+  Future<TemplateInspection> inspectWorkspaceTemplate(String templateId) async {
+    final json = await client.rpc<dynamic>('inspect_workspace_template',
+        params: {'p_template_id': templateId});
+    return TemplateInspection.fromJson(
         Map<String, dynamic>.from(json as Map? ?? const <String, dynamic>{}));
   }
 
