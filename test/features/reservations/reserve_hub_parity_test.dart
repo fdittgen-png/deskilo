@@ -53,7 +53,8 @@ void main() {
     setUpAll(() {
       hub = File('lib/features/reservations/presentation/screens/'
               'reserve_screen.dart')
-          .readAsStringSync();
+          .readAsStringSync() + File('lib/features/reservations/presentation/widgets/'
+              'reserve_hub_layout.dart').readAsStringSync();
     });
 
     test('a Now button exists, as on the Plan tab', () {
@@ -85,7 +86,8 @@ void main() {
     setUpAll(() {
       hub = File('lib/features/reservations/presentation/screens/'
               'reserve_screen.dart')
-          .readAsStringSync();
+          .readAsStringSync() + File('lib/features/reservations/presentation/widgets/'
+              'reserve_hub_layout.dart').readAsStringSync();
     });
 
     test('scan, date and the four views survive', () {

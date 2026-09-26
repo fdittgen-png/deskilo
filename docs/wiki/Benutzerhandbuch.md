@@ -127,6 +127,8 @@ Vom Plan aus buchen:
 
 ## 4. Reservierungen (Reservieren-Hub)
 
+Bei großer Schrift oder einem kurzen Fenster lassen sich die Steuerelemente des Hubs scrollen, um Datum und Ansicht zu erreichen; der Grundriss behält einen eigenen sichtbaren Bereich (#1654).
+
 Öffne den **Reservieren**-Hub (Mittelknopf). Oben: zwei Reihen von Bedienelementen. Die erste sagt, **was** du siehst: die vier **Ansichts-Knöpfe** und, auf dem Plan, der Umschalter **Plan / Liste**. Die zweite sagt **wann**: der **Datums-Chip**, ein **Jetzt**-Knopf, sobald du von heute weggeblättert hast, und die **Tageszeit-Chips**. Die **Etagen-Chips** (*Alle Etagen* oder eine je Ebene) sitzen auf dem Plan selbst, der **QR-Scan** (§4a) in der Kopfzeile, neben Editor und Glocke. Dann vier Ansichten:
 
 - **Plan** — der Grundriss, gefiltert auf dein Fenster; freien Platz antippen und buchen.

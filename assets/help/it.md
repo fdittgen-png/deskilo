@@ -127,6 +127,8 @@ Prenotare dalla piantina:
 
 ## 4. Prenotazioni (hub Prenota)
 
+Con caratteri grandi o una finestra bassa, scorri i controlli dell’hub per raggiungere data e viste; la pianta mantiene una propria area visibile (#1654).
+
 Apri l'hub **Prenota** (pulsante centrale). In alto: due righe di controlli. La prima dice **che cosa** stai guardando: i quattro **pulsanti di vista** e, sulla piantina, il selettore **piantina / elenco**. La seconda dice **quando**: il **chip della data**, un pulsante **Adesso** appena ti allontani da oggi, e gli stessi controlli della finestra legati alla granularità della piantina stessa (§3 — chip di fascia oraria, un chip *Giornata intera*, oppure da → a). I **chip di piano** (*Tutti i piani*, o uno per livello) stanno sulla piantina stessa, e il pulsante di **scansione QR** (§4a) sta nella barra dell'app, accanto all'editor e alla campanella. Poi quattro viste:
 
 - **Piantina** — la piantina filtrata sulla finestra scelta; tocca un posto libero per prenotarlo.

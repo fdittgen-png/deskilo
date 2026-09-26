@@ -127,6 +127,8 @@ Réserver depuis le plan :
 
 ## 4. Réservations (hub Réserver)
 
+Avec de grands caractères ou une fenêtre courte, faites défiler les commandes du hub pour atteindre la date et les vues ; le plan conserve sa propre zone visible (#1654).
+
 Ouvrez le hub **Réserver** (bouton central). En haut : deux rangées de commandes. La première dit **ce que** vous regardez : les quatre **boutons de vue** et, sur le plan, le sélecteur **plan / liste**. La seconde dit **quand** : la **puce de date**, un bouton **Maintenant** dès que vous avez quitté aujourd'hui, et les **puces de moment** (matin / après-midi / journée). Les **puces d'étage** (*Tous les étages*, ou un par niveau) sont sur le plan lui-même, et le bouton **scan QR** (§4a) est dans la barre d'app, à côté de l'éditeur et de la cloche. Puis quatre vues :
 
 - **Plan** — le plan filtré sur votre fenêtre ; touchez une place libre pour réserver.

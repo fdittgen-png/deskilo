@@ -23,6 +23,7 @@ import '../reserve_seat_actions.dart';
 import '../space_subjects.dart';
 import '../widgets/reserve_canvas.dart';
 import '../widgets/reserve_view_menu.dart';
+import '../widgets/reserve_hub_layout.dart';
 import '../widgets/seat_list_view.dart';
 import '../widgets/stale_availability_banner.dart';
 import '../../../plan/providers/default_level_controller.dart';
@@ -744,74 +745,14 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
         ],
       );
     }
-    final content = Expanded(
-            // #209: cross-fade the Plan/Day/Week toggle. Distinct subtree
-            // keys make the switcher animate the swap; the fade stays
-            // OUTSIDE the canvas's InteractiveViewer transform.
-            // #611 — fade-through style: the incoming view also scales
-            // 0.97→1, per the M3 top-level-switch pattern.
-            child: AnimatedSwitcher(
-              duration: AppMotion.viewSwitchOf(context),
-              switchInCurve: MotionTokens.enter,
-              switchOutCurve: MotionTokens.ease,
-              transitionBuilder: (child, animation) => FadeTransition(
-                opacity: animation,
-                child: ScaleTransition(
-                  scale: Tween<double>(begin: 0.97, end: 1)
-                      .animate(animation),
-                  child: child,
-                ),
-              ),
-              child: switch (_view) {
-                // Map and list are the same VIEW with two
-                // presentations; _planView picks between them and keys
-                // its own child, so the cross-fade (#209) happens
-                // inside rather than swapping the whole surface.
-                ReserveView.plan || ReserveView.list => KeyedSubtree(
-                    key: const ValueKey('reserve-plan-view'),
-                    child: _planView(l10n, window, dayOpen: dayOpen),
-                  ),
-                ReserveView.day => KeyedSubtree(
-                    key: const ValueKey('reserve-day-view'),
-                    child: _dayView(),
-                  ),
-                ReserveView.week => KeyedSubtree(
-                    key: const ValueKey('reserve-week-view'),
-                    child: _weekView(),
-                  ),
-                ReserveView.month => KeyedSubtree(
-                    key: const ValueKey('reserve-month-view'),
-                    child: _monthView(),
-                  ),
-              },
-            ),
-          );
-
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.maxWidth > constraints.maxHeight) {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  // #478 phone-landscape audit: 40% sidebar left the
-                  // canvas cramped while the panel sat mostly empty.
-                  width:
-                      (constraints.maxWidth * 0.3).clamp(260.0, 380.0),
-                  child: SingleChildScrollView(child: header()),
-                ),
-                const VerticalDivider(key: ValueKey('split-divider'), width: 1),
-                content,
-              ],
-            );
-          }
-          return Column(children: [header(), content]);
-        },
-      ),
-    );
+    return ReserveHubLayout(header: header(), view: _view,
+      buildView: (view) => switch (view) {
+        ReserveView.plan || ReserveView.list => _planView(l10n, window, dayOpen: dayOpen),
+        ReserveView.day => _dayView(),
+        ReserveView.week => _weekView(),
+        ReserveView.month => _monthView(),
+      });
   }
-
 
 
   /// Closed-day banner (#186 style): the workspace is not open on the
