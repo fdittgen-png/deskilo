@@ -18,8 +18,9 @@ analyzer:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
-  plugins:
-    - riverpod_lint
+
+plugins:
+  riverpod_lint: 3.1.9
 
 linter:
   rules:
