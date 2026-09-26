@@ -188,6 +188,7 @@ begin
       "memberAccountMenu": true,
       "memberDataExport": true,
       "memberEnvironments": false,
+      "memberGettingStarted": true,
       "memberNotifications": true,
       "memberOrigin": false,
       "memberPage": false,

@@ -235,4 +235,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureMcpAccessTitle ?? 'MCP interface',
       WorkspaceFeature.calendarFileExport =>
         l10n?.featureCalendarFileExportTitle ?? 'Calendar file of a booking',
+      WorkspaceFeature.memberGettingStarted =>
+        l10n?.featureMemberGettingStartedTitle ?? 'Get started card',
     };

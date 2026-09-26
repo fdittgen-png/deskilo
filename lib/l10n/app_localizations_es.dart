@@ -3419,6 +3419,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Pedido, nunca supuesto. Active lo que este espacio realmente hace.';
 
   @override
+  String get featureMemberGettingStartedTitle => 'Tarjeta Primeros pasos';
+
+  @override
+  String get featureMemberGettingStartedDesc =>
+      'Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Desactivada, oculta la tarjeta y no cambia nada más.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override

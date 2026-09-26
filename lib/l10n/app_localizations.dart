@@ -5953,6 +5953,18 @@ abstract class AppLocalizations {
   /// **'Asked for, never assumed. Switch on what this space actually runs.'**
   String get featureTierPlatformDesc;
 
+  /// #1654 getting started: featureMemberGettingStartedTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Get started card'**
+  String get featureMemberGettingStartedTitle;
+
+  /// #1654 getting started: featureMemberGettingStartedDesc
+  ///
+  /// In en, this message translates to:
+  /// **'After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. Off hides the card and changes nothing else.'**
+  String get featureMemberGettingStartedDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:

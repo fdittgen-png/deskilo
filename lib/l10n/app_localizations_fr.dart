@@ -3425,6 +3425,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Demandé, jamais supposé. Activez ce que cet espace fait vraiment.';
 
   @override
+  String get featureMemberGettingStartedTitle => 'Carte Premiers pas';
+
+  @override
+  String get featureMemberGettingStartedDesc =>
+      'Après avoir rejoint ou créé un espace, un membre voit une carte compacte sur le hub Réserver : l’espace dans lequel il se trouve et une prochaine étape suggérée — choisir un créneau à réserver, consulter son adhésion ou ouvrir l’aide — seulement là où les fonctionnalités et ses permissions le permettent. Pas maintenant la masque ; les Réglages peuvent la réafficher. Elle ne réserve, ne paie et n’approuve jamais rien. Désactivée, elle masque la carte et ne change rien d’autre.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override

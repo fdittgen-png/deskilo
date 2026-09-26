@@ -162,7 +162,13 @@ import 'package:flutter_test/flutter_test.dart';
 //   without naming anybody. No calendar write, no sync, no amount, no name.
 //   Reserve, Core, default ON: an interoperability courtesy every space
 //   can extend, and a switch that hides the button when it will not.
-const int _expectedFeatureCount = 113; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
+// 113→114 (2026-09-25): #1654 memberGettingStarted — the Get started card
+//   on the Reserve hub after a join or a creation: the workspace the
+//   person is in and ONE permitted next action, from what the hub already
+//   loaded. Writes only its own dismissal; never books, pays or approves.
+//   Reserve, Core, default ON: optional help a space can hide, and OFF
+//   hides the card and nothing else.
+const int _expectedFeatureCount = 114; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
 
 void main() {
   _tierPins();
@@ -231,7 +237,11 @@ void main() {
 // grants nothing. A courtesy a fifteen-person community meets on day one
 // without having asked, which is exactly what Core is for; the switch
 // exists so a space can hide the button, not so it has to find it.
-const int _expectedCoreCount = 38;
+// 38→39 (2026-09-25): #1654 memberGettingStarted — the first thing a
+// newly joined member of a fifteen-person community meets is the question
+// "what do I do here?"; a card that answers it with the one permitted
+// action, and goes away when asked, is exactly what Core is for.
+const int _expectedCoreCount = 39;
 
 void _tierPins() {
   test('every feature declares a tier, and the split is pinned', () {

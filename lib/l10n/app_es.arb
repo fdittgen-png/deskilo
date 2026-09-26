@@ -2297,6 +2297,14 @@
   "featureTierCoreDesc": "Lo que todo espacio necesita. Activo desde el primer día.",
   "featureTierPlatform": "Plataforma",
   "featureTierPlatformDesc": "Pedido, nunca supuesto. Active lo que este espacio realmente hace.",
+  "featureMemberGettingStartedTitle": "Tarjeta Primeros pasos",
+  "@featureMemberGettingStartedTitle": {
+    "description": "#1654 getting started: featureMemberGettingStartedTitle"
+  },
+  "featureMemberGettingStartedDesc": "Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Desactivada, oculta la tarjeta y no cambia nada más.",
+  "@featureMemberGettingStartedDesc": {
+    "description": "#1654 getting started: featureMemberGettingStartedDesc"
+  },
   "helpTitle": "Ayuda",
   "helpContents": "Índice",
   "helpHintMessages": "Todas las conversaciones en una lista, la más reciente arriba. Toque el lápiz para escribir a alguien o crear un grupo.",
