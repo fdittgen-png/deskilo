@@ -12145,6 +12145,300 @@ abstract class AppLocalizations {
   /// **'Read a validation request'**
   String get mcpOpGetValidation;
 
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant access'**
+  String get mcpPolicyTitle;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant settings could not be loaded. Try again later.'**
+  String get mcpPolicyUnavailable;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'You switched workspace. Reopen this page to edit the other workspace.'**
+  String get mcpPolicySwitched;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what assistants may do in this workspace. A member still needs this database\'s approval, the matching role, and must choose this workspace when connecting their assistant.'**
+  String get mcpPolicyExplain;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants are switched off for this workspace in its features. You can still narrow or switch off the services below.'**
+  String get mcpPolicyFeatureOff;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Offer assistant services'**
+  String get mcpPolicyEnabled;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Records an assistant may act on'**
+  String get mcpPolicyCeiling;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Own records only'**
+  String get mcpPolicyCeilingOwn;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace-wide'**
+  String get mcpPolicyCeilingWorkspace;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants already connected do not get the added services: each person must add them when they connect again.'**
+  String get mcpPolicyBroadening;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get mcpPolicySave;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Own bookings and account'**
+  String get mcpGroupOwn;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Financial requests'**
+  String get mcpGroupFinancial;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Membership requests'**
+  String get mcpGroupMembership;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Validations'**
+  String get mcpGroupValidations;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Saved.'**
+  String get mcpPolicySaved;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Someone changed these settings meanwhile. Review the current settings and save again.'**
+  String get mcpPolicyStale;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'This save was refused. Review the current settings and save again.'**
+  String get mcpPolicyConflict;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect {client}?'**
+  String mcpDisconnectTitle(String client);
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant loses access to every workspace on this database. What it already read is not taken back.'**
+  String get mcpDisconnectBody;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get mcpCancel;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get mcpDisconnect;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants'**
+  String get mcpAssistantsTitle;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Your assistant access could not be loaded. Try again later.'**
+  String get mcpAssistantsUnavailable;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Connected assistants'**
+  String get mcpConnectedTitle;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'No assistant is connected. Connect one from the assistant itself.'**
+  String get mcpConnectedNone;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'This database allows you to use assistants.'**
+  String get mcpEligibleYes;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'You asked for approval. A database administrator will review it.'**
+  String get mcpEligibleRequested;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Your approval expired. Ask again to keep using assistants.'**
+  String get mcpEligibleExpired;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is not linked to a verified identity on this database.'**
+  String get mcpEligibleNoIdentity;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'This database has not approved assistants for you.'**
+  String get mcpEligibleNot;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Give up assistant access on this database'**
+  String get mcpEligibleWithdraw;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'No workspace: this assistant can do nothing here.'**
+  String get mcpConnectedNoWorkspace;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this workspace'**
+  String get mcpRemoveWorkspace;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant approvals'**
+  String get mcpReviewTitle;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Only this database\'s administrators review approvals.'**
+  String get mcpReviewNotAdmin;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'The requests could not be loaded. A review needs your second factor; try again.'**
+  String get mcpReviewUnavailable;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Approving lets a person connect assistants on this database, in the workspaces whose owners allow it. It grants no membership or role.'**
+  String get mcpReviewExplain;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'No request is waiting.'**
+  String get mcpReviewEmpty;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get mcpReviewReject;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get mcpReviewApprove;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Decision recorded.'**
+  String get mcpReviewDone;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'This request changed or another administrator decided first. Nothing was done.'**
+  String get mcpReviewChanged;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'The decision was refused.'**
+  String get mcpReviewRefused;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm with your authenticator'**
+  String get mfaTitle;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Scan this code with an authenticator app, or enter the key, then type the six digits it shows.'**
+  String get mfaEnroll;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Six-digit code'**
+  String get mfaCode;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'That code was not accepted. Try the current one.'**
+  String get mfaWrong;
+
+  /// #1626 #1627 #1628 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get mfaVerify;
+
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///
   /// In en, this message translates to:

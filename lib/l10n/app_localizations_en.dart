@@ -6994,6 +6994,175 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpGetValidation => 'Read a validation request';
 
   @override
+  String get mcpPolicyTitle => 'Assistant access';
+
+  @override
+  String get mcpPolicyUnavailable =>
+      'The assistant settings could not be loaded. Try again later.';
+
+  @override
+  String get mcpPolicySwitched =>
+      'You switched workspace. Reopen this page to edit the other workspace.';
+
+  @override
+  String get mcpPolicyExplain =>
+      'Choose what assistants may do in this workspace. A member still needs this database\'s approval, the matching role, and must choose this workspace when connecting their assistant.';
+
+  @override
+  String get mcpPolicyFeatureOff =>
+      'Assistants are switched off for this workspace in its features. You can still narrow or switch off the services below.';
+
+  @override
+  String get mcpPolicyEnabled => 'Offer assistant services';
+
+  @override
+  String get mcpPolicyCeiling => 'Records an assistant may act on';
+
+  @override
+  String get mcpPolicyCeilingOwn => 'Own records only';
+
+  @override
+  String get mcpPolicyCeilingWorkspace => 'Workspace-wide';
+
+  @override
+  String get mcpPolicyBroadening =>
+      'Assistants already connected do not get the added services: each person must add them when they connect again.';
+
+  @override
+  String get mcpPolicySave => 'Save';
+
+  @override
+  String get mcpGroupOwn => 'Own bookings and account';
+
+  @override
+  String get mcpGroupFinancial => 'Financial requests';
+
+  @override
+  String get mcpGroupMembership => 'Membership requests';
+
+  @override
+  String get mcpGroupValidations => 'Validations';
+
+  @override
+  String get mcpPolicySaved => 'Saved.';
+
+  @override
+  String get mcpPolicyStale =>
+      'Someone changed these settings meanwhile. Review the current settings and save again.';
+
+  @override
+  String get mcpPolicyConflict =>
+      'This save was refused. Review the current settings and save again.';
+
+  @override
+  String mcpDisconnectTitle(String client) {
+    return 'Disconnect $client?';
+  }
+
+  @override
+  String get mcpDisconnectBody =>
+      'The assistant loses access to every workspace on this database. What it already read is not taken back.';
+
+  @override
+  String get mcpCancel => 'Cancel';
+
+  @override
+  String get mcpDisconnect => 'Disconnect';
+
+  @override
+  String get mcpAssistantsTitle => 'Assistants';
+
+  @override
+  String get mcpAssistantsUnavailable =>
+      'Your assistant access could not be loaded. Try again later.';
+
+  @override
+  String get mcpConnectedTitle => 'Connected assistants';
+
+  @override
+  String get mcpConnectedNone =>
+      'No assistant is connected. Connect one from the assistant itself.';
+
+  @override
+  String get mcpEligibleYes => 'This database allows you to use assistants.';
+
+  @override
+  String get mcpEligibleRequested =>
+      'You asked for approval. A database administrator will review it.';
+
+  @override
+  String get mcpEligibleExpired =>
+      'Your approval expired. Ask again to keep using assistants.';
+
+  @override
+  String get mcpEligibleNoIdentity =>
+      'Your account is not linked to a verified identity on this database.';
+
+  @override
+  String get mcpEligibleNot =>
+      'This database has not approved assistants for you.';
+
+  @override
+  String get mcpEligibleWithdraw => 'Give up assistant access on this database';
+
+  @override
+  String get mcpConnectedNoWorkspace =>
+      'No workspace: this assistant can do nothing here.';
+
+  @override
+  String get mcpRemoveWorkspace => 'Remove this workspace';
+
+  @override
+  String get mcpReviewTitle => 'Assistant approvals';
+
+  @override
+  String get mcpReviewNotAdmin =>
+      'Only this database\'s administrators review approvals.';
+
+  @override
+  String get mcpReviewUnavailable =>
+      'The requests could not be loaded. A review needs your second factor; try again.';
+
+  @override
+  String get mcpReviewExplain =>
+      'Approving lets a person connect assistants on this database, in the workspaces whose owners allow it. It grants no membership or role.';
+
+  @override
+  String get mcpReviewEmpty => 'No request is waiting.';
+
+  @override
+  String get mcpReviewReject => 'Reject';
+
+  @override
+  String get mcpReviewApprove => 'Approve';
+
+  @override
+  String get mcpReviewDone => 'Decision recorded.';
+
+  @override
+  String get mcpReviewChanged =>
+      'This request changed or another administrator decided first. Nothing was done.';
+
+  @override
+  String get mcpReviewRefused => 'The decision was refused.';
+
+  @override
+  String get mfaTitle => 'Confirm with your authenticator';
+
+  @override
+  String get mfaEnroll =>
+      'Scan this code with an authenticator app, or enter the key, then type the six digits it shows.';
+
+  @override
+  String get mfaCode => 'Six-digit code';
+
+  @override
+  String get mfaWrong => 'That code was not accepted. Try the current one.';
+
+  @override
+  String get mfaVerify => 'Verify';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Members see My account';
 
   @override

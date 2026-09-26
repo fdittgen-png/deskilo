@@ -26,6 +26,7 @@
 import '../../features/workspace/application/creation_intent.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/action_confirmation_repository.dart';
+import 'data/mcp_admin_repository.dart';
 import 'data/mcp_connection_repository.dart';
 import '../../features/mcp/providers/mcp_providers.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -93,6 +94,11 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       // #1615 — nor an assistant to connect.
       mcpConnectionRepositoryProvider
           .overrideWithValue(FakeMcpConnectionRepository()),
+      // #1626/#1627 — no policy to save and no queue to review; and no
+      // second factor, since Demo has no Auth server to verify one.
+      mcpAdminRepositoryProvider.overrideWithValue(FakeMcpAdminRepository()),
+      secondFactorRepositoryProvider
+          .overrideWithValue(FakeSecondFactorRepository()),
       workspaceRepositoryProvider.overrideWithValue(fixture.workspaces),
       floorPlanRepositoryProvider.overrideWithValue(fixture.floorPlan),
       reservationRepositoryProvider.overrideWithValue(fixture.reservations),
@@ -183,6 +189,8 @@ const Set<String> demoOverriddenProviders = {
   'identityBindingRepositoryProvider',
   'actionConfirmationRepositoryProvider',
   'mcpConnectionRepositoryProvider',
+  'mcpAdminRepositoryProvider',
+  'secondFactorRepositoryProvider',
   'workspaceRepositoryProvider',
   'floorPlanRepositoryProvider',
   'reservationRepositoryProvider',

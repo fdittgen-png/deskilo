@@ -135,3 +135,106 @@ final class IdentityBindingRepositoryProvider
 
 String _$identityBindingRepositoryHash() =>
     r'7fd608f3e3d3c5352298e4a381e3ed97edff2114';
+
+/// #1627 — the second factor a database decision needs.
+
+@ProviderFor(secondFactorRepository)
+final secondFactorRepositoryProvider = SecondFactorRepositoryProvider._();
+
+/// #1627 — the second factor a database decision needs.
+
+final class SecondFactorRepositoryProvider
+    extends
+        $FunctionalProvider<
+          SecondFactorRepository,
+          SecondFactorRepository,
+          SecondFactorRepository
+        >
+    with $Provider<SecondFactorRepository> {
+  /// #1627 — the second factor a database decision needs.
+  SecondFactorRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'secondFactorRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$secondFactorRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<SecondFactorRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  SecondFactorRepository create(Ref ref) {
+    return secondFactorRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SecondFactorRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SecondFactorRepository>(value),
+    );
+  }
+}
+
+String _$secondFactorRepositoryHash() =>
+    r'e6e130d106eefe2263df62632974973b8d2d6ed9';
+
+/// #1608/#1611 — what this database lets the signed-in account do:
+/// administrator, MCP eligibility. Re-read after every change.
+
+@ProviderFor(myDatabaseCapabilities)
+final myDatabaseCapabilitiesProvider = MyDatabaseCapabilitiesProvider._();
+
+/// #1608/#1611 — what this database lets the signed-in account do:
+/// administrator, MCP eligibility. Re-read after every change.
+
+final class MyDatabaseCapabilitiesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<DatabaseCapabilities>,
+          DatabaseCapabilities,
+          FutureOr<DatabaseCapabilities>
+        >
+    with
+        $FutureModifier<DatabaseCapabilities>,
+        $FutureProvider<DatabaseCapabilities> {
+  /// #1608/#1611 — what this database lets the signed-in account do:
+  /// administrator, MCP eligibility. Re-read after every change.
+  MyDatabaseCapabilitiesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myDatabaseCapabilitiesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myDatabaseCapabilitiesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<DatabaseCapabilities> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<DatabaseCapabilities> create(Ref ref) {
+    return myDatabaseCapabilities(ref);
+  }
+}
+
+String _$myDatabaseCapabilitiesHash() =>
+    r'52dff47e6f2a6cd80f6afcc88cf32511897bb2b6';
