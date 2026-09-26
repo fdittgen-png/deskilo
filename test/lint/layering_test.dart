@@ -266,7 +266,7 @@ const Map<String, int> _pairBudget = {
   // facts; the card has no cross-feature reads. Workspace environment and
   // BookingPolicies remain owned by workspace, not duplicated in the card.
   'reservations -> workspace': 54,
-  'workspace -> auth': 3,
+  'workspace -> auth': 4, // 2026-09-26 #1636 3→4: a pending creation draft names the account that sent it, so a restart resumes it for that account only (application/creation_intent.dart)
   // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
   // *does anything need me?* by ASSEMBLING signals that already exist:
   // the events awaiting my decision (the type, to tell money from a

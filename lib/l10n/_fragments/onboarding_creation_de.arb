@@ -1,0 +1,16 @@
+{
+  "onboardingShapeLabel": "Was erstellt wird",
+  "onboardingShapeTest": "Ein Test-Arbeitsbereich",
+  "onboardingShapeTestHint": "Sicher zum Ausprobieren: Jeder Bildschirm und jedes Dokument zeigt, dass es ein Test ist. Keine echte Abrechnung.",
+  "onboardingShapeReal": "Ein echter Arbeitsbereich",
+  "onboardingShapeRealHint": "Für den echten Betrieb: Die ausgestellten Rechnungen sind geschuldet.",
+  "onboardingShapePair": "Ein verknüpftes Test- und Echt-Paar",
+  "onboardingSummaryCount": "{count, plural, =1{Erstellt einen Arbeitsbereich} other{Erstellt {count} Arbeitsbereiche}}",
+  "onboardingSummaryBillingOn": "Echte Abrechnung ist möglich: Die Rechnungen sind geschuldet.",
+  "onboardingSummaryBillingOff": "Keine echte Abrechnung: Dokumente sind als Test markiert.",
+  "onboardingSummaryServer": "Auf dem Server {host}",
+  "onboardingIntentChanged": "Ihre frühere Anfrage wurde möglicherweise bereits ausgeführt. Wiederholen Sie sie genau wie gesendet, bevor Sie etwas ändern.",
+  "onboardingIntentResumed": "Eine frühere Erstellung ist möglicherweise durchgegangen. Wiederholen Sie, um dieselbe Anfrage zu prüfen.",
+  "onboardingRetryAsSent": "Wie gesendet wiederholen",
+  "onboardingCurrencyUnknown": "Geben Sie einen unterstützten Währungscode ein, z. B. EUR"
+}

@@ -14,6 +14,8 @@
 // and `if (code.isEmpty) return;` — both silent. A whole pasted
 // invitation with no code in it looked exactly like a button that had
 // not been pressed.
+import '../../../core/i18n/currencies.dart';
+import '../../../core/i18n/time_zones.dart';
 import '../domain/invite_uri.dart';
 import '../domain/template_outline.dart';
 import '../domain/template_preview.dart';
@@ -54,9 +56,15 @@ enum JoinOutcome {
 /// A workspace is chosen from a list by its name, so it needs one.
 bool isNameable(String name) => name.trim().isNotEmpty;
 
-/// A currency is three letters and a timezone is a name.
+/// #1636 — a currency the app can format and a zone the clock can
+/// install. Three letters and any text used to pass: `EURO` failed on
+/// the server, `Europe/Pairs` saved and silently ran on device time.
 bool isPlaceable({required String currencyCode, required String timezone}) =>
-    currencyCode.trim().length == 3 && timezone.trim().isNotEmpty;
+    isKnownCurrency(currencyCode) && TimeZones.isKnown(timezone.trim());
+
+/// A currency the workspace may bill in.
+bool isKnownCurrency(String code) =>
+    Currencies.selectable.contains(code.trim().toUpperCase());
 
 /// Whether [outline] leaves the template usable.
 ///
@@ -104,7 +112,7 @@ class WorkspaceStart {
     required String timezone,
     required String requestId,
     WorkspaceEnvironment environment = WorkspaceEnvironment.development,
-    bool withTwin = true,
+    bool withTwin = false,
     String? templateId,
     TemplateOutline? outline,
   }) async {

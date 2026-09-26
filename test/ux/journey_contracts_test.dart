@@ -63,9 +63,7 @@ void main() {
         ..createFailure = StateError('the response was lost');
 
       await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
-      await goToStep(tester, 'Where');
-      await tester.tap(find.byKey(const ValueKey('onboarding-with-twin')));
-      await tester.pumpAndSettle();
+      // #1636 — one test workspace is the default; nothing to untick.
       await goToStep(tester, 'Confirm');
 
       await pressCreate(tester); // the response is lost
@@ -82,9 +80,9 @@ void main() {
       expect(
         repo.createRequests.map((r) => r.withTwin),
         everyElement(isFalse),
-        reason: 'the member unticked the pair. A retry that re-sent the '
-            'default would hand them a production twin they refused, and '
-            'the confirm step would have said so on neither attempt',
+        reason: 'the member did not ask for the pair. A retry that re-sent '
+            'another shape would hand them a production twin they never '
+            'chose, and the confirm step would have said so on neither',
       );
       expect(repo.twinsCreated, isEmpty,
           reason: 'the twin rides the creation itself (#1303). A separate '
@@ -94,15 +92,21 @@ void main() {
           reason: 'and the member is in the app, not staring at the error');
     });
 
-    testWidgets('the twin the member KEPT travels with the one creation',
+    testWidgets('the twin the member CHOSE travels with the one creation',
         (tester) async {
       final repo = await pumpWithoutWorkspace(tester);
       await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+      await goToStep(tester, 'Where');
+      final pair = find.byKey(const ValueKey('onboarding-shape-pair'));
+      await tester.ensureVisible(pair);
+      await tester.tap(pair);
+      await tester.pumpAndSettle();
       await goToStep(tester, 'Confirm');
+      expect(find.text('Creates 2 workspaces'), findsOneWidget);
       await pressCreate(tester);
 
       expect(repo.createRequests.single.withTwin, isTrue,
-          reason: 'the pair is the default and the confirm step shows it');
+          reason: 'the pair was chosen and the confirm step shows it');
       expect(repo.twinsCreated, isEmpty,
           reason: 'still one call: the server makes the pair, the client '
               'does not follow up with a second request that can fail on '

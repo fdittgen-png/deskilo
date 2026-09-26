@@ -8086,6 +8086,65 @@ class AppLocalizationsFr extends AppLocalizations {
       'Des numéros ont déjà été attribués avec la date. La retirer pourrait en répéter un — changez aussi le préfixe ou le suffixe.';
 
   @override
+  String get onboardingShapeLabel => 'Que créer';
+
+  @override
+  String get onboardingShapeTest => 'Un espace de test';
+
+  @override
+  String get onboardingShapeTestHint =>
+      'Idéal pour essayer : chaque écran et chaque document indique qu\'il s\'agit d\'un test. Aucune facturation réelle.';
+
+  @override
+  String get onboardingShapeReal => 'Un espace réel';
+
+  @override
+  String get onboardingShapeRealHint =>
+      'Pour l\'exploitation réelle : les factures émises sont dues.';
+
+  @override
+  String get onboardingShapePair => 'Une paire liée test et réel';
+
+  @override
+  String onboardingSummaryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Crée $count espaces',
+      one: 'Crée un espace',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get onboardingSummaryBillingOn =>
+      'La facturation réelle est possible : ses factures sont dues.';
+
+  @override
+  String get onboardingSummaryBillingOff =>
+      'Aucune facturation réelle : les documents sont marqués comme test.';
+
+  @override
+  String onboardingSummaryServer(String host) {
+    return 'Sur le serveur $host';
+  }
+
+  @override
+  String get onboardingIntentChanged =>
+      'Votre demande précédente a peut-être déjà été créée. Relancez-la telle qu\'elle a été envoyée avant de modifier quoi que ce soit.';
+
+  @override
+  String get onboardingIntentResumed =>
+      'Une création précédente a peut-être abouti. Relancez pour vérifier la même demande.';
+
+  @override
+  String get onboardingRetryAsSent => 'Relancer telle quelle';
+
+  @override
+  String get onboardingCurrencyUnknown =>
+      'Saisissez un code de devise pris en charge, par exemple EUR';
+
+  @override
   String billParticipation(int pct) {
     return 'Participation $pct %';
   }

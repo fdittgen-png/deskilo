@@ -1,0 +1,16 @@
+{
+  "onboardingShapeLabel": "Qué crear",
+  "onboardingShapeTest": "Un espacio de prueba",
+  "onboardingShapeTestHint": "Seguro para probar: cada pantalla y cada documento indica que es una prueba. Sin facturación real.",
+  "onboardingShapeReal": "Un espacio real",
+  "onboardingShapeRealHint": "Para la operación real: las facturas que emite se deben.",
+  "onboardingShapePair": "Un par vinculado de prueba y real",
+  "onboardingSummaryCount": "{count, plural, =1{Crea un espacio} other{Crea {count} espacios}}",
+  "onboardingSummaryBillingOn": "La facturación real es posible: sus facturas se deben.",
+  "onboardingSummaryBillingOff": "Sin facturación real: los documentos se marcan como prueba.",
+  "onboardingSummaryServer": "En el servidor {host}",
+  "onboardingIntentChanged": "Puede que su solicitud anterior ya se haya creado. Reinténtela tal como se envió antes de cambiar nada.",
+  "onboardingIntentResumed": "Puede que una creación anterior se haya completado. Reintente para comprobar la misma solicitud.",
+  "onboardingRetryAsSent": "Reintentar tal cual",
+  "onboardingCurrencyUnknown": "Introduzca un código de moneda admitido, por ejemplo EUR"
+}

@@ -8012,6 +8012,65 @@ class AppLocalizationsEn extends AppLocalizations {
       'Numbers were already issued with the date. Removing it could repeat one — change the prefix or suffix too.';
 
   @override
+  String get onboardingShapeLabel => 'What to create';
+
+  @override
+  String get onboardingShapeTest => 'One test workspace';
+
+  @override
+  String get onboardingShapeTestHint =>
+      'Safe for trying things out: every screen and document says it is a test. No real billing.';
+
+  @override
+  String get onboardingShapeReal => 'One real workspace';
+
+  @override
+  String get onboardingShapeRealHint =>
+      'For real operation: the invoices it issues are owed.';
+
+  @override
+  String get onboardingShapePair => 'A linked test and real pair';
+
+  @override
+  String onboardingSummaryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Creates $count workspaces',
+      one: 'Creates one workspace',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get onboardingSummaryBillingOn =>
+      'Real billing is possible: its invoices are owed.';
+
+  @override
+  String get onboardingSummaryBillingOff =>
+      'No real billing: documents are marked as a test.';
+
+  @override
+  String onboardingSummaryServer(String host) {
+    return 'On the server $host';
+  }
+
+  @override
+  String get onboardingIntentChanged =>
+      'Your earlier request may already have been created. Retry it exactly as it was sent before changing anything.';
+
+  @override
+  String get onboardingIntentResumed =>
+      'An earlier creation may have gone through. Retry to check the same request.';
+
+  @override
+  String get onboardingRetryAsSent => 'Retry as sent';
+
+  @override
+  String get onboardingCurrencyUnknown =>
+      'Enter a currency code the app supports, such as EUR';
+
+  @override
   String billParticipation(int pct) {
     return 'Participation $pct%';
   }
