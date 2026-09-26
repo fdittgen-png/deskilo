@@ -138,4 +138,37 @@ void main() {
       })['status'], 'invalid_value');
     });
   });
+
+  test('the latest migration carries the generated catalogue verbatim', () {
+    final migrations = Directory('supabase/migrations')
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.sql') &&
+            f.readAsStringSync().contains('function public.mcp_operation_catalogue()'))
+        .toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+    expect(migrations, isNotEmpty);
+    expect(migrations.last.readAsStringSync(), contains(renderMcpCatalogueSql(source())),
+        reason: '${migrations.last.path} does not carry the current catalogue: '
+            'a contract change needs a migration with renderMcpCatalogueSql');
+  });
+
+  test('every dispatchable operation has its branch in mcp_execute_v1', () {
+    final migrations = Directory('supabase/migrations')
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.readAsStringSync().contains('function public.mcp_execute_v1('))
+        .toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+    final body = migrations.last.readAsStringSync();
+    // An operation needing native confirmation answers
+    // `requires_confirmation` through the generic path and executes
+    // nothing until #1619 consumes the confirmation.
+    for (final op in mcpOperations.values.where((o) => o.dispatch && !o.nativeConfirmation)) {
+      expect(body, contains("'${op.id}'"), reason: '${op.id} is dispatchable but has no branch');
+      if (op.rpc != null) {
+        expect(body, contains('public.${op.rpc}('), reason: '${op.id} never calls ${op.rpc}');
+      }
+    }
+  });
 }

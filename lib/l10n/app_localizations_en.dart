@@ -6820,6 +6820,349 @@ class AppLocalizationsEn extends AppLocalizations {
       'Makes the MCP interface available to this workspace, so an AI assistant can be connected to DesKilo. Availability only: switching it on grants nobody anything. Each person still needs a grant the owner configures and the instance administrator approves, and every operation keeps answering to the permissions and rules the app already applies. Off hides the MCP entry points and refuses calls; existing grants stay visible and revocable.';
 
   @override
+  String get mcpConfirmTitle => 'Confirm an assistant request';
+
+  @override
+  String get mcpConfirmConsequence =>
+      'Confirming lets the assistant send this exact request once. The workspace\'s own validation rules still apply.';
+
+  @override
+  String get mcpConfirmDecline => 'Decline';
+
+  @override
+  String get mcpConfirmAccept => 'Confirm';
+
+  @override
+  String get mcpConfirmDone =>
+      'Confirmed. The assistant can now send the request.';
+
+  @override
+  String get mcpConfirmDeclined => 'Declined. Nothing was done.';
+
+  @override
+  String get mcpConfirmExpired =>
+      'This request expired. Ask the assistant to send it again.';
+
+  @override
+  String get mcpConfirmStale =>
+      'This request no longer matches the current data or your access. Nothing was done.';
+
+  @override
+  String get mcpConfirmNotFound => 'There is no such request for you.';
+
+  @override
+  String get mcpConfirmUnavailable =>
+      'This request could not be loaded. Try again from the link.';
+
+  @override
+  String mcpConfirmNewStatus(String status) {
+    return 'New status: $status';
+  }
+
+  @override
+  String mcpConfirmNewShare(String pct) {
+    return 'New subscription share: $pct %';
+  }
+
+  @override
+  String get mcpConfirmApprove => 'Your answer: approve';
+
+  @override
+  String get mcpConfirmRefuse => 'Your answer: refuse';
+
+  @override
+  String mcpConfirmPeriod(String period) {
+    return 'Period: $period';
+  }
+
+  @override
+  String mcpConfirmWorkspace(String workspace) {
+    return 'Workspace: $workspace';
+  }
+
+  @override
+  String mcpConfirmClient(String client) {
+    return 'Asked by: $client';
+  }
+
+  @override
+  String get mcpOpInvoiceIssue => 'Issue an invoice';
+
+  @override
+  String get mcpOpInvoiceVoid => 'Void an invoice';
+
+  @override
+  String get mcpOpRefund => 'Refund an invoice';
+
+  @override
+  String get mcpOpMemberStatus => 'Change a member\'s status';
+
+  @override
+  String get mcpOpSubscription => 'Change a member\'s subscription share';
+
+  @override
+  String get mcpOpRespond => 'Answer a validation request';
+
+  @override
+  String get mcpConsentTitle => 'Connect an assistant';
+
+  @override
+  String get mcpConsentUnavailable =>
+      'This connection request could not be loaded. Start again from the assistant.';
+
+  @override
+  String get mcpConsentAlready =>
+      'This assistant is already connected. Returning to it.';
+
+  @override
+  String mcpConsentAsks(String client) {
+    return '$client asks to act for you in Deskilo.';
+  }
+
+  @override
+  String get mcpConsentNotEligible =>
+      'This database has not approved assistants for you yet. Ask for approval, then connect again.';
+
+  @override
+  String get mcpConsentRequestEligibility => 'Ask for approval';
+
+  @override
+  String get mcpConsentNoWorkspace =>
+      'None of your workspaces lets assistants in. Nothing can be connected.';
+
+  @override
+  String get mcpConsentChoose =>
+      'Choose each workspace and what it may do there. Nothing is chosen for you.';
+
+  @override
+  String get mcpConsentDeny => 'Deny';
+
+  @override
+  String get mcpConsentApprove => 'Connect';
+
+  @override
+  String get mcpConsentConnected => 'Connected. Returning to the assistant.';
+
+  @override
+  String get mcpConsentDenied => 'Refused. The assistant gets nothing.';
+
+  @override
+  String get mcpConsentPartial =>
+      'The assistant was approved but the connection is not usable yet. Connect again from the assistant.';
+
+  @override
+  String get mcpConsentRequested =>
+      'Approval requested. A database administrator will review it.';
+
+  @override
+  String get mcpOpListWorkspaces => 'See which workspaces it may use';
+
+  @override
+  String get mcpOpCapabilities => 'See what it may do there';
+
+  @override
+  String get mcpOpAvailability => 'See free places';
+
+  @override
+  String get mcpOpMyReservations => 'See your reservations';
+
+  @override
+  String get mcpOpMyStatement => 'See your account statement';
+
+  @override
+  String get mcpOpMyInvoices => 'See your invoices';
+
+  @override
+  String get mcpOpCreateReservation => 'Book a place for you';
+
+  @override
+  String get mcpOpUpdateReservation => 'Change your reservations';
+
+  @override
+  String get mcpOpCheckIn => 'Check you in';
+
+  @override
+  String get mcpOpCheckOut => 'Check you out';
+
+  @override
+  String get mcpOpReservationDeletion => 'Ask to delete a reservation';
+
+  @override
+  String get mcpOpPendingValidations => 'See pending validation requests';
+
+  @override
+  String get mcpOpGetValidation => 'Read a validation request';
+
+  @override
+  String get mcpPolicyTitle => 'Assistant access';
+
+  @override
+  String get mcpPolicyUnavailable =>
+      'The assistant settings could not be loaded. Try again later.';
+
+  @override
+  String get mcpPolicySwitched =>
+      'You switched workspace. Reopen this page to edit the other workspace.';
+
+  @override
+  String get mcpPolicyExplain =>
+      'Choose what assistants may do in this workspace. A member still needs this database\'s approval, the matching role, and must choose this workspace when connecting their assistant.';
+
+  @override
+  String get mcpPolicyFeatureOff =>
+      'Assistants are switched off for this workspace in its features. You can still narrow or switch off the services below.';
+
+  @override
+  String get mcpPolicyEnabled => 'Offer assistant services';
+
+  @override
+  String get mcpPolicyCeiling => 'Records an assistant may act on';
+
+  @override
+  String get mcpPolicyCeilingOwn => 'Own records only';
+
+  @override
+  String get mcpPolicyCeilingWorkspace => 'Workspace-wide';
+
+  @override
+  String get mcpPolicyBroadening =>
+      'Assistants already connected do not get the added services: each person must add them when they connect again.';
+
+  @override
+  String get mcpPolicySave => 'Save';
+
+  @override
+  String get mcpGroupOwn => 'Own bookings and account';
+
+  @override
+  String get mcpGroupFinancial => 'Financial requests';
+
+  @override
+  String get mcpGroupMembership => 'Membership requests';
+
+  @override
+  String get mcpGroupValidations => 'Validations';
+
+  @override
+  String get mcpPolicySaved => 'Saved.';
+
+  @override
+  String get mcpPolicyStale =>
+      'Someone changed these settings meanwhile. Review the current settings and save again.';
+
+  @override
+  String get mcpPolicyConflict =>
+      'This save was refused. Review the current settings and save again.';
+
+  @override
+  String mcpDisconnectTitle(String client) {
+    return 'Disconnect $client?';
+  }
+
+  @override
+  String get mcpDisconnectBody =>
+      'The assistant loses access to every workspace on this database. What it already read is not taken back.';
+
+  @override
+  String get mcpCancel => 'Cancel';
+
+  @override
+  String get mcpDisconnect => 'Disconnect';
+
+  @override
+  String get mcpAssistantsTitle => 'Assistants';
+
+  @override
+  String get mcpAssistantsUnavailable =>
+      'Your assistant access could not be loaded. Try again later.';
+
+  @override
+  String get mcpConnectedTitle => 'Connected assistants';
+
+  @override
+  String get mcpConnectedNone =>
+      'No assistant is connected. Connect one from the assistant itself.';
+
+  @override
+  String get mcpEligibleYes => 'This database allows you to use assistants.';
+
+  @override
+  String get mcpEligibleRequested =>
+      'You asked for approval. A database administrator will review it.';
+
+  @override
+  String get mcpEligibleExpired =>
+      'Your approval expired. Ask again to keep using assistants.';
+
+  @override
+  String get mcpEligibleNoIdentity =>
+      'Your account is not linked to a verified identity on this database.';
+
+  @override
+  String get mcpEligibleNot =>
+      'This database has not approved assistants for you.';
+
+  @override
+  String get mcpEligibleWithdraw => 'Give up assistant access on this database';
+
+  @override
+  String get mcpConnectedNoWorkspace =>
+      'No workspace: this assistant can do nothing here.';
+
+  @override
+  String get mcpRemoveWorkspace => 'Remove this workspace';
+
+  @override
+  String get mcpReviewTitle => 'Assistant approvals';
+
+  @override
+  String get mcpReviewNotAdmin =>
+      'Only this database\'s administrators review approvals.';
+
+  @override
+  String get mcpReviewUnavailable =>
+      'The requests could not be loaded. A review needs your second factor; try again.';
+
+  @override
+  String get mcpReviewExplain =>
+      'Approving lets a person connect assistants on this database, in the workspaces whose owners allow it. It grants no membership or role.';
+
+  @override
+  String get mcpReviewEmpty => 'No request is waiting.';
+
+  @override
+  String get mcpReviewReject => 'Reject';
+
+  @override
+  String get mcpReviewApprove => 'Approve';
+
+  @override
+  String get mcpReviewDone => 'Decision recorded.';
+
+  @override
+  String get mcpReviewChanged =>
+      'This request changed or another administrator decided first. Nothing was done.';
+
+  @override
+  String get mcpReviewRefused => 'The decision was refused.';
+
+  @override
+  String get mfaTitle => 'Confirm with your authenticator';
+
+  @override
+  String get mfaEnroll =>
+      'Scan this code with an authenticator app, or enter the key, then type the six digits it shows.';
+
+  @override
+  String get mfaCode => 'Six-digit code';
+
+  @override
+  String get mfaWrong => 'That code was not accepted. Try the current one.';
+
+  @override
+  String get mfaVerify => 'Verify';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Members see My account';
 
   @override

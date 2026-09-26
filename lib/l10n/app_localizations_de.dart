@@ -6879,6 +6879,354 @@ class AppLocalizationsDe extends AppLocalizations {
       'Stellt die MCP-Schnittstelle für diesen Arbeitsbereich bereit, damit ein KI-Assistent mit DesKilo verbunden werden kann. Nur Verfügbarkeit: das Einschalten gewährt niemandem etwas. Jede Person braucht weiterhin eine Freigabe, die der Eigentümer konfiguriert und der Instanzadministrator genehmigt, und jeder Vorgang unterliegt weiterhin den Berechtigungen und Regeln, die die App ohnehin anwendet. Ausgeschaltet verbirgt sie die MCP-Einstiegspunkte und weist Aufrufe ab; bestehende Freigaben bleiben sichtbar und widerrufbar.';
 
   @override
+  String get mcpConfirmTitle => 'Anfrage eines Assistenten bestätigen';
+
+  @override
+  String get mcpConfirmConsequence =>
+      'Die Bestätigung erlaubt dem Assistenten, genau diese Anfrage einmal zu senden. Die Freigaberegeln des Arbeitsbereichs gelten weiterhin.';
+
+  @override
+  String get mcpConfirmDecline => 'Ablehnen';
+
+  @override
+  String get mcpConfirmAccept => 'Bestätigen';
+
+  @override
+  String get mcpConfirmDone =>
+      'Bestätigt. Der Assistent kann die Anfrage jetzt senden.';
+
+  @override
+  String get mcpConfirmDeclined => 'Abgelehnt. Es wurde nichts ausgeführt.';
+
+  @override
+  String get mcpConfirmExpired =>
+      'Diese Anfrage ist abgelaufen. Bitten Sie den Assistenten, sie erneut zu senden.';
+
+  @override
+  String get mcpConfirmStale =>
+      'Diese Anfrage passt nicht mehr zu den aktuellen Daten oder Ihrem Zugriff. Es wurde nichts ausgeführt.';
+
+  @override
+  String get mcpConfirmNotFound => 'Für Sie gibt es keine solche Anfrage.';
+
+  @override
+  String get mcpConfirmUnavailable =>
+      'Diese Anfrage konnte nicht geladen werden. Versuchen Sie es über den Link erneut.';
+
+  @override
+  String mcpConfirmNewStatus(String status) {
+    return 'Neuer Status: $status';
+  }
+
+  @override
+  String mcpConfirmNewShare(String pct) {
+    return 'Neuer Abonnementanteil: $pct %';
+  }
+
+  @override
+  String get mcpConfirmApprove => 'Ihre Antwort: freigeben';
+
+  @override
+  String get mcpConfirmRefuse => 'Ihre Antwort: ablehnen';
+
+  @override
+  String mcpConfirmPeriod(String period) {
+    return 'Zeitraum: $period';
+  }
+
+  @override
+  String mcpConfirmWorkspace(String workspace) {
+    return 'Arbeitsbereich: $workspace';
+  }
+
+  @override
+  String mcpConfirmClient(String client) {
+    return 'Angefragt von: $client';
+  }
+
+  @override
+  String get mcpOpInvoiceIssue => 'Rechnung ausstellen';
+
+  @override
+  String get mcpOpInvoiceVoid => 'Rechnung stornieren';
+
+  @override
+  String get mcpOpRefund => 'Rechnung erstatten';
+
+  @override
+  String get mcpOpMemberStatus => 'Status eines Mitglieds ändern';
+
+  @override
+  String get mcpOpSubscription => 'Abonnementanteil eines Mitglieds ändern';
+
+  @override
+  String get mcpOpRespond => 'Auf eine Freigabeanfrage antworten';
+
+  @override
+  String get mcpConsentTitle => 'Assistenten verbinden';
+
+  @override
+  String get mcpConsentUnavailable =>
+      'Diese Verbindungsanfrage konnte nicht geladen werden. Beginnen Sie erneut im Assistenten.';
+
+  @override
+  String get mcpConsentAlready =>
+      'Dieser Assistent ist bereits verbunden. Zurück zu ihm.';
+
+  @override
+  String mcpConsentAsks(String client) {
+    return '$client möchte in Deskilo für Sie handeln.';
+  }
+
+  @override
+  String get mcpConsentNotEligible =>
+      'Diese Datenbank hat Assistenten für Sie noch nicht freigegeben. Bitten Sie um Freigabe und verbinden Sie sich dann erneut.';
+
+  @override
+  String get mcpConsentRequestEligibility => 'Freigabe anfragen';
+
+  @override
+  String get mcpConsentNoWorkspace =>
+      'Keiner Ihrer Arbeitsbereiche lässt Assistenten zu. Es kann nichts verbunden werden.';
+
+  @override
+  String get mcpConsentChoose =>
+      'Wählen Sie jeden Arbeitsbereich und was der Assistent dort tun darf. Nichts ist vorausgewählt.';
+
+  @override
+  String get mcpConsentDeny => 'Ablehnen';
+
+  @override
+  String get mcpConsentApprove => 'Verbinden';
+
+  @override
+  String get mcpConsentConnected => 'Verbunden. Zurück zum Assistenten.';
+
+  @override
+  String get mcpConsentDenied => 'Abgelehnt. Der Assistent erhält nichts.';
+
+  @override
+  String get mcpConsentPartial =>
+      'Der Assistent wurde genehmigt, aber die Verbindung ist noch nicht nutzbar. Verbinden Sie sich erneut im Assistenten.';
+
+  @override
+  String get mcpConsentRequested =>
+      'Freigabe angefragt. Ein Datenbankadministrator prüft sie.';
+
+  @override
+  String get mcpOpListWorkspaces =>
+      'Sehen, welche Arbeitsbereiche er nutzen darf';
+
+  @override
+  String get mcpOpCapabilities => 'Sehen, was er dort tun darf';
+
+  @override
+  String get mcpOpAvailability => 'Freie Plätze sehen';
+
+  @override
+  String get mcpOpMyReservations => 'Ihre Reservierungen sehen';
+
+  @override
+  String get mcpOpMyStatement => 'Ihren Kontoauszug sehen';
+
+  @override
+  String get mcpOpMyInvoices => 'Ihre Rechnungen sehen';
+
+  @override
+  String get mcpOpCreateReservation => 'Einen Platz für Sie buchen';
+
+  @override
+  String get mcpOpUpdateReservation => 'Ihre Reservierungen ändern';
+
+  @override
+  String get mcpOpCheckIn => 'Sie einchecken';
+
+  @override
+  String get mcpOpCheckOut => 'Sie auschecken';
+
+  @override
+  String get mcpOpReservationDeletion =>
+      'Löschung einer Reservierung beantragen';
+
+  @override
+  String get mcpOpPendingValidations => 'Offene Freigabeanfragen sehen';
+
+  @override
+  String get mcpOpGetValidation => 'Eine Freigabeanfrage lesen';
+
+  @override
+  String get mcpPolicyTitle => 'Zugriff für Assistenten';
+
+  @override
+  String get mcpPolicyUnavailable =>
+      'Die Assistenten-Einstellungen konnten nicht geladen werden. Versuchen Sie es später erneut.';
+
+  @override
+  String get mcpPolicySwitched =>
+      'Sie haben den Arbeitsbereich gewechselt. Öffnen Sie diese Seite erneut, um den anderen zu bearbeiten.';
+
+  @override
+  String get mcpPolicyExplain =>
+      'Wählen Sie, was Assistenten in diesem Arbeitsbereich tun dürfen. Ein Mitglied braucht weiterhin die Freigabe dieser Datenbank, die passende Rolle und muss diesen Arbeitsbereich beim Verbinden seines Assistenten wählen.';
+
+  @override
+  String get mcpPolicyFeatureOff =>
+      'Assistenten sind in den Funktionen dieses Arbeitsbereichs ausgeschaltet. Sie können die Dienste unten weiterhin einschränken oder abschalten.';
+
+  @override
+  String get mcpPolicyEnabled => 'Assistentendienste anbieten';
+
+  @override
+  String get mcpPolicyCeiling => 'Daten, auf die ein Assistent zugreifen darf';
+
+  @override
+  String get mcpPolicyCeilingOwn => 'Nur eigene Daten';
+
+  @override
+  String get mcpPolicyCeilingWorkspace => 'Ganzer Arbeitsbereich';
+
+  @override
+  String get mcpPolicyBroadening =>
+      'Bereits verbundene Assistenten erhalten die neuen Dienste nicht: Jede Person muss sie beim erneuten Verbinden hinzufügen.';
+
+  @override
+  String get mcpPolicySave => 'Speichern';
+
+  @override
+  String get mcpGroupOwn => 'Eigene Buchungen und Konto';
+
+  @override
+  String get mcpGroupFinancial => 'Finanzanfragen';
+
+  @override
+  String get mcpGroupMembership => 'Mitgliedschaftsanfragen';
+
+  @override
+  String get mcpGroupValidations => 'Freigaben';
+
+  @override
+  String get mcpPolicySaved => 'Gespeichert.';
+
+  @override
+  String get mcpPolicyStale =>
+      'Jemand hat diese Einstellungen inzwischen geändert. Prüfen Sie den aktuellen Stand und speichern Sie erneut.';
+
+  @override
+  String get mcpPolicyConflict =>
+      'Dieses Speichern wurde abgelehnt. Prüfen Sie den aktuellen Stand und speichern Sie erneut.';
+
+  @override
+  String mcpDisconnectTitle(String client) {
+    return '$client trennen?';
+  }
+
+  @override
+  String get mcpDisconnectBody =>
+      'Der Assistent verliert den Zugriff auf alle Arbeitsbereiche dieser Datenbank. Bereits Gelesenes wird nicht zurückgenommen.';
+
+  @override
+  String get mcpCancel => 'Abbrechen';
+
+  @override
+  String get mcpDisconnect => 'Trennen';
+
+  @override
+  String get mcpAssistantsTitle => 'Assistenten';
+
+  @override
+  String get mcpAssistantsUnavailable =>
+      'Ihr Assistentenzugang konnte nicht geladen werden. Versuchen Sie es später erneut.';
+
+  @override
+  String get mcpConnectedTitle => 'Verbundene Assistenten';
+
+  @override
+  String get mcpConnectedNone =>
+      'Kein Assistent ist verbunden. Verbinden Sie einen direkt im Assistenten.';
+
+  @override
+  String get mcpEligibleYes =>
+      'Diese Datenbank erlaubt Ihnen, Assistenten zu nutzen.';
+
+  @override
+  String get mcpEligibleRequested =>
+      'Sie haben um Freigabe gebeten. Ein Datenbankadministrator prüft sie.';
+
+  @override
+  String get mcpEligibleExpired =>
+      'Ihre Freigabe ist abgelaufen. Fragen Sie erneut an, um Assistenten weiter zu nutzen.';
+
+  @override
+  String get mcpEligibleNoIdentity =>
+      'Ihr Konto ist auf dieser Datenbank nicht mit einer bestätigten Identität verknüpft.';
+
+  @override
+  String get mcpEligibleNot =>
+      'Diese Datenbank hat Assistenten für Sie nicht freigegeben.';
+
+  @override
+  String get mcpEligibleWithdraw =>
+      'Assistentenzugang auf dieser Datenbank aufgeben';
+
+  @override
+  String get mcpConnectedNoWorkspace =>
+      'Kein Arbeitsbereich: Dieser Assistent kann hier nichts tun.';
+
+  @override
+  String get mcpRemoveWorkspace => 'Diesen Arbeitsbereich entfernen';
+
+  @override
+  String get mcpReviewTitle => 'Freigaben für Assistenten';
+
+  @override
+  String get mcpReviewNotAdmin =>
+      'Nur die Administratoren dieser Datenbank prüfen Freigaben.';
+
+  @override
+  String get mcpReviewUnavailable =>
+      'Die Anfragen konnten nicht geladen werden. Eine Prüfung braucht Ihren zweiten Faktor; versuchen Sie es erneut.';
+
+  @override
+  String get mcpReviewExplain =>
+      'Eine Freigabe erlaubt einer Person, Assistenten auf dieser Datenbank zu verbinden, in den Arbeitsbereichen, deren Eigentümer es zulassen. Sie gewährt keine Mitgliedschaft und keine Rolle.';
+
+  @override
+  String get mcpReviewEmpty => 'Keine Anfrage wartet.';
+
+  @override
+  String get mcpReviewReject => 'Ablehnen';
+
+  @override
+  String get mcpReviewApprove => 'Freigeben';
+
+  @override
+  String get mcpReviewDone => 'Entscheidung gespeichert.';
+
+  @override
+  String get mcpReviewChanged =>
+      'Diese Anfrage hat sich geändert oder ein anderer Administrator hat zuerst entschieden. Es wurde nichts getan.';
+
+  @override
+  String get mcpReviewRefused => 'Die Entscheidung wurde abgelehnt.';
+
+  @override
+  String get mfaTitle => 'Mit Ihrer Authenticator-App bestätigen';
+
+  @override
+  String get mfaEnroll =>
+      'Scannen Sie diesen Code mit einer Authenticator-App oder geben Sie den Schlüssel ein, dann tippen Sie die sechs angezeigten Ziffern.';
+
+  @override
+  String get mfaCode => 'Sechsstelliger Code';
+
+  @override
+  String get mfaWrong =>
+      'Dieser Code wurde nicht akzeptiert. Versuchen Sie den aktuellen.';
+
+  @override
+  String get mfaVerify => 'Bestätigen';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Mitglieder sehen Mein Konto';
 
   @override

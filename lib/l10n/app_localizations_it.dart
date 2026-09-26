@@ -6880,6 +6880,356 @@ class AppLocalizationsIt extends AppLocalizations {
       'Rende disponibile l’interfaccia MCP per questo spazio, così che un assistente IA possa essere collegato a DesKilo. Solo disponibilità: attivarla non concede nulla a nessuno. Ogni persona ha ancora bisogno di un’autorizzazione che il proprietario configura e l’amministratore dell’istanza approva, e ogni operazione continua a rispondere ai permessi e alle regole che l’app già applica. Disattivata, nasconde i punti di ingresso MCP e rifiuta le chiamate; le autorizzazioni esistenti restano visibili e revocabili.';
 
   @override
+  String get mcpConfirmTitle => 'Conferma una richiesta dell\'assistente';
+
+  @override
+  String get mcpConfirmConsequence =>
+      'Confermando, l\'assistente può inviare questa esatta richiesta una sola volta. Le regole di validazione dello spazio restano valide.';
+
+  @override
+  String get mcpConfirmDecline => 'Rifiuta';
+
+  @override
+  String get mcpConfirmAccept => 'Conferma';
+
+  @override
+  String get mcpConfirmDone =>
+      'Confermato. L\'assistente ora può inviare la richiesta.';
+
+  @override
+  String get mcpConfirmDeclined => 'Rifiutato. Non è stato fatto nulla.';
+
+  @override
+  String get mcpConfirmExpired =>
+      'Questa richiesta è scaduta. Chiedi all\'assistente di inviarla di nuovo.';
+
+  @override
+  String get mcpConfirmStale =>
+      'Questa richiesta non corrisponde più ai dati attuali o al tuo accesso. Non è stato fatto nulla.';
+
+  @override
+  String get mcpConfirmNotFound =>
+      'Non c\'è nessuna richiesta di questo tipo per te.';
+
+  @override
+  String get mcpConfirmUnavailable =>
+      'Impossibile caricare questa richiesta. Riprova dal link.';
+
+  @override
+  String mcpConfirmNewStatus(String status) {
+    return 'Nuovo stato: $status';
+  }
+
+  @override
+  String mcpConfirmNewShare(String pct) {
+    return 'Nuova quota di abbonamento: $pct %';
+  }
+
+  @override
+  String get mcpConfirmApprove => 'La tua risposta: approva';
+
+  @override
+  String get mcpConfirmRefuse => 'La tua risposta: rifiuta';
+
+  @override
+  String mcpConfirmPeriod(String period) {
+    return 'Periodo: $period';
+  }
+
+  @override
+  String mcpConfirmWorkspace(String workspace) {
+    return 'Spazio: $workspace';
+  }
+
+  @override
+  String mcpConfirmClient(String client) {
+    return 'Richiesto da: $client';
+  }
+
+  @override
+  String get mcpOpInvoiceIssue => 'Emettere una fattura';
+
+  @override
+  String get mcpOpInvoiceVoid => 'Annullare una fattura';
+
+  @override
+  String get mcpOpRefund => 'Rimborsare una fattura';
+
+  @override
+  String get mcpOpMemberStatus => 'Modificare lo stato di un membro';
+
+  @override
+  String get mcpOpSubscription =>
+      'Modificare la quota di abbonamento di un membro';
+
+  @override
+  String get mcpOpRespond => 'Rispondere a una richiesta di validazione';
+
+  @override
+  String get mcpConsentTitle => 'Collega un assistente';
+
+  @override
+  String get mcpConsentUnavailable =>
+      'Impossibile caricare questa richiesta di collegamento. Ricomincia dall\'assistente.';
+
+  @override
+  String get mcpConsentAlready =>
+      'Questo assistente è già collegato. Ritorno all\'assistente.';
+
+  @override
+  String mcpConsentAsks(String client) {
+    return '$client chiede di agire per te in Deskilo.';
+  }
+
+  @override
+  String get mcpConsentNotEligible =>
+      'Questo database non ha ancora approvato gli assistenti per te. Chiedi l\'approvazione, poi collega di nuovo.';
+
+  @override
+  String get mcpConsentRequestEligibility => 'Chiedi l\'approvazione';
+
+  @override
+  String get mcpConsentNoWorkspace =>
+      'Nessuno dei tuoi spazi ammette assistenti. Non si può collegare nulla.';
+
+  @override
+  String get mcpConsentChoose =>
+      'Scegli ogni spazio e cosa l\'assistente può fare lì. Nulla è scelto al posto tuo.';
+
+  @override
+  String get mcpConsentDeny => 'Rifiuta';
+
+  @override
+  String get mcpConsentApprove => 'Collega';
+
+  @override
+  String get mcpConsentConnected => 'Collegato. Ritorno all\'assistente.';
+
+  @override
+  String get mcpConsentDenied => 'Rifiutato. L\'assistente non ottiene nulla.';
+
+  @override
+  String get mcpConsentPartial =>
+      'L\'assistente è stato approvato ma il collegamento non è ancora utilizzabile. Collega di nuovo dall\'assistente.';
+
+  @override
+  String get mcpConsentRequested =>
+      'Approvazione richiesta. Un amministratore del database la esaminerà.';
+
+  @override
+  String get mcpOpListWorkspaces => 'Vedere quali spazi può usare';
+
+  @override
+  String get mcpOpCapabilities => 'Vedere cosa può fare lì';
+
+  @override
+  String get mcpOpAvailability => 'Vedere i posti liberi';
+
+  @override
+  String get mcpOpMyReservations => 'Vedere le tue prenotazioni';
+
+  @override
+  String get mcpOpMyStatement => 'Vedere il tuo estratto conto';
+
+  @override
+  String get mcpOpMyInvoices => 'Vedere le tue fatture';
+
+  @override
+  String get mcpOpCreateReservation => 'Prenotare un posto per te';
+
+  @override
+  String get mcpOpUpdateReservation => 'Modificare le tue prenotazioni';
+
+  @override
+  String get mcpOpCheckIn => 'Registrare il tuo arrivo';
+
+  @override
+  String get mcpOpCheckOut => 'Registrare la tua uscita';
+
+  @override
+  String get mcpOpReservationDeletion =>
+      'Chiedere l\'eliminazione di una prenotazione';
+
+  @override
+  String get mcpOpPendingValidations =>
+      'Vedere le richieste di convalida in sospeso';
+
+  @override
+  String get mcpOpGetValidation => 'Leggere una richiesta di convalida';
+
+  @override
+  String get mcpPolicyTitle => 'Accesso degli assistenti';
+
+  @override
+  String get mcpPolicyUnavailable =>
+      'Impossibile caricare le impostazioni degli assistenti. Riprova più tardi.';
+
+  @override
+  String get mcpPolicySwitched =>
+      'Hai cambiato spazio. Riapri questa pagina per modificare l\'altro spazio.';
+
+  @override
+  String get mcpPolicyExplain =>
+      'Scegli cosa possono fare gli assistenti in questo spazio. Un membro ha comunque bisogno dell\'approvazione di questo database, del ruolo adatto, e deve scegliere questo spazio quando collega il suo assistente.';
+
+  @override
+  String get mcpPolicyFeatureOff =>
+      'Gli assistenti sono disattivati nelle funzioni di questo spazio. Puoi comunque restringere o disattivare i servizi qui sotto.';
+
+  @override
+  String get mcpPolicyEnabled => 'Offri i servizi per assistenti';
+
+  @override
+  String get mcpPolicyCeiling => 'Dati su cui un assistente può agire';
+
+  @override
+  String get mcpPolicyCeilingOwn => 'Solo i propri dati';
+
+  @override
+  String get mcpPolicyCeilingWorkspace => 'Tutto lo spazio';
+
+  @override
+  String get mcpPolicyBroadening =>
+      'Gli assistenti già collegati non ricevono i servizi aggiunti: ogni persona deve aggiungerli quando si ricollega.';
+
+  @override
+  String get mcpPolicySave => 'Salva';
+
+  @override
+  String get mcpGroupOwn => 'Prenotazioni e conto personali';
+
+  @override
+  String get mcpGroupFinancial => 'Richieste finanziarie';
+
+  @override
+  String get mcpGroupMembership => 'Richieste di iscrizione';
+
+  @override
+  String get mcpGroupValidations => 'Convalide';
+
+  @override
+  String get mcpPolicySaved => 'Salvato.';
+
+  @override
+  String get mcpPolicyStale =>
+      'Qualcuno ha modificato queste impostazioni nel frattempo. Controlla quelle attuali e salva di nuovo.';
+
+  @override
+  String get mcpPolicyConflict =>
+      'Il salvataggio è stato rifiutato. Controlla le impostazioni attuali e salva di nuovo.';
+
+  @override
+  String mcpDisconnectTitle(String client) {
+    return 'Scollegare $client?';
+  }
+
+  @override
+  String get mcpDisconnectBody =>
+      'L\'assistente perde l\'accesso a tutti gli spazi di questo database. Ciò che ha già letto non viene ripreso.';
+
+  @override
+  String get mcpCancel => 'Annulla';
+
+  @override
+  String get mcpDisconnect => 'Scollega';
+
+  @override
+  String get mcpAssistantsTitle => 'Assistenti';
+
+  @override
+  String get mcpAssistantsUnavailable =>
+      'Impossibile caricare il tuo accesso agli assistenti. Riprova più tardi.';
+
+  @override
+  String get mcpConnectedTitle => 'Assistenti collegati';
+
+  @override
+  String get mcpConnectedNone =>
+      'Nessun assistente collegato. Collegane uno dall\'assistente stesso.';
+
+  @override
+  String get mcpEligibleYes =>
+      'Questo database ti consente di usare gli assistenti.';
+
+  @override
+  String get mcpEligibleRequested =>
+      'Hai chiesto l\'approvazione. Un amministratore del database la esaminerà.';
+
+  @override
+  String get mcpEligibleExpired =>
+      'La tua approvazione è scaduta. Richiedila di nuovo per continuare a usare gli assistenti.';
+
+  @override
+  String get mcpEligibleNoIdentity =>
+      'Il tuo account non è collegato a un\'identità verificata su questo database.';
+
+  @override
+  String get mcpEligibleNot =>
+      'Questo database non ha approvato gli assistenti per te.';
+
+  @override
+  String get mcpEligibleWithdraw =>
+      'Rinuncia all\'accesso degli assistenti su questo database';
+
+  @override
+  String get mcpConnectedNoWorkspace =>
+      'Nessuno spazio: questo assistente non può fare nulla qui.';
+
+  @override
+  String get mcpRemoveWorkspace => 'Rimuovi questo spazio';
+
+  @override
+  String get mcpReviewTitle => 'Approvazioni degli assistenti';
+
+  @override
+  String get mcpReviewNotAdmin =>
+      'Solo gli amministratori di questo database esaminano le approvazioni.';
+
+  @override
+  String get mcpReviewUnavailable =>
+      'Impossibile caricare le richieste. Un esame richiede il tuo secondo fattore; riprova.';
+
+  @override
+  String get mcpReviewExplain =>
+      'Approvare consente a una persona di collegare assistenti su questo database, negli spazi i cui proprietari lo permettono. Non concede iscrizione né ruolo.';
+
+  @override
+  String get mcpReviewEmpty => 'Nessuna richiesta in attesa.';
+
+  @override
+  String get mcpReviewReject => 'Rifiuta';
+
+  @override
+  String get mcpReviewApprove => 'Approva';
+
+  @override
+  String get mcpReviewDone => 'Decisione registrata.';
+
+  @override
+  String get mcpReviewChanged =>
+      'Questa richiesta è cambiata o un altro amministratore ha deciso prima. Non è stato fatto nulla.';
+
+  @override
+  String get mcpReviewRefused => 'La decisione è stata rifiutata.';
+
+  @override
+  String get mfaTitle => 'Conferma con la tua app di autenticazione';
+
+  @override
+  String get mfaEnroll =>
+      'Scansiona questo codice con un\'app di autenticazione, o inserisci la chiave, poi digita le sei cifre mostrate.';
+
+  @override
+  String get mfaCode => 'Codice a sei cifre';
+
+  @override
+  String get mfaWrong =>
+      'Quel codice non è stato accettato. Prova quello attuale.';
+
+  @override
+  String get mfaVerify => 'Verifica';
+
+  @override
   String get featureMemberAccountMenuTitle => 'I membri vedono Il mio account';
 
   @override

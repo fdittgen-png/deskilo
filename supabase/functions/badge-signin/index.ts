@@ -23,6 +23,7 @@
 // attacker learns which tags are real. The distinction lives in the
 // attempt log, which nothing outside the service role can read.
 
+import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const supabase = createClient(
@@ -54,6 +55,9 @@ function refused(reason: "refused" | "locked"): Response {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST") return json({ ok: false, reason: "refused" }, 405);
+  // #1614 — a badge sign-in is never asked for with a delegated token.
+  const delegated = refuseDelegated(req, CORS);
+  if (delegated) return delegated;
 
   let uid: string | undefined;
   let pin: string | undefined;

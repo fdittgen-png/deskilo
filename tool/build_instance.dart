@@ -18,6 +18,11 @@ import 'dart:io';
 /// member: they verify their own signatures and must not demand a JWT.
 const Map<String, bool> functionVerifyJwt = {
   'badge-signin': true,
+  // #1616 — the MCP endpoint verifies every bearer itself (auth.getUser,
+  // delegated tokens only) before any handler, and serves anonymous
+  // protected-resource metadata; the gateway's legacy check would refuse
+  // both. Tested in supabase/functions/deskilo-mcp/index_test.ts.
+  'deskilo-mcp': false,
   'create-payment-order': true,
   'mollie-webhook': false,
   'paypal-webhook': false,
@@ -75,6 +80,8 @@ Map<String, Object?> buildInstanceBundle(String root) {
             'files': [
               for (final f in dir.listSync().whereType<File>().toList()
                 ..sort((a, b) => a.path.compareTo(b.path)))
+                // A function's tests never deploy.
+                if (!f.path.endsWith('_test.ts'))
                 {
                   'name':
                       '${dir.uri.pathSegments.where((s) => s.isNotEmpty).last}/${f.uri.pathSegments.last}',

@@ -101,7 +101,7 @@
         "required": [],
         "x-operation": "list_workspaces",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "GetCapabilitiesInput": {
         "type": "object",
@@ -117,7 +117,7 @@
         ],
         "x-operation": "get_capabilities",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "GetAvailabilityInput": {
         "type": "object",
@@ -136,6 +136,15 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 400
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
           }
         },
         "required": [
@@ -145,7 +154,7 @@
         ],
         "x-operation": "get_availability",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "ListMyReservationsInput": {
         "type": "object",
@@ -169,6 +178,10 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 400
           }
         },
         "required": [
@@ -178,7 +191,7 @@
         ],
         "x-operation": "list_my_reservations",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "GetMyStatementInput": {
         "type": "object",
@@ -204,7 +217,7 @@
         ],
         "x-operation": "get_my_statement",
         "x-rpc": "member_statement",
-        "x-handler": false
+        "x-handler": true
       },
       "ListMyInvoicesInput": {
         "type": "object",
@@ -218,6 +231,10 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 400
           }
         },
         "required": [
@@ -225,7 +242,7 @@
         ],
         "x-operation": "list_my_invoices",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "CreateReservationInput": {
         "type": "object",
@@ -274,7 +291,7 @@
         ],
         "x-operation": "create_reservation",
         "x-rpc": "create_reservation_once",
-        "x-handler": false
+        "x-handler": true
       },
       "UpdateReservationInput": {
         "type": "object",
@@ -312,7 +329,7 @@
         ],
         "x-operation": "update_reservation",
         "x-rpc": "update_reservation",
-        "x-handler": false
+        "x-handler": true
       },
       "CheckInInput": {
         "type": "object",
@@ -338,7 +355,7 @@
         ],
         "x-operation": "check_in",
         "x-rpc": "check_in_reservation",
-        "x-handler": false
+        "x-handler": true
       },
       "CheckOutInput": {
         "type": "object",
@@ -364,7 +381,7 @@
         ],
         "x-operation": "check_out",
         "x-rpc": "check_out_reservation",
-        "x-handler": false
+        "x-handler": true
       },
       "RequestReservationDeletionInput": {
         "type": "object",
@@ -394,7 +411,7 @@
         ],
         "x-operation": "request_reservation_deletion",
         "x-rpc": "request_reservation_deletion",
-        "x-handler": false
+        "x-handler": true
       },
       "RequestInvoiceIssueInput": {
         "type": "object",
@@ -433,7 +450,7 @@
         ],
         "x-operation": "request_invoice_issue",
         "x-rpc": "request_invoice_issue",
-        "x-handler": false
+        "x-handler": true
       },
       "RequestInvoiceVoidInput": {
         "type": "object",
@@ -463,7 +480,7 @@
         ],
         "x-operation": "request_invoice_void",
         "x-rpc": "request_invoice_void",
-        "x-handler": false
+        "x-handler": true
       },
       "RequestRefundInput": {
         "type": "object",
@@ -493,7 +510,7 @@
         ],
         "x-operation": "request_refund",
         "x-rpc": "request_refund",
-        "x-handler": false
+        "x-handler": true
       },
       "RequestMemberStatusChangeInput": {
         "type": "object",
@@ -528,7 +545,7 @@
         ],
         "x-operation": "request_member_status_change",
         "x-rpc": "request_member_status_change",
-        "x-handler": false
+        "x-handler": true
       },
       "RequestSubscriptionChangeInput": {
         "type": "object",
@@ -560,7 +577,7 @@
         ],
         "x-operation": "request_subscription_change",
         "x-rpc": "request_subscription_change",
-        "x-handler": false
+        "x-handler": true
       },
       "ListPendingValidationsInput": {
         "type": "object",
@@ -574,6 +591,10 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 400
           }
         },
         "required": [
@@ -581,7 +602,7 @@
         ],
         "x-operation": "list_pending_validations",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "GetValidationInput": {
         "type": "object",
@@ -602,7 +623,7 @@
         ],
         "x-operation": "get_validation",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "RespondToValidationInput": {
         "type": "object",
@@ -632,7 +653,7 @@
         ],
         "x-operation": "respond_to_validation",
         "x-rpc": "respond_to_event",
-        "x-handler": false
+        "x-handler": true
       }
     }
   }

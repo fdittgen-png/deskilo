@@ -392,6 +392,15 @@ jobs:
         continue-on-error: true
         run: bash scripts/edge_payment_check.sh --settle mollie
 
+      # #1613/#1614 — a delegated (OAuth client) token through the real
+      # PostgREST: the facade answers, every raw table, business RPC,
+      # OpenAPI and GraphQL route is refused; a native session is unchanged.
+      - name: A delegated token reaches only the MCP facade
+        id: containment
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: bash scripts/mcp_containment_check.sh
+
       # #1310 — OPERATIONS.md has documented the dump and the restore
       # since the day it was written, and nothing had ever executed it.
       # A backup procedure that has never been restored is a hope, not a
@@ -494,6 +503,8 @@ jobs:
               "${{ steps.settlement_paypal.outcome }}"
             printf 'Mollie and Wero settlement|%s|each method with its own key; paid credits once, open and authorized do not, canceled/expired/failed mark failed; wrong method, currency, amount, mode or reference and provider outage credit nothing; duplicate and concurrent callbacks credit once; next-generation payloads refused; reconciliation clean\n' \
               "${{ steps.settlement_mollie.outcome }}"
+            printf 'MCP token containment|%s|a delegated token reaches POST /rpc/mcp_execute_v1 and nothing else through the real PostgREST; native sessions unchanged\n' \
+              "${{ steps.containment.outcome }}"
             printf 'Instance lifecycle|%s|empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation\n' \
               "${{ steps.lifecycle.outcome }}"
             printf 'Archive preservation|%s|a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught\n' \
@@ -536,6 +547,7 @@ jobs:
             "A Stripe payment settles=${{ steps.settlement.outcome }}" \
             "A PayPal payment settles=${{ steps.settlement_paypal.outcome }}" \
             "A Mollie or Wero payment settles=${{ steps.settlement_mollie.outcome }}" \
+            "A delegated token reaches only the MCP facade=${{ steps.containment.outcome }}" \
             "Install, resume and upgrade a real schema=${{ steps.lifecycle.outcome }}" \
             "A populated instance upgrades and keeps its archives=${{ steps.archive.outcome }}"
 

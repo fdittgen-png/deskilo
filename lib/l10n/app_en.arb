@@ -7272,6 +7272,437 @@
   "@featureMcpAccessDesc": {
     "description": "#1607 MCP access: featureMcpAccessDesc"
   },
+  "mcpConfirmTitle": "Confirm an assistant request",
+  "@mcpConfirmTitle": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmConsequence": "Confirming lets the assistant send this exact request once. The workspace's own validation rules still apply.",
+  "@mcpConfirmConsequence": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmDecline": "Decline",
+  "@mcpConfirmDecline": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmAccept": "Confirm",
+  "@mcpConfirmAccept": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmDone": "Confirmed. The assistant can now send the request.",
+  "@mcpConfirmDone": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmDeclined": "Declined. Nothing was done.",
+  "@mcpConfirmDeclined": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmExpired": "This request expired. Ask the assistant to send it again.",
+  "@mcpConfirmExpired": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmStale": "This request no longer matches the current data or your access. Nothing was done.",
+  "@mcpConfirmStale": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmNotFound": "There is no such request for you.",
+  "@mcpConfirmNotFound": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmUnavailable": "This request could not be loaded. Try again from the link.",
+  "@mcpConfirmUnavailable": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmNewStatus": "New status: {status}",
+  "@mcpConfirmNewStatus": {
+    "description": "#1619 mcp_confirmation",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmNewShare": "New subscription share: {pct} %",
+  "@mcpConfirmNewShare": {
+    "description": "#1619 mcp_confirmation",
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmApprove": "Your answer: approve",
+  "@mcpConfirmApprove": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmRefuse": "Your answer: refuse",
+  "@mcpConfirmRefuse": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmPeriod": "Period: {period}",
+  "@mcpConfirmPeriod": {
+    "description": "#1619 mcp_confirmation",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmWorkspace": "Workspace: {workspace}",
+  "@mcpConfirmWorkspace": {
+    "description": "#1619 mcp_confirmation",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmClient": "Asked by: {client}",
+  "@mcpConfirmClient": {
+    "description": "#1619 mcp_confirmation",
+    "placeholders": {
+      "client": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpOpInvoiceIssue": "Issue an invoice",
+  "@mcpOpInvoiceIssue": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpOpInvoiceVoid": "Void an invoice",
+  "@mcpOpInvoiceVoid": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpOpRefund": "Refund an invoice",
+  "@mcpOpRefund": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpOpMemberStatus": "Change a member's status",
+  "@mcpOpMemberStatus": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpOpSubscription": "Change a member's subscription share",
+  "@mcpOpSubscription": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpOpRespond": "Answer a validation request",
+  "@mcpOpRespond": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConsentTitle": "Connect an assistant",
+  "@mcpConsentTitle": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentUnavailable": "This connection request could not be loaded. Start again from the assistant.",
+  "@mcpConsentUnavailable": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentAlready": "This assistant is already connected. Returning to it.",
+  "@mcpConsentAlready": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentAsks": "{client} asks to act for you in Deskilo.",
+  "@mcpConsentAsks": {
+    "description": "#1615 mcp_consent",
+    "placeholders": {
+      "client": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConsentNotEligible": "This database has not approved assistants for you yet. Ask for approval, then connect again.",
+  "@mcpConsentNotEligible": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentRequestEligibility": "Ask for approval",
+  "@mcpConsentRequestEligibility": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentNoWorkspace": "None of your workspaces lets assistants in. Nothing can be connected.",
+  "@mcpConsentNoWorkspace": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentChoose": "Choose each workspace and what it may do there. Nothing is chosen for you.",
+  "@mcpConsentChoose": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentDeny": "Deny",
+  "@mcpConsentDeny": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentApprove": "Connect",
+  "@mcpConsentApprove": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentConnected": "Connected. Returning to the assistant.",
+  "@mcpConsentConnected": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentDenied": "Refused. The assistant gets nothing.",
+  "@mcpConsentDenied": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentPartial": "The assistant was approved but the connection is not usable yet. Connect again from the assistant.",
+  "@mcpConsentPartial": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpConsentRequested": "Approval requested. A database administrator will review it.",
+  "@mcpConsentRequested": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpListWorkspaces": "See which workspaces it may use",
+  "@mcpOpListWorkspaces": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpCapabilities": "See what it may do there",
+  "@mcpOpCapabilities": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpAvailability": "See free places",
+  "@mcpOpAvailability": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpMyReservations": "See your reservations",
+  "@mcpOpMyReservations": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpMyStatement": "See your account statement",
+  "@mcpOpMyStatement": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpMyInvoices": "See your invoices",
+  "@mcpOpMyInvoices": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpCreateReservation": "Book a place for you",
+  "@mcpOpCreateReservation": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpUpdateReservation": "Change your reservations",
+  "@mcpOpUpdateReservation": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpCheckIn": "Check you in",
+  "@mcpOpCheckIn": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpCheckOut": "Check you out",
+  "@mcpOpCheckOut": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpReservationDeletion": "Ask to delete a reservation",
+  "@mcpOpReservationDeletion": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpPendingValidations": "See pending validation requests",
+  "@mcpOpPendingValidations": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpGetValidation": "Read a validation request",
+  "@mcpOpGetValidation": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpPolicyTitle": "Assistant access",
+  "@mcpPolicyTitle": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicyUnavailable": "The assistant settings could not be loaded. Try again later.",
+  "@mcpPolicyUnavailable": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicySwitched": "You switched workspace. Reopen this page to edit the other workspace.",
+  "@mcpPolicySwitched": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicyExplain": "Choose what assistants may do in this workspace. A member still needs this database's approval, the matching role, and must choose this workspace when connecting their assistant.",
+  "@mcpPolicyExplain": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicyFeatureOff": "Assistants are switched off for this workspace in its features. You can still narrow or switch off the services below.",
+  "@mcpPolicyFeatureOff": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicyEnabled": "Offer assistant services",
+  "@mcpPolicyEnabled": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicyCeiling": "Records an assistant may act on",
+  "@mcpPolicyCeiling": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicyCeilingOwn": "Own records only",
+  "@mcpPolicyCeilingOwn": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicyCeilingWorkspace": "Workspace-wide",
+  "@mcpPolicyCeilingWorkspace": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicyBroadening": "Assistants already connected do not get the added services: each person must add them when they connect again.",
+  "@mcpPolicyBroadening": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicySave": "Save",
+  "@mcpPolicySave": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpGroupOwn": "Own bookings and account",
+  "@mcpGroupOwn": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpGroupFinancial": "Financial requests",
+  "@mcpGroupFinancial": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpGroupMembership": "Membership requests",
+  "@mcpGroupMembership": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpGroupValidations": "Validations",
+  "@mcpGroupValidations": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicySaved": "Saved.",
+  "@mcpPolicySaved": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicyStale": "Someone changed these settings meanwhile. Review the current settings and save again.",
+  "@mcpPolicyStale": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpPolicyConflict": "This save was refused. Review the current settings and save again.",
+  "@mcpPolicyConflict": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpDisconnectTitle": "Disconnect {client}?",
+  "@mcpDisconnectTitle": {
+    "description": "#1626 #1627 #1628 mcp_settings",
+    "placeholders": {
+      "client": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpDisconnectBody": "The assistant loses access to every workspace on this database. What it already read is not taken back.",
+  "@mcpDisconnectBody": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpCancel": "Cancel",
+  "@mcpCancel": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpDisconnect": "Disconnect",
+  "@mcpDisconnect": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpAssistantsTitle": "Assistants",
+  "@mcpAssistantsTitle": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpAssistantsUnavailable": "Your assistant access could not be loaded. Try again later.",
+  "@mcpAssistantsUnavailable": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpConnectedTitle": "Connected assistants",
+  "@mcpConnectedTitle": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpConnectedNone": "No assistant is connected. Connect one from the assistant itself.",
+  "@mcpConnectedNone": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpEligibleYes": "This database allows you to use assistants.",
+  "@mcpEligibleYes": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpEligibleRequested": "You asked for approval. A database administrator will review it.",
+  "@mcpEligibleRequested": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpEligibleExpired": "Your approval expired. Ask again to keep using assistants.",
+  "@mcpEligibleExpired": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpEligibleNoIdentity": "Your account is not linked to a verified identity on this database.",
+  "@mcpEligibleNoIdentity": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpEligibleNot": "This database has not approved assistants for you.",
+  "@mcpEligibleNot": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpEligibleWithdraw": "Give up assistant access on this database",
+  "@mcpEligibleWithdraw": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpConnectedNoWorkspace": "No workspace: this assistant can do nothing here.",
+  "@mcpConnectedNoWorkspace": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpRemoveWorkspace": "Remove this workspace",
+  "@mcpRemoveWorkspace": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpReviewTitle": "Assistant approvals",
+  "@mcpReviewTitle": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpReviewNotAdmin": "Only this database's administrators review approvals.",
+  "@mcpReviewNotAdmin": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpReviewUnavailable": "The requests could not be loaded. A review needs your second factor; try again.",
+  "@mcpReviewUnavailable": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpReviewExplain": "Approving lets a person connect assistants on this database, in the workspaces whose owners allow it. It grants no membership or role.",
+  "@mcpReviewExplain": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpReviewEmpty": "No request is waiting.",
+  "@mcpReviewEmpty": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpReviewReject": "Reject",
+  "@mcpReviewReject": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpReviewApprove": "Approve",
+  "@mcpReviewApprove": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpReviewDone": "Decision recorded.",
+  "@mcpReviewDone": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpReviewChanged": "This request changed or another administrator decided first. Nothing was done.",
+  "@mcpReviewChanged": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpReviewRefused": "The decision was refused.",
+  "@mcpReviewRefused": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mfaTitle": "Confirm with your authenticator",
+  "@mfaTitle": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mfaEnroll": "Scan this code with an authenticator app, or enter the key, then type the six digits it shows.",
+  "@mfaEnroll": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mfaCode": "Six-digit code",
+  "@mfaCode": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mfaWrong": "That code was not accepted. Try the current one.",
+  "@mfaWrong": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mfaVerify": "Verify",
+  "@mfaVerify": {
+    "description": "#1626 #1627 #1628 mcp_settings"
+  },
   "featureMemberAccountMenuTitle": "Members see My account",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"

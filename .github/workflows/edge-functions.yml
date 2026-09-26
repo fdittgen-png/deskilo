@@ -77,6 +77,14 @@ jobs:
           fi
           echo "## Edge functions typecheck" >> "$GITHUB_STEP_SUMMARY"
 
+      # #1616 — the functions' own tests (the network stubbed at Supabase's
+      # boundary), e.g. the MCP endpoint's protocol and refusal matrix.
+      - name: Test every function that has tests
+        run: |
+          tests=$(ls supabase/functions/*/*_test.ts 2>/dev/null || true)
+          if [ -z "$tests" ]; then echo "no function tests"; exit 0; fi
+          deno test -A $tests
+
       # Owner-configurable, like the doctor's: without the secrets this
       # says so in the summary rather than failing a run nobody asked to
       # deploy.

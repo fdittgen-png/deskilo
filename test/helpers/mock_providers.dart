@@ -14,6 +14,10 @@ import 'package:deskilo/core/demo/data/workspace_repository.dart';
 export 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
+import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
+import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
+import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
+import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
 export 'package:deskilo/core/demo/data/stores.dart';
 export 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
@@ -108,6 +112,11 @@ List<Override> standardTestOverrides({
   BackendSettingsStore? backendSettings,
   EntryIntentStore? entryIntent,
   CreationDraftStore? creationDraft,
+  FakeActionConfirmationRepository? actionConfirmations,
+  FakeMcpConnectionRepository? mcpConnections,
+  FakeMcpAdminRepository? mcpAdmin,
+  FakeIdentityBindingRepository? identityBinding,
+  FakeSecondFactorRepository? secondFactor,
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
@@ -181,7 +190,14 @@ List<Override> standardTestOverrides({
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
     identityBindingRepositoryProvider
-        .overrideWithValue(FakeIdentityBindingRepository()),
+        .overrideWithValue(identityBinding ?? FakeIdentityBindingRepository()),
+    actionConfirmationRepositoryProvider
+        .overrideWithValue(actionConfirmations ?? FakeActionConfirmationRepository()),
+    mcpConnectionRepositoryProvider
+        .overrideWithValue(mcpConnections ?? FakeMcpConnectionRepository()),
+    mcpAdminRepositoryProvider.overrideWithValue(mcpAdmin ?? FakeMcpAdminRepository()),
+    secondFactorRepositoryProvider
+        .overrideWithValue(secondFactor ?? FakeSecondFactorRepository()),
     workspaceRepositoryProvider.overrideWithValue(() {
       final repo = workspace ?? FakeWorkspaceRepository.withWorkspace();
       if (devMode && repo is FakeWorkspaceRepository) repo.applyDevMode(true);

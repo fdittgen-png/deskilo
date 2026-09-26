@@ -84,6 +84,14 @@ const Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  // #1610/#1612 — MCP exposure and consent are authority, not data: an
+  // export that carried them would re-activate a workspace's MCP exposure
+  // or a person's consent wherever it was imported.
+  'workspace_mcp_policies': 'MCP exposure is authority; an import must not re-enable it (#1610)',
+  'workspace_mcp_policy_revisions': 'the history of that authority, same reason (#1610)',
+  'mcp_connection_scopes': 'a person\'s consent to an assistant, never portable (#1612)',
+  'mcp_idempotency': 'replay records of MCP calls, operational state only (#1612)',
+  'mcp_action_confirmations': 'a person\'s pending confirmation of an assistant request, never portable (#1619)',
   // --- authority a copy must not carry by itself (#1287) ------------
   'workspace_role_members':
       'a grant names a member, and members do not travel — a role given '

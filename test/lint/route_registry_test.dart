@@ -53,7 +53,7 @@ import 'package:flutter_test/flutter_test.dart';
 // 61→62 (2026-09-16): #1312 /server-update — where a server whose schema
 //   is older than the app sends every route. No flag: the flags live on
 //   that server.
-const int _expectedRouteCount = 66; // 2026-09-19 #1247 /attention // 2026-09-19 #1528 /settings/roles-of-this-space // 2026-09-19 #1288 /settings/questions // 2026-09-18 #1289 /settings/colours // 2026-09-16 #1312 /server-update
+const int _expectedRouteCount = 71; // 2026-09-26 #1626/#1627/#1628 /settings/assistants (owner redirect), /assistants and /database/assistant-approvals (the server answers only the caller, administrators with aal2) // 2026-09-26 #1615 /oauth/consent — every consent RPC refuses a delegated token, and only mcpAccess workspaces are offered // 2026-09-26 #1619 /mcp/confirm/:id — the server answers only the bound person, and a confirmation exists only where mcpAccess is on // 2026-09-19 #1247 /attention // 2026-09-19 #1528 /settings/roles-of-this-space // 2026-09-19 #1288 /settings/questions // 2026-09-18 #1289 /settings/colours // 2026-09-16 #1312 /server-update
 // 57→58 (2026-09-06): #977 /server/new-instance.
 
 void main() {

@@ -142,6 +142,15 @@ const Set<String> _knownPairs = {
   'reservations -> plan',
   'reservations -> workspace',
   'workspace -> auth',
+  // #1615 — the consent screen lets a person the database has not
+  // approved ask for approval: auth owns the identity binding and its
+  // eligibility request (connect_assistant's provider).
+  'mcp -> auth',
+  // #1626 — the policy screen edits the CURRENT workspace and its
+  // settings entry reads the workspace's mcpAccess flag and ownership.
+  'mcp -> workspace',
+  // #1626/#1627/#1628 — settings shows the assistant entries (one widget).
+  'profile -> mcp',
   'workspace -> events',
   'workspace -> money',
   'workspace -> plan',
