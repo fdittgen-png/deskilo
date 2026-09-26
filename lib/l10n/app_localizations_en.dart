@@ -269,6 +269,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'That code is no longer valid here. Request a new one.';
 
   @override
+  String get authJoinByInvitation => 'Join by invitation';
+
+  @override
+  String get authJoinHint =>
+      'Create your account or sign in first — you\'ll paste your invitation right after.';
+
+  @override
+  String get authConnectServer => 'Connect an organisation\'s server';
+
+  @override
   String get availabilityTitle => 'Availability';
 
   @override

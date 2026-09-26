@@ -2,8 +2,11 @@
 import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
+import '../../../../app/entry_intent.dart';
+import '../../../../app/entry_intents.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -39,6 +42,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   final _password = TextEditingController();
   bool _isSignUp = false;
   bool _busy = false;
+
+  /// #1650 — the join errand was chosen on this screen; the hint stays
+  /// until the person leaves it.
+  bool _joining = false;
   bool _obscurePassword = true;
 
   /// What the last submission came back with, kept ON the form until the
@@ -423,10 +430,54 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         'New here? Create an account'),
               ),
             ),
+            // #1650 — the two ways in that are not "I already have a
+            // space here", below the mode switch so nothing above it
+            // moves: an invitation, and the organisation's own server.
+            // The invitation itself is pasted AFTER sign-in, on the join
+            // form; what is kept now is only that joining is the errand.
+            TextButton.icon(
+              key: const ValueKey('auth-join'),
+              icon: const Icon(Icons.mail_outline),
+              label: Text(l10n?.authJoinByInvitation ?? 'Join by invitation'),
+              onPressed: _busy ? null : _joinByInvitation,
+            ),
+            if (_joining)
+              InlineBanner(
+                key: const ValueKey('auth-join-hint'),
+                icon: Icons.info_outline,
+                severity: InlineBannerSeverity.info,
+                text: l10n?.authJoinHint ??
+                    "Create your account or sign in first — you'll paste "
+                        'your invitation right after.',
+              ),
+            // The explicit secondary path. Reachable signed out, because
+            // choosing a server is what comes BEFORE an account on it;
+            // setting one up is the wizard on that screen.
+            TextButton(
+              key: const ValueKey('auth-server'),
+              onPressed: () => context.push('/server'),
+              child: Text(
+                l10n?.authConnectServer ?? "Connect an organisation's server",
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  /// Keeps "join" as the errand and moves to account creation — the
+  /// usual case for somebody holding an invitation. The code is not
+  /// asked for here: the join form takes it once there is a session.
+  Future<void> _joinByInvitation() async {
+    final intents = ref.read(entryIntentsProvider.notifier);
+    await intents.capture(EntryIntent.join(intents.nextId()));
+    if (!mounted) return;
+    setState(() {
+      _joining = true;
+      _isSignUp = true;
+      _lastResult = null;
+    });
   }
 }
 

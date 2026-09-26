@@ -48,5 +48,8 @@
   "authVerifyChangeEmail": "Usa un altro indirizzo",
   "authVerifyBackToSignIn": "Torna all'accesso",
   "authRecoveryRetryUpdate": "Salva di nuovo la nuova password",
-  "authRecoverySessionLost": "Quel codice non è più valido qui. Richiedine uno nuovo."
+  "authRecoverySessionLost": "Quel codice non è più valido qui. Richiedine uno nuovo.",
+  "authJoinByInvitation": "Entra con un invito",
+  "authJoinHint": "Crea prima il tuo account o accedi: incollerai l'invito subito dopo.",
+  "authConnectServer": "Collegarsi al server di un'organizzazione"
 }
