@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../application/answer_confirmation.dart';
 import '../application/assistant_access.dart';
 import '../application/connect_assistant.dart';
 import '../application/eligibility_review.dart';
@@ -22,6 +23,10 @@ ActionConfirmationRepository actionConfirmationRepository(Ref ref) =>
     SupabaseActionConfirmationRepository(Supabase.instance.client);
 
 /// One confirmation, as the server answers it now.
+@riverpod
+ConfirmationAnswers confirmationAnswers(Ref ref) =>
+    ConfirmationAnswers(ref.watch(actionConfirmationRepositoryProvider));
+
 @riverpod
 Future<ActionConfirmation> actionConfirmation(Ref ref, String id) =>
     ref.watch(actionConfirmationRepositoryProvider).get(id);

@@ -15,22 +15,35 @@ import 'dart:io';
 
 /// A widget reaching a repository: `ref.read(xRepositoryProvider)` or
 /// `ref.watch(…)`, the exact shape #1234 counted 125 of.
-final RegExp repositoryUse =
-    RegExp(r'ref\.(read|watch)\(\s*[a-zA-Z]+RepositoryProvider');
+///
+/// #1449 A2 — insensitive to formatting: `ref\n    .read(\n  x…` is the
+/// same access as the one-line form, and the formatter produces both.
+final RegExp repositoryUse = RegExp(
+    r'\bref\s*\.\s*(read|watch)\s*\(\s*[a-zA-Z]+RepositoryProvider\b');
 
 final RegExp importRe = RegExp("import '([^']+)'");
 
-/// Source with `//` comments removed.
+/// Source with comments and string literals removed.
 ///
 /// A scanner that reads raw text reports the comment EXPLAINING a rule as
-/// a violation of it, which this repository has learned twice.
-String withoutComments(String source) => source
-    .split('\n')
-    .map((line) {
-      final at = line.indexOf('//');
-      return at < 0 ? line : line.substring(0, at);
-    })
-    .join('\n');
+/// a violation of it, which this repository has learned twice; a string
+/// that quotes an example is the same trap. Strings go first, so a `//`
+/// inside a URL is not taken for a comment; then block and line comments.
+String withoutComments(String source) {
+  final noStrings = source
+      .replaceAll(RegExp(r"'''[\s\S]*?'''"), "''")
+      .replaceAll(RegExp(r'"""[\s\S]*?"""'), '""')
+      .replaceAll(RegExp(r"'(?:\\.|[^'\\\n])*'"), "''")
+      .replaceAll(RegExp(r'"(?:\\.|[^"\\\n])*"'), '""');
+  return noStrings
+      .replaceAll(RegExp(r'/\*[\s\S]*?\*/'), '')
+      .split('\n')
+      .map((line) {
+        final at = line.indexOf('//');
+        return at < 0 ? line : line.substring(0, at);
+      })
+      .join('\n');
+}
 
 /// The feature a repo-relative path belongs to, or null.
 String? featureOf(String path) {
