@@ -43,6 +43,12 @@ on:
         required: true
         default: bd1ec20edb6d8daf42a3186829e08dd1ee2273d73c2b0581a8a4d1a6286072aa
 
+# #1446 C4 — a publish someone dispatched is never cancelled by a later
+# one; it queues behind it.
+concurrency:
+  group: fdroid-release
+  cancel-in-progress: false
+
 permissions:
   contents: write
 

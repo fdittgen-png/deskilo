@@ -56,14 +56,15 @@ on:
     inputs:
       source_sha:
         description: The full commit SHA to build — resolved once by the caller (#1446 C4)
-        required: false
+        required: true
         type: string
-        default: ''
-      ref:
-        required: false
-        type: string
-        default: master
 
+# One group per ref and purpose: a superseded pull-request push cancels
+# its predecessor; a dispatched or train-called build is never cancelled
+# by a later one — it queues (#1446 C4).
+concurrency:
+  group: macos-app-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   FLUTTER_VERSION: "3.44.9"

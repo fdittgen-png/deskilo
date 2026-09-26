@@ -46,9 +46,8 @@ on:
     inputs:
       source_sha:
         description: The full commit SHA to build — resolved once by the caller (#1446 C4)
-        required: false
+        required: true
         type: string
-        default: ''
       track:
         required: true
         type: string

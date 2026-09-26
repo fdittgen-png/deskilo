@@ -44,10 +44,24 @@ name: Release · Train (all platforms)
 # Play may refuse a track that is still policy-locked (production access
 # pending): that leg then fails and the report says so in Play's own
 # words — exactly the honest outcome the train exists to surface.
+#
+# #1446 C4 — ONE candidate. The requested ref is resolved to a full
+# commit SHA exactly once, in the `resolve` job, and every leg receives
+# THAT SHA, checks it out and refuses to build anything else. Before,
+# each leg checked out a branch NAME at its own start (the Android leg
+# `master` whatever was asked): a push to master while the train was
+# running put two different commits in one train, labelled as one.
 
 on:
   workflow_dispatch:
     inputs:
+      ref:
+        description: >-
+          Branch, tag or SHA to ship. Empty means the branch this dispatch
+          runs on. Resolved ONCE to a commit; every leg builds that commit.
+        required: false
+        type: string
+        default: ''
       track:
         description: >-
           Which train — alpha (the closed test the testers are enrolled
@@ -84,9 +98,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # The one resolution. `gh api .../commits/<ref>` answers a branch, a
+  # tag (annotated ones peeled) or a SHA with the commit it names NOW;
+  # from here on the train speaks only in that SHA.
+  resolve:
+    name: resolve the candidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      sha: ${{ steps.candidate.outputs.sha }}
+    steps:
+      - name: Resolve the requested ref to one commit
+        id: candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: ${{ inputs.ref || github.ref_name }}
+          TRACK: ${{ inputs.track }}
+        run: |
+          set -euo pipefail
+          sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$(jq -rn --arg r "$REF" '$r|@uri')" --jq .sha)
+          if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::'$REF' did not resolve to a commit (got '$sha')"
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          {
+            echo "## Candidate"
+            echo
+            echo "- **Requested:** \`$REF\`"
+            echo "- **Resolved once to:** \`$sha\` — every leg builds this commit and refuses any other"
+            echo "- **Track:** $TRACK"
+          } >> "$GITHUB_STEP_SUMMARY"
+
   android:
+    needs: [resolve]
     uses: ./.github/workflows/play-internal.yml
     with:
+      source_sha: ${{ needs.resolve.outputs.sha }}
       # #626 — 'alpha' IS the closed test the testers are enrolled in.
       # No mapping left to get wrong: the input IS the track.
       track: ${{ inputs.track }}
@@ -94,8 +142,10 @@ jobs:
     secrets: inherit
 
   apple:
+    needs: [resolve]
     uses: ./.github/workflows/ios-testflight.yml
     with:
+      source_sha: ${{ needs.resolve.outputs.sha }}
       release_notes: ${{ inputs.release_notes != '' && inputs.release_notes
         || (inputs.track == 'production'
             && 'Production candidate.' || 'Alpha build.') }}
@@ -106,21 +156,24 @@ jobs:
     secrets: inherit
 
   macos:
+    needs: [resolve]
     uses: ./.github/workflows/macos-app.yml
     with:
-      ref: ${{ github.ref_name }}
+      source_sha: ${{ needs.resolve.outputs.sha }}
     secrets: inherit
 
   windows:
+    needs: [resolve]
     uses: ./.github/workflows/windows-msi.yml
     with:
-      ref: ${{ github.ref_name }}
+      source_sha: ${{ needs.resolve.outputs.sha }}
     secrets: inherit
 
   web:
+    needs: [resolve]
     uses: ./.github/workflows/web.yml
     with:
-      ref: ${{ github.ref_name }}
+      source_sha: ${{ needs.resolve.outputs.sha }}
       deploy: ${{ inputs.track == 'production' }}
     secrets: inherit
 
@@ -129,7 +182,7 @@ jobs:
   # issue + e-mail. A train that quietly half-ships is worse than one
   # that fails loudly.
   report:
-    needs: [android, apple, macos, windows, web]
+    needs: [resolve, android, apple, macos, windows, web]
     if: ${{ always() }}
     runs-on: ubuntu-latest
     env:
@@ -137,6 +190,8 @@ jobs:
       # secrets are not allowed in step-level `if` — bridge via job env.
       HAS_SMTP: ${{ secrets.SMTP_HOST != '' && secrets.SMTP_USERNAME != ''
         && secrets.SMTP_PASSWORD != '' && secrets.NOTIFY_EMAIL_TO != '' }}
+      RESULT_RESOLVE: ${{ needs.resolve.result }}
+      CANDIDATE: ${{ needs.resolve.outputs.sha }}
       RESULT_ANDROID: ${{ needs.android.result }}
       RESULT_APPLE: ${{ needs.apple.result }}
       RESULT_MACOS: ${{ needs.macos.result }}
@@ -149,6 +204,7 @@ jobs:
         run: |
           set -euo pipefail
           declare -A results=(
+            [resolve]="$RESULT_RESOLVE"
             [android]="$RESULT_ANDROID" [apple]="$RESULT_APPLE"
             [macos]="$RESULT_MACOS" [windows]="$RESULT_WINDOWS"
             [web]="$RESULT_WEB"
@@ -159,13 +215,19 @@ jobs:
             echo
             echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
             echo
+            echo "Candidate: \`${CANDIDATE:-unresolved}\`"
+            echo
             echo "| Leg | Result |"
             echo "| --- | --- |"
-            for leg in android apple macos windows web; do
+            # Anything but success is a leg that did not ship: a leg
+            # SKIPPED because the candidate never resolved included.
+            for leg in resolve android apple macos windows web; do
               r="${results[$leg]}"
               icon="✅"
-              if [ "$r" = "failure" ]; then icon="❌"; failed+=("$leg"); fi
-              if [ "$r" = "cancelled" ]; then icon="🚫"; failed+=("$leg"); fi
+              if [ "$r" = "failure" ]; then icon="❌"; fi
+              if [ "$r" = "cancelled" ]; then icon="🚫"; fi
+              if [ "$r" = "skipped" ]; then icon="⏭️"; fi
+              if [ "$r" != "success" ]; then failed+=("$leg"); fi
               echo "| $leg | $icon $r |"
             done
             echo
@@ -210,7 +272,8 @@ jobs:
                 fi
                 echo '```' >> report.md
               done < <(jq -r --arg leg "$leg" \
-                'select(.conclusion == "failure" and (.name | startswith($leg + " /")))
+                'select(.conclusion == "failure"
+                        and (.name | startswith($leg + " /") or startswith($leg + " ")))
                  | [(.id | tostring), .name, .html_url] | @tsv' jobs.jsonl)
             done
           else

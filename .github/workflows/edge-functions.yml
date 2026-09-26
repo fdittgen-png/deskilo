@@ -39,6 +39,12 @@ on:
         type: boolean
         default: false
 
+# #1446 C4 — a superseded pull-request push cancels its predecessor in
+# THIS workflow only; a dispatched deploy is never cancelled, it queues.
+concurrency:
+  group: edge-functions-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 

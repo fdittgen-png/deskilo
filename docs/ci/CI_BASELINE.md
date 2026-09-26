@@ -151,6 +151,52 @@ layer, and an empty, malformed or lib-less report fails as a reporting
 error rather than a score. `test/lint/coverage_gate_test.dart` drives
 each refusal through the real script.
 
+## One candidate, bounded reuse (C4)
+
+The release train resolves the requested ref **once**, in its `resolve`
+job, to a full commit SHA (`gh api .../commits/<ref>`, so a branch, a
+tag or a SHA all answer with one commit), and every leg — Play,
+TestFlight, macOS, Windows, web — receives that SHA as its required
+`workflow_call` input `source_sha`. Before #1446 C4 each leg checked out
+a branch NAME at its own start, and the Android leg checked out `master`
+whatever was asked: a push to master while the train ran put two commits
+in one train under one label. A leg run alone pins its own source the
+same way, before its checkout: the dispatch ref resolved through the
+API, or the commit the event carries. The checkout takes the SHA, and
+`.github/actions/source-identity` then refuses to continue unless
+`git rev-parse HEAD` is that SHA, and records SHA, flavor, dart-defines
+and base href in the step summary and in a `source-identity-<leg>`
+artifact (replaced, never duplicated, on a rerun). Artifacts are named
+after the built SHA, not the caller's dispatch-time `github.sha`. The
+train's report lists `resolve` as a leg and counts a skipped leg as one
+that did not ship. Nothing here publishes: the train is not dispatched
+by this change, and the Pages deploy stays the separate explicit step.
+
+Caches carry dependencies and toolchains only: the pub cache keyed on
+`pubspec.lock`, CocoaPods on `Podfile.lock`, the emulator image on its
+own API-and-device name; the Flutter SDK cache of `flutter-action` is
+keyed by the action on version, channel and OS. No cache path is a test
+result, a report or a build tree, no key names a run or a pull request,
+and no publish job (`deploy`, `report`) restores anything — GitHub scopes
+a pull request's cache to that pull request, so a fork cannot write what
+a release job reads, and the lint keeps it that way by construction.
+Runtimes stay as pinned as they were: Flutter by `FLUTTER_VERSION`, Ruby
+3.3, Python 3.12, Java 17, WiX 5.0.2, `macos-15`; Xcode deliberately
+floats to `latest-stable` because Apple refuses uploads built with an
+older SDK. No dependency was bumped for this.
+
+Concurrency groups are per workflow (the group starts with the file's
+own name, so no workflow can cancel another's work) and, for anything a
+pull request triggers, per ref. `cancel-in-progress` is `false` or
+`${{ github.event_name == 'pull_request' }}` — never a bare `true`: a
+superseded pull-request push cancels its predecessor, and a dispatch, a
+nightly run, a train leg or a Pages deploy someone started on purpose
+queues behind the one already running. That queue is GitHub's own
+(at most one pending per group); it orders nothing and is not a
+dependency. `test/lint/workflow_source_identity_test.dart` reads every
+workflow as YAML and holds all of the above. No duration is claimed for
+any of it: this checkpoint is correctness only, unmeasured.
+
 ## What is still not enforced
 
 Live protection on `master`, read 2026-09-20:

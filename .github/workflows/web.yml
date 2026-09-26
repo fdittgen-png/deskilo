@@ -40,13 +40,8 @@ on:
     inputs:
       source_sha:
         description: The full commit SHA to build — resolved once by the caller (#1446 C4)
-        required: false
+        required: true
         type: string
-        default: ''
-      ref:
-        required: false
-        type: string
-        default: master
       deploy:
         required: false
         type: boolean
@@ -67,9 +62,11 @@ permissions:
 # on master) and a standalone `-f deploy=true` dispatch on the same ref
 # no longer cancel each other — that collision is what left the train's
 # web leg 'cancelled' in #715 and swallowed two Pages deploys on 08-29.
+# #1446 C4 — and only a pull request cancels: a dispatch or a train leg
+# someone started on purpose queues behind its predecessor instead.
 concurrency:
   group: web-${{ github.ref }}-${{ github.event_name }}-${{ inputs.deploy == true }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   classify:

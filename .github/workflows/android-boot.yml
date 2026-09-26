@@ -24,9 +24,11 @@ on:
       - '.github/workflows/android-boot.yml'
   workflow_dispatch:
 
+# #1446 C4 — only a superseded pull-request run is cancelled; a push to
+# master or a dispatch someone started on purpose queues instead.
 concurrency:
   group: android-boot-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   FLUTTER_VERSION: "3.44.9"
