@@ -60,10 +60,59 @@ String _$actionConfirmationRepositoryHash() =>
 
 /// One confirmation, as the server answers it now.
 
-@ProviderFor(actionConfirmation)
-final actionConfirmationProvider = ActionConfirmationFamily._();
+@ProviderFor(confirmationAnswers)
+final confirmationAnswersProvider = ConfirmationAnswersProvider._();
 
 /// One confirmation, as the server answers it now.
+
+final class ConfirmationAnswersProvider
+    extends
+        $FunctionalProvider<
+          ConfirmationAnswers,
+          ConfirmationAnswers,
+          ConfirmationAnswers
+        >
+    with $Provider<ConfirmationAnswers> {
+  /// One confirmation, as the server answers it now.
+  ConfirmationAnswersProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'confirmationAnswersProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$confirmationAnswersHash();
+
+  @$internal
+  @override
+  $ProviderElement<ConfirmationAnswers> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ConfirmationAnswers create(Ref ref) {
+    return confirmationAnswers(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ConfirmationAnswers value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ConfirmationAnswers>(value),
+    );
+  }
+}
+
+String _$confirmationAnswersHash() =>
+    r'180a70cf82113a7909bf2a4ee916e95558e5f58f';
+
+@ProviderFor(actionConfirmation)
+final actionConfirmationProvider = ActionConfirmationFamily._();
 
 final class ActionConfirmationProvider
     extends
@@ -75,7 +124,6 @@ final class ActionConfirmationProvider
     with
         $FutureModifier<ActionConfirmation>,
         $FutureProvider<ActionConfirmation> {
-  /// One confirmation, as the server answers it now.
   ActionConfirmationProvider._({
     required ActionConfirmationFamily super.from,
     required String super.argument,
@@ -123,8 +171,6 @@ final class ActionConfirmationProvider
 String _$actionConfirmationHash() =>
     r'1446a08934cd8f33ef8aba6dcd0bf78271df3c01';
 
-/// One confirmation, as the server answers it now.
-
 final class ActionConfirmationFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ActionConfirmation>, String> {
   ActionConfirmationFamily._()
@@ -135,8 +181,6 @@ final class ActionConfirmationFamily extends $Family
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
-
-  /// One confirmation, as the server answers it now.
 
   ActionConfirmationProvider call(String id) =>
       ActionConfirmationProvider._(argument: id, from: this);

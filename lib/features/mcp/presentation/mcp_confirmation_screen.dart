@@ -46,8 +46,8 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       message: 'confirmation answer failed',
       action: () async {
         result = await ref
-            .read(actionConfirmationRepositoryProvider)
-            .respond(widget.confirmationId, accept: accept);
+            .read(confirmationAnswersProvider)
+            .answer(widget.confirmationId, accept: accept);
       },
     );
     if (!mounted) return;
