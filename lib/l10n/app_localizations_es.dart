@@ -9311,6 +9311,114 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo cargar tu cuenta, así que todavía no hay nada que aceptar.';
 
   @override
+  String get backendModeDefault => 'Usar el servicio de DesKilo';
+
+  @override
+  String get backendModeConnect => 'Conectar con una organización existente';
+
+  @override
+  String get backendModeOperator => 'Configurar un servidor (operadores)';
+
+  @override
+  String get backendModeDefaultHint =>
+      'El servicio de DesKilo no necesita configuración. Los miembros de una organización con servidor propio usan su código en su lugar.';
+
+  @override
+  String get backendModeConnectHint =>
+      'Escanee o pegue el código de servidor que le dio su organización. Nunca hace falta una clave de administrador.';
+
+  @override
+  String get backendServerInUse => 'En uso en este dispositivo';
+
+  @override
+  String get backendDescriptorLabel => 'Código de servidor';
+
+  @override
+  String get backendDescriptorInvalid =>
+      'Eso no es un código de servidor DesKilo válido.';
+
+  @override
+  String backendDescriptorNamed(String label) {
+    return 'Llamado «$label» por quien lo compartió — sin verificar.';
+  }
+
+  @override
+  String backendDestination(String host) {
+    return 'Destino: $host';
+  }
+
+  @override
+  String get backendSaveNeedsTest =>
+      'Pruebe primero la conexión. Solo se puede guardar un servidor verificado.';
+
+  @override
+  String get backendTestAttention =>
+      'Se alcanzó, pero la respuesta no pudo clasificarse. Revise el servidor antes de usarlo.';
+
+  @override
+  String backendFacets(
+    String reachable,
+    String key,
+    String schema,
+    String version,
+  ) {
+    return 'Alcanzado: $reachable · Clave aceptada: $key · Esquema: $schema · Versión: $version';
+  }
+
+  @override
+  String get backendFacetYes => 'sí';
+
+  @override
+  String get backendFacetNo => 'no';
+
+  @override
+  String get backendFacetUnknown => 'desconocido';
+
+  @override
+  String get backendVersionShortCurrent => 'actual';
+
+  @override
+  String get backendVersionShortBehind => 'más antigua';
+
+  @override
+  String get backendVersionShortAhead => 'más reciente';
+
+  @override
+  String get backendErrorUrlNotCanonical =>
+      'Indique solo la dirección del proyecto (https://host), sin ruta, parámetros ni credenciales.';
+
+  @override
+  String get backendErrorKeySecret =>
+      'Eso es una clave secreta, no una publicable. No la comparta nunca: rótela en Project Settings → API keys y pegue aquí la clave publicable.';
+
+  @override
+  String get backendErrorKeyPersonalToken =>
+      'Eso es un token de acceso personal. Se queda con su propietario — pegue aquí la clave publicable del proyecto.';
+
+  @override
+  String get backendErrorKeyUserToken =>
+      'Eso es un token de sesión o de identidad, no una clave de proyecto. Pegue aquí la clave publicable del proyecto.';
+
+  @override
+  String get backendErrorKeyConnectionString =>
+      'Eso es una cadena de conexión a la base de datos. Nunca sale del servidor — pegue aquí la clave publicable del proyecto.';
+
+  @override
+  String get backendPendingTitle => 'Guardado para el próximo inicio';
+
+  @override
+  String backendPendingBody(String active, String saved) {
+    return 'Esta sesión sigue en $active. $saved tomará el relevo cuando cierre y vuelva a abrir la app.';
+  }
+
+  @override
+  String get backendPendingUndo => 'Deshacer';
+
+  @override
+  String get backendPendingUndone =>
+      'Deshecho — el servidor anterior ha vuelto.';
+
+  @override
   String get profilesDefault => 'Predeterminado al iniciar';
 
   @override

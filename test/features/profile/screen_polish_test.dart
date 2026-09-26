@@ -17,11 +17,15 @@ void main() {
     testWidgets('the connection test runs the full width, like every '
         'other button on the screen', (tester) async {
       await pumpServerScreen(tester);
+      // #1651 — the test button belongs to a candidate; the operator
+      // mode always has one on the form.
+      await tester.tap(find.byKey(const ValueKey('backend-mode-operator')));
+      await tester.pumpAndSettle();
       final test = find.byKey(const ValueKey('backend-test'));
-      final scan = find.byKey(const ValueKey('backend-scan'));
+      final save = find.byKey(const ValueKey('backend-save'));
       expect(test, findsOneWidget);
       expect(tester.getSize(test).width,
-          closeTo(tester.getSize(scan).width, 1),
+          closeTo(tester.getSize(save).width, 1),
           reason: 'a half-width button broke the column\'s right edge on '
               'the one row that matters most');
     });

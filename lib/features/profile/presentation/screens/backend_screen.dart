@@ -8,14 +8,12 @@ import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/backend/backend_uri.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
-import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
+import '../widgets/backend_candidate_form.dart';
 import '../widgets/backend_how_to.dart';
 import '../widgets/server_facts_card.dart';
 
@@ -28,6 +26,12 @@ import '../widgets/server_facts_card.dart';
 /// buttons, a QR the owner shares from this same screen, and a
 /// connection test that says WHICH part is wrong before anything is
 /// saved (unreachable / wrong key / schema not installed).
+///
+/// #1651 — three states are kept apart on this screen: the CANDIDATE on
+/// the form (BackendCandidateForm), the endpoint SAVED for the next start
+/// (the store), and the endpoint this process actually RUNS on
+/// (`bootedBackendUrlProvider`). A save that has not been followed by a
+/// restart is shown as pending, with the way back.
 class BackendScreen extends ConsumerStatefulWidget {
   const BackendScreen({super.key});
 
@@ -36,41 +40,24 @@ class BackendScreen extends ConsumerStatefulWidget {
 }
 
 class _BackendScreenState extends ConsumerState<BackendScreen> {
-  final _url = TextEditingController();
-  final _key = TextEditingController();
-  bool _prefilled = false;
-  bool _testing = false;
-  BackendProbeResult? _result;
   DateTime? _lastOk;
-
-  @override
-  void dispose() {
-    _url.dispose();
-    _key.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final endpoint = ref.watch(activeBackendProvider).value;
     final isDefault = endpoint == null || ActiveBackend.isDefault(endpoint);
-    if (!_prefilled && endpoint != null) {
-      _prefilled = true;
-      if (!isDefault) {
-        _url.text = endpoint.url;
-        _key.text = endpoint.key;
-      }
-    }
+    final booted = ref.watch(bootedBackendUrlProvider);
+    final pending = ref.watch(pendingBackendSwitchProvider).value;
+    final switchPending =
+        endpoint != null && booted.isNotEmpty && booted != endpoint.url;
     final topic = l10n?.helpTopicServer ?? 'your own server';
     final scheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.backendServerTitle ?? 'Server'),
-        actions: [HelpDot(topic,
-          anchor: HelpAnchor.backendServer,
-        )],
+        actions: [HelpDot(topic, anchor: HelpAnchor.backendServer)],
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,
@@ -82,7 +69,9 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
                 isDefault ? Icons.cloud_outlined : Icons.dns_outlined,
                 color: scheme.primary,
               ),
-              title: Text(l10n?.backendCurrentTitle ?? 'This device uses'),
+              title: Text(switchPending
+                  ? (l10n?.backendPendingTitle ?? 'Saved for the next start')
+                  : (l10n?.backendCurrentTitle ?? 'This device uses')),
               subtitle: Text(endpoint == null
                   ? ''
                   : isDefault
@@ -100,6 +89,35 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
                     ),
             ),
           ),
+          if (switchPending) ...[
+            const SizedBox(height: AppSpacing.sm),
+            Card(
+              key: const ValueKey('backend-pending'),
+              child: Padding(
+                padding: AppSpacing.mdAll,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(l10n?.backendPendingBody(
+                            Uri.tryParse(booted)?.host ?? booted,
+                            endpoint.host) ??
+                        'This session still runs on '
+                            '${Uri.tryParse(booted)?.host ?? booted}. '
+                            '${endpoint.host} takes over when you close and '
+                            'reopen the app.'),
+                    if (pending != null) ...[
+                      const SizedBox(height: AppSpacing.sm),
+                      OutlinedButton(
+                        key: const ValueKey('backend-pending-undo'),
+                        onPressed: _undo,
+                        child: Text(l10n?.backendPendingUndo ?? 'Undo'),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ],
           if (endpoint != null) ...[
             const SizedBox(height: AppSpacing.sm),
             ServerFactsCard(
@@ -109,83 +127,15 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
             ),
           ],
           const SizedBox(height: AppSpacing.sm),
+          BackendCandidateForm(
+            topic: topic,
+            isDefault: isDefault,
+            initial: isDefault ? null : endpoint,
+            onApply: _apply,
+            onVerified: (at) => setState(() => _lastOk = at),
+          ),
+          const SizedBox(height: AppSpacing.sm),
           BackendHowTo(topic: topic),
-          const SizedBox(height: AppSpacing.sm),
-          Row(children: [
-            Expanded(
-              child: OutlinedButton.icon(
-                key: const ValueKey('backend-scan'),
-                onPressed: _scan,
-                icon: const Icon(Icons.qr_code_scanner),
-                label: Text(l10n?.backendScan ?? 'Scan a server QR'),
-              ),
-            ),
-          ]),
-          const SizedBox(height: AppSpacing.sm),
-          _field(
-            key: const ValueKey('backend-url-field'),
-            controller: _url,
-            label: l10n?.backendUrlLabel ?? 'Project URL',
-            hint: 'https://xxxxxxxx.supabase.co',
-            topic: topic,
-            keyboard: TextInputType.url,
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          _field(
-            key: const ValueKey('backend-key-field'),
-            controller: _key,
-            label: l10n?.backendKeyLabel ?? 'Publishable key',
-            hint: 'sb_publishable_…',
-            topic: topic,
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          // #1194 — every other button on this screen runs the full
-          // width; this one sat half-width and left-aligned, so the
-          // column's right edge broke on the one row that matters most.
-          Row(children: [
-            Expanded(
-              child: OutlinedButton.icon(
-              key: const ValueKey('backend-test'),
-              onPressed: _testing ? null : _test,
-              icon: _testing
-                  ? const SizedBox(
-                      width: 16,
-                      height: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.network_check),
-              label: Text(_testing
-                  ? (l10n?.backendTesting ?? 'Testing…')
-                  : (l10n?.backendTest ?? 'Test the connection')),
-              ),
-            ),
-          ]),
-          if (_result != null)
-            Padding(
-              padding: const EdgeInsets.only(top: AppSpacing.sm),
-              child: Text(
-                key: const ValueKey('backend-test-result'),
-                backendProbeText(l10n, _result!),
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: _result == BackendProbeResult.ok
-                          ? scheme.primary
-                          : scheme.error,
-                    ),
-              ),
-            ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            l10n?.backendServerRestartHint ??
-                'The app signs you out and applies the change on the next '
-                    'start.',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          FilledButton(
-            key: const ValueKey('backend-save'),
-            onPressed: _save,
-            child: Text(l10n?.commonSave ?? 'Save'),
-          ),
           if (!isDefault) ...[
             const SizedBox(height: AppSpacing.sm),
             ServerResetAction(onReset: () => _apply(null)),
@@ -193,86 +143,6 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
         ],
       ),
     );
-  }
-
-  Widget _field({
-    required Key key,
-    required TextEditingController controller,
-    required String label,
-    required String hint,
-    required String topic,
-    TextInputType? keyboard,
-  }) {
-    final l10n = AppLocalizations.of(context);
-    return TextField(
-      key: key,
-      controller: controller,
-      keyboardType: keyboard,
-      onChanged: (_) => setState(() => _result = null),
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hint,
-        suffixIcon: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              tooltip: l10n?.backendPaste ?? 'Paste',
-              icon: const Icon(Icons.content_paste, size: 20),
-              onPressed: () async {
-                final data = await Clipboard.getData(Clipboard.kTextPlain);
-                final text = data?.text?.trim();
-                if (text == null || text.isEmpty) return;
-                setState(() {
-                  controller.text = text;
-                  _result = null;
-                });
-              },
-            ),
-            HelpDot(topic,
-              anchor: HelpAnchor.backendServer,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<void> _scan() async {
-    final l10n = AppLocalizations.of(context);
-    BackendEndpoint? found;
-    await showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => SheetShell(
-        title: l10n?.backendScan ?? 'Scan a server QR',
-        children: [
-          const SizedBox(height: 12),
-          ScanCameraBox(
-            cameraKey: const ValueKey('backend-scan-camera'),
-            defaultFront: false,
-            onCode: (payload) {
-              final endpoint = BackendUriCodec.decode(payload);
-              if (endpoint == null) return;
-              found = endpoint;
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
-    );
-    if (!mounted) return;
-    if (found == null) {
-      AppSnack.info(
-        context,
-        l10n?.backendScanNothing ?? 'That QR is not a DesKilo server code.',
-      );
-      return;
-    }
-    setState(() {
-      _url.text = found!.url;
-      _key.text = found!.key;
-      _result = null;
-    });
   }
 
   Future<void> _share(BackendEndpoint endpoint) async {
@@ -316,36 +186,21 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
     );
   }
 
-  Future<void> _test() async {
+  Future<void> _undo() async {
     final l10n = AppLocalizations.of(context);
-    final error = validateBackendEndpoint(_url.text, _key.text);
-    if (error != null) {
-      AppSnack.error(context, backendErrorText(l10n, error));
-      return;
-    }
-    setState(() {
-      _testing = true;
-      _result = null;
-    });
-    final result = await probeBackend(
-      BackendEndpoint(_url.text.trim(), _key.text.trim()),
+    final ok = await runGuarded(
+      context,
+      domain: 'backend',
+      message: 'undo backend switch failed',
+      action: () async {
+        await ref.read(activeBackendProvider.notifier).undoSwitch();
+      },
     );
-    if (!mounted) return;
-    setState(() {
-      _testing = false;
-      _result = result;
-      if (result == BackendProbeResult.ok) _lastOk = ref.read(clockProvider).now();
-    });
-  }
-
-  Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
-    final error = validateBackendEndpoint(_url.text, _key.text);
-    if (error != null) {
-      AppSnack.error(context, backendErrorText(l10n, error));
-      return;
-    }
-    await _apply(BackendEndpoint(_url.text.trim(), _key.text.trim()));
+    if (!ok || !mounted) return;
+    AppSnack.success(
+      context,
+      l10n?.backendPendingUndone ?? 'Undone — the previous server is back.',
+    );
   }
 
   Future<void> _apply(BackendEndpoint? endpoint) async {

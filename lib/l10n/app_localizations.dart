@@ -16099,6 +16099,179 @@ abstract class AppLocalizations {
   /// **'Your account could not be loaded, so there is nothing to accept yet.'**
   String get consentUnavailable;
 
+  /// No description provided for @backendModeDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Use DesKilo\'s service'**
+  String get backendModeDefault;
+
+  /// No description provided for @backendModeConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect an existing organization'**
+  String get backendModeConnect;
+
+  /// No description provided for @backendModeOperator.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up a server (operators)'**
+  String get backendModeOperator;
+
+  /// No description provided for @backendModeDefaultHint.
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo\'s own service needs no setup. Members of an organization that runs its own server use its code instead.'**
+  String get backendModeDefaultHint;
+
+  /// No description provided for @backendModeConnectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan or paste the server code your organization gave you. You never need an administrator key.'**
+  String get backendModeConnectHint;
+
+  /// No description provided for @backendServerInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'In use on this device'**
+  String get backendServerInUse;
+
+  /// No description provided for @backendDescriptorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Server code'**
+  String get backendDescriptorLabel;
+
+  /// No description provided for @backendDescriptorInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'That is not a valid DesKilo server code.'**
+  String get backendDescriptorInvalid;
+
+  /// #1651 Server screen
+  ///
+  /// In en, this message translates to:
+  /// **'Named \"{label}\" by whoever shared it — not verified.'**
+  String backendDescriptorNamed(String label);
+
+  /// #1651 Server screen
+  ///
+  /// In en, this message translates to:
+  /// **'Destination: {host}'**
+  String backendDestination(String host);
+
+  /// No description provided for @backendSaveNeedsTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Test the connection first. Only a verified server can be saved.'**
+  String get backendSaveNeedsTest;
+
+  /// No description provided for @backendTestAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'Reached it, but the answer could not be classified. Check the server before using it.'**
+  String get backendTestAttention;
+
+  /// #1651 Server screen
+  ///
+  /// In en, this message translates to:
+  /// **'Reached: {reachable} · Key accepted: {key} · Schema: {schema} · Version: {version}'**
+  String backendFacets(
+    String reachable,
+    String key,
+    String schema,
+    String version,
+  );
+
+  /// No description provided for @backendFacetYes.
+  ///
+  /// In en, this message translates to:
+  /// **'yes'**
+  String get backendFacetYes;
+
+  /// No description provided for @backendFacetNo.
+  ///
+  /// In en, this message translates to:
+  /// **'no'**
+  String get backendFacetNo;
+
+  /// No description provided for @backendFacetUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'unknown'**
+  String get backendFacetUnknown;
+
+  /// No description provided for @backendVersionShortCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'current'**
+  String get backendVersionShortCurrent;
+
+  /// No description provided for @backendVersionShortBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'older'**
+  String get backendVersionShortBehind;
+
+  /// No description provided for @backendVersionShortAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'newer'**
+  String get backendVersionShortAhead;
+
+  /// No description provided for @backendErrorUrlNotCanonical.
+  ///
+  /// In en, this message translates to:
+  /// **'Use only the project\'s address (https://host), without a path, a query or credentials.'**
+  String get backendErrorUrlNotCanonical;
+
+  /// No description provided for @backendErrorKeySecret.
+  ///
+  /// In en, this message translates to:
+  /// **'That is a secret key, not a publishable one. Never share it: rotate it in Project Settings → API keys, then paste the publishable key here.'**
+  String get backendErrorKeySecret;
+
+  /// No description provided for @backendErrorKeyPersonalToken.
+  ///
+  /// In en, this message translates to:
+  /// **'That is a personal access token. It stays with its owner — paste the project\'s publishable key here.'**
+  String get backendErrorKeyPersonalToken;
+
+  /// No description provided for @backendErrorKeyUserToken.
+  ///
+  /// In en, this message translates to:
+  /// **'That is a session or identity token, not a project key. Paste the project\'s publishable key here.'**
+  String get backendErrorKeyUserToken;
+
+  /// No description provided for @backendErrorKeyConnectionString.
+  ///
+  /// In en, this message translates to:
+  /// **'That is a database connection string. It never leaves the server — paste the project\'s publishable key here.'**
+  String get backendErrorKeyConnectionString;
+
+  /// No description provided for @backendPendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved for the next start'**
+  String get backendPendingTitle;
+
+  /// #1651 Server screen
+  ///
+  /// In en, this message translates to:
+  /// **'This session still runs on {active}. {saved} takes over when you close and reopen the app.'**
+  String backendPendingBody(String active, String saved);
+
+  /// No description provided for @backendPendingUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get backendPendingUndo;
+
+  /// No description provided for @backendPendingUndone.
+  ///
+  /// In en, this message translates to:
+  /// **'Undone — the previous server is back.'**
+  String get backendPendingUndone;
+
   /// No description provided for @profilesDefault.
   ///
   /// In en, this message translates to:
