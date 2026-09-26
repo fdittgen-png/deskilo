@@ -242,7 +242,7 @@ final class ConnectAssistantProvider
   }
 }
 
-String _$connectAssistantHash() => r'9a3acc00aa1d8e8281eed7dd0b19a3a72dd39e53';
+String _$connectAssistantHash() => r'9b131ce9d1d178d657b3dc9381bdd4a8e9fc7443';
 
 /// The pending request and what this person may offer, loaded together.
 
