@@ -83,4 +83,46 @@ void main() {
     expect((await repo.revoke()).state, IdentityBindingState.unlinked);
     expect(repo.finalizeCalls, 1);
   });
+
+  group('#1608/#1611 — database capabilities', () {
+    test('the server answer maps; administration never implies provisioning', () {
+      final c = DatabaseCapabilities.fromJson({
+        'mcp_eligibility': 'eligible',
+        'eligible_until': '2026-12-25T14:17:46+00:00',
+        'database_administrator': false,
+        'can_provision': true,
+        'runtime_enabled': false,
+      });
+      expect(c.eligibility, McpEligibility.eligible);
+      expect(c.canProvision, isFalse, reason: 'provisioning needs administration');
+      expect(c.eligibleUntil, DateTime.utc(2026, 12, 25, 14, 17, 46));
+      final admin = DatabaseCapabilities.fromJson({
+        'mcp_eligibility': 'not_requested',
+        'database_administrator': true,
+        'can_provision': true,
+      });
+      expect(admin.canProvision, isTrue);
+    });
+
+    test('unknown or incomplete answers are unavailable, never eligible', () {
+      for (final answer in <Object?>[
+        null,
+        <String, Object?>{},
+        {'mcp_eligibility': 'approved'},
+        {'mcp_eligibility': 'eligible'},
+        {'mcp_eligibility': 'eligible', 'eligible_until': 'soon'},
+      ]) {
+        expect(DatabaseCapabilities.fromJson(answer).eligibility,
+            McpEligibility.unavailable, reason: '$answer');
+      }
+      expect(DatabaseCapabilities.fromJson({'mcp_eligibility': 'no_identity'}).eligibility,
+          McpEligibility.noIdentity);
+    });
+
+    test('the fake asks, and a request never approves itself', () async {
+      final repo = FakeIdentityBindingRepository();
+      expect((await repo.requestMcpEligibility()).eligibility, McpEligibility.requested);
+      expect((await repo.withdrawMcpEligibility()).eligibility, McpEligibility.notRequested);
+    });
+  });
 }

@@ -28,4 +28,18 @@ class FakeIdentityBindingRepository implements IdentityBindingRepository {
   @override
   Future<IdentityBindingStatus> revoke() async => _current =
       const IdentityBindingStatus(state: IdentityBindingState.unlinked);
+
+  DatabaseCapabilities capabilities = DatabaseCapabilities.unavailable;
+
+  @override
+  Future<DatabaseCapabilities> databaseCapabilities() async => capabilities;
+
+  /// A request never approves itself: it answers `requested`.
+  @override
+  Future<DatabaseCapabilities> requestMcpEligibility() async =>
+      capabilities = const DatabaseCapabilities(eligibility: McpEligibility.requested);
+
+  @override
+  Future<DatabaseCapabilities> withdrawMcpEligibility() async =>
+      capabilities = const DatabaseCapabilities(eligibility: McpEligibility.notRequested);
 }

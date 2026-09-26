@@ -10,6 +10,7 @@
 //   dart run tool/instance.dart doctor   --token … --ref <project ref> [--public]
 //   dart run tool/instance.dart auth     --token … --ref <project ref>
 //   dart run tool/instance.dart doctor   --token … --ref <project ref>
+//   dart run tool/instance.dart db-admins --token … --ref <ref> list | grant --email E [--review-only] [--apply] | revoke --email E [--apply]
 //
 // `create` makes the project, waits for it, installs the schema and the
 // functions from the repository (not the asset — the repository is the
@@ -37,6 +38,7 @@ import 'package:deskilo/core/instance/instance_policies.dart';
 import 'package:deskilo/core/instance/management_api.dart';
 
 import 'build_instance.dart';
+import 'instance/db_admins.dart';
 
 // Dart ignores what `main` returns; the exit code is set here.
 Future<void> main(List<String> argv) async => exitCode = await run(argv);
@@ -45,7 +47,7 @@ Future<int> run(List<String> argv) async {
   final args = _Args(argv);
   final token = args.option('token') ?? Platform.environment['SUPABASE_ACCESS_TOKEN'];
   if (args.command.isEmpty || token == null || token.isEmpty) {
-    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|record|auth|doctor --token … [--org … --name … --region … --ref … --skip N --through NNNN]');
+    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|record|auth|doctor|db-admins --token … [--org … --name … --region … --ref … --skip N --through NNNN]');
     return 2;
   }
   final api = DioSupabaseManagement(token);
@@ -137,6 +139,18 @@ Future<int> run(List<String> argv) async {
             redacted: args.option('public') != null));
         // Exit 1 on a finding so a schedule can act without parsing text.
         return hasProblem(findings) ? 1 : 0;
+      case 'db-admins':
+        final ref = args.option('ref');
+        if (ref == null) {
+          stderr.writeln('db-admins needs --ref');
+          return 2;
+        }
+        return runDbAdmins(api,
+            ref: ref,
+            action: args.positional ?? 'list',
+            email: args.option('email'),
+            reviewOnly: args.flag('review-only'),
+            apply: args.flag('apply'));
       default:
         stderr.writeln('unknown command ${args.command}');
         return 2;
@@ -174,11 +188,20 @@ class _Args {
     command = argv.firstOrNull ?? '';
     for (var i = 1; i < argv.length; i++) {
       final a = argv[i];
-      if (a.startsWith('--')) {
+      if (_flags.contains(a.substring(a.startsWith('--') ? 2 : 0))) {
+        _options[a.substring(2)] = 'true';
+      } else if (a.startsWith('--')) {
         _options[a.substring(2)] = i + 1 < argv.length ? argv[++i] : '';
+      } else {
+        positional ??= a;
       }
     }
   }
+
+  /// Options that take no value.
+  static const _flags = {'apply', 'review-only'};
+  String? positional;
+  bool flag(String name) => _options[name] == 'true';
   late final String command;
   final _options = <String, String>{};
   String? option(String name) => _options[name];
