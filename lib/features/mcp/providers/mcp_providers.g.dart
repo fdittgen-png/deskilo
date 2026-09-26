@@ -386,3 +386,317 @@ final class MyMcpConnectionsProvider
 }
 
 String _$myMcpConnectionsHash() => r'eb966cd1b83a624398f00f3fd3364c08d2860a2b';
+
+/// #1626/#1627 — owner policy and database eligibility review.
+
+@ProviderFor(mcpAdminRepository)
+final mcpAdminRepositoryProvider = McpAdminRepositoryProvider._();
+
+/// #1626/#1627 — owner policy and database eligibility review.
+
+final class McpAdminRepositoryProvider
+    extends
+        $FunctionalProvider<
+          McpAdminRepository,
+          McpAdminRepository,
+          McpAdminRepository
+        >
+    with $Provider<McpAdminRepository> {
+  /// #1626/#1627 — owner policy and database eligibility review.
+  McpAdminRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mcpAdminRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpAdminRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<McpAdminRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  McpAdminRepository create(Ref ref) {
+    return mcpAdminRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(McpAdminRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<McpAdminRepository>(value),
+    );
+  }
+}
+
+String _$mcpAdminRepositoryHash() =>
+    r'd78751f105599de23ce6bd057e3a900468df1ba5';
+
+/// The owner's policy for one workspace, as the server holds it now.
+
+@ProviderFor(mcpPolicy)
+final mcpPolicyProvider = McpPolicyFamily._();
+
+/// The owner's policy for one workspace, as the server holds it now.
+
+final class McpPolicyProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<McpPolicy>,
+          McpPolicy,
+          FutureOr<McpPolicy>
+        >
+    with $FutureModifier<McpPolicy>, $FutureProvider<McpPolicy> {
+  /// The owner's policy for one workspace, as the server holds it now.
+  McpPolicyProvider._({
+    required McpPolicyFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'mcpPolicyProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpPolicyHash();
+
+  @override
+  String toString() {
+    return r'mcpPolicyProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<McpPolicy> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<McpPolicy> create(Ref ref) {
+    final argument = this.argument as String;
+    return mcpPolicy(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is McpPolicyProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$mcpPolicyHash() => r'db094c2207d37221f6b29b34a52574efb23c8613';
+
+/// The owner's policy for one workspace, as the server holds it now.
+
+final class McpPolicyFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<McpPolicy>, String> {
+  McpPolicyFamily._()
+    : super(
+        retry: null,
+        name: r'mcpPolicyProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The owner's policy for one workspace, as the server holds it now.
+
+  McpPolicyProvider call(String workspaceId) =>
+      McpPolicyProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'mcpPolicyProvider';
+}
+
+@ProviderFor(mcpPolicyEditor)
+final mcpPolicyEditorProvider = McpPolicyEditorProvider._();
+
+final class McpPolicyEditorProvider
+    extends
+        $FunctionalProvider<McpPolicyEditor, McpPolicyEditor, McpPolicyEditor>
+    with $Provider<McpPolicyEditor> {
+  McpPolicyEditorProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mcpPolicyEditorProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpPolicyEditorHash();
+
+  @$internal
+  @override
+  $ProviderElement<McpPolicyEditor> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  McpPolicyEditor create(Ref ref) {
+    return mcpPolicyEditor(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(McpPolicyEditor value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<McpPolicyEditor>(value),
+    );
+  }
+}
+
+String _$mcpPolicyEditorHash() => r'be948e59c62b548b34dda08f7aa9bc2b1ccd63ca';
+
+/// The pending eligibility requests on this database (administrators only).
+
+@ProviderFor(eligibilityRequests)
+final eligibilityRequestsProvider = EligibilityRequestsProvider._();
+
+/// The pending eligibility requests on this database (administrators only).
+
+final class EligibilityRequestsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<EligibilityRequest>>,
+          List<EligibilityRequest>,
+          FutureOr<List<EligibilityRequest>>
+        >
+    with
+        $FutureModifier<List<EligibilityRequest>>,
+        $FutureProvider<List<EligibilityRequest>> {
+  /// The pending eligibility requests on this database (administrators only).
+  EligibilityRequestsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'eligibilityRequestsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$eligibilityRequestsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<EligibilityRequest>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<EligibilityRequest>> create(Ref ref) {
+    return eligibilityRequests(ref);
+  }
+}
+
+String _$eligibilityRequestsHash() =>
+    r'6e3c3a4d4a18203eb72646a0ea248fc2305baba5';
+
+@ProviderFor(eligibilityReview)
+final eligibilityReviewProvider = EligibilityReviewProvider._();
+
+final class EligibilityReviewProvider
+    extends
+        $FunctionalProvider<
+          EligibilityReview,
+          EligibilityReview,
+          EligibilityReview
+        >
+    with $Provider<EligibilityReview> {
+  EligibilityReviewProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'eligibilityReviewProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$eligibilityReviewHash();
+
+  @$internal
+  @override
+  $ProviderElement<EligibilityReview> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  EligibilityReview create(Ref ref) {
+    return eligibilityReview(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EligibilityReview value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<EligibilityReview>(value),
+    );
+  }
+}
+
+String _$eligibilityReviewHash() => r'572f7623152a58396a274d9161da0acc2db06ab5';
+
+@ProviderFor(assistantAccess)
+final assistantAccessProvider = AssistantAccessProvider._();
+
+final class AssistantAccessProvider
+    extends
+        $FunctionalProvider<AssistantAccess, AssistantAccess, AssistantAccess>
+    with $Provider<AssistantAccess> {
+  AssistantAccessProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'assistantAccessProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$assistantAccessHash();
+
+  @$internal
+  @override
+  $ProviderElement<AssistantAccess> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  AssistantAccess create(Ref ref) {
+    return assistantAccess(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AssistantAccess value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AssistantAccess>(value),
+    );
+  }
+}
+
+String _$assistantAccessHash() => r'07a7f9dc58dc25bac5393851b614eb48379cce3d';

@@ -7045,6 +7045,177 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpGetValidation => 'Leer una solicitud de validación';
 
   @override
+  String get mcpPolicyTitle => 'Acceso de asistentes';
+
+  @override
+  String get mcpPolicyUnavailable =>
+      'No se pudieron cargar los ajustes de asistentes. Inténtelo más tarde.';
+
+  @override
+  String get mcpPolicySwitched =>
+      'Ha cambiado de espacio. Vuelva a abrir esta página para editar el otro espacio.';
+
+  @override
+  String get mcpPolicyExplain =>
+      'Elija qué pueden hacer los asistentes en este espacio. Un miembro sigue necesitando la aprobación de esta base de datos, el rol adecuado, y debe elegir este espacio al conectar su asistente.';
+
+  @override
+  String get mcpPolicyFeatureOff =>
+      'Los asistentes están desactivados en las funciones de este espacio. Aún puede restringir o desactivar los servicios de abajo.';
+
+  @override
+  String get mcpPolicyEnabled => 'Ofrecer servicios de asistente';
+
+  @override
+  String get mcpPolicyCeiling =>
+      'Registros sobre los que puede actuar un asistente';
+
+  @override
+  String get mcpPolicyCeilingOwn => 'Solo registros propios';
+
+  @override
+  String get mcpPolicyCeilingWorkspace => 'Todo el espacio';
+
+  @override
+  String get mcpPolicyBroadening =>
+      'Los asistentes ya conectados no reciben los servicios añadidos: cada persona debe añadirlos al volver a conectar.';
+
+  @override
+  String get mcpPolicySave => 'Guardar';
+
+  @override
+  String get mcpGroupOwn => 'Reservas y cuenta propias';
+
+  @override
+  String get mcpGroupFinancial => 'Solicitudes financieras';
+
+  @override
+  String get mcpGroupMembership => 'Solicitudes de membresía';
+
+  @override
+  String get mcpGroupValidations => 'Validaciones';
+
+  @override
+  String get mcpPolicySaved => 'Guardado.';
+
+  @override
+  String get mcpPolicyStale =>
+      'Alguien cambió estos ajustes mientras tanto. Revise los ajustes actuales y guarde de nuevo.';
+
+  @override
+  String get mcpPolicyConflict =>
+      'Se rechazó este guardado. Revise los ajustes actuales y guarde de nuevo.';
+
+  @override
+  String mcpDisconnectTitle(String client) {
+    return '¿Desconectar $client?';
+  }
+
+  @override
+  String get mcpDisconnectBody =>
+      'El asistente pierde el acceso a todos los espacios de esta base de datos. Lo que ya leyó no se recupera.';
+
+  @override
+  String get mcpCancel => 'Cancelar';
+
+  @override
+  String get mcpDisconnect => 'Desconectar';
+
+  @override
+  String get mcpAssistantsTitle => 'Asistentes';
+
+  @override
+  String get mcpAssistantsUnavailable =>
+      'No se pudo cargar su acceso a asistentes. Inténtelo más tarde.';
+
+  @override
+  String get mcpConnectedTitle => 'Asistentes conectados';
+
+  @override
+  String get mcpConnectedNone =>
+      'No hay ningún asistente conectado. Conecte uno desde el propio asistente.';
+
+  @override
+  String get mcpEligibleYes => 'Esta base de datos le permite usar asistentes.';
+
+  @override
+  String get mcpEligibleRequested =>
+      'Solicitó la aprobación. Un administrador de la base de datos la revisará.';
+
+  @override
+  String get mcpEligibleExpired =>
+      'Su aprobación caducó. Vuelva a solicitarla para seguir usando asistentes.';
+
+  @override
+  String get mcpEligibleNoIdentity =>
+      'Su cuenta no está vinculada a una identidad verificada en esta base de datos.';
+
+  @override
+  String get mcpEligibleNot =>
+      'Esta base de datos no ha aprobado asistentes para usted.';
+
+  @override
+  String get mcpEligibleWithdraw =>
+      'Renunciar al acceso de asistentes en esta base de datos';
+
+  @override
+  String get mcpConnectedNoWorkspace =>
+      'Ningún espacio: este asistente no puede hacer nada aquí.';
+
+  @override
+  String get mcpRemoveWorkspace => 'Quitar este espacio';
+
+  @override
+  String get mcpReviewTitle => 'Aprobaciones de asistentes';
+
+  @override
+  String get mcpReviewNotAdmin =>
+      'Solo los administradores de esta base de datos revisan las aprobaciones.';
+
+  @override
+  String get mcpReviewUnavailable =>
+      'No se pudieron cargar las solicitudes. Una revisión necesita su segundo factor; inténtelo de nuevo.';
+
+  @override
+  String get mcpReviewExplain =>
+      'Aprobar permite a una persona conectar asistentes en esta base de datos, en los espacios cuyos propietarios lo admiten. No otorga membresía ni rol.';
+
+  @override
+  String get mcpReviewEmpty => 'No hay solicitudes pendientes.';
+
+  @override
+  String get mcpReviewReject => 'Rechazar';
+
+  @override
+  String get mcpReviewApprove => 'Aprobar';
+
+  @override
+  String get mcpReviewDone => 'Decisión registrada.';
+
+  @override
+  String get mcpReviewChanged =>
+      'Esta solicitud cambió u otro administrador decidió antes. No se hizo nada.';
+
+  @override
+  String get mcpReviewRefused => 'La decisión fue rechazada.';
+
+  @override
+  String get mfaTitle => 'Confirme con su aplicación de autenticación';
+
+  @override
+  String get mfaEnroll =>
+      'Escanee este código con una aplicación de autenticación, o introduzca la clave, y escriba los seis dígitos que muestra.';
+
+  @override
+  String get mfaCode => 'Código de seis dígitos';
+
+  @override
+  String get mfaWrong => 'Ese código no fue aceptado. Pruebe el actual.';
+
+  @override
+  String get mfaVerify => 'Verificar';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Los miembros ven Mi cuenta';
 
   @override
