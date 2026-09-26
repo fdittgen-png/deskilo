@@ -3397,6 +3397,99 @@ class AppLocalizationsEn extends AppLocalizations {
       'After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. Off hides the card and changes nothing else.';
 
   @override
+  String gettingStartedTitle(String workspace) {
+    return 'Get started in $workspace';
+  }
+
+  @override
+  String get gettingStartedEnvDev => 'Development workspace';
+
+  @override
+  String get gettingStartedEnvProd => 'Production workspace';
+
+  @override
+  String get gettingStartedStandingMember => 'You are a member here.';
+
+  @override
+  String get gettingStartedStandingAdmin => 'You are an administrator here.';
+
+  @override
+  String get gettingStartedStandingOwner =>
+      'You are an owner of this workspace.';
+
+  @override
+  String get gettingStartedReadyToBook =>
+      'The workspace is open on this day. Pick a time and a space on the plan — nothing is booked until you confirm.';
+
+  @override
+  String get gettingStartedClosedToday =>
+      'The workspace is closed on the selected day. Choose another day to see what is free.';
+
+  @override
+  String get gettingStartedNoSpaces =>
+      'Nothing can be booked here yet. Your membership shows what your access includes.';
+
+  @override
+  String get gettingStartedAvailabilityUnknown =>
+      'Availability could not be loaded. The help explains how booking works here.';
+
+  @override
+  String get gettingStartedMembershipUnknown =>
+      'Your membership could not be loaded right now. The help explains how this workspace works.';
+
+  @override
+  String gettingStartedBooked(String id, String state) {
+    return 'Your booking $id is $state. Your membership shows what else is included.';
+  }
+
+  @override
+  String gettingStartedAllowance(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'You may hold $count bookings at a time.',
+      one: 'You may hold one booking at a time.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gettingStartedStateReserved => 'reserved';
+
+  @override
+  String get gettingStartedStateCheckedIn => 'checked in';
+
+  @override
+  String get gettingStartedStateCompleted => 'completed';
+
+  @override
+  String get gettingStartedStateCancelled => 'cancelled';
+
+  @override
+  String get gettingStartedStateReleased => 'released';
+
+  @override
+  String get gettingStartedActionChooseTime => 'Choose a time to book';
+
+  @override
+  String get gettingStartedActionChooseDay => 'Choose another day';
+
+  @override
+  String get gettingStartedActionMembership => 'View my membership';
+
+  @override
+  String get gettingStartedActionHelp => 'Help for this workspace';
+
+  @override
+  String get gettingStartedNotNow => 'Not now';
+
+  @override
+  String get gettingStartedReopen => 'Get started';
+
+  @override
+  String get gettingStartedSemantics => 'Get started: one suggested next step';
+
+  @override
   String get helpTitle => 'Help';
 
   @override

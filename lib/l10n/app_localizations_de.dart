@@ -3427,6 +3427,99 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nach dem Beitritt oder dem Anlegen eines Workspace sieht ein Mitglied eine kompakte Karte im Reservieren-Hub: in welchem Workspace es ist und einen vorgeschlagenen nächsten Schritt — eine Zeit zum Buchen wählen, die eigene Mitgliedschaft ansehen oder die Hilfe öffnen — nur dort, wo Funktionen und Berechtigungen es erlauben. „Jetzt nicht“ blendet sie aus; die Einstellungen zeigen sie wieder an. Sie bucht, zahlt und genehmigt nie etwas. Aus blendet die Karte aus und ändert sonst nichts.';
 
   @override
+  String gettingStartedTitle(String workspace) {
+    return 'Erste Schritte in $workspace';
+  }
+
+  @override
+  String get gettingStartedEnvDev => 'Entwicklungs-Workspace';
+
+  @override
+  String get gettingStartedEnvProd => 'Produktions-Workspace';
+
+  @override
+  String get gettingStartedStandingMember => 'Du bist hier Mitglied.';
+
+  @override
+  String get gettingStartedStandingAdmin => 'Du bist hier Administrator.';
+
+  @override
+  String get gettingStartedStandingOwner => 'Du bist Inhaber dieses Workspace.';
+
+  @override
+  String get gettingStartedReadyToBook =>
+      'Der Workspace ist an diesem Tag geöffnet. Wähle eine Zeit und einen Platz auf dem Plan — gebucht wird erst, wenn du bestätigst.';
+
+  @override
+  String get gettingStartedClosedToday =>
+      'Der Workspace ist am gewählten Tag geschlossen. Wähle einen anderen Tag, um zu sehen, was frei ist.';
+
+  @override
+  String get gettingStartedNoSpaces =>
+      'Hier kann noch nichts gebucht werden. Deine Mitgliedschaft zeigt, was dein Zugang umfasst.';
+
+  @override
+  String get gettingStartedAvailabilityUnknown =>
+      'Die Verfügbarkeit konnte nicht geladen werden. Die Hilfe erklärt, wie Buchen hier funktioniert.';
+
+  @override
+  String get gettingStartedMembershipUnknown =>
+      'Deine Mitgliedschaft konnte gerade nicht geladen werden. Die Hilfe erklärt, wie dieser Workspace funktioniert.';
+
+  @override
+  String gettingStartedBooked(String id, String state) {
+    return 'Deine Buchung $id ist $state. Deine Mitgliedschaft zeigt, was sonst noch enthalten ist.';
+  }
+
+  @override
+  String gettingStartedAllowance(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Du kannst $count Buchungen gleichzeitig halten.',
+      one: 'Du kannst eine Buchung gleichzeitig halten.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gettingStartedStateReserved => 'reserviert';
+
+  @override
+  String get gettingStartedStateCheckedIn => 'eingecheckt';
+
+  @override
+  String get gettingStartedStateCompleted => 'abgeschlossen';
+
+  @override
+  String get gettingStartedStateCancelled => 'storniert';
+
+  @override
+  String get gettingStartedStateReleased => 'freigegeben';
+
+  @override
+  String get gettingStartedActionChooseTime => 'Zeit zum Buchen wählen';
+
+  @override
+  String get gettingStartedActionChooseDay => 'Anderen Tag wählen';
+
+  @override
+  String get gettingStartedActionMembership => 'Meine Mitgliedschaft ansehen';
+
+  @override
+  String get gettingStartedActionHelp => 'Hilfe zu diesem Workspace';
+
+  @override
+  String get gettingStartedNotNow => 'Jetzt nicht';
+
+  @override
+  String get gettingStartedReopen => 'Erste Schritte';
+
+  @override
+  String get gettingStartedSemantics =>
+      'Erste Schritte: ein vorgeschlagener nächster Schritt';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override

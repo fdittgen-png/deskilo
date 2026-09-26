@@ -5965,6 +5965,156 @@ abstract class AppLocalizations {
   /// **'After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. Off hides the card and changes nothing else.'**
   String get featureMemberGettingStartedDesc;
 
+  /// #1654 getting started card: gettingStartedTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Get started in {workspace}'**
+  String gettingStartedTitle(String workspace);
+
+  /// #1654 getting started card: gettingStartedEnvDev
+  ///
+  /// In en, this message translates to:
+  /// **'Development workspace'**
+  String get gettingStartedEnvDev;
+
+  /// #1654 getting started card: gettingStartedEnvProd
+  ///
+  /// In en, this message translates to:
+  /// **'Production workspace'**
+  String get gettingStartedEnvProd;
+
+  /// #1654 getting started card: gettingStartedStandingMember
+  ///
+  /// In en, this message translates to:
+  /// **'You are a member here.'**
+  String get gettingStartedStandingMember;
+
+  /// #1654 getting started card: gettingStartedStandingAdmin
+  ///
+  /// In en, this message translates to:
+  /// **'You are an administrator here.'**
+  String get gettingStartedStandingAdmin;
+
+  /// #1654 getting started card: gettingStartedStandingOwner
+  ///
+  /// In en, this message translates to:
+  /// **'You are an owner of this workspace.'**
+  String get gettingStartedStandingOwner;
+
+  /// #1654 getting started card: gettingStartedReadyToBook
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace is open on this day. Pick a time and a space on the plan — nothing is booked until you confirm.'**
+  String get gettingStartedReadyToBook;
+
+  /// #1654 getting started card: gettingStartedClosedToday
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace is closed on the selected day. Choose another day to see what is free.'**
+  String get gettingStartedClosedToday;
+
+  /// #1654 getting started card: gettingStartedNoSpaces
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing can be booked here yet. Your membership shows what your access includes.'**
+  String get gettingStartedNoSpaces;
+
+  /// #1654 getting started card: gettingStartedAvailabilityUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Availability could not be loaded. The help explains how booking works here.'**
+  String get gettingStartedAvailabilityUnknown;
+
+  /// #1654 getting started card: gettingStartedMembershipUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Your membership could not be loaded right now. The help explains how this workspace works.'**
+  String get gettingStartedMembershipUnknown;
+
+  /// #1654 getting started card: gettingStartedBooked
+  ///
+  /// In en, this message translates to:
+  /// **'Your booking {id} is {state}. Your membership shows what else is included.'**
+  String gettingStartedBooked(String id, String state);
+
+  /// #1654 getting started card: gettingStartedAllowance
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{You may hold one booking at a time.} other{You may hold {count} bookings at a time.}}'**
+  String gettingStartedAllowance(int count);
+
+  /// #1654 getting started card: gettingStartedStateReserved
+  ///
+  /// In en, this message translates to:
+  /// **'reserved'**
+  String get gettingStartedStateReserved;
+
+  /// #1654 getting started card: gettingStartedStateCheckedIn
+  ///
+  /// In en, this message translates to:
+  /// **'checked in'**
+  String get gettingStartedStateCheckedIn;
+
+  /// #1654 getting started card: gettingStartedStateCompleted
+  ///
+  /// In en, this message translates to:
+  /// **'completed'**
+  String get gettingStartedStateCompleted;
+
+  /// #1654 getting started card: gettingStartedStateCancelled
+  ///
+  /// In en, this message translates to:
+  /// **'cancelled'**
+  String get gettingStartedStateCancelled;
+
+  /// #1654 getting started card: gettingStartedStateReleased
+  ///
+  /// In en, this message translates to:
+  /// **'released'**
+  String get gettingStartedStateReleased;
+
+  /// #1654 getting started card: gettingStartedActionChooseTime
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a time to book'**
+  String get gettingStartedActionChooseTime;
+
+  /// #1654 getting started card: gettingStartedActionChooseDay
+  ///
+  /// In en, this message translates to:
+  /// **'Choose another day'**
+  String get gettingStartedActionChooseDay;
+
+  /// #1654 getting started card: gettingStartedActionMembership
+  ///
+  /// In en, this message translates to:
+  /// **'View my membership'**
+  String get gettingStartedActionMembership;
+
+  /// #1654 getting started card: gettingStartedActionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Help for this workspace'**
+  String get gettingStartedActionHelp;
+
+  /// #1654 getting started card: gettingStartedNotNow
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get gettingStartedNotNow;
+
+  /// #1654 getting started card: gettingStartedReopen
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get gettingStartedReopen;
+
+  /// #1654 getting started card: gettingStartedSemantics
+  ///
+  /// In en, this message translates to:
+  /// **'Get started: one suggested next step'**
+  String get gettingStartedSemantics;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:

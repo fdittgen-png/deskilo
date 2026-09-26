@@ -3426,6 +3426,100 @@ class AppLocalizationsIt extends AppLocalizations {
       'Dopo essersi unito a uno spazio o averlo creato, un membro vede una scheda compatta nell’hub Prenota: in quale spazio si trova e un passo successivo suggerito — scegliere un orario da prenotare, vedere la propria iscrizione o aprire l’aiuto — solo dove le funzioni e i suoi permessi lo consentono. Non ora la nasconde; le Impostazioni possono mostrarla di nuovo. Non prenota, non paga e non approva mai nulla. Disattivata, nasconde la scheda e non cambia altro.';
 
   @override
+  String gettingStartedTitle(String workspace) {
+    return 'Primi passi in $workspace';
+  }
+
+  @override
+  String get gettingStartedEnvDev => 'Spazio di sviluppo';
+
+  @override
+  String get gettingStartedEnvProd => 'Spazio di produzione';
+
+  @override
+  String get gettingStartedStandingMember => 'Sei membro qui.';
+
+  @override
+  String get gettingStartedStandingAdmin => 'Sei amministratore qui.';
+
+  @override
+  String get gettingStartedStandingOwner =>
+      'Sei proprietario di questo spazio.';
+
+  @override
+  String get gettingStartedReadyToBook =>
+      'Lo spazio è aperto in questo giorno. Scegli un orario e un posto sulla pianta — nulla viene prenotato finché non confermi.';
+
+  @override
+  String get gettingStartedClosedToday =>
+      'Lo spazio è chiuso nel giorno selezionato. Scegli un altro giorno per vedere cosa è libero.';
+
+  @override
+  String get gettingStartedNoSpaces =>
+      'Qui non si può ancora prenotare nulla. La tua iscrizione mostra cosa comprende il tuo accesso.';
+
+  @override
+  String get gettingStartedAvailabilityUnknown =>
+      'Impossibile caricare la disponibilità. L’aiuto spiega come funziona la prenotazione qui.';
+
+  @override
+  String get gettingStartedMembershipUnknown =>
+      'Impossibile caricare la tua iscrizione al momento. L’aiuto spiega come funziona questo spazio.';
+
+  @override
+  String gettingStartedBooked(String id, String state) {
+    return 'La tua prenotazione $id è $state. La tua iscrizione mostra cos’altro è incluso.';
+  }
+
+  @override
+  String gettingStartedAllowance(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Puoi tenere $count prenotazioni alla volta.',
+      one: 'Puoi tenere una prenotazione alla volta.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gettingStartedStateReserved => 'prenotata';
+
+  @override
+  String get gettingStartedStateCheckedIn => 'registrata';
+
+  @override
+  String get gettingStartedStateCompleted => 'completata';
+
+  @override
+  String get gettingStartedStateCancelled => 'annullata';
+
+  @override
+  String get gettingStartedStateReleased => 'rilasciata';
+
+  @override
+  String get gettingStartedActionChooseTime => 'Scegli un orario da prenotare';
+
+  @override
+  String get gettingStartedActionChooseDay => 'Scegli un altro giorno';
+
+  @override
+  String get gettingStartedActionMembership => 'Vedi la mia iscrizione';
+
+  @override
+  String get gettingStartedActionHelp => 'Aiuto per questo spazio';
+
+  @override
+  String get gettingStartedNotNow => 'Non ora';
+
+  @override
+  String get gettingStartedReopen => 'Primi passi';
+
+  @override
+  String get gettingStartedSemantics =>
+      'Primi passi: un passo successivo suggerito';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override

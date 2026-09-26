@@ -7,5 +7,30 @@
   "featureMemberGettingStartedDesc": "Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Desactivada, oculta la tarjeta y no cambia nada más.",
   "@featureMemberGettingStartedDesc": {
     "description": "#1654 getting started: featureMemberGettingStartedDesc"
-  }
+  },
+  "gettingStartedTitle": "Primeros pasos en {workspace}",
+  "gettingStartedEnvDev": "Espacio de desarrollo",
+  "gettingStartedEnvProd": "Espacio de producción",
+  "gettingStartedStandingMember": "Eres miembro aquí.",
+  "gettingStartedStandingAdmin": "Eres administrador aquí.",
+  "gettingStartedStandingOwner": "Eres propietario de este espacio.",
+  "gettingStartedReadyToBook": "El espacio está abierto ese día. Elige un horario y un puesto en el plano — no se reserva nada hasta que confirmes.",
+  "gettingStartedClosedToday": "El espacio está cerrado el día seleccionado. Elige otro día para ver qué está libre.",
+  "gettingStartedNoSpaces": "Aquí todavía no se puede reservar nada. Tu membresía muestra lo que incluye tu acceso.",
+  "gettingStartedAvailabilityUnknown": "No se pudo cargar la disponibilidad. La ayuda explica cómo funcionan las reservas aquí.",
+  "gettingStartedMembershipUnknown": "No se pudo cargar tu membresía ahora mismo. La ayuda explica cómo funciona este espacio.",
+  "gettingStartedBooked": "Tu reserva {id} está {state}. Tu membresía muestra qué más está incluido.",
+  "gettingStartedAllowance": "{count, plural, =1{Puedes tener una reserva a la vez.} other{Puedes tener {count} reservas a la vez.}}",
+  "gettingStartedStateReserved": "reservada",
+  "gettingStartedStateCheckedIn": "registrada",
+  "gettingStartedStateCompleted": "completada",
+  "gettingStartedStateCancelled": "cancelada",
+  "gettingStartedStateReleased": "liberada",
+  "gettingStartedActionChooseTime": "Elegir un horario para reservar",
+  "gettingStartedActionChooseDay": "Elegir otro día",
+  "gettingStartedActionMembership": "Ver mi membresía",
+  "gettingStartedActionHelp": "Ayuda para este espacio",
+  "gettingStartedNotNow": "Ahora no",
+  "gettingStartedReopen": "Primeros pasos",
+  "gettingStartedSemantics": "Primeros pasos: un siguiente paso sugerido"
 }

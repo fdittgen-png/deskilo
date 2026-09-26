@@ -7,5 +7,30 @@
   "featureMemberGettingStartedDesc": "Dopo essersi unito a uno spazio o averlo creato, un membro vede una scheda compatta nell’hub Prenota: in quale spazio si trova e un passo successivo suggerito — scegliere un orario da prenotare, vedere la propria iscrizione o aprire l’aiuto — solo dove le funzioni e i suoi permessi lo consentono. Non ora la nasconde; le Impostazioni possono mostrarla di nuovo. Non prenota, non paga e non approva mai nulla. Disattivata, nasconde la scheda e non cambia altro.",
   "@featureMemberGettingStartedDesc": {
     "description": "#1654 getting started: featureMemberGettingStartedDesc"
-  }
+  },
+  "gettingStartedTitle": "Primi passi in {workspace}",
+  "gettingStartedEnvDev": "Spazio di sviluppo",
+  "gettingStartedEnvProd": "Spazio di produzione",
+  "gettingStartedStandingMember": "Sei membro qui.",
+  "gettingStartedStandingAdmin": "Sei amministratore qui.",
+  "gettingStartedStandingOwner": "Sei proprietario di questo spazio.",
+  "gettingStartedReadyToBook": "Lo spazio è aperto in questo giorno. Scegli un orario e un posto sulla pianta — nulla viene prenotato finché non confermi.",
+  "gettingStartedClosedToday": "Lo spazio è chiuso nel giorno selezionato. Scegli un altro giorno per vedere cosa è libero.",
+  "gettingStartedNoSpaces": "Qui non si può ancora prenotare nulla. La tua iscrizione mostra cosa comprende il tuo accesso.",
+  "gettingStartedAvailabilityUnknown": "Impossibile caricare la disponibilità. L’aiuto spiega come funziona la prenotazione qui.",
+  "gettingStartedMembershipUnknown": "Impossibile caricare la tua iscrizione al momento. L’aiuto spiega come funziona questo spazio.",
+  "gettingStartedBooked": "La tua prenotazione {id} è {state}. La tua iscrizione mostra cos’altro è incluso.",
+  "gettingStartedAllowance": "{count, plural, =1{Puoi tenere una prenotazione alla volta.} other{Puoi tenere {count} prenotazioni alla volta.}}",
+  "gettingStartedStateReserved": "prenotata",
+  "gettingStartedStateCheckedIn": "registrata",
+  "gettingStartedStateCompleted": "completata",
+  "gettingStartedStateCancelled": "annullata",
+  "gettingStartedStateReleased": "rilasciata",
+  "gettingStartedActionChooseTime": "Scegli un orario da prenotare",
+  "gettingStartedActionChooseDay": "Scegli un altro giorno",
+  "gettingStartedActionMembership": "Vedi la mia iscrizione",
+  "gettingStartedActionHelp": "Aiuto per questo spazio",
+  "gettingStartedNotNow": "Non ora",
+  "gettingStartedReopen": "Primi passi",
+  "gettingStartedSemantics": "Primi passi: un passo successivo suggerito"
 }

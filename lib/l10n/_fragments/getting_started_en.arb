@@ -7,5 +7,123 @@
   "featureMemberGettingStartedDesc": "After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. Off hides the card and changes nothing else.",
   "@featureMemberGettingStartedDesc": {
     "description": "#1654 getting started: featureMemberGettingStartedDesc"
+  },
+  "gettingStartedTitle": "Get started in {workspace}",
+  "@gettingStartedTitle": {
+    "description": "#1654 getting started card: gettingStartedTitle",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "gettingStartedEnvDev": "Development workspace",
+  "@gettingStartedEnvDev": {
+    "description": "#1654 getting started card: gettingStartedEnvDev"
+  },
+  "gettingStartedEnvProd": "Production workspace",
+  "@gettingStartedEnvProd": {
+    "description": "#1654 getting started card: gettingStartedEnvProd"
+  },
+  "gettingStartedStandingMember": "You are a member here.",
+  "@gettingStartedStandingMember": {
+    "description": "#1654 getting started card: gettingStartedStandingMember"
+  },
+  "gettingStartedStandingAdmin": "You are an administrator here.",
+  "@gettingStartedStandingAdmin": {
+    "description": "#1654 getting started card: gettingStartedStandingAdmin"
+  },
+  "gettingStartedStandingOwner": "You are an owner of this workspace.",
+  "@gettingStartedStandingOwner": {
+    "description": "#1654 getting started card: gettingStartedStandingOwner"
+  },
+  "gettingStartedReadyToBook": "The workspace is open on this day. Pick a time and a space on the plan — nothing is booked until you confirm.",
+  "@gettingStartedReadyToBook": {
+    "description": "#1654 getting started card: gettingStartedReadyToBook"
+  },
+  "gettingStartedClosedToday": "The workspace is closed on the selected day. Choose another day to see what is free.",
+  "@gettingStartedClosedToday": {
+    "description": "#1654 getting started card: gettingStartedClosedToday"
+  },
+  "gettingStartedNoSpaces": "Nothing can be booked here yet. Your membership shows what your access includes.",
+  "@gettingStartedNoSpaces": {
+    "description": "#1654 getting started card: gettingStartedNoSpaces"
+  },
+  "gettingStartedAvailabilityUnknown": "Availability could not be loaded. The help explains how booking works here.",
+  "@gettingStartedAvailabilityUnknown": {
+    "description": "#1654 getting started card: gettingStartedAvailabilityUnknown"
+  },
+  "gettingStartedMembershipUnknown": "Your membership could not be loaded right now. The help explains how this workspace works.",
+  "@gettingStartedMembershipUnknown": {
+    "description": "#1654 getting started card: gettingStartedMembershipUnknown"
+  },
+  "gettingStartedBooked": "Your booking {id} is {state}. Your membership shows what else is included.",
+  "@gettingStartedBooked": {
+    "description": "#1654 getting started card: gettingStartedBooked",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "gettingStartedAllowance": "{count, plural, =1{You may hold one booking at a time.} other{You may hold {count} bookings at a time.}}",
+  "@gettingStartedAllowance": {
+    "description": "#1654 getting started card: gettingStartedAllowance",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gettingStartedStateReserved": "reserved",
+  "@gettingStartedStateReserved": {
+    "description": "#1654 getting started card: gettingStartedStateReserved"
+  },
+  "gettingStartedStateCheckedIn": "checked in",
+  "@gettingStartedStateCheckedIn": {
+    "description": "#1654 getting started card: gettingStartedStateCheckedIn"
+  },
+  "gettingStartedStateCompleted": "completed",
+  "@gettingStartedStateCompleted": {
+    "description": "#1654 getting started card: gettingStartedStateCompleted"
+  },
+  "gettingStartedStateCancelled": "cancelled",
+  "@gettingStartedStateCancelled": {
+    "description": "#1654 getting started card: gettingStartedStateCancelled"
+  },
+  "gettingStartedStateReleased": "released",
+  "@gettingStartedStateReleased": {
+    "description": "#1654 getting started card: gettingStartedStateReleased"
+  },
+  "gettingStartedActionChooseTime": "Choose a time to book",
+  "@gettingStartedActionChooseTime": {
+    "description": "#1654 getting started card: gettingStartedActionChooseTime"
+  },
+  "gettingStartedActionChooseDay": "Choose another day",
+  "@gettingStartedActionChooseDay": {
+    "description": "#1654 getting started card: gettingStartedActionChooseDay"
+  },
+  "gettingStartedActionMembership": "View my membership",
+  "@gettingStartedActionMembership": {
+    "description": "#1654 getting started card: gettingStartedActionMembership"
+  },
+  "gettingStartedActionHelp": "Help for this workspace",
+  "@gettingStartedActionHelp": {
+    "description": "#1654 getting started card: gettingStartedActionHelp"
+  },
+  "gettingStartedNotNow": "Not now",
+  "@gettingStartedNotNow": {
+    "description": "#1654 getting started card: gettingStartedNotNow"
+  },
+  "gettingStartedReopen": "Get started",
+  "@gettingStartedReopen": {
+    "description": "#1654 getting started card: gettingStartedReopen"
+  },
+  "gettingStartedSemantics": "Get started: one suggested next step",
+  "@gettingStartedSemantics": {
+    "description": "#1654 getting started card: gettingStartedSemantics"
   }
 }
