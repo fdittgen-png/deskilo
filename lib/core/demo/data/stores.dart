@@ -52,11 +52,21 @@ class InMemoryCacheStore implements CacheStore {
 class InMemoryBackendSettingsStore implements BackendSettingsStore {
   BackendEndpoint? value;
 
+  /// #1651 — the pending switch, until the (simulated) restart.
+  BackendSwitchRecord? pending;
+
   @override
   Future<BackendEndpoint?> read() async => value;
 
   @override
   Future<void> write(BackendEndpoint? endpoint) async => value = endpoint;
+
+  @override
+  Future<BackendSwitchRecord?> readSwitch() async => pending;
+
+  @override
+  Future<void> writeSwitch(BackendSwitchRecord? record) async =>
+      pending = record;
 }
 
 class InMemoryFrontCameraStore implements FrontCameraStore {

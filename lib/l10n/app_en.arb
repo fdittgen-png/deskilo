@@ -9744,6 +9744,78 @@
   "@consentUnavailable": {
     "description": "Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form"
   },
+  "backendModeDefault": "Use DesKilo's service",
+  "backendModeConnect": "Connect an existing organization",
+  "backendModeOperator": "Set up a server (operators)",
+  "backendModeDefaultHint": "DesKilo's own service needs no setup. Members of an organization that runs its own server use its code instead.",
+  "backendModeConnectHint": "Scan or paste the server code your organization gave you. You never need an administrator key.",
+  "backendServerInUse": "In use on this device",
+  "backendDescriptorLabel": "Server code",
+  "backendDescriptorInvalid": "That is not a valid DesKilo server code.",
+  "backendDescriptorNamed": "Named \"{label}\" by whoever shared it — not verified.",
+  "@backendDescriptorNamed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    },
+    "description": "#1651 Server screen"
+  },
+  "backendDestination": "Destination: {host}",
+  "@backendDestination": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    },
+    "description": "#1651 Server screen"
+  },
+  "backendSaveNeedsTest": "Test the connection first. Only a verified server can be saved.",
+  "backendTestAttention": "Reached it, but the answer could not be classified. Check the server before using it.",
+  "backendFacets": "Reached: {reachable} · Key accepted: {key} · Schema: {schema} · Version: {version}",
+  "@backendFacets": {
+    "placeholders": {
+      "reachable": {
+        "type": "String"
+      },
+      "key": {
+        "type": "String"
+      },
+      "schema": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      }
+    },
+    "description": "#1651 Server screen"
+  },
+  "backendFacetYes": "yes",
+  "backendFacetNo": "no",
+  "backendFacetUnknown": "unknown",
+  "backendVersionShortCurrent": "current",
+  "backendVersionShortBehind": "older",
+  "backendVersionShortAhead": "newer",
+  "backendErrorUrlNotCanonical": "Use only the project's address (https://host), without a path, a query or credentials.",
+  "backendErrorKeySecret": "That is a secret key, not a publishable one. Never share it: rotate it in Project Settings → API keys, then paste the publishable key here.",
+  "backendErrorKeyPersonalToken": "That is a personal access token. It stays with its owner — paste the project's publishable key here.",
+  "backendErrorKeyUserToken": "That is a session or identity token, not a project key. Paste the project's publishable key here.",
+  "backendErrorKeyConnectionString": "That is a database connection string. It never leaves the server — paste the project's publishable key here.",
+  "backendPendingTitle": "Saved for the next start",
+  "backendPendingBody": "This session still runs on {active}. {saved} takes over when you close and reopen the app.",
+  "@backendPendingBody": {
+    "placeholders": {
+      "active": {
+        "type": "String"
+      },
+      "saved": {
+        "type": "String"
+      }
+    },
+    "description": "#1651 Server screen"
+  },
+  "backendPendingUndo": "Undo",
+  "backendPendingUndone": "Undone — the previous server is back.",
   "profilesDefault": "Default at startup",
   "profilesMakeDefault": "Use as default at startup",
   "profilesSiteLine": "Site: {site}",

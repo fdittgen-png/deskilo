@@ -9250,6 +9250,113 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your account could not be loaded, so there is nothing to accept yet.';
 
   @override
+  String get backendModeDefault => 'Use DesKilo\'s service';
+
+  @override
+  String get backendModeConnect => 'Connect an existing organization';
+
+  @override
+  String get backendModeOperator => 'Set up a server (operators)';
+
+  @override
+  String get backendModeDefaultHint =>
+      'DesKilo\'s own service needs no setup. Members of an organization that runs its own server use its code instead.';
+
+  @override
+  String get backendModeConnectHint =>
+      'Scan or paste the server code your organization gave you. You never need an administrator key.';
+
+  @override
+  String get backendServerInUse => 'In use on this device';
+
+  @override
+  String get backendDescriptorLabel => 'Server code';
+
+  @override
+  String get backendDescriptorInvalid =>
+      'That is not a valid DesKilo server code.';
+
+  @override
+  String backendDescriptorNamed(String label) {
+    return 'Named \"$label\" by whoever shared it — not verified.';
+  }
+
+  @override
+  String backendDestination(String host) {
+    return 'Destination: $host';
+  }
+
+  @override
+  String get backendSaveNeedsTest =>
+      'Test the connection first. Only a verified server can be saved.';
+
+  @override
+  String get backendTestAttention =>
+      'Reached it, but the answer could not be classified. Check the server before using it.';
+
+  @override
+  String backendFacets(
+    String reachable,
+    String key,
+    String schema,
+    String version,
+  ) {
+    return 'Reached: $reachable · Key accepted: $key · Schema: $schema · Version: $version';
+  }
+
+  @override
+  String get backendFacetYes => 'yes';
+
+  @override
+  String get backendFacetNo => 'no';
+
+  @override
+  String get backendFacetUnknown => 'unknown';
+
+  @override
+  String get backendVersionShortCurrent => 'current';
+
+  @override
+  String get backendVersionShortBehind => 'older';
+
+  @override
+  String get backendVersionShortAhead => 'newer';
+
+  @override
+  String get backendErrorUrlNotCanonical =>
+      'Use only the project\'s address (https://host), without a path, a query or credentials.';
+
+  @override
+  String get backendErrorKeySecret =>
+      'That is a secret key, not a publishable one. Never share it: rotate it in Project Settings → API keys, then paste the publishable key here.';
+
+  @override
+  String get backendErrorKeyPersonalToken =>
+      'That is a personal access token. It stays with its owner — paste the project\'s publishable key here.';
+
+  @override
+  String get backendErrorKeyUserToken =>
+      'That is a session or identity token, not a project key. Paste the project\'s publishable key here.';
+
+  @override
+  String get backendErrorKeyConnectionString =>
+      'That is a database connection string. It never leaves the server — paste the project\'s publishable key here.';
+
+  @override
+  String get backendPendingTitle => 'Saved for the next start';
+
+  @override
+  String backendPendingBody(String active, String saved) {
+    return 'This session still runs on $active. $saved takes over when you close and reopen the app.';
+  }
+
+  @override
+  String get backendPendingUndo => 'Undo';
+
+  @override
+  String get backendPendingUndone => 'Undone — the previous server is back.';
+
+  @override
   String get profilesDefault => 'Default at startup';
 
   @override

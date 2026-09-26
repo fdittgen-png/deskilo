@@ -42,7 +42,7 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/screens/report_editor_screen.dart': 1,
   'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 1,
   'lib/features/money/presentation/widgets/usage_face.dart': 1,
-  'lib/features/profile/presentation/screens/backend_screen.dart': 1,
+  'lib/features/profile/presentation/widgets/backend_candidate_form.dart': 1, // #1651 the Test button's in-flight spinner moved here with the form
   'lib/features/profile/presentation/screens/developer_screen.dart': 1,
   'lib/features/profile/presentation/screens/personal_info_screen.dart': 1,
   'lib/features/profile/presentation/widgets/workspace_owners_sheet.dart': 1,

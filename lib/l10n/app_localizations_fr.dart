@@ -9336,6 +9336,114 @@ class AppLocalizationsFr extends AppLocalizations {
       'Votre compte n\'a pas pu être chargé ; il n\'y a donc rien à accepter pour l\'instant.';
 
   @override
+  String get backendModeDefault => 'Utiliser le service DesKilo';
+
+  @override
+  String get backendModeConnect => 'Rejoindre une organisation existante';
+
+  @override
+  String get backendModeOperator => 'Installer un serveur (opérateurs)';
+
+  @override
+  String get backendModeDefaultHint =>
+      'Le service DesKilo ne demande aucune configuration. Les membres d\'une organisation qui exploite son propre serveur utilisent son code à la place.';
+
+  @override
+  String get backendModeConnectHint =>
+      'Scannez ou collez le code serveur transmis par votre organisation. Aucune clé d\'administrateur n\'est nécessaire.';
+
+  @override
+  String get backendServerInUse => 'Utilisé sur cet appareil';
+
+  @override
+  String get backendDescriptorLabel => 'Code serveur';
+
+  @override
+  String get backendDescriptorInvalid =>
+      'Ce n\'est pas un code serveur DesKilo valide.';
+
+  @override
+  String backendDescriptorNamed(String label) {
+    return 'Nommé « $label » par la personne qui l\'a partagé — non vérifié.';
+  }
+
+  @override
+  String backendDestination(String host) {
+    return 'Destination : $host';
+  }
+
+  @override
+  String get backendSaveNeedsTest =>
+      'Testez d\'abord la connexion. Seul un serveur vérifié peut être enregistré.';
+
+  @override
+  String get backendTestAttention =>
+      'Atteint, mais la réponse n\'a pas pu être classée. Vérifiez le serveur avant de l\'utiliser.';
+
+  @override
+  String backendFacets(
+    String reachable,
+    String key,
+    String schema,
+    String version,
+  ) {
+    return 'Atteint : $reachable · Clé acceptée : $key · Schéma : $schema · Version : $version';
+  }
+
+  @override
+  String get backendFacetYes => 'oui';
+
+  @override
+  String get backendFacetNo => 'non';
+
+  @override
+  String get backendFacetUnknown => 'inconnu';
+
+  @override
+  String get backendVersionShortCurrent => 'à jour';
+
+  @override
+  String get backendVersionShortBehind => 'plus ancienne';
+
+  @override
+  String get backendVersionShortAhead => 'plus récente';
+
+  @override
+  String get backendErrorUrlNotCanonical =>
+      'Indiquez seulement l\'adresse du projet (https://hôte), sans chemin, ni paramètres, ni identifiants.';
+
+  @override
+  String get backendErrorKeySecret =>
+      'C\'est une clé secrète, pas une clé publiable. Ne la partagez jamais : renouvelez-la dans Project Settings → API keys, puis collez ici la clé publiable.';
+
+  @override
+  String get backendErrorKeyPersonalToken =>
+      'C\'est un jeton d\'accès personnel. Il reste chez son propriétaire — collez ici la clé publiable du projet.';
+
+  @override
+  String get backendErrorKeyUserToken =>
+      'C\'est un jeton de session ou d\'identité, pas une clé de projet. Collez ici la clé publiable du projet.';
+
+  @override
+  String get backendErrorKeyConnectionString =>
+      'C\'est une chaîne de connexion à la base de données. Elle ne quitte jamais le serveur — collez ici la clé publiable du projet.';
+
+  @override
+  String get backendPendingTitle => 'Enregistré pour le prochain démarrage';
+
+  @override
+  String backendPendingBody(String active, String saved) {
+    return 'Cette session tourne encore sur $active. $saved prendra le relais quand vous fermerez et rouvrirez l\'app.';
+  }
+
+  @override
+  String get backendPendingUndo => 'Annuler';
+
+  @override
+  String get backendPendingUndone =>
+      'Annulé — le serveur précédent est de retour.';
+
+  @override
   String get profilesDefault => 'Profil par défaut au démarrage';
 
   @override
