@@ -127,6 +127,8 @@ Booking from the plan:
 
 ## 4. Reservations (Reserve hub)
 
+**Get started** (#1654) is optional guidance in the Reserve hub. It names the active workspace and environment, then suggests one action supported by the available information: choose a time, view your membership, or open Help. Opening an action never makes a booking. **Not now** hides the card for this account, server and workspace; **View → Get started** brings it back. A successful booking updates the card from the returned reservation; a failed request does not mark it complete. Long guidance scrolls so its actions remain reachable with large text. The workspace can turn off **Get started card** without disabling normal booking.
+
 With large text or a short window, scroll the hub controls to reach the date and view actions; the floor plan keeps its own visible area (#1654).
 
 Open the **Reserve** hub (center button). Along the top: two rows of controls. The first says **what** you are looking at: the four **view buttons** and, on the plan, the **map / list** switch. The second says **when**: the **date chip**, a **Now** button once you have browsed away from today, and the same granularity-dependent window controls the plan itself uses (§3 — day-part chips, a *Full day* chip, or from → to). The **floor chips** (*All floors*, or one per level) sit on the plan itself, and the **QR scan** button (§4a) sits in the app bar, beside the editor and the bell. Then four views:

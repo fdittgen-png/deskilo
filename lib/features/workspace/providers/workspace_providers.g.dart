@@ -96,6 +96,61 @@ final class MyWorkspacesProvider
 
 String _$myWorkspacesHash() => r'198c8d5a8c8478df79f3177df2af39d009d2c760';
 
+/// #1654 — the signed-in account, for scoping a per-account device
+/// preference (the Get started dismissal); null while signed out. Read
+/// from the session, not from a membership row, so a membership that
+/// could not be loaded still has an account to remember its answer for.
+
+@ProviderFor(currentAccountId)
+final currentAccountIdProvider = CurrentAccountIdProvider._();
+
+/// #1654 — the signed-in account, for scoping a per-account device
+/// preference (the Get started dismissal); null while signed out. Read
+/// from the session, not from a membership row, so a membership that
+/// could not be loaded still has an account to remember its answer for.
+
+final class CurrentAccountIdProvider
+    extends $FunctionalProvider<String?, String?, String?>
+    with $Provider<String?> {
+  /// #1654 — the signed-in account, for scoping a per-account device
+  /// preference (the Get started dismissal); null while signed out. Read
+  /// from the session, not from a membership row, so a membership that
+  /// could not be loaded still has an account to remember its answer for.
+  CurrentAccountIdProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currentAccountIdProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currentAccountIdHash();
+
+  @$internal
+  @override
+  $ProviderElement<String?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  String? create(Ref ref) {
+    return currentAccountId(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(String? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<String?>(value),
+    );
+  }
+}
+
+String _$currentAccountIdHash() => r'1f690b2d3a9dd0efc18bbc17c70099a477dbcf87';
+
 /// The persisted active-profile choice (#89). At START-UP the user's
 /// DEFAULT profile wins when one is checked (#322); in-session switches
 /// still take effect immediately and last until the next start. Falls

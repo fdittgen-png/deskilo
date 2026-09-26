@@ -127,6 +127,8 @@ Vom Plan aus buchen:
 
 ## 4. Reservierungen (Reservieren-Hub)
 
+**Erste Schritte** (#1654) ist eine freiwillige Hilfe im Reservieren-Hub. Die Karte nennt den aktiven Arbeitsbereich und seine Umgebung und schlägt anhand der verfügbaren Informationen eine Aktion vor: Zeit wählen, Mitgliedschaft ansehen oder Hilfe öffnen. Das Öffnen einer Aktion bucht nichts. **Jetzt nicht** blendet die Karte für dieses Konto, diesen Server und diesen Arbeitsbereich aus; über das Ansichtsmenü lässt sie sich wieder öffnen. Eine erfolgreiche Buchung aktualisiert die Karte anhand der zurückgegebenen Reservierung; ein Fehler gilt nicht als Abschluss. Lange Hinweise lassen sich scrollen, damit die Aktionen auch bei großer Schrift erreichbar bleiben. Das Abschalten der Hilfe lässt normale Buchungen verfügbar.
+
 Bei großer Schrift oder einem kurzen Fenster lassen sich die Steuerelemente des Hubs scrollen, um Datum und Ansicht zu erreichen; der Grundriss behält einen eigenen sichtbaren Bereich (#1654).
 
 Öffne den **Reservieren**-Hub (Mittelknopf). Oben: zwei Reihen von Bedienelementen. Die erste sagt, **was** du siehst: die vier **Ansichts-Knöpfe** und, auf dem Plan, der Umschalter **Plan / Liste**. Die zweite sagt **wann**: der **Datums-Chip**, ein **Jetzt**-Knopf, sobald du von heute weggeblättert hast, und die **Tageszeit-Chips**. Die **Etagen-Chips** (*Alle Etagen* oder eine je Ebene) sitzen auf dem Plan selbst, der **QR-Scan** (§4a) in der Kopfzeile, neben Editor und Glocke. Dann vier Ansichten:

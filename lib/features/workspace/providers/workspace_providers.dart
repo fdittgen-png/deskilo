@@ -51,6 +51,13 @@ Future<List<Workspace>> myWorkspaces(Ref ref) async {
   return ref.watch(workspaceRepositoryProvider).fetchMyWorkspaces();
 }
 
+/// #1654 — the signed-in account, for scoping a per-account device
+/// preference (the Get started dismissal); null while signed out. Read
+/// from the session, not from a membership row, so a membership that
+/// could not be loaded still has an account to remember its answer for.
+@Riverpod(keepAlive: true)
+String? currentAccountId(Ref ref) => ref.watch(authStateProvider).value;
+
 /// The persisted active-profile choice (#89). At START-UP the user's
 /// DEFAULT profile wins when one is checked (#322); in-session switches
 /// still take effect immediately and last until the next start. Falls

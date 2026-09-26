@@ -28,9 +28,15 @@ class ReserveViewMenu extends StatelessWidget {
     super.key,
     required this.view,
     required this.onChanged,
+    this.onGetStarted,
   });
 
   final ReserveView view;
+
+  /// #1654 — when set, the menu ends with a "Get started" entry that
+  /// reopens the dismissed card. Null hides the entry: the menu is the
+  /// hub's view chooser first.
+  final VoidCallback? onGetStarted;
 
   /// Called with the chosen view; choosing the one already shown does not
   /// fire, so choosing Plan from the list presentation keeps the list.
@@ -90,6 +96,18 @@ class ReserveViewMenu extends StatelessWidget {
               trailing: option == current ? const Icon(Icons.check) : null,
             ),
           ),
+        if (onGetStarted != null) ...[
+          const PopupMenuDivider(),
+          PopupMenuItem<ReserveView>(
+            key: const ValueKey('reserve-view-get-started'),
+            onTap: onGetStarted,
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.flag_outlined),
+              title: Text(l10n?.gettingStartedReopen ?? 'Get started'),
+            ),
+          ),
+        ],
       ],
       // 48dp both ways: the header row is scrollable precisely so no
       // control shrinks under the touch-target floor (#284).

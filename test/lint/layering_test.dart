@@ -262,7 +262,10 @@ const Map<String, int> _pairBudget = {
   // 2026-09-25 #1643 51→52: `widgets/calendar_file_button.dart` reads
   // `myMemberProvider` to say WHOSE file is being asked for, the same
   // import the detail sheet it sits in already makes.
-  'reservations -> workspace': 52,
+  // 2026-09-26 #1654 52→54: the hub adapts existing membership/policy
+  // facts; the card has no cross-feature reads. Workspace environment and
+  // BookingPolicies remain owned by workspace, not duplicated in the card.
+  'reservations -> workspace': 54,
   'workspace -> auth': 3,
   // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
   // *does anything need me?* by ASSEMBLING signals that already exist:

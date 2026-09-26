@@ -127,6 +127,8 @@ Reservar desde el plano:
 
 ## 4. Reservas (hub Reservar)
 
+**Primeros pasos** (#1654) es una ayuda opcional en el hub Reservar. La tarjeta identifica el espacio activo y su entorno y propone una acción según la información disponible: elegir una hora, consultar la membresía o abrir la ayuda. Abrir una acción no realiza una reserva. **Ahora no** oculta la tarjeta para esta cuenta, servidor y espacio; el menú de vista permite volver a abrirla. Una reserva correcta actualiza la tarjeta a partir del resultado recibido; un error no marca la tarea como completada. Los textos largos se desplazan para mantener las acciones accesibles con texto grande. Desactivar esta ayuda no desactiva las reservas normales.
+
 Con texto grande o una ventana baja, desplace los controles del hub para acceder a la fecha y las vistas; el plano conserva su propia zona visible (#1654).
 
 Abre el hub **Reservar** (botón central). A lo largo del borde superior: dos filas de controles. La primera dice **qué** está mirando: los cuatro **botones de vista** y, en el plano, el selector **plano / lista**. La segunda dice **cuándo**: el **chip de fecha**, un botón **Ahora** en cuanto se aleja de hoy, y los **chips de franja** (mañana / tarde / día completo). Los **chips de planta** (*Todas las plantas*, o uno por planta) están sobre el propio plano, y el **botón de escaneo QR** (§4a) está en la barra superior, junto al editor y la campana. Después, cuatro vistas:

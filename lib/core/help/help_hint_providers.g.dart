@@ -46,7 +46,7 @@ final class DismissedHelpHintsProvider
 }
 
 String _$dismissedHelpHintsHash() =>
-    r'f0fbe75c24ade2a5f9c48c88356d1682788db7a0';
+    r'73a042afe93e60d444c4f1c1627d16324789313a';
 
 /// The set of dismissed hint ids (#606), loaded from disk once and kept
 /// in sync eagerly on every change — the notification-filter idiom.
