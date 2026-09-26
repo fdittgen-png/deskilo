@@ -24,6 +24,7 @@
 // providers, not SharedPreferences and not `Supabase.instance`, so the
 // only thing that made them isolated was that nobody had noticed.
 import '../../features/workspace/application/creation_intent.dart';
+import 'data/identity_binding_repository.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/auth/providers/auth_providers.dart';
@@ -80,6 +81,9 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       // is, which is what makes an external effect impossible rather
       // than refused.
       authRepositoryProvider.overrideWithValue(fixture.auth),
+      // #1647 — Demo binds no identity: the visitor is not a Deskilo user.
+      identityBindingRepositoryProvider
+          .overrideWithValue(FakeIdentityBindingRepository()),
       workspaceRepositoryProvider.overrideWithValue(fixture.workspaces),
       floorPlanRepositoryProvider.overrideWithValue(fixture.floorPlan),
       reservationRepositoryProvider.overrideWithValue(fixture.reservations),
@@ -167,6 +171,7 @@ List<Override> demoOverrides(DemoFixture fixture) => [
 const Set<String> demoOverriddenProviders = {
   'clockProvider',
   'authRepositoryProvider',
+  'identityBindingRepositoryProvider',
   'workspaceRepositoryProvider',
   'floorPlanRepositoryProvider',
   'reservationRepositoryProvider',

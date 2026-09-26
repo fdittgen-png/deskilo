@@ -82,3 +82,56 @@ final class AuthStateProvider
 }
 
 String _$authStateHash() => r'1d14c532bd9d229ad3424bb49c844ea9e4792e97';
+
+/// #1647 — the signed-in account's canonical-identity binding.
+
+@ProviderFor(identityBindingRepository)
+final identityBindingRepositoryProvider = IdentityBindingRepositoryProvider._();
+
+/// #1647 — the signed-in account's canonical-identity binding.
+
+final class IdentityBindingRepositoryProvider
+    extends
+        $FunctionalProvider<
+          IdentityBindingRepository,
+          IdentityBindingRepository,
+          IdentityBindingRepository
+        >
+    with $Provider<IdentityBindingRepository> {
+  /// #1647 — the signed-in account's canonical-identity binding.
+  IdentityBindingRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'identityBindingRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$identityBindingRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<IdentityBindingRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  IdentityBindingRepository create(Ref ref) {
+    return identityBindingRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(IdentityBindingRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<IdentityBindingRepository>(value),
+    );
+  }
+}
+
+String _$identityBindingRepositoryHash() =>
+    r'7fd608f3e3d3c5352298e4a381e3ed97edff2114';
