@@ -127,6 +127,8 @@ Réserver depuis le plan :
 
 ## 4. Réservations (hub Réserver)
 
+Après une adhésion ou une création réussie, l’espace renvoyé devient actif pour la session en cours sans modifier votre choix par défaut enregistré. Une tâche déjà demandée conserve son contexte ; une réponse tardive ne remplace pas un choix plus récent de compte, d’instance ou d’espace. (#1654)
+
 **Bien démarrer** (#1654) est une aide facultative dans le hub Réserver. La carte indique l’espace actif et son environnement, puis propose une action adaptée aux informations disponibles : choisir une heure, consulter votre adhésion ou ouvrir l’aide. Ouvrir une action ne réserve rien. **Pas maintenant** masque la carte pour ce compte, ce serveur et cet espace ; le menu de vue permet de la rouvrir. Une réservation réussie actualise la carte à partir du résultat reçu ; un échec ne marque rien comme terminé. Les longs textes défilent pour garder les actions accessibles avec de grands caractères. Désactiver cette aide ne désactive pas les réservations normales.
 
 Avec de grands caractères ou une fenêtre courte, faites défiler les commandes du hub pour atteindre la date et les vues ; le plan conserve sa propre zone visible (#1654).

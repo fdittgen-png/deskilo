@@ -127,6 +127,8 @@ Reservar desde el plano:
 
 ## 4. Reservas (hub Reservar)
 
+Tras unirse o crear un espacio correctamente, el espacio devuelto queda activo durante la sesión actual sin cambiar la opción predeterminada guardada. Una tarea ya solicitada conserva su contexto; una respuesta tardía no sustituye una elección posterior de cuenta, instancia o espacio. (#1654)
+
 **Primeros pasos** (#1654) es una ayuda opcional en el hub Reservar. La tarjeta identifica el espacio activo y su entorno y propone una acción según la información disponible: elegir una hora, consultar la membresía o abrir la ayuda. Abrir una acción no realiza una reserva. **Ahora no** oculta la tarjeta para esta cuenta, servidor y espacio; el menú de vista permite volver a abrirla. Una reserva correcta actualiza la tarjeta a partir del resultado recibido; un error no marca la tarea como completada. Los textos largos se desplazan para mantener las acciones accesibles con texto grande. Desactivar esta ayuda no desactiva las reservas normales.
 
 Con texto grande o una ventana baja, desplace los controles del hub para acceder a la fecha y las vistas; el plano conserva su propia zona visible (#1654).

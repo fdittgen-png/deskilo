@@ -57,7 +57,7 @@ abstract class _$DismissedHelpHints extends $AsyncNotifier<Set<String>> {
   FutureOr<Set<String>> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<Set<String>>, Set<String>>;
     final element =
         ref.element
@@ -67,7 +67,7 @@ abstract class _$DismissedHelpHints extends $AsyncNotifier<Set<String>> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -119,7 +119,7 @@ abstract class _$HelpHintPositions extends $AsyncNotifier<Map<String, int>> {
   FutureOr<Map<String, int>> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref =
         this.ref as $Ref<AsyncValue<Map<String, int>>, Map<String, int>>;
     final element =
@@ -130,6 +130,6 @@ abstract class _$HelpHintPositions extends $AsyncNotifier<Map<String, int>> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

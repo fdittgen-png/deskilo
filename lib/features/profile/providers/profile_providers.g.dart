@@ -58,12 +58,14 @@ String _$profileRepositoryHash() => r'45c52cb7ca00235e652426023c450cae54c82031';
 
 /// My own profile row (#223); null while signed out. Invalidated by the
 /// WhatsApp editor after a successful save.
+// The app router keeps listening to the consent gate for its lifetime.
 
 @ProviderFor(myProfile)
 final myProfileProvider = MyProfileProvider._();
 
 /// My own profile row (#223); null while signed out. Invalidated by the
 /// WhatsApp editor after a successful save.
+// The app router keeps listening to the consent gate for its lifetime.
 
 final class MyProfileProvider
     extends
@@ -71,13 +73,14 @@ final class MyProfileProvider
     with $FutureModifier<Profile?>, $FutureProvider<Profile?> {
   /// My own profile row (#223); null while signed out. Invalidated by the
   /// WhatsApp editor after a successful save.
+  // The app router keeps listening to the consent gate for its lifetime.
   MyProfileProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'myProfileProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -96,7 +99,7 @@ final class MyProfileProvider
   }
 }
 
-String _$myProfileHash() => r'c606617e4d65b93f16cb88705bba3f3b64eb9781';
+String _$myProfileHash() => r'f1626a715fd49460deb74f0c467f4afaf014d7ea';
 
 /// Bytes of [userId]'s profile photo (0038), or null when they have none.
 /// Kept alive so a member's avatar is fetched once and reused across the

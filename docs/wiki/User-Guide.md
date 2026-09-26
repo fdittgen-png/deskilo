@@ -127,6 +127,8 @@ Booking from the plan:
 
 ## 4. Reservations (Reserve hub)
 
+After a successful join or creation, the returned workspace becomes active for the current session without changing your saved default. An existing requested task keeps its own context; a late response cannot replace a newer account, installation or workspace choice. (#1654)
+
 **Get started** (#1654) is optional guidance in the Reserve hub. It names the active workspace and environment, then suggests one action supported by the available information: choose a time, view your membership, or open Help. Opening an action never makes a booking. **Not now** hides the card for this account, server and workspace; **View → Get started** brings it back. A successful booking updates the card from the returned reservation; a failed request does not mark it complete. Long guidance scrolls so its actions remain reachable with large text. The workspace can turn off **Get started card** without disabling normal booking.
 
 With large text or a short window, scroll the hub controls to reach the date and view actions; the floor plan keeps its own visible area (#1654).

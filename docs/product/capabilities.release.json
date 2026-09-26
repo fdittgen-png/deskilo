@@ -21,7 +21,7 @@
       ],
       "prerequisites": "A workspace with a published plan and opening hours; booking rules in Settings.",
       "limitations": "Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.",
-      "fingerprint": "98699b04f25b",
+      "fingerprint": "291e3c0d7b12",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -171,7 +171,7 @@
       ],
       "prerequisites": "Roles assigned; a quorum per decision kind in Settings.",
       "limitations": "Quorums count distinct people by membership, not by device or session.",
-      "fingerprint": "048f7cafc82d",
+      "fingerprint": "4a7ae0f756c8",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -512,7 +512,7 @@
       ],
       "prerequisites": "None: the Demo is built into every client.",
       "limitations": "The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.",
-      "fingerprint": "69d54f3d6895",
+      "fingerprint": "3c87bc2afa40",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",

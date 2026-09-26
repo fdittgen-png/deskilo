@@ -56,7 +56,7 @@ abstract class _$EntryIntents extends $Notifier<EntryIntent?> {
   EntryIntent? build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<EntryIntent?, EntryIntent?>;
     final element =
         ref.element
@@ -66,6 +66,6 @@ abstract class _$EntryIntents extends $Notifier<EntryIntent?> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

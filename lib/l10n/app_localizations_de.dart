@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -1195,8 +1196,7 @@ class AppLocalizationsDe extends AppLocalizations {
       locale: localeName,
       other:
           'Die $count Rechnungen, die diese ersetzt, können ihr folgen, jede auf eigenen Seiten und als zusammengefasst gestempelt.',
-      one:
-          'Die Rechnung, die diese ersetzt, kann ihr folgen, auf eigenen Seiten und als zusammengefasst gestempelt.',
+      one: 'Die Rechnung, die diese ersetzt, kann ihr folgen, auf eigenen Seiten und als zusammengefasst gestempelt.',
     );
     return '$_temp0';
   }
@@ -8957,8 +8957,7 @@ class AppLocalizationsDe extends AppLocalizations {
       locale: localeName,
       other:
           '$count Funktionen sind an, warten aber auf eine ausgeschaltete Voraussetzung',
-      one:
-          '1 Funktion ist an, wartet aber auf eine ausgeschaltete Voraussetzung',
+      one: '1 Funktion ist an, wartet aber auf eine ausgeschaltete Voraussetzung',
     );
     return '$_temp0';
   }

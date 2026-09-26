@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'reservation.dart';
@@ -9,6 +9,7 @@ part of 'reservation.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -34,16 +35,21 @@ $ReservationCopyWith<Reservation> get copyWith => _$ReservationCopyWithImpl<Rese
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Reservation&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.seatId, seatId) || other.seatId == seatId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.officeId, officeId) || other.officeId == officeId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.startsAt, startsAt) || other.startsAt == startsAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.seriesId, seriesId) || other.seriesId == seriesId)&&(identical(other.seriesPattern, seriesPattern) || other.seriesPattern == seriesPattern)&&(identical(other.checkedInAt, checkedInAt) || other.checkedInAt == checkedInAt)&&(identical(other.checkedOutAt, checkedOutAt) || other.checkedOutAt == checkedOutAt)&&(identical(other.spaceLabel, spaceLabel) || other.spaceLabel == spaceLabel)&&(identical(other.system, system) || other.system == system));
+  final _this = this as Reservation;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Reservation&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.seatId, _this.seatId) || other.seatId == _this.seatId)&&(identical(other.deskId, _this.deskId) || other.deskId == _this.deskId)&&(identical(other.officeId, _this.officeId) || other.officeId == _this.officeId)&&(identical(other.levelId, _this.levelId) || other.levelId == _this.levelId)&&(identical(other.memberId, _this.memberId) || other.memberId == _this.memberId)&&(identical(other.startsAt, _this.startsAt) || other.startsAt == _this.startsAt)&&(identical(other.endsAt, _this.endsAt) || other.endsAt == _this.endsAt)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.seriesId, _this.seriesId) || other.seriesId == _this.seriesId)&&(identical(other.seriesPattern, _this.seriesPattern) || other.seriesPattern == _this.seriesPattern)&&(identical(other.checkedInAt, _this.checkedInAt) || other.checkedInAt == _this.checkedInAt)&&(identical(other.checkedOutAt, _this.checkedOutAt) || other.checkedOutAt == _this.checkedOutAt)&&(identical(other.spaceLabel, _this.spaceLabel) || other.spaceLabel == _this.spaceLabel)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,seatId,deskId,officeId,levelId,memberId,startsAt,endsAt,status,seriesId,seriesPattern,checkedInAt,checkedOutAt,spaceLabel,system);
+int get hashCode {
+  final _this = this as Reservation;
+  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.seatId,_this.deskId,_this.officeId,_this.levelId,_this.memberId,_this.startsAt,_this.endsAt,_this.status,_this.seriesId,_this.seriesPattern,_this.checkedInAt,_this.checkedOutAt,_this.spaceLabel,_this.system);
+}
 
 @override
 String toString() {
-  return 'Reservation(id: $id, workspaceId: $workspaceId, seatId: $seatId, deskId: $deskId, officeId: $officeId, levelId: $levelId, memberId: $memberId, startsAt: $startsAt, endsAt: $endsAt, status: $status, seriesId: $seriesId, seriesPattern: $seriesPattern, checkedInAt: $checkedInAt, checkedOutAt: $checkedOutAt, spaceLabel: $spaceLabel, system: $system)';
+  final _this = this as Reservation;
+  return 'Reservation(id: ${_this.id}, workspaceId: ${_this.workspaceId}, seatId: ${_this.seatId}, deskId: ${_this.deskId}, officeId: ${_this.officeId}, levelId: ${_this.levelId}, memberId: ${_this.memberId}, startsAt: ${_this.startsAt}, endsAt: ${_this.endsAt}, status: ${_this.status}, seriesId: ${_this.seriesId}, seriesPattern: ${_this.seriesPattern}, checkedInAt: ${_this.checkedInAt}, checkedOutAt: ${_this.checkedOutAt}, spaceLabel: ${_this.spaceLabel}, system: ${_this.system})';
 }
 
 
@@ -72,7 +78,7 @@ class _$ReservationCopyWithImpl<$Res>
 /// Create a copy of Reservation
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? seatId = freezed,Object? deskId = freezed,Object? officeId = freezed,Object? levelId = freezed,Object? memberId = null,Object? startsAt = null,Object? endsAt = null,Object? status = null,Object? seriesId = freezed,Object? seriesPattern = freezed,Object? checkedInAt = freezed,Object? checkedOutAt = freezed,Object? spaceLabel = freezed,Object? system = null,}) {
-  return _then(_self.copyWith(
+  return _then(Reservation(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,seatId: freezed == seatId ? _self.seatId : seatId // ignore: cast_nullable_to_non_nullable
@@ -263,16 +269,18 @@ _$ReservationCopyWith<_Reservation> get copyWith => __$ReservationCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Reservation&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.seatId, seatId) || other.seatId == seatId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.officeId, officeId) || other.officeId == officeId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.startsAt, startsAt) || other.startsAt == startsAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.seriesId, seriesId) || other.seriesId == seriesId)&&(identical(other.seriesPattern, seriesPattern) || other.seriesPattern == seriesPattern)&&(identical(other.checkedInAt, checkedInAt) || other.checkedInAt == checkedInAt)&&(identical(other.checkedOutAt, checkedOutAt) || other.checkedOutAt == checkedOutAt)&&(identical(other.spaceLabel, spaceLabel) || other.spaceLabel == spaceLabel)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Reservation&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.seatId, seatId) || other.seatId == seatId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.officeId, officeId) || other.officeId == officeId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.startsAt, startsAt) || other.startsAt == startsAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.seriesId, seriesId) || other.seriesId == seriesId)&&(identical(other.seriesPattern, seriesPattern) || other.seriesPattern == seriesPattern)&&(identical(other.checkedInAt, checkedInAt) || other.checkedInAt == checkedInAt)&&(identical(other.checkedOutAt, checkedOutAt) || other.checkedOutAt == checkedOutAt)&&(identical(other.spaceLabel, spaceLabel) || other.spaceLabel == spaceLabel)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,seatId,deskId,officeId,levelId,memberId,startsAt,endsAt,status,seriesId,seriesPattern,checkedInAt,checkedOutAt,spaceLabel,system);
+int get hashCode {
+    return Object.hash(runtimeType,id,workspaceId,seatId,deskId,officeId,levelId,memberId,startsAt,endsAt,status,seriesId,seriesPattern,checkedInAt,checkedOutAt,spaceLabel,system);
+}
 
 @override
 String toString() {
-  return 'Reservation(id: $id, workspaceId: $workspaceId, seatId: $seatId, deskId: $deskId, officeId: $officeId, levelId: $levelId, memberId: $memberId, startsAt: $startsAt, endsAt: $endsAt, status: $status, seriesId: $seriesId, seriesPattern: $seriesPattern, checkedInAt: $checkedInAt, checkedOutAt: $checkedOutAt, spaceLabel: $spaceLabel, system: $system)';
+    return 'Reservation(id: $id, workspaceId: $workspaceId, seatId: $seatId, deskId: $deskId, officeId: $officeId, levelId: $levelId, memberId: $memberId, startsAt: $startsAt, endsAt: $endsAt, status: $status, seriesId: $seriesId, seriesPattern: $seriesPattern, checkedInAt: $checkedInAt, checkedOutAt: $checkedOutAt, spaceLabel: $spaceLabel, system: $system)';
 }
 
 

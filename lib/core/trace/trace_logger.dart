@@ -62,10 +62,10 @@ class TraceEntry {
 /// Callers must never see an exception coming out of [log] or [clear].
 class TraceLogger {
   TraceLogger({
-    Future<Directory> Function()? directoryProvider,
+    this._directoryProvider,
     this.capacity = 500,
     this.maxFileBytes = 512 * 1024,
-  }) : _directoryProvider = directoryProvider;
+  });
 
   /// Global fallback for call sites without a Riverpod ref (main-zone
   /// hooks, repositories). Set during bootstrap; defaults to a

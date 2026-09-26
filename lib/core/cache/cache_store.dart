@@ -131,8 +131,9 @@ class FileCacheStore implements CacheStore {
           .warn('cache', 'unreadable entry $key', error: e, stackTrace: st);
       try {
         await file.delete();
-      } catch (_, _) {
-        // trace-exempt: best-effort cleanup of an already-broken file.
+      } catch (e, st) {
+        TraceLogger.instance.warn('cache', 'could not remove unreadable entry',
+            error: e, stackTrace: st);
       }
       return null;
     }
@@ -197,9 +198,9 @@ class FileCacheStore implements CacheStore {
             await file.delete();
             evicted++;
           }
-        } catch (_, _) {
-          // trace-exempt: unreadable files are exactly what eviction
-          // exists to clear.
+        } catch (e, st) {
+          TraceLogger.instance.warn('cache', 'evicting unreadable entry',
+              error: e, stackTrace: st);
           await file.delete();
           evicted++;
         }

@@ -28,8 +28,8 @@ class ConnectAssistant {
   const ConnectAssistant(
     this._repository,
     this._requestEligibility, {
-    void Function(Object, StackTrace)? onFinalizeFailed,
-  }) : _onFinalizeFailed = onFinalizeFailed;
+    this._onFinalizeFailed,
+  });
   final void Function(Object, StackTrace)? _onFinalizeFailed;
   final McpConnectionRepository _repository;
   final Future<void> Function() _requestEligibility;

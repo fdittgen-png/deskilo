@@ -24,7 +24,8 @@ ProfileRepository profileRepository(Ref ref) =>
 
 /// My own profile row (#223); null while signed out. Invalidated by the
 /// WhatsApp editor after a successful save.
-@riverpod
+// The app router keeps listening to the consent gate for its lifetime.
+@Riverpod(keepAlive: true)
 Future<Profile?> myProfile(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;
   if (!signedIn) return null;

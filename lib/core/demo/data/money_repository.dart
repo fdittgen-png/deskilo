@@ -943,7 +943,7 @@ class FakeMoneyRepository implements MoneyRepository {
   ) async =>
       Map.of(invoiceMatchesStore);
 
-  FakeMoneyRepository({FakeEventRepository? events}) : _events = events;
+  FakeMoneyRepository({this._events});
 
   /// When wired, [recordServiceCharge] also files the pending
   /// service_charge event the real RPC creates (#134), so tests can drive

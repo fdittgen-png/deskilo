@@ -125,18 +125,13 @@ final class CalendarSaveFailed extends CalendarSaveOutcome {
 /// Builds and saves one owned reservation's calendar file.
 class CalendarFiles {
   CalendarFiles({
-    required ReservationRepository reservations,
-    required Clock clock,
-    required String installation,
-    required Future<Map<String, String>> Function() targetNames,
-    required Future<String> Function() workspaceName,
-    required CalendarFileWriter write,
-  })  : _reservations = reservations,
-        _clock = clock,
-        _installation = installation,
-        _targetNames = targetNames,
-        _workspaceName = workspaceName,
-        _write = write;
+    required this._reservations,
+    required this._clock,
+    required this._installation,
+    required this._targetNames,
+    required this._workspaceName,
+    required this._write,
+  });
 
   final ReservationRepository _reservations;
   final Clock _clock;

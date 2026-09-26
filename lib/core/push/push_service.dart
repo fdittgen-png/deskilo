@@ -24,22 +24,15 @@ enum PushStatus {
 /// carry no personal data; the client localizes the notification text.
 class PushService {
   PushService({
-    required PushConnector connector,
-    required PushEndpointRepository repository,
-    required NotificationService notifications,
-    required Future<List<String>> Function() myMemberIds,
-    required String pendingTitle,
-    required String pendingBody,
-    required String cancelledTitle,
-    required String cancelledBody,
-  })  : _connector = connector,
-        _repository = repository,
-        _notifications = notifications,
-        _myMemberIds = myMemberIds,
-        _pendingTitle = pendingTitle,
-        _pendingBody = pendingBody,
-        _cancelledTitle = cancelledTitle,
-        _cancelledBody = cancelledBody;
+    required this._connector,
+    required this._repository,
+    required this._notifications,
+    required this._myMemberIds,
+    required this._pendingTitle,
+    required this._pendingBody,
+    required this._cancelledTitle,
+    required this._cancelledBody,
+  });
 
   final PushConnector _connector;
   final PushEndpointRepository _repository;

@@ -167,7 +167,7 @@ void main() {
           '```GOODCODE22```\n'
           'A bientot !',
         ),
-        JoinOutcome.joined,
+        (outcome: JoinOutcome.joined, workspaceId: 'ws-joined-1'),
       );
       expect(repo.workspaces.length, before + 1);
     });
@@ -175,7 +175,8 @@ void main() {
     test('nothing that looks like a code is REFUSED, not ignored', () async {
       final repo = FakeWorkspaceRepository();
       final before = repo.workspaces.length;
-      expect(await WorkspaceStart(repo).join('   '), JoinOutcome.noCode);
+      expect(await WorkspaceStart(repo).join('   '),
+          (outcome: JoinOutcome.noCode, workspaceId: null));
       expect(repo.workspaces.length, before);
     });
   });

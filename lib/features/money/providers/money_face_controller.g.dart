@@ -65,7 +65,7 @@ abstract class _$MoneyFaceController extends $Notifier<MoneyFace> {
   MoneyFace build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<MoneyFace, MoneyFace>;
     final element =
         ref.element
@@ -75,6 +75,6 @@ abstract class _$MoneyFaceController extends $Notifier<MoneyFace> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
