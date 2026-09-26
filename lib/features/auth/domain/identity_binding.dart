@@ -4,6 +4,9 @@
 // installation, as `my_identity_status` / `finalize_identity_binding`
 // answer it. It never carries the subject or any raw Auth payload, and it
 // confers nothing: no membership, no role, no MCP eligibility.
+import 'database_capabilities.dart';
+
+export 'database_capabilities.dart';
 
 /// Where the local account stands.
 enum IdentityBindingState {
@@ -78,4 +81,14 @@ abstract interface class IdentityBindingRepository {
   Future<IdentityBindingStatus> status();
   Future<IdentityBindingStatus> finalize();
   Future<IdentityBindingStatus> revoke();
+
+  /// #1608/#1611 — the caller's database-level capabilities.
+  Future<DatabaseCapabilities> databaseCapabilities();
+
+  /// Asks this database's administrators for MCP eligibility. Never
+  /// approves itself.
+  Future<DatabaseCapabilities> requestMcpEligibility();
+
+  /// Withdraws a pending request and gives up a current approval.
+  Future<DatabaseCapabilities> withdrawMcpEligibility();
 }

@@ -36,4 +36,29 @@ class SupabaseIdentityBindingRepository implements IdentityBindingRepository {
 
   @override
   Future<IdentityBindingStatus> revoke() => _call('revoke_my_identity_binding');
+
+  Future<DatabaseCapabilities> _capabilities(String fn) async {
+    try {
+      return DatabaseCapabilities.fromJson(await _client.rpc<Object?>(fn));
+    } on PostgrestException catch (e, st) {
+      if (isMissingFunction(e)) {
+        TraceLogger.instance.warn('identity', '$fn is absent on this server',
+            error: e, stackTrace: st);
+        return DatabaseCapabilities.unavailable;
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<DatabaseCapabilities> databaseCapabilities() =>
+      _capabilities('my_database_capabilities');
+
+  @override
+  Future<DatabaseCapabilities> requestMcpEligibility() =>
+      _capabilities('request_mcp_eligibility');
+
+  @override
+  Future<DatabaseCapabilities> withdrawMcpEligibility() =>
+      _capabilities('withdraw_mcp_eligibility');
 }
