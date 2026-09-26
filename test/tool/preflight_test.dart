@@ -96,6 +96,39 @@ void main() {
         isNot(contains(page)));
   });
 
+  test('a source whose generated sibling is checked in selects build_runner '
+      'FIRST — the capability page fingerprints that sibling (#1446 C5a)',
+      () {
+    const build = 'dart run build_runner build --delete-conflicting-outputs';
+    const generated = {
+      'lib/features/reservations/providers/reservation_providers.g.dart',
+      'lib/features/money/domain/invoice.freezed.dart',
+    };
+    final commands = preflightSteps(
+      ['lib/features/reservations/providers/reservation_providers.dart'],
+      generated: generated,
+    ).map((s) => s.command).toList();
+    expect(commands.first, build);
+    expect(commands, contains('dart run tool/capability_evidence.dart'));
+    expect(
+      preflightSteps(['lib/features/money/domain/invoice.dart'],
+          generated: generated).map((s) => s.command),
+      contains(build),
+      reason: 'a freezed sibling counts too',
+    );
+    expect(
+      preflightSteps(['lib/features/plan/presentation/widgets/legend.dart'],
+          generated: generated).map((s) => s.command),
+      isNot(contains(build)),
+      reason: 'a source with no sibling does not pay for a build_runner run',
+    );
+    expect(
+      preflightSteps([generated.first], generated: generated),
+      isEmpty,
+      reason: 'the sibling is an output and selects nothing',
+    );
+  });
+
   test('a change that owns no generated tree selects nothing', () {
     expect(_commands(['.github/workflows/quality.yml']), isEmpty);
     expect(_commands(['README.md']), isEmpty);

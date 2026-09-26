@@ -66,9 +66,15 @@ jobs:
           # rather than F-Droid's builder saying it a week later.
           flutter pub get --enforce-lockfile
 
+      # #1446 C5a — the libre lockfile drops Firebase, not a generator:
+      # what build_runner writes here is byte-equal to the commit, or the
+      # audit says which file is not, instead of failing a fingerprint
+      # test twelve minutes later.
       - name: Analyze and test under the FOSS flavour
         run: |
-          dart run build_runner build --delete-conflicting-outputs
+          bash scripts/generated_drift.sh \
+            'dart run build_runner build --delete-conflicting-outputs' \
+            -- '*.g.dart' '*.freezed.dart'
           flutter gen-l10n
           flutter analyze --fatal-infos lib test
           flutter test

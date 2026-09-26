@@ -28,6 +28,7 @@ says which generated files it had to rewrite.
 
 | input | generator |
 |---|---|
+| a `.dart` source whose `.g.dart` or `.freezed.dart` sibling is checked in | `build_runner build`, first — the capability page fingerprints the sibling (#1446 C5a) |
 | `lib/l10n/_fragments/**` | `build_arb.dart`, then `flutter gen-l10n` |
 | `workspace_feature.dart` | `build_feature_registry_sql.dart`, `build_builtin_templates.dart`, `build_setup_l10n.dart` |
 | `workspace_process.dart` | `build_process_catalogue.dart`, `build_process_labels.dart` |

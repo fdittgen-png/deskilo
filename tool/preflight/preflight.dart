@@ -18,7 +18,7 @@
 //
 // Bump [preflightVersion] whenever a rule changes.
 
-const String preflightVersion = '2';
+const String preflightVersion = '3';
 
 /// One generator, and why this change reached it.
 class Step {
@@ -44,6 +44,9 @@ class Step {
 /// the ARB aggregate is built before `flutter gen-l10n` reads it, and
 /// the feature registry is built before the setup catalogue quotes it.
 const List<({String command, String owns})> _order = [
+  // First: the capability page fingerprints the generated siblings, so
+  // they must be current before it is rendered (#1446 C5a).
+  (command: _buildRunner, owns: '*.g.dart and *.freezed.dart'),
   (command: 'dart run tool/build_arb.dart', owns: 'lib/l10n/app_*.arb'),
   (command: 'flutter gen-l10n', owns: 'lib/l10n/app_localizations*.dart'),
   (
@@ -87,6 +90,12 @@ const List<({String command, String owns})> _order = [
   ),
 ];
 
+const String _buildRunner =
+    'dart run build_runner build --delete-conflicting-outputs';
+
+bool _isGenerated(String p) =>
+    p.endsWith('.g.dart') || p.endsWith('.freezed.dart');
+
 bool _isFeatureRegistry(String p) =>
     p == 'lib/features/workspace/domain/workspace_feature.dart';
 
@@ -99,12 +108,29 @@ bool _isProcessRegistry(String p) =>
 /// the output, and the input that produced it is what decides. That keeps
 /// `git add -A` after a generator run from selecting the same generator
 /// again.
-List<Step> preflightSteps(Iterable<String> paths) {
+///
+/// [generated] is the set of checked-in generator outputs (`git ls-files
+/// -- '*.g.dart' '*.freezed.dart'`): a source whose sibling is in it owns
+/// that sibling, and selects `build_runner` (#1446 C5a). The set is an
+/// argument so the decision stays a pure function of paths.
+List<Step> preflightSteps(
+  Iterable<String> paths, {
+  Set<String> generated = const {},
+}) {
   final because = <String, String>{};
   void select(String command, String path) =>
       because.putIfAbsent(command, () => path);
 
   for (final p in paths) {
+    // #1446 C5a — the provider hash and the freezed body are what
+    // build_runner writes for THIS source; CI compares them to the commit.
+    if (p.endsWith('.dart') && !_isGenerated(p)) {
+      final stem = p.substring(0, p.length - '.dart'.length);
+      if (generated.contains('$stem.g.dart') ||
+          generated.contains('$stem.freezed.dart')) {
+        select(_buildRunner, p);
+      }
+    }
     if (p.startsWith('lib/l10n/_fragments/')) {
       select('dart run tool/build_arb.dart', p);
       select('flutter gen-l10n', p);

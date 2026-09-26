@@ -101,6 +101,19 @@ jobs:
           git diff --exit-code -- lib/l10n \
             || { echo "::error::lib/l10n drift — run 'dart run tool/build_arb.dart && flutter gen-l10n' and commit (HARD RULE #4)"; exit 1; }
 
+      # #1446 C5a — HARD RULE 3, enforced: the generated code is what
+      # build_runner writes for this tree. This job compiles what is
+      # committed and never regenerated, so on 2026-09-25 master carried
+      # five `.g.dart` files a provider hash behind their sources; the
+      # F-Droid audit, which regenerates as F-Droid's builder does, moved
+      # a capability fingerprint and was red on master while this job
+      # was green. Same script, same command, in that workflow.
+      - name: codegen gate — build_runner output is committed
+        run: |
+          bash scripts/generated_drift.sh \
+            'dart run build_runner build --delete-conflicting-outputs' \
+            -- '*.g.dart' '*.freezed.dart'
+
       # #1558 — the push transport's own suite. It cannot live in the
       # app's test/ because the F-Droid job swaps this package for the
       # Google-free twin before running that suite (#716), so a root
