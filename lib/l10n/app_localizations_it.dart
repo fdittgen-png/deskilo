@@ -2873,6 +2873,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eventTypeUnknown => 'Attività';
 
   @override
+  String get expenseInvalidAmount => 'Inserisci un importo maggiore di zero.';
+
+  @override
+  String get expenseMissingSupplyName => 'Dai un nome al nuovo articolo.';
+
+  @override
+  String get expenseInvalidSupplyQuantity => 'Inserisci almeno un\'unità.';
+
+  @override
+  String get expenseInvalidUnitPrice =>
+      'Inserisci un prezzo unitario valido o lascialo vuoto.';
+
+  @override
   String get featuresSearchLabel => 'Cerca funzionalità';
 
   @override

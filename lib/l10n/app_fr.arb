@@ -2083,6 +2083,10 @@
   "@eventTypeUnknown": {
     "description": "#1088 an event type this build does not know: the row still shows"
   },
+  "expenseInvalidAmount": "Saisissez un montant supérieur à zéro.",
+  "expenseMissingSupplyName": "Nommez le nouvel article.",
+  "expenseInvalidSupplyQuantity": "Saisissez au moins une unité.",
+  "expenseInvalidUnitPrice": "Saisissez un prix unitaire valide, ou laissez-le vide.",
   "featuresSearchLabel": "Rechercher une fonctionnalité",
   "featuresFilterChanged": "Modifiées",
   "featuresNoMatch": "Aucune fonctionnalité ne correspond.",

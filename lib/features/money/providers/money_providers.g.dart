@@ -366,6 +366,52 @@ final class ConsumptionsProvider
 
 String _$consumptionsHash() => r'32231b1df8048f66ffe107772aef50ff8bdb02b5';
 
+/// #1449 — an expense, and whether it may be filed as typed.
+
+@ProviderFor(expenses)
+final expensesProvider = ExpensesProvider._();
+
+/// #1449 — an expense, and whether it may be filed as typed.
+
+final class ExpensesProvider
+    extends $FunctionalProvider<Expenses, Expenses, Expenses>
+    with $Provider<Expenses> {
+  /// #1449 — an expense, and whether it may be filed as typed.
+  ExpensesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'expensesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$expensesHash();
+
+  @$internal
+  @override
+  $ProviderElement<Expenses> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Expenses create(Ref ref) {
+    return expenses(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Expenses value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Expenses>(value),
+    );
+  }
+}
+
+String _$expensesHash() => r'f9b3d362ef8698f68ebadff79ac2da2d006703b8';
+
 @ProviderFor(legalIdentity)
 final legalIdentityProvider = LegalIdentityProvider._();
 
