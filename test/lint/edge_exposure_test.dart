@@ -44,6 +44,15 @@ void main() {
     }
   });
 
+  test('the MCP endpoint accepts only delegated tokens and never the service role', () {
+    for (final entry in manifest.entries) {
+      if ((entry.value as Map)['class'] != 'mcp') continue;
+      final source = File('supabase/functions/${entry.key}/index.ts').readAsStringSync();
+      expect(source, contains('delegatedClient(authorization) === null'), reason: entry.key);
+      expect(source, isNot(contains('SERVICE_ROLE')), reason: '${entry.key} must never run as service_role');
+    }
+  });
+
   test('webhooks never use a bearer token as their authority', () {
     for (final entry in manifest.entries) {
       if ((entry.value as Map)['class'] != 'webhook') continue;

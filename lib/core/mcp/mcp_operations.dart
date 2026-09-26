@@ -36,7 +36,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'list_workspaces': McpOperationSpec(
     id: 'list_workspaces',
     rpc: null,
-    handler: false,
+    handler: true,
     dispatch: false,
     authority: McpAuthority.self,
     permission: null,
@@ -53,7 +53,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'get_capabilities': McpOperationSpec(
     id: 'get_capabilities',
     rpc: null,
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.member,
     permission: null,
@@ -109,7 +109,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'get_my_statement': McpOperationSpec(
     id: 'get_my_statement',
     rpc: 'member_statement',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.self,
     permission: null,
@@ -146,7 +146,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'create_reservation': McpOperationSpec(
     id: 'create_reservation',
     rpc: 'create_reservation_once',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.self,
     permission: null,
@@ -170,7 +170,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'update_reservation': McpOperationSpec(
     id: 'update_reservation',
     rpc: 'update_reservation',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.self,
     permission: null,
@@ -191,7 +191,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'check_in': McpOperationSpec(
     id: 'check_in',
     rpc: 'check_in_reservation',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.self,
     permission: null,
@@ -210,7 +210,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'check_out': McpOperationSpec(
     id: 'check_out',
     rpc: 'check_out_reservation',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.self,
     permission: null,
@@ -229,7 +229,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'request_reservation_deletion': McpOperationSpec(
     id: 'request_reservation_deletion',
     rpc: 'request_reservation_deletion',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.self,
     permission: null,
@@ -249,7 +249,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'request_invoice_issue': McpOperationSpec(
     id: 'request_invoice_issue',
     rpc: 'request_invoice_issue',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.permission,
     permission: 'issueInvoices',
@@ -270,7 +270,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'request_invoice_void': McpOperationSpec(
     id: 'request_invoice_void',
     rpc: 'request_invoice_void',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.permission,
     permission: 'issueInvoices',
@@ -290,7 +290,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'request_refund': McpOperationSpec(
     id: 'request_refund',
     rpc: 'request_refund',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.permission,
     permission: 'issueInvoices',
@@ -310,7 +310,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'request_member_status_change': McpOperationSpec(
     id: 'request_member_status_change',
     rpc: 'request_member_status_change',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.permission,
     permission: 'manageMembers',
@@ -330,7 +330,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'request_subscription_change': McpOperationSpec(
     id: 'request_subscription_change',
     rpc: 'request_subscription_change',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.permission,
     permission: 'manageBilling',
@@ -386,7 +386,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
   'respond_to_validation': McpOperationSpec(
     id: 'respond_to_validation',
     rpc: 'respond_to_event',
-    handler: false,
+    handler: true,
     dispatch: true,
     authority: McpAuthority.permission,
     permission: 'manageValidation',
