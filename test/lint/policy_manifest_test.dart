@@ -86,6 +86,12 @@ Set<String> policiesCreatedBy(Iterable<String> sql) {
   return live;
 }
 
+const _loopPolicy = 'mcp_delegated_deny';
+
+bool _loopDeclared(List<File> files) => files.any((f) =>
+    f.path.endsWith('0273_mcp_token_containment.sql') &&
+    f.readAsStringSync().contains("create policy $_loopPolicy on %I.%I"));
+
 void main() {
   final files = Directory('supabase/migrations')
       .listSync()
@@ -123,6 +129,10 @@ void main() {
     final ghosts = manifest
         .where((p) => p.startsWith('public.'))
         .where((p) => !created.contains(p))
+        // 0273 creates `mcp_delegated_deny` on EVERY RLS table in a
+        // plpgsql loop, which this reader cannot expand; the replay
+        // (the database job) is what proves each one exists.
+        .where((p) => !(p.endsWith('.$_loopPolicy') && _loopDeclared(files)))
         .toList()
       ..sort();
     expect(
