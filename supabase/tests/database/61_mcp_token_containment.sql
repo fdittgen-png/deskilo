@@ -3,7 +3,7 @@
 -- and nothing else. Assertions run as `authenticated`, once with a
 -- native session and once with the same person's delegated claims.
 begin;
-select plan(13);
+select plan(14);
 
 create function pg_temp.act_as(p_user uuid, p_client text default null) returns void language plpgsql as $$
 begin
@@ -53,6 +53,14 @@ select ok(exists (select 1 from pg_policy p join pg_class c on c.oid = p.polreli
                   where n.nspname = 'storage' and c.relname = 'objects' and p.polname = 'mcp_delegated_deny'
                     and not p.polpermissive),
   'Storage objects carry the restrictive denial');
+
+-- PostgREST runs the pre-request as the request's own role: an anonymous
+-- request must pass it, or every signed-out call answers 401.
+reset role;
+select set_config('request.jwt.claims', '{"role": "anon"}', true);
+set local role anon;
+select lives_ok($$select public.mcp_pre_request()$$, 'an anonymous request passes the guard');
+reset role;
 
 drop policy mcp_delegated_deny on public.accessories;
 select throws_ok($$select public.operator_set_mcp_runtime(true)$$, 'P0001', null,

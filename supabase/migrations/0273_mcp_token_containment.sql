@@ -32,7 +32,9 @@ returns boolean language sql stable set search_path = public as $fn$
   select coalesce(nullif(current_setting('request.jwt.claims', true), ''), '{}')::jsonb ? 'client_id';
 $fn$;
 revoke execute on function public.mcp_is_delegated() from public, anon;
-grant execute on function public.mcp_is_delegated() to authenticated;
+-- anon too: PostgREST runs the pre-request below as the request's role,
+-- and an anonymous request that cannot ask is refused outright.
+grant execute on function public.mcp_is_delegated() to anon, authenticated;
 
 -- The routes a delegated token may reach: exact, versioned, POST only.
 create or replace function public.mcp_pre_request()
