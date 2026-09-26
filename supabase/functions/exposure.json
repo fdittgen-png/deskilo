@@ -1,0 +1,12 @@
+{
+  "x-doc": "#1614 — every Edge function and who may call it. user_facing and system functions refuse a delegated (MCP) token before any privileged work (_shared/delegated.ts refuseDelegated); webhooks authenticate by the provider's own signature or by fetching the object back, never by a bearer token. test/lint/edge_exposure_test.dart keeps this file and the directory in step.",
+  "functions": {
+    "badge-signin": {"class": "user_facing", "authority": "badge proof, then a minted native session"},
+    "create-payment-order": {"class": "user_facing", "authority": "the member's native session"},
+    "send-e-invoice": {"class": "user_facing", "authority": "a workspace admin's native session"},
+    "send-push": {"class": "system", "authority": "database triggers through the gateway"},
+    "stripe-webhook": {"class": "webhook", "authority": "Stripe-Signature HMAC"},
+    "paypal-webhook": {"class": "webhook", "authority": "PayPal verify-webhook-signature"},
+    "mollie-webhook": {"class": "webhook", "authority": "the payment fetched back with the workspace key"}
+  }
+}

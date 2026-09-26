@@ -12,6 +12,7 @@
 // (docs/guides/push-setup.md). Absent -> the function no-ops politely so
 // the trigger never fails.
 
+import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const supabase = createClient(
@@ -84,6 +85,9 @@ async function fcmAccessToken(sa: {
 }
 
 Deno.serve(async (req) => {
+  // #1614 — system-only: a delegated (MCP) token never triggers a push.
+  const delegated = refuseDelegated(req);
+  if (delegated) return delegated;
   const saRaw = Deno.env.get("FCM_SERVICE_ACCOUNT");
   if (!saRaw) {
     return Response.json({ skipped: "FCM_SERVICE_ACCOUNT not set" });

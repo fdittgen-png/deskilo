@@ -17,6 +17,7 @@
 // Every attempt is logged to invoice_transmissions, accepted or not: a
 // document that may or may not have left is worse than one that failed.
 
+import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
 
@@ -143,6 +144,9 @@ Deno.serve(async (req) => {
   // browser's question instead of answering it.
   if (req.method === "OPTIONS") return preflight();
   if (req.method !== "POST") return json({ error: "method not allowed" }, 405);
+  // #1614 — a delegated (MCP) token never transmits an invoice.
+  const delegated = refuseDelegated(req, CORS);
+  if (delegated) return delegated;
 
   const url = Deno.env.get("SUPABASE_URL")!;
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;

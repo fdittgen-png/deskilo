@@ -10,6 +10,7 @@
 // config is absent is not offered: {action:'config', workspace_id} lists the
 // configured providers and, per provider, the missing config fields.
 
+import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
 import { toMajor } from "../_shared/money.ts";
@@ -230,6 +231,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
   // browser's question instead of answering it.
   if (req.method === "OPTIONS") return preflight();
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+  // #1614 — a delegated (MCP) token never opens a payment.
+  const delegated = refuseDelegated(req, CORS);
+  if (delegated) return delegated;
   let body: Record<string, unknown>;
   try {
     body = await req.json();

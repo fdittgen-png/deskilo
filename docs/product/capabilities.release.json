@@ -207,7 +207,7 @@
       "prerequisites": "Stripe credentials in Settings; the webhook endpoint reachable from Stripe.",
       "limitations": "CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.",
       "provider": "stripe",
-      "fingerprint": "eb76f02194a8",
+      "fingerprint": "f02ef9bf2d8d",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -261,7 +261,7 @@
       "prerequisites": "PayPal credentials in Settings; the webhook endpoint reachable from PayPal.",
       "limitations": "No CI check reaches the PayPal handler; the Stripe stub says nothing about PayPal.",
       "provider": "paypal",
-      "fingerprint": "63ade9788564",
+      "fingerprint": "8706a3a0445b",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -292,7 +292,7 @@
       "prerequisites": "Mollie credentials in Settings; the webhook endpoint reachable from Mollie.",
       "limitations": "The reconciliation is proved in a replayed database; no Mollie sandbox has been exercised from this repository.",
       "provider": "mollie",
-      "fingerprint": "7280dc34e1ff",
+      "fingerprint": "2f98e5ff4ca8",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -323,7 +323,7 @@
       "prerequisites": "Mollie credentials with Wero enabled on the Mollie account.",
       "limitations": "Wero rides Mollie's checkout; nothing beyond the client's method handling cites Wero, so the Mollie reconciliation does not count here.",
       "provider": "wero",
-      "fingerprint": "7280dc34e1ff",
+      "fingerprint": "2f98e5ff4ca8",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -440,7 +440,7 @@
       ],
       "prerequisites": "Platform credentials configured by the operator.",
       "limitations": "The client's hand-off is unit-tested against a fake function; no transmission to a real or sandbox platform has been recorded.",
-      "fingerprint": "722461d57704",
+      "fingerprint": "d8dc1c00f7ee",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
