@@ -28,5 +28,7 @@ Effective contract|database|step|conditional||routines, grants, constraints and 
 Restore drill|database|step|conditional||seeded, dumped, restored into a fresh database, counts equal and reconciled
 Payments|database|step|conditional||the real payment handler opens the caller's intent; strangers and no token refused
 Payment settlement|database|step|conditional||Stripe: paid credits once, unpaid does not, async success once, failure and expiry mark failed, bad signature and wrong amount refused, duplicate and concurrent delivery credit once, a lost webhook stays pending, reconciliation clean
+PayPal settlement|database|step|conditional||PayPal: approval is not money; one capture per order, refusals before capture, lost reply and reordered callbacks credit once
+Mollie and Wero settlement|database|step|conditional||Mollie and Wero separately: the fetched payment must be the intent's; mismatches and outages credit nothing; duplicates credit once
 Instance lifecycle|database|step|conditional||empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation
 Archive preservation|database|step|conditional||a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught
