@@ -26,6 +26,7 @@
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
+import 'package:deskilo/core/storage/entry_intent_store.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
@@ -121,6 +122,11 @@ class DemoDevicePrefs {
   /// visitor could change from Settings → Server, and the one the real
   /// app reads at start-up: the reason this file exists.
   final InMemoryBackendSettingsStore backend = InMemoryBackendSettingsStore();
+
+  /// #1650 — what the person came to do. A visitor's errand inside the
+  /// demonstration is the demonstration's; the live draft is neither
+  /// read nor spent by entering it.
+  final InMemoryEntryIntentStore entryIntent = InMemoryEntryIntentStore();
 
   /// The file cache is device state too — the real store writes to the
   /// device filesystem, and a demonstration's synthetic rows have no
