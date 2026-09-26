@@ -1776,6 +1776,22 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get consumptionRefusedStock =>
+      'Stock insuffisant. Rien n\'a été enregistré.';
+
+  @override
+  String get consumptionRefusedInactive =>
+      'Ce service n\'est plus proposé. Rien n\'a été enregistré.';
+
+  @override
+  String get consumptionRefusedQuantity =>
+      'La quantité doit être comprise entre 1 et 999. Rien n\'a été enregistré.';
+
+  @override
+  String get consumptionRefusedPeriod =>
+      'La période de facturation doit être un mois (AAAA-MM). Rien n\'a été enregistré.';
+
+  @override
   String get coOwnerAction => 'Copropriété';
 
   @override

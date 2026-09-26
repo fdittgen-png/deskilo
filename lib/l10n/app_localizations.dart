@@ -3104,6 +3104,30 @@ abstract class AppLocalizations {
   /// **'{name} ×{quantity} — {amount}'**
   String eventServiceChargeTitle(String name, int quantity, String amount);
 
+  /// #1449 consumption_refusals
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough left in stock. Nothing was recorded.'**
+  String get consumptionRefusedStock;
+
+  /// #1449 consumption_refusals
+  ///
+  /// In en, this message translates to:
+  /// **'This service is no longer offered. Nothing was recorded.'**
+  String get consumptionRefusedInactive;
+
+  /// #1449 consumption_refusals
+  ///
+  /// In en, this message translates to:
+  /// **'The quantity must be between 1 and 999. Nothing was recorded.'**
+  String get consumptionRefusedQuantity;
+
+  /// #1449 consumption_refusals
+  ///
+  /// In en, this message translates to:
+  /// **'The billing period must be a month (YYYY-MM). Nothing was recorded.'**
+  String get consumptionRefusedPeriod;
+
   /// Member-sheet action opening the co-owner dialog (0058)
   ///
   /// In en, this message translates to:

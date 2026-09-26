@@ -192,7 +192,24 @@ Future<void> showConsumptionSheet(
   )) {
     return;
   }
-  if (outcome != ConsumptionOutcome.filed || !context.mounted) return;
+  if (!context.mounted) return;
+  // #1449 — a refusal the rules reached after the sheet closed (the shelf
+  // emptied meanwhile) is said, never swallowed.
+  final refusal = switch (outcome) {
+    ConsumptionOutcome.filed => null,
+    ConsumptionOutcome.insufficientStock => l10n?.consumptionRefusedStock ??
+        'Not enough left in stock. Nothing was recorded.',
+    ConsumptionOutcome.serviceInactive => l10n?.consumptionRefusedInactive ??
+        'This service is no longer offered. Nothing was recorded.',
+    ConsumptionOutcome.quantityOutOfRange => l10n?.consumptionRefusedQuantity ??
+        'The quantity must be between 1 and 999. Nothing was recorded.',
+    ConsumptionOutcome.periodNotAMonth => l10n?.consumptionRefusedPeriod ??
+        'The billing period must be a month (YYYY-MM). Nothing was recorded.',
+  };
+  if (refusal != null) {
+    AppSnack.error(context, refusal);
+    return;
+  }
   AppSnack.success(
     context,
     l10n?.consumptionRecorded ??

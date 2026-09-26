@@ -1762,6 +1762,22 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get consumptionRefusedStock =>
+      'Not enough left in stock. Nothing was recorded.';
+
+  @override
+  String get consumptionRefusedInactive =>
+      'This service is no longer offered. Nothing was recorded.';
+
+  @override
+  String get consumptionRefusedQuantity =>
+      'The quantity must be between 1 and 999. Nothing was recorded.';
+
+  @override
+  String get consumptionRefusedPeriod =>
+      'The billing period must be a month (YYYY-MM). Nothing was recorded.';
+
+  @override
   String get coOwnerAction => 'Co-ownership';
 
   @override

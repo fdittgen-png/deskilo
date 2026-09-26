@@ -1772,6 +1772,22 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get consumptionRefusedStock =>
+      'Nicht genug auf Lager. Es wurde nichts erfasst.';
+
+  @override
+  String get consumptionRefusedInactive =>
+      'Dieser Dienst wird nicht mehr angeboten. Es wurde nichts erfasst.';
+
+  @override
+  String get consumptionRefusedQuantity =>
+      'Die Menge muss zwischen 1 und 999 liegen. Es wurde nichts erfasst.';
+
+  @override
+  String get consumptionRefusedPeriod =>
+      'Der Abrechnungszeitraum muss ein Monat sein (JJJJ-MM). Es wurde nichts erfasst.';
+
+  @override
   String get coOwnerAction => 'Mit-Inhaberschaft';
 
   @override

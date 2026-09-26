@@ -1,0 +1,18 @@
+{
+  "consumptionRefusedStock": "Not enough left in stock. Nothing was recorded.",
+  "@consumptionRefusedStock": {
+    "description": "#1449 consumption_refusals"
+  },
+  "consumptionRefusedInactive": "This service is no longer offered. Nothing was recorded.",
+  "@consumptionRefusedInactive": {
+    "description": "#1449 consumption_refusals"
+  },
+  "consumptionRefusedQuantity": "The quantity must be between 1 and 999. Nothing was recorded.",
+  "@consumptionRefusedQuantity": {
+    "description": "#1449 consumption_refusals"
+  },
+  "consumptionRefusedPeriod": "The billing period must be a month (YYYY-MM). Nothing was recorded.",
+  "@consumptionRefusedPeriod": {
+    "description": "#1449 consumption_refusals"
+  }
+}
