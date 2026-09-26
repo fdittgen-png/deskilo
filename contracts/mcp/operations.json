@@ -1,90 +1,813 @@
 {
-  "contract": "deskilo.mcp.operations",
-  "version": 1,
-  "tool_prefix": "deskilo_",
-  "statuses": ["completed", "pending_validation", "requires_confirmation", "denied", "conflict", "validation_error", "not_found", "rate_limited"],
-  "forbidden_inputs": ["actor", "actor_id", "user_id", "role", "roles", "permission", "permissions", "is_admin", "is_owner", "sql", "query", "table", "rpc", "function", "url", "approval", "approved", "decided_by", "status_override"],
-  "page": {"default": 25, "max": 100},
-  "operations": [
-    {"id": "list_workspaces", "handler": true, "description": "The workspaces the caller is an approved member of.", "rpc": null,
-     "authority": {"kind": "self"}, "features": [], "scope": "discovery", "mutation": "read", "idempotency": "none", "confirmation": "none",
-     "input": {"limit": {"type": "integer", "min": 1, "max": 100}},
-     "output": ["workspace_id", "name", "role", "environment"]},
-    {"id": "get_capabilities", "handler": true, "dispatch": true, "description": "What this workspace exposes to the caller, and why an operation is unavailable.", "rpc": null,
-     "authority": {"kind": "member"}, "features": ["mcpAccess"], "scope": "workspace", "mutation": "read", "idempotency": "none", "confirmation": "none",
-     "input": {"workspace_id": {"type": "uuid", "required": true}},
-     "output": ["operations", "unavailable"]},
-    {"id": "get_availability", "description": "Free and taken places for a bounded window.", "rpc": null,
-     "authority": {"kind": "member"}, "features": ["mcpAccess"], "scope": "workspace", "mutation": "read", "idempotency": "none", "confirmation": "none",
-     "input": {"workspace_id": {"type": "uuid", "required": true}, "starts_at": {"type": "datetime", "required": true}, "ends_at": {"type": "datetime", "required": true}},
-     "output": ["places", "window"]},
-    {"id": "list_my_reservations", "description": "The caller's own reservations in a bounded window.", "rpc": null,
-     "authority": {"kind": "self"}, "features": ["mcpAccess"], "scope": "own", "mutation": "read", "idempotency": "none", "confirmation": "none",
-     "input": {"workspace_id": {"type": "uuid", "required": true}, "from": {"type": "datetime", "required": true}, "to": {"type": "datetime", "required": true}, "limit": {"type": "integer", "min": 1, "max": 100}},
-     "output": ["reservation_id", "place", "starts_at", "ends_at", "status"]},
-    {"id": "get_my_statement", "handler": true, "dispatch": true, "description": "The caller's own monthly statement.", "rpc": "member_statement",
-     "authority": {"kind": "self"}, "features": ["mcpAccess", "moneyTab"], "scope": "own", "mutation": "read", "idempotency": "none", "confirmation": "none",
-     "input": {"workspace_id": {"type": "uuid", "required": true}, "member_id": {"type": "uuid", "required": true, "param": "p_member_id"}, "period": {"type": "month", "required": true, "param": "p_period"}},
-     "output": ["lines", "total_cents", "currency"]},
-    {"id": "list_my_invoices", "description": "The caller's own invoices.", "rpc": null,
-     "authority": {"kind": "self"}, "features": ["mcpAccess", "invoicing"], "scope": "own", "mutation": "read", "idempotency": "none", "confirmation": "none",
-     "input": {"workspace_id": {"type": "uuid", "required": true}, "limit": {"type": "integer", "min": 1, "max": 100}},
-     "output": ["invoice_id", "number", "period", "total_cents", "status"]},
-    {"id": "create_reservation", "handler": true, "dispatch": true, "description": "Book a place for the caller; one request id is one reservation however often it is sent.", "rpc": "create_reservation_once",
-     "authority": {"kind": "self"}, "features": ["mcpAccess"], "scope": "own", "mutation": "write", "idempotency": "request_id", "confirmation": "none",
-     "input": {"request_id": {"type": "uuid", "required": true, "param": "p_client_request_id"}, "workspace_id": {"type": "uuid", "required": true, "param": "p_workspace_id"},
-               "seat_id": {"type": "uuid", "param": "p_seat_id"}, "desk_id": {"type": "uuid", "param": "p_desk_id"}, "office_id": {"type": "uuid", "param": "p_office_id"}, "level_id": {"type": "uuid", "param": "p_level_id"},
-               "starts_at": {"type": "datetime", "required": true, "param": "p_starts_at"}, "ends_at": {"type": "datetime", "required": true, "param": "p_ends_at"}},
-     "fixed": {"p_check_in": false},
-     "output": ["reservation_id"]},
-    {"id": "update_reservation", "handler": true, "dispatch": true, "description": "Move the caller's own reservation.", "rpc": "update_reservation",
-     "authority": {"kind": "self"}, "features": ["mcpAccess"], "scope": "own", "mutation": "write", "idempotency": "request_id", "confirmation": "none",
-     "input": {"request_id": {"type": "uuid", "required": true}, "workspace_id": {"type": "uuid", "required": true}, "reservation_id": {"type": "uuid", "required": true, "param": "p_reservation_id"},
-               "starts_at": {"type": "datetime", "required": true, "param": "p_starts_at"}, "ends_at": {"type": "datetime", "required": true, "param": "p_ends_at"}},
-     "output": []},
-    {"id": "check_in", "handler": true, "dispatch": true, "description": "Check the caller in on their own reservation.", "rpc": "check_in_reservation",
-     "authority": {"kind": "self"}, "features": ["mcpAccess"], "scope": "own", "mutation": "write", "idempotency": "request_id", "confirmation": "none",
-     "input": {"request_id": {"type": "uuid", "required": true}, "workspace_id": {"type": "uuid", "required": true}, "reservation_id": {"type": "uuid", "required": true, "param": "p_reservation_id"}},
-     "output": []},
-    {"id": "check_out", "handler": true, "dispatch": true, "description": "Check the caller out of their own running reservation.", "rpc": "check_out_reservation",
-     "authority": {"kind": "self"}, "features": ["mcpAccess"], "scope": "own", "mutation": "write", "idempotency": "request_id", "confirmation": "none",
-     "input": {"request_id": {"type": "uuid", "required": true}, "workspace_id": {"type": "uuid", "required": true}, "reservation_id": {"type": "uuid", "required": true, "param": "p_reservation_id"}},
-     "output": []},
-    {"id": "request_reservation_deletion", "handler": true, "dispatch": true, "description": "Ask for the caller's reservation to be deleted; the workspace's validation rules decide.", "rpc": "request_reservation_deletion",
-     "authority": {"kind": "self"}, "features": ["mcpAccess"], "scope": "own", "mutation": "request", "idempotency": "request_id", "confirmation": "none",
-     "input": {"request_id": {"type": "uuid", "required": true}, "workspace_id": {"type": "uuid", "required": true}, "reservation_id": {"type": "uuid", "required": true, "param": "p_reservation_id"}, "reason": {"type": "text", "maxLength": 500, "param": "p_reason"}},
-     "output": ["event_id"]},
-    {"id": "request_invoice_issue", "handler": true, "dispatch": true, "description": "Ask for a member's invoice to be issued.", "rpc": "request_invoice_issue",
-     "authority": {"kind": "permission", "permission": "issueInvoices"}, "features": ["mcpAccess", "invoicing"], "scope": "workspace", "mutation": "request", "idempotency": "request_id", "confirmation": "native",
-     "input": {"request_id": {"type": "uuid", "required": true}, "workspace_id": {"type": "uuid", "required": true, "param": "p_workspace_id"}, "member_id": {"type": "uuid", "required": true, "param": "p_member_id"}, "period": {"type": "month", "required": true, "param": "p_period"}, "kind": {"type": "enum", "values": ["full", "subscription", "usage"], "param": "p_kind"}},
-     "output": ["event_id", "invoice_id"]},
-    {"id": "request_invoice_void", "handler": true, "dispatch": true, "description": "Ask for an invoice to be voided.", "rpc": "request_invoice_void",
-     "authority": {"kind": "permission", "permission": "issueInvoices"}, "features": ["mcpAccess", "invoicing"], "scope": "workspace", "mutation": "request", "idempotency": "request_id", "confirmation": "native",
-     "input": {"request_id": {"type": "uuid", "required": true}, "workspace_id": {"type": "uuid", "required": true}, "invoice_id": {"type": "uuid", "required": true, "param": "p_invoice_id"}, "reason": {"type": "text", "maxLength": 500, "param": "p_reason"}},
-     "output": ["event_id"]},
-    {"id": "request_refund", "handler": true, "dispatch": true, "description": "Ask for an invoice to be refunded.", "rpc": "request_refund",
-     "authority": {"kind": "permission", "permission": "issueInvoices"}, "features": ["mcpAccess", "invoicing"], "scope": "workspace", "mutation": "request", "idempotency": "request_id", "confirmation": "native",
-     "input": {"request_id": {"type": "uuid", "required": true}, "workspace_id": {"type": "uuid", "required": true}, "invoice_id": {"type": "uuid", "required": true, "param": "p_invoice_id"}, "note": {"type": "text", "maxLength": 500, "param": "p_note"}},
-     "output": ["event_id"]},
-    {"id": "request_member_status_change", "handler": true, "dispatch": true, "description": "Ask for a member's status to change.", "rpc": "request_member_status_change",
-     "authority": {"kind": "permission", "permission": "manageMembers"}, "features": ["mcpAccess"], "scope": "workspace", "mutation": "request", "idempotency": "request_id", "confirmation": "native",
-     "input": {"request_id": {"type": "uuid", "required": true}, "workspace_id": {"type": "uuid", "required": true}, "member_id": {"type": "uuid", "required": true, "param": "p_member_id"}, "status": {"type": "enum", "required": true, "values": ["active", "paused", "exited"], "param": "p_status"}},
-     "output": ["event_id"]},
-    {"id": "request_subscription_change", "handler": true, "dispatch": true, "description": "Ask for a member's subscription share to change.", "rpc": "request_subscription_change",
-     "authority": {"kind": "permission", "permission": "manageBilling"}, "features": ["mcpAccess"], "scope": "workspace", "mutation": "request", "idempotency": "request_id", "confirmation": "native",
-     "input": {"request_id": {"type": "uuid", "required": true}, "workspace_id": {"type": "uuid", "required": true}, "member_id": {"type": "uuid", "required": true, "param": "p_member_id"}, "pct": {"type": "integer", "required": true, "min": 0, "max": 100, "param": "p_pct"}},
-     "output": ["event_id"]},
-    {"id": "list_pending_validations", "description": "Requests awaiting the caller's decision.", "rpc": null,
-     "authority": {"kind": "permission", "permission": "manageValidation"}, "features": ["mcpAccess"], "scope": "workspace", "mutation": "read", "idempotency": "none", "confirmation": "none",
-     "input": {"workspace_id": {"type": "uuid", "required": true}, "limit": {"type": "integer", "min": 1, "max": 100}},
-     "output": ["event_id", "type", "requested_at", "summary"]},
-    {"id": "get_validation", "description": "One request awaiting a decision, with what the decision is about.", "rpc": null,
-     "authority": {"kind": "permission", "permission": "manageValidation"}, "features": ["mcpAccess"], "scope": "workspace", "mutation": "read", "idempotency": "none", "confirmation": "none",
-     "input": {"workspace_id": {"type": "uuid", "required": true}, "event_id": {"type": "uuid", "required": true}},
-     "output": ["event_id", "type", "requested_at", "summary", "decisions"]},
-    {"id": "respond_to_validation", "handler": true, "dispatch": true, "description": "Accept or refuse a request awaiting the caller's decision; the distinct-person quorum stays the server's.", "rpc": "respond_to_event",
-     "authority": {"kind": "permission", "permission": "manageValidation"}, "features": ["mcpAccess"], "scope": "workspace", "mutation": "decision", "idempotency": "request_id", "confirmation": "native",
-     "input": {"request_id": {"type": "uuid", "required": true}, "workspace_id": {"type": "uuid", "required": true}, "event_id": {"type": "uuid", "required": true, "param": "p_event_id"}, "accept": {"type": "boolean", "required": true, "param": "p_accept"}},
-     "output": []}
-  ]
+ "contract": "deskilo.mcp.operations",
+ "version": 1,
+ "tool_prefix": "deskilo_",
+ "statuses": [
+  "completed",
+  "pending_validation",
+  "requires_confirmation",
+  "denied",
+  "conflict",
+  "validation_error",
+  "not_found",
+  "rate_limited"
+ ],
+ "forbidden_inputs": [
+  "actor",
+  "actor_id",
+  "user_id",
+  "role",
+  "roles",
+  "permission",
+  "permissions",
+  "is_admin",
+  "is_owner",
+  "sql",
+  "query",
+  "table",
+  "rpc",
+  "function",
+  "url",
+  "approval",
+  "approved",
+  "decided_by",
+  "status_override"
+ ],
+ "page": {
+  "default": 25,
+  "max": 100
+ },
+ "operations": [
+  {
+   "id": "list_workspaces",
+   "handler": true,
+   "description": "The workspaces the caller is an approved member of.",
+   "rpc": null,
+   "authority": {
+    "kind": "self"
+   },
+   "features": [],
+   "scope": "discovery",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "limit": {
+     "type": "integer",
+     "min": 1,
+     "max": 100
+    }
+   },
+   "output": [
+    "workspace_id",
+    "name",
+    "role",
+    "environment"
+   ]
+  },
+  {
+   "id": "get_capabilities",
+   "handler": true,
+   "dispatch": true,
+   "description": "What this workspace exposes to the caller, and why an operation is unavailable.",
+   "rpc": null,
+   "authority": {
+    "kind": "member"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    }
+   },
+   "output": [
+    "operations",
+    "unavailable"
+   ]
+  },
+  {
+   "id": "get_availability",
+   "dispatch": true,
+   "handler": true,
+   "description": "Free and taken places for a bounded window.",
+   "rpc": null,
+   "authority": {
+    "kind": "member"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "starts_at": {
+     "type": "datetime",
+     "required": true
+    },
+    "ends_at": {
+     "type": "datetime",
+     "required": true
+    },
+    "cursor": {
+     "type": "text",
+     "maxLength": 400
+    },
+    "limit": {
+     "type": "integer",
+     "min": 1,
+     "max": 100
+    }
+   },
+   "output": [
+    "places",
+    "window"
+   ]
+  },
+  {
+   "id": "list_my_reservations",
+   "dispatch": true,
+   "handler": true,
+   "description": "The caller's own reservations in a bounded window.",
+   "rpc": null,
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "own",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "from": {
+     "type": "datetime",
+     "required": true
+    },
+    "to": {
+     "type": "datetime",
+     "required": true
+    },
+    "limit": {
+     "type": "integer",
+     "min": 1,
+     "max": 100
+    },
+    "cursor": {
+     "type": "text",
+     "maxLength": 400
+    }
+   },
+   "output": [
+    "reservation_id",
+    "place",
+    "starts_at",
+    "ends_at",
+    "status"
+   ]
+  },
+  {
+   "id": "get_my_statement",
+   "handler": true,
+   "dispatch": true,
+   "description": "The caller's own monthly statement.",
+   "rpc": "member_statement",
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess",
+    "moneyTab"
+   ],
+   "scope": "own",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "member_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_member_id"
+    },
+    "period": {
+     "type": "month",
+     "required": true,
+     "param": "p_period"
+    }
+   },
+   "output": [
+    "lines",
+    "total_cents",
+    "currency"
+   ]
+  },
+  {
+   "id": "list_my_invoices",
+   "dispatch": true,
+   "handler": true,
+   "description": "The caller's own invoices.",
+   "rpc": null,
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess",
+    "invoicing"
+   ],
+   "scope": "own",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "limit": {
+     "type": "integer",
+     "min": 1,
+     "max": 100
+    },
+    "cursor": {
+     "type": "text",
+     "maxLength": 400
+    }
+   },
+   "output": [
+    "invoice_id",
+    "number",
+    "period",
+    "total_cents",
+    "status"
+   ]
+  },
+  {
+   "id": "create_reservation",
+   "handler": true,
+   "dispatch": true,
+   "description": "Book a place for the caller; one request id is one reservation however often it is sent.",
+   "rpc": "create_reservation_once",
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "own",
+   "mutation": "write",
+   "idempotency": "request_id",
+   "confirmation": "none",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_client_request_id"
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_workspace_id"
+    },
+    "seat_id": {
+     "type": "uuid",
+     "param": "p_seat_id"
+    },
+    "desk_id": {
+     "type": "uuid",
+     "param": "p_desk_id"
+    },
+    "office_id": {
+     "type": "uuid",
+     "param": "p_office_id"
+    },
+    "level_id": {
+     "type": "uuid",
+     "param": "p_level_id"
+    },
+    "starts_at": {
+     "type": "datetime",
+     "required": true,
+     "param": "p_starts_at"
+    },
+    "ends_at": {
+     "type": "datetime",
+     "required": true,
+     "param": "p_ends_at"
+    }
+   },
+   "fixed": {
+    "p_check_in": false
+   },
+   "output": [
+    "reservation_id"
+   ]
+  },
+  {
+   "id": "update_reservation",
+   "handler": true,
+   "dispatch": true,
+   "description": "Move the caller's own reservation.",
+   "rpc": "update_reservation",
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "own",
+   "mutation": "write",
+   "idempotency": "request_id",
+   "confirmation": "none",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "reservation_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_reservation_id"
+    },
+    "starts_at": {
+     "type": "datetime",
+     "required": true,
+     "param": "p_starts_at"
+    },
+    "ends_at": {
+     "type": "datetime",
+     "required": true,
+     "param": "p_ends_at"
+    }
+   },
+   "output": []
+  },
+  {
+   "id": "check_in",
+   "handler": true,
+   "dispatch": true,
+   "description": "Check the caller in on their own reservation.",
+   "rpc": "check_in_reservation",
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "own",
+   "mutation": "write",
+   "idempotency": "request_id",
+   "confirmation": "none",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "reservation_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_reservation_id"
+    }
+   },
+   "output": []
+  },
+  {
+   "id": "check_out",
+   "handler": true,
+   "dispatch": true,
+   "description": "Check the caller out of their own running reservation.",
+   "rpc": "check_out_reservation",
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "own",
+   "mutation": "write",
+   "idempotency": "request_id",
+   "confirmation": "none",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "reservation_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_reservation_id"
+    }
+   },
+   "output": []
+  },
+  {
+   "id": "request_reservation_deletion",
+   "handler": true,
+   "dispatch": true,
+   "description": "Ask for the caller's reservation to be deleted; the workspace's validation rules decide.",
+   "rpc": "request_reservation_deletion",
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "own",
+   "mutation": "request",
+   "idempotency": "request_id",
+   "confirmation": "none",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "reservation_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_reservation_id"
+    },
+    "reason": {
+     "type": "text",
+     "maxLength": 500,
+     "param": "p_reason"
+    }
+   },
+   "output": [
+    "event_id"
+   ]
+  },
+  {
+   "id": "request_invoice_issue",
+   "handler": true,
+   "dispatch": true,
+   "description": "Ask for a member's invoice to be issued.",
+   "rpc": "request_invoice_issue",
+   "authority": {
+    "kind": "permission",
+    "permission": "issueInvoices"
+   },
+   "features": [
+    "mcpAccess",
+    "invoicing"
+   ],
+   "scope": "workspace",
+   "mutation": "request",
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_workspace_id"
+    },
+    "member_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_member_id"
+    },
+    "period": {
+     "type": "month",
+     "required": true,
+     "param": "p_period"
+    },
+    "kind": {
+     "type": "enum",
+     "values": [
+      "full",
+      "subscription",
+      "usage"
+     ],
+     "param": "p_kind"
+    }
+   },
+   "output": [
+    "event_id",
+    "invoice_id"
+   ]
+  },
+  {
+   "id": "request_invoice_void",
+   "handler": true,
+   "dispatch": true,
+   "description": "Ask for an invoice to be voided.",
+   "rpc": "request_invoice_void",
+   "authority": {
+    "kind": "permission",
+    "permission": "issueInvoices"
+   },
+   "features": [
+    "mcpAccess",
+    "invoicing"
+   ],
+   "scope": "workspace",
+   "mutation": "request",
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "invoice_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_invoice_id"
+    },
+    "reason": {
+     "type": "text",
+     "maxLength": 500,
+     "param": "p_reason"
+    }
+   },
+   "output": [
+    "event_id"
+   ]
+  },
+  {
+   "id": "request_refund",
+   "handler": true,
+   "dispatch": true,
+   "description": "Ask for an invoice to be refunded.",
+   "rpc": "request_refund",
+   "authority": {
+    "kind": "permission",
+    "permission": "issueInvoices"
+   },
+   "features": [
+    "mcpAccess",
+    "invoicing"
+   ],
+   "scope": "workspace",
+   "mutation": "request",
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "invoice_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_invoice_id"
+    },
+    "note": {
+     "type": "text",
+     "maxLength": 500,
+     "param": "p_note"
+    }
+   },
+   "output": [
+    "event_id"
+   ]
+  },
+  {
+   "id": "request_member_status_change",
+   "handler": true,
+   "dispatch": true,
+   "description": "Ask for a member's status to change.",
+   "rpc": "request_member_status_change",
+   "authority": {
+    "kind": "permission",
+    "permission": "manageMembers"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "request",
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "member_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_member_id"
+    },
+    "status": {
+     "type": "enum",
+     "required": true,
+     "values": [
+      "active",
+      "paused",
+      "exited"
+     ],
+     "param": "p_status"
+    }
+   },
+   "output": [
+    "event_id"
+   ]
+  },
+  {
+   "id": "request_subscription_change",
+   "handler": true,
+   "dispatch": true,
+   "description": "Ask for a member's subscription share to change.",
+   "rpc": "request_subscription_change",
+   "authority": {
+    "kind": "permission",
+    "permission": "manageBilling"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "request",
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "member_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_member_id"
+    },
+    "pct": {
+     "type": "integer",
+     "required": true,
+     "min": 0,
+     "max": 100,
+     "param": "p_pct"
+    }
+   },
+   "output": [
+    "event_id"
+   ]
+  },
+  {
+   "id": "list_pending_validations",
+   "dispatch": true,
+   "handler": true,
+   "description": "Requests awaiting the caller's decision.",
+   "rpc": null,
+   "authority": {
+    "kind": "member"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "limit": {
+     "type": "integer",
+     "min": 1,
+     "max": 100
+    },
+    "cursor": {
+     "type": "text",
+     "maxLength": 400
+    }
+   },
+   "output": [
+    "event_id",
+    "type",
+    "requested_at",
+    "summary"
+   ]
+  },
+  {
+   "id": "get_validation",
+   "dispatch": true,
+   "handler": true,
+   "description": "One request awaiting a decision, with what the decision is about.",
+   "rpc": null,
+   "authority": {
+    "kind": "member"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "event_id": {
+     "type": "uuid",
+     "required": true
+    }
+   },
+   "output": [
+    "event_id",
+    "type",
+    "requested_at",
+    "summary",
+    "decisions"
+   ]
+  },
+  {
+   "id": "respond_to_validation",
+   "handler": true,
+   "dispatch": true,
+   "description": "Accept or refuse a request awaiting the caller's decision; the distinct-person quorum stays the server's.",
+   "rpc": "respond_to_event",
+   "authority": {
+    "kind": "permission",
+    "permission": "manageValidation"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "decision",
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true
+    },
+    "event_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_event_id"
+    },
+    "accept": {
+     "type": "boolean",
+     "required": true,
+     "param": "p_accept"
+    }
+   },
+   "output": []
+  }
+ ]
 }

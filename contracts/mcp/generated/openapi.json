@@ -136,6 +136,15 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 400
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
           }
         },
         "required": [
@@ -145,7 +154,7 @@
         ],
         "x-operation": "get_availability",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "ListMyReservationsInput": {
         "type": "object",
@@ -169,6 +178,10 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 400
           }
         },
         "required": [
@@ -178,7 +191,7 @@
         ],
         "x-operation": "list_my_reservations",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "GetMyStatementInput": {
         "type": "object",
@@ -218,6 +231,10 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 400
           }
         },
         "required": [
@@ -225,7 +242,7 @@
         ],
         "x-operation": "list_my_invoices",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "CreateReservationInput": {
         "type": "object",
@@ -574,6 +591,10 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 400
           }
         },
         "required": [
@@ -581,7 +602,7 @@
         ],
         "x-operation": "list_pending_validations",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "GetValidationInput": {
         "type": "object",
@@ -602,7 +623,7 @@
         ],
         "x-operation": "get_validation",
         "x-rpc": null,
-        "x-handler": false
+        "x-handler": true
       },
       "RespondToValidationInput": {
         "type": "object",
