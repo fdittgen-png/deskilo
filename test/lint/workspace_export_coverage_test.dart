@@ -91,6 +91,7 @@ const Map<String, String> _notExported = {
   'workspace_mcp_policy_revisions': 'the history of that authority, same reason (#1610)',
   'mcp_connection_scopes': 'a person\'s consent to an assistant, never portable (#1612)',
   'mcp_idempotency': 'replay records of MCP calls, operational state only (#1612)',
+  'mcp_action_confirmations': 'a person\'s pending confirmation of an assistant request, never portable (#1619)',
   // --- authority a copy must not carry by itself (#1287) ------------
   'workspace_role_members':
       'a grant names a member, and members do not travel — a role given '

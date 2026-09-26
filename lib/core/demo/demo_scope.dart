@@ -25,6 +25,8 @@
 // only thing that made them isolated was that nobody had noticed.
 import '../../features/workspace/application/creation_intent.dart';
 import 'data/identity_binding_repository.dart';
+import 'data/action_confirmation_repository.dart';
+import '../../features/mcp/providers/mcp_providers.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/auth/providers/auth_providers.dart';
@@ -84,6 +86,9 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       // #1647 — Demo binds no identity: the visitor is not a Deskilo user.
       identityBindingRepositoryProvider
           .overrideWithValue(FakeIdentityBindingRepository()),
+      // #1619 — Demo has no assistant, so nothing to confirm.
+      actionConfirmationRepositoryProvider
+          .overrideWithValue(FakeActionConfirmationRepository()),
       workspaceRepositoryProvider.overrideWithValue(fixture.workspaces),
       floorPlanRepositoryProvider.overrideWithValue(fixture.floorPlan),
       reservationRepositoryProvider.overrideWithValue(fixture.reservations),
@@ -172,6 +177,7 @@ const Set<String> demoOverriddenProviders = {
   'clockProvider',
   'authRepositoryProvider',
   'identityBindingRepositoryProvider',
+  'actionConfirmationRepositoryProvider',
   'workspaceRepositoryProvider',
   'floorPlanRepositoryProvider',
   'reservationRepositoryProvider',

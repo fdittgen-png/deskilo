@@ -14,6 +14,8 @@ import 'package:deskilo/core/demo/data/workspace_repository.dart';
 export 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
+import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
+import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
 export 'package:deskilo/core/demo/data/stores.dart';
 export 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
@@ -108,6 +110,7 @@ List<Override> standardTestOverrides({
   BackendSettingsStore? backendSettings,
   EntryIntentStore? entryIntent,
   CreationDraftStore? creationDraft,
+  FakeActionConfirmationRepository? actionConfirmations,
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
@@ -182,6 +185,8 @@ List<Override> standardTestOverrides({
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
     identityBindingRepositoryProvider
         .overrideWithValue(FakeIdentityBindingRepository()),
+    actionConfirmationRepositoryProvider
+        .overrideWithValue(actionConfirmations ?? FakeActionConfirmationRepository()),
     workspaceRepositoryProvider.overrideWithValue(() {
       final repo = workspace ?? FakeWorkspaceRepository.withWorkspace();
       if (devMode && repo is FakeWorkspaceRepository) repo.applyDevMode(true);

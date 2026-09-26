@@ -118,7 +118,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/presentation/screens/availability_screen.dart` | 856 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
-| `lib/app/router.dart` | 789 |
+| `lib/app/router.dart` | 797 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |

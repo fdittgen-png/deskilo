@@ -6869,6 +6869,91 @@ class AppLocalizationsEs extends AppLocalizations {
       'Pone la interfaz MCP a disposición de este espacio, para que un asistente de IA pueda conectarse a DesKilo. Solo disponibilidad: activarla no concede nada a nadie. Cada persona sigue necesitando una autorización que el propietario configura y el administrador de la instancia aprueba, y cada operación sigue respondiendo a los permisos y reglas que la aplicación ya aplica. Desactivada, oculta los puntos de entrada MCP y rechaza las llamadas; las autorizaciones existentes siguen visibles y revocables.';
 
   @override
+  String get mcpConfirmTitle => 'Confirmar una solicitud del asistente';
+
+  @override
+  String get mcpConfirmConsequence =>
+      'Confirmar permite al asistente enviar esta solicitud exacta una sola vez. Las reglas de validación del espacio siguen aplicándose.';
+
+  @override
+  String get mcpConfirmDecline => 'Rechazar';
+
+  @override
+  String get mcpConfirmAccept => 'Confirmar';
+
+  @override
+  String get mcpConfirmDone =>
+      'Confirmado. El asistente ya puede enviar la solicitud.';
+
+  @override
+  String get mcpConfirmDeclined => 'Rechazado. No se ha hecho nada.';
+
+  @override
+  String get mcpConfirmExpired =>
+      'Esta solicitud ha caducado. Pida al asistente que la envíe de nuevo.';
+
+  @override
+  String get mcpConfirmStale =>
+      'Esta solicitud ya no coincide con los datos actuales o con su acceso. No se ha hecho nada.';
+
+  @override
+  String get mcpConfirmNotFound => 'No hay ninguna solicitud así para usted.';
+
+  @override
+  String get mcpConfirmUnavailable =>
+      'No se pudo cargar esta solicitud. Vuelva a intentarlo desde el enlace.';
+
+  @override
+  String mcpConfirmNewStatus(String status) {
+    return 'Nuevo estado: $status';
+  }
+
+  @override
+  String mcpConfirmNewShare(String pct) {
+    return 'Nueva parte de suscripción: $pct %';
+  }
+
+  @override
+  String get mcpConfirmApprove => 'Su respuesta: aprobar';
+
+  @override
+  String get mcpConfirmRefuse => 'Su respuesta: rechazar';
+
+  @override
+  String mcpConfirmPeriod(String period) {
+    return 'Periodo: $period';
+  }
+
+  @override
+  String mcpConfirmWorkspace(String workspace) {
+    return 'Espacio: $workspace';
+  }
+
+  @override
+  String mcpConfirmClient(String client) {
+    return 'Solicitado por: $client';
+  }
+
+  @override
+  String get mcpOpInvoiceIssue => 'Emitir una factura';
+
+  @override
+  String get mcpOpInvoiceVoid => 'Anular una factura';
+
+  @override
+  String get mcpOpRefund => 'Reembolsar una factura';
+
+  @override
+  String get mcpOpMemberStatus => 'Cambiar el estado de un miembro';
+
+  @override
+  String get mcpOpSubscription =>
+      'Cambiar la parte de suscripción de un miembro';
+
+  @override
+  String get mcpOpRespond => 'Responder a una solicitud de validación';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Los miembros ven Mi cuenta';
 
   @override

@@ -6820,6 +6820,90 @@ class AppLocalizationsEn extends AppLocalizations {
       'Makes the MCP interface available to this workspace, so an AI assistant can be connected to DesKilo. Availability only: switching it on grants nobody anything. Each person still needs a grant the owner configures and the instance administrator approves, and every operation keeps answering to the permissions and rules the app already applies. Off hides the MCP entry points and refuses calls; existing grants stay visible and revocable.';
 
   @override
+  String get mcpConfirmTitle => 'Confirm an assistant request';
+
+  @override
+  String get mcpConfirmConsequence =>
+      'Confirming lets the assistant send this exact request once. The workspace\'s own validation rules still apply.';
+
+  @override
+  String get mcpConfirmDecline => 'Decline';
+
+  @override
+  String get mcpConfirmAccept => 'Confirm';
+
+  @override
+  String get mcpConfirmDone =>
+      'Confirmed. The assistant can now send the request.';
+
+  @override
+  String get mcpConfirmDeclined => 'Declined. Nothing was done.';
+
+  @override
+  String get mcpConfirmExpired =>
+      'This request expired. Ask the assistant to send it again.';
+
+  @override
+  String get mcpConfirmStale =>
+      'This request no longer matches the current data or your access. Nothing was done.';
+
+  @override
+  String get mcpConfirmNotFound => 'There is no such request for you.';
+
+  @override
+  String get mcpConfirmUnavailable =>
+      'This request could not be loaded. Try again from the link.';
+
+  @override
+  String mcpConfirmNewStatus(String status) {
+    return 'New status: $status';
+  }
+
+  @override
+  String mcpConfirmNewShare(String pct) {
+    return 'New subscription share: $pct %';
+  }
+
+  @override
+  String get mcpConfirmApprove => 'Your answer: approve';
+
+  @override
+  String get mcpConfirmRefuse => 'Your answer: refuse';
+
+  @override
+  String mcpConfirmPeriod(String period) {
+    return 'Period: $period';
+  }
+
+  @override
+  String mcpConfirmWorkspace(String workspace) {
+    return 'Workspace: $workspace';
+  }
+
+  @override
+  String mcpConfirmClient(String client) {
+    return 'Asked by: $client';
+  }
+
+  @override
+  String get mcpOpInvoiceIssue => 'Issue an invoice';
+
+  @override
+  String get mcpOpInvoiceVoid => 'Void an invoice';
+
+  @override
+  String get mcpOpRefund => 'Refund an invoice';
+
+  @override
+  String get mcpOpMemberStatus => 'Change a member\'s status';
+
+  @override
+  String get mcpOpSubscription => 'Change a member\'s subscription share';
+
+  @override
+  String get mcpOpRespond => 'Answer a validation request';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Members see My account';
 
   @override

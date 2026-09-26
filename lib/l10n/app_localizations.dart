@@ -11845,6 +11845,144 @@ abstract class AppLocalizations {
   /// **'Makes the MCP interface available to this workspace, so an AI assistant can be connected to DesKilo. Availability only: switching it on grants nobody anything. Each person still needs a grant the owner configures and the instance administrator approves, and every operation keeps answering to the permissions and rules the app already applies. Off hides the MCP entry points and refuses calls; existing grants stay visible and revocable.'**
   String get featureMcpAccessDesc;
 
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm an assistant request'**
+  String get mcpConfirmTitle;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Confirming lets the assistant send this exact request once. The workspace\'s own validation rules still apply.'**
+  String get mcpConfirmConsequence;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get mcpConfirmDecline;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get mcpConfirmAccept;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed. The assistant can now send the request.'**
+  String get mcpConfirmDone;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Declined. Nothing was done.'**
+  String get mcpConfirmDeclined;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'This request expired. Ask the assistant to send it again.'**
+  String get mcpConfirmExpired;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'This request no longer matches the current data or your access. Nothing was done.'**
+  String get mcpConfirmStale;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'There is no such request for you.'**
+  String get mcpConfirmNotFound;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'This request could not be loaded. Try again from the link.'**
+  String get mcpConfirmUnavailable;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'New status: {status}'**
+  String mcpConfirmNewStatus(String status);
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'New subscription share: {pct} %'**
+  String mcpConfirmNewShare(String pct);
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Your answer: approve'**
+  String get mcpConfirmApprove;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Your answer: refuse'**
+  String get mcpConfirmRefuse;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Period: {period}'**
+  String mcpConfirmPeriod(String period);
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace: {workspace}'**
+  String mcpConfirmWorkspace(String workspace);
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Asked by: {client}'**
+  String mcpConfirmClient(String client);
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Issue an invoice'**
+  String get mcpOpInvoiceIssue;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Void an invoice'**
+  String get mcpOpInvoiceVoid;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Refund an invoice'**
+  String get mcpOpRefund;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Change a member\'s status'**
+  String get mcpOpMemberStatus;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Change a member\'s subscription share'**
+  String get mcpOpSubscription;
+
+  /// #1619 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Answer a validation request'**
+  String get mcpOpRespond;
+
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///
   /// In en, this message translates to:

@@ -41,6 +41,7 @@ import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/backend_screen.dart';
+import '../features/mcp/presentation/mcp_confirmation_screen.dart';
 import '../features/profile/presentation/screens/new_instance_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
@@ -457,6 +458,13 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/scan-join',
         builder: (context, state) => const ScanJoinScreen(),
+      ),
+      // #1619 — an assistant's high-impact request, confirmed by its
+      // person. The server answers only them; see the screen's doc.
+      GoRoute(
+        path: '/mcp/confirm/:id',
+        builder: (context, state) =>
+            McpConfirmationScreen(confirmationId: state.pathParameters['id']!),
       ),
       GoRoute(
         path: '/nfc-config',

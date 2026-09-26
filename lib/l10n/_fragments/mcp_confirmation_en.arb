@@ -1,0 +1,119 @@
+{
+  "mcpConfirmTitle": "Confirm an assistant request",
+  "@mcpConfirmTitle": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmConsequence": "Confirming lets the assistant send this exact request once. The workspace's own validation rules still apply.",
+  "@mcpConfirmConsequence": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmDecline": "Decline",
+  "@mcpConfirmDecline": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmAccept": "Confirm",
+  "@mcpConfirmAccept": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmDone": "Confirmed. The assistant can now send the request.",
+  "@mcpConfirmDone": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmDeclined": "Declined. Nothing was done.",
+  "@mcpConfirmDeclined": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmExpired": "This request expired. Ask the assistant to send it again.",
+  "@mcpConfirmExpired": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmStale": "This request no longer matches the current data or your access. Nothing was done.",
+  "@mcpConfirmStale": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmNotFound": "There is no such request for you.",
+  "@mcpConfirmNotFound": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmUnavailable": "This request could not be loaded. Try again from the link.",
+  "@mcpConfirmUnavailable": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmNewStatus": "New status: {status}",
+  "@mcpConfirmNewStatus": {
+    "description": "#1619 mcp_confirmation",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmNewShare": "New subscription share: {pct} %",
+  "@mcpConfirmNewShare": {
+    "description": "#1619 mcp_confirmation",
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmApprove": "Your answer: approve",
+  "@mcpConfirmApprove": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmRefuse": "Your answer: refuse",
+  "@mcpConfirmRefuse": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmPeriod": "Period: {period}",
+  "@mcpConfirmPeriod": {
+    "description": "#1619 mcp_confirmation",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmWorkspace": "Workspace: {workspace}",
+  "@mcpConfirmWorkspace": {
+    "description": "#1619 mcp_confirmation",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmClient": "Asked by: {client}",
+  "@mcpConfirmClient": {
+    "description": "#1619 mcp_confirmation",
+    "placeholders": {
+      "client": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpOpInvoiceIssue": "Issue an invoice",
+  "@mcpOpInvoiceIssue": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpOpInvoiceVoid": "Void an invoice",
+  "@mcpOpInvoiceVoid": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpOpRefund": "Refund an invoice",
+  "@mcpOpRefund": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpOpMemberStatus": "Change a member's status",
+  "@mcpOpMemberStatus": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpOpSubscription": "Change a member's subscription share",
+  "@mcpOpSubscription": {
+    "description": "#1619 mcp_confirmation"
+  },
+  "mcpOpRespond": "Answer a validation request",
+  "@mcpOpRespond": {
+    "description": "#1619 mcp_confirmation"
+  }
+}
