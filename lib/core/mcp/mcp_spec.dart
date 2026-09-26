@@ -39,6 +39,7 @@ class McpOperationSpec {
     required this.id,
     required this.rpc,
     required this.handler,
+    required this.dispatch,
     required this.authority,
     required this.permission,
     required this.features,
@@ -58,6 +59,10 @@ class McpOperationSpec {
 
   /// Whether an MCP handler exists. Only these may be advertised.
   final bool handler;
+
+  /// #1612 — whether `mcp_execute_v1` implements it. Only these may be
+  /// named in a workspace policy.
+  final bool dispatch;
   final McpAuthority authority;
   final String? permission;
   final List<String> features;
