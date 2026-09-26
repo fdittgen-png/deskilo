@@ -92,7 +92,7 @@ select is(public.mcp_execute_v1(current_setting('t.i')::uuid, current_setting('t
   'request_id_reused', 'the same id with other arguments conflicts');
 select is(public.mcp_execute_v1(current_setting('t.i')::uuid, current_setting('t.a')::uuid, 'request_reservation_deletion',
   '{"reservation_id":"00000000-0000-4000-8000-0000000000aa"}', gen_random_uuid())->>'status',
-  'requires_confirmation', 'a deletion waits for native confirmation');
+  'not_found', 'an unknown reservation is not found: a deletion request names a real one (0272)');
 reset role;
 select is((select count(*)::int from public.reservations where workspace_id = current_setting('t.a')::uuid), 1,
   'one booking, however often it was asked');

@@ -272,6 +272,16 @@ constraint managed_identities.managed_identities_pkey PRIMARY KEY (member_id)
 constraint managed_identities.managed_identities_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint managed_identities.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint managed_identities.system_company_present CHECK ((company_id IS NOT NULL))
+constraint mcp_action_confirmations.mcp_action_confirmations_client_id_fkey FOREIGN KEY (client_id) REFERENCES mcp_clients(client_id)
+constraint mcp_action_confirmations.mcp_action_confirmations_eligibility_grant_id_fkey FOREIGN KEY (eligibility_grant_id) REFERENCES mcp_eligibility_grants(id)
+constraint mcp_action_confirmations.mcp_action_confirmations_installation_id_fkey FOREIGN KEY (installation_id) REFERENCES installation_identity(installation_id)
+constraint mcp_action_confirmations.mcp_action_confirmations_installation_id_local_user_id_clie_key UNIQUE (installation_id, local_user_id, client_id, request_id)
+constraint mcp_action_confirmations.mcp_action_confirmations_local_user_id_fkey FOREIGN KEY (local_user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+constraint mcp_action_confirmations.mcp_action_confirmations_pkey PRIMARY KEY (id)
+constraint mcp_action_confirmations.mcp_action_confirmations_status_check CHECK ((status = ANY (ARRAY['pending'::text, 'acknowledged'::text, 'consumed'::text, 'declined'::text, 'expired'::text, 'revoked'::text])))
+constraint mcp_action_confirmations.mcp_action_confirmations_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint mcp_action_confirmations.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint mcp_action_confirmations.system_company_present CHECK ((company_id IS NOT NULL))
 constraint mcp_clients.mcp_clients_client_id_check CHECK ((client_id ~ '^[A-Za-z0-9._:-]{1,128}$'::text))
 constraint mcp_clients.mcp_clients_name_check CHECK (((length(name) >= 1) AND (length(name) <= 120)))
 constraint mcp_clients.mcp_clients_pkey PRIMARY KEY (client_id)
@@ -930,10 +940,15 @@ routine public.may_validate_event_type(p_workspace_id uuid, p_type text) -> bool
 routine public.may_view_invoice(p_invoice_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:4a02ac9c0f76
 routine public.may_view_member_finances(p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:642867c71724
 routine public.may_view_member_negotiations(p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:b55728ee95bd
+routine public.mcp_confirm_action(p_confirmation_id uuid, p_accept boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2149d8cadb49
+routine public.mcp_eligibility_revoked_cascade() -> trigger | function | definer | volatile | exec:service_role | body:1cb49f240708
 routine public.mcp_envelope(p_request_id uuid, p_operation text, p_workspace_id uuid, p_status text, p_data jsonb, p_code text, p_fields jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:9fa90edd3a7d
-routine public.mcp_execute_v1(p_installation_id uuid, p_workspace_id uuid, p_operation text, p_arguments jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6b1ee540e4f6
-routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:4c8f449c43ae
+routine public.mcp_execute_v1(p_installation_id uuid, p_workspace_id uuid, p_operation text, p_arguments jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9a8eb820adcf
+routine public.mcp_get_action_confirmation(p_confirmation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:28d6a1c6fb1a
+routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:b2c4e11b067a
 routine public.mcp_policy_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:24f5a5c5d317
+routine public.mcp_request_outcome(p_result jsonb) -> text | function | invoker | immutable | exec:service_role | body:883fde66b9af
+routine public.mcp_target(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:41105cd8750f
 routine public.mcp_time_arg(p_args jsonb, p_key text) -> timestamp with time zone | function | invoker | immutable | exec:service_role | body:3fcf56ea5f3e
 routine public.mcp_uuid_arg(p_args jsonb, p_key text, p_required boolean) -> uuid | function | invoker | immutable | exec:service_role | body:8e8deb6fc5c3
 routine public.member_account(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bf3adfa2b319
@@ -1191,9 +1206,11 @@ trigger ledger_entries.ledger_entries_no_rewrite CREATE TRIGGER ledger_entries_n
 trigger ledger_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger levels.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.levels FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger managed_identities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.managed_identities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger mcp_action_confirmations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_action_confirmations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_clients.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_clients FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_connection_scopes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_connection_scopes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_connections.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_connections FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger mcp_eligibility_grants.mcp_eligibility_revoked_cascade CREATE TRIGGER mcp_eligibility_revoked_cascade AFTER UPDATE OF status ON public.mcp_eligibility_grants FOR EACH ROW EXECUTE FUNCTION mcp_eligibility_revoked_cascade()
 trigger mcp_eligibility_grants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_eligibility_grants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_eligibility_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_eligibility_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_idempotency.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_idempotency FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
