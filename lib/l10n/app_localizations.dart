@@ -13993,6 +13993,90 @@ abstract class AppLocalizations {
   /// **'Numbers were already issued with the date. Removing it could repeat one — change the prefix or suffix too.'**
   String get numberSequenceDateRemovalBlocked;
 
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'What to create'**
+  String get onboardingShapeLabel;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'One test workspace'**
+  String get onboardingShapeTest;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'Safe for trying things out: every screen and document says it is a test. No real billing.'**
+  String get onboardingShapeTestHint;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'One real workspace'**
+  String get onboardingShapeReal;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'For real operation: the invoices it issues are owed.'**
+  String get onboardingShapeRealHint;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'A linked test and real pair'**
+  String get onboardingShapePair;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Creates one workspace} other{Creates {count} workspaces}}'**
+  String onboardingSummaryCount(int count);
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'Real billing is possible: its invoices are owed.'**
+  String get onboardingSummaryBillingOn;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'No real billing: documents are marked as a test.'**
+  String get onboardingSummaryBillingOff;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'On the server {host}'**
+  String onboardingSummaryServer(String host);
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'Your earlier request may already have been created. Retry it exactly as it was sent before changing anything.'**
+  String get onboardingIntentChanged;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'An earlier creation may have gone through. Retry to check the same request.'**
+  String get onboardingIntentResumed;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'Retry as sent'**
+  String get onboardingRetryAsSent;
+
+  /// #1636 onboarding_creation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a currency code the app supports, such as EUR'**
+  String get onboardingCurrencyUnknown;
+
   /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.
   ///
   /// In en, this message translates to:

@@ -8077,6 +8077,65 @@ class AppLocalizationsIt extends AppLocalizations {
       'Sono già stati emessi numeri con la data. Toglierla potrebbe ripeterne uno: cambia anche il prefisso o il suffisso.';
 
   @override
+  String get onboardingShapeLabel => 'Cosa creare';
+
+  @override
+  String get onboardingShapeTest => 'Uno spazio di prova';
+
+  @override
+  String get onboardingShapeTestHint =>
+      'Sicuro per provare: ogni schermata e documento indica che è una prova. Nessuna fatturazione reale.';
+
+  @override
+  String get onboardingShapeReal => 'Uno spazio reale';
+
+  @override
+  String get onboardingShapeRealHint =>
+      'Per l\'attività reale: le fatture emesse sono dovute.';
+
+  @override
+  String get onboardingShapePair => 'Una coppia collegata di prova e reale';
+
+  @override
+  String onboardingSummaryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Crea $count spazi',
+      one: 'Crea uno spazio',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get onboardingSummaryBillingOn =>
+      'La fatturazione reale è possibile: le sue fatture sono dovute.';
+
+  @override
+  String get onboardingSummaryBillingOff =>
+      'Nessuna fatturazione reale: i documenti sono contrassegnati come prova.';
+
+  @override
+  String onboardingSummaryServer(String host) {
+    return 'Sul server $host';
+  }
+
+  @override
+  String get onboardingIntentChanged =>
+      'La richiesta precedente potrebbe essere già stata creata. Riprovala esattamente come inviata prima di cambiare qualcosa.';
+
+  @override
+  String get onboardingIntentResumed =>
+      'Una creazione precedente potrebbe essere andata a buon fine. Riprova per verificare la stessa richiesta.';
+
+  @override
+  String get onboardingRetryAsSent => 'Riprova com\'era';
+
+  @override
+  String get onboardingCurrencyUnknown =>
+      'Inserisci un codice valuta supportato, ad esempio EUR';
+
+  @override
   String billParticipation(int pct) {
     return 'Partecipazione $pct %';
   }

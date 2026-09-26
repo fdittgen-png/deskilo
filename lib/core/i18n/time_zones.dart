@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
 /// The IANA zones an owner may pick for a workspace (#711).
@@ -18,8 +19,22 @@ abstract final class TimeZones {
     'Europe', 'Indian', 'Pacific',
   };
 
+  static bool _loaded = false;
+
+  /// #1636 — the database is loaded on first use, so a validator never
+  /// answers "unknown" merely because nothing installed a clock yet.
+  static void _ensureLoaded() {
+    if (_loaded || tz.timeZoneDatabase.locations.isNotEmpty) {
+      _loaded = true;
+      return;
+    }
+    tzdata.initializeTimeZones();
+    _loaded = true;
+  }
+
   /// Every pickable zone name, sorted.
   static List<String> get all {
+    _ensureLoaded();
     final names = tz.timeZoneDatabase.locations.keys
         .where((n) => _regions.contains(n.split('/').first))
         .toList()
@@ -36,7 +51,10 @@ abstract final class TimeZones {
   }
 
   /// Whether the clock can install [name].
-  static bool isKnown(String name) => tz.timeZoneDatabase.locations.containsKey(name);
+  static bool isKnown(String name) {
+    _ensureLoaded();
+    return tz.timeZoneDatabase.locations.containsKey(name);
+  }
 
   /// `UTC+02:00` for [name] at [instant] — the one fact a picker row
   /// needs beside the name, because "Europe/Paris" means nothing to

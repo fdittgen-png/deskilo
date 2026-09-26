@@ -23,6 +23,7 @@
 // implementation inside the scope. A separate root container replaces
 // providers, not SharedPreferences and not `Supabase.instance`, so the
 // only thing that made them isolated was that nobody had noticed.
+import '../../features/workspace/application/creation_intent.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/auth/providers/auth_providers.dart';
@@ -152,6 +153,7 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       backendSettingsStoreProvider.overrideWithValue(fixture.prefs.backend),
       // #1650 — the resumable errand is device state too.
       entryIntentStoreProvider.overrideWithValue(fixture.prefs.entryIntent),
+      creationDraftStoreProvider.overrideWithValue(fixture.prefs.creationDraft),
       // The file cache is device state too: the real one writes the
       // demonstration's synthetic rows to the device filesystem.
       cacheStoreProvider.overrideWithValue(fixture.prefs.cache),
@@ -202,6 +204,7 @@ const Set<String> demoOverriddenProviders = {
   'defaultLevelStoreProvider',
   'defaultPeriodStoreProvider',
   'entryIntentStoreProvider',
+  'creationDraftStoreProvider',
   'notificationFilterStoreProvider',
   'helpHintStoreProvider',
   'noteSeenStoreProvider',

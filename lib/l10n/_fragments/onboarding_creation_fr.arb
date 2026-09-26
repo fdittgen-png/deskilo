@@ -1,0 +1,16 @@
+{
+  "onboardingShapeLabel": "Que créer",
+  "onboardingShapeTest": "Un espace de test",
+  "onboardingShapeTestHint": "Idéal pour essayer : chaque écran et chaque document indique qu'il s'agit d'un test. Aucune facturation réelle.",
+  "onboardingShapeReal": "Un espace réel",
+  "onboardingShapeRealHint": "Pour l'exploitation réelle : les factures émises sont dues.",
+  "onboardingShapePair": "Une paire liée test et réel",
+  "onboardingSummaryCount": "{count, plural, =1{Crée un espace} other{Crée {count} espaces}}",
+  "onboardingSummaryBillingOn": "La facturation réelle est possible : ses factures sont dues.",
+  "onboardingSummaryBillingOff": "Aucune facturation réelle : les documents sont marqués comme test.",
+  "onboardingSummaryServer": "Sur le serveur {host}",
+  "onboardingIntentChanged": "Votre demande précédente a peut-être déjà été créée. Relancez-la telle qu'elle a été envoyée avant de modifier quoi que ce soit.",
+  "onboardingIntentResumed": "Une création précédente a peut-être abouti. Relancez pour vérifier la même demande.",
+  "onboardingRetryAsSent": "Relancer telle quelle",
+  "onboardingCurrencyUnknown": "Saisissez un code de devise pris en charge, par exemple EUR"
+}

@@ -8076,6 +8076,65 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mit dem Datum wurden bereits Nummern vergeben. Es zu entfernen könnte eine wiederholen – ändern Sie auch Präfix oder Suffix.';
 
   @override
+  String get onboardingShapeLabel => 'Was erstellt wird';
+
+  @override
+  String get onboardingShapeTest => 'Ein Test-Arbeitsbereich';
+
+  @override
+  String get onboardingShapeTestHint =>
+      'Sicher zum Ausprobieren: Jeder Bildschirm und jedes Dokument zeigt, dass es ein Test ist. Keine echte Abrechnung.';
+
+  @override
+  String get onboardingShapeReal => 'Ein echter Arbeitsbereich';
+
+  @override
+  String get onboardingShapeRealHint =>
+      'Für den echten Betrieb: Die ausgestellten Rechnungen sind geschuldet.';
+
+  @override
+  String get onboardingShapePair => 'Ein verknüpftes Test- und Echt-Paar';
+
+  @override
+  String onboardingSummaryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Erstellt $count Arbeitsbereiche',
+      one: 'Erstellt einen Arbeitsbereich',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get onboardingSummaryBillingOn =>
+      'Echte Abrechnung ist möglich: Die Rechnungen sind geschuldet.';
+
+  @override
+  String get onboardingSummaryBillingOff =>
+      'Keine echte Abrechnung: Dokumente sind als Test markiert.';
+
+  @override
+  String onboardingSummaryServer(String host) {
+    return 'Auf dem Server $host';
+  }
+
+  @override
+  String get onboardingIntentChanged =>
+      'Ihre frühere Anfrage wurde möglicherweise bereits ausgeführt. Wiederholen Sie sie genau wie gesendet, bevor Sie etwas ändern.';
+
+  @override
+  String get onboardingIntentResumed =>
+      'Eine frühere Erstellung ist möglicherweise durchgegangen. Wiederholen Sie, um dieselbe Anfrage zu prüfen.';
+
+  @override
+  String get onboardingRetryAsSent => 'Wie gesendet wiederholen';
+
+  @override
+  String get onboardingCurrencyUnknown =>
+      'Geben Sie einen unterstützten Währungscode ein, z. B. EUR';
+
+  @override
   String billParticipation(int pct) {
     return 'Beitrag $pct %';
   }

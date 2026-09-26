@@ -1,0 +1,68 @@
+{
+  "onboardingShapeLabel": "What to create",
+  "@onboardingShapeLabel": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingShapeTest": "One test workspace",
+  "@onboardingShapeTest": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingShapeTestHint": "Safe for trying things out: every screen and document says it is a test. No real billing.",
+  "@onboardingShapeTestHint": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingShapeReal": "One real workspace",
+  "@onboardingShapeReal": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingShapeRealHint": "For real operation: the invoices it issues are owed.",
+  "@onboardingShapeRealHint": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingShapePair": "A linked test and real pair",
+  "@onboardingShapePair": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingSummaryCount": "{count, plural, =1{Creates one workspace} other{Creates {count} workspaces}}",
+  "@onboardingSummaryCount": {
+    "description": "#1636 onboarding_creation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingSummaryBillingOn": "Real billing is possible: its invoices are owed.",
+  "@onboardingSummaryBillingOn": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingSummaryBillingOff": "No real billing: documents are marked as a test.",
+  "@onboardingSummaryBillingOff": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingSummaryServer": "On the server {host}",
+  "@onboardingSummaryServer": {
+    "description": "#1636 onboarding_creation",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingIntentChanged": "Your earlier request may already have been created. Retry it exactly as it was sent before changing anything.",
+  "@onboardingIntentChanged": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingIntentResumed": "An earlier creation may have gone through. Retry to check the same request.",
+  "@onboardingIntentResumed": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingRetryAsSent": "Retry as sent",
+  "@onboardingRetryAsSent": {
+    "description": "#1636 onboarding_creation"
+  },
+  "onboardingCurrencyUnknown": "Enter a currency code the app supports, such as EUR",
+  "@onboardingCurrencyUnknown": {
+    "description": "#1636 onboarding_creation"
+  }
+}

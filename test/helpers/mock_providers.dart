@@ -26,6 +26,7 @@ import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
+import 'package:deskilo/features/workspace/application/creation_intent.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
@@ -105,6 +106,7 @@ List<Override> standardTestOverrides({
   bool devMode = false,
   BackendSettingsStore? backendSettings,
   EntryIntentStore? entryIntent,
+  CreationDraftStore? creationDraft,
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
@@ -244,6 +246,9 @@ List<Override> standardTestOverrides({
     // #1650 — the resumable errand: in memory, so no test resumes another's.
     entryIntentStoreProvider
         .overrideWithValue(entryIntent ?? InMemoryEntryIntentStore()),
+    // #1636 — the pending creation draft: in memory, per test.
+    creationDraftStoreProvider
+        .overrideWithValue(creationDraft ?? InMemoryCreationDraftStore()),
     // File cache would touch path_provider channels in tests — and boot
     // eviction runs on every app pump.
     cacheStoreProvider.overrideWithValue(InMemoryCacheStore()),

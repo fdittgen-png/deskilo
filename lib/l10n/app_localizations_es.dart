@@ -8062,6 +8062,65 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ya se emitieron números con la fecha. Quitarla podría repetir uno: cambia también el prefijo o el sufijo.';
 
   @override
+  String get onboardingShapeLabel => 'Qué crear';
+
+  @override
+  String get onboardingShapeTest => 'Un espacio de prueba';
+
+  @override
+  String get onboardingShapeTestHint =>
+      'Seguro para probar: cada pantalla y cada documento indica que es una prueba. Sin facturación real.';
+
+  @override
+  String get onboardingShapeReal => 'Un espacio real';
+
+  @override
+  String get onboardingShapeRealHint =>
+      'Para la operación real: las facturas que emite se deben.';
+
+  @override
+  String get onboardingShapePair => 'Un par vinculado de prueba y real';
+
+  @override
+  String onboardingSummaryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Crea $count espacios',
+      one: 'Crea un espacio',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get onboardingSummaryBillingOn =>
+      'La facturación real es posible: sus facturas se deben.';
+
+  @override
+  String get onboardingSummaryBillingOff =>
+      'Sin facturación real: los documentos se marcan como prueba.';
+
+  @override
+  String onboardingSummaryServer(String host) {
+    return 'En el servidor $host';
+  }
+
+  @override
+  String get onboardingIntentChanged =>
+      'Puede que su solicitud anterior ya se haya creado. Reinténtela tal como se envió antes de cambiar nada.';
+
+  @override
+  String get onboardingIntentResumed =>
+      'Puede que una creación anterior se haya completado. Reintente para comprobar la misma solicitud.';
+
+  @override
+  String get onboardingRetryAsSent => 'Reintentar tal cual';
+
+  @override
+  String get onboardingCurrencyUnknown =>
+      'Introduzca un código de moneda admitido, por ejemplo EUR';
+
+  @override
   String billParticipation(int pct) {
     return 'Participación $pct %';
   }

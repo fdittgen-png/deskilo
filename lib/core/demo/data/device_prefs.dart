@@ -23,6 +23,7 @@
 // live on the fixture, which settles the lifetime for free — they
 // survive a persona switch (same fixture), come back canonical on Reset
 // (new fixture) and are dropped on Leave (the fixture is dropped).
+import '../../../features/workspace/application/creation_intent.dart';
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
@@ -127,6 +128,9 @@ class DemoDevicePrefs {
   /// demonstration is the demonstration's; the live draft is neither
   /// read nor spent by entering it.
   final InMemoryEntryIntentStore entryIntent = InMemoryEntryIntentStore();
+
+  /// #1636 — a creation a visitor started stays inside the demonstration.
+  final InMemoryCreationDraftStore creationDraft = InMemoryCreationDraftStore();
 
   /// The file cache is device state too — the real store writes to the
   /// device filesystem, and a demonstration's synthetic rows have no

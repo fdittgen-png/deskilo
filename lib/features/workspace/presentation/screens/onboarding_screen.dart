@@ -12,15 +12,14 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../application/creation_intent.dart';
 import '../../application/start_workspace.dart';
+import '../widgets/onboarding_creation.dart';
 import '../widgets/onboarding_join_form.dart';
 import '../../../../core/ui/wizard_navigation.dart';
 import '../../domain/template_outline.dart';
-import '../../domain/template_preview.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
-import '../../domain/workspace.dart';
-import '../widgets/template_group_label.dart';
 import '../widgets/template_picker.dart';
 import '../../../../core/ui/wizard_scaffold.dart';
 import '../../../../core/ui/wizard_form_layout.dart';
@@ -45,15 +44,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _timezoneFocus = FocusNode();
   final _currency = TextEditingController();
   final _timezone = TextEditingController();
-  // #917 — development until its owner declares otherwise.
-  WorkspaceEnvironment _environment = WorkspaceEnvironment.development;
-  bool _withTwin = true;
+  // #917/#1636 — one test workspace until its owner chooses otherwise.
+  CreationShape _shape = CreationShape.test;
+  late String _derivedCurrency, _derivedTimezone;
+
+  /// #1636 — what was last sent, and whether its outcome is unknown.
+  CreationIntent? _sent;
+  bool _uncertain = false, _intentChanged = false;
 
   String? _templateId;
   bool _templateResolved = false;
 
-  /// A retry retains the request id, so creation stays idempotent.
-  final String _requestId = newRequestId();
+  /// A retry retains the request id, so creation stays idempotent; a
+  /// resumed draft brings its own.
+  String _requestId = newRequestId();
   final _inviteCode = TextEditingController();
   late String _countryCode;
   bool _joinMode = false;
@@ -102,9 +106,47 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     super.initState();
     final country = initialCountryFor(ref.read(deviceLocaleProvider));
     _countryCode = country.code;
-    _currency.text = country.currencyCode;
-    _timezone.text = country.defaultTimezone;
+    _currency.text = _derivedCurrency = country.currencyCode;
+    _timezone.text = _derivedTimezone = country.defaultTimezone;
+    _resume();
   }
+
+  /// #1636 — a creation sent before a restart, by THIS account, whose
+  /// answer never arrived: its fields and its request id come back, and
+  /// the confirm step says so.
+  Future<void> _resume() async {
+    final draft = await ref.read(creationDraftsProvider).pending();
+    if (draft == null || !mounted) return;
+    setState(() {
+      _restore(draft.intent);
+      _uncertain = true;
+      _completed.addAll([_nameStep, _whereStep, 2]);
+      _step = _confirmStep;
+    });
+  }
+
+  void _restore(CreationIntent intent) {
+    _sent = intent;
+    _requestId = intent.requestId;
+    _name.text = intent.name;
+    _countryCode = intent.countryCode;
+    _currency.text = intent.currencyCode;
+    _timezone.text = intent.timezone;
+    _shape = intent.shape;
+    _templateId = intent.templateId;
+    _templateResolved = true;
+    _intentChanged = false;
+  }
+
+  CreationIntent get _intent => CreationIntent(
+        requestId: _requestId,
+        name: _name.text,
+        countryCode: _countryCode,
+        currencyCode: _currency.text,
+        timezone: _timezone.text,
+        shape: _shape,
+        templateId: _templateId,
+      );
 
   @override
   void dispose() {
@@ -120,6 +162,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   Future<void> _run(Future<bool> Function() action) async {
     if (_busy) return;
+    Object? error;
     setState(() { _busy = true; _failure = null; });
     final l10n = AppLocalizations.of(context);
     var accepted = false;
@@ -128,8 +171,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       domain: 'workspace',
       message: 'onboarding action failed',
       action: () async {
-          accepted = await action();
+          try {
+            accepted = await action();
+          } catch (e, st) {
+            // trace-exempt: rethrown with its stack; runGuarded traces it.
+            // Kept to tell a template refusal from an unknown outcome.
+            error = e;
+            Error.throwWithStackTrace(e, st);
+          }
           if (!accepted || !mounted) return;
+          if (!_joinMode) await ref.read(creationDraftsProvider).confirmed();
           widget.navigation?.completed = true;
           ref.invalidate(myWorkspacesProvider);
           await ref.read(myWorkspacesProvider.future);
@@ -147,7 +198,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               ? l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.'
               : l10n?.onboardingUnconfirmed ??
                   'The result could not be confirmed. Your entries are kept. Retry to check the same request.';
-          _failedWithTemplate = _templateId != null;
+          // #1636 — only the server refusing the template means nothing
+          // was made; any other failure may have created it.
+          final refused = error != null && isTemplateRefusal(error!);
+          _failedWithTemplate = _templateId != null && refused;
+          if (!_joinMode && error != null) _uncertain = !refused;
         });
         WidgetsBinding.instance.addPostFrameCallback((_) {
           final target = _feedbackKey.currentContext;
@@ -203,20 +258,35 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Future<void> _create() async {
+    final intent = _intent;
+    final sent = _sent;
+    if (_uncertain && sent != null && !intent.sameMaterial(sent)) {
+      setState(() => _intentChanged = true);
+      return;
+    }
     await _run(() async {
+      _sent = intent;
+      await ref.read(creationDraftsProvider).sent(intent);
       final result = await ref.read(workspaceStartProvider).create(
-            name: _name.text,
-            countryCode: _countryCode,
-            currencyCode: _currency.text,
-            timezone: _timezone.text,
-            requestId: _requestId,
-            environment: _environment,
-            withTwin: _withTwin,
-            templateId: _templateId,
+            name: intent.name,
+            countryCode: intent.countryCode,
+            currencyCode: intent.currencyCode,
+            timezone: intent.timezone,
+            requestId: intent.requestId,
+            environment: intent.shape.environment,
+            withTwin: intent.shape.withTwin,
+            templateId: intent.templateId,
             outline: _outlineFor == _templateId ? _outlineValue : null,
           );
       return result.outcome == StartOutcome.created;
     });
+  }
+
+  void _retryAsSent() {
+    final sent = _sent;
+    if (sent == null || _busy) return;
+    setState(() => _restore(sent));
+    _create();
   }
 
   Future<void> _join() async {
@@ -381,76 +451,31 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               final country = CountryCatalog.byCode(code);
               setState(() {
                 _countryCode = code;
-                _currency.text = country.currencyCode;
-                _timezone.text = country.defaultTimezone;
+                // #1636 — only a value still at its derived default follows
+                // the country; an owner's own choice stays.
+                if (_currency.text.trim() == _derivedCurrency) {
+                  _currency.text = country.currencyCode;
+                }
+                if (_timezone.text.trim() == _derivedTimezone) {
+                  _timezone.text = country.defaultTimezone;
+                }
+                _derivedCurrency = country.currencyCode;
+                _derivedTimezone = country.defaultTimezone;
               });
             },
           ),
           const SizedBox(height: 12),
-          TextFormField(
-            key: const ValueKey('onboarding-currency'),
-            controller: _currency,
-            focusNode: _currencyFocus,
-            decoration: InputDecoration(
-              labelText: l10n?.workspaceCurrencyLabel ?? 'Currency',
-            ),
-            validator: (v) => (v == null || v.trim().length != 3)
-                ? (l10n?.authFieldRequired ?? 'Required')
-                : null,
+          PlaceFields(
+            currency: _currency,
+            currencyFocus: _currencyFocus,
+            timezone: _timezone,
+            timezoneFocus: _timezoneFocus,
           ),
           const SizedBox(height: 12),
-          TextFormField(
-            key: const ValueKey('onboarding-timezone'),
-            controller: _timezone,
-            focusNode: _timezoneFocus,
-            decoration: InputDecoration(
-              labelText: l10n?.workspaceTimezoneLabel ?? 'Time zone',
-            ),
-            validator: (v) => (v == null || v.trim().isEmpty)
-                ? (l10n?.authFieldRequired ?? 'Required')
-                : null,
-          ),
-          const SizedBox(height: 12),
-          DropdownButtonFormField<WorkspaceEnvironment>(
-            key: const ValueKey('onboarding-environment'),
-            initialValue: _environment,
-            isExpanded: true,
-            itemHeight: null,
-            decoration: InputDecoration(
-              labelText: l10n?.environmentLabel ?? 'Workspace type',
-              helperMaxLines: 4,
-              helperText: l10n?.environmentHint ??
-                  'A development workspace says so on every screen and '
-                      'watermarks every document.',
-            ),
-            items: [
-              DropdownMenuItem(
-                value: WorkspaceEnvironment.development,
-                child: Text(l10n?.environmentDev ??
-                    'Development — for trying things out'),
-              ),
-              DropdownMenuItem(
-                value: WorkspaceEnvironment.production,
-                child: Text(l10n?.environmentProd ??
-                    'Production — the invoices are owed'),
-              ),
-            ],
-            onChanged: _busy
-                ? null
-                : (v) => setState(() => _environment = v ?? _environment),
-          ),
-          CheckboxListTile(
-            key: const ValueKey('onboarding-with-twin'),
-            value: _withTwin,
-            contentPadding: EdgeInsets.zero,
-            controlAffinity: ListTileControlAffinity.leading,
-            title: Text(l10n?.onboardingWithTwin ??
-                'Create the development and production pair'),
-            subtitle: Text(l10n?.onboardingWithTwinHint ??
-                'Two workspaces with the same name: one to try things out, '
-                    'one that is real. You own both.'),
-            onChanged:
-                _busy ? null : (v) => setState(() => _withTwin = v ?? true),
+          CreationShapeSelector(
+            value: _shape,
+            enabled: !_busy,
+            onChanged: (shape) => setState(() => _shape = shape),
           ),
         ],
       );
@@ -482,20 +507,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         final templates = ref.watch(workspaceTemplatesProvider).value ?? const [];
         final template =
             templates.where((t) => t.id == _templateId).firstOrNull;
-        final environment = _environment == WorkspaceEnvironment.production
-            ? (l10n?.environmentProd ?? 'Production — the invoices are owed')
-            : (l10n?.environmentDev ?? 'Development — for trying things out');
         return Column(
           key: const ValueKey('onboarding-confirm'),
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (_uncertain && _sent != null)
+              CreationPendingBanner(
+                  changed: _intentChanged || !_intent.sameMaterial(_sent!),
+                  onRetryAsSent: _retryAsSent),
             Text(l10n?.onboardingConfirmIntro ?? 'This is what will be created:',
                 style: Theme.of(context).textTheme.titleMedium),
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.business_outlined),
               title: Text(_name.text.trim()),
-              subtitle: Text(environment),
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
@@ -504,13 +529,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               subtitle: Text(
                   '${_currency.text.trim().toUpperCase()} · ${_timezone.text.trim()}'),
             ),
-            if (_withTwin)
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.copy_all_outlined),
-                title: Text(l10n?.onboardingWithTwin ??
-                    'Create the development and production pair'),
-              ),
+            CreationSummary(shape: _shape),
             ListTile(
               key: const ValueKey('onboarding-confirm-template'),
               contentPadding: EdgeInsets.zero,
@@ -532,7 +551,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             if (template != null)
               FutureBuilder<TemplateOutline>(
                 future: _outlineOf(template.id),
-                builder: (context, snap) => _outlineView(l10n, snap.data),
+                builder: (context, snap) => TemplateOutlineView(outline: snap.data),
               ),
             if (_failedWithTemplate || _templateRefused)
               OutlinedButton(
@@ -553,40 +572,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ],
         );
       });
-
-  Widget _outlineView(AppLocalizations? l10n, TemplateOutline? outline) {
-    if (outline == null) return const SizedBox.shrink();
-    if (outline.refused) {
-      return InlineBanner(
-        key: const ValueKey('onboarding-template-refused'),
-        icon: Icons.block,
-        text: [
-          l10n?.libraryNotSupported ?? 'This template cannot be applied here.',
-          ?outline.reason,
-        ].join(' '),
-      );
-    }
-    final groups =
-        outline.groups.map((g) => templateGroupLabel(l10n, g)).join(', ');
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (outline.compatibility == TemplateCompatibility.partial)
-          InlineBanner(
-            key: const ValueKey('onboarding-template-partial'),
-            icon: Icons.info_outline,
-            severity: InlineBannerSeverity.info,
-            text: l10n?.libraryPartial ??
-                'Part of this template cannot be applied here and is left out.',
-          ),
-        if (groups.isNotEmpty)
-          Text(
-            l10n?.onboardingTemplateSetsUp(groups) ?? 'Sets up: $groups',
-            key: const ValueKey('onboarding-confirm-groups'),
-          ),
-      ],
-    );
-  }
 
   Widget _joinForm(AppLocalizations? l10n) => OnboardingJoinForm(
     formKey: _joinFormKey, code: _inviteCode, busy: _busy, onJoin: _join,

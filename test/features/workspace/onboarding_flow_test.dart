@@ -293,10 +293,11 @@ void main() {
       expect(repo.workspaces.single.currencyCode, 'CHF');
     });
 
-    testWidgets('a creation that fails with a template offers to create '
-        'without one', (tester) async {
+    testWidgets('#1636 — a creation the server refused FOR ITS TEMPLATE '
+        'offers to create without one', (tester) async {
       final repo = await pumpWithoutWorkspace(tester)
-        ..createFailure = StateError('the template cannot be applied');
+        ..createFailure =
+            StateError('not supported: this server has no entity forms');
       await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
       await useSuggested(tester);
       await tester.tap(find.text('Create workspace'));
