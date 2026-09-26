@@ -14,9 +14,11 @@ import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../application/creation_intent.dart';
 import '../../application/start_workspace.dart';
+import '../widgets/template_region_notice.dart';
 import '../widgets/onboarding_creation.dart';
 import '../widgets/onboarding_join_form.dart';
 import '../../../../core/ui/wizard_navigation.dart';
+import '../../domain/workspace_template.dart';
 import '../../domain/template_outline.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
@@ -203,6 +205,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       return;
     }
     if (mounted) setState(() => _busy = false);
+  }
+
+  // #1656 — the person chose the template's region; each value only when
+  // the template carries it.
+  void _useRegion(RegionalSuggestion r) {
+    _countryCode = r.countryCode ?? _countryCode;
+    if (r.currencyCode != null) _currency.text = _derivedCurrency = r.currencyCode!;
+    if (r.timezone != null) _timezone.text = _derivedTimezone = r.timezone!;
   }
 
   bool get _nameValid => isNameable(_name.text);
@@ -521,6 +531,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               subtitle: Text(
                   '${_currency.text.trim().toUpperCase()} · ${_timezone.text.trim()}'),
             ),
+            if (template != null)
+              TemplateRegionNotice(
+                suggestion: template.regional,
+                countryCode: _countryCode,
+                currencyCode: _currency.text,
+                timezone: _timezone.text,
+                enabled: !_busy,
+                onUse: () => setState(() => _useRegion(template.regional)),
+              ),
             CreationSummary(shape: _shape),
             ListTile(
               key: const ValueKey('onboarding-confirm-template'),

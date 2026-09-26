@@ -43,6 +43,7 @@ class WorkspaceTemplate implements SystemStamped {
     this.schemaVersion = 1,
     this.templateVersion = 1,
     this.tags = const [],
+    this.regional = const RegionalSuggestion(),
     this.system = SystemColumns.none,
   });
 
@@ -75,6 +76,9 @@ class WorkspaceTemplate implements SystemStamped {
   final int templateVersion;
 
   final List<String> tags;
+
+  /// #1656 — where the template was made, offered at creation only.
+  final RegionalSuggestion regional;
 
   /// More than a floor plan: hours, prices, rules or features travel too.
   bool get carriesConfiguration => entities.any((e) => e != 'floor_plan');
@@ -116,6 +120,7 @@ class WorkspaceTemplate implements SystemStamped {
         schemaVersion: (row['schema_version'] as num?)?.toInt() ?? 1,
         templateVersion: (row['template_version'] as num?)?.toInt() ?? 1,
         tags: [for (final t in row['tags'] as List? ?? const <Object?>[]) '$t'],
+        regional: RegionalSuggestion.fromJson(row['regional']),
       );
 }
 
@@ -128,4 +133,40 @@ String templateKeyFrom(String name) {
       .replaceAll(RegExp(r'^_+|_+$'), '');
   final safe = slug.isEmpty || !RegExp(r'^[a-z]').hasMatch(slug) ? 't_$slug' : slug;
   return safe.length > 40 ? safe.substring(0, 40) : safe;
+}
+
+/// #1656 — a template's suggested region for a NEW space (0277): the
+/// source workspace's country, currency, timezone and language. Never
+/// applied to an existing space, and at creation only by choice.
+class RegionalSuggestion {
+  const RegionalSuggestion({this.countryCode, this.currencyCode, this.timezone, this.locale});
+
+  final String? countryCode;
+  final String? currencyCode;
+  final String? timezone;
+  final String? locale;
+
+  bool get isEmpty => countryCode == null && currencyCode == null && timezone == null;
+
+  /// Whether it differs from what the form holds now.
+  bool differsFrom({required String countryCode, required String currencyCode, required String timezone}) =>
+      !isEmpty &&
+      ((this.countryCode != null && this.countryCode != countryCode.toUpperCase()) ||
+          (this.currencyCode != null && this.currencyCode != currencyCode.trim().toUpperCase()) ||
+          (this.timezone != null && this.timezone != timezone.trim()));
+
+  factory RegionalSuggestion.fromJson(Object? json) {
+    if (json is! Map) return const RegionalSuggestion();
+    String? text(String key, RegExp shape) {
+      final v = json[key];
+      return v is String && shape.hasMatch(v) ? v : null;
+    }
+
+    return RegionalSuggestion(
+      countryCode: text('country_code', RegExp(r'^[A-Z]{2}$')),
+      currencyCode: text('currency_code', RegExp(r'^[A-Z]{3}$')),
+      timezone: text('timezone', RegExp(r'^.{1,64}$')),
+      locale: text('locale', RegExp(r'^[a-z]{2}$')),
+    );
+  }
 }

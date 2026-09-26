@@ -1,0 +1,15 @@
+{
+  "templateRegionSuggested": "This template was made for {values}. Your choice is kept unless you use its values.",
+  "@templateRegionSuggested": {
+    "description": "#1656 template_region",
+    "placeholders": {
+      "values": {
+        "type": "String"
+      }
+    }
+  },
+  "templateRegionUse": "Use the template's region",
+  "@templateRegionUse": {
+    "description": "#1656 template_region"
+  }
+}

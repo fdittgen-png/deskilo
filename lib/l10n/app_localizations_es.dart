@@ -11228,6 +11228,14 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String templateRegionSuggested(String values) {
+    return 'Esta plantilla se creó para $values. Se mantiene su elección salvo que use sus valores.';
+  }
+
+  @override
+  String get templateRegionUse => 'Usar la región de la plantilla';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override
