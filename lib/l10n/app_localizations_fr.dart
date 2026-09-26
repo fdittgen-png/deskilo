@@ -3432,6 +3432,100 @@ class AppLocalizationsFr extends AppLocalizations {
       'Après avoir rejoint ou créé un espace, un membre voit une carte compacte sur le hub Réserver : l’espace dans lequel il se trouve et une prochaine étape suggérée — choisir un créneau à réserver, consulter son adhésion ou ouvrir l’aide — seulement là où les fonctionnalités et ses permissions le permettent. Pas maintenant la masque ; les Réglages peuvent la réafficher. Elle ne réserve, ne paie et n’approuve jamais rien. Désactivée, elle masque la carte et ne change rien d’autre.';
 
   @override
+  String gettingStartedTitle(String workspace) {
+    return 'Premiers pas dans $workspace';
+  }
+
+  @override
+  String get gettingStartedEnvDev => 'Espace de développement';
+
+  @override
+  String get gettingStartedEnvProd => 'Espace de production';
+
+  @override
+  String get gettingStartedStandingMember => 'Vous êtes membre ici.';
+
+  @override
+  String get gettingStartedStandingAdmin => 'Vous êtes administrateur ici.';
+
+  @override
+  String get gettingStartedStandingOwner =>
+      'Vous êtes propriétaire de cet espace.';
+
+  @override
+  String get gettingStartedReadyToBook =>
+      'L’espace est ouvert ce jour-là. Choisissez un créneau et une place sur le plan — rien n’est réservé tant que vous ne confirmez pas.';
+
+  @override
+  String get gettingStartedClosedToday =>
+      'L’espace est fermé le jour sélectionné. Choisissez un autre jour pour voir ce qui est libre.';
+
+  @override
+  String get gettingStartedNoSpaces =>
+      'Rien ne peut encore être réservé ici. Votre adhésion indique ce que comprend votre accès.';
+
+  @override
+  String get gettingStartedAvailabilityUnknown =>
+      'Les disponibilités n’ont pas pu être chargées. L’aide explique comment la réservation fonctionne ici.';
+
+  @override
+  String get gettingStartedMembershipUnknown =>
+      'Votre adhésion n’a pas pu être chargée pour le moment. L’aide explique comment cet espace fonctionne.';
+
+  @override
+  String gettingStartedBooked(String id, String state) {
+    return 'Votre réservation $id est $state. Votre adhésion indique ce qui est compris par ailleurs.';
+  }
+
+  @override
+  String gettingStartedAllowance(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Vous pouvez tenir $count réservations à la fois.',
+      one: 'Vous pouvez tenir une réservation à la fois.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gettingStartedStateReserved => 'réservée';
+
+  @override
+  String get gettingStartedStateCheckedIn => 'pointée';
+
+  @override
+  String get gettingStartedStateCompleted => 'terminée';
+
+  @override
+  String get gettingStartedStateCancelled => 'annulée';
+
+  @override
+  String get gettingStartedStateReleased => 'libérée';
+
+  @override
+  String get gettingStartedActionChooseTime => 'Choisir un créneau';
+
+  @override
+  String get gettingStartedActionChooseDay => 'Choisir un autre jour';
+
+  @override
+  String get gettingStartedActionMembership => 'Voir mon adhésion';
+
+  @override
+  String get gettingStartedActionHelp => 'Aide pour cet espace';
+
+  @override
+  String get gettingStartedNotNow => 'Pas maintenant';
+
+  @override
+  String get gettingStartedReopen => 'Premiers pas';
+
+  @override
+  String get gettingStartedSemantics =>
+      'Premiers pas : une prochaine étape suggérée';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
