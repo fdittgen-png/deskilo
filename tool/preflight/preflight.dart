@@ -66,6 +66,10 @@ const List<({String command, String owns})> _order = [
     owns: 'supabase/templates/*.json and variants/*.{json,md}',
   ),
   (command: 'dart run tool/build_setup_l10n.dart', owns: 'web/setup_*.js'),
+  (
+    command: 'dart run tool/build_mcp_contract.dart',
+    owns: 'contracts/mcp/generated/*, lib/core/mcp/mcp_operations.dart, _shared/mcp_contract.ts',
+  ),
   (command: 'dart run tool/build_help.dart', owns: 'assets/help/*.md'),
   (
     command: 'dart run tool/record_applied_migrations.dart',
@@ -148,6 +152,13 @@ List<Step> preflightSteps(
     // sources select the catalogue that feeds it.
     if (p == 'web/setup.html' || p.startsWith('lib/features/workspace/presentation/feature_')) {
       select('dart run tool/build_setup_l10n.dart', p);
+    }
+    // #1609 — the operation contract renders into Dart, TypeScript, the
+    // MCP tool list and an OpenAPI fragment; the TypeScript is an edge
+    // function file, so the instance bundle follows it.
+    if (p == 'contracts/mcp/operations.json' || p.startsWith('tool/mcp_contract/')) {
+      select('dart run tool/build_mcp_contract.dart', p);
+      select('dart run tool/build_instance.dart', p);
     }
     if (p.startsWith('docs/wiki/')) {
       select('dart run tool/build_help.dart', p);
