@@ -272,11 +272,16 @@ jobs:
       # that only works against a database that already exists cannot
       # rebuild production, and we would find that out on the day we
       # needed to.
+      #
+      # #1446 C5 — the start is the composite action, and it happens ONCE
+      # in this job: every step below attaches to this stack, through
+      # the address it publishes or `supabase status` on the runner. A
+      # producer added later (MCP, auth) is one more step after it.
       - name: Migration safety
         id: migrations
         if: env.DB_REQUIRED == 'true'
         continue-on-error: true
-        run: supabase start
+        uses: ./.github/actions/local-stack
 
       - name: Database disciplines
         id: pgtap
@@ -286,9 +291,6 @@ jobs:
           # #1335 — without pipefail this step reported `tee`'s exit code,
           # so a failing pgTAP run could never turn it red.
           set -o pipefail
-          psql "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')" \
-            -v ON_ERROR_STOP=1 \
-            -c 'create extension if not exists pgtap with schema extensions;'
           supabase test db 2>&1 | tee report-pgtap.log
 
       # #1313 — the policies the migrations actually build, read from the
@@ -300,10 +302,11 @@ jobs:
         id: policies
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
         run: |
           set -o pipefail
-          psql "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')" \
-            -v ON_ERROR_STOP=1 -At \
+          psql "$DB_URL" -v ON_ERROR_STOP=1 -At \
             -c "select schemaname || '.' || tablename || '.' || policyname
                   from pg_policies where schemaname in ('public', 'storage')
                  order by 1" > replay-policies.txt
@@ -322,9 +325,9 @@ jobs:
         id: contract
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
-        run: |
-          bash scripts/contract_check.sh \
-            "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')"
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
+        run: bash scripts/contract_check.sh "$DB_URL"
 
       # #1232 — the one property no pgTAP file can make, because every
       # one of them runs in a single transaction and a race needs two
@@ -333,9 +336,9 @@ jobs:
         id: race
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
-        run: |
-          bash scripts/concurrency_check.sh \
-            "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')"
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
+        run: bash scripts/concurrency_check.sh "$DB_URL"
 
       # #1329 — the feature-flag write compares its read-set and merges
       # under ONE row lock. Two real sessions prove there is no window
@@ -344,23 +347,9 @@ jobs:
         id: flags
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
-        run: |
-          bash scripts/feature_flags_race.sh \
-            "$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')"
-
-      # #1310 — OPERATIONS.md has documented the dump and the restore
-      # since the day it was written, and nothing had ever executed it.
-      # A backup procedure that has never been restored is a hope, not a
-      # recovery plan. Every pgTAP file rolls back, so this is the one
-      # fixture that persists: it is seeded, dumped, restored into a
-      # fresh database, and the copy is made to prove itself — equal row
-      # counts, a clean reconciliation per workspace, tenants intact.
-      # It runs last because its seed is the only data left on disk.
-      - name: Restore drill
-        id: restore
-        if: steps.migrations.outcome == 'success'
-        continue-on-error: true
-        run: bash scripts/restore_check.sh
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
+        run: bash scripts/feature_flags_race.sh "$DB_URL"
 
       # #1450 — the SQL tests inject a caller and `deno check` reads types;
       # neither shows how an Edge function composes its clients. This runs
@@ -382,6 +371,26 @@ jobs:
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
         run: bash scripts/edge_payment_check.sh --settle stripe
+
+      # #1310 — OPERATIONS.md has documented the dump and the restore
+      # since the day it was written, and nothing had ever executed it.
+      # A backup procedure that has never been restored is a hope, not a
+      # recovery plan. Every pgTAP file rolls back, so this is the one
+      # fixture that persists: it is seeded, dumped, restored into a
+      # fresh database, and the copy is made to prove itself — equal row
+      # counts, a clean reconciliation per workspace, tenants intact.
+      #
+      # #1446 C5 — its seed is the only data that stays in the SHARED
+      # database, so it runs after every step that expects to find only
+      # its own rows there (the race scripts remove theirs, the payment
+      # checks name theirs by run). The two drills after it work in
+      # databases of their own. test/lint/local_stack_harness_test.dart
+      # holds this order.
+      - name: Restore drill
+        id: restore
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: bash scripts/restore_check.sh
 
       # #1337 — the install, the resume, the readiness verdict and the
       # doctor were proven against a fake Management API only. This runs

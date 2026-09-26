@@ -197,6 +197,97 @@ dependency. `test/lint/workflow_source_identity_test.dart` reads every
 workflow as YAML and holds all of the above. No duration is claimed for
 any of it: this checkpoint is correctness only, unmeasured.
 
+## Shared setup without coupling (C5)
+
+**One measured run per candidate and flavour.** The code job runs the
+suite once, with coverage, and every row is derived from that stream
+(C1). Two other Flutter runs exist and both are kept, because each is a
+different candidate, not another report of the same one:
+
+- `packages/deskilo_push` runs its own suite in the code job. It cannot
+  live in `test/` because the F-Droid job swaps the package for its
+  Google-free twin before running that tree (#1558); it is seconds.
+- `CI · F-Droid no-GMS audit` runs the root suite again under the libre
+  flavour. `tool/fdroid_foss_swap.sh` changes the resolved dependency
+  graph — the Firebase transport for the twin, seven packages out of the
+  lockfile — and the suite is the proof that the app compiles and
+  behaves on that graph. Same tests, different candidate; a row derived
+  from the first stream would say nothing about the second. It is
+  path-filtered (`packages/`, `pubspec.yaml`, `lib/core/push/`,
+  `fdroid/`, itself), so it is not a cost on every pull request. Its
+  four successful runs of 2026-09-20 (35485239589, 35486020161,
+  35494426503, 35495613901): job 1 230–1 662 s, of which the analyze-and-
+  test step 828–1 098 s and the release build 357–521 s.
+- Since C5a both trees regenerate through `scripts/generated_drift.sh`:
+  the audit's regeneration is byte-equal to the commit or it says which
+  file is not. On 2026-09-25 the audit was red on master for exactly
+  that while the required job was green.
+
+**One stack per job.** `supabase start` happens in one place,
+`.github/actions/local-stack`, which the database job calls once as its
+`migrations` step; the action publishes the database address as an
+output and every step after it takes `DB_URL` from that output or asks
+`supabase status` on the same runner. No file under `scripts/` starts a
+stack. The Stripe checks already attach this way; an MCP or auth
+producer is one more step after `migrations` — `if:
+steps.migrations.outcome == 'success'`, `continue-on-error: true`, a row
+in `.github/quality-manifest.psv` — and `test/lint/local_stack_harness_test.dart`
+is red when it starts a stack of its own.
+
+**Fixtures that do not depend on order.** All 44 pgTAP files open with
+`begin;` and end with `rollback;` (the lint holds it), so none can read
+another's rows. The race scripts create rows under fixed ids and remove
+them; the payment checks name their users and sessions by run (`$$`) and
+leave them; the restore drill's seed is the only fixture that stays in
+the shared database, so it now runs after every step that expects to
+find only its own rows there — before C5 it ran between the flag race
+and the payment checks, with a comment saying it ran last. The lifecycle
+and archive drills work in databases of their own, and archive reads the
+empty project lifecycle leaves behind, so those two stay last in that
+order. The lint holds the order and, for every script the job runs,
+that it names its rows by run, removes them, creates its own database,
+or writes nothing.
+
+**Parallelism.** `flutter test` already runs one test process per core
+(`--concurrency` defaults to the core count; `ubuntu-latest` has four),
+with the file as the unit; nothing here changes it. `supabase test db`
+offers no parallel option through the pinned CLI, and the pgTAP step is
+363 s of a database job that runs beside the code job (558 s against
+1 527 s): shortening it would not shorten a pull request. No parallelism
+was added, and no number is claimed for any.
+
+**Measured, 2026-09-26.** `scripts/ci_timings.sh 60` now leaves a
+cancelled job out of every percentile — since C4b a superseded push is
+cancelled, and a killed job's duration is when it was killed, not what
+it costs — and labels each measured code job's cache state from its own
+log. Sixty completed pull-request runs, 27 cancelled, 33 measured:
+
+| job | n | success | cancelled (not measured) | queue p50 | queue p95 | run p50 | run p95 |
+|---|---|---|---|---|---|---|---|
+| analyze · l10n gate · test · coverage | 33 | 27 | 19 | 3 s | 4 s | 1 527 s | 1 609 s |
+| classify the change | 51 | 47 | 1 | 3 s | 14 s | 21 s | 24 s |
+| quality · database | 51 | 39 | 1 | 3 s | 35 s | 558 s | 626 s |
+| quality · report | 52 | 26 | 0 | 3 s | 4 s | 10 s | 11 s |
+
+Steps of twenty seconds or more, median: `Tests with coverage` 1 441 s
+(n=33), `Analyze` 39 s, the SDK setup 22 s; `Database disciplines` 363 s
+(n=51), `Migration safety` 61 s, the lifecycle drill 53 s. The run ids
+are in the script's output for that date; the first is 36203925616, the
+last 36178823262.
+
+Folding the cancelled jobs in had put the code job's p50 at 1 462 s; the
+honest figure is 65 s higher. **Cache state:** every one of the 33
+measured code jobs hit the SDK cache; 30 hit the pub cache exactly and 3
+on the restore-key prefix. There is no cold run in this sample, so this
+file still contains no cold-against-warm comparison — the 1 358 s median
+of the three partial hits against 1 541 s for the thirty exact ones is
+three runs of a 1 441 s test step, not a cache effect.
+
+Nothing in C5 is a speedup and none is claimed: the composite runs the
+same `supabase start`, the reorder moves a step without removing one,
+and C5a ADDS a build_runner step to the critical-path job — its cost is
+recorded below from the first runs that carried it.
+
 ## What is still not enforced
 
 Live protection on `master`, read 2026-09-20:
