@@ -11,6 +11,9 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+-- The facade calls mcp_read_v1 as its owner; the test calls it directly
+-- under each person's claims, so it grants itself what the facade has.
+grant execute on function public.mcp_read_v1(uuid, public.members, text, jsonb) to authenticated;
 create function pg_temp.read(p_user uuid, p_op text, p_args jsonb) returns jsonb language sql as $$
   select public.mcp_read_v1(current_setting('t.w')::uuid,
     (select m from public.members m where m.workspace_id = current_setting('t.w')::uuid and m.user_id = p_user),

@@ -85,6 +85,10 @@ select set_config('t.args', json_build_object(
   'ends_at', to_char(((now() at time zone 'Europe/Paris')::date + 7 + time '12:00') at time zone 'Europe/Paris', 'YYYY-MM-DD"T"HH24:MI:SS"Z"'))::text, true);
 select is(public.mcp_execute_v1(current_setting('t.i')::uuid, current_setting('t.a')::uuid, 'create_reservation',
   current_setting('t.args')::jsonb, '00000000-0000-4000-8000-00000000a001')->>'status', 'completed', 'A books');
+reset role;
+select diag('A books answered: ' || coalesce((select outcome::text from public.mcp_idempotency
+  where request_id = '00000000-0000-4000-8000-00000000a001'), 'nothing recorded'));
+select pg_temp.act_as('00000000-0000-4000-8000-0000000161a2', 'claude-test');
 select is(public.mcp_execute_v1(current_setting('t.i')::uuid, current_setting('t.a')::uuid, 'create_reservation',
   current_setting('t.args')::jsonb, '00000000-0000-4000-8000-00000000a001')->>'status', 'completed', 'the replay answers the same');
 select is(public.mcp_execute_v1(current_setting('t.i')::uuid, current_setting('t.a')::uuid, 'create_reservation',

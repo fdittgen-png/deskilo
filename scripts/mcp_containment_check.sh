@@ -47,7 +47,16 @@ expect "native reads a table" 200 "$NATIVE" GET "/rest/v1/workspaces?select=id"
 expect "delegated reads a table" 403 "$DELEGATED" GET "/rest/v1/workspaces?select=id"
 expect "delegated calls a business RPC" 403 "$DELEGATED" POST "/rest/v1/rpc/request_refund" '{"p_invoice_id":"00000000-0000-4000-8000-000000000001"}'
 expect "delegated reads the OpenAPI root" 403 "$DELEGATED" GET "/rest/v1/"
-expect "delegated uses GraphQL" 403 "$DELEGATED" POST "/graphql/v1" '{"query":"{ __typename }"}'
+# GraphQL: refused by the guard (403), or not served at all where the
+# stack does not expose the graphql schema (406, PGRST106). Anything that
+# answers data is a breach.
+got=$(code "$DELEGATED" POST "/graphql/v1" '{"query":"{ __typename }"}')
+case "$got" in
+  403) ;;
+  406) grep -q PGRST106 /tmp/mcp-out || fail "delegated uses GraphQL: 406 without PGRST106: $(head -c 300 /tmp/mcp-out)" ;;
+  *) fail "delegated uses GraphQL: expected 403 or an unexposed schema, got $got: $(head -c 300 /tmp/mcp-out)" ;;
+esac
+echo "delegated uses GraphQL: $got"
 expect "delegated GETs the facade" 403 "$DELEGATED" GET "/rest/v1/rpc/mcp_execute_v1"
 expect "delegated POSTs the facade" 200 "$DELEGATED" POST "/rest/v1/rpc/mcp_execute_v1" \
   '{"p_installation_id":"00000000-0000-4000-8000-000000000001","p_workspace_id":"00000000-0000-4000-8000-000000000002","p_operation":"get_capabilities","p_arguments":{},"p_request_id":null}'

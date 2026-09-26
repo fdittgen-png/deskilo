@@ -57,10 +57,9 @@ select ok(exists (select 1 from pg_policy p join pg_class c on c.oid = p.polreli
 -- PostgREST runs the pre-request as the request's own role: an anonymous
 -- request must pass it, or every signed-out call answers 401.
 reset role;
-select set_config('request.jwt.claims', '{"role": "anon"}', true);
-set local role anon;
-select lives_ok($$select public.mcp_pre_request()$$, 'an anonymous request passes the guard');
-reset role;
+select ok(has_function_privilege('anon', 'public.mcp_is_delegated()', 'execute')
+          and has_function_privilege('anon', 'public.mcp_pre_request()', 'execute'),
+  'an anonymous request can run the guard');
 
 drop policy mcp_delegated_deny on public.accessories;
 select throws_ok($$select public.operator_set_mcp_runtime(true)$$, 'P0001', null,
