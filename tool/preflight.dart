@@ -60,7 +60,15 @@ int run(List<String> args) {
     stdout.writeln('preflight v$preflightVersion: nothing changed against $base');
     return 0;
   }
-  final steps = preflightSteps(paths);
+  // #1446 C5a — the checked-in generator outputs, so a source with a
+  // sibling among them selects build_runner.
+  final generated = _lines(Process.runSync('git', [
+    'ls-files',
+    '--',
+    '*.g.dart',
+    '*.freezed.dart',
+  ]).stdout as String).toSet();
+  final steps = preflightSteps(paths, generated: generated);
   stdout.writeln('preflight v$preflightVersion: ${paths.length} changed '
       'file(s) against $base select ${steps.length} generator(s)');
   if (steps.isEmpty) return 0;

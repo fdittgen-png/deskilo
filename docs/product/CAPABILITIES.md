@@ -29,7 +29,7 @@ Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipp
 
 A member finds a free place on the plan and holds it for a period; the database refuses a second booking of the same place at the same time, whoever asks and however many clients race.
 
-- **Code:** shipped · component `d7bdf8e6a232`
+- **Code:** shipped · component `6c936b415523`
 - **Needs:** A workspace with a published plan and opening hours; booking rules in Settings.
 - **Limits:** Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.
 - **Feature flags:** `bookingGate`, `bookingPolicies`, `seriesBooking`, `autoCheckInOut`
@@ -43,7 +43,7 @@ A member finds a free place on the plan and holds it for a period; the database 
 
 A membership plan grants an allowance per month; a booking beyond it spends a carnet or is refused, and a member without a subscription never books for free.
 
-- **Code:** shipped · component `57cbac61789e`
+- **Code:** shipped · component `48425dc41b38`
 - **Needs:** Membership plans configured; an allowance per plan.
 - **Limits:** Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.
 - **Feature flags:** `carnets`, `usageRecords`

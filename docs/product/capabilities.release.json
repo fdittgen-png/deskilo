@@ -21,7 +21,7 @@
       ],
       "prerequisites": "A workspace with a published plan and opening hours; booking rules in Settings.",
       "limitations": "Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.",
-      "fingerprint": "d7bdf8e6a232",
+      "fingerprint": "6c936b415523",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -67,7 +67,7 @@
       ],
       "prerequisites": "Membership plans configured; an allowance per plan.",
       "limitations": "Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.",
-      "fingerprint": "57cbac61789e",
+      "fingerprint": "48425dc41b38",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",

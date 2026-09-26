@@ -280,8 +280,6 @@ final class CurrentWorkspaceProvider
 
 String _$currentWorkspaceHash() => r'e6a8c0bd37a3bab95967196d4286dfc44dc132a6';
 
-/// All memberships of the active workspace (owner management + event
-/// decider computation, #107).
 /// #1449 — the decisions behind starting a conversation: whether picking
 /// a second person makes it a group, and that a name already taken is a
 /// correction rather than a failure.
@@ -289,8 +287,6 @@ String _$currentWorkspaceHash() => r'e6a8c0bd37a3bab95967196d4286dfc44dc132a6';
 @ProviderFor(startConversationCommand)
 final startConversationCommandProvider = StartConversationCommandProvider._();
 
-/// All memberships of the active workspace (owner management + event
-/// decider computation, #107).
 /// #1449 — the decisions behind starting a conversation: whether picking
 /// a second person makes it a group, and that a name already taken is a
 /// correction rather than a failure.
@@ -298,8 +294,6 @@ final startConversationCommandProvider = StartConversationCommandProvider._();
 final class StartConversationCommandProvider
     extends $FunctionalProvider<Conversations, Conversations, Conversations>
     with $Provider<Conversations> {
-  /// All memberships of the active workspace (owner management + event
-  /// decider computation, #107).
   /// #1449 — the decisions behind starting a conversation: whether picking
   /// a second person makes it a group, and that a name already taken is a
   /// correction rather than a failure.
@@ -339,20 +333,20 @@ final class StartConversationCommandProvider
 String _$startConversationCommandHash() =>
     r'942ce4132b6a5f45e51a1913773daa96b0ed5467';
 
-/// #1449 — starting a workspace: what a creation needs before it is
-/// one, and the request id that makes a retry the SAME creation.
+/// #1449 — starting a workspace: what a creation needs before it is one,
+/// and the request id that makes a retry the SAME creation.
 
 @ProviderFor(workspaceStart)
 final workspaceStartProvider = WorkspaceStartProvider._();
 
-/// #1449 — starting a workspace: what a creation needs before it is
-/// one, and the request id that makes a retry the SAME creation.
+/// #1449 — starting a workspace: what a creation needs before it is one,
+/// and the request id that makes a retry the SAME creation.
 
 final class WorkspaceStartProvider
     extends $FunctionalProvider<WorkspaceStart, WorkspaceStart, WorkspaceStart>
     with $Provider<WorkspaceStart> {
-  /// #1449 — starting a workspace: what a creation needs before it is
-  /// one, and the request id that makes a retry the SAME creation.
+  /// #1449 — starting a workspace: what a creation needs before it is one,
+  /// and the request id that makes a retry the SAME creation.
   WorkspaceStartProvider._()
     : super(
         from: null,
@@ -388,8 +382,14 @@ final class WorkspaceStartProvider
 
 String _$workspaceStartHash() => r'f2e03f5b0054327d8a2e39eff27edaf972c37fe1';
 
+/// All memberships of the active workspace (owner management + event
+/// decider computation, #107).
+
 @ProviderFor(workspaceMembers)
 final workspaceMembersProvider = WorkspaceMembersProvider._();
+
+/// All memberships of the active workspace (owner management + event
+/// decider computation, #107).
 
 final class WorkspaceMembersProvider
     extends
@@ -399,6 +399,8 @@ final class WorkspaceMembersProvider
           FutureOr<List<Member>>
         >
     with $FutureModifier<List<Member>>, $FutureProvider<List<Member>> {
+  /// All memberships of the active workspace (owner management + event
+  /// decider computation, #107).
   WorkspaceMembersProvider._()
     : super(
         from: null,
@@ -425,7 +427,7 @@ final class WorkspaceMembersProvider
   }
 }
 
-String _$workspaceMembersHash() => r'f78db28b0125042299f8e84ea7933796eaf4865b';
+String _$workspaceMembersHash() => r'70057020bede2169b5f0a0eb60981d23fd535e89';
 
 /// All my membership rows across workspaces — one per profile (#89).
 
@@ -1801,7 +1803,7 @@ final class MyMemberProvider
   }
 }
 
-String _$myMemberHash() => r'894055bd99d73ca6c7d30a82ed343f8f484fb725';
+String _$myMemberHash() => r'08e79acaed8f2f29f630ee1a1732f2f25fbeddf4';
 
 /// #915 — one managed profile's identity, from behind the access rule.
 ///
@@ -1892,7 +1894,7 @@ final class ManagedIdentityProvider
   }
 }
 
-String _$managedIdentityHash() => r'7fd4b43dc1a7d90b0d9e14fbc2d09092f28be37a';
+String _$managedIdentityHash() => r'a5c00d0aca2d3fa4c3d5961eb7b155fc51c7414e';
 
 /// #915 — one managed profile's identity, from behind the access rule.
 ///

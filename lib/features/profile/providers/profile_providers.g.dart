@@ -96,7 +96,7 @@ final class MyProfileProvider
   }
 }
 
-String _$myProfileHash() => r'ca2642f7b736bb77fd5491e83fe3985d9fc2baca';
+String _$myProfileHash() => r'c606617e4d65b93f16cb88705bba3f3b64eb9781';
 
 /// Bytes of [userId]'s profile photo (0038), or null when they have none.
 /// Kept alive so a member's avatar is fetched once and reused across the
