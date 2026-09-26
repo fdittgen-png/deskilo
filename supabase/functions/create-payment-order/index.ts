@@ -13,6 +13,7 @@
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
 import { toMajor } from "../_shared/money.ts";
+import { mollieApi, paypalApi } from "../_shared/providers.ts";
 
 type Provider = "paypal" | "stripe" | "mollie" | "wero";
 
@@ -96,11 +97,6 @@ const missingFields = (config: Record<string, string>, provider: Provider) =>
  * request ever leaves the runner. */
 const stripeApi = () =>
   Deno.env.get("STRIPE_API_BASE") ?? "https://api.stripe.com";
-
-const paypalApi = (env?: string) =>
-  env === "live"
-    ? "https://api-m.paypal.com"
-    : "https://api-m.sandbox.paypal.com";
 
 // ── providers ─────────────────────────────────────────────────────────
 
@@ -191,7 +187,7 @@ async function createMolliePayment(
   reference: string,
   method?: string,
 ): Promise<{ orderId: string; approveUrl: string }> {
-  const res = await fetch("https://api.mollie.com/v2/payments", {
+  const res = await fetch(`${mollieApi()}/v2/payments`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${cfg.api_key}`,

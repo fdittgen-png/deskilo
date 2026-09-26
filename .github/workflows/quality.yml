@@ -372,6 +372,26 @@ jobs:
         continue-on-error: true
         run: bash scripts/edge_payment_check.sh --settle stripe
 
+      # #1638 — PayPal: approval is not money. A stateful local PayPal
+      # (token, Orders v2 create/detail/capture, signature verification),
+      # the real handlers: capture once per order under a fixed request id,
+      # a lost capture reply, an order captured elsewhere, a verifier
+      # outage, a forged signature, a foreign amount/currency/reference.
+      - name: A PayPal payment settles
+        id: settlement_paypal
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: bash scripts/edge_payment_check.sh --settle paypal
+
+      # #1639 — Mollie and Wero, each with its own key and payments: the
+      # classic callback is a notification, the fetched payment must be the
+      # intent's in reference, amount, currency, method and mode.
+      - name: A Mollie or Wero payment settles
+        id: settlement_mollie
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: bash scripts/edge_payment_check.sh --settle mollie
+
       # #1310 — OPERATIONS.md has documented the dump and the restore
       # since the day it was written, and nothing had ever executed it.
       # A backup procedure that has never been restored is a hope, not a
@@ -470,6 +490,10 @@ jobs:
               "${{ steps.payments.outcome }}"
             printf 'Payment settlement|%s|Stripe: paid credits once, unpaid does not, async success once, failure and expiry mark failed, bad signature and wrong amount refused, duplicate and concurrent delivery credit once, a lost webhook stays pending, reconciliation clean\n' \
               "${{ steps.settlement.outcome }}"
+            printf 'PayPal settlement|%s|approved orders captured once under a fixed request id and settled from the capture; unapproved, forged, verifier outage and foreign amount/currency/reference refused before capture; lost capture reply and reordered callbacks credit once; reconciliation clean\n' \
+              "${{ steps.settlement_paypal.outcome }}"
+            printf 'Mollie and Wero settlement|%s|each method with its own key; paid credits once, open and authorized do not, canceled/expired/failed mark failed; wrong method, currency, amount, mode or reference and provider outage credit nothing; duplicate and concurrent callbacks credit once; next-generation payloads refused; reconciliation clean\n' \
+              "${{ steps.settlement_mollie.outcome }}"
             printf 'Instance lifecycle|%s|empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation\n' \
               "${{ steps.lifecycle.outcome }}"
             printf 'Archive preservation|%s|a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught\n' \
@@ -510,6 +534,8 @@ jobs:
             "Restore drill=${{ steps.restore.outcome }}" \
             "A member can start a payment=${{ steps.payments.outcome }}" \
             "A Stripe payment settles=${{ steps.settlement.outcome }}" \
+            "A PayPal payment settles=${{ steps.settlement_paypal.outcome }}" \
+            "A Mollie or Wero payment settles=${{ steps.settlement_mollie.outcome }}" \
             "Install, resume and upgrade a real schema=${{ steps.lifecycle.outcome }}" \
             "A populated instance upgrades and keeps its archives=${{ steps.archive.outcome }}"
 

@@ -28,8 +28,10 @@
 # #1637 — `--settle <provider>` goes on from here: the same fixtures, the
 # stateful stub in scripts/payment_scenarios/, the REAL webhook handler
 # and a matrix of locally signed events, sourced from
-# scripts/payment_scenarios/<provider>.sh. Only `stripe` exists; Q-018
-# and Q-019 add theirs, and no file speaks for another provider.
+# scripts/payment_scenarios/<provider>.sh: stripe, paypal (#1638) and
+# mollie (#1639, Mollie and Wero). No file speaks for another provider;
+# the order handler is started with every provider's local origin, and
+# each scenario file starts its own stub on that port.
 set -uo pipefail
 
 fail() { echo "::error::payment edge check: $*"; exit 1; }
@@ -71,6 +73,7 @@ STUB_PID=$!
 SUPABASE_URL="$API_URL" SUPABASE_ANON_KEY="$ANON_KEY" \
 SUPABASE_SERVICE_ROLE_KEY="$SERVICE_KEY" \
 STRIPE_API_BASE="http://127.0.0.1:$STUB_PORT" \
+PAYPAL_API_BASE="http://127.0.0.1:54997" MOLLIE_API_BASE="http://127.0.0.1:54996" \
   deno run --allow-net --allow-env --allow-read --allow-import \
   supabase/functions/create-payment-order/index.ts > "$WORK/fn.log" 2>&1 &
 FN_PID=$!
