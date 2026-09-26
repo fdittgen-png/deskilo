@@ -132,7 +132,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/screens/legal_identity_screen.dart` | 649 |
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
-| `lib/features/workspace/providers/workspace_providers.dart` | 622 |
+| `lib/features/workspace/providers/workspace_providers.dart` | 624 |
 | `lib/features/money/presentation/invoice_documents.dart` | 610 |
 
 **39 files.**

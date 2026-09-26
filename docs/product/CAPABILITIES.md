@@ -29,7 +29,7 @@ Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipp
 
 A member finds a free place on the plan and holds it for a period; the database refuses a second booking of the same place at the same time, whoever asks and however many clients race.
 
-- **Code:** shipped · component `c716ad520b2e`
+- **Code:** shipped · component `291e3c0d7b12`
 - **Needs:** A workspace with a published plan and opening hours; booking rules in Settings.
 - **Limits:** Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.
 - **Feature flags:** `bookingGate`, `bookingPolicies`, `seriesBooking`, `autoCheckInOut`

@@ -64,3 +64,6 @@ Add the input rule in `tool/preflight/preflight.dart`, put the command in
 `_order` at the position its inputs demand, and add the case to
 `test/tool/preflight_test.dart`. Bump `preflightVersion` when a rule
 changes, so a report can say which rules decided.
+
+<!-- dated: 2026-09-26 — #1654 analyzer plugin migration -->
+Run `dart analyze --fatal-infos` with the pinned SDK as well as the Flutter check. It waits for Riverpod plugin diagnostics; the Flutter LSP command can finish before those arrive. A plugin setup failure is a failed check.

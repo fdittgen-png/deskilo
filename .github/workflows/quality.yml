@@ -124,7 +124,8 @@ jobs:
         working-directory: packages/deskilo_push
 
       - name: Analyze (lib + test)
-        run: flutter analyze
+        # Direct Dart analysis waits for analyzer plugins to finish.
+        run: dart analyze --fatal-infos
 
       # #1446 C1 — ONE run of the suite, with coverage, for the whole
       # report. The discipline rows below are derived from this run's JSON

@@ -163,7 +163,8 @@ WorkspaceStart workspaceStart(Ref ref) =>
 
 /// All memberships of the active workspace (owner management + event
 /// decider computation, #107).
-@riverpod
+// Shared by the persistent invoicing overview; workspace changes invalidate it.
+@Riverpod(keepAlive: true)
 Future<List<Member>> workspaceMembers(Ref ref) async {
   // #1218 — the repository is watched BEFORE the gap: a bare
   // `ref.watch` on the far side of an await throws outright if the
@@ -217,7 +218,8 @@ Future<List<int>> openWeekdays(Ref ref) async {
 
 /// Booking-granularity rule of the active workspace (#200); flexible
 /// while no workspace is selected or the key is absent.
-@riverpod
+// The session-lived default-period controller watches this policy.
+@Riverpod(keepAlive: true)
 Future<BookingGranularity> bookingGranularity(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return BookingGranularity.flexible;

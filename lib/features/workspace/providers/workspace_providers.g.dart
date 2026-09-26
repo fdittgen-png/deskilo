@@ -439,12 +439,14 @@ String _$workspaceStartHash() => r'f2e03f5b0054327d8a2e39eff27edaf972c37fe1';
 
 /// All memberships of the active workspace (owner management + event
 /// decider computation, #107).
+// Shared by the persistent invoicing overview; workspace changes invalidate it.
 
 @ProviderFor(workspaceMembers)
 final workspaceMembersProvider = WorkspaceMembersProvider._();
 
 /// All memberships of the active workspace (owner management + event
 /// decider computation, #107).
+// Shared by the persistent invoicing overview; workspace changes invalidate it.
 
 final class WorkspaceMembersProvider
     extends
@@ -456,13 +458,14 @@ final class WorkspaceMembersProvider
     with $FutureModifier<List<Member>>, $FutureProvider<List<Member>> {
   /// All memberships of the active workspace (owner management + event
   /// decider computation, #107).
+  // Shared by the persistent invoicing overview; workspace changes invalidate it.
   WorkspaceMembersProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'workspaceMembersProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -482,7 +485,7 @@ final class WorkspaceMembersProvider
   }
 }
 
-String _$workspaceMembersHash() => r'70057020bede2169b5f0a0eb60981d23fd535e89';
+String _$workspaceMembersHash() => r'0fd2fffc9c1cca252f0b68b750f6044bf4efa641';
 
 /// All my membership rows across workspaces — one per profile (#89).
 
@@ -618,12 +621,14 @@ String _$openWeekdaysHash() => r'a009dd9b0d56fe04f6fd083a0511371e97097a80';
 
 /// Booking-granularity rule of the active workspace (#200); flexible
 /// while no workspace is selected or the key is absent.
+// The session-lived default-period controller watches this policy.
 
 @ProviderFor(bookingGranularity)
 final bookingGranularityProvider = BookingGranularityProvider._();
 
 /// Booking-granularity rule of the active workspace (#200); flexible
 /// while no workspace is selected or the key is absent.
+// The session-lived default-period controller watches this policy.
 
 final class BookingGranularityProvider
     extends
@@ -637,13 +642,14 @@ final class BookingGranularityProvider
         $FutureProvider<BookingGranularity> {
   /// Booking-granularity rule of the active workspace (#200); flexible
   /// while no workspace is selected or the key is absent.
+  // The session-lived default-period controller watches this policy.
   BookingGranularityProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'bookingGranularityProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -664,7 +670,7 @@ final class BookingGranularityProvider
 }
 
 String _$bookingGranularityHash() =>
-    r'bf5e00802791de2482d6dd476a2a5ab5c4a698b2';
+    r'3716110520803d5fa16aa829e642a43eb05aace2';
 
 /// The #600 booking-policy switches of the active workspace; all OFF
 /// while no workspace is selected or the keys are absent.

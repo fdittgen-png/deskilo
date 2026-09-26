@@ -218,43 +218,12 @@ abstract class _$ShellSwipeCoachSeen extends $AsyncNotifier<bool> {
   }
 }
 
-/// The live collapse progress `t` ∈ [0, 1] — 0 shown, 1 hidden — for
-/// chrome that lives outside [ShellBarCollapse]: the title bar (#1322).
-///
-/// Published by the ONE controller that owns the gesture, never driven by
-/// a second: two controllers with the same duration and curve still part
-/// company the moment a finger is on the bar, because only one of them
-/// follows it. Transient like that controller; the settled, persisted
-/// choice stays [ShellBarHidden].
-
 @ProviderFor(shellBarProgress)
 final shellBarProgressProvider = ShellBarProgressProvider._();
 
-/// The live collapse progress `t` ∈ [0, 1] — 0 shown, 1 hidden — for
-/// chrome that lives outside [ShellBarCollapse]: the title bar (#1322).
-///
-/// Published by the ONE controller that owns the gesture, never driven by
-/// a second: two controllers with the same duration and curve still part
-/// company the moment a finger is on the bar, because only one of them
-/// follows it. Transient like that controller; the settled, persisted
-/// choice stays [ShellBarHidden].
-
 final class ShellBarProgressProvider
-    extends
-        $FunctionalProvider<
-          ValueNotifier<double>,
-          ValueNotifier<double>,
-          ValueNotifier<double>
-        >
-    with $Provider<ValueNotifier<double>> {
-  /// The live collapse progress `t` ∈ [0, 1] — 0 shown, 1 hidden — for
-  /// chrome that lives outside [ShellBarCollapse]: the title bar (#1322).
-  ///
-  /// Published by the ONE controller that owns the gesture, never driven by
-  /// a second: two controllers with the same duration and curve still part
-  /// company the moment a finger is on the bar, because only one of them
-  /// follows it. Transient like that controller; the settled, persisted
-  /// choice stays [ShellBarHidden].
+    extends $FunctionalProvider<ShellBarMotion, ShellBarMotion, ShellBarMotion>
+    with $Provider<ShellBarMotion> {
   ShellBarProgressProvider._()
     : super(
         from: null,
@@ -271,22 +240,21 @@ final class ShellBarProgressProvider
 
   @$internal
   @override
-  $ProviderElement<ValueNotifier<double>> $createElement(
-    $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  $ProviderElement<ShellBarMotion> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
 
   @override
-  ValueNotifier<double> create(Ref ref) {
+  ShellBarMotion create(Ref ref) {
     return shellBarProgress(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ValueNotifier<double> value) {
+  Override overrideWithValue(ShellBarMotion value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<ValueNotifier<double>>(value),
+      providerOverride: $SyncValueProvider<ShellBarMotion>(value),
     );
   }
 }
 
-String _$shellBarProgressHash() => r'a436a786930582467c23aaef9ca2232b18220e75';
+String _$shellBarProgressHash() => r'2d499afb48ed9b33aea81adb3734eaae7d2bf35c';

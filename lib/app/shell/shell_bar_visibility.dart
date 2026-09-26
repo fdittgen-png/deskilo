@@ -135,9 +135,17 @@ const double kShellBarSwipeVelocity = 200;
 /// company the moment a finger is on the bar, because only one of them
 /// follows it. Transient like that controller; the settled, persisted
 /// choice stays [ShellBarHidden].
-@Riverpod(keepAlive: true)
-ValueNotifier<double> shellBarProgress(Ref ref) {
+class ShellBarMotion {
   final progress = ValueNotifier<double>(0);
-  ref.onDispose(progress.dispose);
-  return progress;
+
+  void dispose() => progress.dispose();
+}
+
+// Riverpod owns the controller's lifetime. Frame listeners subscribe to
+// progress explicitly, without rebuilding every provider consumer per frame.
+@Riverpod(keepAlive: true)
+ShellBarMotion shellBarProgress(Ref ref) {
+  final motion = ShellBarMotion();
+  ref.onDispose(motion.dispose);
+  return motion;
 }
