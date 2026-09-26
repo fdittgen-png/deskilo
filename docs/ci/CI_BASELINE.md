@@ -256,11 +256,37 @@ offers no parallel option through the pinned CLI, and the pgTAP step is
 1 527 s): shortening it would not shorten a pull request. No parallelism
 was added, and no number is claimed for any.
 
+**Measured, 2026-09-26.** `scripts/ci_timings.sh 60` now leaves a
+cancelled job out of every percentile — since C4b a superseded push is
+cancelled, and a killed job's duration is when it was killed, not what
+it costs — and labels each measured code job's cache state from its own
+log. Sixty completed pull-request runs, 27 cancelled, 33 measured:
+
+| job | n | success | cancelled (not measured) | queue p50 | queue p95 | run p50 | run p95 |
+|---|---|---|---|---|---|---|---|
+| analyze · l10n gate · test · coverage | 33 | 27 | 19 | 3 s | 4 s | 1 527 s | 1 609 s |
+| classify the change | 51 | 47 | 1 | 3 s | 14 s | 21 s | 24 s |
+| quality · database | 51 | 39 | 1 | 3 s | 35 s | 558 s | 626 s |
+| quality · report | 52 | 26 | 0 | 3 s | 4 s | 10 s | 11 s |
+
+Steps of twenty seconds or more, median: `Tests with coverage` 1 441 s
+(n=33), `Analyze` 39 s, the SDK setup 22 s; `Database disciplines` 363 s
+(n=51), `Migration safety` 61 s, the lifecycle drill 53 s. The run ids
+are in the script's output for that date; the first is 36203925616, the
+last 36178823262.
+
+Folding the cancelled jobs in had put the code job's p50 at 1 462 s; the
+honest figure is 65 s higher. **Cache state:** every one of the 33
+measured code jobs hit the SDK cache; 30 hit the pub cache exactly and 3
+on the restore-key prefix. There is no cold run in this sample, so this
+file still contains no cold-against-warm comparison — the 1 358 s median
+of the three partial hits against 1 541 s for the thirty exact ones is
+three runs of a 1 441 s test step, not a cache effect.
+
 Nothing in C5 is a speedup and none is claimed: the composite runs the
 same `supabase start`, the reorder moves a step without removing one,
-and C5a ADDS a build_runner step to the critical-path job. The sample
-that says what all of it costs, taken with a script that no longer
-counts a cancelled job, is C5b.
+and C5a ADDS a build_runner step to the critical-path job — its cost is
+recorded below from the first runs that carried it.
 
 ## What is still not enforced
 
