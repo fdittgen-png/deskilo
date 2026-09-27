@@ -82,6 +82,62 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accessoriesActive => 'Actif';
 
   @override
+  String get handoffTitle => 'Avant d’enregistrer';
+
+  @override
+  String handoffIncluded(String count) {
+    return '$count document(s) dans le fichier';
+  }
+
+  @override
+  String handoffExcludedSettlements(String count) {
+    return '$count récapitulatif(s) de règlement écarté(s) : leurs factures figurent déjà';
+  }
+
+  @override
+  String get handoffIssued => 'Émises';
+
+  @override
+  String get handoffVoided => 'Annulées';
+
+  @override
+  String handoffPayments(String confirmed, String pending) {
+    return 'Payé : $confirmed confirmé, $pending en attente';
+  }
+
+  @override
+  String handoffMissingCurrency(String number) {
+    return '$number : aucune devise';
+  }
+
+  @override
+  String handoffDuplicate(String number) {
+    return '$number : apparaît deux fois dans la source';
+  }
+
+  @override
+  String handoffOrphanMatch(String key) {
+    return 'Un paiement ($key) ne correspond à aucun document de cet export';
+  }
+
+  @override
+  String handoffRowMismatch(String detail) {
+    return 'Les lignes du fichier ne correspondent pas aux documents ($detail)';
+  }
+
+  @override
+  String handoffOverpaid(String number) {
+    return '$number : payé au-delà du montant facturé';
+  }
+
+  @override
+  String get handoffBlocked =>
+      'Ce fichier ne peut pas être transmis tant que la source n’est pas corrigée.';
+
+  @override
+  String get handoffSave => 'Enregistrer le fichier et le rapport';
+
+  @override
   String get fecAccountExpenses => 'Achats et charges';
 
   @override

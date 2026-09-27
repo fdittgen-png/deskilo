@@ -82,6 +82,62 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accessoriesActive => 'Active';
 
   @override
+  String get handoffTitle => 'Before you save';
+
+  @override
+  String handoffIncluded(String count) {
+    return '$count document(s) in the file';
+  }
+
+  @override
+  String handoffExcludedSettlements(String count) {
+    return '$count settlement summary(ies) left out: their invoices are already listed';
+  }
+
+  @override
+  String get handoffIssued => 'Issued';
+
+  @override
+  String get handoffVoided => 'Voided';
+
+  @override
+  String handoffPayments(String confirmed, String pending) {
+    return 'Paid: $confirmed confirmed, $pending pending';
+  }
+
+  @override
+  String handoffMissingCurrency(String number) {
+    return '$number: no currency';
+  }
+
+  @override
+  String handoffDuplicate(String number) {
+    return '$number: appears twice in the source';
+  }
+
+  @override
+  String handoffOrphanMatch(String key) {
+    return 'A payment ($key) belongs to no document of this export';
+  }
+
+  @override
+  String handoffRowMismatch(String detail) {
+    return 'The file rows do not match the documents ($detail)';
+  }
+
+  @override
+  String handoffOverpaid(String number) {
+    return '$number: paid more than it charges';
+  }
+
+  @override
+  String get handoffBlocked =>
+      'This file cannot be handed over until the source is corrected.';
+
+  @override
+  String get handoffSave => 'Save file and report';
+
+  @override
   String get fecAccountExpenses => 'Expenses';
 
   @override

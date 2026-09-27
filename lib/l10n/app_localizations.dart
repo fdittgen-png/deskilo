@@ -236,6 +236,84 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get accessoriesActive;
 
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'Before you save'**
+  String get handoffTitle;
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'{count} document(s) in the file'**
+  String handoffIncluded(String count);
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'{count} settlement summary(ies) left out: their invoices are already listed'**
+  String handoffExcludedSettlements(String count);
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get handoffIssued;
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'Voided'**
+  String get handoffVoided;
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'Paid: {confirmed} confirmed, {pending} pending'**
+  String handoffPayments(String confirmed, String pending);
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: no currency'**
+  String handoffMissingCurrency(String number);
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: appears twice in the source'**
+  String handoffDuplicate(String number);
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'A payment ({key}) belongs to no document of this export'**
+  String handoffOrphanMatch(String key);
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'The file rows do not match the documents ({detail})'**
+  String handoffRowMismatch(String detail);
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: paid more than it charges'**
+  String handoffOverpaid(String number);
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'This file cannot be handed over until the source is corrected.'**
+  String get handoffBlocked;
+
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'Save file and report'**
+  String get handoffSave;
+
   /// #936 accounting exports: fecAccountExpenses
   ///
   /// In en, this message translates to:
