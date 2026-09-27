@@ -6881,6 +6881,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get libraryProcessTechnical => 'Técnico';
 
   @override
+  String get templatesLoadFailed => 'No se pudieron cargar las plantillas.';
+
+  @override
+  String get onboardingTemplatesFailedEmpty =>
+      'No se pudieron cargar las plantillas, así que este espacio empezaría vacío. Vuelva atrás para intentarlo de nuevo.';
+
+  @override
   String get localSlotLegalIdentity =>
       'Su identidad legal y su dirección (para las facturas)';
 

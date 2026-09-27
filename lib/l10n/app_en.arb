@@ -7307,6 +7307,14 @@
   "@libraryProcessTechnical": {
     "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
   },
+  "templatesLoadFailed": "The templates could not be loaded.",
+  "@templatesLoadFailed": {
+    "description": "#1660 library"
+  },
+  "onboardingTemplatesFailedEmpty": "The templates could not be loaded, so this space would start empty. Go back to try again.",
+  "@onboardingTemplatesFailedEmpty": {
+    "description": "#1660 library"
+  },
   "localSlotLegalIdentity": "Your legal identity and address (for invoices)",
   "@localSlotLegalIdentity": {
     "description": "#1656 local_setup"

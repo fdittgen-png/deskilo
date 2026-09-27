@@ -6892,6 +6892,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get libraryProcessTechnical => 'Technisch';
 
   @override
+  String get templatesLoadFailed =>
+      'Die Vorlagen konnten nicht geladen werden.';
+
+  @override
+  String get onboardingTemplatesFailedEmpty =>
+      'Die Vorlagen konnten nicht geladen werden, daher würde dieser Bereich leer beginnen. Gehen Sie zurück, um es erneut zu versuchen.';
+
+  @override
   String get localSlotLegalIdentity =>
       'Ihre rechtliche Identität und Adresse (für Rechnungen)';
 

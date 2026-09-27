@@ -11833,6 +11833,18 @@ abstract class AppLocalizations {
   /// **'Technical'**
   String get libraryProcessTechnical;
 
+  /// #1660 library
+  ///
+  /// In en, this message translates to:
+  /// **'The templates could not be loaded.'**
+  String get templatesLoadFailed;
+
+  /// #1660 library
+  ///
+  /// In en, this message translates to:
+  /// **'The templates could not be loaded, so this space would start empty. Go back to try again.'**
+  String get onboardingTemplatesFailedEmpty;
+
   /// #1656 local_setup
   ///
   /// In en, this message translates to:

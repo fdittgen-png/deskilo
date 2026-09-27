@@ -6832,6 +6832,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get libraryProcessTechnical => 'Technical';
 
   @override
+  String get templatesLoadFailed => 'The templates could not be loaded.';
+
+  @override
+  String get onboardingTemplatesFailedEmpty =>
+      'The templates could not be loaded, so this space would start empty. Go back to try again.';
+
+  @override
   String get localSlotLegalIdentity =>
       'Your legal identity and address (for invoices)';
 
