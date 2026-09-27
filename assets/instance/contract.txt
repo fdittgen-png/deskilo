@@ -1142,6 +1142,8 @@ routine public.system_columns_stamp() -> trigger | function | invoker | volatile
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
 routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:ddcd6518c5cf
+routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4acf23aa5b44
+routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9e1945110fb4
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
 routine public.template_plan_price_tree(p_tree jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:e3aa36ff6c7e
 routine public.template_plan_same(p_a jsonb, p_b jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:15531b9739f4
@@ -1181,6 +1183,7 @@ routine public.workspace_charges_vat(p_workspace_id uuid) -> boolean | function 
 routine public.workspace_default_vat_percent(p_workspace_id uuid) -> numeric | function | definer | stable | exec:authenticated,service_role | body:9b1c2bfc4051
 routine public.workspace_default_vat_percent(p_workspace_id uuid, p_date date) -> numeric | function | definer | stable | exec:authenticated,service_role | body:f8f0dfd76674
 routine public.workspace_default_vat_rate_id(p_workspace_id uuid) -> uuid | function | definer | stable | exec:authenticated,service_role | body:c5b128b6036a
+routine public.workspace_local_readiness(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:73fd7536d369
 routine public.workspace_mcp_policy_revisions_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:e85c1267373c
 routine public.workspace_owners(p_workspace_id uuid) -> TABLE(member_id uuid, name text, email text) | function | definer | volatile | exec:authenticated,service_role | body:0b62eff662e8
 routine public.workspace_roles_export(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:9bfe6a91775f
