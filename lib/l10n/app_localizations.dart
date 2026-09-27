@@ -20064,6 +20064,36 @@ abstract class AppLocalizations {
   /// **'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise'**
   String get workbookWide;
 
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting the workbook'**
+  String get workbookExportTitle;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Reading templates: {done} of {total}'**
+  String workbookExportReading(String done, String total);
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Building the workbook…'**
+  String get workbookExportBuilding;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Choose where to save it…'**
+  String get workbookExportSaving;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Export cancelled. Nothing was saved.'**
+  String get workbookExportCancelled;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:

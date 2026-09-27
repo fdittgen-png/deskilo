@@ -12587,6 +12587,34 @@
   "@workbookWide": {
     "description": "#1661 template_workbook"
   },
+  "workbookExportTitle": "Exporting the workbook",
+  "@workbookExportTitle": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookExportReading": "Reading templates: {done} of {total}",
+  "@workbookExportReading": {
+    "description": "#1661 template_workbook",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "workbookExportBuilding": "Building the workbook…",
+  "@workbookExportBuilding": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookExportSaving": "Choose where to save it…",
+  "@workbookExportSaving": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookExportCancelled": "Export cancelled. Nothing was saved.",
+  "@workbookExportCancelled": {
+    "description": "#1661 template_workbook"
+  },
   "themeTitle": "Theme",
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"

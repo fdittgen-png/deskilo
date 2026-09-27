@@ -11541,6 +11541,23 @@ class AppLocalizationsEn extends AppLocalizations {
       'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise';
 
   @override
+  String get workbookExportTitle => 'Exporting the workbook';
+
+  @override
+  String workbookExportReading(String done, String total) {
+    return 'Reading templates: $done of $total';
+  }
+
+  @override
+  String get workbookExportBuilding => 'Building the workbook…';
+
+  @override
+  String get workbookExportSaving => 'Choose where to save it…';
+
+  @override
+  String get workbookExportCancelled => 'Export cancelled. Nothing was saved.';
+
+  @override
   String get themeTitle => 'Theme';
 
   @override

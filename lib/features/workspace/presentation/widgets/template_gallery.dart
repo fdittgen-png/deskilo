@@ -6,6 +6,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../application/template_compare.dart';
 import '../../application/template_workbook.dart';
 import '../workbook_labels.dart';
+import 'workbook_export_dialog.dart';
 import '../screens/template_compare_screen.dart';
 import '../screens/template_detail_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -142,21 +143,22 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
       return;
     }
     setState(() => _exporting = true);
-    String? path;
+    ({String? path, bool cancelled})? result;
     final ok = await runGuarded(
       context,
       domain: 'templates',
       message: 'template workbook export failed',
-      action: () async => path = await ref
-          .read(templateWorkbookExportProvider)
-          .export([for (final t in shown) t.id], now: ref.read(clockProvider).now(),
-              labels: workbookLabels(l10n)),
+      action: () async => result = await exportWorkbookWithProgress(
+        context,
+        ref.read(templateWorkbookExportProvider),
+        [for (final t in shown) t.id],
+        now: ref.read(clockProvider).now(),
+        labels: workbookLabels(l10n),
+      ),
     );
     if (!mounted) return;
     setState(() => _exporting = false);
-    if (ok && path != null) {
-      AppSnack.success(context, l10n?.compareExported ?? 'Workbook saved.');
-    }
+    if (ok) showWorkbookExportResult(context, result);
   }
   static const maxShortlist = 4;
 

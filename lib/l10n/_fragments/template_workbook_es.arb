@@ -10,5 +10,10 @@
   "workbookStateLocal": "a definir localmente",
   "workbookStateUnknown": "no se pudo leer; no se afirma nada",
   "workbookStateExcluded": "deliberadamente nunca publicado",
-  "workbookWide": "Catalogs, RolePermissions, Validations y Fields muestran un valor donde la plantilla lo fija y, si no, su estado"
+  "workbookWide": "Catalogs, RolePermissions, Validations y Fields muestran un valor donde la plantilla lo fija y, si no, su estado",
+  "workbookExportTitle": "Exportando el libro",
+  "workbookExportReading": "Leyendo plantillas: {done} de {total}",
+  "workbookExportBuilding": "Creando el libro…",
+  "workbookExportSaving": "Elija dónde guardarlo…",
+  "workbookExportCancelled": "Exportación cancelada. No se ha guardado nada."
 }

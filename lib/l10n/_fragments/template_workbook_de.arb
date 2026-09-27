@@ -10,5 +10,10 @@
   "workbookStateLocal": "lokal festzulegen",
   "workbookStateUnknown": "nicht lesbar; es wird nichts behauptet",
   "workbookStateExcluded": "bewusst nie veröffentlicht",
-  "workbookWide": "Catalogs, RolePermissions, Validations und Fields zeigen einen Wert, wo die Vorlage ihn festlegt, sonst seinen Zustand"
+  "workbookWide": "Catalogs, RolePermissions, Validations und Fields zeigen einen Wert, wo die Vorlage ihn festlegt, sonst seinen Zustand",
+  "workbookExportTitle": "Arbeitsmappe wird exportiert",
+  "workbookExportReading": "Vorlagen werden gelesen: {done} von {total}",
+  "workbookExportBuilding": "Arbeitsmappe wird erstellt…",
+  "workbookExportSaving": "Wählen Sie den Speicherort…",
+  "workbookExportCancelled": "Export abgebrochen. Nichts wurde gespeichert."
 }

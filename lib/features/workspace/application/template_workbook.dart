@@ -378,28 +378,70 @@ String templateWorkbookName(DateTime capturedAt) {
   return 'deskilo-templates-${d.year}${two(d.month)}${two(d.day)}.xlsx';
 }
 
+/// #1661 — where an export stands: reading template [done] of [total],
+/// building the workbook, or waiting on the save dialog. No ETA: only
+/// what has actually happened.
+enum WorkbookStage { reading, building, saving }
+
+class WorkbookProgress {
+  const WorkbookProgress(this.stage, this.done, this.total);
+  final WorkbookStage stage;
+  final int done;
+  final int total;
+}
+
+/// Asked between steps. Once the save dialog is open the export can no
+/// longer be cancelled from here; the dialog's own cancel answers.
+class WorkbookCancel {
+  bool _cancelled = false;
+  bool get isCancelled => _cancelled;
+  void cancel() => _cancelled = true;
+}
+
+/// Thrown when [WorkbookCancel] was asked before the save: nothing was
+/// saved, and nothing is left behind.
+class WorkbookCancelled implements Exception {
+  const WorkbookCancelled();
+}
+
 /// Reads each template's inspection and saves the workbook.
 class TemplateWorkbookExport {
   const TemplateWorkbookExport(this._workspaces, this._save);
   final WorkspaceRepository _workspaces;
   final FileSaver _save;
 
-  /// The saved location, or null when the person cancelled.
+  /// The saved location, or null when the person cancelled the save
+  /// dialog. Throws [WorkbookCancelled] when [cancel] was asked first.
   Future<String?> export(
     List<String> templateIds, {
     required DateTime now,
     WorkbookLabels? labels,
+    void Function(WorkbookProgress progress)? onProgress,
+    WorkbookCancel? cancel,
   }) async {
     if (templateIds.length > maxTemplates) {
       throw ArgumentError('at most $maxTemplates templates per workbook');
     }
-    final inspections = [
-      for (final id in templateIds)
-        await _workspaces.inspectWorkspaceTemplate(id),
-    ];
+    void check() {
+      if (cancel?.isCancelled ?? false) throw const WorkbookCancelled();
+    }
+
+    final total = templateIds.length;
+    final inspections = <TemplateInspection>[];
+    for (final id in templateIds) {
+      check();
+      onProgress?.call(
+        WorkbookProgress(WorkbookStage.reading, inspections.length, total),
+      );
+      inspections.add(await _workspaces.inspectWorkspaceTemplate(id));
+    }
+    check();
+    onProgress?.call(WorkbookProgress(WorkbookStage.building, total, total));
     final Uint8List bytes = buildXlsx(
       templateWorkbook(inspections, capturedAt: now, labels: labels),
     );
+    check();
+    onProgress?.call(WorkbookProgress(WorkbookStage.saving, total, total));
     return _save(bytes: bytes, fileName: templateWorkbookName(now));
   }
 }
