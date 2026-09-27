@@ -596,7 +596,12 @@
    },
    "output": [
     "event_id",
-    "invoice_id"
+    "invoice_id",
+    "invoice_number",
+    "period",
+    "total_cents",
+    "currency",
+    "voided"
    ]
   },
   {
@@ -638,7 +643,13 @@
     }
    },
    "output": [
-    "event_id"
+    "event_id",
+    "invoice_id",
+    "invoice_number",
+    "period",
+    "total_cents",
+    "currency",
+    "voided"
    ]
   },
   {
@@ -680,7 +691,13 @@
     }
    },
    "output": [
-    "event_id"
+    "event_id",
+    "invoice_id",
+    "invoice_number",
+    "period",
+    "total_cents",
+    "currency",
+    "voided"
    ]
   },
   {
@@ -726,7 +743,11 @@
     }
    },
    "output": [
-    "event_id"
+    "event_id",
+    "member_id",
+    "member_status",
+    "subscription_pct",
+    "unchanged"
    ]
   },
   {
@@ -769,7 +790,11 @@
     }
    },
    "output": [
-    "event_id"
+    "event_id",
+    "member_id",
+    "member_status",
+    "subscription_pct",
+    "unchanged"
    ]
   },
   {

@@ -274,7 +274,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'period': McpField(McpFieldType.month, required: true, param: 'p_period'),
       'kind': McpField(McpFieldType.enum_, values: ['full', 'subscription', 'usage'], param: 'p_kind'),
     },
-    output: ['event_id', 'invoice_id'],
+    output: ['event_id', 'invoice_id', 'invoice_number', 'period', 'total_cents', 'currency', 'voided'],
   ),
   'request_invoice_void': McpOperationSpec(
     id: 'request_invoice_void',
@@ -294,7 +294,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'invoice_id': McpField(McpFieldType.uuid, required: true, param: 'p_invoice_id'),
       'reason': McpField(McpFieldType.text, maxLength: 500, param: 'p_reason'),
     },
-    output: ['event_id'],
+    output: ['event_id', 'invoice_id', 'invoice_number', 'period', 'total_cents', 'currency', 'voided'],
   ),
   'request_refund': McpOperationSpec(
     id: 'request_refund',
@@ -314,7 +314,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'invoice_id': McpField(McpFieldType.uuid, required: true, param: 'p_invoice_id'),
       'note': McpField(McpFieldType.text, maxLength: 500, param: 'p_note'),
     },
-    output: ['event_id'],
+    output: ['event_id', 'invoice_id', 'invoice_number', 'period', 'total_cents', 'currency', 'voided'],
   ),
   'request_member_status_change': McpOperationSpec(
     id: 'request_member_status_change',
@@ -334,7 +334,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'member_id': McpField(McpFieldType.uuid, required: true, param: 'p_member_id'),
       'status': McpField(McpFieldType.enum_, required: true, values: ['active', 'paused', 'exited'], param: 'p_status'),
     },
-    output: ['event_id'],
+    output: ['event_id', 'member_id', 'member_status', 'subscription_pct', 'unchanged'],
   ),
   'request_subscription_change': McpOperationSpec(
     id: 'request_subscription_change',
@@ -354,7 +354,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'member_id': McpField(McpFieldType.uuid, required: true, param: 'p_member_id'),
       'pct': McpField(McpFieldType.integer, required: true, min: 0, max: 100, param: 'p_pct'),
     },
-    output: ['event_id'],
+    output: ['event_id', 'member_id', 'member_status', 'subscription_pct', 'unchanged'],
   ),
   'list_pending_validations': McpOperationSpec(
     id: 'list_pending_validations',
