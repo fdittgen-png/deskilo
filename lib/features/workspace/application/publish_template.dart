@@ -34,6 +34,7 @@ Future<void> publishTemplate(
   required List<String>? groups,
   List<String> allGroups = const [],
   bool invitationTexts = false,
+  String? requestId,
 }) async {
   // #1656 — invitation texts travel only on this explicit choice (0279),
   // which names every group so the choice is never implied.
@@ -48,6 +49,7 @@ Future<void> publishTemplate(
         visibility: visibility,
         tags: tags,
         groups: groups,
+        requestId: requestId,
       );
   ref.invalidate(workspaceTemplatesProvider);
 }

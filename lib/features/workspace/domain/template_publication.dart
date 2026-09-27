@@ -76,3 +76,11 @@ class TemplatePublication {
         ],
       );
 }
+
+/// #1658 — a publication request id reused with other arguments: the
+/// first request already published; this one is not a retry of it.
+class TemplatePublishConflict implements Exception {
+  const TemplatePublishConflict();
+  @override
+  String toString() => 'this publication request was already used for another form';
+}
