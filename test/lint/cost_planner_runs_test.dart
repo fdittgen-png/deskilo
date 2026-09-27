@@ -20,4 +20,16 @@ void main() {
     // A harness that stopped finding its cases would pass testing nothing.
     expect(out, contains('cost planner: 12 cases passed'));
   });
+
+  test('the evaluation page keeps its contract', () {
+    final node = Process.runSync('node', ['--version']);
+    if (node.exitCode != 0) {
+      markTestSkipped('node is not on PATH');
+      return;
+    }
+    final r = Process.runSync('node', ['tool/web/product_page_test.mjs']);
+    final out = '${r.stdout}${r.stderr}'.trim();
+    expect(r.exitCode, 0, reason: out);
+    expect(out, contains('product page: 8 cases passed'));
+  });
 }
