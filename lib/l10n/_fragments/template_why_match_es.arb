@@ -1,0 +1,11 @@
+{
+  "templateWhy": "Por qué coincide",
+  "templateWhyHide": "Ocultar el porqué",
+  "capabilityStateEnabled": "Activado",
+  "capabilityStateDisabled": "Desactivado",
+  "capabilityStateConditional": "Activado solo si sus requisitos lo están",
+  "capabilityStateUnspecified": "No lo fija esta plantilla",
+  "capabilityStateLocalInput": "Necesita antes un valor local",
+  "capabilityStateIncompatible": "No aplicable aquí",
+  "capabilityStateUnknown": "Desconocido"
+}

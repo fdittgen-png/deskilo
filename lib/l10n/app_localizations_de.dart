@@ -11480,6 +11480,35 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get templateWhy => 'Warum diese Vorlage passt';
+
+  @override
+  String get templateWhyHide => 'Begründung ausblenden';
+
+  @override
+  String get capabilityStateEnabled => 'An';
+
+  @override
+  String get capabilityStateDisabled => 'Aus';
+
+  @override
+  String get capabilityStateConditional =>
+      'Nur an, wenn die Voraussetzungen an sind';
+
+  @override
+  String get capabilityStateUnspecified =>
+      'Von dieser Vorlage nicht festgelegt';
+
+  @override
+  String get capabilityStateLocalInput => 'Braucht zuerst einen lokalen Wert';
+
+  @override
+  String get capabilityStateIncompatible => 'Hier nicht anwendbar';
+
+  @override
+  String get capabilityStateUnknown => 'Unbekannt';
+
+  @override
   String get libraryInvitationTexts => 'Einladungstexte';
 
   @override

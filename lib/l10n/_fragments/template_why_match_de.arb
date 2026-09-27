@@ -1,0 +1,11 @@
+{
+  "templateWhy": "Warum diese Vorlage passt",
+  "templateWhyHide": "Begründung ausblenden",
+  "capabilityStateEnabled": "An",
+  "capabilityStateDisabled": "Aus",
+  "capabilityStateConditional": "Nur an, wenn die Voraussetzungen an sind",
+  "capabilityStateUnspecified": "Von dieser Vorlage nicht festgelegt",
+  "capabilityStateLocalInput": "Braucht zuerst einen lokalen Wert",
+  "capabilityStateIncompatible": "Hier nicht anwendbar",
+  "capabilityStateUnknown": "Unbekannt"
+}

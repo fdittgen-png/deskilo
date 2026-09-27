@@ -19800,6 +19800,60 @@ abstract class AppLocalizations {
   /// **'Who validates: {type}'**
   String localSlotNamedValidators(String type);
 
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Why this matches'**
+  String get templateWhy;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Hide why'**
+  String get templateWhyHide;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get capabilityStateEnabled;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get capabilityStateDisabled;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'On only if its prerequisites are'**
+  String get capabilityStateConditional;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Not set by this template'**
+  String get capabilityStateUnspecified;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a local value first'**
+  String get capabilityStateLocalInput;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot apply here'**
+  String get capabilityStateIncompatible;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get capabilityStateUnknown;
+
   /// #1656 template_wording
   ///
   /// In en, this message translates to:

@@ -14,6 +14,7 @@ import '../capability_labels.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'template_why_match.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -347,6 +348,10 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
                             : () => widget.onSelected!(t.id),
                         trailing: s.trailingFor?.call(t),
                         shortlisted: _shortlist.any((x) => x.id == t.id),
+                        evidence: _capability?.matched
+                            .where((m) => m.inspection.templateId == t.id)
+                            .firstOrNull
+                            ?.evidence,
                         onShortlist: () => _toggleShortlist(t),
                       ),
                     _ => _EmptySpaceCard(
@@ -375,9 +380,14 @@ class TemplateCard extends StatelessWidget {
     this.trailing,
     this.shortlisted,
     this.onShortlist,
+    this.evidence,
   });
 
   final WorkspaceTemplate template;
+
+  /// #1660 — what this template says about each capability searched for;
+  /// null or empty outside a capability search.
+  final Map<String, CapabilityEvidence>? evidence;
 
   /// #1660 — whether it is on the compare shortlist; null hides the toggle.
   final bool? shortlisted;
@@ -425,7 +435,7 @@ class TemplateCard extends StatelessWidget {
       color: isSelected
           ? Theme.of(context).colorScheme.secondaryContainer
           : null,
-      child: ListTile(
+      child: Column(mainAxisSize: MainAxisSize.min, children: [ListTile(
         leading: Icon(isSelected ? Icons.check : Icons.grid_view_outlined),
         title: Text(template.name),
         subtitle: Text(lines.where((l) => l.isNotEmpty).join('\n')),
@@ -448,6 +458,9 @@ class TemplateCard extends StatelessWidget {
                 ?trailing,
               ]),
       ),
+        if (evidence case final e? when e.isNotEmpty)
+          TemplateWhyMatch(templateKey: template.key, evidence: e),
+      ]),
     );
   }
 }

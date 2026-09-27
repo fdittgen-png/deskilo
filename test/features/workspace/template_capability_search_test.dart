@@ -106,6 +106,21 @@ void main() {
     expect(find.text('Templates set up for: Credit packs'), findsOneWidget);
   });
 
+  testWidgets('#1660 why a template matches: hidden until asked, then its '
+      'state for each capability', (tester) async {
+    await pumpLibrary(tester);
+    expect(find.byKey(const ValueKey('template-why-tiny')), findsNothing,
+        reason: 'browsing without a capability search explains nothing');
+    await search(tester, 'credit packs');
+    final why = find.byKey(const ValueKey('template-why-tiny'));
+    expect(why, findsOneWidget);
+    expect(find.textContaining('Credit packs · On'), findsNothing);
+    await tester.tap(why);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Credit packs · On'), findsOneWidget);
+    expect(find.text('Hide why'), findsOneWidget);
+  });
+
   testWidgets('the same capability in French finds the same template', (tester) async {
     await pumpLibrary(tester);
     await search(tester, 'Carnets');
