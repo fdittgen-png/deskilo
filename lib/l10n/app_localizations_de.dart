@@ -12825,6 +12825,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get readinessAreaRecovery => 'Export und Wiederherstellung';
 
   @override
+  String gettingStartedSetupIncomplete(String step) {
+    return 'Bevor hier jemand buchen kann: $step.';
+  }
+
+  @override
+  String get gettingStartedActionFinishSetup => 'Einrichtung abschließen';
+
+  @override
   String get featureWorkspaceStatus => 'Lage des Arbeitsbereichs';
 
   @override

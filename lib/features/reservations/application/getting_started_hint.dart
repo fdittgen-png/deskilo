@@ -24,8 +24,11 @@
 // who has not set the space up yet gets the same permitted task a member
 // gets, through [chooseGettingStartedHint]'s `ownerGuidance` parameter —
 // the ONE seam where a readiness checklist plugs in once it exists — and
-// [noOwnerReadinessGuidance] is what is plugged in today: nothing,
-// deliberately, rather than an invented list.
+// [noOwnerReadinessGuidance] is the default: nothing. The Reserve hub
+// plugs in [readinessGuidance] (#1636), which speaks only when the
+// server's readiness check names a step that blocks a first booking.
+
+import '../../workspace/domain/workspace_readiness.dart';
 
 /// How a fact was obtained, which decides what may be said about it.
 enum FactState {
@@ -124,7 +127,7 @@ class GettingStartedFacts {
 }
 
 /// The one action the card may suggest.
-enum GettingStartedAction { chooseTime, viewMembership, openHelp }
+enum GettingStartedAction { chooseTime, viewMembership, openHelp, finishSetup }
 
 /// Why that action, and what the text says. One reason per row of the
 /// table, so two hints with the same action stay distinguishable.
@@ -155,6 +158,10 @@ enum GettingStartedReason {
   /// The plan or the day could not be read at all (no connection, or
   /// refused): the help explains, nothing is claimed about availability.
   availabilityUnknown,
+
+  /// #1636 — an owner or administrator whose space still lacks something
+  /// a first booking needs; the card opens where it is set up.
+  setupIncomplete,
 }
 
 /// What the card shows: one primary action (or none), why, and the
@@ -166,9 +173,13 @@ class GettingStartedHint {
     this.standing,
     this.allowance,
     this.booking,
+    this.setupStep,
   });
 
   final GettingStartedReason reason;
+
+  /// #1636 — the blocking setup step, for [GettingStartedReason.setupIncomplete].
+  final ReadinessSection? setupStep;
   final GettingStartedAction? action;
   final MembershipStanding? standing;
 
@@ -198,6 +209,22 @@ typedef OwnerReadinessGuidance =
 /// all. An owner meets the same permitted task a member does rather
 /// than an invented checklist.
 GettingStartedHint? noOwnerReadinessGuidance(GettingStartedFacts facts) => null;
+
+/// #1636 — the guidance the readiness check supports: the first section
+/// that blocks a first booking, or nothing. An optional section (pricing,
+/// payments) never displaces the owner's own next task, and an unanswered
+/// check (null) says nothing rather than guessing.
+OwnerReadinessGuidance readinessGuidance(List<ReadinessSection>? sections) =>
+    (facts) {
+      final next = sections == null ? null : nextReadinessStep(sections);
+      if (next == null || !next.blocking) return null;
+      return GettingStartedHint(
+        reason: GettingStartedReason.setupIncomplete,
+        action: GettingStartedAction.finishSetup,
+        standing: facts.membership.value,
+        setupStep: next,
+      );
+    };
 
 /// The version of the guidance a dismissal refers to. Bumped only when
 /// the card's MEANING changes enough that a person who dismissed the

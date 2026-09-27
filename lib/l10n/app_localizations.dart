@@ -22266,6 +22266,18 @@ abstract class AppLocalizations {
   /// **'Export and recovery'**
   String get readinessAreaRecovery;
 
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Before anyone can book here: {step}.'**
+  String gettingStartedSetupIncomplete(String step);
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Finish setting up'**
+  String get gettingStartedActionFinishSetup;
+
   /// #934 workspace status / repartition wizard: featureWorkspaceStatus
   ///
   /// In en, this message translates to:

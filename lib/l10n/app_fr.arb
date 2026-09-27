@@ -8477,6 +8477,8 @@
   "readinessAreaInvitations": "Inviter les premiers membres",
   "readinessAreaPayments": "Comment les membres paient",
   "readinessAreaRecovery": "Export et restauration",
+  "gettingStartedSetupIncomplete": "Avant que quiconque puisse réserver ici : {step}.",
+  "gettingStartedActionFinishSetup": "Terminer la mise en place",
   "featureWorkspaceStatus": "Situation de l'espace",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

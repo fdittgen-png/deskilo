@@ -14045,6 +14045,19 @@
   "@readinessAreaRecovery": {
     "description": "#1636 workspace_readiness"
   },
+  "gettingStartedSetupIncomplete": "Before anyone can book here: {step}.",
+  "@gettingStartedSetupIncomplete": {
+    "description": "#1636 workspace_readiness",
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "gettingStartedActionFinishSetup": "Finish setting up",
+  "@gettingStartedActionFinishSetup": {
+    "description": "#1636 workspace_readiness"
+  },
   "featureWorkspaceStatus": "Workspace status",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

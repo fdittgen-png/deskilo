@@ -11,6 +11,7 @@
 // is a function, so this file needs no widget tree, no store and no
 // repository.
 import 'package:deskilo/features/reservations/application/getting_started_hint.dart';
+import 'package:deskilo/features/workspace/domain/workspace_readiness.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _member = Fact.ready(MembershipStanding.member);
@@ -427,5 +428,53 @@ void main() {
     expect(const Fact<int>.loading().known, isFalse);
     expect(const Fact<int>.offline().known, isFalse);
     expect(const Fact<int>.refused().known, isFalse);
+  });
+
+  group('#1636 readiness guidance', () {
+    const blocker = ReadinessSection(
+      area: ReadinessArea.resources,
+      state: ReadinessState.needsConfiguration,
+      required: true,
+      route: '/editor',
+    );
+    const optional = ReadinessSection(
+      area: ReadinessArea.pricing,
+      state: ReadinessState.needsConfiguration,
+      required: false,
+      route: '/billing',
+    );
+
+    test('a blocking step guides an owner and an administrator to it', () {
+      for (final who in [_owner, _admin]) {
+        final hint = chooseGettingStartedHint(
+          _facts(membership: who),
+          dismissed: false,
+          ownerGuidance: readinessGuidance(const [optional, blocker]),
+        );
+        expect(hint?.reason, GettingStartedReason.setupIncomplete);
+        expect(hint?.action, GettingStartedAction.finishSetup);
+        expect(hint?.setupStep?.route, '/editor');
+      }
+    });
+
+    test('a member is never asked, whatever the space lacks', () {
+      final hint = chooseGettingStartedHint(
+        _facts(),
+        dismissed: false,
+        ownerGuidance: (_) => fail('a member was guided'),
+      );
+      expect(hint?.action, GettingStartedAction.chooseTime);
+    });
+
+    test('an optional gap or an unanswered check falls through', () {
+      for (final sections in [null, const [optional], const <ReadinessSection>[]]) {
+        final hint = chooseGettingStartedHint(
+          _facts(membership: _owner),
+          dismissed: false,
+          ownerGuidance: readinessGuidance(sections),
+        );
+        expect(hint?.action, GettingStartedAction.chooseTime, reason: '$sections');
+      }
+    });
   });
 }
