@@ -11148,6 +11148,43 @@ class AppLocalizationsEn extends AppLocalizations {
       'You are already checked in here. Choose Check out to leave the seat.';
 
   @override
+  String get supportTitle => 'Support details';
+
+  @override
+  String get supportPrivacy =>
+      'Only this device’s bounded event counts and known checks are included. Identities, server addresses, credentials, business records and raw logs are excluded. Unknown checks are unavailable; an operator can run doctor --support-json separately. Files you share cannot be revoked.';
+
+  @override
+  String get supportHour => 'Last hour';
+
+  @override
+  String get supportDay => 'Last 24 hours';
+
+  @override
+  String get supportPrepare => 'Prepare preview';
+
+  @override
+  String supportSize(int bytes) {
+    final intl.NumberFormat bytesNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String bytesString = bytesNumberFormat.format(bytes);
+
+    return 'Preview: $bytesString bytes';
+  }
+
+  @override
+  String get supportSaved => 'Saved locally';
+
+  @override
+  String get supportChanged => 'The context changed. Prepare a new preview.';
+
+  @override
+  String get supportFailed => 'Could not prepare support details. Try again.';
+
+  @override
+  String get supportDemo => 'Demo: simulated local context';
+
+  @override
   String get capabilityMultiApproval => 'Two or more approvals';
 
   @override

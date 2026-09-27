@@ -11232,6 +11232,45 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ya ha fichado aquí. Elija « Fichar la salida » para dejar la plaza.';
 
   @override
+  String get supportTitle => 'Detalles de soporte';
+
+  @override
+  String get supportPrivacy =>
+      'Solo se incluyen recuentos limitados de este dispositivo y comprobaciones conocidas. Se excluyen identidades, direcciones del servidor, credenciales, datos comerciales y registros sin procesar. Las comprobaciones desconocidas no están disponibles; un operador puede ejecutar doctor --support-json por separado. Los archivos compartidos no se pueden revocar.';
+
+  @override
+  String get supportHour => 'Última hora';
+
+  @override
+  String get supportDay => 'Últimas 24 horas';
+
+  @override
+  String get supportPrepare => 'Preparar vista previa';
+
+  @override
+  String supportSize(int bytes) {
+    final intl.NumberFormat bytesNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String bytesString = bytesNumberFormat.format(bytes);
+
+    return 'Vista previa: $bytesString bytes';
+  }
+
+  @override
+  String get supportSaved => 'Guardado localmente';
+
+  @override
+  String get supportChanged =>
+      'El contexto cambió. Prepare una nueva vista previa.';
+
+  @override
+  String get supportFailed =>
+      'No se pudieron preparar los detalles. Inténtelo de nuevo.';
+
+  @override
+  String get supportDemo => 'Demo: contexto local simulado';
+
+  @override
   String get capabilityMultiApproval => 'Dos o más aprobaciones';
 
   @override

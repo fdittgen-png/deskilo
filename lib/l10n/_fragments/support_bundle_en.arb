@@ -1,0 +1,20 @@
+{
+  "supportTitle": "Support details",
+  "supportPrivacy": "Only this device’s bounded event counts and known checks are included. Identities, server addresses, credentials, business records and raw logs are excluded. Unknown checks are unavailable; an operator can run doctor --support-json separately. Files you share cannot be revoked.",
+  "supportHour": "Last hour",
+  "supportDay": "Last 24 hours",
+  "supportPrepare": "Prepare preview",
+  "supportSize": "Preview: {bytes} bytes",
+  "supportSaved": "Saved locally",
+  "supportChanged": "The context changed. Prepare a new preview.",
+  "supportFailed": "Could not prepare support details. Try again.",
+  "supportDemo": "Demo: simulated local context",
+  "@supportSize": {
+    "placeholders": {
+      "bytes": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  }
+}

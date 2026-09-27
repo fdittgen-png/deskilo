@@ -19428,6 +19428,66 @@ abstract class AppLocalizations {
   /// **'You are already checked in here. Choose Check out to leave the seat.'**
   String get spaceAlreadyCheckedInHere;
 
+  /// No description provided for @supportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Support details'**
+  String get supportTitle;
+
+  /// No description provided for @supportPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Only this device’s bounded event counts and known checks are included. Identities, server addresses, credentials, business records and raw logs are excluded. Unknown checks are unavailable; an operator can run doctor --support-json separately. Files you share cannot be revoked.'**
+  String get supportPrivacy;
+
+  /// No description provided for @supportHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Last hour'**
+  String get supportHour;
+
+  /// No description provided for @supportDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 24 hours'**
+  String get supportDay;
+
+  /// No description provided for @supportPrepare.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare preview'**
+  String get supportPrepare;
+
+  /// No description provided for @supportSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview: {bytes} bytes'**
+  String supportSize(int bytes);
+
+  /// No description provided for @supportSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved locally'**
+  String get supportSaved;
+
+  /// No description provided for @supportChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'The context changed. Prepare a new preview.'**
+  String get supportChanged;
+
+  /// No description provided for @supportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not prepare support details. Try again.'**
+  String get supportFailed;
+
+  /// No description provided for @supportDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo: simulated local context'**
+  String get supportDemo;
+
   /// #1659 template_capabilities
   ///
   /// In en, this message translates to:

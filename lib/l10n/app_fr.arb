@@ -7298,6 +7298,24 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceAlreadyCheckedInHere": "Vous êtes déjà pointé ici. Choisissez « Pointer la sortie » pour libérer la place.",
+  "supportTitle": "Détails pour l’assistance",
+  "supportPrivacy": "Seuls les compteurs limités de cet appareil et les contrôles connus sont inclus. Identités, adresses serveur, identifiants, données métier et journaux bruts sont exclus. Les contrôles inconnus sont indisponibles ; un opérateur peut exécuter doctor --support-json séparément. Les fichiers partagés ne peuvent pas être révoqués.",
+  "supportHour": "Dernière heure",
+  "supportDay": "Dernières 24 heures",
+  "supportPrepare": "Préparer l’aperçu",
+  "supportSize": "Aperçu : {bytes} octets",
+  "supportSaved": "Enregistré localement",
+  "supportChanged": "Le contexte a changé. Préparez un nouvel aperçu.",
+  "supportFailed": "Impossible de préparer les détails. Réessayez.",
+  "supportDemo": "Démo : contexte local simulé",
+  "@supportSize": {
+    "placeholders": {
+      "bytes": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
   "capabilityMultiApproval": "Deux validations ou plus",
   "capabilityRefundApprovals": "Deux validations pour les remboursements",
   "capabilityPayAsYouGo": "Paiement à l'usage",

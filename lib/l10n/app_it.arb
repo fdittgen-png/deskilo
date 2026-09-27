@@ -7298,6 +7298,24 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceAlreadyCheckedInHere": "Siete già registrati qui. Scegliete « Registra l'uscita » per liberare il posto.",
+  "supportTitle": "Dettagli per l’assistenza",
+  "supportPrivacy": "Sono inclusi solo conteggi limitati di questo dispositivo e verifiche note. Sono esclusi identità, indirizzi del server, credenziali, dati aziendali e registri grezzi. Le verifiche sconosciute non sono disponibili; un operatore può eseguire doctor --support-json separatamente. I file condivisi non possono essere revocati.",
+  "supportHour": "Ultima ora",
+  "supportDay": "Ultime 24 ore",
+  "supportPrepare": "Prepara anteprima",
+  "supportSize": "Anteprima: {bytes} byte",
+  "supportSaved": "Salvato localmente",
+  "supportChanged": "Il contesto è cambiato. Prepara una nuova anteprima.",
+  "supportFailed": "Impossibile preparare i dettagli. Riprova.",
+  "supportDemo": "Demo: contesto locale simulato",
+  "@supportSize": {
+    "placeholders": {
+      "bytes": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
   "capabilityMultiApproval": "Due o più approvazioni",
   "capabilityRefundApprovals": "Due approvazioni per i rimborsi",
   "capabilityPayAsYouGo": "Pagamento a consumo",

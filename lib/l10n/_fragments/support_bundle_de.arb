@@ -1,0 +1,20 @@
+{
+  "supportTitle": "Supportdetails",
+  "supportPrivacy": "Enthalten sind nur begrenzte Ereigniszähler dieses Geräts und bekannte Prüfergebnisse. Identitäten, Serveradressen, Zugangsdaten, Geschäftsdaten und Rohprotokolle sind ausgeschlossen. Unbekannte Prüfungen sind nicht verfügbar; ein Betreiber kann doctor --support-json separat ausführen. Geteilte Dateien können nicht zurückgerufen werden.",
+  "supportHour": "Letzte Stunde",
+  "supportDay": "Letzte 24 Stunden",
+  "supportPrepare": "Vorschau vorbereiten",
+  "supportSize": "Vorschau: {bytes} Bytes",
+  "supportSaved": "Lokal gespeichert",
+  "supportChanged": "Der Kontext hat sich geändert. Erstellen Sie eine neue Vorschau.",
+  "supportFailed": "Supportdetails konnten nicht vorbereitet werden. Erneut versuchen.",
+  "supportDemo": "Demo: simulierter lokaler Kontext",
+  "@supportSize": {
+    "placeholders": {
+      "bytes": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  }
+}

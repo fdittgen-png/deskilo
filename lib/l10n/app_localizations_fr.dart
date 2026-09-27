@@ -11261,6 +11261,44 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous êtes déjà pointé ici. Choisissez « Pointer la sortie » pour libérer la place.';
 
   @override
+  String get supportTitle => 'Détails pour l’assistance';
+
+  @override
+  String get supportPrivacy =>
+      'Seuls les compteurs limités de cet appareil et les contrôles connus sont inclus. Identités, adresses serveur, identifiants, données métier et journaux bruts sont exclus. Les contrôles inconnus sont indisponibles ; un opérateur peut exécuter doctor --support-json séparément. Les fichiers partagés ne peuvent pas être révoqués.';
+
+  @override
+  String get supportHour => 'Dernière heure';
+
+  @override
+  String get supportDay => 'Dernières 24 heures';
+
+  @override
+  String get supportPrepare => 'Préparer l’aperçu';
+
+  @override
+  String supportSize(int bytes) {
+    final intl.NumberFormat bytesNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String bytesString = bytesNumberFormat.format(bytes);
+
+    return 'Aperçu : $bytesString octets';
+  }
+
+  @override
+  String get supportSaved => 'Enregistré localement';
+
+  @override
+  String get supportChanged =>
+      'Le contexte a changé. Préparez un nouvel aperçu.';
+
+  @override
+  String get supportFailed => 'Impossible de préparer les détails. Réessayez.';
+
+  @override
+  String get supportDemo => 'Démo : contexte local simulé';
+
+  @override
   String get capabilityMultiApproval => 'Deux validations ou plus';
 
   @override

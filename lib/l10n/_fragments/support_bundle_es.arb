@@ -1,0 +1,20 @@
+{
+  "supportTitle": "Detalles de soporte",
+  "supportPrivacy": "Solo se incluyen recuentos limitados de este dispositivo y comprobaciones conocidas. Se excluyen identidades, direcciones del servidor, credenciales, datos comerciales y registros sin procesar. Las comprobaciones desconocidas no están disponibles; un operador puede ejecutar doctor --support-json por separado. Los archivos compartidos no se pueden revocar.",
+  "supportHour": "Última hora",
+  "supportDay": "Últimas 24 horas",
+  "supportPrepare": "Preparar vista previa",
+  "supportSize": "Vista previa: {bytes} bytes",
+  "supportSaved": "Guardado localmente",
+  "supportChanged": "El contexto cambió. Prepare una nueva vista previa.",
+  "supportFailed": "No se pudieron preparar los detalles. Inténtelo de nuevo.",
+  "supportDemo": "Demo: contexto local simulado",
+  "@supportSize": {
+    "placeholders": {
+      "bytes": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  }
+}
