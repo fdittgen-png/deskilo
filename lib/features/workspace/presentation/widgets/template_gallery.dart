@@ -4,6 +4,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../application/template_compare.dart';
 import '../../application/template_workbook.dart';
+import '../workbook_labels.dart';
 import '../screens/template_compare_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -145,7 +146,8 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
       message: 'template workbook export failed',
       action: () async => path = await ref
           .read(templateWorkbookExportProvider)
-          .export([for (final t in shown) t.id], now: ref.read(clockProvider).now()),
+          .export([for (final t in shown) t.id], now: ref.read(clockProvider).now(),
+              labels: workbookLabels(l10n)),
     );
     if (!mounted) return;
     setState(() => _exporting = false);

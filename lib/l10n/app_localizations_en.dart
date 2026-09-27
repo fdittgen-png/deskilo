@@ -11473,6 +11473,34 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get workbookNote =>
+      'A snapshot of template definitions. Editing this file changes nothing in DesKilo, and it is not a backup of any workspace: it holds no members, bookings, invoices or credentials.';
+
+  @override
+  String get workbookStatePresent => 'the template sets this value';
+
+  @override
+  String get workbookStateInherit =>
+      'the template does not say; the target keeps its own';
+
+  @override
+  String get workbookStateDefault =>
+      'the template does not say; the default applies';
+
+  @override
+  String get workbookStateLocal => 'to be set locally';
+
+  @override
+  String get workbookStateUnknown => 'could not be read; nothing is claimed';
+
+  @override
+  String get workbookStateExcluded => 'deliberately never published';
+
+  @override
+  String get workbookWide =>
+      'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise';
+
+  @override
   String get themeTitle => 'Theme';
 
   @override

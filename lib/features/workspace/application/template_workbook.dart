@@ -39,11 +39,60 @@ String _state(TemplateFieldDisposition d, TemplateAbsentMeaning? a) =>
       _ => d.name,
     };
 
+/// #1661 — the words a person reads in the workbook, in the language they
+/// chose. Technical keys, field ids, states and values stay the same in
+/// every language; only these explanations and labels change.
+class WorkbookLabels {
+  const WorkbookLabels({
+    required this.language,
+    required this.note,
+    required this.states,
+    required this.feature,
+    required this.wide,
+  });
+
+  /// English, for callers without a reader's language.
+  static WorkbookLabels english() => WorkbookLabels(
+    language: 'en',
+    note:
+        'A snapshot of template definitions. Editing this file changes '
+        'nothing in DesKilo, and it is not a backup of any workspace: it '
+        'holds no members, bookings, invoices or credentials.',
+    states: const {
+      'present': 'the template sets this value',
+      'absent:inherit': 'the template does not say; the target keeps its own',
+      'absent:product_default': 'the template does not say; the default applies',
+      'absent:required': 'to be set locally',
+      'unknown': 'could not be read; nothing is claimed',
+      'excluded': 'deliberately never published',
+    },
+    feature: (key) => key,
+    wide:
+        'Catalogs, RolePermissions, Validations and Fields show a value where '
+        'the template sets it, and its state otherwise',
+  );
+
+  /// ISO language code of the labels.
+  final String language;
+  final String note;
+
+  /// State (as written in the sheets) → what it means.
+  final Map<String, String> states;
+
+  /// A feature's registry key → its name for the reader.
+  final String Function(String featureKey) feature;
+
+  /// How the wide sheets read.
+  final String wide;
+}
+
 /// The workbook's sheets for [inspections], captured at [capturedAt].
 List<XlsxSheet> templateWorkbook(
   List<TemplateInspection> inspections, {
   required DateTime capturedAt,
+  WorkbookLabels? labels,
 }) {
+  final words = labels ?? WorkbookLabels.english();
   if (inspections.isEmpty) throw ArgumentError('no template to export');
   if (inspections.length > maxTemplates) {
     throw ArgumentError('at most $maxTemplates templates per workbook');
@@ -57,27 +106,10 @@ List<XlsxSheet> templateWorkbook(
         ['DesKilo template export'],
         ['captured_at', capturedAt.toUtc().toIso8601String()],
         ['templates', inspections.length],
-        [
-          'note',
-          'A snapshot of template definitions. Editing this file changes nothing in DesKilo, '
-              'and it is not a backup of any workspace: it holds no members, bookings, invoices or credentials.',
-        ],
-        ['state present', 'the template sets this value'],
-        [
-          'state absent:inherit',
-          'the template does not say; the target keeps its own',
-        ],
-        [
-          'state absent:product_default / registry_default',
-          'the template does not say; the default applies',
-        ],
-        ['state absent:required', 'to be set locally'],
-        ['state unknown', 'could not be read; nothing is claimed'],
-        ['state excluded / stripped', 'deliberately never published'],
-        [
-          'wide sheets',
-          'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise',
-        ],
+        ['language', words.language],
+        ['note', words.note],
+        for (final s in words.states.entries) ['state ${s.key}', s.value],
+        ['wide sheets', words.wide],
       ],
     ),
     XlsxSheet(
@@ -136,12 +168,14 @@ List<XlsxSheet> templateWorkbook(
       rows: [
         [
           'feature',
+          'label',
           for (final k in keys) ...['$k value', '$k state'],
         ],
         for (final r in rows)
           if (r.id.startsWith('workspace.feature_flags.'))
             [
               r.id.substring('workspace.feature_flags.'.length),
+              words.feature(r.id.substring('workspace.feature_flags.'.length)),
               for (final c in r.cells) ...[
                 _value(c.value),
                 _state(c.disposition, c.absent),
@@ -354,6 +388,7 @@ class TemplateWorkbookExport {
   Future<String?> export(
     List<String> templateIds, {
     required DateTime now,
+    WorkbookLabels? labels,
   }) async {
     if (templateIds.length > maxTemplates) {
       throw ArgumentError('at most $maxTemplates templates per workbook');
@@ -363,7 +398,7 @@ class TemplateWorkbookExport {
         await _workspaces.inspectWorkspaceTemplate(id),
     ];
     final Uint8List bytes = buildXlsx(
-      templateWorkbook(inspections, capturedAt: now),
+      templateWorkbook(inspections, capturedAt: now, labels: labels),
     );
     return _save(bytes: bytes, fileName: templateWorkbookName(now));
   }

@@ -11590,6 +11590,34 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get workbookNote =>
+      'Un instantané de définitions de modèles. Modifier ce fichier ne change rien dans DesKilo, et ce n’est la sauvegarde d’aucun espace : il ne contient ni membres, ni réservations, ni factures, ni identifiants.';
+
+  @override
+  String get workbookStatePresent => 'le modèle fixe cette valeur';
+
+  @override
+  String get workbookStateInherit =>
+      'le modèle ne dit rien ; la cible garde la sienne';
+
+  @override
+  String get workbookStateDefault =>
+      'le modèle ne dit rien ; la valeur par défaut s’applique';
+
+  @override
+  String get workbookStateLocal => 'à définir localement';
+
+  @override
+  String get workbookStateUnknown => 'illisible ; rien n’est affirmé';
+
+  @override
+  String get workbookStateExcluded => 'délibérément jamais publié';
+
+  @override
+  String get workbookWide =>
+      'Catalogs, RolePermissions, Validations et Fields montrent une valeur là où le modèle la fixe, et son état sinon';
+
+  @override
   String get themeTitle => 'Thème';
 
   @override

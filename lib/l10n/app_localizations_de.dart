@@ -11573,6 +11573,34 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get workbookNote =>
+      'Eine Momentaufnahme von Vorlagendefinitionen. Änderungen an dieser Datei ändern nichts in DesKilo, und sie ist keine Sicherung eines Workspace: Sie enthält keine Mitglieder, Buchungen, Rechnungen oder Zugangsdaten.';
+
+  @override
+  String get workbookStatePresent => 'die Vorlage legt diesen Wert fest';
+
+  @override
+  String get workbookStateInherit =>
+      'die Vorlage sagt nichts; das Ziel behält seinen eigenen';
+
+  @override
+  String get workbookStateDefault =>
+      'die Vorlage sagt nichts; der Standard gilt';
+
+  @override
+  String get workbookStateLocal => 'lokal festzulegen';
+
+  @override
+  String get workbookStateUnknown => 'nicht lesbar; es wird nichts behauptet';
+
+  @override
+  String get workbookStateExcluded => 'bewusst nie veröffentlicht';
+
+  @override
+  String get workbookWide =>
+      'Catalogs, RolePermissions, Validations und Fields zeigen einen Wert, wo die Vorlage ihn festlegt, sonst seinen Zustand';
+
+  @override
   String get themeTitle => 'Design';
 
   @override

@@ -19950,6 +19950,54 @@ abstract class AppLocalizations {
   /// **'At most {max} templates per workbook. Narrow the search first.'**
   String templateExportTooMany(String max);
 
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'A snapshot of template definitions. Editing this file changes nothing in DesKilo, and it is not a backup of any workspace: it holds no members, bookings, invoices or credentials.'**
+  String get workbookNote;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'the template sets this value'**
+  String get workbookStatePresent;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'the template does not say; the target keeps its own'**
+  String get workbookStateInherit;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'the template does not say; the default applies'**
+  String get workbookStateDefault;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'to be set locally'**
+  String get workbookStateLocal;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'could not be read; nothing is claimed'**
+  String get workbookStateUnknown;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'deliberately never published'**
+  String get workbookStateExcluded;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise'**
+  String get workbookWide;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:
