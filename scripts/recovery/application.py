@@ -118,6 +118,9 @@ def run(args):
             phase = 'database_backup'
             no_authority(source)
             source_id = identity(source)
+            # #1648: a real protected client row must not travel to the clone.
+            source.sql("select public.operator_register_identity_federation_client("
+                "gen_random_uuid(), gen_random_uuid(), 'https://recovery.invalid/auth/v1');")
             # Recover synthetic accounts and identities, never active sessions,
             # refresh tokens, MFA/OAuth configuration or external credentials.
             dump = command(source.db + ['pg_dump', '-U', 'postgres', '-d', 'postgres',
