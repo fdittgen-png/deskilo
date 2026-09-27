@@ -28,7 +28,7 @@ Future<TemplatePreview> previewTemplate(
 ///
 /// #1656 — answers what happened to the template's floor-plan prices, so
 /// the sheet can say they were left alone in another currency.
-Future<TemplatePriceOutcome> applyTemplateGroups(WidgetRef ref,
+Future<TemplateApplyResult> applyTemplateGroups(WidgetRef ref,
     String workspaceId, WorkspaceTemplate template, Set<String> groups) async {
   final outcome = await ref.read(workspaceRepositoryProvider).applyWorkspaceTemplate(
       workspaceId, template.id,

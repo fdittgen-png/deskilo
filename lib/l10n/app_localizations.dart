@@ -19506,6 +19506,18 @@ abstract class AppLocalizations {
   /// **'Use the template\'s region'**
   String get templateRegionUse;
 
+  /// #1657 template_validators
+  ///
+  /// In en, this message translates to:
+  /// **'Choose who validates {types} in the validation settings; those rules were left as they were.'**
+  String templateValidatorsToChoose(String types);
+
+  /// #1657 template_validators
+  ///
+  /// In en, this message translates to:
+  /// **'Who validates: {type}'**
+  String localSlotNamedValidators(String type);
+
   /// #1656 template_wording
   ///
   /// In en, this message translates to:

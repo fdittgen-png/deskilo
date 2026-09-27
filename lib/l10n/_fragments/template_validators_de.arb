@@ -1,0 +1,4 @@
+{
+  "templateValidatorsToChoose": "Wählen Sie in den Freigabeeinstellungen, wer {types} freigibt; diese Regeln blieben unverändert.",
+  "localSlotNamedValidators": "Wer freigibt: {type}"
+}

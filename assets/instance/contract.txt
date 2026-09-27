@@ -805,7 +805,7 @@ routine public.apply_usage_correction(p_record_id uuid, p_event_id uuid) -> void
 routine public.apply_usage_decision() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:2144e8924671
 routine public.apply_validated_decision_0181() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:0c4d74c777c8
 routine public.apply_workspace_template(p_workspace_id uuid, p_key text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a685a1cb7f41
-routine public.apply_workspace_template(p_workspace_id uuid, p_template_id uuid, p_groups text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a37f285e165c
+routine public.apply_workspace_template(p_workspace_id uuid, p_template_id uuid, p_groups text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1d0ee71377a0
 routine public.assert_fee_bands_contiguous() -> trigger | function | definer | volatile | exec:service_role | body:a67aff42d6fc
 routine public.assert_member_quota(p_member_id uuid, p_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:8e367161e697
 routine public.assert_seat_not_blocked(p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:597dcd20ef44
@@ -874,7 +874,7 @@ routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | fun
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:50db203e93fa
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9f29855f8d96
-routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bedcf33d2ea0
+routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:68dd0f873a84
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:99a275c44fd9
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f195c36ad44b
@@ -903,7 +903,7 @@ routine public.identity_bindings_immutable() -> trigger | function | invoker | v
 routine public.import_floor_plan(p_workspace_id uuid, p_plan jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:00d64c021417
 routine public.import_floor_plan_v2(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:39b7cff8ccf8
 routine public.import_floor_plan_v3(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f22d8d613ba5
-routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:15c49d89ceef
+routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:77ef7301efcc
 routine public.imported_branding(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:fa95d80a7677
 routine public.imported_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:39acec231f00
 routine public.imported_lexicon(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:8b21e6a016db
@@ -1139,10 +1139,11 @@ routine public.sweep_payment_reminders(p_workspace_id uuid) -> integer | functio
 routine public.sweep_pending_events(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:44585fc4a001
 routine public.system_column_names() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:a9f38911774d
 routine public.system_columns_stamp() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:300c2d072fc0
+routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:ddcd6518c5cf
-routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4acf23aa5b44
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:38ec8087466c
+routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9e1945110fb4
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
 routine public.template_plan_price_tree(p_tree jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:e3aa36ff6c7e

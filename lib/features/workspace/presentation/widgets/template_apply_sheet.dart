@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'local_setup_views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -111,25 +112,32 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
     }
     final count = preview.changesFor(selected);
     setState(() => _busy = true);
-    var prices = TemplatePriceOutcome.none;
+    var result = const TemplateApplyResult();
     final done = await runGuarded(
       context,
       domain: 'workspace',
       message: 'apply template failed',
-      action: () async => prices = await applyTemplateGroups(
+      action: () async => result = await applyTemplateGroups(
           ref, widget.workspaceId, widget.template, selected),
     );
     if (!mounted) return;
     setState(() => _busy = false);
     if (!done) return;
     // #1656 — prices in another currency are never relabelled; say so.
-    if (prices == TemplatePriceOutcome.currencyMismatch) {
-      AppSnack.info(
-        context,
-        AppLocalizations.of(context)?.templatePricesOtherCurrency ??
+    final words = AppLocalizations.of(context);
+    final notes = [
+      if (result.prices == TemplatePriceOutcome.currencyMismatch)
+        words?.templatePricesOtherCurrency ??
             'The template\'s prices are in another currency, so the prices here were left unchanged.',
-      );
-    }
+      // #1657 — a policy restricted to named validators is never opened
+      // to everyone: it waits for the owner's own choice.
+      if (result.validationBlocked.isNotEmpty)
+        words?.templateValidatorsToChoose(result.validationBlocked
+                .map((t) => eventTypeWord(words, t))
+                .join(', ')) ??
+            'Choose who validates ${result.validationBlocked.join(', ')} in the validation settings; those rules were left as they were.',
+    ];
+    if (notes.isNotEmpty) AppSnack.info(context, notes.join('\n'));
     Navigator.of(context).pop(count);
   }
 

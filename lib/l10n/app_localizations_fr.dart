@@ -11310,6 +11310,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get templateRegionUse => 'Utiliser la région du modèle';
 
   @override
+  String templateValidatorsToChoose(String types) {
+    return 'Choisissez qui valide $types dans les réglages de validation ; ces règles n\'ont pas été modifiées.';
+  }
+
+  @override
+  String localSlotNamedValidators(String type) {
+    return 'Qui valide : $type';
+  }
+
+  @override
   String get libraryInvitationTexts => 'Textes d\'invitation';
 
   @override

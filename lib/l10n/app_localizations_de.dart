@@ -11291,6 +11291,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get templateRegionUse => 'Region der Vorlage übernehmen';
 
   @override
+  String templateValidatorsToChoose(String types) {
+    return 'Wählen Sie in den Freigabeeinstellungen, wer $types freigibt; diese Regeln blieben unverändert.';
+  }
+
+  @override
+  String localSlotNamedValidators(String type) {
+    return 'Wer freigibt: $type';
+  }
+
+  @override
   String get libraryInvitationTexts => 'Einladungstexte';
 
   @override

@@ -31,10 +31,23 @@ void main() {
   test('the fake reports the outcome it is given', () async {
     final repo = FakeWorkspaceRepository()
       ..templates.add(const WorkspaceTemplate(id: 't', key: 't', name: 'T'))
-      ..templatePriceOutcome = TemplatePriceOutcome.currencyMismatch;
+      ..templateApplyResult = const TemplateApplyResult(
+        prices: TemplatePriceOutcome.currencyMismatch,
+        validationBlocked: ['expense'],
+      );
     expect(
-      await repo.applyWorkspaceTemplate('ws', 't'),
+      (await repo.applyWorkspaceTemplate('ws', 't')).prices,
       TemplatePriceOutcome.currencyMismatch,
     );
+  });
+
+  test('the apply result names the policies left for local choice (#1657)', () {
+    final r = TemplateApplyResult.fromResult({
+      'prices': 'applied',
+      'validation_blocked': ['expense', 'payment'],
+    });
+    expect(r.prices, TemplatePriceOutcome.applied);
+    expect(r.validationBlocked, ['expense', 'payment']);
+    expect(TemplateApplyResult.fromResult(null).validationBlocked, isEmpty);
   });
 }
