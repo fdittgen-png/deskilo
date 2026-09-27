@@ -12437,6 +12437,18 @@
       }
     }
   },
+  "capabilityBrowserTitle": "Browse capabilities",
+  "@capabilityBrowserTitle": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityBrowserRequire": "Require",
+  "@capabilityBrowserRequire": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityBrowserPrefer": "Prefer",
+  "@capabilityBrowserPrefer": {
+    "description": "#1660 template_why_match"
+  },
   "templateWidenTitle": "Make this template readable by: {audience}?",
   "@templateWidenTitle": {
     "description": "#1658 template_widen",

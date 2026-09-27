@@ -14,5 +14,8 @@
   "templateNoMatch": "Keine Vorlage passt. Ändern Sie die Wörter, ein Schlagwort oder eine Voraussetzung.",
   "templateClearFilters": "Suche zurücksetzen",
   "templatePrefer": "Bevorzugen: {capability}",
-  "templatePreferredChip": "Bevorzugt: {capability}"
+  "templatePreferredChip": "Bevorzugt: {capability}",
+  "capabilityBrowserTitle": "Funktionen durchsuchen",
+  "capabilityBrowserRequire": "Voraussetzen",
+  "capabilityBrowserPrefer": "Bevorzugen"
 }

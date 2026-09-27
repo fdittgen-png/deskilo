@@ -176,6 +176,36 @@ void main() {
         reason: 'the template set up for it now comes first');
   });
 
+  testWidgets('#1660 a capability found by browsing its process becomes a '
+      'requirement, and only that', (tester) async {
+    await pumpLibrary(tester);
+    await tester.tap(find.byKey(const ValueKey('template-browse-capabilities')));
+    await tester.pumpAndSettle();
+    final process = find.byKey(const ValueKey('capability-process-membershipCommerce'));
+    await tester.tap(process);
+    await tester.pumpAndSettle();
+    final require = find.byKey(const ValueKey('capability-require-carnets'));
+    await tester.ensureVisible(require);
+    await tester.tap(require);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('capability-browser')), findsNothing);
+    expect(find.byKey(const ValueKey('template-required-feature.carnets')),
+        findsOneWidget);
+    expect(find.byKey(tinyCard), findsOneWidget);
+    expect(find.byKey(studioCard), findsNothing,
+        reason: 'carnets off in the studio template');
+  });
+
+  testWidgets('#1660 closing the browser chooses nothing', (tester) async {
+    await pumpLibrary(tester);
+    await tester.tap(find.byKey(const ValueKey('template-browse-capabilities')));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(10, 10));
+    await tester.pumpAndSettle();
+    expect(find.byType(InputChip), findsNothing);
+    expect(find.byKey(studioCard), findsOneWidget);
+  });
+
   testWidgets('the same capability in French finds the same template', (tester) async {
     await pumpLibrary(tester);
     await search(tester, 'Carnets');

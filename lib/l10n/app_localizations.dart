@@ -19896,6 +19896,24 @@ abstract class AppLocalizations {
   /// **'Preferred: {capability}'**
   String templatePreferredChip(String capability);
 
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Browse capabilities'**
+  String get capabilityBrowserTitle;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Require'**
+  String get capabilityBrowserRequire;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Prefer'**
+  String get capabilityBrowserPrefer;
+
   /// #1658 template_widen
   ///
   /// In en, this message translates to:

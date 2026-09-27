@@ -14,5 +14,8 @@
   "templateNoMatch": "Ninguna plantilla coincide. Cambie las palabras, una etiqueta o un requisito.",
   "templateClearFilters": "Borrar la búsqueda",
   "templatePrefer": "Preferir: {capability}",
-  "templatePreferredChip": "Preferido: {capability}"
+  "templatePreferredChip": "Preferido: {capability}",
+  "capabilityBrowserTitle": "Explorar funciones",
+  "capabilityBrowserRequire": "Exigir",
+  "capabilityBrowserPrefer": "Preferir"
 }
