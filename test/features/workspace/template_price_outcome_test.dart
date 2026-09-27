@@ -50,4 +50,24 @@ void main() {
     expect(r.validationBlocked, ['expense', 'payment']);
     expect(TemplateApplyResult.fromResult(null).validationBlocked, isEmpty);
   });
+
+  test(
+    'the exact apply says whether the reviewed revision took effect (#1658)',
+    () {
+      TemplateApplyStatus st(Object? r) =>
+          TemplateApplyResult.fromResult(r).status;
+      expect(st({'status': 'applied'}), TemplateApplyStatus.applied);
+      expect(st({'status': 'replayed'}).tookEffect, isTrue);
+      expect(
+        st({'status': 'stale', 'template_version': 4}).tookEffect,
+        isFalse,
+      );
+      expect(st({'status': 'conflict'}).tookEffect, isFalse);
+      expect(
+        st({'copy_jobs': <Object>[]}),
+        TemplateApplyStatus.applied,
+        reason: 'the old function answers no status and did apply',
+      );
+    },
+  );
 }

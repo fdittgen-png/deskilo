@@ -1696,7 +1696,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   @override
   Future<TemplateApplyResult> applyWorkspaceTemplate(String workspaceId, String templateId,
-      {List<String>? groups}) async {
+      {List<String>? groups, int? expectedVersion, String? requestId}) async {
     if (!templates.any((t) => t.id == templateId)) {
       throw Exception('unknown template');
     }

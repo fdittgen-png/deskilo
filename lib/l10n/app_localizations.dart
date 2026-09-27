@@ -19488,6 +19488,18 @@ abstract class AppLocalizations {
   /// **'Did you mean “{word}”?'**
   String librarySearchSuggestion(String word);
 
+  /// #1658 template_exact_apply
+  ///
+  /// In en, this message translates to:
+  /// **'This template changed since you reviewed it. Nothing was applied; open it again to review the new version.'**
+  String get templateChangedSinceReview;
+
+  /// #1658 template_exact_apply
+  ///
+  /// In en, this message translates to:
+  /// **'This request was already used for something else. Nothing was applied.'**
+  String get templateApplyConflict;
+
   /// #1657 template_prerequisites
   ///
   /// In en, this message translates to:

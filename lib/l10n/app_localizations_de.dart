@@ -11279,6 +11279,14 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get templateChangedSinceReview =>
+      'Diese Vorlage hat sich seit Ihrer Prüfung geändert. Es wurde nichts übernommen; öffnen Sie sie erneut, um die neue Version zu prüfen.';
+
+  @override
+  String get templateApplyConflict =>
+      'Diese Anfrage wurde bereits für etwas anderes verwendet. Es wurde nichts übernommen.';
+
+  @override
   String libraryFeatureNeeds(String feature, String prerequisite) {
     return '$feature braucht $prerequisite, das ausgeschaltet bleibt: Es funktioniert noch nicht.';
   }

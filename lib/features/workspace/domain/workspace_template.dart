@@ -193,11 +193,24 @@ enum TemplatePriceOutcome {
 /// #1656/#1657 — what applying a template reported: its prices, and the
 /// validation policies left for local choice of named validators (0281).
 class TemplateApplyResult {
-  const TemplateApplyResult({this.prices = TemplatePriceOutcome.none, this.validationBlocked = const []});
+  const TemplateApplyResult({
+    this.prices = TemplatePriceOutcome.none,
+    this.validationBlocked = const [],
+    this.status = TemplateApplyStatus.applied,
+  });
   final TemplatePriceOutcome prices;
   final List<String> validationBlocked;
 
+  /// #1658 — applied, replayed, or refused as stale/conflicting (0282).
+  final TemplateApplyStatus status;
+
   factory TemplateApplyResult.fromResult(Object? result) => TemplateApplyResult(
+        status: switch (result is Map ? result['status'] : null) {
+          'stale' => TemplateApplyStatus.stale,
+          'conflict' => TemplateApplyStatus.conflict,
+          'replayed' => TemplateApplyStatus.replayed,
+          _ => TemplateApplyStatus.applied,
+        },
         prices: TemplatePriceOutcome.fromResult(result),
         validationBlocked: [
           for (final t in (result is Map && result['validation_blocked'] is List
@@ -206,4 +219,20 @@ class TemplateApplyResult {
             '$t',
         ],
       );
+}
+
+/// #1658 — whether the reviewed revision was applied (0282).
+enum TemplateApplyStatus {
+  applied,
+
+  /// The same request again: its recorded result, applied once.
+  replayed,
+
+  /// The template changed since it was reviewed: nothing applied.
+  stale,
+
+  /// The request id was used for something else: nothing applied.
+  conflict;
+
+  bool get tookEffect => this == TemplateApplyStatus.applied || this == TemplateApplyStatus.replayed;
 }

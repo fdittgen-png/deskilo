@@ -712,7 +712,7 @@ abstract class WorkspaceRepository {
   /// (#1276); [groups] narrows it, null applies all. `manageConfiguration`;
   /// refused for an unreadable template or an unknown snapshot format.
   Future<TemplateApplyResult> applyWorkspaceTemplate(String workspaceId, String templateId,
-      {List<String>? groups});
+      {List<String>? groups, int? expectedVersion, String? requestId});
 
   /// #1280 — per group, what applying [templateId] here would change.
   Future<TemplatePreview> previewWorkspaceTemplate(
