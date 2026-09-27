@@ -11560,6 +11560,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get templateWidenConfirm => 'Hacer legible';
 
   @override
+  String get templateProfileFull => 'Perfil de configuración completo';
+
+  @override
+  String templateProfileSelected(String chosen, String total) {
+    return 'Grupos elegidos: $chosen de $total';
+  }
+
+  @override
+  String get templatePublishLocalNeeds =>
+      'Un espacio que la aplique configurará esto por sí mismo:';
+
+  @override
   String get libraryInvitationTexts => 'Textos de invitación';
 
   @override

@@ -12492,6 +12492,26 @@
   "@templateWidenConfirm": {
     "description": "#1658 template_widen"
   },
+  "templateProfileFull": "Full configuration profile",
+  "@templateProfileFull": {
+    "description": "#1658 template_widen"
+  },
+  "templateProfileSelected": "Selected groups: {chosen} of {total}",
+  "@templateProfileSelected": {
+    "description": "#1658 template_widen",
+    "placeholders": {
+      "chosen": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "templatePublishLocalNeeds": "A space that applies it will set these up itself:",
+  "@templatePublishLocalNeeds": {
+    "description": "#1658 template_widen"
+  },
   "libraryInvitationTexts": "Invitation texts",
   "@libraryInvitationTexts": {
     "description": "#1656 template_wording"
