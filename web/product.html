@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'">
+<title>DesKilo</title>
+<style>
+:root{--accent:#c1440e;--bg:#faf6f2;--card:#fff;--ink:#241a14;--muted:#6b6058;--line:#e6ddd4;--warn:#7a4f00}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{background:var(--accent);color:#fff;padding:20px 16px}
+header .top{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;max-width:60rem;margin:0 auto}
+header h1{margin:0;font-size:1.5rem}
+header p{margin:6px auto 0;max-width:60rem}
+header label{font-size:.9rem}
+main{max-width:60rem;margin:0 auto;padding:12px 16px 80px}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin:16px 0}
+h2{margin:0 0 8px;font-size:1.2rem}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.actions a{display:inline-block;min-height:48px;padding:12px 16px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
+.actions a.secondary{background:#fff;color:var(--accent);border:2px solid var(--accent)}
+.note{color:var(--muted);font-size:.9rem}
+.badge{display:inline-block;background:#fff3;border:1px solid #fff;border-radius:999px;padding:2px 10px;font-size:.8rem;margin-left:8px}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:10px}
+.grid label{display:flex;flex-direction:column;font-size:.9rem;gap:4px}
+input,select{font:inherit;padding:8px;border:1px solid var(--line);border-radius:6px;min-height:44px}
+button{font:inherit;min-height:48px;padding:10px 16px;border-radius:8px;border:2px solid var(--accent);background:#fff;color:var(--accent);font-weight:600;cursor:pointer}
+fieldset{border:1px solid var(--line);border-radius:8px;margin:10px 0;padding:10px}
+legend{font-weight:600}
+#result{margin-top:12px}
+#result .unresolved{color:var(--warn)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #1a5fb4;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{header .top label,.actions,#planner-buttons{display:none}}
+</style>
+<script type="module" src="product.js"></script>
+</head>
+<body>
+<header>
+  <div class="top">
+    <h1><span>DesKilo</span><span class="badge" data-i18n="beta">Beta</span></h1>
+    <label><span data-i18n="language">Language</span>
+      <select id="lang" aria-label="Language">
+        <option value="en">English</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option><option value="it">Italiano</option>
+      </select></label>
+  </div>
+  <p data-i18n="tagline">A booking and money app for coworking communities.</p>
+</header>
+<main>
+  <section aria-labelledby="h-start">
+    <h2 id="h-start" data-i18n="startTitle">Start</h2>
+    <div class="actions">
+      <a id="go-demo" href="./#/auth" data-i18n="actionDemo">Explore the demo</a>
+      <a id="go-signin" class="secondary" href="./#/auth" data-i18n="actionSignIn">Sign in or get started</a>
+      <a id="go-join" class="secondary" href="./#/auth" data-i18n="actionJoin">Join with an invitation</a>
+    </div>
+    <p class="note" data-i18n="startNote">The demo opens from the sign-in screen ("Explore the demo") and resets when you leave it. To join, sign in, then paste the code you were given. Nothing is created or joined by opening this page.</p>
+    <p class="note" data-i18n="operatorNote">Running your own server is an operator's task, set up from the app's Server screen; it is never needed to try the app or join a space.</p>
+  </section>
+
+  <section aria-labelledby="h-questions">
+    <h2 id="h-questions" data-i18n="questionsTitle">The three questions it answers</h2>
+    <ul>
+      <li data-i18n="q1">Where can I work? The plan shows every place and who holds it, for any day.</li>
+      <li data-i18n="q2">What do I owe? Each member reads their own statement: subscription, use, credits and payments.</li>
+      <li data-i18n="q3">Who must approve this? Expenses, deletions and changes go to the people the community named.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="h-demo">
+    <h2 id="h-demo" data-i18n="demoTitle">Try it in the demo</h2>
+    <ol>
+      <li data-i18n="demo1">Book a place for a half-day, then read what it used of your allowance on your statement.</li>
+      <li data-i18n="demo2">Submit a community expense and approve it as another member.</li>
+      <li data-i18n="demo3">Open a request still waiting for a decision and see who may decide it.</li>
+    </ol>
+    <p class="note" data-i18n="demoNote">The demo is a fictional community on your device; nothing you do there reaches a server.</p>
+  </section>
+
+  <section aria-labelledby="h-status">
+    <h2 id="h-status" data-i18n="statusTitle">Where it runs today</h2>
+    <table>
+      <thead><tr><th data-i18n="platform">Platform</th><th data-i18n="status">Status</th></tr></thead>
+      <tbody>
+        <tr><td>Web</td><td data-i18n="statusWeb">Available in the browser</td></tr>
+        <tr><td>Android</td><td data-i18n="statusAndroid">Closed test on Google Play</td></tr>
+        <tr><td>iOS</td><td data-i18n="statusIos">Public beta through TestFlight</td></tr>
+        <tr><td>macOS, Windows</td><td data-i18n="statusDesktop">Installers attached to each release</td></tr>
+      </tbody>
+    </table>
+    <p class="note" data-i18n="statusNote">As of 27 September 2026. Features still being built are not listed as available.</p>
+  </section>
+
+  <section aria-labelledby="h-roles">
+    <h2 id="h-roles" data-i18n="rolesTitle">Who is responsible for what</h2>
+    <ul>
+      <li data-i18n="roleOwner">The workspace owner sets the rules, prices and members.</li>
+      <li data-i18n="roleDba">A database administrator decides which assistants may connect and how.</li>
+      <li data-i18n="roleOperator">Whoever runs the server keeps it updated and restorable.</li>
+      <li data-i18n="roleMember">Each member decides whether an assistant may act for them.</li>
+    </ul>
+    <p class="note" data-i18n="supportNote">There is no support contract or guaranteed response time.</p>
+  </section>
+
+  <section aria-labelledby="h-planner">
+    <h2 id="h-planner" data-i18n="plannerTitle">Plan your operating cost</h2>
+    <p class="note" data-i18n="plannerNote">Every value is yours to enter; nothing is looked up. A blank field is unknown, not free. Taxes are not included.</p>
+    <form id="planner" novalidate>
+      <div class="grid">
+        <label><span data-i18n="currency">Currency (ISO code)</span><input name="currency" value="EUR" maxlength="3" autocomplete="off"></label>
+      </div>
+      <fieldset><legend data-i18n="setupTitle">One-time setup</legend><div class="grid">
+        <label><span data-i18n="setupHours">Setup hours</span><input name="setup_hours" inputmode="decimal"></label>
+        <label><span data-i18n="hourlyValue">Value of an hour</span><input name="hourly_value" inputmode="decimal"></label>
+      </div></fieldset>
+      <fieldset><legend data-i18n="monthlyTitle">Each month</legend><div class="grid">
+        <label><span data-i18n="backendPlan">Server plan</span><input name="backend_plan" inputmode="decimal"></label>
+        <label><span data-i18n="storageUsed">Storage used (GB)</span><input name="storage_used" inputmode="decimal"></label>
+        <label><span data-i18n="storageFree">Storage included (GB)</span><input name="storage_free" inputmode="decimal"></label>
+        <label><span data-i18n="storagePrice">Price per extra GB</span><input name="storage_price" inputmode="decimal"></label>
+        <label><span data-i18n="backup">Backup and monitoring</span><input name="backup" inputmode="decimal"></label>
+        <label><span data-i18n="payCount">Online payments</span><input name="pay_count" inputmode="numeric"></label>
+        <label><span data-i18n="payAverage">Average payment</span><input name="pay_average" inputmode="decimal"></label>
+        <label><span data-i18n="payPercent">Provider fee (%)</span><input name="pay_percent" inputmode="decimal"></label>
+        <label><span data-i18n="payFixed">Provider fee per payment</span><input name="pay_fixed" inputmode="decimal"></label>
+        <label><span data-i18n="adminHours">Admin hours</span><input name="admin_hours" inputmode="decimal"></label>
+        <label><span data-i18n="assistantFunding">Assistant</span><select name="assistant_funding"><option value="user" data-i18n="assistantUser">Members bring their own</option><option value="deskilo" data-i18n="assistantDeskilo">Paid by the community</option></select></label>
+        <label><span data-i18n="assistantTokens">Assistant tokens</span><input name="assistant_tokens" inputmode="numeric"></label>
+        <label><span data-i18n="assistantPrice">Price per million tokens</span><input name="assistant_price" inputmode="decimal"></label>
+      </div></fieldset>
+      <div id="planner-buttons" class="actions">
+        <button type="button" id="save" data-i18n="save">Save scenario</button>
+        <label class="note"><span data-i18n="load">Load a scenario</span> <input type="file" id="load" accept="application/json"></label>
+        <button type="button" id="print" data-i18n="print">Print</button>
+        <button type="reset" id="reset" data-i18n="reset">Reset</button>
+      </div>
+    </form>
+    <div id="result" role="status" aria-live="polite"></div>
+  </section>
+
+  <p class="note"><span data-i18n="licence">Free software under the GNU AGPL 3.0 or later; anyone using the code must credit its author.</span> <a href="https://github.com/fdittgen-png/deskilo">github.com/fdittgen-png/deskilo</a></p>
+</main>
+</body>
+</html>
