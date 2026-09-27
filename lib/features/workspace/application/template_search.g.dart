@@ -48,4 +48,4 @@ final class TemplateSearchProvider
   }
 }
 
-String _$templateSearchHash() => r'4bdefa2e6385763c8ba5faf631d0aacb9cdf062b';
+String _$templateSearchHash() => r'b4940d00d2ed88c702349c268f76bb9351e44e72';

@@ -25,9 +25,11 @@
 // only thing that made them isolated was that nobody had noticed.
 import '../../features/workspace/application/creation_intent.dart';
 import '../../features/workspace/providers/local_setup_providers.dart';
+import '../../features/workspace/providers/template_search_providers.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/action_confirmation_repository.dart';
 import 'data/local_setup_repository.dart';
+import 'data/template_search_repository.dart';
 import 'data/mcp_admin_repository.dart';
 import 'data/mcp_connection_repository.dart';
 import '../../features/mcp/providers/mcp_providers.dart';
@@ -101,6 +103,9 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       mcpAdminRepositoryProvider.overrideWithValue(FakeMcpAdminRepository()),
       // #1656 — Demo lacks nothing locally.
       localSetupRepositoryProvider.overrideWithValue(FakeLocalSetupRepository()),
+      // #1659 — Demo searches only its own fixture templates.
+      templateSearchRepositoryProvider
+          .overrideWithValue(FakeTemplateSearchRepository(source: () => fixture.workspaces.templates)),
       secondFactorRepositoryProvider
           .overrideWithValue(FakeSecondFactorRepository()),
       workspaceRepositoryProvider.overrideWithValue(fixture.workspaces),
@@ -195,6 +200,7 @@ const Set<String> demoOverriddenProviders = {
   'mcpConnectionRepositoryProvider',
   'mcpAdminRepositoryProvider',
   'localSetupRepositoryProvider',
+  'templateSearchRepositoryProvider',
   'secondFactorRepositoryProvider',
   'workspaceRepositoryProvider',
   'floorPlanRepositoryProvider',
