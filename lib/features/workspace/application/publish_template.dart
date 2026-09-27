@@ -14,6 +14,14 @@ Future<TemplatePublication> publicationPreview(
         WidgetRef ref, String workspaceId) =>
     ref.read(workspaceRepositoryProvider).templatePublicationPreview(workspaceId);
 
+/// The save's explicit opt-in for invitation texts (0279).
+const invitationTextsChoice = 'invitation_texts';
+
+/// Whether [error] is the server refusing an invitation text that still
+/// names the source space or its people.
+bool isInvitationTextRefusal(Object error) =>
+    '$error'.contains('invitation text still names');
+
 /// Publishes [name] with the ticked [groups]; every group ticked is sent as
 /// null, so a template publishes whatever the server allows today.
 Future<void> publishTemplate(
@@ -24,7 +32,14 @@ Future<void> publishTemplate(
   required TemplateVisibility visibility,
   required List<String> tags,
   required List<String>? groups,
+  List<String> allGroups = const [],
+  bool invitationTexts = false,
 }) async {
+  // #1656 — invitation texts travel only on this explicit choice (0279),
+  // which names every group so the choice is never implied.
+  if (invitationTexts) {
+    groups = [...(groups ?? allGroups), invitationTextsChoice]..sort();
+  }
   await ref.read(workspaceRepositoryProvider).saveWorkspaceAsTemplate(
         workspaceId,
         key: templateKeyFrom(name),

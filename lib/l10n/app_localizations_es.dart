@@ -11248,6 +11248,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get templateRegionUse => 'Usar la región de la plantilla';
 
   @override
+  String get libraryInvitationTexts => 'Textos de invitación';
+
+  @override
+  String libraryInvitationTextsHint(String tag) {
+    return 'Solo textos escritos con marcadores como $tag; un texto que nombre su espacio o a sus personas se rechaza.';
+  }
+
+  @override
+  String get libraryInvitationTextsRefused =>
+      'Un texto de invitación todavía nombra su espacio o a sus personas. Sustitúyalos por marcadores en los ajustes de invitación o desmarque los textos de invitación.';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

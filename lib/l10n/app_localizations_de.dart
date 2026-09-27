@@ -11260,6 +11260,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get templateRegionUse => 'Region der Vorlage übernehmen';
 
   @override
+  String get libraryInvitationTexts => 'Einladungstexte';
+
+  @override
+  String libraryInvitationTextsHint(String tag) {
+    return 'Nur Texte mit Platzhaltern wie $tag; ein Text, der Ihren Arbeitsbereich oder seine Personen nennt, wird abgelehnt.';
+  }
+
+  @override
+  String get libraryInvitationTextsRefused =>
+      'Ein Einladungstext nennt noch Ihren Arbeitsbereich oder seine Personen. Ersetzen Sie sie in den Einladungseinstellungen durch Platzhalter oder wählen Sie die Einladungstexte ab.';
+
+  @override
   String get themeTitle => 'Design';
 
   @override

@@ -11166,6 +11166,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get templateRegionUse => 'Use the template\'s region';
 
   @override
+  String get libraryInvitationTexts => 'Invitation texts';
+
+  @override
+  String libraryInvitationTextsHint(String tag) {
+    return 'Only texts written with placeholders such as $tag; a text naming your space or its people is refused.';
+  }
+
+  @override
+  String get libraryInvitationTextsRefused =>
+      'An invitation text still names your space or its people. Replace them with placeholders in the invitation settings, or untick invitation texts.';
+
+  @override
   String get themeTitle => 'Theme';
 
   @override

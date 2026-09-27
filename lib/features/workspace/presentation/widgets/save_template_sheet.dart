@@ -8,6 +8,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/publish_template.dart';
+import '../../domain/invitation_message.dart';
 import '../../domain/template_preview.dart';
 import '../../domain/template_publication.dart';
 import '../../domain/workspace_template.dart';
@@ -50,6 +51,9 @@ class _SaveTemplateSheetState extends ConsumerState<SaveTemplateSheet> {
   final _tags = TextEditingController();
   var _visibility = TemplateVisibility.private;
   Set<TemplateGroup>? _groups;
+  // #1656 — invitation texts: an explicit choice, off until ticked.
+  var _invitationTexts = false;
+  var _wordingRefused = false;
 
   @override
   void dispose() {
@@ -74,6 +78,8 @@ class _SaveTemplateSheetState extends ConsumerState<SaveTemplateSheet> {
   Future<void> _publish(TemplatePublication publication) async {
     final all = publication.groups.toSet();
     final chosen = _groups ?? all;
+    final withTexts = _invitationTexts && chosen.contains(TemplateGroup.wording);
+    setState(() => _wordingRefused = false);
     final ok = await runGuarded(
       context,
       domain: 'workspace',
@@ -91,7 +97,14 @@ class _SaveTemplateSheetState extends ConsumerState<SaveTemplateSheet> {
         groups: chosen.containsAll(all)
             ? null
             : ([for (final g in chosen) g.wire]..sort()),
-      ),
+        allGroups: [for (final g in all) g.wire],
+        invitationTexts: withTexts,
+      ).catchError((Object e, StackTrace st) {
+        // trace-exempt: shown in the sheet; any other failure rethrows.
+        if (!isInvitationTextRefusal(e)) Error.throwWithStackTrace(e, st);
+        if (mounted) setState(() => _wordingRefused = true);
+        throw e;
+      }),
     );
     if (ok && mounted) Navigator.of(context).pop(true);
   }
@@ -166,6 +179,26 @@ class _SaveTemplateSheetState extends ConsumerState<SaveTemplateSheet> {
                       value: chosen.contains(g),
                       onChanged: (on) => setState(() =>
                           on == true ? chosen.add(g) : chosen.remove(g)),
+                    ),
+                  if (chosen.contains(TemplateGroup.wording))
+                    CheckboxListTile(
+                      key: const ValueKey('save-template-invitations'),
+                      contentPadding: EdgeInsets.zero,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: Text(l10n?.libraryInvitationTexts ?? 'Invitation texts'),
+                      subtitle: Text(l10n?.libraryInvitationTextsHint(InvitationTags.workspaceName) ??
+                          'Only texts written with placeholders such as {workspaceName}; '
+                              'a text naming your space or its people is refused.'),
+                      value: _invitationTexts,
+                      onChanged: (on) => setState(() => _invitationTexts = on == true),
+                    ),
+                  if (_wordingRefused)
+                    Text(
+                      l10n?.libraryInvitationTextsRefused ??
+                          'An invitation text still names your space or its people. '
+                              'Replace them with placeholders in the invitation settings, or untick invitation texts.',
+                      key: const ValueKey('save-template-invitations-refused'),
+                      style: TextStyle(color: theme.colorScheme.error),
                     ),
                   if (names.isNotEmpty) ...[
                     const SizedBox(height: AppSpacing.xs),

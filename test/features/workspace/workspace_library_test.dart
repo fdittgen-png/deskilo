@@ -128,6 +128,32 @@ void main() {
       expect(workspace.savedTemplateGroups.single, ['hours_booking']);
     });
 
+    testWidgets('invitation texts travel only when ticked, naming every group '
+        '(#1656)', (tester) async {
+      final workspace = await openPublish(tester);
+      final box = find.byKey(const ValueKey('save-template-invitations'));
+      await tester.ensureVisible(box);
+      expect(tester.widget<CheckboxListTile>(box).value, isFalse,
+          reason: 'never implied by publishing everything');
+      await tester.tap(box);
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.byKey(const ValueKey('save-template-confirm')));
+      await tester.tap(find.byKey(const ValueKey('save-template-confirm')));
+      await tester.pumpAndSettle();
+      expect(workspace.savedTemplateGroups.single,
+          ['hours_booking', 'invitation_texts', 'space', 'wording']);
+    });
+
+    testWidgets('without the wording group there is no invitation choice',
+        (tester) async {
+      await openPublish(tester);
+      final wording = find.byKey(const ValueKey('save-template-group-wording'));
+      await tester.ensureVisible(wording);
+      await tester.tap(wording);
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('save-template-invitations')), findsNothing);
+    });
+
     testWidgets('nothing ticked cannot be published', (tester) async {
       await openPublish(tester);
       for (final g in ['space', 'wording', 'hours_booking']) {
