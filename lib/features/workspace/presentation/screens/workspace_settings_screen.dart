@@ -37,6 +37,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/workspace_settings_save.dart';
 import '../../domain/space_code_entries.dart';
+import '../widgets/local_setup_views.dart';
 import '../widgets/space_codes_options_dialog.dart';
 import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
@@ -1038,6 +1039,7 @@ class _WorkspaceSettingsScreenState
               child: ListView(
                 padding: AppSpacing.gutterAll,
                 children: [
+                  LocalReadinessCard(workspaceId: workspace.id), // #1656
                   ..._parametersTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
                   ..._toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
                   ..._dangerZoneTiles(context, l10n: l10n, workspace: workspace),

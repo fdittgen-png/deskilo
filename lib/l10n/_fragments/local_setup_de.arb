@@ -1,0 +1,11 @@
+{
+  "localSlotLegalIdentity": "Ihre rechtliche Identität und Adresse (für Rechnungen)",
+  "localSlotPaymentDetails": "Wie Mitglieder Sie bezahlen (Bankverbindung)",
+  "localSlotPaymentProvider": "Ein Online-Zahlungsanbieter",
+  "localSlotEinvoicePlatform": "Ihr Konto bei der E-Rechnungsplattform",
+  "localSlotSite": "Mindestens ein Standort",
+  "localSlotRecommended": "Empfohlen",
+  "localSlotOpen": "Einrichten",
+  "localNeedsTitle": "Diese fügen Sie selbst hinzu; eine Vorlage überträgt sie nie:",
+  "localGapsTitle": "Um diesen Arbeitsbereich fertig einzurichten"
+}

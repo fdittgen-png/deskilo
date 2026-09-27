@@ -6832,6 +6832,38 @@ class AppLocalizationsIt extends AppLocalizations {
   String get libraryProcessTechnical => 'Tecnico';
 
   @override
+  String get localSlotLegalIdentity =>
+      'La tua identità legale e il tuo indirizzo (per le fatture)';
+
+  @override
+  String get localSlotPaymentDetails =>
+      'Come ti pagano i membri (coordinate bancarie)';
+
+  @override
+  String get localSlotPaymentProvider => 'Un fornitore di pagamenti online';
+
+  @override
+  String get localSlotEinvoicePlatform =>
+      'Il tuo account sulla piattaforma di fatturazione elettronica';
+
+  @override
+  String get localSlotSite => 'Almeno una sede';
+
+  @override
+  String get localSlotRecommended => 'Consigliato';
+
+  @override
+  String get localSlotOpen => 'Configura';
+
+  @override
+  String get localNeedsTitle =>
+      'Li aggiungerai tu; un modello non li trasporta mai:';
+
+  @override
+  String get localGapsTitle =>
+      'Per completare la configurazione di questo spazio';
+
+  @override
   String get featureManagedProfileAccess => 'Chi amministra un profilo';
 
   @override

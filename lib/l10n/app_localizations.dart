@@ -11749,6 +11749,60 @@ abstract class AppLocalizations {
   /// **'Technical'**
   String get libraryProcessTechnical;
 
+  /// #1656 local_setup
+  ///
+  /// In en, this message translates to:
+  /// **'Your legal identity and address (for invoices)'**
+  String get localSlotLegalIdentity;
+
+  /// #1656 local_setup
+  ///
+  /// In en, this message translates to:
+  /// **'How members pay you (bank details)'**
+  String get localSlotPaymentDetails;
+
+  /// #1656 local_setup
+  ///
+  /// In en, this message translates to:
+  /// **'An online payment provider'**
+  String get localSlotPaymentProvider;
+
+  /// #1656 local_setup
+  ///
+  /// In en, this message translates to:
+  /// **'Your e-invoicing platform account'**
+  String get localSlotEinvoicePlatform;
+
+  /// #1656 local_setup
+  ///
+  /// In en, this message translates to:
+  /// **'At least one site'**
+  String get localSlotSite;
+
+  /// #1656 local_setup
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended'**
+  String get localSlotRecommended;
+
+  /// #1656 local_setup
+  ///
+  /// In en, this message translates to:
+  /// **'Set up'**
+  String get localSlotOpen;
+
+  /// #1656 local_setup
+  ///
+  /// In en, this message translates to:
+  /// **'You will add these yourself; a template never carries them:'**
+  String get localNeedsTitle;
+
+  /// #1656 local_setup
+  ///
+  /// In en, this message translates to:
+  /// **'To finish setting up this space'**
+  String get localGapsTitle;
+
   /// #914 managed profile access: name
   ///
   /// In en, this message translates to:

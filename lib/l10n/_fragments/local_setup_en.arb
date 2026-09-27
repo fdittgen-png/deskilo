@@ -1,0 +1,38 @@
+{
+  "localSlotLegalIdentity": "Your legal identity and address (for invoices)",
+  "@localSlotLegalIdentity": {
+    "description": "#1656 local_setup"
+  },
+  "localSlotPaymentDetails": "How members pay you (bank details)",
+  "@localSlotPaymentDetails": {
+    "description": "#1656 local_setup"
+  },
+  "localSlotPaymentProvider": "An online payment provider",
+  "@localSlotPaymentProvider": {
+    "description": "#1656 local_setup"
+  },
+  "localSlotEinvoicePlatform": "Your e-invoicing platform account",
+  "@localSlotEinvoicePlatform": {
+    "description": "#1656 local_setup"
+  },
+  "localSlotSite": "At least one site",
+  "@localSlotSite": {
+    "description": "#1656 local_setup"
+  },
+  "localSlotRecommended": "Recommended",
+  "@localSlotRecommended": {
+    "description": "#1656 local_setup"
+  },
+  "localSlotOpen": "Set up",
+  "@localSlotOpen": {
+    "description": "#1656 local_setup"
+  },
+  "localNeedsTitle": "You will add these yourself; a template never carries them:",
+  "@localNeedsTitle": {
+    "description": "#1656 local_setup"
+  },
+  "localGapsTitle": "To finish setting up this space",
+  "@localGapsTitle": {
+    "description": "#1656 local_setup"
+  }
+}

@@ -24,8 +24,10 @@
 // providers, not SharedPreferences and not `Supabase.instance`, so the
 // only thing that made them isolated was that nobody had noticed.
 import '../../features/workspace/application/creation_intent.dart';
+import '../../features/workspace/providers/local_setup_providers.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/action_confirmation_repository.dart';
+import 'data/local_setup_repository.dart';
 import 'data/mcp_admin_repository.dart';
 import 'data/mcp_connection_repository.dart';
 import '../../features/mcp/providers/mcp_providers.dart';
@@ -97,6 +99,8 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       // #1626/#1627 — no policy to save and no queue to review; and no
       // second factor, since Demo has no Auth server to verify one.
       mcpAdminRepositoryProvider.overrideWithValue(FakeMcpAdminRepository()),
+      // #1656 — Demo lacks nothing locally.
+      localSetupRepositoryProvider.overrideWithValue(FakeLocalSetupRepository()),
       secondFactorRepositoryProvider
           .overrideWithValue(FakeSecondFactorRepository()),
       workspaceRepositoryProvider.overrideWithValue(fixture.workspaces),
@@ -190,6 +194,7 @@ const Set<String> demoOverriddenProviders = {
   'actionConfirmationRepositoryProvider',
   'mcpConnectionRepositoryProvider',
   'mcpAdminRepositoryProvider',
+  'localSetupRepositoryProvider',
   'secondFactorRepositoryProvider',
   'workspaceRepositoryProvider',
   'floorPlanRepositoryProvider',
