@@ -146,6 +146,36 @@ void main() {
     expect(find.byKey(studioCard), findsOneWidget);
   });
 
+  testWidgets('#1660 a preferred capability ranks first and hides nothing',
+      (tester) async {
+    final repo = await pumpLibrary(tester);
+    // Flip the fixture: the shared studio has carnets, the builtin tiny
+    // (listed first by default) does not.
+    final tiny = repo.templates.firstWhere((t) => t.key == 'tiny');
+    final studio = repo.templates.firstWhere((t) => t.key == 'studio');
+    repo.templateInspections[tiny.id] = seeded(tiny, [
+      present(featureFieldId(WorkspaceFeature.carnets), featureFieldId(WorkspaceFeature.carnets), false),
+    ]);
+    repo.templateInspections[studio.id] = seeded(studio, [
+      present(featureFieldId(WorkspaceFeature.carnets), featureFieldId(WorkspaceFeature.carnets), true),
+    ]);
+    expect(tester.getTopLeft(find.byKey(tinyCard)).dy,
+        lessThan(tester.getTopLeft(find.byKey(studioCard)).dy),
+        reason: 'the builtin is listed first by default');
+    await search(tester, 'Carnets');
+    await tester.tap(find.byKey(const ValueKey('template-prefer-feature.carnets')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('template-preferred-feature.carnets')),
+        findsOneWidget);
+    await search(tester, '');
+    expect(find.byKey(tinyCard), findsOneWidget,
+        reason: 'preferring never hides a template');
+    expect(find.byKey(studioCard), findsOneWidget);
+    expect(tester.getTopLeft(find.byKey(studioCard)).dy,
+        lessThan(tester.getTopLeft(find.byKey(tinyCard)).dy),
+        reason: 'the template set up for it now comes first');
+  });
+
   testWidgets('the same capability in French finds the same template', (tester) async {
     await pumpLibrary(tester);
     await search(tester, 'Carnets');

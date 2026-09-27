@@ -7382,6 +7382,8 @@
   "templateRequirementsReset": "Restablecer",
   "templateNoMatch": "Ninguna plantilla coincide. Cambie las palabras, una etiqueta o un requisito.",
   "templateClearFilters": "Borrar la búsqueda",
+  "templatePrefer": "Preferir: {capability}",
+  "templatePreferredChip": "Preferido: {capability}",
   "templateWidenTitle": "¿Hacer esta plantilla legible para: {audience}?",
   "templateWidenCount": "{count} ajustes pasan a ser legibles, tal como los contiene ahora la plantilla.",
   "templateWidenExcluded": "{count} tipos de valores nunca salen con ella (datos bancarios, sedes, direcciones…).",

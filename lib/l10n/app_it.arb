@@ -7382,6 +7382,8 @@
   "templateRequirementsReset": "Azzera",
   "templateNoMatch": "Nessun modello corrisponde. Cambia le parole, un’etichetta o un requisito.",
   "templateClearFilters": "Cancella la ricerca",
+  "templatePrefer": "Preferisci: {capability}",
+  "templatePreferredChip": "Preferito: {capability}",
   "templateWidenTitle": "Rendere questo modello leggibile da: {audience}?",
   "templateWidenCount": "{count} impostazioni diventano leggibili, esattamente come il modello le contiene ora.",
   "templateWidenExcluded": "{count} tipi di valori non escono mai con esso (coordinate bancarie, sedi, indirizzi…).",

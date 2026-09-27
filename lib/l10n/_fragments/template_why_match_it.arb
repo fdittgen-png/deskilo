@@ -12,5 +12,7 @@
   "templateRequirementRemove": "Rimuovi il requisito",
   "templateRequirementsReset": "Azzera",
   "templateNoMatch": "Nessun modello corrisponde. Cambia le parole, un’etichetta o un requisito.",
-  "templateClearFilters": "Cancella la ricerca"
+  "templateClearFilters": "Cancella la ricerca",
+  "templatePrefer": "Preferisci: {capability}",
+  "templatePreferredChip": "Preferito: {capability}"
 }

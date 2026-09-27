@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+export 'template_card.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -15,7 +16,7 @@ import '../capability_labels.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'template_why_match.dart';
+import 'template_card.dart';
 import 'template_requirements.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -188,12 +189,14 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   /// #1660 — capabilities chosen as requirements, and those the current
   /// words offer.
   final List<String> _required = [];
+  final List<String> _preferred = [];
   List<String> _offered = const [];
 
   /// Whether anything narrows the gallery: words, tags or requirements,
   /// over a library that has templates at all.
   bool get _narrowed =>
-      (_query.trim().isNotEmpty || _tags.isNotEmpty || _required.isNotEmpty) &&
+      (_query.trim().isNotEmpty || _tags.isNotEmpty || _required.isNotEmpty ||
+          _preferred.isNotEmpty) &&
       widget.sections.any((s) => s.templates.isNotEmpty);
 
   void _clearAll() {
@@ -202,6 +205,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
       _query = '';
       _tags.clear();
       _required.clear();
+      _preferred.clear();
       _offered = const [];
       _capability = null;
       _suggestion = null;
@@ -232,17 +236,18 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
     setState(() {
       _offered = [
         for (final c in parsed.capabilities)
-          if (!_required.contains(c)) c,
+          if (!_required.contains(c) && !_preferred.contains(c)) c,
       ];
       _suggestion = parsed.capabilities.isEmpty && unknown.isNotEmpty
           ? vocabulary.suggest(unknown.first)
           : null;
       _capability = null;
-      _checking = capabilities.isNotEmpty;
+      _checking = capabilities.isNotEmpty || _preferred.isNotEmpty;
     });
-    if (capabilities.isEmpty) return;
+    if (capabilities.isEmpty && _preferred.isEmpty) return;
     final result = await ref.read(templateSearchProvider).run(
           capabilities: capabilities,
+          preferred: List.of(_preferred),
           freeWords: parsed.freeWords,
           templates: [for (final s in widget.sections) ...s.templates],
         );
@@ -287,6 +292,14 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
         for (final t in TemplateGallery.ordered(section.templates))
           if (_shows(t)) t,
       ];
+      // #1660 — a capability search lists its matches in the order it
+      // ranked them: preferred capabilities first, then the words.
+      final ranked = _capability?.matched;
+      if (ranked != null) {
+        int rank(WorkspaceTemplate t) =>
+            ranked.indexWhere((m) => m.inspection.templateId == t.id);
+        shown.sort((a, b) => rank(a).compareTo(rank(b)));
+      }
       if (widget.sections.length > 1) rows.add(section);
       for (final t in shown) {
         rows.add((template: t, section: section));
@@ -313,8 +326,16 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
           offered: _offered,
           required: _required,
           onRequire: (id) => _setRequired(() => _required.add(id)),
-          onRemove: (id) => _setRequired(() => _required.remove(id)),
-          onReset: () => _setRequired(_required.clear),
+          onRemove: (id) => _setRequired(() {
+            _required.remove(id);
+            _preferred.remove(id);
+          }),
+          onReset: () => _setRequired(() {
+            _required.clear();
+            _preferred.clear();
+          }),
+          preferred: _preferred,
+          onPrefer: (id) => _setRequired(() => _preferred.add(id)),
         ),
         if (allTags.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
@@ -431,100 +452,6 @@ class _EmptySpace {
 }
 
 /// One template, as the gallery shows it: what it is for and what it gives.
-class TemplateCard extends StatelessWidget {
-  const TemplateCard({
-    super.key,
-    required this.template,
-    this.selected,
-    this.onTap,
-    this.trailing,
-    this.shortlisted,
-    this.onShortlist,
-    this.evidence,
-  });
-
-  final WorkspaceTemplate template;
-
-  /// #1660 — what this template says about each capability searched for;
-  /// null or empty outside a capability search.
-  final Map<String, CapabilityEvidence>? evidence;
-
-  /// #1660 — whether it is on the compare shortlist; null hides the toggle.
-  final bool? shortlisted;
-  final VoidCallback? onShortlist;
-
-  /// Null outside selection mode.
-  final bool? selected;
-  final VoidCallback? onTap;
-  final Widget? trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final c = template.counts;
-    final gives = [
-      l10n?.libraryCounts(c.levels, c.desks, c.seats) ??
-          '${c.levels} levels · ${c.desks} desks · ${c.seats} seats',
-      if (template.carriesConfiguration)
-        l10n?.libraryCarriesSettings ?? 'with its settings',
-    ].join(' · ');
-    final visibility = switch (template.visibility) {
-      TemplateVisibility.builtin => l10n?.libraryVisibilityBuiltin ?? 'Built in',
-      TemplateVisibility.private => l10n?.libraryVisibilityPrivate ?? 'Only me',
-      TemplateVisibility.shared =>
-        l10n?.libraryVisibilityShared ?? 'People I invite',
-      TemplateVisibility.public =>
-        l10n?.libraryVisibilityPublic ?? 'Everyone (the library)',
-      TemplateVisibility.unknown => '',
-    };
-    final lines = [
-      gives,
-      if (template.description.isNotEmpty) template.description,
-      [
-        if (template.tags.isNotEmpty) template.tags.join(', '),
-        if (visibility.isNotEmpty) visibility,
-      ].join(' · '),
-    ];
-    final isSelected = selected ?? false;
-    return Card(
-      // The selection keys stay the ones onboarding tests pin; the
-      // library's row key stays the library's.
-      key: ValueKey(selected == null
-          ? 'library-template-${template.key}'
-          : 'template-${template.key}'),
-      color: isSelected
-          ? Theme.of(context).colorScheme.secondaryContainer
-          : null,
-      child: Column(mainAxisSize: MainAxisSize.min, children: [ListTile(
-        leading: Icon(isSelected ? Icons.check : Icons.grid_view_outlined),
-        title: Text(template.name),
-        subtitle: Text(lines.where((l) => l.isNotEmpty).join('\n')),
-        isThreeLine: lines.where((l) => l.isNotEmpty).length > 2,
-        selected: isSelected,
-        onTap: onTap,
-        trailing: shortlisted == null
-            ? trailing
-            : Row(mainAxisSize: MainAxisSize.min, children: [
-                IconButton(
-                  key: ValueKey('template-shortlist-${template.key}'),
-                  tooltip: shortlisted!
-                      ? (l10n?.compareRemove ?? 'Remove from comparison')
-                      : (l10n?.compareAdd ?? 'Add to comparison'),
-                  isSelected: shortlisted,
-                  icon: const Icon(Icons.add_chart_outlined),
-                  selectedIcon: const Icon(Icons.bar_chart),
-                  onPressed: onShortlist,
-                ),
-                ?trailing,
-              ]),
-      ),
-        if (evidence case final e? when e.isNotEmpty)
-          TemplateWhyMatch(templateKey: template.key, evidence: e),
-      ]),
-    );
-  }
-}
-
 class _EmptySpaceCard extends StatelessWidget {
   const _EmptySpaceCard({required this.selected, required this.onTap});
 

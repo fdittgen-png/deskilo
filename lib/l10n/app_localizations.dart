@@ -19884,6 +19884,18 @@ abstract class AppLocalizations {
   /// **'Clear the search'**
   String get templateClearFilters;
 
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Prefer: {capability}'**
+  String templatePrefer(String capability);
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred: {capability}'**
+  String templatePreferredChip(String capability);
+
   /// #1658 template_widen
   ///
   /// In en, this message translates to:

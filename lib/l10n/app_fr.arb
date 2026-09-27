@@ -7382,6 +7382,8 @@
   "templateRequirementsReset": "Réinitialiser",
   "templateNoMatch": "Aucun modèle ne correspond. Changez les mots, une étiquette ou une exigence.",
   "templateClearFilters": "Effacer la recherche",
+  "templatePrefer": "Préférer : {capability}",
+  "templatePreferredChip": "Préféré : {capability}",
   "templateWidenTitle": "Rendre ce modèle lisible par : {audience} ?",
   "templateWidenCount": "{count} réglages deviennent lisibles, tels que le modèle les contient maintenant.",
   "templateWidenExcluded": "{count} types de valeurs ne partent jamais avec lui (coordonnées bancaires, sites, adresses…).",

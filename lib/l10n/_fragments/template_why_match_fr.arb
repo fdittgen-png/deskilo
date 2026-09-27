@@ -12,5 +12,7 @@
   "templateRequirementRemove": "Retirer l’exigence",
   "templateRequirementsReset": "Réinitialiser",
   "templateNoMatch": "Aucun modèle ne correspond. Changez les mots, une étiquette ou une exigence.",
-  "templateClearFilters": "Effacer la recherche"
+  "templateClearFilters": "Effacer la recherche",
+  "templatePrefer": "Préférer : {capability}",
+  "templatePreferredChip": "Préféré : {capability}"
 }
