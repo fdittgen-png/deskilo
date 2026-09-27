@@ -11146,6 +11146,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get templatePricesOtherCurrency =>
+      'The template\'s prices are in another currency, so the prices here were left unchanged.';
+
+  @override
   String templateRegionSuggested(String values) {
     return 'This template was made for $values. Your choice is kept unless you use its values.';
   }

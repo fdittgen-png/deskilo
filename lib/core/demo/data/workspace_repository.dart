@@ -1692,14 +1692,17 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   Future<List<WorkspaceTemplate>> fetchWorkspaceTemplates() async =>
       List.of(templates);
 
+  TemplatePriceOutcome templatePriceOutcome = TemplatePriceOutcome.none; // #1656 next apply's report
+
   @override
-  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId,
+  Future<TemplatePriceOutcome> applyWorkspaceTemplate(String workspaceId, String templateId,
       {List<String>? groups}) async {
     if (!templates.any((t) => t.id == templateId)) {
       throw Exception('unknown template');
     }
     appliedTemplates.add(
         (workspaceId: workspaceId, templateId: templateId, groups: groups));
+    return templatePriceOutcome;
   }
 
   /// #1280 S3 — the groups each save asked for (null = everything allowed).

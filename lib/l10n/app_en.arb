@@ -12044,6 +12044,10 @@
       }
     }
   },
+  "templatePricesOtherCurrency": "The template's prices are in another currency, so the prices here were left unchanged.",
+  "@templatePricesOtherCurrency": {
+    "description": "#1656 template_prices"
+  },
   "templateRegionSuggested": "This template was made for {values}. Your choice is kept unless you use its values.",
   "@templateRegionSuggested": {
     "description": "#1656 template_region",

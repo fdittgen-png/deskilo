@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -110,16 +111,26 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
     }
     final count = preview.changesFor(selected);
     setState(() => _busy = true);
+    var prices = TemplatePriceOutcome.none;
     final done = await runGuarded(
       context,
       domain: 'workspace',
       message: 'apply template failed',
-      action: () => applyTemplateGroups(
+      action: () async => prices = await applyTemplateGroups(
           ref, widget.workspaceId, widget.template, selected),
     );
     if (!mounted) return;
     setState(() => _busy = false);
-    if (done) Navigator.of(context).pop(count);
+    if (!done) return;
+    // #1656 — prices in another currency are never relabelled; say so.
+    if (prices == TemplatePriceOutcome.currencyMismatch) {
+      AppSnack.info(
+        context,
+        AppLocalizations.of(context)?.templatePricesOtherCurrency ??
+            'The template\'s prices are in another currency, so the prices here were left unchanged.',
+      );
+    }
+    Navigator.of(context).pop(count);
   }
 
   @override

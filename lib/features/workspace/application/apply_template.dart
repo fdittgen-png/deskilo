@@ -25,13 +25,17 @@ Future<TemplatePreview> previewTemplate(
 
 /// Applies exactly the [groups] chosen, never the whole template in a
 /// configured workspace.
-Future<void> applyTemplateGroups(WidgetRef ref, String workspaceId,
-    WorkspaceTemplate template, Set<String> groups) async {
-  await ref.read(workspaceRepositoryProvider).applyWorkspaceTemplate(
+///
+/// #1656 — answers what happened to the template's floor-plan prices, so
+/// the sheet can say they were left alone in another currency.
+Future<TemplatePriceOutcome> applyTemplateGroups(WidgetRef ref,
+    String workspaceId, WorkspaceTemplate template, Set<String> groups) async {
+  final outcome = await ref.read(workspaceRepositoryProvider).applyWorkspaceTemplate(
       workspaceId, template.id,
       groups: groups.toList()..sort());
   ref
     ..invalidate(levelsProvider)
     ..invalidate(myWorkspacesProvider)
     ..invalidate(workspaceTemplatesProvider);
+  return outcome;
 }

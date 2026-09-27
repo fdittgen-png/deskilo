@@ -7297,6 +7297,7 @@
   "librarySearchCapabilities": "Plantillas configuradas para: {capabilities}",
   "librarySearchUnavailable": "No se pudieron comprobar los ajustes de las plantillas, así que ninguna aparece como coincidente. Inténtelo de nuevo.",
   "librarySearchSuggestion": "¿Quiso decir «{word}»?",
+  "templatePricesOtherCurrency": "Los precios de la plantilla están en otra moneda, así que los precios de aquí no se cambiaron.",
   "templateRegionSuggested": "Esta plantilla se creó para {values}. Se mantiene su elección salvo que use sus valores.",
   "templateRegionUse": "Usar la región de la plantilla",
   "themeTitle": "Tema",

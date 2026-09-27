@@ -19422,6 +19422,12 @@ abstract class AppLocalizations {
   /// **'Did you mean “{word}”?'**
   String librarySearchSuggestion(String word);
 
+  /// #1656 template_prices
+  ///
+  /// In en, this message translates to:
+  /// **'The template\'s prices are in another currency, so the prices here were left unchanged.'**
+  String get templatePricesOtherCurrency;
+
   /// #1656 template_region
   ///
   /// In en, this message translates to:

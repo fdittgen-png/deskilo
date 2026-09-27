@@ -763,6 +763,7 @@ constraint workspace_templates.workspace_templates_name_check CHECK (((char_leng
 constraint workspace_templates.workspace_templates_owner_workspace_id_fkey FOREIGN KEY (owner_workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_templates.workspace_templates_ownership CHECK (((visibility = 'builtin'::text) = (owner_workspace_id IS NULL)))
 constraint workspace_templates.workspace_templates_pkey PRIMARY KEY (id)
+constraint workspace_templates.workspace_templates_plan_prices_shape CHECK (((jsonb_typeof(plan_prices) = 'object'::text) AND ((plan_prices = '{}'::jsonb) OR (((plan_prices ->> 'currency'::text) ~ '^[A-Z]{3}$'::text) AND (jsonb_typeof((plan_prices -> 'levels'::text)) = 'array'::text)))))
 constraint workspace_templates.workspace_templates_regional_shape CHECK (((jsonb_typeof(regional) = 'object'::text) AND ((NOT (regional ? 'country_code'::text)) OR ((regional ->> 'country_code'::text) ~ '^[A-Z]{2}$'::text)) AND ((NOT (regional ? 'currency_code'::text)) OR ((regional ->> 'currency_code'::text) ~ '^[A-Z]{3}$'::text)) AND ((NOT (regional ? 'timezone'::text)) OR ((char_length((regional ->> 'timezone'::text)) >= 1) AND (char_length((regional ->> 'timezone'::text)) <= 64))) AND ((NOT (regional ? 'locale'::text)) OR ((regional ->> 'locale'::text) ~ '^[a-z]{2}$'::text))))
 constraint workspace_templates.workspace_templates_visibility_check CHECK ((visibility = ANY (ARRAY['builtin'::text, 'private'::text, 'shared'::text, 'public'::text])))
 constraint workspaces.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -804,7 +805,7 @@ routine public.apply_usage_correction(p_record_id uuid, p_event_id uuid) -> void
 routine public.apply_usage_decision() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:2144e8924671
 routine public.apply_validated_decision_0181() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:0c4d74c777c8
 routine public.apply_workspace_template(p_workspace_id uuid, p_key text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a685a1cb7f41
-routine public.apply_workspace_template(p_workspace_id uuid, p_template_id uuid, p_groups text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f33f079dd1f0
+routine public.apply_workspace_template(p_workspace_id uuid, p_template_id uuid, p_groups text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a37f285e165c
 routine public.assert_fee_bands_contiguous() -> trigger | function | definer | volatile | exec:service_role | body:a67aff42d6fc
 routine public.assert_member_quota(p_member_id uuid, p_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:8e367161e697
 routine public.assert_seat_not_blocked(p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:597dcd20ef44
@@ -1140,11 +1141,15 @@ routine public.system_column_names() -> text[] | function | invoker | immutable 
 routine public.system_columns_stamp() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:300c2d072fc0
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:e59f6b4d188f
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:e69917e43c2f
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
+routine public.template_plan_price_tree(p_tree jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:e3aa36ff6c7e
+routine public.template_plan_same(p_a jsonb, p_b jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:15531b9739f4
+routine public.template_price_outcome(p_tpl workspace_templates, p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:6b57f0d16b8c
+routine public.template_priced_plan(p_tpl workspace_templates, p_workspace_id uuid, p_tree jsonb) -> jsonb | function | definer | stable | exec:service_role | body:d3516890a5f2
 routine public.template_publication_preview(p_workspace_id uuid, p_groups text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:923d1fcaa4a8
 routine public.template_publication_rules() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:bf33cd0c6a98
-routine public.template_regional_capture() -> trigger | function | definer | volatile | exec:service_role | body:b94152046d81
+routine public.template_regional_capture() -> trigger | function | definer | volatile | exec:service_role | body:ba7262486e35
 routine public.template_snapshot(p_template workspace_templates, p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:2faa633b79c5
 routine public.template_supported_schema_versions() -> integer[] | function | invoker | immutable | exec:authenticated,service_role | body:53e229c024d6
 routine public.template_walk_payload(p_configuration jsonb, p_floor_plan jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:fb9a295f1ab3

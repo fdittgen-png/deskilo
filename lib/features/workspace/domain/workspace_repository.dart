@@ -711,7 +711,7 @@ abstract class WorkspaceRepository {
   /// Merges what [templateId] carries into [workspaceId], never wiping
   /// (#1276); [groups] narrows it, null applies all. `manageConfiguration`;
   /// refused for an unreadable template or an unknown snapshot format.
-  Future<void> applyWorkspaceTemplate(String workspaceId, String templateId,
+  Future<TemplatePriceOutcome> applyWorkspaceTemplate(String workspaceId, String templateId,
       {List<String>? groups});
 
   /// #1280 — per group, what applying [templateId] here would change.

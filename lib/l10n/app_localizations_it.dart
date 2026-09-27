@@ -11245,6 +11245,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get templatePricesOtherCurrency =>
+      'I prezzi del modello sono in un\'altra valuta, quindi i prezzi qui non sono stati modificati.';
+
+  @override
   String templateRegionSuggested(String values) {
     return 'Questo modello è stato creato per $values. La tua scelta resta, a meno che tu non usi i suoi valori.';
   }

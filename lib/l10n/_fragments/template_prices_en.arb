@@ -1,0 +1,6 @@
+{
+  "templatePricesOtherCurrency": "The template's prices are in another currency, so the prices here were left unchanged.",
+  "@templatePricesOtherCurrency": {
+    "description": "#1656 template_prices"
+  }
+}
