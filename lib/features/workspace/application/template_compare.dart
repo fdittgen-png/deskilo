@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/files/file_saver.dart';
 import '../domain/template_capabilities.dart';
+import '../domain/template_inspection.dart';
 import '../providers/workspace_providers.dart';
 import 'template_workbook.dart';
 
@@ -24,6 +25,11 @@ Future<List<ComparisonRow>> templateComparison(
   ];
   return compareTemplates(inspections);
 }
+
+/// #1660 — one template's inspection, for its detail screen.
+@riverpod
+Future<TemplateInspection> templateInspection(Ref ref, String templateId) =>
+    ref.watch(workspaceRepositoryProvider).inspectWorkspaceTemplate(templateId);
 
 /// #1661 — the workbook export of a shortlist.
 @riverpod

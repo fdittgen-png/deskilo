@@ -11446,6 +11446,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get capabilityBrowserPrefer => 'Prefer';
 
   @override
+  String get templateDetails => 'What it holds';
+
+  @override
+  String get templateDetailSearch => 'Find a setting in this template';
+
+  @override
+  String get templateDetailNone => 'No setting matches.';
+
+  @override
   String templateWidenTitle(String audience) {
     return 'Make this template readable by: $audience?';
   }

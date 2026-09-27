@@ -15,6 +15,7 @@ class TemplateCard extends StatelessWidget {
     this.trailing,
     this.shortlisted,
     this.onShortlist,
+    this.onDetails,
     this.evidence,
   });
 
@@ -27,6 +28,9 @@ class TemplateCard extends StatelessWidget {
   /// #1660 — whether it is on the compare shortlist; null hides the toggle.
   final bool? shortlisted;
   final VoidCallback? onShortlist;
+
+  /// #1660 — opens what the template holds, read-only.
+  final VoidCallback? onDetails;
 
   /// Null outside selection mode.
   final bool? selected;
@@ -104,6 +108,16 @@ class TemplateCard extends StatelessWidget {
           ),
           if (evidence case final e? when e.isNotEmpty)
             TemplateWhyMatch(templateKey: template.key, evidence: e),
+          if (onDetails != null)
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton.icon(
+                key: ValueKey('template-details-${template.key}'),
+                icon: const Icon(Icons.list_alt_outlined),
+                label: Text(l10n?.templateDetails ?? 'What it holds'),
+                onPressed: onDetails,
+              ),
+            ),
         ],
       ),
     );

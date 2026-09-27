@@ -7,6 +7,7 @@ import '../../application/template_compare.dart';
 import '../../application/template_workbook.dart';
 import '../workbook_labels.dart';
 import '../screens/template_compare_screen.dart';
+import '../screens/template_detail_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/template_search.dart';
@@ -451,6 +452,14 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
                             .firstOrNull
                             ?.evidence,
                         onShortlist: () => _toggleShortlist(t),
+                        onDetails: widget.onSelected != null
+                            ? null
+                            : () => Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) =>
+                                      TemplateDetailScreen(template: t),
+                                ),
+                              ),
                       ),
                     _ => _EmptySpaceCard(
                         selected: widget.selectedId == null,

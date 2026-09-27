@@ -13,6 +13,7 @@ import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/template_gallery.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -184,5 +185,93 @@ void main() {
       find.byKey(const ValueKey('template-gallery-empty')),
       findsOneWidget,
     );
+  });
+
+  testWidgets('#1660 a template\'s detail groups every setting, names '
+      'features, and finds "refund" in its validations', (tester) async {
+    const refunds = WorkspaceTemplate(
+      id: 'tpl-refunds',
+      key: 'tpl-refunds',
+      name: 'Refunds',
+    );
+    final saved = await _pump(tester, const [refunds]);
+    // The pumped repository answers the inspection seeded here.
+    final element = tester.element(find.byType(TemplateGallery));
+    final repo = ProviderScope.containerOf(
+      element,
+    ).read(workspaceRepositoryProvider) as FakeWorkspaceRepository;
+    repo.templateInspections['tpl-refunds'] = const TemplateInspection(
+      templateId: 'tpl-refunds',
+      key: 'tpl-refunds',
+      name: 'Refunds',
+      status: TemplateInspectionStatus.ok,
+      profile: TemplateProfile.partial,
+      compatibility: TemplateCompatibility.supported,
+      outline: TemplateOutline(
+        compatibility: TemplateCompatibility.supported,
+        groups: [],
+      ),
+      fields: [
+        TemplateFieldRecord(
+          path: 'workspace.feature_flags.kioskMode',
+          id: 'workspace.feature_flags.kioskMode',
+          disposition: TemplateFieldDisposition.present,
+          value: false,
+        ),
+        TemplateFieldRecord(
+          path: 'tables.validation_policies[refund].required_count',
+          id: 'tables.validation_policies[].required_count',
+          disposition: TemplateFieldDisposition.present,
+          value: 2,
+        ),
+      ],
+    );
+    await tester.tap(
+      find.byKey(const ValueKey('template-details-tpl-refunds')),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(
+        const ValueKey('template-detail-section-workspace.feature_flags'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(
+        const ValueKey('template-detail-section-tables.validation_policies'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.text('No'),
+      findsOneWidget,
+      reason: 'an OFF feature is shown, as No',
+    );
+    await tester.enterText(
+      find.byKey(const ValueKey('template-detail-search')),
+      'refund',
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(
+        const ValueKey(
+          'template-detail-row-tables.validation_policies[refund].required_count',
+        ),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(
+        const ValueKey('template-detail-section-workspace.feature_flags'),
+      ),
+      findsNothing,
+    );
+    await tester.enterText(
+      find.byKey(const ValueKey('template-detail-search')),
+      'zzz',
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('template-detail-none')), findsOneWidget);
+    expect(saved, isEmpty, reason: 'reading writes nothing');
   });
 }
