@@ -11381,6 +11381,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un texto de invitación todavía nombra su espacio o a sus personas. Sustitúyalos por marcadores en los ajustes de invitación o desmarque los textos de invitación.';
 
   @override
+  String get compareExport => 'Exportar a Excel';
+
+  @override
+  String get compareExported => 'Libro guardado.';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

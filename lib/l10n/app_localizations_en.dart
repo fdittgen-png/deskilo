@@ -11297,6 +11297,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'An invitation text still names your space or its people. Replace them with placeholders in the invitation settings, or untick invitation texts.';
 
   @override
+  String get compareExport => 'Export to Excel';
+
+  @override
+  String get compareExported => 'Workbook saved.';
+
+  @override
   String get themeTitle => 'Theme';
 
   @override
