@@ -19854,6 +19854,24 @@ abstract class AppLocalizations {
   /// **'Unknown'**
   String get capabilityStateUnknown;
 
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Require: {capability}'**
+  String templateRequire(String capability);
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Remove requirement'**
+  String get templateRequirementRemove;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get templateRequirementsReset;
+
   /// #1656 template_wording
   ///
   /// In en, this message translates to:

@@ -121,6 +121,31 @@ void main() {
     expect(find.text('Hide why'), findsOneWidget);
   });
 
+  testWidgets('#1660 a requirement is chosen by a tap and holds until '
+      'removed, whatever is typed next', (tester) async {
+    await pumpLibrary(tester);
+    await search(tester, 'credit packs');
+    const offer = ValueKey('template-require-model.credit_packs');
+    const chip = ValueKey('template-required-model.credit_packs');
+    expect(find.byKey(offer), findsOneWidget);
+    expect(find.byKey(chip), findsNothing, reason: 'typing only offers it');
+    await tester.tap(find.byKey(offer));
+    await tester.pumpAndSettle();
+    expect(find.byKey(chip), findsOneWidget);
+    expect(find.byKey(offer), findsNothing);
+
+    await search(tester, '');
+    expect(find.byKey(chip), findsOneWidget);
+    expect(find.byKey(tinyCard), findsOneWidget);
+    expect(find.byKey(studioCard), findsNothing,
+        reason: 'the requirement still filters with no words typed');
+
+    await tester.tap(find.byKey(const ValueKey('template-requirements-reset')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(chip), findsNothing);
+    expect(find.byKey(studioCard), findsOneWidget);
+  });
+
   testWidgets('the same capability in French finds the same template', (tester) async {
     await pumpLibrary(tester);
     await search(tester, 'Carnets');

@@ -7,5 +7,8 @@
   "capabilityStateUnspecified": "Von dieser Vorlage nicht festgelegt",
   "capabilityStateLocalInput": "Braucht zuerst einen lokalen Wert",
   "capabilityStateIncompatible": "Hier nicht anwendbar",
-  "capabilityStateUnknown": "Unbekannt"
+  "capabilityStateUnknown": "Unbekannt",
+  "templateRequire": "Voraussetzen: {capability}",
+  "templateRequirementRemove": "Voraussetzung entfernen",
+  "templateRequirementsReset": "Zurücksetzen"
 }

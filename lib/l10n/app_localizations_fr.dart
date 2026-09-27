@@ -11526,6 +11526,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get capabilityStateUnknown => 'Inconnu';
 
   @override
+  String templateRequire(String capability) {
+    return 'Exiger : $capability';
+  }
+
+  @override
+  String get templateRequirementRemove => 'Retirer l’exigence';
+
+  @override
+  String get templateRequirementsReset => 'Réinitialiser';
+
+  @override
   String get libraryInvitationTexts => 'Textes d\'invitation';
 
   @override

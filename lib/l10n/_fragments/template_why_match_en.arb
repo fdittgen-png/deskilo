@@ -34,5 +34,22 @@
   "capabilityStateUnknown": "Unknown",
   "@capabilityStateUnknown": {
     "description": "#1660 template_why_match"
+  },
+  "templateRequire": "Require: {capability}",
+  "@templateRequire": {
+    "description": "#1660 template_why_match",
+    "placeholders": {
+      "capability": {
+        "type": "String"
+      }
+    }
+  },
+  "templateRequirementRemove": "Remove requirement",
+  "@templateRequirementRemove": {
+    "description": "#1660 template_why_match"
+  },
+  "templateRequirementsReset": "Reset",
+  "@templateRequirementsReset": {
+    "description": "#1660 template_why_match"
   }
 }
