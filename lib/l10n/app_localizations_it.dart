@@ -11399,6 +11399,12 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un testo di invito nomina ancora il tuo spazio o le sue persone. Sostituiscili con segnaposto nelle impostazioni di invito, oppure deseleziona i testi di invito.';
 
   @override
+  String get compareExport => 'Esporta in Excel';
+
+  @override
+  String get compareExported => 'Cartella di lavoro salvata.';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

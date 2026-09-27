@@ -19674,6 +19674,18 @@ abstract class AppLocalizations {
   /// **'An invitation text still names your space or its people. Replace them with placeholders in the invitation settings, or untick invitation texts.'**
   String get libraryInvitationTextsRefused;
 
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Export to Excel'**
+  String get compareExport;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Workbook saved.'**
+  String get compareExported;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:

@@ -11393,6 +11393,12 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Einladungstext nennt noch Ihren Arbeitsbereich oder seine Personen. Ersetzen Sie sie in den Einladungseinstellungen durch Platzhalter oder wählen Sie die Einladungstexte ab.';
 
   @override
+  String get compareExport => 'Nach Excel exportieren';
+
+  @override
+  String get compareExported => 'Arbeitsmappe gespeichert.';
+
+  @override
   String get themeTitle => 'Design';
 
   @override

@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/time/clock.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -32,6 +35,26 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
   String _filter = '';
   int _baseline = 0;
   int _other = 1;
+  bool _exporting = false;
+
+  // #1661 — the same templates, as an offline workbook.
+  Future<void> _export() async {
+    setState(() => _exporting = true);
+    String? path;
+    final ok = await runGuarded(
+      context,
+      domain: 'templates',
+      message: 'template workbook export failed',
+      action: () async => path = await ref
+          .read(templateWorkbookExportProvider)
+          .export([for (final t in widget.templates) t.id], now: ref.read(clockProvider).now()),
+    );
+    if (!mounted) return;
+    setState(() => _exporting = false);
+    if (ok && path != null) {
+      AppSnack.success(context, AppLocalizations.of(context)?.compareExported ?? 'Workbook saved.');
+    }
+  }
 
   static const wideWidth = 720.0;
 
@@ -41,7 +64,17 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
     final ids = widget.templates.map((t) => t.id).join(',');
     final comparison = ref.watch(templateComparisonProvider(ids));
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.compareTitle ?? 'Compare templates')),
+      appBar: AppBar(
+        title: Text(l10n?.compareTitle ?? 'Compare templates'),
+        actions: [
+          IconButton(
+            key: const ValueKey('compare-export'),
+            tooltip: l10n?.compareExport ?? 'Export to Excel',
+            icon: const Icon(Icons.table_view_outlined),
+            onPressed: _exporting ? null : _export,
+          ),
+        ],
+      ),
       body: comparison.when(
         loading: () => const LoadingView(),
         error: (e, _) => Padding(

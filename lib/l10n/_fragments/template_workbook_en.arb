@@ -1,0 +1,10 @@
+{
+  "compareExport": "Export to Excel",
+  "@compareExport": {
+    "description": "#1661 template_workbook"
+  },
+  "compareExported": "Workbook saved.",
+  "@compareExported": {
+    "description": "#1661 template_workbook"
+  }
+}

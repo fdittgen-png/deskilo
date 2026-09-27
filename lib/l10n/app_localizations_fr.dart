@@ -11412,6 +11412,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un texte d\'invitation nomme encore votre espace ou ses membres. Remplacez-les par des variables dans les réglages d\'invitation, ou décochez les textes d\'invitation.';
 
   @override
+  String get compareExport => 'Exporter vers Excel';
+
+  @override
+  String get compareExported => 'Classeur enregistré.';
+
+  @override
   String get themeTitle => 'Thème';
 
   @override

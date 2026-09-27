@@ -12258,6 +12258,14 @@
   "@libraryInvitationTextsRefused": {
     "description": "#1656 template_wording"
   },
+  "compareExport": "Export to Excel",
+  "@compareExport": {
+    "description": "#1661 template_workbook"
+  },
+  "compareExported": "Workbook saved.",
+  "@compareExported": {
+    "description": "#1661 template_workbook"
+  },
   "themeTitle": "Theme",
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"

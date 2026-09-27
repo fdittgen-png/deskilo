@@ -94,3 +94,56 @@ final class TemplateComparisonFamily extends $Family
   @override
   String toString() => r'templateComparisonProvider';
 }
+
+/// #1661 — the workbook export of a shortlist.
+
+@ProviderFor(templateWorkbookExport)
+final templateWorkbookExportProvider = TemplateWorkbookExportProvider._();
+
+/// #1661 — the workbook export of a shortlist.
+
+final class TemplateWorkbookExportProvider
+    extends
+        $FunctionalProvider<
+          TemplateWorkbookExport,
+          TemplateWorkbookExport,
+          TemplateWorkbookExport
+        >
+    with $Provider<TemplateWorkbookExport> {
+  /// #1661 — the workbook export of a shortlist.
+  TemplateWorkbookExportProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'templateWorkbookExportProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$templateWorkbookExportHash();
+
+  @$internal
+  @override
+  $ProviderElement<TemplateWorkbookExport> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  TemplateWorkbookExport create(Ref ref) {
+    return templateWorkbookExport(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(TemplateWorkbookExport value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<TemplateWorkbookExport>(value),
+    );
+  }
+}
+
+String _$templateWorkbookExportHash() =>
+    r'11dad0f8e111149762c4ec7e1008461c9d8d9b7b';

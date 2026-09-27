@@ -7339,6 +7339,8 @@
   "libraryInvitationTexts": "Testi di invito",
   "libraryInvitationTextsHint": "Solo testi scritti con segnaposto come {tag}; un testo che nomina il tuo spazio o le sue persone viene rifiutato.",
   "libraryInvitationTextsRefused": "Un testo di invito nomina ancora il tuo spazio o le sue persone. Sostituiscili con segnaposto nelle impostazioni di invito, oppure deseleziona i testi di invito.",
+  "compareExport": "Esporta in Excel",
+  "compareExported": "Cartella di lavoro salvata.",
   "themeTitle": "Tema",
   "themeSystem": "Predefinito di sistema",
   "themeLight": "Chiaro",
