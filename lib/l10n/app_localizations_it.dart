@@ -6892,6 +6892,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get libraryProcessTechnical => 'Tecnico';
 
   @override
+  String get templatesLoadFailed => 'Non è stato possibile caricare i modelli.';
+
+  @override
+  String get onboardingTemplatesFailedEmpty =>
+      'Non è stato possibile caricare i modelli, quindi questo spazio partirebbe vuoto. Torni indietro per riprovare.';
+
+  @override
   String get localSlotLegalIdentity =>
       'La tua identità legale e il tuo indirizzo (per le fatture)';
 

@@ -543,6 +543,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               ),
             if (template != null) TemplateLocalNeedsView(templateId: template.id),
             CreationSummary(shape: _shape),
+            // #1660 — no list arrived and nobody chose: say so.
+            if (!_templateResolved) const TemplatesFailedNotice(),
             ListTile(
               key: const ValueKey('onboarding-confirm-template'),
               contentPadding: EdgeInsets.zero,

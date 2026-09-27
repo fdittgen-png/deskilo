@@ -4282,6 +4282,8 @@
   "@libraryProcessTechnical": {
     "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
   },
+  "templatesLoadFailed": "Les modèles n’ont pas pu être chargés.",
+  "onboardingTemplatesFailedEmpty": "Les modèles n’ont pas pu être chargés : cet espace démarrerait vide. Revenez en arrière pour réessayer.",
   "localSlotLegalIdentity": "Votre identité légale et votre adresse (pour les factures)",
   "localSlotPaymentDetails": "Comment les membres vous paient (coordonnées bancaires)",
   "localSlotPaymentProvider": "Un prestataire de paiement en ligne",

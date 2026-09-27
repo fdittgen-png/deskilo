@@ -131,5 +131,7 @@
   "libraryProcessTechnical": "Técnico",
   "@libraryProcessTechnical": {
     "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
-  }
+  },
+  "templatesLoadFailed": "No se pudieron cargar las plantillas.",
+  "onboardingTemplatesFailedEmpty": "No se pudieron cargar las plantillas, así que este espacio empezaría vacío. Vuelva atrás para intentarlo de nuevo."
 }

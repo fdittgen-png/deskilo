@@ -6900,6 +6900,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get libraryProcessTechnical => 'Technique';
 
   @override
+  String get templatesLoadFailed => 'Les modèles n’ont pas pu être chargés.';
+
+  @override
+  String get onboardingTemplatesFailedEmpty =>
+      'Les modèles n’ont pas pu être chargés : cet espace démarrerait vide. Revenez en arrière pour réessayer.';
+
+  @override
   String get localSlotLegalIdentity =>
       'Votre identité légale et votre adresse (pour les factures)';
 
