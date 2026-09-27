@@ -74,6 +74,10 @@ List<XlsxSheet> templateWorkbook(
         ['state absent:required', 'to be set locally'],
         ['state unknown', 'could not be read; nothing is claimed'],
         ['state excluded / stripped', 'deliberately never published'],
+        [
+          'wide sheets',
+          'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise',
+        ],
       ],
     ),
     XlsxSheet(
@@ -199,8 +203,139 @@ List<XlsxSheet> templateWorkbook(
             [t.key, e.id, e.portability, e.reason ?? ''],
       ],
     ),
+    XlsxSheet(
+      name: 'Catalogs',
+      rows: [
+        ['template_key', 'catalog', 'row', 'attribute', 'state', 'value'],
+        for (final t in inspections)
+          for (final table in _catalogTables)
+            for (final row in _tableRows(t, table).entries)
+              for (final attr in row.value.entries)
+                [
+                  t.key,
+                  table,
+                  row.key,
+                  attr.key,
+                  _state(attr.value.disposition, attr.value.absent),
+                  _value(attr.value.value),
+                ],
+      ],
+    ),
+    XlsxSheet(
+      name: 'RolePermissions',
+      rows: [
+        ['template_key', 'role', 'kind', 'permissions', 'state'],
+        for (final t in inspections) ...[
+          for (final f in t.fields)
+            if (f.id.startsWith('workspace.role_permissions.'))
+              [
+                t.key,
+                f.id.substring('workspace.role_permissions.'.length),
+                'base',
+                _cell(f),
+                _state(f.disposition, f.absent),
+              ],
+          for (final row in _tableRows(t, 'workspace_roles').entries)
+            [
+              t.key,
+              row.key,
+              'custom',
+              _cell(row.value['permissions']),
+              _state(
+                row.value['permissions']?.disposition ??
+                    TemplateFieldDisposition.absent,
+                row.value['permissions']?.absent,
+              ),
+            ],
+        ],
+      ],
+    ),
+    XlsxSheet(
+      name: 'Validations',
+      rows: [
+        ['template_key', 'event_type', ..._validationColumns],
+        for (final t in inspections)
+          for (final row in _tableRows(t, 'validation_policies').entries)
+            [
+              t.key,
+              row.key,
+              for (final c in _validationColumns) _cell(row.value[c]),
+            ],
+      ],
+    ),
+    XlsxSheet(
+      name: 'Fields',
+      rows: [
+        ['template_key', 'field_key', ..._fieldColumns],
+        for (final t in inspections)
+          for (final row
+              in _tableRows(t, 'workspace_field_definitions').entries)
+            [
+              t.key,
+              row.key,
+              for (final c in _fieldColumns) _cell(row.value[c]),
+            ],
+      ],
+    ),
   ];
 }
+
+/// The rows of [table] in [t], by natural row key: each row's top-level
+/// attributes, as the inspection recorded them.
+Map<String, Map<String, TemplateFieldRecord>> _tableRows(
+  TemplateInspection t,
+  String table,
+) {
+  final shape = RegExp('^tables\\.${RegExp.escape(table)}\\[(.*)\\]\\.([a-z_]+)\$');
+  final rows = <String, Map<String, TemplateFieldRecord>>{};
+  for (final f in t.fields) {
+    final m = shape.firstMatch(f.path);
+    if (m == null) continue;
+    (rows[m.group(1)!] ??= {})[m.group(2)!] = f;
+  }
+  return rows;
+}
+
+/// A wide cell: the value when the template sets it, otherwise its
+/// state (absent:inherit, unknown, ...), so a blank never hides which.
+Object? _cell(TemplateFieldRecord? f) => f == null
+    ? 'absent:unknown'
+    : f.disposition == TemplateFieldDisposition.present
+    ? _value(f.value)
+    : _state(f.disposition, f.absent);
+
+const _catalogTables = [
+  'plans',
+  'fee_bands',
+  'credit_products',
+  'packages',
+  'services',
+  'accessories',
+];
+
+const _validationColumns = [
+  'required_count',
+  'owner_required',
+  'admins_may_validate',
+  'owner_may_self_validate',
+  'sequential',
+  'validator_scope',
+  'min_amount_cents',
+  'auto_validate_admin',
+  'auto_validate_owner',
+  'eligible_admin_ids',
+];
+
+const _fieldColumns = [
+  'type',
+  'required',
+  'personal_data',
+  'visibility',
+  'contexts',
+  'group_key',
+  'active',
+  'sort_order',
+];
 
 /// The file name: no template name, no person, just the date.
 String templateWorkbookName(DateTime capturedAt) {

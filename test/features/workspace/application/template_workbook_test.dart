@@ -40,7 +40,7 @@ void main() {
   final at = DateTime.utc(2026, 9, 27, 10);
 
   test(
-    'seven sheets, the fields of every template, false kept apart from missing',
+    'eleven sheets, the fields of every template, false kept apart from missing',
     () {
       final sheets = templateWorkbook([
         _i('a', [
@@ -57,6 +57,10 @@ void main() {
         'Settings',
         'Requirements',
         'Provenance',
+        'Catalogs',
+        'RolePermissions',
+        'Validations',
+        'Fields',
       ]);
       final features = sheets.firstWhere((s) => s.name == 'Features').rows;
       expect(features[1], [
@@ -99,5 +103,83 @@ void main() {
         .join();
     expect(sheetXml.contains('<f>'), isFalse, reason: 'a leading = stays text');
     expect(templateWorkbookName(at), 'deskilo-templates-20260927.xlsx');
+  });
+
+  test('catalogs, roles, validations and fields read row by row', () {
+    TemplateFieldRecord rec(String path, String id, Object? v) =>
+        TemplateFieldRecord(
+          path: path,
+          id: id,
+          disposition: TemplateFieldDisposition.present,
+          value: v,
+        );
+    final sheets = templateWorkbook([
+      _i('asso', [
+        rec('tables.plans[Nomade].name', 'tables.plans[].name', 'Nomade'),
+        rec(
+          'tables.plans[Nomade].base_fee_cents',
+          'tables.plans[].base_fee_cents',
+          5000,
+        ),
+        rec(
+          'workspace.role_permissions.admin',
+          'workspace.role_permissions.admin',
+          ['manageMembers', 'viewFinances'],
+        ),
+        rec(
+          'tables.workspace_roles[tresorier].permissions',
+          'tables.workspace_roles[].permissions',
+          ['viewFinances'],
+        ),
+        rec(
+          'tables.validation_policies[expense].required_count',
+          'tables.validation_policies[].required_count',
+          2,
+        ),
+        const TemplateFieldRecord(
+          path: 'tables.validation_policies[expense].eligible_admin_ids',
+          id: 'tables.validation_policies[].eligible_admin_ids',
+          disposition: TemplateFieldDisposition.stripped,
+        ),
+        rec(
+          'tables.workspace_field_definitions[committee].type',
+          'tables.workspace_field_definitions[].type',
+          'choice',
+        ),
+        rec(
+          'tables.workspace_field_definitions[committee].labels.fr.label',
+          'tables.workspace_field_definitions[].labels.{locale}.label',
+          'Rôle',
+        ),
+      ]),
+    ], capturedAt: at);
+    List<List<Object?>> rows(String name) =>
+        sheets.firstWhere((s) => s.name == name).rows;
+
+    expect(rows('Catalogs').skip(1), [
+      ['asso', 'plans', 'Nomade', 'name', 'present', 'Nomade'],
+      ['asso', 'plans', 'Nomade', 'base_fee_cents', 'present', 5000],
+    ]);
+    expect(rows('RolePermissions').skip(1), [
+      ['asso', 'admin', 'base', 'manageMembers, viewFinances', 'present'],
+      ['asso', 'tresorier', 'custom', 'viewFinances', 'present'],
+    ]);
+    final validation = rows('Validations')[1];
+    expect(validation[0], 'asso');
+    expect(validation[1], 'expense');
+    expect(validation[2], 2, reason: 'required_count as a number');
+    expect(
+      validation.last,
+      'stripped',
+      reason: 'named validators never travel, and the sheet says so',
+    );
+    expect(validation[3], 'absent:unknown', reason: 'not in this template');
+    final field = rows('Fields')[1];
+    expect(field.take(3), ['asso', 'committee', 'choice']);
+    expect(
+      field.contains('Rôle'),
+      isFalse,
+      reason: 'nested labels are Settings rows, not a wide column',
+    );
   });
 }
