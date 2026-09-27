@@ -7373,6 +7373,8 @@
   "libraryInvitationTextsRefused": "Un texto de invitación todavía nombra su espacio o a sus personas. Sustitúyalos por marcadores en los ajustes de invitación o desmarque los textos de invitación.",
   "compareExport": "Exportar a Excel",
   "compareExported": "Libro guardado.",
+  "templateExportResults": "Exportar estos resultados ({count})",
+  "templateExportTooMany": "Como máximo {max} plantillas por libro. Acote primero la búsqueda.",
   "themeTitle": "Tema",
   "themeSystem": "Predeterminado del sistema",
   "themeLight": "Claro",

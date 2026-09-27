@@ -7373,6 +7373,8 @@
   "libraryInvitationTextsRefused": "Un testo di invito nomina ancora il tuo spazio o le sue persone. Sostituiscili con segnaposto nelle impostazioni di invito, oppure deseleziona i testi di invito.",
   "compareExport": "Esporta in Excel",
   "compareExported": "Cartella di lavoro salvata.",
+  "templateExportResults": "Esporta questi risultati ({count})",
+  "templateExportTooMany": "Al massimo {max} modelli per cartella. Restringi prima la ricerca.",
   "themeTitle": "Tema",
   "themeSystem": "Predefinito di sistema",
   "themeLight": "Chiaro",

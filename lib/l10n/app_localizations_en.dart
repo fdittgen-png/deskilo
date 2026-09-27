@@ -11400,6 +11400,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get compareExported => 'Workbook saved.';
 
   @override
+  String templateExportResults(String count) {
+    return 'Export these results ($count)';
+  }
+
+  @override
+  String templateExportTooMany(String max) {
+    return 'At most $max templates per workbook. Narrow the search first.';
+  }
+
+  @override
   String get themeTitle => 'Theme';
 
   @override

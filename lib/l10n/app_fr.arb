@@ -7373,6 +7373,8 @@
   "libraryInvitationTextsRefused": "Un texte d'invitation nomme encore votre espace ou ses membres. Remplacez-les par des variables dans les réglages d'invitation, ou décochez les textes d'invitation.",
   "compareExport": "Exporter vers Excel",
   "compareExported": "Classeur enregistré.",
+  "templateExportResults": "Exporter ces résultats ({count})",
+  "templateExportTooMany": "Au plus {max} modèles par classeur. Affinez d’abord la recherche.",
   "themeTitle": "Thème",
   "themeSystem": "Par défaut du système",
   "themeLight": "Clair",

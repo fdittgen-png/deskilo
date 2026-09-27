@@ -11503,6 +11503,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get compareExported => 'Cartella di lavoro salvata.';
 
   @override
+  String templateExportResults(String count) {
+    return 'Esporta questi risultati ($count)';
+  }
+
+  @override
+  String templateExportTooMany(String max) {
+    return 'Al massimo $max modelli per cartella. Restringi prima la ricerca.';
+  }
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

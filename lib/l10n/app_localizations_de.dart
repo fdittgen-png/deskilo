@@ -11498,6 +11498,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get compareExported => 'Arbeitsmappe gespeichert.';
 
   @override
+  String templateExportResults(String count) {
+    return 'Diese Ergebnisse exportieren ($count)';
+  }
+
+  @override
+  String templateExportTooMany(String max) {
+    return 'Höchstens $max Vorlagen pro Arbeitsmappe. Grenzen Sie die Suche zuerst ein.';
+  }
+
+  @override
   String get themeTitle => 'Design';
 
   @override

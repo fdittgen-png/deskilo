@@ -1,4 +1,6 @@
 {
   "compareExport": "Esporta in Excel",
-  "compareExported": "Cartella di lavoro salvata."
+  "compareExported": "Cartella di lavoro salvata.",
+  "templateExportResults": "Esporta questi risultati ({count})",
+  "templateExportTooMany": "Al massimo {max} modelli per cartella. Restringi prima la ricerca."
 }

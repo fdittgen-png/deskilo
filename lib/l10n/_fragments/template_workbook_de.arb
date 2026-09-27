@@ -1,4 +1,6 @@
 {
   "compareExport": "Nach Excel exportieren",
-  "compareExported": "Arbeitsmappe gespeichert."
+  "compareExported": "Arbeitsmappe gespeichert.",
+  "templateExportResults": "Diese Ergebnisse exportieren ({count})",
+  "templateExportTooMany": "Höchstens {max} Vorlagen pro Arbeitsmappe. Grenzen Sie die Suche zuerst ein."
 }

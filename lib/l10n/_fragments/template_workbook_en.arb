@@ -6,5 +6,23 @@
   "compareExported": "Workbook saved.",
   "@compareExported": {
     "description": "#1661 template_workbook"
+  },
+  "templateExportResults": "Export these results ({count})",
+  "@templateExportResults": {
+    "description": "#1661 template_workbook",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "templateExportTooMany": "At most {max} templates per workbook. Narrow the search first.",
+  "@templateExportTooMany": {
+    "description": "#1661 template_workbook",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
   }
 }
