@@ -16,6 +16,8 @@ import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/core/demo/data/template_search_repository.dart';
+import 'package:deskilo/features/workspace/providers/template_search_providers.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
 import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
 import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
@@ -118,6 +120,7 @@ List<Override> standardTestOverrides({
   FakeMcpConnectionRepository? mcpConnections,
   FakeMcpAdminRepository? mcpAdmin,
   FakeLocalSetupRepository? localSetup,
+  FakeTemplateSearchRepository? templateSearch,
   FakeIdentityBindingRepository? identityBinding,
   FakeSecondFactorRepository? secondFactor,
   AuthRepository? auth,
@@ -154,6 +157,11 @@ List<Override> standardTestOverrides({
   WorkspaceRolesRepository? roles,
   Locale? deviceLocale,
 }) {
+  final workspaceRepo = () {
+    final repo = workspace ?? FakeWorkspaceRepository.withWorkspace();
+    if (devMode && repo is FakeWorkspaceRepository) repo.applyDevMode(true);
+    return repo;
+  }();
   return [
     // #1150 — a 24-hour clock for every test: `ClockPref.auto` renders
     // "8:00 AM" under en_US, which is right for that member and wrong for
@@ -200,13 +208,11 @@ List<Override> standardTestOverrides({
         .overrideWithValue(mcpConnections ?? FakeMcpConnectionRepository()),
     mcpAdminRepositoryProvider.overrideWithValue(mcpAdmin ?? FakeMcpAdminRepository()),
     localSetupRepositoryProvider.overrideWithValue(localSetup ?? FakeLocalSetupRepository()),
+    templateSearchRepositoryProvider.overrideWithValue(templateSearch ??
+        FakeTemplateSearchRepository(source: () => workspaceRepo is FakeWorkspaceRepository ? workspaceRepo.templates : const [])),
     secondFactorRepositoryProvider
         .overrideWithValue(secondFactor ?? FakeSecondFactorRepository()),
-    workspaceRepositoryProvider.overrideWithValue(() {
-      final repo = workspace ?? FakeWorkspaceRepository.withWorkspace();
-      if (devMode && repo is FakeWorkspaceRepository) repo.applyDevMode(true);
-      return repo;
-    }()),
+    workspaceRepositoryProvider.overrideWithValue(workspaceRepo),
     floorPlanRepositoryProvider
         .overrideWithValue(floorPlan ?? FakeFloorPlanRepository()),
     // #988 — the deployment engine, in memory.
