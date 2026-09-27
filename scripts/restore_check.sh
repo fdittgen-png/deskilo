@@ -30,20 +30,30 @@
 # restore, because members reference auth.users.
 set -uo pipefail
 
-COPY_DB="deskilo_restore_check"
+# #1641: an explicit mode creates its own disposable official local stacks.
+# Dispatch before the legacy drill discovers or touches any running container.
+if [ "${1:-}" = "--application" ]; then
+  shift
+  exec python3 "$(dirname "$0")/recovery/application.py" "$@"
+fi
+
+COPY_DB="${DESKILO_RESTORE_COPY_DB:-deskilo_restore_check}"
+[[ "$COPY_DB" =~ ^[a-z][a-z0-9_]+$ ]] || exit 2
 DUMP="$(mktemp -t deskilo-restore-XXXXXX)"
 
 fail() { echo "::error::restore drill: $*"; exit 1; }
 
-C="$(docker ps --format '{{.Names}}' | grep -E '^supabase_db' | head -1)"
+C="${DESKILO_RESTORE_CONTAINER:-$(docker ps --format '{{.Names}}' | grep -E '^supabase_db' | head -1)}"
 [ -n "$C" ] || fail "the local stack's database container is not running"
 
 src() { docker exec -i "$C" psql -U postgres -d postgres "$@"; }
 copy() { docker exec -i "$C" psql -U postgres -d "$COPY_DB" "$@"; }
 
 echo "--- seeding the fixture"
-src -v ON_ERROR_STOP=1 -q < supabase/restore/seed.sql \
-  || fail "the seed did not apply"
+if [ "${DESKILO_RESTORE_SKIP_SEED:-0}" != "1" ]; then
+  src -v ON_ERROR_STOP=1 -q < supabase/restore/seed.sql \
+    || fail "the seed did not apply"
+fi
 
 TABLES="workspaces members levels offices desks seats reservations invoices ledger_entries invoice_matches"
 counts() {

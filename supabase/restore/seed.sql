@@ -23,13 +23,16 @@ begin;
 
 do $seed$
 declare
-  u_a uuid := '00000000-0000-4000-8000-00000000d001';
-  u_b uuid := '00000000-0000-4000-8000-00000000d002';
+  u_a uuid := coalesce(nullif(current_setting('deskilo.restore.user_a', true), ''),
+      '00000000-0000-4000-8000-00000000d001')::uuid;
+  u_b uuid := coalesce(nullif(current_setting('deskilo.restore.user_b', true), ''),
+      '00000000-0000-4000-8000-00000000d002')::uuid;
   ws_a uuid; ws_b uuid; m_a uuid; m_b uuid;
   lvl uuid; office uuid; desk uuid; seat_a uuid; seat_b uuid;
   inv uuid; credit uuid;
 begin
   -- The profile comes from the trigger on auth.users; never insert it.
+  if current_setting('deskilo.restore.precreated_auth', true) is distinct from 'true' then
   insert into auth.users (id, instance_id, aud, role, email,
                           encrypted_password, email_confirmed_at,
                           created_at, updated_at)
@@ -37,6 +40,7 @@ begin
           'authenticated', 'restore-a@deskilo.test', '', now(), now(), now()),
          (u_b, '00000000-0000-0000-0000-000000000000', 'authenticated',
           'authenticated', 'restore-b@deskilo.test', '', now(), now(), now());
+  end if;
 
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
   values ('Restore A', 'FR', 'EUR', 'Europe/Paris', u_a) returning id into ws_a;

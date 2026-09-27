@@ -170,7 +170,7 @@ With a platform configured, the app hands the document to the send-e-invoice fun
 
 A dump of the public and auth schemas restores into a fresh database with equal counts and a clean reconciliation.
 
-- **Code:** shipped · component `dd52d3f517ee`
+- **Code:** shipped · component `94d21485722a`
 - **Needs:** Someone responsible for taking and keeping the dumps, per the operations guide.
 - **Limits:** The drill restores the database only: Storage objects and the Auth service's own configuration are outside it.
 - `local_integration` · **gated** · [`scripts/restore_check.sh`](../../scripts/restore_check.sh)
