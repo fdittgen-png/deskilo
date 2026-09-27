@@ -730,6 +730,10 @@ abstract class WorkspaceRepository {
 
   /// Snapshots [workspaceId] through `template_publication_rules` (#1276);
   /// the same key again updates in place and bumps the version.
+  ///
+  /// #1658 — with [requestId] (0286) a retry of the same request returns
+  /// the template it already published instead of publishing again, and
+  /// the same id with other arguments throws [TemplatePublishConflict].
   Future<String> saveWorkspaceAsTemplate(
     String workspaceId, {
     required String key,
@@ -738,6 +742,7 @@ abstract class WorkspaceRepository {
     TemplateVisibility visibility = TemplateVisibility.private,
     List<String> tags = const [],
     List<String>? groups,
+    String? requestId,
   });
 
   /// #1280 — what publishing [workspaceId] with [groups] would carry.

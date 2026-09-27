@@ -100,7 +100,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 
 | file | lines |
 |---|---|
-| `lib/core/demo/data/workspace_repository.dart` | 1865 |
+| `lib/core/demo/data/workspace_repository.dart` | 1885 |
 | `lib/core/demo/data/money_repository.dart` | 1800 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1660 |
 | `lib/features/workspace/domain/workspace_feature.dart` | 1466 |
@@ -127,7 +127,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
-| `lib/features/workspace/domain/workspace_repository.dart` | 756 |
+| `lib/features/workspace/domain/workspace_repository.dart` | 761 |
 | `lib/features/reservations/presentation/reserve_seat_actions.dart` | 750 |
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 703 |
 | `lib/core/demo/data/reservation_repository.dart` | 695 |

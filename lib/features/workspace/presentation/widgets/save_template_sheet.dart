@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -54,6 +55,9 @@ class _SaveTemplateSheetState extends ConsumerState<SaveTemplateSheet> {
   // #1656 — invitation texts: an explicit choice, off until ticked.
   var _invitationTexts = false;
   var _wordingRefused = false;
+  // #1658 — one request per opened sheet: a retry after a lost response
+  // is the same publication, never a second version.
+  late final String _requestId = newRequestId();
 
   @override
   void dispose() {
@@ -99,6 +103,7 @@ class _SaveTemplateSheetState extends ConsumerState<SaveTemplateSheet> {
             : ([for (final g in chosen) g.wire]..sort()),
         allGroups: [for (final g in all) g.wire],
         invitationTexts: withTexts,
+        requestId: _requestId,
       ).catchError((Object e, StackTrace st) {
         // trace-exempt: shown in the sheet; any other failure rethrows.
         if (!isInvitationTextRefusal(e)) Error.throwWithStackTrace(e, st);

@@ -1707,6 +1707,11 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// #1280 S3 — the groups each save asked for (null = everything allowed).
   final savedTemplateGroups = <List<String>?>[];
+  /// #1658 — publication request id → its arguments and template.
+  final Map<String, ({String args, String id})> publishRequests = {};
+
+  /// Tests: the next publication happens, and its answer is lost.
+  bool loseNextPublishResponse = false;
 
   /// #1280 S3 — what the fake server says publishing would carry.
   TemplatePublication publication = const TemplatePublication(
@@ -1814,7 +1819,17 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     TemplateVisibility visibility = TemplateVisibility.private,
     List<String> tags = const [],
     List<String>? groups,
+    String? requestId,
   }) async {
+    // #1658 — the same request again is a retry, not a second publication.
+    final args = '$key|$name|$description|${visibility.name}|$tags|$groups';
+    if (requestId != null) {
+      final prior = publishRequests[requestId];
+      if (prior != null) {
+        if (prior.args != args) throw const TemplatePublishConflict();
+        return prior.id;
+      }
+    }
     savedTemplateGroups.add(groups);
     if (visibility == TemplateVisibility.builtin) {
       throw Exception('a workspace cannot publish a builtin template');
@@ -1826,6 +1841,11 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       visibility: visibility, ownerWorkspaceId: workspaceId, tags: tags,
       floorPlan: const <Object?>[<String, Object?>{'name': 'Snapshot', 'offices': <Object?>[]}],
     ));
+    if (requestId != null) publishRequests[requestId] = (args: args, id: id);
+    if (loseNextPublishResponse) {
+      loseNextPublishResponse = false;
+      throw Exception('ClientException: Connection reset');
+    }
     return id;
   }
 

@@ -59,6 +59,29 @@ void main() {
         reason: 'an owner may publish');
   });
 
+  testWidgets('#1658 a retry after a lost answer publishes once, not twice',
+      (tester) async {
+    final workspace = await _pumpLibrary(tester);
+    workspace.loseNextPublishResponse = true;
+    await tester.tap(find.byKey(const ValueKey('library-save')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+        find.byKey(const ValueKey('save-template-name')), 'Our loft');
+    await tester.pump();
+    final confirm = find.byKey(const ValueKey('save-template-confirm'));
+    await tester.ensureVisible(confirm);
+    await tester.tap(confirm);
+    await tester.pumpAndSettle();
+    expect(confirm, findsOneWidget, reason: 'the answer was lost; the sheet stays');
+    await tester.ensureVisible(confirm);
+    await tester.tap(confirm);
+    await tester.pumpAndSettle();
+    expect(confirm, findsNothing, reason: 'the retry got the first answer');
+    expect(workspace.savedTemplateGroups, hasLength(1),
+        reason: 'published once: the retry replayed the same request');
+    expect(workspace.publishRequests, hasLength(1));
+  });
+
   testWidgets('saving snapshots the space as a private template by default',
       (tester) async {
     final workspace = await _pumpLibrary(tester);
