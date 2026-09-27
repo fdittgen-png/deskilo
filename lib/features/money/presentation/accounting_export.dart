@@ -12,6 +12,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
+import '../domain/accountant_handoff.dart';
 import '../domain/accounting_format.dart';
 import '../domain/accounting_view.dart';
 import '../domain/audit_trail.dart';
@@ -27,6 +28,7 @@ import 'invoice_documents.dart';
 import '../domain/invoice_line_text.dart';
 import 'report_strings_l10n.dart';
 import 'widgets/accounting_export_sheet.dart';
+import 'widgets/accountant_handoff_preflight.dart';
 import 'widgets/export_accounts_dialogs.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../domain/archive_bundle.dart';
@@ -292,16 +294,27 @@ Future<void> exportAccountingFile(
         message: 'accountant CSV export failed',
         errorText: l10n?.workspaceGenericError ??
             'Something went wrong. Please try again.',
-        action: () => save(
-          buildAccountantCsv(
+        action: () async {
+          // #1640 — the file and its report are built first, shown, and
+          // saved only on an explicit Save with nothing blocking.
+          final csv = buildAccountantCsv(
             invoices: exported,
             matches: matches,
             generatedAt: now,
             workspaceName: workspace.name,
             currencyFallback: workspace.currencyCode,
-          ),
-          named('accounting'),
-        ),
+          );
+          final report = buildAccountantHandoff(
+            invoices: exported,
+            matches: matches,
+            csv: csv,
+            generatedAt: now,
+          );
+          if (!await showAccountantHandoffPreflight(context, report)) return;
+          await save(csv, named('accounting'));
+          await save(report.toPrettyJson(),
+              '${safeFileSlug('accounting report ${workspace.name} $label')}.json');
+        },
       );
 
     case 'bundle':

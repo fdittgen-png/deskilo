@@ -1,0 +1,15 @@
+{
+  "handoffTitle": "Antes de guardar",
+  "handoffIncluded": "{count} documento(s) en el archivo",
+  "handoffExcludedSettlements": "{count} resumen(es) de liquidación omitido(s): sus facturas ya figuran",
+  "handoffIssued": "Emitidas",
+  "handoffVoided": "Anuladas",
+  "handoffPayments": "Pagado: {confirmed} confirmado, {pending} pendiente",
+  "handoffMissingCurrency": "{number}: sin moneda",
+  "handoffDuplicate": "{number}: aparece dos veces en el origen",
+  "handoffOrphanMatch": "Un pago ({key}) no corresponde a ningún documento de esta exportación",
+  "handoffRowMismatch": "Las filas del archivo no coinciden con los documentos ({detail})",
+  "handoffOverpaid": "{number}: pagado por encima de lo facturado",
+  "handoffBlocked": "Este archivo no puede entregarse hasta que se corrija el origen.",
+  "handoffSave": "Guardar archivo e informe"
+}

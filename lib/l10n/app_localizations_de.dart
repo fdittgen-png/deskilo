@@ -82,6 +82,62 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accessoriesActive => 'Aktiv';
 
   @override
+  String get handoffTitle => 'Vor dem Speichern';
+
+  @override
+  String handoffIncluded(String count) {
+    return '$count Beleg(e) in der Datei';
+  }
+
+  @override
+  String handoffExcludedSettlements(String count) {
+    return '$count Sammelabrechnung(en) ausgelassen: ihre Rechnungen stehen bereits in der Datei';
+  }
+
+  @override
+  String get handoffIssued => 'Ausgestellt';
+
+  @override
+  String get handoffVoided => 'Storniert';
+
+  @override
+  String handoffPayments(String confirmed, String pending) {
+    return 'Bezahlt: $confirmed bestätigt, $pending ausstehend';
+  }
+
+  @override
+  String handoffMissingCurrency(String number) {
+    return '$number: keine Währung';
+  }
+
+  @override
+  String handoffDuplicate(String number) {
+    return '$number: erscheint zweimal in der Quelle';
+  }
+
+  @override
+  String handoffOrphanMatch(String key) {
+    return 'Eine Zahlung ($key) gehört zu keinem Beleg dieses Exports';
+  }
+
+  @override
+  String handoffRowMismatch(String detail) {
+    return 'Die Zeilen der Datei passen nicht zu den Belegen ($detail)';
+  }
+
+  @override
+  String handoffOverpaid(String number) {
+    return '$number: mehr bezahlt als berechnet';
+  }
+
+  @override
+  String get handoffBlocked =>
+      'Diese Datei kann erst übergeben werden, wenn die Quelle korrigiert ist.';
+
+  @override
+  String get handoffSave => 'Datei und Bericht speichern';
+
+  @override
   String get fecAccountExpenses => 'Aufwendungen';
 
   @override

@@ -82,6 +82,62 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accessoriesActive => 'Activo';
 
   @override
+  String get handoffTitle => 'Antes de guardar';
+
+  @override
+  String handoffIncluded(String count) {
+    return '$count documento(s) en el archivo';
+  }
+
+  @override
+  String handoffExcludedSettlements(String count) {
+    return '$count resumen(es) de liquidación omitido(s): sus facturas ya figuran';
+  }
+
+  @override
+  String get handoffIssued => 'Emitidas';
+
+  @override
+  String get handoffVoided => 'Anuladas';
+
+  @override
+  String handoffPayments(String confirmed, String pending) {
+    return 'Pagado: $confirmed confirmado, $pending pendiente';
+  }
+
+  @override
+  String handoffMissingCurrency(String number) {
+    return '$number: sin moneda';
+  }
+
+  @override
+  String handoffDuplicate(String number) {
+    return '$number: aparece dos veces en el origen';
+  }
+
+  @override
+  String handoffOrphanMatch(String key) {
+    return 'Un pago ($key) no corresponde a ningún documento de esta exportación';
+  }
+
+  @override
+  String handoffRowMismatch(String detail) {
+    return 'Las filas del archivo no coinciden con los documentos ($detail)';
+  }
+
+  @override
+  String handoffOverpaid(String number) {
+    return '$number: pagado por encima de lo facturado';
+  }
+
+  @override
+  String get handoffBlocked =>
+      'Este archivo no puede entregarse hasta que se corrija el origen.';
+
+  @override
+  String get handoffSave => 'Guardar archivo e informe';
+
+  @override
   String get fecAccountExpenses => 'Gastos';
 
   @override

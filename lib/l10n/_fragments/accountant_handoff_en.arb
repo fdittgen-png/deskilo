@@ -1,0 +1,97 @@
+{
+  "handoffTitle": "Before you save",
+  "@handoffTitle": {
+    "description": "#1640 accountant_handoff"
+  },
+  "handoffIncluded": "{count} document(s) in the file",
+  "@handoffIncluded": {
+    "description": "#1640 accountant_handoff",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffExcludedSettlements": "{count} settlement summary(ies) left out: their invoices are already listed",
+  "@handoffExcludedSettlements": {
+    "description": "#1640 accountant_handoff",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffIssued": "Issued",
+  "@handoffIssued": {
+    "description": "#1640 accountant_handoff"
+  },
+  "handoffVoided": "Voided",
+  "@handoffVoided": {
+    "description": "#1640 accountant_handoff"
+  },
+  "handoffPayments": "Paid: {confirmed} confirmed, {pending} pending",
+  "@handoffPayments": {
+    "description": "#1640 accountant_handoff",
+    "placeholders": {
+      "confirmed": {
+        "type": "String"
+      },
+      "pending": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffMissingCurrency": "{number}: no currency",
+  "@handoffMissingCurrency": {
+    "description": "#1640 accountant_handoff",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffDuplicate": "{number}: appears twice in the source",
+  "@handoffDuplicate": {
+    "description": "#1640 accountant_handoff",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffOrphanMatch": "A payment ({key}) belongs to no document of this export",
+  "@handoffOrphanMatch": {
+    "description": "#1640 accountant_handoff",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffRowMismatch": "The file rows do not match the documents ({detail})",
+  "@handoffRowMismatch": {
+    "description": "#1640 accountant_handoff",
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffOverpaid": "{number}: paid more than it charges",
+  "@handoffOverpaid": {
+    "description": "#1640 accountant_handoff",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffBlocked": "This file cannot be handed over until the source is corrected.",
+  "@handoffBlocked": {
+    "description": "#1640 accountant_handoff"
+  },
+  "handoffSave": "Save file and report",
+  "@handoffSave": {
+    "description": "#1640 accountant_handoff"
+  }
+}
