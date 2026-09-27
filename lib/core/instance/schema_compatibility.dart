@@ -12,11 +12,7 @@
 /// Pinned to the migration directory by
 /// `test/lint/migration_version_marker_test.dart`, so a migration cannot
 /// land without the app saying it needs it.
-<<<<<<< HEAD
-const int requiredSchemaVersion = 290;
-=======
-const int requiredSchemaVersion = 290;
->>>>>>> 2a794f6d (feat(mcp): the five reservation tools read back what happened and refuse a stale state (#1620))
+const int requiredSchemaVersion = 291;
 
 /// How a server's schema compares with what this app needs.
 enum SchemaCompatibility {

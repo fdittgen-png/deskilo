@@ -650,7 +650,7 @@
     },
     {
       "name": "deskilo_respond_to_validation",
-      "description": "Accept or refuse a request awaiting the caller's decision; the distinct-person quorum stays the server's.",
+      "description": "Accept or refuse a request awaiting the caller's decision; the distinct-person quorum stays the server's. Who may decide is the validation policy's own answer (validator scope, pool, owner and sequential rules), not a separate permission.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,

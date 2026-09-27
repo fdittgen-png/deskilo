@@ -398,8 +398,8 @@ const Map<String, McpOperationSpec> mcpOperations = {
     rpc: 'respond_to_event',
     handler: true,
     dispatch: true,
-    authority: McpAuthority.permission,
-    permission: 'manageValidation',
+    authority: McpAuthority.member,
+    permission: null,
     features: ['mcpAccess'],
     scope: McpScope.workspace,
     mutation: McpMutation.decision,
@@ -411,6 +411,6 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'event_id': McpField(McpFieldType.uuid, required: true, param: 'p_event_id'),
       'accept': McpField(McpFieldType.boolean, required: true, param: 'p_accept'),
     },
-    output: [],
+    output: ['event_id', 'event_status', 'decision_recorded', 'effect_applied'],
   ),
 };

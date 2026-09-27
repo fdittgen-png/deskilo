@@ -873,11 +873,10 @@
    "id": "respond_to_validation",
    "handler": true,
    "dispatch": true,
-   "description": "Accept or refuse a request awaiting the caller's decision; the distinct-person quorum stays the server's.",
+   "description": "Accept or refuse a request awaiting the caller's decision; the distinct-person quorum stays the server's. Who may decide is the validation policy's own answer (validator scope, pool, owner and sequential rules), not a separate permission.",
    "rpc": "respond_to_event",
    "authority": {
-    "kind": "permission",
-    "permission": "manageValidation"
+    "kind": "member"
    },
    "features": [
     "mcpAccess"
@@ -906,7 +905,12 @@
      "param": "p_accept"
     }
    },
-   "output": []
+   "output": [
+    "event_id",
+    "event_status",
+    "decision_recorded",
+    "effect_applied"
+   ]
   }
  ]
 }
