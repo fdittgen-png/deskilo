@@ -17,6 +17,19 @@ const generatedPaths = (
 /// #1610/#1612 — the catalogue as the database reads it: the statement a
 /// migration carries verbatim (see mcp_contract_test), so the dispatcher
 /// and the policy validator ask the same source as every other rendering.
+/// #1644 — what an operation may put in `data` by default: its declared
+/// outputs that are classified `operational`, plus the envelope's own
+/// always-allowed fields. Sorted, so every rendering agrees.
+List<String> mcpAllowedOutput(Map<String, dynamic> contract, Map<String, dynamic> op) {
+  final classes = Map<String, dynamic>.from(contract['output_fields'] as Map? ?? const {});
+  bool operational(Object? f) => (classes['$f'] as Map?)?['class'] == 'operational';
+  return {
+    for (final f in op['output'] as List? ?? const []) if (operational(f)) '$f',
+    for (final f in contract['always_output'] as List? ?? const []) if (operational(f)) '$f',
+  }.toList()
+    ..sort();
+}
+
 String renderMcpCatalogueSql(Map<String, dynamic> contract) {
   final ops = [
     for (final o in contract['operations'] as List) Map<String, dynamic>.from(o as Map),
@@ -34,6 +47,7 @@ String renderMcpCatalogueSql(Map<String, dynamic> contract) {
           'scope': op['scope'],
           'mutation': op['mutation'],
           'confirmation': op['confirmation'],
+          'output': mcpAllowedOutput(contract, op),
         },
     },
   };
@@ -210,6 +224,14 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     ..writeln('export const MCP_INPUT_SCHEMAS: Record<McpOperationId, unknown> = {');
   for (final op in ops) {
     ts.writeln('  ${op['id']}: ${jsonEncode(inputSchema(op))},');
+  }
+  ts
+    ..writeln('};')
+    ..writeln()
+    ..writeln('/** #1644 — what each operation may return in `data` by default. */')
+    ..writeln('export const MCP_OUTPUT_ALLOWED: Record<McpOperationId, readonly string[]> = {');
+  for (final op in ops) {
+    ts.writeln('  ${op['id']}: ${jsonEncode(mcpAllowedOutput(contract, op))},');
   }
   ts
     ..writeln('};')
