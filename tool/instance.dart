@@ -12,6 +12,10 @@
 //   dart run tool/instance.dart doctor   --token … --ref <project ref>
 //   dart run tool/instance.dart db-admins --token … --ref <ref> list | grant --email E [--review-only] [--apply] | revoke --email E [--apply]
 //
+//   dart run tool/instance.dart federation-stage --auth-url <exact Auth URL> --issuer <canonical issuer> --client-id <identity client> [--apply]
+//   Uses DESKILO_TARGET_AUTH_ADMIN_KEY and DESKILO_FEDERATION_CLIENT_SECRET;
+//   stages a DISABLED provider only, without changing the app Site URL.
+//
 // `create` makes the project, waits for it, installs the schema and the
 // functions from the repository (not the asset — the repository is the
 // source), applies the sign-in settings and prints the endpoint.
@@ -39,12 +43,16 @@ import 'package:deskilo/core/instance/management_api.dart';
 
 import 'build_instance.dart';
 import 'instance/db_admins.dart';
+import 'instance/federation.dart';
 import 'instance/support_doctor.dart';
 
 // Dart ignores what `main` returns; the exit code is set here.
 Future<void> main(List<String> argv) async => exitCode = await run(argv);
 
 Future<int> run(List<String> argv) async {
+  if (argv.firstOrNull == 'federation-stage') {
+    return runFederationStage(argv.skip(1).toList());
+  }
   final args = _Args(argv);
   final token = args.option('token') ?? Platform.environment['SUPABASE_ACCESS_TOKEN'];
   if (args.command.isEmpty || token == null || token.isEmpty) {
