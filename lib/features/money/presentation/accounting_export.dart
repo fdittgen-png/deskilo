@@ -334,9 +334,17 @@ Future<void> exportAccountingFile(
             );
             return;
           }
-          await save(csv, named('accounting'));
-          await save(report.toPrettyJson(),
-              '${safeFileSlug('accounting report ${workspace.name} $label')}.json');
+          // One archive: the CSV and the report that counts it travel
+          // together, or not at all.
+          final stem = safeFileSlug('accounting ${workspace.name} $label');
+          final bytes = accountantHandoffArchive(
+            csv: csv,
+            csvName: '$stem.csv',
+            report: report,
+          );
+          if (!context.mounted) return;
+          await savePdfToDownloads(context, ref,
+              bytes: bytes, fileName: '$stem.zip');
         },
       );
 

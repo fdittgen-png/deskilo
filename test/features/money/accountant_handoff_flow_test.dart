@@ -4,7 +4,11 @@
 // before anything is saved, Save writes the file and its report, and a
 // document that changes while the owner reviews stops the save.
 import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:archive/archive.dart';
+
+import 'package:crypto/crypto.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +18,9 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 
-Future<({FakeMoneyRepository money, List<({String name, String body})> saved})>
+Future<
+  ({FakeMoneyRepository money, List<({String name, Uint8List bytes})> saved})
+>
 _openPreflight(WidgetTester tester) async {
   final money = FakeMoneyRepository();
   await money.createInvoice(
@@ -27,7 +33,7 @@ _openPreflight(WidgetTester tester) async {
     memberId: 'member-1',
     period: '2026-07',
   );
-  final saved = <({String name, String body})>[];
+  final saved = <({String name, Uint8List bytes})>[];
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
@@ -39,7 +45,7 @@ _openPreflight(WidgetTester tester) async {
           required bytes,
           required fileName,
         }) async {
-          saved.add((name: fileName, body: utf8.decode(bytes)));
+          saved.add((name: fileName, bytes: bytes));
           return 'Download/$fileName';
         }),
       ],
@@ -73,11 +79,26 @@ void main() {
     expect(r.saved, isEmpty, reason: 'nothing is saved before Save');
     await tester.tap(find.byKey(const ValueKey('handoff-save')));
     await tester.pumpAndSettle();
-    expect(r.saved.map((f) => f.name.split('.').last), ['csv', 'json']);
-    expect(r.saved.first.body, contains('# 2 invoice(s)'));
-    final report = jsonDecode(r.saved.last.body) as Map<String, Object?>;
+    expect(
+      r.saved.single.name,
+      endsWith('.zip'),
+      reason: 'the file and its report travel as one archive',
+    );
+    final zip = ZipDecoder().decodeBytes(r.saved.single.bytes);
+    final csv = zip.files.singleWhere((f) => f.name.endsWith('.csv'));
+    final json = zip.files.singleWhere((f) => f.name == 'report.json');
+    final csvText = utf8.decode(csv.content as List<int>);
+    expect(csvText, contains('# 2 invoice(s)'));
+    final report = jsonDecode(
+      utf8.decode(json.content as List<int>),
+    ) as Map<String, Object?>;
     expect(report['included'], 2);
     expect(report['clean'], isTrue);
+    expect(
+      (report['file'] as Map)['sha256'],
+      sha256.convert(utf8.encode(csvText)).toString(),
+      reason: 'the report names the very bytes beside it',
+    );
   });
 
   testWidgets('a document voided during the review stops the save', (
