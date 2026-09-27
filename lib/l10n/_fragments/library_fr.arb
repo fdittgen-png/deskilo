@@ -133,5 +133,6 @@
     "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
   },
   "templatesLoadFailed": "Les modèles n’ont pas pu être chargés.",
-  "onboardingTemplatesFailedEmpty": "Les modèles n’ont pas pu être chargés : cet espace démarrerait vide. Revenez en arrière pour réessayer."
+  "onboardingTemplatesFailedEmpty": "Les modèles n’ont pas pu être chargés : cet espace démarrerait vide. Revenez en arrière pour réessayer.",
+  "templateResultCount": "{count, plural, =0{Aucun modèle affiché} =1{1 modèle affiché} other{{count} modèles affichés}}"
 }

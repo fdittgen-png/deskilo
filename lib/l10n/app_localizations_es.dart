@@ -6888,6 +6888,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudieron cargar las plantillas, así que este espacio empezaría vacío. Vuelva atrás para intentarlo de nuevo.';
 
   @override
+  String templateResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plantillas mostradas',
+      one: '1 plantilla mostrada',
+      zero: 'Ninguna plantilla mostrada',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get localSlotLegalIdentity =>
       'Su identidad legal y su dirección (para las facturas)';
 

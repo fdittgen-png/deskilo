@@ -4284,6 +4284,7 @@
   },
   "templatesLoadFailed": "Non è stato possibile caricare i modelli.",
   "onboardingTemplatesFailedEmpty": "Non è stato possibile caricare i modelli, quindi questo spazio partirebbe vuoto. Torni indietro per riprovare.",
+  "templateResultCount": "{count, plural, =0{Nessun modello mostrato} =1{1 modello mostrato} other{{count} modelli mostrati}}",
   "localSlotLegalIdentity": "La tua identità legale e il tuo indirizzo (per le fatture)",
   "localSlotPaymentDetails": "Come ti pagano i membri (coordinate bancarie)",
   "localSlotPaymentProvider": "Un fornitore di pagamenti online",

@@ -6907,6 +6907,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les modèles n’ont pas pu être chargés : cet espace démarrerait vide. Revenez en arrière pour réessayer.';
 
   @override
+  String templateResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count modèles affichés',
+      one: '1 modèle affiché',
+      zero: 'Aucun modèle affiché',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get localSlotLegalIdentity =>
       'Votre identité légale et votre adresse (pour les factures)';
 
