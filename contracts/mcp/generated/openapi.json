@@ -281,6 +281,9 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+          },
+          "check_in": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -318,6 +321,10 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64
           }
         },
         "required": [
@@ -346,6 +353,10 @@
           "reservation_id": {
             "type": "string",
             "format": "uuid"
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64
           }
         },
         "required": [
@@ -372,6 +383,10 @@
           "reservation_id": {
             "type": "string",
             "format": "uuid"
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64
           }
         },
         "required": [
@@ -402,6 +417,10 @@
           "reason": {
             "type": "string",
             "maxLength": 500
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64
           }
         },
         "required": [

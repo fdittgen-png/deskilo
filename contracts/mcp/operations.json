@@ -266,7 +266,7 @@
    "id": "create_reservation",
    "handler": true,
    "dispatch": true,
-   "description": "Book a place for the caller; one request id is one reservation however often it is sent.",
+   "description": "Book a place for the caller, optionally checked in at once; one request id is one reservation however often it is sent.",
    "rpc": "create_reservation_once",
    "authority": {
     "kind": "self"
@@ -314,13 +314,24 @@
      "type": "datetime",
      "required": true,
      "param": "p_ends_at"
+    },
+    "check_in": {
+     "type": "boolean",
+     "param": "p_check_in"
     }
    },
-   "fixed": {
-    "p_check_in": false
-   },
    "output": [
-    "reservation_id"
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
    ]
   },
   {
@@ -362,9 +373,25 @@
      "type": "datetime",
      "required": true,
      "param": "p_ends_at"
+    },
+    "expected_state": {
+     "type": "text",
+     "maxLength": 64
     }
    },
-   "output": []
+   "output": [
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
+   ]
   },
   {
    "id": "check_in",
@@ -395,9 +422,25 @@
      "type": "uuid",
      "required": true,
      "param": "p_reservation_id"
+    },
+    "expected_state": {
+     "type": "text",
+     "maxLength": 64
     }
    },
-   "output": []
+   "output": [
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
+   ]
   },
   {
    "id": "check_out",
@@ -428,9 +471,25 @@
      "type": "uuid",
      "required": true,
      "param": "p_reservation_id"
+    },
+    "expected_state": {
+     "type": "text",
+     "maxLength": 64
     }
    },
-   "output": []
+   "output": [
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
+   ]
   },
   {
    "id": "request_reservation_deletion",
@@ -466,10 +525,25 @@
      "type": "text",
      "maxLength": 500,
      "param": "p_reason"
+    },
+    "expected_state": {
+     "type": "text",
+     "maxLength": 64
     }
    },
    "output": [
-    "event_id"
+    "event_id",
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
    ]
   },
   {
@@ -522,7 +596,12 @@
    },
    "output": [
     "event_id",
-    "invoice_id"
+    "invoice_id",
+    "invoice_number",
+    "period",
+    "total_cents",
+    "currency",
+    "voided"
    ]
   },
   {
@@ -564,7 +643,13 @@
     }
    },
    "output": [
-    "event_id"
+    "event_id",
+    "invoice_id",
+    "invoice_number",
+    "period",
+    "total_cents",
+    "currency",
+    "voided"
    ]
   },
   {
@@ -606,7 +691,13 @@
     }
    },
    "output": [
-    "event_id"
+    "event_id",
+    "invoice_id",
+    "invoice_number",
+    "period",
+    "total_cents",
+    "currency",
+    "voided"
    ]
   },
   {
@@ -652,7 +743,11 @@
     }
    },
    "output": [
-    "event_id"
+    "event_id",
+    "member_id",
+    "member_status",
+    "subscription_pct",
+    "unchanged"
    ]
   },
   {
@@ -695,7 +790,11 @@
     }
    },
    "output": [
-    "event_id"
+    "event_id",
+    "member_id",
+    "member_status",
+    "subscription_pct",
+    "unchanged"
    ]
   },
   {
@@ -774,11 +873,10 @@
    "id": "respond_to_validation",
    "handler": true,
    "dispatch": true,
-   "description": "Accept or refuse a request awaiting the caller's decision; the distinct-person quorum stays the server's.",
+   "description": "Accept or refuse a request awaiting the caller's decision; the distinct-person quorum stays the server's. Who may decide is the validation policy's own answer (validator scope, pool, owner and sequential rules), not a separate permission.",
    "rpc": "respond_to_event",
    "authority": {
-    "kind": "permission",
-    "permission": "manageValidation"
+    "kind": "member"
    },
    "features": [
     "mcpAccess"
@@ -807,7 +905,12 @@
      "param": "p_accept"
     }
    },
-   "output": []
+   "output": [
+    "event_id",
+    "event_status",
+    "decision_recorded",
+    "effect_applied"
+   ]
   }
  ]
 }

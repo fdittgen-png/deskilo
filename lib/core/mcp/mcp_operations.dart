@@ -168,8 +168,9 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'level_id': McpField(McpFieldType.uuid, param: 'p_level_id'),
       'starts_at': McpField(McpFieldType.datetime, required: true, param: 'p_starts_at'),
       'ends_at': McpField(McpFieldType.datetime, required: true, param: 'p_ends_at'),
+      'check_in': McpField(McpFieldType.boolean, param: 'p_check_in'),
     },
-    output: ['reservation_id'],
+    output: ['reservation_id', 'status', 'starts_at', 'ends_at', 'seat_id', 'desk_id', 'office_id', 'level_id', 'checked_in_at', 'checked_out_at', 'state_digest'],
   ),
   'update_reservation': McpOperationSpec(
     id: 'update_reservation',
@@ -189,8 +190,9 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'reservation_id': McpField(McpFieldType.uuid, required: true, param: 'p_reservation_id'),
       'starts_at': McpField(McpFieldType.datetime, required: true, param: 'p_starts_at'),
       'ends_at': McpField(McpFieldType.datetime, required: true, param: 'p_ends_at'),
+      'expected_state': McpField(McpFieldType.text, maxLength: 64),
     },
-    output: [],
+    output: ['reservation_id', 'status', 'starts_at', 'ends_at', 'seat_id', 'desk_id', 'office_id', 'level_id', 'checked_in_at', 'checked_out_at', 'state_digest'],
   ),
   'check_in': McpOperationSpec(
     id: 'check_in',
@@ -208,8 +210,9 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'request_id': McpField(McpFieldType.uuid, required: true),
       'workspace_id': McpField(McpFieldType.uuid, required: true),
       'reservation_id': McpField(McpFieldType.uuid, required: true, param: 'p_reservation_id'),
+      'expected_state': McpField(McpFieldType.text, maxLength: 64),
     },
-    output: [],
+    output: ['reservation_id', 'status', 'starts_at', 'ends_at', 'seat_id', 'desk_id', 'office_id', 'level_id', 'checked_in_at', 'checked_out_at', 'state_digest'],
   ),
   'check_out': McpOperationSpec(
     id: 'check_out',
@@ -227,8 +230,9 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'request_id': McpField(McpFieldType.uuid, required: true),
       'workspace_id': McpField(McpFieldType.uuid, required: true),
       'reservation_id': McpField(McpFieldType.uuid, required: true, param: 'p_reservation_id'),
+      'expected_state': McpField(McpFieldType.text, maxLength: 64),
     },
-    output: [],
+    output: ['reservation_id', 'status', 'starts_at', 'ends_at', 'seat_id', 'desk_id', 'office_id', 'level_id', 'checked_in_at', 'checked_out_at', 'state_digest'],
   ),
   'request_reservation_deletion': McpOperationSpec(
     id: 'request_reservation_deletion',
@@ -247,8 +251,9 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'workspace_id': McpField(McpFieldType.uuid, required: true),
       'reservation_id': McpField(McpFieldType.uuid, required: true, param: 'p_reservation_id'),
       'reason': McpField(McpFieldType.text, maxLength: 500, param: 'p_reason'),
+      'expected_state': McpField(McpFieldType.text, maxLength: 64),
     },
-    output: ['event_id'],
+    output: ['event_id', 'reservation_id', 'status', 'starts_at', 'ends_at', 'seat_id', 'desk_id', 'office_id', 'level_id', 'checked_in_at', 'checked_out_at', 'state_digest'],
   ),
   'request_invoice_issue': McpOperationSpec(
     id: 'request_invoice_issue',
@@ -269,7 +274,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'period': McpField(McpFieldType.month, required: true, param: 'p_period'),
       'kind': McpField(McpFieldType.enum_, values: ['full', 'subscription', 'usage'], param: 'p_kind'),
     },
-    output: ['event_id', 'invoice_id'],
+    output: ['event_id', 'invoice_id', 'invoice_number', 'period', 'total_cents', 'currency', 'voided'],
   ),
   'request_invoice_void': McpOperationSpec(
     id: 'request_invoice_void',
@@ -289,7 +294,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'invoice_id': McpField(McpFieldType.uuid, required: true, param: 'p_invoice_id'),
       'reason': McpField(McpFieldType.text, maxLength: 500, param: 'p_reason'),
     },
-    output: ['event_id'],
+    output: ['event_id', 'invoice_id', 'invoice_number', 'period', 'total_cents', 'currency', 'voided'],
   ),
   'request_refund': McpOperationSpec(
     id: 'request_refund',
@@ -309,7 +314,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'invoice_id': McpField(McpFieldType.uuid, required: true, param: 'p_invoice_id'),
       'note': McpField(McpFieldType.text, maxLength: 500, param: 'p_note'),
     },
-    output: ['event_id'],
+    output: ['event_id', 'invoice_id', 'invoice_number', 'period', 'total_cents', 'currency', 'voided'],
   ),
   'request_member_status_change': McpOperationSpec(
     id: 'request_member_status_change',
@@ -329,7 +334,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'member_id': McpField(McpFieldType.uuid, required: true, param: 'p_member_id'),
       'status': McpField(McpFieldType.enum_, required: true, values: ['active', 'paused', 'exited'], param: 'p_status'),
     },
-    output: ['event_id'],
+    output: ['event_id', 'member_id', 'member_status', 'subscription_pct', 'unchanged'],
   ),
   'request_subscription_change': McpOperationSpec(
     id: 'request_subscription_change',
@@ -349,7 +354,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'member_id': McpField(McpFieldType.uuid, required: true, param: 'p_member_id'),
       'pct': McpField(McpFieldType.integer, required: true, min: 0, max: 100, param: 'p_pct'),
     },
-    output: ['event_id'],
+    output: ['event_id', 'member_id', 'member_status', 'subscription_pct', 'unchanged'],
   ),
   'list_pending_validations': McpOperationSpec(
     id: 'list_pending_validations',
@@ -393,8 +398,8 @@ const Map<String, McpOperationSpec> mcpOperations = {
     rpc: 'respond_to_event',
     handler: true,
     dispatch: true,
-    authority: McpAuthority.permission,
-    permission: 'manageValidation',
+    authority: McpAuthority.member,
+    permission: null,
     features: ['mcpAccess'],
     scope: McpScope.workspace,
     mutation: McpMutation.decision,
@@ -406,6 +411,6 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'event_id': McpField(McpFieldType.uuid, required: true, param: 'p_event_id'),
       'accept': McpField(McpFieldType.boolean, required: true, param: 'p_accept'),
     },
-    output: [],
+    output: ['event_id', 'event_status', 'decision_recorded', 'effect_applied'],
   ),
 };
