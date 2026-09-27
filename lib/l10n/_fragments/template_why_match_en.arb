@@ -59,5 +59,23 @@
   "templateClearFilters": "Clear the search",
   "@templateClearFilters": {
     "description": "#1660 template_why_match"
+  },
+  "templatePrefer": "Prefer: {capability}",
+  "@templatePrefer": {
+    "description": "#1660 template_why_match",
+    "placeholders": {
+      "capability": {
+        "type": "String"
+      }
+    }
+  },
+  "templatePreferredChip": "Preferred: {capability}",
+  "@templatePreferredChip": {
+    "description": "#1660 template_why_match",
+    "placeholders": {
+      "capability": {
+        "type": "String"
+      }
+    }
   }
 }

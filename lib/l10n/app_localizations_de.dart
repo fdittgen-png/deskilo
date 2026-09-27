@@ -11527,6 +11527,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get templateClearFilters => 'Suche zurücksetzen';
 
   @override
+  String templatePrefer(String capability) {
+    return 'Bevorzugen: $capability';
+  }
+
+  @override
+  String templatePreferredChip(String capability) {
+    return 'Bevorzugt: $capability';
+  }
+
+  @override
   String templateWidenTitle(String audience) {
     return 'Diese Vorlage lesbar machen für: $audience?';
   }

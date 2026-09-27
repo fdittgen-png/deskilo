@@ -11544,6 +11544,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get templateClearFilters => 'Effacer la recherche';
 
   @override
+  String templatePrefer(String capability) {
+    return 'Préférer : $capability';
+  }
+
+  @override
+  String templatePreferredChip(String capability) {
+    return 'Préféré : $capability';
+  }
+
+  @override
   String templateWidenTitle(String audience) {
     return 'Rendre ce modèle lisible par : $audience ?';
   }

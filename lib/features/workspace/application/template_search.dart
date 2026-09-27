@@ -71,11 +71,13 @@ class TemplateSearch {
   }
   final _inspections = <String, TemplateInspection>{};
 
-  /// Every capability in [capabilities] is REQUIRED; [freeWords] rank.
+  /// Every capability in [capabilities] is REQUIRED; [preferred] ones
+  /// only rank (#1660), and so do [freeWords].
   Future<TemplateSearchResult> run({
     required List<String> capabilities,
     required List<String> freeWords,
     required List<WorkspaceTemplate> templates,
+    List<String> preferred = const [],
   }) async {
     final inspections = <TemplateInspection>[];
     try {
@@ -94,7 +96,14 @@ class TemplateSearch {
       capabilities: capabilities,
       matched: matchTemplates(
         inspections,
-        CapabilityQuery(required: capabilities, freeWords: freeWords),
+        CapabilityQuery(
+          required: capabilities,
+          preferred: [
+            for (final p in preferred)
+              if (!capabilities.contains(p)) p,
+          ],
+          freeWords: freeWords,
+        ),
       ),
     );
   }

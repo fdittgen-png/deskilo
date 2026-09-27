@@ -12,5 +12,7 @@
   "templateRequirementRemove": "Voraussetzung entfernen",
   "templateRequirementsReset": "Zurücksetzen",
   "templateNoMatch": "Keine Vorlage passt. Ändern Sie die Wörter, ein Schlagwort oder eine Voraussetzung.",
-  "templateClearFilters": "Suche zurücksetzen"
+  "templateClearFilters": "Suche zurücksetzen",
+  "templatePrefer": "Bevorzugen: {capability}",
+  "templatePreferredChip": "Bevorzugt: {capability}"
 }

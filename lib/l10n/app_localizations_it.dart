@@ -11531,6 +11531,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get templateClearFilters => 'Cancella la ricerca';
 
   @override
+  String templatePrefer(String capability) {
+    return 'Preferisci: $capability';
+  }
+
+  @override
+  String templatePreferredChip(String capability) {
+    return 'Preferito: $capability';
+  }
+
+  @override
   String templateWidenTitle(String audience) {
     return 'Rendere questo modello leggibile da: $audience?';
   }

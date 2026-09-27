@@ -7382,6 +7382,8 @@
   "templateRequirementsReset": "Zurücksetzen",
   "templateNoMatch": "Keine Vorlage passt. Ändern Sie die Wörter, ein Schlagwort oder eine Voraussetzung.",
   "templateClearFilters": "Suche zurücksetzen",
+  "templatePrefer": "Bevorzugen: {capability}",
+  "templatePreferredChip": "Bevorzugt: {capability}",
   "templateWidenTitle": "Diese Vorlage lesbar machen für: {audience}?",
   "templateWidenCount": "{count} Einstellungen werden lesbar, genau so, wie die Vorlage sie jetzt enthält.",
   "templateWidenExcluded": "{count} Arten von Werten verlassen den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).",
