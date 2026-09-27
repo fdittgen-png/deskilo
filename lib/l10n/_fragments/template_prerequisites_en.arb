@@ -1,0 +1,14 @@
+{
+  "libraryFeatureNeeds": "{feature} needs {prerequisite}, which stays off: it will not work yet.",
+  "@libraryFeatureNeeds": {
+    "description": "#1657 template_prerequisites",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      },
+      "prerequisite": {
+        "type": "String"
+      }
+    }
+  }
+}

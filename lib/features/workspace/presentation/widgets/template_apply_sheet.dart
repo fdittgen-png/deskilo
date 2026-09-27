@@ -3,6 +3,8 @@ import 'local_setup_views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../providers/workspace_providers.dart';
+import '../../domain/workspace_feature.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -169,6 +171,16 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
           };
           final count = preview.changesFor(selected);
           final anythingToApply = preview.groups.any((g) => g.selectable);
+          // #1657 — a feature switched on whose prerequisite stays off is
+          // not working; the flips of every ticked group count together.
+          final currentOn = ref.watch(enabledFeaturesSyncProvider);
+          final ticked = {
+            for (final g in preview.groups)
+              if (selected.contains(g.wire)) ...g.featureChanges,
+          };
+          // A group's own flips always count, with whatever else is ticked.
+          Map<WorkspaceFeature, WorkspaceFeature> unmetFor(Map<String, bool> own) =>
+              unmetPrerequisites({...ticked, ...own}, currentOn);
           return SingleChildScrollView(
             padding: AppSpacing.gutterAll,
             child: Column(
@@ -229,6 +241,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
                           : _ProcessChanges(
                               groups: processViewOf(g.featureChanges),
                               wire: g.wire,
+                              unmet: unmetFor(g.featureChanges),
                             ),
                     ),
                   const SizedBox(height: AppSpacing.md),
@@ -308,10 +321,11 @@ class _GroupRow extends StatelessWidget {
 /// business process each flip belongs to. Read-only: the group above is
 /// what gets ticked, a process is where a flip is shown.
 class _ProcessChanges extends StatelessWidget {
-  const _ProcessChanges({required this.groups, required this.wire});
+  const _ProcessChanges({required this.groups, required this.wire, this.unmet = const {}});
 
   final List<ProcessChangeGroup> groups;
   final String wire;
+  final Map<WorkspaceFeature, WorkspaceFeature> unmet;
 
   @override
   Widget build(BuildContext context) {
@@ -343,6 +357,14 @@ class _ProcessChanges extends StatelessWidget {
                 key: ValueKey('template-process-feature-${c.feature.name}'),
                 style: theme.textTheme.bodySmall,
               ),
+            for (final c in g.changes)
+              if (c.enabled && unmet[c.feature] != null)
+                Text(
+                  l10n?.libraryFeatureNeeds(featureName(l10n, c.feature), featureName(l10n, unmet[c.feature]!)) ??
+                      '${featureName(l10n, c.feature)} needs ${featureName(l10n, unmet[c.feature]!)}, which stays off: it will not work yet.',
+                  key: ValueKey('template-feature-blocked-${c.feature.name}'),
+                  style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
+                ),
             const SizedBox(height: AppSpacing.xs),
           ],
         ],

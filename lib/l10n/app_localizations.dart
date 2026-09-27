@@ -19488,6 +19488,12 @@ abstract class AppLocalizations {
   /// **'Did you mean “{word}”?'**
   String librarySearchSuggestion(String word);
 
+  /// #1657 template_prerequisites
+  ///
+  /// In en, this message translates to:
+  /// **'{feature} needs {prerequisite}, which stays off: it will not work yet.'**
+  String libraryFeatureNeeds(String feature, String prerequisite);
+
   /// #1656 template_prices
   ///
   /// In en, this message translates to:
