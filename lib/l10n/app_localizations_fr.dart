@@ -37,6 +37,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get a11yRecentre => 'Ajuster le plan à l\'écran';
 
   @override
+  String get aboutAttribution =>
+      'Based on DesKilo by Florian DITTGEN — https://github.com/fdittgen-png/deskilo';
+
+  @override
+  String get aboutAttributionNote =>
+      'Cette mention doit rester visible dans toute copie et toute version modifiée.';
+
+  @override
   String accessRuleManagedProfile(String people) {
     return 'Tant que ce profil était géré pour vous : $people. Chaque consultation ou modification par l\'un d\'eux figure ci-dessous.';
   }

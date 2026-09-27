@@ -4,7 +4,7 @@ AntiFeatures:
 Categories:
   - Finance Manager
   - Schedule
-License: 0BSD
+License: AGPL-3.0-or-later
 AuthorName: Florian DITTGEN
 SourceCode: https://github.com/fdittgen-png/deskilo
 IssueTracker: https://github.com/fdittgen-png/deskilo/issues

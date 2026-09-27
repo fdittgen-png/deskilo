@@ -36,6 +36,14 @@
   "@a11yRecentre": {
     "description": "Tooltip on the plan canvas's recentre button, which sizes the whole level to the viewport (#1235)."
   },
+  "aboutAttribution": "Based on DesKilo by Florian DITTGEN — https://github.com/fdittgen-png/deskilo",
+  "@aboutAttribution": {
+    "description": "licence about_attribution"
+  },
+  "aboutAttributionNote": "This credit must stay visible in every copy and modified version.",
+  "@aboutAttributionNote": {
+    "description": "licence about_attribution"
+  },
   "accessRuleManagedProfile": "While this profile was managed for you: {people}. Every time one of them opened or changed it is on the record below.",
   "@accessRuleManagedProfile": {
     "description": "#914 access rule: profile",

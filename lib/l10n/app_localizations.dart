@@ -158,6 +158,18 @@ abstract class AppLocalizations {
   /// **'Fit the plan to the screen'**
   String get a11yRecentre;
 
+  /// licence about_attribution
+  ///
+  /// In en, this message translates to:
+  /// **'Based on DesKilo by Florian DITTGEN — https://github.com/fdittgen-png/deskilo'**
+  String get aboutAttribution;
+
+  /// licence about_attribution
+  ///
+  /// In en, this message translates to:
+  /// **'This credit must stay visible in every copy and modified version.'**
+  String get aboutAttributionNote;
+
   /// #914 access rule: profile
   ///
   /// In en, this message translates to:

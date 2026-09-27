@@ -37,6 +37,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get a11yRecentre => 'Adatta la pianta allo schermo';
 
   @override
+  String get aboutAttribution =>
+      'Based on DesKilo by Florian DITTGEN — https://github.com/fdittgen-png/deskilo';
+
+  @override
+  String get aboutAttributionNote =>
+      'Questa menzione deve restare visibile in ogni copia e in ogni versione modificata.';
+
+  @override
   String accessRuleManagedProfile(String people) {
     return 'Finché questo profilo è stato gestito per voi: $people. Ogni consultazione o modifica da parte loro è registrata sotto.';
   }

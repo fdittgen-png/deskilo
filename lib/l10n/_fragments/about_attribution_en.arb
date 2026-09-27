@@ -1,0 +1,10 @@
+{
+  "aboutAttribution": "Based on DesKilo by Florian DITTGEN — https://github.com/fdittgen-png/deskilo",
+  "@aboutAttribution": {
+    "description": "licence about_attribution"
+  },
+  "aboutAttributionNote": "This credit must stay visible in every copy and modified version.",
+  "@aboutAttributionNote": {
+    "description": "licence about_attribution"
+  }
+}
