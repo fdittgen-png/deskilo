@@ -13,9 +13,9 @@
 /// `test/lint/migration_version_marker_test.dart`, so a migration cannot
 /// land without the app saying it needs it.
 <<<<<<< HEAD
-const int requiredSchemaVersion = 288;
+const int requiredSchemaVersion = 289;
 =======
-const int requiredSchemaVersion = 288;
+const int requiredSchemaVersion = 289;
 >>>>>>> 2a794f6d (feat(mcp): the five reservation tools read back what happened and refuse a stale state (#1620))
 
 /// How a server's schema compares with what this app needs.
