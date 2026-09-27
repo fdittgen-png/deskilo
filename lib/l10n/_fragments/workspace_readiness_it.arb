@@ -16,5 +16,6 @@
   "readinessAreaPayments": "Come pagano i membri",
   "readinessAreaRecovery": "Esportazione e ripristino",
   "gettingStartedSetupIncomplete": "Prima che qualcuno possa prenotare qui: {step}.",
-  "gettingStartedActionFinishSetup": "Completa la configurazione"
+  "gettingStartedActionFinishSetup": "Completa la configurazione",
+  "readinessAreaLocalSetup": "Dati richiesti dalle funzioni (identità, banca, piattaforme)"
 }

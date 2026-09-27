@@ -13085,6 +13085,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get gettingStartedActionFinishSetup => 'Terminer la mise en place';
 
   @override
+  String get readinessAreaLocalSetup =>
+      'Informations requises par vos fonctionnalités (identité, banque, plateformes)';
+
+  @override
   String get featureWorkspaceStatus => 'Situation de l\'espace';
 
   @override

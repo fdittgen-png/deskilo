@@ -12955,6 +12955,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gettingStartedActionFinishSetup => 'Finish setting up';
 
   @override
+  String get readinessAreaLocalSetup =>
+      'Details your features need (identity, bank, platforms)';
+
+  @override
   String get featureWorkspaceStatus => 'Workspace status';
 
   @override

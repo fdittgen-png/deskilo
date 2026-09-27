@@ -8547,6 +8547,7 @@
   "readinessAreaRecovery": "Esportazione e ripristino",
   "gettingStartedSetupIncomplete": "Prima che qualcuno possa prenotare qui: {step}.",
   "gettingStartedActionFinishSetup": "Completa la configurazione",
+  "readinessAreaLocalSetup": "Dati richiesti dalle funzioni (identità, banca, piattaforme)",
   "featureWorkspaceStatus": "Situazione dello spazio",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"
