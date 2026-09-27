@@ -15,6 +15,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'template_why_match.dart';
+import 'template_requirements.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -182,6 +183,16 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   int _generation = 0;
   bool _checking = false;
 
+  /// #1660 — capabilities chosen as requirements, and those the current
+  /// words offer.
+  final List<String> _required = [];
+  List<String> _offered = const [];
+
+  void _setRequired(void Function() change) {
+    setState(change);
+    _searchCapabilities(_search.text);
+  }
+
   void _onQuery(String value) {
     _debounce?.cancel();
     _debounce = Timer(TemplateGallery.debounce, () {
@@ -196,17 +207,22 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
     final vocabulary =
         CapabilityVocabulary(capabilityVocabularyLabels(AppLocalizations.of(context)));
     final parsed = vocabulary.parse(value);
+    final capabilities = {..._required, ...parsed.capabilities}.toList();
     final unknown = parsed.freeWords.where((w) => !_anyTemplateText(w)).toList();
     setState(() {
+      _offered = [
+        for (final c in parsed.capabilities)
+          if (!_required.contains(c)) c,
+      ];
       _suggestion = parsed.capabilities.isEmpty && unknown.isNotEmpty
           ? vocabulary.suggest(unknown.first)
           : null;
       _capability = null;
-      _checking = parsed.capabilities.isNotEmpty;
+      _checking = capabilities.isNotEmpty;
     });
-    if (parsed.capabilities.isEmpty) return;
+    if (capabilities.isEmpty) return;
     final result = await ref.read(templateSearchProvider).run(
-          capabilities: parsed.capabilities,
+          capabilities: capabilities,
           freeWords: parsed.freeWords,
           templates: [for (final s in widget.sections) ...s.templates],
         );
@@ -273,6 +289,13 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
           ),
         ),
         ..._capabilityStatus(l10n),
+        TemplateRequirementChips(
+          offered: _offered,
+          required: _required,
+          onRequire: (id) => _setRequired(() => _required.add(id)),
+          onRemove: (id) => _setRequired(() => _required.remove(id)),
+          onReset: () => _setRequired(_required.clear),
+        ),
         if (allTags.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
           EdgeFadeScroll(
@@ -303,7 +326,8 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
         ],
         // Browsing the library only: a picker is for choosing one.
         if (widget.onSelected == null &&
-            (_query.trim().isNotEmpty || _tags.isNotEmpty) &&
+            (_query.trim().isNotEmpty || _tags.isNotEmpty ||
+                _required.isNotEmpty) &&
             shownAll.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
           OutlinedButton.icon(
