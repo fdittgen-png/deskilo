@@ -138,6 +138,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get handoffSave => 'Datei und Bericht speichern';
 
   @override
+  String get handoffChanged =>
+      'Die Rechnungen haben sich während Ihrer Prüfung geändert. Exportieren Sie erneut, um den aktuellen Stand zu sehen.';
+
+  @override
   String get fecAccountExpenses => 'Aufwendungen';
 
   @override

@@ -314,6 +314,12 @@ abstract class AppLocalizations {
   /// **'Save file and report'**
   String get handoffSave;
 
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'The invoices changed while you were reviewing. Export again to see the current books.'**
+  String get handoffChanged;
+
   /// #936 accounting exports: fecAccountExpenses
   ///
   /// In en, this message translates to:

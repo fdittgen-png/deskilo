@@ -193,6 +193,10 @@
   "@handoffSave": {
     "description": "#1640 accountant_handoff"
   },
+  "handoffChanged": "The invoices changed while you were reviewing. Export again to see the current books.",
+  "@handoffChanged": {
+    "description": "#1640 accountant_handoff"
+  },
   "fecAccountExpenses": "Expenses",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"

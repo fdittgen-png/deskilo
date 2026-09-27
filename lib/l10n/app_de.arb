@@ -43,6 +43,7 @@
   "handoffOverpaid": "{number}: mehr bezahlt als berechnet",
   "handoffBlocked": "Diese Datei kann erst übergeben werden, wenn die Quelle korrigiert ist.",
   "handoffSave": "Datei und Bericht speichern",
+  "handoffChanged": "Die Rechnungen haben sich während Ihrer Prüfung geändert. Exportieren Sie erneut, um den aktuellen Stand zu sehen.",
   "fecAccountExpenses": "Aufwendungen",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"

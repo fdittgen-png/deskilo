@@ -138,6 +138,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get handoffSave => 'Save file and report';
 
   @override
+  String get handoffChanged =>
+      'The invoices changed while you were reviewing. Export again to see the current books.';
+
+  @override
   String get fecAccountExpenses => 'Expenses';
 
   @override

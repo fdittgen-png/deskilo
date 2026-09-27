@@ -43,6 +43,7 @@
   "handoffOverpaid": "{number}: pagado por encima de lo facturado",
   "handoffBlocked": "Este archivo no puede entregarse hasta que se corrija el origen.",
   "handoffSave": "Guardar archivo e informe",
+  "handoffChanged": "Las facturas cambiaron mientras las revisaba. Vuelva a exportar para ver las cuentas actuales.",
   "fecAccountExpenses": "Gastos",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"

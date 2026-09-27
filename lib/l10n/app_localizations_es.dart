@@ -138,6 +138,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get handoffSave => 'Guardar archivo e informe';
 
   @override
+  String get handoffChanged =>
+      'Las facturas cambiaron mientras las revisaba. Vuelva a exportar para ver las cuentas actuales.';
+
+  @override
   String get fecAccountExpenses => 'Gastos';
 
   @override
