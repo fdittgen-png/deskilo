@@ -12419,6 +12419,37 @@
   "@templateClearFilters": {
     "description": "#1660 template_why_match"
   },
+  "templateWidenTitle": "Make this template readable by: {audience}?",
+  "@templateWidenTitle": {
+    "description": "#1658 template_widen",
+    "placeholders": {
+      "audience": {
+        "type": "String"
+      }
+    }
+  },
+  "templateWidenCount": "{count} settings become readable, exactly as the template holds them now.",
+  "@templateWidenCount": {
+    "description": "#1658 template_widen",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "templateWidenExcluded": "{count} kinds of value never leave with it (bank details, sites, addresses…).",
+  "@templateWidenExcluded": {
+    "description": "#1658 template_widen",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "templateWidenConfirm": "Make readable",
+  "@templateWidenConfirm": {
+    "description": "#1658 template_widen"
+  },
   "libraryInvitationTexts": "Invitation texts",
   "@libraryInvitationTexts": {
     "description": "#1656 template_wording"

@@ -11527,6 +11527,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get templateClearFilters => 'Suche zurücksetzen';
 
   @override
+  String templateWidenTitle(String audience) {
+    return 'Diese Vorlage lesbar machen für: $audience?';
+  }
+
+  @override
+  String templateWidenCount(String count) {
+    return '$count Einstellungen werden lesbar, genau so, wie die Vorlage sie jetzt enthält.';
+  }
+
+  @override
+  String templateWidenExcluded(String count) {
+    return '$count Arten von Werten verlassen den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).';
+  }
+
+  @override
+  String get templateWidenConfirm => 'Lesbar machen';
+
+  @override
   String get libraryInvitationTexts => 'Einladungstexte';
 
   @override

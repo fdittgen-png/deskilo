@@ -9,8 +9,10 @@
 // really does start from a template.
 import 'dart:async';
 
-import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/workspace/domain/template_inspection.dart';
+import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
+import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,6 +59,76 @@ void main() {
         reason: 'a template shared with me is in the library half');
     expect(find.byKey(const ValueKey('library-save')), findsOneWidget,
         reason: 'an owner may publish');
+  });
+
+  group('#1658 widening a template is confirmed against what it carries', () {
+    Future<FakeWorkspaceRepository> withMine(WidgetTester tester) async {
+      final workspace = await _pumpLibrary(tester);
+      workspace.templates.add(const WorkspaceTemplate(
+        id: 'tpl-mine',
+        key: 'mine',
+        name: 'Mine',
+        visibility: TemplateVisibility.private,
+        ownerWorkspaceId: 'ws-1',
+      ));
+      workspace.templateInspections['tpl-mine'] = const TemplateInspection(
+        templateId: 'tpl-mine',
+        key: 'mine',
+        name: 'Mine',
+        status: TemplateInspectionStatus.ok,
+        profile: TemplateProfile.partial,
+        compatibility: TemplateCompatibility.supported,
+        outline: TemplateOutline(
+          compatibility: TemplateCompatibility.supported,
+          groups: [TemplateGroup.hoursBooking],
+        ),
+        coverage: TemplateCoverage(present: 7),
+        exclusions: [
+          TemplateExclusion(id: 'payment_instructions', portability: 'never'),
+        ],
+      );
+      // Reopen so the library lists it.
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+      unawaited(GoRouter.of(tester.element(find.byType(Scaffold).first))
+          .push('/library'));
+      await tester.pumpAndSettle();
+      return workspace;
+    }
+
+    Future<void> choose(WidgetTester tester, String label) async {
+      final menu = find.byKey(const ValueKey('library-menu-mine'));
+      await tester.ensureVisible(menu);
+      await tester.tap(menu);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(label).last);
+      await tester.pumpAndSettle();
+    }
+
+    TemplateVisibility visibility(FakeWorkspaceRepository w) =>
+        w.templates.firstWhere((t) => t.id == 'tpl-mine').visibility;
+
+    testWidgets('Cancel leaves it where it was', (tester) async {
+      final w = await withMine(tester);
+      await choose(tester, 'Everyone (the library)');
+      expect(find.byKey(const ValueKey('template-widen')), findsOneWidget);
+      expect(find.textContaining('7 settings become readable'), findsOneWidget);
+      expect(find.byKey(const ValueKey('template-widen-excluded')), findsOneWidget);
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
+      expect(visibility(w), TemplateVisibility.private);
+    });
+
+    testWidgets('confirming widens it; narrowing asks nothing', (tester) async {
+      final w = await withMine(tester);
+      await choose(tester, 'Everyone (the library)');
+      await tester.tap(find.byKey(const ValueKey('template-widen-confirm')));
+      await tester.pumpAndSettle();
+      expect(visibility(w), TemplateVisibility.public);
+      await choose(tester, 'Only me');
+      expect(find.byKey(const ValueKey('template-widen')), findsNothing);
+      expect(visibility(w), TemplateVisibility.private);
+    });
   });
 
   testWidgets('#1658 a retry after a lost answer publishes once, not twice',

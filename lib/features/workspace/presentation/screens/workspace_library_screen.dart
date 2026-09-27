@@ -23,6 +23,8 @@ import '../widgets/save_template_sheet.dart';
 import '../widgets/template_apply_sheet.dart';
 import '../widgets/template_gallery.dart';
 import '../widgets/template_share_sheet.dart';
+import '../widgets/template_widen_dialog.dart';
+import '../../domain/template_inspection.dart';
 
 class WorkspaceLibraryScreen extends ConsumerWidget {
   const WorkspaceLibraryScreen({super.key});
@@ -121,6 +123,24 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
       case 'shared':
       case 'public':
         final v = TemplateVisibility.values.byName(action);
+        // #1658 — reaching more people is confirmed against what the
+        // server says the template carries now; narrowing is not.
+        if (templateVisibilityReach(v) > templateVisibilityReach(t.visibility)) {
+          TemplateInspection? inspection;
+          if (!await runGuarded(context,
+              domain: 'workspace',
+              message: 'template inspection failed',
+              action: () async =>
+                  inspection = await repo.inspectWorkspaceTemplate(t.id))) {
+            return;
+          }
+          if (!context.mounted ||
+              !await showTemplateWidenDialog(context,
+                  inspection: inspection!, to: v)) {
+            return;
+          }
+          if (!context.mounted) return;
+        }
         if (await runGuarded(context,
             domain: 'workspace',
             message: 'template visibility failed',

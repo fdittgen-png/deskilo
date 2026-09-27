@@ -11427,6 +11427,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get templateClearFilters => 'Clear the search';
 
   @override
+  String templateWidenTitle(String audience) {
+    return 'Make this template readable by: $audience?';
+  }
+
+  @override
+  String templateWidenCount(String count) {
+    return '$count settings become readable, exactly as the template holds them now.';
+  }
+
+  @override
+  String templateWidenExcluded(String count) {
+    return '$count kinds of value never leave with it (bank details, sites, addresses…).';
+  }
+
+  @override
+  String get templateWidenConfirm => 'Make readable';
+
+  @override
   String get libraryInvitationTexts => 'Invitation texts';
 
   @override

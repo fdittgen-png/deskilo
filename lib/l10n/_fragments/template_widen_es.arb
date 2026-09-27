@@ -1,0 +1,6 @@
+{
+  "templateWidenTitle": "¿Hacer esta plantilla legible para: {audience}?",
+  "templateWidenCount": "{count} ajustes pasan a ser legibles, tal como los contiene ahora la plantilla.",
+  "templateWidenExcluded": "{count} tipos de valores nunca salen con ella (datos bancarios, sedes, direcciones…).",
+  "templateWidenConfirm": "Hacer legible"
+}
