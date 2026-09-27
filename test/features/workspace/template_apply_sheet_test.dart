@@ -3,6 +3,8 @@
 // #1330 — the apply preview shows a group's feature flips under their
 // business process, from the server's own change-set.
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
+import 'package:deskilo/features/workspace/domain/template_process_view.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/template_apply_sheet.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -72,7 +74,9 @@ void main() {
     );
 
     expect(
-      find.byKey(const ValueKey('template-process-documents_operations-workspaceAccess')),
+      find.byKey(
+        const ValueKey('template-process-documents_operations-workspaceAccess'),
+      ),
       findsOneWidget,
     );
     expect(find.text('Kiosk mode on'), findsOneWidget);
@@ -96,13 +100,77 @@ void main() {
       TemplatePreview.fromJson(<String, dynamic>{
         'compatibility': 'supported',
         'groups': [
-          {'group': 'space', 'state': 'new', 'items': [<String, Object?>{}]},
+          {
+            'group': 'space',
+            'state': 'new',
+            'items': [<String, Object?>{}],
+          },
         ],
       }),
     );
-    expect(find.byWidgetPredicate((w) {
-      final k = w.key;
-      return k is ValueKey<String> && k.value.startsWith('template-process-');
-    }), findsNothing);
+    expect(
+      find.byWidgetPredicate((w) {
+        final k = w.key;
+        return k is ValueKey<String> && k.value.startsWith('template-process-');
+      }),
+      findsNothing,
+    );
+  });
+
+  test(
+    'a feature switched on whose prerequisite stays off is unmet (#1657)',
+    () {
+      // invoicing requires moneyTab.
+      expect(
+        unmetPrerequisites({'invoicing': true, 'moneyTab': false}, const {}),
+        {WorkspaceFeature.invoicing: WorkspaceFeature.moneyTab},
+      );
+      expect(
+        unmetPrerequisites({'invoicing': true}, {WorkspaceFeature.moneyTab}),
+        isEmpty,
+        reason: 'the prerequisite already on here',
+      );
+      expect(
+        unmetPrerequisites({'invoicing': true, 'moneyTab': true}, const {}),
+        isEmpty,
+        reason: 'the same change-set switches it on',
+      );
+      expect(
+        unmetPrerequisites({'invoicing': false}, const {}),
+        isEmpty,
+        reason: 'switching off needs nothing',
+      );
+      expect(unmetPrerequisites({'notAFeature': true}, const {}), isEmpty);
+    },
+  );
+
+  testWidgets('the preview says which prerequisite blocks a feature (#1657)', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      TemplatePreview.fromJson(<String, dynamic>{
+        'compatibility': 'supported',
+        'groups': [
+          {
+            'group': 'documents_operations',
+            'state': 'change',
+            'items': [
+              {
+                'scope': 'workspace',
+                'op': 'change',
+                'key': 'feature_flags',
+                'before': {'invoicing': false, 'moneyTab': true},
+                'after': {'invoicing': true, 'moneyTab': false},
+              },
+            ],
+          },
+        ],
+      }),
+    );
+    expect(
+      find.byKey(const ValueKey('template-feature-blocked-invoicing')),
+      findsOneWidget,
+    );
   });
 }

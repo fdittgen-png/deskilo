@@ -12088,6 +12088,18 @@
       }
     }
   },
+  "libraryFeatureNeeds": "{feature} needs {prerequisite}, which stays off: it will not work yet.",
+  "@libraryFeatureNeeds": {
+    "description": "#1657 template_prerequisites",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      },
+      "prerequisite": {
+        "type": "String"
+      }
+    }
+  },
   "templatePricesOtherCurrency": "The template's prices are in another currency, so the prices here were left unchanged.",
   "@templatePricesOtherCurrency": {
     "description": "#1656 template_prices"

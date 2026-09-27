@@ -77,3 +77,29 @@ List<ProcessChangeGroup> processViewOf(
   }
   return out;
 }
+
+/// #1657 — the features a change-set switches ON whose prerequisite
+/// (`FeatureManifestEntry.requires`) would still be off afterwards, each
+/// with the prerequisite that blocks it. Such a feature is not working,
+/// and the preview says so instead of advertising it.
+///
+/// [changes] is every selected group's flips together (`dbKey -> on`);
+/// [currentOn] is what the workspace has on now. A feature's resulting
+/// state is its flip when there is one, its current state otherwise.
+Map<WorkspaceFeature, WorkspaceFeature> unmetPrerequisites(
+  Map<String, bool> changes,
+  Set<WorkspaceFeature> currentOn, {
+  Map<WorkspaceFeature, FeatureManifestEntry> manifest = featureManifest,
+}) {
+  final byName = WorkspaceFeature.values.asNameMap();
+  final flips = <WorkspaceFeature, bool>{
+    for (final e in changes.entries) ?byName[e.key]: e.value,
+  };
+  bool onAfter(WorkspaceFeature f) => flips[f] ?? currentOn.contains(f);
+  return {
+    for (final e in flips.entries)
+      if (e.value)
+        if (manifest[e.key]?.requires case final needed?)
+          if (!onAfter(needed)) e.key: needed,
+  };
+}

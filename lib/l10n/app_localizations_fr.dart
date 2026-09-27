@@ -11298,6 +11298,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String libraryFeatureNeeds(String feature, String prerequisite) {
+    return '$feature nécessite $prerequisite, qui reste désactivé : cela ne fonctionnera pas encore.';
+  }
+
+  @override
   String get templatePricesOtherCurrency =>
       'Les prix du modèle sont dans une autre devise : les prix d\'ici n\'ont pas été modifiés.';
 

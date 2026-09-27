@@ -7308,6 +7308,7 @@
   "librarySearchCapabilities": "Modelli configurati per: {capabilities}",
   "librarySearchUnavailable": "Non è stato possibile verificare le impostazioni dei modelli, quindi nessuno è mostrato come corrispondente. Riprova.",
   "librarySearchSuggestion": "Intendevi «{word}»?",
+  "libraryFeatureNeeds": "{feature} richiede {prerequisite}, che resta disattivato: non funzionerà ancora.",
   "templatePricesOtherCurrency": "I prezzi del modello sono in un'altra valuta, quindi i prezzi qui non sono stati modificati.",
   "templateRegionSuggested": "Questo modello è stato creato per {values}. La tua scelta resta, a meno che tu non usi i suoi valori.",
   "templateRegionUse": "Usa la regione del modello",

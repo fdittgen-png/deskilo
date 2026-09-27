@@ -7308,6 +7308,7 @@
   "librarySearchCapabilities": "Vorlagen eingerichtet für: {capabilities}",
   "librarySearchUnavailable": "Die Einstellungen der Vorlagen konnten nicht geprüft werden, daher wird keine als passend angezeigt. Versuchen Sie es erneut.",
   "librarySearchSuggestion": "Meinten Sie „{word}“?",
+  "libraryFeatureNeeds": "{feature} braucht {prerequisite}, das ausgeschaltet bleibt: Es funktioniert noch nicht.",
   "templatePricesOtherCurrency": "Die Preise der Vorlage sind in einer anderen Währung, daher wurden die Preise hier nicht geändert.",
   "templateRegionSuggested": "Diese Vorlage wurde für {values} erstellt. Ihre Wahl bleibt, außer Sie übernehmen ihre Werte.",
   "templateRegionUse": "Region der Vorlage übernehmen",
