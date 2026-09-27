@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../providers/workspace_providers.dart';
 import '../../domain/workspace_feature.dart';
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -65,6 +66,8 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
       previewTemplate(ref, widget.workspaceId, widget.template);
   Set<String>? _selected;
   bool _busy = false;
+  // #1658 — one request per review: a retry after a lost answer replays it.
+  final _requestId = newRequestId();
 
   static String stateLabel(AppLocalizations? l10n, TemplateGroupState state) =>
       switch (state) {
@@ -120,11 +123,27 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
       domain: 'workspace',
       message: 'apply template failed',
       action: () async => result = await applyTemplateGroups(
-          ref, widget.workspaceId, widget.template, selected),
+          ref, widget.workspaceId, widget.template, selected,
+          requestId: _requestId),
     );
     if (!mounted) return;
     setState(() => _busy = false);
     if (!done) return;
+    // #1658 — a template republished since the preview, or a request id
+    // reused, applied nothing: say so and close, so a fresh review opens.
+    if (!result.status.tookEffect) {
+      AppSnack.error(
+        context,
+        result.status == TemplateApplyStatus.stale
+            ? (AppLocalizations.of(context)?.templateChangedSinceReview ??
+                'This template changed since you reviewed it. Nothing was applied; open it again to review the new version.')
+            : (AppLocalizations.of(context)?.templateApplyConflict ??
+                'This request was already used for something else. Nothing was applied.'),
+      );
+      ref.invalidate(workspaceTemplatesProvider);
+      Navigator.of(context).pop();
+      return;
+    }
     // #1656 — prices in another currency are never relabelled; say so.
     final words = AppLocalizations.of(context);
     final notes = [

@@ -11298,6 +11298,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get templateChangedSinceReview =>
+      'Ce modèle a changé depuis votre relecture. Rien n\'a été appliqué ; rouvrez-le pour relire la nouvelle version.';
+
+  @override
+  String get templateApplyConflict =>
+      'Cette demande a déjà servi pour autre chose. Rien n\'a été appliqué.';
+
+  @override
   String libraryFeatureNeeds(String feature, String prerequisite) {
     return '$feature nécessite $prerequisite, qui reste désactivé : cela ne fonctionnera pas encore.';
   }

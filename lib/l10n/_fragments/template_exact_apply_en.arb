@@ -1,0 +1,10 @@
+{
+  "templateChangedSinceReview": "This template changed since you reviewed it. Nothing was applied; open it again to review the new version.",
+  "@templateChangedSinceReview": {
+    "description": "#1658 template_exact_apply"
+  },
+  "templateApplyConflict": "This request was already used for something else. Nothing was applied.",
+  "@templateApplyConflict": {
+    "description": "#1658 template_exact_apply"
+  }
+}

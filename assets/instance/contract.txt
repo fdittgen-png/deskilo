@@ -806,6 +806,7 @@ routine public.apply_usage_decision() -> trigger | function | definer | volatile
 routine public.apply_validated_decision_0181() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:0c4d74c777c8
 routine public.apply_workspace_template(p_workspace_id uuid, p_key text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a685a1cb7f41
 routine public.apply_workspace_template(p_workspace_id uuid, p_template_id uuid, p_groups text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1d0ee71377a0
+routine public.apply_workspace_template_exact(p_workspace_id uuid, p_template_id uuid, p_groups text[], p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d78602b49918
 routine public.assert_fee_bands_contiguous() -> trigger | function | definer | volatile | exec:service_role | body:a67aff42d6fc
 routine public.assert_member_quota(p_member_id uuid, p_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:8e367161e697
 routine public.assert_seat_not_blocked(p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:597dcd20ef44

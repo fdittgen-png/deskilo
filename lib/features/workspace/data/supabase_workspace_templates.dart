@@ -31,9 +31,18 @@ mixin SupabaseWorkspaceTemplates {
   }
 
   Future<TemplateApplyResult> applyWorkspaceTemplate(String workspaceId,
-          String templateId, {List<String>? groups}) async =>
-      TemplateApplyResult.fromResult(
-          await client.rpc<dynamic>('apply_workspace_template', params: {
+          String templateId,
+          {List<String>? groups, int? expectedVersion, String? requestId}) async =>
+      TemplateApplyResult.fromResult(requestId != null && expectedVersion != null
+          // #1658 — the reviewed revision, once (0282).
+          ? await client.rpc<dynamic>('apply_workspace_template_exact', params: {
+              'p_workspace_id': workspaceId,
+              'p_template_id': templateId,
+              'p_groups': groups,
+              'p_expected_version': expectedVersion,
+              'p_request_id': requestId,
+            })
+          : await client.rpc<dynamic>('apply_workspace_template', params: {
         'p_workspace_id': workspaceId,
         'p_template_id': templateId,
         // #1276 — null applies everything the template carries.
