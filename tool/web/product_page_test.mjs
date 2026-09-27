@@ -121,4 +121,31 @@ t('planned, unevidenced or unknown is never shown as available', () => {
   assert.ok(capabilityRows('en').some((r) => r.id === 'mcp.write' && r.state === 'planned'));
 });
 
+const zeros = { currency: 'EUR', backend_plan: '0', storage_free: '0', storage_used: '0', storage_price: '0', backup: '0', pay_count: '0', pay_average: '0', pay_percent: '0', pay_fixed: '0', admin_hours: '0', hourly_value: '0', setup_hours: '0', assistant_funding: 'user' };
+
+t('an untouched other-currency row is no cost, not an unknown one', () => {
+  const s = scenarioFromFields(zeros);
+  assert.equal(s.components.some((c) => c.id === 'foreign'), false);
+  assert.deepEqual(s.conversions, []);
+  assert.equal(planCost(s).recurring.complete, true);
+});
+
+t('another currency without a rate, date and source stays out of the total', () => {
+  const plan = planCost(scenarioFromFields({ ...zeros, foreign_amount: '100', foreign_currency: 'usd' }));
+  assert.equal(plan.recurring.known_minor, 0);
+  assert.equal(plan.recurring.complete, false);
+  assert.ok(describePlan(plan, 'en').includes('  Not counted: A cost in another currency — another currency'));
+  const noSource = planCost(scenarioFromFields({ ...zeros, foreign_amount: '100', foreign_currency: 'USD', foreign_rate: '0.9', foreign_date: '2026-09-01' }));
+  assert.equal(noSource.recurring.complete, false, 'a rate without its source is not a rate');
+});
+
+t('an entered rate converts, and the result says at what rate, when and from where', () => {
+  const plan = planCost(scenarioFromFields({ ...zeros, foreign_amount: '100', foreign_currency: 'USD', foreign_rate: '0.9', foreign_date: '2026-09-01', foreign_source: 'ECB reference rate' }));
+  assert.equal(plan.recurring.known_minor, 9000);
+  assert.equal(plan.recurring.complete, true);
+  assert.ok(describePlan(plan, 'en').includes('  Converted: A cost in another currency — 1 USD = 0.9 EUR, 2026-09-01, ECB reference rate'));
+  const same = planCost(scenarioFromFields({ ...zeros, foreign_amount: '12.5', foreign_currency: 'EUR' }));
+  assert.equal(same.recurring.known_minor, 1250, 'the scenario currency needs no rate');
+});
+
 console.log(`product page: ${cases} cases passed`);

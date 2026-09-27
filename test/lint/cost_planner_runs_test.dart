@@ -30,6 +30,6 @@ void main() {
     final r = Process.runSync('node', ['tool/web/product_page_test.mjs']);
     final out = '${r.stdout}${r.stderr}'.trim();
     expect(r.exitCode, 0, reason: out);
-    expect(out, contains('product page: 10 cases passed'));
+    expect(out, contains('product page: 13 cases passed'));
   });
 }
