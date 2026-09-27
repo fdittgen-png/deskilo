@@ -9,6 +9,7 @@ import '../../../events/presentation/event_labels.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../domain/local_setup.dart';
+import 'workspace_readiness_card.dart';
 
 /// #1657 — a validation event type, as its label, from its stored word.
 String eventTypeWord(AppLocalizations? l10n, String dbName) =>
@@ -123,3 +124,10 @@ class LocalReadinessCard extends ConsumerWidget {
     );
   }
 }
+
+/// #1636 #1656 — the top of the space's settings: how far it is from a
+/// first booking, then what its features still lack locally.
+List<Widget> setupReadinessCards(String workspaceId) => [
+  WorkspaceReadinessCard(workspaceId: workspaceId),
+  LocalReadinessCard(workspaceId: workspaceId),
+];

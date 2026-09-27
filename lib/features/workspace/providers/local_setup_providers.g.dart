@@ -221,3 +221,90 @@ final class WorkspaceLocalGapsFamily extends $Family
   @override
   String toString() => r'workspaceLocalGapsProvider';
 }
+
+/// #1636 — every setup section of the space, in the server's order.
+
+@ProviderFor(workspaceReadiness)
+final workspaceReadinessProvider = WorkspaceReadinessFamily._();
+
+/// #1636 — every setup section of the space, in the server's order.
+
+final class WorkspaceReadinessProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ReadinessSection>>,
+          List<ReadinessSection>,
+          FutureOr<List<ReadinessSection>>
+        >
+    with
+        $FutureModifier<List<ReadinessSection>>,
+        $FutureProvider<List<ReadinessSection>> {
+  /// #1636 — every setup section of the space, in the server's order.
+  WorkspaceReadinessProvider._({
+    required WorkspaceReadinessFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'workspaceReadinessProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceReadinessHash();
+
+  @override
+  String toString() {
+    return r'workspaceReadinessProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ReadinessSection>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ReadinessSection>> create(Ref ref) {
+    final argument = this.argument as String;
+    return workspaceReadiness(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is WorkspaceReadinessProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$workspaceReadinessHash() =>
+    r'12643350eb4294773994fa82357d9d77cf5f078b';
+
+/// #1636 — every setup section of the space, in the server's order.
+
+final class WorkspaceReadinessFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<ReadinessSection>>, String> {
+  WorkspaceReadinessFamily._()
+    : super(
+        retry: null,
+        name: r'workspaceReadinessProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #1636 — every setup section of the space, in the server's order.
+
+  WorkspaceReadinessProvider call(String workspaceId) =>
+      WorkspaceReadinessProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'workspaceReadinessProvider';
+}

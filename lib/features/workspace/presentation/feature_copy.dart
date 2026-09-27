@@ -526,6 +526,8 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'book, view their membership, or open the help — only '
                   'where the features and their permissions allow it. Not '
                   'now hides it; Settings can show it again. It never '
-                  'books, pays or approves anything. Off hides the card '
-                  'and changes nothing else.',
+                  'books, pays or approves anything. For whoever configures '
+                  'the space, the settings also show how far it is from a '
+                  'first booking, section by section. Off hides the card '
+                  'and that checklist and changes nothing else.',
       };

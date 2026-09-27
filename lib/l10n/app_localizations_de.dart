@@ -3462,7 +3462,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureMemberGettingStartedDesc =>
-      'Nach dem Beitritt oder dem Anlegen eines Workspace sieht ein Mitglied eine kompakte Karte im Reservieren-Hub: in welchem Workspace es ist und einen vorgeschlagenen nächsten Schritt — eine Zeit zum Buchen wählen, die eigene Mitgliedschaft ansehen oder die Hilfe öffnen — nur dort, wo Funktionen und Berechtigungen es erlauben. „Jetzt nicht“ blendet sie aus; die Einstellungen zeigen sie wieder an. Sie bucht, zahlt und genehmigt nie etwas. Aus blendet die Karte aus und ändert sonst nichts.';
+      'Nach dem Beitritt oder dem Anlegen eines Workspace sieht ein Mitglied eine kompakte Karte im Reservieren-Hub: in welchem Workspace es ist und einen vorgeschlagenen nächsten Schritt — eine Zeit zum Buchen wählen, die eigene Mitgliedschaft ansehen oder die Hilfe öffnen — nur dort, wo Funktionen und Berechtigungen es erlauben. „Jetzt nicht“ blendet sie aus; die Einstellungen zeigen sie wieder an. Sie bucht, zahlt und genehmigt nie etwas. Wer den Workspace einrichtet, sieht in den Einstellungen außerdem Bereich für Bereich, was bis zu einer ersten Buchung fehlt. Aus blendet die Karte und diese Liste aus und ändert sonst nichts.';
 
   @override
   String gettingStartedTitle(String workspace) {
@@ -12769,6 +12769,60 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureWorkspaceVocabularyDesc =>
       'Der Arbeitsbereich darf je Sprache eine kleine, freigegebene Auswahl an Produktbegriffen umbenennen — einen Platz, die Beschriftungen der Legende, die Tabs. Alles Übrige behält die Formulierung des Produkts, und ein Arbeitsbereich, der nichts umbenennt, sieht genau so aus wie zuvor.';
+
+  @override
+  String get readinessTitle => 'Einrichtung dieses Workspace';
+
+  @override
+  String readinessBlocked(String step) {
+    return 'Vor einer ersten Buchung: $step';
+  }
+
+  @override
+  String get readinessFirstBookingReady => 'Bereit für eine erste Buchung';
+
+  @override
+  String readinessNext(String step) {
+    return 'Als Nächstes: $step';
+  }
+
+  @override
+  String readinessAll(String ready, String total) {
+    return 'Alle Bereiche ($ready von $total bereit)';
+  }
+
+  @override
+  String get readinessStateReady => 'Bereit';
+
+  @override
+  String get readinessStateNeeds => 'Einzurichten';
+
+  @override
+  String get readinessStateUnverified => 'Noch nicht geprüft';
+
+  @override
+  String get readinessNeededFirst => 'Nötig für eine erste Buchung';
+
+  @override
+  String get readinessLater => 'Später nötig';
+
+  @override
+  String get readinessAreaRegionRules => 'Öffnungstage, Zeitzone und Währung';
+
+  @override
+  String get readinessAreaResources => 'Buchbare Plätze im Grundriss';
+
+  @override
+  String get readinessAreaPricing => 'Mitgliedschaftsmodelle und Tarife';
+
+  @override
+  String get readinessAreaInvitations => 'Die ersten Mitglieder einladen';
+
+  @override
+  String get readinessAreaPayments => 'Wie Mitglieder bezahlen';
+
+  @override
+  String get readinessAreaRecovery => 'Export und Wiederherstellung';
 
   @override
   String get featureWorkspaceStatus => 'Lage des Arbeitsbereichs';

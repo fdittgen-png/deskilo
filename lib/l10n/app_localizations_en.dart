@@ -3431,7 +3431,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureMemberGettingStartedDesc =>
-      'After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. Off hides the card and changes nothing else.';
+      'After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. For whoever configures the space, the settings also show how far it is from a first booking, section by section. Off hides the card and that checklist and changes nothing else.';
 
   @override
   String gettingStartedTitle(String workspace) {
@@ -12665,6 +12665,60 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureWorkspaceVocabularyDesc =>
       'The workspace may rename a small, approved set of product words — a seat, the legend labels, the tabs — per language. Everything else keeps the product\'s own wording, and a workspace that renames nothing looks exactly as it did before.';
+
+  @override
+  String get readinessTitle => 'Setting up this space';
+
+  @override
+  String readinessBlocked(String step) {
+    return 'Before a first booking: $step';
+  }
+
+  @override
+  String get readinessFirstBookingReady => 'Ready for a first booking';
+
+  @override
+  String readinessNext(String step) {
+    return 'Next: $step';
+  }
+
+  @override
+  String readinessAll(String ready, String total) {
+    return 'All sections ($ready of $total ready)';
+  }
+
+  @override
+  String get readinessStateReady => 'Ready';
+
+  @override
+  String get readinessStateNeeds => 'Needs configuration';
+
+  @override
+  String get readinessStateUnverified => 'Not verified yet';
+
+  @override
+  String get readinessNeededFirst => 'Needed for a first booking';
+
+  @override
+  String get readinessLater => 'Needed later';
+
+  @override
+  String get readinessAreaRegionRules => 'Opening days, time zone and currency';
+
+  @override
+  String get readinessAreaResources => 'Bookable places on the floor plan';
+
+  @override
+  String get readinessAreaPricing => 'Membership plans and tariffs';
+
+  @override
+  String get readinessAreaInvitations => 'Invite the first members';
+
+  @override
+  String get readinessAreaPayments => 'How members pay';
+
+  @override
+  String get readinessAreaRecovery => 'Export and recovery';
 
   @override
   String get featureWorkspaceStatus => 'Workspace status';

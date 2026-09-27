@@ -1,0 +1,18 @@
+{
+  "readinessTitle": "Einrichtung dieses Workspace",
+  "readinessBlocked": "Vor einer ersten Buchung: {step}",
+  "readinessFirstBookingReady": "Bereit für eine erste Buchung",
+  "readinessNext": "Als Nächstes: {step}",
+  "readinessAll": "Alle Bereiche ({ready} von {total} bereit)",
+  "readinessStateReady": "Bereit",
+  "readinessStateNeeds": "Einzurichten",
+  "readinessStateUnverified": "Noch nicht geprüft",
+  "readinessNeededFirst": "Nötig für eine erste Buchung",
+  "readinessLater": "Später nötig",
+  "readinessAreaRegionRules": "Öffnungstage, Zeitzone und Währung",
+  "readinessAreaResources": "Buchbare Plätze im Grundriss",
+  "readinessAreaPricing": "Mitgliedschaftsmodelle und Tarife",
+  "readinessAreaInvitations": "Die ersten Mitglieder einladen",
+  "readinessAreaPayments": "Wie Mitglieder bezahlen",
+  "readinessAreaRecovery": "Export und Wiederherstellung"
+}

@@ -2311,7 +2311,7 @@
   "@featureMemberGettingStartedTitle": {
     "description": "#1654 getting started: featureMemberGettingStartedTitle"
   },
-  "featureMemberGettingStartedDesc": "Après avoir rejoint ou créé un espace, un membre voit une carte compacte sur le hub Réserver : l’espace dans lequel il se trouve et une prochaine étape suggérée — choisir un créneau à réserver, consulter son adhésion ou ouvrir l’aide — seulement là où les fonctionnalités et ses permissions le permettent. Pas maintenant la masque ; les Réglages peuvent la réafficher. Elle ne réserve, ne paie et n’approuve jamais rien. Désactivée, elle masque la carte et ne change rien d’autre.",
+  "featureMemberGettingStartedDesc": "Après avoir rejoint ou créé un espace, un membre voit une carte compacte sur le hub Réserver : l’espace dans lequel il se trouve et une prochaine étape suggérée — choisir un créneau à réserver, consulter son adhésion ou ouvrir l’aide — seulement là où les fonctionnalités et ses permissions le permettent. Pas maintenant la masque ; les Réglages peuvent la réafficher. Elle ne réserve, ne paie et n’approuve jamais rien. Pour qui configure l’espace, les réglages montrent aussi, section par section, ce qui le sépare d’une première réservation. Désactivée, elle masque la carte et cette liste et ne change rien d’autre.",
   "@featureMemberGettingStartedDesc": {
     "description": "#1654 getting started: featureMemberGettingStartedDesc"
   },
@@ -8461,6 +8461,22 @@
   "@featureWorkspaceVocabularyDesc": {
     "description": "#1277 workspace vocabulary: the feature switch description"
   },
+  "readinessTitle": "Mise en place de cet espace",
+  "readinessBlocked": "Avant une première réservation : {step}",
+  "readinessFirstBookingReady": "Prêt pour une première réservation",
+  "readinessNext": "Ensuite : {step}",
+  "readinessAll": "Toutes les sections ({ready} sur {total} prêtes)",
+  "readinessStateReady": "Prêt",
+  "readinessStateNeeds": "À configurer",
+  "readinessStateUnverified": "Pas encore vérifié",
+  "readinessNeededFirst": "Nécessaire pour une première réservation",
+  "readinessLater": "Nécessaire plus tard",
+  "readinessAreaRegionRules": "Jours d’ouverture, fuseau horaire et devise",
+  "readinessAreaResources": "Places réservables sur le plan",
+  "readinessAreaPricing": "Formules d’adhésion et tarifs",
+  "readinessAreaInvitations": "Inviter les premiers membres",
+  "readinessAreaPayments": "Comment les membres paient",
+  "readinessAreaRecovery": "Export et restauration",
   "featureWorkspaceStatus": "Situation de l'espace",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

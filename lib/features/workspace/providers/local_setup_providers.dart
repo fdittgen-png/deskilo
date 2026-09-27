@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../data/supabase_local_setup_repository.dart';
 import '../domain/local_setup.dart';
+import '../domain/workspace_readiness.dart';
 
 part 'local_setup_providers.g.dart';
 
@@ -27,3 +28,8 @@ Future<List<LocalSlot>> workspaceLocalGaps(Ref ref, String workspaceId) async {
       if (s.filled == false && s.kind != LocalSlotKind.unknown) s,
   ]..sort((a, b) => (b.required ? 1 : 0) - (a.required ? 1 : 0));
 }
+
+/// #1636 — every setup section of the space, in the server's order.
+@riverpod
+Future<List<ReadinessSection>> workspaceReadiness(Ref ref, String workspaceId) =>
+    ref.watch(localSetupRepositoryProvider).sections(workspaceId);
