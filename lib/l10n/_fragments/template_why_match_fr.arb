@@ -1,0 +1,11 @@
+{
+  "templateWhy": "Pourquoi ce modèle correspond",
+  "templateWhyHide": "Masquer le pourquoi",
+  "capabilityStateEnabled": "Activé",
+  "capabilityStateDisabled": "Désactivé",
+  "capabilityStateConditional": "Activé seulement si ses prérequis le sont",
+  "capabilityStateUnspecified": "Non défini par ce modèle",
+  "capabilityStateLocalInput": "Demande d’abord une valeur locale",
+  "capabilityStateIncompatible": "Inapplicable ici",
+  "capabilityStateUnknown": "Inconnu"
+}

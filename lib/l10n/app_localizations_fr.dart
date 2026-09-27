@@ -11498,6 +11498,34 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get templateWhy => 'Pourquoi ce modèle correspond';
+
+  @override
+  String get templateWhyHide => 'Masquer le pourquoi';
+
+  @override
+  String get capabilityStateEnabled => 'Activé';
+
+  @override
+  String get capabilityStateDisabled => 'Désactivé';
+
+  @override
+  String get capabilityStateConditional =>
+      'Activé seulement si ses prérequis le sont';
+
+  @override
+  String get capabilityStateUnspecified => 'Non défini par ce modèle';
+
+  @override
+  String get capabilityStateLocalInput => 'Demande d’abord une valeur locale';
+
+  @override
+  String get capabilityStateIncompatible => 'Inapplicable ici';
+
+  @override
+  String get capabilityStateUnknown => 'Inconnu';
+
+  @override
   String get libraryInvitationTexts => 'Textes d\'invitation';
 
   @override

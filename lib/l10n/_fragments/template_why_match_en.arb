@@ -1,0 +1,38 @@
+{
+  "templateWhy": "Why this matches",
+  "@templateWhy": {
+    "description": "#1660 template_why_match"
+  },
+  "templateWhyHide": "Hide why",
+  "@templateWhyHide": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateEnabled": "On",
+  "@capabilityStateEnabled": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateDisabled": "Off",
+  "@capabilityStateDisabled": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateConditional": "On only if its prerequisites are",
+  "@capabilityStateConditional": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateUnspecified": "Not set by this template",
+  "@capabilityStateUnspecified": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateLocalInput": "Needs a local value first",
+  "@capabilityStateLocalInput": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateIncompatible": "Cannot apply here",
+  "@capabilityStateIncompatible": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateUnknown": "Unknown",
+  "@capabilityStateUnknown": {
+    "description": "#1660 template_why_match"
+  }
+}
