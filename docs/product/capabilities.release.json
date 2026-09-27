@@ -463,7 +463,7 @@
       "features": [],
       "prerequisites": "Someone responsible for taking and keeping the dumps, per the operations guide.",
       "limitations": "The drill restores the database only: Storage objects and the Auth service's own configuration are outside it.",
-      "fingerprint": "dd52d3f517ee",
+      "fingerprint": "94d21485722a",
       "scopes": {
         "unit": "unverified",
         "local_integration": "gated",
