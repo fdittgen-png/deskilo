@@ -190,7 +190,7 @@
     },
     {
       "name": "deskilo_create_reservation",
-      "description": "Book a place for the caller; one request id is one reservation however often it is sent.",
+      "description": "Book a place for the caller, optionally checked in at once; one request id is one reservation however often it is sent.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -228,6 +228,9 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+          },
+          "check_in": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -270,6 +273,10 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64
           }
         },
         "required": [
@@ -303,6 +310,10 @@
           "reservation_id": {
             "type": "string",
             "format": "uuid"
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64
           }
         },
         "required": [
@@ -334,6 +345,10 @@
           "reservation_id": {
             "type": "string",
             "format": "uuid"
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64
           }
         },
         "required": [
@@ -369,6 +384,10 @@
           "reason": {
             "type": "string",
             "maxLength": 500
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64
           }
         },
         "required": [

@@ -266,7 +266,7 @@
    "id": "create_reservation",
    "handler": true,
    "dispatch": true,
-   "description": "Book a place for the caller; one request id is one reservation however often it is sent.",
+   "description": "Book a place for the caller, optionally checked in at once; one request id is one reservation however often it is sent.",
    "rpc": "create_reservation_once",
    "authority": {
     "kind": "self"
@@ -314,13 +314,24 @@
      "type": "datetime",
      "required": true,
      "param": "p_ends_at"
+    },
+    "check_in": {
+     "type": "boolean",
+     "param": "p_check_in"
     }
    },
-   "fixed": {
-    "p_check_in": false
-   },
    "output": [
-    "reservation_id"
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
    ]
   },
   {
@@ -362,9 +373,25 @@
      "type": "datetime",
      "required": true,
      "param": "p_ends_at"
+    },
+    "expected_state": {
+     "type": "text",
+     "maxLength": 64
     }
    },
-   "output": []
+   "output": [
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
+   ]
   },
   {
    "id": "check_in",
@@ -395,9 +422,25 @@
      "type": "uuid",
      "required": true,
      "param": "p_reservation_id"
+    },
+    "expected_state": {
+     "type": "text",
+     "maxLength": 64
     }
    },
-   "output": []
+   "output": [
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
+   ]
   },
   {
    "id": "check_out",
@@ -428,9 +471,25 @@
      "type": "uuid",
      "required": true,
      "param": "p_reservation_id"
+    },
+    "expected_state": {
+     "type": "text",
+     "maxLength": 64
     }
    },
-   "output": []
+   "output": [
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
+   ]
   },
   {
    "id": "request_reservation_deletion",
@@ -466,10 +525,25 @@
      "type": "text",
      "maxLength": 500,
      "param": "p_reason"
+    },
+    "expected_state": {
+     "type": "text",
+     "maxLength": 64
     }
    },
    "output": [
-    "event_id"
+    "event_id",
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
    ]
   },
   {
