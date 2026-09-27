@@ -7380,6 +7380,8 @@
   "templateRequire": "Exigir: {capability}",
   "templateRequirementRemove": "Quitar el requisito",
   "templateRequirementsReset": "Restablecer",
+  "templateNoMatch": "Ninguna plantilla coincide. Cambie las palabras, una etiqueta o un requisito.",
+  "templateClearFilters": "Borrar la búsqueda",
   "libraryInvitationTexts": "Textos de invitación",
   "libraryInvitationTextsHint": "Solo textos escritos con marcadores como {tag}; un texto que nombre su espacio o a sus personas se rechaza.",
   "libraryInvitationTextsRefused": "Un texto de invitación todavía nombra su espacio o a sus personas. Sustitúyalos por marcadores en los ajustes de invitación o desmarque los textos de invitación.",

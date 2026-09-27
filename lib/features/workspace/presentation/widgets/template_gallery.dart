@@ -188,6 +188,24 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   final List<String> _required = [];
   List<String> _offered = const [];
 
+  /// Whether anything narrows the gallery: words, tags or requirements,
+  /// over a library that has templates at all.
+  bool get _narrowed =>
+      (_query.trim().isNotEmpty || _tags.isNotEmpty || _required.isNotEmpty) &&
+      widget.sections.any((s) => s.templates.isNotEmpty);
+
+  void _clearAll() {
+    _search.clear();
+    setState(() {
+      _query = '';
+      _tags.clear();
+      _required.clear();
+      _offered = const [];
+      _capability = null;
+      _suggestion = null;
+    });
+  }
+
   void _setRequired(void Function() change) {
     setState(change);
     _searchCapabilities(_search.text);
@@ -340,7 +358,23 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
         ],
         const SizedBox(height: AppSpacing.sm),
         Expanded(
-          child: !anyTemplate && !widget.offerEmpty
+          child: !anyTemplate && !widget.offerEmpty && _narrowed && !_checking
+              // #1660 — the library HAS templates; this search just
+              // matches none of them. Never "nothing here yet".
+              ? Column(key: const ValueKey('template-no-match'), children: [
+                  Expanded(child: EmptyState(
+                    icon: Icons.search_off,
+                    title: l10n?.templateNoMatch ??
+                        'No template matches. Change the words, a tag or a '
+                            'requirement.',
+                  )),
+                  TextButton(
+                    key: const ValueKey('template-clear-filters'),
+                    onPressed: _clearAll,
+                    child: Text(l10n?.templateClearFilters ?? 'Clear the search'),
+                  ),
+                ])
+              : !anyTemplate && !widget.offerEmpty
               ? EmptyState(
                   key: const ValueKey('template-gallery-empty'),
                   icon: Icons.grid_view_outlined,

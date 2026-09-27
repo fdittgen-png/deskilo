@@ -19872,6 +19872,18 @@ abstract class AppLocalizations {
   /// **'Reset'**
   String get templateRequirementsReset;
 
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'No template matches. Change the words, a tag or a requirement.'**
+  String get templateNoMatch;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the search'**
+  String get templateClearFilters;
+
   /// #1656 template_wording
   ///
   /// In en, this message translates to:

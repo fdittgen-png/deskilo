@@ -12411,6 +12411,14 @@
   "@templateRequirementsReset": {
     "description": "#1660 template_why_match"
   },
+  "templateNoMatch": "No template matches. Change the words, a tag or a requirement.",
+  "@templateNoMatch": {
+    "description": "#1660 template_why_match"
+  },
+  "templateClearFilters": "Clear the search",
+  "@templateClearFilters": {
+    "description": "#1660 template_why_match"
+  },
   "libraryInvitationTexts": "Invitation texts",
   "@libraryInvitationTexts": {
     "description": "#1656 template_wording"

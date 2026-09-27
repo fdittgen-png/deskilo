@@ -7380,6 +7380,8 @@
   "templateRequire": "Richiedi: {capability}",
   "templateRequirementRemove": "Rimuovi il requisito",
   "templateRequirementsReset": "Azzera",
+  "templateNoMatch": "Nessun modello corrisponde. Cambia le parole, un’etichetta o un requisito.",
+  "templateClearFilters": "Cancella la ricerca",
   "libraryInvitationTexts": "Testi di invito",
   "libraryInvitationTextsHint": "Solo testi scritti con segnaposto come {tag}; un testo che nomina il tuo spazio o le sue persone viene rifiutato.",
   "libraryInvitationTextsRefused": "Un testo di invito nomina ancora il tuo spazio o le sue persone. Sostituiscili con segnaposto nelle impostazioni di invito, oppure deseleziona i testi di invito.",

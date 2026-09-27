@@ -11520,6 +11520,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get templateRequirementsReset => 'Zurücksetzen';
 
   @override
+  String get templateNoMatch =>
+      'Keine Vorlage passt. Ändern Sie die Wörter, ein Schlagwort oder eine Voraussetzung.';
+
+  @override
+  String get templateClearFilters => 'Suche zurücksetzen';
+
+  @override
   String get libraryInvitationTexts => 'Einladungstexte';
 
   @override

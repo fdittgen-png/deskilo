@@ -11524,6 +11524,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get templateRequirementsReset => 'Azzera';
 
   @override
+  String get templateNoMatch =>
+      'Nessun modello corrisponde. Cambia le parole, un’etichetta o un requisito.';
+
+  @override
+  String get templateClearFilters => 'Cancella la ricerca';
+
+  @override
   String get libraryInvitationTexts => 'Testi di invito';
 
   @override

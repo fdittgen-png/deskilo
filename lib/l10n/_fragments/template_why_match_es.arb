@@ -10,5 +10,7 @@
   "capabilityStateUnknown": "Desconocido",
   "templateRequire": "Exigir: {capability}",
   "templateRequirementRemove": "Quitar el requisito",
-  "templateRequirementsReset": "Restablecer"
+  "templateRequirementsReset": "Restablecer",
+  "templateNoMatch": "Ninguna plantilla coincide. Cambie las palabras, una etiqueta o un requisito.",
+  "templateClearFilters": "Borrar la búsqueda"
 }
