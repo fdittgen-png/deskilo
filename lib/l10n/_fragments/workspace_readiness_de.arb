@@ -16,5 +16,6 @@
   "readinessAreaPayments": "Wie Mitglieder bezahlen",
   "readinessAreaRecovery": "Export und Wiederherstellung",
   "gettingStartedSetupIncomplete": "Bevor hier jemand buchen kann: {step}.",
-  "gettingStartedActionFinishSetup": "Einrichtung abschließen"
+  "gettingStartedActionFinishSetup": "Einrichtung abschließen",
+  "readinessAreaLocalSetup": "Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)"
 }

@@ -14359,6 +14359,10 @@
   "@gettingStartedActionFinishSetup": {
     "description": "#1636 workspace_readiness"
   },
+  "readinessAreaLocalSetup": "Details your features need (identity, bank, platforms)",
+  "@readinessAreaLocalSetup": {
+    "description": "#1636 workspace_readiness"
+  },
   "featureWorkspaceStatus": "Workspace status",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

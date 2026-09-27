@@ -22638,6 +22638,12 @@ abstract class AppLocalizations {
   /// **'Finish setting up'**
   String get gettingStartedActionFinishSetup;
 
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Details your features need (identity, bank, platforms)'**
+  String get readinessAreaLocalSetup;
+
   /// #934 workspace status / repartition wizard: featureWorkspaceStatus
   ///
   /// In en, this message translates to:

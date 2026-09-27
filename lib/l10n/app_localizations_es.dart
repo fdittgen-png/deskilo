@@ -13050,6 +13050,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get gettingStartedActionFinishSetup => 'Terminar la configuración';
 
   @override
+  String get readinessAreaLocalSetup =>
+      'Datos que necesitan sus funciones (identidad, banco, plataformas)';
+
+  @override
   String get featureWorkspaceStatus => 'Situación del espacio';
 
   @override

@@ -99,12 +99,21 @@ void main() {
       },
       {'section': 'recovery', 'state': 'unverified', 'route': 'https://x'},
       {'section': 'weird', 'state': 'ready'},
+      {
+        'section': 'local_setup',
+        'state': 'needs_configuration',
+        'route': '/einvoice-config',
+      },
     ]);
     expect(s.map((e) => e.area), [
       ReadinessArea.resources,
       ReadinessArea.recovery,
       ReadinessArea.unknown,
+      ReadinessArea.localSetup,
     ]);
+    expect(s.last.blocking, isFalse,
+        reason: 'local setup never blocks a first booking');
+    expect(s.last.route, '/einvoice-config');
     expect(s[0].blocking, isTrue);
     expect(s[1].required, isFalse);
     expect(s[1].route, '/workspace-settings');

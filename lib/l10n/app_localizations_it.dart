@@ -13068,6 +13068,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get gettingStartedActionFinishSetup => 'Completa la configurazione';
 
   @override
+  String get readinessAreaLocalSetup =>
+      'Dati richiesti dalle funzioni (identità, banca, piattaforme)';
+
+  @override
   String get featureWorkspaceStatus => 'Situazione dello spazio';
 
   @override

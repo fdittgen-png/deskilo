@@ -16,5 +16,6 @@
   "readinessAreaPayments": "Comment les membres paient",
   "readinessAreaRecovery": "Export et restauration",
   "gettingStartedSetupIncomplete": "Avant que quiconque puisse réserver ici : {step}.",
-  "gettingStartedActionFinishSetup": "Terminer la mise en place"
+  "gettingStartedActionFinishSetup": "Terminer la mise en place",
+  "readinessAreaLocalSetup": "Informations requises par vos fonctionnalités (identité, banque, plateformes)"
 }

@@ -25,6 +25,9 @@ String readinessAreaLabel(
   ReadinessArea.payments => l10n?.readinessAreaPayments ?? 'How members pay',
   ReadinessArea.recovery =>
     l10n?.readinessAreaRecovery ?? 'Export and recovery',
+  ReadinessArea.localSetup =>
+    l10n?.readinessAreaLocalSetup ??
+        'Details your features need (identity, bank, platforms)',
   ReadinessArea.unknown => '',
 };
 

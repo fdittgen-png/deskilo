@@ -13064,6 +13064,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get gettingStartedActionFinishSetup => 'Einrichtung abschließen';
 
   @override
+  String get readinessAreaLocalSetup =>
+      'Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)';
+
+  @override
   String get featureWorkspaceStatus => 'Lage des Arbeitsbereichs';
 
   @override

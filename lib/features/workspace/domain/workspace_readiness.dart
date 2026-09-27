@@ -12,6 +12,9 @@ enum ReadinessArea {
   invitations,
   payments,
   recovery,
+
+  /// 0287 — what the switched-on features still need locally (0280).
+  localSetup,
   unknown,
 }
 
@@ -47,6 +50,7 @@ class ReadinessSection {
             'invitations' => ReadinessArea.invitations,
             'payments' => ReadinessArea.payments,
             'recovery' => ReadinessArea.recovery,
+            'local_setup' => ReadinessArea.localSetup,
             _ => ReadinessArea.unknown,
           },
           state: switch (s['state']) {
