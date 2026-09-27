@@ -1,0 +1,11 @@
+{
+  "localSlotLegalIdentity": "Votre identité légale et votre adresse (pour les factures)",
+  "localSlotPaymentDetails": "Comment les membres vous paient (coordonnées bancaires)",
+  "localSlotPaymentProvider": "Un prestataire de paiement en ligne",
+  "localSlotEinvoicePlatform": "Votre compte sur la plateforme de facturation électronique",
+  "localSlotSite": "Au moins un site",
+  "localSlotRecommended": "Recommandé",
+  "localSlotOpen": "Configurer",
+  "localNeedsTitle": "Vous les ajouterez vous-même ; un modèle ne les transporte jamais :",
+  "localGapsTitle": "Pour terminer la configuration de cet espace"
+}

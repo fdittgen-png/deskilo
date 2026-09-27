@@ -4268,6 +4268,15 @@
   "@libraryProcessTechnical": {
     "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
   },
+  "localSlotLegalIdentity": "Su identidad legal y su dirección (para las facturas)",
+  "localSlotPaymentDetails": "Cómo le pagan los miembros (datos bancarios)",
+  "localSlotPaymentProvider": "Un proveedor de pagos en línea",
+  "localSlotEinvoicePlatform": "Su cuenta en la plataforma de facturación electrónica",
+  "localSlotSite": "Al menos una sede",
+  "localSlotRecommended": "Recomendado",
+  "localSlotOpen": "Configurar",
+  "localNeedsTitle": "Los añadirá usted; una plantilla nunca los transporta:",
+  "localGapsTitle": "Para terminar de configurar este espacio",
   "featureManagedProfileAccess": "Quién administra un perfil",
   "@featureManagedProfileAccess": {
     "description": "#914 managed profile access: name"

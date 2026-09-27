@@ -6772,6 +6772,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get libraryProcessTechnical => 'Technical';
 
   @override
+  String get localSlotLegalIdentity =>
+      'Your legal identity and address (for invoices)';
+
+  @override
+  String get localSlotPaymentDetails => 'How members pay you (bank details)';
+
+  @override
+  String get localSlotPaymentProvider => 'An online payment provider';
+
+  @override
+  String get localSlotEinvoicePlatform => 'Your e-invoicing platform account';
+
+  @override
+  String get localSlotSite => 'At least one site';
+
+  @override
+  String get localSlotRecommended => 'Recommended';
+
+  @override
+  String get localSlotOpen => 'Set up';
+
+  @override
+  String get localNeedsTitle =>
+      'You will add these yourself; a template never carries them:';
+
+  @override
+  String get localGapsTitle => 'To finish setting up this space';
+
+  @override
   String get featureManagedProfileAccess => 'Who administers a profile';
 
   @override

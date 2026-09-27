@@ -14,6 +14,7 @@ import '../../../auth/providers/sign_out.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../application/creation_intent.dart';
 import '../../application/start_workspace.dart';
+import '../widgets/local_setup_views.dart';
 import '../widgets/template_region_notice.dart';
 import '../widgets/onboarding_creation.dart';
 import '../widgets/onboarding_join_form.dart';
@@ -540,6 +541,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 enabled: !_busy,
                 onUse: () => setState(() => _useRegion(template.regional)),
               ),
+            if (template != null) TemplateLocalNeedsView(templateId: template.id),
             CreationSummary(shape: _shape),
             ListTile(
               key: const ValueKey('onboarding-confirm-template'),

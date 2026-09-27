@@ -15,7 +15,9 @@ export 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
+import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
+import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
 import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
 import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
 export 'package:deskilo/core/demo/data/stores.dart';
@@ -115,6 +117,7 @@ List<Override> standardTestOverrides({
   FakeActionConfirmationRepository? actionConfirmations,
   FakeMcpConnectionRepository? mcpConnections,
   FakeMcpAdminRepository? mcpAdmin,
+  FakeLocalSetupRepository? localSetup,
   FakeIdentityBindingRepository? identityBinding,
   FakeSecondFactorRepository? secondFactor,
   AuthRepository? auth,
@@ -196,6 +199,7 @@ List<Override> standardTestOverrides({
     mcpConnectionRepositoryProvider
         .overrideWithValue(mcpConnections ?? FakeMcpConnectionRepository()),
     mcpAdminRepositoryProvider.overrideWithValue(mcpAdmin ?? FakeMcpAdminRepository()),
+    localSetupRepositoryProvider.overrideWithValue(localSetup ?? FakeLocalSetupRepository()),
     secondFactorRepositoryProvider
         .overrideWithValue(secondFactor ?? FakeSecondFactorRepository()),
     workspaceRepositoryProvider.overrideWithValue(() {
