@@ -11533,6 +11533,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get capabilityBrowserPrefer => 'Preferir';
 
   @override
+  String get templateDetails => 'Qué contiene';
+
+  @override
+  String get templateDetailSearch => 'Buscar un ajuste en esta plantilla';
+
+  @override
+  String get templateDetailNone => 'Ningún ajuste coincide.';
+
+  @override
   String templateWidenTitle(String audience) {
     return '¿Hacer esta plantilla legible para: $audience?';
   }

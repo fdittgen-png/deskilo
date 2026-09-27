@@ -19914,6 +19914,24 @@ abstract class AppLocalizations {
   /// **'Prefer'**
   String get capabilityBrowserPrefer;
 
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'What it holds'**
+  String get templateDetails;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Find a setting in this template'**
+  String get templateDetailSearch;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'No setting matches.'**
+  String get templateDetailNone;
+
   /// #1658 template_widen
   ///
   /// In en, this message translates to:

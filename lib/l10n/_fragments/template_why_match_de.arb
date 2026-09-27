@@ -17,5 +17,8 @@
   "templatePreferredChip": "Bevorzugt: {capability}",
   "capabilityBrowserTitle": "Funktionen durchsuchen",
   "capabilityBrowserRequire": "Voraussetzen",
-  "capabilityBrowserPrefer": "Bevorzugen"
+  "capabilityBrowserPrefer": "Bevorzugen",
+  "templateDetails": "Was sie enthält",
+  "templateDetailSearch": "Eine Einstellung in dieser Vorlage finden",
+  "templateDetailNone": "Keine Einstellung passt."
 }

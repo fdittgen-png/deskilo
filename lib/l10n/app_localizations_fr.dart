@@ -11563,6 +11563,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get capabilityBrowserPrefer => 'Préférer';
 
   @override
+  String get templateDetails => 'Ce qu’il contient';
+
+  @override
+  String get templateDetailSearch => 'Chercher un réglage dans ce modèle';
+
+  @override
+  String get templateDetailNone => 'Aucun réglage ne correspond.';
+
+  @override
   String templateWidenTitle(String audience) {
     return 'Rendre ce modèle lisible par : $audience ?';
   }

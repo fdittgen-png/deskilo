@@ -89,5 +89,17 @@
   "capabilityBrowserPrefer": "Prefer",
   "@capabilityBrowserPrefer": {
     "description": "#1660 template_why_match"
+  },
+  "templateDetails": "What it holds",
+  "@templateDetails": {
+    "description": "#1660 template_why_match"
+  },
+  "templateDetailSearch": "Find a setting in this template",
+  "@templateDetailSearch": {
+    "description": "#1660 template_why_match"
+  },
+  "templateDetailNone": "No setting matches.",
+  "@templateDetailNone": {
+    "description": "#1660 template_why_match"
   }
 }

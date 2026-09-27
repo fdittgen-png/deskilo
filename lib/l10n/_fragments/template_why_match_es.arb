@@ -17,5 +17,8 @@
   "templatePreferredChip": "Preferido: {capability}",
   "capabilityBrowserTitle": "Explorar funciones",
   "capabilityBrowserRequire": "Exigir",
-  "capabilityBrowserPrefer": "Preferir"
+  "capabilityBrowserPrefer": "Preferir",
+  "templateDetails": "Qué contiene",
+  "templateDetailSearch": "Buscar un ajuste en esta plantilla",
+  "templateDetailNone": "Ningún ajuste coincide."
 }

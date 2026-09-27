@@ -95,6 +95,93 @@ final class TemplateComparisonFamily extends $Family
   String toString() => r'templateComparisonProvider';
 }
 
+/// #1660 — one template's inspection, for its detail screen.
+
+@ProviderFor(templateInspection)
+final templateInspectionProvider = TemplateInspectionFamily._();
+
+/// #1660 — one template's inspection, for its detail screen.
+
+final class TemplateInspectionProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<TemplateInspection>,
+          TemplateInspection,
+          FutureOr<TemplateInspection>
+        >
+    with
+        $FutureModifier<TemplateInspection>,
+        $FutureProvider<TemplateInspection> {
+  /// #1660 — one template's inspection, for its detail screen.
+  TemplateInspectionProvider._({
+    required TemplateInspectionFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'templateInspectionProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$templateInspectionHash();
+
+  @override
+  String toString() {
+    return r'templateInspectionProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<TemplateInspection> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<TemplateInspection> create(Ref ref) {
+    final argument = this.argument as String;
+    return templateInspection(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is TemplateInspectionProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$templateInspectionHash() =>
+    r'727f176221a729582173c46b285c40ce904f6ecb';
+
+/// #1660 — one template's inspection, for its detail screen.
+
+final class TemplateInspectionFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<TemplateInspection>, String> {
+  TemplateInspectionFamily._()
+    : super(
+        retry: null,
+        name: r'templateInspectionProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #1660 — one template's inspection, for its detail screen.
+
+  TemplateInspectionProvider call(String templateId) =>
+      TemplateInspectionProvider._(argument: templateId, from: this);
+
+  @override
+  String toString() => r'templateInspectionProvider';
+}
+
 /// #1661 — the workbook export of a shortlist.
 
 @ProviderFor(templateWorkbookExport)
