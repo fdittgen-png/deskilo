@@ -21,7 +21,7 @@ import '../../helpers/mock_providers.dart';
 Future<
   ({FakeMoneyRepository money, List<({String name, Uint8List bytes})> saved})
 >
-_openPreflight(WidgetTester tester) async {
+_openPreflight(WidgetTester tester, {bool failSave = false}) async {
   final money = FakeMoneyRepository();
   await money.createInvoice(
     workspaceId: 'ws-1',
@@ -45,6 +45,7 @@ _openPreflight(WidgetTester tester) async {
           required bytes,
           required fileName,
         }) async {
+          if (failSave) throw Exception('disk full');
           saved.add((name: fileName, bytes: bytes));
           return 'Download/$fileName';
         }),
@@ -111,6 +112,28 @@ void main() {
     expect(r.saved, isEmpty);
     expect(
       find.textContaining('The invoices changed while you were reviewing'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('Cancel in the preflight saves nothing', (tester) async {
+    final r = await _openPreflight(tester);
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+    expect(r.saved, isEmpty);
+    expect(find.byKey(const ValueKey('handoff-preflight')), findsNothing);
+  });
+
+  testWidgets('a save that fails says so and leaves nothing half-written', (
+    tester,
+  ) async {
+    final r = await _openPreflight(tester, failSave: true);
+    await tester.tap(find.byKey(const ValueKey('handoff-save')));
+    await tester.pumpAndSettle();
+    expect(r.saved, isEmpty);
+    expect(tester.takeException(), isNull);
+    expect(
+      find.text('Something went wrong. Please try again.'),
       findsOneWidget,
     );
   });

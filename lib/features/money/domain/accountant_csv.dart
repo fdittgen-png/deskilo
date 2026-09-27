@@ -58,6 +58,15 @@ String accountantCsvText(String? value) {
 String _inertPreamble(String value) =>
     value.replaceAll(RegExp(r'[\x00-\x1F\x7F,;"]+'), ' ').trim();
 
+/// #1640 — the gross a row states. An invoice states what it charges
+/// (its positive lines, before the month's payments are netted off); a
+/// credit note gives money back, so it states the sum of its lines,
+/// negative, beside its negative net and VAT rather than a 0.00 that
+/// contradicts them.
+int accountantGrossCents(Invoice invoice) => invoice.isCreditNote
+    ? invoice.lines.fold(0, (sum, line) => sum + line.amountCents)
+    : invoice.chargesCents;
+
 /// The columns, in order — the handoff report quotes them.
 const List<String> accountantCsvColumns = _columns;
 
@@ -142,7 +151,7 @@ String buildAccountantCsv({
       q(invoice.currency.isEmpty ? currencyFallback : invoice.currency),
       money(invoice.netCents, invoice.currency),
       money(invoice.vatCents, invoice.currency),
-      money(invoice.chargesCents, invoice.currency),
+      money(accountantGrossCents(invoice), invoice.currency),
       // Which rates, so a reader can see at a glance that a period mixes
       // them — the single most common surprise in a coworking ledger.
       q([
