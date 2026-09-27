@@ -11245,6 +11245,14 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String templateRegionSuggested(String values) {
+    return 'Questo modello è stato creato per $values. La tua scelta resta, a meno che tu non usi i suoi valori.';
+  }
+
+  @override
+  String get templateRegionUse => 'Usa la regione del modello';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

@@ -11240,6 +11240,14 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String templateRegionSuggested(String values) {
+    return 'Diese Vorlage wurde für $values erstellt. Ihre Wahl bleibt, außer Sie übernehmen ihre Werte.';
+  }
+
+  @override
+  String get templateRegionUse => 'Region der Vorlage übernehmen';
+
+  @override
   String get themeTitle => 'Design';
 
   @override

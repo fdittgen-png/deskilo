@@ -7297,6 +7297,8 @@
   "librarySearchCapabilities": "Plantillas configuradas para: {capabilities}",
   "librarySearchUnavailable": "No se pudieron comprobar los ajustes de las plantillas, así que ninguna aparece como coincidente. Inténtelo de nuevo.",
   "librarySearchSuggestion": "¿Quiso decir «{word}»?",
+  "templateRegionSuggested": "Esta plantilla se creó para {values}. Se mantiene su elección salvo que use sus valores.",
+  "templateRegionUse": "Usar la región de la plantilla",
   "themeTitle": "Tema",
   "themeSystem": "Predeterminado del sistema",
   "themeLight": "Claro",

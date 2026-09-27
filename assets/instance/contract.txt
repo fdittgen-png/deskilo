@@ -763,6 +763,7 @@ constraint workspace_templates.workspace_templates_name_check CHECK (((char_leng
 constraint workspace_templates.workspace_templates_owner_workspace_id_fkey FOREIGN KEY (owner_workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_templates.workspace_templates_ownership CHECK (((visibility = 'builtin'::text) = (owner_workspace_id IS NULL)))
 constraint workspace_templates.workspace_templates_pkey PRIMARY KEY (id)
+constraint workspace_templates.workspace_templates_regional_shape CHECK (((jsonb_typeof(regional) = 'object'::text) AND ((NOT (regional ? 'country_code'::text)) OR ((regional ->> 'country_code'::text) ~ '^[A-Z]{2}$'::text)) AND ((NOT (regional ? 'currency_code'::text)) OR ((regional ->> 'currency_code'::text) ~ '^[A-Z]{3}$'::text)) AND ((NOT (regional ? 'timezone'::text)) OR ((char_length((regional ->> 'timezone'::text)) >= 1) AND (char_length((regional ->> 'timezone'::text)) <= 64))) AND ((NOT (regional ? 'locale'::text)) OR ((regional ->> 'locale'::text) ~ '^[a-z]{2}$'::text))))
 constraint workspace_templates.workspace_templates_visibility_check CHECK ((visibility = ANY (ARRAY['builtin'::text, 'private'::text, 'shared'::text, 'public'::text])))
 constraint workspaces.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint workspaces.system_company_present CHECK ((company_id IS NOT NULL))
@@ -1143,6 +1144,7 @@ routine public.template_field_registry() -> jsonb | function | invoker | immutab
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
 routine public.template_publication_preview(p_workspace_id uuid, p_groups text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:923d1fcaa4a8
 routine public.template_publication_rules() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:bf33cd0c6a98
+routine public.template_regional_capture() -> trigger | function | definer | volatile | exec:service_role | body:b94152046d81
 routine public.template_snapshot(p_template workspace_templates, p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:2faa633b79c5
 routine public.template_supported_schema_versions() -> integer[] | function | invoker | immutable | exec:authenticated,service_role | body:53e229c024d6
 routine public.template_walk_payload(p_configuration jsonb, p_floor_plan jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:fb9a295f1ab3
@@ -1300,6 +1302,7 @@ trigger workspace_role_members.zz_system_columns_stamp CREATE TRIGGER zz_system_
 trigger workspace_roles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_roles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_template_applications.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_template_applications FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_template_grants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_template_grants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_templates.template_regional_capture CREATE TRIGGER template_regional_capture BEFORE INSERT OR UPDATE ON public.workspace_templates FOR EACH ROW EXECUTE FUNCTION template_regional_capture()
 trigger workspace_templates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_templates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspaces.stamp_accessory_supplements_since CREATE TRIGGER stamp_accessory_supplements_since BEFORE UPDATE OF feature_flags ON public.workspaces FOR EACH ROW EXECUTE FUNCTION stamp_accessory_supplements_since()
 trigger workspaces.workspaces_seed_plans CREATE TRIGGER workspaces_seed_plans AFTER INSERT ON public.workspaces FOR EACH ROW EXECUTE FUNCTION seed_default_plans()

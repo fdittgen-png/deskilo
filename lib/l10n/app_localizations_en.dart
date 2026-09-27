@@ -11146,6 +11146,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String templateRegionSuggested(String values) {
+    return 'This template was made for $values. Your choice is kept unless you use its values.';
+  }
+
+  @override
+  String get templateRegionUse => 'Use the template\'s region';
+
+  @override
   String get themeTitle => 'Theme';
 
   @override

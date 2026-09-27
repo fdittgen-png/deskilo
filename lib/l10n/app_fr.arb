@@ -7297,6 +7297,8 @@
   "librarySearchCapabilities": "Modèles configurés pour : {capabilities}",
   "librarySearchUnavailable": "Les réglages des modèles n'ont pas pu être vérifiés : aucun n'est donc affiché comme correspondant. Réessayez.",
   "librarySearchSuggestion": "Vouliez-vous dire « {word} » ?",
+  "templateRegionSuggested": "Ce modèle a été conçu pour {values}. Votre choix est conservé, sauf si vous utilisez ses valeurs.",
+  "templateRegionUse": "Utiliser la région du modèle",
   "themeTitle": "Thème",
   "themeSystem": "Par défaut du système",
   "themeLight": "Clair",

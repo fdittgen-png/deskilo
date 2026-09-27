@@ -52,6 +52,15 @@ DB_URL="$(env_of DB_URL)"
 [ -n "$API_URL" ] && [ -n "$ANON_KEY" ] && [ -n "$SERVICE_KEY" ] && [ -n "$DB_URL" ] \
   || fail "supabase status did not report the local stack"
 
+# The previous settlement pass stops its stubs and handler on EXIT, but a
+# killed process can hold its port for a moment; binding before it lets
+# go failed the next pass with "Address already in use". Wait for them.
+port_free() { python3 -c "import socket,sys; s=socket.socket(); s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1); s.bind(('127.0.0.1', int(sys.argv[1]))); s.close()" "$1" 2>/dev/null; }
+for port in 8000 54996 54997 54998; do
+  for _ in $(seq 1 30); do port_free "$port" && break; sleep 1; done
+  port_free "$port" || fail "port $port is still held by an earlier pass"
+done
+
 WORK="$(mktemp -d -t deskilo-pay-XXXXXX)"
 STUB_PORT=54998
 # Deno.serve() without options listens on 8000.

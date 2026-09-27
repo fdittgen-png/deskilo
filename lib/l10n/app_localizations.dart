@@ -19422,6 +19422,18 @@ abstract class AppLocalizations {
   /// **'Did you mean “{word}”?'**
   String librarySearchSuggestion(String word);
 
+  /// #1656 template_region
+  ///
+  /// In en, this message translates to:
+  /// **'This template was made for {values}. Your choice is kept unless you use its values.'**
+  String templateRegionSuggested(String values);
+
+  /// #1656 template_region
+  ///
+  /// In en, this message translates to:
+  /// **'Use the template\'s region'**
+  String get templateRegionUse;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:
