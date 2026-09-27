@@ -11516,6 +11516,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get compareExported => 'Classeur enregistré.';
 
   @override
+  String templateExportResults(String count) {
+    return 'Exporter ces résultats ($count)';
+  }
+
+  @override
+  String templateExportTooMany(String max) {
+    return 'Au plus $max modèles par classeur. Affinez d’abord la recherche.';
+  }
+
+  @override
   String get themeTitle => 'Thème';
 
   @override

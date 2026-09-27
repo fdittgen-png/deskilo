@@ -1,4 +1,6 @@
 {
   "compareExport": "Exporter vers Excel",
-  "compareExported": "Classeur enregistré."
+  "compareExported": "Classeur enregistré.",
+  "templateExportResults": "Exporter ces résultats ({count})",
+  "templateExportTooMany": "Au plus {max} modèles par classeur. Affinez d’abord la recherche."
 }

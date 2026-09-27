@@ -11486,6 +11486,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get compareExported => 'Libro guardado.';
 
   @override
+  String templateExportResults(String count) {
+    return 'Exportar estos resultados ($count)';
+  }
+
+  @override
+  String templateExportTooMany(String max) {
+    return 'Como máximo $max plantillas por libro. Acote primero la búsqueda.';
+  }
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

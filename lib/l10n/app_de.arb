@@ -7373,6 +7373,8 @@
   "libraryInvitationTextsRefused": "Ein Einladungstext nennt noch Ihren Arbeitsbereich oder seine Personen. Ersetzen Sie sie in den Einladungseinstellungen durch Platzhalter oder wählen Sie die Einladungstexte ab.",
   "compareExport": "Nach Excel exportieren",
   "compareExported": "Arbeitsmappe gespeichert.",
+  "templateExportResults": "Diese Ergebnisse exportieren ({count})",
+  "templateExportTooMany": "Höchstens {max} Vorlagen pro Arbeitsmappe. Grenzen Sie die Suche zuerst ein.",
   "themeTitle": "Design",
   "themeSystem": "Systemstandard",
   "themeLight": "Hell",

@@ -19830,6 +19830,18 @@ abstract class AppLocalizations {
   /// **'Workbook saved.'**
   String get compareExported;
 
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Export these results ({count})'**
+  String templateExportResults(String count);
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'At most {max} templates per workbook. Narrow the search first.'**
+  String templateExportTooMany(String max);
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:

@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/trace/guarded.dart';
+import '../../application/template_compare.dart';
+import '../../application/template_workbook.dart';
 import '../screens/template_compare_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -117,6 +121,36 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   /// #1660 — templates to compare, in the order they were added. Separate
   /// from the selection: adding one never chooses it.
   final List<WorkspaceTemplate> _shortlist = [];
+  bool _exporting = false;
+
+  // #1661 — what a search or a filter shows, as an offline workbook: at
+  // most [maxTemplates], refused rather than cut short when there are more.
+  Future<void> _exportResults(List<WorkspaceTemplate> shown) async {
+    final l10n = AppLocalizations.of(context);
+    if (shown.length > maxTemplates) {
+      AppSnack.error(
+        context,
+        l10n?.templateExportTooMany('$maxTemplates') ??
+            'At most $maxTemplates templates per workbook. Narrow the search first.',
+      );
+      return;
+    }
+    setState(() => _exporting = true);
+    String? path;
+    final ok = await runGuarded(
+      context,
+      domain: 'templates',
+      message: 'template workbook export failed',
+      action: () async => path = await ref
+          .read(templateWorkbookExportProvider)
+          .export([for (final t in shown) t.id], now: ref.read(clockProvider).now()),
+    );
+    if (!mounted) return;
+    setState(() => _exporting = false);
+    if (ok && path != null) {
+      AppSnack.success(context, l10n?.compareExported ?? 'Workbook saved.');
+    }
+  }
   static const maxShortlist = 4;
 
   void _toggleShortlist(WorkspaceTemplate t) {
@@ -209,6 +243,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
 
     // Flattened rows: a header per non-empty section, then its cards.
     final rows = <Object>[];
+    final shownAll = <WorkspaceTemplate>[];
     var anyTemplate = false;
     for (final section in widget.sections) {
       final shown = [
@@ -219,6 +254,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
       for (final t in shown) {
         rows.add((template: t, section: section));
       }
+      shownAll.addAll(shown);
       anyTemplate = anyTemplate || shown.isNotEmpty;
     }
     if (widget.offerEmpty) rows.add(const _EmptySpace());
@@ -262,6 +298,19 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
                 ? null
                 : () => Navigator.of(context).push(MaterialPageRoute<void>(
                       builder: (_) => TemplateCompareScreen(templates: List.of(_shortlist)))),
+          ),
+        ],
+        // Browsing the library only: a picker is for choosing one.
+        if (widget.onSelected == null &&
+            (_query.trim().isNotEmpty || _tags.isNotEmpty) &&
+            shownAll.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.sm),
+          OutlinedButton.icon(
+            key: const ValueKey('template-export-results'),
+            icon: const Icon(Icons.table_view_outlined),
+            label: Text(l10n?.templateExportResults('${shownAll.length}') ??
+                'Export these results (${shownAll.length})'),
+            onPressed: _exporting ? null : () => _exportResults(shownAll),
           ),
         ],
         const SizedBox(height: AppSpacing.sm),
