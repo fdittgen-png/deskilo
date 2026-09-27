@@ -11271,6 +11271,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get templateRegionUse => 'Utiliser la région du modèle';
 
   @override
+  String get libraryInvitationTexts => 'Textes d\'invitation';
+
+  @override
+  String libraryInvitationTextsHint(String tag) {
+    return 'Seulement des textes écrits avec des variables comme $tag ; un texte qui nomme votre espace ou ses membres est refusé.';
+  }
+
+  @override
+  String get libraryInvitationTextsRefused =>
+      'Un texte d\'invitation nomme encore votre espace ou ses membres. Remplacez-les par des variables dans les réglages d\'invitation, ou décochez les textes d\'invitation.';
+
+  @override
   String get themeTitle => 'Thème';
 
   @override

@@ -19440,6 +19440,24 @@ abstract class AppLocalizations {
   /// **'Use the template\'s region'**
   String get templateRegionUse;
 
+  /// #1656 template_wording
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation texts'**
+  String get libraryInvitationTexts;
+
+  /// #1656 template_wording
+  ///
+  /// In en, this message translates to:
+  /// **'Only texts written with placeholders such as {tag}; a text naming your space or its people is refused.'**
+  String libraryInvitationTextsHint(String tag);
+
+  /// #1656 template_wording
+  ///
+  /// In en, this message translates to:
+  /// **'An invitation text still names your space or its people. Replace them with placeholders in the invitation settings, or untick invitation texts.'**
+  String get libraryInvitationTextsRefused;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:

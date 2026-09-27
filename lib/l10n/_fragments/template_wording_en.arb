@@ -1,0 +1,19 @@
+{
+  "libraryInvitationTexts": "Invitation texts",
+  "@libraryInvitationTexts": {
+    "description": "#1656 template_wording"
+  },
+  "libraryInvitationTextsHint": "Only texts written with placeholders such as {tag}; a text naming your space or its people is refused.",
+  "@libraryInvitationTextsHint": {
+    "description": "#1656 template_wording",
+    "placeholders": {
+      "tag": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryInvitationTextsRefused": "An invitation text still names your space or its people. Replace them with placeholders in the invitation settings, or untick invitation texts.",
+  "@libraryInvitationTextsRefused": {
+    "description": "#1656 template_wording"
+  }
+}
