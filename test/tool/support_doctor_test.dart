@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// The real doctor CLI and its support boundary return truthful outcomes without echoing provider errors or argument/environment secrets.
 import 'dart:convert';
 import 'dart:io';
 

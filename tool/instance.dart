@@ -122,6 +122,7 @@ Future<int> run(List<String> argv) async {
           return 2;
         }
         if (args.flag('support-json')) {
+          final evidence = await loadSupportEvidence();
           return await runSupportDoctor(() async {
             final policies = File(instancePoliciesAssetPath);
             final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
@@ -130,7 +131,7 @@ Future<int> run(List<String> argv) async {
                 bundleMigrations: [for (final m in bundle.schema) m.name],
                 expectedPolicies: policies.existsSync()
                     ? parseInstancePolicies(policies.readAsStringSync()) : const {});
-          });
+          }, evidence: evidence);
         }
         // #1313 — the expected policies come from the file CI's replay
         // writes; without it drift simply is not judged.

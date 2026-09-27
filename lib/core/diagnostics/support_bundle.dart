@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import '../instance/schema_compatibility.dart';
+import 'support_evidence.dart';
 
 enum SupportMode { local, demo, operator }
 
@@ -27,6 +28,7 @@ class SupportBundle {
     required DateTime until,
     required SupportMode mode,
     required SupportPlatform platform,
+    SupportEvidence? evidence,
     String appVersion = '',
     int? schemaVersion,
     Map<SupportCheck, SupportStatus> checks = const {},
@@ -56,6 +58,7 @@ class SupportBundle {
         'from': from.toUtc().toIso8601String(),
         'until': until.toUtc().toIso8601String(),
       },
+      'capabilityEvidence': evidence?.toJson(),
       'clientAlias': 'client-1',
       'checks': {
         for (final check in SupportCheck.values)

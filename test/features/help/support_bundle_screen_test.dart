@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// Support preview bytes are saved only explicitly in the same context; cancellation, failures and switches cannot revive stale exports.
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'dart:ui' show SemanticsAction;
 
 import 'package:deskilo/core/app_info.dart';
@@ -18,10 +19,13 @@ import 'package:deskilo/features/help/providers/help_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
+import '../../helpers/test_clock.dart';
 
 class _Backend extends ActiveBackend {
   @override
@@ -47,6 +51,7 @@ Future<ProviderContainer> mount(
   bool auth = false,
   bool backend = false,
   Future<String>? version,
+  Future<String> Function()? versionLoader,
 }) async {
   final logger = TraceLogger()
     ..error('private-area', 'secret@example.org TOKEN');
@@ -54,9 +59,9 @@ Future<ProviderContainer> mount(
     overrides: [
       traceLoggerProvider.overrideWithValue(logger),
       appVersionProvider.overrideWith(
-        (_) => version ?? Future.value('1.2.3+4'),
+        (_) => versionLoader?.call() ?? version ?? Future.value('1.2.3+4'),
       ),
-      clockProvider.overrideWithValue(FixedClock(DateTime.now().toUtc())),
+      clockProvider.overrideWithValue(FixedClock(kTestNow)),
       // Fails if support accidentally starts a server probe.
       schemaCompatibilityProvider.overrideWith(
         (_) => throw StateError('network forbidden'),
@@ -262,6 +267,57 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('support-preview')), findsNothing);
     await tap(tester, 'support-cancel');
+    await tester.tap(find.byIcon(Icons.support_agent));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('support-preview')), findsNothing);
+  });
+
+  testWidgets(
+    'keyboard prepares; collection failure retries without stale data',
+    (tester) async {
+      final first = Completer<String>();
+      var attempts = 0;
+      final container = await mount(
+        tester,
+        versionLoader: () =>
+            ++attempts == 1 ? first.future : Future.value('1.2.3'),
+      );
+      final label = find.descendant(
+        of: find.byKey(const ValueKey('support-prepare')),
+        matching: find.byType(Text),
+      );
+      Focus.of(tester.element(label)).requestFocus();
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pump();
+      first.completeError(StateError('PRIVATE-ERROR'));
+      await tester.pumpAndSettle();
+      expect(
+        find.text('Could not prepare support details. Try again.'),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('support-preview')), findsNothing);
+      container.invalidate(appVersionProvider);
+      await tap(tester, 'support-prepare');
+      expect(preview(tester), isNot(contains('PRIVATE')));
+    },
+  );
+
+  testWidgets('Cancel during collection never restores the pending preview', (
+    tester,
+  ) async {
+    final version = Completer<String>();
+    await mount(tester, help: true, version: version.future);
+    await tester.tap(find.byIcon(Icons.support_agent));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('support-prepare')));
+    await tester.pump();
+    await tester.ensureVisible(find.byKey(const ValueKey('support-cancel')));
+    await tester.tap(find.byKey(const ValueKey('support-cancel')));
+    await tester.pumpAndSettle();
+    version.complete('1.2.3');
+    await tester.pumpAndSettle();
+    expect(find.byType(SupportBundleScreen), findsNothing);
     await tester.tap(find.byIcon(Icons.support_agent));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('support-preview')), findsNothing);

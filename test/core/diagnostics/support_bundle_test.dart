@@ -30,6 +30,7 @@ void main() {
       'requiredSchemaVersion',
       'schemaVersion',
       'window',
+      'capabilityEvidence',
       'clientAlias',
       'checks',
       'localEventCounts',
