@@ -37,6 +37,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get a11yRecentre => 'Fit the plan to the screen';
 
   @override
+  String get aboutAttribution =>
+      'Based on DesKilo by Florian DITTGEN — https://github.com/fdittgen-png/deskilo';
+
+  @override
+  String get aboutAttributionNote =>
+      'This credit must stay visible in every copy and modified version.';
+
+  @override
   String accessRuleManagedProfile(String people) {
     return 'While this profile was managed for you: $people. Every time one of them opened or changed it is on the record below.';
   }

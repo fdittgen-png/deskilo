@@ -43,8 +43,12 @@ import 'package:flutter_test/flutter_test.dart';
 /// that commit and compared 497 entries identical — which is the whole
 /// point of a verified build. A recipe that names the wrong commit
 /// cannot reproduce anything.
-const _frozenBytes = 9974;
-const _frozenHash = '0xfd476c0e585ea1fc';
+///
+/// PIN MOVED 2026-09-27, on the owner's instruction: the licence is
+/// AGPL-3.0-or-later (ADR 0031) and the recipe still said 0BSD. The
+/// `License:` field is the only change.
+const _frozenBytes = 9987;
+const _frozenHash = '0x2623c815b3385e98';
 
 /// FNV-1a, 64-bit. Hand-rolled because `crypto` is not a direct
 /// dependency of this package and adding one to detect an edited YAML

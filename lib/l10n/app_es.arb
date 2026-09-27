@@ -9,6 +9,8 @@
   "a11yZoomIn": "Acercar",
   "a11yZoomOut": "Alejar",
   "a11yRecentre": "Ajustar el plano a la pantalla",
+  "aboutAttribution": "Based on DesKilo by Florian DITTGEN — https://github.com/fdittgen-png/deskilo",
+  "aboutAttributionNote": "Esta mención debe seguir visible en cada copia y cada versión modificada.",
   "accessRuleManagedProfile": "Mientras este perfil se gestionó para usted: {people}. Cada consulta o cambio por alguno de ellos consta abajo.",
   "@accessRuleManagedProfile": {
     "description": "#914 access rule: profile",

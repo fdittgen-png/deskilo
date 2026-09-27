@@ -72,6 +72,17 @@ List<Widget> aboutSettingsTiles(
             ),
             onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_repoUrl)),
           ),
+          // LICENSE-EXCEPTIONS.md §5 — the attribution every copy must
+          // keep visible (AGPL §7(b)); legal wording, identical in every
+          // language.
+          ListTile(
+            key: const ValueKey('about-attribution'),
+            leading: const Icon(Icons.copyright),
+            title: Text(l10n?.aboutAttribution ??
+                'Based on DesKilo by Florian DITTGEN — https://github.com/fdittgen-png/deskilo'),
+            subtitle: Text(l10n?.aboutAttributionNote ??
+                'This credit must stay visible in every copy and modified version.'),
+          ),
           ListTile(
             key: const ValueKey('about-privacy'),
             leading: const Icon(Icons.shield_outlined),

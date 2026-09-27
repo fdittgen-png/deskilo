@@ -849,7 +849,7 @@ Dispatch (`ref`, `deploy`) and PRs touching `.github/workflows/web.yml`, `web/**
 | Visibility | **Public** |
 | Created | 2026-07-07 |
 | Default branch | `master` |
-| License (detected) | BSD Zero Clause License (`0bsd`) |
+| License (detected) | GNU Affero General Public License v3.0 (`agpl-3.0`) — ADR 0031, with an attribution term (LICENSE-EXCEPTIONS.md §5) |
 | Issues | enabled |
 | Wiki | enabled (sourced from `docs/wiki/`) |
 | Homepage URL | *(not set)* |
@@ -1061,7 +1061,7 @@ The invoicing/e-invoicing chain (0060–0073, ADR 0010) still has **no section o
 
 §6 opened *"New migration (not yet written — ship with the first live PSP)"* while the document's own status line said implemented. It now states that migration 0045 shipped (extended by 0047/0048) and flags the one deviation from the draft: idempotency is keyed on `(provider, order_id)`, not the capture id, so a provider reporting settlement before a capture id exists still settles exactly once. §8 is retitled as historical.
 
-### G. SPDX headers not fully migrated to 0BSD
+### G. SPDX headers not fully migrated to 0BSD — **superseded** by ADR 0031 (AGPL-3.0-or-later; `spdx_headers_test` now enforces it)
 
 ADR 0009 says *"all 350+ SPDX headers"* become `0BSD`. 470 files under `lib/ test/ tool/ tools/ scripts/ supabase/` now carry `0BSD`, but **ten files still declare MIT**:
 
