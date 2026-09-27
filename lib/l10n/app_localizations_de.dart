@@ -11279,6 +11279,73 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get compareTitle => 'Vorlagen vergleichen';
+
+  @override
+  String get compareUnavailable =>
+      'Diese Vorlagen konnten zum Vergleich nicht gelesen werden. Es wird nichts behauptet.';
+
+  @override
+  String get compareDifferences => 'Unterschiede';
+
+  @override
+  String get compareAll => 'Alle Einstellungen';
+
+  @override
+  String get compareSearch => 'Einstellung suchen';
+
+  @override
+  String compareCount(String shown, String total) {
+    return '$shown von $total Einstellungen';
+  }
+
+  @override
+  String get compareNothing => 'Keine Einstellung unterscheidet sich.';
+
+  @override
+  String get compareCurrencies => 'Verschiedene Währungen: nicht vergleichbar';
+
+  @override
+  String get compareYes => 'Ja';
+
+  @override
+  String get compareNo => 'Nein';
+
+  @override
+  String get compareInherits => 'Behält den des Arbeitsbereichs';
+
+  @override
+  String get compareDefault => 'Standard';
+
+  @override
+  String get compareLocal => 'Vor Ort festzulegen';
+
+  @override
+  String get compareMissing => 'Nicht in dieser Vorlage';
+
+  @override
+  String get compareUnknown => 'Unbekannt';
+
+  @override
+  String get compareNotCarried => 'Nicht übertragen';
+
+  @override
+  String compareLimit(String count) {
+    return 'Bis zu $count Vorlagen können verglichen werden. Entfernen Sie zuerst eine.';
+  }
+
+  @override
+  String compareOpen(String count) {
+    return 'Vergleichen ($count)';
+  }
+
+  @override
+  String get compareAdd => 'Zum Vergleich hinzufügen';
+
+  @override
+  String get compareRemove => 'Aus dem Vergleich entfernen';
+
+  @override
   String get templateChangedSinceReview =>
       'Diese Vorlage hat sich seit Ihrer Prüfung geändert. Es wurde nichts übernommen; öffnen Sie sie erneut, um die neue Version zu prüfen.';
 

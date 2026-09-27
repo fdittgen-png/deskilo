@@ -1,0 +1,22 @@
+{
+  "compareTitle": "Confronta i modelli",
+  "compareUnavailable": "Non è stato possibile leggere questi modelli per confrontarli. Non si afferma nulla.",
+  "compareDifferences": "Differenze",
+  "compareAll": "Tutte le impostazioni",
+  "compareSearch": "Cerca un'impostazione",
+  "compareCount": "{shown} di {total} impostazioni",
+  "compareNothing": "Nessuna impostazione è diversa.",
+  "compareCurrencies": "Valute diverse: non confrontabile",
+  "compareYes": "Sì",
+  "compareNo": "No",
+  "compareInherits": "Mantiene quello dello spazio",
+  "compareDefault": "Predefinito",
+  "compareLocal": "Da impostare localmente",
+  "compareMissing": "Non in questo modello",
+  "compareUnknown": "Sconosciuto",
+  "compareNotCarried": "Non trasportato",
+  "compareLimit": "Si possono confrontare fino a {count} modelli. Rimuovine prima uno.",
+  "compareOpen": "Confronta ({count})",
+  "compareAdd": "Aggiungi al confronto",
+  "compareRemove": "Rimuovi dal confronto"
+}

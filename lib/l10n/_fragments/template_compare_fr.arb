@@ -1,0 +1,22 @@
+{
+  "compareTitle": "Comparer les modèles",
+  "compareUnavailable": "Ces modèles n'ont pas pu être lus pour les comparer. Rien n'est affirmé.",
+  "compareDifferences": "Différences",
+  "compareAll": "Tous les réglages",
+  "compareSearch": "Chercher un réglage",
+  "compareCount": "{shown} sur {total} réglages",
+  "compareNothing": "Aucun réglage ne diffère.",
+  "compareCurrencies": "Devises différentes : non comparable",
+  "compareYes": "Oui",
+  "compareNo": "Non",
+  "compareInherits": "Garde celui de l'espace",
+  "compareDefault": "Par défaut",
+  "compareLocal": "À définir localement",
+  "compareMissing": "Absent de ce modèle",
+  "compareUnknown": "Inconnu",
+  "compareNotCarried": "Non transporté",
+  "compareLimit": "Jusqu'à {count} modèles peuvent être comparés. Retirez-en un d'abord.",
+  "compareOpen": "Comparer ({count})",
+  "compareAdd": "Ajouter à la comparaison",
+  "compareRemove": "Retirer de la comparaison"
+}

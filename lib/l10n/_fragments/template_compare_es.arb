@@ -1,0 +1,22 @@
+{
+  "compareTitle": "Comparar plantillas",
+  "compareUnavailable": "No se pudieron leer estas plantillas para compararlas. No se afirma nada.",
+  "compareDifferences": "Diferencias",
+  "compareAll": "Todos los ajustes",
+  "compareSearch": "Buscar un ajuste",
+  "compareCount": "{shown} de {total} ajustes",
+  "compareNothing": "Ningún ajuste difiere.",
+  "compareCurrencies": "Monedas distintas: no comparable",
+  "compareYes": "Sí",
+  "compareNo": "No",
+  "compareInherits": "Conserva el del espacio",
+  "compareDefault": "Predeterminado",
+  "compareLocal": "A definir localmente",
+  "compareMissing": "No está en esta plantilla",
+  "compareUnknown": "Desconocido",
+  "compareNotCarried": "No se transporta",
+  "compareLimit": "Se pueden comparar hasta {count} plantillas. Quite una primero.",
+  "compareOpen": "Comparar ({count})",
+  "compareAdd": "Añadir a la comparación",
+  "compareRemove": "Quitar de la comparación"
+}

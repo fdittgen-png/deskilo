@@ -11183,6 +11183,73 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get compareTitle => 'Compare templates';
+
+  @override
+  String get compareUnavailable =>
+      'These templates could not be read to compare them. Nothing is claimed either way.';
+
+  @override
+  String get compareDifferences => 'Differences';
+
+  @override
+  String get compareAll => 'All settings';
+
+  @override
+  String get compareSearch => 'Find a setting';
+
+  @override
+  String compareCount(String shown, String total) {
+    return '$shown of $total settings';
+  }
+
+  @override
+  String get compareNothing => 'No setting differs.';
+
+  @override
+  String get compareCurrencies => 'Different currencies: not comparable';
+
+  @override
+  String get compareYes => 'Yes';
+
+  @override
+  String get compareNo => 'No';
+
+  @override
+  String get compareInherits => 'Keeps the space\'s own';
+
+  @override
+  String get compareDefault => 'Default';
+
+  @override
+  String get compareLocal => 'Set locally';
+
+  @override
+  String get compareMissing => 'Not in this template';
+
+  @override
+  String get compareUnknown => 'Unknown';
+
+  @override
+  String get compareNotCarried => 'Not carried';
+
+  @override
+  String compareLimit(String count) {
+    return 'Up to $count templates can be compared. Remove one first.';
+  }
+
+  @override
+  String compareOpen(String count) {
+    return 'Compare ($count)';
+  }
+
+  @override
+  String get compareAdd => 'Add to comparison';
+
+  @override
+  String get compareRemove => 'Remove from comparison';
+
+  @override
   String get templateChangedSinceReview =>
       'This template changed since you reviewed it. Nothing was applied; open it again to review the new version.';
 

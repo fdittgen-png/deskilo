@@ -19488,6 +19488,126 @@ abstract class AppLocalizations {
   /// **'Did you mean “{word}”?'**
   String librarySearchSuggestion(String word);
 
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Compare templates'**
+  String get compareTitle;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'These templates could not be read to compare them. Nothing is claimed either way.'**
+  String get compareUnavailable;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Differences'**
+  String get compareDifferences;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'All settings'**
+  String get compareAll;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Find a setting'**
+  String get compareSearch;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'{shown} of {total} settings'**
+  String compareCount(String shown, String total);
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'No setting differs.'**
+  String get compareNothing;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Different currencies: not comparable'**
+  String get compareCurrencies;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get compareYes;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get compareNo;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Keeps the space\'s own'**
+  String get compareInherits;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get compareDefault;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Set locally'**
+  String get compareLocal;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Not in this template'**
+  String get compareMissing;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get compareUnknown;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Not carried'**
+  String get compareNotCarried;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {count} templates can be compared. Remove one first.'**
+  String compareLimit(String count);
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Compare ({count})'**
+  String compareOpen(String count);
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Add to comparison'**
+  String get compareAdd;
+
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from comparison'**
+  String get compareRemove;
+
   /// #1658 template_exact_apply
   ///
   /// In en, this message translates to:

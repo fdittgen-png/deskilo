@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../../core/ui/app_snack.dart';
+import '../screens/template_compare_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/template_search.dart';
@@ -111,6 +113,25 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   Timer? _debounce;
   String _query = '';
   final Set<String> _tags = {};
+
+  /// #1660 — templates to compare, in the order they were added. Separate
+  /// from the selection: adding one never chooses it.
+  final List<WorkspaceTemplate> _shortlist = [];
+  static const maxShortlist = 4;
+
+  void _toggleShortlist(WorkspaceTemplate t) {
+    final l10n = AppLocalizations.of(context);
+    setState(() {
+      if (_shortlist.any((s) => s.id == t.id)) {
+        _shortlist.removeWhere((s) => s.id == t.id);
+      } else if (_shortlist.length >= maxShortlist) {
+        AppSnack.info(context, l10n?.compareLimit('$maxShortlist') ??
+            'Up to $maxShortlist templates can be compared. Remove one first.');
+      } else {
+        _shortlist.add(t);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -231,6 +252,18 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
             ]),
           ),
         ],
+        if (_shortlist.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.sm),
+          FilledButton.tonalIcon(
+            key: const ValueKey('template-compare'),
+            icon: const Icon(Icons.compare_arrows),
+            label: Text(l10n?.compareOpen('${_shortlist.length}') ?? 'Compare (${_shortlist.length})'),
+            onPressed: _shortlist.length < 2
+                ? null
+                : () => Navigator.of(context).push(MaterialPageRoute<void>(
+                      builder: (_) => TemplateCompareScreen(templates: List.of(_shortlist)))),
+          ),
+        ],
         const SizedBox(height: AppSpacing.sm),
         Expanded(
           child: !anyTemplate && !widget.offerEmpty
@@ -264,6 +297,8 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
                             ? null
                             : () => widget.onSelected!(t.id),
                         trailing: s.trailingFor?.call(t),
+                        shortlisted: _shortlist.any((x) => x.id == t.id),
+                        onShortlist: () => _toggleShortlist(t),
                       ),
                     _ => _EmptySpaceCard(
                         selected: widget.selectedId == null,
@@ -289,9 +324,15 @@ class TemplateCard extends StatelessWidget {
     this.selected,
     this.onTap,
     this.trailing,
+    this.shortlisted,
+    this.onShortlist,
   });
 
   final WorkspaceTemplate template;
+
+  /// #1660 — whether it is on the compare shortlist; null hides the toggle.
+  final bool? shortlisted;
+  final VoidCallback? onShortlist;
 
   /// Null outside selection mode.
   final bool? selected;
@@ -342,7 +383,21 @@ class TemplateCard extends StatelessWidget {
         isThreeLine: lines.where((l) => l.isNotEmpty).length > 2,
         selected: isSelected,
         onTap: onTap,
-        trailing: trailing,
+        trailing: shortlisted == null
+            ? trailing
+            : Row(mainAxisSize: MainAxisSize.min, children: [
+                IconButton(
+                  key: ValueKey('template-shortlist-${template.key}'),
+                  tooltip: shortlisted!
+                      ? (l10n?.compareRemove ?? 'Remove from comparison')
+                      : (l10n?.compareAdd ?? 'Add to comparison'),
+                  isSelected: shortlisted,
+                  icon: const Icon(Icons.add_chart_outlined),
+                  selectedIcon: const Icon(Icons.bar_chart),
+                  onPressed: onShortlist,
+                ),
+                ?trailing,
+              ]),
       ),
     );
   }

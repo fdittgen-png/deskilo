@@ -1,0 +1,22 @@
+{
+  "compareTitle": "Vorlagen vergleichen",
+  "compareUnavailable": "Diese Vorlagen konnten zum Vergleich nicht gelesen werden. Es wird nichts behauptet.",
+  "compareDifferences": "Unterschiede",
+  "compareAll": "Alle Einstellungen",
+  "compareSearch": "Einstellung suchen",
+  "compareCount": "{shown} von {total} Einstellungen",
+  "compareNothing": "Keine Einstellung unterscheidet sich.",
+  "compareCurrencies": "Verschiedene Währungen: nicht vergleichbar",
+  "compareYes": "Ja",
+  "compareNo": "Nein",
+  "compareInherits": "Behält den des Arbeitsbereichs",
+  "compareDefault": "Standard",
+  "compareLocal": "Vor Ort festzulegen",
+  "compareMissing": "Nicht in dieser Vorlage",
+  "compareUnknown": "Unbekannt",
+  "compareNotCarried": "Nicht übertragen",
+  "compareLimit": "Bis zu {count} Vorlagen können verglichen werden. Entfernen Sie zuerst eine.",
+  "compareOpen": "Vergleichen ({count})",
+  "compareAdd": "Zum Vergleich hinzufügen",
+  "compareRemove": "Aus dem Vergleich entfernen"
+}
