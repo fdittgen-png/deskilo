@@ -129,6 +129,7 @@ def run(args):
             timings.finish(phase)
             source.close()
             phase = 'target_start'
+            target.reserved_ports.update(source.ports)
             target.create()
             target.start()
             sensitive.extend(target.credentials.get(key, '') for key in SECRET_KEYS)

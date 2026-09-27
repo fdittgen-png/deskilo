@@ -175,6 +175,15 @@ void main() {
               anyOf(401, 403),
               reason: 'source_session_not_target_authority',
             );
+            final staleData = await http.get(
+              url.resolve('/rest/v1/reservations?select=id&limit=1'),
+              headers: {
+                'apikey': fixture['anon_key'] as String,
+                'Authorization': 'Bearer ${user['source_token']}',
+              },
+            );
+            expect(staleData.statusCode, anyOf(401, 403),
+                reason: 'source_session_not_target_data_authority');
           }
         } finally {
           await client.dispose();

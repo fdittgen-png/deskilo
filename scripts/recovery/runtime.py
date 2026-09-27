@@ -69,6 +69,7 @@ class Stack:
         self.created = False
         self.credentials = {}
         self.ports = []
+        self.reserved_ports = set()
 
     def create(self):
         self.path.mkdir(mode=0o700)  # exclusive; cleanup owns only this directory
@@ -80,9 +81,12 @@ class Stack:
         shutil.copytree(self.repo / 'supabase/tests', root / 'tests')
         holders = []
         try:
-            for _ in range(3):
+            while len(self.ports) < 3:
                 sock = socket.socket()
                 sock.bind(('127.0.0.1', 0))
+                if sock.getsockname()[1] in self.reserved_ports:
+                    sock.close()
+                    continue
                 holders.append(sock)
                 self.ports.append(sock.getsockname()[1])
         finally:
