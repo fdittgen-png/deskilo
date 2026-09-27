@@ -29,6 +29,14 @@ Future<List<LocalSlot>> workspaceLocalGaps(Ref ref, String workspaceId) async {
   ]..sort((a, b) => (b.required ? 1 : 0) - (a.required ? 1 : 0));
 }
 
+/// #1658 — every local slot the space's switched-on features need,
+/// filled or not: what a space applying its template will need too.
+@riverpod
+Future<List<LocalSlot>> workspaceLocalSlots(Ref ref, String workspaceId) async => [
+  for (final s in await ref.watch(localSetupRepositoryProvider).readiness(workspaceId))
+    if (s.kind != LocalSlotKind.unknown) s,
+];
+
 /// #1636 — every setup section of the space, in the server's order.
 @riverpod
 Future<List<ReadinessSection>> workspaceReadiness(Ref ref, String workspaceId) =>

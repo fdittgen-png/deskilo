@@ -19956,6 +19956,24 @@ abstract class AppLocalizations {
   /// **'Make readable'**
   String get templateWidenConfirm;
 
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'Full configuration profile'**
+  String get templateProfileFull;
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'Selected groups: {chosen} of {total}'**
+  String templateProfileSelected(String chosen, String total);
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'A space that applies it will set these up itself:'**
+  String get templatePublishLocalNeeds;
+
   /// #1656 template_wording
   ///
   /// In en, this message translates to:

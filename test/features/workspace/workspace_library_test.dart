@@ -13,6 +13,8 @@ import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/features/workspace/domain/local_setup.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +23,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
 
-Future<FakeWorkspaceRepository> _pumpLibrary(WidgetTester tester) async {
+Future<FakeWorkspaceRepository> _pumpLibrary(WidgetTester tester,
+    {FakeLocalSetupRepository? localSetup}) async {
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
@@ -39,7 +42,7 @@ Future<FakeWorkspaceRepository> _pumpLibrary(WidgetTester tester) async {
     ],
   ));
   await tester.pumpWidget(ProviderScope(
-    overrides: standardTestOverrides(workspace: workspace),
+    overrides: standardTestOverrides(workspace: workspace, localSetup: localSetup),
     child: const DeskiloApp(),
   ));
   await tester.pumpAndSettle();
@@ -129,6 +132,29 @@ void main() {
       expect(find.byKey(const ValueKey('template-widen')), findsNothing);
       expect(visibility(w), TemplateVisibility.private);
     });
+  });
+
+  testWidgets('#1658 the save sheet names its profile and what an applying '
+      'space will set up itself', (tester) async {
+    await _pumpLibrary(tester,
+        localSetup: FakeLocalSetupRepository(missing: const [
+          LocalSlot(kind: LocalSlotKind.legalIdentity, required: true,
+              route: '/settings', filled: true),
+          LocalSlot(kind: LocalSlotKind.paymentDetails, required: false,
+              route: '/settings', filled: false),
+        ]));
+    await tester.tap(find.byKey(const ValueKey('library-save')));
+    await tester.pumpAndSettle();
+    expect(find.text('Full configuration profile'), findsOneWidget);
+    final needs = find.byKey(const ValueKey('save-template-local-needs'));
+    await tester.ensureVisible(needs);
+    expect(find.textContaining('Your legal identity'), findsOneWidget,
+        reason: 'a filled slot is still one an applying space needs');
+    final box = find.byKey(const ValueKey('save-template-group-space'));
+    await tester.ensureVisible(box);
+    await tester.tap(box);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Selected groups:'), findsOneWidget);
   });
 
   testWidgets('#1658 a retry after a lost answer publishes once, not twice',
