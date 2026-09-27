@@ -19884,6 +19884,30 @@ abstract class AppLocalizations {
   /// **'Clear the search'**
   String get templateClearFilters;
 
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'Make this template readable by: {audience}?'**
+  String templateWidenTitle(String audience);
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'{count} settings become readable, exactly as the template holds them now.'**
+  String templateWidenCount(String count);
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'{count} kinds of value never leave with it (bank details, sites, addresses…).'**
+  String templateWidenExcluded(String count);
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'Make readable'**
+  String get templateWidenConfirm;
+
   /// #1656 template_wording
   ///
   /// In en, this message translates to:

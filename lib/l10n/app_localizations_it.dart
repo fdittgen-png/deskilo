@@ -11531,6 +11531,24 @@ class AppLocalizationsIt extends AppLocalizations {
   String get templateClearFilters => 'Cancella la ricerca';
 
   @override
+  String templateWidenTitle(String audience) {
+    return 'Rendere questo modello leggibile da: $audience?';
+  }
+
+  @override
+  String templateWidenCount(String count) {
+    return '$count impostazioni diventano leggibili, esattamente come il modello le contiene ora.';
+  }
+
+  @override
+  String templateWidenExcluded(String count) {
+    return '$count tipi di valori non escono mai con esso (coordinate bancarie, sedi, indirizzi…).';
+  }
+
+  @override
+  String get templateWidenConfirm => 'Rendi leggibile';
+
+  @override
   String get libraryInvitationTexts => 'Testi di invito';
 
   @override

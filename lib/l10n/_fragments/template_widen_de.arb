@@ -1,0 +1,6 @@
+{
+  "templateWidenTitle": "Diese Vorlage lesbar machen für: {audience}?",
+  "templateWidenCount": "{count} Einstellungen werden lesbar, genau so, wie die Vorlage sie jetzt enthält.",
+  "templateWidenExcluded": "{count} Arten von Werten verlassen den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).",
+  "templateWidenConfirm": "Lesbar machen"
+}
