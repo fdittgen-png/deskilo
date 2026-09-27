@@ -10,6 +10,9 @@
 // currency keeps its own totals: two currencies are never added into
 // one number.
 import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:archive/archive.dart';
 
 import 'package:crypto/crypto.dart';
 
@@ -315,4 +318,20 @@ String accountantSourceDigest(
       ].join('|'),
   ]..sort();
   return sha256.convert(utf8.encode(rows.join('\n'))).toString();
+}
+
+/// #1640 — the file and its report as ONE archive, so they cannot be
+/// separated on the way to the accountant: [csvName] and `report.json`,
+/// whose `file.sha256` names the CSV's bytes exactly.
+Uint8List accountantHandoffArchive({
+  required String csv,
+  required String csvName,
+  required AccountantHandoff report,
+}) {
+  final archive = Archive();
+  void add(String path, List<int> bytes) =>
+      archive.addFile(ArchiveFile(path, bytes.length, bytes));
+  add(csvName, utf8.encode(csv));
+  add('report.json', utf8.encode(report.toPrettyJson()));
+  return Uint8List.fromList(ZipEncoder().encode(archive));
 }
