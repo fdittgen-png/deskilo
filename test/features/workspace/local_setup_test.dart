@@ -72,6 +72,11 @@ void main() {
       reason: 'only in-app routes are followed',
     );
     expect(slots[1].filled, isNull);
+    final named = LocalSlot.listFromJson([
+      {'slot': 'named_validators', 'event_type': 'expense', 'route': '/validation'},
+    ]).single;
+    expect(named.kind, LocalSlotKind.namedValidators);
+    expect(named.eventType, 'expense');
   });
 
   testWidgets('creation names what the template will need', (tester) async {

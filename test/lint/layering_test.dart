@@ -284,7 +284,7 @@ const Map<String, int> _pairBudget = {
   // where they are computed is the whole point — a second copy of
   // "which events are pending" is the coupling worth refusing, not
   // three imports in one provider file.
-  'workspace -> events': 13,
+  'workspace -> events': 15, // 2026-09-27 #1657 13→15: widgets/local_setup_views.dart names a validation policy by its event-type label (the domain enum and its label), for the named-validators slot and the apply sheet's note
   'workspace -> members': 4,
   'workspace -> money': 35,
   'workspace -> plan': 25,

@@ -11,6 +11,7 @@ enum LocalSlotKind {
   paymentProvider,
   einvoicePlatform,
   site,
+  namedValidators,
   unknown,
 }
 
@@ -20,7 +21,11 @@ class LocalSlot {
     required this.required,
     required this.route,
     this.filled,
+    this.eventType,
   });
+
+  /// #1657 — for [LocalSlotKind.namedValidators]: which policy.
+  final String? eventType;
 
   final LocalSlotKind kind;
 
@@ -43,6 +48,7 @@ class LocalSlot {
             'payment_provider' => LocalSlotKind.paymentProvider,
             'einvoice_platform' => LocalSlotKind.einvoicePlatform,
             'site' => LocalSlotKind.site,
+            'named_validators' => LocalSlotKind.namedValidators,
             _ => LocalSlotKind.unknown,
           },
           required: s['required'] != false,
@@ -50,6 +56,7 @@ class LocalSlot {
               ? s['route'] as String
               : '/settings',
           filled: s['filled'] is bool ? s['filled'] as bool : null,
+          eventType: s['event_type'] is String ? s['event_type'] as String : null,
         ),
   ];
 }

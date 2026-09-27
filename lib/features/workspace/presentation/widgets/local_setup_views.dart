@@ -4,11 +4,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../events/domain/workspace_event.dart';
+import '../../../events/presentation/event_labels.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../domain/local_setup.dart';
 
-String localSlotLabel(AppLocalizations? l10n, LocalSlotKind kind) =>
+/// #1657 — a validation event type, as its label, from its stored word.
+String eventTypeWord(AppLocalizations? l10n, String dbName) =>
+    eventTypeLabel(l10n, EventType.fromDb(dbName));
+
+String localSlotLabel(AppLocalizations? l10n, LocalSlotKind kind,
+        [String? eventType]) =>
     switch (kind) {
       LocalSlotKind.legalIdentity =>
         l10n?.localSlotLegalIdentity ??
@@ -20,6 +27,9 @@ String localSlotLabel(AppLocalizations? l10n, LocalSlotKind kind) =>
       LocalSlotKind.einvoicePlatform =>
         l10n?.localSlotEinvoicePlatform ?? 'Your e-invoicing platform account',
       LocalSlotKind.site => l10n?.localSlotSite ?? 'At least one site',
+      LocalSlotKind.namedValidators => l10n?.localSlotNamedValidators(
+              eventTypeLabel(l10n, EventType.fromDb(eventType ?? ''))) ??
+          'Who validates ${eventType ?? ''}',
       LocalSlotKind.unknown => '',
     };
 
@@ -52,11 +62,11 @@ class TemplateLocalNeedsView extends ConsumerWidget {
         ),
         for (final s in shown)
           ListTile(
-            key: ValueKey('template-local-need-${s.kind.name}'),
+            key: ValueKey('template-local-need-${s.kind.name}${s.eventType ?? ''}'),
             dense: true,
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.edit_note_outlined),
-            title: Text(localSlotLabel(l10n, s.kind)),
+            title: Text(localSlotLabel(l10n, s.kind, s.eventType)),
             subtitle: s.required
                 ? null
                 : Text(l10n?.localSlotRecommended ?? 'Recommended'),
@@ -98,7 +108,7 @@ class LocalReadinessCard extends ConsumerWidget {
                 leading: Icon(
                   s.required ? Icons.error_outline : Icons.info_outline,
                 ),
-                title: Text(localSlotLabel(l10n, s.kind)),
+                title: Text(localSlotLabel(l10n, s.kind, s.eventType)),
                 subtitle: s.required
                     ? null
                     : Text(l10n?.localSlotRecommended ?? 'Recommended'),

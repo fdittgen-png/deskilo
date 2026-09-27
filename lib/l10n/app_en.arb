@@ -12105,6 +12105,24 @@
   "@templateRegionUse": {
     "description": "#1656 template_region"
   },
+  "templateValidatorsToChoose": "Choose who validates {types} in the validation settings; those rules were left as they were.",
+  "@templateValidatorsToChoose": {
+    "description": "#1657 template_validators",
+    "placeholders": {
+      "types": {
+        "type": "String"
+      }
+    }
+  },
+  "localSlotNamedValidators": "Who validates: {type}",
+  "@localSlotNamedValidators": {
+    "description": "#1657 template_validators",
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "libraryInvitationTexts": "Invitation texts",
   "@libraryInvitationTexts": {
     "description": "#1656 template_wording"

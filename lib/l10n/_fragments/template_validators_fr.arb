@@ -1,0 +1,4 @@
+{
+  "templateValidatorsToChoose": "Choisissez qui valide {types} dans les réglages de validation ; ces règles n'ont pas été modifiées.",
+  "localSlotNamedValidators": "Qui valide : {type}"
+}

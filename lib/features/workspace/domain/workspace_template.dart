@@ -189,3 +189,21 @@ enum TemplatePriceOutcome {
         _ => TemplatePriceOutcome.none,
       };
 }
+
+/// #1656/#1657 — what applying a template reported: its prices, and the
+/// validation policies left for local choice of named validators (0281).
+class TemplateApplyResult {
+  const TemplateApplyResult({this.prices = TemplatePriceOutcome.none, this.validationBlocked = const []});
+  final TemplatePriceOutcome prices;
+  final List<String> validationBlocked;
+
+  factory TemplateApplyResult.fromResult(Object? result) => TemplateApplyResult(
+        prices: TemplatePriceOutcome.fromResult(result),
+        validationBlocked: [
+          for (final t in (result is Map && result['validation_blocked'] is List
+              ? result['validation_blocked'] as List
+              : const []))
+            '$t',
+        ],
+      );
+}

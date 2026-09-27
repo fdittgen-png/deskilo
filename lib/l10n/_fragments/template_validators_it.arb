@@ -1,0 +1,4 @@
+{
+  "templateValidatorsToChoose": "Scegli chi convalida {types} nelle impostazioni di convalida; quelle regole sono rimaste com'erano.",
+  "localSlotNamedValidators": "Chi convalida: {type}"
+}

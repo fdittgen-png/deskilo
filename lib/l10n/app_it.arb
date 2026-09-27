@@ -7311,6 +7311,8 @@
   "templatePricesOtherCurrency": "I prezzi del modello sono in un'altra valuta, quindi i prezzi qui non sono stati modificati.",
   "templateRegionSuggested": "Questo modello è stato creato per {values}. La tua scelta resta, a meno che tu non usi i suoi valori.",
   "templateRegionUse": "Usa la regione del modello",
+  "templateValidatorsToChoose": "Scegli chi convalida {types} nelle impostazioni di convalida; quelle regole sono rimaste com'erano.",
+  "localSlotNamedValidators": "Chi convalida: {type}",
   "libraryInvitationTexts": "Testi di invito",
   "libraryInvitationTextsHint": "Solo testi scritti con segnaposto come {tag}; un testo che nomina il tuo spazio o le sue persone viene rifiutato.",
   "libraryInvitationTextsRefused": "Un testo di invito nomina ancora il tuo spazio o le sue persone. Sostituiscili con segnaposto nelle impostazioni di invito, oppure deseleziona i testi di invito.",
