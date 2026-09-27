@@ -279,3 +279,40 @@ AccountantHandoff buildAccountantHandoff({
     csvRows: rows,
   );
 }
+
+/// #1640 — a fingerprint of what the export was built from: each
+/// document's identity, amounts, currency, lifecycle and settlement, and
+/// each payment match's amount, status and date, independent of order.
+/// Read again just before saving; a different fingerprint means the
+/// source changed while the owner was reviewing, and nothing is saved.
+String accountantSourceDigest(
+  List<Invoice> invoices,
+  Map<String, InvoiceMatch> matches,
+) {
+  final rows = [
+    for (final i in invoices)
+      [
+        'i',
+        i.id,
+        i.number,
+        i.currency,
+        i.kind.name,
+        i.totalCents,
+        i.chargesCents,
+        i.vatCents,
+        i.voidedAt?.toUtc().toIso8601String() ?? '',
+        i.settledByInvoiceId ?? '',
+      ].join('|'),
+    for (final e in matches.entries)
+      [
+        'm',
+        e.key,
+        e.value.invoiceId,
+        e.value.paidCents,
+        e.value.status,
+        e.value.matchedAt.toUtc().toIso8601String(),
+        e.value.writeoffAt?.toUtc().toIso8601String() ?? '',
+      ].join('|'),
+  ]..sort();
+  return sha256.convert(utf8.encode(rows.join('\n'))).toString();
+}
