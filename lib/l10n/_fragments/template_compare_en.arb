@@ -1,0 +1,100 @@
+{
+  "compareTitle": "Compare templates",
+  "@compareTitle": {
+    "description": "#1660 template_compare"
+  },
+  "compareUnavailable": "These templates could not be read to compare them. Nothing is claimed either way.",
+  "@compareUnavailable": {
+    "description": "#1660 template_compare"
+  },
+  "compareDifferences": "Differences",
+  "@compareDifferences": {
+    "description": "#1660 template_compare"
+  },
+  "compareAll": "All settings",
+  "@compareAll": {
+    "description": "#1660 template_compare"
+  },
+  "compareSearch": "Find a setting",
+  "@compareSearch": {
+    "description": "#1660 template_compare"
+  },
+  "compareCount": "{shown} of {total} settings",
+  "@compareCount": {
+    "description": "#1660 template_compare",
+    "placeholders": {
+      "shown": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "compareNothing": "No setting differs.",
+  "@compareNothing": {
+    "description": "#1660 template_compare"
+  },
+  "compareCurrencies": "Different currencies: not comparable",
+  "@compareCurrencies": {
+    "description": "#1660 template_compare"
+  },
+  "compareYes": "Yes",
+  "@compareYes": {
+    "description": "#1660 template_compare"
+  },
+  "compareNo": "No",
+  "@compareNo": {
+    "description": "#1660 template_compare"
+  },
+  "compareInherits": "Keeps the space's own",
+  "@compareInherits": {
+    "description": "#1660 template_compare"
+  },
+  "compareDefault": "Default",
+  "@compareDefault": {
+    "description": "#1660 template_compare"
+  },
+  "compareLocal": "Set locally",
+  "@compareLocal": {
+    "description": "#1660 template_compare"
+  },
+  "compareMissing": "Not in this template",
+  "@compareMissing": {
+    "description": "#1660 template_compare"
+  },
+  "compareUnknown": "Unknown",
+  "@compareUnknown": {
+    "description": "#1660 template_compare"
+  },
+  "compareNotCarried": "Not carried",
+  "@compareNotCarried": {
+    "description": "#1660 template_compare"
+  },
+  "compareLimit": "Up to {count} templates can be compared. Remove one first.",
+  "@compareLimit": {
+    "description": "#1660 template_compare",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "compareOpen": "Compare ({count})",
+  "@compareOpen": {
+    "description": "#1660 template_compare",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "compareAdd": "Add to comparison",
+  "@compareAdd": {
+    "description": "#1660 template_compare"
+  },
+  "compareRemove": "Remove from comparison",
+  "@compareRemove": {
+    "description": "#1660 template_compare"
+  }
+}

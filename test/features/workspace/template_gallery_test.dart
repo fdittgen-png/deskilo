@@ -118,4 +118,20 @@ void main() {
     ));
     expect(find.byKey(const ValueKey('template-gallery-empty')), findsOneWidget);
   });
+
+  testWidgets('a shortlist of up to four, separate from the selection (#1660)', (tester) async {
+    await _pump(tester, [for (var i = 0; i < 6; i++) _tpl(i)]);
+    expect(find.byKey(const ValueKey('template-compare')), findsNothing);
+    for (var i = 0; i < 5; i++) {
+      await tester.tap(find.byKey(ValueKey('template-shortlist-k$i')));
+      await tester.pumpAndSettle();
+    }
+    expect(find.text('Compare (4)'), findsOneWidget, reason: 'the fifth is refused');
+    expect(find.textContaining('Up to 4 templates'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('template-shortlist-k0')));
+    await tester.pumpAndSettle();
+    expect(find.text('Compare (3)'), findsOneWidget);
+    expect(find.byIcon(Icons.check), findsNothing, reason: 'shortlisting never selects');
+  });
 }
+

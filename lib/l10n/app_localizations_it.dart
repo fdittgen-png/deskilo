@@ -11285,6 +11285,73 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get compareTitle => 'Confronta i modelli';
+
+  @override
+  String get compareUnavailable =>
+      'Non è stato possibile leggere questi modelli per confrontarli. Non si afferma nulla.';
+
+  @override
+  String get compareDifferences => 'Differenze';
+
+  @override
+  String get compareAll => 'Tutte le impostazioni';
+
+  @override
+  String get compareSearch => 'Cerca un\'impostazione';
+
+  @override
+  String compareCount(String shown, String total) {
+    return '$shown di $total impostazioni';
+  }
+
+  @override
+  String get compareNothing => 'Nessuna impostazione è diversa.';
+
+  @override
+  String get compareCurrencies => 'Valute diverse: non confrontabile';
+
+  @override
+  String get compareYes => 'Sì';
+
+  @override
+  String get compareNo => 'No';
+
+  @override
+  String get compareInherits => 'Mantiene quello dello spazio';
+
+  @override
+  String get compareDefault => 'Predefinito';
+
+  @override
+  String get compareLocal => 'Da impostare localmente';
+
+  @override
+  String get compareMissing => 'Non in questo modello';
+
+  @override
+  String get compareUnknown => 'Sconosciuto';
+
+  @override
+  String get compareNotCarried => 'Non trasportato';
+
+  @override
+  String compareLimit(String count) {
+    return 'Si possono confrontare fino a $count modelli. Rimuovine prima uno.';
+  }
+
+  @override
+  String compareOpen(String count) {
+    return 'Confronta ($count)';
+  }
+
+  @override
+  String get compareAdd => 'Aggiungi al confronto';
+
+  @override
+  String get compareRemove => 'Rimuovi dal confronto';
+
+  @override
   String get templateChangedSinceReview =>
       'Questo modello è cambiato da quando l\'hai esaminato. Non è stato applicato nulla; riaprilo per esaminare la nuova versione.';
 

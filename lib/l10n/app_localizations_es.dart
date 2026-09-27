@@ -11267,6 +11267,73 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get compareTitle => 'Comparar plantillas';
+
+  @override
+  String get compareUnavailable =>
+      'No se pudieron leer estas plantillas para compararlas. No se afirma nada.';
+
+  @override
+  String get compareDifferences => 'Diferencias';
+
+  @override
+  String get compareAll => 'Todos los ajustes';
+
+  @override
+  String get compareSearch => 'Buscar un ajuste';
+
+  @override
+  String compareCount(String shown, String total) {
+    return '$shown de $total ajustes';
+  }
+
+  @override
+  String get compareNothing => 'Ningún ajuste difiere.';
+
+  @override
+  String get compareCurrencies => 'Monedas distintas: no comparable';
+
+  @override
+  String get compareYes => 'Sí';
+
+  @override
+  String get compareNo => 'No';
+
+  @override
+  String get compareInherits => 'Conserva el del espacio';
+
+  @override
+  String get compareDefault => 'Predeterminado';
+
+  @override
+  String get compareLocal => 'A definir localmente';
+
+  @override
+  String get compareMissing => 'No está en esta plantilla';
+
+  @override
+  String get compareUnknown => 'Desconocido';
+
+  @override
+  String get compareNotCarried => 'No se transporta';
+
+  @override
+  String compareLimit(String count) {
+    return 'Se pueden comparar hasta $count plantillas. Quite una primero.';
+  }
+
+  @override
+  String compareOpen(String count) {
+    return 'Comparar ($count)';
+  }
+
+  @override
+  String get compareAdd => 'Añadir a la comparación';
+
+  @override
+  String get compareRemove => 'Quitar de la comparación';
+
+  @override
   String get templateChangedSinceReview =>
       'Esta plantilla cambió desde que la revisó. No se aplicó nada; ábrala de nuevo para revisar la nueva versión.';
 
