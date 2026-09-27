@@ -2311,7 +2311,7 @@
   "@featureMemberGettingStartedTitle": {
     "description": "#1654 getting started: featureMemberGettingStartedTitle"
   },
-  "featureMemberGettingStartedDesc": "Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Desactivada, oculta la tarjeta y no cambia nada más.",
+  "featureMemberGettingStartedDesc": "Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Para quien configura el espacio, los ajustes muestran además, sección por sección, lo que falta para una primera reserva. Desactivada, oculta la tarjeta y esa lista y no cambia nada más.",
   "@featureMemberGettingStartedDesc": {
     "description": "#1654 getting started: featureMemberGettingStartedDesc"
   },
@@ -8461,6 +8461,22 @@
   "@featureWorkspaceVocabularyDesc": {
     "description": "#1277 workspace vocabulary: the feature switch description"
   },
+  "readinessTitle": "Configuración de este espacio",
+  "readinessBlocked": "Antes de una primera reserva: {step}",
+  "readinessFirstBookingReady": "Listo para una primera reserva",
+  "readinessNext": "Siguiente: {step}",
+  "readinessAll": "Todas las secciones ({ready} de {total} listas)",
+  "readinessStateReady": "Listo",
+  "readinessStateNeeds": "Por configurar",
+  "readinessStateUnverified": "Aún no verificado",
+  "readinessNeededFirst": "Necesario para una primera reserva",
+  "readinessLater": "Necesario más adelante",
+  "readinessAreaRegionRules": "Días de apertura, zona horaria y moneda",
+  "readinessAreaResources": "Puestos reservables en el plano",
+  "readinessAreaPricing": "Planes de membresía y tarifas",
+  "readinessAreaInvitations": "Invitar a los primeros miembros",
+  "readinessAreaPayments": "Cómo pagan los miembros",
+  "readinessAreaRecovery": "Exportación y recuperación",
   "featureWorkspaceStatus": "Situación del espacio",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

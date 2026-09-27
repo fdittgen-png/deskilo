@@ -3460,7 +3460,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureMemberGettingStartedDesc =>
-      'Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Desactivada, oculta la tarjeta y no cambia nada más.';
+      'Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Para quien configura el espacio, los ajustes muestran además, sección por sección, lo que falta para una primera reserva. Desactivada, oculta la tarjeta y esa lista y no cambia nada más.';
 
   @override
   String gettingStartedTitle(String workspace) {
@@ -12756,6 +12756,61 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureWorkspaceVocabularyDesc =>
       'El espacio puede renombrar, por idioma, un conjunto reducido y aprobado de palabras del producto: una plaza, las etiquetas de la leyenda, las pestañas. Todo lo demás conserva la redacción del producto, y un espacio que no renombra nada se ve exactamente igual que antes.';
+
+  @override
+  String get readinessTitle => 'Configuración de este espacio';
+
+  @override
+  String readinessBlocked(String step) {
+    return 'Antes de una primera reserva: $step';
+  }
+
+  @override
+  String get readinessFirstBookingReady => 'Listo para una primera reserva';
+
+  @override
+  String readinessNext(String step) {
+    return 'Siguiente: $step';
+  }
+
+  @override
+  String readinessAll(String ready, String total) {
+    return 'Todas las secciones ($ready de $total listas)';
+  }
+
+  @override
+  String get readinessStateReady => 'Listo';
+
+  @override
+  String get readinessStateNeeds => 'Por configurar';
+
+  @override
+  String get readinessStateUnverified => 'Aún no verificado';
+
+  @override
+  String get readinessNeededFirst => 'Necesario para una primera reserva';
+
+  @override
+  String get readinessLater => 'Necesario más adelante';
+
+  @override
+  String get readinessAreaRegionRules =>
+      'Días de apertura, zona horaria y moneda';
+
+  @override
+  String get readinessAreaResources => 'Puestos reservables en el plano';
+
+  @override
+  String get readinessAreaPricing => 'Planes de membresía y tarifas';
+
+  @override
+  String get readinessAreaInvitations => 'Invitar a los primeros miembros';
+
+  @override
+  String get readinessAreaPayments => 'Cómo pagan los miembros';
+
+  @override
+  String get readinessAreaRecovery => 'Exportación y recuperación';
 
   @override
   String get featureWorkspaceStatus => 'Situación del espacio';

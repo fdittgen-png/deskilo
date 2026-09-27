@@ -3922,7 +3922,7 @@
   "@featureMemberGettingStartedTitle": {
     "description": "#1654 getting started: featureMemberGettingStartedTitle"
   },
-  "featureMemberGettingStartedDesc": "After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. Off hides the card and changes nothing else.",
+  "featureMemberGettingStartedDesc": "After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. For whoever configures the space, the settings also show how far it is from a first booking, section by section. Off hides the card and that checklist and changes nothing else.",
   "@featureMemberGettingStartedDesc": {
     "description": "#1654 getting started: featureMemberGettingStartedDesc"
   },
@@ -13962,6 +13962,88 @@
   "featureWorkspaceVocabularyDesc": "The workspace may rename a small, approved set of product words — a seat, the legend labels, the tabs — per language. Everything else keeps the product's own wording, and a workspace that renames nothing looks exactly as it did before.",
   "@featureWorkspaceVocabularyDesc": {
     "description": "#1277 workspace vocabulary: the feature switch description"
+  },
+  "readinessTitle": "Setting up this space",
+  "@readinessTitle": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessBlocked": "Before a first booking: {step}",
+  "@readinessBlocked": {
+    "description": "#1636 workspace_readiness",
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "readinessFirstBookingReady": "Ready for a first booking",
+  "@readinessFirstBookingReady": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessNext": "Next: {step}",
+  "@readinessNext": {
+    "description": "#1636 workspace_readiness",
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "readinessAll": "All sections ({ready} of {total} ready)",
+  "@readinessAll": {
+    "description": "#1636 workspace_readiness",
+    "placeholders": {
+      "ready": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "readinessStateReady": "Ready",
+  "@readinessStateReady": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessStateNeeds": "Needs configuration",
+  "@readinessStateNeeds": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessStateUnverified": "Not verified yet",
+  "@readinessStateUnverified": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessNeededFirst": "Needed for a first booking",
+  "@readinessNeededFirst": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessLater": "Needed later",
+  "@readinessLater": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaRegionRules": "Opening days, time zone and currency",
+  "@readinessAreaRegionRules": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaResources": "Bookable places on the floor plan",
+  "@readinessAreaResources": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaPricing": "Membership plans and tariffs",
+  "@readinessAreaPricing": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaInvitations": "Invite the first members",
+  "@readinessAreaInvitations": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaPayments": "How members pay",
+  "@readinessAreaPayments": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaRecovery": "Export and recovery",
+  "@readinessAreaRecovery": {
+    "description": "#1636 workspace_readiness"
   },
   "featureWorkspaceStatus": "Workspace status",
   "@featureWorkspaceStatus": {

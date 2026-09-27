@@ -6022,7 +6022,7 @@ abstract class AppLocalizations {
   /// #1654 getting started: featureMemberGettingStartedDesc
   ///
   /// In en, this message translates to:
-  /// **'After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. Off hides the card and changes nothing else.'**
+  /// **'After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. For whoever configures the space, the settings also show how far it is from a first booking, section by section. Off hides the card and that checklist and changes nothing else.'**
   String get featureMemberGettingStartedDesc;
 
   /// #1654 getting started card: gettingStartedTitle
@@ -22169,6 +22169,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The workspace may rename a small, approved set of product words — a seat, the legend labels, the tabs — per language. Everything else keeps the product\'s own wording, and a workspace that renames nothing looks exactly as it did before.'**
   String get featureWorkspaceVocabularyDesc;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Setting up this space'**
+  String get readinessTitle;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Before a first booking: {step}'**
+  String readinessBlocked(String step);
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Ready for a first booking'**
+  String get readinessFirstBookingReady;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {step}'**
+  String readinessNext(String step);
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'All sections ({ready} of {total} ready)'**
+  String readinessAll(String ready, String total);
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get readinessStateReady;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Needs configuration'**
+  String get readinessStateNeeds;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Not verified yet'**
+  String get readinessStateUnverified;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Needed for a first booking'**
+  String get readinessNeededFirst;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Needed later'**
+  String get readinessLater;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Opening days, time zone and currency'**
+  String get readinessAreaRegionRules;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Bookable places on the floor plan'**
+  String get readinessAreaResources;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Membership plans and tariffs'**
+  String get readinessAreaPricing;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Invite the first members'**
+  String get readinessAreaInvitations;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'How members pay'**
+  String get readinessAreaPayments;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Export and recovery'**
+  String get readinessAreaRecovery;
 
   /// #934 workspace status / repartition wizard: featureWorkspaceStatus
   ///

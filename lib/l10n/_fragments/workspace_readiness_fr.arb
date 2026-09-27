@@ -1,0 +1,18 @@
+{
+  "readinessTitle": "Mise en place de cet espace",
+  "readinessBlocked": "Avant une première réservation : {step}",
+  "readinessFirstBookingReady": "Prêt pour une première réservation",
+  "readinessNext": "Ensuite : {step}",
+  "readinessAll": "Toutes les sections ({ready} sur {total} prêtes)",
+  "readinessStateReady": "Prêt",
+  "readinessStateNeeds": "À configurer",
+  "readinessStateUnverified": "Pas encore vérifié",
+  "readinessNeededFirst": "Nécessaire pour une première réservation",
+  "readinessLater": "Nécessaire plus tard",
+  "readinessAreaRegionRules": "Jours d’ouverture, fuseau horaire et devise",
+  "readinessAreaResources": "Places réservables sur le plan",
+  "readinessAreaPricing": "Formules d’adhésion et tarifs",
+  "readinessAreaInvitations": "Inviter les premiers membres",
+  "readinessAreaPayments": "Comment les membres paient",
+  "readinessAreaRecovery": "Export et restauration"
+}

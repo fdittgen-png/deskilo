@@ -1,0 +1,84 @@
+{
+  "readinessTitle": "Setting up this space",
+  "@readinessTitle": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessBlocked": "Before a first booking: {step}",
+  "@readinessBlocked": {
+    "description": "#1636 workspace_readiness",
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "readinessFirstBookingReady": "Ready for a first booking",
+  "@readinessFirstBookingReady": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessNext": "Next: {step}",
+  "@readinessNext": {
+    "description": "#1636 workspace_readiness",
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "readinessAll": "All sections ({ready} of {total} ready)",
+  "@readinessAll": {
+    "description": "#1636 workspace_readiness",
+    "placeholders": {
+      "ready": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "readinessStateReady": "Ready",
+  "@readinessStateReady": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessStateNeeds": "Needs configuration",
+  "@readinessStateNeeds": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessStateUnverified": "Not verified yet",
+  "@readinessStateUnverified": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessNeededFirst": "Needed for a first booking",
+  "@readinessNeededFirst": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessLater": "Needed later",
+  "@readinessLater": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaRegionRules": "Opening days, time zone and currency",
+  "@readinessAreaRegionRules": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaResources": "Bookable places on the floor plan",
+  "@readinessAreaResources": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaPricing": "Membership plans and tariffs",
+  "@readinessAreaPricing": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaInvitations": "Invite the first members",
+  "@readinessAreaInvitations": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaPayments": "How members pay",
+  "@readinessAreaPayments": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaRecovery": "Export and recovery",
+  "@readinessAreaRecovery": {
+    "description": "#1636 workspace_readiness"
+  }
+}

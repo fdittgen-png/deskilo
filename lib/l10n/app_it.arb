@@ -2311,7 +2311,7 @@
   "@featureMemberGettingStartedTitle": {
     "description": "#1654 getting started: featureMemberGettingStartedTitle"
   },
-  "featureMemberGettingStartedDesc": "Dopo essersi unito a uno spazio o averlo creato, un membro vede una scheda compatta nell’hub Prenota: in quale spazio si trova e un passo successivo suggerito — scegliere un orario da prenotare, vedere la propria iscrizione o aprire l’aiuto — solo dove le funzioni e i suoi permessi lo consentono. Non ora la nasconde; le Impostazioni possono mostrarla di nuovo. Non prenota, non paga e non approva mai nulla. Disattivata, nasconde la scheda e non cambia altro.",
+  "featureMemberGettingStartedDesc": "Dopo essersi unito a uno spazio o averlo creato, un membro vede una scheda compatta nell’hub Prenota: in quale spazio si trova e un passo successivo suggerito — scegliere un orario da prenotare, vedere la propria iscrizione o aprire l’aiuto — solo dove le funzioni e i suoi permessi lo consentono. Non ora la nasconde; le Impostazioni possono mostrarla di nuovo. Non prenota, non paga e non approva mai nulla. Per chi configura lo spazio, le impostazioni mostrano anche, sezione per sezione, cosa manca a una prima prenotazione. Disattivata, nasconde la scheda e quell’elenco e non cambia altro.",
   "@featureMemberGettingStartedDesc": {
     "description": "#1654 getting started: featureMemberGettingStartedDesc"
   },
@@ -8461,6 +8461,22 @@
   "@featureWorkspaceVocabularyDesc": {
     "description": "#1277 workspace vocabulary: the feature switch description"
   },
+  "readinessTitle": "Configurazione di questo spazio",
+  "readinessBlocked": "Prima di una prima prenotazione: {step}",
+  "readinessFirstBookingReady": "Pronto per una prima prenotazione",
+  "readinessNext": "Poi: {step}",
+  "readinessAll": "Tutte le sezioni ({ready} su {total} pronte)",
+  "readinessStateReady": "Pronto",
+  "readinessStateNeeds": "Da configurare",
+  "readinessStateUnverified": "Non ancora verificato",
+  "readinessNeededFirst": "Necessario per una prima prenotazione",
+  "readinessLater": "Necessario più avanti",
+  "readinessAreaRegionRules": "Giorni di apertura, fuso orario e valuta",
+  "readinessAreaResources": "Posti prenotabili sulla planimetria",
+  "readinessAreaPricing": "Piani di iscrizione e tariffe",
+  "readinessAreaInvitations": "Invitare i primi membri",
+  "readinessAreaPayments": "Come pagano i membri",
+  "readinessAreaRecovery": "Esportazione e ripristino",
   "featureWorkspaceStatus": "Situazione dello spazio",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

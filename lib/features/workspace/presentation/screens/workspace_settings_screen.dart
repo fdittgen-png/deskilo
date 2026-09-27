@@ -1039,7 +1039,7 @@ class _WorkspaceSettingsScreenState
               child: ListView(
                 padding: AppSpacing.gutterAll,
                 children: [
-                  LocalReadinessCard(workspaceId: workspace.id), // #1656
+                  ...setupReadinessCards(workspace.id), // #1636 #1656
                   ..._parametersTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
                   ..._toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
                   ..._dangerZoneTiles(context, l10n: l10n, workspace: workspace),
