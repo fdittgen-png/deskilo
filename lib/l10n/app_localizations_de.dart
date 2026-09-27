@@ -11300,6 +11300,56 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sie sind hier bereits eingecheckt. Wählen Sie « Auschecken », um den Platz freizugeben.';
 
   @override
+  String get featureSupportBundleTitle => 'Support-Details';
+
+  @override
+  String get featureSupportBundleDesc =>
+      'In der Hilfe erstellt „Support-Details vorbereiten“ eine kleine Datei, die Sie einer Problemmeldung anhängen können: App- und Schemaversionen, aktive Funktionen, Prüfergebnisse und sichere Fehlercodes für einen gewählten Zeitraum. Sie enthält nie eine Nachricht, einen Namen, einen Betrag, ein Passwort oder eine Adresse; Sie sehen genau, was sie enthält, bevor Sie sie speichern, und nichts wird irgendwohin gesendet. Aus blendet den Eintrag aus.';
+
+  @override
+  String get supportBundleTitle => 'Support-Details vorbereiten';
+
+  @override
+  String get supportBundleIntro =>
+      'Nur Versionen, Funktionen, Prüfungen und sichere Fehlercodes — keine Nachricht, kein Name, kein Betrag, kein Passwort, keine Adresse. Sie sehen genau, was gespeichert wird. Eine gesendete Datei lässt sich nicht zurückholen.';
+
+  @override
+  String get supportBundleLastHour => 'Letzte Stunde';
+
+  @override
+  String get supportBundleLastDay => 'Letzte 24 Stunden';
+
+  @override
+  String get supportBundleLastWeek => 'Letzte 7 Tage';
+
+  @override
+  String get supportBundleIncludeBackend => 'Serveradresse einschließen';
+
+  @override
+  String get supportBundleIncludeBackendHint =>
+      'Ihr Name kann Ihre Installation erkennbar machen. Standardmäßig aus.';
+
+  @override
+  String supportBundleSize(String bytes) {
+    return '$bytes Bytes';
+  }
+
+  @override
+  String get supportBundleSave => 'Auf diesem Gerät speichern';
+
+  @override
+  String get supportBundleSaved =>
+      'Auf diesem Gerät gespeichert. Nichts wurde gesendet.';
+
+  @override
+  String get supportBundleSaveFailed =>
+      'Die Datei konnte nicht gespeichert werden.';
+
+  @override
+  String get supportBundleStale =>
+      'Konto oder Workspace hat sich geändert. Bereiten Sie die Details erneut vor.';
+
+  @override
   String get capabilityMultiApproval => 'Zwei oder mehr Freigaben';
 
   @override

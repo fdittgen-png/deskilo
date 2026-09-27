@@ -198,6 +198,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       // #1654 — beside the help hints, for the same reason: optional
       // guidance on an existing screen, not a right anybody holds.
       WorkspaceFeature.memberGettingStarted,
+      // #1642 — help too: a way to describe a problem, not a right.
+      WorkspaceFeature.supportBundle,
       WorkspaceFeature.uiAnimations,
       WorkspaceFeature.regionalFormats,
       WorkspaceFeature.navigationStyle,

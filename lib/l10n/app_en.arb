@@ -12133,6 +12133,67 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceAlreadyCheckedInHere": "You are already checked in here. Choose Check out to leave the seat.",
+  "featureSupportBundleTitle": "Support details",
+  "@featureSupportBundleTitle": {
+    "description": "#1642 support_bundle"
+  },
+  "featureSupportBundleDesc": "In the help, \"Prepare support details\" builds a small file to attach when reporting a problem: app and schema versions, which features are on, check results and safe error codes for a time window you choose. It never holds a message, a name, an amount, a password or an address, you see exactly what it holds before saving it, and nothing is sent anywhere. Off hides the entry.",
+  "@featureSupportBundleDesc": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleTitle": "Prepare support details",
+  "@supportBundleTitle": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleIntro": "Versions, features, checks and safe error codes only — no message, name, amount, password or address. You see exactly what is saved. A file you send cannot be taken back.",
+  "@supportBundleIntro": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleLastHour": "Last hour",
+  "@supportBundleLastHour": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleLastDay": "Last 24 hours",
+  "@supportBundleLastDay": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleLastWeek": "Last 7 days",
+  "@supportBundleLastWeek": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleIncludeBackend": "Include the server address",
+  "@supportBundleIncludeBackend": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleIncludeBackendHint": "Its name can identify your installation. Off by default.",
+  "@supportBundleIncludeBackendHint": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleSize": "{bytes} bytes",
+  "@supportBundleSize": {
+    "description": "#1642 support_bundle",
+    "placeholders": {
+      "bytes": {
+        "type": "String"
+      }
+    }
+  },
+  "supportBundleSave": "Save on this device",
+  "@supportBundleSave": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleSaved": "Saved on this device. Nothing was sent.",
+  "@supportBundleSaved": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleSaveFailed": "The file could not be saved.",
+  "@supportBundleSaveFailed": {
+    "description": "#1642 support_bundle"
+  },
+  "supportBundleStale": "The account or workspace changed. Prepare the details again.",
+  "@supportBundleStale": {
+    "description": "#1642 support_bundle"
+  },
   "capabilityMultiApproval": "Two or more approvals",
   "@capabilityMultiApproval": {
     "description": "#1659 template_capabilities"

@@ -247,6 +247,7 @@ window.SETUP_PROCESSES=[
      "decisionSurface",
      "formHelpHints",
      "memberGettingStarted",
+     "supportBundle",
      "uiAnimations",
      "regionalFormats",
      "navigationStyle",

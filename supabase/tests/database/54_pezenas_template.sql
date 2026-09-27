@@ -189,6 +189,7 @@ begin
       "memberDataExport": true,
       "memberEnvironments": false,
       "memberGettingStarted": true,
+      "supportBundle": true,
       "memberNotifications": true,
       "memberOrigin": false,
       "memberPage": false,

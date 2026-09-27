@@ -1039,6 +1039,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Get started card",
     "After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. For whoever configures the space, the settings also show how far it is from a first booking, section by section. Off hides the card and that checklist and changes nothing else."
+   ],
+   "supportBundle": [
+    "Support details",
+    "In the help, \"Prepare support details\" builds a small file to attach when reporting a problem: app and schema versions, which features are on, check results and safe error codes for a time window you choose. It never holds a message, a name, an amount, a password or an address, you see exactly what it holds before saving it, and nothing is sent anywhere. Off hides the entry."
    ]
   },
   "process": {
@@ -2287,6 +2291,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Carte Premiers pas",
     "Après avoir rejoint ou créé un espace, un membre voit une carte compacte sur le hub Réserver : l’espace dans lequel il se trouve et une prochaine étape suggérée — choisir un créneau à réserver, consulter son adhésion ou ouvrir l’aide — seulement là où les fonctionnalités et ses permissions le permettent. Pas maintenant la masque ; les Réglages peuvent la réafficher. Elle ne réserve, ne paie et n’approuve jamais rien. Pour qui configure l’espace, les réglages montrent aussi, section par section, ce qui le sépare d’une première réservation. Désactivée, elle masque la carte et cette liste et ne change rien d’autre."
+   ],
+   "supportBundle": [
+    "Détails pour l’assistance",
+    "Dans l’aide, « Préparer les détails pour l’assistance » crée un petit fichier à joindre quand vous signalez un problème : versions de l’app et du schéma, fonctionnalités actives, résultats des vérifications et codes d’erreur sûrs sur une période que vous choisissez. Il ne contient jamais de message, de nom, de montant, de mot de passe ni d’adresse ; vous voyez exactement son contenu avant de l’enregistrer, et rien n’est envoyé nulle part. Désactivée, l’entrée est masquée."
    ]
   },
   "process": {
@@ -3535,6 +3543,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Karte „Erste Schritte“",
     "Nach dem Beitritt oder dem Anlegen eines Workspace sieht ein Mitglied eine kompakte Karte im Reservieren-Hub: in welchem Workspace es ist und einen vorgeschlagenen nächsten Schritt — eine Zeit zum Buchen wählen, die eigene Mitgliedschaft ansehen oder die Hilfe öffnen — nur dort, wo Funktionen und Berechtigungen es erlauben. „Jetzt nicht“ blendet sie aus; die Einstellungen zeigen sie wieder an. Sie bucht, zahlt und genehmigt nie etwas. Wer den Workspace einrichtet, sieht in den Einstellungen außerdem Bereich für Bereich, was bis zu einer ersten Buchung fehlt. Aus blendet die Karte und diese Liste aus und ändert sonst nichts."
+   ],
+   "supportBundle": [
+    "Support-Details",
+    "In der Hilfe erstellt „Support-Details vorbereiten“ eine kleine Datei, die Sie einer Problemmeldung anhängen können: App- und Schemaversionen, aktive Funktionen, Prüfergebnisse und sichere Fehlercodes für einen gewählten Zeitraum. Sie enthält nie eine Nachricht, einen Namen, einen Betrag, ein Passwort oder eine Adresse; Sie sehen genau, was sie enthält, bevor Sie sie speichern, und nichts wird irgendwohin gesendet. Aus blendet den Eintrag aus."
    ]
   },
   "process": {
@@ -4783,6 +4795,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Tarjeta Primeros pasos",
     "Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Para quien configura el espacio, los ajustes muestran además, sección por sección, lo que falta para una primera reserva. Desactivada, oculta la tarjeta y esa lista y no cambia nada más."
+   ],
+   "supportBundle": [
+    "Detalles para soporte",
+    "En la ayuda, «Preparar detalles para soporte» crea un pequeño archivo para adjuntar al informar de un problema: versiones de la app y del esquema, funciones activas, resultados de comprobaciones y códigos de error seguros para un periodo que usted elige. Nunca contiene un mensaje, un nombre, un importe, una contraseña ni una dirección; ve exactamente lo que contiene antes de guardarlo y no se envía nada a ninguna parte. Desactivada, la entrada se oculta."
    ]
   },
   "process": {
@@ -6031,6 +6047,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Scheda Primi passi",
     "Dopo essersi unito a uno spazio o averlo creato, un membro vede una scheda compatta nell’hub Prenota: in quale spazio si trova e un passo successivo suggerito — scegliere un orario da prenotare, vedere la propria iscrizione o aprire l’aiuto — solo dove le funzioni e i suoi permessi lo consentono. Non ora la nasconde; le Impostazioni possono mostrarla di nuovo. Non prenota, non paga e non approva mai nulla. Per chi configura lo spazio, le impostazioni mostrano anche, sezione per sezione, cosa manca a una prima prenotazione. Disattivata, nasconde la scheda e quell’elenco e non cambia altro."
+   ],
+   "supportBundle": [
+    "Dettagli per l’assistenza",
+    "Nell’aiuto, «Prepara dettagli per l’assistenza» crea un piccolo file da allegare quando segnali un problema: versioni dell’app e dello schema, funzioni attive, esiti dei controlli e codici di errore sicuri per un periodo che scegli. Non contiene mai un messaggio, un nome, un importo, una password o un indirizzo; vedi esattamente cosa contiene prima di salvarlo e nulla viene inviato. Disattivata, la voce è nascosta."
    ]
   },
   "process": {

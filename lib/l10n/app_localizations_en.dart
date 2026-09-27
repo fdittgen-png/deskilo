@@ -11204,6 +11204,54 @@ class AppLocalizationsEn extends AppLocalizations {
       'You are already checked in here. Choose Check out to leave the seat.';
 
   @override
+  String get featureSupportBundleTitle => 'Support details';
+
+  @override
+  String get featureSupportBundleDesc =>
+      'In the help, \"Prepare support details\" builds a small file to attach when reporting a problem: app and schema versions, which features are on, check results and safe error codes for a time window you choose. It never holds a message, a name, an amount, a password or an address, you see exactly what it holds before saving it, and nothing is sent anywhere. Off hides the entry.';
+
+  @override
+  String get supportBundleTitle => 'Prepare support details';
+
+  @override
+  String get supportBundleIntro =>
+      'Versions, features, checks and safe error codes only — no message, name, amount, password or address. You see exactly what is saved. A file you send cannot be taken back.';
+
+  @override
+  String get supportBundleLastHour => 'Last hour';
+
+  @override
+  String get supportBundleLastDay => 'Last 24 hours';
+
+  @override
+  String get supportBundleLastWeek => 'Last 7 days';
+
+  @override
+  String get supportBundleIncludeBackend => 'Include the server address';
+
+  @override
+  String get supportBundleIncludeBackendHint =>
+      'Its name can identify your installation. Off by default.';
+
+  @override
+  String supportBundleSize(String bytes) {
+    return '$bytes bytes';
+  }
+
+  @override
+  String get supportBundleSave => 'Save on this device';
+
+  @override
+  String get supportBundleSaved => 'Saved on this device. Nothing was sent.';
+
+  @override
+  String get supportBundleSaveFailed => 'The file could not be saved.';
+
+  @override
+  String get supportBundleStale =>
+      'The account or workspace changed. Prepare the details again.';
+
+  @override
   String get capabilityMultiApproval => 'Two or more approvals';
 
   @override

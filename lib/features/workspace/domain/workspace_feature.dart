@@ -276,7 +276,14 @@ enum WorkspaceFeature {
   /// what the hub already loaded, writes nothing but its own dismissal,
   /// and never submits a booking. Core, default ON: optional help a
   /// space can hide; OFF hides the card and nothing else.
-  memberGettingStarted;
+  memberGettingStarted,
+
+  /// #1642 — "Prepare support details" in the help: a person reporting a
+  /// problem previews, then saves on their own device, a bounded bundle
+  /// of versions, flag states, check results and safe error codes — no
+  /// message, name, amount, token or address. Nothing is sent anywhere.
+  /// Core, default ON: help a space can hide; OFF hides the entry.
+  supportBundle;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1305,6 +1312,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.memberGettingStarted: FeatureManifestEntry(
     feature: WorkspaceFeature.memberGettingStarted,
     surface: FeatureSurface.reserve,
+    tier: FeatureTier.core,
+  ),
+  // #1642 — requires nothing: the bundle reads what the device already
+  // knows. Settings, because that is where the help and About live.
+  WorkspaceFeature.supportBundle: FeatureManifestEntry(
+    feature: WorkspaceFeature.supportBundle,
+    surface: FeatureSurface.settings,
     tier: FeatureTier.core,
   ),
 };

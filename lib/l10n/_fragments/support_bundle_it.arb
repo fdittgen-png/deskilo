@@ -1,0 +1,16 @@
+{
+  "featureSupportBundleTitle": "Dettagli per l’assistenza",
+  "featureSupportBundleDesc": "Nell’aiuto, «Prepara dettagli per l’assistenza» crea un piccolo file da allegare quando segnali un problema: versioni dell’app e dello schema, funzioni attive, esiti dei controlli e codici di errore sicuri per un periodo che scegli. Non contiene mai un messaggio, un nome, un importo, una password o un indirizzo; vedi esattamente cosa contiene prima di salvarlo e nulla viene inviato. Disattivata, la voce è nascosta.",
+  "supportBundleTitle": "Prepara dettagli per l’assistenza",
+  "supportBundleIntro": "Solo versioni, funzioni, controlli e codici di errore sicuri — nessun messaggio, nome, importo, password o indirizzo. Vedi esattamente cosa viene salvato. Un file inviato non si può ritirare.",
+  "supportBundleLastHour": "Ultima ora",
+  "supportBundleLastDay": "Ultime 24 ore",
+  "supportBundleLastWeek": "Ultimi 7 giorni",
+  "supportBundleIncludeBackend": "Includi l’indirizzo del server",
+  "supportBundleIncludeBackendHint": "Il suo nome può identificare la tua installazione. Disattivato per impostazione predefinita.",
+  "supportBundleSize": "{bytes} byte",
+  "supportBundleSave": "Salva su questo dispositivo",
+  "supportBundleSaved": "Salvato su questo dispositivo. Non è stato inviato nulla.",
+  "supportBundleSaveFailed": "Impossibile salvare il file.",
+  "supportBundleStale": "L’account o lo spazio è cambiato. Prepara di nuovo i dettagli."
+}

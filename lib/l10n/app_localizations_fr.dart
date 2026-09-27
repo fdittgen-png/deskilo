@@ -11317,6 +11317,56 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous êtes déjà pointé ici. Choisissez « Pointer la sortie » pour libérer la place.';
 
   @override
+  String get featureSupportBundleTitle => 'Détails pour l’assistance';
+
+  @override
+  String get featureSupportBundleDesc =>
+      'Dans l’aide, « Préparer les détails pour l’assistance » crée un petit fichier à joindre quand vous signalez un problème : versions de l’app et du schéma, fonctionnalités actives, résultats des vérifications et codes d’erreur sûrs sur une période que vous choisissez. Il ne contient jamais de message, de nom, de montant, de mot de passe ni d’adresse ; vous voyez exactement son contenu avant de l’enregistrer, et rien n’est envoyé nulle part. Désactivée, l’entrée est masquée.';
+
+  @override
+  String get supportBundleTitle => 'Préparer les détails pour l’assistance';
+
+  @override
+  String get supportBundleIntro =>
+      'Uniquement versions, fonctionnalités, vérifications et codes d’erreur sûrs — aucun message, nom, montant, mot de passe ni adresse. Vous voyez exactement ce qui est enregistré. Un fichier envoyé ne peut pas être repris.';
+
+  @override
+  String get supportBundleLastHour => 'Dernière heure';
+
+  @override
+  String get supportBundleLastDay => 'Dernières 24 heures';
+
+  @override
+  String get supportBundleLastWeek => '7 derniers jours';
+
+  @override
+  String get supportBundleIncludeBackend => 'Inclure l’adresse du serveur';
+
+  @override
+  String get supportBundleIncludeBackendHint =>
+      'Son nom peut identifier votre installation. Désactivé par défaut.';
+
+  @override
+  String supportBundleSize(String bytes) {
+    return '$bytes octets';
+  }
+
+  @override
+  String get supportBundleSave => 'Enregistrer sur cet appareil';
+
+  @override
+  String get supportBundleSaved =>
+      'Enregistré sur cet appareil. Rien n’a été envoyé.';
+
+  @override
+  String get supportBundleSaveFailed =>
+      'Le fichier n’a pas pu être enregistré.';
+
+  @override
+  String get supportBundleStale =>
+      'Le compte ou l’espace a changé. Préparez à nouveau les détails.';
+
+  @override
   String get capabilityMultiApproval => 'Deux validations ou plus';
 
   @override

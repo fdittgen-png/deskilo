@@ -163,6 +163,7 @@
         "spaceQrCodes": true,
         "subscriptionInvoices": false,
         "supplyExpenses": false,
+        "supportBundle": true,
         "uiAnimations": true,
         "uniqueMonograms": true,
         "usageInvoices": false,

@@ -8,6 +8,9 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import 'settings_section_header.dart';
+import 'support_bundle_sheet.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../../../core/theme/app_typography.dart';
 
 // About-section facts (#560): proper nouns and URLs, identical in every
@@ -43,6 +46,18 @@ List<Widget> aboutSettingsTiles(
             title: Text(l10n?.helpTitle ?? 'Help'),
             onTap: () => context.push('/help'),
           ),
+          // #1642 — a way to describe a problem without sending data.
+          if (ref
+              .watch(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.supportBundle))
+            ListTile(
+              key: const ValueKey('settings-support-bundle'),
+              leading: const Icon(Icons.bug_report_outlined),
+              title: Text(
+                l10n?.supportBundleTitle ?? 'Prepare support details',
+              ),
+              onTap: () => showSupportBundleSheet(context),
+            ),
           ListTile(
             key: const ValueKey('about-version'),
             leading: const Icon(Icons.info_outline),

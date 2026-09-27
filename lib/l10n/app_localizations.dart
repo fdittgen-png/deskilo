@@ -19506,6 +19506,90 @@ abstract class AppLocalizations {
   /// **'You are already checked in here. Choose Check out to leave the seat.'**
   String get spaceAlreadyCheckedInHere;
 
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'Support details'**
+  String get featureSupportBundleTitle;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'In the help, \"Prepare support details\" builds a small file to attach when reporting a problem: app and schema versions, which features are on, check results and safe error codes for a time window you choose. It never holds a message, a name, an amount, a password or an address, you see exactly what it holds before saving it, and nothing is sent anywhere. Off hides the entry.'**
+  String get featureSupportBundleDesc;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare support details'**
+  String get supportBundleTitle;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'Versions, features, checks and safe error codes only — no message, name, amount, password or address. You see exactly what is saved. A file you send cannot be taken back.'**
+  String get supportBundleIntro;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'Last hour'**
+  String get supportBundleLastHour;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'Last 24 hours'**
+  String get supportBundleLastDay;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 days'**
+  String get supportBundleLastWeek;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'Include the server address'**
+  String get supportBundleIncludeBackend;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'Its name can identify your installation. Off by default.'**
+  String get supportBundleIncludeBackendHint;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'{bytes} bytes'**
+  String supportBundleSize(String bytes);
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'Save on this device'**
+  String get supportBundleSave;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this device. Nothing was sent.'**
+  String get supportBundleSaved;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'The file could not be saved.'**
+  String get supportBundleSaveFailed;
+
+  /// #1642 support_bundle
+  ///
+  /// In en, this message translates to:
+  /// **'The account or workspace changed. Prepare the details again.'**
+  String get supportBundleStale;
+
   /// #1659 template_capabilities
   ///
   /// In en, this message translates to:

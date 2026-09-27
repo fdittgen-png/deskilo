@@ -518,6 +518,16 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'booking does not update a file already saved. Nothing '
                   'is written to any calendar and nothing syncs. Off hides '
                   'the button.',
+        WorkspaceFeature.supportBundle =>
+          l10n?.featureSupportBundleDesc ??
+              'In the help, "Prepare support details" builds a small file '
+                  'to attach when reporting a problem: app and schema '
+                  'versions, which features are on, check results and '
+                  'safe error codes for a time window you choose. It '
+                  'never holds a message, a name, an amount, a password '
+                  'or an address, you see exactly what it holds before '
+                  'saving it, and nothing is sent anywhere. Off hides the '
+                  'entry.',
         WorkspaceFeature.memberGettingStarted =>
           l10n?.featureMemberGettingStartedDesc ??
               'After joining or creating a workspace, a member sees one '

@@ -11306,6 +11306,55 @@ class AppLocalizationsIt extends AppLocalizations {
       'Siete già registrati qui. Scegliete « Registra l\'uscita » per liberare il posto.';
 
   @override
+  String get featureSupportBundleTitle => 'Dettagli per l’assistenza';
+
+  @override
+  String get featureSupportBundleDesc =>
+      'Nell’aiuto, «Prepara dettagli per l’assistenza» crea un piccolo file da allegare quando segnali un problema: versioni dell’app e dello schema, funzioni attive, esiti dei controlli e codici di errore sicuri per un periodo che scegli. Non contiene mai un messaggio, un nome, un importo, una password o un indirizzo; vedi esattamente cosa contiene prima di salvarlo e nulla viene inviato. Disattivata, la voce è nascosta.';
+
+  @override
+  String get supportBundleTitle => 'Prepara dettagli per l’assistenza';
+
+  @override
+  String get supportBundleIntro =>
+      'Solo versioni, funzioni, controlli e codici di errore sicuri — nessun messaggio, nome, importo, password o indirizzo. Vedi esattamente cosa viene salvato. Un file inviato non si può ritirare.';
+
+  @override
+  String get supportBundleLastHour => 'Ultima ora';
+
+  @override
+  String get supportBundleLastDay => 'Ultime 24 ore';
+
+  @override
+  String get supportBundleLastWeek => 'Ultimi 7 giorni';
+
+  @override
+  String get supportBundleIncludeBackend => 'Includi l’indirizzo del server';
+
+  @override
+  String get supportBundleIncludeBackendHint =>
+      'Il suo nome può identificare la tua installazione. Disattivato per impostazione predefinita.';
+
+  @override
+  String supportBundleSize(String bytes) {
+    return '$bytes byte';
+  }
+
+  @override
+  String get supportBundleSave => 'Salva su questo dispositivo';
+
+  @override
+  String get supportBundleSaved =>
+      'Salvato su questo dispositivo. Non è stato inviato nulla.';
+
+  @override
+  String get supportBundleSaveFailed => 'Impossibile salvare il file.';
+
+  @override
+  String get supportBundleStale =>
+      'L’account o lo spazio è cambiato. Prepara di nuovo i dettagli.';
+
+  @override
   String get capabilityMultiApproval => 'Due o più approvazioni';
 
   @override
