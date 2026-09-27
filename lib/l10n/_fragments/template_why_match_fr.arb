@@ -14,5 +14,8 @@
   "templateNoMatch": "Aucun modèle ne correspond. Changez les mots, une étiquette ou une exigence.",
   "templateClearFilters": "Effacer la recherche",
   "templatePrefer": "Préférer : {capability}",
-  "templatePreferredChip": "Préféré : {capability}"
+  "templatePreferredChip": "Préféré : {capability}",
+  "capabilityBrowserTitle": "Parcourir les fonctionnalités",
+  "capabilityBrowserRequire": "Exiger",
+  "capabilityBrowserPrefer": "Préférer"
 }

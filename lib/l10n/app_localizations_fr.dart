@@ -11554,6 +11554,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get capabilityBrowserTitle => 'Parcourir les fonctionnalités';
+
+  @override
+  String get capabilityBrowserRequire => 'Exiger';
+
+  @override
+  String get capabilityBrowserPrefer => 'Préférer';
+
+  @override
   String templateWidenTitle(String audience) {
     return 'Rendre ce modèle lisible par : $audience ?';
   }

@@ -11537,6 +11537,15 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get capabilityBrowserTitle => 'Funktionen durchsuchen';
+
+  @override
+  String get capabilityBrowserRequire => 'Voraussetzen';
+
+  @override
+  String get capabilityBrowserPrefer => 'Bevorzugen';
+
+  @override
   String templateWidenTitle(String audience) {
     return 'Diese Vorlage lesbar machen für: $audience?';
   }

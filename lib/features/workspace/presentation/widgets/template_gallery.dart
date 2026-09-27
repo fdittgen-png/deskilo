@@ -18,6 +18,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'template_card.dart';
 import 'template_requirements.dart';
+import 'template_capability_browser.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -318,6 +319,22 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
           onChanged: _onQuery,
           decoration: InputDecoration(
             prefixIcon: const Icon(Icons.search),
+            // #1660 — every capability, by process, for whoever does not
+            // know the word to type.
+            suffixIcon: IconButton(
+              key: const ValueKey('template-browse-capabilities'),
+              tooltip: l10n?.capabilityBrowserTitle ?? 'Browse capabilities',
+              icon: const Icon(Icons.account_tree_outlined),
+              onPressed: () async {
+                final choice = await showCapabilityBrowser(context);
+                if (choice == null || !mounted) return;
+                _setRequired(() {
+                  _required.remove(choice.id);
+                  _preferred.remove(choice.id);
+                  (choice.required ? _required : _preferred).add(choice.id);
+                });
+              },
+            ),
             hintText: l10n?.librarySearchHint ?? 'Search templates',
           ),
         ),

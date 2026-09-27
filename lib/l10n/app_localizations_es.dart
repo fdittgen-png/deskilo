@@ -11524,6 +11524,15 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get capabilityBrowserTitle => 'Explorar funciones';
+
+  @override
+  String get capabilityBrowserRequire => 'Exigir';
+
+  @override
+  String get capabilityBrowserPrefer => 'Preferir';
+
+  @override
   String templateWidenTitle(String audience) {
     return '¿Hacer esta plantilla legible para: $audience?';
   }
