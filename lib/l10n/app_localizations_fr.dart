@@ -13089,6 +13089,70 @@ class AppLocalizationsFr extends AppLocalizations {
       'Informations requises par vos fonctionnalités (identité, banque, plateformes)';
 
   @override
+  String get readinessAreaBackend => 'Serveur et version de la base';
+
+  @override
+  String get readinessAreaRolesValidation => 'Rôles et validation des demandes';
+
+  @override
+  String get readinessStateNeedsOperator => 'En attente d’une autre personne';
+
+  @override
+  String get readinessStateNotApplicable => 'Sans objet ici';
+
+  @override
+  String get readinessStateUnavailable => 'Lecture impossible';
+
+  @override
+  String get readinessReasonTooFewValidators =>
+      'Une règle demande plus de validateurs que cet espace n’en compte';
+
+  @override
+  String get readinessReasonNoPolicies =>
+      'Aucune demande n’attend de validateur';
+
+  @override
+  String get readinessReasonNoEvidence =>
+      'Aucun export ni restauration enregistré';
+
+  @override
+  String get readinessActorOwner => 'Vous';
+
+  @override
+  String get readinessActorOperator => 'L’opérateur du serveur';
+
+  @override
+  String readinessActor(String who) {
+    return 'Qui : $who';
+  }
+
+  @override
+  String get readinessAreaAssistant => 'Accès des assistants (facultatif)';
+
+  @override
+  String get readinessActorAdministrator => 'Un administrateur de la base';
+
+  @override
+  String get readinessReasonNotExposed =>
+      'Cet espace n’expose encore rien aux assistants';
+
+  @override
+  String get readinessReasonEligibilityRequested =>
+      'Votre demande attend un administrateur de la base';
+
+  @override
+  String get readinessReasonEligibilityExpired =>
+      'Votre habilitation aux assistants a expiré';
+
+  @override
+  String get readinessReasonEligibilityNoIdentity =>
+      'Connectez-vous d’abord avec votre identité vérifiée';
+
+  @override
+  String get readinessReasonEligibilityMissing =>
+      'Aucun administrateur de la base ne vous a habilité aux assistants';
+
+  @override
   String get featureWorkspaceStatus => 'Situation de l\'espace';
 
   @override

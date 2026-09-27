@@ -13072,6 +13072,71 @@ class AppLocalizationsIt extends AppLocalizations {
       'Dati richiesti dalle funzioni (identità, banca, piattaforme)';
 
   @override
+  String get readinessAreaBackend => 'Server e versione del database';
+
+  @override
+  String get readinessAreaRolesValidation =>
+      'Ruoli e chi convalida le richieste';
+
+  @override
+  String get readinessStateNeedsOperator => 'In attesa di un’altra persona';
+
+  @override
+  String get readinessStateNotApplicable => 'Non necessario qui';
+
+  @override
+  String get readinessStateUnavailable => 'Impossibile leggere';
+
+  @override
+  String get readinessReasonTooFewValidators =>
+      'Una regola richiede più validatori di quanti ne abbia questo spazio';
+
+  @override
+  String get readinessReasonNoPolicies =>
+      'Nessuna richiesta attende un validatore';
+
+  @override
+  String get readinessReasonNoEvidence =>
+      'Nessuna esportazione o ripristino registrato';
+
+  @override
+  String get readinessActorOwner => 'Lei';
+
+  @override
+  String get readinessActorOperator => 'L’operatore del server';
+
+  @override
+  String readinessActor(String who) {
+    return 'Chi: $who';
+  }
+
+  @override
+  String get readinessAreaAssistant => 'Accesso degli assistenti (facoltativo)';
+
+  @override
+  String get readinessActorAdministrator => 'Un amministratore del database';
+
+  @override
+  String get readinessReasonNotExposed =>
+      'Questo spazio non espone ancora nulla agli assistenti';
+
+  @override
+  String get readinessReasonEligibilityRequested =>
+      'La sua richiesta attende un amministratore del database';
+
+  @override
+  String get readinessReasonEligibilityExpired =>
+      'La sua abilitazione agli assistenti è scaduta';
+
+  @override
+  String get readinessReasonEligibilityNoIdentity =>
+      'Acceda prima con la sua identità verificata';
+
+  @override
+  String get readinessReasonEligibilityMissing =>
+      'Nessun amministratore del database l’ha abilitata agli assistenti';
+
+  @override
   String get featureWorkspaceStatus => 'Situazione dello spazio';
 
   @override

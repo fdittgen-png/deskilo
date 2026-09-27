@@ -13054,6 +13054,72 @@ class AppLocalizationsEs extends AppLocalizations {
       'Datos que necesitan sus funciones (identidad, banco, plataformas)';
 
   @override
+  String get readinessAreaBackend => 'Servidor y versión de la base de datos';
+
+  @override
+  String get readinessAreaRolesValidation =>
+      'Roles y quién valida las solicitudes';
+
+  @override
+  String get readinessStateNeedsOperator => 'A la espera de otra persona';
+
+  @override
+  String get readinessStateNotApplicable => 'No es necesario aquí';
+
+  @override
+  String get readinessStateUnavailable => 'No se pudo leer';
+
+  @override
+  String get readinessReasonTooFewValidators =>
+      'Una regla pide más validadores de los que tiene este espacio';
+
+  @override
+  String get readinessReasonNoPolicies =>
+      'Ninguna solicitud espera a un validador';
+
+  @override
+  String get readinessReasonNoEvidence =>
+      'Aún no se ha registrado ninguna exportación ni restauración';
+
+  @override
+  String get readinessActorOwner => 'Usted';
+
+  @override
+  String get readinessActorOperator => 'El operador del servidor';
+
+  @override
+  String readinessActor(String who) {
+    return 'Quién: $who';
+  }
+
+  @override
+  String get readinessAreaAssistant => 'Acceso de asistentes (opcional)';
+
+  @override
+  String get readinessActorAdministrator =>
+      'Un administrador de la base de datos';
+
+  @override
+  String get readinessReasonNotExposed =>
+      'Este espacio aún no expone nada a los asistentes';
+
+  @override
+  String get readinessReasonEligibilityRequested =>
+      'Su solicitud espera a un administrador de la base de datos';
+
+  @override
+  String get readinessReasonEligibilityExpired =>
+      'Su habilitación para asistentes ha caducado';
+
+  @override
+  String get readinessReasonEligibilityNoIdentity =>
+      'Inicie sesión primero con su identidad verificada';
+
+  @override
+  String get readinessReasonEligibilityMissing =>
+      'Ningún administrador de la base de datos le ha habilitado para asistentes';
+
+  @override
   String get featureWorkspaceStatus => 'Situación del espacio';
 
   @override

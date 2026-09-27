@@ -22644,6 +22644,114 @@ abstract class AppLocalizations {
   /// **'Details your features need (identity, bank, platforms)'**
   String get readinessAreaLocalSetup;
 
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Server and database version'**
+  String get readinessAreaBackend;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Roles and who validates requests'**
+  String get readinessAreaRolesValidation;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for someone else'**
+  String get readinessStateNeedsOperator;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Not needed here'**
+  String get readinessStateNotApplicable;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be read'**
+  String get readinessStateUnavailable;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A policy asks for more validators than this space has'**
+  String get readinessReasonTooFewValidators;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'No request waits for a validator'**
+  String get readinessReasonNoPolicies;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'No export or restore recorded yet'**
+  String get readinessReasonNoEvidence;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get readinessActorOwner;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'The server operator'**
+  String get readinessActorOperator;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Who: {who}'**
+  String readinessActor(String who);
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant access (optional)'**
+  String get readinessAreaAssistant;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A database administrator'**
+  String get readinessActorAdministrator;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'This space does not expose anything to assistants yet'**
+  String get readinessReasonNotExposed;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Your request waits for a database administrator'**
+  String get readinessReasonEligibilityRequested;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Your assistant eligibility has expired'**
+  String get readinessReasonEligibilityExpired;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with your verified identity first'**
+  String get readinessReasonEligibilityNoIdentity;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A database administrator has not approved you for assistants'**
+  String get readinessReasonEligibilityMissing;
+
   /// #934 workspace status / repartition wizard: featureWorkspaceStatus
   ///
   /// In en, this message translates to:

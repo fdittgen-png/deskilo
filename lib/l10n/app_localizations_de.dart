@@ -13068,6 +13068,71 @@ class AppLocalizationsDe extends AppLocalizations {
       'Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)';
 
   @override
+  String get readinessAreaBackend => 'Server und Datenbankversion';
+
+  @override
+  String get readinessAreaRolesValidation =>
+      'Rollen und wer Anfragen bestätigt';
+
+  @override
+  String get readinessStateNeedsOperator => 'Wartet auf jemand anderen';
+
+  @override
+  String get readinessStateNotApplicable => 'Hier nicht nötig';
+
+  @override
+  String get readinessStateUnavailable => 'Konnte nicht gelesen werden';
+
+  @override
+  String get readinessReasonTooFewValidators =>
+      'Eine Regel verlangt mehr Prüfer, als dieser Bereich hat';
+
+  @override
+  String get readinessReasonNoPolicies =>
+      'Keine Anfrage wartet auf eine Bestätigung';
+
+  @override
+  String get readinessReasonNoEvidence =>
+      'Noch kein Export und keine Wiederherstellung erfasst';
+
+  @override
+  String get readinessActorOwner => 'Sie';
+
+  @override
+  String get readinessActorOperator => 'Der Serverbetreiber';
+
+  @override
+  String readinessActor(String who) {
+    return 'Wer: $who';
+  }
+
+  @override
+  String get readinessAreaAssistant => 'Assistentenzugang (optional)';
+
+  @override
+  String get readinessActorAdministrator => 'Eine Datenbankadministration';
+
+  @override
+  String get readinessReasonNotExposed =>
+      'Dieser Bereich gibt Assistenten noch nichts frei';
+
+  @override
+  String get readinessReasonEligibilityRequested =>
+      'Ihre Anfrage wartet auf die Datenbankadministration';
+
+  @override
+  String get readinessReasonEligibilityExpired =>
+      'Ihre Freigabe für Assistenten ist abgelaufen';
+
+  @override
+  String get readinessReasonEligibilityNoIdentity =>
+      'Melden Sie sich zuerst mit Ihrer bestätigten Identität an';
+
+  @override
+  String get readinessReasonEligibilityMissing =>
+      'Keine Datenbankadministration hat Sie für Assistenten freigegeben';
+
+  @override
   String get featureWorkspaceStatus => 'Lage des Arbeitsbereichs';
 
   @override

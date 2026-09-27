@@ -12959,6 +12959,68 @@ class AppLocalizationsEn extends AppLocalizations {
       'Details your features need (identity, bank, platforms)';
 
   @override
+  String get readinessAreaBackend => 'Server and database version';
+
+  @override
+  String get readinessAreaRolesValidation => 'Roles and who validates requests';
+
+  @override
+  String get readinessStateNeedsOperator => 'Waiting for someone else';
+
+  @override
+  String get readinessStateNotApplicable => 'Not needed here';
+
+  @override
+  String get readinessStateUnavailable => 'Could not be read';
+
+  @override
+  String get readinessReasonTooFewValidators =>
+      'A policy asks for more validators than this space has';
+
+  @override
+  String get readinessReasonNoPolicies => 'No request waits for a validator';
+
+  @override
+  String get readinessReasonNoEvidence => 'No export or restore recorded yet';
+
+  @override
+  String get readinessActorOwner => 'You';
+
+  @override
+  String get readinessActorOperator => 'The server operator';
+
+  @override
+  String readinessActor(String who) {
+    return 'Who: $who';
+  }
+
+  @override
+  String get readinessAreaAssistant => 'Assistant access (optional)';
+
+  @override
+  String get readinessActorAdministrator => 'A database administrator';
+
+  @override
+  String get readinessReasonNotExposed =>
+      'This space does not expose anything to assistants yet';
+
+  @override
+  String get readinessReasonEligibilityRequested =>
+      'Your request waits for a database administrator';
+
+  @override
+  String get readinessReasonEligibilityExpired =>
+      'Your assistant eligibility has expired';
+
+  @override
+  String get readinessReasonEligibilityNoIdentity =>
+      'Sign in with your verified identity first';
+
+  @override
+  String get readinessReasonEligibilityMissing =>
+      'A database administrator has not approved you for assistants';
+
+  @override
   String get featureWorkspaceStatus => 'Workspace status';
 
   @override

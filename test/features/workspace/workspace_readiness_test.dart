@@ -4,6 +4,7 @@
 // booking, list every section with its state, open where each is set
 // up, and say nothing at all when the Get started help is switched off.
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_readiness.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/workspace_readiness_card.dart';
@@ -47,6 +48,7 @@ Future<List<String>> _pump(
   WidgetTester tester,
   FakeLocalSetupRepository repo, {
   Set<WorkspaceFeature>? features,
+  int? serverSchema,
 }) async {
   final pushed = <String>[];
   GoRoute recorder(String path) => GoRoute(
@@ -68,12 +70,18 @@ Future<List<String>> _pump(
       ),
       recorder('/editor'),
       recorder('/billing'),
+      recorder('/server'),
     ],
   );
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...standardTestOverrides(localSetup: repo),
+        ...standardTestOverrides(
+          localSetup: repo,
+          schemaVersion: serverSchema == null
+              ? null
+              : FixedSchemaVersionSource(serverSchema),
+        ),
         if (features != null)
           enabledFeaturesSyncProvider.overrideWithValue(features),
       ],
@@ -149,7 +157,11 @@ void main() {
       find.text('Before a first booking: Bookable places on the floor plan'),
       findsOneWidget,
     );
-    expect(find.text('All sections (1 of 4 ready)'), findsOneWidget);
+    expect(
+      find.text('All sections (2 of 5 ready)'),
+      findsOneWidget,
+      reason: 'the server runs this build\'s schema, so the backend is ready',
+    );
     await tester.tap(find.byKey(const ValueKey('workspace-readiness-next')));
     await tester.pumpAndSettle();
     expect(pushed, ['/editor']);
@@ -171,6 +183,173 @@ void main() {
       findsOneWidget,
     );
     expect(find.textContaining('Not verified yet'), findsOneWidget);
+  });
+
+  test('0295 words: who acts, why, and what is not applicable', () {
+    final s = ReadinessSection.listFromJson([
+      {
+        'section': 'roles_validation',
+        'state': 'needs_configuration',
+        'required': true,
+        'actor': 'owner',
+        'reason': 'too_few_validators',
+        'route': '/validation',
+      },
+      {
+        'section': 'roles_validation',
+        'state': 'not_applicable',
+        'reason': 'no_policies',
+      },
+      {'section': 'recovery', 'state': 'unverified', 'actor': 'operator'},
+      {'section': 'recovery', 'state': 'unavailable'},
+      {'section': 'resources', 'state': 'needs_operator', 'required': true},
+    ]);
+    expect(s.map((e) => e.state), [
+      ReadinessState.needsConfiguration,
+      ReadinessState.notApplicable,
+      ReadinessState.unverified,
+      ReadinessState.unavailable,
+      ReadinessState.needsOperator,
+    ]);
+    expect(s[0].area, ReadinessArea.rolesValidation);
+    expect(s[0].reason, 'too_few_validators');
+    expect(s[0].blocking, isTrue);
+    expect(s[1].applicable, isFalse);
+    expect(s[2].actor, ReadinessActor.operator);
+    expect(s[3].actor, ReadinessActor.owner, reason: 'owner unless named');
+    expect(s[3].blocking, isFalse);
+    expect(s[4].blocking, isTrue, reason: 'an operator step still blocks');
+  });
+
+  test('the backend section follows the app\'s own schema check', () {
+    expect(
+      backendReadiness(SchemaCompatibility.current).state,
+      ReadinessState.ready,
+    );
+    expect(
+      backendReadiness(SchemaCompatibility.ahead).state,
+      ReadinessState.ready,
+    );
+    final behind = backendReadiness(SchemaCompatibility.behind);
+    expect(behind.state, ReadinessState.needsOperator);
+    expect(behind.actor, ReadinessActor.operator);
+    expect(behind.blocking, isTrue);
+    for (final silent in [SchemaCompatibility.unknown, null]) {
+      expect(backendReadiness(silent).state, ReadinessState.unverified);
+      expect(
+        backendReadiness(silent).blocking,
+        isFalse,
+        reason: 'offline is not a missing setup',
+      );
+    }
+  });
+
+  testWidgets('a server behind this build is the operator\'s blocker', (
+    tester,
+  ) async {
+    final pushed = await _pump(
+      tester,
+      FakeLocalSetupRepository(readinessSections: _sections(seats: true)),
+      serverSchema: requiredSchemaVersion - 1,
+    );
+    expect(
+      find.text('Before a first booking: Server and database version'),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey('workspace-readiness-all')));
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('workspace-readiness-backend')),
+        matching: find.textContaining('Who: The server operator'),
+      ),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey('workspace-readiness-next')));
+    await tester.pumpAndSettle();
+    expect(pushed, ['/server']);
+  });
+
+  testWidgets('a policy nobody can satisfy says why; none is not counted', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      FakeLocalSetupRepository(
+        readinessSections: [
+          ..._sections(seats: true),
+          const ReadinessSection(
+            area: ReadinessArea.rolesValidation,
+            state: ReadinessState.notApplicable,
+            required: false,
+            route: '/validation',
+            reason: 'no_policies',
+          ),
+        ],
+      ),
+    );
+    expect(
+      find.text('All sections (3 of 5 ready)'),
+      findsOneWidget,
+      reason: 'a section with nothing to set up is not a section to finish',
+    );
+    await tester.tap(find.byKey(const ValueKey('workspace-readiness-all')));
+    await tester.pumpAndSettle();
+    final row = find.byKey(const ValueKey('workspace-readiness-rolesValidation'));
+    expect(
+      find.descendant(
+        of: row,
+        matching: find.text(
+          'Not needed here · No request waits for a validator',
+        ),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: row, matching: find.byType(TextButton)),
+      findsNothing,
+    );
+  });
+
+  testWidgets('assistant access waits on an administrator, never on a booking',
+      (tester) async {
+    final assistant = ReadinessSection.listFromJson([
+      {
+        'section': 'assistant',
+        'state': 'needs_operator',
+        'required': false,
+        'actor': 'administrator',
+        'reason': 'eligibility_requested',
+        'route': '/assistants',
+      },
+    ]).single;
+    expect(assistant.area, ReadinessArea.assistant);
+    expect(assistant.actor, ReadinessActor.administrator);
+    expect(assistant.blocking, isFalse);
+    await _pump(
+      tester,
+      FakeLocalSetupRepository(
+        readinessSections: [..._sections(seats: true), assistant],
+      ),
+    );
+    expect(
+      find.text('Ready for a first booking'),
+      findsOneWidget,
+      reason: 'native use does not wait for assistant access',
+    );
+    await tester.tap(find.byKey(const ValueKey('workspace-readiness-all')));
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('workspace-readiness-assistant')),
+        matching: find.text(
+          'Waiting for someone else · Needed later · '
+          'Your request waits for a database administrator · '
+          'Who: A database administrator',
+        ),
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('switched off with the Get started help, it shows nothing', (
