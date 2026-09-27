@@ -7,7 +7,7 @@
 //   dart run tool/instance.dart create   --token … --org <organisation id> --name <project name> [--region eu-west-3]
 //   dart run tool/instance.dart install  --token … --ref <project ref> [--skip N]
 //   dart run tool/instance.dart record   --token … --ref <project ref> --through NNNN
-//   dart run tool/instance.dart doctor   --token … --ref <project ref> [--public]
+//   dart run tool/instance.dart doctor   --token … --ref <project ref> [--public | --support-json]
 //   dart run tool/instance.dart auth     --token … --ref <project ref>
 //   dart run tool/instance.dart doctor   --token … --ref <project ref>
 //   dart run tool/instance.dart db-admins --token … --ref <ref> list | grant --email E [--review-only] [--apply] | revoke --email E [--apply]
@@ -34,11 +34,12 @@ import 'dart:io';
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_bundle.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
-import 'package:deskilo/core/instance/instance_policies.dart';
+import 'package:deskilo/core/instance/instance_policy_parser.dart';
 import 'package:deskilo/core/instance/management_api.dart';
 
 import 'build_instance.dart';
 import 'instance/db_admins.dart';
+import 'instance/support_doctor.dart';
 
 // Dart ignores what `main` returns; the exit code is set here.
 Future<void> main(List<String> argv) async => exitCode = await run(argv);
@@ -116,9 +117,21 @@ Future<int> run(List<String> argv) async {
         return 0;
       case 'doctor':
         final ref = args.option('ref');
-        if (ref == null) {
+        if (ref == null || ref.isEmpty) {
           stderr.writeln('doctor needs --ref');
           return 2;
+        }
+        if (args.flag('support-json')) {
+          final evidence = await loadSupportEvidence();
+          return await runSupportDoctor(() async {
+            final policies = File(instancePoliciesAssetPath);
+            final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
+            return InstanceDoctor(api).examine(ref,
+                required: int.parse(bundle.schemaVersion),
+                bundleMigrations: [for (final m in bundle.schema) m.name],
+                expectedPolicies: policies.existsSync()
+                    ? parseInstancePolicies(policies.readAsStringSync()) : const {});
+          }, evidence: evidence);
         }
         // #1313 — the expected policies come from the file CI's replay
         // writes; without it drift simply is not judged.
@@ -188,7 +201,7 @@ class _Args {
     command = argv.firstOrNull ?? '';
     for (var i = 1; i < argv.length; i++) {
       final a = argv[i];
-      if (_flags.contains(a.substring(a.startsWith('--') ? 2 : 0))) {
+      if (a.startsWith('--') && _flags.contains(a.substring(2))) {
         _options[a.substring(2)] = 'true';
       } else if (a.startsWith('--')) {
         _options[a.substring(2)] = i + 1 < argv.length ? argv[++i] : '';
@@ -199,7 +212,7 @@ class _Args {
   }
 
   /// Options that take no value.
-  static const _flags = {'apply', 'review-only'};
+  static const _flags = {'apply', 'review-only', 'support-json'};
   String? positional;
   bool flag(String name) => _options[name] == 'true';
   late final String command;

@@ -7311,6 +7311,24 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceAlreadyCheckedInHere": "Sie sind hier bereits eingecheckt. Wählen Sie « Auschecken », um den Platz freizugeben.",
+  "supportTitle": "Supportdetails",
+  "supportPrivacy": "Enthalten sind nur begrenzte Ereigniszähler dieses Geräts und bekannte Prüfergebnisse. Identitäten, Serveradressen, Zugangsdaten, Geschäftsdaten und Rohprotokolle sind ausgeschlossen. Unbekannte Prüfungen sind nicht verfügbar; ein Betreiber kann doctor --support-json separat ausführen. Geteilte Dateien können nicht zurückgerufen werden.",
+  "supportHour": "Letzte Stunde",
+  "supportDay": "Letzte 24 Stunden",
+  "supportPrepare": "Vorschau vorbereiten",
+  "supportSize": "Vorschau: {bytes} Bytes",
+  "supportSaved": "Lokal gespeichert",
+  "supportChanged": "Der Kontext hat sich geändert. Erstellen Sie eine neue Vorschau.",
+  "supportFailed": "Supportdetails konnten nicht vorbereitet werden. Erneut versuchen.",
+  "supportDemo": "Demo: simulierter lokaler Kontext",
+  "@supportSize": {
+    "placeholders": {
+      "bytes": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
   "capabilityMultiApproval": "Zwei oder mehr Freigaben",
   "capabilityRefundApprovals": "Zwei Freigaben für Erstattungen",
   "capabilityPayAsYouGo": "Nutzungsbasierte Abrechnung",

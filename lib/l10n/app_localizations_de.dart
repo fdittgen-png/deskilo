@@ -11300,6 +11300,45 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sie sind hier bereits eingecheckt. Wählen Sie « Auschecken », um den Platz freizugeben.';
 
   @override
+  String get supportTitle => 'Supportdetails';
+
+  @override
+  String get supportPrivacy =>
+      'Enthalten sind nur begrenzte Ereigniszähler dieses Geräts und bekannte Prüfergebnisse. Identitäten, Serveradressen, Zugangsdaten, Geschäftsdaten und Rohprotokolle sind ausgeschlossen. Unbekannte Prüfungen sind nicht verfügbar; ein Betreiber kann doctor --support-json separat ausführen. Geteilte Dateien können nicht zurückgerufen werden.';
+
+  @override
+  String get supportHour => 'Letzte Stunde';
+
+  @override
+  String get supportDay => 'Letzte 24 Stunden';
+
+  @override
+  String get supportPrepare => 'Vorschau vorbereiten';
+
+  @override
+  String supportSize(int bytes) {
+    final intl.NumberFormat bytesNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String bytesString = bytesNumberFormat.format(bytes);
+
+    return 'Vorschau: $bytesString Bytes';
+  }
+
+  @override
+  String get supportSaved => 'Lokal gespeichert';
+
+  @override
+  String get supportChanged =>
+      'Der Kontext hat sich geändert. Erstellen Sie eine neue Vorschau.';
+
+  @override
+  String get supportFailed =>
+      'Supportdetails konnten nicht vorbereitet werden. Erneut versuchen.';
+
+  @override
+  String get supportDemo => 'Demo: simulierter lokaler Kontext';
+
+  @override
   String get capabilityMultiApproval => 'Zwei oder mehr Freigaben';
 
   @override

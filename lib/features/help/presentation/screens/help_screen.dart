@@ -7,6 +7,7 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/help_providers.dart';
+import 'support_bundle_screen.dart';
 
 /// Locales the bundled help exists in; anything else falls back to English.
 const helpLocales = {'en', 'fr', 'de', 'es', 'it'};
@@ -96,6 +97,13 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
       appBar: AppBar(
         title: Text(l10n?.helpTitle ?? 'Help'),
         actions: [
+          IconButton(
+            tooltip: l10n?.supportTitle ?? 'Support details',
+            icon: const Icon(Icons.support_agent),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+              builder: (_) => const SupportBundleScreen(),
+            )),
+          ),
           Builder(
             builder: (context) => IconButton(
               key: const ValueKey('help-toc-button'),

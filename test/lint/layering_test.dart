@@ -71,6 +71,9 @@ const Map<String, int> _repositoryInWidgets = {
 };
 
 const Set<String> _knownPairs = {
+  // #1642 — Help discards local support previews when identity/workspace changes.
+  'help -> auth',
+  'help -> workspace',
   // #718 — the calendar hub opens invoices and the Money month from a
   // dated row: money's own sheet and its focus controller, not a copy.
   'calendar -> money',
