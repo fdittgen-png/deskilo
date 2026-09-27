@@ -124,9 +124,10 @@ void main() {
       expect(rows[0][5], "'+1+1");
       expect(rows[1][3], "'@SUM(A1)");
       expect(rows[1][5], "'-2");
-      // A credit note's amounts stay signed numbers.
+      // A credit note's amounts stay signed numbers, gross included.
       expect(rows[0][7], '-10.00');
       expect(rows[0][8], '-2.00');
+      expect(rows[0][9], '-12.00');
     });
 
     test('control characters and delimiters cannot open a cell', () {
@@ -180,6 +181,16 @@ void main() {
       expect(rows.firstWhere((c) => c[6] == 'JPY')[9], '1200');
       expect(rows.firstWhere((c) => c[6] == 'KWD')[9], '12.345');
       expect(out.csv, contains('# 4 invoice(s)'));
+    });
+
+    test('a credit note takes its gross off the issued total', () {
+      final r = _export([
+        _inv(id: '1'),
+        _inv(id: '2', charges: -1200, net: -1000, vat: -200),
+      ]).report;
+      // 120.00 charged, 12.00 given back -> 108.00, net 100 - 10 = 90.00.
+      expect(r.totals['EUR']!['issued']!.grossMinor, 10800);
+      expect(r.totals['EUR']!['issued']!.netMinor, 9000);
     });
 
     test('pending and confirmed payments stay apart', () {

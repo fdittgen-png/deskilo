@@ -238,7 +238,7 @@ AccountantHandoff buildAccountantHandoff({
     t.count++;
     t.netMinor += invoice.netCents;
     t.vatMinor += invoice.vatCents;
-    t.grossMinor += invoice.chargesCents;
+    t.grossMinor += accountantGrossCents(invoice);
 
     final match = matches[invoice.id];
     if (match == null) continue;
