@@ -14,5 +14,7 @@
   "readinessAreaPricing": "Formules d’adhésion et tarifs",
   "readinessAreaInvitations": "Inviter les premiers membres",
   "readinessAreaPayments": "Comment les membres paient",
-  "readinessAreaRecovery": "Export et restauration"
+  "readinessAreaRecovery": "Export et restauration",
+  "gettingStartedSetupIncomplete": "Avant que quiconque puisse réserver ici : {step}.",
+  "gettingStartedActionFinishSetup": "Terminer la mise en place"
 }

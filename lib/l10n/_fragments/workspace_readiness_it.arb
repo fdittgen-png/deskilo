@@ -14,5 +14,7 @@
   "readinessAreaPricing": "Piani di iscrizione e tariffe",
   "readinessAreaInvitations": "Invitare i primi membri",
   "readinessAreaPayments": "Come pagano i membri",
-  "readinessAreaRecovery": "Esportazione e ripristino"
+  "readinessAreaRecovery": "Esportazione e ripristino",
+  "gettingStartedSetupIncomplete": "Prima che qualcuno possa prenotare qui: {step}.",
+  "gettingStartedActionFinishSetup": "Completa la configurazione"
 }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../l10n/app_localizations.dart';
 import '../application/getting_started_hint.dart';
+import '../../workspace/presentation/widgets/workspace_readiness_card.dart';
 
 /// Localized wording for the existing hint model; it creates no business facts.
 abstract final class GettingStartedCopy {
@@ -44,6 +45,14 @@ abstract final class GettingStartedCopy {
                 bookingState(l10n, hint.booking!.state),
               ) ??
               'Your booking ${hint.booking!.id} is ${hint.booking!.state}.',
+        GettingStartedReason.setupIncomplete => () {
+          final area = hint.setupStep?.area;
+          final step = area == null
+              ? (l10n?.readinessTitle ?? 'Setting up this space')
+              : readinessAreaLabel(l10n, area);
+          return l10n?.gettingStartedSetupIncomplete(step) ??
+              'Before anyone can book here: $step.';
+        }(),
         GettingStartedReason.loading ||
         GettingStartedReason.pendingAdmission => '',
       };

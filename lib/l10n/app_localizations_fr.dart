@@ -12849,6 +12849,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get readinessAreaRecovery => 'Export et restauration';
 
   @override
+  String gettingStartedSetupIncomplete(String step) {
+    return 'Avant que quiconque puisse réserver ici : $step.';
+  }
+
+  @override
+  String get gettingStartedActionFinishSetup => 'Terminer la mise en place';
+
+  @override
   String get featureWorkspaceStatus => 'Situation de l\'espace';
 
   @override
