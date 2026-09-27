@@ -11560,6 +11560,34 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get workbookNote =>
+      'Una instantánea de definiciones de plantillas. Editar este archivo no cambia nada en DesKilo, y no es la copia de seguridad de ningún espacio: no contiene miembros, reservas, facturas ni credenciales.';
+
+  @override
+  String get workbookStatePresent => 'la plantilla fija este valor';
+
+  @override
+  String get workbookStateInherit =>
+      'la plantilla no lo indica; el destino conserva el suyo';
+
+  @override
+  String get workbookStateDefault =>
+      'la plantilla no lo indica; se aplica el valor por defecto';
+
+  @override
+  String get workbookStateLocal => 'a definir localmente';
+
+  @override
+  String get workbookStateUnknown => 'no se pudo leer; no se afirma nada';
+
+  @override
+  String get workbookStateExcluded => 'deliberadamente nunca publicado';
+
+  @override
+  String get workbookWide =>
+      'Catalogs, RolePermissions, Validations y Fields muestran un valor donde la plantilla lo fija y, si no, su estado';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

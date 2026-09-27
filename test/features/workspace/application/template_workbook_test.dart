@@ -12,6 +12,9 @@ import 'package:deskilo/features/workspace/application/template_workbook.dart';
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
+import 'package:deskilo/features/workspace/presentation/workbook_labels.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 TemplateInspection _i(String key, List<TemplateFieldRecord> fields) =>
@@ -64,6 +67,7 @@ void main() {
       ]);
       final features = sheets.firstWhere((s) => s.name == 'Features').rows;
       expect(features[1], [
+        'kioskMode',
         'kioskMode',
         'false',
         'present',
@@ -181,5 +185,32 @@ void main() {
       isFalse,
       reason: 'nested labels are Settings rows, not a wide column',
     );
+  });
+
+  test('the reader\'s language changes the words, never the keys or values',
+      () {
+    final inspections = [
+      _i('a', [_f('workspace.feature_flags.kioskMode', false)]),
+    ];
+    final en = templateWorkbook(inspections, capturedAt: at);
+    final fr = templateWorkbook(
+      inspections,
+      capturedAt: at,
+      labels: workbookLabels(lookupAppLocalizations(const Locale('fr'))),
+    );
+    List<List<Object?>> rows(List<XlsxSheet> w, String n) =>
+        w.firstWhere((s) => s.name == n).rows;
+    final readme = rows(fr, 'Readme');
+    expect(readme.firstWhere((r) => r.first == 'language')[1], 'fr');
+    expect(
+      readme.firstWhere((r) => r.first == 'state absent:required')[1],
+      'à définir localement',
+    );
+    final feature = rows(fr, 'Features')[1];
+    expect(feature[0], 'kioskMode', reason: 'the key stays technical');
+    expect(feature[1], isNot('kioskMode'), reason: 'the label is French');
+    expect(feature.skip(2), rows(en, 'Features')[1].skip(2),
+        reason: 'values and states are the same in every language');
+    expect(rows(fr, 'Settings'), rows(en, 'Settings'));
   });
 }

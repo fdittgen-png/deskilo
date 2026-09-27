@@ -10,6 +10,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/template_compare.dart';
+import '../workbook_labels.dart';
 import '../../domain/template_capabilities.dart';
 import '../../domain/template_inspection.dart';
 import '../../domain/workspace_template.dart';
@@ -47,7 +48,8 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
       message: 'template workbook export failed',
       action: () async => path = await ref
           .read(templateWorkbookExportProvider)
-          .export([for (final t in widget.templates) t.id], now: ref.read(clockProvider).now()),
+          .export([for (final t in widget.templates) t.id], now: ref.read(clockProvider).now(),
+              labels: workbookLabels(AppLocalizations.of(context))),
     );
     if (!mounted) return;
     setState(() => _exporting = false);

@@ -2,5 +2,13 @@
   "compareExport": "Exporter vers Excel",
   "compareExported": "Classeur enregistré.",
   "templateExportResults": "Exporter ces résultats ({count})",
-  "templateExportTooMany": "Au plus {max} modèles par classeur. Affinez d’abord la recherche."
+  "templateExportTooMany": "Au plus {max} modèles par classeur. Affinez d’abord la recherche.",
+  "workbookNote": "Un instantané de définitions de modèles. Modifier ce fichier ne change rien dans DesKilo, et ce n’est la sauvegarde d’aucun espace : il ne contient ni membres, ni réservations, ni factures, ni identifiants.",
+  "workbookStatePresent": "le modèle fixe cette valeur",
+  "workbookStateInherit": "le modèle ne dit rien ; la cible garde la sienne",
+  "workbookStateDefault": "le modèle ne dit rien ; la valeur par défaut s’applique",
+  "workbookStateLocal": "à définir localement",
+  "workbookStateUnknown": "illisible ; rien n’est affirmé",
+  "workbookStateExcluded": "délibérément jamais publié",
+  "workbookWide": "Catalogs, RolePermissions, Validations et Fields montrent une valeur là où le modèle la fixe, et son état sinon"
 }
