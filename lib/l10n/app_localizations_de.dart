@@ -11630,6 +11630,24 @@ class AppLocalizationsDe extends AppLocalizations {
       'Catalogs, RolePermissions, Validations und Fields zeigen einen Wert, wo die Vorlage ihn festlegt, sonst seinen Zustand';
 
   @override
+  String get workbookExportTitle => 'Arbeitsmappe wird exportiert';
+
+  @override
+  String workbookExportReading(String done, String total) {
+    return 'Vorlagen werden gelesen: $done von $total';
+  }
+
+  @override
+  String get workbookExportBuilding => 'Arbeitsmappe wird erstellt…';
+
+  @override
+  String get workbookExportSaving => 'Wählen Sie den Speicherort…';
+
+  @override
+  String get workbookExportCancelled =>
+      'Export abgebrochen. Nichts wurde gespeichert.';
+
+  @override
   String get themeTitle => 'Design';
 
   @override

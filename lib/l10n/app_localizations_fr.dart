@@ -11646,6 +11646,24 @@ class AppLocalizationsFr extends AppLocalizations {
       'Catalogs, RolePermissions, Validations et Fields montrent une valeur là où le modèle la fixe, et son état sinon';
 
   @override
+  String get workbookExportTitle => 'Export du classeur';
+
+  @override
+  String workbookExportReading(String done, String total) {
+    return 'Lecture des modèles : $done sur $total';
+  }
+
+  @override
+  String get workbookExportBuilding => 'Construction du classeur…';
+
+  @override
+  String get workbookExportSaving => 'Choisissez où l’enregistrer…';
+
+  @override
+  String get workbookExportCancelled =>
+      'Export annulé. Rien n’a été enregistré.';
+
+  @override
   String get themeTitle => 'Thème';
 
   @override

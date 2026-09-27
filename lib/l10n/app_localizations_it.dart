@@ -11633,6 +11633,24 @@ class AppLocalizationsIt extends AppLocalizations {
       'Catalogs, RolePermissions, Validations e Fields mostrano un valore dove il modello lo imposta, altrimenti il suo stato';
 
   @override
+  String get workbookExportTitle => 'Esportazione della cartella di lavoro';
+
+  @override
+  String workbookExportReading(String done, String total) {
+    return 'Lettura dei modelli: $done di $total';
+  }
+
+  @override
+  String get workbookExportBuilding => 'Creazione della cartella di lavoro…';
+
+  @override
+  String get workbookExportSaving => 'Scelga dove salvarla…';
+
+  @override
+  String get workbookExportCancelled =>
+      'Esportazione annullata. Non è stato salvato nulla.';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override
