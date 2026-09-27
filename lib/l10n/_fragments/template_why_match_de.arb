@@ -10,5 +10,7 @@
   "capabilityStateUnknown": "Unbekannt",
   "templateRequire": "Voraussetzen: {capability}",
   "templateRequirementRemove": "Voraussetzung entfernen",
-  "templateRequirementsReset": "Zurücksetzen"
+  "templateRequirementsReset": "Zurücksetzen",
+  "templateNoMatch": "Keine Vorlage passt. Ändern Sie die Wörter, ein Schlagwort oder eine Voraussetzung.",
+  "templateClearFilters": "Suche zurücksetzen"
 }

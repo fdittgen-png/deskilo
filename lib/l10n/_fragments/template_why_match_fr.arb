@@ -10,5 +10,7 @@
   "capabilityStateUnknown": "Inconnu",
   "templateRequire": "Exiger : {capability}",
   "templateRequirementRemove": "Retirer l’exigence",
-  "templateRequirementsReset": "Réinitialiser"
+  "templateRequirementsReset": "Réinitialiser",
+  "templateNoMatch": "Aucun modèle ne correspond. Changez les mots, une étiquette ou une exigence.",
+  "templateClearFilters": "Effacer la recherche"
 }

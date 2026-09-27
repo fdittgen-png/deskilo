@@ -11420,6 +11420,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get templateRequirementsReset => 'Reset';
 
   @override
+  String get templateNoMatch =>
+      'No template matches. Change the words, a tag or a requirement.';
+
+  @override
+  String get templateClearFilters => 'Clear the search';
+
+  @override
   String get libraryInvitationTexts => 'Invitation texts';
 
   @override

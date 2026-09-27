@@ -159,4 +159,30 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('#1660 a search that matches nothing says so, and Clear '
+      'brings every template back', (tester) async {
+    await _pump(tester, const [alpha, beta, gamma]);
+    await _search(tester, 'zzzz');
+    expect(find.byKey(const ValueKey('template-no-match')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('template-gallery-empty')),
+      findsNothing,
+      reason: 'the library is not empty; the search is',
+    );
+    await tester.tap(find.byKey(const ValueKey('template-clear-filters')));
+    await tester.pumpAndSettle();
+    expect(find.byType(TemplateCard), findsNWidgets(3));
+    expect(find.byKey(const ValueKey('template-no-match')), findsNothing);
+  });
+
+  testWidgets('#1660 an empty library is not a failed search', (tester) async {
+    await _pump(tester, const []);
+    await _search(tester, 'anything');
+    expect(find.byKey(const ValueKey('template-no-match')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('template-gallery-empty')),
+      findsOneWidget,
+    );
+  });
 }

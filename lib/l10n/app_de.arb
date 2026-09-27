@@ -7380,6 +7380,8 @@
   "templateRequire": "Voraussetzen: {capability}",
   "templateRequirementRemove": "Voraussetzung entfernen",
   "templateRequirementsReset": "Zurücksetzen",
+  "templateNoMatch": "Keine Vorlage passt. Ändern Sie die Wörter, ein Schlagwort oder eine Voraussetzung.",
+  "templateClearFilters": "Suche zurücksetzen",
   "libraryInvitationTexts": "Einladungstexte",
   "libraryInvitationTextsHint": "Nur Texte mit Platzhaltern wie {tag}; ein Text, der Ihren Arbeitsbereich oder seine Personen nennt, wird abgelehnt.",
   "libraryInvitationTextsRefused": "Ein Einladungstext nennt noch Ihren Arbeitsbereich oder seine Personen. Ersetzen Sie sie in den Einladungseinstellungen durch Platzhalter oder wählen Sie die Einladungstexte ab.",

@@ -7380,6 +7380,8 @@
   "templateRequire": "Exiger : {capability}",
   "templateRequirementRemove": "Retirer l’exigence",
   "templateRequirementsReset": "Réinitialiser",
+  "templateNoMatch": "Aucun modèle ne correspond. Changez les mots, une étiquette ou une exigence.",
+  "templateClearFilters": "Effacer la recherche",
   "libraryInvitationTexts": "Textes d'invitation",
   "libraryInvitationTextsHint": "Seulement des textes écrits avec des variables comme {tag} ; un texte qui nomme votre espace ou ses membres est refusé.",
   "libraryInvitationTextsRefused": "Un texte d'invitation nomme encore votre espace ou ses membres. Remplacez-les par des variables dans les réglages d'invitation, ou décochez les textes d'invitation.",

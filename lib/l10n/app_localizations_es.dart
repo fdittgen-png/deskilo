@@ -11507,6 +11507,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get templateRequirementsReset => 'Restablecer';
 
   @override
+  String get templateNoMatch =>
+      'Ninguna plantilla coincide. Cambie las palabras, una etiqueta o un requisito.';
+
+  @override
+  String get templateClearFilters => 'Borrar la búsqueda';
+
+  @override
   String get libraryInvitationTexts => 'Textos de invitación';
 
   @override
