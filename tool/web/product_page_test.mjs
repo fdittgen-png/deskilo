@@ -6,7 +6,8 @@
 // numbers checked by hand.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { TEXT, LOCALES, fieldValue, scenarioFromFields, describePlan } from '../../web/product.js';
+import { TEXT, LOCALES, fieldValue, scenarioFromFields, describePlan, capabilityState, capabilityKey, capabilityRows } from '../../web/product.js';
+import { CAPABILITIES } from '../../web/product_capabilities.js';
 import { planCost } from '../../web/cost_planner.js';
 
 const html = fs.readFileSync(new URL('../../web/product.html', import.meta.url), 'utf8');
@@ -90,6 +91,34 @@ t('a funded assistant is billed per started million tokens', () => {
 
 t('an invalid currency says so instead of a number', () => {
   assert.deepEqual(describePlan({ currency: '' }, 'de'), [TEXT.de.resultInvalidCurrency]);
+});
+
+t('every capability the evidence lists has a name in every language', () => {
+  assert.ok(CAPABILITIES.length > 0);
+  for (const l of LOCALES) {
+    for (const c of CAPABILITIES) assert.ok(TEXT[l][capabilityKey(c.id)], `${l}: ${c.id}`);
+  }
+  const named = Object.keys(TEXT.en).filter((k) => k.startsWith('cap_'));
+  assert.deepEqual(named.sort(), CAPABILITIES.map((c) => capabilityKey(c.id)).sort(),
+    'no label for a capability the evidence no longer lists');
+});
+
+t('planned, unevidenced or unknown is never shown as available', () => {
+  assert.equal(capabilityState({ status: 'roadmap', evidence: ['unit:gated'] }), 'planned');
+  assert.equal(capabilityState({ status: 'shipped', evidence: [] }), 'unknown');
+  assert.equal(capabilityState({ status: 'beta', evidence: ['unit:gated'] }), 'unknown');
+  assert.equal(capabilityState({ status: 'shipped', evidence: ['unit:gated'] }), 'tested');
+  assert.equal(capabilityState({ status: 'shipped', evidence: ['unit:gated', 'named_runtime:recorded'] }), 'verified');
+  for (const l of LOCALES) {
+    for (const r of capabilityRows(l)) {
+      const c = CAPABILITIES.find((x) => x.id === r.id);
+      if (c.status !== 'shipped') {
+        assert.notEqual(r.text, TEXT[l].capStateTested, `${l}: ${r.id}`);
+        assert.notEqual(r.text, TEXT[l].capStateVerified, `${l}: ${r.id}`);
+      }
+    }
+  }
+  assert.ok(capabilityRows('en').some((r) => r.id === 'mcp.write' && r.state === 'planned'));
 });
 
 console.log(`product page: ${cases} cases passed`);
