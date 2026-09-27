@@ -314,6 +314,12 @@ abstract class AppLocalizations {
   /// **'Save file and report'**
   String get handoffSave;
 
+  /// #1640 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'The invoices changed while you were reviewing. Export again to see the current books.'**
+  String get handoffChanged;
+
   /// #936 accounting exports: fecAccountExpenses
   ///
   /// In en, this message translates to:
@@ -19794,6 +19800,114 @@ abstract class AppLocalizations {
   /// **'Who validates: {type}'**
   String localSlotNamedValidators(String type);
 
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Why this matches'**
+  String get templateWhy;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Hide why'**
+  String get templateWhyHide;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get capabilityStateEnabled;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get capabilityStateDisabled;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'On only if its prerequisites are'**
+  String get capabilityStateConditional;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Not set by this template'**
+  String get capabilityStateUnspecified;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a local value first'**
+  String get capabilityStateLocalInput;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot apply here'**
+  String get capabilityStateIncompatible;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get capabilityStateUnknown;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Require: {capability}'**
+  String templateRequire(String capability);
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Remove requirement'**
+  String get templateRequirementRemove;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get templateRequirementsReset;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'No template matches. Change the words, a tag or a requirement.'**
+  String get templateNoMatch;
+
+  /// #1660 template_why_match
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the search'**
+  String get templateClearFilters;
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'Make this template readable by: {audience}?'**
+  String templateWidenTitle(String audience);
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'{count} settings become readable, exactly as the template holds them now.'**
+  String templateWidenCount(String count);
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'{count} kinds of value never leave with it (bank details, sites, addresses…).'**
+  String templateWidenExcluded(String count);
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'Make readable'**
+  String get templateWidenConfirm;
+
   /// #1656 template_wording
   ///
   /// In en, this message translates to:
@@ -19823,6 +19937,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workbook saved.'**
   String get compareExported;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Export these results ({count})'**
+  String templateExportResults(String count);
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'At most {max} templates per workbook. Narrow the search first.'**
+  String templateExportTooMany(String max);
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'A snapshot of template definitions. Editing this file changes nothing in DesKilo, and it is not a backup of any workspace: it holds no members, bookings, invoices or credentials.'**
+  String get workbookNote;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'the template sets this value'**
+  String get workbookStatePresent;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'the template does not say; the target keeps its own'**
+  String get workbookStateInherit;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'the template does not say; the default applies'**
+  String get workbookStateDefault;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'to be set locally'**
+  String get workbookStateLocal;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'could not be read; nothing is claimed'**
+  String get workbookStateUnknown;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'deliberately never published'**
+  String get workbookStateExcluded;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise'**
+  String get workbookWide;
 
   /// Settings entry and dialog title for the in-app theme selection
   ///

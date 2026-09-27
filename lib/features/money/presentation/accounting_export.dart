@@ -311,9 +311,40 @@ Future<void> exportAccountingFile(
             generatedAt: now,
           );
           if (!await showAccountantHandoffPreflight(context, report)) return;
-          await save(csv, named('accounting'));
-          await save(report.toPrettyJson(),
-              '${safeFileSlug('accounting report ${workspace.name} $label')}.json');
+          // #1640 — a bounded recheck: the same documents read again from
+          // the server must give the same fingerprint, in the same space,
+          // or the reviewed file no longer describes the books.
+          final ids = {for (final i in invoices) i.id};
+          final fresh = accountingView(
+            [
+              for (final i in await repo.fetchInvoices(workspace.id))
+                if (ids.contains(i.id)) i,
+            ],
+            await repo.fetchInvoiceMatches(workspace.id),
+          );
+          if (!context.mounted) return;
+          if (ref.read(currentWorkspaceProvider).value?.id != workspace.id ||
+              accountantSourceDigest(fresh.invoices, fresh.matches) !=
+                  accountantSourceDigest(exported, matches)) {
+            AppSnack.error(
+              context,
+              l10n?.handoffChanged ??
+                  'The invoices changed while you were reviewing. Export '
+                      'again to see the current books.',
+            );
+            return;
+          }
+          // One archive: the CSV and the report that counts it travel
+          // together, or not at all.
+          final stem = safeFileSlug('accounting ${workspace.name} $label');
+          final bytes = accountantHandoffArchive(
+            csv: csv,
+            csvName: '$stem.csv',
+            report: report,
+          );
+          if (!context.mounted) return;
+          await savePdfToDownloads(context, ref,
+              bytes: bytes, fileName: '$stem.zip');
         },
       );
 

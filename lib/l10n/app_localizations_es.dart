@@ -138,6 +138,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get handoffSave => 'Guardar archivo e informe';
 
   @override
+  String get handoffChanged =>
+      'Las facturas cambiaron mientras las revisaba. Vuelva a exportar para ver las cuentas actuales.';
+
+  @override
   String get fecAccountExpenses => 'Gastos';
 
   @override
@@ -11464,6 +11468,70 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get templateWhy => 'Por qué coincide';
+
+  @override
+  String get templateWhyHide => 'Ocultar el porqué';
+
+  @override
+  String get capabilityStateEnabled => 'Activado';
+
+  @override
+  String get capabilityStateDisabled => 'Desactivado';
+
+  @override
+  String get capabilityStateConditional =>
+      'Activado solo si sus requisitos lo están';
+
+  @override
+  String get capabilityStateUnspecified => 'No lo fija esta plantilla';
+
+  @override
+  String get capabilityStateLocalInput => 'Necesita antes un valor local';
+
+  @override
+  String get capabilityStateIncompatible => 'No aplicable aquí';
+
+  @override
+  String get capabilityStateUnknown => 'Desconocido';
+
+  @override
+  String templateRequire(String capability) {
+    return 'Exigir: $capability';
+  }
+
+  @override
+  String get templateRequirementRemove => 'Quitar el requisito';
+
+  @override
+  String get templateRequirementsReset => 'Restablecer';
+
+  @override
+  String get templateNoMatch =>
+      'Ninguna plantilla coincide. Cambie las palabras, una etiqueta o un requisito.';
+
+  @override
+  String get templateClearFilters => 'Borrar la búsqueda';
+
+  @override
+  String templateWidenTitle(String audience) {
+    return '¿Hacer esta plantilla legible para: $audience?';
+  }
+
+  @override
+  String templateWidenCount(String count) {
+    return '$count ajustes pasan a ser legibles, tal como los contiene ahora la plantilla.';
+  }
+
+  @override
+  String templateWidenExcluded(String count) {
+    return '$count tipos de valores nunca salen con ella (datos bancarios, sedes, direcciones…).';
+  }
+
+  @override
+  String get templateWidenConfirm => 'Hacer legible';
+
+  @override
   String get libraryInvitationTexts => 'Textos de invitación';
 
   @override
@@ -11480,6 +11548,44 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get compareExported => 'Libro guardado.';
+
+  @override
+  String templateExportResults(String count) {
+    return 'Exportar estos resultados ($count)';
+  }
+
+  @override
+  String templateExportTooMany(String max) {
+    return 'Como máximo $max plantillas por libro. Acote primero la búsqueda.';
+  }
+
+  @override
+  String get workbookNote =>
+      'Una instantánea de definiciones de plantillas. Editar este archivo no cambia nada en DesKilo, y no es la copia de seguridad de ningún espacio: no contiene miembros, reservas, facturas ni credenciales.';
+
+  @override
+  String get workbookStatePresent => 'la plantilla fija este valor';
+
+  @override
+  String get workbookStateInherit =>
+      'la plantilla no lo indica; el destino conserva el suyo';
+
+  @override
+  String get workbookStateDefault =>
+      'la plantilla no lo indica; se aplica el valor por defecto';
+
+  @override
+  String get workbookStateLocal => 'a definir localmente';
+
+  @override
+  String get workbookStateUnknown => 'no se pudo leer; no se afirma nada';
+
+  @override
+  String get workbookStateExcluded => 'deliberadamente nunca publicado';
+
+  @override
+  String get workbookWide =>
+      'Catalogs, RolePermissions, Validations y Fields muestran un valor donde la plantilla lo fija y, si no, su estado';
 
   @override
   String get themeTitle => 'Tema';

@@ -1,4 +1,14 @@
 {
   "compareExport": "Exportar a Excel",
-  "compareExported": "Libro guardado."
+  "compareExported": "Libro guardado.",
+  "templateExportResults": "Exportar estos resultados ({count})",
+  "templateExportTooMany": "Como máximo {max} plantillas por libro. Acote primero la búsqueda.",
+  "workbookNote": "Una instantánea de definiciones de plantillas. Editar este archivo no cambia nada en DesKilo, y no es la copia de seguridad de ningún espacio: no contiene miembros, reservas, facturas ni credenciales.",
+  "workbookStatePresent": "la plantilla fija este valor",
+  "workbookStateInherit": "la plantilla no lo indica; el destino conserva el suyo",
+  "workbookStateDefault": "la plantilla no lo indica; se aplica el valor por defecto",
+  "workbookStateLocal": "a definir localmente",
+  "workbookStateUnknown": "no se pudo leer; no se afirma nada",
+  "workbookStateExcluded": "deliberadamente nunca publicado",
+  "workbookWide": "Catalogs, RolePermissions, Validations y Fields muestran un valor donde la plantilla lo fija y, si no, su estado"
 }

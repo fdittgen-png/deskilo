@@ -6,5 +6,55 @@
   "compareExported": "Workbook saved.",
   "@compareExported": {
     "description": "#1661 template_workbook"
+  },
+  "templateExportResults": "Export these results ({count})",
+  "@templateExportResults": {
+    "description": "#1661 template_workbook",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "templateExportTooMany": "At most {max} templates per workbook. Narrow the search first.",
+  "@templateExportTooMany": {
+    "description": "#1661 template_workbook",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "workbookNote": "A snapshot of template definitions. Editing this file changes nothing in DesKilo, and it is not a backup of any workspace: it holds no members, bookings, invoices or credentials.",
+  "@workbookNote": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStatePresent": "the template sets this value",
+  "@workbookStatePresent": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStateInherit": "the template does not say; the target keeps its own",
+  "@workbookStateInherit": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStateDefault": "the template does not say; the default applies",
+  "@workbookStateDefault": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStateLocal": "to be set locally",
+  "@workbookStateLocal": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStateUnknown": "could not be read; nothing is claimed",
+  "@workbookStateUnknown": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStateExcluded": "deliberately never published",
+  "@workbookStateExcluded": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookWide": "Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise",
+  "@workbookWide": {
+    "description": "#1661 template_workbook"
   }
 }

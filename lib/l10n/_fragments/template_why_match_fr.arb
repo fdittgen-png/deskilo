@@ -1,0 +1,16 @@
+{
+  "templateWhy": "Pourquoi ce modèle correspond",
+  "templateWhyHide": "Masquer le pourquoi",
+  "capabilityStateEnabled": "Activé",
+  "capabilityStateDisabled": "Désactivé",
+  "capabilityStateConditional": "Activé seulement si ses prérequis le sont",
+  "capabilityStateUnspecified": "Non défini par ce modèle",
+  "capabilityStateLocalInput": "Demande d’abord une valeur locale",
+  "capabilityStateIncompatible": "Inapplicable ici",
+  "capabilityStateUnknown": "Inconnu",
+  "templateRequire": "Exiger : {capability}",
+  "templateRequirementRemove": "Retirer l’exigence",
+  "templateRequirementsReset": "Réinitialiser",
+  "templateNoMatch": "Aucun modèle ne correspond. Changez les mots, une étiquette ou une exigence.",
+  "templateClearFilters": "Effacer la recherche"
+}

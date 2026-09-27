@@ -138,6 +138,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get handoffSave => 'Save file and report';
 
   @override
+  String get handoffChanged =>
+      'The invoices changed while you were reviewing. Export again to see the current books.';
+
+  @override
   String get fecAccountExpenses => 'Expenses';
 
   @override
@@ -11378,6 +11382,69 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get templateWhy => 'Why this matches';
+
+  @override
+  String get templateWhyHide => 'Hide why';
+
+  @override
+  String get capabilityStateEnabled => 'On';
+
+  @override
+  String get capabilityStateDisabled => 'Off';
+
+  @override
+  String get capabilityStateConditional => 'On only if its prerequisites are';
+
+  @override
+  String get capabilityStateUnspecified => 'Not set by this template';
+
+  @override
+  String get capabilityStateLocalInput => 'Needs a local value first';
+
+  @override
+  String get capabilityStateIncompatible => 'Cannot apply here';
+
+  @override
+  String get capabilityStateUnknown => 'Unknown';
+
+  @override
+  String templateRequire(String capability) {
+    return 'Require: $capability';
+  }
+
+  @override
+  String get templateRequirementRemove => 'Remove requirement';
+
+  @override
+  String get templateRequirementsReset => 'Reset';
+
+  @override
+  String get templateNoMatch =>
+      'No template matches. Change the words, a tag or a requirement.';
+
+  @override
+  String get templateClearFilters => 'Clear the search';
+
+  @override
+  String templateWidenTitle(String audience) {
+    return 'Make this template readable by: $audience?';
+  }
+
+  @override
+  String templateWidenCount(String count) {
+    return '$count settings become readable, exactly as the template holds them now.';
+  }
+
+  @override
+  String templateWidenExcluded(String count) {
+    return '$count kinds of value never leave with it (bank details, sites, addresses…).';
+  }
+
+  @override
+  String get templateWidenConfirm => 'Make readable';
+
+  @override
   String get libraryInvitationTexts => 'Invitation texts';
 
   @override
@@ -11394,6 +11461,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get compareExported => 'Workbook saved.';
+
+  @override
+  String templateExportResults(String count) {
+    return 'Export these results ($count)';
+  }
+
+  @override
+  String templateExportTooMany(String max) {
+    return 'At most $max templates per workbook. Narrow the search first.';
+  }
+
+  @override
+  String get workbookNote =>
+      'A snapshot of template definitions. Editing this file changes nothing in DesKilo, and it is not a backup of any workspace: it holds no members, bookings, invoices or credentials.';
+
+  @override
+  String get workbookStatePresent => 'the template sets this value';
+
+  @override
+  String get workbookStateInherit =>
+      'the template does not say; the target keeps its own';
+
+  @override
+  String get workbookStateDefault =>
+      'the template does not say; the default applies';
+
+  @override
+  String get workbookStateLocal => 'to be set locally';
+
+  @override
+  String get workbookStateUnknown => 'could not be read; nothing is claimed';
+
+  @override
+  String get workbookStateExcluded => 'deliberately never published';
+
+  @override
+  String get workbookWide =>
+      'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise';
 
   @override
   String get themeTitle => 'Theme';

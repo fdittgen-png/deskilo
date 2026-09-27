@@ -138,6 +138,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get handoffSave => 'Datei und Bericht speichern';
 
   @override
+  String get handoffChanged =>
+      'Die Rechnungen haben sich während Ihrer Prüfung geändert. Exportieren Sie erneut, um den aktuellen Stand zu sehen.';
+
+  @override
   String get fecAccountExpenses => 'Aufwendungen';
 
   @override
@@ -11476,6 +11480,71 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get templateWhy => 'Warum diese Vorlage passt';
+
+  @override
+  String get templateWhyHide => 'Begründung ausblenden';
+
+  @override
+  String get capabilityStateEnabled => 'An';
+
+  @override
+  String get capabilityStateDisabled => 'Aus';
+
+  @override
+  String get capabilityStateConditional =>
+      'Nur an, wenn die Voraussetzungen an sind';
+
+  @override
+  String get capabilityStateUnspecified =>
+      'Von dieser Vorlage nicht festgelegt';
+
+  @override
+  String get capabilityStateLocalInput => 'Braucht zuerst einen lokalen Wert';
+
+  @override
+  String get capabilityStateIncompatible => 'Hier nicht anwendbar';
+
+  @override
+  String get capabilityStateUnknown => 'Unbekannt';
+
+  @override
+  String templateRequire(String capability) {
+    return 'Voraussetzen: $capability';
+  }
+
+  @override
+  String get templateRequirementRemove => 'Voraussetzung entfernen';
+
+  @override
+  String get templateRequirementsReset => 'Zurücksetzen';
+
+  @override
+  String get templateNoMatch =>
+      'Keine Vorlage passt. Ändern Sie die Wörter, ein Schlagwort oder eine Voraussetzung.';
+
+  @override
+  String get templateClearFilters => 'Suche zurücksetzen';
+
+  @override
+  String templateWidenTitle(String audience) {
+    return 'Diese Vorlage lesbar machen für: $audience?';
+  }
+
+  @override
+  String templateWidenCount(String count) {
+    return '$count Einstellungen werden lesbar, genau so, wie die Vorlage sie jetzt enthält.';
+  }
+
+  @override
+  String templateWidenExcluded(String count) {
+    return '$count Arten von Werten verlassen den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).';
+  }
+
+  @override
+  String get templateWidenConfirm => 'Lesbar machen';
+
+  @override
   String get libraryInvitationTexts => 'Einladungstexte';
 
   @override
@@ -11492,6 +11561,44 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get compareExported => 'Arbeitsmappe gespeichert.';
+
+  @override
+  String templateExportResults(String count) {
+    return 'Diese Ergebnisse exportieren ($count)';
+  }
+
+  @override
+  String templateExportTooMany(String max) {
+    return 'Höchstens $max Vorlagen pro Arbeitsmappe. Grenzen Sie die Suche zuerst ein.';
+  }
+
+  @override
+  String get workbookNote =>
+      'Eine Momentaufnahme von Vorlagendefinitionen. Änderungen an dieser Datei ändern nichts in DesKilo, und sie ist keine Sicherung eines Workspace: Sie enthält keine Mitglieder, Buchungen, Rechnungen oder Zugangsdaten.';
+
+  @override
+  String get workbookStatePresent => 'die Vorlage legt diesen Wert fest';
+
+  @override
+  String get workbookStateInherit =>
+      'die Vorlage sagt nichts; das Ziel behält seinen eigenen';
+
+  @override
+  String get workbookStateDefault =>
+      'die Vorlage sagt nichts; der Standard gilt';
+
+  @override
+  String get workbookStateLocal => 'lokal festzulegen';
+
+  @override
+  String get workbookStateUnknown => 'nicht lesbar; es wird nichts behauptet';
+
+  @override
+  String get workbookStateExcluded => 'bewusst nie veröffentlicht';
+
+  @override
+  String get workbookWide =>
+      'Catalogs, RolePermissions, Validations und Fields zeigen einen Wert, wo die Vorlage ihn festlegt, sonst seinen Zustand';
 
   @override
   String get themeTitle => 'Design';

@@ -1,4 +1,14 @@
 {
   "compareExport": "Esporta in Excel",
-  "compareExported": "Cartella di lavoro salvata."
+  "compareExported": "Cartella di lavoro salvata.",
+  "templateExportResults": "Esporta questi risultati ({count})",
+  "templateExportTooMany": "Al massimo {max} modelli per cartella. Restringi prima la ricerca.",
+  "workbookNote": "Un’istantanea di definizioni di modelli. Modificare questo file non cambia nulla in DesKilo, e non è il backup di alcuno spazio: non contiene membri, prenotazioni, fatture né credenziali.",
+  "workbookStatePresent": "il modello imposta questo valore",
+  "workbookStateInherit": "il modello non lo dice; la destinazione mantiene il proprio",
+  "workbookStateDefault": "il modello non lo dice; vale il predefinito",
+  "workbookStateLocal": "da impostare localmente",
+  "workbookStateUnknown": "non leggibile; non si afferma nulla",
+  "workbookStateExcluded": "deliberatamente mai pubblicato",
+  "workbookWide": "Catalogs, RolePermissions, Validations e Fields mostrano un valore dove il modello lo imposta, altrimenti il suo stato"
 }

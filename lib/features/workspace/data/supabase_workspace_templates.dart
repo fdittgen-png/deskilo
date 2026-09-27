@@ -10,6 +10,7 @@ import '../domain/template_inspection.dart';
 import '../domain/template_outline.dart';
 import '../domain/template_preview.dart';
 import '../domain/template_publication.dart';
+
 import '../domain/workspace_template.dart';
 
 mixin SupabaseWorkspaceTemplates {
@@ -82,7 +83,23 @@ mixin SupabaseWorkspaceTemplates {
     TemplateVisibility visibility = TemplateVisibility.private,
     List<String> tags = const [],
     List<String>? groups,
+    String? requestId,
   }) async {
+    if (requestId != null) {
+      final result = await client.rpc<dynamic>('save_workspace_as_template_once', params: {
+        'p_workspace_id': workspaceId,
+        'p_key': key,
+        'p_name': name,
+        'p_description': description,
+        'p_visibility': visibility.name,
+        'p_tags': tags,
+        'p_groups': groups,
+        'p_request_id': requestId,
+      });
+      final map = result is Map ? result : const <String, Object?>{};
+      if (map['status'] == 'conflict') throw const TemplatePublishConflict();
+      return '${map['template_id']}';
+    }
     final id = await client.rpc<dynamic>('save_workspace_as_template', params: {
       'p_workspace_id': workspaceId,
       'p_key': key,

@@ -138,6 +138,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get handoffSave => 'Salva file e rapporto';
 
   @override
+  String get handoffChanged =>
+      'Le fatture sono cambiate durante la revisione. Esporta di nuovo per vedere i conti attuali.';
+
+  @override
   String get fecAccountExpenses => 'Spese';
 
   @override
@@ -11481,6 +11485,70 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get templateWhy => 'Perché corrisponde';
+
+  @override
+  String get templateWhyHide => 'Nascondi il perché';
+
+  @override
+  String get capabilityStateEnabled => 'Attivo';
+
+  @override
+  String get capabilityStateDisabled => 'Disattivo';
+
+  @override
+  String get capabilityStateConditional =>
+      'Attivo solo se lo sono i prerequisiti';
+
+  @override
+  String get capabilityStateUnspecified => 'Non impostato da questo modello';
+
+  @override
+  String get capabilityStateLocalInput => 'Richiede prima un valore locale';
+
+  @override
+  String get capabilityStateIncompatible => 'Non applicabile qui';
+
+  @override
+  String get capabilityStateUnknown => 'Sconosciuto';
+
+  @override
+  String templateRequire(String capability) {
+    return 'Richiedi: $capability';
+  }
+
+  @override
+  String get templateRequirementRemove => 'Rimuovi il requisito';
+
+  @override
+  String get templateRequirementsReset => 'Azzera';
+
+  @override
+  String get templateNoMatch =>
+      'Nessun modello corrisponde. Cambia le parole, un’etichetta o un requisito.';
+
+  @override
+  String get templateClearFilters => 'Cancella la ricerca';
+
+  @override
+  String templateWidenTitle(String audience) {
+    return 'Rendere questo modello leggibile da: $audience?';
+  }
+
+  @override
+  String templateWidenCount(String count) {
+    return '$count impostazioni diventano leggibili, esattamente come il modello le contiene ora.';
+  }
+
+  @override
+  String templateWidenExcluded(String count) {
+    return '$count tipi di valori non escono mai con esso (coordinate bancarie, sedi, indirizzi…).';
+  }
+
+  @override
+  String get templateWidenConfirm => 'Rendi leggibile';
+
+  @override
   String get libraryInvitationTexts => 'Testi di invito';
 
   @override
@@ -11497,6 +11565,44 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get compareExported => 'Cartella di lavoro salvata.';
+
+  @override
+  String templateExportResults(String count) {
+    return 'Esporta questi risultati ($count)';
+  }
+
+  @override
+  String templateExportTooMany(String max) {
+    return 'Al massimo $max modelli per cartella. Restringi prima la ricerca.';
+  }
+
+  @override
+  String get workbookNote =>
+      'Un’istantanea di definizioni di modelli. Modificare questo file non cambia nulla in DesKilo, e non è il backup di alcuno spazio: non contiene membri, prenotazioni, fatture né credenziali.';
+
+  @override
+  String get workbookStatePresent => 'il modello imposta questo valore';
+
+  @override
+  String get workbookStateInherit =>
+      'il modello non lo dice; la destinazione mantiene il proprio';
+
+  @override
+  String get workbookStateDefault =>
+      'il modello non lo dice; vale il predefinito';
+
+  @override
+  String get workbookStateLocal => 'da impostare localmente';
+
+  @override
+  String get workbookStateUnknown => 'non leggibile; non si afferma nulla';
+
+  @override
+  String get workbookStateExcluded => 'deliberatamente mai pubblicato';
+
+  @override
+  String get workbookWide =>
+      'Catalogs, RolePermissions, Validations e Fields mostrano un valore dove il modello lo imposta, altrimenti il suo stato';
 
   @override
   String get themeTitle => 'Tema';

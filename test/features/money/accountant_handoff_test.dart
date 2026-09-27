@@ -258,4 +258,26 @@ void main() {
       expect(json['clean'], isTrue);
     });
   });
+
+  group('the source fingerprint', () {
+    test('ignores order, notices a void and a payment decision', () {
+      final a = _inv(id: '1');
+      final b = _inv(id: '2');
+      final m = {'1': _paid('1', 100, status: 'pending')};
+      final base = accountantSourceDigest([a, b], m);
+      expect(accountantSourceDigest([b, a], m), base);
+      expect(
+        accountantSourceDigest([
+          a.copyWith(voidedAt: DateTime.utc(2026, 4)),
+          b,
+        ], m),
+        isNot(base),
+      );
+      expect(
+        accountantSourceDigest([a, b], {'1': _paid('1', 100)}),
+        isNot(base),
+      );
+      expect(accountantSourceDigest([a], m), isNot(base));
+    });
+  });
 }

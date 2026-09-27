@@ -1,0 +1,6 @@
+{
+  "templateWidenTitle": "Rendere questo modello leggibile da: {audience}?",
+  "templateWidenCount": "{count} impostazioni diventano leggibili, esattamente come il modello le contiene ora.",
+  "templateWidenExcluded": "{count} tipi di valori non escono mai con esso (coordinate bancarie, sedi, indirizzi…).",
+  "templateWidenConfirm": "Rendi leggibile"
+}

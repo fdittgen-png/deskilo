@@ -10,6 +10,9 @@
 // currency keeps its own totals: two currencies are never added into
 // one number.
 import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:archive/archive.dart';
 
 import 'package:crypto/crypto.dart';
 
@@ -278,4 +281,57 @@ AccountantHandoff buildAccountantHandoff({
     csvBytes: bytes.length,
     csvRows: rows,
   );
+}
+
+/// #1640 — a fingerprint of what the export was built from: each
+/// document's identity, amounts, currency, lifecycle and settlement, and
+/// each payment match's amount, status and date, independent of order.
+/// Read again just before saving; a different fingerprint means the
+/// source changed while the owner was reviewing, and nothing is saved.
+String accountantSourceDigest(
+  List<Invoice> invoices,
+  Map<String, InvoiceMatch> matches,
+) {
+  final rows = [
+    for (final i in invoices)
+      [
+        'i',
+        i.id,
+        i.number,
+        i.currency,
+        i.kind.name,
+        i.totalCents,
+        i.chargesCents,
+        i.vatCents,
+        i.voidedAt?.toUtc().toIso8601String() ?? '',
+        i.settledByInvoiceId ?? '',
+      ].join('|'),
+    for (final e in matches.entries)
+      [
+        'm',
+        e.key,
+        e.value.invoiceId,
+        e.value.paidCents,
+        e.value.status,
+        e.value.matchedAt.toUtc().toIso8601String(),
+        e.value.writeoffAt?.toUtc().toIso8601String() ?? '',
+      ].join('|'),
+  ]..sort();
+  return sha256.convert(utf8.encode(rows.join('\n'))).toString();
+}
+
+/// #1640 — the file and its report as ONE archive, so they cannot be
+/// separated on the way to the accountant: [csvName] and `report.json`,
+/// whose `file.sha256` names the CSV's bytes exactly.
+Uint8List accountantHandoffArchive({
+  required String csv,
+  required String csvName,
+  required AccountantHandoff report,
+}) {
+  final archive = Archive();
+  void add(String path, List<int> bytes) =>
+      archive.addFile(ArchiveFile(path, bytes.length, bytes));
+  add(csvName, utf8.encode(csv));
+  add('report.json', utf8.encode(report.toPrettyJson()));
+  return Uint8List.fromList(ZipEncoder().encode(archive));
 }

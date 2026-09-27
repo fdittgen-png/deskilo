@@ -193,6 +193,10 @@
   "@handoffSave": {
     "description": "#1640 accountant_handoff"
   },
+  "handoffChanged": "The invoices changed while you were reviewing. Export again to see the current books.",
+  "@handoffChanged": {
+    "description": "#1640 accountant_handoff"
+  },
   "fecAccountExpenses": "Expenses",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -12354,6 +12358,98 @@
       }
     }
   },
+  "templateWhy": "Why this matches",
+  "@templateWhy": {
+    "description": "#1660 template_why_match"
+  },
+  "templateWhyHide": "Hide why",
+  "@templateWhyHide": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateEnabled": "On",
+  "@capabilityStateEnabled": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateDisabled": "Off",
+  "@capabilityStateDisabled": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateConditional": "On only if its prerequisites are",
+  "@capabilityStateConditional": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateUnspecified": "Not set by this template",
+  "@capabilityStateUnspecified": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateLocalInput": "Needs a local value first",
+  "@capabilityStateLocalInput": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateIncompatible": "Cannot apply here",
+  "@capabilityStateIncompatible": {
+    "description": "#1660 template_why_match"
+  },
+  "capabilityStateUnknown": "Unknown",
+  "@capabilityStateUnknown": {
+    "description": "#1660 template_why_match"
+  },
+  "templateRequire": "Require: {capability}",
+  "@templateRequire": {
+    "description": "#1660 template_why_match",
+    "placeholders": {
+      "capability": {
+        "type": "String"
+      }
+    }
+  },
+  "templateRequirementRemove": "Remove requirement",
+  "@templateRequirementRemove": {
+    "description": "#1660 template_why_match"
+  },
+  "templateRequirementsReset": "Reset",
+  "@templateRequirementsReset": {
+    "description": "#1660 template_why_match"
+  },
+  "templateNoMatch": "No template matches. Change the words, a tag or a requirement.",
+  "@templateNoMatch": {
+    "description": "#1660 template_why_match"
+  },
+  "templateClearFilters": "Clear the search",
+  "@templateClearFilters": {
+    "description": "#1660 template_why_match"
+  },
+  "templateWidenTitle": "Make this template readable by: {audience}?",
+  "@templateWidenTitle": {
+    "description": "#1658 template_widen",
+    "placeholders": {
+      "audience": {
+        "type": "String"
+      }
+    }
+  },
+  "templateWidenCount": "{count} settings become readable, exactly as the template holds them now.",
+  "@templateWidenCount": {
+    "description": "#1658 template_widen",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "templateWidenExcluded": "{count} kinds of value never leave with it (bank details, sites, addresses…).",
+  "@templateWidenExcluded": {
+    "description": "#1658 template_widen",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "templateWidenConfirm": "Make readable",
+  "@templateWidenConfirm": {
+    "description": "#1658 template_widen"
+  },
   "libraryInvitationTexts": "Invitation texts",
   "@libraryInvitationTexts": {
     "description": "#1656 template_wording"
@@ -12377,6 +12473,56 @@
   },
   "compareExported": "Workbook saved.",
   "@compareExported": {
+    "description": "#1661 template_workbook"
+  },
+  "templateExportResults": "Export these results ({count})",
+  "@templateExportResults": {
+    "description": "#1661 template_workbook",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "templateExportTooMany": "At most {max} templates per workbook. Narrow the search first.",
+  "@templateExportTooMany": {
+    "description": "#1661 template_workbook",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "workbookNote": "A snapshot of template definitions. Editing this file changes nothing in DesKilo, and it is not a backup of any workspace: it holds no members, bookings, invoices or credentials.",
+  "@workbookNote": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStatePresent": "the template sets this value",
+  "@workbookStatePresent": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStateInherit": "the template does not say; the target keeps its own",
+  "@workbookStateInherit": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStateDefault": "the template does not say; the default applies",
+  "@workbookStateDefault": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStateLocal": "to be set locally",
+  "@workbookStateLocal": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStateUnknown": "could not be read; nothing is claimed",
+  "@workbookStateUnknown": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookStateExcluded": "deliberately never published",
+  "@workbookStateExcluded": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookWide": "Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise",
+  "@workbookWide": {
     "description": "#1661 template_workbook"
   },
   "themeTitle": "Theme",
