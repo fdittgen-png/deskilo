@@ -14,6 +14,7 @@ import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
+import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/features/help/presentation/screens/help_screen.dart';
@@ -22,6 +23,8 @@ import 'package:deskilo/features/profile/presentation/screens/settings_screen.da
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/workspace_readiness.dart';
+import 'package:deskilo/features/editor/presentation/screens/editor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -94,6 +97,7 @@ Future<Hub> pumpCard(
   Size size = const Size(800, 1400),
   BackendSettingsStore? backendSettings,
   String? languageCode,
+  FakeLocalSetupRepository? localSetup,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
@@ -124,6 +128,7 @@ Future<Hub> pumpCard(
           helpHints: store,
           auth: auth,
           backendSettings: backendSettings,
+          localSetup: localSetup,
         ),
         if (languageCode != null)
           localeStoreProvider.overrideWithValue(
@@ -319,5 +324,52 @@ void main() {
     expect(_primaryLabel(tester), 'Choose a time to book');
     expect(find.textContaining('tariff'), findsNothing);
     expect(find.textContaining('approval'), findsNothing);
+  });
+
+  testWidgets('#1636 an owner whose space has no bookable place is sent '
+      'to set it up, and the tap opens where that is done', (tester) async {
+    await pumpCard(
+      tester,
+      member: kOrdinaryMember.copyWith(isOwner: true, isAdmin: true),
+      localSetup: FakeLocalSetupRepository(
+        readinessSections: const [
+          ReadinessSection(
+            area: ReadinessArea.resources,
+            state: ReadinessState.needsConfiguration,
+            required: true,
+            route: '/editor',
+          ),
+        ],
+      ),
+    );
+    expect(_primaryLabel(tester), 'Finish setting up');
+    expect(
+      find.textContaining(
+        'Before anyone can book here: Bookable places on the floor plan.',
+      ),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(_primary));
+    await tester.pumpAndSettle();
+    expect(find.byType(EditorScreen), findsOneWidget);
+  });
+
+  testWidgets('#1636 a member of the same unfinished space keeps their own '
+      'task', (tester) async {
+    await pumpCard(
+      tester,
+      localSetup: FakeLocalSetupRepository(
+        readinessSections: const [
+          ReadinessSection(
+            area: ReadinessArea.resources,
+            state: ReadinessState.needsConfiguration,
+            required: true,
+            route: '/editor',
+          ),
+        ],
+      ),
+    );
+    expect(_primaryLabel(tester), 'Choose a time to book');
+    expect(find.text('Finish setting up'), findsNothing);
   });
 }

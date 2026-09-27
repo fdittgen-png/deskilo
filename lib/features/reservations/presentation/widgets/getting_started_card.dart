@@ -9,6 +9,7 @@ import '../../../../core/help/help_tips.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/providers/local_setup_providers.dart';
 import '../../application/getting_started_hint.dart';
 import '../getting_started_copy.dart';
 
@@ -24,8 +25,12 @@ class GettingStartedCard extends ConsumerWidget {
     required this.facts,
     required this.seenKey,
     required this.onChooseTime,
+    this.workspaceId,
     super.key,
   });
+
+  /// #1636 — whose readiness an owner or administrator is guided by.
+  final String? workspaceId;
 
   final GettingStartedFacts facts;
   final String? seenKey;
@@ -38,8 +43,18 @@ class GettingStartedCard extends ConsumerWidget {
     final seenKey = this.seenKey;
     final dismissed = ref.watch(dismissedHelpHintsProvider).value;
     if (dismissed == null) return const SizedBox.shrink();
+    final standing = facts.membership.known ? facts.membership.value : null;
+    final workspaceId = this.workspaceId;
+    // Only someone who may configure the space asks; a refusal reads as
+    // no answer, and no answer guides nobody.
+    final readiness = workspaceId != null &&
+            (standing == MembershipStanding.owner ||
+                standing == MembershipStanding.administrator)
+        ? ref.watch(workspaceReadinessProvider(workspaceId)).value
+        : null;
     final hint = chooseGettingStartedHint(facts,
-      dismissed: seenKey == null || dismissed.contains(seenKey));
+      dismissed: seenKey == null || dismissed.contains(seenKey),
+      ownerGuidance: readinessGuidance(readiness));
     if (hint == null || !hint.showsCard) return const SizedBox.shrink();
 
     final l10n = AppLocalizations.of(context);
@@ -68,6 +83,10 @@ class GettingStartedCard extends ConsumerWidget {
       GettingStartedAction.viewMembership => (
         l10n?.gettingStartedActionMembership ?? 'View my membership',
         () => context.push('/settings'),
+      ),
+      GettingStartedAction.finishSetup => (
+        l10n?.gettingStartedActionFinishSetup ?? 'Finish setting up',
+        () => context.push(hint.setupStep?.route ?? '/workspace-settings'),
       ),
       GettingStartedAction.openHelp => (
         l10n?.gettingStartedActionHelp ?? 'Help for this workspace',

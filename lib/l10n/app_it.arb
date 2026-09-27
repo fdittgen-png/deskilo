@@ -8495,6 +8495,8 @@
   "readinessAreaInvitations": "Invitare i primi membri",
   "readinessAreaPayments": "Come pagano i membri",
   "readinessAreaRecovery": "Esportazione e ripristino",
+  "gettingStartedSetupIncomplete": "Prima che qualcuno possa prenotare qui: {step}.",
+  "gettingStartedActionFinishSetup": "Completa la configurazione",
   "featureWorkspaceStatus": "Situazione dello spazio",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

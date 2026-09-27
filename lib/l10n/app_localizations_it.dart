@@ -12870,6 +12870,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get readinessAreaRecovery => 'Esportazione e ripristino';
 
   @override
+  String gettingStartedSetupIncomplete(String step) {
+    return 'Prima che qualcuno possa prenotare qui: $step.';
+  }
+
+  @override
+  String get gettingStartedActionFinishSetup => 'Completa la configurazione';
+
+  @override
   String get featureWorkspaceStatus => 'Situazione dello spazio';
 
   @override

@@ -798,7 +798,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
             child: GettingStartedCard(
               facts: facts,
               seenKey: guidanceKey,
-              onChooseTime: _pickDate,
+              onChooseTime: _pickDate, workspaceId: workspace?.id, // #1636
             ),
           ),
         ],

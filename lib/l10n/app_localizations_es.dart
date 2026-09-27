@@ -12852,6 +12852,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get readinessAreaRecovery => 'Exportación y recuperación';
 
   @override
+  String gettingStartedSetupIncomplete(String step) {
+    return 'Antes de que alguien pueda reservar aquí: $step.';
+  }
+
+  @override
+  String get gettingStartedActionFinishSetup => 'Terminar la configuración';
+
+  @override
   String get featureWorkspaceStatus => 'Situación del espacio';
 
   @override
