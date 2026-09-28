@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0295 (#1636) -- the readiness checklist names roles and validation, and
+-- 0294 (#1636) -- the readiness checklist names roles and validation, and
 -- who has to act on each section.
 --
 -- A new section, roles_validation: not_applicable when the space has no
@@ -54,7 +54,7 @@ begin
   v_local := public.workspace_local_readiness(p_workspace_id);
   select e into v_gap from jsonb_array_elements(v_local) e
    where not coalesce((e->>'filled')::boolean, false) limit 1;
-  -- #1636 (0295) — a validation policy nobody can satisfy leaves its
+  -- #1636 (0294) — a validation policy nobody can satisfy leaves its
   -- requests pending forever. The pool per policy is the one the decision
   -- functions use (0135): the owner, then by scope every active member,
   -- the listed ones, or the admins it admits.
@@ -73,7 +73,7 @@ begin
                    and m.is_admin and p.admins_may_validate
                    and (cardinality(p.eligible_admin_ids) = 0
                         or m.id = any(p.eligible_admin_ids)))));
-  -- #1636 (0295) — assistant access is optional, and listed only while
+  -- #1636 (0294) — assistant access is optional, and listed only while
   -- mcpAccess is on. Two of its gates are readable here: the owner's
   -- exposure of this workspace (0271) and the caller's own current
   -- database eligibility (my_database_capabilities, 1718), which a
@@ -129,4 +129,4 @@ $fn$;
 revoke execute on function public.workspace_readiness(uuid) from public, anon;
 grant execute on function public.workspace_readiness(uuid) to authenticated;
 
-select public.set_deskilo_schema_version(295);
+select public.set_deskilo_schema_version(294);

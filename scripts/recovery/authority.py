@@ -4,6 +4,7 @@ from runtime import Refused
 
 # These are authority/configuration, not the synthetic business fixture.
 EXCLUDED = ['installation_identity', 'identity_authority', 'identity_bindings',
+            'identity_federation_clients',
             'database_administrators', 'database_authority_audit',
             'platform_admins', 'platform_access_log', 'mcp_*', 'workspace_mcp_*']
 
@@ -19,7 +20,7 @@ def identity(stack):
 def no_authority(stack):
     tables = stack.sql("select tablename from pg_tables where schemaname='public' "
         "and (tablename like 'mcp_%' or tablename like 'workspace_mcp_%' or "
-        "tablename in ('identity_bindings','identity_authority','database_administrators','platform_admins')) "
+        "tablename in ('identity_bindings','identity_authority','identity_federation_clients','database_administrators','platform_admins')) "
         "and tablename <> 'mcp_runtime';").splitlines()
     for table in tables:
         if not table.replace('_', '').isalnum():

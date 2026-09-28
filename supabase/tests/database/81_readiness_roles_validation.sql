@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- 0295: the readiness checklist names roles and validation, and who acts
+-- 0294: the readiness checklist names roles and validation, and who acts
 -- on every section. A policy nobody can satisfy is named; none at all is
 -- not applicable; only a reservation's short policy blocks a first booking.
 -- The optional assistant section appears only while mcpAccess is on and
@@ -8,8 +8,8 @@ begin;
 select plan(13);
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
- ('00000000-0000-4000-8000-0000000295a1', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'rv@deskilo.test', '', now(), now(), now());
-select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000295a1","role":"authenticated"}', true);
+ ('00000000-0000-4000-8000-0000000294a1', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'rv@deskilo.test', '', now(), now(), now());
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000294a1","role":"authenticated"}', true);
 set local role authenticated;
 select set_config('t.ws', public.create_workspace_once('00000000-0000-4000-8000-00000000c295', 'Roles readiness', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null, null)::text, true);
 reset role;

@@ -6,6 +6,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../application/template_compare.dart';
 import '../../application/template_workbook.dart';
 import '../workbook_labels.dart';
+import 'workbook_export_dialog.dart';
 import '../screens/template_compare_screen.dart';
 import '../screens/template_detail_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -142,21 +143,22 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
       return;
     }
     setState(() => _exporting = true);
-    String? path;
+    ({String? path, bool cancelled})? result;
     final ok = await runGuarded(
       context,
       domain: 'templates',
       message: 'template workbook export failed',
-      action: () async => path = await ref
-          .read(templateWorkbookExportProvider)
-          .export([for (final t in shown) t.id], now: ref.read(clockProvider).now(),
-              labels: workbookLabels(l10n)),
+      action: () async => result = await exportWorkbookWithProgress(
+        context,
+        ref.read(templateWorkbookExportProvider),
+        [for (final t in shown) t.id],
+        now: ref.read(clockProvider).now(),
+        labels: workbookLabels(l10n),
+      ),
     );
     if (!mounted) return;
     setState(() => _exporting = false);
-    if (ok && path != null) {
-      AppSnack.success(context, l10n?.compareExported ?? 'Workbook saved.');
-    }
+    if (ok) showWorkbookExportResult(context, result);
   }
   static const maxShortlist = 4;
 
@@ -371,6 +373,23 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
             ]),
           ),
         ],
+        // #1660 — a narrowed list says how many it shows, and a screen
+        // reader hears the count change; focus stays where it was.
+        if (_narrowed && !_checking)
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.sm),
+            child: Semantics(
+              liveRegion: true,
+              child: Text(
+                key: const ValueKey('template-result-count'),
+                l10n?.templateResultCount(shownAll.length) ??
+                    (shownAll.length == 1
+                        ? '1 template shown'
+                        : '${shownAll.length} templates shown'),
+                style: theme.textTheme.bodySmall,
+              ),
+            ),
+          ),
         if (_shortlist.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
           FilledButton.tonalIcon(

@@ -6892,6 +6892,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get libraryProcessTechnical => 'Technisch';
 
   @override
+  String get templatesLoadFailed =>
+      'Die Vorlagen konnten nicht geladen werden.';
+
+  @override
+  String get onboardingTemplatesFailedEmpty =>
+      'Die Vorlagen konnten nicht geladen werden, daher würde dieser Bereich leer beginnen. Gehen Sie zurück, um es erneut zu versuchen.';
+
+  @override
+  String templateResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Vorlagen angezeigt',
+      one: '1 Vorlage angezeigt',
+      zero: 'Keine Vorlage angezeigt',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get localSlotLegalIdentity =>
       'Ihre rechtliche Identität und Adresse (für Rechnungen)';
 
@@ -11574,6 +11594,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get templateWidenConfirm => 'Lesbar machen';
 
   @override
+  String get templateProfileFull => 'Vollständiges Konfigurationsprofil';
+
+  @override
+  String templateProfileSelected(String chosen, String total) {
+    return 'Ausgewählte Gruppen: $chosen von $total';
+  }
+
+  @override
+  String get templatePublishLocalNeeds =>
+      'Ein Workspace, der sie anwendet, richtet dies selbst ein:';
+
+  @override
   String get libraryInvitationTexts => 'Einladungstexte';
 
   @override
@@ -11628,6 +11660,24 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get workbookWide =>
       'Catalogs, RolePermissions, Validations und Fields zeigen einen Wert, wo die Vorlage ihn festlegt, sonst seinen Zustand';
+
+  @override
+  String get workbookExportTitle => 'Arbeitsmappe wird exportiert';
+
+  @override
+  String workbookExportReading(String done, String total) {
+    return 'Vorlagen werden gelesen: $done von $total';
+  }
+
+  @override
+  String get workbookExportBuilding => 'Arbeitsmappe wird erstellt…';
+
+  @override
+  String get workbookExportSaving => 'Wählen Sie den Speicherort…';
+
+  @override
+  String get workbookExportCancelled =>
+      'Export abgebrochen. Nichts wurde gespeichert.';
 
   @override
   String get themeTitle => 'Design';

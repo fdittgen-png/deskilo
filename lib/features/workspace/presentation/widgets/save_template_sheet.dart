@@ -14,6 +14,7 @@ import '../../domain/template_preview.dart';
 import '../../domain/template_publication.dart';
 import '../../domain/workspace_template.dart';
 import 'template_group_label.dart';
+import 'template_publish_summary.dart';
 
 /// #1120 — snapshot this space as a template. The key is derived from the
 /// name; a second save with the same name updates in place and bumps the
@@ -175,6 +176,7 @@ class _SaveTemplateSheetState extends ConsumerState<SaveTemplateSheet> {
                   const SizedBox(height: AppSpacing.md),
                   Text(l10n?.libraryPublishGroups ?? 'What travels',
                       style: theme.textTheme.titleSmall),
+                  TemplateProfileLine(chosen: chosen.length, total: groups.length),
                   for (final g in groups)
                     CheckboxListTile(
                       key: ValueKey('save-template-group-${g.wire}'),
@@ -230,6 +232,7 @@ class _SaveTemplateSheetState extends ConsumerState<SaveTemplateSheet> {
                     key: const ValueKey('save-template-never'),
                     style: theme.textTheme.bodySmall,
                   ),
+                  TemplateLocalNeedsPreview(workspaceId: widget.workspaceId),
                 ],
                 const SizedBox(height: AppSpacing.md),
                 Text(l10n?.libraryVisibility ?? 'Who may see it',

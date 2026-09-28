@@ -21,6 +21,10 @@ import '../quality_rows/rows.dart' show parseManifest;
 const manifestPath = 'docs/product/capabilities.json';
 const pagePath = 'docs/product/CAPABILITIES.md';
 const releasePath = 'docs/product/capabilities.release.json';
+
+/// #1635 — what the evaluation page shows, as a module it imports (the
+/// page's CSP forbids fetching the JSON).
+const webPath = 'web/product_capabilities.js';
 const evidenceDir = 'docs/product/evidence/';
 
 /// Ascending: a record may claim no scope above its reference's ceiling.

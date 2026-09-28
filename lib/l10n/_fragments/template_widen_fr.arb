@@ -2,5 +2,8 @@
   "templateWidenTitle": "Rendre ce modèle lisible par : {audience} ?",
   "templateWidenCount": "{count} réglages deviennent lisibles, tels que le modèle les contient maintenant.",
   "templateWidenExcluded": "{count} types de valeurs ne partent jamais avec lui (coordonnées bancaires, sites, adresses…).",
-  "templateWidenConfirm": "Rendre lisible"
+  "templateWidenConfirm": "Rendre lisible",
+  "templateProfileFull": "Profil de configuration complet",
+  "templateProfileSelected": "Groupes choisis : {chosen} sur {total}",
+  "templatePublishLocalNeeds": "Un espace qui l’applique les configurera lui-même :"
 }
