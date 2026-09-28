@@ -32,6 +32,7 @@ void main() {
     for (final (path, expected) in [
       (pagePath, renderPage(projection)),
       (releasePath, renderRelease(projection)),
+      (webPath, renderWeb(projection)),
     ]) {
       expect(File(path).readAsStringSync(), expected,
           reason: '$path drifted — run `dart run tool/capability_evidence.dart`');

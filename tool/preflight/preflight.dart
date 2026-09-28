@@ -90,7 +90,7 @@ const List<({String command, String owns})> _order = [
   ),
   (
     command: 'dart run tool/capability_evidence.dart',
-    owns: 'docs/product/CAPABILITIES.md and capabilities.release.json',
+    owns: 'docs/product/CAPABILITIES.md, capabilities.release.json and web/product_capabilities.js',
   ),
 ];
 

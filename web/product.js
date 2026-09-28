@@ -5,6 +5,7 @@
 // scenario and a plan into sentences. No network: the page's CSP sets
 // connect-src 'none', and nothing here fetches, posts or reports.
 import { planCost, parseScenario, serializeScenario, minorDigits } from './cost_planner.js';
+import { CAPABILITIES } from './product_capabilities.js';
 
 export const LOCALES = ['en', 'fr', 'de', 'es', 'it'];
 
@@ -28,6 +29,30 @@ export const TEXT = {
     statusTitle: 'Where it runs today', platform: 'Platform', status: 'Status',
     statusWeb: 'Available in the browser', statusAndroid: 'Closed test on Google Play', statusIos: 'Public beta through TestFlight', statusDesktop: 'Installers attached to each release',
     statusNote: 'As of 27 September 2026. Features still being built are not listed as available.',
+    capsTitle: 'What it does today', capsName: 'Capability', capsState: 'State',
+    capStateVerified: 'Available, checked on a real installation',
+    capStateTested: 'Available, covered by automated tests; not yet checked on a real installation',
+    capStatePlanned: 'Planned, not available yet',
+    capStateUnknown: 'Not verified',
+    capsNote: 'Generated from the project’s capability evidence. A test that passes is not a certification.',
+    'cap_booking': 'Booking a place',
+    'cap_membership_allowances': 'Membership allowances',
+    'cap_statements_shared_expenses': 'Statements and shared expenses',
+    'cap_approvals': 'Approvals by the people named',
+    'cap_payments_stripe': 'Payments with Stripe',
+    'cap_payments_paypal': 'Payments with PayPal',
+    'cap_payments_mollie': 'Payments with Mollie',
+    'cap_payments_wero': 'Payments with Wero',
+    'cap_accounting_export': 'Accounting export',
+    'cap_einvoice_generate': 'E-invoices: creating them',
+    'cap_einvoice_transmit': 'E-invoices: sending them',
+    'cap_recovery_database_restore': 'Database restore',
+    'cap_recovery_storage_auth': 'Restoring files and sign-in accounts',
+    'cap_demo': 'The demo',
+    'cap_mcp_read': 'Assistants: reading',
+    'cap_mcp_write': 'Assistants: acting',
+    'cap_mcp_consent': 'Assistants: consent',
+    'cap_calendar_interchange': 'Calendar exchange',
     rolesTitle: 'Who is responsible for what',
     roleOwner: 'The workspace owner sets the rules, prices and members.',
     roleDba: 'A database administrator decides which assistants may connect and how.',
@@ -68,6 +93,30 @@ export const TEXT = {
     statusTitle: 'Où elle fonctionne aujourd’hui', platform: 'Plateforme', status: 'État',
     statusWeb: 'Disponible dans le navigateur', statusAndroid: 'Test fermé sur Google Play', statusIos: 'Bêta publique via TestFlight', statusDesktop: 'Installateurs joints à chaque version',
     statusNote: 'Au 27 septembre 2026. Les fonctionnalités encore en construction ne sont pas indiquées comme disponibles.',
+    capsTitle: 'Ce qu’elle fait aujourd’hui', capsName: 'Fonction', capsState: 'État',
+    capStateVerified: 'Disponible, vérifié sur une vraie installation',
+    capStateTested: 'Disponible, couvert par des tests automatiques ; pas encore vérifié sur une vraie installation',
+    capStatePlanned: 'Prévu, pas encore disponible',
+    capStateUnknown: 'Non vérifié',
+    capsNote: 'Généré à partir des preuves de fonctionnement du projet. Un test réussi n’est pas une certification.',
+    'cap_booking': 'Réserver une place',
+    'cap_membership_allowances': 'Forfaits d’adhésion',
+    'cap_statements_shared_expenses': 'Relevés et dépenses partagées',
+    'cap_approvals': 'Validations par les personnes désignées',
+    'cap_payments_stripe': 'Paiements avec Stripe',
+    'cap_payments_paypal': 'Paiements avec PayPal',
+    'cap_payments_mollie': 'Paiements avec Mollie',
+    'cap_payments_wero': 'Paiements avec Wero',
+    'cap_accounting_export': 'Export comptable',
+    'cap_einvoice_generate': 'Factures électroniques : création',
+    'cap_einvoice_transmit': 'Factures électroniques : envoi',
+    'cap_recovery_database_restore': 'Restauration de la base',
+    'cap_recovery_storage_auth': 'Restauration des fichiers et des comptes',
+    'cap_demo': 'La démo',
+    'cap_mcp_read': 'Assistants : lecture',
+    'cap_mcp_write': 'Assistants : actions',
+    'cap_mcp_consent': 'Assistants : consentement',
+    'cap_calendar_interchange': 'Échange de calendriers',
     rolesTitle: 'Qui est responsable de quoi',
     roleOwner: 'Le propriétaire de l’espace fixe les règles, les prix et les membres.',
     roleDba: 'Un administrateur de base de données décide quels assistants peuvent se connecter, et comment.',
@@ -108,6 +157,30 @@ export const TEXT = {
     statusTitle: 'Wo sie heute läuft', platform: 'Plattform', status: 'Stand',
     statusWeb: 'Im Browser verfügbar', statusAndroid: 'Geschlossener Test bei Google Play', statusIos: 'Öffentliche Beta über TestFlight', statusDesktop: 'Installer an jeder Veröffentlichung',
     statusNote: 'Stand 27. September 2026. Funktionen im Bau werden nicht als verfügbar aufgeführt.',
+    capsTitle: 'Was sie heute kann', capsName: 'Funktion', capsState: 'Stand',
+    capStateVerified: 'Verfügbar, auf einer echten Installation geprüft',
+    capStateTested: 'Verfügbar, durch automatische Tests abgedeckt; noch nicht auf einer echten Installation geprüft',
+    capStatePlanned: 'Geplant, noch nicht verfügbar',
+    capStateUnknown: 'Nicht geprüft',
+    capsNote: 'Aus den Funktionsnachweisen des Projekts erzeugt. Ein bestandener Test ist keine Zertifizierung.',
+    'cap_booking': 'Einen Platz buchen',
+    'cap_membership_allowances': 'Kontingente der Mitgliedschaft',
+    'cap_statements_shared_expenses': 'Abrechnungen und geteilte Ausgaben',
+    'cap_approvals': 'Freigaben durch die benannten Personen',
+    'cap_payments_stripe': 'Zahlungen mit Stripe',
+    'cap_payments_paypal': 'Zahlungen mit PayPal',
+    'cap_payments_mollie': 'Zahlungen mit Mollie',
+    'cap_payments_wero': 'Zahlungen mit Wero',
+    'cap_accounting_export': 'Buchhaltungsexport',
+    'cap_einvoice_generate': 'E-Rechnungen: erstellen',
+    'cap_einvoice_transmit': 'E-Rechnungen: versenden',
+    'cap_recovery_database_restore': 'Datenbank wiederherstellen',
+    'cap_recovery_storage_auth': 'Dateien und Anmeldekonten wiederherstellen',
+    'cap_demo': 'Die Demo',
+    'cap_mcp_read': 'Assistenten: lesen',
+    'cap_mcp_write': 'Assistenten: handeln',
+    'cap_mcp_consent': 'Assistenten: Einwilligung',
+    'cap_calendar_interchange': 'Kalenderaustausch',
     rolesTitle: 'Wer wofür verantwortlich ist',
     roleOwner: 'Die Workspace-Inhaberin legt Regeln, Preise und Mitglieder fest.',
     roleDba: 'Eine Datenbankadministration entscheidet, welche Assistenten sich wie verbinden dürfen.',
@@ -148,6 +221,30 @@ export const TEXT = {
     statusTitle: 'Dónde funciona hoy', platform: 'Plataforma', status: 'Estado',
     statusWeb: 'Disponible en el navegador', statusAndroid: 'Prueba cerrada en Google Play', statusIos: 'Beta pública en TestFlight', statusDesktop: 'Instaladores en cada versión',
     statusNote: 'A 27 de septiembre de 2026. Las funciones aún en construcción no figuran como disponibles.',
+    capsTitle: 'Lo que hace hoy', capsName: 'Función', capsState: 'Estado',
+    capStateVerified: 'Disponible, comprobado en una instalación real',
+    capStateTested: 'Disponible, cubierto por pruebas automáticas; aún no comprobado en una instalación real',
+    capStatePlanned: 'Previsto, aún no disponible',
+    capStateUnknown: 'Sin verificar',
+    capsNote: 'Generado a partir de las pruebas de funcionamiento del proyecto. Una prueba superada no es una certificación.',
+    'cap_booking': 'Reservar un puesto',
+    'cap_membership_allowances': 'Cupos de la membresía',
+    'cap_statements_shared_expenses': 'Extractos y gastos compartidos',
+    'cap_approvals': 'Aprobaciones por las personas designadas',
+    'cap_payments_stripe': 'Pagos con Stripe',
+    'cap_payments_paypal': 'Pagos con PayPal',
+    'cap_payments_mollie': 'Pagos con Mollie',
+    'cap_payments_wero': 'Pagos con Wero',
+    'cap_accounting_export': 'Exportación contable',
+    'cap_einvoice_generate': 'Facturas electrónicas: creación',
+    'cap_einvoice_transmit': 'Facturas electrónicas: envío',
+    'cap_recovery_database_restore': 'Restauración de la base de datos',
+    'cap_recovery_storage_auth': 'Restauración de archivos y cuentas',
+    'cap_demo': 'La demo',
+    'cap_mcp_read': 'Asistentes: lectura',
+    'cap_mcp_write': 'Asistentes: acciones',
+    'cap_mcp_consent': 'Asistentes: consentimiento',
+    'cap_calendar_interchange': 'Intercambio de calendarios',
     rolesTitle: 'Quién es responsable de qué',
     roleOwner: 'La persona propietaria del espacio fija reglas, precios y miembros.',
     roleDba: 'Una administración de la base de datos decide qué asistentes pueden conectarse y cómo.',
@@ -188,6 +285,30 @@ export const TEXT = {
     statusTitle: 'Dove funziona oggi', platform: 'Piattaforma', status: 'Stato',
     statusWeb: 'Disponibile nel browser', statusAndroid: 'Test chiuso su Google Play', statusIos: 'Beta pubblica tramite TestFlight', statusDesktop: 'Installatori allegati a ogni versione',
     statusNote: 'Al 27 settembre 2026. Le funzioni ancora in costruzione non sono indicate come disponibili.',
+    capsTitle: 'Cosa fa oggi', capsName: 'Funzione', capsState: 'Stato',
+    capStateVerified: 'Disponibile, verificata su un’installazione reale',
+    capStateTested: 'Disponibile, coperta da test automatici; non ancora verificata su un’installazione reale',
+    capStatePlanned: 'Prevista, non ancora disponibile',
+    capStateUnknown: 'Non verificata',
+    capsNote: 'Generato dalle prove di funzionamento del progetto. Un test superato non è una certificazione.',
+    'cap_booking': 'Prenotare un posto',
+    'cap_membership_allowances': 'Quote dell’abbonamento',
+    'cap_statements_shared_expenses': 'Estratti e spese condivise',
+    'cap_approvals': 'Approvazioni dalle persone indicate',
+    'cap_payments_stripe': 'Pagamenti con Stripe',
+    'cap_payments_paypal': 'Pagamenti con PayPal',
+    'cap_payments_mollie': 'Pagamenti con Mollie',
+    'cap_payments_wero': 'Pagamenti con Wero',
+    'cap_accounting_export': 'Esportazione contabile',
+    'cap_einvoice_generate': 'Fatture elettroniche: creazione',
+    'cap_einvoice_transmit': 'Fatture elettroniche: invio',
+    'cap_recovery_database_restore': 'Ripristino del database',
+    'cap_recovery_storage_auth': 'Ripristino di file e account',
+    'cap_demo': 'La demo',
+    'cap_mcp_read': 'Assistenti: lettura',
+    'cap_mcp_write': 'Assistenti: azioni',
+    'cap_mcp_consent': 'Assistenti: consenso',
+    'cap_calendar_interchange': 'Scambio di calendari',
     rolesTitle: 'Chi è responsabile di cosa',
     roleOwner: 'Chi possiede lo spazio stabilisce regole, prezzi e membri.',
     roleDba: 'Un’amministrazione del database decide quali assistenti possono collegarsi e come.',
@@ -210,6 +331,35 @@ export const TEXT = {
     resultInvalidCurrency: 'Inserisci un codice valuta di tre lettere, ad esempio EUR.', loadFailed: 'Questo file non è uno scenario che questa pagina sa leggere.',
   },
 };
+
+/// #1635 — a capability's state as the page states it, from the evidence
+/// only: roadmap is planned, whatever its tests; shipped needs evidence;
+/// a real installation's record is the only 'verified'. Anything else is
+/// unknown, never available.
+export function capabilityState(c) {
+  if (c.status === 'roadmap') return 'planned';
+  if (c.status !== 'shipped') return 'unknown';
+  if (c.evidence.some((e) => e.endsWith(':recorded'))) return 'verified';
+  if (c.evidence.some((e) => e.endsWith(':gated'))) return 'tested';
+  return 'unknown';
+}
+
+export const capabilityKey = (id) => `cap_${id.replace(/\./g, '_')}`;
+
+/// The capability rows for [locale], in the manifest's order.
+export function capabilityRows(locale, caps = CAPABILITIES) {
+  const t = TEXT[locale] ?? TEXT.en;
+  const words = {
+    verified: t.capStateVerified, tested: t.capStateTested,
+    planned: t.capStatePlanned, unknown: t.capStateUnknown,
+  };
+  return caps.map((c) => ({
+    id: c.id,
+    name: t[capabilityKey(c.id)] ?? c.id,
+    state: capabilityState(c),
+    text: words[capabilityState(c)],
+  }));
+}
 
 /// A form value as the planner reads it: '' is blank (unknown), a
 /// decimal with a point or a comma is a number, anything else is kept
@@ -285,6 +435,14 @@ function wire() {
       const text = t[el.dataset.i18n];
       if (text) el.textContent = text;
     }
+    document.getElementById('caps').replaceChildren(...capabilityRows(current()).map((r) => {
+      const tr = document.createElement('tr');
+      tr.dataset.state = r.state;
+      tr.append(
+        Object.assign(document.createElement('td'), { textContent: r.name }),
+        Object.assign(document.createElement('td'), { textContent: r.text }));
+      return tr;
+    }));
     render();
   };
   const browserLang = (navigator.language || 'en').slice(0, 2);
