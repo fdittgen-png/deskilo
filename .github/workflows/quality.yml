@@ -435,7 +435,7 @@ jobs:
         continue-on-error: true
         env:
           DB_URL: ${{ steps.migrations.outputs.db-url }}
-        run: bash scripts/db_race_check.sh "$DB_URL"
+        run: bash scripts/db_race_check.sh "$DB_URL" && echo "=== RED-FIRST CONTROL ===" && bash scripts/db_race_check.sh --drop-guards "$DB_URL"
 
       # #1337 — the install, the resume, the readiness verdict and the
       # doctor were proven against a fake Management API only. This runs
