@@ -1010,7 +1010,7 @@ routine public.member_credit_balance(p_member_id uuid, p_at timestamp with time 
 routine public.member_credit_balance_of(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:2d55cb53d683
 routine public.member_credit_uses_in_period(p_member_id uuid, p_from timestamp with time zone, p_to timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:0e54da7e9595
 routine public.member_custom_permissions(p_member_id uuid) -> text[] | function | definer | stable | exec:authenticated,service_role | body:8e86a2f81494
-routine public.member_directory_person() -> trigger | function | definer | volatile | exec:service_role | body:6581bcfe6f74
+routine public.member_directory_person() -> trigger | function | definer | volatile | exec:service_role | body:b7697b26f360
 routine public.member_emails(p_workspace_id uuid) -> TABLE(member_id uuid, email text) | function | definer | stable | exec:authenticated,service_role | body:54fc35fcd54a
 routine public.member_field_readable(p_member_id uuid, p_definition_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:33df597324ef
 routine public.member_has_permission(p_member_id uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:72a50d0622b7
@@ -1069,7 +1069,7 @@ routine public.protect_identity_federation_client() -> trigger | function | invo
 routine public.protect_last_owner() -> trigger | function | definer | volatile | exec:service_role | body:ab5c4b3b7f91
 routine public.provision_database_admin(p_target uuid, p_can_provision boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ac8050f2c40a
 routine public.public_holidays(p_country text, p_year integer) -> TABLE(day date, key text) | function | invoker | immutable | exec:authenticated,service_role | body:1c6cfdb4de71
-routine public.public_identity_authority() -> jsonb | function | definer | stable | exec:anon,authenticated,service_role | body:23d972e32d5c
+routine public.public_identity_authority() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:4e3256312a3b
 routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with time zone, p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:5ddacb1438c6
 routine public.reconcile_workspace(p_workspace_id uuid) -> TABLE("check" text, subject uuid, detail text) | function | definer | volatile | exec:authenticated,service_role | body:62bcd10a8d15
 routine public.record_applied_event(p_workspace_id uuid, p_type text, p_actor uuid, p_subject uuid, p_payload jsonb) -> uuid | function | definer | volatile | exec:service_role | body:e0cda8411fab

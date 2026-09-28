@@ -8,11 +8,12 @@ import secrets
 import shutil
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / 'scripts/recovery'))
-from runtime import Stack
+from runtime import Stack, Refused
 
 
 def verify_upgrade(stack):
@@ -43,8 +44,18 @@ def verify_upgrade(stack):
     profile = json.loads(stack.request('GET', '/rest/v1/profiles?id=eq.' + account, token=user['access_token']))[0]
     assert profile['first_name'] == 'Original' and profile['clock'] == '12h'
     assert profile['person_id'] != account
-    settings = json.loads(stack.request('POST', '/rest/v1/rpc/my_personal_preferences',
-        token=user['access_token'], body={'p_workspace_id': workspace}))
+    # NOTIFY refreshes PostgREST asynchronously after the migration commits.
+    # Retry only its brief missing-RPC response, never other API failures.
+    deadline = time.monotonic() + 10
+    while True:
+        try:
+            settings = json.loads(stack.request('POST', '/rest/v1/rpc/my_personal_preferences',
+                token=user['access_token'], body={'p_workspace_id': workspace}))
+            break
+        except Refused as error:
+            if str(error) != 'http_unexpected_status_404' or time.monotonic() >= deadline:
+                raise
+            time.sleep(.1)
     assert settings['defaults']['clock'] == '12h' and not settings['overrides']
     session = json.loads(stack.request('POST', '/auth/v1/token?grant_type=password',
         token=stack.credentials['ANON_KEY'], body={'email': email, 'password': password}))

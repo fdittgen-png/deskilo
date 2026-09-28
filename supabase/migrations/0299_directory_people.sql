@@ -277,8 +277,17 @@ create trigger directory_identity_unlinked after delete or update on auth.identi
 -- Before sign-in the app needs only routing metadata, never operator settings,
 -- client secrets, local users or directory contents. No configured authority
 -- keeps ordinary standalone/native sign-in unchanged.
+-- Column grants plus RLS keep this endpoint unprivileged: no anonymous
+-- SECURITY DEFINER entry point and no SELECT * access to operator records.
+grant select (installation_id) on public.installation_identity to anon, authenticated;
+grant select (kind, issuer, oidc_provider) on public.identity_authority to anon, authenticated;
+create policy identity_public_installation on public.installation_identity
+  for select to anon, authenticated using (not public.mcp_is_delegated());
+create policy identity_public_authority on public.identity_authority
+  for select to anon, authenticated using (
+    not public.mcp_is_delegated() and kind='oidc' and oidc_provider='custom:deskilo');
 create function public.public_identity_authority() returns jsonb
-language plpgsql stable security definer set search_path = public as $$
+language plpgsql stable security invoker set search_path = public as $$
 begin
   if public.mcp_is_delegated() then raise exception 'native client required'; end if;
   return (select jsonb_build_object('installation_id', i.installation_id,

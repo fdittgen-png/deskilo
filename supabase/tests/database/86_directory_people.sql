@@ -2,7 +2,7 @@
 -- #1791: directory identity is not a credential or a workspace membership.
 -- Exercise existing signup, invitation and membership paths with real RLS.
 begin;
-select plan(41);
+select plan(44);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
   email_confirmed_at, created_at, updated_at)
 select ('00000000-0000-4000-8000-0000001791' || suffix)::uuid,
@@ -73,10 +73,14 @@ select is((select count(*)::int from public.members where id in ('00000000-0000-
 select ok(exists(select 1 from public.directory_people where id=current_setting('deskilo.directory.deleted_person')::uuid),'person survives credential deletion');
 select is((select count(*)::int from public.profiles where id='00000000-0000-4000-8000-0000001791a2'),0,'credential deletion still removes its private account profile');
 delete from public.identity_authority;
+select ok(not (select prosecdef from pg_proc where oid='public.public_identity_authority()'::regprocedure),
+  'signed-out discovery has no elevated function privileges');
 select set_config('request.jwt.claims','{"role":"anon"}',true);
 set local role anon;
 select is(public.public_identity_authority(),null::jsonb,'standalone installation does not advertise federation');
 select throws_ok($$select * from public.identity_authority$$,'42501',null,'public discovery does not expose the protected configuration table');
+select throws_ok($$select * from public.installation_identity$$,'42501',null,'public discovery cannot read private installation columns');
+select throws_ok($$update public.identity_authority set issuer='https://attacker.invalid'$$,'42501',null,'public discovery never grants configuration writes');
 reset role;
 insert into public.identity_authority(kind,issuer,oidc_provider)
 values ('oidc','https://identity.deskilo.test/auth/v1','custom:deskilo');

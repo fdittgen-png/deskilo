@@ -50,9 +50,11 @@ public.expense_schedules.mcp_delegated_deny
 public.fee_bands.fee_bands_select
 public.fee_bands.fee_bands_write
 public.fee_bands.mcp_delegated_deny
+public.identity_authority.identity_public_authority
 public.identity_authority.mcp_delegated_deny
 public.identity_bindings.mcp_delegated_deny
 public.identity_federation_clients.mcp_delegated_deny
+public.installation_identity.identity_public_installation
 public.installation_identity.mcp_delegated_deny
 public.invitations.invitations_select
 public.invitations.mcp_delegated_deny
