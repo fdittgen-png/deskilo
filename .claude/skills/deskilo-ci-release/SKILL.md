@@ -91,3 +91,39 @@ two branches touched the same lines.
   only then do the 14 continuous days start. Uploading another build
   changes nothing about it, so do not read a green train as progress
   toward production.
+
+## Lessons of 2026-09-28
+
+- **Three contexts are required on master**: `analyze · l10n gate · test
+  · coverage`, `quality · database` and `quality · report`. A PR with a
+  red database job does not merge any more, so a missing contract digest
+  shows up as a PR that sits OPEN/BLOCKED.
+- **The report job can read a stale attempt.** After `gh run rerun
+  --failed`, `quality · report` may still download the first attempt's
+  artifacts and report a row as regressed that the rerun passed. Don't
+  rerun it a third time; push an empty commit (`ci: re-run the quality
+  report on a clean attempt`) for a fresh run.
+- **Infrastructure flakes get ONE rerun**: "port 54996 is still held by
+  an earlier pass", or a Supabase CLI download rate limit. Anything else
+  is real.
+- **Watch with one bounded loop per PR**, run in the background and
+  exiting on MERGED or FAILURE, not repeated manual checks. A watcher
+  started right after a push can see the OLD run's failure: sleep ~60 s
+  first, or skip failures from runs already handled.
+- **Local suites flake under load.** With several builds in parallel,
+  `flutter test` crashed ("Cannot add event while adding stream"), and
+  `ci_classify_script_test` (subprocess timing) failed. Rerun the file
+  alone. If it passes, run `--concurrency=4`, and name the flake in the
+  PR rather than skip the gate.
+- **Android on AGP 9 (#1792)**:
+  - AGP 9.0.1 needs Gradle ≥ 9.1.0. Flutter wants Kotlin ≥ 2.3.20.
+  - `android.applicationVariants` is gone, so the F-Droid per-ABI
+    versionCode (#795, `versionCode * 10 + abi`) lives in
+    `androidComponents.onVariants`.
+  - Flutter's own split-per-abi code (`abi * 1000 + code`) then runs
+    AFTER ours and wraps it (1031/2031/4031), so `gradle.properties`
+    carries `force-version-code-ignoring-abi=true`.
+  - Verify with `aapt2 dump badging` on the split APKs (31/32/33) and
+    the universal APK (3). The AGP 10 opt-outs (`android.builtInKotlin`,
+    `android.newDsl`) stay until the plugins support it.
+  - The PR checks do not build Android; the release train does.
