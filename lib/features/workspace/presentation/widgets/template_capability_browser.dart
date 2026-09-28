@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/motion/motion.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_process.dart';
 import '../feature_names.dart';
@@ -14,10 +15,13 @@ typedef CapabilityChoice = ({String id, bool required});
 /// #1660 — "Browse capabilities": every feature, grouped by the process
 /// and subprocess it belongs to, each with Require and Prefer. Choosing
 /// adds a chip to the search and changes nothing else; closing chooses
-/// nothing.
+/// nothing. With reduced motion the sheet appears and leaves at once.
 Future<CapabilityChoice?> showCapabilityBrowser(BuildContext context) =>
     showModalBottomSheet<CapabilityChoice>(
       context: context,
+      sheetAnimationStyle: MotionSettings.enabledOf(context)
+          ? null
+          : AnimationStyle.noAnimation,
       isScrollControlled: true,
       showDragHandle: true,
       useSafeArea: true,

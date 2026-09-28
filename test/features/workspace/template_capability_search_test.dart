@@ -196,6 +196,35 @@ void main() {
         reason: 'carnets off in the studio template');
   });
 
+  testWidgets('#1660 with reduced motion the browser opens and closes at '
+      'once, and chooses the same', (tester) async {
+    tester.platformDispatcher.accessibilityFeaturesTestValue =
+        const FakeAccessibilityFeatures(disableAnimations: true);
+    addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
+    await pumpLibrary(tester);
+    await tester.tap(find.byKey(const ValueKey('template-browse-capabilities')));
+    await tester.pump();
+    final browser = find.byKey(const ValueKey('capability-browser'));
+    expect(browser, findsOneWidget);
+    final firstFrame = tester.getRect(browser);
+    await tester.pumpAndSettle();
+    expect(tester.getRect(browser), firstFrame,
+        reason: 'no slide-in when the platform asks for reduced motion: '
+            'the first frame is already the final position');
+    await tester.tap(
+        find.byKey(const ValueKey('capability-process-membershipCommerce')));
+    await tester.pumpAndSettle();
+    final require = find.byKey(const ValueKey('capability-require-carnets'));
+    await tester.ensureVisible(require);
+    await tester.tap(require);
+    await tester.pump();
+    expect(find.byKey(const ValueKey('capability-browser')), findsNothing,
+        reason: 'and no slide-out either');
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('template-required-feature.carnets')),
+        findsOneWidget, reason: 'the choice is the same as with motion');
+  });
+
   testWidgets('#1660 closing the browser chooses nothing', (tester) async {
     await pumpLibrary(tester);
     await tester.tap(find.byKey(const ValueKey('template-browse-capabilities')));
