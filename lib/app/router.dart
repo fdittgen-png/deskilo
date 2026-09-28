@@ -42,7 +42,7 @@ import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/backend_screen.dart';
 import '../features/mcp/presentation/mcp_confirmation_screen.dart';
-import '../features/auth/presentation/oauth_consent_screen.dart';
+import 'oauth_consent_route.dart';
 import '../features/mcp/presentation/assistants_screen.dart';
 import '../features/mcp/presentation/eligibility_review_screen.dart';
 import '../features/mcp/presentation/mcp_policy_screen.dart';
@@ -493,7 +493,7 @@ GoRouter router(Ref ref) {
       // Every consent call requires the app's native session.
       GoRoute(
         path: '/oauth/consent',
-        builder: (context, state) => OAuthConsentScreen(
+        builder: (context, state) => OAuthConsentRoute(
             authorizationId: state.uri.queryParameters['authorization_id'] ?? ''),
       ),
       GoRoute(

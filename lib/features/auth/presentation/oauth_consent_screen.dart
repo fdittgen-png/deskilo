@@ -8,7 +8,6 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../mcp/presentation/mcp_consent_screen.dart';
 import '../domain/oauth_consent.dart';
 import '../providers/auth_providers.dart';
 import '../providers/oauth_consent_providers.dart';
@@ -42,7 +41,7 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
 
   bool _current(OAuthConsentContext context, int generation) => mounted &&
       generation == _generation &&
-      ref.read(authRepositoryProvider).currentUserId == context.localUserId;
+      ref.read(authStateProvider).value == context.localUserId;
 
   Future<void> _go(Uri uri, OAuthConsentContext context,
       {bool automatic = false}) async {
@@ -67,10 +66,8 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
     setState(() { _busy = true; _failed = false; });
     Uri? result;
     try {
-      final repository = ref.read(oauthConsentRepositoryProvider);
-      result = await (approve
-          ? repository.approve(widget.authorizationId, context)
-          : repository.deny(widget.authorizationId, context));
+      result = await ref.read(decideOAuthConsentProvider).answer(
+          widget.authorizationId, context, approve: approve);
     } catch (e, st) {
       TraceLogger.instance.error('auth', 'OAuth consent could not continue',
           error: e.runtimeType, stackTrace: st);
@@ -92,10 +89,6 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
     });
     final l10n = AppLocalizations.of(context);
     final value = ref.watch(oauthConsentProvider(widget.authorizationId));
-    final request = value.value;
-    if (request?.context.purpose == OAuthConsentPurpose.mcp) {
-      return McpConsentScreen(authorizationId: widget.authorizationId);
-    }
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.identityConsentTitle ?? 'Continue with Deskilo')),
       body: value.when(
@@ -105,6 +98,9 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
           child: _unavailable(l10n),
         ),
         data: (request) {
+          if (request.context.purpose != OAuthConsentPurpose.identityFederation) {
+            return const LoadingView();
+          }
           final destination = request.context.targetAuthUrl!;
           if (request.returnUri != null && !_returnAttempted) {
             final generation = _generation;

@@ -114,7 +114,7 @@ final class OauthConsentProvider
   }
 }
 
-String _$oauthConsentHash() => r'fb242cae4499168245f9972cf709093e6abac9b7';
+String _$oauthConsentHash() => r'a262919f677c46dde82da15e26e1c7131bc10a84';
 
 final class OauthConsentFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<OAuthConsentRequest>, String> {
@@ -133,3 +133,51 @@ final class OauthConsentFamily extends $Family
   @override
   String toString() => r'oauthConsentProvider';
 }
+
+@ProviderFor(decideOAuthConsent)
+final decideOAuthConsentProvider = DecideOAuthConsentProvider._();
+
+final class DecideOAuthConsentProvider
+    extends
+        $FunctionalProvider<
+          DecideOAuthConsent,
+          DecideOAuthConsent,
+          DecideOAuthConsent
+        >
+    with $Provider<DecideOAuthConsent> {
+  DecideOAuthConsentProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'decideOAuthConsentProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$decideOAuthConsentHash();
+
+  @$internal
+  @override
+  $ProviderElement<DecideOAuthConsent> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  DecideOAuthConsent create(Ref ref) {
+    return decideOAuthConsent(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DecideOAuthConsent value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DecideOAuthConsent>(value),
+    );
+  }
+}
+
+String _$decideOAuthConsentHash() =>
+    r'219775b0cb10e1fb9a0332892839bc5dee5ec2b0';

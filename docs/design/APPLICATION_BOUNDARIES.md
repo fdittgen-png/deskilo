@@ -18,11 +18,11 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | Workspace configuration | `workspace` | 28 |
 | Workspace configuration | `members` | 3 |
 | Workspace configuration | `profile` | 7 |
-| — | `auth` | 5 |
+| — | `auth` | 4 |
 | — | `events` | 1 |
 | — | `kiosk` | 1 |
 
-**77 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
+**76 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
 
 ## Cross-feature imports, by direction
 
@@ -77,7 +77,6 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `plan -> profile` | 2 |
 | `profile -> calendar` | 2 |
 | `reservations -> members` | 2 |
-| `auth -> mcp` | 1 |
 | `help -> auth` | 1 |
 | `help -> workspace` | 1 |
 | `kiosk -> events` | 1 |
@@ -91,9 +90,9 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**60 directed relationships, 716 imports.**
+**59 directed relationships, 715 imports.**
 
-Reciprocal (20): `auth <-> mcp`, `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
+Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
 ## Hand-written files over 600 lines
 
