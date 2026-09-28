@@ -13239,6 +13239,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun export ni restauration enregistré';
 
   @override
+  String get readinessReasonRecentExport => 'Un export récent est enregistré';
+
+  @override
+  String get readinessReasonStaleExport =>
+      'Le dernier export enregistré date de plus de 90 jours';
+
+  @override
   String get readinessActorOwner => 'Vous';
 
   @override

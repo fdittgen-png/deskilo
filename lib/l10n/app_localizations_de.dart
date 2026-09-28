@@ -13219,6 +13219,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Noch kein Export und keine Wiederherstellung erfasst';
 
   @override
+  String get readinessReasonRecentExport => 'Ein aktueller Export ist erfasst';
+
+  @override
+  String get readinessReasonStaleExport =>
+      'Der letzte erfasste Export ist älter als 90 Tage';
+
+  @override
   String get readinessActorOwner => 'Sie';
 
   @override

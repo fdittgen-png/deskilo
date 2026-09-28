@@ -13223,6 +13223,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna esportazione o ripristino registrato';
 
   @override
+  String get readinessReasonRecentExport =>
+      'È registrata un’esportazione recente';
+
+  @override
+  String get readinessReasonStaleExport =>
+      'L’ultima esportazione registrata risale a più di 90 giorni fa';
+
+  @override
   String get readinessActorOwner => 'Lei';
 
   @override

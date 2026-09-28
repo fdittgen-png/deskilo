@@ -8596,6 +8596,8 @@
   "readinessReasonTooFewValidators": "Eine Regel verlangt mehr Prüfer, als dieser Bereich hat",
   "readinessReasonNoPolicies": "Keine Anfrage wartet auf eine Bestätigung",
   "readinessReasonNoEvidence": "Noch kein Export und keine Wiederherstellung erfasst",
+  "readinessReasonRecentExport": "Ein aktueller Export ist erfasst",
+  "readinessReasonStaleExport": "Der letzte erfasste Export ist älter als 90 Tage",
   "readinessActorOwner": "Sie",
   "readinessActorOperator": "Der Serverbetreiber",
   "readinessActor": "Wer: {who}",
