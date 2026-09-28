@@ -32,6 +32,24 @@ List<String> mcpAllowedOutput(Map<String, dynamic> contract, Map<String, dynamic
     ..sort();
 }
 
+/// #1645 — the display fields an operation may add to `data` only when the
+/// installation maximum, the workspace policy and the person's consent for
+/// this client and workspace all name them (and the native path returned
+/// them). A finite list: a field is optional only when the contract says
+/// `"disclosure": "optional"` on a `display` class. Sorted.
+List<String> mcpOptionalOutput(Map<String, dynamic> contract, Map<String, dynamic> op) {
+  final classes = Map<String, dynamic>.from(contract['output_fields'] as Map? ?? const {});
+  bool optional(Object? f) {
+    final c = classes['$f'] as Map?;
+    return c?['class'] == 'display' && c?['disclosure'] == 'optional';
+  }
+
+  return {
+    for (final f in op['output'] as List? ?? const []) if (optional(f)) '$f',
+  }.toList()
+    ..sort();
+}
+
 /// #1629 — the security schemes the documented paths use.
 const Map<String, Object?> mcpSecuritySchemes = {
   'nativeSession': {
@@ -281,6 +299,7 @@ String renderMcpCatalogueSql(Map<String, dynamic> contract) {
           'mutation': op['mutation'],
           'confirmation': op['confirmation'],
           'output': mcpAllowedOutput(contract, op),
+          'optional': mcpOptionalOutput(contract, op),
         },
     },
   };
@@ -465,6 +484,14 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     ..writeln('export const MCP_OUTPUT_ALLOWED: Record<McpOperationId, readonly string[]> = {');
   for (final op in ops) {
     ts.writeln('  ${op['id']}: ${jsonEncode(mcpAllowedOutput(contract, op))},');
+  }
+  ts
+    ..writeln('};')
+    ..writeln()
+    ..writeln('/** #1645 — display fields the database may add after its four-layer consent check. */')
+    ..writeln('export const MCP_OUTPUT_OPTIONAL: Record<McpOperationId, readonly string[]> = {');
+  for (final op in ops) {
+    ts.writeln('  ${op['id']}: ${jsonEncode(mcpOptionalOutput(contract, op))},');
   }
   ts
     ..writeln('};')

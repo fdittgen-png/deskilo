@@ -163,6 +163,30 @@ void main() {
     expect(mcpAllowedOutput(contract, Map<String, dynamic>.from(availability)), isNot(contains('name')));
   });
 
+  test('#1645 optional disclosure is a finite list of display fields', () {
+    final contract = source();
+    final classes = Map<String, dynamic>.from(contract['output_fields'] as Map);
+    for (final entry in classes.entries) {
+      final field = entry.value as Map;
+      if (!field.containsKey('disclosure')) continue;
+      expect(field['disclosure'], 'optional', reason: '${entry.key}: the only disclosure is optional');
+      expect(field['class'], 'display', reason: '${entry.key}: only a display label may be disclosed');
+    }
+    final ops = (contract['operations'] as List).cast<Map<String, dynamic>>();
+    for (final op in ops) {
+      final optional = mcpOptionalOutput(contract, op);
+      expect(optional.toSet().intersection(mcpAllowedOutput(contract, op).toSet()), isEmpty,
+          reason: '${op['id']}: an optional field is never sent by default');
+      for (final f in optional) {
+        expect(op['output'] as List, contains(f), reason: '${op['id']} does not emit $f');
+      }
+    }
+    final availability = ops.firstWhere((o) => o['id'] == 'get_availability');
+    expect(mcpOptionalOutput(contract, availability), ['name']);
+    final reservations = ops.firstWhere((o) => o['id'] == 'list_my_reservations');
+    expect(mcpOptionalOutput(contract, reservations), isEmpty);
+  });
+
   test('the latest migration carries the generated catalogue verbatim', () {
     final migrations = Directory('supabase/migrations')
         .listSync()

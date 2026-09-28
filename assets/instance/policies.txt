@@ -80,6 +80,7 @@ public.mcp_clients.mcp_delegated_deny
 public.mcp_connection_preparations.mcp_delegated_deny
 public.mcp_connection_scopes.mcp_delegated_deny
 public.mcp_connections.mcp_delegated_deny
+public.mcp_disclosure_maximum.mcp_delegated_deny
 public.mcp_eligibility_grants.mcp_delegated_deny
 public.mcp_eligibility_requests.mcp_delegated_deny
 public.mcp_idempotency.mcp_delegated_deny

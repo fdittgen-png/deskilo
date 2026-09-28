@@ -29,6 +29,7 @@ import {
   MCP_INPUT_SCHEMAS,
   MCP_OPERATIONS,
   MCP_OUTPUT_ALLOWED,
+  MCP_OUTPUT_OPTIONAL,
   MCP_TOOL_PREFIX,
   McpOperationId,
 } from "../_shared/mcp_contract.ts";
@@ -95,9 +96,13 @@ export function refusedInput(op: McpOperationId, args: Record<string, unknown>):
  * #1644 — the database already projects every answer; this repeats the
  * same allow-list defensively, recursively, so a field the contract does
  * not classify as operational never reaches the assistant from here.
+ * #1645 — an optional display field the contract names for this operation
+ * is left as the database decided: it is only there when the installation
+ * maximum, the workspace policy and this caller's consent all allowed it,
+ * which this adapter cannot see. Anything else is still dropped.
  */
 export function projectData(op: McpOperationId, value: unknown): unknown {
-  const allowed = new Set(MCP_OUTPUT_ALLOWED[op] ?? []);
+  const allowed = new Set([...(MCP_OUTPUT_ALLOWED[op] ?? []), ...(MCP_OUTPUT_OPTIONAL[op] ?? [])]);
   const walk = (v: unknown): unknown => {
     if (Array.isArray(v)) return v.map(walk);
     if (v === null || typeof v !== "object") return v;

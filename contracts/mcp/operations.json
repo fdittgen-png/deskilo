@@ -206,7 +206,8 @@
   },
   "name": {
    "class": "display",
-   "purpose": "a human label; omitted by default because it can name or describe a person (#1644)"
+   "disclosure": "optional",
+   "purpose": "a human label; omitted by default because it can name or describe a person (#1644); sent only when the installation maximum, the workspace policy and the person's consent all name it (#1645)"
   },
   "negotiated": {
    "class": "operational",
