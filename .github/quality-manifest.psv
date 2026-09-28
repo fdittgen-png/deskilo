@@ -26,6 +26,7 @@ Query budgets|database|step|conditional||indexes exist, the planner uses them at
 Policy drift|database|step|conditional||live policies equal the set the migrations build
 Effective contract|database|step|conditional||routines, grants, constraints and triggers of the replay equal the committed contract
 Restore drill|database|step|conditional||seeded, dumped, restored into a fresh database, counts equal and reconciled
+MCP races|database|step|conditional||two sessions per case: one booking per intent and a refused rival, one event per void and subscription request id, one decision per person across the app and MCP
 Payments|database|step|conditional||the real payment handler opens the caller's intent; strangers and no token refused
 Payment settlement|database|step|conditional||Stripe: paid credits once, unpaid does not, async success once, failure and expiry mark failed, bad signature and wrong amount refused, duplicate and concurrent delivery credit once, a lost webhook stays pending, reconciliation clean
 PayPal settlement|database|step|conditional||PayPal: approval is not money; one capture per order, refusals before capture, lost reply and reordered callbacks credit once
