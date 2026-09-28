@@ -4284,6 +4284,7 @@
   },
   "templatesLoadFailed": "No se pudieron cargar las plantillas.",
   "onboardingTemplatesFailedEmpty": "No se pudieron cargar las plantillas, así que este espacio empezaría vacío. Vuelva atrás para intentarlo de nuevo.",
+  "templateResultCount": "{count, plural, =0{Ninguna plantilla mostrada} =1{1 plantilla mostrada} other{{count} plantillas mostradas}}",
   "localSlotLegalIdentity": "Su identidad legal y su dirección (para las facturas)",
   "localSlotPaymentDetails": "Cómo le pagan los miembros (datos bancarios)",
   "localSlotPaymentProvider": "Un proveedor de pagos en línea",

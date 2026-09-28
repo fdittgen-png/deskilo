@@ -81,6 +81,38 @@ void main() {
     expect(find.text('Studio Lyon'), findsOneWidget);
   });
 
+  testWidgets('#1660 a narrowed list announces its count, and focus stays '
+      'in the search field', (tester) async {
+    final semantics = tester.ensureSemantics();
+    await _pump(tester, [
+      _tpl(1, name: 'Studio Lyon', tags: const ['coworking']),
+      _tpl(2, name: 'Studio Paris', tags: const ['association']),
+      _tpl(3, name: 'Grand hall', tags: const ['coworking']),
+    ]);
+    const count = ValueKey('template-result-count');
+    expect(find.byKey(count), findsNothing,
+        reason: 'nothing narrowed, nothing to announce');
+
+    await tester.tap(find.byKey(const ValueKey('template-search')));
+    await _search(tester, 'studio');
+    expect(find.text('2 templates shown'), findsOneWidget);
+    expect(
+      tester.getSemantics(find.byKey(count)),
+      matchesSemantics(label: '2 templates shown', isLiveRegion: true),
+    );
+    final editable = tester.widget<EditableText>(find.descendant(
+      of: find.byKey(const ValueKey('template-search')),
+      matching: find.byType(EditableText),
+    ));
+    expect(editable.focusNode.hasFocus, isTrue,
+        reason: 'the announcement never takes the focus');
+
+    await tester.tap(find.byKey(const ValueKey('template-tag-coworking')));
+    await tester.pumpAndSettle();
+    expect(find.text('1 template shown'), findsOneWidget);
+    semantics.dispose();
+  });
+
   test('builtin first, then public, shared and private, then by name', () {
     final ordered = TemplateGallery.ordered([
       _tpl(1, name: 'b', visibility: TemplateVisibility.private),

@@ -6839,6 +6839,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'The templates could not be loaded, so this space would start empty. Go back to try again.';
 
   @override
+  String templateResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count templates shown',
+      one: '1 template shown',
+      zero: 'No template shown',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get localSlotLegalIdentity =>
       'Your legal identity and address (for invoices)';
 

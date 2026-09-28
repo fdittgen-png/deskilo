@@ -373,6 +373,23 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
             ]),
           ),
         ],
+        // #1660 — a narrowed list says how many it shows, and a screen
+        // reader hears the count change; focus stays where it was.
+        if (_narrowed && !_checking)
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.sm),
+            child: Semantics(
+              liveRegion: true,
+              child: Text(
+                key: const ValueKey('template-result-count'),
+                l10n?.templateResultCount(shownAll.length) ??
+                    (shownAll.length == 1
+                        ? '1 template shown'
+                        : '${shownAll.length} templates shown'),
+                style: theme.textTheme.bodySmall,
+              ),
+            ),
+          ),
         if (_shortlist.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
           FilledButton.tonalIcon(

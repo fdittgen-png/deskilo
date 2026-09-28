@@ -11845,6 +11845,12 @@ abstract class AppLocalizations {
   /// **'The templates could not be loaded, so this space would start empty. Go back to try again.'**
   String get onboardingTemplatesFailedEmpty;
 
+  /// #1660 library
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No template shown} =1{1 template shown} other{{count} templates shown}}'**
+  String templateResultCount(int count);
+
   /// #1656 local_setup
   ///
   /// In en, this message translates to:

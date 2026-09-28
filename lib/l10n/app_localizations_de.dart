@@ -6900,6 +6900,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Vorlagen konnten nicht geladen werden, daher würde dieser Bereich leer beginnen. Gehen Sie zurück, um es erneut zu versuchen.';
 
   @override
+  String templateResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Vorlagen angezeigt',
+      one: '1 Vorlage angezeigt',
+      zero: 'Keine Vorlage angezeigt',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get localSlotLegalIdentity =>
       'Ihre rechtliche Identität und Adresse (für Rechnungen)';
 
