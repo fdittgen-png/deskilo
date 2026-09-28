@@ -1268,5 +1268,118 @@
     "effect_applied"
    ]
   }
+ ],
+ "native_rpcs": [
+  {
+   "rpc": "mcp_execute_v1",
+   "params": {
+    "p_installation_id": "uuid",
+    "p_workspace_id": "uuid",
+    "p_operation": "text",
+    "p_arguments": "jsonb",
+    "p_request_id": "uuid"
+   },
+   "security": "mcpOAuth",
+   "purpose": "The one facade every tools/call reaches; it re-checks the caller, the policy and the confirmation."
+  },
+  {
+   "rpc": "mcp_my_operations",
+   "params": {
+    "p_installation_id": "uuid"
+   },
+   "security": "mcpOAuth",
+   "purpose": "What tools/list answers: the operations this caller may call now."
+  },
+  {
+   "rpc": "mcp_confirm_action",
+   "params": {
+    "p_confirmation_id": "uuid",
+    "p_accept": "boolean"
+   },
+   "security": "nativeSession",
+   "purpose": "Accept or decline one exact action, in the Deskilo app only."
+  },
+  {
+   "rpc": "mcp_get_action_confirmation",
+   "params": {
+    "p_confirmation_id": "uuid"
+   },
+   "security": "nativeSession",
+   "purpose": "Read one pending confirmation."
+  },
+  {
+   "rpc": "mcp_policy_status",
+   "params": {
+    "p_workspace_id": "uuid"
+   },
+   "security": "nativeSession",
+   "purpose": "The owner reads what the workspace exposes."
+  },
+  {
+   "rpc": "save_mcp_policy",
+   "params": {
+    "p_workspace_id": "uuid",
+    "p_expected_revision": "integer",
+    "p_mutation_id": "uuid",
+    "p_enabled": "boolean",
+    "p_operations": "text[]",
+    "p_target_ceiling": "text",
+    "p_allowed_clients": "text[]"
+   },
+   "security": "nativeSession",
+   "purpose": "The owner saves the exposure; a stale revision is refused."
+  },
+  {
+   "rpc": "my_database_capabilities",
+   "params": {},
+   "security": "nativeSession",
+   "purpose": "The caller's own database eligibility and administrator status."
+  },
+  {
+   "rpc": "request_mcp_eligibility",
+   "params": {},
+   "security": "nativeSession",
+   "purpose": "Ask a database administrator for assistant eligibility."
+  },
+  {
+   "rpc": "withdraw_mcp_eligibility",
+   "params": {},
+   "security": "nativeSession",
+   "purpose": "Withdraw one's own request or eligibility."
+  },
+  {
+   "rpc": "list_mcp_eligibility_requests",
+   "params": {},
+   "security": "administratorAal2",
+   "purpose": "A database administrator's review queue."
+  },
+  {
+   "rpc": "decide_mcp_eligibility",
+   "params": {
+    "p_subject": "uuid",
+    "p_decision_id": "uuid",
+    "p_approve": "boolean",
+    "p_expected_revision": "integer",
+    "p_valid_days": "integer",
+    "p_reason": "text"
+   },
+   "security": "administratorAal2",
+   "purpose": "Approve or reject a request, with a second factor."
+  },
+  {
+   "rpc": "revoke_mcp_eligibility",
+   "params": {
+    "p_subject": "uuid",
+    "p_reason": "text"
+   },
+   "security": "administratorAal2",
+   "purpose": "Revoke an eligibility, with a second factor."
+  },
+  {
+   "rpc": "mcp_consent_options",
+   "params": {},
+   "security": "nativeSession",
+   "purpose": "What an assistant connection may be granted."
+  }
  ]
 }

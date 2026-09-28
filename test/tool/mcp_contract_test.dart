@@ -195,4 +195,84 @@ void main() {
       }
     }
   });
+
+  group('#1629 the OpenAPI document names only what exists', () {
+    Map<String, dynamic> openapi() => jsonDecode(
+        File('contracts/mcp/generated/openapi.json').readAsStringSync()) as Map<String, dynamic>;
+    List<Map<String, dynamic>> nativeRpcs() => [
+      for (final r in source()['native_rpcs'] as List) Map<String, dynamic>.from(r as Map),
+    ];
+
+    test('every documented RPC is in the replay with exactly these '
+        'parameters, and a client may call it', () {
+      final contract = File('assets/instance/contract.txt').readAsLinesSync();
+      for (final r in nativeRpcs()) {
+        final params = Map<String, dynamic>.from(r['params'] as Map);
+        final signature = 'routine public.${r['rpc']}('
+            '${[for (final e in params.entries) '${e.key} ${e.value}'].join(', ')}) ->';
+        final line = contract.where((l) => l.startsWith(signature)).toList();
+        expect(line, hasLength(1), reason: '${r['rpc']}: the replay has no `$signature`');
+        expect(line.single, contains('exec:authenticated'), reason: '${r['rpc']}');
+      }
+    });
+
+    test('one MCP endpoint, its metadata and the documented RPCs: no route '
+        'per tool, no undocumented path', () {
+      final paths = (openapi()['paths'] as Map).keys.cast<String>().toSet();
+      expect(paths, {
+        '/functions/v1/deskilo-mcp',
+        '/functions/v1/deskilo-mcp/.well-known/oauth-protected-resource',
+        for (final r in nativeRpcs()) '/rest/v1/rpc/${r['rpc']}',
+      });
+      for (final op in mcpOperations.values) {
+        expect(paths.any((p) => p.endsWith('/${op.id}')), isFalse, reason: op.id);
+      }
+    });
+
+    test('tools/call offers exactly the dispatchable tools', () {
+      final post = ((openapi()['paths'] as Map)['/functions/v1/deskilo-mcp'] as Map)['post'] as Map;
+      final schema = ((((post['requestBody'] as Map)['content'] as Map)['application/json'] as Map)['schema']) as Map;
+      final names = (((schema['properties'] as Map)['params'] as Map)['properties'] as Map)['name'] as Map;
+      expect((names['enum'] as List).toSet(), {
+        for (final op in mcpOperations.values)
+          if (op.dispatch) '${source()['tool_prefix']}${op.id}',
+      });
+    });
+
+    test('every path is secured by a declared scheme, and administrators '
+        'need the second factor', () {
+      final doc = openapi();
+      final schemes = ((doc['components'] as Map)['securitySchemes'] as Map).keys.toSet();
+      for (final path in (doc['paths'] as Map).values) {
+        for (final op in (path as Map).values) {
+          for (final s in (op as Map)['security'] as List) {
+            expect(schemes, containsAll((s as Map).keys), reason: '${op['operationId']}');
+          }
+        }
+      }
+      for (final r in nativeRpcs()) {
+        if ((r['rpc'] as String).contains('eligibility') && r['rpc'] != 'request_mcp_eligibility' &&
+            r['rpc'] != 'withdraw_mcp_eligibility') {
+          expect(r['security'], 'administratorAal2', reason: '${r['rpc']}');
+        }
+      }
+    });
+
+    test('every documented answer is a valid envelope, and pending is not '
+        'completed', () {
+      final envelope = ((openapi()['components'] as Map)['schemas'] as Map)['McpEnvelope'] as Map;
+      final properties = (envelope['properties'] as Map).keys.toSet();
+      final statuses = (source()['statuses'] as List).toSet();
+      for (final e in mcpDocumentedEnvelopes) {
+        expect(properties, containsAll(e.keys), reason: '${e['status']}');
+        expect(e.keys, containsAll(envelope['required'] as List), reason: '${e['status']}');
+        expect(statuses, contains(e['status']));
+        expect(mcpOperations.keys, contains(e['operation']));
+      }
+      expect({for (final e in mcpDocumentedEnvelopes) e['status']},
+          containsAll(['denied', 'requires_confirmation', 'pending_validation', 'completed']));
+      final pending = mcpDocumentedEnvelopes.firstWhere((e) => e['status'] == 'pending_validation');
+      expect(pending['event_id'], isNotNull, reason: 'pending names the event it waits on');
+    });
+  });
 }
