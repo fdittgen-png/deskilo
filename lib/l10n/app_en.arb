@@ -7910,6 +7910,14 @@
   "@mfaVerify": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
+  "mcpApiReference": "API reference",
+  "@mcpApiReference": {
+    "description": "#1801 mcp_settings"
+  },
+  "mcpApiReferenceHint": "What an assistant can call, and how it is authorised",
+  "@mcpApiReferenceHint": {
+    "description": "#1801 mcp_settings"
+  },
   "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
   "@mcpUsageWorkspaceTitle": {
     "description": "#1630 mcp_usage"

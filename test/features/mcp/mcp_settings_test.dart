@@ -18,6 +18,7 @@ import 'package:deskilo/features/mcp/domain/mcp_admin.dart';
 import 'package:deskilo/features/mcp/domain/mcp_connection.dart';
 import 'package:deskilo/features/mcp/presentation/assistants_screen.dart';
 import 'package:deskilo/features/mcp/presentation/eligibility_review_screen.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/features/mcp/presentation/mcp_policy_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -168,6 +169,30 @@ void main() {
         expect(find.byKey(const ValueKey('mcp-policy-stale')), findsOneWidget);
       },
     );
+
+    testWidgets('#1801 the API reference opens from the policy, only while '
+        'assistants are on', (tester) async {
+      final workspace = FakeWorkspaceRepository.withWorkspace();
+      final ws = workspace.workspaces.first.id;
+      final opened = <Uri>[];
+      await pump(tester, const McpPolicyScreen(), [
+        ...standardTestOverrides(
+          workspace: workspace,
+          mcpAdmin: FakeMcpAdminRepository(policy: policy(ws)),
+        ),
+        linkLauncherProvider.overrideWithValue((uri) async {
+          opened.add(uri);
+          return true;
+        }),
+      ]);
+      final link = find.byKey(const ValueKey('mcp-api-reference'));
+      await tester.scrollUntilVisible(link, 200,
+          scrollable: find.byType(Scrollable).first);
+      await tester.tap(link);
+      await tester.pump();
+      expect(opened.single.toString(), kMcpApiReferenceUrl);
+      expect(opened.single.path, endsWith('/api/'));
+    });
 
     testWidgets('with mcpAccess off, services cannot be switched on', (
       tester,

@@ -7388,6 +7388,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mfaVerify => 'Verificar';
 
   @override
+  String get mcpApiReference => 'Referencia de la API';
+
+  @override
+  String get mcpApiReferenceHint =>
+      'Qué puede llamar un asistente y cómo se autoriza';
+
+  @override
   String get mcpUsageWorkspaceTitle => 'Uso de asistentes, últimos 30 días';
 
   @override

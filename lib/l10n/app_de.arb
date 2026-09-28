@@ -4512,6 +4512,8 @@
   "mfaCode": "Sechsstelliger Code",
   "mfaWrong": "Dieser Code wurde nicht akzeptiert. Versuchen Sie den aktuellen.",
   "mfaVerify": "Bestätigen",
+  "mcpApiReference": "API-Referenz",
+  "mcpApiReferenceHint": "Was ein Assistent aufrufen kann und wie es autorisiert wird",
   "mcpUsageWorkspaceTitle": "Nutzung durch Assistenten, letzte 30 Tage",
   "mcpUsageMineTitle": "Ihre Nutzung durch Assistenten heute",
   "mcpUsageUnavailable": "Die Nutzung konnte nicht geladen werden.",

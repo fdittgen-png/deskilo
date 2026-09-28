@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
@@ -13,6 +14,9 @@ import '../domain/mcp_admin.dart';
 import '../providers/mcp_providers.dart';
 import 'mcp_operation_labels.dart';
 import 'widgets/mcp_usage_cards.dart';
+
+/// #1801 — the self-hosted Swagger UI (#1799), served with the web app.
+const kMcpApiReferenceUrl = 'https://fdittgen-png.github.io/deskilo/api/';
 
 /// #1626 — the owner decides which assistant services this workspace
 /// offers. Exposing a service is not allowing every member: each person
@@ -130,6 +134,22 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
         ),
         const SizedBox(height: AppSpacing.md),
         McpWorkspaceUsageCard(workspaceId: policy.workspaceId),
+        // #1801 — the reference of what an assistant can call, and how.
+        if (policy.featureEnabled)
+          ListTile(
+            key: const ValueKey('mcp-api-reference'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.api_outlined),
+            title: Text(l10n?.mcpApiReference ?? 'API reference'),
+            subtitle: Text(
+              l10n?.mcpApiReferenceHint ??
+                  'What an assistant can call, and how it is authorised',
+            ),
+            trailing: const Icon(Icons.open_in_new),
+            onTap: () => ref.read(linkLauncherProvider)(
+              Uri.parse(kMcpApiReferenceUrl),
+            ),
+          ),
         if (!policy.featureEnabled)
           _note(
             'mcp-policy-feature-off',
