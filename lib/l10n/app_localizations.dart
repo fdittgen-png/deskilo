@@ -12697,6 +12697,60 @@ abstract class AppLocalizations {
   /// **'Verify'**
   String get mfaVerify;
 
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant use, last 30 days'**
+  String get mcpUsageWorkspaceTitle;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Your assistant use today'**
+  String get mcpUsageMineTitle;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Usage could not be loaded.'**
+  String get mcpUsageUnavailable;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'No assistant has used your access yet.'**
+  String get mcpUsageNone;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Last used {when}'**
+  String mcpUsageLastUsed(String when);
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get mcpUsageRequests;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Refused'**
+  String get mcpUsageRefusals;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get mcpUsageApplied;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting validation'**
+  String get mcpUsagePending;
+
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///
   /// In en, this message translates to:

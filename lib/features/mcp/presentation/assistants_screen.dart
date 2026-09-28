@@ -12,6 +12,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../domain/mcp_connection.dart';
 import '../providers/mcp_providers.dart';
 import 'mcp_operation_labels.dart';
+import 'widgets/mcp_usage_cards.dart';
 
 /// #1628 — the person's own assistant access on this database: whether
 /// the database approved them, and each connected assistant with the
@@ -37,7 +38,8 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
     setState(() => _busy = false);
     ref
       ..invalidate(myDatabaseCapabilitiesProvider)
-      ..invalidate(myMcpConnectionsProvider);
+      ..invalidate(myMcpConnectionsProvider)
+      ..invalidate(myMcpUsageProvider);
   }
 
   Future<void> _disconnect(AppLocalizations? l10n, McpConnectionInfo c) async {
@@ -119,6 +121,8 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
                     children: [for (final c in list) _connection(l10n, c)],
                   ),
           ),
+          const SizedBox(height: AppSpacing.lg),
+          const McpMyUsageSection(),
         ],
       ),
     );

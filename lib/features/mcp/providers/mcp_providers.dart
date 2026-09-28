@@ -16,6 +16,7 @@ import '../domain/action_confirmation.dart';
 import '../domain/mcp_admin.dart';
 import '../domain/mcp_context.dart';
 import '../domain/mcp_connection.dart';
+import '../domain/mcp_usage.dart';
 
 part 'mcp_providers.g.dart';
 
@@ -93,6 +94,26 @@ Future<McpPolicy> mcpPolicy(Ref ref, String workspaceId) async {
     answered: p.workspaceId,
   );
 }
+
+/// #1630 — the workspace's assistant usage over 30 days, counts only.
+/// An answer for another workspace is refused, not shown.
+@riverpod
+Future<McpWorkspaceUsage> mcpWorkspaceUsage(Ref ref, String workspaceId) async {
+  final u = await ref
+      .watch(mcpAdminRepositoryProvider)
+      .workspaceUsage(workspaceId);
+  return requireProvenance(
+    u,
+    what: 'workspace',
+    expected: workspaceId,
+    answered: u.workspaceId,
+  );
+}
+
+/// #1630 — this person's own assistant usage today.
+@riverpod
+Future<List<McpClientUsage>> myMcpUsage(Ref ref) =>
+    ref.watch(mcpConnectionRepositoryProvider).myUsage();
 
 @riverpod
 McpPolicyEditor mcpPolicyEditor(Ref ref) =>

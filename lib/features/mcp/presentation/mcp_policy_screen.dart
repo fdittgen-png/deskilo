@@ -12,6 +12,7 @@ import '../application/mcp_policy_editor.dart';
 import '../domain/mcp_admin.dart';
 import '../providers/mcp_providers.dart';
 import 'mcp_operation_labels.dart';
+import 'widgets/mcp_usage_cards.dart';
 
 /// #1626 — the owner decides which assistant services this workspace
 /// offers. Exposing a service is not allowing every member: each person
@@ -128,6 +129,7 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
                   'when connecting their assistant.',
         ),
         const SizedBox(height: AppSpacing.md),
+        McpWorkspaceUsageCard(workspaceId: policy.workspaceId),
         if (!policy.featureEnabled)
           _note(
             'mcp-policy-feature-off',
