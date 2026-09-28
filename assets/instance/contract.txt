@@ -970,7 +970,7 @@ routine public.mcp_invoice_view(p_invoice_id uuid) -> jsonb | function | invoker
 routine public.mcp_is_delegated() -> boolean | function | invoker | stable | exec:anon,authenticated,service_role | body:6c3314325efe
 routine public.mcp_member_view(p_member_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:8d9cb5a3eddd
 routine public.mcp_my_operations(p_installation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e17d1e163398
-routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:bfe7d90d7675
+routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:293d52b5546b
 routine public.mcp_policy_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:24f5a5c5d317
 routine public.mcp_pre_request() -> void | function | invoker | stable | exec:anon,authenticated,service_role | body:957a864733c2
 routine public.mcp_prepare_connection(p_client_id text, p_authorization_id text, p_scopes jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fa9f5e2dc711
