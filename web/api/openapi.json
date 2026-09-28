@@ -398,7 +398,7 @@
     "/rest/v1/rpc/save_mcp_policy": {
       "post": {
         "operationId": "save_mcp_policy",
-        "summary": "The owner saves the exposure; a stale revision is refused.",
+        "summary": "The owner saves the exposure and the optional display fields it allows, within the database maximum (#1645); a stale revision is refused.",
         "security": [
           {
             "nativeSession": []
@@ -438,6 +438,10 @@
                     "x-sql-type": "text"
                   },
                   "p_allowed_clients": {
+                    "type": "array",
+                    "x-sql-type": "text[]"
+                  },
+                  "p_optional_fields": {
                     "type": "array",
                     "x-sql-type": "text[]"
                   }

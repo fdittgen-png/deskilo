@@ -1325,10 +1325,11 @@
     "p_enabled": "boolean",
     "p_operations": "text[]",
     "p_target_ceiling": "text",
-    "p_allowed_clients": "text[]"
+    "p_allowed_clients": "text[]",
+    "p_optional_fields": "text[]"
    },
    "security": "nativeSession",
-   "purpose": "The owner saves the exposure; a stale revision is refused."
+   "purpose": "The owner saves the exposure and the optional display fields it allows, within the database maximum (#1645); a stale revision is refused."
   },
   {
    "rpc": "my_database_capabilities",
