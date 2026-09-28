@@ -216,7 +216,7 @@ const Map<String, int> _pairBudget = {
   'money -> events': 30,
   'money -> members': 2,
   'money -> plan': 14,
-  'money -> profile': 4,
+  'money -> profile': 8, // 2026-09-28 #1791: payment choice reads and edits existing personal defaults; checkout consumes that same preference.
   'money -> reservations': 13,
   // 2026-09-15 #1310 S0 112→113: the invoice register asks for the
   // exportData permission before offering the accounting export.
