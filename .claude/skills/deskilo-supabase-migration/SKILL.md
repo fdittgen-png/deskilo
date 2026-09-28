@@ -154,3 +154,44 @@ exists twice (SQL + Dart), change both and keep the pin.
 - **`profiles.default_workspace_id` is SET NULL**, so someone whose
   default was deleted lands on the profiles switcher rather than
   nowhere. Count them in the harness and say so in the report.
+
+## 8. Lessons of 2026-09-28 (0288–0304, two agents at once)
+
+- **Migration and pgTAP numbers are first-come, recorded before work
+  starts.** Write the claim ("takes 0301 / pgTAP 88 … next free 0302 /
+  89") into `AGENT_HANDOFF.md` and `.agent-work/<issue>.json` BEFORE
+  writing the file. Never renumber into a number another agent reserved,
+  and never wait on them: if your number lands before theirs, theirs
+  moves.
+- **A gap is expected, not fixed.** When your 0301 is pushed before
+  someone else's 0300 lands, `project_scale_test` and the migration
+  marker fail on the gap alone. Push anyway, and after 0300 merges run
+  `git merge origin/master` ONCE (never a rebase), regenerate, push.
+- **Apply-before-harness on the dev project, then verify the body.**
+  Probe the migration plus its assertions as ONE rolled-back
+  `execute_sql` (`insert into r select is(...)` … `raise exception 'PGTAP
+  %'`). Then `apply_migration`, and compare `md5(prosrc)` with the file's
+  `$fn$` body. A chunked md5 finds WHERE they differ; comment drift is
+  harmless, logic drift is not.
+- **A long function is patched on dev in place**, not pasted: `do $$ …
+  v := pg_get_functiondef(...); v := replace(v, anchor, new); if
+  position(marker in v) = 0 then raise …; execute v; $$`. Guard on a
+  unique marker, then check the md5 against the file.
+- **The contract digest comes from CI's replay, every time.**
+  `quality · database` is REQUIRED on master since 2026-09-26, so a stale
+  `assets/instance/contract.txt` holds the PR open. Download it with
+  `gh run download <run> -n quality-database`, copy `contract.txt`
+  (sometimes `policies.txt` too), commit and push. The reusable loop is
+  `.agent-work`-style: poll the PR, and on "contract.txt is not what the
+  migrations build" copy the artifact once per failing run.
+- **Every RLS table needs the `mcp_delegated_deny`-style policy and a
+  `policies.txt` line**; pgTAP 61/79 and the policy manifest lint fail
+  without them. New tables also go into the export-coverage lint
+  (exported or explicitly not).
+- **After merging master into a migration branch**, preflight did NOT
+  rebuild the instance bundle. Run `dart run tool/build_instance.dart`
+  yourself, and check that `bundle.json` names every migration.
+- **An MCP catalogue change needs a catalogue migration.** The latest
+  migration defining `mcp_operation_catalogue()` must carry
+  `renderMcpCatalogueSql` verbatim (`mcp_contract_test`). Render it with
+  a throwaway Dart script, write the migration, delete the script.

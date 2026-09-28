@@ -165,3 +165,37 @@ memory file, not in the wiki.
   badge" appeared twice in Settings because two keys held the same value
   in all five locales — perfectly parallel, so `l10n_completeness_test`
   was satisfied. Parallel is not correct.
+
+## 9. Lessons of 2026-09-28 (working beside other agents)
+
+- **Other agents (Codex, other Claude sessions) push to the same repo
+  under the same GitHub user.** `gh pr list --author @me` is not "mine";
+  the claim files are. Check `.agent-work/*.json`, the tail of
+  `AGENT_HANDOFF.md`, open PRs and the issue's last comments before
+  starting, and write your own claim.
+- **Never rebase, never chase.** When master moves under your PR: merge
+  master in ONCE, regenerate the generated files, push, let auto-merge
+  finish. If it conflicts again, stop and report, don't loop.
+  - Conflicts in generated files (bundle, APPLIED, TEST_INVENTORY,
+    capability docs, l10n output): take master's copy with
+    `git diff --name-only --diff-filter=U -z | xargs -0 git checkout origin/master --`,
+    then regenerate. NEVER `for f in $files` in zsh: it passes all paths
+    as one argument, and conflict markers get committed and pushed.
+  - `git grep -l '^<<<<<<<'` before every push.
+- **Push only on a green verdict, in one command:** run the gates into a
+  log; `grep -q "All tests passed!"` AND `grep -q "No issues found"`;
+  only then commit, push, `gh pr create … | xargs -I{} gh pr merge {}
+  --auto --squash`.
+- **A branch whose PR was superseded is deleted, not merged.** Compare
+  its files with master (`git show origin/master:<f> | md5`). If every
+  feature file is identical and only generated files differ, merging
+  would revert newer work.
+- **Close an issue when its last checkpoint merges green.** A remainder
+  that needs other infrastructure is collected in ONE follow-up issue
+  (e.g. #1789 for four issues' race tests), linked from the closing
+  comment. An open issue someone else may continue gets a "Handoff (for
+  whoever continues)" comment: what is done, the files, the next step.
+- **A stale `build_runner` blocks later ones silently.** A hung
+  `build.dart.aot` from hours earlier holds the lock. Check
+  `ps -eo pid,etime,time,command | grep build.dart.aot` (CPU time not
+  moving = stuck), kill it, `rm -rf .dart_tool/build`, and retry.
