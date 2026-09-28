@@ -11,6 +11,8 @@ import 'package:deskilo/features/workspace/providers/deployment_providers.dart';
 import 'fake_deployment_repository.dart';
 import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/workbook_origin_repository.dart';
+import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
+import 'package:deskilo/features/profile/providers/personal_preferences_providers.dart';
 import 'package:deskilo/features/workspace/application/template_compare.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 export 'package:deskilo/core/demo/data/auth_repository.dart';
@@ -110,6 +112,7 @@ import 'fake_credit_repository.dart';
 /// channel. Default OFF, like a fresh install; tests exercising
 
 List<Override> standardTestOverrides({
+  FakePersonalPreferencesRepository? personalPreferences,
   // #1150 — most fixtures were written against workspace wall time (the
   // app's default); a few against the device's. Each test says which.
   TimeZoneMode timeZoneMode = TimeZoneMode.workspace,
@@ -207,6 +210,7 @@ List<Override> standardTestOverrides({
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
     workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
+    personalPreferencesRepositoryProvider.overrideWithValue(personalPreferences ?? FakePersonalPreferencesRepository()),
     identityBindingRepositoryProvider
         .overrideWithValue(identityBinding ?? FakeIdentityBindingRepository()),
     actionConfirmationRepositoryProvider

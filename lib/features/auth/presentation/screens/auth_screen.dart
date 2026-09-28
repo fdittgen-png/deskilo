@@ -171,6 +171,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(authFeedbackProvider, (_, value) {
+      if (value.value case final result?) {
+        setState(() => _lastResult = result);
+      }
+    });
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
@@ -363,7 +368,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               runSpacing: 8,
               alignment: WrapAlignment.center,
               children: [
-                for (final provider in SocialProvider.values)
+                for (final provider in ref.watch(availableSocialProvidersProvider).value ?? const <SocialProvider>[])
                   OutlinedButton(
                     key: ValueKey('auth-social-${provider.name}'),
                     onPressed:
@@ -412,6 +417,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             // #1379 — no account is needed to look around, so the
             // offer sits beside the two that do need one.
             const DemoEntryButton(),
+            if (!(ref.watch(availableSocialProvidersProvider).value ?? const <SocialProvider>[]).contains(SocialProvider.deskilo))
             TextButton(
               // The e-mail and the name follow across the switch;
               // the password and the last answer do not.

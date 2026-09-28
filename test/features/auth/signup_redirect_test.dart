@@ -49,6 +49,7 @@ void main() {
           httpClient: client,
           authOptions: AuthClientOptions(pkceAsyncStorage: _MemoryStorage()),
         ),
+        authorityRead: () async => null,
       );
 
   MockClient capturingSignup() => MockClient((request) async {

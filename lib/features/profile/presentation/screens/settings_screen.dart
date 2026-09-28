@@ -11,10 +11,10 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint_providers.dart';
-import '../../../../core/locale/locale_controller.dart';
+import '../../providers/personal_appearance_providers.dart';
+import '../widgets/preference_scope_controls.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/navigation/navigation_style.dart';
-import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -245,8 +245,8 @@ class SettingsScreen extends ConsumerWidget {
     // `isOwner || canAdminister`.
     final perms = ref.watch(myPermissionsProvider);
     final devMode = ref.watch(devModeProvider).value ?? false;
-    final localeOverride = ref.watch(localeControllerProvider).value;
-    final themeOverride = ref.watch(themeControllerProvider).value;
+    final localeOverride = ref.watch(personalLocaleProvider);
+    final themeOverride = ref.watch(personalThemeProvider);
     final features = ref.watch(enabledFeaturesSyncProvider);
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
@@ -375,6 +375,7 @@ class SettingsScreen extends ConsumerWidget {
                 builder: (_) => const WhatsappDialog(),
               ),
             ),
+          const PreferenceScopeControls(),
           // #711 — Region & formats: numbers, dates, clock, zone. Gated by
           // the regionalFormats feature like every member preference the
           // owner may switch off.
@@ -663,7 +664,7 @@ class _LanguageDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final current =
-        ref.watch(localeControllerProvider).value?.languageCode ??
+        ref.watch(personalLocaleProvider)?.languageCode ??
         _systemDefault;
     return SimpleDialog(
       title: HelpDotTitle(
@@ -674,13 +675,11 @@ class _LanguageDialog extends ConsumerWidget {
       children: [
         RadioGroup<String>(
           groupValue: current,
-          onChanged: (code) {
-            ref
-                .read(localeControllerProvider.notifier)
-                .set(
-                  code == null || code == _systemDefault ? null : Locale(code),
-                );
-            Navigator.of(context).pop();
+          onChanged: (code) async {
+            await runGuarded(context, domain: 'profile', message: 'save language failed',
+              errorText: l10n?.preferencesSaveFailed ?? 'Could not save your preferences. Please try again.',
+              action: () => savePersonalLanguage(ref, code == null || code == _systemDefault ? null : Locale(code)));
+            if (context.mounted) Navigator.of(context).pop();
           },
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -950,7 +949,7 @@ class _ThemeDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final current =
-        ref.watch(themeControllerProvider).value ?? ThemeMode.system;
+        ref.watch(personalThemeProvider) ?? ThemeMode.system;
     return SimpleDialog(
       title: HelpDotTitle(
         l10n?.themeTitle ?? 'Theme',
@@ -960,11 +959,11 @@ class _ThemeDialog extends ConsumerWidget {
       children: [
         RadioGroup<ThemeMode>(
           groupValue: current,
-          onChanged: (mode) {
-            ref
-                .read(themeControllerProvider.notifier)
-                .set(mode == null || mode == ThemeMode.system ? null : mode);
-            Navigator.of(context).pop();
+          onChanged: (mode) async {
+            await runGuarded(context, domain: 'profile', message: 'save theme failed',
+              errorText: l10n?.preferencesSaveFailed ?? 'Could not save your preferences. Please try again.',
+              action: () => savePersonalTheme(ref, mode == null || mode == ThemeMode.system ? null : mode));
+            if (context.mounted) Navigator.of(context).pop();
           },
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -1023,7 +1022,7 @@ class _NavigationDialog extends ConsumerWidget {
           groupValue: current,
           onChanged: (style) {
             ref.read(navigationStyleControllerProvider.notifier).set(style);
-            Navigator.of(context).pop();
+            if (context.mounted) Navigator.of(context).pop();
           },
           child: Column(
             mainAxisSize: MainAxisSize.min,

@@ -1,23 +1,30 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../core/backend/auth_callback_guard.dart';
 
 import '../data/supabase_auth_repository.dart';
 import '../data/supabase_identity_binding_repository.dart';
 import '../data/supabase_second_factor_repository.dart';
 import '../domain/auth_repository.dart';
+import '../domain/auth_outcome.dart';
 import '../domain/identity_binding.dart';
 import '../domain/second_factor.dart';
+import '../domain/social_provider.dart';
 
 part 'auth_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 AuthRepository authRepository(Ref ref) =>
-    SupabaseAuthRepository(Supabase.instance.client);
+    SupabaseAuthRepository(Supabase.instance.client, callbackGuard: bootAuthCallbackGuard);
 
 @Riverpod(keepAlive: true)
 Stream<String?> authState(Ref ref) =>
     ref.watch(authRepositoryProvider).authStateChanges();
+
+@riverpod
+Stream<AuthResult> authFeedback(Ref ref) =>
+    ref.watch(authRepositoryProvider).authFeedback();
 
 /// #1647 — the signed-in account's canonical-identity binding.
 @Riverpod(keepAlive: true)
@@ -34,3 +41,8 @@ SecondFactorRepository secondFactorRepository(Ref ref) =>
 @riverpod
 Future<DatabaseCapabilities> myDatabaseCapabilities(Ref ref) =>
     ref.watch(identityBindingRepositoryProvider).databaseCapabilities();
+
+/// Sign-in and account linking share the installation's actual capabilities.
+@riverpod
+Future<List<SocialProvider>> availableSocialProviders(Ref ref) =>
+    ref.watch(authRepositoryProvider).availableSocialProviders();

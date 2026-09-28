@@ -84,7 +84,7 @@ final class LocaleControllerProvider
   LocaleController create() => LocaleController();
 }
 
-String _$localeControllerHash() => r'4cba36c4d6c429b8df171cd0414fe3c5f14fd1de';
+String _$localeControllerHash() => r'17f13b6689d469b4309a63251db4970ed1e07ae5';
 
 /// The user's language override; null means "follow the system locale".
 /// Feeding this into `MaterialApp.locale` applies a change instantly,

@@ -81,6 +81,10 @@ sealed class Member with _$Member implements SystemStamped {
     required String id,
     required String workspaceId,
     required String userId,
+    /// Stable person; userId remains the optional local login link.
+    String? personId,
+    /// Null inherits the profile document language; empty follows workspace.
+    String? preferredLocaleOverride,
     required bool isAdmin,
     required bool isOwner,
     required MemberStatus status,

@@ -48,7 +48,7 @@ final class AuthRepositoryProvider
   }
 }
 
-String _$authRepositoryHash() => r'5c55c13092c0c0039018a3f472e5c70ead6236c4';
+String _$authRepositoryHash() => r'3561feb326352c9fdd48de0ad63607d0fd77906d';
 
 @ProviderFor(authState)
 final authStateProvider = AuthStateProvider._();
@@ -82,6 +82,44 @@ final class AuthStateProvider
 }
 
 String _$authStateHash() => r'1d14c532bd9d229ad3424bb49c844ea9e4792e97';
+
+@ProviderFor(authFeedback)
+final authFeedbackProvider = AuthFeedbackProvider._();
+
+final class AuthFeedbackProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<AuthResult>,
+          AuthResult,
+          Stream<AuthResult>
+        >
+    with $FutureModifier<AuthResult>, $StreamProvider<AuthResult> {
+  AuthFeedbackProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'authFeedbackProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$authFeedbackHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<AuthResult> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<AuthResult> create(Ref ref) {
+    return authFeedback(ref);
+  }
+}
+
+String _$authFeedbackHash() => r'92bd53f30bac3efdb81acf403719283f168e4cab';
 
 /// #1647 — the signed-in account's canonical-identity binding.
 
@@ -238,3 +276,50 @@ final class MyDatabaseCapabilitiesProvider
 
 String _$myDatabaseCapabilitiesHash() =>
     r'52dff47e6f2a6cd80f6afcc88cf32511897bb2b6';
+
+/// Sign-in and account linking share the installation's actual capabilities.
+
+@ProviderFor(availableSocialProviders)
+final availableSocialProvidersProvider = AvailableSocialProvidersProvider._();
+
+/// Sign-in and account linking share the installation's actual capabilities.
+
+final class AvailableSocialProvidersProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<SocialProvider>>,
+          List<SocialProvider>,
+          FutureOr<List<SocialProvider>>
+        >
+    with
+        $FutureModifier<List<SocialProvider>>,
+        $FutureProvider<List<SocialProvider>> {
+  /// Sign-in and account linking share the installation's actual capabilities.
+  AvailableSocialProvidersProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'availableSocialProvidersProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$availableSocialProvidersHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<SocialProvider>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<SocialProvider>> create(Ref ref) {
+    return availableSocialProviders(ref);
+  }
+}
+
+String _$availableSocialProvidersHash() =>
+    r'883fe9750036797b11c91aec5e73c4d0953aed02';

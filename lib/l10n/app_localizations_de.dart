@@ -8824,6 +8824,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get personalInfoSave => 'Speichern';
 
   @override
+  String get preferencesWorkspaceOnly => 'Nur für diesen Arbeitsbereich';
+
+  @override
+  String get preferencesScopeHint =>
+      'Sprache, Darstellung und regionale Formate. Aus: meine Standardwerte bearbeiten.';
+
+  @override
+  String get preferencesUseDefaults => 'Meine Standardwerte verwenden';
+
+  @override
+  String get preferencesSaveFailed =>
+      'Deine Einstellungen konnten nicht gespeichert werden. Bitte versuche es erneut.';
+
+  @override
   String get planDurationLabel => 'Dauer';
 
   @override
@@ -11248,7 +11262,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get linkedAccountsIntro =>
-      'Melde dich mit jedem davon an diesem Konto an. Füge Google, Microsoft, Apple oder Facebook hinzu, um dich ohne Passwort anzumelden.';
+      'Melde dich mit einer verknüpften Identität bei diesem Konto an. Die verfügbaren Anbieter hängen von deinem Server ab.';
 
   @override
   String get linkedAccountsLink => 'Verknüpfen';

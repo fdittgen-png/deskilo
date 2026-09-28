@@ -55,6 +55,9 @@ void main() {
     // #1307 — Help opens the Help & about section at the foot of Settings.
     await tester.scrollUntilVisible(find.byKey(const ValueKey('settings-help')), 200,
         scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('settings-help')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('settings-help')));
     await tester.pumpAndSettle();
 

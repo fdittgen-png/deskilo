@@ -148,6 +148,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     try {
       language = resolveMemberReportLanguage(ref,
           memberLocale:
+              ref.read(myMemberProvider).value?.preferredLocaleOverride ??
               ref.read(myProfileProvider).value?.preferredLocale ?? '');
     } on AmbiguousReportLanguage {
       AppSnack.error(

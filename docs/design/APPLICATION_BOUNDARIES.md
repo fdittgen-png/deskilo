@@ -105,11 +105,11 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1660 |
 | `lib/features/workspace/domain/workspace_feature.dart` | 1466 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1420 |
-| `lib/features/money/presentation/screens/money_screen.dart` | 1295 |
-| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1282 |
+| `lib/features/money/presentation/screens/money_screen.dart` | 1296 |
+| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1283 |
 | `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
-| `lib/features/profile/presentation/screens/settings_screen.dart` | 1055 |
+| `lib/features/profile/presentation/screens/settings_screen.dart` | 1054 |
 | `lib/features/money/domain/invoice_pdf.dart` | 1050 |
 | `lib/features/editor/presentation/screens/level_canvas_screen.dart` | 1044 |
 | `lib/features/money/presentation/invoice_actions.dart` | 1027 |
@@ -138,7 +138,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
 | `lib/features/workspace/providers/workspace_providers.dart` | 630 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
-| `lib/features/money/presentation/invoice_documents.dart` | 610 |
+| `lib/features/money/presentation/invoice_documents.dart` | 608 |
 
 **39 files.**
 

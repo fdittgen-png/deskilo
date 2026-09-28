@@ -522,16 +522,14 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
   try {
     final members =
         ref.read(workspaceMembersProvider).value ?? const <Member>[];
-    final userId = members
-        .where((m) => m.id == invoice.memberId)
-        .firstOrNull
-        ?.userId;
+    final member = members.where((m) => m.id == invoice.memberId).firstOrNull;
+    final userId = member?.userId;
     final profile = userId == null
         ? null
         : ref.read(memberProfilesProvider).value?[userId];
     language = resolveMemberReportLanguage(
       ref,
-      memberLocale: profile?.preferredLocale ?? '',
+      memberLocale: member?.preferredLocaleOverride ?? profile?.preferredLocale ?? '',
     );
   } on AmbiguousReportLanguage {
     language = '';

@@ -9,6 +9,8 @@ abstract class AuthRepository {
   /// Emits the signed-in user id, or null when signed out. Emits the
   /// current state to new listeners immediately.
   Stream<String?> authStateChanges();
+  /// Browser-return failures are asynchronous; keep the existing form usable.
+  Stream<AuthResult> authFeedback();
 
   String? get currentUserId;
 
@@ -76,6 +78,9 @@ abstract class AuthRepository {
   /// deskilo:// callback returns to the app. Throws when the provider is
   /// not enabled on the server.
   Future<void> signInWithSocial(SocialProvider provider);
+
+  /// Providers enabled on this installation, never a hard-coded promise.
+  Future<List<SocialProvider>> availableSocialProviders();
 
   /// The identities attached to the signed-in account (email + socials).
   Future<List<LinkedIdentity>> linkedIdentities();

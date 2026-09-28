@@ -15,6 +15,8 @@
 // does, and reads the request that went out where the contract is about
 // the request (resend hits /resend, not /signup).
 import 'dart:convert';
+import 'package:deskilo/core/backend/auth_callback_guard.dart';
+import '../../core/backend/installation_auth_storage_test.dart' show MemorySecrets;
 
 import 'package:deskilo/features/auth/data/supabase_auth_repository.dart';
 import 'package:deskilo/features/auth/domain/auth_outcome.dart';
@@ -77,6 +79,21 @@ http.Response _error(String code, String message, [int status = 400]) =>
     _json({'code': code, 'message': message}, status);
 
 void main() {
+  test('logout cancels an outstanding browser callback before session removal', () async {
+    final guard = AuthCallbackGuard(MemorySecrets(),
+        Uri.parse('https://project.supabase.co'), Uri.parse('deskilo://auth-callback'));
+    final redirect = Uri.parse(await guard.begin('social'));
+    final callback = redirect.replace(queryParameters: {...redirect.queryParameters, 'code': 'late-code'});
+    final client = SupabaseClient('https://project.supabase.co', 'anon-key',
+        authOptions: AuthClientOptions(pkceAsyncStorage: _MemoryStorage()));
+    addTearDown(client.dispose);
+    await SupabaseAuthRepository(client, callbackGuard: guard).signOut();
+    expect(guard.claim(callback), false);
+    final restored = AuthCallbackGuard(guard.store, guard.origin, guard.callback);
+    await restored.restore();
+    expect(restored.claim(callback), false);
+  });
+
   final requests = <http.Request>[];
 
   SupabaseAuthRepository repositoryAnswering(
@@ -91,7 +108,7 @@ void main() {
         return answer(request);
       }),
       authOptions: AuthClientOptions(pkceAsyncStorage: _MemoryStorage()),
-    ));
+    ), authorityRead: () async => null);
   }
 
   Future<AuthResult> signUp(SupabaseAuthRepository repo) => repo.signUp(

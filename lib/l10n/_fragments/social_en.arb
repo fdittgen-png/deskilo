@@ -9,7 +9,7 @@
     }
   },
   "linkedAccountsTitle": "Linked accounts",
-  "linkedAccountsIntro": "Sign into this account with any of these. Add Google, Microsoft, Apple, or Facebook to sign in without a password.",
+  "linkedAccountsIntro": "Sign into this account with any linked identity. The available providers depend on your server.",
   "linkedAccountsLink": "Link",
   "linkedAccountsUnlink": "Unlink",
   "linkedAccountsLinked": "Linked",

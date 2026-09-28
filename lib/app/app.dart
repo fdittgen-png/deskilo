@@ -6,11 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/demo/demo_entry.dart';
 import '../core/demo/presentation/demo_workspace.dart';
-import '../core/locale/locale_controller.dart';
+import '../features/profile/providers/personal_appearance_providers.dart';
 import '../core/motion/motion.dart';
 import '../core/presence/presence_providers.dart';
 import '../core/privacy/recording_banner.dart';
-import '../core/theme/theme_controller.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import '../l10n/app_localizations.dart';
@@ -69,12 +68,12 @@ class DeskiloApp extends ConsumerWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       // null keeps the standard system-locale resolution (#147).
-      locale: ref.watch(localeControllerProvider).value,
+      locale: ref.watch(personalLocaleProvider),
       theme: DeskiloTheme.light(animations: animations, brand: brand),
       darkTheme: DeskiloTheme.dark(animations: animations, brand: brand),
       // null follows the system brightness (#160).
       themeMode:
-          ref.watch(themeControllerProvider).value ?? ThemeMode.system,
+          ref.watch(personalThemeProvider) ?? ThemeMode.system,
       // Boot splash (field request): covers every route until the data
       // warm-up finishes — the user never watches the form assemble.
       // MotionSettings sits above the navigator so every screen, sheet

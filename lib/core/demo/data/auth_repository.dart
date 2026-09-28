@@ -12,6 +12,9 @@ import 'package:deskilo/features/auth/domain/social_provider.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
+  List<SocialProvider> enabledSocialProviders = [SocialProvider.google];
+  @override
+  Future<List<SocialProvider>> availableSocialProviders() async => enabledSocialProviders;
   FakeAuthRepository({this._userId});
 
   FakeAuthRepository.signedIn() : this(userId: 'user-1');
@@ -122,6 +125,9 @@ class FakeAuthRepository implements AuthRepository {
 
   /// Emails for which [signInWithPassword]/[signUp] should throw.
   final Set<String> failingEmails = {};
+
+  @override
+  Stream<AuthResult> authFeedback() => const Stream.empty();
 
   @override
   Stream<String?> authStateChanges() async* {
