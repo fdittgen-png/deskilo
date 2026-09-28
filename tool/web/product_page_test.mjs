@@ -6,7 +6,8 @@
 // numbers checked by hand.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { TEXT, LOCALES, fieldValue, scenarioFromFields, describePlan } from '../../web/product.js';
+import { TEXT, LOCALES, fieldValue, scenarioFromFields, describePlan, capabilityState, capabilityKey, capabilityRows } from '../../web/product.js';
+import { CAPABILITIES } from '../../web/product_capabilities.js';
 import { planCost } from '../../web/cost_planner.js';
 
 const html = fs.readFileSync(new URL('../../web/product.html', import.meta.url), 'utf8');
@@ -90,6 +91,61 @@ t('a funded assistant is billed per started million tokens', () => {
 
 t('an invalid currency says so instead of a number', () => {
   assert.deepEqual(describePlan({ currency: '' }, 'de'), [TEXT.de.resultInvalidCurrency]);
+});
+
+t('every capability the evidence lists has a name in every language', () => {
+  assert.ok(CAPABILITIES.length > 0);
+  for (const l of LOCALES) {
+    for (const c of CAPABILITIES) assert.ok(TEXT[l][capabilityKey(c.id)], `${l}: ${c.id}`);
+  }
+  const named = Object.keys(TEXT.en).filter((k) => k.startsWith('cap_'));
+  assert.deepEqual(named.sort(), CAPABILITIES.map((c) => capabilityKey(c.id)).sort(),
+    'no label for a capability the evidence no longer lists');
+});
+
+t('planned, unevidenced or unknown is never shown as available', () => {
+  assert.equal(capabilityState({ status: 'roadmap', evidence: ['unit:gated'] }), 'planned');
+  assert.equal(capabilityState({ status: 'shipped', evidence: [] }), 'unknown');
+  assert.equal(capabilityState({ status: 'beta', evidence: ['unit:gated'] }), 'unknown');
+  assert.equal(capabilityState({ status: 'shipped', evidence: ['unit:gated'] }), 'tested');
+  assert.equal(capabilityState({ status: 'shipped', evidence: ['unit:gated', 'named_runtime:recorded'] }), 'verified');
+  for (const l of LOCALES) {
+    for (const r of capabilityRows(l)) {
+      const c = CAPABILITIES.find((x) => x.id === r.id);
+      if (c.status !== 'shipped') {
+        assert.notEqual(r.text, TEXT[l].capStateTested, `${l}: ${r.id}`);
+        assert.notEqual(r.text, TEXT[l].capStateVerified, `${l}: ${r.id}`);
+      }
+    }
+  }
+  assert.ok(capabilityRows('en').some((r) => r.id === 'mcp.write' && r.state === 'planned'));
+});
+
+const zeros = { currency: 'EUR', backend_plan: '0', storage_free: '0', storage_used: '0', storage_price: '0', backup: '0', pay_count: '0', pay_average: '0', pay_percent: '0', pay_fixed: '0', admin_hours: '0', hourly_value: '0', setup_hours: '0', assistant_funding: 'user' };
+
+t('an untouched other-currency row is no cost, not an unknown one', () => {
+  const s = scenarioFromFields(zeros);
+  assert.equal(s.components.some((c) => c.id === 'foreign'), false);
+  assert.deepEqual(s.conversions, []);
+  assert.equal(planCost(s).recurring.complete, true);
+});
+
+t('another currency without a rate, date and source stays out of the total', () => {
+  const plan = planCost(scenarioFromFields({ ...zeros, foreign_amount: '100', foreign_currency: 'usd' }));
+  assert.equal(plan.recurring.known_minor, 0);
+  assert.equal(plan.recurring.complete, false);
+  assert.ok(describePlan(plan, 'en').includes('  Not counted: A cost in another currency — another currency'));
+  const noSource = planCost(scenarioFromFields({ ...zeros, foreign_amount: '100', foreign_currency: 'USD', foreign_rate: '0.9', foreign_date: '2026-09-01' }));
+  assert.equal(noSource.recurring.complete, false, 'a rate without its source is not a rate');
+});
+
+t('an entered rate converts, and the result says at what rate, when and from where', () => {
+  const plan = planCost(scenarioFromFields({ ...zeros, foreign_amount: '100', foreign_currency: 'USD', foreign_rate: '0.9', foreign_date: '2026-09-01', foreign_source: 'ECB reference rate' }));
+  assert.equal(plan.recurring.known_minor, 9000);
+  assert.equal(plan.recurring.complete, true);
+  assert.ok(describePlan(plan, 'en').includes('  Converted: A cost in another currency — 1 USD = 0.9 EUR, 2026-09-01, ECB reference rate'));
+  const same = planCost(scenarioFromFields({ ...zeros, foreign_amount: '12.5', foreign_currency: 'EUR' }));
+  assert.equal(same.recurring.known_minor, 1250, 'the scenario currency needs no rate');
 });
 
 console.log(`product page: ${cases} cases passed`);

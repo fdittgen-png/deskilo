@@ -6906,6 +6906,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get libraryProcessTechnical => 'Técnico';
 
   @override
+  String get templatesLoadFailed => 'No se pudieron cargar las plantillas.';
+
+  @override
+  String get onboardingTemplatesFailedEmpty =>
+      'No se pudieron cargar las plantillas, así que este espacio empezaría vacío. Vuelva atrás para intentarlo de nuevo.';
+
+  @override
+  String templateResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plantillas mostradas',
+      one: '1 plantilla mostrada',
+      zero: 'Ninguna plantilla mostrada',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get localSlotLegalIdentity =>
       'Su identidad legal y su dirección (para las facturas)';
 
@@ -11458,6 +11477,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get compareRemove => 'Quitar de la comparación';
 
   @override
+  String get compareEmpty => 'Vacío';
+
+  @override
   String get templateChangedSinceReview =>
       'Esta plantilla cambió desde que la revisó. No se aplicó nada; ábrala de nuevo para revisar la nueva versión.';
 
@@ -11585,6 +11607,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get templateWidenConfirm => 'Hacer legible';
 
   @override
+  String get templateProfileFull => 'Perfil de configuración completo';
+
+  @override
+  String templateProfileSelected(String chosen, String total) {
+    return 'Grupos elegidos: $chosen de $total';
+  }
+
+  @override
+  String get templatePublishLocalNeeds =>
+      'Un espacio que la aplique configurará esto por sí mismo:';
+
+  @override
   String get libraryInvitationTexts => 'Textos de invitación';
 
   @override
@@ -11639,6 +11673,24 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get workbookWide =>
       'Catalogs, RolePermissions, Validations y Fields muestran un valor donde la plantilla lo fija y, si no, su estado';
+
+  @override
+  String get workbookExportTitle => 'Exportando el libro';
+
+  @override
+  String workbookExportReading(String done, String total) {
+    return 'Leyendo plantillas: $done de $total';
+  }
+
+  @override
+  String get workbookExportBuilding => 'Creando el libro…';
+
+  @override
+  String get workbookExportSaving => 'Elija dónde guardarlo…';
+
+  @override
+  String get workbookExportCancelled =>
+      'Exportación cancelada. No se ha guardado nada.';
 
   @override
   String get themeTitle => 'Tema';
@@ -13077,6 +13129,72 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get readinessAreaLocalSetup =>
       'Datos que necesitan sus funciones (identidad, banco, plataformas)';
+
+  @override
+  String get readinessAreaBackend => 'Servidor y versión de la base de datos';
+
+  @override
+  String get readinessAreaRolesValidation =>
+      'Roles y quién valida las solicitudes';
+
+  @override
+  String get readinessStateNeedsOperator => 'A la espera de otra persona';
+
+  @override
+  String get readinessStateNotApplicable => 'No es necesario aquí';
+
+  @override
+  String get readinessStateUnavailable => 'No se pudo leer';
+
+  @override
+  String get readinessReasonTooFewValidators =>
+      'Una regla pide más validadores de los que tiene este espacio';
+
+  @override
+  String get readinessReasonNoPolicies =>
+      'Ninguna solicitud espera a un validador';
+
+  @override
+  String get readinessReasonNoEvidence =>
+      'Aún no se ha registrado ninguna exportación ni restauración';
+
+  @override
+  String get readinessActorOwner => 'Usted';
+
+  @override
+  String get readinessActorOperator => 'El operador del servidor';
+
+  @override
+  String readinessActor(String who) {
+    return 'Quién: $who';
+  }
+
+  @override
+  String get readinessAreaAssistant => 'Acceso de asistentes (opcional)';
+
+  @override
+  String get readinessActorAdministrator =>
+      'Un administrador de la base de datos';
+
+  @override
+  String get readinessReasonNotExposed =>
+      'Este espacio aún no expone nada a los asistentes';
+
+  @override
+  String get readinessReasonEligibilityRequested =>
+      'Su solicitud espera a un administrador de la base de datos';
+
+  @override
+  String get readinessReasonEligibilityExpired =>
+      'Su habilitación para asistentes ha caducado';
+
+  @override
+  String get readinessReasonEligibilityNoIdentity =>
+      'Inicie sesión primero con su identidad verificada';
+
+  @override
+  String get readinessReasonEligibilityMissing =>
+      'Ningún administrador de la base de datos le ha habilitado para asistentes';
 
   @override
   String get featureWorkspaceStatus => 'Situación del espacio';

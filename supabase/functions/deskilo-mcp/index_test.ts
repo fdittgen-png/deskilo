@@ -8,7 +8,7 @@
 // tool and a forbidden field; and the facade's status reaches the result
 // truthfully (pending is not done).
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { handle } from "./index.ts";
+import { handle, projectData } from "./index.ts";
 
 function jwt(claims: Record<string, unknown>): string {
   const b = (o: unknown) => btoa(JSON.stringify(o)).replace(/=+$/, "").replace(/\+/g, "-").replace(/\//g, "_");
@@ -167,4 +167,19 @@ Deno.test("without a configured installation it serves nothing", async () => {
   } finally {
     Deno.env.set("DESKILO_INSTALLATION_ID", "0ea54888-a3d7-441f-a025-ee4576cf2fa9");
   }
+});
+
+Deno.test("#1644 the adapter keeps only operational fields, however deep", () => {
+  const out = projectData("get_availability", {
+    window: { starts_at: "a", ends_at: "b", organiser: "alice@example.org" },
+    items: [{ seat_id: "s1", name: "Alice's desk", free: true, note: "private" }],
+    next_cursor: null,
+    debug: "select * from members",
+  }) as Record<string, unknown>;
+  assertEquals(out, {
+    window: { starts_at: "a", ends_at: "b" },
+    items: [{ seat_id: "s1", free: true }],
+    next_cursor: null,
+  });
+  assert(!JSON.stringify(out).includes("alice"));
 });

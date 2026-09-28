@@ -222,6 +222,96 @@ final class WorkspaceLocalGapsFamily extends $Family
   String toString() => r'workspaceLocalGapsProvider';
 }
 
+/// #1658 — every local slot the space's switched-on features need,
+/// filled or not: what a space applying its template will need too.
+
+@ProviderFor(workspaceLocalSlots)
+final workspaceLocalSlotsProvider = WorkspaceLocalSlotsFamily._();
+
+/// #1658 — every local slot the space's switched-on features need,
+/// filled or not: what a space applying its template will need too.
+
+final class WorkspaceLocalSlotsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<LocalSlot>>,
+          List<LocalSlot>,
+          FutureOr<List<LocalSlot>>
+        >
+    with $FutureModifier<List<LocalSlot>>, $FutureProvider<List<LocalSlot>> {
+  /// #1658 — every local slot the space's switched-on features need,
+  /// filled or not: what a space applying its template will need too.
+  WorkspaceLocalSlotsProvider._({
+    required WorkspaceLocalSlotsFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'workspaceLocalSlotsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceLocalSlotsHash();
+
+  @override
+  String toString() {
+    return r'workspaceLocalSlotsProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<LocalSlot>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<LocalSlot>> create(Ref ref) {
+    final argument = this.argument as String;
+    return workspaceLocalSlots(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is WorkspaceLocalSlotsProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$workspaceLocalSlotsHash() =>
+    r'e31ffae8939ee08a5e60516e93c41fd31767cafa';
+
+/// #1658 — every local slot the space's switched-on features need,
+/// filled or not: what a space applying its template will need too.
+
+final class WorkspaceLocalSlotsFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<LocalSlot>>, String> {
+  WorkspaceLocalSlotsFamily._()
+    : super(
+        retry: null,
+        name: r'workspaceLocalSlotsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #1658 — every local slot the space's switched-on features need,
+  /// filled or not: what a space applying its template will need too.
+
+  WorkspaceLocalSlotsProvider call(String workspaceId) =>
+      WorkspaceLocalSlotsProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'workspaceLocalSlotsProvider';
+}
+
 /// #1636 — every setup section of the space, in the server's order.
 
 @ProviderFor(workspaceReadiness)

@@ -23,11 +23,16 @@ WorkspaceTemplate _tpl(int i,
     );
 
 Future<void> _pump(WidgetTester tester, List<WorkspaceTemplate> templates,
-    {Size size = const Size(800, 900)}) async {
+    {Size size = const Size(800, 900), double textScale = 1}) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(MaterialApp(
+    builder: (context, child) => MediaQuery(
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: TextScaler.linear(textScale)),
+      child: child!,
+    ),
     home: Scaffold(
       body: TemplateGallery(
         sections: [TemplateGallerySection(title: 'All', templates: templates)],
@@ -76,6 +81,38 @@ void main() {
     expect(find.text('Studio Lyon'), findsOneWidget);
   });
 
+  testWidgets('#1660 a narrowed list announces its count, and focus stays '
+      'in the search field', (tester) async {
+    final semantics = tester.ensureSemantics();
+    await _pump(tester, [
+      _tpl(1, name: 'Studio Lyon', tags: const ['coworking']),
+      _tpl(2, name: 'Studio Paris', tags: const ['association']),
+      _tpl(3, name: 'Grand hall', tags: const ['coworking']),
+    ]);
+    const count = ValueKey('template-result-count');
+    expect(find.byKey(count), findsNothing,
+        reason: 'nothing narrowed, nothing to announce');
+
+    await tester.tap(find.byKey(const ValueKey('template-search')));
+    await _search(tester, 'studio');
+    expect(find.text('2 templates shown'), findsOneWidget);
+    expect(
+      tester.getSemantics(find.byKey(count)),
+      matchesSemantics(label: '2 templates shown', isLiveRegion: true),
+    );
+    final editable = tester.widget<EditableText>(find.descendant(
+      of: find.byKey(const ValueKey('template-search')),
+      matching: find.byType(EditableText),
+    ));
+    expect(editable.focusNode.hasFocus, isTrue,
+        reason: 'the announcement never takes the focus');
+
+    await tester.tap(find.byKey(const ValueKey('template-tag-coworking')));
+    await tester.pumpAndSettle();
+    expect(find.text('1 template shown'), findsOneWidget);
+    semantics.dispose();
+  });
+
   test('builtin first, then public, shared and private, then by name', () {
     final ordered = TemplateGallery.ordered([
       _tpl(1, name: 'b', visibility: TemplateVisibility.private),
@@ -104,6 +141,57 @@ void main() {
     final second = tester.getTopLeft(find.byType(TemplateCard).at(1));
     expect(first.dx, second.dx, reason: 'cards stack in one column');
   });
+
+  // #1660 — the phone at large text, and a short landscape window: the
+  // search stays on screen, the results still scroll, nothing overflows.
+  for (final (label, size, scale) in [
+    ('360 dp at 200 % text', const Size(360, 740), 2.0),
+    ('short landscape at 130 % text', const Size(740, 360), 1.3),
+  ]) {
+    testWidgets('$label: search visible, results reachable, no overflow', (
+      tester,
+    ) async {
+      await _pump(
+        tester,
+        [
+          for (var i = 0; i < 30; i++)
+            _tpl(i,
+                tags: const ['coworking', 'association', 'small'],
+                description: 'A long description that has to wrap without '
+                    'pushing anything off the edge of the screen.'),
+        ],
+        size: size,
+        textScale: scale,
+      );
+      expect(tester.takeException(), isNull);
+      final search = tester.getRect(
+        find.byKey(const ValueKey('template-search')),
+      );
+      expect(search.top, greaterThanOrEqualTo(0));
+      expect(search.right, lessThanOrEqualTo(size.width));
+      expect(search.bottom, lessThanOrEqualTo(size.height),
+          reason: 'the search field is on screen, not pushed below it');
+      final results = find
+          .byWidgetPredicate(
+            (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+          )
+          .first;
+      expect(
+        tester.state<ScrollableState>(results).position.viewportDimension,
+        greaterThanOrEqualTo(size.height / 2),
+        reason: 'the results keep at least half the window under the '
+            'search and filters',
+      );
+      final last = find.text('Template 029');
+      await tester.scrollUntilVisible(last, 600,
+          maxScrolls: 200,
+          scrollable: results);
+      await tester.pumpAndSettle();
+      expect(last.hitTestable(), findsOneWidget,
+          reason: 'the last result is reachable by scrolling');
+      expect(tester.takeException(), isNull);
+    });
+  }
 
   testWidgets('nothing to show says so', (tester) async {
     tester.view.physicalSize = const Size(800, 900);

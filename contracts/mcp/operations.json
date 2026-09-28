@@ -37,6 +37,314 @@
   "default": 25,
   "max": 100
  },
+ "always_output": [
+  "confirmation_id",
+  "expires_at",
+  "reason",
+  "unchanged"
+ ],
+ "output_fields": {
+  "accessory_supplement_by_rate": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "accessory_supplement_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "active": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "amount_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "balance_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "can_respond": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "checked_in_at": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "checked_out_at": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "confirmation_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "credits_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "currency": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "decision_recorded": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "decisions": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "default_fee_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "default_overage_fee_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "desk_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "desk_supplement_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "discount_percent": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "effect_applied": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "eligible_until": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "ends_at": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "environment": {
+   "class": "operational",
+   "purpose": "the caller's own role and the workspace environment (#1644)"
+  },
+  "event_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "event_status": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "expires_at": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "extra_half_days": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "fee_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "free": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "granted_half_days": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "included_half_days": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "invoice_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "invoice_number": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "issued_at": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "items": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "kind": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "level_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "level_supplement_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "member_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "member_status": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "mine": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "name": {
+   "class": "display",
+   "purpose": "a human label; omitted by default because it can name or describe a person (#1644)"
+  },
+  "negotiated": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "next_cursor": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "not_checked": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "number": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "observed_at": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "office_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "office_supplement_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "open_days": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "operations": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "overage_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "overage_fee_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "overage_policy": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "overage_rate_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "period": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "reason": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "remaining_half_days": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "requested_at": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "reservation_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "role": {
+   "class": "operational",
+   "purpose": "the caller's own role and the workspace environment (#1644)"
+  },
+  "seat_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "starts_at": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "state_digest": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "status": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "subscription_pct": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "target_ceiling": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "total_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "type": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "unchanged": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "used_half_days": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "valid_from": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "vat_percent": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "voided": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "window": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "workspace_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  }
+ },
  "operations": [
   {
    "id": "list_workspaces",
@@ -89,7 +397,8 @@
    },
    "output": [
     "operations",
-    "unavailable"
+    "target_ceiling",
+    "eligible_until"
    ]
   },
   {
@@ -132,8 +441,16 @@
     }
    },
    "output": [
-    "places",
-    "window"
+    "window",
+    "starts_at",
+    "ends_at",
+    "observed_at",
+    "items",
+    "seat_id",
+    "name",
+    "free",
+    "next_cursor",
+    "not_checked"
    ]
   },
   {
@@ -176,11 +493,16 @@
     }
    },
    "output": [
+    "items",
     "reservation_id",
-    "place",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
     "starts_at",
     "ends_at",
-    "status"
+    "status",
+    "next_cursor"
    ]
   },
   {
@@ -217,9 +539,34 @@
     }
    },
    "output": [
-    "lines",
-    "total_cents",
-    "currency"
+    "period",
+    "fee_cents",
+    "open_days",
+    "negotiated",
+    "active",
+    "valid_from",
+    "discount_percent",
+    "default_fee_cents",
+    "overage_fee_cents",
+    "default_overage_fee_cents",
+    "balance_cents",
+    "credits_cents",
+    "overage_cents",
+    "overage_policy",
+    "used_half_days",
+    "extra_half_days",
+    "subscription_pct",
+    "granted_half_days",
+    "included_half_days",
+    "overage_rate_cents",
+    "remaining_half_days",
+    "desk_supplement_cents",
+    "level_supplement_cents",
+    "office_supplement_cents",
+    "accessory_supplement_cents",
+    "accessory_supplement_by_rate",
+    "vat_percent",
+    "amount_cents"
    ]
   },
   {
@@ -255,11 +602,16 @@
     }
    },
    "output": [
+    "items",
     "invoice_id",
     "number",
     "period",
+    "kind",
     "total_cents",
-    "status"
+    "currency",
+    "issued_at",
+    "voided",
+    "next_cursor"
    ]
   },
   {
@@ -758,7 +1110,7 @@
    "rpc": "request_subscription_change",
    "authority": {
     "kind": "permission",
-    "permission": "manageBilling"
+    "permission": "manageMembers"
    },
    "features": [
     "mcpAccess"
@@ -829,10 +1181,12 @@
     }
    },
    "output": [
+    "items",
     "event_id",
     "type",
     "requested_at",
-    "summary"
+    "mine",
+    "next_cursor"
    ]
   },
   {
@@ -864,9 +1218,11 @@
    "output": [
     "event_id",
     "type",
+    "status",
     "requested_at",
-    "summary",
-    "decisions"
+    "decisions",
+    "can_respond",
+    "reason"
    ]
   },
   {

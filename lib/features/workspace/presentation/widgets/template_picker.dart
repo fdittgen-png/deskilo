@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/workspace_providers.dart';
 import 'template_gallery.dart';
@@ -18,6 +20,10 @@ import 'template_gallery.dart';
 /// yet to hold a flag, and a new space starting with a room is the whole
 /// point of #1120's first step. The server decides which rows are
 /// readable; the picker shows what it returned, builtin first.
+///
+/// #1660 — a request that is still out, or that failed, is not an empty
+/// library: it shows a spinner, or the failure with a retry, and never
+/// leaves "Empty space" as the only thing on offer.
 class TemplatePicker extends ConsumerWidget {
   const TemplatePicker({
     super.key,
@@ -34,7 +40,8 @@ class TemplatePicker extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final templates = ref.watch(workspaceTemplatesProvider).value ?? const [];
+    final async = ref.watch(workspaceTemplatesProvider);
+    final templates = async.value ?? const [];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -43,7 +50,21 @@ class TemplatePicker extends ConsumerWidget {
         const SizedBox(height: AppSpacing.sm),
         SizedBox(
           height: galleryHeight,
-          child: TemplateGallery(
+          child: async.hasError && !async.hasValue
+              ? Align(
+                  alignment: Alignment.topCenter,
+                  child: InlineBanner(
+                    key: const ValueKey('template-picker-failed'),
+                    icon: Icons.cloud_off_outlined,
+                    text: l10n?.templatesLoadFailed ??
+                        'The templates could not be loaded.',
+                    actionLabel: l10n?.commonRetry ?? 'Retry',
+                    onAction: () => ref.invalidate(workspaceTemplatesProvider),
+                  ),
+                )
+              : !async.hasValue
+              ? const LoadingView(key: ValueKey('template-picker-loading'))
+              : TemplateGallery(
             sections: [
               TemplateGallerySection(
                 title: l10n?.onboardingStartFrom ?? 'Start from',
@@ -56,6 +77,27 @@ class TemplatePicker extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// #1660 — on the confirm step, when the templates never arrived: the
+/// empty space is what the failure leaves, not what was picked.
+class TemplatesFailedNotice extends ConsumerWidget {
+  const TemplatesFailedNotice({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final async = ref.watch(workspaceTemplatesProvider);
+    if (!async.hasError || async.hasValue) return const SizedBox.shrink();
+    final l10n = AppLocalizations.of(context);
+    return InlineBanner(
+      key: const ValueKey('onboarding-confirm-templates-failed'),
+      icon: Icons.cloud_off_outlined,
+      text:
+          l10n?.onboardingTemplatesFailedEmpty ??
+          'The templates could not be loaded, so this space would start '
+              'empty. Go back to try again.',
     );
   }
 }

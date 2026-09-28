@@ -6857,6 +6857,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get libraryProcessTechnical => 'Technical';
 
   @override
+  String get templatesLoadFailed => 'The templates could not be loaded.';
+
+  @override
+  String get onboardingTemplatesFailedEmpty =>
+      'The templates could not be loaded, so this space would start empty. Go back to try again.';
+
+  @override
+  String templateResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count templates shown',
+      one: '1 template shown',
+      zero: 'No template shown',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get localSlotLegalIdentity =>
       'Your legal identity and address (for invoices)';
 
@@ -11372,6 +11391,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get compareRemove => 'Remove from comparison';
 
   @override
+  String get compareEmpty => 'Empty';
+
+  @override
   String get templateChangedSinceReview =>
       'This template changed since you reviewed it. Nothing was applied; open it again to review the new version.';
 
@@ -11498,6 +11520,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get templateWidenConfirm => 'Make readable';
 
   @override
+  String get templateProfileFull => 'Full configuration profile';
+
+  @override
+  String templateProfileSelected(String chosen, String total) {
+    return 'Selected groups: $chosen of $total';
+  }
+
+  @override
+  String get templatePublishLocalNeeds =>
+      'A space that applies it will set these up itself:';
+
+  @override
   String get libraryInvitationTexts => 'Invitation texts';
 
   @override
@@ -11552,6 +11586,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get workbookWide =>
       'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise';
+
+  @override
+  String get workbookExportTitle => 'Exporting the workbook';
+
+  @override
+  String workbookExportReading(String done, String total) {
+    return 'Reading templates: $done of $total';
+  }
+
+  @override
+  String get workbookExportBuilding => 'Building the workbook…';
+
+  @override
+  String get workbookExportSaving => 'Choose where to save it…';
+
+  @override
+  String get workbookExportCancelled => 'Export cancelled. Nothing was saved.';
 
   @override
   String get themeTitle => 'Theme';
@@ -12982,6 +13033,68 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get readinessAreaLocalSetup =>
       'Details your features need (identity, bank, platforms)';
+
+  @override
+  String get readinessAreaBackend => 'Server and database version';
+
+  @override
+  String get readinessAreaRolesValidation => 'Roles and who validates requests';
+
+  @override
+  String get readinessStateNeedsOperator => 'Waiting for someone else';
+
+  @override
+  String get readinessStateNotApplicable => 'Not needed here';
+
+  @override
+  String get readinessStateUnavailable => 'Could not be read';
+
+  @override
+  String get readinessReasonTooFewValidators =>
+      'A policy asks for more validators than this space has';
+
+  @override
+  String get readinessReasonNoPolicies => 'No request waits for a validator';
+
+  @override
+  String get readinessReasonNoEvidence => 'No export or restore recorded yet';
+
+  @override
+  String get readinessActorOwner => 'You';
+
+  @override
+  String get readinessActorOperator => 'The server operator';
+
+  @override
+  String readinessActor(String who) {
+    return 'Who: $who';
+  }
+
+  @override
+  String get readinessAreaAssistant => 'Assistant access (optional)';
+
+  @override
+  String get readinessActorAdministrator => 'A database administrator';
+
+  @override
+  String get readinessReasonNotExposed =>
+      'This space does not expose anything to assistants yet';
+
+  @override
+  String get readinessReasonEligibilityRequested =>
+      'Your request waits for a database administrator';
+
+  @override
+  String get readinessReasonEligibilityExpired =>
+      'Your assistant eligibility has expired';
+
+  @override
+  String get readinessReasonEligibilityNoIdentity =>
+      'Sign in with your verified identity first';
+
+  @override
+  String get readinessReasonEligibilityMissing =>
+      'A database administrator has not approved you for assistants';
 
   @override
   String get featureWorkspaceStatus => 'Workspace status';

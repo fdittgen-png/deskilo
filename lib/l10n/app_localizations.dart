@@ -11875,6 +11875,24 @@ abstract class AppLocalizations {
   /// **'Technical'**
   String get libraryProcessTechnical;
 
+  /// #1660 library
+  ///
+  /// In en, this message translates to:
+  /// **'The templates could not be loaded.'**
+  String get templatesLoadFailed;
+
+  /// #1660 library
+  ///
+  /// In en, this message translates to:
+  /// **'The templates could not be loaded, so this space would start empty. Go back to try again.'**
+  String get onboardingTemplatesFailedEmpty;
+
+  /// #1660 library
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No template shown} =1{1 template shown} other{{count} templates shown}}'**
+  String templateResultCount(int count);
+
   /// #1656 local_setup
   ///
   /// In en, this message translates to:
@@ -19794,6 +19812,12 @@ abstract class AppLocalizations {
   /// **'Remove from comparison'**
   String get compareRemove;
 
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Empty'**
+  String get compareEmpty;
+
   /// #1658 template_exact_apply
   ///
   /// In en, this message translates to:
@@ -19998,6 +20022,24 @@ abstract class AppLocalizations {
   /// **'Make readable'**
   String get templateWidenConfirm;
 
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'Full configuration profile'**
+  String get templateProfileFull;
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'Selected groups: {chosen} of {total}'**
+  String templateProfileSelected(String chosen, String total);
+
+  /// #1658 template_widen
+  ///
+  /// In en, this message translates to:
+  /// **'A space that applies it will set these up itself:'**
+  String get templatePublishLocalNeeds;
+
   /// #1656 template_wording
   ///
   /// In en, this message translates to:
@@ -20087,6 +20129,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise'**
   String get workbookWide;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting the workbook'**
+  String get workbookExportTitle;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Reading templates: {done} of {total}'**
+  String workbookExportReading(String done, String total);
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Building the workbook…'**
+  String get workbookExportBuilding;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Choose where to save it…'**
+  String get workbookExportSaving;
+
+  /// #1661 template_workbook
+  ///
+  /// In en, this message translates to:
+  /// **'Export cancelled. Nothing was saved.'**
+  String get workbookExportCancelled;
 
   /// Settings entry and dialog title for the in-app theme selection
   ///
@@ -22685,6 +22757,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Details your features need (identity, bank, platforms)'**
   String get readinessAreaLocalSetup;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Server and database version'**
+  String get readinessAreaBackend;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Roles and who validates requests'**
+  String get readinessAreaRolesValidation;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for someone else'**
+  String get readinessStateNeedsOperator;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Not needed here'**
+  String get readinessStateNotApplicable;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be read'**
+  String get readinessStateUnavailable;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A policy asks for more validators than this space has'**
+  String get readinessReasonTooFewValidators;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'No request waits for a validator'**
+  String get readinessReasonNoPolicies;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'No export or restore recorded yet'**
+  String get readinessReasonNoEvidence;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get readinessActorOwner;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'The server operator'**
+  String get readinessActorOperator;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Who: {who}'**
+  String readinessActor(String who);
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant access (optional)'**
+  String get readinessAreaAssistant;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A database administrator'**
+  String get readinessActorAdministrator;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'This space does not expose anything to assistants yet'**
+  String get readinessReasonNotExposed;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Your request waits for a database administrator'**
+  String get readinessReasonEligibilityRequested;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Your assistant eligibility has expired'**
+  String get readinessReasonEligibilityExpired;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with your verified identity first'**
+  String get readinessReasonEligibilityNoIdentity;
+
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A database administrator has not approved you for assistants'**
+  String get readinessReasonEligibilityMissing;
 
   /// #934 workspace status / repartition wizard: featureWorkspaceStatus
   ///

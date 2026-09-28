@@ -14,11 +14,11 @@ select set_config('t.r', public.workspace_readiness(current_setting('t.ws')::uui
 select set_config('t.local', public.workspace_local_readiness(current_setting('t.ws')::uuid)::text, true);
 reset role;
 
-select is((select string_agg(e->>'section', ',' order by o) from jsonb_array_elements(current_setting('t.r')::jsonb) with ordinality x(e, o) where o <= 6),
-  'region_rules,resources,pricing,invitations,payments,recovery', 'six sections in the order a space is set up');
+select is((select string_agg(e->>'section', ',' order by o) from jsonb_array_elements(current_setting('t.r')::jsonb) with ordinality x(e, o) where o <= 7),
+  'region_rules,resources,pricing,invitations,payments,roles_validation,recovery', 'seven sections in the order a space is set up (0295 adds roles and validation)');
 -- 0287: the local setup the switched-on features need, as one more
 -- section, present exactly when there is anything to set up locally.
-select is((select e->>'section' from jsonb_array_elements(current_setting('t.r')::jsonb) with ordinality x(e, o) where o = 7),
+select is((select e->>'section' from jsonb_array_elements(current_setting('t.r')::jsonb) with ordinality x(e, o) where o = 8),
   case when jsonb_array_length(current_setting('t.local')::jsonb) > 0 then 'local_setup' end,
   'the local setup follows when a feature needs it');
 select is((select (e->>'required')::boolean from jsonb_array_elements(current_setting('t.r')::jsonb) e where e->>'section' = 'local_setup'),
@@ -27,7 +27,7 @@ select is((select (e->>'required')::boolean from jsonb_array_elements(current_se
 select is((select e->>'state' from jsonb_array_elements(current_setting('t.r')::jsonb) e where e->>'section' = 'recovery'),
   'unverified', 'recovery is never claimed without evidence');
 select is((select string_agg(e->>'section', ',') from jsonb_array_elements(current_setting('t.r')::jsonb) e where (e->>'required')::boolean),
-  'region_rules,resources', 'only rules and places block a first booking');
+  'region_rules,resources', 'only rules and places block a first booking, while no reservation policy is short');
 select is((select e->>'state' from jsonb_array_elements(current_setting('t.r')::jsonb) e where e->>'section' = 'invitations'),
   'needs_configuration', 'a space of one has invited nobody yet');
 

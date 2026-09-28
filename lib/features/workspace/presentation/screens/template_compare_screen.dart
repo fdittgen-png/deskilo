@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/time/clock.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -11,6 +10,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/template_compare.dart';
 import '../workbook_labels.dart';
+import '../widgets/workbook_export_dialog.dart';
 import '../../domain/template_capabilities.dart';
 import '../../domain/template_inspection.dart';
 import '../../domain/workspace_template.dart';
@@ -41,21 +41,22 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
   // #1661 — the same templates, as an offline workbook.
   Future<void> _export() async {
     setState(() => _exporting = true);
-    String? path;
+    ({String? path, bool cancelled})? result;
     final ok = await runGuarded(
       context,
       domain: 'templates',
       message: 'template workbook export failed',
-      action: () async => path = await ref
-          .read(templateWorkbookExportProvider)
-          .export([for (final t in widget.templates) t.id], now: ref.read(clockProvider).now(),
-              labels: workbookLabels(AppLocalizations.of(context))),
+      action: () async => result = await exportWorkbookWithProgress(
+        context,
+        ref.read(templateWorkbookExportProvider),
+        [for (final t in widget.templates) t.id],
+        now: ref.read(clockProvider).now(),
+        labels: workbookLabels(AppLocalizations.of(context)),
+      ),
     );
     if (!mounted) return;
     setState(() => _exporting = false);
-    if (ok && path != null) {
-      AppSnack.success(context, AppLocalizations.of(context)?.compareExported ?? 'Workbook saved.');
-    }
+    if (ok) showWorkbookExportResult(context, result);
   }
 
   static const wideWidth = 720.0;
@@ -294,7 +295,18 @@ String comparisonCellText(AppLocalizations? l10n, ComparisonCell c) =>
         true => l10n?.compareYes ?? 'Yes',
         false => l10n?.compareNo ?? 'No',
         null => '—',
+        // #1660 — an empty value is a value, not a blank cell that reads
+        // like a missing one; a map reads as its entries, in key order.
+        final String v when v.trim().isEmpty => l10n?.compareEmpty ?? 'Empty',
+        final List<Object?> list when list.isEmpty =>
+          l10n?.compareEmpty ?? 'Empty',
+        final Map<Object?, Object?> map when map.isEmpty =>
+          l10n?.compareEmpty ?? 'Empty',
         final List<Object?> list => list.join(', '),
+        final Map<Object?, Object?> map => (map.entries.toList()
+              ..sort((a, b) => '${a.key}'.compareTo('${b.key}')))
+            .map((e) => '${e.key}: ${e.value}')
+            .join(', '),
         final v => '$v',
       },
       TemplateFieldDisposition.absent => switch (c.absent) {

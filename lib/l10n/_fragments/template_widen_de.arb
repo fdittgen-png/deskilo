@@ -2,5 +2,8 @@
   "templateWidenTitle": "Diese Vorlage lesbar machen für: {audience}?",
   "templateWidenCount": "{count} Einstellungen werden lesbar, genau so, wie die Vorlage sie jetzt enthält.",
   "templateWidenExcluded": "{count} Arten von Werten verlassen den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).",
-  "templateWidenConfirm": "Lesbar machen"
+  "templateWidenConfirm": "Lesbar machen",
+  "templateProfileFull": "Vollständiges Konfigurationsprofil",
+  "templateProfileSelected": "Ausgewählte Gruppen: {chosen} von {total}",
+  "templatePublishLocalNeeds": "Ein Workspace, der sie anwendet, richtet dies selbst ein:"
 }

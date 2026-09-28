@@ -7322,6 +7322,23 @@
   "@libraryProcessTechnical": {
     "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
   },
+  "templatesLoadFailed": "The templates could not be loaded.",
+  "@templatesLoadFailed": {
+    "description": "#1660 library"
+  },
+  "onboardingTemplatesFailedEmpty": "The templates could not be loaded, so this space would start empty. Go back to try again.",
+  "@onboardingTemplatesFailedEmpty": {
+    "description": "#1660 library"
+  },
+  "templateResultCount": "{count, plural, =0{No template shown} =1{1 template shown} other{{count} templates shown}}",
+  "@templateResultCount": {
+    "description": "#1660 library",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "localSlotLegalIdentity": "Your legal identity and address (for invoices)",
   "@localSlotLegalIdentity": {
     "description": "#1656 local_setup"
@@ -12318,6 +12335,10 @@
   "@compareRemove": {
     "description": "#1660 template_compare"
   },
+  "compareEmpty": "Empty",
+  "@compareEmpty": {
+    "description": "#1660 template_compare"
+  },
   "templateChangedSinceReview": "This template changed since you reviewed it. Nothing was applied; open it again to review the new version.",
   "@templateChangedSinceReview": {
     "description": "#1658 template_exact_apply"
@@ -12507,6 +12528,26 @@
   "@templateWidenConfirm": {
     "description": "#1658 template_widen"
   },
+  "templateProfileFull": "Full configuration profile",
+  "@templateProfileFull": {
+    "description": "#1658 template_widen"
+  },
+  "templateProfileSelected": "Selected groups: {chosen} of {total}",
+  "@templateProfileSelected": {
+    "description": "#1658 template_widen",
+    "placeholders": {
+      "chosen": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "templatePublishLocalNeeds": "A space that applies it will set these up itself:",
+  "@templatePublishLocalNeeds": {
+    "description": "#1658 template_widen"
+  },
   "libraryInvitationTexts": "Invitation texts",
   "@libraryInvitationTexts": {
     "description": "#1656 template_wording"
@@ -12580,6 +12621,34 @@
   },
   "workbookWide": "Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise",
   "@workbookWide": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookExportTitle": "Exporting the workbook",
+  "@workbookExportTitle": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookExportReading": "Reading templates: {done} of {total}",
+  "@workbookExportReading": {
+    "description": "#1661 template_workbook",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "workbookExportBuilding": "Building the workbook…",
+  "@workbookExportBuilding": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookExportSaving": "Choose where to save it…",
+  "@workbookExportSaving": {
+    "description": "#1661 template_workbook"
+  },
+  "workbookExportCancelled": "Export cancelled. Nothing was saved.",
+  "@workbookExportCancelled": {
     "description": "#1661 template_workbook"
   },
   "themeTitle": "Theme",
@@ -14376,6 +14445,83 @@
   },
   "readinessAreaLocalSetup": "Details your features need (identity, bank, platforms)",
   "@readinessAreaLocalSetup": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaBackend": "Server and database version",
+  "@readinessAreaBackend": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaRolesValidation": "Roles and who validates requests",
+  "@readinessAreaRolesValidation": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessStateNeedsOperator": "Waiting for someone else",
+  "@readinessStateNeedsOperator": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessStateNotApplicable": "Not needed here",
+  "@readinessStateNotApplicable": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessStateUnavailable": "Could not be read",
+  "@readinessStateUnavailable": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonTooFewValidators": "A policy asks for more validators than this space has",
+  "@readinessReasonTooFewValidators": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonNoPolicies": "No request waits for a validator",
+  "@readinessReasonNoPolicies": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonNoEvidence": "No export or restore recorded yet",
+  "@readinessReasonNoEvidence": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessActorOwner": "You",
+  "@readinessActorOwner": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessActorOperator": "The server operator",
+  "@readinessActorOperator": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessActor": "Who: {who}",
+  "@readinessActor": {
+    "description": "#1636 workspace_readiness",
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "readinessAreaAssistant": "Assistant access (optional)",
+  "@readinessAreaAssistant": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessActorAdministrator": "A database administrator",
+  "@readinessActorAdministrator": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonNotExposed": "This space does not expose anything to assistants yet",
+  "@readinessReasonNotExposed": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonEligibilityRequested": "Your request waits for a database administrator",
+  "@readinessReasonEligibilityRequested": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonEligibilityExpired": "Your assistant eligibility has expired",
+  "@readinessReasonEligibilityExpired": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonEligibilityNoIdentity": "Sign in with your verified identity first",
+  "@readinessReasonEligibilityNoIdentity": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonEligibilityMissing": "A database administrator has not approved you for assistants",
+  "@readinessReasonEligibilityMissing": {
     "description": "#1636 workspace_readiness"
   },
   "featureWorkspaceStatus": "Workspace status",

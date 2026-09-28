@@ -18,5 +18,6 @@
   "compareLimit": "Se pueden comparar hasta {count} plantillas. Quite una primero.",
   "compareOpen": "Comparar ({count})",
   "compareAdd": "Añadir a la comparación",
-  "compareRemove": "Quitar de la comparación"
+  "compareRemove": "Quitar de la comparación",
+  "compareEmpty": "Vacío"
 }

@@ -107,8 +107,11 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
         data: (request) {
           final destination = request.context.targetAuthUrl!;
           if (request.returnUri != null && !_returnAttempted) {
+            final generation = _generation;
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (mounted) _go(request.returnUri!, request.context, automatic: true);
+              if (mounted && generation == _generation) {
+                _go(request.returnUri!, request.context, automatic: true);
+              }
             });
           }
           return ListView(

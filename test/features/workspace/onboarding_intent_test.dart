@@ -10,6 +10,7 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/application/creation_intent.dart';
 import 'package:deskilo/features/workspace/application/start_workspace.dart';
+import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,12 +20,15 @@ import '../../helpers/mock_providers.dart';
 Future<FakeWorkspaceRepository> pump(
   WidgetTester tester, {
   InMemoryCreationDraftStore? drafts,
+  FakeWorkspaceRepository? workspace,
 }) async {
-  final repo = FakeWorkspaceRepository();
+  final repo = workspace ?? FakeWorkspaceRepository();
   tester.view.physicalSize = const Size(800, 1800);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(ProviderScope(
+    // A seeded failure must stay a failure, not be retried away.
+    retry: workspace == null ? null : (_, _) => null,
     overrides: standardTestOverrides(workspace: repo, creationDraft: drafts),
     child: const DeskiloApp(),
   ));
@@ -61,6 +65,13 @@ const intent = CreationIntent(
   shape: CreationShape.test,
   templateId: null,
 );
+
+/// #1660 — a library that could not be read.
+class _NoTemplates extends FakeWorkspaceRepository {
+  @override
+  Future<List<WorkspaceTemplate>> fetchWorkspaceTemplates() async =>
+      throw Exception('offline');
+}
 
 void main() {
   group('the pure contract', () {
@@ -120,6 +131,27 @@ void main() {
     await pressCreate(tester);
     expect(repo.createRequests.single.withTwin, isFalse);
     expect(repo.workspaces.single.environment, 'dev');
+  });
+
+  testWidgets('#1660 templates that failed to load: the confirm step says '
+      'the space would start empty because of it', (tester) async {
+    await pump(tester, workspace: _NoTemplates());
+    await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+    await goTo(tester, 'Confirm');
+    expect(
+      find.byKey(const ValueKey('onboarding-confirm-templates-failed')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('templates that loaded: no such warning', (tester) async {
+    await pump(tester);
+    await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
+    await goTo(tester, 'Confirm');
+    expect(
+      find.byKey(const ValueKey('onboarding-confirm-templates-failed')),
+      findsNothing,
+    );
   });
 
   testWidgets('a real workspace is chosen, not defaulted, and says it bills',
