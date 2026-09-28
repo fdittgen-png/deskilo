@@ -5,7 +5,12 @@ import '../features/workspace/presentation/screens/questions_screen.dart';
 import '../features/workspace/presentation/screens/roles_of_space_screen.dart';
 import '../features/workspace/presentation/screens/deployment_screen.dart';
 import '../features/workspace/presentation/screens/wording_screen.dart';
+import '../features/directory/presentation/directory_screen.dart' as discovery;
+import '../features/directory/presentation/public_page_editor.dart';
+import '../features/directory/presentation/connections_screen.dart';
+import '../features/directory/presentation/account_messenger_screen.dart';
 import 'package:flutter/foundation.dart';
+import '../features/money/presentation/screens/account_activity_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -74,6 +79,7 @@ import '../features/workspace/domain/member.dart';
 import '../features/workspace/presentation/screens/onboarding_screen.dart';
 import '../core/ui/wizard_navigation.dart';
 import '../features/workspace/presentation/screens/pending_approval_screen.dart';
+import '../features/workspace/presentation/screens/workspace_applications_screen.dart';
 import '../features/workspace/presentation/screens/scan_join_screen.dart';
 import '../features/workspace/presentation/screens/workspace_code_screen.dart';
 import '../features/workspace/presentation/screens/workspace_library_screen.dart';
@@ -816,6 +822,16 @@ GoRouter router(Ref ref) {
       // #1312 — where a server older than this app sends every route.
       GoRoute(path: kSchemaUpdateRoute,
           builder: (context, state) => const SchemaUpdateScreen()),
+      // Account history and applicant chat survive a refused membership.
+      GoRoute(path: '/account-activity',
+          builder: (context, state) => const AccountActivityScreen()),
+      GoRoute(path: '/discover',builder:(context,state)=>const discovery.DirectoryScreen()),
+      GoRoute(path: '/connections',builder:(context,state)=>const ConnectionsScreen()),
+      GoRoute(path: '/account-messages',builder:(context,state)=>AccountMessengerScreen(
+        source:state.uri.queryParameters['source']??'',recipient:state.uri.queryParameters['recipient'],name:state.uri.queryParameters['name']??'')),
+      GoRoute(path: '/settings/public-page',redirect:(context,state)=>(ref.read(myMemberProvider).value?.actsAsOwner??false)?null:'/profiles',builder:(context,state)=>const PublicPageEditor()),
+      GoRoute(path: '/applications',
+          builder: (context, state) => const WorkspaceApplicationsScreen()),
     ],
   );
   ref.onDispose(router.dispose);

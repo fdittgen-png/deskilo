@@ -30,6 +30,26 @@
   "accessoriesNoSupplement": "Sin suplemento",
   "accessoriesInactive": "Inactivo",
   "accessoriesActive": "Activo",
+  "accountActivityTitle": "Mi consumo y mis pagos",
+  "accountPaymentsTitle": "Pagos",
+  "accountActivityScope": "Todos tus perfiles en este servidor, incluidas las afiliaciones anteriores. Las monedas se muestran por separado.",
+  "accountActivityEmpty": "No hay registros que mostrar.",
+  "accountActivityFailed": "No se pudo cargar tu historial financiero. Toca para reintentar.",
+  "accountPaymentConfirmed": "Pago confirmado",
+  "accountInvoiceVoided": "Factura anulada",
+  "accountInvoiceRegrouped": "Incluido en una factura de liquidación",
+  "accountInvoiceIssued": "Factura emitida",
+  "accountUsageCorrected": "Consumo facturable corregido",
+  "accountUsageMinutes": "{minutes} minutos",
+  "accountPaymentPreference": "Pago en línea preferido",
+  "accountPaymentAsk": "Elegir al pagar",
+  "@accountUsageMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "handoffTitle": "Antes de guardar",
   "handoffIncluded": "{count} documento(s) en el archivo",
   "handoffExcludedSettlements": "{count} resumen(es) de liquidación omitido(s): sus facturas ya figuran",
@@ -83,6 +103,54 @@
   "addressWindowOff": "Sin ventanilla",
   "@addressWindowOff": {
     "description": "Address-window option: keep the flow layout, print no window block (#869)"
+  },
+  "applicationsTitle": "Solicitudes de acceso",
+  "@applicationsTitle": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationsEmpty": "No hay solicitudes de acceso.",
+  "@applicationsEmpty": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationPending": "Pendiente de aprobación",
+  "@applicationPending": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationApproved": "Aprobada",
+  "@applicationApproved": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationRefused": "Rechazada",
+  "@applicationRefused": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationAcceptedVote": "Ha aprobado esta solicitud",
+  "@applicationAcceptedVote": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationRefusedVote": "Ha rechazado esta solicitud",
+  "@applicationRefusedVote": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationNoMessages": "Aún no hay mensajes.",
+  "@applicationNoMessages": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationDiscussionHint": "Tus solicitudes y conversaciones con quienes las revisan siguen disponibles, incluso si se rechaza una solicitud.",
+  "@applicationDiscussionHint": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationDecisionComment": "Comentario visible para la persona solicitante",
+  "@applicationDecisionComment": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationsLoadFailed": "No se pudieron cargar tus solicitudes de acceso. Inténtalo de nuevo.",
+  "@applicationsLoadFailed": {
+    "description": "Admission action failure (#1791)"
+  },
+  "applicationReplyFailed": "Tu mensaje no se ha enviado. Se conserva el borrador; inténtalo de nuevo.",
+  "@applicationReplyFailed": {
+    "description": "Admission action failure (#1791)"
   },
   "invoiceExportBundle": "Archivo del ejercicio (zip)",
   "@invoiceExportBundle": {
@@ -5775,6 +5843,55 @@
   "@profilesEmailCopied": {
     "description": "#937 platform owner: profilesEmailCopied"
   },
+  "portalActionFailed": "No se pudo guardar el cambio. Inténtalo de nuevo.",
+  "portalConnect": "Conectar un servidor",
+  "portalConnections": "Servidores conectados",
+  "portalDisconnect": "Desconectar",
+  "portalConnectionFailed": "No se pudo conectar. Comprueba el servidor y tus credenciales.",
+  "portalConnectionsHint": "Cada servidor usa su propia sesión. Desconectarlo elimina el acceso guardado de esta cuenta en este dispositivo.",
+  "portalEmailCode": "Código de acceso por correo",
+  "portalUseCode": "Usar un código por correo",
+  "portalSendCode": "Enviar código de acceso",
+  "portalSourceUnavailable": "Un servidor no está disponible. Esta vista está incompleta. Toca para reintentar.",
+  "portalDiscover": "Buscar un espacio de trabajo",
+  "portalRegisterDirectory": "Publicar un servidor en el directorio",
+  "portalPublication": "Página pública del espacio",
+  "portalPublished": "Visible en el directorio público",
+  "portalPreview": "Vista externa",
+  "portalSavePreview": "Guardar y ver la vista externa",
+  "portalDescription": "Descripción",
+  "portalAddress": "Dirección pública",
+  "portalEmail": "Correo público",
+  "portalPhone": "Teléfono público",
+  "portalWebsite": "Sitio web",
+  "portalImage": "URL de la imagen del espacio",
+  "portalPublicPlan": "Plano público",
+  "portalPlans": "Planes y precios",
+  "portalLatitude": "Latitud",
+  "portalLongitude": "Longitud",
+  "portalAssociation": "Asociación",
+  "portalCompany": "Empresa",
+  "portalPerson": "Anfitrión particular",
+  "portalOwner": "Propietario",
+  "portalAdmin": "Administrador",
+  "portalChat": "Conversar",
+  "portalRequestProfile": "Solicitar un perfil en este espacio",
+  "portalRequestSent": "Solicitud enviada. El espacio revisará tu perfil.",
+  "portalList": "Lista",
+  "portalMap": "Mapa",
+  "portalSearch": "Buscar espacios",
+  "portalDirectoryUnavailable": "Algunos directorios no están disponibles. Los resultados están incompletos.",
+  "portalNoWorkspaces": "No se encontraron espacios publicados.",
+  "portalMoreDirectories": "Más directorios",
+  "portalMessenger": "Mensajería de la cuenta",
+  "portalThisServer": "Este servidor",
+  "portalAvailable": "Permitir que los usuarios encuentren mi cuenta y me escriban",
+  "portalFindPeople": "Buscar personas disponibles",
+  "portalEmployed": "Empleado de este espacio",
+  "portalEmploymentHint": "El empleo no modifica los permisos ni las suscripciones. Los pagos de salarios no están habilitados.",
+  "portalAdminVisible": "Mostrarme como administrador público",
+  "featurePublicListings": "Anuncio público del espacio",
+  "featurePublicListingsDesc": "Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores.",
   "featuresViewProcesses": "Procesos",
   "featuresViewSwitches": "Interruptores",
   "processSearchLabel": "Buscar procesos y funciones",

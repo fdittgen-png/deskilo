@@ -95,7 +95,8 @@ begin
           'private', ws, 1, 1, array['association','coworking','france','pezenas'],
           array['identity','tariffs','credit_products','floor_plan','booking_rules',
                 'closure_days','lexicon','workspace_roles','features'],
-          $cfg${
+          $cfg$
+{
   "workspace": {
     "default_locale": "fr",
     "vat_regime": "not_subject",
@@ -212,6 +213,7 @@ begin
       "planObjectDelete": true,
       "priceNegotiations": false,
       "publicHolidays": true,
+      "publicListings": false,
       "pushNotifications": true,
       "qrBadges": false,
       "recordingPrivacy": false,
@@ -346,7 +348,8 @@ begin
     "years": 2,
     "country": "FR"
   }
-}$cfg$::jsonb,
+}
+$cfg$::jsonb,
           $tpl$[
   {
     "name": "Étage 1",

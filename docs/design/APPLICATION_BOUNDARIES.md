@@ -33,7 +33,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `money -> workspace` | 117 |
 | `reservations -> plan` | 69 |
 | `reservations -> workspace` | 57 |
-| `profile -> workspace` | 38 |
+| `profile -> workspace` | 39 |
 | `workspace -> money` | 35 |
 | `members -> workspace` | 34 |
 | `money -> events` | 30 |
@@ -52,27 +52,31 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `members -> money` | 9 |
 | `members -> profile` | 9 |
 | `plan -> reservations` | 9 |
+| `workspace -> auth` | 9 |
 | `calendar -> reservations` | 8 |
 | `mcp -> auth` | 8 |
+| `money -> profile` | 8 |
 | `kiosk -> plan` | 7 |
 | `kiosk -> workspace` | 7 |
 | `calendar -> money` | 6 |
 | `calendar -> plan` | 6 |
+| `directory -> auth` | 6 |
 | `editor -> workspace` | 6 |
 | `profile -> auth` | 6 |
 | `events -> money` | 5 |
 | `profile -> reservations` | 5 |
 | `reservations -> events` | 5 |
-| `workspace -> auth` | 5 |
 | `calendar -> events` | 4 |
 | `events -> reservations` | 4 |
-| `money -> profile` | 4 |
 | `plan -> money` | 4 |
+| `workspace -> directory` | 4 |
 | `workspace -> members` | 4 |
 | `mcp -> workspace` | 3 |
 | `members -> plan` | 3 |
+| `directory -> workspace` | 2 |
 | `events -> plan` | 2 |
 | `kiosk -> profile` | 2 |
+| `money -> auth` | 2 |
 | `money -> members` | 2 |
 | `plan -> profile` | 2 |
 | `profile -> calendar` | 2 |
@@ -84,15 +88,16 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `money -> calendar` | 1 |
 | `plan -> events` | 1 |
 | `plan -> members` | 1 |
+| `profile -> directory` | 1 |
 | `profile -> mcp` | 1 |
 | `profile -> members` | 1 |
 | `reservations -> calendar` | 1 |
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**59 directed relationships, 715 imports.**
+**64 directed relationships, 739 imports.**
 
-Reciprocal (19): `calendar <-> money`, `calendar <-> reservations`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
+Reciprocal (20): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
 ## Hand-written files over 600 lines
 
@@ -100,13 +105,13 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 
 | file | lines |
 |---|---|
-| `lib/core/demo/data/workspace_repository.dart` | 1885 |
+| `lib/core/demo/data/workspace_repository.dart` | 1889 |
 | `lib/core/demo/data/money_repository.dart` | 1800 |
-| `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1660 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1466 |
+| `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1475 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1420 |
-| `lib/features/money/presentation/screens/money_screen.dart` | 1296 |
-| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1283 |
+| `lib/features/money/presentation/screens/money_screen.dart` | 1299 |
+| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1287 |
 | `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
 | `lib/features/profile/presentation/screens/settings_screen.dart` | 1054 |
@@ -122,14 +127,14 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 871 |
 | `lib/features/workspace/presentation/screens/availability_screen.dart` | 856 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
-| `lib/app/router.dart` | 827 |
+| `lib/app/router.dart` | 843 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
 | `lib/features/workspace/domain/workspace_repository.dart` | 761 |
 | `lib/features/reservations/presentation/reserve_seat_actions.dart` | 750 |
-| `lib/features/workspace/presentation/member_admin_actions.dart` | 703 |
+| `lib/features/workspace/presentation/member_admin_actions.dart` | 713 |
 | `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
@@ -139,6 +144,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/providers/workspace_providers.dart` | 630 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
 | `lib/features/money/presentation/invoice_documents.dart` | 608 |
+| `lib/features/workspace/presentation/screens/onboarding_screen.dart` | 602 |
 
-**39 files.**
+**40 files.**
 

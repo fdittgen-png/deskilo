@@ -82,6 +82,50 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accessoriesActive => 'Actif';
 
   @override
+  String get accountActivityTitle => 'Ma consommation et mes paiements';
+
+  @override
+  String get accountPaymentsTitle => 'Paiements';
+
+  @override
+  String get accountActivityScope =>
+      'Tous vos profils sur ce serveur, y compris vos anciennes adhésions. Les devises restent séparées.';
+
+  @override
+  String get accountActivityEmpty => 'Aucun enregistrement à afficher.';
+
+  @override
+  String get accountActivityFailed =>
+      'Impossible de charger votre historique financier. Appuyez pour réessayer.';
+
+  @override
+  String get accountPaymentConfirmed => 'Paiement confirmé';
+
+  @override
+  String get accountInvoiceVoided => 'Facture annulée';
+
+  @override
+  String get accountInvoiceRegrouped =>
+      'Inclus dans une facture de regroupement';
+
+  @override
+  String get accountInvoiceIssued => 'Facture émise';
+
+  @override
+  String get accountUsageCorrected => 'Consommation facturable corrigée';
+
+  @override
+  String accountUsageMinutes(int minutes) {
+    return '$minutes minutes';
+  }
+
+  @override
+  String get accountPaymentPreference => 'Paiement en ligne préféré';
+
+  @override
+  String get accountPaymentAsk => 'Choisir au paiement';
+
+  @override
   String get handoffTitle => 'Avant d’enregistrer';
 
   @override
@@ -173,6 +217,46 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get addressWindowOff => 'Sans fenêtre';
+
+  @override
+  String get applicationsTitle => 'Demandes d’accès';
+
+  @override
+  String get applicationsEmpty => 'Aucune demande d’accès.';
+
+  @override
+  String get applicationPending => 'En attente de validation';
+
+  @override
+  String get applicationApproved => 'Acceptée';
+
+  @override
+  String get applicationRefused => 'Refusée';
+
+  @override
+  String get applicationAcceptedVote => 'A accepté cette demande';
+
+  @override
+  String get applicationRefusedVote => 'A refusé cette demande';
+
+  @override
+  String get applicationNoMessages => 'Aucun message pour le moment.';
+
+  @override
+  String get applicationDiscussionHint =>
+      'Vos demandes et les échanges avec les personnes chargées de leur validation restent accessibles, même après un refus.';
+
+  @override
+  String get applicationDecisionComment =>
+      'Commentaire visible par la personne qui a fait la demande';
+
+  @override
+  String get applicationsLoadFailed =>
+      'Impossible de charger vos demandes d’accès. Veuillez réessayer.';
+
+  @override
+  String get applicationReplyFailed =>
+      'Votre message n’a pas été envoyé. Votre brouillon est conservé ; veuillez réessayer.';
 
   @override
   String get invoiceExportBundle => 'Archive de l\'exercice (zip)';
@@ -9233,6 +9317,163 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get profilesEmailCopied => 'E-mail copié.';
+
+  @override
+  String get portalActionFailed =>
+      'Impossible d’enregistrer cette modification. Réessayez.';
+
+  @override
+  String get portalConnect => 'Connecter un serveur';
+
+  @override
+  String get portalConnections => 'Serveurs connectés';
+
+  @override
+  String get portalDisconnect => 'Déconnecter';
+
+  @override
+  String get portalConnectionFailed =>
+      'Connexion impossible. Vérifiez le serveur et vos identifiants.';
+
+  @override
+  String get portalConnectionsHint =>
+      'Chaque serveur utilise sa propre connexion. Le déconnecter supprime son accès enregistré pour ce compte sur cet appareil.';
+
+  @override
+  String get portalEmailCode => 'Code de connexion par e-mail';
+
+  @override
+  String get portalUseCode => 'Utiliser un code par e-mail';
+
+  @override
+  String get portalSendCode => 'Envoyer le code de connexion';
+
+  @override
+  String get portalSourceUnavailable =>
+      'Un serveur est indisponible. Cette vue est incomplète. Appuyez pour réessayer.';
+
+  @override
+  String get portalDiscover => 'Trouver un espace de travail';
+
+  @override
+  String get portalRegisterDirectory => 'Publier un serveur dans l’annuaire';
+
+  @override
+  String get portalPublication => 'Page publique de l’espace';
+
+  @override
+  String get portalPublished => 'Visible dans l’annuaire public';
+
+  @override
+  String get portalPreview => 'Vue externe';
+
+  @override
+  String get portalSavePreview => 'Enregistrer et voir la vue externe';
+
+  @override
+  String get portalDescription => 'Description';
+
+  @override
+  String get portalAddress => 'Adresse publique';
+
+  @override
+  String get portalEmail => 'E-mail public';
+
+  @override
+  String get portalPhone => 'Téléphone public';
+
+  @override
+  String get portalWebsite => 'Site internet';
+
+  @override
+  String get portalImage => 'URL de l’image de l’espace';
+
+  @override
+  String get portalPublicPlan => 'Plan public des locaux';
+
+  @override
+  String get portalPlans => 'Formules et tarifs';
+
+  @override
+  String get portalLatitude => 'Latitude';
+
+  @override
+  String get portalLongitude => 'Longitude';
+
+  @override
+  String get portalAssociation => 'Association';
+
+  @override
+  String get portalCompany => 'Entreprise';
+
+  @override
+  String get portalPerson => 'Particulier';
+
+  @override
+  String get portalOwner => 'Propriétaire';
+
+  @override
+  String get portalAdmin => 'Administrateur';
+
+  @override
+  String get portalChat => 'Discuter';
+
+  @override
+  String get portalRequestProfile => 'Demander un profil dans cet espace';
+
+  @override
+  String get portalRequestSent =>
+      'Demande envoyée. L’espace examinera votre profil.';
+
+  @override
+  String get portalList => 'Liste';
+
+  @override
+  String get portalMap => 'Carte';
+
+  @override
+  String get portalSearch => 'Rechercher des espaces';
+
+  @override
+  String get portalDirectoryUnavailable =>
+      'Certains annuaires sont inaccessibles. Les résultats sont incomplets.';
+
+  @override
+  String get portalNoWorkspaces => 'Aucun espace publié trouvé.';
+
+  @override
+  String get portalMoreDirectories => 'Autres annuaires';
+
+  @override
+  String get portalMessenger => 'Messagerie du compte';
+
+  @override
+  String get portalThisServer => 'Ce serveur';
+
+  @override
+  String get portalAvailable =>
+      'Autoriser les utilisateurs à trouver mon compte et à m’écrire';
+
+  @override
+  String get portalFindPeople => 'Rechercher des personnes disponibles';
+
+  @override
+  String get portalEmployed => 'Salarié de cet espace';
+
+  @override
+  String get portalEmploymentHint =>
+      'L’emploi ne change ni les accès ni l’abonnement. Le versement des salaires n’est pas activé.';
+
+  @override
+  String get portalAdminVisible =>
+      'Afficher mon rôle d’administrateur publiquement';
+
+  @override
+  String get featurePublicListings => 'Présentation publique de l’espace';
+
+  @override
+  String get featurePublicListingsDesc =>
+      'Publiez les informations et plans choisis, avec les propriétaires visibles et les administrateurs volontaires.';
 
   @override
   String get featuresViewProcesses => 'Processus';

@@ -168,7 +168,7 @@ import 'package:flutter_test/flutter_test.dart';
 //   loaded. Writes only its own dismissal; never books, pays or approves.
 //   Reserve, Core, default ON: optional help a space can hide, and OFF
 //   hides the card and nothing else.
-const int _expectedFeatureCount = 114; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
+const int _expectedFeatureCount = 115; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
 
 void main() {
   _tierPins();
@@ -241,7 +241,7 @@ void main() {
 // newly joined member of a fifteen-person community meets is the question
 // "what do I do here?"; a card that answers it with the one permitted
 // action, and goes away when asked, is exactly what Core is for.
-const int _expectedCoreCount = 39;
+const int _expectedCoreCount = 40;
 
 void _tierPins() {
   test('every feature declares a tier, and the split is pinned', () {

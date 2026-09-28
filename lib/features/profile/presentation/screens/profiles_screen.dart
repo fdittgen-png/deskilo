@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../directory/presentation/account_portal_entry.dart';
 import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -21,6 +22,7 @@ import '../../../workspace/presentation/member_admin_actions.dart';
 import '../../../workspace/domain/workspace_overview.dart';
 import '../widgets/pair_card.dart';
 import '../widgets/workspace_owners_sheet.dart';
+import '../../../workspace/presentation/widgets/application_requests_entry.dart';
 
 /// Profile switcher à la tankstellen (#89): each membership is a profile —
 /// a workspace plus the role held there. The active profile shapes the
@@ -45,6 +47,10 @@ class ProfilesScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n?.profilesTitle ?? 'Profiles'),
         actions: [
+          const ApplicationRequestsEntry(), const AccountPortalEntry(),
+          IconButton(tooltip: l10n?.accountActivityTitle ?? 'My consumption and payments',
+            onPressed: () => context.push('/account-activity'),
+            icon: const Icon(Icons.receipt_long_outlined)),
           // #763 — one dot for the whole switcher, in the app bar.
           HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile',
             anchor: HelpAnchor.profileProfiles,

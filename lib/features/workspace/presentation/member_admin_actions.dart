@@ -20,6 +20,9 @@ import '../domain/site.dart';
 import '../domain/overage_policy.dart';
 import '../providers/workspace_providers.dart';
 import 'widgets/badge_manager_dialog.dart';
+import 'widgets/application_comment_dialog.dart';
+import '../../auth/providers/auth_providers.dart';
+import '../providers/workspace_application_providers.dart';
 
 export 'member_subscription_action.dart';
 export 'subscription_text.dart';
@@ -543,6 +546,11 @@ Future<void> decideMemberJoin(
   required bool approve,
 }) async {
   final l10n = AppLocalizations.of(context);
+  final account = ref.read(authStateProvider).value;
+  if (account == null) return;
+  final comment = approve ? '' : await showDialog<String>(context: context,
+    builder: (_) => const ApplicationCommentDialog());
+  if (comment == null || !context.mounted || ref.read(authStateProvider).value != account) return;
   if (!await runGuarded(
     context,
     domain: 'workspace',
@@ -551,11 +559,13 @@ Future<void> decideMemberJoin(
         'Something went wrong. Please try again.',
     action: () => ref
         .read(workspaceRepositoryProvider)
-        .decideMemberJoin(member.id, approve: approve),
+        .decideMemberJoin(member.id, approve: approve, comment: comment, expectedAccount: account),
   )) {
     return;
   }
+  if (!context.mounted || ref.read(authStateProvider).value != account) return;
   ref.invalidate(workspaceMembersProvider);
+  ref.invalidate(workspaceApplicationsProvider);
 }
 
 /// Badge manager of one member (0043): the active/revoked badge list

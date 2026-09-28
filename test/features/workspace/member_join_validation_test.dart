@@ -62,9 +62,9 @@ void main() {
     );
   });
 
+  for (final approve in [true, false]) {
   testWidgets(
-      'the members sheet approves a pending member through the RPC; '
-      'reject exits them', (tester) async {
+      'the members sheet ${approve ? "approves" : "refuses with a comment"} a pending member through the RPC', (tester) async {
     tester.view.physicalSize = const Size(800, 2200);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -97,15 +97,22 @@ void main() {
 
     await tester.tap(find.text('Nova'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Approve membership'));
+    await tester.tap(find.text(approve ? 'Approve membership' : 'Reject membership'));
     await tester.pumpAndSettle();
+    if (!approve) {
+      await tester.enterText(find.byKey(const ValueKey('application-decision-comment')), 'No desks this month.');
+      await tester.tap(find.widgetWithText(FilledButton, 'Reject membership'));
+      await tester.pumpAndSettle();
+      expect(workspace.joinComments['member-2'], 'No desks this month.');
+    }
 
-    expect(workspace.joinDecisions['member-2'], isTrue);
+    expect(workspace.joinDecisions['member-2'], approve);
     expect(
       workspace.otherMembers.single.status,
-      MemberStatus.active,
+      approve ? MemberStatus.active : MemberStatus.exited,
     );
   });
+  }
 
   testWidgets('the validation rules screen lists the New member domain',
       (tester) async {

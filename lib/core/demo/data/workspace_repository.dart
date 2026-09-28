@@ -291,13 +291,17 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// (0052) member id → last join decision, for assertions.
   final joinDecisions = <String, bool>{};
+  final joinComments = <String, String>{};
 
   @override
   Future<void> decideMemberJoin(
     String memberId, {
     required bool approve,
+    String comment = '',
+    String? expectedAccount,
   }) async {
     joinDecisions[memberId] = approve;
+    joinComments[memberId] = comment;
     final i = otherMembers.indexWhere((m) => m.id == memberId);
     if (i != -1) {
       otherMembers[i] = otherMembers[i].copyWith(
