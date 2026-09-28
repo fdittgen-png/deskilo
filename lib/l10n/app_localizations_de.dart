@@ -3544,6 +3544,84 @@ class AppLocalizationsDe extends AppLocalizations {
       'Angefragt, nie vorausgesetzt. Schalten Sie ein, was dieser Raum wirklich betreibt.';
 
   @override
+  String get federationContinue => 'Weiter mit Deskilo';
+
+  @override
+  String federationPurpose(String server) {
+    return 'Ihr Browser bestätigt Ihr Deskilo-Konto und bringt Sie dann zurück zu $server. Ihre Mitgliedschaften und Ihr Verlauf hier bleiben unverändert.';
+  }
+
+  @override
+  String get federationDetails => 'Technische Details';
+
+  @override
+  String federationDetailServer(String host) {
+    return 'Server: $host';
+  }
+
+  @override
+  String federationDetailAuthority(String host) {
+    return 'Identitätsanbieter: $host';
+  }
+
+  @override
+  String get federationStageOpening => 'Anmeldung wird geöffnet…';
+
+  @override
+  String get federationStageWaiting => 'Warten auf die Anmeldung im Browser…';
+
+  @override
+  String get federationStageCompleting => 'Anmeldung wird abgeschlossen…';
+
+  @override
+  String get federationCancel => 'Abbrechen';
+
+  @override
+  String get federationRetry => 'Erneut versuchen';
+
+  @override
+  String get federationClose => 'Schließen';
+
+  @override
+  String get federationActionExistingAccount =>
+      'Bei meinem bestehenden Konto anmelden';
+
+  @override
+  String get federationActionReviewServer => 'Server prüfen';
+
+  @override
+  String get federationFailureWrongAccount =>
+      'Ihr Browser hat sich mit einem anderen Deskilo-Konto angemeldet. Wechseln Sie das Konto im Browser und versuchen Sie es erneut.';
+
+  @override
+  String get federationFailureUnlinked =>
+      'Dieses Deskilo-Konto passt zu einem Konto hier, das noch nicht damit verknüpft ist. Melden Sie sich bei diesem Konto an und verknüpfen Sie Deskilo unter Verknüpfte Konten. Nichts wird zusammengeführt, bevor der Server es bestätigt.';
+
+  @override
+  String get federationFailureIncompatible =>
+      'Dieser Server akzeptiert diese Deskilo-Anmeldung nicht. Prüfen Sie die Serveradresse oder fragen Sie die Administration.';
+
+  @override
+  String get federationFailureProviderMissing =>
+      'Die Deskilo-Anmeldung ist auf diesem Server nicht eingerichtet. Bitten Sie die Administration, sie zu aktivieren.';
+
+  @override
+  String get federationFailureNetwork =>
+      'Der Server war nicht erreichbar, daher wurde die Anmeldung nicht abgeschlossen. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.';
+
+  @override
+  String get federationFailureRefused =>
+      'Die Anmeldung wurde im Browser abgebrochen oder abgelehnt. Nichts wurde geändert; Sie können es erneut versuchen.';
+
+  @override
+  String get federationFailureExpired =>
+      'Diese Anmeldung hat zu lange gedauert und ist abgelaufen. Starten Sie sie neu.';
+
+  @override
+  String get federationFailureBrowser =>
+      'Der Browser konnte nicht geöffnet werden. Prüfen Sie, ob ein Browser verfügbar ist, und versuchen Sie es erneut.';
+
+  @override
   String get featureMemberGettingStartedTitle => 'Karte „Erste Schritte“';
 
   @override

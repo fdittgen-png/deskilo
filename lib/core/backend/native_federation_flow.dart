@@ -9,6 +9,7 @@ import '../trace/trace_logger.dart';
 import 'auth_callback_guard.dart';
 import 'auth_secret_store.dart';
 import 'federation_authority.dart';
+import 'federation_handoff.dart';
 import 'installation_auth_storage.dart';
 
 /// Target-native OAuth runs in an isolated SDK client. Only after the target
@@ -55,10 +56,16 @@ class NativeFederationFlow {
     );
   }
 
-  Future<void> begin(FederationAuthority authority, {bool link = false}) async {
+  /// Opens the target's own sign-in in the system browser ONCE and answers
+  /// the flow id. A launched browser is not a signed-in person: the answer
+  /// arrives later through [AuthCallbackGuard.events].
+  Future<String> begin(
+    FederationAuthority authority, {
+    bool link = false,
+  }) async {
     final previous = active.auth.currentSession;
     if ((previous != null) != link) {
-      throw const AuthException('Use the existing account linking flow.');
+      throw const FederationStartFailure(FederationFailure.wrongAccount);
     }
     final redirect = await guard.begin(
       link ? 'federation-link' : 'federation',
@@ -85,16 +92,24 @@ class NativeFederationFlow {
             );
       if (guard.flow != flow ||
           active.auth.currentUser?.id != previous?.user.id) {
-        throw const AuthException('The active account changed.');
+        throw const FederationStartFailure(FederationFailure.wrongAccount);
       }
       if (!await launch(Uri.parse(url.url))) {
-        throw const AuthException('The sign-in browser could not open.');
+        throw const FederationStartFailure(
+          FederationFailure.browserUnavailable,
+        );
       }
+      return flow;
     } catch (error, stack) {
       // trace-exempt: OAuth exceptions may include browser URLs or codes.
       await _clear(flow);
       Error.throwWithStackTrace(
-        const AuthException('Deskilo sign-in could not start.'),
+        FederationStartFailure(switch (error) {
+          FederationStartFailure(:final failure) => failure,
+          AuthRetryableFetchException() => FederationFailure.network,
+          AuthException(:final code) => federationFailureFromCode(code),
+          _ => FederationFailure.network,
+        }),
         stack,
       );
     } finally {
@@ -113,7 +128,14 @@ class NativeFederationFlow {
     var accepted = false;
     try {
       if (callback.queryParameters.containsKey('error')) {
-        guard.report(AuthCallbackStatus.refused);
+        // The provider's own refusal: its CODE picks the next action; its
+        // prose (which may quote the account) is never shown or logged.
+        guard.report(
+          AuthCallbackStatus.refused,
+          failure: federationFailureFromCode(
+            callback.queryParameters['error_code'],
+          ),
+        );
         return;
       }
       final code = callback.queryParameters['code'];
@@ -121,25 +143,28 @@ class NativeFederationFlow {
       final response = await client.auth.exchangeCodeForSession(code);
       final session = response.session;
       final user = (await client.auth.getUser()).user;
-      if (user == null ||
-          user.id != session.user.id ||
-          (expected != null && user.id != expected)) {
+      if (user == null || user.id != session.user.id) {
         throw const _ProofRefused();
+      }
+      if (expected != null && user.id != expected) {
+        throw const _ProofRefused(FederationFailure.wrongAccount);
       }
       final authority = FederationAuthority.parse(
         await client.rpc<Object?>('public_identity_authority'),
       );
       if (authority?.issuer != issuer ||
           authority?.installationId != installation) {
-        throw const _ProofRefused();
+        throw const _ProofRefused(FederationFailure.incompatibleServer);
       }
       final binding = await client.rpc<Object?>('finalize_identity_binding');
+      final refusal = federationFailureFromBinding(binding);
+      if (refusal != null) throw _ProofRefused(refusal);
       if (binding is! Map ||
-          binding['status'] != 'verified' ||
           binding['issuer'] != issuer ||
-          binding['installation_id'] != installation ||
-          guard.flow != flow ||
-          active.auth.currentUser?.id != expected) {
+          binding['installation_id'] != installation) {
+        throw const _ProofRefused(FederationFailure.incompatibleServer);
+      }
+      if (guard.flow != flow || active.auth.currentUser?.id != expected) {
         throw const _ProofRefused();
       }
       // A fresh, server-checked target-native session; no second registration,
@@ -150,10 +175,27 @@ class NativeFederationFlow {
       await active.auth.recoverSession(jsonEncode(native));
       accepted = true;
       guard.report(AuthCallbackStatus.authenticated);
-    } on _ProofRefused {
-      guard.report(AuthCallbackStatus.refused);
-    } on AuthException {
-      guard.report(AuthCallbackStatus.refused);
+    } on _ProofRefused catch (refusal, stack) {
+      // Only the typed reason is recorded, never a token or a callback.
+      TraceLogger.instance.warn(
+        'auth',
+        'federation proof refused: ${refusal.failure.name}',
+        stackTrace: stack,
+      );
+      guard.report(AuthCallbackStatus.refused, failure: refusal.failure);
+    } on AuthRetryableFetchException {
+      guard.report(AuthCallbackStatus.unavailable);
+    } on AuthException catch (error, stack) {
+      // The error CODE only: its prose may quote the account or callback.
+      TraceLogger.instance.warn(
+        'auth',
+        'federation exchange refused: ${error.code ?? error.statusCode}',
+        stackTrace: stack,
+      );
+      guard.report(
+        AuthCallbackStatus.refused,
+        failure: federationFailureFromCode(error.code),
+      );
     } catch (error, stack) {
       // trace-exempt: network/provider payloads may contain credentials.
       TraceLogger.instance.warn(
@@ -192,6 +234,15 @@ class NativeFederationFlow {
     }
   }
 
+  /// Abandons an unclaimed flow: its verifier and callback metadata go, so
+  /// a late browser return is refused rather than exchanged.
+  /// The guard lets go first, so no return can be claimed in between.
+  Future<void> cancel(String flow) async {
+    if (guard.flow != flow || guard.consumed) return;
+    await guard.finish(flow);
+    await _pkce(flow).removeItem(key: 'supabase.auth.token-code-verifier');
+  }
+
   Future<void> _clear(String flow) async {
     // The pinned SDK's documented storage uses this single verifier key.
     await _pkce(flow).removeItem(key: 'supabase.auth.token-code-verifier');
@@ -200,5 +251,6 @@ class NativeFederationFlow {
 }
 
 class _ProofRefused implements Exception {
-  const _ProofRefused();
+  const _ProofRefused([this.failure = FederationFailure.refused]);
+  final FederationFailure failure;
 }

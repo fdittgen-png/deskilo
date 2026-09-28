@@ -18,7 +18,9 @@ import '../../domain/auth_outcome.dart';
 import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
 import '../auth_outcome_text.dart';
+import '../../application/federation_handoff_controller.dart';
 import '../widgets/badge_sign_in_sheet.dart';
+import '../widgets/federation_handoff_panel.dart';
 import '../widgets/password_recovery_sheet.dart';
 import '../widgets/verification_pending_view.dart';
 
@@ -40,6 +42,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   final _displayName = TextEditingController();
   final _email = TextEditingController();
   final _password = TextEditingController();
+  final _emailFocus = FocusNode(debugLabel: 'auth-email');
   bool _isSignUp = false;
   bool _busy = false;
 
@@ -62,6 +65,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     _displayName.dispose();
     _email.dispose();
     _password.dispose();
+    _emailFocus.dispose();
     super.dispose();
   }
 
@@ -171,11 +175,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(authFeedbackProvider, (_, value) {
-      if (value.value case final result?) {
-        setState(() => _lastResult = result);
-      }
-    });
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
@@ -208,6 +207,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       );
 
   Widget _form(AppLocalizations? l10n) {
+    final handoff = ref.watch(federationHandoffAvailableProvider);
+    final offersDeskilo = (ref.watch(availableSocialProvidersProvider).value ??
+            const <SocialProvider>[])
+        .contains(SocialProvider.deskilo);
     return Form(
       key: _formKey,
       child: AutofillGroup(
@@ -241,6 +244,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             ],
             TextFormField(
               controller: _email,
+              focusNode: _emailFocus,
               decoration: InputDecoration(
                 labelText: l10n?.authEmailLabel ?? 'Email',
               ),
@@ -369,6 +373,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               alignment: WrapAlignment.center,
               children: [
                 for (final provider in ref.watch(availableSocialProvidersProvider).value ?? const <SocialProvider>[])
+                  if (provider != SocialProvider.deskilo || !handoff)
                   OutlinedButton(
                     key: ValueKey('auth-social-${provider.name}'),
                     onPressed:
@@ -377,6 +382,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   ),
               ],
             ),
+            // #1648 — one explicit Continue with Deskilo, its destination
+            // and its true stage; a failure names its own next action.
+            if (handoff && offersDeskilo) ...[
+              const SizedBox(height: 8),
+              FederationHandoffSection(
+                onUseExistingAccount: _useExistingAccount,
+              ),
+            ],
             // #662 — badge sign-in, offered only when this device
             // can actually read one, and never while creating an
             // account (a brand-new member holds no badge).
@@ -470,6 +483,19 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         ),
       ),
     );
+  }
+
+  /// #1648 — the Deskilo identity matches an account here that is not
+  /// linked yet: that account signs in with its own proof first. The
+  /// sign-in form, never the create-account one.
+  void _useExistingAccount() {
+    setState(() {
+      _isSignUp = false;
+      _lastResult = null;
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _emailFocus.requestFocus();
+    });
   }
 
   /// Keeps "join" as the errand and moves to account creation — the

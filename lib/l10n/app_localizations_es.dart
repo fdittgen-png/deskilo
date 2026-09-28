@@ -3541,6 +3541,85 @@ class AppLocalizationsEs extends AppLocalizations {
       'Pedido, nunca supuesto. Active lo que este espacio realmente hace.';
 
   @override
+  String get federationContinue => 'Continuar con Deskilo';
+
+  @override
+  String federationPurpose(String server) {
+    return 'Tu navegador confirma tu cuenta de Deskilo y luego te devuelve a $server. Tus membresías y tu historial aquí no cambian.';
+  }
+
+  @override
+  String get federationDetails => 'Detalles técnicos';
+
+  @override
+  String federationDetailServer(String host) {
+    return 'Servidor: $host';
+  }
+
+  @override
+  String federationDetailAuthority(String host) {
+    return 'Autoridad de identidad: $host';
+  }
+
+  @override
+  String get federationStageOpening => 'Abriendo el inicio de sesión…';
+
+  @override
+  String get federationStageWaiting =>
+      'Esperando el inicio de sesión en tu navegador…';
+
+  @override
+  String get federationStageCompleting => 'Completando el inicio de sesión…';
+
+  @override
+  String get federationCancel => 'Cancelar';
+
+  @override
+  String get federationRetry => 'Reintentar';
+
+  @override
+  String get federationClose => 'Cerrar';
+
+  @override
+  String get federationActionExistingAccount =>
+      'Iniciar sesión en mi cuenta existente';
+
+  @override
+  String get federationActionReviewServer => 'Revisar el servidor';
+
+  @override
+  String get federationFailureWrongAccount =>
+      'Tu navegador inició sesión con otra cuenta de Deskilo. Cambia de cuenta en el navegador y vuelve a intentarlo.';
+
+  @override
+  String get federationFailureUnlinked =>
+      'Esta cuenta de Deskilo coincide con una cuenta de aquí que aún no está vinculada. Inicia sesión en esa cuenta y vincula Deskilo en Cuentas vinculadas. No se fusiona nada hasta que el servidor lo confirme.';
+
+  @override
+  String get federationFailureIncompatible =>
+      'Este servidor no acepta este inicio de sesión de Deskilo. Revisa la dirección del servidor o consulta a su administrador.';
+
+  @override
+  String get federationFailureProviderMissing =>
+      'El inicio de sesión con Deskilo no está configurado en este servidor. Pide a su administrador que lo active.';
+
+  @override
+  String get federationFailureNetwork =>
+      'No se pudo contactar con el servidor, así que el inicio de sesión no se completó. Revisa tu conexión y vuelve a intentarlo.';
+
+  @override
+  String get federationFailureRefused =>
+      'El inicio de sesión se canceló o se rechazó en el navegador. No ha cambiado nada; puedes volver a intentarlo.';
+
+  @override
+  String get federationFailureExpired =>
+      'Este inicio de sesión tardó demasiado y ha caducado. Vuelve a empezarlo.';
+
+  @override
+  String get federationFailureBrowser =>
+      'No se pudo abrir el navegador. Comprueba que hay un navegador disponible y vuelve a intentarlo.';
+
+  @override
   String get featureMemberGettingStartedTitle => 'Tarjeta Primeros pasos';
 
   @override

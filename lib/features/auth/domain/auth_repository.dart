@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'auth_outcome.dart';
 import 'badge_sign_in.dart';
+import 'federation_port.dart';
 import 'social_provider.dart';
 
 /// Pure-Dart auth boundary (spec §2). Implemented by Supabase in data/,
@@ -78,6 +79,10 @@ abstract class AuthRepository {
   /// deskilo:// callback returns to the app. Throws when the provider is
   /// not enabled on the server.
   Future<void> signInWithSocial(SocialProvider provider);
+
+  /// #1648 — the "Continue with Deskilo" handoff, or null where this
+  /// build owns no callback (tests, the demo).
+  FederationPort? get federation;
 
   /// Providers enabled on this installation, never a hard-coded promise.
   Future<List<SocialProvider>> availableSocialProviders();
