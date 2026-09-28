@@ -40,7 +40,7 @@ dependencies:
   flutter_local_notifications: ^22.0.1
   timezone: ^0.11.1
   qr_flutter: ^4.1.0
-  flutter_zxing: ^2.3.0
+  flutter_zxing: ^3.1.0
   shared_preferences: ^2.5.5
   share_plus: ^13.2.0
   # The push transport (#426/#428, ADR 0011; packaged in #716 / ADR
