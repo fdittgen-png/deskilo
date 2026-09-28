@@ -22884,6 +22884,18 @@ abstract class AppLocalizations {
   /// **'No export or restore recorded yet'**
   String get readinessReasonNoEvidence;
 
+  /// #1636 workspace_readiness recovery evidence
+  ///
+  /// In en, this message translates to:
+  /// **'A recent export is on record'**
+  String get readinessReasonRecentExport;
+
+  /// #1636 workspace_readiness recovery evidence
+  ///
+  /// In en, this message translates to:
+  /// **'The last recorded export is more than 90 days old'**
+  String get readinessReasonStaleExport;
+
   /// #1636 workspace_readiness
   ///
   /// In en, this message translates to:
