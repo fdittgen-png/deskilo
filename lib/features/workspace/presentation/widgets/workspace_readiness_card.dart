@@ -35,6 +35,8 @@ String readinessAreaLabel(
         'Details your features need (identity, bank, platforms)',
   ReadinessArea.assistant =>
     l10n?.readinessAreaAssistant ?? 'Assistant access (optional)',
+  ReadinessArea.firstBooking =>
+    l10n?.readinessAreaFirstBooking ?? 'A first booking',
   ReadinessArea.unknown => '',
 };
 

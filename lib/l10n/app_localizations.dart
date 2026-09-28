@@ -22866,6 +22866,12 @@ abstract class AppLocalizations {
   /// **'A database administrator has not approved you for assistants'**
   String get readinessReasonEligibilityMissing;
 
+  /// #1636 workspace_readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A first booking'**
+  String get readinessAreaFirstBooking;
+
   /// #934 workspace status / repartition wizard: featureWorkspaceStatus
   ///
   /// In en, this message translates to:

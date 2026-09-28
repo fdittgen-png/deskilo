@@ -8593,6 +8593,7 @@
   "readinessReasonEligibilityExpired": "Votre habilitation aux assistants a expiré",
   "readinessReasonEligibilityNoIdentity": "Connectez-vous d’abord avec votre identité vérifiée",
   "readinessReasonEligibilityMissing": "Aucun administrateur de la base ne vous a habilité aux assistants",
+  "readinessAreaFirstBooking": "Une première réservation",
   "featureWorkspaceStatus": "Situation de l'espace",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

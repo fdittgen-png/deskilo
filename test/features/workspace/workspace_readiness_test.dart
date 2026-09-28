@@ -219,6 +219,11 @@ void main() {
     expect(s[3].actor, ReadinessActor.owner, reason: 'owner unless named');
     expect(s[3].blocking, isFalse);
     expect(s[4].blocking, isTrue, reason: 'an operator step still blocks');
+    final used = ReadinessSection.listFromJson([
+      {'section': 'first_booking', 'state': 'needs_configuration', 'route': '/reserve'},
+    ]).single;
+    expect(used.area, ReadinessArea.firstBooking);
+    expect(used.blocking, isFalse, reason: 'being used is never a prerequisite');
   });
 
   test('the backend section follows the app\'s own schema check', () {

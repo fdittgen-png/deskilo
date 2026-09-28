@@ -91,4 +91,4 @@ revoke execute on function public.oauth_authorization_context(text)
   from public, anon, service_role;
 grant execute on function public.oauth_authorization_context(text) to authenticated;
 
-select public.set_deskilo_schema_version(0296);
+select public.set_deskilo_schema_version(0297);

@@ -13215,6 +13215,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun amministratore del database l’ha abilitata agli assistenti';
 
   @override
+  String get readinessAreaFirstBooking => 'Una prima prenotazione';
+
+  @override
   String get featureWorkspaceStatus => 'Situazione dello spazio';
 
   @override

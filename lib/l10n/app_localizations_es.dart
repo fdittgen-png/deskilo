@@ -13197,6 +13197,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ningún administrador de la base de datos le ha habilitado para asistentes';
 
   @override
+  String get readinessAreaFirstBooking => 'Una primera reserva';
+
+  @override
   String get featureWorkspaceStatus => 'Situación del espacio';
 
   @override
