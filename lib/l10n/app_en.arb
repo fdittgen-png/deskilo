@@ -14428,6 +14428,83 @@
   "@readinessAreaLocalSetup": {
     "description": "#1636 workspace_readiness"
   },
+  "readinessAreaBackend": "Server and database version",
+  "@readinessAreaBackend": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaRolesValidation": "Roles and who validates requests",
+  "@readinessAreaRolesValidation": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessStateNeedsOperator": "Waiting for someone else",
+  "@readinessStateNeedsOperator": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessStateNotApplicable": "Not needed here",
+  "@readinessStateNotApplicable": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessStateUnavailable": "Could not be read",
+  "@readinessStateUnavailable": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonTooFewValidators": "A policy asks for more validators than this space has",
+  "@readinessReasonTooFewValidators": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonNoPolicies": "No request waits for a validator",
+  "@readinessReasonNoPolicies": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonNoEvidence": "No export or restore recorded yet",
+  "@readinessReasonNoEvidence": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessActorOwner": "You",
+  "@readinessActorOwner": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessActorOperator": "The server operator",
+  "@readinessActorOperator": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessActor": "Who: {who}",
+  "@readinessActor": {
+    "description": "#1636 workspace_readiness",
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "readinessAreaAssistant": "Assistant access (optional)",
+  "@readinessAreaAssistant": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessActorAdministrator": "A database administrator",
+  "@readinessActorAdministrator": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonNotExposed": "This space does not expose anything to assistants yet",
+  "@readinessReasonNotExposed": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonEligibilityRequested": "Your request waits for a database administrator",
+  "@readinessReasonEligibilityRequested": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonEligibilityExpired": "Your assistant eligibility has expired",
+  "@readinessReasonEligibilityExpired": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonEligibilityNoIdentity": "Sign in with your verified identity first",
+  "@readinessReasonEligibilityNoIdentity": {
+    "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonEligibilityMissing": "A database administrator has not approved you for assistants",
+  "@readinessReasonEligibilityMissing": {
+    "description": "#1636 workspace_readiness"
+  },
   "featureWorkspaceStatus": "Workspace status",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"
