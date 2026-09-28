@@ -14,6 +14,7 @@ import '../data/supabase_action_confirmation_repository.dart';
 import '../data/supabase_mcp_connection_repository.dart';
 import '../domain/action_confirmation.dart';
 import '../domain/mcp_admin.dart';
+import '../domain/mcp_context.dart';
 import '../domain/mcp_connection.dart';
 
 part 'mcp_providers.g.dart';
@@ -27,9 +28,12 @@ ActionConfirmationRepository actionConfirmationRepository(Ref ref) =>
 ConfirmationAnswers confirmationAnswers(Ref ref) =>
     ConfirmationAnswers(ref.watch(actionConfirmationRepositoryProvider));
 
+/// #1625 — an answer for another confirmation is refused, not shown.
 @riverpod
-Future<ActionConfirmation> actionConfirmation(Ref ref, String id) =>
-    ref.watch(actionConfirmationRepositoryProvider).get(id);
+Future<ActionConfirmation> actionConfirmation(Ref ref, String id) async {
+  final c = await ref.watch(actionConfirmationRepositoryProvider).get(id);
+  return requireProvenance(c, what: 'confirmation', expected: id, answered: c.id);
+}
 
 /// #1615 — the consent RPCs and Auth's OAuth consent API.
 @Riverpod(keepAlive: true)
@@ -78,9 +82,17 @@ McpAdminRepository mcpAdminRepository(Ref ref) =>
     SupabaseMcpAdminRepository(Supabase.instance.client);
 
 /// The owner's policy for one workspace, as the server holds it now.
+/// #1625 — an answer for another workspace is refused, not shown.
 @riverpod
-Future<McpPolicy> mcpPolicy(Ref ref, String workspaceId) =>
-    ref.watch(mcpAdminRepositoryProvider).policy(workspaceId);
+Future<McpPolicy> mcpPolicy(Ref ref, String workspaceId) async {
+  final p = await ref.watch(mcpAdminRepositoryProvider).policy(workspaceId);
+  return requireProvenance(
+    p,
+    what: 'workspace',
+    expected: workspaceId,
+    answered: p.workspaceId,
+  );
+}
 
 @riverpod
 McpPolicyEditor mcpPolicyEditor(Ref ref) =>
