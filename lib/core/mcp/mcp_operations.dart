@@ -342,7 +342,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
     handler: true,
     dispatch: true,
     authority: McpAuthority.permission,
-    permission: 'manageBilling',
+    permission: 'manageMembers',
     features: ['mcpAccess'],
     scope: McpScope.workspace,
     mutation: McpMutation.request,
