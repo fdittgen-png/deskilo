@@ -206,7 +206,8 @@
   },
   "name": {
    "class": "display",
-   "purpose": "a human label; omitted by default because it can name or describe a person (#1644)"
+   "disclosure": "optional",
+   "purpose": "a human label; omitted by default because it can name or describe a person (#1644); sent only when the installation maximum, the workspace policy and the person's consent all name it (#1645)"
   },
   "negotiated": {
    "class": "operational",
@@ -1324,10 +1325,11 @@
     "p_enabled": "boolean",
     "p_operations": "text[]",
     "p_target_ceiling": "text",
-    "p_allowed_clients": "text[]"
+    "p_allowed_clients": "text[]",
+    "p_optional_fields": "text[]"
    },
    "security": "nativeSession",
-   "purpose": "The owner saves the exposure; a stale revision is refused."
+   "purpose": "The owner saves the exposure and the optional display fields it allows, within the database maximum (#1645); a stale revision is refused."
   },
   {
    "rpc": "my_database_capabilities",

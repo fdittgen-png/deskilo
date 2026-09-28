@@ -127,4 +127,27 @@ export const MCP_OUTPUT_ALLOWED: Record<McpOperationId, readonly string[]> = {
   respond_to_validation: ["confirmation_id","decision_recorded","effect_applied","event_id","event_status","expires_at","reason","unchanged"],
 };
 
+/** #1645 — display fields the database may add after its four-layer consent check. */
+export const MCP_OUTPUT_OPTIONAL: Record<McpOperationId, readonly string[]> = {
+  list_workspaces: ["name"],
+  get_capabilities: [],
+  get_availability: ["name"],
+  list_my_reservations: [],
+  get_my_statement: [],
+  list_my_invoices: [],
+  create_reservation: [],
+  update_reservation: [],
+  check_in: [],
+  check_out: [],
+  request_reservation_deletion: [],
+  request_invoice_issue: [],
+  request_invoice_void: [],
+  request_refund: [],
+  request_member_status_change: [],
+  request_subscription_change: [],
+  list_pending_validations: [],
+  get_validation: [],
+  respond_to_validation: [],
+};
+
 export const MCP_FORBIDDEN_INPUTS: readonly string[] = ["actor","actor_id","user_id","role","roles","permission","permissions","is_admin","is_owner","sql","query","table","rpc","function","url","approval","approved","decided_by","status_override"];

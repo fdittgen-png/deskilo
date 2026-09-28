@@ -12,7 +12,7 @@
 /// Pinned to the migration directory by
 /// `test/lint/migration_version_marker_test.dart`, so a migration cannot
 /// land without the app saying it needs it.
-const int requiredSchemaVersion = 307;
+const int requiredSchemaVersion = 308;
 
 /// How a server's schema compares with what this app needs.
 enum SchemaCompatibility {

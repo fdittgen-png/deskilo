@@ -173,7 +173,7 @@ Deno.test("without a configured installation it serves nothing", async () => {
 Deno.test("#1644 the adapter keeps only operational fields, however deep", () => {
   const out = projectData("get_availability", {
     window: { starts_at: "a", ends_at: "b", organiser: "alice@example.org" },
-    items: [{ seat_id: "s1", name: "Alice's desk", free: true, note: "private" }],
+    items: [{ seat_id: "s1", free: true, note: "private" }],
     next_cursor: null,
     debug: "select * from members",
   }) as Record<string, unknown>;
@@ -183,6 +183,19 @@ Deno.test("#1644 the adapter keeps only operational fields, however deep", () =>
     next_cursor: null,
   });
   assert(!JSON.stringify(out).includes("alice"));
+});
+
+Deno.test("#1645 an optional field the database disclosed passes; elsewhere it is still dropped", () => {
+  // The database sent the seat's name only because all four layers agreed.
+  const disclosed = projectData("get_availability", {
+    items: [{ seat_id: "s1", name: "Desk 1", free: true, note: "private" }],
+  }) as Record<string, unknown>;
+  assertEquals(disclosed, { items: [{ seat_id: "s1", name: "Desk 1", free: true }] });
+  // No operation but those the contract names may carry it.
+  const elsewhere = projectData("list_my_reservations", {
+    items: [{ reservation_id: "r1", name: "Alice" }],
+  }) as Record<string, unknown>;
+  assertEquals(elsewhere, { items: [{ reservation_id: "r1" }] });
 });
 
 Deno.test("browser clients can read the authentication challenge", async () => {
