@@ -1228,6 +1228,7 @@ routine public.set_feature_flags(p_workspace_id uuid, p_flags jsonb, p_expected 
 routine public.set_invoice_pdf_template(p_workspace_id uuid, p_template jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:eef14ac15c75
 routine public.set_level_site(p_level_id uuid, p_site_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:cf95d0712a42
 routine public.set_managed_access(p_member_id uuid, p_access jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f73d20426e36
+routine public.set_mcp_limits(p_calls_per_minute integer, p_mutations_per_minute integer, p_workspace_calls_per_day integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9158656887ea
 routine public.set_member_field_values(p_member_id uuid, p_context text, p_answers jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:5ded60bff456
 routine public.set_member_home_site(p_member_id uuid, p_site_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:026f44f7c8bd
 routine public.set_member_kiosk(p_member_id uuid, p_is_kiosk boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:c67a43bc3830

@@ -55,7 +55,7 @@ declare v_def text; v_keys text := '''preferred_locale'',''ui_locale'',''theme''
   v_check text := $a$if (k='clock' and$a$;
 begin
   v_def:=pg_get_functiondef('public.set_personal_preferences(jsonb,uuid,uuid)'::regprocedure);
-  if position(v_keys in v_def)=0 or position(v_check in v_def)=0 then raise exception '0303: preferences anchor missing'; end if;
+  if position(v_keys in v_def)=0 or position(v_check in v_def)=0 then raise exception '0304: preferences anchor missing'; end if;
   v_def:=replace(v_def,v_keys,v_keys||',''payment_provider''');
   v_def:=replace(v_def,v_check,$a$if (k='payment_provider' and v #>> '{}' not in ('','paypal','stripe','mollie','wero'))
        or (k='clock' and$a$);
@@ -63,4 +63,4 @@ begin
 end;
 $preferences$;
 notify pgrst,'reload schema';
-select public.set_deskilo_schema_version(303);
+select public.set_deskilo_schema_version(304);

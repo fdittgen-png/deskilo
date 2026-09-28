@@ -346,7 +346,7 @@ do $export$
 declare v_def text; v_anchor text := $a$    'exported_at', now(),$a$;
 begin
  v_def:=pg_get_functiondef('public.export_my_data(uuid)'::regprocedure);
- if position(v_anchor in v_def)=0 then raise exception '0304: export anchor missing'; end if;
+ if position(v_anchor in v_def)=0 then raise exception '0305: export anchor missing'; end if;
  execute replace(v_def,v_anchor,$a$    'exported_at', now(),
     'public_directory_sources',(select coalesce(jsonb_agg(to_jsonb(s)),'[]'::jsonb) from public.public_directory_sources s where registered_by=auth.uid()),
     'account_contact_settings',(select to_jsonb(s) from public.account_contact_settings s where user_id=auth.uid()),
@@ -1344,4 +1344,4 @@ on conflict (key) where owner_workspace_id is null do update
 
 
 notify pgrst,'reload schema';
-select public.set_deskilo_schema_version(304);
+select public.set_deskilo_schema_version(305);

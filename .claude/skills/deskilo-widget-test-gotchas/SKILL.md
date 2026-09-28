@@ -32,6 +32,10 @@ description: The recurring reasons a DesKilo widget or lint test fails for a rea
 | `find.text('Report editor')` passes on a title that reads "Rep…" | an ellipsised `Text` still holds the full string in the tree | assert the STRUCTURE that makes room — the overflow menu present, the icon buttons absent — never the string |
 | a new width surfaces an overflow in an unrelated widget | it was always too wide; nothing had rendered it that narrow before | fix it in the same PR — shipping the bar while the body clips is half a fix (#1056: the app bar, then a 194 px Row in the designer's own toolbar) |
 | a `Row` of chips/buttons overflows on a phone | `Flex` answers "too wide" by clipping | `Wrap` with `WrapAlignment.spaceBetween`; on a wide screen it lays out exactly as the Row did, and there is no breakpoint to guess at |
+| a rect read after `scrollUntilVisible` puts a widget off-screen | its final `ensureVisible` jump is not pumped: `getRect` reads the OLD layout | `await tester.pumpAndSettle()` before any geometry assertion; and measure master before "fixing" a layout (#1660: a stale rect faked a 40 px results viewport) |
+| a provider-error test never shows the error state | Riverpod 3 RETRIES a failed provider automatically | `ProviderScope(retry: (_, _) => null, …)` / `ProviderContainer(retry: …)` in failure tests |
+| `tester.hasRunningAnimations` is true with reduced motion on | the tap's ink ripple is an animation too | assert position instead: the first frame's `getRect` equals the settled one; reduced motion via `platformDispatcher.accessibilityFeaturesTestValue = FakeAccessibilityFeatures(disableAnimations: true)` |
+| a "green" test also passes on master | it asserts a default or a stale reading | red-first against master (`git show origin/master:<file> > <file>`), then restore; if it stays green, the test proves nothing |
 | a widget test asserts a toggle that a `finally` never resets | `_busy` stuck after a hang | bound platform calls with `.timeout` so a hang becomes an error |
 
 Quick-view keys: `member-doc-quick` / `-download` / `-share` (one prefix
