@@ -1110,7 +1110,7 @@
    "rpc": "request_subscription_change",
    "authority": {
     "kind": "permission",
-    "permission": "manageBilling"
+    "permission": "manageMembers"
    },
    "features": [
     "mcpAccess"
