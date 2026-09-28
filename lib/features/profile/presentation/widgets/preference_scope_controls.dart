@@ -53,7 +53,7 @@ Future<void> savePersonalLanguage(WidgetRef ref, Locale? locale) async {
       PersonalPreference.documentLocale: locale?.languageCode ?? '',
     }, workspaceOnly: scoped);
   }
-  if (!scoped && ref.context.mounted && ref.read(personalPreferenceContextProvider).account == account) await controller.set(locale);
+  if (!scoped && ref.context.mounted && ref.read(personalPreferenceContextProvider).account == account) await controller.set(locale, updateProfile: false);
 }
 
 Future<void> savePersonalTheme(WidgetRef ref, ThemeMode? mode) async {

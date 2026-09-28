@@ -8,13 +8,51 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/backend/auth_callback_guard.dart';
+import '../../../core/backend/auth_secret_store.dart';
+import '../../../core/backend/federation_authority.dart';
+import '../../../core/backend/native_federation_flow.dart';
+import '../../../core/backend/schema_version.dart';
 import '../domain/auth_outcome.dart';
 import '../domain/auth_repository.dart';
 import '../domain/badge_sign_in.dart';
 import '../domain/social_provider.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
-  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get});
+  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get, this.callbackGuard, this.authorityRead});
+
+  final AuthCallbackGuard? callbackGuard;
+  final Future<Object?> Function()? authorityRead;
+
+  Future<FederationAuthority?> _authority() async {
+    try {
+      return FederationAuthority.parse(await (authorityRead?.call() ??
+          _client.rpc<Object?>('public_identity_authority')));
+    } on PostgrestException catch (error, stack) {
+      // trace-exempt: an older standalone installation retains native login.
+      if (isMissingFunction(error)) return null;
+      Error.throwWithStackTrace(error, stack);
+    }
+  }
+
+  NativeFederationFlow _federation() {
+    final guard = callbackGuard;
+    if (guard == null) throw const AuthException('Callback ownership unavailable.');
+    return NativeFederationFlow(_client, guard, const PlatformAuthSecretStore());
+  }
+
+  @override
+  Stream<AuthResult> authFeedback() async* {
+    final guard = callbackGuard;
+    if (guard == null) return;
+    AuthResult result(AuthCallbackStatus status) => switch (status) {
+      AuthCallbackStatus.authenticated => const AuthResult.authenticated(),
+      AuthCallbackStatus.refused => const AuthResult.refused(AuthRefusal.credentials),
+      AuthCallbackStatus.unavailable => const AuthResult.unavailable(),
+    };
+    if (guard.lastFeedback != null) yield result(guard.lastFeedback!);
+    yield* guard.feedback.stream.map(result);
+  }
 
   final Future<http.Response> Function(Uri, {Map<String, String>? headers}) providerSettingsGet;
 
@@ -44,8 +82,18 @@ class SupabaseAuthRepository implements AuthRepository {
     out = StreamController<String?>(
       onListen: () {
         out.add(_visible(_client.auth.currentUser?.id));
+        _finishCallback();
         events = _client.auth.onAuthStateChange
-            .listen((e) => out.add(_visible(e.session?.user.id)));
+            .listen((e) {
+          out.add(_visible(e.session?.user.id));
+          _finishCallback();
+        }, onError: (Object error, StackTrace stack) {
+          _finishCallback();
+          // A provider refusal leaves the existing native context intact.
+          // Do not echo SDK errors containing callback query parameters.
+          TraceLogger.instance.warn('auth', 'provider callback refused');
+          out.add(_visible(_client.auth.currentUser?.id));
+        });
         gate = _recoveryChanges.stream
             .listen((_) => out.add(_visible(_client.auth.currentUser?.id)));
       },
@@ -55,6 +103,15 @@ class SupabaseAuthRepository implements AuthRepository {
       },
     );
     return out.stream;
+  }
+
+  void _finishCallback() {
+    final guard = callbackGuard;
+    if (guard == null || !guard.consumed || guard.purpose?.startsWith('federation') == true) return;
+    unawaited(guard.finish(guard.flow).catchError((Object error) {
+      // trace-exempt: storage errors must not expose callback metadata.
+      TraceLogger.instance.warn('auth', 'callback cleanup unavailable');
+    }));
   }
 
   @override
@@ -83,6 +140,7 @@ class SupabaseAuthRepository implements AuthRepository {
     required String displayName,
   }) =>
       _outcome('sign-up', () async {
+        if (await _authority() != null) return const AuthResult.refused(AuthRefusal.providerDisabled);
         final response = await _client.auth.signUp(
           email: email,
           password: password,
@@ -90,7 +148,7 @@ class SupabaseAuthRepository implements AuthRepository {
           // Without this the confirmation link carries the project's Site
           // URL, which on an instance predating the wizard is still
           // `http://localhost:3000` — nobody's server. #1050.
-          emailRedirectTo: _redirect,
+          emailRedirectTo: await _redirect('signup'),
         );
         // A session means the server auto-confirmed. No session means an
         // e-mail went out — to a new account, or to an existing one the
@@ -108,13 +166,20 @@ class SupabaseAuthRepository implements AuthRepository {
         await _client.auth.resend(
           type: OtpType.signup,
           email: email,
-          emailRedirectTo: _redirect,
+          emailRedirectTo: await _redirect('signup'),
         );
         return const AuthResult.verificationRequired();
       });
 
   @override
-  Future<void> signOut() => _client.auth.signOut();
+  Future<void> signOut() async {
+    try {
+      final guard = callbackGuard;
+      if (guard != null) await guard.finish(guard.flow);
+    } finally {
+      await _client.auth.signOut();
+    }
+  }
 
   @override
   Future<AuthResult> requestPasswordReset(String email) =>
@@ -297,6 +362,7 @@ class SupabaseAuthRepository implements AuthRepository {
         SocialProvider.google => OAuthProvider.google,
         SocialProvider.apple => OAuthProvider.apple,
         SocialProvider.microsoft => OAuthProvider.azure,
+        SocialProvider.deskilo => NativeFederationFlow.provider,
       };
 
   /// Where a sign-in sends the person back to: the provider's callback,
@@ -319,11 +385,12 @@ class SupabaseAuthRepository implements AuthRepository {
   /// provider refuses the redirect and Supabase quietly substitutes the
   /// Site URL — the very address we are trying to escape. The instance
   /// wizard writes both (InstanceAuthConfig, #977).
-  static String get _redirect => kIsWeb
+  Future<String> _redirect(String purpose, {String? account}) async =>
+      callbackGuard == null ? (kIsWeb
       // Origin + path, so a deploy under /deskilo/ returns to /deskilo/
       // rather than to the domain root.
       ? '${Uri.base.origin}${Uri.base.path}'
-      : 'deskilo://auth-callback';
+      : 'deskilo://auth-callback') : callbackGuard!.begin(purpose, account: account);
 
   @override
   Future<List<SocialProvider>> availableSocialProviders() async {
@@ -335,15 +402,22 @@ class SupabaseAuthRepository implements AuthRepository {
     final json = jsonDecode(response.body);
     if (json is! Map || json['external'] is! Map) throw StateError('invalid auth provider settings');
     final external = json['external'] as Map;
-    return [for (final provider in SocialProvider.values) if (external[provider.wireName] == true) provider];
+    final authority = await _authority();
+    return [for (final provider in SocialProvider.values)
+      if (provider == SocialProvider.deskilo ? authority != null : external[provider.wireName] == true) provider];
   }
 
   @override
   Future<void> signInWithSocial(SocialProvider provider) async {
+    if (provider == SocialProvider.deskilo) {
+      final authority = await _authority();
+      if (authority == null) throw const AuthException('Deskilo sign-in is not configured.');
+      return _federation().begin(authority);
+    }
     await _client.auth.signInWithOAuth(
       _oauth(provider),
       scopes: provider == SocialProvider.microsoft ? 'email' : null,
-      redirectTo: _redirect,
+      redirectTo: await _redirect('social', account: currentUserId),
       authScreenLaunchMode: LaunchMode.externalApplication,
     );
   }
@@ -359,10 +433,15 @@ class SupabaseAuthRepository implements AuthRepository {
 
   @override
   Future<void> linkSocial(SocialProvider provider) async {
+    if (provider == SocialProvider.deskilo) {
+      final authority = await _authority();
+      if (authority == null) throw const AuthException('Deskilo sign-in is not configured.');
+      return _federation().begin(authority, link: true);
+    }
     await _client.auth.linkIdentity(
       _oauth(provider),
       scopes: provider == SocialProvider.microsoft ? 'email' : null,
-      redirectTo: _redirect,
+      redirectTo: await _redirect('link', account: currentUserId),
       authScreenLaunchMode: LaunchMode.externalApplication,
     );
   }

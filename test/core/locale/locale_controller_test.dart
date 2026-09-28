@@ -5,6 +5,7 @@
 import 'dart:ui';
 
 import 'package:deskilo/core/locale/locale_controller.dart';
+import 'package:deskilo/features/profile/providers/profile_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -34,6 +35,24 @@ ProviderContainer containerWith(LocaleStore store) {
 }
 
 void main() {
+  test('scoped save persists locally without a second account write', () async {
+    final store = InMemoryLocaleStore();
+    var profileReads = 0;
+    final container = ProviderContainer(overrides: [
+      localeStoreProvider.overrideWithValue(store),
+      profileRepositoryProvider.overrideWith((ref) {
+        profileReads++;
+        throw StateError('Profile already saved through guarded preferences');
+      }),
+    ]);
+    addTearDown(container.dispose);
+    await container.read(localeControllerProvider.future);
+    await container.read(localeControllerProvider.notifier)
+        .set(const Locale('fr'), updateProfile: false);
+    expect(store.code, 'fr');
+    expect(profileReads, 0);
+  });
+
   test('an empty store resolves to null — follow the system locale',
       () async {
     final container = containerWith(InMemoryLocaleStore());

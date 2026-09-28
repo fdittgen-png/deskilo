@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>keychain-access-groups</key>
+	<array/>
 	<!-- #657 — Core NFC tag reading, so an owner can hold the phone to a
 	     chair and fill its NFC/RFID tag field instead of typing hex.
 	     TAG (rather than NDEF) is what exposes the tag identifier, which

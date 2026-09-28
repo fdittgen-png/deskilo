@@ -127,6 +127,9 @@ class FakeAuthRepository implements AuthRepository {
   final Set<String> failingEmails = {};
 
   @override
+  Stream<AuthResult> authFeedback() => const Stream.empty();
+
+  @override
   Stream<String?> authStateChanges() async* {
     yield _userId;
     yield* _controller.stream;

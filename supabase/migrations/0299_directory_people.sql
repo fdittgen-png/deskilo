@@ -250,5 +250,45 @@ begin
 end;
 $export$;
 
+-- Before sign-in the app needs only routing metadata, never operator settings,
+-- Removing or changing the provider proof withdraws identity-derived trust;
+-- ordinary workspace membership and the remaining native credentials survive.
+create function public.directory_identity_unlinked() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if tg_op = 'UPDATE' and new.user_id = old.user_id and new.provider = old.provider
+     and new.identity_data->>'sub' is not distinct from old.identity_data->>'sub'
+     and new.identity_data->>'iss' is not distinct from old.identity_data->>'iss' then
+    return new;
+  end if;
+  update public.identity_bindings b set status='revoked', revoked_at=now()
+    from public.identity_authority a
+    where a.kind='oidc' and a.oidc_provider=old.provider
+      and b.local_user_id=old.user_id and b.issuer=a.issuer
+      and b.subject=old.identity_data->>'sub' and b.status='active';
+  if tg_op = 'DELETE' then return old; end if;
+  return new;
+end;
+$$;
+revoke execute on function public.directory_identity_unlinked() from public, anon, authenticated;
+create trigger directory_identity_unlinked after delete or update on auth.identities
+  for each row execute function public.directory_identity_unlinked();
+
+-- Before sign-in the app needs only routing metadata, never operator settings,
+-- client secrets, local users or directory contents. No configured authority
+-- keeps ordinary standalone/native sign-in unchanged.
+create function public.public_identity_authority() returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+begin
+  if public.mcp_is_delegated() then raise exception 'native client required'; end if;
+  return (select jsonb_build_object('installation_id', i.installation_id,
+    'kind', a.kind, 'issuer', a.issuer, 'provider', a.oidc_provider)
+    from public.installation_identity i cross join public.identity_authority a
+    where a.kind = 'oidc' and a.oidc_provider = 'custom:deskilo');
+end;
+$$;
+revoke execute on function public.public_identity_authority() from public;
+grant execute on function public.public_identity_authority() to anon, authenticated;
+
 notify pgrst, 'reload schema';
 select public.set_deskilo_schema_version(299);

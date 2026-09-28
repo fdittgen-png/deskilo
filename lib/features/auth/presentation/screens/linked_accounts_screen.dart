@@ -9,6 +9,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/social_provider.dart';
+import '../../domain/auth_outcome.dart';
 import '../../providers/auth_providers.dart';
 
 /// Linked accounts (0051): the identities attached to my account — the
@@ -57,7 +58,10 @@ class _LinkedAccountsScreenState
     } catch (e, st) {
       TraceLogger.instance.error('auth', 'identities load failed',
           error: e, stackTrace: st);
-      if (mounted) setState(() => _identities = const []);
+      if (mounted && repository.currentUserId == account &&
+          identical(ref.read(authRepositoryProvider), repository)) {
+        setState(() => _identities = const []);
+      }
     }
   }
 
@@ -105,6 +109,15 @@ class _LinkedAccountsScreenState
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    ref.listen(authFeedbackProvider, (_, value) {
+      final outcome = value.value?.outcome;
+      if (outcome == AuthOutcome.authenticated) {
+        ref.invalidate(myDatabaseCapabilitiesProvider);
+        unawaited(_load());
+      } else if (outcome == AuthOutcome.refused || outcome == AuthOutcome.unavailable) {
+        AppSnack.error(context, l10n?.authGenericError ?? 'Authentication failed. Check your credentials and try again.');
+      }
+    });
     final identities = _identities;
     final linkedProviders = {
       for (final i in identities ?? const <LinkedIdentity>[])

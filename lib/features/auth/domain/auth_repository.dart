@@ -9,6 +9,8 @@ abstract class AuthRepository {
   /// Emits the signed-in user id, or null when signed out. Emits the
   /// current state to new listeners immediately.
   Stream<String?> authStateChanges();
+  /// Browser-return failures are asynchronous; keep the existing form usable.
+  Stream<AuthResult> authFeedback();
 
   String? get currentUserId;
 

@@ -2,7 +2,7 @@
 -- #1791: directory identity is not a credential or a workspace membership.
 -- Exercise existing signup, invitation and membership paths with real RLS.
 begin;
-select plan(34);
+select plan(41);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
   email_confirmed_at, created_at, updated_at)
 select ('00000000-0000-4000-8000-0000001791' || suffix)::uuid,
@@ -72,5 +72,35 @@ delete from auth.users where id='00000000-0000-4000-8000-0000001791a2';
 select is((select count(*)::int from public.members where id in ('00000000-0000-4000-8000-0000001791c2','00000000-0000-4000-8000-0000001791c3') and user_id is null),2,'credential deletion preserves both membership IDs');
 select ok(exists(select 1 from public.directory_people where id=current_setting('deskilo.directory.deleted_person')::uuid),'person survives credential deletion');
 select is((select count(*)::int from public.profiles where id='00000000-0000-4000-8000-0000001791a2'),0,'credential deletion still removes its private account profile');
+delete from public.identity_authority;
+select set_config('request.jwt.claims','{"role":"anon"}',true);
+set local role anon;
+select is(public.public_identity_authority(),null::jsonb,'standalone installation does not advertise federation');
+select throws_ok($$select * from public.identity_authority$$,'42501',null,'public discovery does not expose the protected configuration table');
+reset role;
+insert into public.identity_authority(kind,issuer,oidc_provider)
+values ('oidc','https://identity.deskilo.test/auth/v1','custom:deskilo');
+set local role anon;
+select is(public.public_identity_authority() - 'installation_id',
+  '{"kind":"oidc","issuer":"https://identity.deskilo.test/auth/v1","provider":"custom:deskilo"}'::jsonb,
+  'signed-out discovery exposes only the configured identity routing metadata');
+reset role;
+select set_config('request.jwt.claims','{"role":"authenticated","client_id":"delegated"}',true);
+set local role authenticated;
+select throws_ok($$select public.public_identity_authority()$$,'P0001','native client required','delegated tokens cannot use the native discovery RPC');
+reset role;
+insert into auth.identities(id,provider_id,user_id,identity_data,provider,created_at,updated_at)
+values(gen_random_uuid(),'directory-canonical-person','00000000-0000-4000-8000-0000001791a1',
+  '{"sub":"directory-canonical-person","iss":"https://identity.deskilo.test/auth/v1"}',
+  'custom:deskilo',now(),now());
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001791a1","role":"authenticated"}',true);
+set local role authenticated;
+select is(public.finalize_identity_binding()->>'status','verified','a linked provider proves the existing native account');
+reset role;
+delete from auth.identities where provider='custom:deskilo' and user_id='00000000-0000-4000-8000-0000001791a1';
+set local role authenticated;
+select is(public.my_identity_status()->>'status','unlinked','provider removal revokes its canonical binding');
+select is((select count(*)::int from public.members where user_id=auth.uid()),1,'unlink retains the existing workspace membership');
+reset role;
 select * from finish();
 rollback;

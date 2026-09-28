@@ -8,7 +8,8 @@
 enum SocialProvider {
   google('Google', 'google'),
   apple('Apple', 'apple'),
-  microsoft('Microsoft', 'azure');
+  microsoft('Microsoft', 'azure'),
+  deskilo('Deskilo', 'custom:deskilo');
 
   const SocialProvider(this.label, this.wireName);
 
