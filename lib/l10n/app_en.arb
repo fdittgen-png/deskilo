@@ -14483,6 +14483,14 @@
   "@readinessReasonNoEvidence": {
     "description": "#1636 workspace_readiness"
   },
+  "readinessReasonRecentExport": "A recent export is on record",
+  "@readinessReasonRecentExport": {
+    "description": "#1636 workspace_readiness recovery evidence"
+  },
+  "readinessReasonStaleExport": "The last recorded export is more than 90 days old",
+  "@readinessReasonStaleExport": {
+    "description": "#1636 workspace_readiness recovery evidence"
+  },
   "readinessActorOwner": "You",
   "@readinessActorOwner": {
     "description": "#1636 workspace_readiness"

@@ -13173,6 +13173,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Aún no se ha registrado ninguna exportación ni restauración';
 
   @override
+  String get readinessReasonRecentExport =>
+      'Hay una exportación reciente registrada';
+
+  @override
+  String get readinessReasonStaleExport =>
+      'La última exportación registrada tiene más de 90 días';
+
+  @override
   String get readinessActorOwner => 'Usted';
 
   @override

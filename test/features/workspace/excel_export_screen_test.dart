@@ -5,9 +5,11 @@
 // tile), and tapping it hands the saver a real workbook — proven by
 // unzipping what was saved, the same bar a spreadsheet reader applies.
 
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
+import 'package:crypto/crypto.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
@@ -41,6 +43,8 @@ Future<List<({String name, Uint8List bytes})>> _pump(
   WidgetTester tester, {
   Map<String, dynamic> featureFlags = const {},
   FakeWorkspaceRepository? workspace,
+  FakeWorkspaceFiles? files,
+  bool cancel = false,
 }) async {
   tester.view.physicalSize = const Size(800, 4600);
   tester.view.devicePixelRatio = 1.0;
@@ -53,14 +57,15 @@ Future<List<({String name, Uint8List bytes})>> _pump(
           workspace: workspace ??
               FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags),
           floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
-          workspaceFiles: FakeWorkspaceFiles({
-            'level-1/background.png': [0x89, 0x50, 0x4E, 0x47],
-          }),
+          workspaceFiles: files ??
+              FakeWorkspaceFiles({
+                'level-1/background.png': [0x89, 0x50, 0x4E, 0x47],
+              }),
         ),
         fileSaverProvider.overrideWithValue(
           ({required bytes, required fileName}) async {
             saved.add((name: fileName, bytes: bytes));
-            return '/local/$fileName';
+            return cancel ? null : '/local/$fileName';
           },
         ),
       ],
@@ -112,6 +117,42 @@ void main() {
           reason: 'sheet$i missing — a dataset dropped out of the export');
     }
     expect(find.textContaining('/local/deskilo-export'), findsOneWidget);
+  });
+
+  testWidgets('#1636 — a saved export is recorded once as recovery '
+      'evidence: the SHA-256 of the saved ZIP and its manifest row count',
+      (tester) async {
+    final files = FakeWorkspaceFiles({
+      'level-1/background.png': [0x89, 0x50, 0x4E, 0x47],
+    });
+    final saved = await _pump(tester, files: files);
+    final tile = find.byKey(const Key('workspaceSettingsExportExcel'));
+    await tester.ensureVisible(tile);
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+
+    final record = files.recordedExports.single;
+    expect(record.sha256, sha256.convert(saved.single.bytes).toString());
+    final manifest = jsonDecode(utf8.decode(ZipDecoder()
+        .decodeBytes(saved.single.bytes)
+        .findFile('manifest.json')!
+        .content as List<int>)) as Map<String, dynamic>;
+    expect(
+      record.rowCount,
+      (manifest['rows'] as Map).values.fold<int>(0, (a, b) => a + (b as int)),
+    );
+  });
+
+  testWidgets('#1636 — a cancelled save records no evidence', (tester) async {
+    final files = FakeWorkspaceFiles();
+    final saved = await _pump(tester, files: files, cancel: true);
+    final tile = find.byKey(const Key('workspaceSettingsExportExcel'));
+    await tester.ensureVisible(tile);
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+
+    expect(saved, hasLength(1), reason: 'the saver was asked');
+    expect(files.recordedExports, isEmpty);
   });
 
   testWidgets('#1310 S0 — without the data-export permission the tile is '

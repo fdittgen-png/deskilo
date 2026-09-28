@@ -122,6 +122,19 @@ class FakeWorkspaceFiles implements WorkspaceFilesRepository {
   @override
   Future<Uint8List> download(String workspaceId, String path) async =>
       Uint8List.fromList(files[path]!);
+
+  /// #1636 — every export recorded as recovery evidence, in order.
+  final List<({String workspaceId, String sha256, int rowCount})>
+      recordedExports = [];
+
+  @override
+  Future<void> recordExport(
+    String workspaceId, {
+    required String sha256,
+    required int rowCount,
+  }) async =>
+      recordedExports.add(
+          (workspaceId: workspaceId, sha256: sha256, rowCount: rowCount));
 }
 
 /// #1373 — the configuration import and export, in memory.

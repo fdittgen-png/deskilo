@@ -47,4 +47,16 @@ class SupabaseWorkspaceFiles implements WorkspaceFilesRepository {
   @override
   Future<Uint8List> download(String workspaceId, String path) =>
       _client.storage.from(_bucket).download('$workspaceId/$path');
+
+  @override
+  Future<void> recordExport(
+    String workspaceId, {
+    required String sha256,
+    required int rowCount,
+  }) =>
+      _client.rpc<Object?>('record_workspace_export', params: {
+        'p_workspace_id': workspaceId,
+        'p_sha256': sha256,
+        'p_row_count': rowCount,
+      });
 }

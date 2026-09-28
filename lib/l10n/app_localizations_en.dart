@@ -13074,6 +13074,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readinessReasonNoEvidence => 'No export or restore recorded yet';
 
   @override
+  String get readinessReasonRecentExport => 'A recent export is on record';
+
+  @override
+  String get readinessReasonStaleExport =>
+      'The last recorded export is more than 90 days old';
+
+  @override
   String get readinessActorOwner => 'You';
 
   @override
