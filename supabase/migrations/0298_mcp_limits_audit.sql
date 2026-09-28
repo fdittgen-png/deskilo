@@ -44,6 +44,9 @@ create index if not exists mcp_usage_workspace_idx
   on public.mcp_usage (workspace_id, created_at);
 alter table public.mcp_usage enable row level security;
 revoke all on table public.mcp_usage from anon, authenticated;
+create policy mcp_delegated_deny on public.mcp_usage
+  as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
 create table if not exists public.mcp_limits (
   singleton boolean primary key default true check (singleton),
@@ -55,6 +58,9 @@ select public.ensure_system_columns('mcp_limits');
 insert into public.mcp_limits (singleton) values (true) on conflict do nothing;
 alter table public.mcp_limits enable row level security;
 revoke all on table public.mcp_limits from anon, authenticated;
+create policy mcp_delegated_deny on public.mcp_limits
+  as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
 -- Seconds until the tightest exceeded window resets, or null when the call
 -- may proceed. Takes the caller's lock, held to the end of the transaction,
