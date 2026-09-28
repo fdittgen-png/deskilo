@@ -30,6 +30,237 @@ List<String> mcpAllowedOutput(Map<String, dynamic> contract, Map<String, dynamic
     ..sort();
 }
 
+/// #1629 — the security schemes the documented paths use.
+const Map<String, Object?> mcpSecuritySchemes = {
+  'nativeSession': {
+    'type': 'http',
+    'scheme': 'bearer',
+    'bearerFormat': 'JWT',
+    'description': 'A signed-in Deskilo session on this installation.',
+  },
+  'administratorAal2': {
+    'type': 'http',
+    'scheme': 'bearer',
+    'bearerFormat': 'JWT',
+    'description': 'A database administrator\'s session at AAL2 (a second '
+        'factor completed); aal1 is refused.',
+  },
+  'mcpOAuth': {
+    'type': 'oauth2',
+    'description': 'A resource-bound token from the installation\'s own '
+        'OAuth server (authorization code with PKCE). Its scopes name the '
+        'identity; they grant no business operation.',
+    'flows': {
+      'authorizationCode': {
+        'authorizationUrl': '/auth/v1/oauth/authorize',
+        'tokenUrl': '/auth/v1/oauth/token',
+        'scopes': {
+          'openid': 'Who is connecting',
+          'email': 'The e-mail of that person',
+          'profile': 'Their display name',
+        },
+      },
+    },
+  },
+};
+
+/// One tools/call answer, as the facade's McpEnvelope inside the MCP text
+/// content — the envelope a parity test checks against McpEnvelope.
+Map<String, Object?> mcpEnvelopeExample(
+  String status, {
+  Map<String, Object?>? data,
+  String? eventId,
+  String? errorCode,
+}) => {
+  'schema_version': 1,
+  'request_id': '00000000-0000-4000-8000-000000000001',
+  'operation': 'request_subscription_change',
+  'workspace_id': '00000000-0000-4000-8000-0000000000a1',
+  'status': status,
+  'data': ?data,
+  'event_id': ?eventId,
+  if (errorCode != null) 'error': {'code': errorCode},
+};
+
+Map<String, Object?> _envelopeExample(Map<String, Object?> envelope) => {
+  'summary': envelope['status'],
+  'value': {
+    'jsonrpc': '2.0',
+    'id': 1,
+    'result': {
+      'content': [
+        {'type': 'text', 'text': jsonEncode(envelope)},
+      ],
+    },
+  },
+};
+
+/// #1629 — the answers the documentation shows: registered but not yet
+/// approved, awaiting the app's confirmation, pending business validation,
+/// and completed. Each is a real McpEnvelope.
+final List<Map<String, Object?>> mcpDocumentedEnvelopes = [
+  mcpEnvelopeExample('denied', errorCode: 'not_eligible'),
+  mcpEnvelopeExample(
+    'requires_confirmation',
+    data: {
+      'confirmation_id': '00000000-0000-4000-8000-0000000000c1',
+      'expires_at': '2026-09-28T12:05:00Z',
+    },
+  ),
+  mcpEnvelopeExample(
+    'pending_validation',
+    eventId: '00000000-0000-4000-8000-0000000000e1',
+    data: {'member_id': '00000000-0000-4000-8000-0000000000d1'},
+  ),
+  mcpEnvelopeExample(
+    'completed',
+    data: {
+      'member_id': '00000000-0000-4000-8000-0000000000d1',
+      'subscription_pct': 50,
+    },
+  ),
+];
+
+String _sqlType(String t) => switch (t) {
+  'uuid' => 'string',
+  'text' => 'string',
+  'boolean' => 'boolean',
+  'integer' => 'integer',
+  'jsonb' => 'object',
+  'text[]' => 'array',
+  _ => throw ArgumentError('unknown RPC parameter type $t'),
+};
+
+/// #1629 — the ACTUAL routes: one MCP endpoint and its metadata, then the
+/// Supabase RPCs named in the contract's `native_rpcs`. Nothing else.
+Map<String, Object?> mcpOpenApiPaths(Map<String, dynamic> contract) {
+  final ops = [
+    for (final o in contract['operations'] as List) Map<String, dynamic>.from(o as Map),
+  ];
+  final prefix = contract['tool_prefix'] as String? ?? '';
+  final tools = [
+    for (final op in ops)
+      if (op['dispatch'] == true) '$prefix${op['id']}',
+  ];
+  final paths = <String, Object?>{
+    '/functions/v1/deskilo-mcp': {
+      'post': {
+        'operationId': 'mcpJsonRpc',
+        'summary': 'MCP over streamable HTTP: initialize, tools/list, tools/call',
+        'security': [
+          {'mcpOAuth': <String>[]},
+        ],
+        'requestBody': {
+          'required': true,
+          'content': {
+            'application/json': {
+              'schema': {
+                'type': 'object',
+                'required': ['jsonrpc', 'method'],
+                'properties': {
+                  'jsonrpc': {'const': '2.0'},
+                  'id': {
+                    'type': ['integer', 'string'],
+                  },
+                  'method': {
+                    'enum': ['initialize', 'notifications/initialized', 'tools/list', 'tools/call'],
+                  },
+                  'params': {
+                    'type': 'object',
+                    'properties': {
+                      'name': {'enum': tools},
+                      'arguments': {'type': 'object'},
+                    },
+                  },
+                },
+              },
+              'examples': {
+                'toolsCall': {
+                  'value': {
+                    'jsonrpc': '2.0',
+                    'id': 1,
+                    'method': 'tools/call',
+                    'params': {
+                      'name': '${prefix}request_subscription_change',
+                      'arguments': {
+                        'workspace_id': '00000000-0000-4000-8000-0000000000a1',
+                        'request_id': '00000000-0000-4000-8000-000000000001',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        'responses': {
+          '200': {
+            'description': 'A JSON-RPC result; a tool answer is one McpEnvelope as text',
+            'content': {
+              'application/json': {
+                'examples': {
+                  for (final e in mcpDocumentedEnvelopes)
+                    '${e['status']}': _envelopeExample(e),
+                },
+              },
+            },
+          },
+          '401': {
+            'description': 'No or invalid token; WWW-Authenticate names the '
+                'protected-resource metadata',
+          },
+        },
+      },
+    },
+    '/functions/v1/deskilo-mcp/.well-known/oauth-protected-resource': {
+      'get': {
+        'operationId': 'mcpResourceMetadata',
+        'summary': 'OAuth protected-resource metadata (RFC 9728)',
+        'security': <Object>[],
+        'responses': {
+          '200': {'description': 'The resource and its authorization server'},
+        },
+      },
+    },
+  };
+  for (final raw in contract['native_rpcs'] as List? ?? const []) {
+    final r = Map<String, dynamic>.from(raw as Map);
+    final params = Map<String, dynamic>.from(r['params'] as Map);
+    paths['/rest/v1/rpc/${r['rpc']}'] = {
+      'post': {
+        'operationId': r['rpc'],
+        'summary': r['purpose'],
+        'security': [
+          {r['security']: <String>[]},
+        ],
+        'requestBody': {
+          'required': params.isNotEmpty,
+          'content': {
+            'application/json': {
+              'schema': {
+                'type': 'object',
+                'properties': {
+                  for (final e in params.entries)
+                    e.key: {
+                      'type': _sqlType(e.value as String),
+                      if (e.value == 'uuid') 'format': 'uuid',
+                      'x-sql-type': e.value,
+                    },
+                },
+              },
+            },
+          },
+        },
+        'responses': {
+          '200': {'description': 'The RPC\'s jsonb answer'},
+          '400': {'description': 'A refusal (PostgREST error body)'},
+        },
+      },
+    };
+  }
+  return paths;
+}
+
 String renderMcpCatalogueSql(Map<String, dynamic> contract) {
   final ops = [
     for (final o in contract['operations'] as List) Map<String, dynamic>.from(o as Map),
@@ -295,12 +526,25 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     'info': {
       'title': 'Deskilo MCP operation payloads',
       'version': '${contract['version']}',
-      'description': 'Component schemas only. MCP is JSON-RPC over one HTTP '
-          'endpoint; the real REST contract is the Supabase RPC path named '
-          'by each operation (x-rpc). No route per tool exists.',
+      'description': 'MCP is JSON-RPC over ONE HTTP endpoint '
+          '(/functions/v1/deskilo-mcp): initialize, tools/list and tools/call. '
+          'There is no route per tool. The REST paths below are the actual '
+          'Supabase RPCs behind it and the native management RPCs the app '
+          'calls. OAuth identity scopes are not business grants: the facade '
+          're-checks the live role, the workspace policy, database '
+          'eligibility and, for writes, a confirmation in the Deskilo app.',
     },
-    'paths': <String, Object?>{},
+    'servers': [
+      {
+        'url': '{supabase_url}',
+        'variables': {
+          'supabase_url': {'default': 'https://your-project.supabase.co'},
+        },
+      },
+    ],
+    'paths': mcpOpenApiPaths(contract),
     'components': {
+      'securitySchemes': mcpSecuritySchemes,
       'schemas': {
         'McpEnvelope': envelopeSchema(contract),
         for (final op in ops)
