@@ -2,7 +2,7 @@
   "authContinueWith": "o continuar con",
   "authSocialUnavailable": "El inicio de sesión con {provider} aún no está disponible — el servidor no lo ha activado.",
   "linkedAccountsTitle": "Cuentas vinculadas",
-  "linkedAccountsIntro": "Inicia sesión en esta cuenta con cualquiera de ellas. Añade Google, Microsoft, Apple o Facebook para entrar sin contraseña.",
+  "linkedAccountsIntro": "Inicia sesión en esta cuenta con una identidad vinculada. Los proveedores disponibles dependen de tu servidor.",
   "linkedAccountsLink": "Vincular",
   "linkedAccountsUnlink": "Desvincular",
   "linkedAccountsLinked": "Vinculada",

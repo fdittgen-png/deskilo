@@ -15235,6 +15235,30 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get personalInfoSave;
 
+  /// No description provided for @preferencesWorkspaceOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Only for this workspace'**
+  String get preferencesWorkspaceOnly;
+
+  /// No description provided for @preferencesScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Language, appearance and regional formats. Off: edit my defaults.'**
+  String get preferencesScopeHint;
+
+  /// No description provided for @preferencesUseDefaults.
+  ///
+  /// In en, this message translates to:
+  /// **'Use my defaults'**
+  String get preferencesUseDefaults;
+
+  /// No description provided for @preferencesSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save your preferences. Please try again.'**
+  String get preferencesSaveFailed;
+
   /// Booking sheet: grid duration slider label (#574)
   ///
   /// In en, this message translates to:
@@ -19389,7 +19413,7 @@ abstract class AppLocalizations {
   /// No description provided for @linkedAccountsIntro.
   ///
   /// In en, this message translates to:
-  /// **'Sign into this account with any of these. Add Google, Microsoft, Apple, or Facebook to sign in without a password.'**
+  /// **'Sign into this account with any linked identity. The available providers depend on your server.'**
   String get linkedAccountsIntro;
 
   /// No description provided for @linkedAccountsLink.

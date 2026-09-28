@@ -80,3 +80,16 @@ Map<String, String> memberMonograms(Ref ref) {
     order: {for (final member in members) member.userId: member.joinedAt},
   );
 }
+
+/// One account/workspace context for private personal preferences (#1791).
+@Riverpod(keepAlive: true)
+({String? account, String? workspace}) personalPreferenceContext(Ref ref) => (
+  account: ref.watch(currentAccountIdProvider),
+  workspace: ref.watch(currentWorkspaceProvider).value?.id,
+);
+
+void invalidatePersonalPreferenceConsumers(Ref ref) {
+  ref.invalidate(myProfileProvider);
+  ref.invalidate(workspaceMembersProvider);
+  ref.invalidate(myMemberProvider);
+}

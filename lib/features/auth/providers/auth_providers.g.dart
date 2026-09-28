@@ -238,3 +238,50 @@ final class MyDatabaseCapabilitiesProvider
 
 String _$myDatabaseCapabilitiesHash() =>
     r'52dff47e6f2a6cd80f6afcc88cf32511897bb2b6';
+
+/// Sign-in and account linking share the installation's actual capabilities.
+
+@ProviderFor(availableSocialProviders)
+final availableSocialProvidersProvider = AvailableSocialProvidersProvider._();
+
+/// Sign-in and account linking share the installation's actual capabilities.
+
+final class AvailableSocialProvidersProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<SocialProvider>>,
+          List<SocialProvider>,
+          FutureOr<List<SocialProvider>>
+        >
+    with
+        $FutureModifier<List<SocialProvider>>,
+        $FutureProvider<List<SocialProvider>> {
+  /// Sign-in and account linking share the installation's actual capabilities.
+  AvailableSocialProvidersProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'availableSocialProvidersProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$availableSocialProvidersHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<SocialProvider>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<SocialProvider>> create(Ref ref) {
+    return availableSocialProviders(ref);
+  }
+}
+
+String _$availableSocialProvidersHash() =>
+    r'883fe9750036797b11c91aec5e73c4d0953aed02';

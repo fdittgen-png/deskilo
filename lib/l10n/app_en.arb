@@ -9427,6 +9427,10 @@
   "@personalInfoSave": {
     "description": "#886 personal-information form: save button"
   },
+  "preferencesWorkspaceOnly": "Only for this workspace",
+  "preferencesScopeHint": "Language, appearance and regional formats. Off: edit my defaults.",
+  "preferencesUseDefaults": "Use my defaults",
+  "preferencesSaveFailed": "Could not save your preferences. Please try again.",
   "planDurationLabel": "Duration",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"
@@ -12079,7 +12083,7 @@
     }
   },
   "linkedAccountsTitle": "Linked accounts",
-  "linkedAccountsIntro": "Sign into this account with any of these. Add Google, Microsoft, Apple, or Facebook to sign in without a password.",
+  "linkedAccountsIntro": "Sign into this account with any linked identity. The available providers depend on your server.",
   "linkedAccountsLink": "Link",
   "linkedAccountsUnlink": "Unlink",
   "linkedAccountsLinked": "Linked",

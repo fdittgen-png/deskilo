@@ -8747,6 +8747,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get personalInfoSave => 'Save';
 
   @override
+  String get preferencesWorkspaceOnly => 'Only for this workspace';
+
+  @override
+  String get preferencesScopeHint =>
+      'Language, appearance and regional formats. Off: edit my defaults.';
+
+  @override
+  String get preferencesUseDefaults => 'Use my defaults';
+
+  @override
+  String get preferencesSaveFailed =>
+      'Could not save your preferences. Please try again.';
+
+  @override
   String get planDurationLabel => 'Duration';
 
   @override
@@ -11150,7 +11164,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get linkedAccountsIntro =>
-      'Sign into this account with any of these. Add Google, Microsoft, Apple, or Facebook to sign in without a password.';
+      'Sign into this account with any linked identity. The available providers depend on your server.';
 
   @override
   String get linkedAccountsLink => 'Link';

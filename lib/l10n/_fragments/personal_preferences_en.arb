@@ -1,0 +1,6 @@
+{
+  "preferencesWorkspaceOnly": "Only for this workspace",
+  "preferencesScopeHint": "Language, appearance and regional formats. Off: edit my defaults.",
+  "preferencesUseDefaults": "Use my defaults",
+  "preferencesSaveFailed": "Could not save your preferences. Please try again."
+}

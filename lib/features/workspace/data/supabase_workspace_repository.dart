@@ -1237,7 +1237,8 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         // #887 — a managed member has no user yet.
-        userId: row['user_id'] as String? ?? '',
+        userId: row['user_id'] as String? ?? '', personId: row['person_id'] as String?,
+        preferredLocaleOverride: row['preferred_locale_override'] as String?,
         isAdmin: row['is_admin'] as bool,
         isOwner: row['is_owner'] as bool,
         coOwner: CoOwnerStatus.fromWire(row['co_owner'] as String?),

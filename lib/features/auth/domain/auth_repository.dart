@@ -77,6 +77,9 @@ abstract class AuthRepository {
   /// not enabled on the server.
   Future<void> signInWithSocial(SocialProvider provider);
 
+  /// Providers enabled on this installation, never a hard-coded promise.
+  Future<List<SocialProvider>> availableSocialProviders();
+
   /// The identities attached to the signed-in account (email + socials).
   Future<List<LinkedIdentity>> linkedIdentities();
 

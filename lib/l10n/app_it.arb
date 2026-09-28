@@ -5628,6 +5628,10 @@
   "@personalInfoSave": {
     "description": "#886 personal-information form: save button"
   },
+  "preferencesWorkspaceOnly": "Solo per questo spazio",
+  "preferencesScopeHint": "Lingua, aspetto e formati regionali. Disattivato: modifica i miei valori predefiniti.",
+  "preferencesUseDefaults": "Usa i miei valori predefiniti",
+  "preferencesSaveFailed": "Impossibile salvare le preferenze. Riprova.",
   "planDurationLabel": "Durata",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"
@@ -7290,7 +7294,7 @@
   "authContinueWith": "oppure continua con",
   "authSocialUnavailable": "L'accesso con {provider} non è ancora disponibile — il server non lo ha abilitato.",
   "linkedAccountsTitle": "Account collegati",
-  "linkedAccountsIntro": "Accedi a questo account con uno qualsiasi di essi. Aggiungi Google, Microsoft, Apple o Facebook per accedere senza password.",
+  "linkedAccountsIntro": "Accedi a questo account con un’identità collegata. I provider disponibili dipendono dal tuo server.",
   "linkedAccountsLink": "Collega",
   "linkedAccountsUnlink": "Scollega",
   "linkedAccountsLinked": "Collegato",

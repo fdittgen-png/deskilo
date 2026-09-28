@@ -8,6 +8,7 @@ import '../data/supabase_second_factor_repository.dart';
 import '../domain/auth_repository.dart';
 import '../domain/identity_binding.dart';
 import '../domain/second_factor.dart';
+import '../domain/social_provider.dart';
 
 part 'auth_providers.g.dart';
 
@@ -34,3 +35,8 @@ SecondFactorRepository secondFactorRepository(Ref ref) =>
 @riverpod
 Future<DatabaseCapabilities> myDatabaseCapabilities(Ref ref) =>
     ref.watch(identityBindingRepositoryProvider).databaseCapabilities();
+
+/// Sign-in and account linking share the installation's actual capabilities.
+@riverpod
+Future<List<SocialProvider>> availableSocialProviders(Ref ref) =>
+    ref.watch(authRepositoryProvider).availableSocialProviders();

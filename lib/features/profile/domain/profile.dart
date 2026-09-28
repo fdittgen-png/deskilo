@@ -18,6 +18,7 @@ abstract final class StatusTextRules {
 class Profile implements SystemStamped {
   const Profile({
     required this.id,
+    this.personId,
     this.displayName = '',
     this.whatsapp = '',
     this.statusText = '',
@@ -40,6 +41,9 @@ class Profile implements SystemStamped {
 
   /// auth.users id (uuid).
   final String id;
+
+  /// Stable directory identity; independent of the login credential (#1791).
+  final String? personId;
 
   final String displayName;
 
@@ -124,6 +128,7 @@ class Profile implements SystemStamped {
   factory Profile.fromDb(Map<String, dynamic> db) => Profile(
     system: SystemColumns.fromRow(db),
     id: db['id'] as String,
+    personId: db['person_id'] as String?,
     displayName: db['display_name'] as String? ?? '',
     whatsapp: db['whatsapp'] as String? ?? '',
     statusText: db['status_text'] as String? ?? '',
@@ -174,6 +179,7 @@ class Profile implements SystemStamped {
     PersonalInfo? identity,
   }) => Profile(
     id: id,
+    personId: personId,
     displayName: displayName ?? this.displayName,
     whatsapp: whatsapp ?? this.whatsapp,
     statusText: statusText ?? this.statusText,

@@ -274,3 +274,57 @@ final class MemberMonogramsProvider
 }
 
 String _$memberMonogramsHash() => r'8bb0b2fc1c4989ac46c2371d0718f664105b4f5a';
+
+/// One account/workspace context for private personal preferences (#1791).
+
+@ProviderFor(personalPreferenceContext)
+final personalPreferenceContextProvider = PersonalPreferenceContextProvider._();
+
+/// One account/workspace context for private personal preferences (#1791).
+
+final class PersonalPreferenceContextProvider
+    extends
+        $FunctionalProvider<
+          ({String? account, String? workspace}),
+          ({String? account, String? workspace}),
+          ({String? account, String? workspace})
+        >
+    with $Provider<({String? account, String? workspace})> {
+  /// One account/workspace context for private personal preferences (#1791).
+  PersonalPreferenceContextProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'personalPreferenceContextProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$personalPreferenceContextHash();
+
+  @$internal
+  @override
+  $ProviderElement<({String? account, String? workspace})> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ({String? account, String? workspace}) create(Ref ref) {
+    return personalPreferenceContext(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(({String? account, String? workspace}) value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride:
+          $SyncValueProvider<({String? account, String? workspace})>(value),
+    );
+  }
+}
+
+String _$personalPreferenceContextHash() =>
+    r'36f10129630c6d82633fd23aabf2b819d219c091';

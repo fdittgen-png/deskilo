@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -12,7 +14,9 @@ import '../domain/badge_sign_in.dart';
 import '../domain/social_provider.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
-  SupabaseAuthRepository(this._client);
+  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get});
+
+  final Future<http.Response> Function(Uri, {Map<String, String>? headers}) providerSettingsGet;
 
   final SupabaseClient _client;
 
@@ -291,6 +295,8 @@ class SupabaseAuthRepository implements AuthRepository {
   /// Brand → Supabase provider.
   static OAuthProvider _oauth(SocialProvider provider) => switch (provider) {
         SocialProvider.google => OAuthProvider.google,
+        SocialProvider.apple => OAuthProvider.apple,
+        SocialProvider.microsoft => OAuthProvider.azure,
       };
 
   /// Where a sign-in sends the person back to: the provider's callback,
@@ -318,6 +324,19 @@ class SupabaseAuthRepository implements AuthRepository {
       // rather than to the domain root.
       ? '${Uri.base.origin}${Uri.base.path}'
       : 'deskilo://auth-callback';
+
+  @override
+  Future<List<SocialProvider>> availableSocialProviders() async {
+    final root = Uri.parse(_client.rest.url);
+    final uri = root.replace(path: root.path.replaceFirst(RegExp(r'/rest/v1/?$'), '/auth/v1/settings'));
+    final response = await providerSettingsGet(uri,
+      headers: {'apikey': _client.auth.headers['apikey'] ?? ''}).timeout(const Duration(seconds: 10));
+    if (response.statusCode != 200) throw StateError('auth provider settings unavailable');
+    final json = jsonDecode(response.body);
+    if (json is! Map || json['external'] is! Map) throw StateError('invalid auth provider settings');
+    final external = json['external'] as Map;
+    return [for (final provider in SocialProvider.values) if (external[provider.wireName] == true) provider];
+  }
 
   @override
   Future<void> signInWithSocial(SocialProvider provider) async {

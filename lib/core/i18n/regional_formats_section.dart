@@ -14,6 +14,9 @@ import 'app_format.dart';
 import 'format_controller.dart';
 import 'format_prefs.dart';
 import 'locale_names.dart';
+import '../../features/profile/domain/personal_preferences.dart';
+import '../../features/profile/providers/personal_preferences_providers.dart';
+import '../../features/profile/presentation/widgets/preference_scope_controls.dart';
 
 /// Settings → Region & formats (#711): the member's own numbers, dates,
 /// clock and time zone. The tile previews what the choices add up to;
@@ -51,8 +54,11 @@ class RegionalFormatsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final prefs =
-        ref.watch(myProfileProvider).value?.formatPrefs ?? FormatPrefs.defaults;
+    final scoped = ref.watch(workspacePreferenceEditingProvider);
+    final stored = ref.watch(personalSettingsProvider).value;
+    final defaults = ref.watch(myProfileProvider).value?.formatPrefs ?? FormatPrefs.defaults;
+    final prefs = (scoped ? stored : PersonalPreferences(defaults: stored?.defaults ?? {}))
+        ?.formats(defaults) ?? defaults;
     final format = ref.watch(appFormatProvider);
     final now = ref.watch(clockProvider).now();
 
@@ -62,7 +68,17 @@ class RegionalFormatsScreen extends ConsumerWidget {
           message: 'save format prefs failed',
           errorText: l10n?.workspaceGenericError ??
               'Something went wrong. Please try again.',
-          action: () => ref.read(profileRepositoryProvider).setFormatPrefs(next),
+          action: () async {
+            if (scoped) {
+              await ref.read(personalSettingsProvider.notifier).save({
+                for (final entry in next.toDb().entries)
+                  if (prefs.toDb()[entry.key] != entry.value) entry.key: entry.value as String,
+              }, workspaceOnly: true);
+            } else {
+              await ref.read(profileRepositoryProvider).setFormatPrefs(next);
+              ref.invalidate(personalSettingsProvider);
+            }
+          },
         ).then((_) => ref.invalidate(myProfileProvider));
 
     final localeLabel = prefs.formatLocale.isEmpty
@@ -74,6 +90,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(l10n?.regionalFormatsTitle ?? 'Region & formats')),
       body: ListView(
         children: [
+          const PreferenceScopeControls(),
           // The preview: what the three choices below ADD UP to, on one
           // line, updated as they change.
           Card(

@@ -29,6 +29,8 @@ import '../../features/workspace/providers/template_search_providers.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/oauth_consent_repository.dart';
 import 'data/workbook_origin_repository.dart';
+import 'data/personal_preferences_repository.dart';
+import '../../features/profile/providers/personal_preferences_providers.dart';
 import '../../features/workspace/application/template_compare.dart';
 import '../../features/auth/providers/oauth_consent_providers.dart';
 import 'data/action_confirmation_repository.dart';
@@ -123,6 +125,7 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       creditRepositoryProvider.overrideWithValue(fixture.credits),
       accessoryRepositoryProvider.overrideWithValue(fixture.accessories),
       profileRepositoryProvider.overrideWithValue(fixture.profiles),
+      personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
       workspaceFilesRepositoryProvider.overrideWithValue(fixture.files),
       workspaceImportRepositoryProvider.overrideWithValue(fixture.imports),
@@ -219,6 +222,7 @@ const Set<String> demoOverriddenProviders = {
   'creditRepositoryProvider',
   'accessoryRepositoryProvider',
   'profileRepositoryProvider',
+  'personalPreferencesRepositoryProvider',
   'deploymentRepositoryProvider',
   'workspaceFilesRepositoryProvider',
   'workspaceImportRepositoryProvider',

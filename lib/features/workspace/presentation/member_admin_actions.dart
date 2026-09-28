@@ -131,7 +131,7 @@ Future<void> sendMemberAgreement(
       final String language;
       try {
         language = resolveMemberReportLanguage(ref,
-            memberLocale: profile?.preferredLocale ?? '');
+            memberLocale: member.preferredLocaleOverride ?? profile?.preferredLocale ?? '');
       } on AmbiguousReportLanguage {
         AppSnack.error(
           context,

@@ -363,7 +363,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               runSpacing: 8,
               alignment: WrapAlignment.center,
               children: [
-                for (final provider in SocialProvider.values)
+                for (final provider in ref.watch(availableSocialProvidersProvider).value ?? const <SocialProvider>[])
                   OutlinedButton(
                     key: ValueKey('auth-social-${provider.name}'),
                     onPressed:

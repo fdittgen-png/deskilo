@@ -36,7 +36,7 @@ void main() {
       'OAuth flow', (tester) async {
     final auth = await pumpSignedOut(tester);
 
-    for (final provider in SocialProvider.values) {
+    for (final provider in auth.enabledSocialProviders) {
       expect(
         find.byKey(ValueKey('auth-social-${provider.name}')),
         findsOneWidget,
@@ -68,11 +68,12 @@ void main() {
     expect(auth.socialSignIns, isEmpty);
   });
 
-  Future<FakeAuthRepository> pumpLinkedAccounts(WidgetTester tester) async {
+  Future<FakeAuthRepository> pumpLinkedAccounts(WidgetTester tester, {bool allProviders = false}) async {
     tester.view.physicalSize = const Size(800, 1800);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     final auth = FakeAuthRepository.signedIn();
+    if (allProviders) auth.enabledSocialProviders = SocialProvider.values;
     await tester.pumpWidget(
       ProviderScope(
         overrides: standardTestOverrides(auth: auth),
@@ -92,7 +93,7 @@ void main() {
 
     expect(find.byType(LinkedAccountsScreen), findsOneWidget);
     expect(find.text('email'), findsOneWidget);
-    for (final provider in SocialProvider.values) {
+    for (final provider in auth.enabledSocialProviders) {
       expect(
         find.byKey(ValueKey('link-${provider.name}')),
         findsOneWidget,
@@ -106,6 +107,20 @@ void main() {
     // The reloaded list now shows Google as linked with an Unlink.
     expect(find.byKey(const ValueKey('unlink-google')), findsOneWidget);
     expect(find.byKey(const ValueKey('link-google')), findsNothing);
+  });
+
+  testWidgets('enabled Apple and Microsoft link to the existing account', (tester) async {
+    final auth = await pumpLinkedAccounts(tester, allProviders: true);
+    final account = auth.currentUserId;
+    for (final provider in [SocialProvider.apple, SocialProvider.microsoft]) {
+      final button = find.byKey(ValueKey('link-${provider.name}'));
+      await tester.ensureVisible(button);
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      expect(auth.currentUserId, account);
+      expect(auth.socialLinks, contains(provider));
+      expect(find.byKey(ValueKey('unlink-${provider.wireName}')), findsOneWidget);
+    }
   });
 
   testWidgets('unlink removes the identity; the last one has no unlink '

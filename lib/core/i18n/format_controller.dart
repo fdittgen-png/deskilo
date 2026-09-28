@@ -11,6 +11,7 @@ import '../locale/locale_controller.dart';
 import '../time/workspace_time.dart';
 import 'app_format.dart';
 import 'format_prefs.dart';
+import '../../features/profile/providers/personal_preferences_providers.dart';
 
 part 'format_controller.g.dart';
 
@@ -39,7 +40,9 @@ AppFormat appFormat(Ref ref) {
   final workspace = ref.watch(currentWorkspaceProvider).value;
   final features = ref.watch(enabledFeaturesSyncProvider);
   final prefs = features.contains(WorkspaceFeature.regionalFormats)
-      ? ref.watch(myProfileProvider).value?.formatPrefs ?? FormatPrefs.defaults
+      ? ref.watch(personalSettingsProvider).value?.formats(
+          ref.watch(myProfileProvider).value?.formatPrefs ?? FormatPrefs.defaults) ??
+          ref.watch(myProfileProvider).value?.formatPrefs ?? FormatPrefs.defaults
       : FormatPrefs.defaults;
 
   final locale = prefs.formatLocale.isNotEmpty &&

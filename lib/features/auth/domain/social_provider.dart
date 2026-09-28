@@ -4,13 +4,11 @@
 /// Browser-based Supabase OAuth, no vendor SDK — the F-Droid flavor stays
 /// Google-services-free (ADR 0003).
 ///
-/// Google alone (field decision 2026-07-27): Microsoft, Apple and Facebook
-/// were offered but never configured server-side, so every tap on them
-/// ended in a provider error. A button that cannot work is worse than no
-/// button. [fromWire] still resolves the retired ids so an account that
-/// linked one of them keeps rendering.
+/// Offered only when the current installation advertises the provider enabled.
 enum SocialProvider {
-  google('Google', 'google');
+  google('Google', 'google'),
+  apple('Apple', 'apple'),
+  microsoft('Microsoft', 'azure');
 
   const SocialProvider(this.label, this.wireName);
 

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
@@ -23,20 +24,36 @@ class LinkedAccountsScreen extends ConsumerStatefulWidget {
 }
 
 class _LinkedAccountsScreenState
-    extends ConsumerState<LinkedAccountsScreen> {
+    extends ConsumerState<LinkedAccountsScreen> with WidgetsBindingObserver {
   List<LinkedIdentity>? _identities;
 
   @override
   void initState() {
     super.initState();
-    _load();
+    WidgetsBinding.instance.addObserver(this);
+    unawaited(_load());
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) unawaited(_load());
   }
 
   Future<void> _load() async {
+    final repository = ref.read(authRepositoryProvider);
+    final account = repository.currentUserId;
     try {
-      final identities =
-          await ref.read(authRepositoryProvider).linkedIdentities();
-      if (mounted) setState(() => _identities = identities);
+      final identities = await repository.linkedIdentities();
+      if (mounted && repository.currentUserId == account &&
+          identical(ref.read(authRepositoryProvider), repository)) {
+        setState(() => _identities = identities);
+      }
     } catch (e, st) {
       TraceLogger.instance.error('auth', 'identities load failed',
           error: e, stackTrace: st);
@@ -104,9 +121,8 @@ class _LinkedAccountsScreenState
               children: [
                 Text(
                   l10n?.linkedAccountsIntro ??
-                      'Sign into this account with any of these. Add '
-                          'Google, Microsoft, Apple, or Facebook to sign '
-                          'in without a password.',
+                      'Sign into this account with any linked identity. '
+                          'The available providers depend on your server.',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -133,7 +149,7 @@ class _LinkedAccountsScreenState
                     ),
                   ),
                 const SizedBox(height: AppSpacing.sm),
-                for (final provider in SocialProvider.values)
+                for (final provider in ref.watch(availableSocialProvidersProvider).value ?? const <SocialProvider>[])
                   if (!linkedProviders.contains(provider))
                     Card(
                       child: ListTile(

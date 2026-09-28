@@ -85,6 +85,7 @@ const Map<String, String> _notExported = {
 
 /// What `export_my_data` returns today.
 const Set<String> _exported = {
+  'member_preference_overrides', // #1791: own scoped preferences accompany the profile.
   'members',
   // #1287 — which roles this member was given, and when. 0247 adds the
   // key by an anchored patch, not a restatement.
