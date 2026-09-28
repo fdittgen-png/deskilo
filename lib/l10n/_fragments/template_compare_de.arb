@@ -18,5 +18,6 @@
   "compareLimit": "Bis zu {count} Vorlagen können verglichen werden. Entfernen Sie zuerst eine.",
   "compareOpen": "Vergleichen ({count})",
   "compareAdd": "Zum Vergleich hinzufügen",
-  "compareRemove": "Aus dem Vergleich entfernen"
+  "compareRemove": "Aus dem Vergleich entfernen",
+  "compareEmpty": "Leer"
 }

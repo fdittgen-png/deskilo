@@ -295,7 +295,18 @@ String comparisonCellText(AppLocalizations? l10n, ComparisonCell c) =>
         true => l10n?.compareYes ?? 'Yes',
         false => l10n?.compareNo ?? 'No',
         null => '—',
+        // #1660 — an empty value is a value, not a blank cell that reads
+        // like a missing one; a map reads as its entries, in key order.
+        final String v when v.trim().isEmpty => l10n?.compareEmpty ?? 'Empty',
+        final List<Object?> list when list.isEmpty =>
+          l10n?.compareEmpty ?? 'Empty',
+        final Map<Object?, Object?> map when map.isEmpty =>
+          l10n?.compareEmpty ?? 'Empty',
         final List<Object?> list => list.join(', '),
+        final Map<Object?, Object?> map => (map.entries.toList()
+              ..sort((a, b) => '${a.key}'.compareTo('${b.key}')))
+            .map((e) => '${e.key}: ${e.value}')
+            .join(', '),
         final v => '$v',
       },
       TemplateFieldDisposition.absent => switch (c.absent) {

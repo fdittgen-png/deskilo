@@ -7363,6 +7363,7 @@
   "compareOpen": "Vergleichen ({count})",
   "compareAdd": "Zum Vergleich hinzufügen",
   "compareRemove": "Aus dem Vergleich entfernen",
+  "compareEmpty": "Leer",
   "templateChangedSinceReview": "Diese Vorlage hat sich seit Ihrer Prüfung geändert. Es wurde nichts übernommen; öffnen Sie sie erneut, um die neue Version zu prüfen.",
   "templateApplyConflict": "Diese Anfrage wurde bereits für etwas anderes verwendet. Es wurde nichts übernommen.",
   "libraryFeatureNeeds": "{feature} braucht {prerequisite}, das ausgeschaltet bleibt: Es funktioniert noch nicht.",

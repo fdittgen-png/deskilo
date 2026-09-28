@@ -11465,6 +11465,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get compareRemove => 'Aus dem Vergleich entfernen';
 
   @override
+  String get compareEmpty => 'Leer';
+
+  @override
   String get templateChangedSinceReview =>
       'Diese Vorlage hat sich seit Ihrer Prüfung geändert. Es wurde nichts übernommen; öffnen Sie sie erneut, um die neue Version zu prüfen.';
 

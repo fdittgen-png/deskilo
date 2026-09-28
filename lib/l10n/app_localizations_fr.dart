@@ -11482,6 +11482,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get compareRemove => 'Retirer de la comparaison';
 
   @override
+  String get compareEmpty => 'Vide';
+
+  @override
   String get templateChangedSinceReview =>
       'Ce modèle a changé depuis votre relecture. Rien n\'a été appliqué ; rouvrez-le pour relire la nouvelle version.';
 
