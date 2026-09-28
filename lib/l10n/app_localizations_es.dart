@@ -11452,6 +11452,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get compareRemove => 'Quitar de la comparación';
 
   @override
+  String get compareEmpty => 'Vacío';
+
+  @override
   String get templateChangedSinceReview =>
       'Esta plantilla cambió desde que la revisó. No se aplicó nada; ábrala de nuevo para revisar la nueva versión.';
 

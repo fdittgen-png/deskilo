@@ -12320,6 +12320,10 @@
   "@compareRemove": {
     "description": "#1660 template_compare"
   },
+  "compareEmpty": "Empty",
+  "@compareEmpty": {
+    "description": "#1660 template_compare"
+  },
   "templateChangedSinceReview": "This template changed since you reviewed it. Nothing was applied; open it again to review the new version.",
   "@templateChangedSinceReview": {
     "description": "#1658 template_exact_apply"

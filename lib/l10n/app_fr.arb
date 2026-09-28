@@ -7363,6 +7363,7 @@
   "compareOpen": "Comparer ({count})",
   "compareAdd": "Ajouter à la comparaison",
   "compareRemove": "Retirer de la comparaison",
+  "compareEmpty": "Vide",
   "templateChangedSinceReview": "Ce modèle a changé depuis votre relecture. Rien n'a été appliqué ; rouvrez-le pour relire la nouvelle version.",
   "templateApplyConflict": "Cette demande a déjà servi pour autre chose. Rien n'a été appliqué.",
   "libraryFeatureNeeds": "{feature} nécessite {prerequisite}, qui reste désactivé : cela ne fonctionnera pas encore.",

@@ -96,5 +96,9 @@
   "compareRemove": "Remove from comparison",
   "@compareRemove": {
     "description": "#1660 template_compare"
+  },
+  "compareEmpty": "Empty",
+  "@compareEmpty": {
+    "description": "#1660 template_compare"
   }
 }

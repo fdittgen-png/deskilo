@@ -18,5 +18,6 @@
   "compareLimit": "Si possono confrontare fino a {count} modelli. Rimuovine prima uno.",
   "compareOpen": "Confronta ({count})",
   "compareAdd": "Aggiungi al confronto",
-  "compareRemove": "Rimuovi dal confronto"
+  "compareRemove": "Rimuovi dal confronto",
+  "compareEmpty": "Vuoto"
 }

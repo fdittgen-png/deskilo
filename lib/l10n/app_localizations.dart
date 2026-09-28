@@ -19770,6 +19770,12 @@ abstract class AppLocalizations {
   /// **'Remove from comparison'**
   String get compareRemove;
 
+  /// #1660 template_compare
+  ///
+  /// In en, this message translates to:
+  /// **'Empty'**
+  String get compareEmpty;
+
   /// #1658 template_exact_apply
   ///
   /// In en, this message translates to:

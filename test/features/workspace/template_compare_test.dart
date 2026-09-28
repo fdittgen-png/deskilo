@@ -108,6 +108,15 @@ void main() {
       ),
       '1, 2',
     );
+    // #1660 — zero is a value; empty is said, never a blank cell.
+    ComparisonCell present(Object? v) =>
+        ComparisonCell(disposition: TemplateFieldDisposition.present, value: v);
+    expect(t(present(0)), '0');
+    expect(t(present('')), 'Empty');
+    expect(t(present('  ')), 'Empty');
+    expect(t(present(const <Object?>[])), 'Empty');
+    expect(t(present(const <String, Object?>{})), 'Empty');
+    expect(t(present(const {'b': 2, 'a': 1})), 'a: 1, b: 2');
   });
 
   testWidgets('differences first; all settings on request', (tester) async {
