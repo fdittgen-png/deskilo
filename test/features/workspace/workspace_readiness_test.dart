@@ -415,4 +415,83 @@ void main() {
     await _pump(tester, FakeLocalSetupRepository());
     expect(find.byKey(const ValueKey('workspace-readiness')), findsNothing);
   });
+
+  test('0303: acknowledged is read, and an acknowledged section is never next',
+      () {
+    final s = ReadinessSection.listFromJson([
+      {
+        'section': 'pricing',
+        'state': 'needs_configuration',
+        'required': false,
+        'route': '/billing',
+        'acknowledged': true,
+      },
+      {
+        'section': 'payments',
+        'state': 'needs_configuration',
+        'required': false,
+        'route': '/payment-methods',
+      },
+    ]);
+    expect(s.first.acknowledged, isTrue);
+    expect(s.first.state, ReadinessState.needsConfiguration,
+        reason: 'setting a section aside never makes it ready');
+    expect(s.last.acknowledged, isFalse);
+    expect(nextReadinessStep(s)?.area, ReadinessArea.payments);
+    expect(s.first.canSetAside, isTrue);
+    expect(
+      const ReadinessSection(
+        area: ReadinessArea.resources,
+        state: ReadinessState.needsConfiguration,
+        required: true,
+        route: '/editor',
+      ).canSetAside,
+      isFalse,
+      reason: 'a required section has to be set up',
+    );
+    expect(readinessSectionCode(ReadinessArea.firstBooking), 'first_booking');
+    expect(readinessSectionCode(ReadinessArea.backend), isNull);
+  });
+
+  testWidgets('Later sets an optional section aside and the next step moves '
+      'on; Undo takes it back', (tester) async {
+    final repo = FakeLocalSetupRepository(
+      readinessSections: [
+        ..._sections(seats: true),
+        const ReadinessSection(
+          area: ReadinessArea.payments,
+          state: ReadinessState.needsConfiguration,
+          required: false,
+          route: '/payment-methods',
+        ),
+      ],
+    );
+    await _pump(tester, repo);
+    expect(find.text('Next: Membership plans and tariffs'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('workspace-readiness-all')));
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('workspace-readiness-later-resources')),
+      findsNothing,
+      reason: 'a ready or required section offers no Later',
+    );
+
+    final later = find.byKey(const ValueKey('workspace-readiness-later-pricing'));
+    await tester.ensureVisible(later);
+    await tester.tap(later);
+    await tester.pumpAndSettle();
+    expect(repo.acknowledgementCalls, ['ack:pricing']);
+    expect(find.text('Next: How members pay'), findsOneWidget);
+    expect(find.textContaining('Set aside for later'), findsOneWidget);
+    expect(find.textContaining('Needs configuration'), findsNWidgets(2),
+        reason: 'the state itself does not change');
+
+    final undo = find.byKey(const ValueKey('workspace-readiness-undo-pricing'));
+    await tester.ensureVisible(undo);
+    await tester.tap(undo);
+    await tester.pumpAndSettle();
+    expect(repo.acknowledgementCalls, ['ack:pricing', 'clear:pricing']);
+    expect(find.text('Next: Membership plans and tariffs'), findsOneWidget);
+    expect(find.textContaining('Set aside for later'), findsNothing);
+  });
 }

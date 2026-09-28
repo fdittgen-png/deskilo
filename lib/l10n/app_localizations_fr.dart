@@ -13293,6 +13293,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get readinessAreaFirstBooking => 'Une première réservation';
 
   @override
+  String get readinessSetAsideAction => 'Plus tard';
+
+  @override
+  String get readinessSetAside => 'Mis de côté pour plus tard';
+
+  @override
+  String get readinessSetAsideUndo => 'Annuler';
+
+  @override
+  String get readinessSetAsideFailed => 'Impossible d’enregistrer. Réessayez.';
+
+  @override
   String get featureWorkspaceStatus => 'Situation de l\'espace';
 
   @override

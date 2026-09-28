@@ -25,4 +25,38 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
   @override
   Future<List<ReadinessSection>> sections(String workspaceId) async =>
       readinessSections;
+
+  /// 0303 — every call, as `ack:<section>` or `clear:<section>`.
+  final List<String> acknowledgementCalls = [];
+
+  @override
+  Future<void> acknowledgeSection(String workspaceId, String section) async {
+    acknowledgementCalls.add('ack:$section');
+    _mark(section, acknowledged: true);
+  }
+
+  @override
+  Future<void> clearAcknowledgement(String workspaceId, String section) async {
+    acknowledgementCalls.add('clear:$section');
+    _mark(section, acknowledged: false);
+  }
+
+  void _mark(String section, {required bool acknowledged}) {
+    readinessSections = [
+      for (final s in readinessSections)
+        if (readinessSectionCode(s.area) == section)
+          ReadinessSection(
+            area: s.area,
+            state: s.state,
+            required: s.required,
+            route: s.route,
+            actor: s.actor,
+            reason: s.reason,
+            recordedAt: s.recordedAt,
+            acknowledged: acknowledged,
+          )
+        else
+          s,
+    ];
+  }
 }

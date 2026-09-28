@@ -13278,6 +13278,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get readinessAreaFirstBooking => 'Una prima prenotazione';
 
   @override
+  String get readinessSetAsideAction => 'Più tardi';
+
+  @override
+  String get readinessSetAside => 'Rimandato a più tardi';
+
+  @override
+  String get readinessSetAsideUndo => 'Annulla';
+
+  @override
+  String get readinessSetAsideFailed => 'Impossibile salvare. Riprova.';
+
+  @override
   String get featureWorkspaceStatus => 'Situazione dello spazio';
 
   @override

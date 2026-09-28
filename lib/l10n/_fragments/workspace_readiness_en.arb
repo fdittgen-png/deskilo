@@ -186,5 +186,21 @@
   "readinessAreaFirstBooking": "A first booking",
   "@readinessAreaFirstBooking": {
     "description": "#1636 workspace_readiness"
+  },
+  "readinessSetAsideAction": "Later",
+  "@readinessSetAsideAction": {
+    "description": "#1636 workspace_readiness (0303)"
+  },
+  "readinessSetAside": "Set aside for later",
+  "@readinessSetAside": {
+    "description": "#1636 workspace_readiness (0303)"
+  },
+  "readinessSetAsideUndo": "Undo",
+  "@readinessSetAsideUndo": {
+    "description": "#1636 workspace_readiness (0303)"
+  },
+  "readinessSetAsideFailed": "That could not be saved. Try again.",
+  "@readinessSetAsideFailed": {
+    "description": "#1636 workspace_readiness (0303)"
   }
 }

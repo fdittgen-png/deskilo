@@ -56,6 +56,10 @@ String _latestExportBody() {
 /// Tables with a member or user column that `export_my_data` does not
 /// return, and why each is right to leave out.
 const Map<String, String> _notExported = {
+  'readiness_acknowledgements':
+      'a configurator\'s own "later" on a setup-checklist section (#1636): '
+          'which step of a space\'s setup waits, never anything about the '
+          'person, and it lapses by itself once the section changes',
   'platform_admins':
       'who administers the platform — not the subject\'s data, and '
           'disclosing it would name other people',

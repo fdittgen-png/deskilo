@@ -132,6 +132,8 @@ public.push_endpoints.mcp_delegated_deny
 public.push_endpoints.push_endpoints_own
 public.quota_extensions.mcp_delegated_deny
 public.quota_extensions.quota_extensions_select
+public.readiness_acknowledgements.mcp_delegated_deny
+public.readiness_acknowledgements.readiness_acknowledgements_own
 public.reservation_requests.mcp_delegated_deny
 public.reservations.mcp_delegated_deny
 public.reservations.reservations_select
