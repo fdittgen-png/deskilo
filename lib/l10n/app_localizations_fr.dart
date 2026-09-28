@@ -7411,6 +7411,37 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mfaVerify => 'Vérifier';
 
   @override
+  String get mcpUsageWorkspaceTitle =>
+      'Utilisation des assistants, 30 derniers jours';
+
+  @override
+  String get mcpUsageMineTitle =>
+      'Votre utilisation des assistants aujourd\'hui';
+
+  @override
+  String get mcpUsageUnavailable => 'L\'utilisation n\'a pas pu être chargée.';
+
+  @override
+  String get mcpUsageNone => 'Aucun assistant n\'a encore utilisé votre accès.';
+
+  @override
+  String mcpUsageLastUsed(String when) {
+    return 'Dernière utilisation $when';
+  }
+
+  @override
+  String get mcpUsageRequests => 'Demandes';
+
+  @override
+  String get mcpUsageRefusals => 'Refusées';
+
+  @override
+  String get mcpUsageApplied => 'Appliquées';
+
+  @override
+  String get mcpUsagePending => 'En attente de validation';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Les membres voient Mon compte';
 
   @override

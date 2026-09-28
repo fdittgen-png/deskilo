@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/auth/domain/second_factor.dart';
 import '../../../features/mcp/domain/mcp_admin.dart';
+import '../../../features/mcp/domain/mcp_usage.dart';
 
 /// #1626/#1627 — in-memory policy and eligibility queue for tests and
 /// Demo (where MCP stays off: the feature is off and nobody is eligible).
@@ -26,6 +27,9 @@ class FakeMcpAdminRepository implements McpAdminRepository {
   final decisions = <({String userId, String decisionId, bool approve})>[];
   final revoked = <String>[];
   PolicySaveStatus nextSave = PolicySaveStatus.saved;
+
+  /// #1630 — the workspace's usage rows; Demo has none, so it shows zeros.
+  List<({DateTime? day, String operation, McpUsageCounts counts})> usage = [];
 
   @override
   Future<McpPolicy> policy(String workspaceId) async =>
@@ -102,6 +106,10 @@ class FakeMcpAdminRepository implements McpAdminRepository {
     revoked.add(userId);
     return true;
   }
+
+  @override
+  Future<McpWorkspaceUsage> workspaceUsage(String workspaceId) async =>
+      McpWorkspaceUsage(workspaceId: workspaceId, rows: List.of(usage));
 }
 
 /// A second factor that is exactly what the test says: never aal2 by

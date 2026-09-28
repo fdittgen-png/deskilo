@@ -1,0 +1,43 @@
+{
+  "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
+  "@mcpUsageWorkspaceTitle": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageMineTitle": "Your assistant use today",
+  "@mcpUsageMineTitle": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageUnavailable": "Usage could not be loaded.",
+  "@mcpUsageUnavailable": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageNone": "No assistant has used your access yet.",
+  "@mcpUsageNone": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageLastUsed": "Last used {when}",
+  "@mcpUsageLastUsed": {
+    "description": "#1630 mcp_usage",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpUsageRequests": "Requests",
+  "@mcpUsageRequests": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageRefusals": "Refused",
+  "@mcpUsageRefusals": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageApplied": "Applied",
+  "@mcpUsageApplied": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsagePending": "Awaiting validation",
+  "@mcpUsagePending": {
+    "description": "#1630 mcp_usage"
+  }
+}

@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/mcp_admin.dart';
+import '../domain/mcp_usage.dart';
 
 /// #1626/#1627 — the owner policy RPCs (0271) and the eligibility review
 /// RPCs (0270). The server checks ownership, administrator status and
@@ -71,4 +72,13 @@ class SupabaseMcpAdminRepository implements McpAdminRepository {
     );
     return r is Map && r['status'] == 'revoked';
   }
+
+  @override
+  Future<McpWorkspaceUsage> workspaceUsage(String workspaceId) async =>
+      McpWorkspaceUsage.fromJson(
+        await _client.rpc<Object?>(
+          'mcp_usage_summary_workspace',
+          params: {'p_workspace_id': workspaceId},
+        ),
+      );
 }

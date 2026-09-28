@@ -4512,6 +4512,15 @@
   "mfaCode": "Código de seis dígitos",
   "mfaWrong": "Ese código no fue aceptado. Pruebe el actual.",
   "mfaVerify": "Verificar",
+  "mcpUsageWorkspaceTitle": "Uso de asistentes, últimos 30 días",
+  "mcpUsageMineTitle": "Su uso de asistentes hoy",
+  "mcpUsageUnavailable": "No se pudo cargar el uso.",
+  "mcpUsageNone": "Ningún asistente ha usado todavía su acceso.",
+  "mcpUsageLastUsed": "Último uso {when}",
+  "mcpUsageRequests": "Solicitudes",
+  "mcpUsageRefusals": "Rechazadas",
+  "mcpUsageApplied": "Aplicadas",
+  "mcpUsagePending": "Pendientes de validación",
   "featureMemberAccountMenuTitle": "Los miembros ven Mi cuenta",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"

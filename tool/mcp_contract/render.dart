@@ -12,6 +12,8 @@ const generatedPaths = (
   typescript: 'supabase/functions/_shared/mcp_contract.ts',
   dart: 'lib/core/mcp/mcp_operations.dart',
   openapi: 'contracts/mcp/generated/openapi.json',
+  // #1629 — the same document, served beside the self-hosted Swagger UI.
+  webOpenapi: 'web/api/openapi.json',
 );
 
 /// #1610/#1612 — the catalogue as the database reads it: the statement a
@@ -563,5 +565,6 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     generatedPaths.typescript: ts.toString(),
     generatedPaths.dart: dart.toString(),
     generatedPaths.openapi: _pretty(openapi),
+    generatedPaths.webOpenapi: _pretty(openapi),
   };
 }
