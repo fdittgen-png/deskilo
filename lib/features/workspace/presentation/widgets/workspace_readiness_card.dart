@@ -107,7 +107,7 @@ String readinessActorLabel(AppLocalizations? l10n, ReadinessActor actor) =>
 /// comes from the app's own schema check; the rest from the server.
 /// Hidden with the Get started help (`memberGettingStarted`), and for
 /// anyone the server does not answer. An optional section that is still
-/// open can be set aside for later (0303): the next step moves on, the
+/// open can be set aside for later (0307): the next step moves on, the
 /// state stays what it is, and Undo takes it back.
 class WorkspaceReadinessCard extends ConsumerWidget {
   const WorkspaceReadinessCard({super.key, required this.workspaceId});

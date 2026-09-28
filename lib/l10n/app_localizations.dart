@@ -22974,25 +22974,25 @@ abstract class AppLocalizations {
   /// **'A first booking'**
   String get readinessAreaFirstBooking;
 
-  /// #1636 workspace_readiness (0303)
+  /// #1636 workspace_readiness (0307)
   ///
   /// In en, this message translates to:
   /// **'Later'**
   String get readinessSetAsideAction;
 
-  /// #1636 workspace_readiness (0303)
+  /// #1636 workspace_readiness (0307)
   ///
   /// In en, this message translates to:
   /// **'Set aside for later'**
   String get readinessSetAside;
 
-  /// #1636 workspace_readiness (0303)
+  /// #1636 workspace_readiness (0307)
   ///
   /// In en, this message translates to:
   /// **'Undo'**
   String get readinessSetAsideUndo;
 
-  /// #1636 workspace_readiness (0303)
+  /// #1636 workspace_readiness (0307)
   ///
   /// In en, this message translates to:
   /// **'That could not be saved. Try again.'**

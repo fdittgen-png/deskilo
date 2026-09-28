@@ -73,11 +73,11 @@ abstract interface class LocalSetupRepository {
   /// #1636 — each setup section of [workspaceId] and its state.
   Future<List<ReadinessSection>> sections(String workspaceId);
 
-  /// 0303 — sets the optional section [section] (the server's name) aside
+  /// 0307 — sets the optional section [section] (the server's name) aside
   /// for later, at its current state. The server refuses a required or a
   /// ready one.
   Future<void> acknowledgeSection(String workspaceId, String section);
 
-  /// 0303 — takes [section] back: it is next again when it is open.
+  /// 0307 — takes [section] back: it is next again when it is open.
   Future<void> clearAcknowledgement(String workspaceId, String section);
 }

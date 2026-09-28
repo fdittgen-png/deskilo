@@ -26,7 +26,7 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
   Future<List<ReadinessSection>> sections(String workspaceId) async =>
       readinessSections;
 
-  /// 0303 — every call, as `ack:<section>` or `clear:<section>`.
+  /// 0307 — every call, as `ack:<section>` or `clear:<section>`.
   final List<String> acknowledgementCalls = [];
 
   @override

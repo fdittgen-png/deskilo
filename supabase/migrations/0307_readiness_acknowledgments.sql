@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0303 (#1636) -- readiness acknowledgements, the issue's last open item.
+-- 0307 (#1636) -- readiness acknowledgements, the issue's last open item.
 -- Someone who configures a space can set an optional, still-open section
 -- aside ("later") so the checklist's next step moves on. What is stored is
 -- only that explicit acknowledgement, keyed by installation, workspace,
@@ -24,7 +24,7 @@
 --     silently drops it. It never makes anything ready: stale or missing
 --     recovery evidence stays unverified.
 --
--- (0302 is in flight; this follows it.)
+-- (0303-0306 are #1791's; this follows them.)
 
 create table if not exists public.readiness_acknowledgements (
   id uuid primary key default gen_random_uuid(),
@@ -193,7 +193,7 @@ begin
     || jsonb_build_array(jsonb_build_object('section', 'first_booking', 'actor', 'owner',
          'required', false, 'route', '/reserve',
          'state', case when v_booked then 'ready' else 'needs_configuration' end));
-  -- #1636 (0303) -- "I'll do it later": a section the caller set aside
+  -- #1636 (0307) -- "I'll do it later": a section the caller set aside
   -- reads acknowledged only while it is still optional, still open, and
   -- still what it was when they set it aside (the same material revision,
   -- in this installation, for this caller). It never changes the state:
@@ -270,4 +270,4 @@ grant execute on function public.clear_readiness_acknowledgement(uuid, text) to 
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(303);
+select public.set_deskilo_schema_version(307);

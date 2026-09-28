@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- 0303: "I'll do it later" is an explicit acknowledgement, keyed by
+-- 0307: "I'll do it later" is an explicit acknowledgement, keyed by
 -- installation, workspace, user and section at one material revision.
 -- Only someone who configures the space sets an optional, open section
 -- aside; it never makes anything ready, and a changed section, another
@@ -8,9 +8,9 @@ begin;
 select plan(38);
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
- ('00000000-0000-4000-8000-0000000303a1', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'ack-owner@deskilo.test', '', now(), now(), now()),
- ('00000000-0000-4000-8000-0000000303a2', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'ack-member@deskilo.test', '', now(), now(), now()),
- ('00000000-0000-4000-8000-0000000303a3', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'ack-foreign@deskilo.test', '', now(), now(), now());
+ ('00000000-0000-4000-8000-0000000307a1', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'ack-owner@deskilo.test', '', now(), now(), now()),
+ ('00000000-0000-4000-8000-0000000307a2', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'ack-member@deskilo.test', '', now(), now(), now()),
+ ('00000000-0000-4000-8000-0000000307a3', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'ack-foreign@deskilo.test', '', now(), now(), now());
 
 create function pg_temp.sec(p text, s text) returns jsonb language sql as $$
   select e from jsonb_array_elements(current_setting(p)::jsonb) e where e->>'section' = s
@@ -18,20 +18,20 @@ $$;
 grant execute on function pg_temp.sec(text, text) to authenticated;
 
 -- The owner's two spaces, the foreign owner's one, a plain member in the first.
-select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000303a1","role":"authenticated"}', true);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000307a1","role":"authenticated"}', true);
 set local role authenticated;
-select set_config('t.ws', public.create_workspace_once('00000000-0000-4000-8000-00000000c303', 'Acknowledged', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null, null)::text, true);
-select set_config('t.ws2', public.create_workspace_once('00000000-0000-4000-8000-00000000c313', 'Other space', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null, null)::text, true);
+select set_config('t.ws', public.create_workspace_once('00000000-0000-4000-8000-00000000c307', 'Acknowledged', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null, null)::text, true);
+select set_config('t.ws2', public.create_workspace_once('00000000-0000-4000-8000-00000000c317', 'Other space', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null, null)::text, true);
 reset role;
-select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000303a3","role":"authenticated"}', true);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000307a3","role":"authenticated"}', true);
 set local role authenticated;
-select set_config('t.wsf', public.create_workspace_once('00000000-0000-4000-8000-00000000c323', 'Foreign space', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null, null)::text, true);
+select set_config('t.wsf', public.create_workspace_once('00000000-0000-4000-8000-00000000c327', 'Foreign space', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null, null)::text, true);
 reset role;
 insert into public.members (workspace_id, user_id, status, is_admin, subscription_pct)
-values (current_setting('t.ws')::uuid, '00000000-0000-4000-8000-0000000303a2', 'active', false, 100);
+values (current_setting('t.ws')::uuid, '00000000-0000-4000-8000-0000000307a2', 'active', false, 100);
 
 -- The owner sets payments and recovery aside, and reads them back.
-select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000303a1","role":"authenticated"}', true);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000307a1","role":"authenticated"}', true);
 set local role authenticated;
 select set_config('t.r0', public.workspace_readiness(current_setting('t.ws')::uuid)::text, true);
 select set_config('t.ack', (select to_jsonb(a) from public.acknowledge_readiness_section(current_setting('t.ws')::uuid, 'payments') a)::text, true);
@@ -56,7 +56,7 @@ select set_config('t.gone', (select count(*) from public.readiness_acknowledgeme
 reset role;
 
 -- The same owner through a delegated assistant token.
-select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000303a1","role":"authenticated","client_id":"assistant"}', true);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000307a1","role":"authenticated","client_id":"assistant"}', true);
 set local role authenticated;
 select throws_ok(format('select public.acknowledge_readiness_section(%L, %L)', current_setting('t.ws'), 'first_booking'),
   '42501', null, 'an assistant token cannot set a section aside');
@@ -66,8 +66,8 @@ reset role;
 
 -- The plain member: no manageConfiguration, even for a row of their own.
 insert into public.readiness_acknowledgements (workspace_id, user_id, section, material_revision)
-values (current_setting('t.ws')::uuid, '00000000-0000-4000-8000-0000000303a2', 'payments', md5('x'));
-select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000303a2","role":"authenticated"}', true);
+values (current_setting('t.ws')::uuid, '00000000-0000-4000-8000-0000000307a2', 'payments', md5('x'));
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000307a2","role":"authenticated"}', true);
 set local role authenticated;
 select throws_ok(format('select public.acknowledge_readiness_section(%L, %L)', current_setting('t.ws'), 'payments'),
   '42501', null, 'a plain member cannot set a section aside');
@@ -75,7 +75,7 @@ select set_config('t.mem', (select count(*) from public.readiness_acknowledgemen
 reset role;
 
 -- The foreign owner.
-select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000303a3","role":"authenticated"}', true);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000307a3","role":"authenticated"}', true);
 set local role authenticated;
 select throws_ok(format('select public.acknowledge_readiness_section(%L, %L)', current_setting('t.ws'), 'payments'),
   '42501', null, 'a foreign owner cannot set another space''s section aside');
@@ -99,21 +99,21 @@ reset role;
 
 -- Another installation's acknowledgement, at the section's current revision.
 insert into public.readiness_acknowledgements (installation_id, workspace_id, user_id, section, material_revision)
-values (gen_random_uuid(), current_setting('t.ws')::uuid, '00000000-0000-4000-8000-0000000303a1', 'first_booking',
+values (gen_random_uuid(), current_setting('t.ws')::uuid, '00000000-0000-4000-8000-0000000307a1', 'first_booking',
         public.readiness_section_revision(pg_temp.sec('t.r0', 'first_booking')));
 -- Payments become ready; recovery's evidence turns up, but stale.
 update public.workspaces set payment_instructions = '{"iban": "FR7630006000011234567890189"}'::jsonb
  where id = current_setting('t.ws')::uuid;
 insert into public.workspace_recovery_evidence (workspace_id, recorded_at, sha256, row_count)
 values (current_setting('t.ws')::uuid, now() - interval '100 days', repeat('a', 64), 1);
-select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000303a1","role":"authenticated"}', true);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000307a1","role":"authenticated"}', true);
 set local role authenticated;
 select set_config('t.r4', public.workspace_readiness(current_setting('t.ws')::uuid)::text, true);
 select set_config('t.inst', (select count(*) from public.readiness_acknowledgements
   where workspace_id = current_setting('t.ws')::uuid and section = 'first_booking')::text, true);
 reset role;
 
-select is(current_setting('t.ack')::jsonb->>'user_id', '00000000-0000-4000-8000-0000000303a1', 'the acknowledgement belongs to the caller');
+select is(current_setting('t.ack')::jsonb->>'user_id', '00000000-0000-4000-8000-0000000307a1', 'the acknowledgement belongs to the caller');
 select is(current_setting('t.ack')::jsonb->>'material_revision', public.readiness_section_revision(pg_temp.sec('t.r0', 'payments')),
   'at the section''s current material revision');
 select ok(pg_temp.sec('t.r0', 'payments')->'acknowledged' is null, 'nothing is acknowledged before anyone says so');

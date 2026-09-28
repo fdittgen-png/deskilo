@@ -416,7 +416,7 @@ void main() {
     expect(find.byKey(const ValueKey('workspace-readiness')), findsNothing);
   });
 
-  test('0303: acknowledged is read, and an acknowledged section is never next',
+  test('0307: acknowledged is read, and an acknowledged section is never next',
       () {
     final s = ReadinessSection.listFromJson([
       {

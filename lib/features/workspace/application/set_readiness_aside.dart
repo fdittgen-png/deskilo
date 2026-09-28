@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #1636 (0303) — "I'll do it later" on an optional setup section. The
+// #1636 (0307) — "I'll do it later" on an optional setup section. The
 // checklist's next step moves on; the section's state does not change,
 // and the server drops the choice by itself once the section changes.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -35,7 +35,7 @@ class ReadinessAside {
   }
 }
 
-/// #1636 (0303) — setting readiness sections aside, and taking them back.
+/// #1636 (0307) — setting readiness sections aside, and taking them back.
 @riverpod
 ReadinessAside readinessAside(Ref ref) =>
     ReadinessAside(ref.watch(localSetupRepositoryProvider));
