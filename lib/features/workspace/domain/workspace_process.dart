@@ -68,6 +68,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.singleRoomLevelNames,
       WorkspaceFeature.workspaceVocabulary,
       WorkspaceFeature.workspaceBranding,
+      WorkspaceFeature.publicListings,
     ]),
   ]),
   WorkspaceProcess('reservationsUsage', [

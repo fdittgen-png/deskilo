@@ -71,6 +71,9 @@ const Map<String, int> _repositoryInWidgets = {
 };
 
 const Set<String> _knownPairs = {
+  // #1791: account-bound portal, workspace publication/employment and profile entry.
+  'workspace -> directory', 'directory -> auth', 'directory -> workspace',
+  'profile -> directory', 'money -> auth',
   // #1642 — Help discards local support previews when identity/workspace changes.
   'help -> auth',
   'help -> workspace',
@@ -247,7 +250,7 @@ const Map<String, int> _pairBudget = {
   // `profile: 4 > 3` instead — a widget in profile/ reaching
   // workspace/'s repository. ADR 0024 is the stronger rule, so the
   // layer violation is fixed and the import ceiling pays for it.
-  'profile -> workspace': 38, // 2026-09-20 #1598 37→38: the settings screen asks `showsMemberAccountMenu` what to call itself. The predicate reads the effective PERMISSION set, so it lives with the matrix in workspace/domain; re-deciding in profile/ what counts as administering something is exactly the drift #1085 was about. One import, and the one definition both the shell and the screen read; // 2026-09-19 #1288 S4 38→37: the questions section moved to workspace/, where the questions are defined; // 2026-09-19 #1288 S2b 34→38: the identity form's section reads the workspace's own questions — the definitions, the validator, the repository and its providers all live in workspace/, and duplicating them in profile/ to keep a number down would be worse; // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
+  'profile -> workspace': 39, // 2026-09-28 #1791: profile switcher links to account admission history.  // 2026-09-20 #1598 37→38: the settings screen asks `showsMemberAccountMenu` what to call itself. The predicate reads the effective PERMISSION set, so it lives with the matrix in workspace/domain; re-deciding in profile/ what counts as administering something is exactly the drift #1085 was about. One import, and the one definition both the shell and the screen read; // 2026-09-19 #1288 S4 38→37: the questions section moved to workspace/, where the questions are defined; // 2026-09-19 #1288 S2b 34→38: the identity form's section reads the workspace's own questions — the definitions, the validator, the repository and its providers all live in workspace/, and duplicating them in profile/ to keep a number down would be worse; // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
   'reservations -> calendar': 1,
   'reservations -> events': 5,
   'reservations -> members': 2,
@@ -280,7 +283,7 @@ const Map<String, int> _pairBudget = {
   // 2026-09-27 #1636: +3 — the Get started card's owner guidance reads
   // the workspace readiness check (domain, provider, section labels).
   'reservations -> workspace': 57,
-  'workspace -> auth': 5, // 2026-09-26 #1636 3→4 and #1654 4→5: a pending creation draft names the account that sent it, so a restart resumes it for that account only (application/creation_intent.dart); #1654: the onboarding handoff listens to the auth stream to discard completions after an account change
+  'workspace -> auth': 9, // 2026-09-28 #1791: account-scoped applications and replies work without membership.  // 2026-09-26 #1636 3→4 and #1654 4→5: a pending creation draft names the account that sent it, so a restart resumes it for that account only (application/creation_intent.dart); #1654: the onboarding handoff listens to the auth stream to discard completions after an account change
   // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
   // *does anything need me?* by ASSEMBLING signals that already exist:
   // the events awaiting my decision (the type, to tell money from a

@@ -60,6 +60,10 @@ const String kDefaultHome = '/reserve';
 /// test/lint/route_policy_registry_test.dart keeps this list and
 /// router.dart in step both ways.
 const List<RouteRule> routeRules = [
+  RouteRule('/discover', RouteClass.publicEntry),
+  RouteRule('/connections', RouteClass.nativeAccount),
+  RouteRule('/account-messages', RouteClass.nativeAccount),
+  RouteRule('/settings/public-page', RouteClass.workspace),
   RouteRule('/auth', RouteClass.publicEntry),
   RouteRule('/help', RouteClass.publicEntry),
   RouteRule('/privacy', RouteClass.publicEntry),
@@ -68,6 +72,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/server/new-instance', RouteClass.operator),
   RouteRule('/consent', RouteClass.nativeAccount),
   RouteRule('/profiles', RouteClass.nativeAccount),
+  RouteRule('/applications', RouteClass.nativeAccount),
+  RouteRule('/account-activity', RouteClass.nativeAccount),
   RouteRule('/linked-accounts', RouteClass.nativeAccount),
   RouteRule('/onboarding', RouteClass.nativeAccount),
   RouteRule('/scan-join', RouteClass.nativeAccount),

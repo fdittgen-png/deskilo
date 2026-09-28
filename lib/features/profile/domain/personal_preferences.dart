@@ -9,7 +9,8 @@ abstract final class PersonalPreference {
   static const documentLocale = 'preferred_locale';
   static const uiLocale = 'ui_locale';
   static const theme = 'theme';
-  static const keys = {formatLocale, clock, timeZoneMode, documentLocale, uiLocale, theme};
+  static const paymentProvider = 'payment_provider';
+  static const keys = {formatLocale, clock, timeZoneMode, documentLocale, uiLocale, theme, paymentProvider};
 }
 
 class PersonalPreferences {

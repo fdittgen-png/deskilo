@@ -1039,6 +1039,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Get started card",
     "After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. For whoever configures the space, the settings also show how far it is from a first booking, section by section. Off hides the card and that checklist and changes nothing else."
+   ],
+   "publicListings": [
+    "Public workspace listing",
+    "Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts."
    ]
   },
   "process": {
@@ -2287,6 +2291,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Carte Premiers pas",
     "Après avoir rejoint ou créé un espace, un membre voit une carte compacte sur le hub Réserver : l’espace dans lequel il se trouve et une prochaine étape suggérée — choisir un créneau à réserver, consulter son adhésion ou ouvrir l’aide — seulement là où les fonctionnalités et ses permissions le permettent. Pas maintenant la masque ; les Réglages peuvent la réafficher. Elle ne réserve, ne paie et n’approuve jamais rien. Pour qui configure l’espace, les réglages montrent aussi, section par section, ce qui le sépare d’une première réservation. Désactivée, elle masque la carte et cette liste et ne change rien d’autre."
+   ],
+   "publicListings": [
+    "Présentation publique de l’espace",
+    "Publiez les informations et plans choisis, avec les propriétaires visibles et les administrateurs volontaires."
    ]
   },
   "process": {
@@ -3535,6 +3543,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Karte „Erste Schritte“",
     "Nach dem Beitritt oder dem Anlegen eines Workspace sieht ein Mitglied eine kompakte Karte im Reservieren-Hub: in welchem Workspace es ist und einen vorgeschlagenen nächsten Schritt — eine Zeit zum Buchen wählen, die eigene Mitgliedschaft ansehen oder die Hilfe öffnen — nur dort, wo Funktionen und Berechtigungen es erlauben. „Jetzt nicht“ blendet sie aus; die Einstellungen zeigen sie wieder an. Sie bucht, zahlt und genehmigt nie etwas. Wer den Workspace einrichtet, sieht in den Einstellungen außerdem Bereich für Bereich, was bis zu einer ersten Buchung fehlt. Aus blendet die Karte und diese Liste aus und ändert sonst nichts."
+   ],
+   "publicListings": [
+    "Öffentlicher Workspace-Eintrag",
+    "Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten."
    ]
   },
   "process": {
@@ -4783,6 +4795,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Tarjeta Primeros pasos",
     "Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Para quien configura el espacio, los ajustes muestran además, sección por sección, lo que falta para una primera reserva. Desactivada, oculta la tarjeta y esa lista y no cambia nada más."
+   ],
+   "publicListings": [
+    "Anuncio público del espacio",
+    "Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores."
    ]
   },
   "process": {
@@ -6031,6 +6047,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Scheda Primi passi",
     "Dopo essersi unito a uno spazio o averlo creato, un membro vede una scheda compatta nell’hub Prenota: in quale spazio si trova e un passo successivo suggerito — scegliere un orario da prenotare, vedere la propria iscrizione o aprire l’aiuto — solo dove le funzioni e i suoi permessi lo consentono. Non ora la nasconde; le Impostazioni possono mostrarla di nuovo. Non prenota, non paga e non approva mai nulla. Per chi configura lo spazio, le impostazioni mostrano anche, sezione per sezione, cosa manca a una prima prenotazione. Disattivata, nasconde la scheda e quell’elenco e non cambia altro."
+   ],
+   "publicListings": [
+    "Scheda pubblica dello spazio",
+    "Pubblica solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi."
    ]
   },
   "process": {

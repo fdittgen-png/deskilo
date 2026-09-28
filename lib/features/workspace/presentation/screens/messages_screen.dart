@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -19,6 +20,7 @@ import '../widgets/conversation_thread.dart';
 import '../widgets/new_conversation_sheet.dart';
 import '../../../../core/theme/shell_metrics.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
+import '../widgets/application_requests_entry.dart';
 
 /// #821 — what the chat list shows.
 enum InboxFilter { all, unread, archived }
@@ -141,6 +143,8 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
         child: const Icon(Icons.edit_outlined),
       ),
       body: Column(children: [
+        const ApplicationRequestsEntry(compact: false),
+        TextButton.icon(onPressed:()=>context.push('/account-messages'),icon:const Icon(Icons.forum_outlined),label:Text(l10n?.portalMessenger??'Account messenger')),
         const HelpHint(HelpHintId.messages),
         if (hub) _filterBar(context, l10n),
         Expanded(child: body),
