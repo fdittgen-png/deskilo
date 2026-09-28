@@ -178,7 +178,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     });
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(actions:[TextButton.icon(onPressed:()=>context.push('/discover'),icon:const Icon(Icons.public),label:Text(l10n?.portalDiscover??'Find a workspace'))]),
       body: Center(
         child: SingleChildScrollView(
           padding: AppSpacing.xlAll,
@@ -466,6 +465,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               child: Text(
                 l10n?.authConnectServer ?? "Connect an organisation's server",
               ),
+            ),
+            TextButton.icon(
+              key: const ValueKey('auth-discover'),
+              onPressed: () => context.push('/discover'),
+              icon: const Icon(Icons.public),
+              label: Text(l10n?.portalDiscover ?? 'Find a workspace'),
             ),
           ],
         ),

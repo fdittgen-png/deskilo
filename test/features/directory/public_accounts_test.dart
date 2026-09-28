@@ -13,6 +13,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:go_router/go_router.dart';
+import 'package:deskilo/features/auth/presentation/screens/auth_screen.dart';
 import 'package:deskilo/features/directory/presentation/directory_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -53,6 +55,40 @@ class _BlankTiles extends TileProvider {
 }
 
 void main() {
+  testWidgets(
+    'signed-out visitor can open public discovery from the existing sign-in form',
+    (tester) async {
+      final router = GoRouter(
+        initialLocation: '/auth',
+        routes: [
+          GoRoute(path: '/auth', builder: (_, state) => const AuthScreen()),
+          GoRoute(
+            path: '/discover',
+            builder: (_, state) => const DirectoryScreen(),
+          ),
+        ],
+      );
+      addTearDown(router.dispose);
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: standardTestOverrides(auth: FakeAuthRepository()),
+          child: MaterialApp.router(
+            routerConfig: router,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final entry = find.byKey(const ValueKey('auth-discover'));
+      await tester.ensureVisible(entry);
+      await tester.tap(entry);
+      await tester.pumpAndSettle();
+      expect(find.byType(DirectoryScreen), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
   testWidgets(
     'map marker selects its public workspace without a network request',
     (tester) async {

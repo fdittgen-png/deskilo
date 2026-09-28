@@ -154,6 +154,7 @@ void main() {
       'recordingPrivacy': true,
       'memberAccountMenu': true,
       'mcpAccess': true,
+      'publicListings': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);
