@@ -111,8 +111,12 @@ final class ConfirmationAnswersProvider
 String _$confirmationAnswersHash() =>
     r'180a70cf82113a7909bf2a4ee916e95558e5f58f';
 
+/// #1625 — an answer for another confirmation is refused, not shown.
+
 @ProviderFor(actionConfirmation)
 final actionConfirmationProvider = ActionConfirmationFamily._();
+
+/// #1625 — an answer for another confirmation is refused, not shown.
 
 final class ActionConfirmationProvider
     extends
@@ -124,6 +128,7 @@ final class ActionConfirmationProvider
     with
         $FutureModifier<ActionConfirmation>,
         $FutureProvider<ActionConfirmation> {
+  /// #1625 — an answer for another confirmation is refused, not shown.
   ActionConfirmationProvider._({
     required ActionConfirmationFamily super.from,
     required String super.argument,
@@ -169,7 +174,9 @@ final class ActionConfirmationProvider
 }
 
 String _$actionConfirmationHash() =>
-    r'1446a08934cd8f33ef8aba6dcd0bf78271df3c01';
+    r'5903ed13bedc54e21914156370a146e43899153c';
+
+/// #1625 — an answer for another confirmation is refused, not shown.
 
 final class ActionConfirmationFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ActionConfirmation>, String> {
@@ -181,6 +188,8 @@ final class ActionConfirmationFamily extends $Family
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
+
+  /// #1625 — an answer for another confirmation is refused, not shown.
 
   ActionConfirmationProvider call(String id) =>
       ActionConfirmationProvider._(argument: id, from: this);
@@ -485,11 +494,13 @@ String _$mcpAdminRepositoryHash() =>
     r'd78751f105599de23ce6bd057e3a900468df1ba5';
 
 /// The owner's policy for one workspace, as the server holds it now.
+/// #1625 — an answer for another workspace is refused, not shown.
 
 @ProviderFor(mcpPolicy)
 final mcpPolicyProvider = McpPolicyFamily._();
 
 /// The owner's policy for one workspace, as the server holds it now.
+/// #1625 — an answer for another workspace is refused, not shown.
 
 final class McpPolicyProvider
     extends
@@ -500,6 +511,7 @@ final class McpPolicyProvider
         >
     with $FutureModifier<McpPolicy>, $FutureProvider<McpPolicy> {
   /// The owner's policy for one workspace, as the server holds it now.
+  /// #1625 — an answer for another workspace is refused, not shown.
   McpPolicyProvider._({
     required McpPolicyFamily super.from,
     required String super.argument,
@@ -543,9 +555,10 @@ final class McpPolicyProvider
   }
 }
 
-String _$mcpPolicyHash() => r'db094c2207d37221f6b29b34a52574efb23c8613';
+String _$mcpPolicyHash() => r'b107dd04ee9bfc2c472f50ef5458a962d29b597b';
 
 /// The owner's policy for one workspace, as the server holds it now.
+/// #1625 — an answer for another workspace is refused, not shown.
 
 final class McpPolicyFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<McpPolicy>, String> {
@@ -559,6 +572,7 @@ final class McpPolicyFamily extends $Family
       );
 
   /// The owner's policy for one workspace, as the server holds it now.
+  /// #1625 — an answer for another workspace is refused, not shown.
 
   McpPolicyProvider call(String workspaceId) =>
       McpPolicyProvider._(argument: workspaceId, from: this);
