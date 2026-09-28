@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0304 (#1645) -- a named display field leaves the database only when
+-- 0308 (#1645) -- a named display field leaves the database only when
 -- every party that may withhold it agreed, now:
 --
 --   installation maximum (a database administrator, mcp_disclosure_maximum)
@@ -19,7 +19,7 @@
 -- is refused for an unknown field, for a policy above the maximum, and
 -- for consent above what the policy and the maximum offer. Lowering a
 -- layer takes effect on the next answer, and a replay is re-projected
--- through the CURRENT layers. (0302 and 0303 are other changes in flight.)
+-- through the CURRENT layers.
 
 -- GENERATED from contracts/mcp/operations.json by tool/mcp_contract/render.dart
 -- (renderMcpCatalogueSql); mcp_contract_test fails until this is verbatim.
@@ -535,11 +535,11 @@ begin
     $a$      -- #1645 — and through the CURRENT disclosure layers.
       public.mcp_project_data(p_operation, v_prior.outcome->'data',
         public.mcp_disclosed_fields(p_operation, p_workspace_id))));$a$);
-  if v_next is null then raise exception '0304: replay anchor not found'; end if;
+  if v_next is null then raise exception '0308: replay anchor not found'; end if;
   execute v_next;
 end
 $migration$;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(304);
+select public.set_deskilo_schema_version(308);

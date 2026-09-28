@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #1645 / 0304: a seat's name leaves the database only when the
+-- #1645 / 0308: a seat's name leaves the database only when the
 -- installation maximum, the workspace policy and the person's consent for
 -- this client and workspace all name it, and only as the native read
 -- returned it. Each negative case removes ONE layer; workspace A never
