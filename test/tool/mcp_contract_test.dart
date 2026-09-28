@@ -139,6 +139,30 @@ void main() {
     });
   });
 
+  test('#1644 every output field is classified, and only operational ones leave by default', () {
+    final contract = source();
+    final classes = Map<String, dynamic>.from(contract['output_fields'] as Map);
+    for (final entry in classes.entries) {
+      final c = (entry.value as Map)['class'];
+      expect(['operational', 'display', 'never'], contains(c), reason: '${entry.key} has class $c');
+      expect('${(entry.value as Map)['purpose'] ?? ''}', isNotEmpty, reason: '${entry.key} needs a purpose');
+    }
+    for (final op in (contract['operations'] as List).cast<Map<String, dynamic>>()) {
+      for (final f in op['output'] as List) {
+        expect(classes, contains(f), reason: '${op['id']} emits $f, which no class covers');
+      }
+      final allowed = mcpAllowedOutput(contract, Map<String, dynamic>.from(op));
+      for (final f in allowed) {
+        expect((classes[f] as Map)['class'], 'operational', reason: '${op['id']} would let $f out');
+      }
+    }
+    // The seat's label can name a person: never in an answer by default.
+    final availability = (contract['operations'] as List)
+        .cast<Map<String, dynamic>>()
+        .firstWhere((o) => o['id'] == 'get_availability');
+    expect(mcpAllowedOutput(contract, Map<String, dynamic>.from(availability)), isNot(contains('name')));
+  });
+
   test('the latest migration carries the generated catalogue verbatim', () {
     final migrations = Directory('supabase/migrations')
         .listSync()

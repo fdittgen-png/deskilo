@@ -65,7 +65,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
     fields: {
       'workspace_id': McpField(McpFieldType.uuid, required: true),
     },
-    output: ['operations', 'unavailable'],
+    output: ['operations', 'target_ceiling', 'eligible_until'],
   ),
   'get_availability': McpOperationSpec(
     id: 'get_availability',
@@ -86,7 +86,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'cursor': McpField(McpFieldType.text, maxLength: 400),
       'limit': McpField(McpFieldType.integer, min: 1, max: 100),
     },
-    output: ['places', 'window'],
+    output: ['window', 'starts_at', 'ends_at', 'observed_at', 'items', 'seat_id', 'name', 'free', 'next_cursor', 'not_checked'],
   ),
   'list_my_reservations': McpOperationSpec(
     id: 'list_my_reservations',
@@ -107,7 +107,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'limit': McpField(McpFieldType.integer, min: 1, max: 100),
       'cursor': McpField(McpFieldType.text, maxLength: 400),
     },
-    output: ['reservation_id', 'place', 'starts_at', 'ends_at', 'status'],
+    output: ['items', 'reservation_id', 'seat_id', 'desk_id', 'office_id', 'level_id', 'starts_at', 'ends_at', 'status', 'next_cursor'],
   ),
   'get_my_statement': McpOperationSpec(
     id: 'get_my_statement',
@@ -126,7 +126,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'member_id': McpField(McpFieldType.uuid, required: true, param: 'p_member_id'),
       'period': McpField(McpFieldType.month, required: true, param: 'p_period'),
     },
-    output: ['lines', 'total_cents', 'currency'],
+    output: ['period', 'fee_cents', 'open_days', 'negotiated', 'active', 'valid_from', 'discount_percent', 'default_fee_cents', 'overage_fee_cents', 'default_overage_fee_cents', 'balance_cents', 'credits_cents', 'overage_cents', 'overage_policy', 'used_half_days', 'extra_half_days', 'subscription_pct', 'granted_half_days', 'included_half_days', 'overage_rate_cents', 'remaining_half_days', 'desk_supplement_cents', 'level_supplement_cents', 'office_supplement_cents', 'accessory_supplement_cents', 'accessory_supplement_by_rate', 'vat_percent', 'amount_cents'],
   ),
   'list_my_invoices': McpOperationSpec(
     id: 'list_my_invoices',
@@ -145,7 +145,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'limit': McpField(McpFieldType.integer, min: 1, max: 100),
       'cursor': McpField(McpFieldType.text, maxLength: 400),
     },
-    output: ['invoice_id', 'number', 'period', 'total_cents', 'status'],
+    output: ['items', 'invoice_id', 'number', 'period', 'kind', 'total_cents', 'currency', 'issued_at', 'voided', 'next_cursor'],
   ),
   'create_reservation': McpOperationSpec(
     id: 'create_reservation',
@@ -373,7 +373,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'limit': McpField(McpFieldType.integer, min: 1, max: 100),
       'cursor': McpField(McpFieldType.text, maxLength: 400),
     },
-    output: ['event_id', 'type', 'requested_at', 'summary'],
+    output: ['items', 'event_id', 'type', 'requested_at', 'mine', 'next_cursor'],
   ),
   'get_validation': McpOperationSpec(
     id: 'get_validation',
@@ -391,7 +391,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'workspace_id': McpField(McpFieldType.uuid, required: true),
       'event_id': McpField(McpFieldType.uuid, required: true),
     },
-    output: ['event_id', 'type', 'requested_at', 'summary', 'decisions'],
+    output: ['event_id', 'type', 'status', 'requested_at', 'decisions', 'can_respond', 'reason'],
   ),
   'respond_to_validation': McpOperationSpec(
     id: 'respond_to_validation',

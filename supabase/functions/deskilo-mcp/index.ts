@@ -28,6 +28,7 @@ import {
   MCP_FORBIDDEN_INPUTS,
   MCP_INPUT_SCHEMAS,
   MCP_OPERATIONS,
+  MCP_OUTPUT_ALLOWED,
   MCP_TOOL_PREFIX,
   McpOperationId,
 } from "../_shared/mcp_contract.ts";
@@ -90,7 +91,27 @@ export function refusedInput(op: McpOperationId, args: Record<string, unknown>):
   return null;
 }
 
-function toolResult(envelope: Record<string, unknown>) {
+/**
+ * #1644 — the database already projects every answer; this repeats the
+ * same allow-list defensively, recursively, so a field the contract does
+ * not classify as operational never reaches the assistant from here.
+ */
+export function projectData(op: McpOperationId, value: unknown): unknown {
+  const allowed = new Set(MCP_OUTPUT_ALLOWED[op] ?? []);
+  const walk = (v: unknown): unknown => {
+    if (Array.isArray(v)) return v.map(walk);
+    if (v === null || typeof v !== "object") return v;
+    const out: Record<string, unknown> = {};
+    for (const [k, inner] of Object.entries(v as Record<string, unknown>)) {
+      if (allowed.has(k)) out[k] = walk(inner);
+    }
+    return out;
+  };
+  return walk(value);
+}
+
+function toolResult(op: McpOperationId, raw: Record<string, unknown>) {
+  const envelope = raw.data === undefined ? raw : { ...raw, data: projectData(op, raw.data) };
   const status = String(envelope.status ?? "");
   const text = JSON.stringify(envelope);
   if (text.length > LIMITS.outputBytes) {
@@ -163,7 +184,7 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
       // Never the database's own words: they can name tables and values.
       return { isError: true, content: [{ type: "text", text: "the request could not be processed" }] };
     }
-    return toolResult(data as Record<string, unknown>);
+    return toolResult(op, data as Record<string, unknown>);
   });
 
   return server;
