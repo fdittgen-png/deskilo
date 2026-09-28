@@ -94,6 +94,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
     <p class="note" data-i18n="statusNote">As of 27 September 2026. Features still being built are not listed as available.</p>
   </section>
 
+  <section aria-labelledby="h-caps">
+    <h2 id="h-caps" data-i18n="capsTitle">What it does today</h2>
+    <table>
+      <thead><tr><th data-i18n="capsName">Capability</th><th data-i18n="capsState">State</th></tr></thead>
+      <tbody id="caps"></tbody>
+    </table>
+    <p class="note" data-i18n="capsNote">Generated from the project’s capability evidence. A test that passes is not a certification.</p>
+  </section>
+
   <section aria-labelledby="h-roles">
     <h2 id="h-roles" data-i18n="rolesTitle">Who is responsible for what</h2>
     <ul>
@@ -131,6 +140,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
         <label><span data-i18n="assistantTokens">Assistant tokens</span><input name="assistant_tokens" inputmode="numeric"></label>
         <label><span data-i18n="assistantPrice">Price per million tokens</span><input name="assistant_price" inputmode="decimal"></label>
       </div></fieldset>
+      <fieldset><legend data-i18n="foreignTitle">A cost in another currency</legend><div class="grid">
+        <label><span data-i18n="foreignAmount">Monthly amount</span><input name="foreign_amount" inputmode="decimal"></label>
+        <label><span data-i18n="foreignCurrency">Its currency (ISO code)</span><input name="foreign_currency" maxlength="3" autocomplete="off"></label>
+        <label><span data-i18n="foreignRate">Rate: 1 unit of it in the scenario currency</span><input name="foreign_rate" inputmode="decimal"></label>
+        <label><span data-i18n="foreignDate">Rate date</span><input name="foreign_date" type="date"></label>
+        <label><span data-i18n="foreignSource">Where the rate comes from</span><input name="foreign_source" autocomplete="off"></label>
+      </div><p class="note" data-i18n="foreignNote">The rate is yours: nothing is looked up. Without a valid rate, date and source this cost stays out of the total.</p></fieldset>
       <div id="planner-buttons" class="actions">
         <button type="button" id="save" data-i18n="save">Save scenario</button>
         <label class="note"><span data-i18n="load">Load a scenario</span> <input type="file" id="load" accept="application/json"></label>

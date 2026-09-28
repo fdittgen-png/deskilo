@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1634 — validates `docs/product/capabilities.json` and writes the
-// capability page and the release artifact from it.
+// capability page, the release artifact and (#1635) the evaluation page's
+// module from it.
 //
 //   dart run tool/capability_evidence.dart          # rewrite the outputs
 //   dart run tool/capability_evidence.dart --check  # exit 1 on drift
@@ -37,6 +38,7 @@ void main(List<String> args) {
   for (final (path, out) in [
     (pagePath, renderPage(projection)),
     (releasePath, renderRelease(projection)),
+    (webPath, renderWeb(projection)),
   ]) {
     final f = File(path);
     if (out == (f.existsSync() ? f.readAsStringSync() : null)) continue;

@@ -6900,6 +6900,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get libraryProcessTechnical => 'Technique';
 
   @override
+  String get templatesLoadFailed => 'Les modèles n’ont pas pu être chargés.';
+
+  @override
+  String get onboardingTemplatesFailedEmpty =>
+      'Les modèles n’ont pas pu être chargés : cet espace démarrerait vide. Revenez en arrière pour réessayer.';
+
+  @override
+  String templateResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count modèles affichés',
+      one: '1 modèle affiché',
+      zero: 'Aucun modèle affiché',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get localSlotLegalIdentity =>
       'Votre identité légale et votre adresse (pour les factures)';
 
@@ -11590,6 +11609,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get templateWidenConfirm => 'Rendre lisible';
 
   @override
+  String get templateProfileFull => 'Profil de configuration complet';
+
+  @override
+  String templateProfileSelected(String chosen, String total) {
+    return 'Groupes choisis : $chosen sur $total';
+  }
+
+  @override
+  String get templatePublishLocalNeeds =>
+      'Un espace qui l’applique les configurera lui-même :';
+
+  @override
   String get libraryInvitationTexts => 'Textes d\'invitation';
 
   @override
@@ -11644,6 +11675,24 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get workbookWide =>
       'Catalogs, RolePermissions, Validations et Fields montrent une valeur là où le modèle la fixe, et son état sinon';
+
+  @override
+  String get workbookExportTitle => 'Export du classeur';
+
+  @override
+  String workbookExportReading(String done, String total) {
+    return 'Lecture des modèles : $done sur $total';
+  }
+
+  @override
+  String get workbookExportBuilding => 'Construction du classeur…';
+
+  @override
+  String get workbookExportSaving => 'Choisissez où l’enregistrer…';
+
+  @override
+  String get workbookExportCancelled =>
+      'Export annulé. Rien n’a été enregistré.';
 
   @override
   String get themeTitle => 'Thème';

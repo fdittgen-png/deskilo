@@ -6832,6 +6832,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get libraryProcessTechnical => 'Technical';
 
   @override
+  String get templatesLoadFailed => 'The templates could not be loaded.';
+
+  @override
+  String get onboardingTemplatesFailedEmpty =>
+      'The templates could not be loaded, so this space would start empty. Go back to try again.';
+
+  @override
+  String templateResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count templates shown',
+      one: '1 template shown',
+      zero: 'No template shown',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get localSlotLegalIdentity =>
       'Your legal identity and address (for invoices)';
 
@@ -11473,6 +11492,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get templateWidenConfirm => 'Make readable';
 
   @override
+  String get templateProfileFull => 'Full configuration profile';
+
+  @override
+  String templateProfileSelected(String chosen, String total) {
+    return 'Selected groups: $chosen of $total';
+  }
+
+  @override
+  String get templatePublishLocalNeeds =>
+      'A space that applies it will set these up itself:';
+
+  @override
   String get libraryInvitationTexts => 'Invitation texts';
 
   @override
@@ -11527,6 +11558,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get workbookWide =>
       'Catalogs, RolePermissions, Validations and Fields show a value where the template sets it, and its state otherwise';
+
+  @override
+  String get workbookExportTitle => 'Exporting the workbook';
+
+  @override
+  String workbookExportReading(String done, String total) {
+    return 'Reading templates: $done of $total';
+  }
+
+  @override
+  String get workbookExportBuilding => 'Building the workbook…';
+
+  @override
+  String get workbookExportSaving => 'Choose where to save it…';
+
+  @override
+  String get workbookExportCancelled => 'Export cancelled. Nothing was saved.';
 
   @override
   String get themeTitle => 'Theme';
