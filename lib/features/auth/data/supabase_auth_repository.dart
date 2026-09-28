@@ -342,6 +342,7 @@ class SupabaseAuthRepository implements AuthRepository {
   Future<void> signInWithSocial(SocialProvider provider) async {
     await _client.auth.signInWithOAuth(
       _oauth(provider),
+      scopes: provider == SocialProvider.microsoft ? 'email' : null,
       redirectTo: _redirect,
       authScreenLaunchMode: LaunchMode.externalApplication,
     );
@@ -360,6 +361,7 @@ class SupabaseAuthRepository implements AuthRepository {
   Future<void> linkSocial(SocialProvider provider) async {
     await _client.auth.linkIdentity(
       _oauth(provider),
+      scopes: provider == SocialProvider.microsoft ? 'email' : null,
       redirectTo: _redirect,
       authScreenLaunchMode: LaunchMode.externalApplication,
     );

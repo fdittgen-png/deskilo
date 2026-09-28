@@ -35,6 +35,7 @@ public.deskilo_schema_version.mcp_delegated_deny
 public.desks.desks_select
 public.desks.desks_write
 public.desks.mcp_delegated_deny
+public.directory_people.mcp_delegated_deny
 public.einvoice_credentials.mcp_delegated_deny
 public.event_decisions.event_decisions_select
 public.event_decisions.mcp_delegated_deny
@@ -92,6 +93,7 @@ public.member_credits.member_credits_select
 public.member_notes.mcp_delegated_deny
 public.member_notes.member_notes_delete
 public.member_notes.member_notes_select
+public.member_preference_overrides.mcp_delegated_deny
 public.members.mcp_delegated_deny
 public.members.members_delete_owner
 public.members.members_select

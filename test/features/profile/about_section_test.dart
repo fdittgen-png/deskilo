@@ -46,6 +46,10 @@ void main() {
     expect(find.text('Support this project'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('about-paypal')));
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('about-revolut')), 200,
+      scrollable: find.byType(Scrollable).last,
+    );
     await tester.tap(find.byKey(const ValueKey('about-revolut')));
     await tester.tap(find.byKey(const ValueKey('about-source')));
     await tester.pump();

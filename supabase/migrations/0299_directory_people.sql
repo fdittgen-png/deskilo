@@ -14,6 +14,9 @@ create index directory_people_merged_idx on public.directory_people(merged_into)
   where merged_into is not null;
 alter table public.directory_people enable row level security;
 revoke all on public.directory_people from public, anon, authenticated;
+create policy mcp_delegated_deny on public.directory_people
+  as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
 alter table public.profiles add column person_id uuid
   references public.directory_people(id);
@@ -55,6 +58,9 @@ create table public.member_preference_overrides (
 select public.ensure_system_columns('member_preference_overrides');
 alter table public.member_preference_overrides enable row level security;
 revoke all on public.member_preference_overrides from public, anon, authenticated;
+create policy mcp_delegated_deny on public.member_preference_overrides
+  as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
 -- The new key is always server-derived, including writes by older clients.
 create function public.profile_directory_person() returns trigger
