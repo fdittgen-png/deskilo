@@ -56,7 +56,9 @@ Future<List<Workspace>> myWorkspaces(Ref ref) async {
 /// from the session, not from a membership row, so a membership that
 /// could not be loaded still has an account to remember its answer for.
 @Riverpod(keepAlive: true)
-String? currentAccountId(Ref ref) => ref.watch(authStateProvider).value;
+String? currentAccountId(Ref ref) => ref.watch(authStateProvider).hasValue
+    ? ref.watch(authStateProvider).value
+    : ref.watch(authRepositoryProvider).currentUserId;
 
 /// The persisted active-profile choice (#89). At START-UP the user's
 /// DEFAULT profile wins when one is checked (#322); in-session switches

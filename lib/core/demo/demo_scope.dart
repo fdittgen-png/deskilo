@@ -28,6 +28,8 @@ import '../../features/workspace/providers/local_setup_providers.dart';
 import '../../features/workspace/providers/template_search_providers.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/oauth_consent_repository.dart';
+import 'data/workbook_origin_repository.dart';
+import '../../features/workspace/application/template_compare.dart';
 import '../../features/auth/providers/oauth_consent_providers.dart';
 import 'data/action_confirmation_repository.dart';
 import 'data/local_setup_repository.dart';
@@ -91,6 +93,7 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       // is, which is what makes an external effect impossible rather
       // than refused.
       authRepositoryProvider.overrideWithValue(fixture.auth),
+      workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
       oauthConsentRepositoryProvider.overrideWithValue(FakeOAuthConsentRepository()),
       // #1647 — Demo binds no identity: the visitor is not a Deskilo user.
       identityBindingRepositoryProvider
@@ -200,6 +203,7 @@ const Set<String> demoOverriddenProviders = {
   'authRepositoryProvider',
   'identityBindingRepositoryProvider',
   'oauthConsentRepositoryProvider',
+  'workbookOriginRepositoryProvider',
   'actionConfirmationRepositoryProvider',
   'mcpConnectionRepositoryProvider',
   'mcpAdminRepositoryProvider',

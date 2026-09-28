@@ -149,7 +149,7 @@ final class CurrentAccountIdProvider
   }
 }
 
-String _$currentAccountIdHash() => r'1f690b2d3a9dd0efc18bbc17c70099a477dbcf87';
+String _$currentAccountIdHash() => r'0e58676f400e0be2643ef2cd4e24f43767217634';
 
 /// The persisted active-profile choice (#89). At START-UP the user's
 /// DEFAULT profile wins when one is checked (#322); in-session switches

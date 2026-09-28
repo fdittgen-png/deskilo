@@ -10,6 +10,7 @@ import 'package:archive/archive.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/workspace/application/template_workbook.dart';
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
+import 'package:deskilo/core/demo/data/workbook_origin_repository.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
@@ -178,7 +179,7 @@ void main() {
     }
 
     final seen = <String>[];
-    final export = TemplateWorkbookExport(repo, saver);
+    final export = TemplateWorkbookExport(repo, saver, origin: FakeWorkbookOriginRepository());
     await export.export(
       const ['tpl-alpha', 'tpl-beta'],
       now: DateTime.utc(2026, 9, 28),
