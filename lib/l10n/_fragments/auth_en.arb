@@ -179,10 +179,25 @@
   },
   "authJoinHint": "Create your account or sign in first — you'll paste your invitation right after.",
   "@authJoinHint": {
-    "description": "Sign-in screen: banner after tapping Join by invitation (#1650) \u2014 the invitation is pasted after sign-in, never stored"
+    "description": "Sign-in screen: banner after tapping Join by invitation (#1650) — the invitation is pasted after sign-in, never stored"
   },
   "authConnectServer": "Connect an organisation's server",
   "@authConnectServer": {
     "description": "Sign-in screen: secondary link to the Server screen (#1650); the wizard on that screen covers setting one up"
+  },
+  "identityConsentTitle": "Continue with Deskilo",
+  "identityConsentAsks": "Use your Deskilo identity to sign in to {host}.",
+  "identityConsentPurpose": "Workspace and assistant access are approved separately.",
+  "identityConsentUnavailable": "This sign-in request is unavailable. Return to the destination and start again.",
+  "identityConsentReturning": "Returning to sign-in…",
+  "identityConsentReturnFailed": "Could not open the destination.",
+  "identityConsentCompleting": "Saving your choice…",
+  "@identityConsentAsks": {
+    "description": "Identity-only consent names the exact destination host.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -20,9 +20,11 @@ LinkLauncher linkLauncher(Ref ref) => (uri) async {
       try {
         return await launchUrl(uri, mode: LaunchMode.externalApplication);
       } catch (e, st) {
-        debugPrint('link launch failed ($uri): $e\n$st');
+        // OAuth return URLs carry one-time credentials. Platform exceptions
+        // can repeat the entire URL, so neither belongs in a diagnostic.
+        debugPrint('link launch failed (${e.runtimeType})\n$st');
         TraceLogger.instance
-            .error('links', 'link launch failed', error: e, stackTrace: st);
+            .error('links', 'link launch failed', error: e.runtimeType, stackTrace: st);
         return false;
       }
     };

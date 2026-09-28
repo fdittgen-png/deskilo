@@ -168,6 +168,21 @@
   "authJoinByInvitation": "Entra con un invito",
   "authJoinHint": "Crea prima il tuo account o accedi: incollerai l'invito subito dopo.",
   "authConnectServer": "Collegarsi al server di un'organizzazione",
+  "identityConsentTitle": "Continua con Deskilo",
+  "identityConsentAsks": "Usa la tua identità Deskilo per accedere a {host}.",
+  "identityConsentPurpose": "L’accesso agli spazi e agli assistenti viene approvato separatamente.",
+  "identityConsentUnavailable": "Questa richiesta di accesso non è disponibile. Torna alla destinazione e ricomincia.",
+  "identityConsentReturning": "Ritorno all’accesso…",
+  "identityConsentReturnFailed": "Impossibile aprire la destinazione.",
+  "identityConsentCompleting": "Salvataggio della scelta…",
+  "@identityConsentAsks": {
+    "description": "Identity-only consent names the exact destination host.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "availabilityTitle": "Disponibilità",
   "availabilityOpenWeekdays": "Giorni di apertura",
   "availabilityClosureDays": "Giorni di chiusura",

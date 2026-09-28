@@ -897,6 +897,7 @@ routine public.gen_invite_code() -> text | function | invoker | volatile | exec:
 routine public.generate_closure_days(p_workspace_id uuid, p_country text, p_year integer, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1ab7539721fe
 routine public.grant_database_admin_internal(p_target uuid, p_can_provision boolean, p_granted_by text) -> jsonb | function | definer | volatile | exec:service_role | body:f424674c09a4
 routine public.grant_workspace_template(p_template_id uuid, p_email text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:234a872cde5d
+routine public.guard_oauth_client_purpose() -> trigger | function | invoker | volatile | exec: | body:a18b6684527b
 routine public.guarded_role_permissions(p_workspace_id uuid, p_incoming jsonb, p_current jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e2c13fd7d108
 routine public.handle_new_user() -> trigger | function | definer | volatile | exec:service_role | body:283ccda0aedd
 routine public.has_badge_pin() -> boolean | function | definer | stable | exec:authenticated,service_role | body:7958ad5866ab
@@ -1018,6 +1019,7 @@ routine public.number_sequence_format(p_workspace_id uuid, p_seq number_sequence
 routine public.number_sequence_pair_valid(p_date_part text, p_reset text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:38936e7559ec
 routine public.number_sequence_period_key(p_workspace_id uuid, p_reset text, p_at timestamp with time zone) -> text | function | invoker | stable | exec:authenticated,service_role | body:888b4e7bfd8a
 routine public.number_sequence_restarts(p_stored text, p_current text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:31eb5248e9ec
+routine public.oauth_authorization_context(p_authorization_id text) -> jsonb | function | definer | stable | exec:authenticated | body:72d2dfa1d588
 routine public.open_payment_intent(p_workspace_id uuid, p_member_id uuid, p_provider text, p_period text, p_amount_cents integer, p_currency text) -> TABLE(id uuid, reference text) | function | definer | volatile | exec:authenticated,service_role | body:1e094dd4a232
 routine public.operator_approve_mcp_client(p_client_id text, p_name text, p_active boolean) -> jsonb | function | definer | volatile | exec:service_role | body:7edcf1c6a5bc
 routine public.operator_grant_database_admin(p_target uuid, p_can_provision boolean) -> jsonb | function | definer | volatile | exec:service_role | body:3b3a6c1aec00
@@ -1248,6 +1250,7 @@ trigger identity_authority.zz_system_columns_stamp CREATE TRIGGER zz_system_colu
 trigger identity_bindings.identity_binding_revoked_cascade CREATE TRIGGER identity_binding_revoked_cascade AFTER UPDATE OF status ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION identity_binding_revoked_cascade()
 trigger identity_bindings.identity_bindings_immutable CREATE TRIGGER identity_bindings_immutable BEFORE UPDATE ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION identity_bindings_immutable()
 trigger identity_bindings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger identity_federation_clients.guard_oauth_client_purpose CREATE TRIGGER guard_oauth_client_purpose BEFORE INSERT OR UPDATE ON public.identity_federation_clients FOR EACH ROW EXECUTE FUNCTION guard_oauth_client_purpose()
 trigger identity_federation_clients.protect_identity_federation_client CREATE TRIGGER protect_identity_federation_client BEFORE DELETE OR UPDATE ON public.identity_federation_clients FOR EACH ROW EXECUTE FUNCTION protect_identity_federation_client()
 trigger identity_federation_clients.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.identity_federation_clients FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger installation_identity.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.installation_identity FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -1263,6 +1266,7 @@ trigger ledger_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_
 trigger levels.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.levels FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger managed_identities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.managed_identities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_action_confirmations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_action_confirmations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger mcp_clients.guard_oauth_client_purpose CREATE TRIGGER guard_oauth_client_purpose BEFORE INSERT OR UPDATE ON public.mcp_clients FOR EACH ROW EXECUTE FUNCTION guard_oauth_client_purpose()
 trigger mcp_clients.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_clients FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_connection_preparations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_connection_preparations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_connection_scopes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_connection_scopes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

@@ -454,6 +454,21 @@
   "@authConnectServer": {
     "description": "Sign-in screen: secondary link to the Server screen (#1650); the wizard on that screen covers setting one up"
   },
+  "identityConsentTitle": "Continue with Deskilo",
+  "identityConsentAsks": "Use your Deskilo identity to sign in to {host}.",
+  "identityConsentPurpose": "Workspace and assistant access are approved separately.",
+  "identityConsentUnavailable": "This sign-in request is unavailable. Return to the destination and start again.",
+  "identityConsentReturning": "Returning to sign-in…",
+  "identityConsentReturnFailed": "Could not open the destination.",
+  "identityConsentCompleting": "Saving your choice…",
+  "@identityConsentAsks": {
+    "description": "Identity-only consent names the exact destination host.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "availabilityTitle": "Availability",
   "@availabilityTitle": {
     "description": "App-bar title of the owner availability editor and its settings tile"

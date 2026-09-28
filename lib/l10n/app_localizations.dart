@@ -698,6 +698,48 @@ abstract class AppLocalizations {
   /// **'Connect an organisation\'s server'**
   String get authConnectServer;
 
+  /// No description provided for @identityConsentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Deskilo'**
+  String get identityConsentTitle;
+
+  /// Identity-only consent names the exact destination host.
+  ///
+  /// In en, this message translates to:
+  /// **'Use your Deskilo identity to sign in to {host}.'**
+  String identityConsentAsks(String host);
+
+  /// No description provided for @identityConsentPurpose.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace and assistant access are approved separately.'**
+  String get identityConsentPurpose;
+
+  /// No description provided for @identityConsentUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in request is unavailable. Return to the destination and start again.'**
+  String get identityConsentUnavailable;
+
+  /// No description provided for @identityConsentReturning.
+  ///
+  /// In en, this message translates to:
+  /// **'Returning to sign-in…'**
+  String get identityConsentReturning;
+
+  /// No description provided for @identityConsentReturnFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the destination.'**
+  String get identityConsentReturnFailed;
+
+  /// No description provided for @identityConsentCompleting.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving your choice…'**
+  String get identityConsentCompleting;
+
   /// App-bar title of the owner availability editor and its settings tile
   ///
   /// In en, this message translates to:

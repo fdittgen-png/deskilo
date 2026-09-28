@@ -350,6 +350,32 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authConnectServer => 'Se connecter au serveur d\'une organisation';
 
   @override
+  String get identityConsentTitle => 'Continuer avec Deskilo';
+
+  @override
+  String identityConsentAsks(String host) {
+    return 'Utilisez votre identité Deskilo pour vous connecter à $host.';
+  }
+
+  @override
+  String get identityConsentPurpose =>
+      'Les accès aux espaces et aux assistants sont approuvés séparément.';
+
+  @override
+  String get identityConsentUnavailable =>
+      'Cette demande de connexion est indisponible. Revenez au site de destination et recommencez.';
+
+  @override
+  String get identityConsentReturning => 'Retour à la connexion…';
+
+  @override
+  String get identityConsentReturnFailed =>
+      'Impossible d’ouvrir la destination.';
+
+  @override
+  String get identityConsentCompleting => 'Enregistrement de votre choix…';
+
+  @override
   String get availabilityTitle => 'Disponibilité';
 
   @override

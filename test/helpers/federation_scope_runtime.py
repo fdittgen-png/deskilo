@@ -61,6 +61,7 @@ try:
     basic='Basic '+base64.b64encode((cid+':'+client['client_secret']).encode()).decode()
     s.sql("select public.operator_register_identity_federation_client('"+cid+"','"+str(uuid.uuid4())+"','http://127.0.0.1:2'); select public.operator_set_identity_federation_client('"+cid+"',true);")
     checks.append('operator_bootstrap_without_app_admin')
+    disabled=False
     def exchange(scope):
         verifier=secrets.token_urlsafe(48)
         challenge=base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).decode().rstrip('=')
@@ -69,6 +70,19 @@ try:
         status,headers,_=raw('GET','/auth/v1/oauth/authorize?'+query)
         assert status in (302,303), 'authorize did not redirect'
         aid=urllib.parse.parse_qs(urllib.parse.urlparse(headers['Location']).query)['authorization_id'][0]
+        # The native consent consumer resolves protected purpose BEFORE Auth
+        # details can auto-approve. Continue raw Auth below even on refusal to
+        # prove the token hook independently prevents bypassing this consumer.
+        context_status,_,context_data=raw('POST','/rest/v1/rpc/oauth_authorization_context',
+            {'p_authorization_id':aid},authorization='Bearer '+native)
+        if scope=='openid profile' and not disabled:
+            context=json.loads(context_data)
+            assert context_status==200 and context['purpose']=='identity_federation'
+            assert context['client_id']==cid and context['local_user_id']==signup['user']['id']
+            assert context['target_auth_url']=='http://127.0.0.1:2'
+            assert not {'state','nonce','authorization_code','code_challenge'} & context.keys()
+        else:
+            assert context_status>=400, 'unsafe consent context was returned'
         details=json.loads(s.request('GET','/auth/v1/oauth/authorizations/'+aid,token=native))
         if 'redirect_url' in details: approved=details
         else:
@@ -110,6 +124,7 @@ try:
         assert status in (401,403)
     checks.append('native_raw_api_passes_identity_access_and_id_tokens_refused')
     s.sql("select public.operator_set_identity_federation_client('"+cid+"',false)")
+    disabled=True
     status,denied,_,_=exchange('openid profile')
     assert status>=400 and 'access_token' not in denied
     checks.append('disabled_client_cannot_issue_new_tokens')
@@ -118,6 +133,7 @@ try:
         authorization=basic,form=True)
     assert status>=400 and 'access_token' not in json.loads(data)
     checks.append('disabled_client_cannot_refresh_existing_session')
+    checks.append('actual_native_consent_context_without_workspace_or_mcp_grant')
     report={'status':'pass','checks':checks,'scope':'disposable_canonical_auth_only','cli':'2.118.0','environment':environment(s),'not_exercised':['target_provider','native_router','hosted_project']}
 finally:
     s.close()
