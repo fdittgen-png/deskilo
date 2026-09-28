@@ -1,0 +1,22 @@
+{
+  "accountActivityTitle": "My consumption and payments",
+  "accountPaymentsTitle": "Payments",
+  "accountActivityScope": "All your profiles on this server, including previous memberships. Currencies are shown separately.",
+  "accountActivityEmpty": "No records to display.",
+  "accountActivityFailed": "Could not load your financial history. Tap to retry.",
+  "accountPaymentConfirmed": "Payment confirmed",
+  "accountInvoiceVoided": "Invoice voided",
+  "accountInvoiceRegrouped": "Included in a settlement invoice",
+  "accountInvoiceIssued": "Invoice issued",
+  "accountUsageCorrected": "Corrected billable usage",
+  "accountUsageMinutes": "{minutes} minutes",
+  "accountPaymentPreference": "Preferred online payment",
+  "accountPaymentAsk": "Choose at checkout",
+  "@accountUsageMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  }
+}

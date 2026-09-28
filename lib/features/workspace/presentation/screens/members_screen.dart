@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../directory/presentation/member_employment_tile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
@@ -65,6 +66,7 @@ class MembersScreen extends ConsumerWidget {
         .read(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.memberReports);
     final actions = <Widget>[
+      if(isOwner||isSelf)MemberEmploymentTile(member:member.id,editable:isOwner),
       // #494 — the standing financial agreement, sent by owner/admin.
       if (reportsOn && !member.isKiosk && active)
         _sheetAction(

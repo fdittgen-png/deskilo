@@ -51,6 +51,7 @@ function cors(origin: string | null): Record<string, string> {
       "Access-Control-Allow-Origin": origin,
       "Access-Control-Allow-Headers": "authorization, content-type, mcp-protocol-version",
       "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Expose-Headers": "WWW-Authenticate",
       Vary: "Origin",
     }
     : {};
@@ -115,13 +116,24 @@ export function projectData(op: McpOperationId, value: unknown): unknown {
   return walk(value);
 }
 
+function boundedResult(envelope: Record<string, unknown>, summary: string, isError = false) {
+  const result = {
+    isError,
+    structuredContent: envelope,
+    content: [
+      { type: "text", text: summary },
+      { type: "text", text: JSON.stringify(envelope) },
+    ],
+  };
+  if (new TextEncoder().encode(JSON.stringify(result)).length > LIMITS.outputBytes) {
+    return { isError: true, content: [{ type: "text", text: "the answer is too large" }] };
+  }
+  return result;
+}
+
 function toolResult(op: McpOperationId, raw: Record<string, unknown>) {
   const envelope = raw.data === undefined ? raw : { ...raw, data: projectData(op, raw.data) };
   const status = String(envelope.status ?? "");
-  const text = JSON.stringify(envelope);
-  if (text.length > LIMITS.outputBytes) {
-    return { isError: true, content: [{ type: "text", text: "the answer is too large" }] };
-  }
   const isError = ["denied", "validation_error", "not_found", "conflict", "rate_limited"].includes(status);
   const summary = status === "pending_validation"
     ? "Submitted: waiting for the workspace's validators. Not completed yet."
@@ -130,7 +142,7 @@ function toolResult(op: McpOperationId, raw: Record<string, unknown>) {
     : status === "completed"
     ? "Done."
     : `Not done: ${(envelope.error as { code?: string } | undefined)?.code ?? status}.`;
-  return { isError, structuredContent: envelope, content: [{ type: "text", text: summary }] };
+  return boundedResult(envelope, summary, isError);
 }
 
 function buildServer(db: SupabaseClient, installation: string, signal: AbortSignal) {
@@ -168,14 +180,19 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
     const refused = refusedInput(op, args);
     if (refused) return { isError: true, content: [{ type: "text", text: refused }] };
     if (op === "list_workspaces") {
+      const limit = args.limit ?? 100;
+      if (typeof limit !== "number" || !Number.isInteger(limit) || limit < 1 || limit > 100) {
+        return { isError: true, content: [{ type: "text", text: "invalid limit" }] };
+      }
       const { data, error } = await db.rpc("mcp_my_operations", { p_installation_id: installation })
         .abortSignal(signal);
       if (error) return { isError: true, content: [{ type: "text", text: "unavailable" }] };
       const workspaces = (data?.workspaces ?? []) as unknown[];
-      return {
-        structuredContent: { workspaces },
-        content: [{ type: "text", text: `${workspaces.length} workspace(s) available.` }],
-      };
+      const visible = workspaces.slice(0, limit);
+      return boundedResult(
+        { workspaces: visible, has_more: workspaces.length > limit },
+        `${visible.length} workspace(s) available.`,
+      );
     }
     const { workspace_id, request_id, ...rest } = args as { workspace_id?: string; request_id?: string };
     const { data, error } = await db.rpc("mcp_execute_v1", {
@@ -193,6 +210,40 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
   });
 
   return server;
+}
+
+/** Stop oversized or stalled bodies before buffering an unbounded request. */
+async function readBody(req: Request, signal: AbortSignal): Promise<string | null> {
+  const reader = req.body?.getReader();
+  if (!reader) return "";
+  const cancel = () => { void reader.cancel().catch(() => {}); };
+  signal.addEventListener("abort", cancel, { once: true });
+  try {
+    signal.throwIfAborted();
+    const chunks: Uint8Array[] = [];
+    let size = 0;
+    while (true) {
+      const { value, done } = await reader.read();
+      signal.throwIfAborted();
+      if (done) break;
+      size += value.byteLength;
+      if (size > LIMITS.inputBytes) {
+        cancel();
+        return null;
+      }
+      chunks.push(value);
+    }
+    const bytes = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+    return new TextDecoder().decode(bytes);
+  } finally {
+    signal.removeEventListener("abort", cancel);
+    reader.releaseLock();
+  }
 }
 
 export async function handle(req: Request): Promise<Response> {
@@ -222,29 +273,34 @@ export async function handle(req: Request): Promise<Response> {
   if (!authorization.startsWith("Bearer ") || delegatedClient(authorization) === null) {
     return unauthorized(req, headers);
   }
-  const raw = await req.text();
-  if (new TextEncoder().encode(raw).length > LIMITS.inputBytes) {
-    return jsonResponse({ error: "payload_too_large" }, 413, headers);
-  }
-  let body: unknown;
-  try {
-    body = JSON.parse(raw);
-  } catch {
-    return jsonResponse({ jsonrpc: "2.0", id: null, error: { code: -32700, message: "Parse error" } }, 400, headers);
-  }
-
-  // Per request: this caller's token, the publishable key, nothing kept.
-  const db = createClient(env("SUPABASE_URL"), env("SUPABASE_ANON_KEY"), {
-    global: { headers: { Authorization: authorization } },
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-  const { data: user, error: userError } = await db.auth.getUser(authorization.slice(7));
-  if (userError || !user?.user) return unauthorized(req, headers);
-
   const controller = new AbortController();
+  const signal = AbortSignal.any([controller.signal, req.signal]);
   const deadline = setTimeout(() => controller.abort(), LIMITS.deadlineMs);
   try {
-    const server = buildServer(db, installation, controller.signal);
+    const raw = await readBody(req, signal);
+    if (raw === null) return jsonResponse({ error: "payload_too_large" }, 413, headers);
+    let body: unknown;
+    try {
+      body = JSON.parse(raw);
+    } catch {
+      return jsonResponse({ jsonrpc: "2.0", id: null, error: { code: -32700, message: "Parse error" } }, 400, headers);
+    }
+
+    // Per request: this caller's token, with one deadline for Auth and RPCs.
+    const db = createClient(env("SUPABASE_URL"), env("SUPABASE_ANON_KEY"), {
+      global: {
+        headers: { Authorization: authorization },
+        fetch: (input, init) => fetch(input, {
+          ...init,
+          signal: init?.signal ? AbortSignal.any([signal, init.signal]) : signal,
+        }),
+      },
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const { data: user, error: userError } = await db.auth.getUser(authorization.slice(7));
+    signal.throwIfAborted();
+    if (userError || !user?.user) return unauthorized(req, headers);
+    const server = buildServer(db, installation, signal);
     const transport = new WebStandardStreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
       enableJsonResponse: true,
@@ -253,9 +309,11 @@ export async function handle(req: Request): Promise<Response> {
     const response = await transport.handleRequest(
       new Request(req.url, { method: "POST", headers: req.headers, body: JSON.stringify(body) }),
     );
+    signal.throwIfAborted();
     for (const [k, v] of Object.entries(headers)) response.headers.set(k, v);
     return response;
   } catch (e) {
+    if (signal.aborted) return jsonResponse({ error: "request_timeout" }, 504, headers);
     console.error("deskilo-mcp failed", e instanceof Error ? e.name : "error");
     return jsonResponse({ jsonrpc: "2.0", id: null, error: { code: -32603, message: "Internal error" } }, 500, headers);
   } finally {

@@ -1,0 +1,22 @@
+{
+  "accountActivityTitle": "Mi consumo y mis pagos",
+  "accountPaymentsTitle": "Pagos",
+  "accountActivityScope": "Todos tus perfiles en este servidor, incluidas las afiliaciones anteriores. Las monedas se muestran por separado.",
+  "accountActivityEmpty": "No hay registros que mostrar.",
+  "accountActivityFailed": "No se pudo cargar tu historial financiero. Toca para reintentar.",
+  "accountPaymentConfirmed": "Pago confirmado",
+  "accountInvoiceVoided": "Factura anulada",
+  "accountInvoiceRegrouped": "Incluido en una factura de liquidación",
+  "accountInvoiceIssued": "Factura emitida",
+  "accountUsageCorrected": "Consumo facturable corregido",
+  "accountUsageMinutes": "{minutes} minutos",
+  "accountPaymentPreference": "Pago en línea preferido",
+  "accountPaymentAsk": "Elegir al pagar",
+  "@accountUsageMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  }
+}

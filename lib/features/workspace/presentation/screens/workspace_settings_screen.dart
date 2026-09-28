@@ -5,6 +5,7 @@ import '../../../../core/l10n/lexicon.dart';
 import 'package:file_selector/file_selector.dart';
 import '../member_labels.dart';
 import 'package:flutter/material.dart';
+import '../../../directory/presentation/admin_visibility_tile.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -1039,6 +1040,8 @@ class _WorkspaceSettingsScreenState
               child: ListView(
                 padding: AppSpacing.gutterAll,
                 children: [
+                  const AdminVisibilityTile(),
+                  if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(title:Text(l10n?.portalPublication??'Public workspace page'),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
                   ..._parametersTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
                   ..._toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),

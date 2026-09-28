@@ -82,6 +82,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accessoriesActive => 'Active';
 
   @override
+  String get accountActivityTitle => 'My consumption and payments';
+
+  @override
+  String get accountPaymentsTitle => 'Payments';
+
+  @override
+  String get accountActivityScope =>
+      'All your profiles on this server, including previous memberships. Currencies are shown separately.';
+
+  @override
+  String get accountActivityEmpty => 'No records to display.';
+
+  @override
+  String get accountActivityFailed =>
+      'Could not load your financial history. Tap to retry.';
+
+  @override
+  String get accountPaymentConfirmed => 'Payment confirmed';
+
+  @override
+  String get accountInvoiceVoided => 'Invoice voided';
+
+  @override
+  String get accountInvoiceRegrouped => 'Included in a settlement invoice';
+
+  @override
+  String get accountInvoiceIssued => 'Invoice issued';
+
+  @override
+  String get accountUsageCorrected => 'Corrected billable usage';
+
+  @override
+  String accountUsageMinutes(int minutes) {
+    return '$minutes minutes';
+  }
+
+  @override
+  String get accountPaymentPreference => 'Preferred online payment';
+
+  @override
+  String get accountPaymentAsk => 'Choose at checkout';
+
+  @override
   String get handoffTitle => 'Before you save';
 
   @override
@@ -173,6 +216,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addressWindowOff => 'No window';
+
+  @override
+  String get applicationsTitle => 'Workspace requests';
+
+  @override
+  String get applicationsEmpty => 'No workspace requests.';
+
+  @override
+  String get applicationPending => 'Awaiting approval';
+
+  @override
+  String get applicationApproved => 'Approved';
+
+  @override
+  String get applicationRefused => 'Refused';
+
+  @override
+  String get applicationAcceptedVote => 'Approved this request';
+
+  @override
+  String get applicationRefusedVote => 'Refused this request';
+
+  @override
+  String get applicationNoMessages => 'No messages yet.';
+
+  @override
+  String get applicationDiscussionHint =>
+      'Your requests and reviewer discussions remain available, even if a request is refused.';
+
+  @override
+  String get applicationDecisionComment => 'Comment visible to the applicant';
+
+  @override
+  String get applicationsLoadFailed =>
+      'Could not load your workspace requests. Please try again.';
+
+  @override
+  String get applicationReplyFailed =>
+      'Your message was not sent. Your draft is kept; please try again.';
 
   @override
   String get invoiceExportBundle => 'Year archive (zip)';
@@ -9061,6 +9143,161 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profilesEmailCopied => 'E-mail copied.';
+
+  @override
+  String get portalActionFailed =>
+      'Could not save this change. Please try again.';
+
+  @override
+  String get portalConnect => 'Connect a server';
+
+  @override
+  String get portalConnections => 'Connected servers';
+
+  @override
+  String get portalDisconnect => 'Disconnect';
+
+  @override
+  String get portalConnectionFailed =>
+      'Could not connect. Check this server and your sign-in details.';
+
+  @override
+  String get portalConnectionsHint =>
+      'Each server uses its own sign-in. Disconnecting removes its saved access from this account on this device.';
+
+  @override
+  String get portalEmailCode => 'Email sign-in code';
+
+  @override
+  String get portalUseCode => 'Use an email code';
+
+  @override
+  String get portalSendCode => 'Send sign-in code';
+
+  @override
+  String get portalSourceUnavailable =>
+      'A server is unavailable. This overview is incomplete. Tap to retry.';
+
+  @override
+  String get portalDiscover => 'Find a workspace';
+
+  @override
+  String get portalRegisterDirectory => 'Publish a server in the directory';
+
+  @override
+  String get portalPublication => 'Public workspace page';
+
+  @override
+  String get portalPublished => 'Visible in the public directory';
+
+  @override
+  String get portalPreview => 'External view';
+
+  @override
+  String get portalSavePreview => 'Save and preview the external view';
+
+  @override
+  String get portalDescription => 'Description';
+
+  @override
+  String get portalAddress => 'Public address';
+
+  @override
+  String get portalEmail => 'Public email';
+
+  @override
+  String get portalPhone => 'Public phone';
+
+  @override
+  String get portalWebsite => 'Website';
+
+  @override
+  String get portalImage => 'Identity image URL';
+
+  @override
+  String get portalPublicPlan => 'Public floor plan';
+
+  @override
+  String get portalPlans => 'Plans and prices';
+
+  @override
+  String get portalLatitude => 'Latitude';
+
+  @override
+  String get portalLongitude => 'Longitude';
+
+  @override
+  String get portalAssociation => 'Association';
+
+  @override
+  String get portalCompany => 'Company';
+
+  @override
+  String get portalPerson => 'Private host';
+
+  @override
+  String get portalOwner => 'Owner';
+
+  @override
+  String get portalAdmin => 'Administrator';
+
+  @override
+  String get portalChat => 'Chat';
+
+  @override
+  String get portalRequestProfile => 'Request a workspace profile';
+
+  @override
+  String get portalRequestSent =>
+      'Request sent. The workspace will review your profile.';
+
+  @override
+  String get portalList => 'List';
+
+  @override
+  String get portalMap => 'Map';
+
+  @override
+  String get portalSearch => 'Search workspaces';
+
+  @override
+  String get portalDirectoryUnavailable =>
+      'Some directories could not be reached. Results are incomplete.';
+
+  @override
+  String get portalNoWorkspaces => 'No published workspaces found.';
+
+  @override
+  String get portalMoreDirectories => 'More directories';
+
+  @override
+  String get portalMessenger => 'Account messenger';
+
+  @override
+  String get portalThisServer => 'This server';
+
+  @override
+  String get portalAvailable => 'Let users find and message my account';
+
+  @override
+  String get portalFindPeople => 'Find available people';
+
+  @override
+  String get portalEmployed => 'Employed by this workspace';
+
+  @override
+  String get portalEmploymentHint =>
+      'Employment does not change access or subscriptions. Salary payments are not enabled.';
+
+  @override
+  String get portalAdminVisible => 'Show me as a public administrator';
+
+  @override
+  String get featurePublicListings => 'Public workspace listing';
+
+  @override
+  String get featurePublicListingsDesc =>
+      'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.';
 
   @override
   String get featuresViewProcesses => 'Processes';

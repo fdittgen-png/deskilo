@@ -8,7 +8,7 @@
 // tool and a forbidden field; and the facade's status reaches the result
 // truthfully (pending is not done).
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { handle, projectData } from "./index.ts";
+import { handle, projectData, LIMITS } from "./index.ts";
 
 function jwt(claims: Record<string, unknown>): string {
   const b = (o: unknown) => btoa(JSON.stringify(o)).replace(/=+$/, "").replace(/\+/g, "-").replace(/\//g, "_");
@@ -23,6 +23,7 @@ const operationsOf: Record<string, string[]> = {
   [ALICE]: ["create_reservation", "get_capabilities"],
   [BOB]: ["get_capabilities"],
 };
+let discoveredWorkspaces: unknown[] = [];
 let envelope: Record<string, unknown> = { schema_version: 1, status: "completed", data: {} };
 
 Deno.env.set("SUPABASE_URL", "https://stub.supabase.test");
@@ -40,7 +41,7 @@ globalThis.fetch = async (input: string | URL | Request, init?: RequestInit) => 
     return Response.json({ id: token === ALICE ? "alice" : "bob", aud: "authenticated" });
   }
   if (url.pathname === "/rest/v1/rpc/mcp_my_operations") {
-    return Response.json({ operations: operationsOf[token] ?? [], workspaces: [] });
+    return Response.json({ operations: operationsOf[token] ?? [], workspaces: discoveredWorkspaces });
   }
   if (url.pathname === "/rest/v1/rpc/mcp_execute_v1") return Response.json(envelope);
   return new Response("not stubbed", { status: 500 });
@@ -195,4 +196,90 @@ Deno.test("#1645 an optional field the database disclosed passes; elsewhere it i
     items: [{ reservation_id: "r1", name: "Alice" }],
   }) as Record<string, unknown>;
   assertEquals(elsewhere, { items: [{ reservation_id: "r1" }] });
+});
+
+Deno.test("browser clients can read the authentication challenge", async () => {
+  const r = await rpc(null, "tools/list", {}, { Origin: "https://app.deskilo.test" });
+  assertEquals(r.status, 401);
+  assert((r.headers.get("Access-Control-Expose-Headers") ?? "").toLowerCase().includes("www-authenticate"));
+});
+
+Deno.test("text-only clients receive the same projected data", async () => {
+  envelope = { status: "completed", data: { window: { starts_at: "2030-01-01", private_note: "hidden" } } };
+  const r = await rpc(ALICE, "tools/call", { name: "deskilo_get_availability", arguments: {} });
+  const json = r.json.result.content.find((c: {text?: string}) => c.text?.startsWith("{"));
+  assert(json);
+  assertEquals(JSON.parse(json.text), r.json.result.structuredContent);
+  assert(!json.text.includes("hidden"));
+});
+
+Deno.test("output limits count UTF-8 bytes, including workspace discovery", async () => {
+  const large = "界".repeat(100_000);
+  envelope = { status: "completed", data: { window: { starts_at: large } } };
+  const r = await rpc(ALICE, "tools/call", { name: "deskilo_get_availability", arguments: {} });
+  assertEquals(r.json.result.isError, true);
+  assertEquals(r.json.result.structuredContent, undefined);
+  discoveredWorkspaces = [{ workspace_id: "w", name: large }];
+  try {
+    const listing = await rpc(ALICE, "tools/call", { name: "deskilo_list_workspaces", arguments: {} });
+    assertEquals(listing.json.result.isError, true);
+    assertEquals(listing.json.result.structuredContent, undefined);
+  } finally { discoveredWorkspaces = []; }
+});
+
+Deno.test("workspace discovery respects the advertised limit", async () => {
+  discoveredWorkspaces = [{ workspace_id: "one" }, { workspace_id: "two" }];
+  try {
+    const r = await rpc(ALICE, "tools/call", { name: "deskilo_list_workspaces", arguments: {limit: 1} });
+    assertEquals(r.json.result.structuredContent.workspaces, [{workspace_id: "one"}]);
+    assertEquals(r.json.result.structuredContent.has_more, true);
+  } finally { discoveredWorkspaces = []; }
+});
+
+Deno.test("oversized streamed requests cancel before reading the whole stream", async () => {
+  let cancelled = false;
+  const body = new ReadableStream<Uint8Array>({
+    start(controller) { controller.enqueue(new Uint8Array(LIMITS.inputBytes + 1)); },
+    pull(controller) { controller.enqueue(new Uint8Array(1)); controller.close(); },
+    cancel() { cancelled = true; },
+  });
+  const r = await handle(new Request("https://stub.supabase.test/functions/v1/deskilo-mcp", {
+    method: "POST", headers: {"content-type": "application/json", Authorization: `Bearer ${ALICE}`}, body,
+  }));
+  assertEquals(r.status, 413);
+  assert(cancelled);
+});
+
+Deno.test("authentication is inside the request deadline and cannot dispatch afterward", async () => {
+  const previousFetch = globalThis.fetch, previousDeadline = LIMITS.deadlineMs;
+  LIMITS.deadlineMs = 10;
+  let authenticated = false;
+  globalThis.fetch = (_input, init) => {
+    assert(init?.signal, "auth fetch must carry the request deadline");
+    authenticated = true;
+    return new Promise((_resolve, reject) => init.signal!.addEventListener("abort", () => reject(new DOMException("Aborted", "AbortError")), { once: true }));
+  };
+  const before = calls.length;
+  try {
+    const r = await rpc(ALICE, "tools/list");
+    assert(authenticated);
+    assertEquals(r.status, 504);
+    assertEquals(calls.length, before);
+  } finally { globalThis.fetch = previousFetch; LIMITS.deadlineMs = previousDeadline; }
+});
+
+Deno.test("stalled request bodies expire before authentication", async () => {
+  const previousDeadline = LIMITS.deadlineMs;
+  LIMITS.deadlineMs = 10;
+  let cancelled = false;
+  const before = calls.length;
+  const body = new ReadableStream<Uint8Array>({ cancel() { cancelled = true; } });
+  try {
+    const r = await handle(new Request("https://stub.supabase.test/functions/v1/deskilo-mcp", {
+      method: "POST", headers: { "content-type": "application/json", Authorization: `Bearer ${ALICE}` }, body,
+    }));
+    assertEquals(r.status, 504);
+    assert(cancelled);
+    assertEquals(calls.length, before);
+  } finally { LIMITS.deadlineMs = previousDeadline; }
 });

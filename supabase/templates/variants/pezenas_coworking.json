@@ -158,6 +158,7 @@
         "planObjectDelete": true,
         "priceNegotiations": false,
         "publicHolidays": true,
+        "publicListings": false,
         "pushNotifications": true,
         "qrBadges": false,
         "recordingPrivacy": false,
