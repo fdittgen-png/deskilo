@@ -757,6 +757,14 @@ constraint workspace_mcp_policy_revisions.workspace_mcp_policy_revisions_saved_b
 constraint workspace_mcp_policy_revisions.workspace_mcp_policy_revisions_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_mcp_policy_revisions.workspace_mcp_policy_revisions_workspace_id_mutation_id_key UNIQUE (workspace_id, mutation_id)
 constraint workspace_mcp_policy_revisions.workspace_mcp_policy_revisions_workspace_id_revision_key UNIQUE (workspace_id, revision)
+constraint workspace_recovery_evidence.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint workspace_recovery_evidence.system_company_present CHECK ((company_id IS NOT NULL))
+constraint workspace_recovery_evidence.workspace_recovery_evidence_kind_check CHECK ((kind = 'export'::text))
+constraint workspace_recovery_evidence.workspace_recovery_evidence_pkey PRIMARY KEY (id)
+constraint workspace_recovery_evidence.workspace_recovery_evidence_recorded_by_fkey FOREIGN KEY (recorded_by) REFERENCES auth.users(id) ON DELETE SET NULL
+constraint workspace_recovery_evidence.workspace_recovery_evidence_row_count_check CHECK ((row_count >= 0))
+constraint workspace_recovery_evidence.workspace_recovery_evidence_sha256_check CHECK ((sha256 ~ '^[0-9a-f]{64}$'::text))
+constraint workspace_recovery_evidence.workspace_recovery_evidence_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_role_members.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint workspace_role_members.system_company_present CHECK ((company_id IS NOT NULL))
 constraint workspace_role_members.workspace_role_members_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
@@ -1076,6 +1084,7 @@ routine public.record_applied_event(p_workspace_id uuid, p_type text, p_actor uu
 routine public.record_invoice_reminder(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:ad0ae7d31f2d
 routine public.record_payment(p_workspace_id uuid, p_member_id uuid, p_amount_cents integer, p_note text, p_method text, p_paid_on date, p_period text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:3244f398d06d
 routine public.record_service_charge(p_workspace_id uuid, p_subject_member_id uuid, p_service_id uuid, p_quantity integer, p_period text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:863d2c166287
+routine public.record_workspace_export(p_workspace_id uuid, p_sha256 text, p_row_count integer) -> workspace_recovery_evidence | function | definer | volatile | exec:authenticated,service_role | body:32f4d263514d
 routine public.register_my_nfc_badge(p_workspace_id uuid, p_uid text, p_label text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:741684565a6f
 routine public.register_nfc_badge(p_workspace_id uuid, p_member_id uuid, p_uid text, p_label text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:4939d344b76b
 routine public.release_invoice_payment(p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:31f5acde6a81
@@ -1234,7 +1243,7 @@ routine public.workspace_default_vat_rate_id(p_workspace_id uuid) -> uuid | func
 routine public.workspace_local_readiness(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:73fd7536d369
 routine public.workspace_mcp_policy_revisions_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:e85c1267373c
 routine public.workspace_owners(p_workspace_id uuid) -> TABLE(member_id uuid, name text, email text) | function | definer | volatile | exec:authenticated,service_role | body:0b62eff662e8
-routine public.workspace_readiness(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3339ed8d168a
+routine public.workspace_readiness(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ae5832ea9bce
 routine public.workspace_roles_export(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:9bfe6a91775f
 routine public.workspace_roles_import(p_workspace_id uuid, p_roles jsonb, p_mode text) -> void | function | definer | volatile | exec:service_role | body:e657070377af
 routine public.workspace_status(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:05ed87a12d72
@@ -1367,6 +1376,7 @@ trigger workspace_field_values.zz_system_columns_stamp CREATE TRIGGER zz_system_
 trigger workspace_mcp_policies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_mcp_policies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_mcp_policy_revisions.workspace_mcp_policy_revisions_immutable CREATE TRIGGER workspace_mcp_policy_revisions_immutable BEFORE UPDATE ON public.workspace_mcp_policy_revisions FOR EACH ROW EXECUTE FUNCTION workspace_mcp_policy_revisions_immutable()
 trigger workspace_mcp_policy_revisions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_mcp_policy_revisions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_recovery_evidence.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_recovery_evidence FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_role_members.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_role_members FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_roles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_roles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_template_applications.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_template_applications FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
