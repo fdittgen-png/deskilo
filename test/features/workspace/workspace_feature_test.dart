@@ -16,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// a login surface. Shipping any of those ON would make the choice for
 /// them silently.
 const Set<WorkspaceFeature> defaultOffFeatures = {
+  WorkspaceFeature.publicListings,
   // #1279 — selling carnets is an offer a workspace makes on purpose.
   WorkspaceFeature.carnets,
   // #1289 — colours are a statement a workspace makes on purpose.
@@ -153,6 +154,7 @@ void main() {
       'recordingPrivacy': true,
       'memberAccountMenu': true,
       'mcpAccess': true,
+      'publicListings': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

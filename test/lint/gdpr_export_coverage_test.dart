@@ -89,6 +89,11 @@ const Map<String, String> _notExported = {
 
 /// What `export_my_data` returns today.
 const Set<String> _exported = {
+  // #1791: private account controls, employment and own conversations.
+  'account_contact_settings', 'member_public_contact', 'member_employment',
+  'account_conversations', 'account_messages', 'public_directory_sources',
+  'workspace_applications', // #1791: account ownership of the subject's requests.
+  'workspace_application_messages', // #1791: own replies and admission discussions.
   'member_preference_overrides', // #1791: own scoped preferences accompany the profile.
   'members',
   // #1287 — which roles this member was given, and when. 0247 adds the

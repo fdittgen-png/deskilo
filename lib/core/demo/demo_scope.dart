@@ -1,4 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/backend/connected_installation_providers.dart';
+import 'package:deskilo/features/directory/providers/directory_providers.dart';
+import 'package:deskilo/core/demo/data/account_activity_repository.dart';
+import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 //
 // #1373 — what makes a `ProviderScope` the Demo environment.
 //
@@ -23,6 +29,8 @@
 // implementation inside the scope. A separate root container replaces
 // providers, not SharedPreferences and not `Supabase.instance`, so the
 // only thing that made them isolated was that nobody had noticed.
+import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
+import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
 import '../../features/workspace/application/creation_intent.dart';
 import '../../features/workspace/providers/local_setup_providers.dart';
 import '../../features/workspace/providers/template_search_providers.dart';
@@ -125,6 +133,12 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       creditRepositoryProvider.overrideWithValue(fixture.credits),
       accessoryRepositoryProvider.overrideWithValue(fixture.accessories),
       profileRepositoryProvider.overrideWithValue(fixture.profiles),
+      connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
+      connectedSourcesProvider.overrideWith((ref) async=>[]),
+      directoryRepositoryProvider.overrideWith((ref)=>FakeDirectoryRepository()),
+      accountContactRepositoryProvider.overrideWith((ref,source)=>FakeAccountContactRepository()),
+      accountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository()),
+      workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
       workspaceFilesRepositoryProvider.overrideWithValue(fixture.files),
@@ -223,6 +237,10 @@ const Set<String> demoOverriddenProviders = {
   'accessoryRepositoryProvider',
   'profileRepositoryProvider',
   'personalPreferencesRepositoryProvider',
+  'workspaceApplicationRepositoryProvider',
+  'accountActivityRepositoryProvider',
+  'connectedInstallationsProvider', 'connectedSourcesProvider',
+  'directoryRepositoryProvider', 'accountContactRepositoryProvider',
   'deploymentRepositoryProvider',
   'workspaceFilesRepositoryProvider',
   'workspaceImportRepositoryProvider',

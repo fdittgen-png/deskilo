@@ -13,6 +13,9 @@
 public.accessories.accessories_select
 public.accessories.accessories_write
 public.accessories.mcp_delegated_deny
+public.account_contact_settings.mcp_delegated_deny
+public.account_conversations.mcp_delegated_deny
+public.account_messages.mcp_delegated_deny
 public.badge_auth_attempts.mcp_delegated_deny
 public.closure_days.closure_days_read
 public.closure_days.closure_days_write
@@ -92,10 +95,12 @@ public.member_credit_uses.mcp_delegated_deny
 public.member_credit_uses.member_credit_uses_select
 public.member_credits.mcp_delegated_deny
 public.member_credits.member_credits_select
+public.member_employment.mcp_delegated_deny
 public.member_notes.mcp_delegated_deny
 public.member_notes.member_notes_delete
 public.member_notes.member_notes_select
 public.member_preference_overrides.mcp_delegated_deny
+public.member_public_contact.mcp_delegated_deny
 public.members.mcp_delegated_deny
 public.members.members_delete_owner
 public.members.members_select
@@ -127,6 +132,10 @@ public.price_negotiations.price_negotiations_select
 public.profiles.mcp_delegated_deny
 public.profiles.profiles_select
 public.profiles.profiles_update
+public.public_directory_sources.mcp_delegated_deny
+public.public_directory_sources.public_directory_read
+public.public_workspace_cards.mcp_delegated_deny
+public.public_workspace_cards.published_cards
 public.push_config.mcp_delegated_deny
 public.push_endpoints.mcp_delegated_deny
 public.push_endpoints.push_endpoints_own
@@ -157,6 +166,8 @@ public.vat_declarations.mcp_delegated_deny
 public.vat_declarations.vat_declarations_select
 public.vat_rates.mcp_delegated_deny
 public.vat_rates.vat_rates_select
+public.workspace_application_messages.mcp_delegated_deny
+public.workspace_applications.mcp_delegated_deny
 public.workspace_creation_requests.mcp_delegated_deny
 public.workspace_documents.mcp_delegated_deny
 public.workspace_documents.workspace_documents_select
@@ -175,6 +186,7 @@ public.workspace_field_values.mcp_delegated_deny
 public.workspace_field_values.workspace_field_values_select
 public.workspace_mcp_policies.mcp_delegated_deny
 public.workspace_mcp_policy_revisions.mcp_delegated_deny
+public.workspace_public_pages.mcp_delegated_deny
 public.workspace_recovery_evidence.mcp_delegated_deny
 public.workspace_role_members.mcp_delegated_deny
 public.workspace_role_members.workspace_role_members_select

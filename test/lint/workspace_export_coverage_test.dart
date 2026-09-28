@@ -84,6 +84,10 @@ const Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'workspace_public_pages': 'publication consent is installation-specific; importing a workspace must not publish it (#1791)',
+  'public_workspace_cards': 'derived public projection regenerated only by explicit publication on this installation (#1791)',
+  'workspace_applications': 'account-bound request ownership is not portable workspace configuration (#1791)',
+  'workspace_application_messages': 'private applicant/reviewer correspondence belongs in subject-access export, not a bulk workspace workbook (#1791)',
   // #1610/#1612 — MCP exposure and consent are authority, not data: an
   // export that carried them would re-activate a workspace's MCP exposure
   // or a person's consent wherever it was imported.

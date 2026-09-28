@@ -1,0 +1,50 @@
+{
+  "applicationsTitle": "Workspace requests",
+  "@applicationsTitle": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationsEmpty": "No workspace requests.",
+  "@applicationsEmpty": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationPending": "Awaiting approval",
+  "@applicationPending": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationApproved": "Approved",
+  "@applicationApproved": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationRefused": "Refused",
+  "@applicationRefused": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationAcceptedVote": "Approved this request",
+  "@applicationAcceptedVote": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationRefusedVote": "Refused this request",
+  "@applicationRefusedVote": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationNoMessages": "No messages yet.",
+  "@applicationNoMessages": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationDiscussionHint": "Your requests and reviewer discussions remain available, even if a request is refused.",
+  "@applicationDiscussionHint": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationDecisionComment": "Comment visible to the applicant",
+  "@applicationDecisionComment": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationsLoadFailed": "Could not load your workspace requests. Please try again.",
+  "@applicationsLoadFailed": {
+    "description": "Admission action failure (#1791)"
+  },
+  "applicationReplyFailed": "Your message was not sent. Your draft is kept; please try again.",
+  "@applicationReplyFailed": {
+    "description": "Admission action failure (#1791)"
+  }
+}

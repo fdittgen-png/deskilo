@@ -60,7 +60,8 @@ window.SETUP_PROCESSES=[
      "uniqueMonograms",
      "singleRoomLevelNames",
      "workspaceVocabulary",
-     "workspaceBranding"
+     "workspaceBranding",
+     "publicListings"
     ]
    }
   ]

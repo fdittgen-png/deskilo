@@ -2,6 +2,7 @@
 import 'dart:async' show unawaited;
 
 import 'package:flutter/material.dart';
+import '../../../directory/presentation/account_portal_entry.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,6 +10,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/application_requests_entry.dart';
 
 /// The waiting room (0052): a freshly joined member is PENDING until the
 /// workspace's validators approve. They see only the workspace name here
@@ -25,6 +27,7 @@ class PendingApprovalScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n?.pendingApprovalTitle ?? 'Awaiting approval'),
         actions: [
+          const ApplicationRequestsEntry(), const AccountPortalEntry(),
           IconButton(
             icon: const Icon(Icons.switch_account_outlined),
             tooltip: l10n?.profilesTitle ?? 'Profiles',

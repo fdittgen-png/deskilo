@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import '../../../directory/presentation/account_portal_entry.dart';
+import '../widgets/application_requests_entry.dart';
 
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/locale/device_locale.dart';
@@ -328,7 +330,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       return Scaffold(
         appBar: AppBar(
           title: Text(l10n?.onboardingTitle ?? 'Welcome to DesKilo'),
-          actions: [signOut],
+          actions: [const ApplicationRequestsEntry(), const AccountPortalEntry(), signOut],
         ),
         body: _centered(Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -351,7 +353,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       stepStates: [for (var i = 0; i <= _confirmStep; i++) _stateOf(i)],
       formMaxWidth: _step == 2 ? double.infinity : WizardFormLayout.shortFormWidth,
       title: l10n?.onboardingTitle ?? 'Welcome to DesKilo',
-      actions: [signOut],
+      actions: [const ApplicationRequestsEntry(), const AccountPortalEntry(), signOut],
       steps: [
         (name: 'name', label: l10n?.onboardingStepName ?? 'Name'),
         (name: 'where', label: l10n?.onboardingStepWhere ?? 'Where'),

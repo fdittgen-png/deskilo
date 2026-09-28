@@ -5,6 +5,8 @@ import '../payment_provider_labels.dart';
 import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
 import 'package:flutter/material.dart';
+import '../../../profile/domain/personal_preferences.dart';
+import '../../../profile/providers/personal_preferences_providers.dart';
 import '../../../../core/i18n/money_format.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -796,7 +798,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     }
 
     // 2. Pick the provider (directly when only one is configured).
-    PaymentProvider? provider = gateway.providers.singleOrNull;
+    final preferred = PaymentProvider.fromWire(ref.read(personalSettingsProvider).value?.effective[PersonalPreference.paymentProvider]);
+    PaymentProvider? provider = gateway.providers.contains(preferred) ? preferred : gateway.providers.singleOrNull;
     provider ??= await showModalBottomSheet<PaymentProvider>(
       context: context,
       builder: (context) => SheetShell(

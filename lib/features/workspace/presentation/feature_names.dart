@@ -219,6 +219,7 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featurePublicHolidaysTitle ?? 'Public holidays',
       WorkspaceFeature.workspaceVocabulary =>
         l10n?.featureWorkspaceVocabularyTitle ?? 'Workspace vocabulary',
+      WorkspaceFeature.publicListings => l10n?.featurePublicListings ?? 'Public workspace listing',
       WorkspaceFeature.workspaceBranding =>
         l10n?.featureWorkspaceBrandingTitle ?? 'Workspace colours',
       WorkspaceFeature.customRoles =>

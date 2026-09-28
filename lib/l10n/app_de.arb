@@ -30,6 +30,26 @@
   "accessoriesNoSupplement": "Kein Aufpreis",
   "accessoriesInactive": "Inaktiv",
   "accessoriesActive": "Aktiv",
+  "accountActivityTitle": "Mein Verbrauch und meine Zahlungen",
+  "accountPaymentsTitle": "Zahlungen",
+  "accountActivityScope": "Alle Ihre Profile auf diesem Server, auch frühere Mitgliedschaften. Währungen werden getrennt angezeigt.",
+  "accountActivityEmpty": "Keine Einträge vorhanden.",
+  "accountActivityFailed": "Ihr Finanzverlauf konnte nicht geladen werden. Zum Wiederholen antippen.",
+  "accountPaymentConfirmed": "Zahlung bestätigt",
+  "accountInvoiceVoided": "Rechnung storniert",
+  "accountInvoiceRegrouped": "In einer Sammelrechnung enthalten",
+  "accountInvoiceIssued": "Rechnung ausgestellt",
+  "accountUsageCorrected": "Korrigierter abrechenbarer Verbrauch",
+  "accountUsageMinutes": "{minutes} Minuten",
+  "accountPaymentPreference": "Bevorzugte Onlinezahlung",
+  "accountPaymentAsk": "Beim Bezahlen wählen",
+  "@accountUsageMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "handoffTitle": "Vor dem Speichern",
   "handoffIncluded": "{count} Beleg(e) in der Datei",
   "handoffExcludedSettlements": "{count} Sammelabrechnung(en) ausgelassen: ihre Rechnungen stehen bereits in der Datei",
@@ -83,6 +103,54 @@
   "addressWindowOff": "Kein Fenster",
   "@addressWindowOff": {
     "description": "Address-window option: keep the flow layout, print no window block (#869)"
+  },
+  "applicationsTitle": "Arbeitsplatzanfragen",
+  "@applicationsTitle": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationsEmpty": "Keine Arbeitsplatzanfragen.",
+  "@applicationsEmpty": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationPending": "Genehmigung ausstehend",
+  "@applicationPending": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationApproved": "Genehmigt",
+  "@applicationApproved": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationRefused": "Abgelehnt",
+  "@applicationRefused": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationAcceptedVote": "Hat diese Anfrage genehmigt",
+  "@applicationAcceptedVote": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationRefusedVote": "Hat diese Anfrage abgelehnt",
+  "@applicationRefusedVote": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationNoMessages": "Noch keine Nachrichten.",
+  "@applicationNoMessages": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationDiscussionHint": "Ihre Anfragen und Gespräche mit den prüfenden Personen bleiben auch nach einer Ablehnung verfügbar.",
+  "@applicationDiscussionHint": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationDecisionComment": "Für die anfragende Person sichtbarer Kommentar",
+  "@applicationDecisionComment": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationsLoadFailed": "Ihre Arbeitsplatzanfragen konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+  "@applicationsLoadFailed": {
+    "description": "Admission action failure (#1791)"
+  },
+  "applicationReplyFailed": "Ihre Nachricht wurde nicht gesendet. Ihr Entwurf bleibt erhalten; bitte versuchen Sie es erneut.",
+  "@applicationReplyFailed": {
+    "description": "Admission action failure (#1791)"
   },
   "invoiceExportBundle": "Jahresarchiv (zip)",
   "@invoiceExportBundle": {
@@ -5754,6 +5822,55 @@
   "@profilesEmailCopied": {
     "description": "#937 platform owner: profilesEmailCopied"
   },
+  "portalActionFailed": "Die Änderung konnte nicht gespeichert werden. Bitte erneut versuchen.",
+  "portalConnect": "Server verbinden",
+  "portalConnections": "Verbundene Server",
+  "portalDisconnect": "Trennen",
+  "portalConnectionFailed": "Verbindung fehlgeschlagen. Server und Anmeldedaten prüfen.",
+  "portalConnectionsHint": "Jeder Server verwendet eine eigene Anmeldung. Trennen entfernt den gespeicherten Zugang dieses Kontos auf diesem Gerät.",
+  "portalEmailCode": "Anmeldecode per E-Mail",
+  "portalUseCode": "E-Mail-Code verwenden",
+  "portalSendCode": "Anmeldecode senden",
+  "portalSourceUnavailable": "Ein Server ist nicht erreichbar. Diese Übersicht ist unvollständig. Zum Wiederholen antippen.",
+  "portalDiscover": "Arbeitsplatz finden",
+  "portalRegisterDirectory": "Server im Verzeichnis veröffentlichen",
+  "portalPublication": "Öffentliche Workspace-Seite",
+  "portalPublished": "Im öffentlichen Verzeichnis sichtbar",
+  "portalPreview": "Externe Ansicht",
+  "portalSavePreview": "Speichern und externe Ansicht öffnen",
+  "portalDescription": "Beschreibung",
+  "portalAddress": "Öffentliche Adresse",
+  "portalEmail": "Öffentliche E-Mail",
+  "portalPhone": "Öffentliche Telefonnummer",
+  "portalWebsite": "Website",
+  "portalImage": "URL des Workspace-Bildes",
+  "portalPublicPlan": "Öffentlicher Grundriss",
+  "portalPlans": "Angebote und Preise",
+  "portalLatitude": "Breitengrad",
+  "portalLongitude": "Längengrad",
+  "portalAssociation": "Verein",
+  "portalCompany": "Unternehmen",
+  "portalPerson": "Privater Anbieter",
+  "portalOwner": "Eigentümer",
+  "portalAdmin": "Administrator",
+  "portalChat": "Chat",
+  "portalRequestProfile": "Workspace-Profil beantragen",
+  "portalRequestSent": "Anfrage gesendet. Der Workspace prüft Ihr Profil.",
+  "portalList": "Liste",
+  "portalMap": "Karte",
+  "portalSearch": "Workspaces suchen",
+  "portalDirectoryUnavailable": "Einige Verzeichnisse sind nicht erreichbar. Die Ergebnisse sind unvollständig.",
+  "portalNoWorkspaces": "Keine veröffentlichten Workspaces gefunden.",
+  "portalMoreDirectories": "Weitere Verzeichnisse",
+  "portalMessenger": "Kontonachrichten",
+  "portalThisServer": "Dieser Server",
+  "portalAvailable": "Mein Konto für Suche und Nachrichten freigeben",
+  "portalFindPeople": "Erreichbare Personen suchen",
+  "portalEmployed": "Bei diesem Workspace angestellt",
+  "portalEmploymentHint": "Eine Anstellung ändert weder Zugriffsrechte noch Abonnements. Gehaltszahlungen sind nicht aktiviert.",
+  "portalAdminVisible": "Mich als öffentlichen Administrator anzeigen",
+  "featurePublicListings": "Öffentlicher Workspace-Eintrag",
+  "featurePublicListingsDesc": "Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten.",
   "featuresViewProcesses": "Prozesse",
   "featuresViewSwitches": "Schalter",
   "processSearchLabel": "Prozesse und Funktionen suchen",

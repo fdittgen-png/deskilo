@@ -276,7 +276,10 @@ enum WorkspaceFeature {
   /// what the hub already loaded, writes nothing but its own dismissal,
   /// and never submits a booking. Core, default ON: optional help a
   /// space can hide; OFF hides the card and nothing else.
-  memberGettingStarted;
+  memberGettingStarted,
+
+  /// Explicitly published public workspace page; never private occupancy.
+  publicListings;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1224,6 +1227,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // #1289 — colours are a statement a workspace makes on purpose; the
   // product's own palette is the default and needs no switch: Platform,
   // off. Everywhere, because the theme is the whole app.
+  WorkspaceFeature.publicListings: FeatureManifestEntry(
+    feature: WorkspaceFeature.publicListings,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.core,
+    defaultOn: false,
+  ),
   WorkspaceFeature.workspaceBranding: FeatureManifestEntry(
     feature: WorkspaceFeature.workspaceBranding,
     surface: FeatureSurface.everywhere,

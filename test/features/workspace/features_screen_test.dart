@@ -131,7 +131,7 @@ void main() {
     // #1607 — mcpAccess is the thirtieth: a workspace is never reachable
     // by a machine it did not ask to be reachable by, and asking is only
     // the first of the steps that lead to one being allowed in.
-    expect(onCount, featureManifest.length - 30);
+    expect(onCount, featureManifest.length - 31);
   });
 
   testWidgets(

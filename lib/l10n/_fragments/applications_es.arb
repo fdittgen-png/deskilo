@@ -1,0 +1,50 @@
+{
+  "applicationsTitle": "Solicitudes de acceso",
+  "@applicationsTitle": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationsEmpty": "No hay solicitudes de acceso.",
+  "@applicationsEmpty": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationPending": "Pendiente de aprobación",
+  "@applicationPending": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationApproved": "Aprobada",
+  "@applicationApproved": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationRefused": "Rechazada",
+  "@applicationRefused": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationAcceptedVote": "Ha aprobado esta solicitud",
+  "@applicationAcceptedVote": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationRefusedVote": "Ha rechazado esta solicitud",
+  "@applicationRefusedVote": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationNoMessages": "Aún no hay mensajes.",
+  "@applicationNoMessages": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationDiscussionHint": "Tus solicitudes y conversaciones con quienes las revisan siguen disponibles, incluso si se rechaza una solicitud.",
+  "@applicationDiscussionHint": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationDecisionComment": "Comentario visible para la persona solicitante",
+  "@applicationDecisionComment": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationsLoadFailed": "No se pudieron cargar tus solicitudes de acceso. Inténtalo de nuevo.",
+  "@applicationsLoadFailed": {
+    "description": "Admission action failure (#1791)"
+  },
+  "applicationReplyFailed": "Tu mensaje no se ha enviado. Se conserva el borrador; inténtalo de nuevo.",
+  "@applicationReplyFailed": {
+    "description": "Admission action failure (#1791)"
+  }
+}

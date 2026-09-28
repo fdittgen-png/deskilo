@@ -113,6 +113,11 @@ void main() {
     const notRows = {
       'SeatContext', 'ReservationLink', 'ConversationLink', 'EventLink',
       'InvoiceLink',
+      // Widgets displaying RPC projections are not persistence row mappers.
+      'ListTile', 'TextButton', 'IconButton',
+      // #1791: bounded account RPC projections, not direct table rows;
+      // operator/system-user stamps intentionally stay outside the API.
+      'WorkspaceApplication', 'ApplicationMessage', 'AccountActivity',
     };
     final missing = <String>{};
     for (final file in _dartFiles('lib')) {

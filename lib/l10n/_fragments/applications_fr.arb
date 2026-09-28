@@ -1,0 +1,50 @@
+{
+  "applicationsTitle": "Demandes d’accès",
+  "@applicationsTitle": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationsEmpty": "Aucune demande d’accès.",
+  "@applicationsEmpty": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationPending": "En attente de validation",
+  "@applicationPending": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationApproved": "Acceptée",
+  "@applicationApproved": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationRefused": "Refusée",
+  "@applicationRefused": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationAcceptedVote": "A accepté cette demande",
+  "@applicationAcceptedVote": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationRefusedVote": "A refusé cette demande",
+  "@applicationRefusedVote": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationNoMessages": "Aucun message pour le moment.",
+  "@applicationNoMessages": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationDiscussionHint": "Vos demandes et les échanges avec les personnes chargées de leur validation restent accessibles, même après un refus.",
+  "@applicationDiscussionHint": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationDecisionComment": "Commentaire visible par la personne qui a fait la demande",
+  "@applicationDecisionComment": {
+    "description": "Workspace admission history and discussion (#1791)"
+  },
+  "applicationsLoadFailed": "Impossible de charger vos demandes d’accès. Veuillez réessayer.",
+  "@applicationsLoadFailed": {
+    "description": "Admission action failure (#1791)"
+  },
+  "applicationReplyFailed": "Votre message n’a pas été envoyé. Votre brouillon est conservé ; veuillez réessayer.",
+  "@applicationReplyFailed": {
+    "description": "Admission action failure (#1791)"
+  }
+}

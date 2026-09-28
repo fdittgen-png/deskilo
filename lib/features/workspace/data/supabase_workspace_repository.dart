@@ -404,10 +404,14 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   Future<void> decideMemberJoin(
     String memberId, {
     required bool approve,
+    String comment = '',
+    String? expectedAccount,
   }) async {
-    await _client.rpc<dynamic>('decide_member_join', params: {
+    await _client.rpc<dynamic>('decide_workspace_application', params: {
       'p_member_id': memberId,
       'p_approve': approve,
+      'p_comment': comment,
+      'p_expected_account': expectedAccount ?? _client.auth.currentUser?.id,
     });
   }
 
