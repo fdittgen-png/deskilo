@@ -35,5 +35,6 @@
   "readinessReasonEligibilityRequested": "Votre demande attend un administrateur de la base",
   "readinessReasonEligibilityExpired": "Votre habilitation aux assistants a expiré",
   "readinessReasonEligibilityNoIdentity": "Connectez-vous d’abord avec votre identité vérifiée",
-  "readinessReasonEligibilityMissing": "Aucun administrateur de la base ne vous a habilité aux assistants"
+  "readinessReasonEligibilityMissing": "Aucun administrateur de la base ne vous a habilité aux assistants",
+  "readinessAreaFirstBooking": "Une première réservation"
 }

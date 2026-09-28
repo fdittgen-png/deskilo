@@ -8578,6 +8578,7 @@
   "readinessReasonEligibilityExpired": "Su habilitación para asistentes ha caducado",
   "readinessReasonEligibilityNoIdentity": "Inicie sesión primero con su identidad verificada",
   "readinessReasonEligibilityMissing": "Ningún administrador de la base de datos le ha habilitado para asistentes",
+  "readinessAreaFirstBooking": "Una primera reserva",
   "featureWorkspaceStatus": "Situación del espacio",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

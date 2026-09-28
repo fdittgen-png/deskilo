@@ -13186,6 +13186,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine Datenbankadministration hat Sie für Assistenten freigegeben';
 
   @override
+  String get readinessAreaFirstBooking => 'Eine erste Buchung';
+
+  @override
   String get featureWorkspaceStatus => 'Lage des Arbeitsbereichs';
 
   @override

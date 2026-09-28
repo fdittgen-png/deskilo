@@ -13205,6 +13205,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun administrateur de la base ne vous a habilité aux assistants';
 
   @override
+  String get readinessAreaFirstBooking => 'Une première réservation';
+
+  @override
   String get featureWorkspaceStatus => 'Situation de l\'espace';
 
   @override

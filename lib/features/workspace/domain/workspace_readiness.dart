@@ -27,6 +27,9 @@ enum ReadinessArea {
   /// 0295 — assistant (MCP) access: optional, listed only while
   /// `mcpAccess` is on, never required for a booking.
   assistant,
+
+  /// 0296 — the space has been used: one booking that stands.
+  firstBooking,
   unknown,
 }
 
@@ -99,6 +102,7 @@ class ReadinessSection {
             'recovery' => ReadinessArea.recovery,
             'local_setup' => ReadinessArea.localSetup,
             'assistant' => ReadinessArea.assistant,
+            'first_booking' => ReadinessArea.firstBooking,
             _ => ReadinessArea.unknown,
           },
           state: switch (s['state']) {

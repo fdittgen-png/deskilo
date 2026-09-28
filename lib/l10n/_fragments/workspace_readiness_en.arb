@@ -174,5 +174,9 @@
   "readinessReasonEligibilityMissing": "A database administrator has not approved you for assistants",
   "@readinessReasonEligibilityMissing": {
     "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaFirstBooking": "A first booking",
+  "@readinessAreaFirstBooking": {
+    "description": "#1636 workspace_readiness"
   }
 }

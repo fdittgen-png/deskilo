@@ -13072,6 +13072,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'A database administrator has not approved you for assistants';
 
   @override
+  String get readinessAreaFirstBooking => 'A first booking';
+
+  @override
   String get featureWorkspaceStatus => 'Workspace status';
 
   @override
