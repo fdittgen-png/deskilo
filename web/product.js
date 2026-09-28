@@ -63,6 +63,14 @@ export const TEXT = {
     plannerNote: 'Every value is yours to enter; nothing is looked up. A blank field is unknown, not free. Taxes are not included.',
     currency: 'Currency (ISO code)', setupTitle: 'One-time setup', setupHours: 'Setup hours', hourlyValue: 'Value of an hour',
     monthlyTitle: 'Each month', backendPlan: 'Server plan', storageUsed: 'Storage used (GB)', storageFree: 'Storage included (GB)', storagePrice: 'Price per extra GB',
+    foreignTitle: 'A cost in another currency',
+    foreignAmount: 'Monthly amount',
+    foreignCurrency: 'Its currency (ISO code)',
+    foreignRate: 'Rate: 1 unit of it in the scenario currency',
+    foreignDate: 'Rate date',
+    foreignSource: 'Where the rate comes from',
+    foreignNote: 'The rate is yours: nothing is looked up. Without a valid rate, date and source this cost stays out of the total.',
+    resultConverted: 'Converted',
     backup: 'Backup and monitoring', payCount: 'Online payments', payAverage: 'Average payment', payPercent: 'Provider fee (%)', payFixed: 'Provider fee per payment',
     adminHours: 'Admin hours', assistantFunding: 'Assistant', assistantUser: 'Members bring their own', assistantDeskilo: 'Paid by the community',
     assistantTokens: 'Assistant tokens', assistantPrice: 'Price per million tokens',
@@ -127,6 +135,14 @@ export const TEXT = {
     plannerNote: 'Chaque valeur est la vôtre ; rien n’est recherché ailleurs. Un champ vide est inconnu, pas gratuit. Les taxes ne sont pas incluses.',
     currency: 'Devise (code ISO)', setupTitle: 'Mise en place (une fois)', setupHours: 'Heures de mise en place', hourlyValue: 'Valeur d’une heure',
     monthlyTitle: 'Chaque mois', backendPlan: 'Offre serveur', storageUsed: 'Stockage utilisé (Go)', storageFree: 'Stockage inclus (Go)', storagePrice: 'Prix par Go supplémentaire',
+    foreignTitle: 'Un coût dans une autre devise',
+    foreignAmount: 'Montant mensuel',
+    foreignCurrency: 'Sa devise (code ISO)',
+    foreignRate: 'Taux : 1 unité de cette devise dans la devise du scénario',
+    foreignDate: 'Date du taux',
+    foreignSource: 'Origine du taux',
+    foreignNote: 'Le taux est le vôtre : rien n’est consulté en ligne. Sans taux, date et origine valides, ce coût reste hors du total.',
+    resultConverted: 'Converti',
     backup: 'Sauvegarde et surveillance', payCount: 'Paiements en ligne', payAverage: 'Paiement moyen', payPercent: 'Frais du prestataire (%)', payFixed: 'Frais fixes par paiement',
     adminHours: 'Heures d’administration', assistantFunding: 'Assistant', assistantUser: 'Les membres apportent le leur', assistantDeskilo: 'Payé par la communauté',
     assistantTokens: 'Jetons de l’assistant', assistantPrice: 'Prix par million de jetons',
@@ -191,6 +207,14 @@ export const TEXT = {
     plannerNote: 'Jeder Wert ist Ihre Eingabe; nichts wird nachgeschlagen. Ein leeres Feld ist unbekannt, nicht kostenlos. Steuern sind nicht enthalten.',
     currency: 'Währung (ISO-Code)', setupTitle: 'Einmalige Einrichtung', setupHours: 'Einrichtungsstunden', hourlyValue: 'Wert einer Stunde',
     monthlyTitle: 'Jeden Monat', backendPlan: 'Server-Tarif', storageUsed: 'Genutzter Speicher (GB)', storageFree: 'Enthaltener Speicher (GB)', storagePrice: 'Preis je weiterem GB',
+    foreignTitle: 'Kosten in einer anderen Währung',
+    foreignAmount: 'Monatlicher Betrag',
+    foreignCurrency: 'Ihre Währung (ISO-Code)',
+    foreignRate: 'Kurs: 1 Einheit davon in der Szenariowährung',
+    foreignDate: 'Datum des Kurses',
+    foreignSource: 'Quelle des Kurses',
+    foreignNote: 'Der Kurs ist Ihrer: Nichts wird abgerufen. Ohne gültigen Kurs, Datum und Quelle bleiben diese Kosten außerhalb der Summe.',
+    resultConverted: 'Umgerechnet',
     backup: 'Sicherung und Überwachung', payCount: 'Online-Zahlungen', payAverage: 'Durchschnittliche Zahlung', payPercent: 'Anbietergebühr (%)', payFixed: 'Anbietergebühr je Zahlung',
     adminHours: 'Verwaltungsstunden', assistantFunding: 'Assistent', assistantUser: 'Mitglieder bringen eigenen mit', assistantDeskilo: 'Von der Gemeinschaft bezahlt',
     assistantTokens: 'Assistenten-Tokens', assistantPrice: 'Preis je Million Tokens',
@@ -255,6 +279,14 @@ export const TEXT = {
     plannerNote: 'Cada valor lo introduce usted; no se consulta nada. Un campo vacío es desconocido, no gratuito. No incluye impuestos.',
     currency: 'Moneda (código ISO)', setupTitle: 'Puesta en marcha (una vez)', setupHours: 'Horas de puesta en marcha', hourlyValue: 'Valor de una hora',
     monthlyTitle: 'Cada mes', backendPlan: 'Plan de servidor', storageUsed: 'Almacenamiento usado (GB)', storageFree: 'Almacenamiento incluido (GB)', storagePrice: 'Precio por GB adicional',
+    foreignTitle: 'Un coste en otra moneda',
+    foreignAmount: 'Importe mensual',
+    foreignCurrency: 'Su moneda (código ISO)',
+    foreignRate: 'Tipo: 1 unidad de ella en la moneda del escenario',
+    foreignDate: 'Fecha del tipo',
+    foreignSource: 'Origen del tipo',
+    foreignNote: 'El tipo es suyo: no se consulta nada. Sin un tipo, fecha y origen válidos, este coste queda fuera del total.',
+    resultConverted: 'Convertido',
     backup: 'Copias y supervisión', payCount: 'Pagos en línea', payAverage: 'Pago medio', payPercent: 'Comisión del proveedor (%)', payFixed: 'Comisión fija por pago',
     adminHours: 'Horas de administración', assistantFunding: 'Asistente', assistantUser: 'Los miembros traen el suyo', assistantDeskilo: 'Pagado por la comunidad',
     assistantTokens: 'Tokens del asistente', assistantPrice: 'Precio por millón de tokens',
@@ -319,6 +351,14 @@ export const TEXT = {
     plannerNote: 'Ogni valore lo inserisci tu; nulla viene cercato altrove. Un campo vuoto è sconosciuto, non gratuito. Le imposte non sono incluse.',
     currency: 'Valuta (codice ISO)', setupTitle: 'Avvio (una tantum)', setupHours: 'Ore di avvio', hourlyValue: 'Valore di un’ora',
     monthlyTitle: 'Ogni mese', backendPlan: 'Piano del server', storageUsed: 'Spazio usato (GB)', storageFree: 'Spazio incluso (GB)', storagePrice: 'Prezzo per GB in più',
+    foreignTitle: 'Un costo in un’altra valuta',
+    foreignAmount: 'Importo mensile',
+    foreignCurrency: 'La sua valuta (codice ISO)',
+    foreignRate: 'Cambio: 1 unità di essa nella valuta dello scenario',
+    foreignDate: 'Data del cambio',
+    foreignSource: 'Fonte del cambio',
+    foreignNote: 'Il cambio è il suo: nulla viene consultato. Senza cambio, data e fonte validi, questo costo resta fuori dal totale.',
+    resultConverted: 'Convertito',
     backup: 'Backup e monitoraggio', payCount: 'Pagamenti online', payAverage: 'Pagamento medio', payPercent: 'Commissione del fornitore (%)', payFixed: 'Commissione fissa per pagamento',
     adminHours: 'Ore di amministrazione', assistantFunding: 'Assistente', assistantUser: 'I membri portano il proprio', assistantDeskilo: 'Pagato dalla comunità',
     assistantTokens: 'Token dell’assistente', assistantPrice: 'Prezzo per milione di token',
@@ -374,9 +414,14 @@ export function fieldValue(raw) {
 /// The form's fields, by name, as a planner scenario.
 export function scenarioFromFields(f) {
   const v = (n) => fieldValue(f[n]);
+  const currency = String(f.currency ?? '').trim().toUpperCase();
+  const foreign = {
+    amount: v('foreign_amount'),
+    currency: String(f.foreign_currency ?? '').trim().toUpperCase() || currency,
+  };
   return {
     version: 1,
-    currency: String(f.currency ?? '').trim().toUpperCase(),
+    currency,
     allowances: { storage: v('storage_free') },
     components: [
       { id: 'setup', kind: 'one_time', type: 'hours', hours: v('setup_hours'), hourly_value: v('hourly_value') },
@@ -386,6 +431,14 @@ export function scenarioFromFields(f) {
       { id: 'payments', kind: 'recurring', type: 'payments', count: v('pay_count'), average_value: v('pay_average'), percent_fee: v('pay_percent'), fixed_fee: v('pay_fixed') },
       { id: 'admin', kind: 'recurring', type: 'hours', hours: v('admin_hours'), hourly_value: v('hourly_value') },
       { id: 'assistant', kind: 'recurring', type: 'assistant', funding: f.assistant_funding === 'deskilo' ? 'deskilo' : 'user', usage: v('assistant_tokens'), increment: 1e6, price_per_increment: v('assistant_price') },
+      // Only once an amount is entered: an untouched row is not an
+      // unknown cost, it is no cost the visitor has.
+      ...(foreign.amount === null ? [] : [
+        { id: 'foreign', kind: 'recurring', type: 'flat', amount: foreign.amount, currency: foreign.currency },
+      ]),
+    ],
+    conversions: foreign.amount === null || foreign.currency === currency ? [] : [
+      { from: foreign.currency, rate: v('foreign_rate'), date: String(f.foreign_date ?? '').trim(), source: String(f.foreign_source ?? '').trim() },
     ],
   };
 }
@@ -403,6 +456,7 @@ export function describePlan(plan, locale) {
   const name = {
     setup: t.setupTitle, backend_plan: t.backendPlan, storage: t.storageUsed, backup: t.backup,
     payments: t.payCount, admin: t.adminHours, assistant: t.assistantFunding,
+    foreign: t.foreignTitle,
   };
   const lines = [];
   for (const [kind, label] of [['one_time', t.resultOneTime], ['recurring', t.resultMonthly]]) {
@@ -411,6 +465,12 @@ export function describePlan(plan, locale) {
     for (const u of b.unresolved) {
       lines.push(`  ${t.resultUnresolved}${t.colon}${name[u.id] ?? u.id} — ${reason[u.reason] ?? u.reason}`);
     }
+  }
+  // #1635 — a converted cost says at what rate, on what date, from where.
+  for (const l of plan.lines ?? []) {
+    if (!l.provenance) continue;
+    const p = l.provenance;
+    lines.push(`  ${t.resultConverted}${t.colon}${name[l.id] ?? l.id} — 1 ${p.from} = ${p.rate} ${plan.currency}, ${p.date}, ${p.source}`);
   }
   lines.push(t.resultExcluded);
   return lines;
@@ -473,6 +533,9 @@ function wire() {
       set('pay_fixed', byId.payments?.fixed_fee); set('admin_hours', byId.admin?.hours);
       set('assistant_tokens', byId.assistant?.usage); set('assistant_price', byId.assistant?.price_per_increment);
       form.elements.assistant_funding.value = byId.assistant?.funding === 'deskilo' ? 'deskilo' : 'user';
+      const conv = (s.conversions ?? [])[0];
+      set('foreign_amount', byId.foreign?.amount); set('foreign_currency', byId.foreign?.currency);
+      set('foreign_rate', conv?.rate); set('foreign_date', conv?.date); set('foreign_source', conv?.source);
       render();
     } catch {
       result.replaceChildren(Object.assign(document.createElement('p'), { textContent: TEXT[current()].loadFailed }));
