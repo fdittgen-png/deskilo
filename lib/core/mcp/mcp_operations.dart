@@ -8,6 +8,18 @@ import 'mcp_spec.dart';
 /// The contract version these specs were generated from.
 const int mcpContractVersion = 1;
 
+/// #1801 — every status an MCP envelope may carry.
+const List<String> mcpStatuses = [
+  'completed',
+  'pending_validation',
+  'requires_confirmation',
+  'denied',
+  'conflict',
+  'validation_error',
+  'not_found',
+  'rate_limited',
+];
+
 /// Names no input may carry: identity, role, SQL, targets, approval state.
 const Set<String> mcpForbiddenInputs = {
   'actor',

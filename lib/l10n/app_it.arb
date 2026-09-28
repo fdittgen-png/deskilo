@@ -4512,6 +4512,8 @@
   "mfaCode": "Codice a sei cifre",
   "mfaWrong": "Quel codice non è stato accettato. Prova quello attuale.",
   "mfaVerify": "Verifica",
+  "mcpApiReference": "Riferimento API",
+  "mcpApiReferenceHint": "Cosa può chiamare un assistente e come viene autorizzato",
   "mcpUsageWorkspaceTitle": "Uso degli assistenti, ultimi 30 giorni",
   "mcpUsageMineTitle": "Il tuo uso degli assistenti oggi",
   "mcpUsageUnavailable": "Non è stato possibile caricare l'utilizzo.",

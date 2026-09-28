@@ -12697,6 +12697,18 @@ abstract class AppLocalizations {
   /// **'Verify'**
   String get mfaVerify;
 
+  /// #1801 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'API reference'**
+  String get mcpApiReference;
+
+  /// #1801 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'What an assistant can call, and how it is authorised'**
+  String get mcpApiReferenceHint;
+
   /// #1630 mcp_usage
   ///
   /// In en, this message translates to:
