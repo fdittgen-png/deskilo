@@ -422,6 +422,21 @@ jobs:
         continue-on-error: true
         run: bash scripts/restore_check.sh
 
+      # #1789 — the MCP races no pgTAP file can run: identical booking
+      # intents, void and subscription requests under one request id, and
+      # one person approving natively and through MCP at once. Two psql
+      # sessions per case, the second observed WAITING on the first, then
+      # the counts. Its rows are named by run and stay; it runs after the
+      # restore drill so that drill reconciles only what it expects, and
+      # the drills below work in databases of their own.
+      - name: Two sessions, one MCP intent
+        id: mcp_races
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
+        run: bash scripts/db_race_check.sh "$DB_URL"
+
       # #1337 — the install, the resume, the readiness verdict and the
       # doctor were proven against a fake Management API only. This runs
       # the real Dart code on databases that start as an empty Supabase
@@ -496,6 +511,8 @@ jobs:
               "${{ steps.contract.outcome }}"
             printf 'Restore drill|%s|seeded, dumped, restored into a fresh database, counts equal and reconciled\n' \
               "${{ steps.restore.outcome }}"
+            printf 'MCP races|%s|two sessions per case: one booking per intent and a refused rival, one event per void and subscription request id, one decision per person across the app and MCP\n' \
+              "${{ steps.mcp_races.outcome }}"
             printf 'Payments|%s|the real payment handler opens the caller'"'"'s intent; strangers and no token refused\n' \
               "${{ steps.payments.outcome }}"
             printf 'Payment settlement|%s|Stripe: paid credits once, unpaid does not, async success once, failure and expiry mark failed, bad signature and wrong amount refused, duplicate and concurrent delivery credit once, a lost webhook stays pending, reconciliation clean\n' \
@@ -544,6 +561,7 @@ jobs:
             "Two sessions, one seat=${{ steps.race.outcome }}" \
             "Two owners, one decision=${{ steps.flags.outcome }}" \
             "Restore drill=${{ steps.restore.outcome }}" \
+            "Two sessions, one MCP intent=${{ steps.mcp_races.outcome }}" \
             "A member can start a payment=${{ steps.payments.outcome }}" \
             "A Stripe payment settles=${{ steps.settlement.outcome }}" \
             "A PayPal payment settles=${{ steps.settlement_paypal.outcome }}" \
