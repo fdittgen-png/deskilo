@@ -5,7 +5,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/schema_version.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/set_readiness_aside.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_readiness.dart';
 import '../../providers/local_setup_providers.dart';
@@ -103,10 +106,44 @@ String readinessActorLabel(AppLocalizations? l10n, ReadinessActor actor) =>
 /// books, invites or charges anything to find out. The backend section
 /// comes from the app's own schema check; the rest from the server.
 /// Hidden with the Get started help (`memberGettingStarted`), and for
-/// anyone the server does not answer.
+/// anyone the server does not answer. An optional section that is still
+/// open can be set aside for later (0307): the next step moves on, the
+/// state stays what it is, and Undo takes it back.
 class WorkspaceReadinessCard extends ConsumerWidget {
   const WorkspaceReadinessCard({super.key, required this.workspaceId});
   final String workspaceId;
+
+  Future<void> _setAside(
+    BuildContext context,
+    WidgetRef ref,
+    ReadinessSection section, {
+    required bool undo,
+  }) async {
+    final l10n = AppLocalizations.of(context);
+    final aside = ref.read(readinessAsideProvider);
+    try {
+      if (undo) {
+        await aside.undo(workspaceId, section);
+      } else {
+        await aside.later(workspaceId, section);
+      }
+    } catch (e, st) {
+      TraceLogger.instance.error(
+        'workspace',
+        'set readiness section aside failed',
+        error: e,
+        stackTrace: st,
+      );
+      if (context.mounted) {
+        AppSnack.error(
+          context,
+          l10n?.readinessSetAsideFailed ??
+              'That could not be saved. Try again.',
+        );
+      }
+    }
+    ref.invalidate(workspaceReadinessProvider(workspaceId));
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -190,29 +227,64 @@ class WorkspaceReadinessCard extends ConsumerWidget {
                             ? Icons.error_outline
                             : Icons.radio_button_unchecked,
                       ReadinessState.needsOperator => Icons.dns_outlined,
-                      ReadinessState.notApplicable => Icons.remove_circle_outline,
+                      ReadinessState.notApplicable =>
+                        Icons.remove_circle_outline,
                       ReadinessState.unverified => Icons.help_outline,
                       ReadinessState.unavailable => Icons.cloud_off_outlined,
                     }),
                     title: Text(readinessAreaLabel(l10n, s.area)),
-                    subtitle: Text(
-                      [
-                        readinessStateLabel(l10n, s.state),
-                        if (s.state != ReadinessState.notApplicable)
-                          s.required
-                              ? (l10n?.readinessNeededFirst ??
-                                    'Needed for a first booking')
-                              : (l10n?.readinessLater ?? 'Needed later'),
-                        ?readinessReasonLabel(l10n, s.reason),
-                        if (s.state != ReadinessState.ready &&
-                            s.state != ReadinessState.notApplicable)
-                          l10n?.readinessActor(
-                                readinessActorLabel(l10n, s.actor),
-                              ) ??
-                              'Who: ${readinessActorLabel(l10n, s.actor)}',
-                      ].join(' · '),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          [
+                            readinessStateLabel(l10n, s.state),
+                            if (s.acknowledged && s.canSetAside)
+                              l10n?.readinessSetAside ?? 'Set aside for later'
+                            else if (s.state != ReadinessState.notApplicable)
+                              s.required
+                                  ? (l10n?.readinessNeededFirst ??
+                                        'Needed for a first booking')
+                                  : (l10n?.readinessLater ?? 'Needed later'),
+                            ?readinessReasonLabel(l10n, s.reason),
+                            if (s.state != ReadinessState.ready &&
+                                s.state != ReadinessState.notApplicable)
+                              l10n?.readinessActor(
+                                    readinessActorLabel(l10n, s.actor),
+                                  ) ??
+                                  'Who: ${readinessActorLabel(l10n, s.actor)}',
+                          ].join(' · '),
+                        ),
+                        if (s.canSetAside)
+                          Align(
+                            alignment: AlignmentDirectional.centerStart,
+                            child: s.acknowledged
+                                ? TextButton.icon(
+                                    key: ValueKey(
+                                      'workspace-readiness-undo-${s.area.name}',
+                                    ),
+                                    onPressed: () =>
+                                        _setAside(context, ref, s, undo: true),
+                                    icon: const Icon(Icons.undo),
+                                    label: Text(
+                                      l10n?.readinessSetAsideUndo ?? 'Undo',
+                                    ),
+                                  )
+                                : TextButton(
+                                    key: ValueKey(
+                                      'workspace-readiness-later-${s.area.name}',
+                                    ),
+                                    onPressed: () =>
+                                        _setAside(context, ref, s, undo: false),
+                                    child: Text(
+                                      l10n?.readinessSetAsideAction ?? 'Later',
+                                    ),
+                                  ),
+                          ),
+                      ],
                     ),
-                    trailing: s.state == ReadinessState.ready ||
+                    trailing:
+                        s.state == ReadinessState.ready ||
                             s.state == ReadinessState.notApplicable
                         ? null
                         : TextButton(

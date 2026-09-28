@@ -13577,6 +13577,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get readinessAreaFirstBooking => 'Una primera reserva';
 
   @override
+  String get readinessSetAsideAction => 'Más tarde';
+
+  @override
+  String get readinessSetAside => 'Dejado para más tarde';
+
+  @override
+  String get readinessSetAsideUndo => 'Deshacer';
+
+  @override
+  String get readinessSetAsideFailed =>
+      'No se pudo guardar. Inténtelo de nuevo.';
+
+  @override
   String get featureWorkspaceStatus => 'Situación del espacio';
 
   @override

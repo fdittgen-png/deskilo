@@ -8749,6 +8749,10 @@
   "readinessReasonEligibilityNoIdentity": "Melden Sie sich zuerst mit Ihrer bestätigten Identität an",
   "readinessReasonEligibilityMissing": "Keine Datenbankadministration hat Sie für Assistenten freigegeben",
   "readinessAreaFirstBooking": "Eine erste Buchung",
+  "readinessSetAsideAction": "Später",
+  "readinessSetAside": "Für später zurückgestellt",
+  "readinessSetAsideUndo": "Rückgängig",
+  "readinessSetAsideFailed": "Das konnte nicht gespeichert werden. Bitte erneut versuchen.",
   "featureWorkspaceStatus": "Lage des Arbeitsbereichs",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"
