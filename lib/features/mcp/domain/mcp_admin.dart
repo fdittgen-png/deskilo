@@ -3,6 +3,7 @@
 // #1626 — a workspace owner's MCP exposure policy; #1627 — a database
 // administrator's eligibility queue. Both are read and written through
 // the server's own RPCs (0270/0271): the app never decides who may.
+import 'mcp_usage.dart';
 
 /// The owner's exposure policy for one workspace, as the server holds it.
 class McpPolicy {
@@ -136,4 +137,8 @@ abstract interface class McpAdminRepository {
 
   /// Blocks this person's MCP use across this database's workspaces.
   Future<bool> revokeEligibility(String userId);
+
+  /// #1630 — the workspace's assistant usage over 30 days, counts only
+  /// (the owner or a database administrator).
+  Future<McpWorkspaceUsage> workspaceUsage(String workspaceId);
 }

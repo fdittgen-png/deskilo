@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/mcp_connection.dart';
+import '../domain/mcp_usage.dart';
 
 /// #1615 — the consent RPCs (0276) and Auth's OAuth 2.1 server consent API.
 class SupabaseMcpConnectionRepository implements McpConnectionRepository {
@@ -87,4 +88,9 @@ class SupabaseMcpConnectionRepository implements McpConnectionRepository {
     );
     await _client.auth.oauth.revokeGrant(clientId);
   }
+
+  @override
+  Future<List<McpClientUsage>> myUsage() async => McpClientUsage.listFromJson(
+    await _client.rpc<Object?>('mcp_usage_summary_mine'),
+  );
 }

@@ -1,0 +1,11 @@
+{
+  "mcpUsageWorkspaceTitle": "Uso degli assistenti, ultimi 30 giorni",
+  "mcpUsageMineTitle": "Il tuo uso degli assistenti oggi",
+  "mcpUsageUnavailable": "Non è stato possibile caricare l'utilizzo.",
+  "mcpUsageNone": "Nessun assistente ha ancora usato il tuo accesso.",
+  "mcpUsageLastUsed": "Ultimo uso {when}",
+  "mcpUsageRequests": "Richieste",
+  "mcpUsageRefusals": "Rifiutate",
+  "mcpUsageApplied": "Applicate",
+  "mcpUsagePending": "In attesa di convalida"
+}
