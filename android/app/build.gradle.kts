@@ -1,6 +1,7 @@
-import com.android.build.gradle.internal.api.ApkVariantOutputImpl
+import com.android.build.api.variant.FilterConfiguration
 import java.io.FileInputStream
 import java.util.Properties
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
@@ -28,10 +29,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
         // flutter_local_notifications scheduled notifications need desugaring
         isCoreLibraryDesugaringEnabled = true
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
@@ -97,15 +94,26 @@ android {
 // Harmless to the store trains: they build a universal APK/AAB, which
 // has no ABI filter and so is never rewritten here.
 val abiCodes = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86_64" to 3)
-android.applicationVariants.configureEach {
-    val variant = this
-    variant.outputs.forEach { output ->
-        val abiVersionCode =
-            abiCodes[output.filters.find { it.filterType == "ABI" }?.identifier]
-        if (abiVersionCode != null) {
-            (output as ApkVariantOutputImpl).versionCodeOverride =
-                variant.versionCode * 10 + abiVersionCode
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.forEach { output ->
+            val abi = output.filters
+                .find { it.filterType == FilterConfiguration.FilterType.ABI }
+                ?.identifier
+            val abiVersionCode = abiCodes[abi]
+            if (abiVersionCode != null) {
+                // AGP 9 removed android.applicationVariants: the new
+                // variant API sets the same code: versionCode * 10 + abi.
+                val base = output.versionCode.get() ?: 0
+                output.versionCode.set(base * 10 + abiVersionCode)
+            }
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
