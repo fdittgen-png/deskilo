@@ -42,7 +42,7 @@ import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/backend_screen.dart';
 import '../features/mcp/presentation/mcp_confirmation_screen.dart';
-import '../features/mcp/presentation/mcp_consent_screen.dart';
+import '../features/auth/presentation/oauth_consent_screen.dart';
 import '../features/mcp/presentation/assistants_screen.dart';
 import '../features/mcp/presentation/eligibility_review_screen.dart';
 import '../features/mcp/presentation/mcp_policy_screen.dart';
@@ -489,11 +489,11 @@ GoRouter router(Ref ref) {
             (ref.read(myMemberProvider).value?.actsAsOwner ?? false) ? null : '/messages',
         builder: (context, state) => const McpPolicyScreen(),
       ),
-      // #1615 — Auth's OAuth server sends the person here to connect an
-      // assistant. Every consent call refuses an assistant's token.
+      // #1648 — the protected client purpose selects identity or MCP consent.
+      // Every consent call requires the app's native session.
       GoRoute(
         path: '/oauth/consent',
-        builder: (context, state) => McpConsentScreen(
+        builder: (context, state) => OAuthConsentScreen(
             authorizationId: state.uri.queryParameters['authorization_id'] ?? ''),
       ),
       GoRoute(

@@ -34,6 +34,9 @@ import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
+import 'package:deskilo/features/auth/providers/oauth_consent_providers.dart';
+import 'package:deskilo/features/auth/domain/oauth_consent.dart';
+import 'package:deskilo/core/demo/data/oauth_consent_repository.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/features/workspace/application/creation_intent.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
@@ -118,6 +121,7 @@ List<Override> standardTestOverrides({
   CreationDraftStore? creationDraft,
   FakeActionConfirmationRepository? actionConfirmations,
   FakeMcpConnectionRepository? mcpConnections,
+  OAuthConsentRepository? oauthConsent,
   FakeMcpAdminRepository? mcpAdmin,
   FakeLocalSetupRepository? localSetup,
   FakeTemplateSearchRepository? templateSearch,
@@ -204,6 +208,11 @@ List<Override> standardTestOverrides({
         .overrideWithValue(identityBinding ?? FakeIdentityBindingRepository()),
     actionConfirmationRepositoryProvider
         .overrideWithValue(actionConfirmations ?? FakeActionConfirmationRepository()),
+    oauthConsentRepositoryProvider.overrideWithValue(oauthConsent ??
+        FakeOAuthConsentRepository(request: const OAuthConsentRequest(
+          context: OAuthConsentContext(purpose: OAuthConsentPurpose.mcp,
+              clientId: 'test-assistant', localUserId: 'test-user'),
+        ))),
     mcpConnectionRepositoryProvider
         .overrideWithValue(mcpConnections ?? FakeMcpConnectionRepository()),
     mcpAdminRepositoryProvider.overrideWithValue(mcpAdmin ?? FakeMcpAdminRepository()),
