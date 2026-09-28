@@ -8728,6 +8728,10 @@
   "readinessReasonEligibilityNoIdentity": "Acceda prima con la sua identità verificata",
   "readinessReasonEligibilityMissing": "Nessun amministratore del database l’ha abilitata agli assistenti",
   "readinessAreaFirstBooking": "Una prima prenotazione",
+  "readinessSetAsideAction": "Più tardi",
+  "readinessSetAside": "Rimandato a più tardi",
+  "readinessSetAsideUndo": "Annulla",
+  "readinessSetAsideFailed": "Impossibile salvare. Riprova.",
   "featureWorkspaceStatus": "Situazione dello spazio",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

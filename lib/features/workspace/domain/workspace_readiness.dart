@@ -4,7 +4,9 @@
 // as workspace_readiness (0285) reads it from what the space holds.
 // Nothing here is a checkbox: a section is ready because the data is
 // there, and recovery stays unverified until evidence exists — a real
-// export the app recorded within 90 days (0301).
+// export the app recorded within 90 days (0301). Setting an optional
+// section aside for later (0307) is the one explicit choice stored, and it
+// only moves the next step on: it never makes a section ready.
 
 import '../../../core/instance/schema_compatibility.dart';
 
@@ -62,6 +64,7 @@ class ReadinessSection {
     this.actor = ReadinessActor.owner,
     this.reason,
     this.recordedAt,
+    this.acknowledged = false,
   });
 
   final ReadinessArea area;
@@ -84,6 +87,20 @@ class ReadinessSection {
   /// 0301 — when the evidence behind the recovery section was recorded:
   /// the last completed export. Null when there is none.
   final DateTime? recordedAt;
+
+  /// 0307 — the caller set this optional section aside for later, and it
+  /// is still what it was then. The state is unchanged by it.
+  final bool acknowledged;
+
+  /// 0307 — whether this section may be set aside for later: optional,
+  /// and something is still open. The backend check is the app's own.
+  bool get canSetAside =>
+      !required &&
+      area != ReadinessArea.backend &&
+      area != ReadinessArea.unknown &&
+      state != ReadinessState.ready &&
+      state != ReadinessState.notApplicable &&
+      state != ReadinessState.unavailable;
 
   /// Only what someone must still do blocks. An unverified or unavailable
   /// answer is shown, never demanded: offline is not a missing setup.
@@ -130,12 +147,29 @@ class ReadinessSection {
               ? DateTime.tryParse(s['recorded_at'] as String)
               : null,
           required: s['required'] == true,
+          acknowledged: s['acknowledged'] == true,
           route: s['route'] is String && '${s['route']}'.startsWith('/')
               ? s['route'] as String
               : '/workspace-settings',
         ),
   ];
 }
+
+/// 0307 — the server's name for [area]; null for the app's own backend
+/// check and for a section this build does not know.
+String? readinessSectionCode(ReadinessArea area) => switch (area) {
+  ReadinessArea.regionRules => 'region_rules',
+  ReadinessArea.resources => 'resources',
+  ReadinessArea.pricing => 'pricing',
+  ReadinessArea.invitations => 'invitations',
+  ReadinessArea.payments => 'payments',
+  ReadinessArea.rolesValidation => 'roles_validation',
+  ReadinessArea.recovery => 'recovery',
+  ReadinessArea.localSetup => 'local_setup',
+  ReadinessArea.assistant => 'assistant',
+  ReadinessArea.firstBooking => 'first_booking',
+  ReadinessArea.backend || ReadinessArea.unknown => null,
+};
 
 /// #1636 — the backend section, from the app's own schema check: the
 /// server behind this build needs its operator (and blocks, since the
@@ -157,11 +191,12 @@ ReadinessSection backendReadiness(SchemaCompatibility? compatibility) =>
 
 /// The first section that still needs something, blockers before the
 /// rest, in the server's order; null when nothing is left to set up.
-/// An unverified section is never "next": it is shown, not demanded.
+/// An unverified section is never "next": it is shown, not demanded; nor
+/// is one the caller set aside for later (0307).
 ReadinessSection? nextReadinessStep(List<ReadinessSection> sections) {
   final known = [
     for (final s in sections)
-      if (s.area != ReadinessArea.unknown) s,
+      if (s.area != ReadinessArea.unknown && !s.acknowledged) s,
   ];
   for (final s in known) {
     if (s.blocking) return s;
