@@ -466,6 +466,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 l10n?.authConnectServer ?? "Connect an organisation's server",
               ),
             ),
+            TextButton.icon(
+              key: const ValueKey('auth-discover'),
+              onPressed: () => context.push('/discover'),
+              icon: const Icon(Icons.public),
+              label: Text(l10n?.portalDiscover ?? 'Find a workspace'),
+            ),
           ],
         ),
       ),

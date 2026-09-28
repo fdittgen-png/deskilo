@@ -1,0 +1,22 @@
+{
+  "accountActivityTitle": "Mein Verbrauch und meine Zahlungen",
+  "accountPaymentsTitle": "Zahlungen",
+  "accountActivityScope": "Alle Ihre Profile auf diesem Server, auch frühere Mitgliedschaften. Währungen werden getrennt angezeigt.",
+  "accountActivityEmpty": "Keine Einträge vorhanden.",
+  "accountActivityFailed": "Ihr Finanzverlauf konnte nicht geladen werden. Zum Wiederholen antippen.",
+  "accountPaymentConfirmed": "Zahlung bestätigt",
+  "accountInvoiceVoided": "Rechnung storniert",
+  "accountInvoiceRegrouped": "In einer Sammelrechnung enthalten",
+  "accountInvoiceIssued": "Rechnung ausgestellt",
+  "accountUsageCorrected": "Korrigierter abrechenbarer Verbrauch",
+  "accountUsageMinutes": "{minutes} Minuten",
+  "accountPaymentPreference": "Bevorzugte Onlinezahlung",
+  "accountPaymentAsk": "Beim Bezahlen wählen",
+  "@accountUsageMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  }
+}

@@ -37,6 +37,8 @@ dependencies:
   intl: ^0.20.2
   supabase_flutter: ^2.17.2
   http: ^1.6.0
+  flutter_map: 8.3.2
+  latlong2: 0.9.1
   flutter_local_notifications: ^22.0.1
   timezone: ^0.11.1
   qr_flutter: ^4.1.0

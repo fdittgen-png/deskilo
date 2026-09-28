@@ -1,0 +1,22 @@
+{
+  "accountActivityTitle": "Ma consommation et mes paiements",
+  "accountPaymentsTitle": "Paiements",
+  "accountActivityScope": "Tous vos profils sur ce serveur, y compris vos anciennes adhésions. Les devises restent séparées.",
+  "accountActivityEmpty": "Aucun enregistrement à afficher.",
+  "accountActivityFailed": "Impossible de charger votre historique financier. Appuyez pour réessayer.",
+  "accountPaymentConfirmed": "Paiement confirmé",
+  "accountInvoiceVoided": "Facture annulée",
+  "accountInvoiceRegrouped": "Inclus dans une facture de regroupement",
+  "accountInvoiceIssued": "Facture émise",
+  "accountUsageCorrected": "Consommation facturable corrigée",
+  "accountUsageMinutes": "{minutes} minutes",
+  "accountPaymentPreference": "Paiement en ligne préféré",
+  "accountPaymentAsk": "Choisir au paiement",
+  "@accountUsageMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  }
+}

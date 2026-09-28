@@ -236,6 +236,84 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get accessoriesActive;
 
+  /// No description provided for @accountActivityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My consumption and payments'**
+  String get accountActivityTitle;
+
+  /// No description provided for @accountPaymentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get accountPaymentsTitle;
+
+  /// No description provided for @accountActivityScope.
+  ///
+  /// In en, this message translates to:
+  /// **'All your profiles on this server, including previous memberships. Currencies are shown separately.'**
+  String get accountActivityScope;
+
+  /// No description provided for @accountActivityEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No records to display.'**
+  String get accountActivityEmpty;
+
+  /// No description provided for @accountActivityFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load your financial history. Tap to retry.'**
+  String get accountActivityFailed;
+
+  /// No description provided for @accountPaymentConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment confirmed'**
+  String get accountPaymentConfirmed;
+
+  /// No description provided for @accountInvoiceVoided.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice voided'**
+  String get accountInvoiceVoided;
+
+  /// No description provided for @accountInvoiceRegrouped.
+  ///
+  /// In en, this message translates to:
+  /// **'Included in a settlement invoice'**
+  String get accountInvoiceRegrouped;
+
+  /// No description provided for @accountInvoiceIssued.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice issued'**
+  String get accountInvoiceIssued;
+
+  /// No description provided for @accountUsageCorrected.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected billable usage'**
+  String get accountUsageCorrected;
+
+  /// No description provided for @accountUsageMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} minutes'**
+  String accountUsageMinutes(int minutes);
+
+  /// No description provided for @accountPaymentPreference.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred online payment'**
+  String get accountPaymentPreference;
+
+  /// No description provided for @accountPaymentAsk.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose at checkout'**
+  String get accountPaymentAsk;
+
   /// #1640 accountant_handoff
   ///
   /// In en, this message translates to:
@@ -379,6 +457,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No window'**
   String get addressWindowOff;
+
+  /// Workspace admission history and discussion (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace requests'**
+  String get applicationsTitle;
+
+  /// Workspace admission history and discussion (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'No workspace requests.'**
+  String get applicationsEmpty;
+
+  /// Workspace admission history and discussion (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting approval'**
+  String get applicationPending;
+
+  /// Workspace admission history and discussion (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get applicationApproved;
+
+  /// Workspace admission history and discussion (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'Refused'**
+  String get applicationRefused;
+
+  /// Workspace admission history and discussion (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'Approved this request'**
+  String get applicationAcceptedVote;
+
+  /// Workspace admission history and discussion (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'Refused this request'**
+  String get applicationRefusedVote;
+
+  /// Workspace admission history and discussion (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet.'**
+  String get applicationNoMessages;
+
+  /// Workspace admission history and discussion (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'Your requests and reviewer discussions remain available, even if a request is refused.'**
+  String get applicationDiscussionHint;
+
+  /// Workspace admission history and discussion (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'Comment visible to the applicant'**
+  String get applicationDecisionComment;
+
+  /// Admission action failure (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load your workspace requests. Please try again.'**
+  String get applicationsLoadFailed;
+
+  /// Admission action failure (#1791)
+  ///
+  /// In en, this message translates to:
+  /// **'Your message was not sent. Your draft is kept; please try again.'**
+  String get applicationReplyFailed;
 
   /// #957 archive bundle: invoiceExportBundle
   ///
@@ -15762,6 +15912,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'E-mail copied.'**
   String get profilesEmailCopied;
+
+  /// No description provided for @portalActionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save this change. Please try again.'**
+  String get portalActionFailed;
+
+  /// No description provided for @portalConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a server'**
+  String get portalConnect;
+
+  /// No description provided for @portalConnections.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected servers'**
+  String get portalConnections;
+
+  /// No description provided for @portalDisconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get portalDisconnect;
+
+  /// No description provided for @portalConnectionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not connect. Check this server and your sign-in details.'**
+  String get portalConnectionFailed;
+
+  /// No description provided for @portalConnectionsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Each server uses its own sign-in. Disconnecting removes its saved access from this account on this device.'**
+  String get portalConnectionsHint;
+
+  /// No description provided for @portalEmailCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Email sign-in code'**
+  String get portalEmailCode;
+
+  /// No description provided for @portalUseCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Use an email code'**
+  String get portalUseCode;
+
+  /// No description provided for @portalSendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send sign-in code'**
+  String get portalSendCode;
+
+  /// No description provided for @portalSourceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'A server is unavailable. This overview is incomplete. Tap to retry.'**
+  String get portalSourceUnavailable;
+
+  /// No description provided for @portalDiscover.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a workspace'**
+  String get portalDiscover;
+
+  /// No description provided for @portalRegisterDirectory.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish a server in the directory'**
+  String get portalRegisterDirectory;
+
+  /// No description provided for @portalPublication.
+  ///
+  /// In en, this message translates to:
+  /// **'Public workspace page'**
+  String get portalPublication;
+
+  /// No description provided for @portalPublished.
+  ///
+  /// In en, this message translates to:
+  /// **'Visible in the public directory'**
+  String get portalPublished;
+
+  /// No description provided for @portalPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'External view'**
+  String get portalPreview;
+
+  /// No description provided for @portalSavePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Save and preview the external view'**
+  String get portalSavePreview;
+
+  /// No description provided for @portalDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get portalDescription;
+
+  /// No description provided for @portalAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Public address'**
+  String get portalAddress;
+
+  /// No description provided for @portalEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Public email'**
+  String get portalEmail;
+
+  /// No description provided for @portalPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Public phone'**
+  String get portalPhone;
+
+  /// No description provided for @portalWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get portalWebsite;
+
+  /// No description provided for @portalImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity image URL'**
+  String get portalImage;
+
+  /// No description provided for @portalPublicPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Public floor plan'**
+  String get portalPublicPlan;
+
+  /// No description provided for @portalPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'Plans and prices'**
+  String get portalPlans;
+
+  /// No description provided for @portalLatitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get portalLatitude;
+
+  /// No description provided for @portalLongitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get portalLongitude;
+
+  /// No description provided for @portalAssociation.
+  ///
+  /// In en, this message translates to:
+  /// **'Association'**
+  String get portalAssociation;
+
+  /// No description provided for @portalCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get portalCompany;
+
+  /// No description provided for @portalPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Private host'**
+  String get portalPerson;
+
+  /// No description provided for @portalOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get portalOwner;
+
+  /// No description provided for @portalAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrator'**
+  String get portalAdmin;
+
+  /// No description provided for @portalChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get portalChat;
+
+  /// No description provided for @portalRequestProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a workspace profile'**
+  String get portalRequestProfile;
+
+  /// No description provided for @portalRequestSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent. The workspace will review your profile.'**
+  String get portalRequestSent;
+
+  /// No description provided for @portalList.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get portalList;
+
+  /// No description provided for @portalMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get portalMap;
+
+  /// No description provided for @portalSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search workspaces'**
+  String get portalSearch;
+
+  /// No description provided for @portalDirectoryUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Some directories could not be reached. Results are incomplete.'**
+  String get portalDirectoryUnavailable;
+
+  /// No description provided for @portalNoWorkspaces.
+  ///
+  /// In en, this message translates to:
+  /// **'No published workspaces found.'**
+  String get portalNoWorkspaces;
+
+  /// No description provided for @portalMoreDirectories.
+  ///
+  /// In en, this message translates to:
+  /// **'More directories'**
+  String get portalMoreDirectories;
+
+  /// No description provided for @portalMessenger.
+  ///
+  /// In en, this message translates to:
+  /// **'Account messenger'**
+  String get portalMessenger;
+
+  /// No description provided for @portalThisServer.
+  ///
+  /// In en, this message translates to:
+  /// **'This server'**
+  String get portalThisServer;
+
+  /// No description provided for @portalAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Let users find and message my account'**
+  String get portalAvailable;
+
+  /// No description provided for @portalFindPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'Find available people'**
+  String get portalFindPeople;
+
+  /// No description provided for @portalEmployed.
+  ///
+  /// In en, this message translates to:
+  /// **'Employed by this workspace'**
+  String get portalEmployed;
+
+  /// No description provided for @portalEmploymentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Employment does not change access or subscriptions. Salary payments are not enabled.'**
+  String get portalEmploymentHint;
+
+  /// No description provided for @portalAdminVisible.
+  ///
+  /// In en, this message translates to:
+  /// **'Show me as a public administrator'**
+  String get portalAdminVisible;
+
+  /// No description provided for @featurePublicListings.
+  ///
+  /// In en, this message translates to:
+  /// **'Public workspace listing'**
+  String get featurePublicListings;
+
+  /// No description provided for @featurePublicListingsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.'**
+  String get featurePublicListingsDesc;
 
   /// #1327 the process-first overview of the Features screen
   ///

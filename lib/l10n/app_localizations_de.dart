@@ -82,6 +82,49 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accessoriesActive => 'Aktiv';
 
   @override
+  String get accountActivityTitle => 'Mein Verbrauch und meine Zahlungen';
+
+  @override
+  String get accountPaymentsTitle => 'Zahlungen';
+
+  @override
+  String get accountActivityScope =>
+      'Alle Ihre Profile auf diesem Server, auch frühere Mitgliedschaften. Währungen werden getrennt angezeigt.';
+
+  @override
+  String get accountActivityEmpty => 'Keine Einträge vorhanden.';
+
+  @override
+  String get accountActivityFailed =>
+      'Ihr Finanzverlauf konnte nicht geladen werden. Zum Wiederholen antippen.';
+
+  @override
+  String get accountPaymentConfirmed => 'Zahlung bestätigt';
+
+  @override
+  String get accountInvoiceVoided => 'Rechnung storniert';
+
+  @override
+  String get accountInvoiceRegrouped => 'In einer Sammelrechnung enthalten';
+
+  @override
+  String get accountInvoiceIssued => 'Rechnung ausgestellt';
+
+  @override
+  String get accountUsageCorrected => 'Korrigierter abrechenbarer Verbrauch';
+
+  @override
+  String accountUsageMinutes(int minutes) {
+    return '$minutes Minuten';
+  }
+
+  @override
+  String get accountPaymentPreference => 'Bevorzugte Onlinezahlung';
+
+  @override
+  String get accountPaymentAsk => 'Beim Bezahlen wählen';
+
+  @override
   String get handoffTitle => 'Vor dem Speichern';
 
   @override
@@ -173,6 +216,46 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get addressWindowOff => 'Kein Fenster';
+
+  @override
+  String get applicationsTitle => 'Arbeitsplatzanfragen';
+
+  @override
+  String get applicationsEmpty => 'Keine Arbeitsplatzanfragen.';
+
+  @override
+  String get applicationPending => 'Genehmigung ausstehend';
+
+  @override
+  String get applicationApproved => 'Genehmigt';
+
+  @override
+  String get applicationRefused => 'Abgelehnt';
+
+  @override
+  String get applicationAcceptedVote => 'Hat diese Anfrage genehmigt';
+
+  @override
+  String get applicationRefusedVote => 'Hat diese Anfrage abgelehnt';
+
+  @override
+  String get applicationNoMessages => 'Noch keine Nachrichten.';
+
+  @override
+  String get applicationDiscussionHint =>
+      'Ihre Anfragen und Gespräche mit den prüfenden Personen bleiben auch nach einer Ablehnung verfügbar.';
+
+  @override
+  String get applicationDecisionComment =>
+      'Für die anfragende Person sichtbarer Kommentar';
+
+  @override
+  String get applicationsLoadFailed =>
+      'Ihre Arbeitsplatzanfragen konnten nicht geladen werden. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get applicationReplyFailed =>
+      'Ihre Nachricht wurde nicht gesendet. Ihr Entwurf bleibt erhalten; bitte versuchen Sie es erneut.';
 
   @override
   String get invoiceExportBundle => 'Jahresarchiv (zip)';
@@ -9141,6 +9224,164 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get profilesEmailCopied => 'E-Mail kopiert.';
+
+  @override
+  String get portalActionFailed =>
+      'Die Änderung konnte nicht gespeichert werden. Bitte erneut versuchen.';
+
+  @override
+  String get portalConnect => 'Server verbinden';
+
+  @override
+  String get portalConnections => 'Verbundene Server';
+
+  @override
+  String get portalDisconnect => 'Trennen';
+
+  @override
+  String get portalConnectionFailed =>
+      'Verbindung fehlgeschlagen. Server und Anmeldedaten prüfen.';
+
+  @override
+  String get portalConnectionsHint =>
+      'Jeder Server verwendet eine eigene Anmeldung. Trennen entfernt den gespeicherten Zugang dieses Kontos auf diesem Gerät.';
+
+  @override
+  String get portalEmailCode => 'Anmeldecode per E-Mail';
+
+  @override
+  String get portalUseCode => 'E-Mail-Code verwenden';
+
+  @override
+  String get portalSendCode => 'Anmeldecode senden';
+
+  @override
+  String get portalSourceUnavailable =>
+      'Ein Server ist nicht erreichbar. Diese Übersicht ist unvollständig. Zum Wiederholen antippen.';
+
+  @override
+  String get portalDiscover => 'Arbeitsplatz finden';
+
+  @override
+  String get portalRegisterDirectory => 'Server im Verzeichnis veröffentlichen';
+
+  @override
+  String get portalPublication => 'Öffentliche Workspace-Seite';
+
+  @override
+  String get portalPublished => 'Im öffentlichen Verzeichnis sichtbar';
+
+  @override
+  String get portalPreview => 'Externe Ansicht';
+
+  @override
+  String get portalSavePreview => 'Speichern und externe Ansicht öffnen';
+
+  @override
+  String get portalDescription => 'Beschreibung';
+
+  @override
+  String get portalAddress => 'Öffentliche Adresse';
+
+  @override
+  String get portalEmail => 'Öffentliche E-Mail';
+
+  @override
+  String get portalPhone => 'Öffentliche Telefonnummer';
+
+  @override
+  String get portalWebsite => 'Website';
+
+  @override
+  String get portalImage => 'URL des Workspace-Bildes';
+
+  @override
+  String get portalPublicPlan => 'Öffentlicher Grundriss';
+
+  @override
+  String get portalPlans => 'Angebote und Preise';
+
+  @override
+  String get portalLatitude => 'Breitengrad';
+
+  @override
+  String get portalLongitude => 'Längengrad';
+
+  @override
+  String get portalAssociation => 'Verein';
+
+  @override
+  String get portalCompany => 'Unternehmen';
+
+  @override
+  String get portalPerson => 'Privater Anbieter';
+
+  @override
+  String get portalOwner => 'Eigentümer';
+
+  @override
+  String get portalAdmin => 'Administrator';
+
+  @override
+  String get portalChat => 'Chat';
+
+  @override
+  String get portalRequestProfile => 'Workspace-Profil beantragen';
+
+  @override
+  String get portalRequestSent =>
+      'Anfrage gesendet. Der Workspace prüft Ihr Profil.';
+
+  @override
+  String get portalList => 'Liste';
+
+  @override
+  String get portalMap => 'Karte';
+
+  @override
+  String get portalSearch => 'Workspaces suchen';
+
+  @override
+  String get portalDirectoryUnavailable =>
+      'Einige Verzeichnisse sind nicht erreichbar. Die Ergebnisse sind unvollständig.';
+
+  @override
+  String get portalNoWorkspaces =>
+      'Keine veröffentlichten Workspaces gefunden.';
+
+  @override
+  String get portalMoreDirectories => 'Weitere Verzeichnisse';
+
+  @override
+  String get portalMessenger => 'Kontonachrichten';
+
+  @override
+  String get portalThisServer => 'Dieser Server';
+
+  @override
+  String get portalAvailable =>
+      'Mein Konto für Suche und Nachrichten freigeben';
+
+  @override
+  String get portalFindPeople => 'Erreichbare Personen suchen';
+
+  @override
+  String get portalEmployed => 'Bei diesem Workspace angestellt';
+
+  @override
+  String get portalEmploymentHint =>
+      'Eine Anstellung ändert weder Zugriffsrechte noch Abonnements. Gehaltszahlungen sind nicht aktiviert.';
+
+  @override
+  String get portalAdminVisible =>
+      'Mich als öffentlichen Administrator anzeigen';
+
+  @override
+  String get featurePublicListings => 'Öffentlicher Workspace-Eintrag';
+
+  @override
+  String get featurePublicListingsDesc =>
+      'Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten.';
 
   @override
   String get featuresViewProcesses => 'Prozesse';

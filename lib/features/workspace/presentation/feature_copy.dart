@@ -456,7 +456,8 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'language. Everything else keeps the product\'s own '
                   'wording, and a workspace that renames nothing looks '
                   'exactly as it did before.',
-        WorkspaceFeature.workspaceBranding =>
+        WorkspaceFeature.publicListings => l10n?.featurePublicListingsDesc ?? 'Public workspace listing',
+      WorkspaceFeature.workspaceBranding =>
           l10n?.featureWorkspaceBrandingDesc ??
               'The workspace chooses a brand colour the app derives its '
                   'light and dark themes from, and the fill colours of its '

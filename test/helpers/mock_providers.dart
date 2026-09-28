@@ -1,4 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/backend/connected_installation_providers.dart';
+import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/features/directory/providers/directory_providers.dart';
+import 'package:deskilo/core/demo/data/account_activity_repository.dart';
+import 'package:deskilo/features/money/providers/account_activity_providers.dart';
+import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
+import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
 import 'dart:ui' show Locale;
 import 'package:deskilo/core/locale/device_locale.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
@@ -112,6 +121,11 @@ import 'fake_credit_repository.dart';
 /// channel. Default OFF, like a fresh install; tests exercising
 
 List<Override> standardTestOverrides({
+  FakeWorkspaceApplicationRepository? applications,
+  FakeAccountActivityRepository? accountActivity,
+  FakeDirectoryRepository? directory,
+  List<ConnectedInstallation> connectedSources = const [],
+  FakeAccountContactRepository? contacts,
   FakePersonalPreferencesRepository? personalPreferences,
   // #1150 — most fixtures were written against workspace wall time (the
   // app's default); a few against the device's. Each test says which.
@@ -210,7 +224,13 @@ List<Override> standardTestOverrides({
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
     workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
-    personalPreferencesRepositoryProvider.overrideWithValue(personalPreferences ?? FakePersonalPreferencesRepository()),
+    connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
+      connectedSourcesProvider.overrideWith((ref) async=>connectedSources),
+      directoryRepositoryProvider.overrideWith((ref)=>directory??FakeDirectoryRepository()),
+      accountContactRepositoryProvider.overrideWith((ref,source)=>contacts??FakeAccountContactRepository()),
+      accountActivityRepositoryProvider.overrideWithValue(accountActivity ?? FakeAccountActivityRepository()),
+      workspaceApplicationRepositoryProvider.overrideWithValue(applications ?? FakeWorkspaceApplicationRepository()),
+      personalPreferencesRepositoryProvider.overrideWithValue(personalPreferences ?? FakePersonalPreferencesRepository()),
     identityBindingRepositoryProvider
         .overrideWithValue(identityBinding ?? FakeIdentityBindingRepository()),
     actionConfirmationRepositoryProvider
@@ -381,4 +401,3 @@ class FixedSchemaVersionSource implements SchemaVersionSource {
     return version;
   }
 }
-
