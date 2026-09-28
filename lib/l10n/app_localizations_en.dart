@@ -13394,6 +13394,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readinessAreaFirstBooking => 'A first booking';
 
   @override
+  String get readinessSetAsideAction => 'Later';
+
+  @override
+  String get readinessSetAside => 'Set aside for later';
+
+  @override
+  String get readinessSetAsideUndo => 'Undo';
+
+  @override
+  String get readinessSetAsideFailed => 'That could not be saved. Try again.';
+
+  @override
   String get featureWorkspaceStatus => 'Workspace status';
 
   @override
