@@ -80,7 +80,9 @@ public.mcp_connections.mcp_delegated_deny
 public.mcp_eligibility_grants.mcp_delegated_deny
 public.mcp_eligibility_requests.mcp_delegated_deny
 public.mcp_idempotency.mcp_delegated_deny
+public.mcp_limits.mcp_delegated_deny
 public.mcp_runtime.mcp_delegated_deny
+public.mcp_usage.mcp_delegated_deny
 public.member_badges.mcp_delegated_deny
 public.member_badges.member_badges_select
 public.member_credit_uses.mcp_delegated_deny
