@@ -581,6 +581,143 @@ final class McpPolicyFamily extends $Family
   String toString() => r'mcpPolicyProvider';
 }
 
+/// #1630 — the workspace's assistant usage over 30 days, counts only.
+/// An answer for another workspace is refused, not shown.
+
+@ProviderFor(mcpWorkspaceUsage)
+final mcpWorkspaceUsageProvider = McpWorkspaceUsageFamily._();
+
+/// #1630 — the workspace's assistant usage over 30 days, counts only.
+/// An answer for another workspace is refused, not shown.
+
+final class McpWorkspaceUsageProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<McpWorkspaceUsage>,
+          McpWorkspaceUsage,
+          FutureOr<McpWorkspaceUsage>
+        >
+    with
+        $FutureModifier<McpWorkspaceUsage>,
+        $FutureProvider<McpWorkspaceUsage> {
+  /// #1630 — the workspace's assistant usage over 30 days, counts only.
+  /// An answer for another workspace is refused, not shown.
+  McpWorkspaceUsageProvider._({
+    required McpWorkspaceUsageFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'mcpWorkspaceUsageProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpWorkspaceUsageHash();
+
+  @override
+  String toString() {
+    return r'mcpWorkspaceUsageProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<McpWorkspaceUsage> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<McpWorkspaceUsage> create(Ref ref) {
+    final argument = this.argument as String;
+    return mcpWorkspaceUsage(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is McpWorkspaceUsageProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$mcpWorkspaceUsageHash() => r'c4e7b93ab6adddb709f87f23dba15e3f52657ba4';
+
+/// #1630 — the workspace's assistant usage over 30 days, counts only.
+/// An answer for another workspace is refused, not shown.
+
+final class McpWorkspaceUsageFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<McpWorkspaceUsage>, String> {
+  McpWorkspaceUsageFamily._()
+    : super(
+        retry: null,
+        name: r'mcpWorkspaceUsageProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #1630 — the workspace's assistant usage over 30 days, counts only.
+  /// An answer for another workspace is refused, not shown.
+
+  McpWorkspaceUsageProvider call(String workspaceId) =>
+      McpWorkspaceUsageProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'mcpWorkspaceUsageProvider';
+}
+
+/// #1630 — this person's own assistant usage today.
+
+@ProviderFor(myMcpUsage)
+final myMcpUsageProvider = MyMcpUsageProvider._();
+
+/// #1630 — this person's own assistant usage today.
+
+final class MyMcpUsageProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<McpClientUsage>>,
+          List<McpClientUsage>,
+          FutureOr<List<McpClientUsage>>
+        >
+    with
+        $FutureModifier<List<McpClientUsage>>,
+        $FutureProvider<List<McpClientUsage>> {
+  /// #1630 — this person's own assistant usage today.
+  MyMcpUsageProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myMcpUsageProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myMcpUsageHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<McpClientUsage>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<McpClientUsage>> create(Ref ref) {
+    return myMcpUsage(ref);
+  }
+}
+
+String _$myMcpUsageHash() => r'34626a01dcf0c0e9974f5c5498f520b71fe55f12';
+
 @ProviderFor(mcpPolicyEditor)
 final mcpPolicyEditorProvider = McpPolicyEditorProvider._();
 

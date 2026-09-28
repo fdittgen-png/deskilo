@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/mcp/domain/mcp_connection.dart';
+import '../../../features/mcp/domain/mcp_usage.dart';
 
 /// #1615 — in-memory consent for tests and Demo (which connects nothing:
 /// the visitor is not eligible, so no request reaches Auth).
@@ -15,6 +16,9 @@ class FakeMcpConnectionRepository implements McpConnectionRepository {
   final prepared = <Map<String, List<String>>>[];
   final live = <McpConnectionInfo>[];
   bool failFinalize = false;
+
+  /// #1630 — the person's usage per assistant; Demo has none.
+  final usage = <McpClientUsage>[];
 
   @override
   Future<AuthorizationRequest> authorization(String authorizationId) async =>
@@ -63,4 +67,7 @@ class FakeMcpConnectionRepository implements McpConnectionRepository {
     calls.add('disconnect:$clientId');
     live.removeWhere((c) => c.clientId == clientId);
   }
+
+  @override
+  Future<List<McpClientUsage>> myUsage() async => List.of(usage);
 }

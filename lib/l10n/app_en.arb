@@ -7978,6 +7978,55 @@
   "@mfaVerify": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
+  "mcpApiReference": "API reference",
+  "@mcpApiReference": {
+    "description": "#1801 mcp_settings"
+  },
+  "mcpApiReferenceHint": "What an assistant can call, and how it is authorised",
+  "@mcpApiReferenceHint": {
+    "description": "#1801 mcp_settings"
+  },
+  "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
+  "@mcpUsageWorkspaceTitle": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageMineTitle": "Your assistant use today",
+  "@mcpUsageMineTitle": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageUnavailable": "Usage could not be loaded.",
+  "@mcpUsageUnavailable": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageNone": "No assistant has used your access yet.",
+  "@mcpUsageNone": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageLastUsed": "Last used {when}",
+  "@mcpUsageLastUsed": {
+    "description": "#1630 mcp_usage",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpUsageRequests": "Requests",
+  "@mcpUsageRequests": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageRefusals": "Refused",
+  "@mcpUsageRefusals": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsageApplied": "Applied",
+  "@mcpUsageApplied": {
+    "description": "#1630 mcp_usage"
+  },
+  "mcpUsagePending": "Awaiting validation",
+  "@mcpUsagePending": {
+    "description": "#1630 mcp_usage"
+  },
   "featureMemberAccountMenuTitle": "Members see My account",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"
@@ -14599,6 +14648,14 @@
   "readinessReasonNoEvidence": "No export or restore recorded yet",
   "@readinessReasonNoEvidence": {
     "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonRecentExport": "A recent export is on record",
+  "@readinessReasonRecentExport": {
+    "description": "#1636 workspace_readiness recovery evidence"
+  },
+  "readinessReasonStaleExport": "The last recorded export is more than 90 days old",
+  "@readinessReasonStaleExport": {
+    "description": "#1636 workspace_readiness recovery evidence"
   },
   "readinessActorOwner": "You",
   "@readinessActorOwner": {

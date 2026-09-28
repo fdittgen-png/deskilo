@@ -32,4 +32,16 @@ void main() {
     expect(r.exitCode, 0, reason: out);
     expect(out, contains('product page: 13 cases passed'));
   });
+
+  test('#1629 the self-hosted API reference keeps its contract', () {
+    final node = Process.runSync('node', ['--version']);
+    if (node.exitCode != 0) {
+      markTestSkipped('node is not on PATH');
+      return;
+    }
+    final r = Process.runSync('node', ['tool/web/api_docs_test.mjs']);
+    final out = '${r.stdout}${r.stderr}'.trim();
+    expect(r.exitCode, 0, reason: out);
+    expect(out, contains('api docs: 4 cases passed'));
+  });
 }

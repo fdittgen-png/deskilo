@@ -142,13 +142,19 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
         onPressed: () => _compose(context, ref),
         child: const Icon(Icons.edit_outlined),
       ),
-      body: Column(children: [
-        const ApplicationRequestsEntry(compact: false),
-        TextButton.icon(onPressed:()=>context.push('/account-messages'),icon:const Icon(Icons.forum_outlined),label:Text(l10n?.portalMessenger??'Account messenger')),
-        const HelpHint(HelpHintId.messages),
-        if (hub) _filterBar(context, l10n),
-        Expanded(child: body),
-      ]),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverToBoxAdapter(
+            child: Column(children: [
+              const ApplicationRequestsEntry(compact: false),
+              TextButton.icon(onPressed:()=>context.push('/account-messages'),icon:const Icon(Icons.forum_outlined),label:Text(l10n?.portalMessenger??'Account messenger')),
+              const HelpHint(HelpHintId.messages),
+              if (hub) _filterBar(context, l10n),
+            ]),
+          ),
+        ],
+        body: body,
+      ),
     );
   }
 

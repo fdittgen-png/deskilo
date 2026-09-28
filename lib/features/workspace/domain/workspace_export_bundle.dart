@@ -45,10 +45,8 @@ Map<String, Object?> workspaceExportManifest({
       'schema_version': schemaVersion,
       'workspace_id': workspaceId,
       'created_at': createdAt.toUtc().toIso8601String(),
-      // The header row is not a row of data.
       'rows': {
-        for (final sheet in sheets)
-          sheet.name: sheet.rows.isEmpty ? 0 : sheet.rows.length - 1,
+        for (final sheet in sheets) sheet.name: _dataRows(sheet),
       },
       'files': [
         for (final f in files)
@@ -59,6 +57,23 @@ Map<String, Object?> workspaceExportManifest({
           },
       ],
     };
+
+/// The header row is not a row of data.
+int _dataRows(XlsxSheet sheet) => sheet.rows.isEmpty ? 0 : sheet.rows.length - 1;
+
+/// #1636 — what a completed export leaves as recovery evidence: the
+/// SHA-256 of the saved ZIP and the data rows its manifest counts.
+typedef WorkspaceExportEvidence = ({String sha256, int rowCount});
+
+/// The evidence for [zip], built from [sheets] by the manifest's own rule.
+WorkspaceExportEvidence workspaceExportEvidence({
+  required Uint8List zip,
+  required List<XlsxSheet> sheets,
+}) =>
+    (
+      sha256: sha256.convert(zip).toString(),
+      rowCount: sheets.fold(0, (sum, sheet) => sum + _dataRows(sheet)),
+    );
 
 /// The export ZIP's bytes.
 Uint8List buildWorkspaceExportZip({
@@ -102,4 +117,13 @@ abstract interface class WorkspaceFilesRepository {
 
   /// The file at [path] (relative to the workspace prefix).
   Future<Uint8List> download(String workspaceId, String path);
+
+  /// #1636 — records a COMPLETED export as the workspace's recovery
+  /// evidence (record_workspace_export, 0301). Called only once the file
+  /// was saved; a failed or cancelled export records nothing.
+  Future<void> recordExport(
+    String workspaceId, {
+    required String sha256,
+    required int rowCount,
+  });
 }

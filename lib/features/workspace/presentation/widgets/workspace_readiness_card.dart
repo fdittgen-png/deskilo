@@ -65,6 +65,11 @@ String? readinessReasonLabel(AppLocalizations? l10n, String? reason) =>
         l10n?.readinessReasonNoPolicies ?? 'No request waits for a validator',
       'no_evidence' =>
         l10n?.readinessReasonNoEvidence ?? 'No export or restore recorded yet',
+      'recent_export' =>
+        l10n?.readinessReasonRecentExport ?? 'A recent export is on record',
+      'stale_export' =>
+        l10n?.readinessReasonStaleExport ??
+            'The last recorded export is more than 90 days old',
       'not_exposed' =>
         l10n?.readinessReasonNotExposed ??
             'This space does not expose anything to assistants yet',

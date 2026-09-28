@@ -7485,6 +7485,43 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mfaVerify => 'Bestätigen';
 
   @override
+  String get mcpApiReference => 'API-Referenz';
+
+  @override
+  String get mcpApiReferenceHint =>
+      'Was ein Assistent aufrufen kann und wie es autorisiert wird';
+
+  @override
+  String get mcpUsageWorkspaceTitle =>
+      'Nutzung durch Assistenten, letzte 30 Tage';
+
+  @override
+  String get mcpUsageMineTitle => 'Ihre Nutzung durch Assistenten heute';
+
+  @override
+  String get mcpUsageUnavailable => 'Die Nutzung konnte nicht geladen werden.';
+
+  @override
+  String get mcpUsageNone => 'Noch kein Assistent hat Ihren Zugang genutzt.';
+
+  @override
+  String mcpUsageLastUsed(String when) {
+    return 'Zuletzt genutzt $when';
+  }
+
+  @override
+  String get mcpUsageRequests => 'Anfragen';
+
+  @override
+  String get mcpUsageRefusals => 'Abgelehnt';
+
+  @override
+  String get mcpUsageApplied => 'Ausgeführt';
+
+  @override
+  String get mcpUsagePending => 'Warten auf Freigabe';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Mitglieder sehen Mein Konto';
 
   @override
@@ -13428,6 +13465,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get readinessReasonNoEvidence =>
       'Noch kein Export und keine Wiederherstellung erfasst';
+
+  @override
+  String get readinessReasonRecentExport => 'Ein aktueller Export ist erfasst';
+
+  @override
+  String get readinessReasonStaleExport =>
+      'Der letzte erfasste Export ist älter als 90 Tage';
 
   @override
   String get readinessActorOwner => 'Sie';

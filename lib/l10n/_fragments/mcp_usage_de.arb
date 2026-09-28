@@ -1,0 +1,11 @@
+{
+  "mcpUsageWorkspaceTitle": "Nutzung durch Assistenten, letzte 30 Tage",
+  "mcpUsageMineTitle": "Ihre Nutzung durch Assistenten heute",
+  "mcpUsageUnavailable": "Die Nutzung konnte nicht geladen werden.",
+  "mcpUsageNone": "Noch kein Assistent hat Ihren Zugang genutzt.",
+  "mcpUsageLastUsed": "Zuletzt genutzt {when}",
+  "mcpUsageRequests": "Anfragen",
+  "mcpUsageRefusals": "Abgelehnt",
+  "mcpUsageApplied": "Ausgeführt",
+  "mcpUsagePending": "Warten auf Freigabe"
+}

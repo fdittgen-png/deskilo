@@ -7495,6 +7495,44 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mfaVerify => 'Vérifier';
 
   @override
+  String get mcpApiReference => 'Référence de l’API';
+
+  @override
+  String get mcpApiReferenceHint =>
+      'Ce qu’un assistant peut appeler, et comment c’est autorisé';
+
+  @override
+  String get mcpUsageWorkspaceTitle =>
+      'Utilisation des assistants, 30 derniers jours';
+
+  @override
+  String get mcpUsageMineTitle =>
+      'Votre utilisation des assistants aujourd\'hui';
+
+  @override
+  String get mcpUsageUnavailable => 'L\'utilisation n\'a pas pu être chargée.';
+
+  @override
+  String get mcpUsageNone => 'Aucun assistant n\'a encore utilisé votre accès.';
+
+  @override
+  String mcpUsageLastUsed(String when) {
+    return 'Dernière utilisation $when';
+  }
+
+  @override
+  String get mcpUsageRequests => 'Demandes';
+
+  @override
+  String get mcpUsageRefusals => 'Refusées';
+
+  @override
+  String get mcpUsageApplied => 'Appliquées';
+
+  @override
+  String get mcpUsagePending => 'En attente de validation';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Les membres voient Mon compte';
 
   @override
@@ -13447,6 +13485,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get readinessReasonNoEvidence =>
       'Aucun export ni restauration enregistré';
+
+  @override
+  String get readinessReasonRecentExport => 'Un export récent est enregistré';
+
+  @override
+  String get readinessReasonStaleExport =>
+      'Le dernier export enregistré date de plus de 90 jours';
 
   @override
   String get readinessActorOwner => 'Vous';

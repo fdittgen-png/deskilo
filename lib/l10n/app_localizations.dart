@@ -12847,6 +12847,72 @@ abstract class AppLocalizations {
   /// **'Verify'**
   String get mfaVerify;
 
+  /// #1801 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'API reference'**
+  String get mcpApiReference;
+
+  /// #1801 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'What an assistant can call, and how it is authorised'**
+  String get mcpApiReferenceHint;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant use, last 30 days'**
+  String get mcpUsageWorkspaceTitle;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Your assistant use today'**
+  String get mcpUsageMineTitle;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Usage could not be loaded.'**
+  String get mcpUsageUnavailable;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'No assistant has used your access yet.'**
+  String get mcpUsageNone;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Last used {when}'**
+  String mcpUsageLastUsed(String when);
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get mcpUsageRequests;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Refused'**
+  String get mcpUsageRefusals;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get mcpUsageApplied;
+
+  /// #1630 mcp_usage
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting validation'**
+  String get mcpUsagePending;
+
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///
   /// In en, this message translates to:
@@ -23273,6 +23339,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No export or restore recorded yet'**
   String get readinessReasonNoEvidence;
+
+  /// #1636 workspace_readiness recovery evidence
+  ///
+  /// In en, this message translates to:
+  /// **'A recent export is on record'**
+  String get readinessReasonRecentExport;
+
+  /// #1636 workspace_readiness recovery evidence
+  ///
+  /// In en, this message translates to:
+  /// **'The last recorded export is more than 90 days old'**
+  String get readinessReasonStaleExport;
 
   /// #1636 workspace_readiness
   ///

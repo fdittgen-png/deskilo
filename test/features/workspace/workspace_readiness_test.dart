@@ -226,6 +226,49 @@ void main() {
     expect(used.blocking, isFalse, reason: 'being used is never a prerequisite');
   });
 
+  test('0301 words: recovery evidence is a recorded export, recent or stale',
+      () {
+    final s = ReadinessSection.listFromJson([
+      {
+        'section': 'recovery',
+        'state': 'ready',
+        'actor': 'operator',
+        'required': false,
+        'reason': 'recent_export',
+        'recorded_at': '2026-09-01T10:00:00+00:00',
+        'route': '/workspace-settings',
+      },
+      {
+        'section': 'recovery',
+        'state': 'unverified',
+        'actor': 'operator',
+        'reason': 'stale_export',
+        'recorded_at': '2026-05-01T10:00:00+00:00',
+        'route': '/workspace-settings',
+      },
+      {
+        'section': 'recovery',
+        'state': 'unverified',
+        'reason': 'no_evidence',
+        'recorded_at': null,
+        'route': '/workspace-settings',
+      },
+    ]);
+    expect(s[0].state, ReadinessState.ready);
+    expect(s[0].reason, 'recent_export');
+    expect(s[0].recordedAt, DateTime.utc(2026, 9, 1, 10));
+    expect(s[0].actor, ReadinessActor.operator);
+    expect(s[0].blocking, isFalse);
+    expect(s[1].state, ReadinessState.unverified);
+    expect(s[1].reason, 'stale_export');
+    expect(s[1].blocking, isFalse, reason: 'stale evidence is shown, not demanded');
+    expect(s[2].recordedAt, isNull);
+    expect(readinessReasonLabel(null, 'recent_export'),
+        'A recent export is on record');
+    expect(readinessReasonLabel(null, 'stale_export'),
+        'The last recorded export is more than 90 days old');
+  });
+
   test('the backend section follows the app\'s own schema check', () {
     expect(
       backendReadiness(SchemaCompatibility.current).state,

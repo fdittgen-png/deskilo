@@ -3,7 +3,8 @@
 // #1636 — how far a space is from being usable, one section at a time,
 // as workspace_readiness (0285) reads it from what the space holds.
 // Nothing here is a checkbox: a section is ready because the data is
-// there, and recovery stays unverified until evidence exists.
+// there, and recovery stays unverified until evidence exists — a real
+// export the app recorded within 90 days (0301).
 
 import '../../../core/instance/schema_compatibility.dart';
 
@@ -60,6 +61,7 @@ class ReadinessSection {
     required this.route,
     this.actor = ReadinessActor.owner,
     this.reason,
+    this.recordedAt,
   });
 
   final ReadinessArea area;
@@ -74,9 +76,14 @@ class ReadinessSection {
   final ReadinessActor actor;
 
   /// The server's code for why, where the state alone does not say it
-  /// (`too_few_validators`, `no_policies`, `no_evidence`, `not_exposed`,
-  /// `eligibility_*`); null otherwise.
+  /// (`too_few_validators`, `no_policies`, `no_evidence`,
+  /// `recent_export`, `stale_export`, `not_exposed`, `eligibility_*`);
+  /// null otherwise.
   final String? reason;
+
+  /// 0301 — when the evidence behind the recovery section was recorded:
+  /// the last completed export. Null when there is none.
+  final DateTime? recordedAt;
 
   /// Only what someone must still do blocks. An unverified or unavailable
   /// answer is shown, never demanded: offline is not a missing setup.
@@ -119,6 +126,9 @@ class ReadinessSection {
             _ => ReadinessActor.owner,
           },
           reason: s['reason'] is String ? s['reason'] as String : null,
+          recordedAt: s['recorded_at'] is String
+              ? DateTime.tryParse(s['recorded_at'] as String)
+              : null,
           required: s['required'] == true,
           route: s['route'] is String && '${s['route']}'.startsWith('/')
               ? s['route'] as String

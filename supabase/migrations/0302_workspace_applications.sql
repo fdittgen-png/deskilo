@@ -191,7 +191,7 @@ do $export$
 declare v_def text; v_anchor text := $a$    'exported_at', now(),$a$;
 begin
   v_def := pg_get_functiondef('public.export_my_data(uuid)'::regprocedure);
-  if position(v_anchor in v_def)=0 then raise exception '0300: export anchor missing'; end if;
+  if position(v_anchor in v_def)=0 then raise exception '0302: export anchor missing'; end if;
   execute replace(v_def,v_anchor,$a$    'exported_at', now(),
     'application_messages', (select coalesce(jsonb_agg(to_jsonb(message)),'[]'::jsonb)
       from public.workspace_application_messages message where message.workspace_id=p_workspace_id
@@ -204,4 +204,4 @@ end;
 $export$;
 
 notify pgrst,'reload schema';
-select public.set_deskilo_schema_version(300);
+select public.set_deskilo_schema_version(302);

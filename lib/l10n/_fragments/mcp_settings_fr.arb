@@ -47,5 +47,7 @@
   "mfaEnroll": "Scannez ce code avec une application d'authentification, ou saisissez la clé, puis tapez les six chiffres affichés.",
   "mfaCode": "Code à six chiffres",
   "mfaWrong": "Ce code n'a pas été accepté. Essayez le code actuel.",
-  "mfaVerify": "Vérifier"
+  "mfaVerify": "Vérifier",
+  "mcpApiReference": "Référence de l’API",
+  "mcpApiReferenceHint": "Ce qu’un assistant peut appeler, et comment c’est autorisé"
 }

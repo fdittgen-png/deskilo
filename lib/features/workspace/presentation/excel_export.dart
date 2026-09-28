@@ -107,16 +107,34 @@ Future<void> exportWorkspaceExcel(
 
       final now = ref.read(clockProvider).now();
       final stamp = now.toIso8601String().substring(0, 10);
+      final zip = buildWorkspaceExportZip(
+        workspaceId: workspace.id,
+        schemaVersion: schemaVersion,
+        createdAt: now,
+        sheets: sheets,
+        files: files,
+      );
       final path = await ref.read(fileSaverProvider)(
-        bytes: buildWorkspaceExportZip(
-          workspaceId: workspace.id,
-          schemaVersion: schemaVersion,
-          createdAt: now,
-          sheets: sheets,
-          files: files,
-        ),
+        bytes: zip,
         fileName: 'deskilo-export-${workspace.inviteCode}-$stamp.zip',
       );
+      // #1636 — a saved export is the recovery evidence the readiness
+      // checklist reads; a failed or cancelled save records nothing. The
+      // export itself succeeded, so a failed record only warns.
+      if (path != null) {
+        final evidence = workspaceExportEvidence(zip: zip, sheets: sheets);
+        try {
+          await filesRepo.recordExport(
+            workspace.id,
+            sha256: evidence.sha256,
+            rowCount: evidence.rowCount,
+          );
+        } catch (e, st) {
+          TraceLogger.instance.warn('workspace',
+              'export: saved, but its recovery evidence was not recorded',
+              error: e, stackTrace: st);
+        }
+      }
       if (!context.mounted) return;
       if (path == null) {
         AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');

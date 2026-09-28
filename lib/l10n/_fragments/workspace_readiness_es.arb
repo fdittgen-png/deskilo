@@ -26,6 +26,8 @@
   "readinessReasonTooFewValidators": "Una regla pide más validadores de los que tiene este espacio",
   "readinessReasonNoPolicies": "Ninguna solicitud espera a un validador",
   "readinessReasonNoEvidence": "Aún no se ha registrado ninguna exportación ni restauración",
+  "readinessReasonRecentExport": "Hay una exportación reciente registrada",
+  "readinessReasonStaleExport": "La última exportación registrada tiene más de 90 días",
   "readinessActorOwner": "Usted",
   "readinessActorOperator": "El operador del servidor",
   "readinessActor": "Quién: {who}",

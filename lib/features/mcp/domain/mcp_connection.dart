@@ -4,6 +4,7 @@
 // may offer it (per workspace, per operation), and the connections that
 // exist. The assistant never widens its own consent: every call here runs
 // from the app's own session.
+import 'mcp_usage.dart';
 
 /// An assistant's pending authorization request, as Auth describes it.
 class AuthorizationRequest {
@@ -116,4 +117,7 @@ abstract interface class McpConnectionRepository {
 
   /// This database's connection and the provider grant.
   Future<void> disconnect(String clientId);
+
+  /// #1630 — this person's own usage today, per assistant.
+  Future<List<McpClientUsage>> myUsage();
 }
