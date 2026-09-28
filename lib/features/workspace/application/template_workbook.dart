@@ -14,6 +14,7 @@ import '../../../core/files/xlsx.dart';
 import '../domain/template_capabilities.dart';
 import '../domain/template_inspection.dart';
 import '../domain/workspace_repository.dart';
+import '../domain/workbook_origin.dart';
 
 /// The largest named batch one workbook carries; more is refused, never
 /// cut short.
@@ -91,6 +92,7 @@ List<XlsxSheet> templateWorkbook(
   List<TemplateInspection> inspections, {
   required DateTime capturedAt,
   WorkbookLabels? labels,
+  WorkbookOrigin? origin,
 }) {
   final words = labels ?? WorkbookLabels.english();
   if (inspections.isEmpty) throw ArgumentError('no template to export');
@@ -126,6 +128,7 @@ List<XlsxSheet> templateWorkbook(
           'profile',
           'compatibility',
           'entities',
+          'source_id', 'installation_id', 'scoped_template_id', 'captured_at',
         ],
         for (final t in inspections)
           [
@@ -139,6 +142,9 @@ List<XlsxSheet> templateWorkbook(
             t.profile.name,
             t.compatibility.name,
             t.entities.join(', '),
+            origin?.sourceId ?? 'unknown', origin?.installationId ?? 'unknown',
+            origin?.scopedTemplate(t.templateId) ?? 'unknown',
+            capturedAt.toUtc().toIso8601String(),
           ],
       ],
     ),
@@ -219,6 +225,7 @@ List<XlsxSheet> templateWorkbook(
           'unknown',
           'required_inputs',
           'excluded',
+          'source_id', 'installation_id', 'scoped_template_id',
         ],
         for (final t in inspections)
           [
@@ -229,6 +236,8 @@ List<XlsxSheet> templateWorkbook(
             t.coverage.unknown,
             t.coverage.requiredInputs,
             t.exclusions.length,
+            origin?.sourceId ?? 'unknown', origin?.installationId ?? 'unknown',
+            origin?.scopedTemplate(t.templateId) ?? 'unknown',
           ],
         <Object?>[],
         ['template_key', 'excluded_field', 'portability', 'reason'],
@@ -406,9 +415,12 @@ class WorkbookCancelled implements Exception {
 
 /// Reads each template's inspection and saves the workbook.
 class TemplateWorkbookExport {
-  const TemplateWorkbookExport(this._workspaces, this._save);
+  const TemplateWorkbookExport(this._workspaces, this._save,
+      {required this.origin, this.isCurrent});
   final WorkspaceRepository _workspaces;
   final FileSaver _save;
+  final WorkbookOriginRepository origin;
+  final bool Function()? isCurrent;
 
   /// The saved location, or null when the person cancelled the save
   /// dialog. Throws [WorkbookCancelled] when [cancel] was asked first.
@@ -419,29 +431,40 @@ class TemplateWorkbookExport {
     void Function(WorkbookProgress progress)? onProgress,
     WorkbookCancel? cancel,
   }) async {
-    if (templateIds.length > maxTemplates) {
+    final ids = List<String>.unmodifiable(templateIds);
+    if (ids.isEmpty || ids.toSet().length != ids.length || ids.length > maxTemplates) {
       throw ArgumentError('at most $maxTemplates templates per workbook');
     }
     void check() {
       if (cancel?.isCancelled ?? false) throw const WorkbookCancelled();
+      if (!(isCurrent?.call() ?? true)) throw StateError('workbook_source_changed');
     }
-
-    final total = templateIds.length;
+    check();
+    final capturedOrigin = await origin.read();
+    check();
+    final total = ids.length;
     final inspections = <TemplateInspection>[];
-    for (final id in templateIds) {
+    for (final id in ids) {
       check();
       onProgress?.call(
         WorkbookProgress(WorkbookStage.reading, inspections.length, total),
       );
-      inspections.add(await _workspaces.inspectWorkspaceTemplate(id));
+      final inspection = await _workspaces.inspectWorkspaceTemplate(id);
+      check();
+      if (inspection.templateId != id || !inspection.usable) {
+        throw StateError('workbook_inspection_changed');
+      }
+      inspections.add(inspection);
     }
+    if (!capturedOrigin.sameContext(await origin.read())) throw StateError('workbook_source_changed');
     check();
     onProgress?.call(WorkbookProgress(WorkbookStage.building, total, total));
     final Uint8List bytes = buildXlsx(
-      templateWorkbook(inspections, capturedAt: now, labels: labels),
+      templateWorkbook(inspections, capturedAt: now, labels: labels, origin: capturedOrigin),
     );
     check();
     onProgress?.call(WorkbookProgress(WorkbookStage.saving, total, total));
+    check();
     return _save(bytes: bytes, fileName: templateWorkbookName(now));
   }
 }

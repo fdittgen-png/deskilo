@@ -10,6 +10,8 @@ import 'package:deskilo/features/workspace/domain/deployment.dart';
 import 'package:deskilo/features/workspace/providers/deployment_providers.dart';
 import 'fake_deployment_repository.dart';
 import 'package:deskilo/core/demo/data/auth_repository.dart';
+import 'package:deskilo/core/demo/data/workbook_origin_repository.dart';
+import 'package:deskilo/features/workspace/application/template_compare.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 export 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
@@ -204,6 +206,7 @@ List<Override> standardTestOverrides({
 
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
+    workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
     identityBindingRepositoryProvider
         .overrideWithValue(identityBinding ?? FakeIdentityBindingRepository()),
     actionConfirmationRepositoryProvider

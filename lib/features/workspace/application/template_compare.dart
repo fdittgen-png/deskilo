@@ -4,11 +4,11 @@
 // once, turned into #1659's comparison rows. The screen only shows them.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/files/file_saver.dart';
 import '../domain/template_capabilities.dart';
 import '../domain/template_inspection.dart';
 import '../providers/workspace_providers.dart';
-import 'template_workbook.dart';
+
+export '../providers/workbook_export_providers.dart' show templateWorkbookExportProvider, workbookOriginRepositoryProvider;
 
 part 'template_compare.g.dart';
 
@@ -30,10 +30,3 @@ Future<List<ComparisonRow>> templateComparison(
 @riverpod
 Future<TemplateInspection> templateInspection(Ref ref, String templateId) =>
     ref.watch(workspaceRepositoryProvider).inspectWorkspaceTemplate(templateId);
-
-/// #1661 — the workbook export of a shortlist.
-@riverpod
-TemplateWorkbookExport templateWorkbookExport(Ref ref) => TemplateWorkbookExport(
-      ref.watch(workspaceRepositoryProvider),
-      ref.watch(fileSaverProvider),
-    );
