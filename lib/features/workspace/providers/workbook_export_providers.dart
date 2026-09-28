@@ -9,7 +9,7 @@ import 'workspace_providers.dart';
 
 part 'workbook_export_providers.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 WorkbookOriginRepository workbookOriginRepository(Ref ref) =>
     SupabaseWorkbookOriginRepository(Supabase.instance.client);
 
