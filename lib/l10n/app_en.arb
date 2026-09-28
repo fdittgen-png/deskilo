@@ -14509,6 +14509,10 @@
   "@readinessReasonEligibilityMissing": {
     "description": "#1636 workspace_readiness"
   },
+  "readinessAreaFirstBooking": "A first booking",
+  "@readinessAreaFirstBooking": {
+    "description": "#1636 workspace_readiness"
+  },
   "featureWorkspaceStatus": "Workspace status",
   "@featureWorkspaceStatus": {
     "description": "#934 workspace status / repartition wizard: featureWorkspaceStatus"

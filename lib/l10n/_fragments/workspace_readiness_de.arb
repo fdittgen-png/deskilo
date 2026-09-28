@@ -35,5 +35,6 @@
   "readinessReasonEligibilityRequested": "Ihre Anfrage wartet auf die Datenbankadministration",
   "readinessReasonEligibilityExpired": "Ihre Freigabe für Assistenten ist abgelaufen",
   "readinessReasonEligibilityNoIdentity": "Melden Sie sich zuerst mit Ihrer bestätigten Identität an",
-  "readinessReasonEligibilityMissing": "Keine Datenbankadministration hat Sie für Assistenten freigegeben"
+  "readinessReasonEligibilityMissing": "Keine Datenbankadministration hat Sie für Assistenten freigegeben",
+  "readinessAreaFirstBooking": "Eine erste Buchung"
 }
