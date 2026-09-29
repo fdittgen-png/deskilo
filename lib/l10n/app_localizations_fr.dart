@@ -7322,6 +7322,58 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpOpGetValidation => 'Lire une demande de validation';
 
   @override
+  String get mcpFieldName => 'Noms des espaces et des places';
+
+  @override
+  String get mcpFieldNameSample => 'Bureau fenêtre 12';
+
+  @override
+  String get mcpDisclosureTitle => 'Détails facultatifs';
+
+  @override
+  String get mcpDisclosurePolicyExplain =>
+      'Les assistants reçoivent des réponses minimisées. Choisissez les détails qu\'ils peuvent aussi voir ici ; chaque personne choisit encore pour elle-même.';
+
+  @override
+  String get mcpDisclosureNoneAllowed =>
+      'Cette base de données ne permet de montrer aucun détail facultatif aux assistants.';
+
+  @override
+  String get mcpDisclosurePreviewNote =>
+      'Une réponse fictive, pour montrer ce que verraient les assistants.';
+
+  @override
+  String get mcpDisclosurePreviewMinimised => 'Réponse minimisée';
+
+  @override
+  String get mcpDisclosurePreviewDetailed => 'Réponse détaillée';
+
+  @override
+  String get mcpDisclosureMaximumExplain =>
+      'Le maximum que les propriétaires de cette base de données peuvent laisser voir aux assistants. Il n\'élargit jamais la politique d\'un espace ni le consentement d\'une personne.';
+
+  @override
+  String get mcpDisclosureMaximumSave => 'Enregistrer le maximum';
+
+  @override
+  String get mcpDisclosureMaximumSaved => 'Maximum enregistré.';
+
+  @override
+  String get mcpDisclosureMaximumRefused =>
+      'Le maximum n\'a pas été enregistré. Il faut votre second facteur.';
+
+  @override
+  String get mcpDisclosureMaximumLocked =>
+      'Confirmez avec votre second facteur pour voir et modifier le maximum.';
+
+  @override
+  String get mcpDisclosureUnlock => 'Confirmer';
+
+  @override
+  String get mcpConsentFieldsExplain =>
+      'Détails qu\'il peut aussi voir ici. Laissez-les décochés pour garder ses réponses minimisées.';
+
+  @override
   String get mcpPolicyTitle => 'Accès des assistants';
 
   @override

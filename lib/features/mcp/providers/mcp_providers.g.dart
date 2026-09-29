@@ -807,6 +807,56 @@ final class EligibilityRequestsProvider
 String _$eligibilityRequestsHash() =>
     r'6e3c3a4d4a18203eb72646a0ea248fc2305baba5';
 
+/// #1809 — the installation maximum of optional fields (administrators,
+/// aal2).
+
+@ProviderFor(mcpDisclosureMaximum)
+final mcpDisclosureMaximumProvider = McpDisclosureMaximumProvider._();
+
+/// #1809 — the installation maximum of optional fields (administrators,
+/// aal2).
+
+final class McpDisclosureMaximumProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<McpDisclosureMaximum>,
+          McpDisclosureMaximum,
+          FutureOr<McpDisclosureMaximum>
+        >
+    with
+        $FutureModifier<McpDisclosureMaximum>,
+        $FutureProvider<McpDisclosureMaximum> {
+  /// #1809 — the installation maximum of optional fields (administrators,
+  /// aal2).
+  McpDisclosureMaximumProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mcpDisclosureMaximumProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpDisclosureMaximumHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<McpDisclosureMaximum> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<McpDisclosureMaximum> create(Ref ref) {
+    return mcpDisclosureMaximum(ref);
+  }
+}
+
+String _$mcpDisclosureMaximumHash() =>
+    r'976fe5d46fc01a79cc86b14a8b8ceba3b3da0497';
+
 @ProviderFor(eligibilityReview)
 final eligibilityReviewProvider = EligibilityReviewProvider._();
 

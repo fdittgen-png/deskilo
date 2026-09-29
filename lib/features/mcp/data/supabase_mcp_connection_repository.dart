@@ -38,15 +38,20 @@ class SupabaseMcpConnectionRepository implements McpConnectionRepository {
   Future<void> prepare(
     String clientId,
     String authorizationId,
-    Map<String, List<String>> scopes,
-  ) => _client.rpc<Object?>(
+    Map<String, List<String>> scopes, {
+    Map<String, List<String>> optionalFields = const {},
+  }) => _client.rpc<Object?>(
     'mcp_prepare_connection',
     params: {
       'p_client_id': clientId,
       'p_authorization_id': authorizationId,
       'p_scopes': [
         for (final e in scopes.entries)
-          {'workspace_id': e.key, 'operations': e.value},
+          {
+            'workspace_id': e.key,
+            'operations': e.value,
+            'optional_fields': optionalFields[e.key] ?? const <String>[],
+          },
       ],
     },
   );

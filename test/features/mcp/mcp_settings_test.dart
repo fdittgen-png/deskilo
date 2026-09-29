@@ -393,4 +393,170 @@ void main() {
       },
     );
   });
+
+  group('optional disclosure (#1809)', () {
+    McpPolicy withFields(
+      String ws, {
+      List<String> maximum = const ['name'],
+      Set<String> fields = const {},
+    }) {
+      final p = policy(ws);
+      return McpPolicy(
+        workspaceId: p.workspaceId,
+        revision: p.revision,
+        enabled: p.enabled,
+        operations: p.operations,
+        targetCeiling: p.targetCeiling,
+        featureEnabled: p.featureEnabled,
+        available: p.available,
+        optionalFields: fields,
+        availableOptionalFields: maximum,
+      );
+    }
+
+    Future<void> tap(WidgetTester tester, String key) async {
+      final f = find.byKey(ValueKey(key));
+      await tester.ensureVisible(f);
+      await tester.pumpAndSettle();
+      await tester.tap(f);
+      await tester.pumpAndSettle();
+    }
+
+    String detailed(WidgetTester tester) => tester
+        .widget<Text>(
+          find.byKey(const ValueKey('mcp-disclosure-preview-detailed')),
+        )
+        .data!;
+
+    test('the DTOs keep only the fields the contract defines', () {
+      final p = McpPolicy.fromJson({
+        'optional_fields': ['name', 'email'],
+        'available_optional_fields': ['email', 'name'],
+      });
+      expect(p.optionalFields, {'name'});
+      expect(p.availableOptionalFields, ['name']);
+      final m = McpDisclosureMaximum.fromJson({
+        'optional_fields': <String>[],
+        'available_fields': ['name'],
+      });
+      expect(m.fields, isEmpty);
+      expect(m.available, ['name']);
+    });
+
+    testWidgets(
+      'the owner chooses within the maximum; the preview and the save follow',
+      (tester) async {
+        final workspace = FakeWorkspaceRepository.withWorkspace();
+        final ws = workspace.workspaces.first.id;
+        final admin = FakeMcpAdminRepository(policy: withFields(ws));
+        await pump(
+          tester,
+          const McpPolicyScreen(),
+          standardTestOverrides(workspace: workspace, mcpAdmin: admin),
+        );
+        final minimised = tester
+            .widget<Text>(
+              find.byKey(const ValueKey('mcp-disclosure-preview-minimised')),
+            )
+            .data!;
+        expect(minimised, isNot(contains('"name"')));
+        expect(detailed(tester), isNot(contains('"name"')));
+
+        await tap(tester, 'mcp-policy-field-name');
+        expect(detailed(tester), contains('"name": "Window desk 12"'));
+        expect(
+          tester
+              .widget<Text>(
+                find.byKey(const ValueKey('mcp-disclosure-preview-minimised')),
+              )
+              .data,
+          minimised,
+          reason: 'the minimised answer never carries an optional field',
+        );
+
+        await tap(tester, 'mcp-policy-save');
+        expect(admin.saves.single.optionalFields, {'name'});
+        expect(admin.current!.optionalFields, {'name'});
+      },
+    );
+
+    testWidgets('the owner cannot pick a field outside the maximum', (
+      tester,
+    ) async {
+      final workspace = FakeWorkspaceRepository.withWorkspace();
+      final ws = workspace.workspaces.first.id;
+      // The database lowered its maximum after the owner offered `name`.
+      final admin = FakeMcpAdminRepository(
+        policy: withFields(ws, maximum: const [], fields: {'name'}),
+      );
+      await pump(
+        tester,
+        const McpPolicyScreen(),
+        standardTestOverrides(workspace: workspace, mcpAdmin: admin),
+      );
+      expect(find.byKey(const ValueKey('mcp-policy-field-name')), findsNothing);
+      expect(
+        find.byKey(const ValueKey('mcp-policy-fields-none')),
+        findsOneWidget,
+      );
+      expect(detailed(tester), isNot(contains('"name"')));
+      await tap(tester, 'mcp-policy-save');
+      expect(admin.saves.single.optionalFields, isEmpty);
+    });
+
+    testWidgets('the administrator sets the maximum behind the second factor', (
+      tester,
+    ) async {
+      final identity = FakeIdentityBindingRepository()
+        ..capabilities = const DatabaseCapabilities(
+          eligibility: McpEligibility.notRequested,
+          databaseAdministrator: true,
+        );
+      final admin = FakeMcpAdminRepository()
+        ..maximum = const McpDisclosureMaximum(
+          fields: {},
+          available: ['name'],
+        );
+      final factor = FakeSecondFactorRepository();
+      await pump(
+        tester,
+        const EligibilityReviewScreen(),
+        standardTestOverrides(
+          identityBinding: identity,
+          mcpAdmin: admin,
+          secondFactor: factor,
+        ),
+      );
+      expect(
+        tester
+            .widget<CheckboxListTile>(
+              find.byKey(const ValueKey('mcp-maximum-field-name')),
+            )
+            .value,
+        isFalse,
+      );
+      await tap(tester, 'mcp-maximum-field-name');
+      await tap(tester, 'mcp-maximum-save');
+      await tester.enterText(find.byKey(const ValueKey('mfa-code')), '000000');
+      await tester.tap(find.byKey(const ValueKey('mfa-verify')));
+      await tester.pumpAndSettle();
+      expect(admin.maximumSaves, isEmpty, reason: 'a wrong code saves nothing');
+
+      await tester.enterText(find.byKey(const ValueKey('mfa-code')), '123456');
+      await tester.tap(find.byKey(const ValueKey('mfa-verify')));
+      await tester.pumpAndSettle();
+      expect(admin.maximumSaves.single, {'name'});
+      expect(
+        find.byKey(const ValueKey('mcp-maximum-outcome-saved')),
+        findsOneWidget,
+      );
+    });
+
+    test('without aal2 the maximum is not saved', () async {
+      final admin = FakeMcpAdminRepository();
+      final review = EligibilityReview(admin, FakeSecondFactorRepository());
+      expect(await review.setDisclosureMaximum({'name'}), isNull);
+      expect(admin.maximumSaves, isEmpty);
+    });
+  });
 }
