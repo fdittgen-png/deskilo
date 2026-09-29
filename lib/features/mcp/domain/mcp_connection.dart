@@ -5,6 +5,7 @@
 // exist. The assistant never widens its own consent: every call here runs
 // from the app's own session.
 import 'mcp_admin.dart' show mcpKnownOptionalFields;
+import 'mcp_context.dart';
 import 'mcp_usage.dart';
 
 /// An assistant's pending authorization request, as Auth describes it.
@@ -78,12 +79,25 @@ class McpConnectionInfo {
     required this.clientName,
     required this.workspaces,
     this.connectedAt,
+    this.scope,
   });
 
   final String clientId;
   final String clientName;
   final List<ConsentWorkspace> workspaces;
   final DateTime? connectedAt;
+
+  /// #1625 — the installation and account this connection lives on; a
+  /// disconnect goes there, whatever the app shows by then.
+  final McpInstanceRef? scope;
+
+  McpConnectionInfo withScope(McpInstanceRef scope) => McpConnectionInfo(
+    clientId: clientId,
+    clientName: clientName,
+    workspaces: workspaces,
+    connectedAt: connectedAt,
+    scope: scope,
+  );
 
   static List<McpConnectionInfo> listFromJson(Object? json) => [
     for (final c in json is List ? json : const [])

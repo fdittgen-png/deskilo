@@ -58,6 +58,208 @@ final class ActionConfirmationRepositoryProvider
 String _$actionConfirmationRepositoryHash() =>
     r'a8a9d46d88e5ca5c391da2845f4a314d14a8a98d';
 
+/// #1625 — the active backend's own repositories, as one target bundle.
+
+@ProviderFor(activeMcpRepositories)
+final activeMcpRepositoriesProvider = ActiveMcpRepositoriesProvider._();
+
+/// #1625 — the active backend's own repositories, as one target bundle.
+
+final class ActiveMcpRepositoriesProvider
+    extends
+        $FunctionalProvider<McpRepositories, McpRepositories, McpRepositories>
+    with $Provider<McpRepositories> {
+  /// #1625 — the active backend's own repositories, as one target bundle.
+  ActiveMcpRepositoriesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'activeMcpRepositoriesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$activeMcpRepositoriesHash();
+
+  @$internal
+  @override
+  $ProviderElement<McpRepositories> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  McpRepositories create(Ref ref) {
+    return activeMcpRepositories(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(McpRepositories value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<McpRepositories>(value),
+    );
+  }
+}
+
+String _$activeMcpRepositoriesHash() =>
+    r'171b4a9ab637a313b1c4b1f9eb9513df6675f493';
+
+/// #1625 — one native client per verified installation + issuer + account
+/// + purpose. The active backend borrows the app's session; a connected
+/// installation runs through its own isolated record. A sign-in change
+/// retires every client, with one outcome per target.
+
+@ProviderFor(mcpClientRegistry)
+final mcpClientRegistryProvider = McpClientRegistryProvider._();
+
+/// #1625 — one native client per verified installation + issuer + account
+/// + purpose. The active backend borrows the app's session; a connected
+/// installation runs through its own isolated record. A sign-in change
+/// retires every client, with one outcome per target.
+
+final class McpClientRegistryProvider
+    extends
+        $FunctionalProvider<
+          McpClientRegistry,
+          McpClientRegistry,
+          McpClientRegistry
+        >
+    with $Provider<McpClientRegistry> {
+  /// #1625 — one native client per verified installation + issuer + account
+  /// + purpose. The active backend borrows the app's session; a connected
+  /// installation runs through its own isolated record. A sign-in change
+  /// retires every client, with one outcome per target.
+  McpClientRegistryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mcpClientRegistryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpClientRegistryHash();
+
+  @$internal
+  @override
+  $ProviderElement<McpClientRegistry> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  McpClientRegistry create(Ref ref) {
+    return mcpClientRegistry(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(McpClientRegistry value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<McpClientRegistry>(value),
+    );
+  }
+}
+
+String _$mcpClientRegistryHash() => r'5325e89d66a67b45d016ebbe14b48b018058605d';
+
+@ProviderFor(mcpCommands)
+final mcpCommandsProvider = McpCommandsProvider._();
+
+final class McpCommandsProvider
+    extends $FunctionalProvider<McpCommands, McpCommands, McpCommands>
+    with $Provider<McpCommands> {
+  McpCommandsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mcpCommandsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpCommandsHash();
+
+  @$internal
+  @override
+  $ProviderElement<McpCommands> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  McpCommands create(Ref ref) {
+    return mcpCommands(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(McpCommands value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<McpCommands>(value),
+    );
+  }
+}
+
+String _$mcpCommandsHash() => r'a277b2b84ce6b90ba91763d6233cec4e4927aaf8';
+
+/// #1625 — the active backend as a verified target: the installation id
+/// its own server answers for the signed-in account. Registered in the
+/// registry before anything is asked of it.
+
+@ProviderFor(activeMcpTarget)
+final activeMcpTargetProvider = ActiveMcpTargetProvider._();
+
+/// #1625 — the active backend as a verified target: the installation id
+/// its own server answers for the signed-in account. Registered in the
+/// registry before anything is asked of it.
+
+final class ActiveMcpTargetProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<VerifiedMcpTarget>,
+          VerifiedMcpTarget,
+          FutureOr<VerifiedMcpTarget>
+        >
+    with
+        $FutureModifier<VerifiedMcpTarget>,
+        $FutureProvider<VerifiedMcpTarget> {
+  /// #1625 — the active backend as a verified target: the installation id
+  /// its own server answers for the signed-in account. Registered in the
+  /// registry before anything is asked of it.
+  ActiveMcpTargetProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'activeMcpTargetProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$activeMcpTargetHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<VerifiedMcpTarget> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<VerifiedMcpTarget> create(Ref ref) {
+    return activeMcpTarget(ref);
+  }
+}
+
+String _$activeMcpTargetHash() => r'111e813975fe7c63466273871c954218b221b4de';
+
 /// One confirmation, as the server answers it now.
 
 @ProviderFor(confirmationAnswers)
@@ -80,7 +282,7 @@ final class ConfirmationAnswersProvider
         argument: null,
         retry: null,
         name: r'confirmationAnswersProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -109,14 +311,18 @@ final class ConfirmationAnswersProvider
 }
 
 String _$confirmationAnswersHash() =>
-    r'180a70cf82113a7909bf2a4ee916e95558e5f58f';
+    r'7c4e8ac50effea2d2b70aa7c550c90d7ed5f574a';
 
-/// #1625 — an answer for another confirmation is refused, not shown.
+/// #1625 — read through the active target's confirmation client; an
+/// answer for another confirmation is refused, not shown, and one that
+/// arrives after a switch or sign-out is discarded.
 
 @ProviderFor(actionConfirmation)
 final actionConfirmationProvider = ActionConfirmationFamily._();
 
-/// #1625 — an answer for another confirmation is refused, not shown.
+/// #1625 — read through the active target's confirmation client; an
+/// answer for another confirmation is refused, not shown, and one that
+/// arrives after a switch or sign-out is discarded.
 
 final class ActionConfirmationProvider
     extends
@@ -128,7 +334,9 @@ final class ActionConfirmationProvider
     with
         $FutureModifier<ActionConfirmation>,
         $FutureProvider<ActionConfirmation> {
-  /// #1625 — an answer for another confirmation is refused, not shown.
+  /// #1625 — read through the active target's confirmation client; an
+  /// answer for another confirmation is refused, not shown, and one that
+  /// arrives after a switch or sign-out is discarded.
   ActionConfirmationProvider._({
     required ActionConfirmationFamily super.from,
     required String super.argument,
@@ -174,9 +382,11 @@ final class ActionConfirmationProvider
 }
 
 String _$actionConfirmationHash() =>
-    r'5903ed13bedc54e21914156370a146e43899153c';
+    r'6e33c5a54810ac2dbf1a06a97accea7c9e0f4de2';
 
-/// #1625 — an answer for another confirmation is refused, not shown.
+/// #1625 — read through the active target's confirmation client; an
+/// answer for another confirmation is refused, not shown, and one that
+/// arrives after a switch or sign-out is discarded.
 
 final class ActionConfirmationFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ActionConfirmation>, String> {
@@ -189,7 +399,9 @@ final class ActionConfirmationFamily extends $Family
         isAutoDispose: true,
       );
 
-  /// #1625 — an answer for another confirmation is refused, not shown.
+  /// #1625 — read through the active target's confirmation client; an
+  /// answer for another confirmation is refused, not shown, and one that
+  /// arrives after a switch or sign-out is discarded.
 
   ActionConfirmationProvider call(String id) =>
       ActionConfirmationProvider._(argument: id, from: this);
@@ -438,7 +650,7 @@ final class MyMcpConnectionsProvider
   }
 }
 
-String _$myMcpConnectionsHash() => r'eb966cd1b83a624398f00f3fd3364c08d2860a2b';
+String _$myMcpConnectionsHash() => r'd437b0beba6804db52282f00cbe5c46573d708de';
 
 /// #1626/#1627 — owner policy and database eligibility review.
 
@@ -494,13 +706,17 @@ String _$mcpAdminRepositoryHash() =>
     r'd78751f105599de23ce6bd057e3a900468df1ba5';
 
 /// The owner's policy for one workspace, as the server holds it now.
-/// #1625 — an answer for another workspace is refused, not shown.
+/// #1625 — keyed by installation, account and workspace; an answer for
+/// another workspace is refused, and one that arrives after the context
+/// was switched, signed out of or revoked is discarded.
 
 @ProviderFor(mcpPolicy)
 final mcpPolicyProvider = McpPolicyFamily._();
 
 /// The owner's policy for one workspace, as the server holds it now.
-/// #1625 — an answer for another workspace is refused, not shown.
+/// #1625 — keyed by installation, account and workspace; an answer for
+/// another workspace is refused, and one that arrives after the context
+/// was switched, signed out of or revoked is discarded.
 
 final class McpPolicyProvider
     extends
@@ -511,10 +727,12 @@ final class McpPolicyProvider
         >
     with $FutureModifier<McpPolicy>, $FutureProvider<McpPolicy> {
   /// The owner's policy for one workspace, as the server holds it now.
-  /// #1625 — an answer for another workspace is refused, not shown.
+  /// #1625 — keyed by installation, account and workspace; an answer for
+  /// another workspace is refused, and one that arrives after the context
+  /// was switched, signed out of or revoked is discarded.
   McpPolicyProvider._({
     required McpPolicyFamily super.from,
-    required String super.argument,
+    required McpContextRef super.argument,
   }) : super(
          retry: null,
          name: r'mcpPolicyProvider',
@@ -540,7 +758,7 @@ final class McpPolicyProvider
 
   @override
   FutureOr<McpPolicy> create(Ref ref) {
-    final argument = this.argument as String;
+    final argument = this.argument as McpContextRef;
     return mcpPolicy(ref, argument);
   }
 
@@ -555,13 +773,15 @@ final class McpPolicyProvider
   }
 }
 
-String _$mcpPolicyHash() => r'b107dd04ee9bfc2c472f50ef5458a962d29b597b';
+String _$mcpPolicyHash() => r'169d22cec9725ca611ef0064fb5e6a8d2a59b40a';
 
 /// The owner's policy for one workspace, as the server holds it now.
-/// #1625 — an answer for another workspace is refused, not shown.
+/// #1625 — keyed by installation, account and workspace; an answer for
+/// another workspace is refused, and one that arrives after the context
+/// was switched, signed out of or revoked is discarded.
 
 final class McpPolicyFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<McpPolicy>, String> {
+    with $FunctionalFamilyOverride<FutureOr<McpPolicy>, McpContextRef> {
   McpPolicyFamily._()
     : super(
         retry: null,
@@ -572,13 +792,99 @@ final class McpPolicyFamily extends $Family
       );
 
   /// The owner's policy for one workspace, as the server holds it now.
-  /// #1625 — an answer for another workspace is refused, not shown.
+  /// #1625 — keyed by installation, account and workspace; an answer for
+  /// another workspace is refused, and one that arrives after the context
+  /// was switched, signed out of or revoked is discarded.
 
-  McpPolicyProvider call(String workspaceId) =>
-      McpPolicyProvider._(argument: workspaceId, from: this);
+  McpPolicyProvider call(McpContextRef context) =>
+      McpPolicyProvider._(argument: context, from: this);
 
   @override
   String toString() => r'mcpPolicyProvider';
+}
+
+/// #1625 — the six separate facts for one person on one workspace.
+
+@ProviderFor(mcpAccessStatus)
+final mcpAccessStatusProvider = McpAccessStatusFamily._();
+
+/// #1625 — the six separate facts for one person on one workspace.
+
+final class McpAccessStatusProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<McpAccessStatus>,
+          McpAccessStatus,
+          FutureOr<McpAccessStatus>
+        >
+    with $FutureModifier<McpAccessStatus>, $FutureProvider<McpAccessStatus> {
+  /// #1625 — the six separate facts for one person on one workspace.
+  McpAccessStatusProvider._({
+    required McpAccessStatusFamily super.from,
+    required McpContextRef super.argument,
+  }) : super(
+         retry: null,
+         name: r'mcpAccessStatusProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpAccessStatusHash();
+
+  @override
+  String toString() {
+    return r'mcpAccessStatusProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<McpAccessStatus> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<McpAccessStatus> create(Ref ref) {
+    final argument = this.argument as McpContextRef;
+    return mcpAccessStatus(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is McpAccessStatusProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$mcpAccessStatusHash() => r'cb48ecb641949fa1b8cae426601efd3e881e636e';
+
+/// #1625 — the six separate facts for one person on one workspace.
+
+final class McpAccessStatusFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<McpAccessStatus>, McpContextRef> {
+  McpAccessStatusFamily._()
+    : super(
+        retry: null,
+        name: r'mcpAccessStatusProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #1625 — the six separate facts for one person on one workspace.
+
+  McpAccessStatusProvider call(McpContextRef context) =>
+      McpAccessStatusProvider._(argument: context, from: this);
+
+  @override
+  String toString() => r'mcpAccessStatusProvider';
 }
 
 /// #1630 — the workspace's assistant usage over 30 days, counts only.
@@ -758,14 +1064,16 @@ final class McpPolicyEditorProvider
   }
 }
 
-String _$mcpPolicyEditorHash() => r'be948e59c62b548b34dda08f7aa9bc2b1ccd63ca';
+String _$mcpPolicyEditorHash() => r'5cf5176e3714d6df21cad8481a9dd1d5ef04dcde';
 
 /// The pending eligibility requests on this database (administrators only).
+/// #1625 — the installation's queue, whatever workspace is selected.
 
 @ProviderFor(eligibilityRequests)
 final eligibilityRequestsProvider = EligibilityRequestsProvider._();
 
 /// The pending eligibility requests on this database (administrators only).
+/// #1625 — the installation's queue, whatever workspace is selected.
 
 final class EligibilityRequestsProvider
     extends
@@ -778,6 +1086,7 @@ final class EligibilityRequestsProvider
         $FutureModifier<List<EligibilityRequest>>,
         $FutureProvider<List<EligibilityRequest>> {
   /// The pending eligibility requests on this database (administrators only).
+  /// #1625 — the installation's queue, whatever workspace is selected.
   EligibilityRequestsProvider._()
     : super(
         from: null,
@@ -805,7 +1114,7 @@ final class EligibilityRequestsProvider
 }
 
 String _$eligibilityRequestsHash() =>
-    r'6e3c3a4d4a18203eb72646a0ea248fc2305baba5';
+    r'c2f005b9e3252ade237480a4a10f00242c7cafd0';
 
 /// #1809 — the installation maximum of optional fields (administrators,
 /// aal2).
@@ -902,7 +1211,7 @@ final class EligibilityReviewProvider
   }
 }
 
-String _$eligibilityReviewHash() => r'572f7623152a58396a274d9161da0acc2db06ab5';
+String _$eligibilityReviewHash() => r'1a015e56e5c8eb8580558d8b9694f0fbac53572d';
 
 @ProviderFor(assistantAccess)
 final assistantAccessProvider = AssistantAccessProvider._();
@@ -944,4 +1253,4 @@ final class AssistantAccessProvider
   }
 }
 
-String _$assistantAccessHash() => r'07a7f9dc58dc25bac5393851b614eb48379cce3d';
+String _$assistantAccessHash() => r'0d97c437347dfea75eae6255350d942121cd5e7c';

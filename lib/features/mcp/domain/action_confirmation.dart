@@ -3,6 +3,7 @@
 // #1619 — a high-impact action an assistant asked for, waiting for its
 // human in the Deskilo app. The id in a link is not an authorisation: the
 // server answers only the bound human, only from a native session.
+import 'mcp_context.dart';
 
 enum ConfirmationStatus {
   pending,
@@ -43,6 +44,7 @@ class ActionConfirmation {
     this.arguments = const {},
     this.target = const {},
     this.expiresAt,
+    this.scope,
   });
 
   final String id;
@@ -60,6 +62,22 @@ class ActionConfirmation {
   /// total, currency, period), a member (name, status, share) or an event.
   final Map<String, Object?> target;
   final DateTime? expiresAt;
+
+  /// #1625 — the installation and account it was read from; the answer
+  /// goes back there, whatever the app shows by then.
+  final McpInstanceRef? scope;
+
+  ActionConfirmation withScope(McpInstanceRef scope) => ActionConfirmation(
+    id: id,
+    status: status,
+    operation: operation,
+    workspaceName: workspaceName,
+    clientName: clientName,
+    arguments: arguments,
+    target: target,
+    expiresAt: expiresAt,
+    scope: scope,
+  );
 
   factory ActionConfirmation.fromJson(String id, Object? json) {
     if (json is! Map) {
