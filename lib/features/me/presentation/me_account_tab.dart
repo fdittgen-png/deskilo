@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/sign_out.dart';
-import '../../profile/presentation/widgets/account_settings_tiles.dart';
+import '../../profile/presentation/screens/settings_screen.dart';
 import '../../profile/presentation/widgets/settings_section_header.dart';
 import 'visibility_card.dart';
 
@@ -32,10 +32,9 @@ class MeAccountTab extends ConsumerWidget {
       body: ListView(
         key: const ValueKey('me-account-list'),
         children: [
-          const VisibilityCard(),
           SettingsSectionHeader(l10n?.settingsSectionAccount ?? 'My account'),
           ...accountSettingsTiles(context, ref),
-          const Divider(),
+          const VisibilityCard(),
           SettingsSectionHeader(l10n?.meSectionMine ?? 'My history and data'),
           door('me-activity', Icons.receipt_long_outlined,
               l10n?.accountActivityTitle ?? 'My consumption and payments',

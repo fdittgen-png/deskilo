@@ -62,5 +62,6 @@
   "visibilityAboutEmpty": "Aggiungi la tua professione e qualche parola",
   "visibilityProfession": "Professione",
   "visibilityBio": "Qualche parola su di te",
-  "visibilityAboutSaveFailed": "Impossibile salvare professione e biografia. Riprova."
+  "visibilityAboutSaveFailed": "Impossibile salvare professione e biografia. Riprova.",
+  "portalOpenMe": "Io: il mio account e i miei spazi"
 }

@@ -4762,6 +4762,7 @@
   "visibilityProfession": "Profesión",
   "visibilityBio": "Unas palabras sobre ti",
   "visibilityAboutSaveFailed": "No se pudieron guardar tu profesión y biografía. Inténtalo de nuevo.",
+  "portalOpenMe": "Yo: mi cuenta y mis espacios",
   "featureMemberAccountMenuTitle": "Los miembros ven Mi cuenta",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"

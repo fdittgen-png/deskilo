@@ -8143,6 +8143,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d\'enregistrer votre métier et votre présentation. Veuillez réessayer.';
 
   @override
+  String get portalOpenMe => 'Moi : mon compte et mes espaces';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Les membres voient Mon compte';
 
   @override

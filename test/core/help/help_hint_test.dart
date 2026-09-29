@@ -28,6 +28,7 @@ import 'package:go_router/go_router.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/open_my_account.dart';
 
 Override _helpOverride() => helpContentProvider.overrideWith(
   (ref, languageCode) async => '# User Guide\n\n## 1. Intro\n\nHi.\n',
@@ -232,7 +233,7 @@ void main() {
     await _pumpApp(tester, store: store);
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsNothing);
 
-    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await openMyAccount(tester); // #1823: My account is in Me
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('settings-restore-hints')),
@@ -245,7 +246,7 @@ void main() {
 
     // Back on the hub the hint greets again.
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).pop();
+    GoRouter.of(context).go('/reserve');
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsOneWidget);
   });
@@ -256,10 +257,10 @@ void main() {
     await _pumpApp(tester, featureFlags: {'formHelpHints': false});
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsNothing);
 
-    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await openMyAccount(tester); // #1823: My account is in Me
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('settings-help')),
+      find.byKey(const ValueKey('me-help')),
       200,
       scrollable: find.byType(Scrollable).first,
     );

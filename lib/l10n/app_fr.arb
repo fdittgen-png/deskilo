@@ -4762,6 +4762,7 @@
   "visibilityProfession": "Métier",
   "visibilityBio": "Quelques mots sur vous",
   "visibilityAboutSaveFailed": "Impossible d'enregistrer votre métier et votre présentation. Veuillez réessayer.",
+  "portalOpenMe": "Moi : mon compte et mes espaces",
   "featureMemberAccountMenuTitle": "Les membres voient Mon compte",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"

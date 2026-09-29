@@ -8713,6 +8713,10 @@
   "@visibilityAboutSaveFailed": {
     "description": "Error when saving profession and bio failed."
   },
+  "portalOpenMe": "Me: my account and my spaces",
+  "@portalOpenMe": {
+    "description": "Menu item on the account menu (globe) that opens the Me layer."
+  },
   "featureMemberAccountMenuTitle": "Members see My account",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"

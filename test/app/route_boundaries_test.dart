@@ -71,23 +71,20 @@ void main() {
   });
 
   group('no workspace', () {
-    // #1823 — Me, the account's own home, offers joining and creating;
-    // onboarding is one tap away and still opens deliberately.
-    testWidgets('boots into Me, keeps the account pages and the '
+    testWidgets('boots into onboarding, keeps Me, the account pages and the '
         'server and help reachable', (tester) async {
       final router = await pumpApp(
         tester,
         workspace: FakeWorkspaceRepository(workspaces: []),
       );
-      expect(router.state.uri.toString(), '/me');
-      expect(await goTo(tester, router, '/onboarding?first=1'),
-          '/onboarding?first=1');
+      expect(router.state.uri.toString(), '/onboarding?first=1');
+      expect(await goTo(tester, router, '/me'), '/me');
       expect(await goTo(tester, router, '/profiles'), '/profiles');
       expect(await goTo(tester, router, '/server'), '/server');
       expect(await goTo(tester, router, '/help'), '/help');
       expect(await goTo(tester, router, '/linked-accounts'),
           '/linked-accounts');
-      expect(await goTo(tester, router, '/reserve'), '/me');
+      expect(await goTo(tester, router, '/reserve'), '/onboarding?first=1');
     });
 
     testWidgets('the instance wizard opens with no workspace to gate it',

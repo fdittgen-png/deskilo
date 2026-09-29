@@ -8,9 +8,11 @@ import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../helpers/fake_pref_stores.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/open_my_account.dart';
 
 Future<void> _pump(WidgetTester tester,
     {required bool web, required InMemoryNavigationStyleStore store}) async {
@@ -27,7 +29,7 @@ Future<void> _pump(WidgetTester tester,
 }
 
 Future<void> _openSettings(WidgetTester tester) async {
-  await tester.tap(find.byIcon(Icons.settings_outlined));
+  await openMyAccount(tester); // #1823: My account is in Me
   await tester.pumpAndSettle();
 }
 
@@ -58,8 +60,8 @@ void main() {
     expect(store.style, 'menu');
     expect(find.text('Menu: the hamburger, like the web'), findsOneWidget);
 
-    // Back on the shell: the bar is gone, the hamburger is there.
-    await tester.tap(find.byType(BackButton).first);
+    // Back in the space: the bar is gone, the hamburger is there.
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/reserve');
     await tester.pumpAndSettle();
     expect(find.byType(ShellBottomBar), findsNothing,
         reason: 'the bar is gone the moment the choice is made');

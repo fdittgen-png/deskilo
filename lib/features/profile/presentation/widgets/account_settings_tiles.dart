@@ -8,40 +8,8 @@
 // Settings keep only what is the space's: the badge and PIN of that
 // membership, and the per-space override of language, theme and formats,
 // shown as the exception it is.
-import 'package:file_selector/file_selector.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+part of '../screens/settings_screen.dart';
 
-import '../../../../app/route_classes.dart';
-import '../../../../core/files/file_picker.dart';
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
-import '../../../../core/help/help_hint_providers.dart';
-import '../../../../core/i18n/regional_formats_section.dart';
-import '../../../../core/navigation/navigation_style.dart';
-import '../../../../core/privacy/recording_banner.dart';
-import '../../../../core/country/country_catalog.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/guarded.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../mcp/presentation/widgets/mcp_settings_tiles.dart';
-import '../../../members/providers/directory_providers.dart';
-import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/presentation/country_names.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/personal_preferences.dart';
-import '../../domain/profile.dart';
-import '../../providers/personal_appearance_providers.dart';
-import '../../providers/personal_preferences_providers.dart';
-import '../../providers/profile_providers.dart';
-import 'member_avatar.dart';
-import 'preference_scope_controls.dart';
-import 'whatsapp_dialog.dart';
-
-part 'account_settings_dialogs.dart';
 
 /// Chooser for the profile photo (0038): pick a new one, or remove the
 /// current one when set.

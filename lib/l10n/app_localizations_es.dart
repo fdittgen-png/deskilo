@@ -8116,6 +8116,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudieron guardar tu profesión y biografía. Inténtalo de nuevo.';
 
   @override
+  String get portalOpenMe => 'Yo: mi cuenta y mis espacios';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Los miembros ven Mi cuenta';
 
   @override

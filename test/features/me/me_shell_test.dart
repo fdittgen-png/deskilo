@@ -13,12 +13,18 @@ import '../../helpers/mock_providers.dart';
 import 'me_app.dart';
 
 void main() {
-  testWidgets('zero workspaces: the app opens on Me and every tab opens',
-      (tester) async {
+  testWidgets('zero workspaces: Me opens from the first run, and every tab '
+      'opens', (tester) async {
     final router = await pumpMeApp(
       tester,
       workspace: FakeWorkspaceRepository(workspaces: []),
     );
+    // The first run creates or joins a space; Me is in its account menu.
+    expect(router.state.uri.path, '/onboarding');
+    await tester.tap(find.byIcon(Icons.public).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('portal-open-me')));
+    await tester.pumpAndSettle();
     expect(router.state.uri.path, '/me');
     expect(find.byType(MeShell), findsOneWidget);
     expect(find.byKey(const ValueKey('me-home-empty')), findsOneWidget);
@@ -40,6 +46,7 @@ void main() {
     expect(find.byKey(const ValueKey('me-home-empty')), findsOneWidget);
     expect(router.state.uri.path, '/me',
         reason: 'no tab of Me asks for a workspace');
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('Home offers finding, joining and creating a space',
@@ -48,6 +55,7 @@ void main() {
       tester,
       workspace: FakeWorkspaceRepository(workspaces: []),
     );
+    await goTo(tester, router, '/me');
     await tester.tap(find.byKey(const ValueKey('me-home-discover')));
     await tester.pumpAndSettle();
     expect(find.byType(DirectoryScreen), findsOneWidget);

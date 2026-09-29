@@ -20,11 +20,32 @@ import '../../../workspace/presentation/widgets/my_badge_tile.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/profile.dart';
 import '../../providers/profile_providers.dart';
-import '../widgets/account_settings_tiles.dart';
 import '../widgets/settings_advanced_section.dart';
 import '../widgets/settings_about_section.dart';
 import '../widgets/settings_workspace_sections.dart';
 import '../widgets/settings_section_header.dart';
+import 'package:file_selector/file_selector.dart';
+import '../../../../app/route_classes.dart';
+import '../../../../core/files/file_picker.dart';
+import '../../../../core/help/help_hint_providers.dart';
+import '../../../../core/i18n/regional_formats_section.dart';
+import '../../../../core/navigation/navigation_style.dart';
+import '../../../../core/privacy/recording_banner.dart';
+import '../../../../core/country/country_catalog.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/guarded.dart';
+import '../../../mcp/presentation/widgets/mcp_settings_tiles.dart';
+import '../../../members/providers/directory_providers.dart';
+import '../../../workspace/presentation/country_names.dart';
+import '../../domain/personal_preferences.dart';
+import '../../providers/personal_appearance_providers.dart';
+import '../../providers/personal_preferences_providers.dart';
+import '../widgets/member_avatar.dart';
+import '../widgets/preference_scope_controls.dart';
+import '../widgets/whatsapp_dialog.dart';
+
+part '../widgets/account_settings_tiles.dart';
+part '../widgets/account_settings_dialogs.dart';
 
 
 /// App settings. Sign-out lives here; more sections arrive with their Epics.

@@ -289,5 +289,9 @@
   "visibilityAboutSaveFailed": "Could not save your profession and bio. Please try again.",
   "@visibilityAboutSaveFailed": {
     "description": "Error when saving profession and bio failed."
+  },
+  "portalOpenMe": "Me: my account and my spaces",
+  "@portalOpenMe": {
+    "description": "Menu item on the account menu (globe) that opens the Me layer."
   }
 }

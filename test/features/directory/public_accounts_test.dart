@@ -180,14 +180,15 @@ void main() {
     },
   );
   testWidgets(
-    'account messenger opt-in and private reply use account repository',
+    'account messenger points to who can reach me, and a private reply '
+    'uses the account repository',
     (tester) async {
       final repo = FakeAccountContactRepository()
         ..people.add({'id': 'person', 'name': 'Alice'});
       await showPortal(tester, const AccountMessengerScreen(), contacts: repo);
-      await tester.tap(find.byType(SwitchListTile));
-      await tester.pumpAndSettle();
-      expect(repo.available, isTrue);
+      // #1823 — the single opt-in switch became the audiences in Me.
+      expect(find.byType(SwitchListTile), findsNothing);
+      expect(find.byKey(const ValueKey('portal-visibility-link')), findsOneWidget);
       await tester.enterText(find.byType(TextField), 'Alice');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();

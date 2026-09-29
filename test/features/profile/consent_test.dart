@@ -15,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/open_my_account.dart';
 
 Future<FakeProfileRepository> pump(WidgetTester tester,
     {bool accepted = false, String? version}) async {
@@ -66,8 +67,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(profile.acceptedPolicyVersions, [kPrivacyPolicyVersion]);
     expect(find.byKey(const ValueKey('consent-text')), findsNothing);
-    // The shell (with its always-visible privacy shield) is now there.
-    expect(find.byKey(const ValueKey('shell-privacy')), findsOneWidget);
+    // The shell (with the way back to Me, where Privacy lives) is there.
+    expect(find.byKey(const ValueKey('shell-back-to-me')), findsOneWidget);
   });
 
   testWidgets('no profile row at all still gates (fails closed)',
@@ -125,8 +126,7 @@ void main() {
       'with its date from Privacy & data', (tester) async {
     await pump(tester, accepted: true);
     expect(find.byKey(const ValueKey('consent-text')), findsNothing);
-    await tester.tap(find.byKey(const ValueKey('shell-privacy')));
-    await tester.pumpAndSettle();
+    await openMyPrivacy(tester); // #1823: Privacy lives in Me
     await tester.tap(find.byKey(const ValueKey('privacy-consent')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('consent-text')), findsOneWidget);

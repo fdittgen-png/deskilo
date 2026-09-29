@@ -4762,6 +4762,7 @@
   "visibilityProfession": "Professione",
   "visibilityBio": "Qualche parola su di te",
   "visibilityAboutSaveFailed": "Impossibile salvare professione e biografia. Riprova.",
+  "portalOpenMe": "Io: il mio account e i miei spazi",
   "featureMemberAccountMenuTitle": "I membri vedono Il mio account",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"

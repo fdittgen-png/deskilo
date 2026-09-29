@@ -8129,6 +8129,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Beruf und Kurzprofil konnten nicht gespeichert werden. Bitte versuche es erneut.';
 
   @override
+  String get portalOpenMe => 'Ich: mein Konto und meine Spaces';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Mitglieder sehen Mein Konto';
 
   @override

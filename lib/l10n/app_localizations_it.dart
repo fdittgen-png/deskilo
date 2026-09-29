@@ -8134,6 +8134,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile salvare professione e biografia. Riprova.';
 
   @override
+  String get portalOpenMe => 'Io: il mio account e i miei spazi';
+
+  @override
   String get featureMemberAccountMenuTitle => 'I membri vedono Il mio account';
 
   @override

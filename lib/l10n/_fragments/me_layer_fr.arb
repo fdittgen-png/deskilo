@@ -62,5 +62,6 @@
   "visibilityAboutEmpty": "Ajoutez votre métier et quelques mots",
   "visibilityProfession": "Métier",
   "visibilityBio": "Quelques mots sur vous",
-  "visibilityAboutSaveFailed": "Impossible d'enregistrer votre métier et votre présentation. Veuillez réessayer."
+  "visibilityAboutSaveFailed": "Impossible d'enregistrer votre métier et votre présentation. Veuillez réessayer.",
+  "portalOpenMe": "Moi : mon compte et mes espaces"
 }

@@ -11,7 +11,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_radius.dart';
 import '../../core/theme/app_spacing.dart';
-import '../../features/profile/presentation/widgets/member_avatar.dart';
 import '../../features/profile/providers/profile_providers.dart';
 import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
@@ -120,19 +119,20 @@ class BackToMeButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final profile = ref.watch(myProfileProvider).value;
+    final name = ref.watch(myProfileProvider).value?.displayName ?? '';
+    final initial = name.isEmpty ? '?' : name.substring(0, 1).toUpperCase();
+    final scheme = Theme.of(context).colorScheme;
     return IconButton(
       key: const ValueKey('shell-back-to-me'),
       tooltip: l10n?.spaceBackToMe ?? 'Back to Me',
       onPressed: () => context.go(kMeHome),
-      icon: profile == null
-          ? const Icon(Icons.account_circle_outlined)
-          : MemberAvatar(
-              userId: profile.id,
-              name: profile.displayName,
-              hasAvatar: profile.hasAvatar,
-              radius: 14,
-            ),
+      // The initial on the theme's own pair, so it reads on any bar.
+      icon: CircleAvatar(
+        radius: 14,
+        backgroundColor: scheme.primary,
+        foregroundColor: scheme.onPrimary,
+        child: Text(initial),
+      ),
     );
   }
 }

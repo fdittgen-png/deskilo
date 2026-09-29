@@ -8053,6 +8053,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not save your profession and bio. Please try again.';
 
   @override
+  String get portalOpenMe => 'Me: my account and my spaces';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Members see My account';
 
   @override

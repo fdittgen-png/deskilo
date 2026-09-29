@@ -62,5 +62,6 @@
   "visibilityAboutEmpty": "Beruf und ein paar Worte hinzufügen",
   "visibilityProfession": "Beruf",
   "visibilityBio": "Ein paar Worte über dich",
-  "visibilityAboutSaveFailed": "Beruf und Kurzprofil konnten nicht gespeichert werden. Bitte versuche es erneut."
+  "visibilityAboutSaveFailed": "Beruf und Kurzprofil konnten nicht gespeichert werden. Bitte versuche es erneut.",
+  "portalOpenMe": "Ich: mein Konto und meine Spaces"
 }

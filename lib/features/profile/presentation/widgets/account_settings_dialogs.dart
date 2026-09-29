@@ -2,7 +2,7 @@
 //
 // The dialogs of My account (#147 language, #160 theme, 0060 address,
 // #969 navigation), moved with the tiles that open them (#1823).
-part of 'account_settings_tiles.dart';
+part of '../screens/settings_screen.dart';
 
 /// Endonyms are proper nouns, identical in every UI language — deliberately
 /// const strings, not l10n keys (#147). Order matches the issue spec.

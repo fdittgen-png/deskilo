@@ -13939,6 +13939,12 @@ abstract class AppLocalizations {
   /// **'Could not save your profession and bio. Please try again.'**
   String get visibilityAboutSaveFailed;
 
+  /// Menu item on the account menu (globe) that opens the Me layer.
+  ///
+  /// In en, this message translates to:
+  /// **'Me: my account and my spaces'**
+  String get portalOpenMe;
+
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///
   /// In en, this message translates to:

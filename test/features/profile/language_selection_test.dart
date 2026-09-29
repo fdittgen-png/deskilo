@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/open_my_account.dart';
 
 /// In-memory [LocaleStore] so widget tests never touch SharedPreferences.
 class InMemoryLocaleStore implements LocaleStore {
@@ -38,7 +39,7 @@ Future<void> pumpSettings(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byIcon(Icons.settings_outlined));
+  await openMyAccount(tester); // #1823: My account is in Me
   await tester.pumpAndSettle();
 }
 
@@ -89,7 +90,7 @@ void main() {
       'persists to the store', (tester) async {
     final store = InMemoryLocaleStore();
     await pumpSettings(tester, store: store);
-    expect(find.text('Settings'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Me'), findsOneWidget); // #1823: in Me
 
     await revealTile(tester, 'Language');
     await tester.tap(find.text('Language'));
@@ -114,11 +115,11 @@ void main() {
     await tester.tap(find.text('Deutsch'));
     await tester.pumpAndSettle();
 
-    // No restart: the settings screen now renders in German.
-    expect(find.text('Einstellungen'), findsOneWidget);
+    // No restart: My account (in Me) now renders in German.
+    expect(find.widgetWithText(AppBar, 'Ich'), findsOneWidget);
     expect(find.text('Sprache'), findsOneWidget);
     expect(find.text('Deutsch'), findsOneWidget);
-    expect(find.text('Settings'), findsNothing);
+    expect(find.widgetWithText(AppBar, 'Me'), findsNothing);
     expect(store.code, 'de');
   });
 
@@ -127,7 +128,7 @@ void main() {
       (tester) async {
     final store = InMemoryLocaleStore(code: 'de');
     await pumpSettings(tester, store: store);
-    expect(find.text('Einstellungen'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Ich'), findsOneWidget);
 
     await revealTile(tester, 'Sprache');
     await tester.tap(find.text('Sprache'));
@@ -139,8 +140,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // The test platform locale is en_US, so English is back.
-    expect(find.text('Settings'), findsOneWidget);
-    expect(find.text('Einstellungen'), findsNothing);
+    expect(find.widgetWithText(AppBar, 'Me'), findsOneWidget); // #1823: in Me
+    expect(find.widgetWithText(AppBar, 'Ich'), findsNothing);
     expect(store.code, isNull);
   });
 }
