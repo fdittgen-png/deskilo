@@ -6,10 +6,10 @@ import '../widgets/application_requests_entry.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/locale/device_locale.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../onboarding_handoff.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
@@ -19,7 +19,11 @@ import '../../application/start_workspace.dart';
 import '../widgets/local_setup_views.dart';
 import '../widgets/template_region_notice.dart';
 import '../widgets/onboarding_creation.dart';
-import '../widgets/onboarding_join_form.dart';
+import '../widgets/invitation_join_panel.dart';
+import '../../application/pending_invitation.dart';
+import '../../../../app/entry_intent.dart';
+import '../../../../app/entry_intents.dart';
+import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/ui/wizard_navigation.dart';
 import '../../domain/workspace_template.dart';
 import '../../domain/template_outline.dart';
@@ -33,8 +37,12 @@ import '../../../../core/ui/wizard_progress.dart';
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
 class OnboardingScreen extends ConsumerStatefulWidget {
-  const OnboardingScreen({super.key, this.navigation});
+  const OnboardingScreen({super.key, this.navigation, this.joinFirst = false});
   final WizardNavigationController? navigation;
+
+  /// #1652 — the person came with an invitation: Join is selected
+  /// directly, with no Create/Join choice in between.
+  final bool joinFirst;
 
   @override
   ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -42,7 +50,6 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _createFormKey = GlobalKey<FormState>();
-  final _joinFormKey = GlobalKey<FormState>();
   final _name = TextEditingController();
   final _nameFocus = FocusNode();
   final _currencyFocus = FocusNode();
@@ -113,7 +120,49 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     _countryCode = country.code;
     _currency.text = _derivedCurrency = country.currencyCode;
     _timezone.text = _derivedTimezone = country.defaultTimezone;
+    // #1652 — the person came to join: Join is selected, not Create.
+    _joinMode = widget.joinFirst ||
+        ref.read(entryIntentsProvider)?.purpose == EntryPurpose.join;
     _resume();
+    _takeArrivedInvitation();
+    _offerKeptInvitation();
+  }
+
+  /// #1652 — the link the app was opened with fills the field; the
+  /// person reviews it and joins, or not.
+  void _takeArrivedInvitation() {
+    final link = ref.read(arrivedInvitationsProvider).take();
+    if (link == null) return;
+    _joinMode = true;
+    _inviteCode.text = link;
+  }
+
+  @override
+  void didUpdateWidget(covariant OnboardingScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // The same page, reached again with an invitation errand.
+    if (widget.joinFirst && !oldWidget.joinFirst && !_busy) _joinMode = true;
+    if (widget.joinFirst) _takeArrivedInvitation();
+  }
+
+  /// #1652 — an invitation kept for THIS server across the switch to it
+  /// comes back into the field, and Join is selected. Nothing is joined.
+  Future<void> _offerKeptInvitation() async {
+    final String? text;
+    try {
+      final active = await ref.read(activeBackendProvider.future);
+      text = await ref.read(pendingInvitationsProvider).offeredOn(active);
+    } catch (e, st) {
+      // Storage unavailable: the field stays empty.
+      TraceLogger.instance.warn('workspace', 'kept invitation unreadable',
+          error: e, stackTrace: st);
+      return;
+    }
+    if (!mounted || text == null || _inviteCode.text.isNotEmpty) return;
+    setState(() {
+      _joinMode = true;
+      _inviteCode.text = text!;
+    });
   }
 
   /// #1636 — a creation sent before a restart, by THIS account, whose
@@ -293,14 +342,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     _create();
   }
 
-  Future<void> _join() async {
-    if (!(_joinFormKey.currentState?.validate() ?? false)) return;
-    await _run(() async {
-      final result = await ref.read(workspaceStartProvider).join(_inviteCode.text);
-      return result.outcome == JoinOutcome.joined ? result.workspaceId : null;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -335,7 +376,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         body: _centered(Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [modeSwitch, const SizedBox(height: 24),
-            if (_failure != null) _feedback, _joinForm(l10n)],
+            InvitationJoinPanel(code: _inviteCode, navigation: widget.navigation)],
         )),
       );
     }
@@ -589,14 +630,4 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ],
         );
       });
-
-  Widget _joinForm(AppLocalizations? l10n) => OnboardingJoinForm(
-    formKey: _joinFormKey, code: _inviteCode, busy: _busy, onJoin: _join,
-    onScan: () async {
-      final code = await context.push<String>('/scan-join');
-      if (!mounted || code == null || code.isEmpty) return;
-      _inviteCode.text = code;
-      await _join();
-    },
-  );
 }

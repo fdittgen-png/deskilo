@@ -64,6 +64,7 @@ import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/schema_update_screen.dart';
 import '../core/backend/schema_version.dart';
 import '../core/instance/schema_compatibility.dart';
+import 'entry_intent.dart';
 import 'entry_intents.dart';
 import 'entry_resumption.dart';
 import 'route_classes.dart';
@@ -81,6 +82,8 @@ import '../core/ui/wizard_navigation.dart';
 import '../features/workspace/presentation/screens/pending_approval_screen.dart';
 import '../features/workspace/presentation/screens/workspace_applications_screen.dart';
 import '../features/workspace/presentation/screens/scan_join_screen.dart';
+import '../core/backend/backend_uri.dart';
+import '../features/workspace/application/pending_invitation.dart';
 import '../features/workspace/presentation/screens/workspace_code_screen.dart';
 import '../features/workspace/presentation/screens/workspace_library_screen.dart';
 import '../features/workspace/presentation/screens/workspace_settings_screen.dart';
@@ -169,6 +172,14 @@ GoRouter router(Ref ref) {
     // facts; this closure only collects the facts and asks. Building them
     // reads; nothing here writes.
     redirect: (context, state) {
+      // #1652 — an invitation link opened from outside: the link (and the
+      // code in it) leaves the location at once, is held in memory for
+      // the join field, and Join is selected. Nothing is joined here.
+      if (isInvitationLink(state.uri)) {
+        ref.read(arrivedInvitationsProvider).hold(
+            Uri(scheme: 'deskilo', host: 'join', query: state.uri.query).toString());
+        return const EntryIntent.join('invitation-link').destination;
+      }
       final intent = ref.read(entryIntentsProvider);
       final auth = ref.read(authStateProvider);
       // Nothing else is read until the session is known: a read flushes a
@@ -250,7 +261,8 @@ GoRouter router(Ref ref) {
         path: '/onboarding',
         onExit: (_, _) => ref.read(authStateProvider).value == null
             ? true : onboardingNavigation.requestExit(),
-        builder: (context, state) => OnboardingScreen(navigation: onboardingNavigation),
+        builder: (context, state) => OnboardingScreen(navigation: onboardingNavigation,
+            joinFirst: state.uri.queryParameters['join'] == '1'),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -344,7 +356,8 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/server',
-        builder: (context, state) => const BackendScreen(),
+        builder: (context, state) => BackendScreen(
+            candidate: state.extra is BackendDescriptor ? state.extra! as BackendDescriptor : null),
       ),
       GoRoute(
         // No owner guard (#144): developer mode is local diagnostics,

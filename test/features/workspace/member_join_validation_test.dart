@@ -31,7 +31,10 @@ void main() {
     await tester.tap(find.text('Join a workspace'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextFormField).first, 'GOODCODE22');
-    await tester.tap(find.text('Join'));
+    await tester.tap(find.byKey(const ValueKey('invitation-review-button')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('invitation-join')));
+    await tester.tap(find.byKey(const ValueKey('invitation-join')));
     await tester.pumpAndSettle();
 
     expect(find.byType(PendingApprovalScreen), findsOneWidget);

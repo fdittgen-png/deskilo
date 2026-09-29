@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -173,6 +174,8 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
         : InviteUriCodec.encode(
             code: code,
             role: isAdminInvite ? InviteRole.admin : InviteRole.user,
+            // #1652 — the QR names the server it was issued on.
+            target: ref.watch(activeBackendProvider).value,
           );
 
     return Scaffold(

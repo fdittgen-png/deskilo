@@ -3,6 +3,7 @@
 // The workspace code screen: member and single-use admin invites, and a
 // validated new workspace ID.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,7 +51,13 @@ void main() {
     await pumpWorkspaceCode(tester);
 
     final qr = tester.widget<QrImageView>(find.byType(QrImageView));
-    expect(qr.semanticsLabel, 'deskilo://join?role=user&code=GOODCODE22');
+    final uri = Uri.parse(qr.semanticsLabel);
+    expect(uri.queryParameters['role'], 'user');
+    expect(uri.queryParameters['code'], 'GOODCODE22');
+    // #1652 — the QR names the server it was issued on.
+    final read = InvitationReader.read(qr.semanticsLabel);
+    expect(read.version, 2);
+    expect(read.target, isNotNull);
   });
 
   testWidgets('owner switches to the admin invite — a PERSONAL single-use '
@@ -64,10 +71,9 @@ void main() {
     final minted = workspace.mintedInvitations.single;
     expect(minted.isAdmin, isTrue);
     final qr = tester.widget<QrImageView>(find.byType(QrImageView));
-    expect(
-      qr.semanticsLabel,
-      'deskilo://join?role=admin&code=${minted.code}',
-    );
+    final uri = Uri.parse(qr.semanticsLabel);
+    expect(uri.queryParameters['role'], 'admin');
+    expect(uri.queryParameters['code'], minted.code);
     expect(find.text(minted.code), findsOneWidget);
     expect(find.text('Change workspace ID'), findsNothing);
   });

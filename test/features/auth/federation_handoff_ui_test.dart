@@ -168,9 +168,12 @@ void main() {
     expect(target.active.auth.currentUser?.id, 'target-person');
     expect(
       router.state.uri.toString(),
-      '/onboarding',
+      '/onboarding?join=1',
       reason: 'the saved errand, with no extra Connected→Continue step',
     );
+    // #1652 — the target's own sign-in lands on Join, ready for the
+    // invitation; nothing is joined by the return itself.
+    expect(find.byKey(const ValueKey('invitation-input')), findsOneWidget);
     expect(
       container.read(entryIntentsProvider),
       isNull,
