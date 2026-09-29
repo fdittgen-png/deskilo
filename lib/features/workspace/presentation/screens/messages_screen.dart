@@ -21,6 +21,7 @@ import '../widgets/new_conversation_sheet.dart';
 import '../../../../core/theme/shell_metrics.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../widgets/application_requests_entry.dart';
+import '../../../directory/presentation/messenger/space_inquiries_screen.dart';
 
 /// #821 — what the chat list shows.
 enum InboxFilter { all, unread, archived }
@@ -147,6 +148,8 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
           SliverToBoxAdapter(
             child: Column(children: [
               const ApplicationRequestsEntry(compact: false),
+              // #1824 — what outside people wrote to this space.
+              const SpaceInquiriesEntry(),
               TextButton.icon(onPressed:()=>context.push('/account-messages'),icon:const Icon(Icons.forum_outlined),label:Text(l10n?.portalMessenger??'Account messenger')),
               const HelpHint(HelpHintId.messages),
               if (hub) _filterBar(context, l10n),

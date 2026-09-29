@@ -2,6 +2,7 @@
 // #1791: real UI affordances publish/search a page, opt into an account inbox
 // and edit employment independently of permissions. SQL tests own authorization.
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/directory_screen.dart';
 import 'package:deskilo/features/directory/presentation/account_messenger_screen.dart';
@@ -26,6 +27,7 @@ Future<void> showPortal(
   Widget child, {
   FakeDirectoryRepository? directory,
   FakeAccountContactRepository? contacts,
+  FakeMessengerRepository? messenger,
 }) async {
   await tester.pumpWidget(
     ProviderScope(
@@ -33,6 +35,7 @@ Future<void> showPortal(
         auth: FakeAuthRepository.signedIn(),
         directory: directory,
         contacts: contacts,
+        messenger: messenger,
       ),
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -180,11 +183,18 @@ void main() {
     },
   );
   testWidgets(
-    'account messenger opt-in and private reply use account repository',
+    'account messenger opt-in uses the account repository, and a private '
+    'reply goes through the messenger to that person (#1824)',
     (tester) async {
       final repo = FakeAccountContactRepository()
         ..people.add({'id': 'person', 'name': 'Alice'});
-      await showPortal(tester, const AccountMessengerScreen(), contacts: repo);
+      final messenger = FakeMessengerRepository();
+      await showPortal(
+        tester,
+        const AccountMessengerScreen(),
+        contacts: repo,
+        messenger: messenger,
+      );
       await tester.tap(find.byType(SwitchListTile));
       await tester.pumpAndSettle();
       expect(repo.available, isTrue);
@@ -196,7 +206,16 @@ void main() {
       await tester.enterText(find.byType(TextField), 'Hello from my account');
       await tester.tap(find.byTooltip('Send'));
       await tester.pumpAndSettle();
-      expect(repo.sent, [(recipient: 'person', body: 'Hello from my account')]);
+      expect(
+        messenger
+            .threads[FakeMessengerRepository.threadKey(
+              MessageContextKind.account,
+              'person',
+            )]
+            ?.single
+            .body,
+        'Hello from my account',
+      );
       expect(find.text('Hello from my account'), findsOneWidget);
       await tester.pumpWidget(const SizedBox.shrink());
     },

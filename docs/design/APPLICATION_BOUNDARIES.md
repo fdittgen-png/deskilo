@@ -48,6 +48,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `mcp -> auth` | 13 |
 | `money -> reservations` | 13 |
 | `plan -> workspace` | 11 |
+| `workspace -> directory` | 11 |
 | `workspace -> profile` | 11 |
 | `kiosk -> reservations` | 10 |
 | `workspace -> auth` | 10 |
@@ -56,11 +57,12 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `plan -> reservations` | 9 |
 | `calendar -> reservations` | 8 |
 | `money -> profile` | 8 |
+| `directory -> auth` | 7 |
+| `directory -> workspace` | 7 |
 | `kiosk -> plan` | 7 |
 | `kiosk -> workspace` | 7 |
 | `calendar -> money` | 6 |
 | `calendar -> plan` | 6 |
-| `directory -> auth` | 6 |
 | `editor -> workspace` | 6 |
 | `profile -> auth` | 6 |
 | `events -> money` | 5 |
@@ -70,10 +72,8 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `events -> reservations` | 4 |
 | `mcp -> workspace` | 4 |
 | `plan -> money` | 4 |
-| `workspace -> directory` | 4 |
 | `workspace -> members` | 4 |
 | `members -> plan` | 3 |
-| `directory -> workspace` | 2 |
 | `events -> plan` | 2 |
 | `kiosk -> profile` | 2 |
 | `money -> auth` | 2 |
@@ -85,6 +85,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `help -> workspace` | 1 |
 | `kiosk -> events` | 1 |
 | `kiosk -> members` | 1 |
+| `me -> directory` | 1 |
 | `money -> calendar` | 1 |
 | `plan -> events` | 1 |
 | `plan -> members` | 1 |
@@ -95,7 +96,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**64 directed relationships, 747 imports.**
+**65 directed relationships, 761 imports.**
 
 Reciprocal (20): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
