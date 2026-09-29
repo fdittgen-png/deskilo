@@ -15,6 +15,16 @@ enum MeRefusal {
   /// "Chosen spaces" with no space chosen would hide the field from
   /// everybody while claiming to show it to some.
   noSpaceChosen,
+
+  /// A profession over 120 characters or a bio over 1000 — the limits
+  /// the server's table holds.
+  aboutTooLong,
+}
+
+/// The longest profession and bio `account_about` stores.
+abstract final class AboutLimits {
+  static const int profession = 120;
+  static const int bio = 1000;
 }
 
 class MeRefused implements Exception {
@@ -35,6 +45,16 @@ class MeActions {
   Future<void> leave(String workspaceId, {required bool isOwner}) {
     if (isOwner) throw const MeRefused(MeRefusal.ownerMustHandOver);
     return _repository.leaveSpace(workspaceId);
+  }
+
+  /// My profession and bio, trimmed; who reads them is [VisibilityField.about].
+  Future<void> saveAbout(String profession, String bio) {
+    final p = profession.trim();
+    final b = bio.trim();
+    if (p.length > AboutLimits.profession || b.length > AboutLimits.bio) {
+      throw const MeRefused(MeRefusal.aboutTooLong);
+    }
+    return _repository.setAbout(p, b);
   }
 
   /// Give [field] the audience [choice].

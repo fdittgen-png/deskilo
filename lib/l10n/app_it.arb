@@ -4745,7 +4745,7 @@
   "visibilityPreviewTitle": "Come mi vedono gli altri",
   "visibilityPreviewMySpaces": "Un membro dei miei spazi",
   "visibilityPreviewSignedIn": "Chiunque abbia effettuato l'accesso",
-  "visibilityPreviewNobody": "Nessuno",
+  "visibilityPreviewNobody": "Solo io",
   "visibilityPreviewNothing": "Non vedono nulla di te.",
   "visibilityPreviewFailed": "Impossibile caricare l'anteprima.",
   "visibilityPreviewCanWrite": "Può iniziare una conversazione con te",
@@ -4757,6 +4757,11 @@
   "portalCopyEmail": "Copia l'e-mail",
   "portalEmailCopied": "E-mail copiata",
   "meAddressSaveFailed": "Impossibile salvare il tuo indirizzo. Riprova.",
+  "visibilityAboutMe": "Su di me",
+  "visibilityAboutEmpty": "Aggiungi la tua professione e qualche parola",
+  "visibilityProfession": "Professione",
+  "visibilityBio": "Qualche parola su di te",
+  "visibilityAboutSaveFailed": "Impossibile salvare professione e biografia. Riprova.",
   "featureMemberAccountMenuTitle": "I membri vedono Il mio account",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"

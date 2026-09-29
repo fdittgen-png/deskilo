@@ -7991,7 +7991,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilityPreviewSignedIn => 'Anyone signed in';
 
   @override
-  String get visibilityPreviewNobody => 'Nobody';
+  String get visibilityPreviewNobody => 'Only me';
 
   @override
   String get visibilityPreviewNothing => 'They see nothing of you.';
@@ -8035,6 +8035,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get meAddressSaveFailed =>
       'Could not save your address. Please try again.';
+
+  @override
+  String get visibilityAboutMe => 'About me';
+
+  @override
+  String get visibilityAboutEmpty => 'Add your profession and a few words';
+
+  @override
+  String get visibilityProfession => 'Profession';
+
+  @override
+  String get visibilityBio => 'A few words about you';
+
+  @override
+  String get visibilityAboutSaveFailed =>
+      'Could not save your profession and bio. Please try again.';
 
   @override
   String get featureMemberAccountMenuTitle => 'Members see My account';

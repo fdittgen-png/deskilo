@@ -8070,7 +8070,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Chiunque abbia effettuato l\'accesso';
 
   @override
-  String get visibilityPreviewNobody => 'Nessuno';
+  String get visibilityPreviewNobody => 'Solo io';
 
   @override
   String get visibilityPreviewNothing => 'Non vedono nulla di te.';
@@ -8115,6 +8115,23 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get meAddressSaveFailed =>
       'Impossibile salvare il tuo indirizzo. Riprova.';
+
+  @override
+  String get visibilityAboutMe => 'Su di me';
+
+  @override
+  String get visibilityAboutEmpty =>
+      'Aggiungi la tua professione e qualche parola';
+
+  @override
+  String get visibilityProfession => 'Professione';
+
+  @override
+  String get visibilityBio => 'Qualche parola su di te';
+
+  @override
+  String get visibilityAboutSaveFailed =>
+      'Impossibile salvare professione e biografia. Riprova.';
 
   @override
   String get featureMemberAccountMenuTitle => 'I membri vedono Il mio account';

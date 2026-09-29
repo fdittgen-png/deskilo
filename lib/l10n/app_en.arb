@@ -8640,9 +8640,9 @@
   "@visibilityPreviewSignedIn": {
     "description": "Preview audience chip: anyone signed in."
   },
-  "visibilityPreviewNobody": "Nobody",
+  "visibilityPreviewNobody": "Only me",
   "@visibilityPreviewNobody": {
-    "description": "Preview audience chip: nobody."
+    "description": "Preview audience chip: only me — everything, as the person alone sees it."
   },
   "visibilityPreviewNothing": "They see nothing of you.",
   "@visibilityPreviewNothing": {
@@ -8692,6 +8692,26 @@
   "meAddressSaveFailed": "Could not save your address. Please try again.",
   "@meAddressSaveFailed": {
     "description": "Error when saving the postal address from My account failed."
+  },
+  "visibilityAboutMe": "About me",
+  "@visibilityAboutMe": {
+    "description": "Row and dialog title: edit my profession and bio."
+  },
+  "visibilityAboutEmpty": "Add your profession and a few words",
+  "@visibilityAboutEmpty": {
+    "description": "Subtitle when no profession or bio is written yet."
+  },
+  "visibilityProfession": "Profession",
+  "@visibilityProfession": {
+    "description": "Field label: profession."
+  },
+  "visibilityBio": "A few words about you",
+  "@visibilityBio": {
+    "description": "Field label: a short bio."
+  },
+  "visibilityAboutSaveFailed": "Could not save your profession and bio. Please try again.",
+  "@visibilityAboutSaveFailed": {
+    "description": "Error when saving profession and bio failed."
   },
   "featureMemberAccountMenuTitle": "Members see My account",
   "@featureMemberAccountMenuTitle": {

@@ -23,7 +23,8 @@ class FakeAccount {
     this.spaces = const {},
   });
 
-  final String name, profession, bio, whatsapp, email, presence;
+  final String name, whatsapp, email, presence;
+  String profession, bio;
 
   /// The spaces this account is an active member of.
   final Set<String> spaces;
@@ -66,7 +67,16 @@ class FakeMeRepository implements MeRepository {
   }
 
   @override
-  Future<MyVisibility> myVisibility() async => _me.visibility;
+  Future<MyVisibility> myVisibility() async =>
+      _me.visibility.withAbout(_me.profession, _me.bio);
+
+  @override
+  Future<void> setAbout(String profession, String bio) async {
+    if (failure != null) throw failure!;
+    _me
+      ..profession = profession
+      ..bio = bio;
+  }
 
   @override
   Future<void> setVisibility(
@@ -97,13 +107,14 @@ class FakeMeRepository implements MeRepository {
   }
 
   static AccountView _view(FakeAccount account, Set<String>? viewerSpaces,
-      {required bool signedIn}) {
-    bool shows(VisibilityField field) => _meets(
+      {required bool signedIn, bool owner = false}) {
+    bool shows(VisibilityField field) => owner || _meets(
         account.visibility.of(field), account.spaces, viewerSpaces,
         signedIn: signedIn);
     String? keep(VisibilityField field, String value) =>
         shows(field) && value.isNotEmpty ? value : null;
     return AccountView(
+      presenceShared: shows(VisibilityField.presence),
       name: shows(VisibilityField.identity) ? account.name : null,
       profession: keep(VisibilityField.about, account.profession),
       bio: keep(VisibilityField.about, account.bio),
@@ -121,7 +132,8 @@ class FakeMeRepository implements MeRepository {
         PreviewAudience.mySpaces => _view(_me, _me.spaces, signedIn: true),
         // A stranger with an account: no space in common.
         PreviewAudience.signedIn => _view(_me, const {}, signedIn: true),
-        PreviewAudience.nobody => const AccountView(),
+        // Only me: everything, as I see myself.
+        PreviewAudience.nobody => _view(_me, null, signedIn: true, owner: true),
       };
 
   @override

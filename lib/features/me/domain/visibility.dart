@@ -64,6 +64,7 @@ enum VisibilityAudience {
 enum PreviewAudience {
   mySpaces('my_spaces'),
   signedIn('signed_in'),
+  /// Only me: everything, as I alone see it (the server's `nobody`).
   nobody('nobody');
 
   const PreviewAudience(this.wire);
@@ -107,11 +108,14 @@ class FieldAudience {
 }
 
 /// `my_visibility()`: every field, reachability included, with the
-/// server's defaults filled in for anything it did not name.
+/// server's defaults filled in for anything it did not name — and my own
+/// profession and bio, which only `set_my_about` writes.
 class MyVisibility {
-  const MyVisibility(this.fields);
+  const MyVisibility(this.fields, {this.profession = '', this.bio = ''});
 
   final Map<VisibilityField, FieldAudience> fields;
+  final String profession;
+  final String bio;
 
   FieldAudience of(VisibilityField field) =>
       fields[field] ?? FieldAudience(field.defaultAudience);
@@ -120,7 +124,9 @@ class MyVisibility {
 
   factory MyVisibility.fromJson(Map<String, dynamic> json) {
     final raw = json['fields'] is Map ? json['fields'] as Map : const <String, dynamic>{};
-    return MyVisibility({
+    final about = json['about'] is Map ? json['about'] as Map : const <String, dynamic>{};
+    return MyVisibility(profession: about['profession'] as String? ?? '',
+        bio: about['bio'] as String? ?? '', {
       for (final field in VisibilityField.values)
         field: FieldAudience.fromJson(
           field == VisibilityField.reachability
@@ -132,11 +138,17 @@ class MyVisibility {
   }
 
   MyVisibility withField(VisibilityField field, FieldAudience audience) =>
-      MyVisibility({...fields, field: audience});
+      MyVisibility({...fields, field: audience}, profession: profession, bio: bio);
+
+  MyVisibility withAbout(String profession, String bio) =>
+      MyVisibility(fields, profession: profession, bio: bio);
 }
 
 /// What one account shows another: `visible_account(user)` and
-/// `preview_my_account(as)`. Every field is null when it is hidden.
+/// `preview_my_account(as)`. The server leaves a hidden part OUT (#1822):
+/// `{identity?:{name, avatar_path}, about?:{profession, bio},
+/// contact_channels?:{whatsapp, email}, presence?:{last_seen_at,
+/// status_text}, can_message}`; here a hidden or empty value is null.
 class AccountView {
   const AccountView({
     this.name,
@@ -146,6 +158,7 @@ class AccountView {
     this.whatsapp,
     this.email,
     this.presence,
+    this.presenceShared = false,
     this.canMessage = false,
   });
 
@@ -155,7 +168,11 @@ class AccountView {
   final String? bio;
   final String? whatsapp;
   final String? email;
+  /// The status line shared with the presence, when there is one.
   final String? presence;
+
+  /// Whether the presence part is shown at all.
+  final bool presenceShared;
   final bool canMessage;
 
   /// Nothing at all is shown.
@@ -166,23 +183,24 @@ class AccountView {
       bio == null &&
       whatsapp == null &&
       email == null &&
-      presence == null;
+      !presenceShared;
 
   factory AccountView.fromJson(Map<String, dynamic> json) {
-    String? text(String key) {
-      final value = json[key];
+    String? text(String part, String key) {
+      final group = json[part];
+      final value = group is Map ? group[key] : null;
       return value is String && value.trim().isNotEmpty ? value : null;
     }
 
-    final photo = json['has_avatar'] ?? json['has_photo'];
     return AccountView(
-      name: text('name') ?? text('display_name'),
-      hasPhoto: photo == true || text('avatar_path') != null,
-      profession: text('profession'),
-      bio: text('bio'),
-      whatsapp: text('whatsapp'),
-      email: text('email'),
-      presence: text('presence'),
+      name: text('identity', 'name'),
+      hasPhoto: text('identity', 'avatar_path') != null,
+      profession: text('about', 'profession'),
+      bio: text('about', 'bio'),
+      whatsapp: text('contact_channels', 'whatsapp'),
+      email: text('contact_channels', 'email'),
+      presence: text('presence', 'status_text'),
+      presenceShared: json['presence'] is Map,
       canMessage: json['can_message'] == true,
     );
   }

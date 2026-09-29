@@ -51,5 +51,5 @@ String previewAudienceLabel(AppLocalizations? l10n, PreviewAudience as) =>
         l10n?.visibilityPreviewMySpaces ?? 'A member of my spaces',
       PreviewAudience.signedIn =>
         l10n?.visibilityPreviewSignedIn ?? 'Anyone signed in',
-      PreviewAudience.nobody => l10n?.visibilityPreviewNobody ?? 'Nobody',
+      PreviewAudience.nobody => l10n?.visibilityPreviewNobody ?? 'Only me',
     };

@@ -46,7 +46,7 @@
   "visibilityPreviewTitle": "Comment les autres me voient",
   "visibilityPreviewMySpaces": "Un membre de mes espaces",
   "visibilityPreviewSignedIn": "Toute personne connectée",
-  "visibilityPreviewNobody": "Personne",
+  "visibilityPreviewNobody": "Moi seul",
   "visibilityPreviewNothing": "Ils ne voient rien de vous.",
   "visibilityPreviewFailed": "L'aperçu n'a pas pu être chargé.",
   "visibilityPreviewCanWrite": "Peut démarrer une conversation avec vous",
@@ -57,5 +57,10 @@
   "portalEnterSpace": "Entrer",
   "portalCopyEmail": "Copier l'e-mail",
   "portalEmailCopied": "E-mail copié",
-  "meAddressSaveFailed": "Impossible d'enregistrer votre adresse. Veuillez réessayer."
+  "meAddressSaveFailed": "Impossible d'enregistrer votre adresse. Veuillez réessayer.",
+  "visibilityAboutMe": "À propos de moi",
+  "visibilityAboutEmpty": "Ajoutez votre métier et quelques mots",
+  "visibilityProfession": "Métier",
+  "visibilityBio": "Quelques mots sur vous",
+  "visibilityAboutSaveFailed": "Impossible d'enregistrer votre métier et votre présentation. Veuillez réessayer."
 }

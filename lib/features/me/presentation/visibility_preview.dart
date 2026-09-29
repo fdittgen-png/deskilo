@@ -103,9 +103,10 @@ class _Preview extends StatelessWidget {
             line('visibility-preview-whatsapp', Icons.chat_outlined, whatsapp),
           if (view.email case final email?)
             line('visibility-preview-email', Icons.alternate_email, email),
-          if (view.presence case final presence?)
+          if (view.presenceShared)
             line('visibility-preview-presence', Icons.location_on_outlined,
-                presence),
+                view.presence ??
+                    (l10n?.visibilityPresence ?? 'In the space today')),
           line(
             'visibility-preview-reach',
             view.canMessage ? Icons.forum_outlined : Icons.speaker_notes_off_outlined,

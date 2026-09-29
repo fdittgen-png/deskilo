@@ -13,6 +13,7 @@ import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/visibility.dart';
 import '../providers/me_providers.dart';
+import 'about_dialog.dart';
 import 'visibility_labels.dart';
 import 'visibility_preview.dart';
 
@@ -48,6 +49,26 @@ class VisibilityCard extends ConsumerWidget {
     if (ok) ref.invalidate(myVisibilityProvider);
   }
 
+  Future<void> _editAbout(
+      BuildContext context, WidgetRef ref, MyVisibility current) async {
+    final l10n = AppLocalizations.of(context);
+    final about = await showDialog<(String, String)>(
+      context: context,
+      builder: (_) =>
+          AboutMeDialog(profession: current.profession, bio: current.bio),
+    );
+    if (about == null || !context.mounted) return;
+    final ok = await runGuarded(
+      context,
+      domain: 'me',
+      message: 'save about failed',
+      errorText: l10n?.visibilityAboutSaveFailed ??
+          'Could not save your profession and bio. Please try again.',
+      action: () => ref.read(meActionsProvider).saveAbout(about.$1, about.$2),
+    );
+    if (ok) ref.invalidate(myVisibilityProvider);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -77,6 +98,23 @@ class VisibilityCard extends ConsumerWidget {
             subtitle: Text(l10n?.visibilityIntro ??
                 'Each part of your account picks its own audience. '
                     'Nothing is public unless you choose it.'),
+          ),
+          ListTile(
+            key: const ValueKey('visibility-about-edit'),
+            leading: const Icon(Icons.edit_note_outlined),
+            title: Text(l10n?.visibilityAboutMe ?? 'About me'),
+            subtitle: Text(
+              visibility.profession.isEmpty && visibility.bio.isEmpty
+                  ? (l10n?.visibilityAboutEmpty ??
+                      'Add your profession and a few words')
+                  : [visibility.profession, visibility.bio]
+                      .where((t) => t.isNotEmpty)
+                      .join(' · '),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _editAbout(context, ref, visibility),
           ),
           for (final field in VisibilityField.seen) row(field),
           const Divider(),

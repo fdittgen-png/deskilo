@@ -8053,7 +8053,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get visibilityPreviewSignedIn => 'Cualquiera con sesión iniciada';
 
   @override
-  String get visibilityPreviewNobody => 'Nadie';
+  String get visibilityPreviewNobody => 'Solo yo';
 
   @override
   String get visibilityPreviewNothing => 'No ven nada de ti.';
@@ -8098,6 +8098,22 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get meAddressSaveFailed =>
       'No se pudo guardar tu dirección. Inténtalo de nuevo.';
+
+  @override
+  String get visibilityAboutMe => 'Sobre mí';
+
+  @override
+  String get visibilityAboutEmpty => 'Añade tu profesión y unas palabras';
+
+  @override
+  String get visibilityProfession => 'Profesión';
+
+  @override
+  String get visibilityBio => 'Unas palabras sobre ti';
+
+  @override
+  String get visibilityAboutSaveFailed =>
+      'No se pudieron guardar tu profesión y biografía. Inténtalo de nuevo.';
 
   @override
   String get featureMemberAccountMenuTitle => 'Los miembros ven Mi cuenta';

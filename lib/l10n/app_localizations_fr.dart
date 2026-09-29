@@ -8079,7 +8079,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get visibilityPreviewSignedIn => 'Toute personne connectée';
 
   @override
-  String get visibilityPreviewNobody => 'Personne';
+  String get visibilityPreviewNobody => 'Moi seul';
 
   @override
   String get visibilityPreviewNothing => 'Ils ne voient rien de vous.';
@@ -8125,6 +8125,22 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get meAddressSaveFailed =>
       'Impossible d\'enregistrer votre adresse. Veuillez réessayer.';
+
+  @override
+  String get visibilityAboutMe => 'À propos de moi';
+
+  @override
+  String get visibilityAboutEmpty => 'Ajoutez votre métier et quelques mots';
+
+  @override
+  String get visibilityProfession => 'Métier';
+
+  @override
+  String get visibilityBio => 'Quelques mots sur vous';
+
+  @override
+  String get visibilityAboutSaveFailed =>
+      'Impossible d\'enregistrer votre métier et votre présentation. Veuillez réessayer.';
 
   @override
   String get featureMemberAccountMenuTitle => 'Les membres voient Mon compte';

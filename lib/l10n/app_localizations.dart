@@ -13837,10 +13837,10 @@ abstract class AppLocalizations {
   /// **'Anyone signed in'**
   String get visibilityPreviewSignedIn;
 
-  /// Preview audience chip: nobody.
+  /// Preview audience chip: only me — everything, as the person alone sees it.
   ///
   /// In en, this message translates to:
-  /// **'Nobody'**
+  /// **'Only me'**
   String get visibilityPreviewNobody;
 
   /// Preview when the audience sees nothing.
@@ -13908,6 +13908,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not save your address. Please try again.'**
   String get meAddressSaveFailed;
+
+  /// Row and dialog title: edit my profession and bio.
+  ///
+  /// In en, this message translates to:
+  /// **'About me'**
+  String get visibilityAboutMe;
+
+  /// Subtitle when no profession or bio is written yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your profession and a few words'**
+  String get visibilityAboutEmpty;
+
+  /// Field label: profession.
+  ///
+  /// In en, this message translates to:
+  /// **'Profession'**
+  String get visibilityProfession;
+
+  /// Field label: a short bio.
+  ///
+  /// In en, this message translates to:
+  /// **'A few words about you'**
+  String get visibilityBio;
+
+  /// Error when saving profession and bio failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save your profession and bio. Please try again.'**
+  String get visibilityAboutSaveFailed;
 
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///

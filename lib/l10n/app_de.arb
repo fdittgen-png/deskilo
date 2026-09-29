@@ -4745,7 +4745,7 @@
   "visibilityPreviewTitle": "Wie andere mich sehen",
   "visibilityPreviewMySpaces": "Ein Mitglied meiner Spaces",
   "visibilityPreviewSignedIn": "Alle Angemeldeten",
-  "visibilityPreviewNobody": "Niemand",
+  "visibilityPreviewNobody": "Nur ich",
   "visibilityPreviewNothing": "Sie sehen nichts von dir.",
   "visibilityPreviewFailed": "Die Vorschau konnte nicht geladen werden.",
   "visibilityPreviewCanWrite": "Kann ein Gespräch mit dir beginnen",
@@ -4757,6 +4757,11 @@
   "portalCopyEmail": "E-Mail kopieren",
   "portalEmailCopied": "E-Mail kopiert",
   "meAddressSaveFailed": "Deine Adresse konnte nicht gespeichert werden. Bitte versuche es erneut.",
+  "visibilityAboutMe": "Über mich",
+  "visibilityAboutEmpty": "Beruf und ein paar Worte hinzufügen",
+  "visibilityProfession": "Beruf",
+  "visibilityBio": "Ein paar Worte über dich",
+  "visibilityAboutSaveFailed": "Beruf und Kurzprofil konnten nicht gespeichert werden. Bitte versuche es erneut.",
   "featureMemberAccountMenuTitle": "Mitglieder sehen Mein Konto",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"

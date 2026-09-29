@@ -8065,7 +8065,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilityPreviewSignedIn => 'Alle Angemeldeten';
 
   @override
-  String get visibilityPreviewNobody => 'Niemand';
+  String get visibilityPreviewNobody => 'Nur ich';
 
   @override
   String get visibilityPreviewNothing => 'Sie sehen nichts von dir.';
@@ -8111,6 +8111,22 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get meAddressSaveFailed =>
       'Deine Adresse konnte nicht gespeichert werden. Bitte versuche es erneut.';
+
+  @override
+  String get visibilityAboutMe => 'Über mich';
+
+  @override
+  String get visibilityAboutEmpty => 'Beruf und ein paar Worte hinzufügen';
+
+  @override
+  String get visibilityProfession => 'Beruf';
+
+  @override
+  String get visibilityBio => 'Ein paar Worte über dich';
+
+  @override
+  String get visibilityAboutSaveFailed =>
+      'Beruf und Kurzprofil konnten nicht gespeichert werden. Bitte versuche es erneut.';
 
   @override
   String get featureMemberAccountMenuTitle => 'Mitglieder sehen Mein Konto';

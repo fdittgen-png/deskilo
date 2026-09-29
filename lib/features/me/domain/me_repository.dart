@@ -15,6 +15,10 @@ abstract interface class MeRepository {
   /// `set_visibility(field, audience, workspaces)`.
   Future<void> setVisibility(VisibilityField field, FieldAudience audience);
 
+  /// `set_my_about(profession, bio)`: the words only [VisibilityField.about]
+  /// lets anyone read.
+  Future<void> setAbout(String profession, String bio);
+
   /// `preview_my_account(as)`: what that audience would see of me.
   Future<AccountView> previewMyAccount(PreviewAudience audience);
 

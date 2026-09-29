@@ -42,6 +42,12 @@ class SupabaseMeRepository implements MeRepository {
       });
 
   @override
+  Future<void> setAbout(String profession, String bio) => _client.rpc<void>(
+        'set_my_about',
+        params: {'p_profession': profession, 'p_bio': bio},
+      );
+
+  @override
   Future<AccountView> previewMyAccount(PreviewAudience audience) async =>
       AccountView.fromJson(_object(await _client
           .rpc<dynamic>('preview_my_account', params: {'p_as': audience.wire})));

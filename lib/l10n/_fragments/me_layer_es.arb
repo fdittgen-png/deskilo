@@ -46,7 +46,7 @@
   "visibilityPreviewTitle": "Cómo me ven los demás",
   "visibilityPreviewMySpaces": "Un miembro de mis espacios",
   "visibilityPreviewSignedIn": "Cualquiera con sesión iniciada",
-  "visibilityPreviewNobody": "Nadie",
+  "visibilityPreviewNobody": "Solo yo",
   "visibilityPreviewNothing": "No ven nada de ti.",
   "visibilityPreviewFailed": "No se pudo cargar la vista previa.",
   "visibilityPreviewCanWrite": "Puede iniciar una conversación contigo",
@@ -57,5 +57,10 @@
   "portalEnterSpace": "Entrar",
   "portalCopyEmail": "Copiar el correo",
   "portalEmailCopied": "Correo copiado",
-  "meAddressSaveFailed": "No se pudo guardar tu dirección. Inténtalo de nuevo."
+  "meAddressSaveFailed": "No se pudo guardar tu dirección. Inténtalo de nuevo.",
+  "visibilityAboutMe": "Sobre mí",
+  "visibilityAboutEmpty": "Añade tu profesión y unas palabras",
+  "visibilityProfession": "Profesión",
+  "visibilityBio": "Unas palabras sobre ti",
+  "visibilityAboutSaveFailed": "No se pudieron guardar tu profesión y biografía. Inténtalo de nuevo."
 }
