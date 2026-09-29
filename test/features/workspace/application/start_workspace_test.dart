@@ -9,6 +9,9 @@ import 'package:deskilo/features/workspace/application/start_workspace.dart';
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
+import 'package:deskilo/core/backend/backend_settings.dart';
+import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
+import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Future<({StartOutcome outcome, String? workspaceId})> _create(
@@ -156,28 +159,54 @@ void main() {
     });
   });
 
-  group('joining', () {
-    test('a WHOLE pasted invitation still joins', () async {
+  group('joining (#1652)', () {
+    const here = BackendEndpoint('https://here.example.org', 'sb_publishable_here_key_0001');
+    const there = BackendEndpoint('https://there.example.org', 'sb_publishable_there_key_0002');
+
+    test('a WHOLE pasted invitation is reviewed without a write, then joined once', () async {
       final repo = FakeWorkspaceRepository();
       final before = repo.workspaces.length;
-      expect(
-        await WorkspaceStart(repo).join(
-          'Salut ! Rejoins Le Bocal sur DesKilo.\n'
-          'Voici ton code :\n'
-          '```GOODCODE22```\n'
-          'A bientot !',
-        ),
-        (outcome: JoinOutcome.joined, workspaceId: 'ws-joined-1'),
+      final start = WorkspaceStart(repo);
+      final check = await start.check(
+        'Salut ! Rejoins Le Bocal sur DesKilo.\n'
+        'Voici ton code :\n'
+        '```GOODCODE22```\n'
+        'A bientot !',
+        active: here,
       );
+      expect(check.kind, InvitationCheckKind.answered);
+      expect(check.answer!.state, InvitationState.valid);
+      expect(repo.workspaces.length, before, reason: 'a preview writes nothing');
+      expect(repo.joinByInvitationCalls, 0);
+      final joined = await start.join(check.invitation, active: here);
+      expect(joined.state, InvitationState.joinedActive);
+      expect(joined.workspaceId, 'ws-joined-1');
       expect(repo.workspaces.length, before + 1);
+      final again = await start.join(check.invitation, active: here);
+      expect(again.state, InvitationState.alreadyMember);
+      expect(repo.workspaces.length, before + 1, reason: 'a retry never joins twice');
     });
 
-    test('nothing that looks like a code is REFUSED, not ignored', () async {
+    test('nothing that looks like a code is REFUSED, and nothing is asked', () async {
       final repo = FakeWorkspaceRepository();
-      final before = repo.workspaces.length;
-      expect(await WorkspaceStart(repo).join('   '),
-          (outcome: JoinOutcome.noCode, workspaceId: null));
-      expect(repo.workspaces.length, before);
+      final check = await WorkspaceStart(repo).check('   ', active: here);
+      expect(check.kind, InvitationCheckKind.unreadable);
+      expect(check.invitation.problem, InvitationProblem.noCode);
+      expect(repo.previewCalls, 0);
+    });
+
+    test('an invitation issued on another server is never sent to this one', () async {
+      final repo = FakeWorkspaceRepository();
+      final start = WorkspaceStart(repo);
+      final link = InviteUriCodec.encode(code: 'GOODCODE22', role: InviteRole.user, target: there);
+      final check = await start.check(link, active: here);
+      expect(check.kind, InvitationCheckKind.otherServer);
+      expect(check.invitation.target!.endpoint.url, there.url);
+      expect(repo.previewCalls, 0);
+      expect(() => start.join(check.invitation, active: here), throwsStateError);
+      expect(repo.joinByInvitationCalls, 0);
+      final onItsOwn = await start.check(link, active: there);
+      expect(onItsOwn.kind, InvitationCheckKind.answered);
     });
   });
 }

@@ -84,6 +84,7 @@ const Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'retired_invite_codes': 'withdrawn invitation secrets of this installation, kept only to answer "revoked"; never portable configuration (#1652)',
   'workspace_public_pages': 'publication consent is installation-specific; importing a workspace must not publish it (#1791)',
   'public_workspace_cards': 'derived public projection regenerated only by explicit publication on this installation (#1791)',
   'workspace_applications': 'account-bound request ownership is not portable workspace configuration (#1791)',

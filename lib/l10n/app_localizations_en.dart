@@ -4459,6 +4459,147 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get invitationReviewButton => 'Review invitation';
+
+  @override
+  String get invitationPasteButton => 'Paste';
+
+  @override
+  String get invitationReviewTitle => 'Check before you join';
+
+  @override
+  String invitationServerRow(String host) {
+    return 'Server: $host';
+  }
+
+  @override
+  String invitationServerLabel(String label) {
+    return 'Named “$label” by whoever shared it';
+  }
+
+  @override
+  String invitationJoiningAs(String account) {
+    return 'Joining as $account';
+  }
+
+  @override
+  String get invitationRoleMember => 'Offered role: member';
+
+  @override
+  String get invitationRoleAdmin => 'Offered role: administrator';
+
+  @override
+  String get invitationRoleUnknown => 'Offered role: not known yet';
+
+  @override
+  String get invitationApprovalRequired =>
+      'An administrator approves new members before the workspace opens.';
+
+  @override
+  String get invitationApprovalUnknown =>
+      'Whether an administrator must approve is not known.';
+
+  @override
+  String get invitationEnvironmentTest => 'Test workspace';
+
+  @override
+  String get invitationEnvironmentProduction => 'Production workspace';
+
+  @override
+  String get invitationJoinButton => 'Join workspace';
+
+  @override
+  String get invitationChangeAccount => 'Change account';
+
+  @override
+  String get invitationCheckAnother => 'Use another invitation';
+
+  @override
+  String invitationAlreadyMember(String workspace) {
+    return 'You are already a member of $workspace.';
+  }
+
+  @override
+  String get invitationContinue => 'Continue to this workspace';
+
+  @override
+  String invitationPaused(String workspace) {
+    return 'Your membership in $workspace is paused. Only an administrator there can resume it.';
+  }
+
+  @override
+  String get invitationExpired =>
+      'This invitation has expired. Ask the person who sent it for a new one.';
+
+  @override
+  String get invitationRevoked =>
+      'This workspace code was replaced. Ask the person who sent it for the current one.';
+
+  @override
+  String get invitationWrongAccount =>
+      'This invitation was already used by another account. If it was meant for you, sign in with that account.';
+
+  @override
+  String invitationInvalid(String host) {
+    return 'No workspace on $host knows this invitation. Check it, or ask the organizer for their server link.';
+  }
+
+  @override
+  String get invitationUnknownAnswer =>
+      'The server gave an answer this version of the app cannot read. Nothing was changed.';
+
+  @override
+  String invitationOtherServer(String host) {
+    return 'This invitation is for another server: $host.';
+  }
+
+  @override
+  String invitationThisDevice(String host) {
+    return 'This device uses $host. An invitation is only checked on its own server.';
+  }
+
+  @override
+  String get invitationUseServer => 'Use this server';
+
+  @override
+  String get invitationNewerVersion =>
+      'This invitation was made by a newer version of DesKilo. Update the app, then open it again.';
+
+  @override
+  String get invitationBadServer =>
+      'The server in this invitation is not valid. Ask for a new invitation.';
+
+  @override
+  String get invitationCheckFailed =>
+      'The invitation could not be checked — status not updated. Nothing was changed; try again.';
+
+  @override
+  String get invitationJoinUnconfirmed =>
+      'The result could not be confirmed. Join again to check — the invitation is not used twice.';
+
+  @override
+  String get pendingAvailable =>
+      'While you wait, your other workspaces, your account and the help stay available.';
+
+  @override
+  String pendingLastChecked(String time) {
+    return 'Last checked $time';
+  }
+
+  @override
+  String get pendingNotUpdated =>
+      'Status not updated — the server could not be reached. Your request is unchanged.';
+
+  @override
+  String get pendingStillWaiting => 'Still awaiting approval.';
+
+  @override
+  String get pendingSwitchWorkspace => 'Switch workspace';
+
+  @override
+  String get pendingHelp => 'Help';
+
+  @override
   String get inviteSectionTitle => 'Invite someone';
 
   @override
@@ -6354,7 +6495,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberStatusPending => 'Pending';
 
   @override
-  String get pendingApprovalTitle => 'Awaiting approval';
+  String get pendingApprovalTitle => 'Workspace membership awaiting approval';
 
   @override
   String pendingApprovalBody(String workspace) {
@@ -12877,7 +13018,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scanJoinHelp =>
-      'Point the camera at the invitation QR — the code is taken over and joined automatically.';
+      'Point the camera at the invitation QR — you see the workspace before you join.';
 
   @override
   String get scanJoinNotAnInvite =>

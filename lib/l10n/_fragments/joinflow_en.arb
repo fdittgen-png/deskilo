@@ -1,7 +1,7 @@
 {
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
-  "pendingApprovalTitle": "Awaiting approval",
+  "pendingApprovalTitle": "Workspace membership awaiting approval",
   "pendingApprovalBody": "You have joined {workspace}. An administrator must approve your membership before you can use the workspace — you will get access as soon as they confirm.",
   "@pendingApprovalBody": {
     "placeholders": {

@@ -122,7 +122,10 @@ final class EntryIntent {
   String? get destination => switch (purpose) {
         EntryPurpose.defaultEntry => kDefaultHome,
         EntryPurpose.open => target,
-        EntryPurpose.join || EntryPurpose.create => '/onboarding',
+        // #1652 — the errand selects Join on arrival: the intent is spent
+        // when the person arrives, so the mode rides on the location.
+        EntryPurpose.join => '/onboarding?join=1',
+        EntryPurpose.create => '/onboarding',
         EntryPurpose.connectInstallation => '/server',
         EntryPurpose.account => switch (AccountSection.values
             .where((s) => s.name == target)

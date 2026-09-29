@@ -38,12 +38,16 @@ class _ScanJoinScreenState extends ConsumerState<ScanJoinScreen> {
     // The decode is now recorded by SHAPE (never the code itself — an
     // invite code is a secret and traces get exported), and a QR we
     // cannot use says so instead of being swallowed.
-    final code = InviteUriCodec.extractCode(payload);
+    // #1652 — the WHOLE payload goes back to the join field, so a v2
+    // invitation keeps the server it names; the field shows it and the
+    // person reviews it before anything is joined.
+    final read = InvitationReader.read(payload);
+    final usable = read.problem != InvitationProblem.noCode;
     ActTrace.scan.step('join-qr decoded', {
       'shape': ActTrace.payloadShape(payload),
-      'usable': code.isNotEmpty,
+      'usable': usable,
     });
-    if (code.isEmpty) {
+    if (!usable) {
       ActTrace.scan.refused('join-qr', {
         'shape': ActTrace.payloadShape(payload),
         'reason': 'not-an-invite',
@@ -59,7 +63,7 @@ class _ScanJoinScreenState extends ConsumerState<ScanJoinScreen> {
       return;
     }
     _done = true;
-    Navigator.of(context).pop(code);
+    Navigator.of(context).pop(payload.trim());
   }
 
   @override
