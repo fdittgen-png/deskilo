@@ -72,6 +72,17 @@ void main() {
     expect(suiteRow(run, exitCode: 0).outcome, 'success');
   });
 
+  test('#1632 a strict row fails on a skipped test; the same row without '
+      'the flag passes', () {
+    final strict = parseManifest(
+        'Accessibility|code|tests|strict|test/a11y/|required evidence\n');
+    expect(strict.single.strict, isTrue);
+    expect(strict.single.conditional, isFalse);
+    final run = readRun(_stream());
+    expect(deriveRows(strict, run, job: 'code').single.outcome, 'failure');
+    expect(deriveRows(manifest, run, job: 'code')[1].outcome, 'success');
+  });
+
   test('a failing test turns its discipline red and the suite row red, '
       'whatever the reporter printed', () {
     final run = readRun(_stream(layeringResult: 'failure', success: false));

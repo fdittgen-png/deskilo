@@ -20,6 +20,7 @@ class Discipline {
     required this.job,
     required this.kind,
     required this.conditional,
+    this.strict = false,
     required this.paths,
     required this.evidence,
   });
@@ -36,6 +37,10 @@ class Discipline {
   /// A `skipped` outcome is acceptable — the row depends on an earlier
   /// row of the same job (the database rows after the replay).
   final bool conditional;
+
+  /// #1632 — a `tests` row whose paths hold required security evidence: a
+  /// skipped test there is a failure, not a pass (field 4 reads `strict`).
+  final bool strict;
 
   /// Test files or directories, repository-relative.
   final List<String> paths;
@@ -62,6 +67,7 @@ Discipline _discipline(String line) {
     job: f[1].trim(),
     kind: f[2].trim(),
     conditional: f[3].trim() == 'conditional',
+    strict: f[3].trim() == 'strict',
     paths: [for (final p in f[4].split(',')) if (p.trim().isNotEmpty) p.trim()],
     evidence: f[5].trim(),
   );
@@ -228,6 +234,8 @@ List<Row> deriveRows(List<Discipline> manifest, RunResult run, {required String 
     } else if (ran == 0) {
       outcome = 'failure';
     } else if (failed > 0 || loadErrors > 0) {
+      outcome = 'failure';
+    } else if (d.strict && skipped > 0) {
       outcome = 'failure';
     } else {
       outcome = 'success';

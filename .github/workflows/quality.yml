@@ -292,7 +292,9 @@ jobs:
           # #1335 — without pipefail this step reported `tee`'s exit code,
           # so a failing pgTAP run could never turn it red.
           set -o pipefail
-          supabase test db 2>&1 | tee report-pgtap.log
+          # #1632 — the report names the commit it was produced at, so the
+          # MCP coverage gate below can refuse evidence from another one.
+          { echo "# source $GITHUB_SHA"; supabase test db 2>&1; } | tee report-pgtap.log
 
       # #1313 — the policies the migrations actually build, read from the
       # replay and never parsed out of the SQL: 0030 creates a policy 0051
@@ -477,6 +479,17 @@ jobs:
         continue-on-error: true
         run: bash scripts/populated_upgrade_check.sh
 
+      # #1632 — the MCP coverage map (contracts/mcp/coverage.json) against
+      # what actually ran: every pgTAP file it requires passed in THIS run,
+      # at THIS commit, and every implemented tool is mapped. A missing,
+      # empty, skipped, failed or stale report is red. Needs the Dart the
+      # lifecycle step installed; writes nothing to any database.
+      - name: Every MCP tool has executed evidence
+        id: mcp_coverage
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: dart run tool/mcp_coverage.dart --pgtap report-pgtap.log --sha "$GITHUB_SHA"
+
       - name: Rows
         if: always()
         run: |
@@ -525,6 +538,8 @@ jobs:
               "${{ steps.containment.outcome }}"
             printf 'Instance lifecycle|%s|empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation\n' \
               "${{ steps.lifecycle.outcome }}"
+            printf 'MCP coverage evidence|%s|every pgTAP file the MCP coverage map requires ran and passed in this run, at this commit\n' \
+              "${{ steps.mcp_coverage.outcome }}"
             printf 'Archive preservation|%s|a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught\n' \
               "${{ steps.archive.outcome }}"
           } > report/database.psv
@@ -568,7 +583,8 @@ jobs:
             "A Mollie or Wero payment settles=${{ steps.settlement_mollie.outcome }}" \
             "A delegated token reaches only the MCP facade=${{ steps.containment.outcome }}" \
             "Install, resume and upgrade a real schema=${{ steps.lifecycle.outcome }}" \
-            "A populated instance upgrades and keeps its archives=${{ steps.archive.outcome }}"
+            "A populated instance upgrades and keeps its archives=${{ steps.archive.outcome }}" \
+            "Every MCP tool has executed evidence=${{ steps.mcp_coverage.outcome }}"
 
   # #1446 C2 — the always-evaluated final gate. It is red unless every
   # row is green or independently stood down by the classifier's own
