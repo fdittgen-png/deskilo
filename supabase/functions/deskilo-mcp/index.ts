@@ -22,6 +22,11 @@
 // the epoch), this endpoint serves nothing until it is redeployed with the
 // new one. Without a configured epoch it serves nothing at all.
 //
+// #1632 — an answer must name the operation, workspace and request id of
+// the call it answers; a relabelled or crossed envelope is refused, never
+// delivered under this call's JSON-RPC id (sameProvenance). The JSON-RPC
+// id correlates transport messages; the request UUID is the intent.
+//
 // Only CORS preflight and the protected-resource metadata are anonymous.
 
 import { Server } from "npm:@modelcontextprotocol/sdk@1.30.1/server/index.js";
@@ -124,6 +129,25 @@ export function projectData(op: McpOperationId, value: unknown): unknown {
   return walk(value);
 }
 
+/**
+ * #1632 — the facade's envelope names the operation, workspace and request
+ * id it answers (mcp_envelope). An answer naming anything else is not the
+ * answer to this call — a relabelled or crossed reply — and is refused
+ * rather than delivered under this call's JSON-RPC id. The JSON-RPC id is
+ * the transport's correlation; the request UUID is the business intent's.
+ */
+export function sameProvenance(
+  envelope: unknown,
+  asked: { operation: string; workspace_id: unknown; request_id: unknown },
+): boolean {
+  if (envelope === null || typeof envelope !== "object" || Array.isArray(envelope)) return false;
+  const e = envelope as Record<string, unknown>;
+  const norm = (v: unknown) => (typeof v === "string" ? v.toLowerCase() : v ?? null);
+  return norm(e.operation) === asked.operation &&
+    norm(e.workspace_id) === norm(asked.workspace_id) &&
+    norm(e.request_id) === norm(asked.request_id);
+}
+
 function boundedResult(envelope: Record<string, unknown>, summary: string, isError = false) {
   const result = {
     isError,
@@ -210,7 +234,7 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
       p_arguments: rest,
       p_request_id: request_id ?? null,
     }).abortSignal(signal);
-    if (error) {
+    if (error || !sameProvenance(data, { operation: op, workspace_id, request_id })) {
       // Never the database's own words: they can name tables and values.
       return { isError: true, content: [{ type: "text", text: "the request could not be processed" }] };
     }

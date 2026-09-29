@@ -8276,6 +8276,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get memberOriginHeading => 'Comment cette adhésion a commencé';
 
   @override
+  String get featureSpaceInquiriesTitle => 'Écrire aux hôtes';
+
+  @override
+  String get featureSpaceInquiriesDesc =>
+      'Une personne connectée qui trouve la page publiée peut écrire aux hôtes : les propriétaires et les administrateurs qui ont choisi d’être contacts publics. Les hôtes sont nommés avant l’écriture, et seuls cette personne et les hôtes lisent la conversation. Désactivé, le bouton et la vue Demandes disparaissent ; les demandes enregistrées restent.';
+
+  @override
+  String get featureMessageForwardingTitle => 'Transfert de messages';
+
+  @override
+  String get featureMessageForwardingDesc =>
+      'Un message peut être transféré dans une autre conversation à laquelle participe la personne qui transfère. La copie indique son origine et son auteur, la conversation d’origine est informée de qui l’a transféré et où, et un auteur peut verrouiller un message contre le transfert. Désactivé, aucun transfert ne sort de cet espace.';
+
+  @override
+  String get featureCaptureProtectionTitle =>
+      'Protection contre la capture d’écran';
+
+  @override
+  String get featureCaptureProtectionDesc =>
+      'Les écrans de messages refusent les captures et l’enregistrement d’écran quand l’appareil le permet, masquent leur contenu pendant un enregistrement et annoncent une capture dans la conversation quand elle peut seulement être détectée. Un navigateur ne peut pas bloquer les captures ; la conversation y est floutée quand l’onglet perd le focus.';
+
+  @override
   String get moneyBaseFee => 'Abonnement de base';
 
   @override

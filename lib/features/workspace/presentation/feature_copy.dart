@@ -457,6 +457,23 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'wording, and a workspace that renames nothing looks '
                   'exactly as it did before.',
         WorkspaceFeature.publicListings => l10n?.featurePublicListingsDesc ?? 'Public workspace listing',
+        WorkspaceFeature.spaceInquiries =>
+          l10n?.featureSpaceInquiriesDesc ??
+              'A signed-in person who finds the published page can write to '
+                  'the hosts: the owners, and the administrators who chose '
+                  'to be public contacts. Only that person and the hosts '
+                  'read the conversation.',
+        WorkspaceFeature.messageForwarding =>
+          l10n?.featureMessageForwardingDesc ??
+              'A message can be forwarded into another conversation the '
+                  'forwarder takes part in. The copy names where it came '
+                  'from, the original conversation is told who forwarded '
+                  'it and where, and an author can lock a message.',
+        WorkspaceFeature.captureProtection =>
+          l10n?.featureCaptureProtectionDesc ??
+              'Message screens refuse screenshots and screen recording '
+                  'where the device allows it, and announce a screenshot '
+                  'where it can only be detected.',
       WorkspaceFeature.workspaceBranding =>
           l10n?.featureWorkspaceBrandingDesc ??
               'The workspace chooses a brand colour the app derives its '

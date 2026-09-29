@@ -36,6 +36,29 @@ void main() {
     }
   });
 
+  test('#1632 every MCP producer path selects the database job, whose MCP '
+      'coverage evidence it must then produce', () {
+    for (final path in [
+      'supabase/migrations/0312_example.sql',
+      'supabase/tests/database/97_mcp_conformance_journey.sql',
+      'supabase/functions/_shared/mcp_contract.ts',
+      'supabase/functions/deskilo-mcp/index.ts',
+      'contracts/mcp/operations.json',
+      'contracts/mcp/coverage.json',
+      'contracts/mcp/generated/openapi.json',
+      'lib/features/mcp/data/supabase_mcp_admin_repository.dart',
+      'lib/features/mcp/domain/mcp_context.dart',
+      'lib/core/backend/connected_installations.dart',
+      'tool/mcp_coverage.dart',
+      'tool/instance.dart',
+      '.github/workflows/edge-functions.yml',
+      'assets/instance/contract.txt',
+    ]) {
+      expect(_by(classify(_pr([path])))['database']!.required, isTrue,
+          reason: path);
+    }
+  });
+
   test('a missing base, an empty diff, or any event that is not a pull '
       'request runs everything', () {
     expect(_by(classify(_pr(['docs/x.md'], baseKnown: false)))['database']!.required,

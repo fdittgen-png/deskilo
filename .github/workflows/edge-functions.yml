@@ -27,6 +27,7 @@ on:
   pull_request:
     paths:
       - 'supabase/functions/**'
+      - 'contracts/mcp/**'
       - '.github/workflows/edge-functions.yml'
   workflow_dispatch:
     inputs:
@@ -79,11 +80,25 @@ jobs:
 
       # #1616 — the functions' own tests (the network stubbed at Supabase's
       # boundary), e.g. the MCP endpoint's protocol and refusal matrix.
+      #
+      # #1632 — the MCP endpoint's tests are REQUIRED: an empty selection,
+      # a missing endpoint test or a run that executed nothing is a
+      # failure, never a pass, and deno's own exit code is kept.
       - name: Test every function that has tests
+        env:
+          NO_COLOR: '1'
         run: |
+          set -o pipefail
           tests=$(ls supabase/functions/*/*_test.ts 2>/dev/null || true)
-          if [ -z "$tests" ]; then echo "no function tests"; exit 0; fi
-          deno test -A $tests
+          if [ -z "$tests" ] || [ ! -f supabase/functions/deskilo-mcp/index_test.ts ]; then
+            echo "::error::the MCP endpoint's tests are required and none were found"
+            exit 1
+          fi
+          deno test -A $tests 2>&1 | tee deno-test.log
+          grep -Eq '^ok \| [1-9][0-9]* passed \| 0 failed' deno-test.log || {
+            echo "::error::deno reported no executed test"
+            exit 1
+          }
 
       # Owner-configurable, like the doctor's: without the secrets this
       # says so in the summary rather than failing a run nobody asked to

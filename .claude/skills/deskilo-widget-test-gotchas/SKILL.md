@@ -42,6 +42,8 @@ description: The recurring reasons a DesKilo widget or lint test fails for a rea
 | a tap that needs "signed in" pushes `/auth` in a bare `MaterialApp` test | `ref.read(authStateProvider)` on a stream nobody watches is still loading | watch it in a `Consumer` around `home` — in the app the router keeps it alive (#1824) |
 | the second `pumpWidget` of the same screen with other arguments still shows the first one's data | same widget type at the same place REUSES its `State` (`late` fields keep the old id) | `pumpWidget(const SizedBox.shrink())` in between, or key the screen |
 | a platform-channel feature needs a test | no device in `flutter test` | mock the channel (`setMockMethodCallHandler`) for Dart→native, and `handlePlatformMessage` with `StandardMethodCodec().encodeMethodCall` for native→Dart; the native half stays a manual device check, say so (#1824 `deskilo/capture`) |
+| re-reading an autoDispose family provider in one test returns the FIRST answer | a kept listener keeps the element (and its cached value) alive | `container.invalidate(provider(arg))` before each fresh read (a pull to refresh), as `mcp_multi_target_journey_test` does |
+| an awaited provider error is ALSO reported as an uncaught test failure | the `listen` subscription was closed right after the failing `read(.future)` | keep provider listeners until `addTearDown`; never close them in a `finally` next to the await |
 
 Quick-view keys: `member-doc-quick` / `-download` / `-share` (one prefix
 for every member letter), `vat-report-*`, `proforma-*`.

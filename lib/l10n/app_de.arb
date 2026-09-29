@@ -5000,6 +5000,30 @@
   "memberOriginInvited": "Per Einladung beigetreten",
   "memberOriginDelegated": "Profil von einer Verwaltung angelegt",
   "memberOriginHeading": "Wie diese Mitgliedschaft begann",
+  "featureSpaceInquiriesTitle": "Den Gastgebern schreiben",
+  "@featureSpaceInquiriesTitle": {
+    "description": "#1824 messenger flags: featureSpaceInquiriesTitle"
+  },
+  "featureSpaceInquiriesDesc": "Eine angemeldete Person, die die veröffentlichte Seite findet, kann den Gastgebern schreiben: den Eigentümern und den Administratoren, die öffentliche Kontakte sein wollen. Die Gastgeber werden vor dem Schreiben genannt, und nur diese Person und die Gastgeber lesen das Gespräch. Aus entfernt die Schaltfläche und die Ansicht Anfragen; gespeicherte Anfragen bleiben erhalten.",
+  "@featureSpaceInquiriesDesc": {
+    "description": "#1824 messenger flags: featureSpaceInquiriesDesc"
+  },
+  "featureMessageForwardingTitle": "Nachrichten weiterleiten",
+  "@featureMessageForwardingTitle": {
+    "description": "#1824 messenger flags: featureMessageForwardingTitle"
+  },
+  "featureMessageForwardingDesc": "Eine Nachricht kann in ein anderes Gespräch weitergeleitet werden, an dem die weiterleitende Person teilnimmt. Die Kopie nennt Herkunft und Verfasser, das ursprüngliche Gespräch erfährt, wer sie wohin weitergeleitet hat, und Verfasser können eine Nachricht gegen Weiterleitung sperren. Aus verhindert Weiterleitungen aus diesem Bereich.",
+  "@featureMessageForwardingDesc": {
+    "description": "#1824 messenger flags: featureMessageForwardingDesc"
+  },
+  "featureCaptureProtectionTitle": "Schutz vor Bildschirmaufnahmen",
+  "@featureCaptureProtectionTitle": {
+    "description": "#1824 messenger flags: featureCaptureProtectionTitle"
+  },
+  "featureCaptureProtectionDesc": "Nachrichtenbildschirme verweigern Bildschirmfotos und Bildschirmaufnahmen, wo das Gerät es erlaubt, verbergen ihren Inhalt während einer Aufnahme und melden ein Bildschirmfoto im Gespräch, wo es nur erkannt werden kann. Ein Browser kann Bildschirmfotos nicht verhindern; dort wird das Gespräch unscharf, sobald der Tab den Fokus verliert.",
+  "@featureCaptureProtectionDesc": {
+    "description": "#1824 messenger flags: featureCaptureProtectionDesc"
+  },
   "moneyBaseFee": "Basis-Abo",
   "moneyUsage": "{used} von {included} halben Tagen genutzt",
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",

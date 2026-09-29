@@ -8268,6 +8268,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get memberOriginHeading => 'Come è iniziata questa adesione';
 
   @override
+  String get featureSpaceInquiriesTitle => 'Scrivi agli host';
+
+  @override
+  String get featureSpaceInquiriesDesc =>
+      'Una persona connessa che trova la pagina pubblicata può scrivere agli host: i proprietari e gli amministratori che hanno scelto di essere contatti pubblici. Gli host vengono nominati prima di scrivere, e solo quella persona e gli host leggono la conversazione. Disattivato, il pulsante e la vista Richieste scompaiono; le richieste salvate restano.';
+
+  @override
+  String get featureMessageForwardingTitle => 'Inoltro dei messaggi';
+
+  @override
+  String get featureMessageForwardingDesc =>
+      'Un messaggio può essere inoltrato in un’altra conversazione a cui partecipa chi lo inoltra. La copia indica la provenienza e l’autore, la conversazione originale viene informata di chi l’ha inoltrato e dove, e un autore può bloccare l’inoltro di un messaggio. Disattivato, nessun inoltro esce da questo spazio.';
+
+  @override
+  String get featureCaptureProtectionTitle =>
+      'Protezione dalle catture dello schermo';
+
+  @override
+  String get featureCaptureProtectionDesc =>
+      'Le schermate dei messaggi rifiutano screenshot e registrazioni dello schermo quando il dispositivo lo consente, nascondono il contenuto durante una registrazione e annunciano uno screenshot nella conversazione quando può solo essere rilevato. Un browser non può bloccare gli screenshot; lì la conversazione viene sfocata quando la scheda perde il focus.';
+
+  @override
   String get moneyBaseFee => 'Abbonamento base';
 
   @override
