@@ -8190,6 +8190,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberOriginHeading => 'How this membership began';
 
   @override
+  String get featureSpaceInquiriesTitle => 'Write to the hosts';
+
+  @override
+  String get featureSpaceInquiriesDesc =>
+      'A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay.';
+
+  @override
+  String get featureMessageForwardingTitle => 'Message forwarding';
+
+  @override
+  String get featureMessageForwardingDesc =>
+      'A message can be forwarded into another conversation the forwarder takes part in. The copy names where it came from and who wrote it, the original conversation is told who forwarded it and where, and an author can lock a message against forwarding. Off refuses forwards out of this space.';
+
+  @override
+  String get featureCaptureProtectionTitle => 'Screen capture protection';
+
+  @override
+  String get featureCaptureProtectionDesc =>
+      'Message screens refuse screenshots and screen recording where the device allows it, hide their content while the screen is recorded, and announce a screenshot in the conversation where it can only be detected. A browser cannot block screenshots; there the thread is blurred when the tab loses focus.';
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override

@@ -13,8 +13,11 @@
 public.accessories.accessories_select
 public.accessories.accessories_write
 public.accessories.mcp_delegated_deny
+public.account_about.mcp_delegated_deny
 public.account_contact_settings.mcp_delegated_deny
 public.account_conversations.mcp_delegated_deny
+public.account_field_audience.mcp_delegated_deny
+public.account_field_audience_spaces.mcp_delegated_deny
 public.account_messages.mcp_delegated_deny
 public.badge_auth_attempts.mcp_delegated_deny
 public.closure_days.closure_days_read
@@ -107,6 +110,7 @@ public.members.members_delete_owner
 public.members.members_select
 public.members.members_select_self
 public.members.members_update_owner
+public.message_events.mcp_delegated_deny
 public.number_sequences.mcp_delegated_deny
 public.number_sequences.number_sequences_select
 public.offices.mcp_delegated_deny
@@ -159,6 +163,8 @@ public.services.services_select
 public.services.services_write
 public.sites.mcp_delegated_deny
 public.sites.sites_select
+public.space_inquiries.mcp_delegated_deny
+public.space_inquiry_messages.mcp_delegated_deny
 public.usage_records.mcp_delegated_deny
 public.usage_records.usage_records_read
 public.validation_policies.mcp_delegated_deny

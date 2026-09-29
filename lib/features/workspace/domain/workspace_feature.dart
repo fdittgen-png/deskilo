@@ -279,7 +279,31 @@ enum WorkspaceFeature {
   memberGettingStarted,
 
   /// Explicitly published public workspace page; never private occupancy.
-  publicListings;
+  publicListings,
+
+  /// #1824 — "Write to the hosts" on a published space page: a signed-in
+  /// person outside the space starts an inquiry that only they and the
+  /// space's hosts (owners, plus administrators who opted in as public
+  /// contacts) can read. Core, default ON: it acts only where a page is
+  /// published ([publicListings]), and the server refuses an inquiry
+  /// without one; OFF removes the button and the Inquiries view, and
+  /// stored inquiries stay untouched.
+  spaceInquiries,
+
+  /// #1824 — forwarding a message into another conversation the
+  /// forwarder takes part in. The copy names its origin, the original
+  /// conversation is told who forwarded it where, and an author can lock
+  /// a message against it. Core, default ON: OFF refuses forwards OUT of
+  /// this space; account messages always allow it.
+  messageForwarding,
+
+  /// #1824 — the messenger's screens refuse screen capture where the
+  /// platform allows it (Android, macOS, Windows), hide content while the
+  /// screen is recorded and announce screenshots (iOS), and blur plus
+  /// watermark on the web. Core, default ON: confidentiality is the
+  /// default, a space may choose otherwise; account messages are always
+  /// protected.
+  captureProtection;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1315,6 +1339,29 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.memberGettingStarted,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
+  ),
+  // #1824 — an inquiry needs a published page to be asked from, and the
+  // server refuses one without it; the flag carries no `requires`, because
+  // publicListings is off by default and a default-on child of a
+  // default-off parent is a contradiction every builtin template would
+  // inherit. The hosts it reaches are named before writing.
+  WorkspaceFeature.spaceInquiries: FeatureManifestEntry(
+    feature: WorkspaceFeature.spaceInquiries,
+    surface: FeatureSurface.messages,
+    tier: FeatureTier.core,
+  ),
+  // #1824 — forwarding and the capture guard are parts of the messenger.
+  WorkspaceFeature.messageForwarding: FeatureManifestEntry(
+    feature: WorkspaceFeature.messageForwarding,
+    surface: FeatureSurface.messages,
+    tier: FeatureTier.core,
+    requires: WorkspaceFeature.memberNotifications,
+  ),
+  WorkspaceFeature.captureProtection: FeatureManifestEntry(
+    feature: WorkspaceFeature.captureProtection,
+    surface: FeatureSurface.messages,
+    tier: FeatureTier.core,
+    requires: WorkspaceFeature.memberNotifications,
   ),
 };
 

@@ -8249,6 +8249,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberOriginHeading => 'Cómo empezó esta afiliación';
 
   @override
+  String get featureSpaceInquiriesTitle => 'Escribir a los anfitriones';
+
+  @override
+  String get featureSpaceInquiriesDesc =>
+      'Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas; las consultas guardadas se conservan.';
+
+  @override
+  String get featureMessageForwardingTitle => 'Reenvío de mensajes';
+
+  @override
+  String get featureMessageForwardingDesc =>
+      'Un mensaje puede reenviarse a otra conversación en la que participe quien lo reenvía. La copia indica su origen y su autor, la conversación original sabe quién lo reenvió y adónde, y un autor puede bloquear un mensaje contra el reenvío. Desactivado, no sale ningún reenvío de este espacio.';
+
+  @override
+  String get featureCaptureProtectionTitle =>
+      'Protección contra capturas de pantalla';
+
+  @override
+  String get featureCaptureProtectionDesc =>
+      'Las pantallas de mensajes rechazan capturas y grabaciones de pantalla cuando el dispositivo lo permite, ocultan su contenido mientras se graba la pantalla y anuncian una captura en la conversación cuando solo puede detectarse. Un navegador no puede bloquear capturas; allí la conversación se difumina cuando la pestaña pierde el foco.';
+
+  @override
   String get moneyBaseFee => 'Suscripción base';
 
   @override

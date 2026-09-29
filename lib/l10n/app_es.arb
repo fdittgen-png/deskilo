@@ -5000,6 +5000,30 @@
   "memberOriginInvited": "Se unió por invitación",
   "memberOriginDelegated": "Perfil creado por un administrador",
   "memberOriginHeading": "Cómo empezó esta afiliación",
+  "featureSpaceInquiriesTitle": "Escribir a los anfitriones",
+  "@featureSpaceInquiriesTitle": {
+    "description": "#1824 messenger flags: featureSpaceInquiriesTitle"
+  },
+  "featureSpaceInquiriesDesc": "Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas; las consultas guardadas se conservan.",
+  "@featureSpaceInquiriesDesc": {
+    "description": "#1824 messenger flags: featureSpaceInquiriesDesc"
+  },
+  "featureMessageForwardingTitle": "Reenvío de mensajes",
+  "@featureMessageForwardingTitle": {
+    "description": "#1824 messenger flags: featureMessageForwardingTitle"
+  },
+  "featureMessageForwardingDesc": "Un mensaje puede reenviarse a otra conversación en la que participe quien lo reenvía. La copia indica su origen y su autor, la conversación original sabe quién lo reenvió y adónde, y un autor puede bloquear un mensaje contra el reenvío. Desactivado, no sale ningún reenvío de este espacio.",
+  "@featureMessageForwardingDesc": {
+    "description": "#1824 messenger flags: featureMessageForwardingDesc"
+  },
+  "featureCaptureProtectionTitle": "Protección contra capturas de pantalla",
+  "@featureCaptureProtectionTitle": {
+    "description": "#1824 messenger flags: featureCaptureProtectionTitle"
+  },
+  "featureCaptureProtectionDesc": "Las pantallas de mensajes rechazan capturas y grabaciones de pantalla cuando el dispositivo lo permite, ocultan su contenido mientras se graba la pantalla y anuncian una captura en la conversación cuando solo puede detectarse. Un navegador no puede bloquear capturas; allí la conversación se difumina cuando la pestaña pierde el foco.",
+  "@featureCaptureProtectionDesc": {
+    "description": "#1824 messenger flags: featureCaptureProtectionDesc"
+  },
   "moneyBaseFee": "Suscripción base",
   "moneyUsage": "{used} de {included} medias jornadas usadas",
   "moneyUsageUnlimited": "{used} medias jornadas usadas",

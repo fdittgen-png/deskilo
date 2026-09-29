@@ -8265,6 +8265,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberOriginHeading => 'Wie diese Mitgliedschaft begann';
 
   @override
+  String get featureSpaceInquiriesTitle => 'Den Gastgebern schreiben';
+
+  @override
+  String get featureSpaceInquiriesDesc =>
+      'Eine angemeldete Person, die die veröffentlichte Seite findet, kann den Gastgebern schreiben: den Eigentümern und den Administratoren, die öffentliche Kontakte sein wollen. Die Gastgeber werden vor dem Schreiben genannt, und nur diese Person und die Gastgeber lesen das Gespräch. Aus entfernt die Schaltfläche und die Ansicht Anfragen; gespeicherte Anfragen bleiben erhalten.';
+
+  @override
+  String get featureMessageForwardingTitle => 'Nachrichten weiterleiten';
+
+  @override
+  String get featureMessageForwardingDesc =>
+      'Eine Nachricht kann in ein anderes Gespräch weitergeleitet werden, an dem die weiterleitende Person teilnimmt. Die Kopie nennt Herkunft und Verfasser, das ursprüngliche Gespräch erfährt, wer sie wohin weitergeleitet hat, und Verfasser können eine Nachricht gegen Weiterleitung sperren. Aus verhindert Weiterleitungen aus diesem Bereich.';
+
+  @override
+  String get featureCaptureProtectionTitle => 'Schutz vor Bildschirmaufnahmen';
+
+  @override
+  String get featureCaptureProtectionDesc =>
+      'Nachrichtenbildschirme verweigern Bildschirmfotos und Bildschirmaufnahmen, wo das Gerät es erlaubt, verbergen ihren Inhalt während einer Aufnahme und melden ein Bildschirmfoto im Gespräch, wo es nur erkannt werden kann. Ein Browser kann Bildschirmfotos nicht verhindern; dort wird das Gespräch unscharf, sobald der Tab den Fokus verliert.';
+
+  @override
   String get moneyBaseFee => 'Basis-Abo';
 
   @override

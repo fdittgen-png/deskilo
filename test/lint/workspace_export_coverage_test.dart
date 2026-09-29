@@ -87,6 +87,8 @@ const Map<String, String> _notExported = {
   'retired_invite_codes': 'withdrawn invitation secrets of this installation, kept only to answer "revoked"; never portable configuration (#1652)',
   'workspace_public_pages': 'publication consent is installation-specific; importing a workspace must not publish it (#1791)',
   'public_workspace_cards': 'derived public projection regenerated only by explicit publication on this installation (#1791)',
+  'account_field_audience_spaces': 'a person\'s own choice of which of their spaces sees a field of their account (#1823); it belongs to the account, not to the space, and travels in that person\'s own export',
+  'space_inquiries': 'correspondence between a space\'s hosts and a person OUTSIDE it (#1824), readable only by that person and the hosts; an operator\'s export must not carry a stranger\'s messages, and the requester\'s own export does',
   'workspace_applications': 'account-bound request ownership is not portable workspace configuration (#1791)',
   'workspace_application_messages': 'private applicant/reviewer correspondence belongs in subject-access export, not a bulk workspace workbook (#1791)',
   // #1610/#1612 — MCP exposure and consent are authority, not data: an
