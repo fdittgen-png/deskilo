@@ -1382,6 +1382,95 @@
    "params": {},
    "security": "nativeSession",
    "purpose": "What an assistant connection may be granted."
+  },
+  {
+   "rpc": "mcp_disclosure_status",
+   "params": {},
+   "security": "administratorAal2",
+   "purpose": "A database administrator reads the installation maximum of optional display fields (#1809)."
+  },
+  {
+   "rpc": "set_mcp_disclosure_maximum",
+   "params": {
+    "p_fields": "text[]"
+   },
+   "security": "administratorAal2",
+   "purpose": "A database administrator saves that maximum; it never widens a policy or a consent (#1809)."
+  },
+  {
+   "rpc": "my_identity_status",
+   "params": {},
+   "security": "nativeSession",
+   "purpose": "The caller's own identity binding on this installation (#1647)."
+  },
+  {
+   "rpc": "finalize_identity_binding",
+   "params": {},
+   "security": "nativeSession",
+   "purpose": "Bind the caller's verified identity to this installation's account (#1647)."
+  },
+  {
+   "rpc": "revoke_my_identity_binding",
+   "params": {},
+   "security": "nativeSession",
+   "purpose": "Remove the caller's own identity binding (#1647)."
+  },
+  {
+   "rpc": "mcp_prepare_connection",
+   "params": {
+    "p_client_id": "text",
+    "p_authorization_id": "text",
+    "p_scopes": "jsonb"
+   },
+   "security": "nativeSession",
+   "purpose": "Record the workspaces and operations a pending assistant authorization may receive (#1615)."
+  },
+  {
+   "rpc": "mcp_finalize_connection",
+   "params": {
+    "p_authorization_id": "text"
+   },
+   "security": "nativeSession",
+   "purpose": "Finalise the connection after Auth approved the authorization (#1615)."
+  },
+  {
+   "rpc": "my_mcp_connections",
+   "params": {},
+   "security": "nativeSession",
+   "purpose": "The assistants the caller connected, with their workspaces (#1628)."
+  },
+  {
+   "rpc": "revoke_mcp_workspace_scope",
+   "params": {
+    "p_client_id": "text",
+    "p_workspace_id": "uuid"
+   },
+   "security": "nativeSession",
+   "purpose": "Remove one workspace from one assistant connection (#1628)."
+  },
+  {
+   "rpc": "revoke_mcp_connection",
+   "params": {
+    "p_client_id": "text"
+   },
+   "security": "nativeSession",
+   "purpose": "Disconnect one assistant from every workspace on this installation (#1628)."
+  },
+  {
+   "rpc": "mcp_usage_summary_mine",
+   "params": {
+    "p_installation_id": "uuid"
+   },
+   "security": "nativeSession",
+   "purpose": "The caller's own assistant usage today, counts only (#1630)."
+  },
+  {
+   "rpc": "mcp_usage_summary_workspace",
+   "params": {
+    "p_workspace_id": "uuid"
+   },
+   "security": "nativeSession",
+   "purpose": "A workspace's assistant usage over 30 days, for its owner or a database administrator (#1630)."
   }
  ]
 }

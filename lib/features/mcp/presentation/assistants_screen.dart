@@ -12,6 +12,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../domain/mcp_connection.dart';
 import '../providers/mcp_providers.dart';
 import 'mcp_operation_labels.dart';
+import 'widgets/mcp_access_status_card.dart';
 import 'widgets/mcp_usage_cards.dart';
 
 /// #1628 — the person's own assistant access on this database: whether
@@ -39,7 +40,9 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
     ref
       ..invalidate(myDatabaseCapabilitiesProvider)
       ..invalidate(myMcpConnectionsProvider)
-      ..invalidate(myMcpUsageProvider);
+      ..invalidate(myMcpUsageProvider)
+      ..invalidate(mcpAccessStatusProvider)
+      ..invalidate(connectedMcpOverviewProvider);
   }
 
   Future<void> _disconnect(AppLocalizations? l10n, McpConnectionInfo c) async {
@@ -85,6 +88,10 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
+          // #1625 — the six facts and the next step, then the eligibility
+          // actions they explain.
+          const McpAccessStatusCard(),
+          const SizedBox(height: AppSpacing.md),
           caps.when(
             loading: () => const LoadingView(),
             error: (e, _) => _banner(

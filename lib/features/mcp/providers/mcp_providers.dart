@@ -3,8 +3,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/backend/connected_installations.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../application/active_target_client.dart';
 import '../application/answer_confirmation.dart';
 import '../application/assistant_access.dart';
@@ -38,6 +40,7 @@ McpRepositories activeMcpRepositories(Ref ref) => McpRepositories(
   connections: ref.watch(mcpConnectionRepositoryProvider),
   confirmations: ref.watch(actionConfirmationRepositoryProvider),
   identity: ref.watch(identityBindingRepositoryProvider),
+  secondFactor: ref.watch(secondFactorRepositoryProvider),
 );
 
 /// #1625 — one native client per verified installation + issuer + account
@@ -245,6 +248,65 @@ Future<McpAccessStatus> mcpAccessStatus(Ref ref, McpContextRef context) async {
   );
 }
 
+/// #1625 — the selected workspace on the active installation, captured as
+/// a context; null while no workspace is selected.
+@riverpod
+Future<McpContextRef?> currentMcpContext(Ref ref) async {
+  final target = ref.watch(activeMcpTargetProvider.future);
+  final workspace = ref.watch(currentWorkspaceProvider.future);
+  final ws = await workspace;
+  return ws == null ? null : (await target).workspace(ws.id);
+}
+
+/// #1625 — a read-only overview of the other installations this account
+/// connected. Each is registered and asked through its own client; one
+/// that fails reads `unavailable` and hides none of the others.
+@riverpod
+Future<List<McpInstanceStatus>> connectedMcpOverview(Ref ref) async {
+  final sources = ref.watch(connectedSourcesProvider.future);
+  final registry = ref.watch(mcpClientRegistryProvider);
+  final commands = ref.watch(mcpCommandsProvider);
+  return Future.wait([
+    for (final s in await sources) _instanceStatus(registry, commands, s),
+  ]);
+}
+
+Future<McpInstanceStatus> _instanceStatus(
+  McpClientRegistry registry,
+  McpCommands commands,
+  ConnectedInstallation source,
+) async {
+  final origin = source.endpoint.url;
+  final VerifiedMcpTarget target;
+  try {
+    target = VerifiedMcpTarget(
+      installationId: source.installationId,
+      issuer: '',
+      account: source.account,
+      source: origin,
+    );
+  } on McpTargetUnverified catch (e, st) {
+    TraceLogger.instance.warn('mcp', 'connected record not verifiable',
+        error: e, stackTrace: st);
+    return McpInstanceStatus.unavailable(origin);
+  }
+  await registry.register(target);
+  Future<T?> maybe<T>(Future<T> Function(McpRepositories r) q) =>
+      commands.read(target.instance, q).then<T?>((v) => v, onError: (Object e) {
+        if (e is McpContextSuperseded) throw e;
+        return null;
+      });
+  final (identity, capabilities) = await (
+    maybe((r) => r.identity.status()),
+    maybe((r) => r.identity.databaseCapabilities()),
+  ).wait;
+  return McpInstanceStatus.derive(
+    origin,
+    identity: identity,
+    capabilities: capabilities,
+  );
+}
+
 /// #1630 — the workspace's assistant usage over 30 days, counts only.
 /// An answer for another workspace is refused, not shown.
 @riverpod
@@ -289,7 +351,6 @@ Future<McpDisclosureMaximum> mcpDisclosureMaximum(Ref ref) =>
 @riverpod
 EligibilityReview eligibilityReview(Ref ref) => EligibilityReview(
   ref.watch(mcpCommandsProvider),
-  ref.watch(secondFactorRepositoryProvider),
   instance: ref.watch(activeMcpTargetProvider).value?.instance,
 );
 

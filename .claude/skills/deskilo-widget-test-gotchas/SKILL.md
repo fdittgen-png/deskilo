@@ -36,6 +36,7 @@ description: The recurring reasons a DesKilo widget or lint test fails for a rea
 | a provider-error test never shows the error state | Riverpod 3 RETRIES a failed provider automatically | `ProviderScope(retry: (_, _) => null, …)` / `ProviderContainer(retry: …)` in failure tests |
 | `tester.hasRunningAnimations` is true with reduced motion on | the tap's ink ripple is an animation too | assert position instead: the first frame's `getRect` equals the settled one; reduced motion via `platformDispatcher.accessibilityFeaturesTestValue = FakeAccessibilityFeatures(disableAnimations: true)` |
 | a "green" test also passes on master | it asserts a default or a stale reading | red-first against master (`git show origin/master:<file> > <file>`), then restore; if it stays green, the test proves nothing |
+| an HTTP-fixture MFA test sees aal1 after a successful verify, or an unexpected `/auth/v1/token` call | gotrue's `mfa.listFactors()` calls `refreshSession()` first, and `getAuthenticatorAssuranceLevel()` reads the `aal` claim of the (refreshed) JWT | answer `grant_type=refresh_token` with a session at the level the refresh token was issued for (encode it in the token, as `mcp_target_second_factor_test` does); a parameterless `rpc()` posts the body `null`, not `{}` |
 | a widget test asserts a toggle that a `finally` never resets | `_busy` stuck after a hang | bound platform calls with `.timeout` so a hang becomes an error |
 
 Quick-view keys: `member-doc-quick` / `-download` / `-share` (one prefix

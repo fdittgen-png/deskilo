@@ -104,7 +104,7 @@ final class ActiveMcpRepositoriesProvider
 }
 
 String _$activeMcpRepositoriesHash() =>
-    r'171b4a9ab637a313b1c4b1f9eb9513df6675f493';
+    r'5722dbfceda9fa47717c214551b1cf458f5e748e';
 
 /// #1625 — one native client per verified installation + issuer + account
 /// + purpose. The active backend borrows the app's session; a connected
@@ -887,6 +887,106 @@ final class McpAccessStatusFamily extends $Family
   String toString() => r'mcpAccessStatusProvider';
 }
 
+/// #1625 — the selected workspace on the active installation, captured as
+/// a context; null while no workspace is selected.
+
+@ProviderFor(currentMcpContext)
+final currentMcpContextProvider = CurrentMcpContextProvider._();
+
+/// #1625 — the selected workspace on the active installation, captured as
+/// a context; null while no workspace is selected.
+
+final class CurrentMcpContextProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<McpContextRef?>,
+          McpContextRef?,
+          FutureOr<McpContextRef?>
+        >
+    with $FutureModifier<McpContextRef?>, $FutureProvider<McpContextRef?> {
+  /// #1625 — the selected workspace on the active installation, captured as
+  /// a context; null while no workspace is selected.
+  CurrentMcpContextProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currentMcpContextProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currentMcpContextHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<McpContextRef?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<McpContextRef?> create(Ref ref) {
+    return currentMcpContext(ref);
+  }
+}
+
+String _$currentMcpContextHash() => r'b0630996eaac086788e9f107c5007aa61ea2be66';
+
+/// #1625 — a read-only overview of the other installations this account
+/// connected. Each is registered and asked through its own client; one
+/// that fails reads `unavailable` and hides none of the others.
+
+@ProviderFor(connectedMcpOverview)
+final connectedMcpOverviewProvider = ConnectedMcpOverviewProvider._();
+
+/// #1625 — a read-only overview of the other installations this account
+/// connected. Each is registered and asked through its own client; one
+/// that fails reads `unavailable` and hides none of the others.
+
+final class ConnectedMcpOverviewProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<McpInstanceStatus>>,
+          List<McpInstanceStatus>,
+          FutureOr<List<McpInstanceStatus>>
+        >
+    with
+        $FutureModifier<List<McpInstanceStatus>>,
+        $FutureProvider<List<McpInstanceStatus>> {
+  /// #1625 — a read-only overview of the other installations this account
+  /// connected. Each is registered and asked through its own client; one
+  /// that fails reads `unavailable` and hides none of the others.
+  ConnectedMcpOverviewProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'connectedMcpOverviewProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$connectedMcpOverviewHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<McpInstanceStatus>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<McpInstanceStatus>> create(Ref ref) {
+    return connectedMcpOverview(ref);
+  }
+}
+
+String _$connectedMcpOverviewHash() =>
+    r'f482ffe8e2523403a681f5c3b6820b5481d8599d';
+
 /// #1630 — the workspace's assistant usage over 30 days, counts only.
 /// An answer for another workspace is refused, not shown.
 
@@ -1211,7 +1311,7 @@ final class EligibilityReviewProvider
   }
 }
 
-String _$eligibilityReviewHash() => r'1a015e56e5c8eb8580558d8b9694f0fbac53572d';
+String _$eligibilityReviewHash() => r'179805c70dc434014fd67287402387fc46fa0277';
 
 @ProviderFor(assistantAccess)
 final assistantAccessProvider = AssistantAccessProvider._();

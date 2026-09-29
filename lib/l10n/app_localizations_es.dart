@@ -7752,6 +7752,117 @@ class AppLocalizationsEs extends AppLocalizations {
       'Qué puede llamar un asistente y cómo se autoriza';
 
   @override
+  String get mcpStatusTitle => 'Su situación aquí';
+
+  @override
+  String get mcpStatusIdentity => 'Identidad';
+
+  @override
+  String get mcpStatusEligibility => 'Aprobación de la base de datos';
+
+  @override
+  String get mcpStatusExposure => 'Oferta del espacio de trabajo';
+
+  @override
+  String get mcpStatusRole => 'Su rol';
+
+  @override
+  String get mcpStatusConsent => 'Su consentimiento';
+
+  @override
+  String get mcpStatusBackend => 'Servidor';
+
+  @override
+  String get mcpStateVerified => 'Verificada';
+
+  @override
+  String get mcpStateUnlinked => 'No vinculada';
+
+  @override
+  String get mcpStateNotRequested => 'No solicitada';
+
+  @override
+  String get mcpStatePending => 'En espera de una decisión';
+
+  @override
+  String get mcpStateApproved => 'Aprobada';
+
+  @override
+  String get mcpStateRevoked => 'Caducada o retirada';
+
+  @override
+  String get mcpStateDisabled => 'Nada ofrecido';
+
+  @override
+  String get mcpStateExposed => 'Operaciones ofrecidas';
+
+  @override
+  String get mcpStateAllowed => 'Permitido';
+
+  @override
+  String get mcpStateDenied => 'Nada para su rol';
+
+  @override
+  String get mcpStateMissing => 'No otorgado';
+
+  @override
+  String get mcpStateCurrent => 'Otorgado';
+
+  @override
+  String get mcpStateAvailable => 'Accesible';
+
+  @override
+  String get mcpStateIncompatible => 'Versión incompatible';
+
+  @override
+  String get mcpStateUnavailable => 'Desconocido';
+
+  @override
+  String get mcpNextLinkIdentity =>
+      'Siguiente paso: vincule su cuenta a la identidad de esta base de datos.';
+
+  @override
+  String get mcpNextRequestEligibility =>
+      'Siguiente paso: pida la aprobación a los administradores de esta base de datos.';
+
+  @override
+  String get mcpNextAwaitEligibility =>
+      'Siguiente paso: un administrador de la base de datos decide su solicitud.';
+
+  @override
+  String get mcpNextOwnerExposes =>
+      'Siguiente paso: el propietario del espacio de trabajo ofrece operaciones a los asistentes.';
+
+  @override
+  String get mcpNextRoleDenied =>
+      'Su rol no deja aquí ninguna operación. El propietario del espacio de trabajo decide lo que puede hacer cada rol.';
+
+  @override
+  String get mcpNextConsent =>
+      'Siguiente paso: conecte un asistente desde el propio asistente y apruebe este espacio de trabajo.';
+
+  @override
+  String get mcpNextReady =>
+      'Listo: un asistente conectado puede actuar por usted en este espacio de trabajo, dentro de lo que aprobó.';
+
+  @override
+  String get mcpNextUnavailable =>
+      'El servidor no pudo responder. No se supone nada; inténtelo más tarde.';
+
+  @override
+  String get mcpStatusOpenLinkedAccounts => 'Abrir cuentas vinculadas';
+
+  @override
+  String get mcpOverviewTitle => 'Otras bases de datos conectadas';
+
+  @override
+  String get mcpOverviewUnavailable => 'No se pudo consultar ahora.';
+
+  @override
+  String get mcpReviewSecondFactor =>
+      'Esa base de datos necesita su segundo factor en su propia sesión. No se decidió nada.';
+
+  @override
   String get mcpUsageWorkspaceTitle => 'Uso de asistentes, últimos 30 días';
 
   @override

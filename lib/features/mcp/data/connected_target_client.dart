@@ -10,6 +10,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
 import '../../auth/data/supabase_identity_binding_repository.dart';
+import '../../auth/data/supabase_second_factor_repository.dart';
 import '../domain/mcp_client.dart';
 import '../domain/mcp_context.dart';
 import 'supabase_action_confirmation_repository.dart';
@@ -22,6 +23,7 @@ McpRepositories supabaseMcpRepositories(SupabaseClient client) =>
       connections: SupabaseMcpConnectionRepository(client),
       confirmations: SupabaseActionConfirmationRepository(client),
       identity: SupabaseIdentityBindingRepository(client),
+      secondFactor: SupabaseSecondFactorRepository(client),
     );
 
 class ConnectedMcpTargetClient implements McpTargetClient {

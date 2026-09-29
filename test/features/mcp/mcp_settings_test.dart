@@ -101,17 +101,14 @@ Future<({EligibilityReview review, VerifiedMcpTarget target})> _reviewFor(
         connections: FakeMcpConnectionRepository(),
         confirmations: FakeActionConfirmationRepository(),
         identity: FakeIdentityBindingRepository(),
+        secondFactor: factor,
       ),
       currentAccount: () => 'user-1',
     ),
   );
   await registry.register(target);
   return (
-    review: EligibilityReview(
-      McpCommands(registry),
-      factor,
-      instance: target.instance,
-    ),
+    review: EligibilityReview(McpCommands(registry), instance: target.instance),
     target: target,
   );
 }
@@ -341,7 +338,7 @@ void main() {
         final request = _request.withScope(target.instance);
         expect(
           await review.decide(request, approve: true),
-          EligibilityDecisionStatus.refused,
+          EligibilityDecisionStatus.secondFactorRequired,
         );
         factor.aal2 = true;
         await review.decide(request, approve: true);
