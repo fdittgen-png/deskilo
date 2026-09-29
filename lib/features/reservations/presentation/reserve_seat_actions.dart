@@ -40,6 +40,8 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/trace/guarded.dart';
 import 'widgets/reference_open.dart';
 
+part 'others_booking_tap.dart';
+
 /// ACTING ON A SEAT (#687), lifted out of the Reserve hub.
 ///
 /// This is the Plan tab's job, ported when that tab was deleted: tap a
@@ -230,76 +232,26 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       case SeatState.occupied:
         final other = _coveringReservation(plan, seat, reservations, window);
         if (other == null) return;
-        final names = ref.read(memberNamesProvider).value ?? const {};
-        final name = names[other.memberId] ?? '';
-        // #687 — admin powers on another member's seat came with the
-        // Plan tab's job: check them in while they are standing there
-        // (#408 — live only, window open, bookForOthers gate) and
-        // overrule, which removes the reservation with a notification
-        // (#412 — any admin, any time). The server re-checks both.
-        final windowOpen = other.checkInWindowOpen(
-          ref.read(clockProvider).now(),
-          granularity: granularity,
-        );
-        final offerCheckIn = isLive && _canCheckInForOthers && windowOpen;
-        if (!offerCheckIn) {
-          traceCheckInNotOffered(
-            seat: seat,
-            other: other,
-            live: isLive,
-            mayCheckInOthers: _canCheckInForOthers,
-            windowOpen: windowOpen,
-          );
-        }
-        final canOverrule =
-            ref.read(myMemberProvider).value?.canAdminister ?? false;
-        // #814 — admins may END a running check-in where the owner's
-        // `admin_check_out` policy allows it (gate on).
-        final offerCheckOut = canOverrule &&
-            other.status == ReservationStatus.checkedIn &&
-            (bookingGateOf(ref)?.policies.adminCheckOut ?? false);
-        if (offerCheckIn || canOverrule) {
-          await runAdminSeatActions(
-            context,
-            ref,
-            seat: seat,
-            other: other,
-            name: name,
-            offerCheckIn: offerCheckIn,
-            offerCheckOut: offerCheckOut,
-            stepMinutes: granularity.stepMinutes,
-            // #622 — admins get the message affordance ON TOP of their
-            // admin actions.
-            offerMessage: canMessageReserver(ref, other),
-          );
-          return;
-        }
-        final template = state == SeatState.occupied
-            ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name')
-            : (l10n?.planReservedBy(name) ?? 'Reserved by $name');
-        // #908 — display, not wall: a member who asked to read hours in
-        // their own timezone must get them here too.
-        final until =
-            ref.watch(appFormatProvider).time(other.endsAt);
-        final infoLine =
-            '$template · ${l10n?.planUntil(until) ?? 'until $until'}';
-        // #622 — a REGULAR member can message the holder instead of
-        // reading a dead-end snack; the flag off keeps the plain line.
-        if (canMessageReserver(ref, other)) {
-          await showBlockedSpaceSheet(
-            context,
-            ref,
-            title: seat.name,
-            infoLine: infoLine,
-            blocking: other,
-            name: name,
-            spaceName: seat.name,
-          );
-          return;
-        }
-        AppSnack.info(context, infoLine, replace: true);
+        await _othersBookingTap(seat, other, state);
     }
   }
+
+  /// Someone else's booking on [seat] — see [_openOthersBooking].
+  Future<void> _othersBookingTap(
+    Seat seat,
+    Reservation other,
+    SeatState state,
+  ) =>
+      _openOthersBooking(
+        context,
+        ref,
+        seat: seat,
+        other: other,
+        state: state,
+        isLive: isLive,
+        canCheckInForOthers: _canCheckInForOthers,
+        granularity: granularity,
+      );
 
   /// The reservation the tap is ABOUT, resolved the same way the state
   /// was: at the instant while live, across the window while browsing.
@@ -728,7 +680,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     );
     // One booking behaves exactly as it always did.
     if (segments.length < 2) return false;
-    final gap = await showSeatDaySheet(
+    final pick = await showSeatDaySheet(
       context,
       seat: seat,
       segments: segments,
@@ -737,13 +689,29 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       dayEnd: dayEnd,
       now: ref.read(clockProvider).now(),
     );
-    if (gap == null || !mounted) return true;
-    await bookingSheet(
-      seat,
-      reservations,
-      (start: gap.start, end: gap.end),
-      plan: plan,
-    );
+    if (pick == null || !mounted) return true;
+    switch (pick) {
+      case SeatDayGap(:final start, :final end):
+        await bookingSheet(
+          seat,
+          reservations,
+          (start: start, end: end),
+          plan: plan,
+        );
+      // #1813 — the booking that was TAPPED, by id: the same sheet one
+      // booking on its own seat opens. Resolving it from the seat again
+      // would hand every row the first booking of the day.
+      case SeatDayBooking(:final segment):
+        final booking = reservations
+            .where((r) => r.id == segment.reservationId)
+            .firstOrNull;
+        if (booking == null) return true;
+        if (segment.isMine) {
+          await _mySeatSheet(seat, booking);
+        } else {
+          await _othersBookingTap(seat, booking, segment.state);
+        }
+    }
     return true;
   }
 

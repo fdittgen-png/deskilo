@@ -133,7 +133,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
 | `lib/features/workspace/domain/workspace_repository.dart` | 772 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
-| `lib/features/reservations/presentation/reserve_seat_actions.dart` | 750 |
+| `lib/features/reservations/presentation/reserve_seat_actions.dart` | 718 |
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 713 |
 | `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |

@@ -330,7 +330,7 @@ const Map<String, int> _baseline = {
   // were extracted to booking_trace_points.dart; what stayed is eight
   // call sites, on the branches that used to end in nothing at all.
   // 620→680 (2026-09-01): #814 the booking gate before the sheet, the admin check-out.
-  'lib/features/reservations/presentation/reserve_seat_actions.dart': 751, // 2026-09-15 #1301 S4 740→751: availabilityKnown on the interface and the tap guard that says "checking" instead of opening a sheet on an unknown day // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
+  'lib/features/reservations/presentation/reserve_seat_actions.dart': 720, // 2026-09-28 #1813 751→720: someone else's booking moved to the part file others_booking_tap.dart, so a seat-day row and a seat tap share it // 2026-09-15 #1301 S4 740→751: availabilityKnown on the interface and the tap guard that says "checking" instead of opening a sheet on an unknown day // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
   // the validated amount and the member's explanation.
   'lib/features/events/presentation/screens/events_screen.dart': 921, // 2026-09-02 #821 mark seen only when showing // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.

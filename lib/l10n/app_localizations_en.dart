@@ -11543,7 +11543,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get seatDaySubtitle =>
-      'Who has this seat, and when. Tap a free stretch to take it.';
+      'Who has this seat, and when. Tap a booking to open it, or a free stretch to take it.';
 
   @override
   String get seatDayMine => 'You';

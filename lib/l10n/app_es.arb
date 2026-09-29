@@ -7339,7 +7339,7 @@
       }
     }
   },
-  "seatDaySubtitle": "Quién ocupa esta plaza, y cuándo. Toca un tramo libre para reservarlo.",
+  "seatDaySubtitle": "Quién ocupa esta plaza, y cuándo. Toca una reserva para abrirla, o un tramo libre para reservarlo.",
   "@seatDaySubtitle": {
     "description": "#903 seat day timeline: seatDaySubtitle"
   },

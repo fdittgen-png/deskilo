@@ -9,7 +9,7 @@
       }
     }
   },
-  "seatDaySubtitle": "Wer diesen Platz hat, und wann. Tippe auf eine freie Spanne, um sie zu nehmen.",
+  "seatDaySubtitle": "Wer diesen Platz hat, und wann. Tippe auf eine Buchung, um sie zu öffnen, oder auf eine freie Spanne, um sie zu nehmen.",
   "@seatDaySubtitle": {
     "description": "#903 seat day timeline: seatDaySubtitle"
   },

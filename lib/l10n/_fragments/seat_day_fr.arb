@@ -9,7 +9,7 @@
       }
     }
   },
-  "seatDaySubtitle": "Qui occupe cette place, et quand. Touchez une plage libre pour la prendre.",
+  "seatDaySubtitle": "Qui occupe cette place, et quand. Touchez une réservation pour l'ouvrir, ou une plage libre pour la prendre.",
   "@seatDaySubtitle": {
     "description": "#903 seat day timeline: seatDaySubtitle"
   },

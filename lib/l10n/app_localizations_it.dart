@@ -11650,7 +11650,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get seatDaySubtitle =>
-      'Chi occupa questa postazione, e quando. Tocca una fascia libera per prenderla.';
+      'Chi occupa questa postazione, e quando. Tocca una prenotazione per aprirla, o una fascia libera per prenderla.';
 
   @override
   String get seatDayMine => 'Tu';

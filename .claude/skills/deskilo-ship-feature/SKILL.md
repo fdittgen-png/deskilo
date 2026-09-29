@@ -156,6 +156,13 @@ memory file, not in the wiki.
   moving the pair into `report_history_controls.dart` left it 20 lines
   UNDER, so the baseline went 1180→1160. The ratchet only shrinks if
   somebody makes it shrink.
+  **Extracting into a NEW library can trip the layering ratchet.**
+  `layering_test` counts cross-feature import lines per file, so a helper
+  moved out of a presentation mixin re-imports `plan/` and `workspace/`
+  and pushes `reservations -> plan` over its pin (#1813). When the helper
+  only serves that one library, make it a `part` of it: it shares the
+  existing imports and adds no pairs. `others_booking_tap.dart` is the
+  worked example.
 - **Three analyzer strict modes are on now** (`strict-casts`,
   `strict-inference`, `strict-raw-types`, #1060). `?? const []` no longer
   passes: write `?? const <Event>[]`. They caught three latent dynamic
