@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'dart:async';
 
 import '../core/backend/backend_config.dart';
 import '../core/backend/backend_settings.dart';
 import '../core/backend/auth_secret_store.dart';
 import '../core/backend/installation_auth_storage.dart';
+import '../core/backend/auth_callback_dispatch.dart';
 import '../core/backend/auth_callback_guard.dart';
 import '../core/backend/native_federation_flow.dart';
 import '../core/backend/callback_history.dart';
@@ -35,23 +35,13 @@ Future<void> initializeApp() async {
   final guard = AuthCallbackGuard(secrets, origin, callback);
   await guard.restore();
   bootAuthCallbackGuard = guard;
-  Future<void> Function(Uri)? completeFederation;
-  final earlyCallbacks = <Uri>[];
+  final dispatch = AuthCallbackDispatcher(guard,
+      currentUser: () => Supabase.instance.client.auth.currentUser?.id);
   await Supabase.initialize(
     url: stored?.url ?? BackendConfig.supabaseUrl,
     publishableKey: stored?.key ?? BackendConfig.supabaseKey,
     authOptions: FlutterAuthClientOptions(
-      detectSessionInUriPredicate: (uri) {
-        if (!guard.claim(uri, account: Supabase.instance.client.auth.currentUser?.id)) return false;
-        if (guard.purpose?.startsWith('federation') != true) return true;
-        final consume = completeFederation;
-        if (consume == null) {
-          earlyCallbacks.add(uri);
-        } else {
-          unawaited(consume(uri));
-        }
-        return false; // The isolated target client owns this exchange.
-      },
+      detectSessionInUriPredicate: dispatch.call,
       pkceAsyncStorage: InstallationPkceStorage(secrets, origin),
       localStorage: InstallationSessionStorage(secrets, origin,
         legacy: SharedPreferencesLocalStorage(
@@ -59,14 +49,11 @@ Future<void> initializeApp() async {
         )),
     ),
   );
-  completeFederation = (uri) async {
+  await dispatch.attach((uri) async {
     try {
       await NativeFederationFlow(Supabase.instance.client, guard, secrets).complete(uri);
     } finally {
       clearCallbackHistory();
     }
-  };
-  for (final uri in earlyCallbacks) {
-    await completeFederation(uri);
-  }
+  });
 }

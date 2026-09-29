@@ -10,7 +10,9 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/social_provider.dart';
 import '../../domain/auth_outcome.dart';
+import '../../application/federation_handoff_controller.dart';
 import '../../providers/auth_providers.dart';
+import '../widgets/federation_handoff_panel.dart';
 
 /// Linked accounts (0051): the identities attached to my account — the
 /// e-mail credential plus any social provider. Linking runs the same
@@ -114,9 +116,9 @@ class _LinkedAccountsScreenState
       if (outcome == AuthOutcome.authenticated) {
         ref.invalidate(myDatabaseCapabilitiesProvider);
         unawaited(_load());
-      } else if (outcome == AuthOutcome.refused || outcome == AuthOutcome.unavailable) {
-        AppSnack.error(context, l10n?.authGenericError ?? 'Authentication failed. Check your credentials and try again.');
       }
+      // #1648 — a refusal is worded by the handoff section, with its own
+      // next action, not by a generic credentials snack.
     });
     final identities = _identities;
     final linkedProviders = {
@@ -164,6 +166,15 @@ class _LinkedAccountsScreenState
                 const SizedBox(height: AppSpacing.sm),
                 for (final provider in ref.watch(availableSocialProvidersProvider).value ?? const <SocialProvider>[])
                   if (!linkedProviders.contains(provider))
+                    if (provider == SocialProvider.deskilo &&
+                        ref.watch(federationHandoffAvailableProvider))
+                      const Card(
+                        child: Padding(
+                          padding: AppSpacing.gutterAll,
+                          child: FederationHandoffSection(link: true),
+                        ),
+                      )
+                    else
                     Card(
                       child: ListTile(
                         leading: const Icon(Icons.person_add_alt),

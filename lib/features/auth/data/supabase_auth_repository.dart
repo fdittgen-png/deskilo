@@ -16,13 +16,25 @@ import '../../../core/backend/schema_version.dart';
 import '../domain/auth_outcome.dart';
 import '../domain/auth_repository.dart';
 import '../domain/badge_sign_in.dart';
+import '../domain/federation_port.dart';
+import 'guard_federation_port.dart';
 import '../domain/social_provider.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
-  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get, this.callbackGuard, this.authorityRead});
+  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get, this.callbackGuard, this.authorityRead, this.federationFlow});
 
   final AuthCallbackGuard? callbackGuard;
   final Future<Object?> Function()? authorityRead;
+
+  /// Test seam for the system-browser adapter (#1648); production builds
+  /// the real flow over the platform secret store.
+  final NativeFederationFlow Function(AuthCallbackGuard guard)? federationFlow;
+
+  @override
+  late final FederationPort? federation = callbackGuard == null
+      ? null
+      : GuardFederationPort(callbackGuard!,
+          authority: _authority, flow: _federation);
 
   Future<FederationAuthority?> _authority() async {
     try {
@@ -38,7 +50,8 @@ class SupabaseAuthRepository implements AuthRepository {
   NativeFederationFlow _federation() {
     final guard = callbackGuard;
     if (guard == null) throw const AuthException('Callback ownership unavailable.');
-    return NativeFederationFlow(_client, guard, const PlatformAuthSecretStore());
+    return federationFlow?.call(guard) ??
+        NativeFederationFlow(_client, guard, const PlatformAuthSecretStore());
   }
 
   @override
@@ -412,7 +425,8 @@ class SupabaseAuthRepository implements AuthRepository {
     if (provider == SocialProvider.deskilo) {
       final authority = await _authority();
       if (authority == null) throw const AuthException('Deskilo sign-in is not configured.');
-      return _federation().begin(authority);
+      await _federation().begin(authority);
+      return;
     }
     await _client.auth.signInWithOAuth(
       _oauth(provider),
@@ -436,7 +450,8 @@ class SupabaseAuthRepository implements AuthRepository {
     if (provider == SocialProvider.deskilo) {
       final authority = await _authority();
       if (authority == null) throw const AuthException('Deskilo sign-in is not configured.');
-      return _federation().begin(authority, link: true);
+      await _federation().begin(authority, link: true);
+      return;
     }
     await _client.auth.linkIdentity(
       _oauth(provider),

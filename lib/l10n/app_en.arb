@@ -4100,6 +4100,105 @@
   "featureTierCoreDesc": "What every space needs. On from the first day.",
   "featureTierPlatform": "Platform",
   "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs.",
+  "federationContinue": "Continue with Deskilo",
+  "@federationContinue": {
+    "description": "#1648 The one explicit button that starts Sign in with Deskilo in the system browser. Deskilo is the brand; do not translate it."
+  },
+  "federationPurpose": "Your browser confirms your Deskilo account, then brings you back to {server}. Your memberships and history here stay as they are.",
+  "@federationPurpose": {
+    "description": "#1648 One sentence under Continue with Deskilo: where the person goes and returns, and that nothing here is merged. {server} is the server host name.",
+    "placeholders": {
+      "server": {
+        "type": "String"
+      }
+    }
+  },
+  "federationDetails": "Technical details",
+  "@federationDetails": {
+    "description": "#1648 Toggle revealing safe technical details (host names only) about the sign-in destination."
+  },
+  "federationDetailServer": "Server: {host}",
+  "@federationDetailServer": {
+    "description": "#1648 Technical detail line: the server the person returns to. {host} is a host name.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "federationDetailAuthority": "Identity authority: {host}",
+  "@federationDetailAuthority": {
+    "description": "#1648 Technical detail line: the identity authority that confirms the Deskilo account. {host} is a host name.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "federationStageOpening": "Opening sign-in…",
+  "@federationStageOpening": {
+    "description": "#1648 Shown only while the system browser is being opened."
+  },
+  "federationStageWaiting": "Waiting for sign-in in your browser…",
+  "@federationStageWaiting": {
+    "description": "#1648 Shown only while the app waits for the browser to return."
+  },
+  "federationStageCompleting": "Completing sign-in…",
+  "@federationStageCompleting": {
+    "description": "#1648 Shown only while the returned sign-in is being verified and finished."
+  },
+  "federationCancel": "Cancel",
+  "@federationCancel": {
+    "description": "#1648 Abandons the pending Deskilo sign-in; the previous context stays."
+  },
+  "federationRetry": "Try again",
+  "@federationRetry": {
+    "description": "#1648 Starts a fresh Deskilo sign-in after a failure."
+  },
+  "federationClose": "Close",
+  "@federationClose": {
+    "description": "#1648 Dismisses a Deskilo sign-in failure message."
+  },
+  "federationActionExistingAccount": "Sign in to my existing account",
+  "@federationActionExistingAccount": {
+    "description": "#1648 Next action when the Deskilo account matches an unlinked existing account: sign in to that account first."
+  },
+  "federationActionReviewServer": "Review server",
+  "@federationActionReviewServer": {
+    "description": "#1648 Next action when the server is incompatible: open the server screen."
+  },
+  "federationFailureWrongAccount": "Your browser signed in with a different Deskilo account. Switch accounts in the browser, then try again.",
+  "@federationFailureWrongAccount": {
+    "description": "#1648 Failure: the browser returned a different Deskilo account."
+  },
+  "federationFailureUnlinked": "This Deskilo account matches an account here that is not linked to it yet. Sign in to that account, then link Deskilo under Linked accounts. Nothing is merged until the server confirms it.",
+  "@federationFailureUnlinked": {
+    "description": "#1648 Failure: the Deskilo account matches an existing, unlinked account here. Never suggest creating a new account."
+  },
+  "federationFailureIncompatible": "This server does not accept this Deskilo sign-in. Check the server address, or ask its administrator.",
+  "@federationFailureIncompatible": {
+    "description": "#1648 Failure: the server does not accept this Deskilo identity authority."
+  },
+  "federationFailureProviderMissing": "Deskilo sign-in is not set up on this server. Ask its administrator to enable it.",
+  "@federationFailureProviderMissing": {
+    "description": "#1648 Failure: Deskilo sign-in is not configured on this server."
+  },
+  "federationFailureNetwork": "The server could not be reached, so the sign-in was not completed. Check your connection, then try again.",
+  "@federationFailureNetwork": {
+    "description": "#1648 Failure: no connection to the server."
+  },
+  "federationFailureRefused": "The sign-in was cancelled or refused in the browser. Nothing changed; you can try again.",
+  "@federationFailureRefused": {
+    "description": "#1648 Failure: the sign-in was cancelled or refused in the browser."
+  },
+  "federationFailureExpired": "This sign-in took too long and has expired. Start it again.",
+  "@federationFailureExpired": {
+    "description": "#1648 Failure: the pending sign-in expired."
+  },
+  "federationFailureBrowser": "The browser could not be opened. Check that a browser is available, then try again.",
+  "@federationFailureBrowser": {
+    "description": "#1648 Failure: the system browser could not be opened."
+  },
   "featureMemberGettingStartedTitle": "Get started card",
   "@featureMemberGettingStartedTitle": {
     "description": "#1654 getting started: featureMemberGettingStartedTitle"
