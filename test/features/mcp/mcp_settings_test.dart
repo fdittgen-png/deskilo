@@ -12,10 +12,16 @@ import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
 import 'package:deskilo/features/auth/domain/database_capabilities.dart';
+import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
+import 'package:deskilo/features/mcp/application/active_target_client.dart';
 import 'package:deskilo/features/mcp/application/eligibility_review.dart';
+import 'package:deskilo/features/mcp/application/mcp_client_registry.dart';
+import 'package:deskilo/features/mcp/application/mcp_commands.dart';
 import 'package:deskilo/features/mcp/application/mcp_policy_editor.dart';
 import 'package:deskilo/features/mcp/domain/mcp_admin.dart';
+import 'package:deskilo/features/mcp/domain/mcp_client.dart';
 import 'package:deskilo/features/mcp/domain/mcp_connection.dart';
+import 'package:deskilo/features/mcp/domain/mcp_context.dart';
 import 'package:deskilo/features/mcp/presentation/assistants_screen.dart';
 import 'package:deskilo/features/mcp/presentation/eligibility_review_screen.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
@@ -76,6 +82,39 @@ const _request = EligibilityRequest(
   email: 'ada@deskilo.test',
   revision: 2,
 );
+
+/// #1625 — a review over the test installation's registry client.
+Future<({EligibilityReview review, VerifiedMcpTarget target})> _reviewFor(
+  FakeMcpAdminRepository admin,
+  FakeSecondFactorRepository factor,
+) async {
+  final target = VerifiedMcpTarget(
+    installationId: kTestInstallationId,
+    issuer: '',
+    account: 'user-1',
+  );
+  final registry = McpClientRegistry(
+    (key, _) => ActiveMcpTargetClient(
+      key,
+      () => McpRepositories(
+        admin: admin,
+        connections: FakeMcpConnectionRepository(),
+        confirmations: FakeActionConfirmationRepository(),
+        identity: FakeIdentityBindingRepository(),
+      ),
+      currentAccount: () => 'user-1',
+    ),
+  );
+  await registry.register(target);
+  return (
+    review: EligibilityReview(
+      McpCommands(registry),
+      factor,
+      instance: target.instance,
+    ),
+    target: target,
+  );
+}
 
 void main() {
   group('grouping and DTOs', () {
@@ -298,14 +337,15 @@ void main() {
       () async {
         final admin = FakeMcpAdminRepository(requests: [_request, _request]);
         final factor = FakeSecondFactorRepository();
-        final review = EligibilityReview(admin, factor);
+        final (:review, :target) = await _reviewFor(admin, factor);
+        final request = _request.withScope(target.instance);
         expect(
-          await review.decide(_request, approve: true),
+          await review.decide(request, approve: true),
           EligibilityDecisionStatus.refused,
         );
         factor.aal2 = true;
-        await review.decide(_request, approve: true);
-        await review.decide(_request, approve: true);
+        await review.decide(request, approve: true);
+        await review.decide(request, approve: true);
         expect(admin.decisions.map((d) => d.decisionId).toSet(), hasLength(1));
       },
     );
@@ -554,7 +594,10 @@ void main() {
 
     test('without aal2 the maximum is not saved', () async {
       final admin = FakeMcpAdminRepository();
-      final review = EligibilityReview(admin, FakeSecondFactorRepository());
+      final (:review, target: _) = await _reviewFor(
+        admin,
+        FakeSecondFactorRepository(),
+      );
       expect(await review.setDisclosureMaximum({'name'}), isNull);
       expect(admin.maximumSaves, isEmpty);
     });

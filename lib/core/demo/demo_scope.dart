@@ -117,6 +117,11 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       // #1626/#1627 — no policy to save and no queue to review; and no
       // second factor, since Demo has no Auth server to verify one.
       mcpAdminRepositoryProvider.overrideWithValue(FakeMcpAdminRepository()),
+      // #1625 — Demo's one fictional installation: nothing is verified
+      // against a server, and every client borrows the fakes above.
+      activeMcpTargetProvider.overrideWith(
+        (ref) => fixedMcpTarget(ref, kDemoInstallationId),
+      ),
       // #1656 — Demo lacks nothing locally.
       localSetupRepositoryProvider.overrideWithValue(FakeLocalSetupRepository()),
       // #1659 — Demo searches only its own fixture templates.
@@ -210,6 +215,9 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       cacheStoreProvider.overrideWithValue(fixture.prefs.cache),
     ];
 
+/// #1625 — Demo's fictional installation id (never a real server's).
+const kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
+
 /// The providers a Demo scope must override, by name.
 ///
 /// The list exists so a NEW repository cannot quietly stay live in Demo:
@@ -224,6 +232,7 @@ const Set<String> demoOverriddenProviders = {
   'actionConfirmationRepositoryProvider',
   'mcpConnectionRepositoryProvider',
   'mcpAdminRepositoryProvider',
+  'activeMcpTargetProvider',
   'localSetupRepositoryProvider',
   'templateSearchRepositoryProvider',
   'secondFactorRepositoryProvider',
