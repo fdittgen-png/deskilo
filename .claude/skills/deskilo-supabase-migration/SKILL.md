@@ -261,3 +261,41 @@ exists twice (SQL + Dart), change both and keep the pin.
 - **Run the tool's own SQL strings against dev in a rolled-back block**
   before trusting fakes: the fake answers what the test says, the database
   answers what the text means.
+
+## 12. Lessons of 2026-09-29 (0313–0316, a confidentiality fix and three contexts)
+
+- **Put a reading rule in ONE definer function and make the policy call
+  it.** `can_read_member_note(workspace, from, to, conversation, at)`
+  answers only for `auth.uid()`, so it may be granted to `authenticated`;
+  the select policy, the delete policy and every definer reader
+  (`calendar_items` via an anchored patch) ask the same question. A
+  policy that queries `conversation_participants` inline recurses into
+  that table's own policy; the definer function is what breaks the cycle.
+- **Red first can reveal a second defect.** The old `member_notes_select`
+  let every admin read every group AND let a non-admin participant read
+  only their own group messages through the table. The pgTAP positive
+  controls ("a participant reads the whole group") failed on the old
+  policy too; keep both directions in the file.
+- **A column on `profiles` can never be private.** Every space mate
+  `select *`s a profile (0002), and a column revoke would break those
+  selects. A field whose audience may be "nobody" lives in its own
+  no-access table, projected by a definer RPC.
+- **A long generated migration (registry + template field registry +
+  builtin, ~95 KB) is applied by a subagent told to paste it verbatim,
+  then verified by `md5(prosrc)` against the file's `$registry$` bodies.**
+  When the file changes after the apply (a manifest parent removed), patch
+  dev in place with an anchored `replace` of the one changed line and
+  re-check both md5s; do not re-apply the whole file.
+- **The probe runner is a script, not a hand edit.** Split the pgTAP file
+  into statements (track `$$` parity), wrap each in `$s$…$s$` inside the
+  §9 loop, and optionally prefix the migration with comment lines
+  stripped. Fixture traps it caught: `profiles.whatsapp` must match
+  `^\+[0-9]{6,19}$` (a failed fixture update silently leaves display
+  names empty and fails four unrelated assertions); rows inserted in one
+  transaction share `now()`, so `->0`/`->1` over `order by created_at, id`
+  is random — select the row by a property instead.
+- **An anchored patch of an OLD function guarantees the contract-digest
+  second run.** Dev's bodies of long-patched functions (`calendar_items`,
+  `export_my_data`, `create_invoice`) differ from the replay's, so their
+  new digest cannot be computed from dev; plan the one allowed copy of
+  `contract.txt` from the CI artifact.

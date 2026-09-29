@@ -206,3 +206,19 @@ memory file, not in the wiki.
   `build.dart.aot` from hours earlier holds the lock. Check
   `ps -eo pid,etime,time,command | grep build.dart.aot` (CPU time not
   moving = stuck), kill it, `rm -rf .dart_tool/build`, and retry.
+
+## 10. Lessons of 2026-09-29 (three flags in one registry change)
+
+- **A default-ON child of a default-OFF parent is a contradiction every
+  builtin template inherits.** `build_builtin_templates.dart` expands a
+  profile from the registry defaults, and `template_contract_test` then
+  refuses "`spaceInquiries` is on but its parent `publicListings` is
+  off". Give such a flag no `requires` and let the server refuse the case
+  the parent would have covered (an inquiry needs a published page), or
+  make it default off.
+- **Adding a flag to a process moves counts in other tests.**
+  `process_overview_test` switches a whole process off in a fixture map
+  and pins "0 of N features on"; a new flag in that process must join the
+  fixture and N. The Pézenas rehearsal (`54_pezenas_template.sql`) carries
+  the variant's configuration byte for byte and needs the new keys too.
+

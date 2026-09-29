@@ -102,17 +102,28 @@ Deno.serve(async (req) => {
   let kind: string;
   let recipients: { id: string }[];
   if (note_id) {
-    // Member note (#456): load it ourselves — recipient is the target,
-    // or every active admin/owner except the sender for broadcasts.
+    // Member note (#456): load it ourselves — recipient is the target;
+    // a GROUP message (#1822) goes to the conversation's current
+    // participants except the sender, never to the admins; only the
+    // legacy broadcast (no conversation, no target) fans out to every
+    // active admin/owner except the sender.
     const { data: note } = await supabase
       .from("member_notes")
-      .select("id, workspace_id, from_member_id, to_member_id")
+      .select("id, workspace_id, from_member_id, to_member_id, conversation_id")
       .eq("id", note_id)
       .maybeSingle();
     if (!note) return Response.json({ error: "unknown note" }, { status: 404 });
     kind = "member_note";
     if (note.to_member_id) {
       recipients = [{ id: note.to_member_id }];
+    } else if (note.conversation_id) {
+      const { data: participants } = await supabase
+        .from("conversation_participants")
+        .select("member_id")
+        .eq("conversation_id", note.conversation_id)
+        .is("left_at", null)
+        .neq("member_id", note.from_member_id);
+      recipients = (participants ?? []).map((p) => ({ id: p.member_id }));
     } else {
       const { data: admins } = await supabase
         .from("members")

@@ -119,7 +119,10 @@ window.SETUP_PROCESSES=[
      "notificationGrouping",
      "richMessageRefs",
      "messageGestures",
-     "messagesHub"
+     "messagesHub",
+     "spaceInquiries",
+     "messageForwarding",
+     "captureProtection"
     ]
    }
   ]

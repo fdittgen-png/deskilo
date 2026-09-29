@@ -1,0 +1,27 @@
+{
+  "@@locale": "it",
+  "featureSpaceInquiriesTitle": "Scrivi agli host",
+  "@featureSpaceInquiriesTitle": {
+    "description": "#1824 messenger flags: featureSpaceInquiriesTitle"
+  },
+  "featureSpaceInquiriesDesc": "Una persona connessa che trova la pagina pubblicata può scrivere agli host: i proprietari e gli amministratori che hanno scelto di essere contatti pubblici. Gli host vengono nominati prima di scrivere, e solo quella persona e gli host leggono la conversazione. Disattivato, il pulsante e la vista Richieste scompaiono; le richieste salvate restano.",
+  "@featureSpaceInquiriesDesc": {
+    "description": "#1824 messenger flags: featureSpaceInquiriesDesc"
+  },
+  "featureMessageForwardingTitle": "Inoltro dei messaggi",
+  "@featureMessageForwardingTitle": {
+    "description": "#1824 messenger flags: featureMessageForwardingTitle"
+  },
+  "featureMessageForwardingDesc": "Un messaggio può essere inoltrato in un’altra conversazione a cui partecipa chi lo inoltra. La copia indica la provenienza e l’autore, la conversazione originale viene informata di chi l’ha inoltrato e dove, e un autore può bloccare l’inoltro di un messaggio. Disattivato, nessun inoltro esce da questo spazio.",
+  "@featureMessageForwardingDesc": {
+    "description": "#1824 messenger flags: featureMessageForwardingDesc"
+  },
+  "featureCaptureProtectionTitle": "Protezione dalle catture dello schermo",
+  "@featureCaptureProtectionTitle": {
+    "description": "#1824 messenger flags: featureCaptureProtectionTitle"
+  },
+  "featureCaptureProtectionDesc": "Le schermate dei messaggi rifiutano screenshot e registrazioni dello schermo quando il dispositivo lo consente, nascondono il contenuto durante una registrazione e annunciano uno screenshot nella conversazione quando può solo essere rilevato. Un browser non può bloccare gli screenshot; lì la conversazione viene sfocata quando la scheda perde il focus.",
+  "@featureCaptureProtectionDesc": {
+    "description": "#1824 messenger flags: featureCaptureProtectionDesc"
+  }
+}

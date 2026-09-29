@@ -168,7 +168,13 @@ import 'package:flutter_test/flutter_test.dart';
 //   loaded. Writes only its own dismissal; never books, pays or approves.
 //   Reserve, Core, default ON: optional help a space can hide, and OFF
 //   hides the card and nothing else.
-const int _expectedFeatureCount = 115; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
+// 115→118 (2026-09-29): #1824 spaceInquiries, messageForwarding,
+//   captureProtection — the messenger's three space decisions. An inquiry
+//   from outside reaches only the hosts of a published page; a forward names its origin and is announced to the
+//   original conversation; message screens refuse capture where the
+//   device allows it. Messages, Core, default ON each: confidentiality
+//   and transparency are the default, a space may choose otherwise.
+const int _expectedFeatureCount = 118; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
 
 void main() {
   _tierPins();
@@ -241,7 +247,11 @@ void main() {
 // newly joined member of a fifteen-person community meets is the question
 // "what do I do here?"; a card that answers it with the one permitted
 // action, and goes away when asked, is exactly what Core is for.
-const int _expectedCoreCount = 40;
+// 40→43 (2026-09-29): #1824 spaceInquiries, messageForwarding,
+// captureProtection — a fifteen-person community that messages meets
+// forwarding with provenance and capture protection on day one, and an
+// inquiry only once it publishes a page.
+const int _expectedCoreCount = 43;
 
 void _tierPins() {
   test('every feature declares a tier, and the split is pinned', () {
