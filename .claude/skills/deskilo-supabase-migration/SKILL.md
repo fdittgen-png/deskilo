@@ -241,3 +241,23 @@ exists twice (SQL + Dart), change both and keep the pin.
   `installation_identity` is a singleton referenced by foreign keys: model
   D2 as a foreign id and epoch that D1 refuses, with D1's own UUIDs, and
   say in the file header that SQL claim injection proves no OIDC/OAuth.
+
+## 11. Lessons of 2026-09-29 (0312, operator functions and renumbering)
+
+- **The per-statement probe needs two EXECUTE forms.** `execute s into v`
+  on an `insert`/`update`/`delete` fails with "INTO used with a command
+  that cannot return data", and the seed silently never happens. Use
+  `if s ilike 'select%' then execute s into v; else execute s; end if;`.
+- **`set_deskilo_schema_version` is monotonic** (`greatest`). Renumbering a
+  migration you already applied to dev (0313 → 0312 because the reserved
+  0312 had not landed) cannot lower the marker through it; update
+  `public.deskilo_schema_version` directly on dev, and say so in the
+  handoff. The dev history row keeps its old name; that is cosmetic.
+- **An operator function takes no verdict.** An activation that accepts
+  "checks passed" can be forged by whoever calls it. Take the identifiers
+  of what was inspected (installation, epoch) and a fingerprint the
+  database recomputes; refuse on any difference (0312
+  `operator_activate_mcp_runtime`).
+- **Run the tool's own SQL strings against dev in a rolled-back block**
+  before trusting fakes: the fake answers what the test says, the database
+  answers what the text means.
