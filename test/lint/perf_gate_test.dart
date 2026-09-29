@@ -50,6 +50,43 @@ const _measured = <String, Map<String, int>>{
   },
 };
 
+/// #1456 — the onboarding recipes as the record writes them, 2026-09-29:
+/// recipe → (trips, the boundaries it acts through, the extra pinned
+/// counts). Every recipe also carries the common rows below.
+const _recipes = <String, (int, List<String>, Map<String, int>)>{
+  'returning_entry': (10, [], {}),
+  'first_signup': (2, ['sign_up'], {'waits_email': 1, 'required_confirmations': 1}),
+  'invitation_join': (9, ['join'], {'waits_human': 1, 'fields_entered': 0}),
+  'owner_first_booking': (14, ['create', 'book'], {}),
+  'byo_signin': (11, ['verify', 'sign_in'], {'waits_human': 1}),
+  'pending_leave_return': (8, ['request', 'withdraw'], {'back_corrections': 2}),
+  'wizard_keyboard_back_edit':
+      (5, ['create'], {'back_corrections': 1, 'user_edits': 1}),
+};
+
+Map<String, Map<String, int>> get _all => {
+      ..._measured,
+      for (final MapEntry(key: r, value: (trips, acts, extra)) in _recipes.entries)
+        r: {
+          'success': 1,
+          'trips': trips,
+          'route_flashes': 0,
+          'loading_episodes': 1,
+          'fields_reentered': 0,
+          'duplicate_confirmations': 0,
+          'entry_frames': 1,
+          for (final a in acts) ...{
+            '${a}_ack_frames': 1,
+            '${a}_ack_semantic_frames': 1,
+            '${a}_done_frames': 2,
+          },
+          ...extra,
+          'samples': 9,
+          'wall_p50_ms': 500,
+          'wall_p95_ms': 1500,
+        },
+    };
+
 const _conditions = ['sha', 'build_mode', 'host', 'dataset', 'backend'];
 const _unheld = [
   'cold_start_device',
@@ -57,6 +94,10 @@ const _unheld = [
   'transition_ms_device',
   'api_p95',
   'server_ms',
+  'onboarding_frame_timing_device',
+  'onboarding_wait_durations',
+  'screen_reader_device',
+  'onboarding_participants',
 ];
 
 /// A complete record, minus what [dropMetric] / [dropCondition] /
@@ -73,7 +114,7 @@ String _record({
     for (final id in _unheld)
       if (id != dropUnheld) 'unheld|$id|not measured here, and why',
   ];
-  _measured.forEach((journey, metrics) {
+  _all.forEach((journey, metrics) {
     metrics.forEach((metric, value) {
       if ('$journey.$metric' == dropMetric) return;
       lines.add('measure|$journey|$metric|'
@@ -140,6 +181,61 @@ void main() {
     final sheet = run(_record(override: {'booking_commit.sheet_trips': 1}));
     expect(sheet.code, 1, reason: sheet.out);
     expect(sheet.out, contains('booking_commit.sheet_trips is 1'));
+  });
+
+  group('#1456 onboarding recipes', () {
+    test('every recipe is gated, by name', () {
+      final r = run(_record());
+      expect(r.code, 0, reason: r.out);
+      for (final recipe in _recipes.keys) {
+        expect(r.out, contains('$recipe.success 1'), reason: r.out);
+        expect(r.out, contains('$recipe.wall_p50_ms'), reason: r.out);
+      }
+    });
+
+    test('a run that did not assert its authorized result is red, '
+        'whatever its numbers', () {
+      final r = run(_record(override: {'owner_first_booking.success': 0}));
+      expect(r.code, 1, reason: r.out);
+      expect(r.out, contains('owner_first_booking.success is 0'));
+    });
+
+    test('one extra request on a fixed recipe is red', () {
+      final r = run(_record(override: {'returning_entry.trips': 11}));
+      expect(r.code, 1, reason: r.out);
+      expect(r.out, contains('returning_entry.trips is 11, outside [1, 10]'));
+    });
+
+    test('friction the app imposed is red: re-entry, a duplicate '
+        'confirmation, a flash, a second loading screen', () {
+      for (final metric in const [
+        'wizard_keyboard_back_edit.fields_reentered',
+        'first_signup.duplicate_confirmations',
+        'returning_entry.route_flashes',
+      ]) {
+        final r = run(_record(override: {metric: 1}));
+        expect(r.code, 1, reason: '$metric passed:\n${r.out}');
+      }
+      final loading = run(_record(override: {'returning_entry.loading_episodes': 2}));
+      expect(loading.code, 1, reason: loading.out);
+    });
+
+    test('a dwell the app added before completion is red', () {
+      final r = run(_record(override: {'first_signup.sign_up_done_frames': 40}));
+      expect(r.code, 1, reason: r.out);
+      expect(r.out, contains('first_signup.sign_up_done_frames is 40'));
+    });
+
+    test('an acknowledgement that was not measured is red, not skipped', () {
+      final r = run(_record(dropMetric: 'byo_signin.verify_ack_semantic_frames'));
+      expect(r.code, 1, reason: r.out);
+      expect(r.out, contains('byo_signin.verify_ack_semantic_frames was NOT MEASURED'));
+    });
+
+    test('a wait folded away is red: the e-mail must still be counted', () {
+      final r = run(_record(override: {'first_signup.waits_email': 0}));
+      expect(r.code, 1, reason: r.out);
+    });
   });
 
   test('a value that is not a number is malformed, not in range', () {

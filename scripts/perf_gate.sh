@@ -24,7 +24,9 @@
 # the benchmark did not run — and that is all.
 #
 # Not here at all: cold start on a device, frame timing, transition
-# milliseconds, API p95, server milliseconds. Those are declared unheld
+# milliseconds, API p95, server milliseconds — and for the onboarding
+# recipes, device frame timing, how long a human or an e-mail takes, a
+# real screen reader, and real participants. Those are declared unheld
 # in the record, and this script fails if a declaration disappears:
 # dropping the honest "not measured" is how a 2.5 s target nobody holds
 # gets written down as if it were held.
@@ -113,8 +115,64 @@ check reserve_first_usable samples    5    9999
 check reserve_transition   samples    5    9999
 check booking_commit       samples    5    9999
 
+# The onboarding recipes (#1456, 22 September). Correctness first: a
+# recipe whose run did not assert its authorized screen or domain result
+# records success 0 and fails here, whatever its numbers. Then the shape,
+# measured 2026-09-29 against the suite's fakes:
+#
+#  * trips: the ceiling IS the reading, so one extra request is red —
+#    the counts are exact and the same on every machine;
+#  * a route shown that is not a stop of the recipe, a field the app
+#    made the person type again, the same unchanged confirmation twice:
+#    zero, always;
+#  * at most one loading episode on the way in; a second is a duplicate
+#    loading screen;
+#  * tap → acknowledgement within 5 frames and → completion within 10,
+#    with providers that answer at once: more is a dwell the app added.
+#    Frames are 16 ms pumps of FAKE time, a count, not a frame rate.
+#
+# Waits (a human, an e-mail) are pinned as COUNTS: they must be declared,
+# never folded into app time. Their durations are unheld below.
+recipe() {
+  local r="$1" trips="$2"; shift 2
+  check "$r" success 1 1
+  check "$r" trips 1 "$trips"
+  check "$r" route_flashes 0 0
+  check "$r" loading_episodes 0 1
+  check "$r" fields_reentered 0 0
+  check "$r" duplicate_confirmations 0 0
+  check "$r" entry_frames 1 10
+  check "$r" samples 5 9999
+  local b
+  for b in "$@"; do
+    check "$r" "${b}_ack_frames" 1 5
+    check "$r" "${b}_ack_semantic_frames" 1 5
+    check "$r" "${b}_done_frames" 1 10
+  done
+}
+
+echo "onboarding recipes (gated: correctness, then shape):"
+recipe returning_entry           10
+recipe first_signup              2  sign_up
+recipe invitation_join           9  join
+recipe owner_first_booking       14 create book
+recipe byo_signin                11 verify sign_in
+recipe pending_leave_return      8  request withdraw
+recipe wizard_keyboard_back_edit 5  create
+check first_signup              waits_email      1 1
+check first_signup              required_confirmations 1 1
+check byo_signin                waits_human      1 1
+check invitation_join           waits_human      1 1
+# The link fills the field: nothing is typed on the way to Join.
+check invitation_join           fields_entered   0 0
+check pending_leave_return      back_corrections 2 2
+check wizard_keyboard_back_edit back_corrections 1 1
+check wizard_keyboard_back_edit user_edits       1 1
+
 echo "wall clock (reported):"
-for j in reserve_first_usable reserve_transition booking_commit; do
+for j in reserve_first_usable reserve_transition booking_commit \
+    returning_entry first_signup invitation_join owner_first_booking \
+    byo_signin pending_leave_return wizard_keyboard_back_edit; do
   report "$j" wall_p50_ms
   report "$j" wall_p95_ms
 done
@@ -134,7 +192,9 @@ done
 
 # The honest absences, still declared.
 echo "declared UNMEASURED (no device here):"
-for id in cold_start_device frame_timing_device transition_ms_device api_p95 server_ms; do
+for id in cold_start_device frame_timing_device transition_ms_device api_p95 server_ms \
+    onboarding_frame_timing_device onboarding_wait_durations screen_reader_device \
+    onboarding_participants; do
   reason="$(awk -F'|' -v k="$id" '$1=="unheld" && $2==k {print $3}' "$REC")"
   if [ -z "$reason" ]; then
     echo "::error::the record no longer declares '$id' unmeasured. Either it is" \
@@ -153,7 +213,8 @@ if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
     echo
     echo "Shape budgets held; wall clock reported. Cold start, frame timing,"
     echo "transition milliseconds, API p95 and server time remain UNMEASURED —"
-    echo "they need a real device and a real backend."
+    echo "they need a real device and a real backend. The onboarding recipes'"
+    echo "waits are counted, not timed; no participant has run them."
     echo
     echo '```'
     grep '^measure|' "$REC" | awk -F'|' '{printf "%-22s %-20s %s\n", $2, $3, $4}'
