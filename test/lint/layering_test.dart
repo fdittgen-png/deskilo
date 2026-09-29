@@ -283,7 +283,7 @@ const Map<String, int> _pairBudget = {
   // 2026-09-27 #1636: +3 — the Get started card's owner guidance reads
   // the workspace readiness check (domain, provider, section labels).
   'reservations -> workspace': 57,
-  'workspace -> auth': 9, // 2026-09-28 #1791: account-scoped applications and replies work without membership.  // 2026-09-26 #1636 3→4 and #1654 4→5: a pending creation draft names the account that sent it, so a restart resumes it for that account only (application/creation_intent.dart); #1654: the onboarding handoff listens to the auth stream to discard completions after an account change
+  'workspace -> auth': 10, // 2026-09-28 #1652 9→10: the invitation review offers Change account (sign-out) beside Join, and a wrong-account answer offers the same.  // 2026-09-28 #1791: account-scoped applications and replies work without membership.  // 2026-09-26 #1636 3→4 and #1654 4→5: a pending creation draft names the account that sent it, so a restart resumes it for that account only (application/creation_intent.dart); #1654: the onboarding handoff listens to the auth stream to discard completions after an account change
   // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
   // *does anything need me?* by ASSEMBLING signals that already exist:
   // the events awaiting my decision (the type, to tell money from a
@@ -296,7 +296,7 @@ const Map<String, int> _pairBudget = {
   'workspace -> members': 4,
   'workspace -> money': 35,
   'workspace -> plan': 25,
-  'workspace -> profile': 10,
+  'workspace -> profile': 11, // 2026-09-28 #1652 10→11: the invitation review names who is joining (my profile's e-mail).
   'workspace -> reservations': 17,
 };
 

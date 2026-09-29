@@ -52,6 +52,7 @@ import 'package:deskilo/features/auth/domain/oauth_consent.dart';
 import 'package:deskilo/core/demo/data/oauth_consent_repository.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/features/workspace/application/creation_intent.dart';
+import 'package:deskilo/features/workspace/application/pending_invitation.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
@@ -141,6 +142,7 @@ List<Override> standardTestOverrides({
   BackendSettingsStore? backendSettings,
   EntryIntentStore? entryIntent,
   CreationDraftStore? creationDraft,
+  PendingInvitationStore? pendingInvitation,
   FakeActionConfirmationRepository? actionConfirmations,
   FakeMcpConnectionRepository? mcpConnections,
   OAuthConsentRepository? oauthConsent,
@@ -319,6 +321,9 @@ List<Override> standardTestOverrides({
     // #1636 — the pending creation draft: in memory, per test.
     creationDraftStoreProvider
         .overrideWithValue(creationDraft ?? InMemoryCreationDraftStore()),
+    // #1652 — the invitation kept across a server switch: in memory.
+    pendingInvitationStoreProvider
+        .overrideWithValue(pendingInvitation ?? InMemoryPendingInvitationStore()),
     // File cache would touch path_provider channels in tests — and boot
     // eviction runs on every app pump.
     cacheStoreProvider.overrideWithValue(InMemoryCacheStore()),

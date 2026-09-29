@@ -7,12 +7,15 @@ import '../../domain/invite_uri.dart';
 class OnboardingJoinForm extends StatelessWidget {
   const OnboardingJoinForm({super.key, required this.formKey,
     required this.code, required this.busy, required this.onJoin,
-    required this.onScan});
+    required this.onScan, this.onPaste});
   final GlobalKey<FormState> formKey;
   final TextEditingController code;
   final bool busy;
   final VoidCallback onJoin;
   final VoidCallback onScan;
+
+  /// #1652 — reads the clipboard only when the person taps it.
+  final VoidCallback? onPaste;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,9 @@ class OnboardingJoinForm extends StatelessWidget {
               ),
               maxLines: null,
               textCapitalization: TextCapitalization.characters,
-              validator: (v) => InviteUriCodec.extractCode(v ?? '').isEmpty
+              key: const ValueKey('invitation-input'),
+              validator: (v) => InvitationReader.read(v ?? '').problem ==
+                      InvitationProblem.noCode
                   ? (l10n?.workspaceInviteCodeInvalid ??
                       'No workspace ID found — paste the invitation or '
                           'type the ID.')
@@ -41,14 +46,31 @@ class OnboardingJoinForm extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             FilledButton(
+              key: const ValueKey('invitation-review-button'),
               onPressed: busy ? null : onJoin,
-              child: Text(l10n?.onboardingJoinButton ?? 'Join'),
+              child: Text(l10n?.invitationReviewButton ?? 'Review invitation'),
             ),
             const SizedBox(height: 8),
-            OutlinedButton.icon(
-              onPressed: busy ? null : onScan,
-              icon: const Icon(Icons.qr_code_scanner),
-              label: Text(l10n?.onboardingScanButton ?? 'Scan QR code'),
+            // Alternatives, not steps: either fills the same field.
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                if (onPaste != null)
+                  OutlinedButton.icon(
+                    key: const ValueKey('invitation-paste'),
+                    onPressed: busy ? null : onPaste,
+                    icon: const Icon(Icons.content_paste),
+                    label: Text(l10n?.invitationPasteButton ?? 'Paste'),
+                  ),
+                OutlinedButton.icon(
+                  key: const ValueKey('invitation-scan'),
+                  onPressed: busy ? null : onScan,
+                  icon: const Icon(Icons.qr_code_scanner),
+                  label: Text(l10n?.onboardingScanButton ?? 'Scan QR code'),
+                ),
+              ],
             ),
           ],
         ),

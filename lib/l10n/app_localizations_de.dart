@@ -4493,6 +4493,147 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get invitationReviewButton => 'Einladung prüfen';
+
+  @override
+  String get invitationPasteButton => 'Einfügen';
+
+  @override
+  String get invitationReviewTitle => 'Vor dem Beitritt prüfen';
+
+  @override
+  String invitationServerRow(String host) {
+    return 'Server: $host';
+  }
+
+  @override
+  String invitationServerLabel(String label) {
+    return 'Von der teilenden Person „$label“ genannt';
+  }
+
+  @override
+  String invitationJoiningAs(String account) {
+    return 'Beitritt als $account';
+  }
+
+  @override
+  String get invitationRoleMember => 'Angebotene Rolle: Mitglied';
+
+  @override
+  String get invitationRoleAdmin => 'Angebotene Rolle: Administrator';
+
+  @override
+  String get invitationRoleUnknown => 'Angebotene Rolle: noch nicht bekannt';
+
+  @override
+  String get invitationApprovalRequired =>
+      'Ein Administrator gibt neue Mitglieder frei, bevor sich der Bereich öffnet.';
+
+  @override
+  String get invitationApprovalUnknown =>
+      'Ob ein Administrator freigeben muss, ist nicht bekannt.';
+
+  @override
+  String get invitationEnvironmentTest => 'Testbereich';
+
+  @override
+  String get invitationEnvironmentProduction => 'Produktivbereich';
+
+  @override
+  String get invitationJoinButton => 'Bereich beitreten';
+
+  @override
+  String get invitationChangeAccount => 'Konto wechseln';
+
+  @override
+  String get invitationCheckAnother => 'Andere Einladung verwenden';
+
+  @override
+  String invitationAlreadyMember(String workspace) {
+    return 'Du bist bereits Mitglied von $workspace.';
+  }
+
+  @override
+  String get invitationContinue => 'Weiter zu diesem Bereich';
+
+  @override
+  String invitationPaused(String workspace) {
+    return 'Deine Mitgliedschaft in $workspace ist pausiert. Nur ein Administrator dort kann sie fortsetzen.';
+  }
+
+  @override
+  String get invitationExpired =>
+      'Diese Einladung ist abgelaufen. Bitte die Person, die sie geschickt hat, um eine neue.';
+
+  @override
+  String get invitationRevoked =>
+      'Dieser Bereichscode wurde ersetzt. Bitte die Person, die ihn geschickt hat, um den aktuellen.';
+
+  @override
+  String get invitationWrongAccount =>
+      'Diese Einladung wurde bereits von einem anderen Konto verwendet. Wenn sie für dich war, melde dich mit diesem Konto an.';
+
+  @override
+  String invitationInvalid(String host) {
+    return 'Kein Bereich auf $host kennt diese Einladung. Prüfe sie oder bitte die Organisation um ihren Server-Link.';
+  }
+
+  @override
+  String get invitationUnknownAnswer =>
+      'Der Server hat eine Antwort gegeben, die diese App-Version nicht lesen kann. Nichts wurde geändert.';
+
+  @override
+  String invitationOtherServer(String host) {
+    return 'Diese Einladung gehört zu einem anderen Server: $host.';
+  }
+
+  @override
+  String invitationThisDevice(String host) {
+    return 'Dieses Gerät nutzt $host. Eine Einladung wird nur auf ihrem eigenen Server geprüft.';
+  }
+
+  @override
+  String get invitationUseServer => 'Diesen Server verwenden';
+
+  @override
+  String get invitationNewerVersion =>
+      'Diese Einladung stammt aus einer neueren DesKilo-Version. Aktualisiere die App und öffne sie dann erneut.';
+
+  @override
+  String get invitationBadServer =>
+      'Der Server in dieser Einladung ist ungültig. Bitte um eine neue Einladung.';
+
+  @override
+  String get invitationCheckFailed =>
+      'Die Einladung konnte nicht geprüft werden — Status nicht aktualisiert. Nichts wurde geändert; versuche es erneut.';
+
+  @override
+  String get invitationJoinUnconfirmed =>
+      'Das Ergebnis konnte nicht bestätigt werden. Tritt erneut bei, um es zu prüfen — die Einladung wird nicht doppelt verwendet.';
+
+  @override
+  String get pendingAvailable =>
+      'Während du wartest, bleiben deine anderen Bereiche, dein Konto und die Hilfe verfügbar.';
+
+  @override
+  String pendingLastChecked(String time) {
+    return 'Zuletzt geprüft $time';
+  }
+
+  @override
+  String get pendingNotUpdated =>
+      'Status nicht aktualisiert — der Server ist nicht erreichbar. Deine Anfrage bleibt unverändert.';
+
+  @override
+  String get pendingStillWaiting => 'Wartet weiter auf Freigabe.';
+
+  @override
+  String get pendingSwitchWorkspace => 'Bereich wechseln';
+
+  @override
+  String get pendingHelp => 'Hilfe';
+
+  @override
   String get inviteSectionTitle => 'Jemanden einladen';
 
   @override
@@ -6406,7 +6547,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberStatusPending => 'Ausstehend';
 
   @override
-  String get pendingApprovalTitle => 'Warten auf Freigabe';
+  String get pendingApprovalTitle =>
+      'Mitgliedschaft im Bereich wartet auf Freigabe';
 
   @override
   String pendingApprovalBody(String workspace) {
@@ -12992,7 +13134,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get scanJoinHelp =>
-      'Richte die Kamera auf den Einladungs-QR — der Code wird übernommen und der Beitritt läuft automatisch.';
+      'Richte die Kamera auf den Einladungs-QR — du siehst den Bereich, bevor du beitrittst.';
 
   @override
   String get scanJoinNotAnInvite =>

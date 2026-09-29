@@ -1,7 +1,7 @@
 {
   "eventTypeMemberJoin": "Neues Mitglied",
   "memberStatusPending": "Ausstehend",
-  "pendingApprovalTitle": "Warten auf Freigabe",
+  "pendingApprovalTitle": "Mitgliedschaft im Bereich wartet auf Freigabe",
   "pendingApprovalBody": "Du bist {workspace} beigetreten. Ein Admin muss deine Mitgliedschaft bestätigen, bevor du den Workspace nutzen kannst — du erhältst Zugriff, sobald sie bestätigt ist.",
   "pendingApprovalRefresh": "Erneut prüfen",
   "memberApprove": "Mitgliedschaft bestätigen",

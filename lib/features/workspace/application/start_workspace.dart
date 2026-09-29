@@ -14,8 +14,10 @@
 // and `if (code.isEmpty) return;` — both silent. A whole pasted
 // invitation with no code in it looked exactly like a button that had
 // not been pressed.
+import '../../../core/backend/backend_settings.dart';
 import '../../../core/i18n/currencies.dart';
 import '../../../core/i18n/time_zones.dart';
+import '../domain/invitation_answer.dart';
 import '../domain/invite_uri.dart';
 import '../domain/template_outline.dart';
 import '../domain/template_preview.dart';
@@ -43,14 +45,25 @@ enum StartOutcome {
   created,
 }
 
-/// What joining meant.
-enum JoinOutcome {
-  /// Nothing in the box looks like a code. REFUSED — an empty
-  /// extraction used to return in silence.
-  noCode,
+/// #1652 — how far reading one invitation got.
+enum InvitationCheckKind {
+  /// Nothing usable in the text, or a link this build cannot read.
+  unreadable,
 
-  /// Joined; the role came from whichever code matched, server-side.
-  joined,
+  /// A link issued on another server: not sent anywhere from here.
+  otherServer,
+
+  /// This server answered the preview.
+  answered,
+}
+
+/// What reading and checking one invitation found. Nothing is written
+/// for any kind.
+class InvitationCheck {
+  const InvitationCheck(this.kind, this.invitation, {this.answer});
+  final InvitationCheckKind kind;
+  final InvitationDescriptor invitation;
+  final InvitationAnswer? answer;
 }
 
 /// A workspace is chosen from a list by its name, so it needs one.
@@ -138,15 +151,32 @@ class WorkspaceStart {
     return (outcome: StartOutcome.created, workspaceId: id);
   }
 
-  /// Joins from whatever was pasted, and says which outcome it was.
-  ///
-  /// Smart paste (0049): a bare code, an invite URL, or a WHOLE pasted
-  /// invitation message — WhatsApp only copies the full message, so the
-  /// code is dug out here rather than asked of the person.
-  Future<({JoinOutcome outcome, String? workspaceId})> join(String pasted) async {
-    final code = InviteUriCodec.extractCode(pasted);
-    if (code.isEmpty) return (outcome: JoinOutcome.noCode, workspaceId: null);
-    final id = await _workspaces.joinWorkspace(code);
-    return (outcome: JoinOutcome.joined, workspaceId: id);
+  /// #1652 — reads [pasted] (a code, a link or a whole message) and asks
+  /// THIS server what it would do, without writing. An invitation issued
+  /// on another server is not sent here at all: the code is a secret of
+  /// that server, and no code is ever tried on several.
+  Future<InvitationCheck> check(String pasted,
+      {required BackendEndpoint? active}) async {
+    final invitation = InvitationReader.read(pasted);
+    if (!invitation.usable) {
+      return InvitationCheck(InvitationCheckKind.unreadable, invitation);
+    }
+    if (!invitation.belongsTo(active)) {
+      return InvitationCheck(InvitationCheckKind.otherServer, invitation);
+    }
+    final answer = await _workspaces.previewInvitation(invitation.code);
+    return InvitationCheck(InvitationCheckKind.answered, invitation,
+        answer: answer);
+  }
+
+  /// The explicit Join: the existing admission path, once, on the server
+  /// the invitation belongs to. A retry after a lost answer is the same
+  /// call and answers already-member rather than joining twice.
+  Future<InvitationAnswer> join(InvitationDescriptor invitation,
+      {required BackendEndpoint? active}) {
+    if (!invitation.usable || !invitation.belongsTo(active)) {
+      throw StateError('the invitation does not belong to this server');
+    }
+    return _workspaces.joinByInvitation(invitation.code);
   }
 }

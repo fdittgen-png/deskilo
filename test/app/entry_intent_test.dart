@@ -60,7 +60,7 @@ void main() {
       expect(const EntryIntent.openValidated('1', '/money').destination,
           '/money');
       expect(const EntryIntent.join('1', workspaceHint: 'Pézenas').destination,
-          '/onboarding');
+          '/onboarding?join=1');
       expect(const EntryIntent.create('1').destination, '/onboarding');
       expect(
           const EntryIntent.connectInstallation('1', host: 'db.example.org')

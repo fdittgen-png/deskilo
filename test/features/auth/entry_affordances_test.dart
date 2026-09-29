@@ -123,7 +123,9 @@ void main() {
     await tester.ensureVisible(submit);
     await tester.tap(submit);
     await tester.pumpAndSettle();
-    expect(router.state.uri.toString(), '/onboarding');
+    expect(router.state.uri.toString(), '/onboarding?join=1');
+    // #1652 — the invitation errand arrives on Join, not on Create.
+    expect(find.byKey(const ValueKey('invitation-input')), findsOneWidget);
     expect(container.read(entryIntentsProvider), isNull,
         reason: 'arrived, so spent');
   });

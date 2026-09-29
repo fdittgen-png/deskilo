@@ -74,7 +74,11 @@ Future<void> join(WidgetTester tester) async {
   await tester.tap(find.text('Join a workspace'));
   await tester.pumpAndSettle();
   await tester.enterText(find.byType(TextFormField), 'GOODCODE22');
-  await tester.tap(find.widgetWithText(FilledButton, 'Join'));
+  // #1652 — the read-only review first, then the one explicit Join.
+  await tester.tap(find.byKey(const ValueKey('invitation-review-button')));
+  await tester.pumpAndSettle();
+  await tester.ensureVisible(find.byKey(const ValueKey('invitation-join')));
+  await tester.tap(find.byKey(const ValueKey('invitation-join')));
   await tester.pump();
 }
 
@@ -154,6 +158,7 @@ void main() {
     repo.gate!.complete();
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('onboarding-error')), findsNothing);
+    expect(find.byKey(const ValueKey('invitation-error')), findsNothing);
     expect(find.byType(SnackBar), findsNothing);
     expect(repo.workspaces, hasLength(1));
   });
