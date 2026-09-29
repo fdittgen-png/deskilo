@@ -11,6 +11,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/mcp_policy_editor.dart';
 import '../domain/mcp_admin.dart';
+import '../domain/mcp_context.dart';
 import '../providers/mcp_providers.dart';
 import 'mcp_operation_labels.dart';
 import 'widgets/mcp_disclosure_preview.dart';
@@ -25,7 +26,9 @@ const kMcpApiReferenceUrl = 'https://fdittgen-png.github.io/deskilo/api/';
 /// consent (0276), which the screen says rather than implies.
 ///
 /// The workspace is captured when the screen opens; switching workspace
-/// while it is open disables Save instead of retargeting it.
+/// while it is open disables Save instead of retargeting it. #1625 — so
+/// is the installation and account: the policy is read and saved for the
+/// context captured first, never for whatever becomes active later.
 class McpPolicyScreen extends ConsumerStatefulWidget {
   const McpPolicyScreen({super.key});
 
@@ -35,6 +38,7 @@ class McpPolicyScreen extends ConsumerStatefulWidget {
 
 class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
   String? _workspaceId;
+  VerifiedMcpTarget? _target;
   McpPolicyDraft? _draft;
   McpPolicy? _base;
   bool _busy = false;
@@ -69,7 +73,10 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
         _base = null;
       }
     });
-    if (result != null) ref.invalidate(mcpPolicyProvider(draft.workspaceId));
+    final scope = draft.context;
+    if (result != null && scope != null) {
+      ref.invalidate(mcpPolicyProvider(scope));
+    }
   }
 
   @override
@@ -77,13 +84,25 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
     final l10n = AppLocalizations.of(context);
     final active = ref.watch(currentWorkspaceProvider).value?.id;
     final workspaceId = _workspaceId ??= active;
-    final switched = active != null && active != workspaceId;
+    final current = ref.watch(activeMcpTargetProvider);
+    final target = _target ??= current.value;
+    final switched =
+        (active != null && active != workspaceId) ||
+        (current.value != null && current.value != target);
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.mcpPolicyTitle ?? 'Assistant access')),
       body: workspaceId == null
           ? const SizedBox.shrink()
-          : ref
-                .watch(mcpPolicyProvider(workspaceId))
+          : target == null && current.isLoading
+          ? const LoadingView()
+          : (target == null
+                    ? AsyncValue<McpPolicy>.error(
+                        current.error ?? const McpTargetUnverified(''),
+                        current.stackTrace ?? StackTrace.empty,
+                      )
+                    : ref.watch(
+                        mcpPolicyProvider(target.workspace(workspaceId)),
+                      ))
                 .when(
                   loading: () => const LoadingView(),
                   error: (e, _) => Padding(

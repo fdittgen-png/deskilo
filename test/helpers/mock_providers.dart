@@ -121,6 +121,9 @@ import 'fake_credit_repository.dart';
 /// In-memory [DevModeStore] — the settings toggle without the platform
 /// channel. Default OFF, like a fresh install; tests exercising
 
+/// #1625 — the installation every standard test's MCP target is on.
+const kTestInstallationId = '00000000-0000-4000-8000-0000000071e5';
+
 List<Override> standardTestOverrides({
   FakeWorkspaceApplicationRepository? applications,
   FakeAccountActivityRepository? accountActivity,
@@ -245,6 +248,8 @@ List<Override> standardTestOverrides({
     mcpConnectionRepositoryProvider
         .overrideWithValue(mcpConnections ?? FakeMcpConnectionRepository()),
     mcpAdminRepositoryProvider.overrideWithValue(mcpAdmin ?? FakeMcpAdminRepository()),
+    activeMcpTargetProvider
+        .overrideWith((ref) => fixedMcpTarget(ref, kTestInstallationId)),
     localSetupRepositoryProvider.overrideWithValue(localSetup ?? FakeLocalSetupRepository()),
     templateSearchRepositoryProvider.overrideWithValue(templateSearch ??
         FakeTemplateSearchRepository(source: () => workspaceRepo is FakeWorkspaceRepository ? workspaceRepo.templates : const [])),

@@ -4,6 +4,7 @@
 // administrator's eligibility queue. Both are read and written through
 // the server's own RPCs (0270/0271): the app never decides who may.
 import '../../../core/mcp/mcp_operations.dart';
+import 'mcp_context.dart';
 import 'mcp_usage.dart';
 
 /// #1809 — a server list of optional fields, kept to the ones the
@@ -28,6 +29,7 @@ class McpPolicy {
     required this.available,
     this.optionalFields = const {},
     this.availableOptionalFields = const [],
+    this.context,
   });
 
   final String workspaceId;
@@ -50,6 +52,22 @@ class McpPolicy {
 
   /// #1809 — the installation maximum: the owner chooses within it.
   final List<String> availableOptionalFields;
+
+  /// #1625 — the context it was read for; a draft saves back there.
+  final McpContextRef? context;
+
+  McpPolicy withContext(McpContextRef context) => McpPolicy(
+    workspaceId: workspaceId,
+    revision: revision,
+    enabled: enabled,
+    operations: operations,
+    targetCeiling: targetCeiling,
+    featureEnabled: featureEnabled,
+    available: available,
+    optionalFields: optionalFields,
+    availableOptionalFields: availableOptionalFields,
+    context: context,
+  );
 
   factory McpPolicy.fromJson(Object? json) {
     final m = json is Map ? json : const <String, Object?>{};
@@ -125,6 +143,7 @@ class EligibilityRequest {
     required this.email,
     required this.revision,
     this.requestedAt,
+    this.scope,
   });
 
   final String requestId;
@@ -132,6 +151,18 @@ class EligibilityRequest {
   final String email;
   final int revision;
   final DateTime? requestedAt;
+
+  /// #1625 — the installation whose queue it came from; decided there.
+  final McpInstanceRef? scope;
+
+  EligibilityRequest withScope(McpInstanceRef scope) => EligibilityRequest(
+    requestId: requestId,
+    userId: userId,
+    email: email,
+    revision: revision,
+    requestedAt: requestedAt,
+    scope: scope,
+  );
 
   static List<EligibilityRequest> listFromJson(Object? json) => [
     for (final r in json is List ? json : const [])

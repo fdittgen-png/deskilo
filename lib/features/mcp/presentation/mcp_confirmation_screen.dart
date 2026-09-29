@@ -36,7 +36,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
   ConfirmationStatus? _answered;
   bool _busy = false;
 
-  Future<void> _respond(bool accept) async {
+  Future<void> _respond(ActionConfirmation confirmation, bool accept) async {
     if (_busy) return;
     setState(() => _busy = true);
     ConfirmationStatus? result;
@@ -47,7 +47,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       action: () async {
         result = await ref
             .read(confirmationAnswersProvider)
-            .answer(widget.confirmationId, accept: accept);
+            .answer(confirmation, accept: accept);
       },
     );
     if (!mounted) return;
@@ -98,7 +98,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
                   Expanded(
                     child: OutlinedButton(
                       key: const ValueKey('mcp-confirm-decline'),
-                      onPressed: _busy ? null : () => _respond(false),
+                      onPressed: _busy ? null : () => _respond(c, false),
                       child: Text(l10n?.mcpConfirmDecline ?? 'Decline'),
                     ),
                   ),
@@ -106,7 +106,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
                   Expanded(
                     child: FilledButton(
                       key: const ValueKey('mcp-confirm-accept'),
-                      onPressed: _busy ? null : () => _respond(true),
+                      onPressed: _busy ? null : () => _respond(c, true),
                       child: Text(l10n?.mcpConfirmAccept ?? 'Confirm'),
                     ),
                   ),

@@ -71,7 +71,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
     if (confirmed != true || !mounted) return;
     await _run(
       'assistant disconnect failed',
-      () => ref.read(assistantAccessProvider).disconnect(c.clientId),
+      () => ref.read(assistantAccessProvider).disconnect(c),
     );
   }
 
@@ -242,7 +242,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
                         'workspace removal failed',
                         () => ref
                             .read(assistantAccessProvider)
-                            .removeWorkspace(c.clientId, w.id),
+                            .removeWorkspace(c, w.id),
                       ),
               ),
             ),
