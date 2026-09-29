@@ -5,12 +5,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/instance/management_api.dart';
+import 'package:deskilo/core/instance/mcp_auth_checks.dart';
 import 'package:dio/dio.dart';
 
 import 'federation.dart';
 
-const identityHookUri =
-    'pg-functions://postgres/public/identity_federation_token_hook';
+const identityHookUri = canonicalIdentityHookUri;
 const _enabled = 'hook_custom_access_token_enabled';
 const _uri = 'hook_custom_access_token_uri';
 
