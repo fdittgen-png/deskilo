@@ -35,6 +35,7 @@ import '../../l10n/app_localizations.dart';
 import 'shell_bottom_bar.dart';
 import 'shell_destinations.dart';
 import 'shell_drawer.dart';
+import 'shell_slot.dart';
 import '../../core/time/clock.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_title_bar.dart';
@@ -435,7 +436,8 @@ class ShellScreen extends ConsumerWidget {
       // opacity layer above it animates, keyed by the active branch.
       body: FadeInOnChange(
         changeKey: navigationShell.currentIndex,
-        child: navigationShell,
+        // #1818 — one navigation shell at a time: see ShellSlot.
+        child: ShellSlot(child: navigationShell),
       ),
       // ONE destination is enough (#702).
       //
