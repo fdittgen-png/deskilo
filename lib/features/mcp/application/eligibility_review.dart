@@ -8,7 +8,12 @@
 // decided: if another administrator acted first, the answer is "changed".
 //
 // #1625 — the queue belongs to one installation, not to the selected
-// workspace: a request is decided on the installation it was listed from.
+// workspace: a request is decided on the installation it was listed from,
+// and so is its second factor. The check, the enrolment and the code all
+// go through that installation's own registry client and session; the
+// active backend's aal2 never vouches for a decision on another target.
+// The check runs inside the same client call as the decision, so the
+// session that was verified is the session that decides.
 import '../../../core/ids/request_id.dart';
 import '../../auth/domain/second_factor.dart';
 import '../domain/mcp_admin.dart';
@@ -16,44 +21,55 @@ import '../domain/mcp_context.dart';
 import 'mcp_commands.dart';
 
 class EligibilityReview {
-  EligibilityReview(this._commands, this._factors, {this.instance});
+  EligibilityReview(this._commands, {this.instance});
 
   /// The installation whose maximum this screen administers; null while
   /// it is not verified, when nothing is saved.
   final McpInstanceRef? instance;
   final McpCommands _commands;
-  final SecondFactorRepository _factors;
   final _decisionIds = <(McpInstanceRef, String, bool), String>{};
 
-  Future<SecondFactorState> secondFactor() => _factors.state();
-  Future<TotpEnrollment> enroll() => _factors.enrollTotp();
-  Future<void> verify(String factorId, String code) =>
-      _factors.verify(factorId, code);
+  McpScope _target(McpScope? scope) {
+    final target = scope ?? instance;
+    if (target == null) throw const McpTargetUnverified('');
+    return target;
+  }
+
+  /// The second factor of [scope] (default: this screen's installation).
+  Future<SecondFactorState> secondFactor([McpScope? scope]) =>
+      _commands.read(_target(scope), (r) => r.secondFactor.state());
+
+  Future<TotpEnrollment> enroll([McpScope? scope]) =>
+      _commands.read(_target(scope), (r) => r.secondFactor.enrollTotp());
+
+  Future<void> verify(String factorId, String code, [McpScope? scope]) =>
+      _commands.read(
+        _target(scope),
+        (r) => r.secondFactor.verify(factorId, code),
+      );
 
   /// #1809 — saves the installation maximum of optional fields; the
   /// server demands aal2 as for a decision, and so does this. Null when
   /// refused.
-  Future<Set<String>?> setDisclosureMaximum(Set<String> fields) async {
-    if (!(await _factors.state()).aal2) return null;
-    final scope = instance;
-    if (scope == null) throw const McpTargetUnverified('');
+  Future<Set<String>?> setDisclosureMaximum(Set<String> fields) {
+    final scope = _target(null);
     return _commands.execute(
       McpMutation<Object?>(
         scope: scope,
         operation: 'set_mcp_disclosure_maximum',
         payload: fields,
       ),
-      (repositories, m) => repositories.admin.setDisclosureMaximum(fields),
+      (repositories, m) async {
+        if (!(await repositories.secondFactor.state()).aal2) return null;
+        return repositories.admin.setDisclosureMaximum(fields);
+      },
     );
   }
 
   Future<EligibilityDecisionStatus> decide(
     EligibilityRequest request, {
     required bool approve,
-  }) async {
-    if (!(await _factors.state()).aal2) {
-      return EligibilityDecisionStatus.refused;
-    }
+  }) {
     final scope = request.scope;
     if (scope == null) throw const McpTargetUnverified('');
     final id = _decisionIds.putIfAbsent(
@@ -67,11 +83,16 @@ class EligibilityReview {
         payload: (request: request, approve: approve),
         mutationId: id,
       ),
-      (repositories, m) => repositories.admin.decide(
-        request: request,
-        decisionId: m.mutationId,
-        approve: approve,
-      ),
+      (repositories, m) async {
+        if (!(await repositories.secondFactor.state()).aal2) {
+          return EligibilityDecisionStatus.secondFactorRequired;
+        }
+        return repositories.admin.decide(
+          request: request,
+          decisionId: m.mutationId,
+          approve: approve,
+        );
+      },
     );
   }
 }

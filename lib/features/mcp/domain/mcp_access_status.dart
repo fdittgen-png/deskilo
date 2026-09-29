@@ -52,6 +52,34 @@ enum McpNextStep {
   unavailable,
 }
 
+McpIdentityState mcpIdentityState(IdentityBindingStatus? identity) =>
+    switch (identity?.state) {
+      IdentityBindingState.verified => McpIdentityState.verified,
+      IdentityBindingState.unlinked ||
+      IdentityBindingState.ineligible ||
+      IdentityBindingState.conflict => McpIdentityState.unlinked,
+      _ => McpIdentityState.unavailable,
+    };
+
+McpEligibilityState mcpEligibilityState(DatabaseCapabilities? capabilities) =>
+    switch (capabilities?.eligibility) {
+      McpEligibility.eligible => McpEligibilityState.approved,
+      McpEligibility.requested => McpEligibilityState.pending,
+      McpEligibility.expired => McpEligibilityState.revoked,
+      McpEligibility.notRequested ||
+      McpEligibility.noIdentity => McpEligibilityState.notRequested,
+      _ => McpEligibilityState.unavailable,
+    };
+
+McpBackendState mcpBackendState(
+  IdentityBindingStatus? identity,
+  DatabaseCapabilities? capabilities,
+) => identity == null || capabilities == null
+    ? McpBackendState.unavailable
+    : capabilities.eligibility == McpEligibility.unavailable
+    ? McpBackendState.incompatible
+    : McpBackendState.available;
+
 class McpAccessStatus {
   const McpAccessStatus({
     required this.context,
@@ -82,21 +110,6 @@ class McpAccessStatus {
     required List<McpConnectionInfo>? connections,
   }) {
     final ws = context.workspaceId;
-    final id = switch (identity?.state) {
-      IdentityBindingState.verified => McpIdentityState.verified,
-      IdentityBindingState.unlinked ||
-      IdentityBindingState.ineligible ||
-      IdentityBindingState.conflict => McpIdentityState.unlinked,
-      _ => McpIdentityState.unavailable,
-    };
-    final eligibility = switch (capabilities?.eligibility) {
-      McpEligibility.eligible => McpEligibilityState.approved,
-      McpEligibility.requested => McpEligibilityState.pending,
-      McpEligibility.expired => McpEligibilityState.revoked,
-      McpEligibility.notRequested ||
-      McpEligibility.noIdentity => McpEligibilityState.notRequested,
-      _ => McpEligibilityState.unavailable,
-    };
     final forWs = policy != null && policy.workspaceId == ws ? policy : null;
     final offered = options?.workspaces.where((w) => w.id == ws).firstOrNull;
     // The policy is the owner's to read; a member learns exposure from
@@ -118,19 +131,14 @@ class McpAccessStatus {
         : connections.any((c) => c.workspaces.any((w) => w.id == ws))
         ? McpConsentState.current
         : McpConsentState.missing;
-    final backend = identity == null || capabilities == null
-        ? McpBackendState.unavailable
-        : capabilities.eligibility == McpEligibility.unavailable
-        ? McpBackendState.incompatible
-        : McpBackendState.available;
     return McpAccessStatus(
       context: context,
-      identity: id,
-      eligibility: eligibility,
+      identity: mcpIdentityState(identity),
+      eligibility: mcpEligibilityState(capabilities),
       exposure: exposure,
       role: role,
       consent: consent,
-      backend: backend,
+      backend: mcpBackendState(identity, capabilities),
     );
   }
 
@@ -158,4 +166,40 @@ class McpAccessStatus {
         ? McpNextStep.consent
         : McpNextStep.unavailable;
   }
+}
+
+/// #1625 — the installation-level half, for the read-only overview of the
+/// other installations this account connected: identity, eligibility and
+/// the server, each read through that installation's own client. Nothing
+/// here is a workspace fact, and nothing enables an action.
+class McpInstanceStatus {
+  const McpInstanceStatus({
+    required this.source,
+    required this.identity,
+    required this.eligibility,
+    required this.backend,
+  });
+
+  /// Nothing could be asked: an unverifiable record or a failing target.
+  const McpInstanceStatus.unavailable(this.source)
+    : identity = McpIdentityState.unavailable,
+      eligibility = McpEligibilityState.unavailable,
+      backend = McpBackendState.unavailable;
+
+  factory McpInstanceStatus.derive(
+    String source, {
+    required IdentityBindingStatus? identity,
+    required DatabaseCapabilities? capabilities,
+  }) => McpInstanceStatus(
+    source: source,
+    identity: mcpIdentityState(identity),
+    eligibility: mcpEligibilityState(capabilities),
+    backend: mcpBackendState(identity, capabilities),
+  );
+
+  /// The connected origin — a label, never a key.
+  final String source;
+  final McpIdentityState identity;
+  final McpEligibilityState eligibility;
+  final McpBackendState backend;
 }

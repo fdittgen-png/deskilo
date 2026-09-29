@@ -706,6 +706,416 @@
           }
         }
       }
+    },
+    "/rest/v1/rpc/mcp_disclosure_status": {
+      "post": {
+        "operationId": "mcp_disclosure_status",
+        "summary": "A database administrator reads the installation maximum of optional display fields (#1809).",
+        "security": [
+          {
+            "administratorAal2": []
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/set_mcp_disclosure_maximum": {
+      "post": {
+        "operationId": "set_mcp_disclosure_maximum",
+        "summary": "A database administrator saves that maximum; it never widens a policy or a consent (#1809).",
+        "security": [
+          {
+            "administratorAal2": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "p_fields": {
+                    "type": "array",
+                    "x-sql-type": "text[]"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/my_identity_status": {
+      "post": {
+        "operationId": "my_identity_status",
+        "summary": "The caller's own identity binding on this installation (#1647).",
+        "security": [
+          {
+            "nativeSession": []
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/finalize_identity_binding": {
+      "post": {
+        "operationId": "finalize_identity_binding",
+        "summary": "Bind the caller's verified identity to this installation's account (#1647).",
+        "security": [
+          {
+            "nativeSession": []
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/revoke_my_identity_binding": {
+      "post": {
+        "operationId": "revoke_my_identity_binding",
+        "summary": "Remove the caller's own identity binding (#1647).",
+        "security": [
+          {
+            "nativeSession": []
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/mcp_prepare_connection": {
+      "post": {
+        "operationId": "mcp_prepare_connection",
+        "summary": "Record the workspaces and operations a pending assistant authorization may receive (#1615).",
+        "security": [
+          {
+            "nativeSession": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "p_client_id": {
+                    "type": "string",
+                    "x-sql-type": "text"
+                  },
+                  "p_authorization_id": {
+                    "type": "string",
+                    "x-sql-type": "text"
+                  },
+                  "p_scopes": {
+                    "type": "object",
+                    "x-sql-type": "jsonb"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/mcp_finalize_connection": {
+      "post": {
+        "operationId": "mcp_finalize_connection",
+        "summary": "Finalise the connection after Auth approved the authorization (#1615).",
+        "security": [
+          {
+            "nativeSession": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "p_authorization_id": {
+                    "type": "string",
+                    "x-sql-type": "text"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/my_mcp_connections": {
+      "post": {
+        "operationId": "my_mcp_connections",
+        "summary": "The assistants the caller connected, with their workspaces (#1628).",
+        "security": [
+          {
+            "nativeSession": []
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/revoke_mcp_workspace_scope": {
+      "post": {
+        "operationId": "revoke_mcp_workspace_scope",
+        "summary": "Remove one workspace from one assistant connection (#1628).",
+        "security": [
+          {
+            "nativeSession": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "p_client_id": {
+                    "type": "string",
+                    "x-sql-type": "text"
+                  },
+                  "p_workspace_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "x-sql-type": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/revoke_mcp_connection": {
+      "post": {
+        "operationId": "revoke_mcp_connection",
+        "summary": "Disconnect one assistant from every workspace on this installation (#1628).",
+        "security": [
+          {
+            "nativeSession": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "p_client_id": {
+                    "type": "string",
+                    "x-sql-type": "text"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/mcp_usage_summary_mine": {
+      "post": {
+        "operationId": "mcp_usage_summary_mine",
+        "summary": "The caller's own assistant usage today, counts only (#1630).",
+        "security": [
+          {
+            "nativeSession": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "p_installation_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "x-sql-type": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
+    },
+    "/rest/v1/rpc/mcp_usage_summary_workspace": {
+      "post": {
+        "operationId": "mcp_usage_summary_workspace",
+        "summary": "A workspace's assistant usage over 30 days, for its owner or a database administrator (#1630).",
+        "security": [
+          {
+            "nativeSession": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "p_workspace_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "x-sql-type": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The RPC's jsonb answer"
+          },
+          "400": {
+            "description": "A refusal (PostgREST error body)"
+          }
+        }
+      }
     }
   },
   "components": {

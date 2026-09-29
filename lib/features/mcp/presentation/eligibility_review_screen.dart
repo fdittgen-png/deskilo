@@ -13,6 +13,7 @@ import '../../auth/domain/second_factor.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/eligibility_review.dart';
 import '../domain/mcp_admin.dart';
+import '../domain/mcp_context.dart';
 import '../providers/mcp_providers.dart';
 import 'mcp_operation_labels.dart';
 
@@ -40,15 +41,20 @@ class _EligibilityReviewScreenState
   String? _maximumOutcome;
 
   /// True once the session is at aal2: asks for the authenticator code
-  /// when it is not. Every database decision passes here first.
-  Future<bool> _secondFactor(EligibilityReview review) async {
+  /// when it is not. Every database decision passes here first. #1625 —
+  /// [scope] is the installation the decision goes to: its own session
+  /// is checked and verified, never the active backend's.
+  Future<bool> _secondFactor(
+    EligibilityReview review, [
+    McpInstanceRef? scope,
+  ]) async {
     var verified = false;
     await runGuarded(
       context,
       domain: 'mcp',
       message: 'second factor check failed',
       action: () async {
-        verified = (await review.secondFactor()).aal2;
+        verified = (await review.secondFactor(scope)).aal2;
       },
     );
     if (!verified && mounted) {
@@ -56,8 +62,10 @@ class _EligibilityReviewScreenState
           await showModalBottomSheet<bool>(
             context: context,
             isScrollControlled: true,
-            builder: (_) =>
-                SecondFactorSheet(review: ref.read(eligibilityReviewProvider)),
+            builder: (_) => SecondFactorSheet(
+              review: ref.read(eligibilityReviewProvider),
+              scope: scope,
+            ),
           ) ??
           false;
     }
@@ -68,7 +76,7 @@ class _EligibilityReviewScreenState
     if (_busy) return;
     final review = ref.read(eligibilityReviewProvider);
     setState(() => _busy = true);
-    final verified = await _secondFactor(review);
+    final verified = await _secondFactor(review, request.scope);
     if (!mounted) return;
     if (!verified) {
       setState(() => _busy = false);
@@ -333,6 +341,11 @@ class _EligibilityReviewScreenState
             'This request changed or another administrator decided first. Nothing was done.',
         InlineBannerSeverity.error,
       ),
+      'secondFactorRequired' => (
+        l10n?.mcpReviewSecondFactor ??
+            'That database needs your second factor on its own session. Nothing was decided.',
+        InlineBannerSeverity.error,
+      ),
       _ => (
         l10n?.mcpReviewRefused ?? 'The decision was refused.',
         InlineBannerSeverity.error,
@@ -354,8 +367,11 @@ class _EligibilityReviewScreenState
 /// there is none, then verifies a code. Pops true only when the server
 /// accepted the code.
 class SecondFactorSheet extends StatefulWidget {
-  const SecondFactorSheet({super.key, required this.review});
+  const SecondFactorSheet({super.key, required this.review, this.scope});
   final EligibilityReview review;
+
+  /// The installation whose session is verified; null for this screen's.
+  final McpInstanceRef? scope;
 
   @override
   State<SecondFactorSheet> createState() => _SecondFactorSheetState();
@@ -386,11 +402,11 @@ class _SecondFactorSheetState extends State<SecondFactorSheet> {
       domain: 'mcp',
       message: 'second factor setup failed',
       action: () async {
-        final state = await widget.review.secondFactor();
+        final state = await widget.review.secondFactor(widget.scope);
         if (state.verifiedTotpId != null) {
           _factorId = state.verifiedTotpId;
         } else {
-          final e = await widget.review.enroll();
+          final e = await widget.review.enroll(widget.scope);
           _enrollment = e;
           _factorId = e.factorId;
         }
@@ -408,7 +424,7 @@ class _SecondFactorSheetState extends State<SecondFactorSheet> {
     });
     var ok = false;
     try {
-      await widget.review.verify(id, _code.text.trim());
+      await widget.review.verify(id, _code.text.trim(), widget.scope);
       ok = true;
     } catch (error, stack) {
       // trace-exempt: a wrong code is the person's to retry, said below.

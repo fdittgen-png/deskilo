@@ -7552,6 +7552,117 @@ class AppLocalizationsEn extends AppLocalizations {
       'What an assistant can call, and how it is authorised';
 
   @override
+  String get mcpStatusTitle => 'Where you stand here';
+
+  @override
+  String get mcpStatusIdentity => 'Identity';
+
+  @override
+  String get mcpStatusEligibility => 'Database approval';
+
+  @override
+  String get mcpStatusExposure => 'Workspace offer';
+
+  @override
+  String get mcpStatusRole => 'Your role';
+
+  @override
+  String get mcpStatusConsent => 'Your consent';
+
+  @override
+  String get mcpStatusBackend => 'Server';
+
+  @override
+  String get mcpStateVerified => 'Verified';
+
+  @override
+  String get mcpStateUnlinked => 'Not linked';
+
+  @override
+  String get mcpStateNotRequested => 'Not requested';
+
+  @override
+  String get mcpStatePending => 'Waiting for a decision';
+
+  @override
+  String get mcpStateApproved => 'Approved';
+
+  @override
+  String get mcpStateRevoked => 'Expired or withdrawn';
+
+  @override
+  String get mcpStateDisabled => 'Nothing offered';
+
+  @override
+  String get mcpStateExposed => 'Operations offered';
+
+  @override
+  String get mcpStateAllowed => 'Allowed';
+
+  @override
+  String get mcpStateDenied => 'Nothing for your role';
+
+  @override
+  String get mcpStateMissing => 'Not given';
+
+  @override
+  String get mcpStateCurrent => 'Given';
+
+  @override
+  String get mcpStateAvailable => 'Reachable';
+
+  @override
+  String get mcpStateIncompatible => 'Incompatible version';
+
+  @override
+  String get mcpStateUnavailable => 'Unknown';
+
+  @override
+  String get mcpNextLinkIdentity =>
+      'Next: you link your account to this database\'s identity.';
+
+  @override
+  String get mcpNextRequestEligibility =>
+      'Next: you ask this database\'s administrators for approval.';
+
+  @override
+  String get mcpNextAwaitEligibility =>
+      'Next: a database administrator decides your request.';
+
+  @override
+  String get mcpNextOwnerExposes =>
+      'Next: the workspace owner offers operations to assistants.';
+
+  @override
+  String get mcpNextRoleDenied =>
+      'Your role leaves no operation to offer here. The workspace owner decides what each role may do.';
+
+  @override
+  String get mcpNextConsent =>
+      'Next: connect an assistant from the assistant itself and approve this workspace.';
+
+  @override
+  String get mcpNextReady =>
+      'Ready: a connected assistant may act for you in this workspace, within what you approved.';
+
+  @override
+  String get mcpNextUnavailable =>
+      'The server could not answer. Nothing is assumed; try again later.';
+
+  @override
+  String get mcpStatusOpenLinkedAccounts => 'Open linked accounts';
+
+  @override
+  String get mcpOverviewTitle => 'Other connected databases';
+
+  @override
+  String get mcpOverviewUnavailable => 'Could not be asked right now.';
+
+  @override
+  String get mcpReviewSecondFactor =>
+      'That database needs your second factor on its own session. Nothing was decided.';
+
+  @override
   String get mcpUsageWorkspaceTitle => 'Assistant use, last 30 days';
 
   @override

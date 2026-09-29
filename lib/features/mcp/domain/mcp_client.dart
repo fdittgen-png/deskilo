@@ -4,6 +4,7 @@
 // hands out talk to THAT installation as THAT account; nothing here reads
 // the app's current backend or workspace selection.
 import '../../auth/domain/identity_binding.dart';
+import '../../auth/domain/second_factor.dart';
 import 'action_confirmation.dart';
 import 'mcp_admin.dart';
 import 'mcp_connection.dart';
@@ -16,12 +17,17 @@ class McpRepositories {
     required this.connections,
     required this.confirmations,
     required this.identity,
+    required this.secondFactor,
   });
 
   final McpAdminRepository admin;
   final McpConnectionRepository connections;
   final ActionConfirmationRepository confirmations;
   final IdentityBindingRepository identity;
+
+  /// This target's own second factor: a decision against it is checked
+  /// against ITS session's assurance level, never the active backend's.
+  final SecondFactorRepository secondFactor;
 }
 
 /// One client in the registry. Its session persistence and refresh belong
