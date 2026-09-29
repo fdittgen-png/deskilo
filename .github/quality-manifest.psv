@@ -10,11 +10,14 @@
 #   kind `step`:  its own workflow step reports the outcome
 #   conditional:  a `skipped` outcome is acceptable, because the row
 #                 depends on an earlier row of the same job
+#   strict:       (field 4, `tests` rows) a skipped test under `paths` is a
+#                 failure: the row holds required security evidence (#1632)
 Tests|code|step|||the whole Flutter suite, one run, exit code and stream agree
 Architecture|code|tests||test/lint/layering_test.dart,test/lint/file_length_test.dart,test/lint/route_registry_test.dart,test/lint/feature_registry_test.dart|layering, coupling volume, route and feature registries
 Security|code|tests||test/lint/migration_grants_test.dart,test/lint/grant_table_policy_test.dart,test/lint/edge_function_auth_test.dart,test/lint/anchored_patch_test.dart|definer grants, grant-vs-policy, edge auth, anchored patches
 Accessibility|code|tests||test/a11y/,test/core/ui/touch_target_guard_test.dart,test/lint/contrast_test.dart|8 screens x 4 guidelines, 48dp targets, WCAG AA contrast
 Localization|code|tests||test/i18n/,test/lint/l10n_completeness_test.dart,test/lint/legal_terms_test.dart|5 locales, screen overflow, pinned legal terms
+MCP conformance|code|tests|strict|test/features/mcp/,test/tool/mcp_contract_test.dart,test/tool/mcp_coverage_test.dart|every implemented tool mapped to executed tests; the multi-target journey names each injected fault; nothing skipped
 Privacy|code|tests||test/lint/privacy_claims_test.dart,test/lint/privacy_policy_version_test.dart|no claim the code does not keep, retention matrix, erasure
 Coverage|code|step|||by layer and in total, scripts/coverage_gate.sh
 Migration safety|database|step|||every migration replayed from empty
@@ -34,3 +37,4 @@ Mollie and Wero settlement|database|step|conditional||Mollie and Wero separately
 MCP token containment|database|step|conditional||a delegated token reaches only the MCP facade through the real PostgREST; native sessions unchanged
 Instance lifecycle|database|step|conditional||empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation
 Archive preservation|database|step|conditional||a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught
+MCP coverage evidence|database|step|conditional||every pgTAP file the MCP coverage map requires ran and passed in this run, at this commit

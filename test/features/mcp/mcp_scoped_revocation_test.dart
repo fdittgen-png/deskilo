@@ -50,6 +50,7 @@ class _Client implements McpTargetClient {
       connections: connections,
       confirmations: FakeActionConfirmationRepository(),
       identity: FakeIdentityBindingRepository(),
+      secondFactor: FakeSecondFactorRepository(),
     ),
   );
 

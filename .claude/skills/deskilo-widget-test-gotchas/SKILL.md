@@ -38,6 +38,8 @@ description: The recurring reasons a DesKilo widget or lint test fails for a rea
 | a "green" test also passes on master | it asserts a default or a stale reading | red-first against master (`git show origin/master:<file> > <file>`), then restore; if it stays green, the test proves nothing |
 | an HTTP-fixture MFA test sees aal1 after a successful verify, or an unexpected `/auth/v1/token` call | gotrue's `mfa.listFactors()` calls `refreshSession()` first, and `getAuthenticatorAssuranceLevel()` reads the `aal` claim of the (refreshed) JWT | answer `grant_type=refresh_token` with a session at the level the refresh token was issued for (encode it in the token, as `mcp_target_second_factor_test` does); a parameterless `rpc()` posts the body `null`, not `{}` |
 | a widget test asserts a toggle that a `finally` never resets | `_busy` stuck after a hang | bound platform calls with `.timeout` so a hang becomes an error |
+| re-reading an autoDispose family provider in one test returns the FIRST answer | a kept listener keeps the element (and its cached value) alive | `container.invalidate(provider(arg))` before each fresh read (a pull to refresh), as `mcp_multi_target_journey_test` does |
+| an awaited provider error is ALSO reported as an uncaught test failure | the `listen` subscription was closed right after the failing `read(.future)` | keep provider listeners until `addTearDown`; never close them in a `finally` next to the await |
 
 Quick-view keys: `member-doc-quick` / `-download` / `-share` (one prefix
 for every member letter), `vat-report-*`, `proforma-*`.
