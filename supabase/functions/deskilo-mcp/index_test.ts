@@ -6,7 +6,9 @@
 // own; two callers never share it; refusals for a missing or native
 // token, a foreign origin, an oversized or malformed body, an unknown
 // tool and a forbidden field; and the facade's status reaches the result
-// truthfully (pending is not done).
+// truthfully (pending is not done). #1632: interleaved and retried calls
+// keep the JSON-RPC id and the request UUID apart and associated, and a
+// relabelled answer is refused.
 import { assert, assertEquals } from "jsr:@std/assert@1";
 import { handle, projectData, LIMITS } from "./index.ts";
 
@@ -25,6 +27,10 @@ const operationsOf: Record<string, string[]> = {
 };
 let discoveredWorkspaces: unknown[] = [];
 let envelope: Record<string, unknown> = { schema_version: 1, status: "completed", data: {} };
+/** #1632 — a facade answer relabelled after the fact (a controlled fault). */
+let mislabel: Record<string, unknown> = {};
+/** #1632 — per-workspace answer delays, to release answers out of order. */
+const delays: Record<string, number> = {};
 
 Deno.env.set("SUPABASE_URL", "https://stub.supabase.test");
 Deno.env.set("SUPABASE_ANON_KEY", "sb_publishable_stub");
@@ -44,7 +50,19 @@ globalThis.fetch = async (input: string | URL | Request, init?: RequestInit) => 
   if (url.pathname === "/rest/v1/rpc/mcp_my_operations") {
     return Response.json({ operations: operationsOf[token] ?? [], workspaces: discoveredWorkspaces });
   }
-  if (url.pathname === "/rest/v1/rpc/mcp_execute_v1") return Response.json(envelope);
+  if (url.pathname === "/rest/v1/rpc/mcp_execute_v1") {
+    // The facade names what it answers (mcp_envelope): echo the call.
+    const sent = body as Record<string, unknown>;
+    const delay = delays[String(sent.p_workspace_id)] ?? 0;
+    if (delay) await new Promise((r) => setTimeout(r, delay));
+    return Response.json({
+      operation: sent.p_operation,
+      ...(sent.p_workspace_id ? { workspace_id: sent.p_workspace_id } : {}),
+      ...(sent.p_request_id ? { request_id: sent.p_request_id } : {}),
+      ...envelope,
+      ...mislabel,
+    });
+  }
   return new Response("not stubbed", { status: 500 });
 };
 
@@ -307,3 +325,80 @@ Deno.test("stalled request bodies expire before authentication", async () => {
     assertEquals(calls.length, before);
   } finally { LIMITS.deadlineMs = previousDeadline; }
 });
+
+// ── #1632 — provenance: the request UUID is not the JSON-RPC id ─────────
+
+const WS_A = "6b1d3f0e-0000-4000-8000-00000000000a";
+const WS_B = "6b1d3f0e-0000-4000-8000-00000000000b";
+
+async function call(jsonrpcId: number, args: Record<string, unknown>, name = "deskilo_create_reservation") {
+  const res = await handle(new Request("https://stub.supabase.test/functions/v1/deskilo-mcp", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      accept: "application/json, text/event-stream",
+      "mcp-protocol-version": "2025-06-18",
+      Authorization: `Bearer ${ALICE}`,
+    },
+    body: JSON.stringify({ jsonrpc: "2.0", id: jsonrpcId, method: "tools/call", params: { name, arguments: args } }),
+  }));
+  return await res.json();
+}
+
+const booking = (ws: string, requestId: string) => ({
+  request_id: requestId, workspace_id: ws, seat_id: "6b1d3f0e-0000-4000-8000-000000000003",
+  starts_at: "2030-01-01T08:00:00Z", ends_at: "2030-01-01T12:00:00Z",
+});
+
+Deno.test("#1632 interleaved A and B calls keep both ids apart and associated, answered out of order", async () => {
+  envelope = { schema_version: 1, status: "completed", data: {} };
+  delays[WS_A] = 40; // A's answer arrives after B's
+  const before = calls.length;
+  try {
+    const [a, b] = await Promise.all([
+      call(41, booking(WS_A, "6b1d3f0e-0000-4000-8000-0000000000a1")),
+      call(42, booking(WS_B, "6b1d3f0e-0000-4000-8000-0000000000b1")),
+    ]);
+    assertEquals(a.id, 41);
+    assertEquals(b.id, 42);
+    assertEquals(a.result.structuredContent.request_id, "6b1d3f0e-0000-4000-8000-0000000000a1");
+    assertEquals(a.result.structuredContent.workspace_id, WS_A);
+    assertEquals(b.result.structuredContent.request_id, "6b1d3f0e-0000-4000-8000-0000000000b1");
+    assertEquals(b.result.structuredContent.workspace_id, WS_B);
+    const sent = calls.slice(before).filter((c) => c.path === "/rest/v1/rpc/mcp_execute_v1")
+      .map((c) => c.body as Record<string, unknown>);
+    assertEquals(sent.map((s) => s.p_request_id).sort(),
+      ["6b1d3f0e-0000-4000-8000-0000000000a1", "6b1d3f0e-0000-4000-8000-0000000000b1"],
+      "the database receives the request UUIDs, never the JSON-RPC ids");
+    for (const s of sent) assert(![41, 42, "41", "42"].includes(s.p_request_id as never));
+  } finally { delete delays[WS_A]; }
+});
+
+Deno.test("#1632 the same request UUID retried under a new JSON-RPC id is the same request", async () => {
+  envelope = { schema_version: 1, status: "completed", data: {} };
+  const before = calls.length;
+  const first = await call(51, booking(WS_A, "6b1d3f0e-0000-4000-8000-0000000000a2"));
+  const retry = await call(52, booking(WS_A, "6b1d3f0e-0000-4000-8000-0000000000a2"));
+  assertEquals([first.id, retry.id], [51, 52]);
+  const sent = calls.slice(before).filter((c) => c.path === "/rest/v1/rpc/mcp_execute_v1")
+    .map((c) => (c.body as Record<string, unknown>).p_request_id);
+  assertEquals(sent, ["6b1d3f0e-0000-4000-8000-0000000000a2", "6b1d3f0e-0000-4000-8000-0000000000a2"]);
+});
+
+for (const [what, wrong] of [
+  ["workspace", { workspace_id: WS_B }],
+  ["request id", { request_id: "6b1d3f0e-0000-4000-8000-0000000000ff" }],
+  ["operation", { operation: "check_in" }],
+] as const) {
+  Deno.test(`#1632 an answer labelled with another ${what} is refused, never delivered`, async () => {
+    envelope = { schema_version: 1, status: "completed", data: { reservation_id: "r-of-someone-else" } };
+    mislabel = wrong;
+    try {
+      const r = await call(61, booking(WS_A, "6b1d3f0e-0000-4000-8000-0000000000a3"));
+      assertEquals(r.id, 61);
+      assertEquals(r.result.isError, true);
+      assertEquals(r.result.structuredContent, undefined);
+      assert(!JSON.stringify(r).includes("r-of-someone-else"));
+    } finally { mislabel = {}; }
+  });
+}

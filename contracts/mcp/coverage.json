@@ -1,0 +1,221 @@
+{
+ "contract": "deskilo.mcp.coverage",
+ "version": 1,
+ "_comment": "#1632 — every implemented MCP tool mapped to the executable tests that prove it; checked by tool/mcp_coverage.dart and test/tool/mcp_coverage_test.dart. A change to contracts/mcp/operations.json changes contract_sha256: review this map, then record the new fingerprint.",
+ "contract_sha256": "0de0a834e704e36b55c58e0bb86b3a574cdf6b4505e66ee651f54de3d9c26ea7",
+ "catalogue_tests": [
+  "test/tool/mcp_contract_test.dart",
+  "test/features/mcp/mcp_native_contract_parity_test.dart",
+  "supabase/functions/deskilo-mcp/index_test.ts"
+ ],
+ "journeys": [
+  "supabase/tests/database/97_mcp_conformance_journey.sql",
+  "test/features/mcp/mcp_multi_target_journey_test.dart"
+ ],
+ "operations": {
+  "list_workspaces": {
+   "positive": [
+    "supabase/functions/deskilo-mcp/index_test.ts",
+    "supabase/tests/database/59_mcp_policy_and_dispatch.sql"
+   ],
+   "denial": [
+    "supabase/functions/deskilo-mcp/index_test.ts"
+   ]
+  },
+  "get_capabilities": {
+   "positive": [
+    "supabase/tests/database/59_mcp_policy_and_dispatch.sql",
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/96_scoped_invalidation.sql",
+    "supabase/tests/database/97_mcp_conformance_journey.sql",
+    "supabase/functions/deskilo-mcp/index_test.ts"
+   ]
+  },
+  "get_availability": {
+   "positive": [
+    "supabase/tests/database/63_mcp_bounded_reads.sql",
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/64_mcp_connection_consent.sql",
+    "supabase/tests/database/94_mcp_disclosure.sql"
+   ]
+  },
+  "list_my_reservations": {
+   "positive": [
+    "supabase/tests/database/63_mcp_bounded_reads.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ]
+  },
+  "get_my_statement": {
+   "positive": [
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ]
+  },
+  "list_my_invoices": {
+   "positive": [
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ]
+  },
+  "create_reservation": {
+   "positive": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql",
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/96_scoped_invalidation.sql",
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ],
+   "state": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql",
+    "supabase/tests/database/80_mcp_output_minimization.sql",
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ]
+  },
+  "update_reservation": {
+   "positive": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ],
+   "state": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ]
+  },
+  "check_in": {
+   "positive": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/64_mcp_connection_consent.sql"
+   ],
+   "state": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ]
+  },
+  "check_out": {
+   "positive": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ],
+   "state": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ]
+  },
+  "request_reservation_deletion": {
+   "positive": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/59_mcp_policy_and_dispatch.sql"
+   ],
+   "state": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ]
+  },
+  "request_invoice_issue": {
+   "positive": [
+    "supabase/tests/database/76_mcp_financial_requests.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/64_mcp_connection_consent.sql",
+    "supabase/tests/database/76_mcp_financial_requests.sql"
+   ],
+   "state": [
+    "supabase/tests/database/76_mcp_financial_requests.sql"
+   ]
+  },
+  "request_invoice_void": {
+   "positive": [
+    "supabase/tests/database/76_mcp_financial_requests.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/76_mcp_financial_requests.sql"
+   ],
+   "state": [
+    "supabase/tests/database/76_mcp_financial_requests.sql",
+    "supabase/tests/database/82_mcp_workflow_matrices.sql"
+   ]
+  },
+  "request_refund": {
+   "positive": [
+    "supabase/tests/database/76_mcp_financial_requests.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/76_mcp_financial_requests.sql"
+   ],
+   "state": [
+    "supabase/tests/database/76_mcp_financial_requests.sql"
+   ]
+  },
+  "request_member_status_change": {
+   "positive": [
+    "supabase/tests/database/77_mcp_membership_requests.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/77_mcp_membership_requests.sql"
+   ],
+   "state": [
+    "supabase/tests/database/77_mcp_membership_requests.sql",
+    "supabase/tests/database/82_mcp_workflow_matrices.sql"
+   ]
+  },
+  "request_subscription_change": {
+   "positive": [
+    "supabase/tests/database/77_mcp_membership_requests.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/60_mcp_action_confirmations.sql",
+    "supabase/tests/database/77_mcp_membership_requests.sql"
+   ],
+   "state": [
+    "supabase/tests/database/77_mcp_membership_requests.sql",
+    "supabase/tests/database/82_mcp_workflow_matrices.sql"
+   ]
+  },
+  "list_pending_validations": {
+   "positive": [
+    "supabase/tests/database/63_mcp_bounded_reads.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/63_mcp_bounded_reads.sql"
+   ]
+  },
+  "get_validation": {
+   "positive": [
+    "supabase/tests/database/63_mcp_bounded_reads.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/63_mcp_bounded_reads.sql"
+   ]
+  },
+  "respond_to_validation": {
+   "positive": [
+    "supabase/tests/database/78_mcp_validation_decisions.sql",
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/78_mcp_validation_decisions.sql",
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ],
+   "state": [
+    "supabase/tests/database/78_mcp_validation_decisions.sql",
+    "supabase/tests/database/82_mcp_workflow_matrices.sql",
+    "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ]
+  }
+ }
+}

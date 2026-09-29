@@ -217,7 +217,32 @@ exists twice (SQL + Dart), change both and keep the pin.
   second assistant must consent to it again; the probe found that one,
   not the reasoning.
 
-## 10. Lessons of 2026-09-29 (0312, operator functions and renumbering)
+## 10. Lessons of 2026-09-29 (#1632, a pgTAP file that proves it can fail)
+
+- **Inject a fault inside the test, never in a deployed function.** A
+  pgTAP file runs as postgres in one rolled-back transaction, so it may
+  `create or replace` a definer function: save `pg_get_functiondef(fn)`,
+  replace ONE anchor, execute, probe, then `execute` the saved text back.
+  Refuse unless the anchor occurs exactly once (count with
+  `(length(def) - length(replace(def, anchor, ''))) / length(anchor)`):
+  a moved check must fail the test, not turn the fault into a no-op.
+  `97_mcp_conformance_journey.sql` (`pg_temp.inject` / `pg_temp.restore`)
+  is the worked example. A dropped unique index is recreated only after
+  deleting the rows the fault let in.
+- **One dollar tag carries the whole probe.** When the file's bodies only
+  use `$$` and `$q$`, every statement of the probe array can be quoted
+  `$x$…$x$` — no per-statement numbering to keep in sync.
+- **Read the state words before asserting them.** `my_database_capabilities`
+  says `requested` (not `pending`) while an eligibility request waits;
+  consent scopes take `target_ceiling = workspace` from their operations,
+  so a reads-only workspace whose policy ceiling is `own` answers
+  `target_ceiling` to `get_availability`. The first probe run found both.
+- **A second installation cannot live in one database.**
+  `installation_identity` is a singleton referenced by foreign keys: model
+  D2 as a foreign id and epoch that D1 refuses, with D1's own UUIDs, and
+  say in the file header that SQL claim injection proves no OIDC/OAuth.
+
+## 11. Lessons of 2026-09-29 (0312, operator functions and renumbering)
 
 - **The per-statement probe needs two EXECUTE forms.** `execute s into v`
   on an `insert`/`update`/`delete` fails with "INTO used with a command
