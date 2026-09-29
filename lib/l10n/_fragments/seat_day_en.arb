@@ -9,7 +9,7 @@
       }
     }
   },
-  "seatDaySubtitle": "Who has this seat, and when. Tap a free stretch to take it.",
+  "seatDaySubtitle": "Who has this seat, and when. Tap a booking to open it, or a free stretch to take it.",
   "@seatDaySubtitle": {
     "description": "#903 seat day timeline: seatDaySubtitle"
   },

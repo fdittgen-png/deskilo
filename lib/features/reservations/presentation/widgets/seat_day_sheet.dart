@@ -5,7 +5,9 @@
 // row by row — every booking with its hours, its occupant and whether it
 // is done, running or still ahead, and every free stretch as something
 // you can take. Tapping a free row hands its window back to the caller,
-// which opens the ordinary booking sheet on it.
+// which opens the ordinary booking sheet on it. #1813 — tapping a booking
+// hands THAT booking back, so two bookings on one seat each open the
+// sheet one booking on its own seat would.
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -15,11 +17,22 @@ import '../../../plan/domain/seat.dart';
 import '../../domain/seat_state_logic.dart';
 import '../../../../core/i18n/format_controller.dart';
 
+/// What was picked in the day sheet: a free stretch, or one booking.
+sealed class SeatDayPick {
+  const SeatDayPick();
+}
+
 /// A free stretch of the day, between (or around) the bookings.
-class SeatDayGap {
+final class SeatDayGap extends SeatDayPick {
   const SeatDayGap(this.start, this.end);
   final DateTime start;
   final DateTime end;
+}
+
+/// One booking on the seat, picked to act on (#1813).
+final class SeatDayBooking extends SeatDayPick {
+  const SeatDayBooking(this.segment);
+  final SeatDaySegment segment;
 }
 
 /// The day's free stretches around [segments], each at least [minMinutes].
@@ -45,9 +58,9 @@ List<SeatDayGap> seatDayGaps({
   return gaps;
 }
 
-/// Shows the day of [seat]. Returns the free window the person picked, or
-/// null when they only looked.
-Future<SeatDayGap?> showSeatDaySheet(
+/// Shows the day of [seat]. Returns the free window or the booking the
+/// person picked, or null when they only looked.
+Future<SeatDayPick?> showSeatDaySheet(
   BuildContext context, {
   required Seat seat,
   required List<SeatDaySegment> segments,
@@ -56,7 +69,7 @@ Future<SeatDayGap?> showSeatDaySheet(
   required DateTime dayEnd,
   required DateTime now,
 }) =>
-    showModalBottomSheet<SeatDayGap>(
+    showModalBottomSheet<SeatDayPick>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _SeatDaySheet(
@@ -149,6 +162,8 @@ class _SeatDaySheet extends StatelessWidget {
                           (l10n?.seatDaySomeone ?? 'A member'))),
                   trailing: Text(phaseOf(booking.start, booking.end),
                       style: theme.textTheme.labelSmall),
+                  onTap: () =>
+                      Navigator.of(context).pop(SeatDayBooking(booking)),
                 )
               else
                 ListTile(

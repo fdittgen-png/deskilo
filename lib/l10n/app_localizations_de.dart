@@ -11505,7 +11505,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get seatDaySubtitle =>
-      'Wer diesen Platz hat, und wann. Tippe auf eine freie Spanne, um sie zu nehmen.';
+      'Wer diesen Platz hat, und wann. Tippe auf eine Buchung, um sie zu öffnen, oder auf eine freie Spanne, um sie zu nehmen.';
 
   @override
   String get seatDayMine => 'Du';

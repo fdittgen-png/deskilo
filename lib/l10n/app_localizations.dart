@@ -19833,7 +19833,7 @@ abstract class AppLocalizations {
   /// #903 seat day timeline: seatDaySubtitle
   ///
   /// In en, this message translates to:
-  /// **'Who has this seat, and when. Tap a free stretch to take it.'**
+  /// **'Who has this seat, and when. Tap a booking to open it, or a free stretch to take it.'**
   String get seatDaySubtitle;
 
   /// #903 seat day timeline: seatDayMine
