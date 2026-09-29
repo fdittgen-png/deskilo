@@ -11489,7 +11489,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get seatDaySubtitle =>
-      'Quién ocupa esta plaza, y cuándo. Toca un tramo libre para reservarlo.';
+      'Quién ocupa esta plaza, y cuándo. Toca una reserva para abrirla, o un tramo libre para reservarlo.';
 
   @override
   String get seatDayMine => 'Tú';

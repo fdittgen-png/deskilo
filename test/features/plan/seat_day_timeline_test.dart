@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/test_clock.dart';
-import 'plan_screen_test.dart' show pumpPlan;
+import 'plan_screen_test.dart' show pumpPlan, seatCenter;
 
 // #908 — o'clock on the WORKSPACE clock, which is what a stored
 // reservation and the open day both anchor to. Building these on the
@@ -211,9 +211,9 @@ void main() {
   });
 
   group('the day sheet', () {
-    Future<SeatDayGap?> open(WidgetTester tester,
+    Future<SeatDayPick?> open(WidgetTester tester,
         {required List<Reservation> reservations}) async {
-      SeatDayGap? picked;
+      SeatDayPick? picked;
       await tester.pumpWidget(MaterialApp(
         home: Builder(
           builder: (context) => Scaffold(
@@ -236,6 +236,38 @@ void main() {
         ),
       ));
       await tester.tap(find.byKey(const ValueKey('open')));
+      await tester.pumpAndSettle();
+      return picked;
+    }
+
+    /// The pick as it stands once the sheet has closed.
+    Future<SeatDayPick?> pickAfter(WidgetTester tester, Finder row,
+        {required List<Reservation> reservations}) async {
+      SeatDayPick? picked;
+      await tester.pumpWidget(MaterialApp(
+        home: Builder(
+          builder: (context) => Scaffold(
+            body: Center(
+              child: FilledButton(
+                key: const ValueKey('open'),
+                onPressed: () async => picked = await showSeatDaySheet(
+                  context,
+                  seat: _seat,
+                  segments: _segments(reservations),
+                  names: const {'member-2': 'Ana Lima'},
+                  dayStart: _dayStart,
+                  dayEnd: _dayEnd,
+                  now: _at(10),
+                ),
+                child: const Text('open'),
+              ),
+            ),
+          ),
+        ),
+      ));
+      await tester.tap(find.byKey(const ValueKey('open')));
+      await tester.pumpAndSettle();
+      await tester.tap(row);
       await tester.pumpAndSettle();
       return picked;
     }
@@ -278,5 +310,62 @@ void main() {
       // The sheet closed on the choice.
       expect(find.text('Free — book it'), findsNothing);
     });
+
+    testWidgets('#1813 — tapping a booking hands THAT booking back, not the '
+        'first one on the seat', (tester) async {
+      final picked = await pickAfter(
+        tester,
+        find.byKey(const ValueKey('seat-day-booking-afternoon')),
+        reservations: [
+          _booking('morning', fromHour: 8, toHour: 12, member: 'member-1'),
+          _booking('afternoon', fromHour: 13, toHour: 17, member: 'member-1'),
+        ],
+      );
+      expect(picked, isA<SeatDayBooking>());
+      final segment = (picked! as SeatDayBooking).segment;
+      expect(segment.reservationId, 'afternoon');
+      expect(segment.isMine, isTrue);
+    });
+  });
+
+  testWidgets('#1813 — two of MY bookings on one seat: each opens its own '
+      'sheet, and cancelling the afternoon leaves the morning', (tester) async {
+    final env = await pumpPlan(tester, seedReservations: (repo) {
+      for (final (id, from, to) in [
+        ('res-morning', 8, 12),
+        ('res-afternoon', 13, 17),
+      ]) {
+        repo.reservations.add(Reservation(
+          id: id,
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
+          memberId: 'member-1',
+          startsAt: _at(from),
+          endsAt: _at(to),
+          status: ReservationStatus.reserved,
+        ));
+      }
+    });
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    // The seat carries two bookings: the day sheet, one row each.
+    expect(find.byKey(const ValueKey('seat-day-booking-res-morning')),
+        findsOneWidget);
+    await tester
+        .tap(find.byKey(const ValueKey('seat-day-booking-res-afternoon')));
+    await tester.pumpAndSettle();
+
+    // The afternoon's own sheet: its hours, and the cancel it offers
+    // for one booking on its own seat.
+    expect(find.text('13:00 – 17:00'), findsOneWidget);
+    await tester.tap(find.text('Cancel reservation'));
+    await tester.pumpAndSettle();
+
+    ReservationStatus statusOf(String id) =>
+        env.reservations.reservations.firstWhere((r) => r.id == id).status;
+    expect(statusOf('res-afternoon'), ReservationStatus.cancelled);
+    expect(statusOf('res-morning'), ReservationStatus.reserved,
+        reason: 'the other booking on the same seat is untouched');
   });
 }

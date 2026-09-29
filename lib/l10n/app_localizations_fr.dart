@@ -11522,7 +11522,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get seatDaySubtitle =>
-      'Qui occupe cette place, et quand. Touchez une plage libre pour la prendre.';
+      'Qui occupe cette place, et quand. Touchez une réservation pour l\'ouvrir, ou une plage libre pour la prendre.';
 
   @override
   String get seatDayMine => 'Vous';
