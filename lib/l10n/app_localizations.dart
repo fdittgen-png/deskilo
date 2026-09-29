@@ -6289,6 +6289,132 @@ abstract class AppLocalizations {
   /// **'Asked for, never assumed. Switch on what this space actually runs.'**
   String get featureTierPlatformDesc;
 
+  /// #1648 The one explicit button that starts Sign in with Deskilo in the system browser. Deskilo is the brand; do not translate it.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Deskilo'**
+  String get federationContinue;
+
+  /// #1648 One sentence under Continue with Deskilo: where the person goes and returns, and that nothing here is merged. {server} is the server host name.
+  ///
+  /// In en, this message translates to:
+  /// **'Your browser confirms your Deskilo account, then brings you back to {server}. Your memberships and history here stay as they are.'**
+  String federationPurpose(String server);
+
+  /// #1648 Toggle revealing safe technical details (host names only) about the sign-in destination.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical details'**
+  String get federationDetails;
+
+  /// #1648 Technical detail line: the server the person returns to. {host} is a host name.
+  ///
+  /// In en, this message translates to:
+  /// **'Server: {host}'**
+  String federationDetailServer(String host);
+
+  /// #1648 Technical detail line: the identity authority that confirms the Deskilo account. {host} is a host name.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity authority: {host}'**
+  String federationDetailAuthority(String host);
+
+  /// #1648 Shown only while the system browser is being opened.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening sign-in…'**
+  String get federationStageOpening;
+
+  /// #1648 Shown only while the app waits for the browser to return.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for sign-in in your browser…'**
+  String get federationStageWaiting;
+
+  /// #1648 Shown only while the returned sign-in is being verified and finished.
+  ///
+  /// In en, this message translates to:
+  /// **'Completing sign-in…'**
+  String get federationStageCompleting;
+
+  /// #1648 Abandons the pending Deskilo sign-in; the previous context stays.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get federationCancel;
+
+  /// #1648 Starts a fresh Deskilo sign-in after a failure.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get federationRetry;
+
+  /// #1648 Dismisses a Deskilo sign-in failure message.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get federationClose;
+
+  /// #1648 Next action when the Deskilo account matches an unlinked existing account: sign in to that account first.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to my existing account'**
+  String get federationActionExistingAccount;
+
+  /// #1648 Next action when the server is incompatible: open the server screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Review server'**
+  String get federationActionReviewServer;
+
+  /// #1648 Failure: the browser returned a different Deskilo account.
+  ///
+  /// In en, this message translates to:
+  /// **'Your browser signed in with a different Deskilo account. Switch accounts in the browser, then try again.'**
+  String get federationFailureWrongAccount;
+
+  /// #1648 Failure: the Deskilo account matches an existing, unlinked account here. Never suggest creating a new account.
+  ///
+  /// In en, this message translates to:
+  /// **'This Deskilo account matches an account here that is not linked to it yet. Sign in to that account, then link Deskilo under Linked accounts. Nothing is merged until the server confirms it.'**
+  String get federationFailureUnlinked;
+
+  /// #1648 Failure: the server does not accept this Deskilo identity authority.
+  ///
+  /// In en, this message translates to:
+  /// **'This server does not accept this Deskilo sign-in. Check the server address, or ask its administrator.'**
+  String get federationFailureIncompatible;
+
+  /// #1648 Failure: Deskilo sign-in is not configured on this server.
+  ///
+  /// In en, this message translates to:
+  /// **'Deskilo sign-in is not set up on this server. Ask its administrator to enable it.'**
+  String get federationFailureProviderMissing;
+
+  /// #1648 Failure: no connection to the server.
+  ///
+  /// In en, this message translates to:
+  /// **'The server could not be reached, so the sign-in was not completed. Check your connection, then try again.'**
+  String get federationFailureNetwork;
+
+  /// #1648 Failure: the sign-in was cancelled or refused in the browser.
+  ///
+  /// In en, this message translates to:
+  /// **'The sign-in was cancelled or refused in the browser. Nothing changed; you can try again.'**
+  String get federationFailureRefused;
+
+  /// #1648 Failure: the pending sign-in expired.
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in took too long and has expired. Start it again.'**
+  String get federationFailureExpired;
+
+  /// #1648 Failure: the system browser could not be opened.
+  ///
+  /// In en, this message translates to:
+  /// **'The browser could not be opened. Check that a browser is available, then try again.'**
+  String get federationFailureBrowser;
+
   /// #1654 getting started: featureMemberGettingStartedTitle
   ///
   /// In en, this message translates to:

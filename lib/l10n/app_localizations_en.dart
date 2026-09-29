@@ -3594,6 +3594,84 @@ class AppLocalizationsEn extends AppLocalizations {
       'Asked for, never assumed. Switch on what this space actually runs.';
 
   @override
+  String get federationContinue => 'Continue with Deskilo';
+
+  @override
+  String federationPurpose(String server) {
+    return 'Your browser confirms your Deskilo account, then brings you back to $server. Your memberships and history here stay as they are.';
+  }
+
+  @override
+  String get federationDetails => 'Technical details';
+
+  @override
+  String federationDetailServer(String host) {
+    return 'Server: $host';
+  }
+
+  @override
+  String federationDetailAuthority(String host) {
+    return 'Identity authority: $host';
+  }
+
+  @override
+  String get federationStageOpening => 'Opening sign-in…';
+
+  @override
+  String get federationStageWaiting => 'Waiting for sign-in in your browser…';
+
+  @override
+  String get federationStageCompleting => 'Completing sign-in…';
+
+  @override
+  String get federationCancel => 'Cancel';
+
+  @override
+  String get federationRetry => 'Try again';
+
+  @override
+  String get federationClose => 'Close';
+
+  @override
+  String get federationActionExistingAccount =>
+      'Sign in to my existing account';
+
+  @override
+  String get federationActionReviewServer => 'Review server';
+
+  @override
+  String get federationFailureWrongAccount =>
+      'Your browser signed in with a different Deskilo account. Switch accounts in the browser, then try again.';
+
+  @override
+  String get federationFailureUnlinked =>
+      'This Deskilo account matches an account here that is not linked to it yet. Sign in to that account, then link Deskilo under Linked accounts. Nothing is merged until the server confirms it.';
+
+  @override
+  String get federationFailureIncompatible =>
+      'This server does not accept this Deskilo sign-in. Check the server address, or ask its administrator.';
+
+  @override
+  String get federationFailureProviderMissing =>
+      'Deskilo sign-in is not set up on this server. Ask its administrator to enable it.';
+
+  @override
+  String get federationFailureNetwork =>
+      'The server could not be reached, so the sign-in was not completed. Check your connection, then try again.';
+
+  @override
+  String get federationFailureRefused =>
+      'The sign-in was cancelled or refused in the browser. Nothing changed; you can try again.';
+
+  @override
+  String get federationFailureExpired =>
+      'This sign-in took too long and has expired. Start it again.';
+
+  @override
+  String get federationFailureBrowser =>
+      'The browser could not be opened. Check that a browser is available, then try again.';
+
+  @override
   String get featureMemberGettingStartedTitle => 'Get started card';
 
   @override

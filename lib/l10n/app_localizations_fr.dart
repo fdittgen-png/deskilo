@@ -3632,6 +3632,85 @@ class AppLocalizationsFr extends AppLocalizations {
       'Demandé, jamais supposé. Activez ce que cet espace fait vraiment.';
 
   @override
+  String get federationContinue => 'Continuer avec Deskilo';
+
+  @override
+  String federationPurpose(String server) {
+    return 'Votre navigateur confirme votre compte Deskilo, puis vous ramène à $server. Vos adhésions et votre historique ici restent inchangés.';
+  }
+
+  @override
+  String get federationDetails => 'Détails techniques';
+
+  @override
+  String federationDetailServer(String host) {
+    return 'Serveur : $host';
+  }
+
+  @override
+  String federationDetailAuthority(String host) {
+    return 'Autorité d\'identité : $host';
+  }
+
+  @override
+  String get federationStageOpening => 'Ouverture de la connexion…';
+
+  @override
+  String get federationStageWaiting =>
+      'En attente de la connexion dans votre navigateur…';
+
+  @override
+  String get federationStageCompleting => 'Finalisation de la connexion…';
+
+  @override
+  String get federationCancel => 'Annuler';
+
+  @override
+  String get federationRetry => 'Réessayer';
+
+  @override
+  String get federationClose => 'Fermer';
+
+  @override
+  String get federationActionExistingAccount =>
+      'Me connecter à mon compte existant';
+
+  @override
+  String get federationActionReviewServer => 'Vérifier le serveur';
+
+  @override
+  String get federationFailureWrongAccount =>
+      'Votre navigateur s\'est connecté avec un autre compte Deskilo. Changez de compte dans le navigateur, puis réessayez.';
+
+  @override
+  String get federationFailureUnlinked =>
+      'Ce compte Deskilo correspond à un compte d\'ici qui ne lui est pas encore lié. Connectez-vous à ce compte, puis liez Deskilo dans Comptes liés. Rien n\'est fusionné avant la confirmation du serveur.';
+
+  @override
+  String get federationFailureIncompatible =>
+      'Ce serveur n\'accepte pas cette connexion Deskilo. Vérifiez l\'adresse du serveur ou contactez son administrateur.';
+
+  @override
+  String get federationFailureProviderMissing =>
+      'La connexion Deskilo n\'est pas configurée sur ce serveur. Demandez à son administrateur de l\'activer.';
+
+  @override
+  String get federationFailureNetwork =>
+      'Le serveur est injoignable, la connexion n\'a donc pas abouti. Vérifiez votre connexion, puis réessayez.';
+
+  @override
+  String get federationFailureRefused =>
+      'La connexion a été annulée ou refusée dans le navigateur. Rien n\'a changé ; vous pouvez réessayer.';
+
+  @override
+  String get federationFailureExpired =>
+      'Cette connexion a pris trop de temps et a expiré. Recommencez-la.';
+
+  @override
+  String get federationFailureBrowser =>
+      'Le navigateur n\'a pas pu s\'ouvrir. Vérifiez qu\'un navigateur est disponible, puis réessayez.';
+
+  @override
   String get featureMemberGettingStartedTitle => 'Carte Premiers pas';
 
   @override

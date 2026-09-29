@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:deskilo/features/auth/domain/auth_outcome.dart';
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/badge_sign_in.dart';
+import 'package:deskilo/features/auth/domain/federation_port.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
@@ -128,6 +129,10 @@ class FakeAuthRepository implements AuthRepository {
 
   @override
   Stream<AuthResult> authFeedback() => const Stream.empty();
+
+  /// No browser handoff in the demo; tests that need one set it.
+  @override
+  FederationPort? federation;
 
   @override
   Stream<String?> authStateChanges() async* {

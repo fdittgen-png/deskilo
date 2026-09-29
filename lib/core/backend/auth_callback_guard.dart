@@ -6,6 +6,7 @@ import 'dart:math';
 import '../trace/trace_logger.dart';
 
 import 'auth_secret_store.dart';
+import 'federation_handoff.dart';
 import 'installation_auth_storage.dart';
 
 AuthCallbackGuard? bootAuthCallbackGuard;
@@ -28,10 +29,36 @@ class AuthCallbackGuard {
   final DateTime Function() now;
   final feedback = StreamController<AuthCallbackStatus>.broadcast();
   AuthCallbackStatus? lastFeedback;
-  void report(AuthCallbackStatus status) {
+
+  /// #1648 — the same answers, tagged with the flow they belong to, so a
+  /// screen never shows flow A's result on flow B.
+  final events = StreamController<FederationEvent>.broadcast();
+  FederationEvent? lastEvent;
+
+  void report(AuthCallbackStatus status, {FederationFailure? failure}) {
     lastFeedback = status;
     feedback.add(status);
+    final current = flow;
+    if (current == null) return;
+    _emit(status == AuthCallbackStatus.authenticated
+        ? FederationEvent.authenticated(current)
+        : FederationEvent.failed(current, failure ??
+            (status == AuthCallbackStatus.unavailable
+                ? FederationFailure.network
+                : FederationFailure.refused)));
   }
+
+  void _emit(FederationEvent event) {
+    lastEvent = event;
+    events.add(event);
+  }
+
+  /// Whether [pendingFlow] is still waiting for its browser return: begun,
+  /// unclaimed and inside its window. Inspecting never relaunches anything.
+  bool awaiting(String pendingFlow) =>
+      flow == pendingFlow &&
+      !_consumed &&
+      (_pending!['expires'] as int) > now().millisecondsSinceEpoch;
 
   Map<String, dynamic>? _pending;
   bool _consumed = false;
@@ -100,6 +127,7 @@ class AuthCallbackGuard {
     _pending = pending;
     _consumed = false;
     lastFeedback = null;
+    lastEvent = null;
     return callback
         .replace(
           queryParameters: {
@@ -137,6 +165,7 @@ class AuthCallbackGuard {
       return false;
     }
     _consumed = true;
+    _emit(FederationEvent.completing(pending['flow'] as String));
     return true;
   }
 

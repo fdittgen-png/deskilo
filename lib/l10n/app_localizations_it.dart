@@ -3625,6 +3625,84 @@ class AppLocalizationsIt extends AppLocalizations {
       'Richiesto, mai presunto. Attivate ciò che questo spazio fa davvero.';
 
   @override
+  String get federationContinue => 'Continua con Deskilo';
+
+  @override
+  String federationPurpose(String server) {
+    return 'Il browser conferma il tuo account Deskilo e poi ti riporta a $server. Le tue adesioni e la tua cronologia qui restano invariate.';
+  }
+
+  @override
+  String get federationDetails => 'Dettagli tecnici';
+
+  @override
+  String federationDetailServer(String host) {
+    return 'Server: $host';
+  }
+
+  @override
+  String federationDetailAuthority(String host) {
+    return 'Autorità di identità: $host';
+  }
+
+  @override
+  String get federationStageOpening => 'Apertura dell\'accesso…';
+
+  @override
+  String get federationStageWaiting => 'In attesa dell\'accesso nel browser…';
+
+  @override
+  String get federationStageCompleting => 'Completamento dell\'accesso…';
+
+  @override
+  String get federationCancel => 'Annulla';
+
+  @override
+  String get federationRetry => 'Riprova';
+
+  @override
+  String get federationClose => 'Chiudi';
+
+  @override
+  String get federationActionExistingAccount =>
+      'Accedi al mio account esistente';
+
+  @override
+  String get federationActionReviewServer => 'Verifica il server';
+
+  @override
+  String get federationFailureWrongAccount =>
+      'Il browser ha effettuato l\'accesso con un altro account Deskilo. Cambia account nel browser, poi riprova.';
+
+  @override
+  String get federationFailureUnlinked =>
+      'Questo account Deskilo corrisponde a un account qui non ancora collegato. Accedi a quell\'account, poi collega Deskilo in Account collegati. Nulla viene unito finché il server non lo conferma.';
+
+  @override
+  String get federationFailureIncompatible =>
+      'Questo server non accetta questo accesso Deskilo. Controlla l\'indirizzo del server o chiedi al suo amministratore.';
+
+  @override
+  String get federationFailureProviderMissing =>
+      'L\'accesso con Deskilo non è configurato su questo server. Chiedi al suo amministratore di attivarlo.';
+
+  @override
+  String get federationFailureNetwork =>
+      'Il server non è raggiungibile, quindi l\'accesso non è stato completato. Controlla la connessione, poi riprova.';
+
+  @override
+  String get federationFailureRefused =>
+      'L\'accesso è stato annullato o rifiutato nel browser. Non è cambiato nulla; puoi riprovare.';
+
+  @override
+  String get federationFailureExpired =>
+      'Questo accesso ha richiesto troppo tempo ed è scaduto. Ricomincialo.';
+
+  @override
+  String get federationFailureBrowser =>
+      'Impossibile aprire il browser. Verifica che sia disponibile un browser, poi riprova.';
+
+  @override
   String get featureMemberGettingStartedTitle => 'Scheda Primi passi';
 
   @override
