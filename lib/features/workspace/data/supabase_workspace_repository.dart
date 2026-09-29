@@ -4,6 +4,7 @@ import '../../../core/validation/pending_validation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/time/work_hours.dart';
+import '../domain/invitation_answer.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/booking_policies.dart';
 import '../domain/new_member_defaults.dart';
@@ -178,6 +179,16 @@ class SupabaseWorkspaceRepository
     });
     return result as String;
   }
+
+  @override
+  Future<InvitationAnswer> previewInvitation(String inviteCode) async =>
+      InvitationAnswer.fromJson(await _client.rpc<dynamic>(
+          'invitation_preview', params: {'p_code': inviteCode}));
+
+  @override
+  Future<InvitationAnswer> joinByInvitation(String inviteCode) async =>
+      InvitationAnswer.fromJson(await _client.rpc<dynamic>(
+          'join_by_invitation', params: {'p_code': inviteCode}));
 
   @override
   Future<String> createInvitation(

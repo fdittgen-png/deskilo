@@ -33,7 +33,11 @@ import '../widgets/server_facts_card.dart';
 /// (`bootedBackendUrlProvider`). A save that has not been followed by a
 /// restart is shown as pending, with the way back.
 class BackendScreen extends ConsumerStatefulWidget {
-  const BackendScreen({super.key});
+  const BackendScreen({super.key, this.candidate});
+
+  /// #1652 — the server an invitation named: put on the form as the
+  /// candidate, verified and saved only by the person, like a typed one.
+  final BackendDescriptor? candidate;
 
   @override
   ConsumerState<BackendScreen> createState() => _BackendScreenState();
@@ -130,7 +134,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
           BackendCandidateForm(
             topic: topic,
             isDefault: isDefault,
-            initial: isDefault ? null : endpoint,
+            initial: widget.candidate?.endpoint ?? (isDefault ? null : endpoint),
             onApply: _apply,
             onVerified: (at) => setState(() => _lastOk = at),
           ),

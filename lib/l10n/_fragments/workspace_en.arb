@@ -87,7 +87,7 @@
   "@scanJoinTitle": {
     "description": "App-bar title of the QR scanner screen"
   },
-  "scanJoinHelp": "Point the camera at the invitation QR — the code is taken over and joined automatically.",
+  "scanJoinHelp": "Point the camera at the invitation QR — you see the workspace before you join.",
   "scanJoinNotAnInvite": "That QR is not a DesKilo invitation — scan the one from the invitation message.",
   "@scanJoinNotAnInvite": {
     "description": "Join-QR scanner: the QR decoded but is not an invitation (#791)"

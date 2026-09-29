@@ -16,6 +16,8 @@ import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/public_holidays.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
+import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
@@ -356,6 +358,57 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       );
     }
     return workspace.id;
+  }
+
+  /// #1652 — answers a test fixes for a code (expired, revoked, paused…);
+  /// they win over everything below, for the preview and the join alike.
+  final invitationAnswers = <String, InvitationAnswer>{};
+
+  /// #1652 — code → the workspace a join by that code made.
+  final joinedByCode = <String, String>{};
+  int previewCalls = 0, joinByInvitationCalls = 0;
+
+  @override
+  Future<InvitationAnswer> previewInvitation(String inviteCode) async {
+    previewCalls++;
+    return _invitationState(inviteCode.trim().toUpperCase());
+  }
+
+  InvitationAnswer _invitationState(String code) {
+    final fixed = invitationAnswers[code];
+    if (fixed != null) return fixed;
+    final joined = joinedByCode[code];
+    if (joined != null) {
+      return InvitationAnswer(InvitationState.alreadyMember,
+          workspaceId: joined, workspaceName: 'Joined Space',
+          memberStatus: myMember.workspaceId == joined ? myMember.status : MemberStatus.active);
+    }
+    final minted = mintedInvitations.where((i) => i.code == code).firstOrNull;
+    if (minted != null && redeemedInvitations.contains(code)) {
+      return const InvitationAnswer(InvitationState.wrongAccount);
+    }
+    if (minted == null && code != 'GOODCODE22') {
+      return const InvitationAnswer(InvitationState.invalid);
+    }
+    return InvitationAnswer(InvitationState.valid,
+        workspaceName: 'Joined Space', environment: 'dev',
+        offeredRole: minted?.isAdmin ?? false ? InviteRole.admin : InviteRole.user,
+        requiresApproval: true);
+  }
+
+  @override
+  Future<InvitationAnswer> joinByInvitation(String inviteCode) async {
+    joinByInvitationCalls++;
+    final code = inviteCode.trim().toUpperCase();
+    final before = _invitationState(code);
+    if (before.state != InvitationState.valid) return before;
+    final id = await joinWorkspace(code);
+    joinedByCode[code] = id;
+    final status = myMember.workspaceId == id ? myMember.status : MemberStatus.active;
+    return InvitationAnswer(
+        status == MemberStatus.pending ? InvitationState.joinedPending : InvitationState.joinedActive,
+        workspaceId: id, workspaceName: 'Joined Space', environment: 'dev',
+        offeredRole: before.offeredRole, memberStatus: status);
   }
 
   /// (#153) Arguments of the last [updateWorkspaceLocale] call, for

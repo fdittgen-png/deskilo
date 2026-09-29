@@ -4,6 +4,7 @@ import '../../../../core/ui/app_snack.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/share/text_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -44,8 +45,10 @@ String buildInvitationMessage({
   String lastName = '',
   String phone = '',
   bool monospaceCode = false,
+  BackendEndpoint? target,
 }) {
-  final link = InviteUriCodec.encode(code: code, role: role);
+  // #1652 — with [target], the link names the server it was issued on.
+  final link = InviteUriCodec.encode(code: code, role: role, target: target);
   final shownCode = monospaceCode ? '```$code```' : code;
   final l10n = lookupAppLocalizations(Locale(languageCode));
   // #486 — the chosen language's own template wins; the legacy single
@@ -206,6 +209,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
       lastName: _lastName.text.trim(),
       phone: _phone.text.trim(),
       monospaceCode: monospace,
+      target: ref.read(activeBackendProvider).value,
     );
   }
 

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import '../../../core/time/work_hours.dart';
 import 'booking_granularity.dart';
 import 'booking_policies.dart';
+import 'invitation_answer.dart';
 import 'new_member_defaults.dart';
 import 'closure_day.dart';
 import 'public_holidays.dart';
@@ -93,6 +94,16 @@ abstract class WorkspaceRepository {
   /// personal invitation, whose row fixes the role (0051) — a join
   /// therefore always carries a role, and never `owner`.
   Future<String> joinWorkspace(String inviteCode);
+
+  /// #1652 (0309) — what [inviteCode] would do for the signed-in account,
+  /// read without writing anything: the workspace's name, environment and
+  /// offered role, or why it cannot be used.
+  Future<InvitationAnswer> previewInvitation(String inviteCode);
+
+  /// #1652 (0309) — joins through the same admission path as
+  /// [joinWorkspace] and answers what happened. A repeated call answers
+  /// already-member instead of joining twice.
+  Future<InvitationAnswer> joinByInvitation(String inviteCode);
 
   /// Mints a personal, single-use invitation (0051) and returns its code.
   /// Admins may mint member invites; only owners may mint admin invites —

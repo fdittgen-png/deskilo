@@ -26,6 +26,16 @@ Future<FakeWorkspaceRepository> pumpWithoutWorkspace(
   return repo;
 }
 
+/// #1652 — the review, then the explicit Join.
+Future<void> reviewAndJoin(WidgetTester tester) async {
+  await tester.tap(find.byKey(const ValueKey('invitation-review-button')));
+  await tester.pumpAndSettle();
+  expect(find.byKey(const ValueKey('invitation-review')), findsOneWidget);
+  await tester.ensureVisible(find.byKey(const ValueKey('invitation-join')));
+  await tester.tap(find.byKey(const ValueKey('invitation-join')));
+  await tester.pumpAndSettle();
+}
+
 /// #1303 S2 — the name step's shortcut to the confirm step.
 Future<void> useSuggested(WidgetTester tester) async {
   await tester.pump();
@@ -135,8 +145,7 @@ void main() {
     await tester.tap(find.text('Join a workspace'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextFormField).first, 'GOODCODE22');
-    await tester.tap(find.text('Join'));
-    await tester.pumpAndSettle();
+    await reviewAndJoin(tester);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
   });
@@ -154,26 +163,24 @@ void main() {
         '(or scan the invite QR — deskilo://join?role=user&code=GOODCODE22)\n'
         'See you soon!';
     await tester.enterText(find.byType(TextFormField).first, message);
-    await tester.tap(find.text('Join'));
-    await tester.pumpAndSettle();
+    await reviewAndJoin(tester);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
-  testWidgets('joining with an invalid code shows the error and stays',
+  testWidgets('an unknown code is named as such, joins nothing and stays',
       (tester) async {
-    await pumpWithoutWorkspace(tester);
+    final repo = await pumpWithoutWorkspace(tester);
 
     await tester.tap(find.text('Join a workspace'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextFormField).first, 'BADCODE99');
-    await tester.tap(find.text('Join'));
+    await tester.tap(find.byKey(const ValueKey('invitation-review-button')));
     await tester.pumpAndSettle();
 
-    expect(
-      find.text('Something went wrong. Please try again.'),
-      findsOneWidget,
-    );
+    expect(find.byKey(const ValueKey('invitation-invalid')), findsOneWidget);
+    expect(find.byKey(const ValueKey('invitation-join')), findsNothing);
+    expect(repo.joinByInvitationCalls, 0);
     expect(find.byType(ShellBottomBar), findsNothing);
   });
 
@@ -218,6 +225,14 @@ void main() {
     expect(find.byKey(const ValueKey('scan-join-camera')), findsOneWidget);
 
     scanner.emit('deskilo://join?role=user&code=GOODCODE22');
+    await tester.pumpAndSettle();
+
+    // #1652 — a scan fills the field and shows the review; only the
+    // explicit Join joins.
+    expect(find.byKey(const ValueKey('invitation-review')), findsOneWidget);
+    expect(repo.joinByInvitationCalls, 0);
+    expect(repo.workspaces, isEmpty);
+    await tester.tap(find.byKey(const ValueKey('invitation-join')));
     await tester.pumpAndSettle();
 
     expect(find.byType(ShellBottomBar), findsOneWidget);

@@ -56,7 +56,8 @@ Future<bool> runOnboardingAction({required BuildContext context,
         final intent = ref.read(entryIntentsProvider);
         final explicitTask = intent != null &&
             intent.purpose != EntryPurpose.defaultEntry &&
-            intent.destination != null && intent.destination != '/onboarding';
+            intent.destination != null &&
+            Uri.parse(intent.destination!).path != '/onboarding';
         if (!explicitTask) {
           // The result selects this session's destination, not the account's
           // saved default. Synchronous activation leaves no delayed selection

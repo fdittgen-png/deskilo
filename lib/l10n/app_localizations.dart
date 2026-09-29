@@ -7729,6 +7729,228 @@ abstract class AppLocalizations {
   /// **'{count} checks passed'**
   String instanceDoctorPassed(int count);
 
+  /// No description provided for @invitationReviewButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Review invitation'**
+  String get invitationReviewButton;
+
+  /// No description provided for @invitationPasteButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste'**
+  String get invitationPasteButton;
+
+  /// No description provided for @invitationReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check before you join'**
+  String get invitationReviewTitle;
+
+  /// No description provided for @invitationServerRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Server: {host}'**
+  String invitationServerRow(String host);
+
+  /// No description provided for @invitationServerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Named “{label}” by whoever shared it'**
+  String invitationServerLabel(String label);
+
+  /// No description provided for @invitationJoiningAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Joining as {account}'**
+  String invitationJoiningAs(String account);
+
+  /// No description provided for @invitationRoleMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Offered role: member'**
+  String get invitationRoleMember;
+
+  /// No description provided for @invitationRoleAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Offered role: administrator'**
+  String get invitationRoleAdmin;
+
+  /// No description provided for @invitationRoleUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Offered role: not known yet'**
+  String get invitationRoleUnknown;
+
+  /// No description provided for @invitationApprovalRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'An administrator approves new members before the workspace opens.'**
+  String get invitationApprovalRequired;
+
+  /// No description provided for @invitationApprovalUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Whether an administrator must approve is not known.'**
+  String get invitationApprovalUnknown;
+
+  /// No description provided for @invitationEnvironmentTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Test workspace'**
+  String get invitationEnvironmentTest;
+
+  /// No description provided for @invitationEnvironmentProduction.
+  ///
+  /// In en, this message translates to:
+  /// **'Production workspace'**
+  String get invitationEnvironmentProduction;
+
+  /// No description provided for @invitationJoinButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Join workspace'**
+  String get invitationJoinButton;
+
+  /// No description provided for @invitationChangeAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Change account'**
+  String get invitationChangeAccount;
+
+  /// No description provided for @invitationCheckAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Use another invitation'**
+  String get invitationCheckAnother;
+
+  /// No description provided for @invitationAlreadyMember.
+  ///
+  /// In en, this message translates to:
+  /// **'You are already a member of {workspace}.'**
+  String invitationAlreadyMember(String workspace);
+
+  /// No description provided for @invitationContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to this workspace'**
+  String get invitationContinue;
+
+  /// No description provided for @invitationPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Your membership in {workspace} is paused. Only an administrator there can resume it.'**
+  String invitationPaused(String workspace);
+
+  /// No description provided for @invitationExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'This invitation has expired. Ask the person who sent it for a new one.'**
+  String get invitationExpired;
+
+  /// No description provided for @invitationRevoked.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace code was replaced. Ask the person who sent it for the current one.'**
+  String get invitationRevoked;
+
+  /// No description provided for @invitationWrongAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'This invitation was already used by another account. If it was meant for you, sign in with that account.'**
+  String get invitationWrongAccount;
+
+  /// No description provided for @invitationInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'No workspace on {host} knows this invitation. Check it, or ask the organizer for their server link.'**
+  String invitationInvalid(String host);
+
+  /// No description provided for @invitationUnknownAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'The server gave an answer this version of the app cannot read. Nothing was changed.'**
+  String get invitationUnknownAnswer;
+
+  /// No description provided for @invitationOtherServer.
+  ///
+  /// In en, this message translates to:
+  /// **'This invitation is for another server: {host}.'**
+  String invitationOtherServer(String host);
+
+  /// No description provided for @invitationThisDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'This device uses {host}. An invitation is only checked on its own server.'**
+  String invitationThisDevice(String host);
+
+  /// No description provided for @invitationUseServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this server'**
+  String get invitationUseServer;
+
+  /// No description provided for @invitationNewerVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'This invitation was made by a newer version of DesKilo. Update the app, then open it again.'**
+  String get invitationNewerVersion;
+
+  /// No description provided for @invitationBadServer.
+  ///
+  /// In en, this message translates to:
+  /// **'The server in this invitation is not valid. Ask for a new invitation.'**
+  String get invitationBadServer;
+
+  /// No description provided for @invitationCheckFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The invitation could not be checked — status not updated. Nothing was changed; try again.'**
+  String get invitationCheckFailed;
+
+  /// No description provided for @invitationJoinUnconfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'The result could not be confirmed. Join again to check — the invitation is not used twice.'**
+  String get invitationJoinUnconfirmed;
+
+  /// No description provided for @pendingAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'While you wait, your other workspaces, your account and the help stay available.'**
+  String get pendingAvailable;
+
+  /// No description provided for @pendingLastChecked.
+  ///
+  /// In en, this message translates to:
+  /// **'Last checked {time}'**
+  String pendingLastChecked(String time);
+
+  /// No description provided for @pendingNotUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Status not updated — the server could not be reached. Your request is unchanged.'**
+  String get pendingNotUpdated;
+
+  /// No description provided for @pendingStillWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Still awaiting approval.'**
+  String get pendingStillWaiting;
+
+  /// No description provided for @pendingSwitchWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch workspace'**
+  String get pendingSwitchWorkspace;
+
+  /// No description provided for @pendingHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get pendingHelp;
+
   /// No description provided for @inviteSectionTitle.
   ///
   /// In en, this message translates to:
@@ -11008,7 +11230,7 @@ abstract class AppLocalizations {
   /// No description provided for @pendingApprovalTitle.
   ///
   /// In en, this message translates to:
-  /// **'Awaiting approval'**
+  /// **'Workspace membership awaiting approval'**
   String get pendingApprovalTitle;
 
   /// No description provided for @pendingApprovalBody.
@@ -22353,7 +22575,7 @@ abstract class AppLocalizations {
   /// Join-QR scanner: helper line under the camera (#572)
   ///
   /// In en, this message translates to:
-  /// **'Point the camera at the invitation QR — the code is taken over and joined automatically.'**
+  /// **'Point the camera at the invitation QR — you see the workspace before you join.'**
   String get scanJoinHelp;
 
   /// Join-QR scanner: the QR decoded but is not an invitation (#791)

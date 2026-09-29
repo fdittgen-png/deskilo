@@ -317,6 +317,17 @@ away on the same screen, and every write still goes through
 `featureFlagsToggleDelta`. When process activation writes flags (#1329),
 that write is a functionality and follows the normal rule.
 
+## Joining by invitation has no feature flag (#1652)
+
+The person joining has no workspace yet, so there is no workspace whose
+flags could be read: the invitation review, the typed join result and the
+waiting screen exist before (or instead of) membership. The joining
+workspace still decides everything that matters server-side: its code or
+personal invitation, the role that code carries, and its validators'
+admission of the `member_join` event (0052). `join_by_invitation` (0309)
+only classifies and then calls the existing `join_workspace`. Do not add a
+flag that a person without a membership could never have switched.
+
 ## Validation domains grow in FOUR places (#767/#769)
 
 A new server-side validation domain (`events_type_check` +
