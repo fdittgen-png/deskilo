@@ -18,7 +18,7 @@ const ALICE = jwt({ sub: "alice", role: "authenticated", client_id: "claude-test
 const BOB = jwt({ sub: "bob", role: "authenticated", client_id: "claude-test" });
 const NATIVE = jwt({ sub: "alice", role: "authenticated" });
 
-const calls: { path: string; token: string; body: unknown }[] = [];
+const calls: { path: string; token: string; body: unknown; epoch: string | null }[] = [];
 const operationsOf: Record<string, string[]> = {
   [ALICE]: ["create_reservation", "get_capabilities"],
   [BOB]: ["get_capabilities"],
@@ -30,13 +30,14 @@ Deno.env.set("SUPABASE_URL", "https://stub.supabase.test");
 Deno.env.set("SUPABASE_ANON_KEY", "sb_publishable_stub");
 Deno.env.set("DESKILO_INSTALLATION_ID", "0ea54888-a3d7-441f-a025-ee4576cf2fa9");
 Deno.env.set("DESKILO_MCP_ALLOWED_ORIGINS", "https://app.deskilo.test");
+Deno.env.set("DESKILO_MCP_EPOCH", "3");
 
 globalThis.fetch = async (input: string | URL | Request, init?: RequestInit) => {
   const url = new URL(typeof input === "string" ? input : input instanceof URL ? input.href : input.url);
   const headers = new Headers(init?.headers ?? (input instanceof Request ? input.headers : undefined));
   const token = (headers.get("Authorization") ?? "").replace("Bearer ", "");
   const body = init?.body ? JSON.parse(String(init.body)) : null;
-  calls.push({ path: url.pathname, token, body });
+  calls.push({ path: url.pathname, token, body, epoch: headers.get("x-deskilo-mcp-epoch") });
   if (url.pathname === "/auth/v1/user") {
     return Response.json({ id: token === ALICE ? "alice" : "bob", aud: "authenticated" });
   }
@@ -168,6 +169,29 @@ Deno.test("without a configured installation it serves nothing", async () => {
   } finally {
     Deno.env.set("DESKILO_INSTALLATION_ID", "0ea54888-a3d7-441f-a025-ee4576cf2fa9");
   }
+});
+
+Deno.test("#1631 without a configured epoch, or with a malformed one, it serves nothing", async () => {
+  for (const value of [null, "0", "three", "-1"]) {
+    if (value === null) Deno.env.delete("DESKILO_MCP_EPOCH");
+    else Deno.env.set("DESKILO_MCP_EPOCH", value);
+    try {
+      const before = calls.length;
+      assertEquals((await rpc(ALICE, "tools/list")).status, 503);
+      assertEquals(calls.length, before, "nothing reaches Auth or the database");
+    } finally {
+      Deno.env.set("DESKILO_MCP_EPOCH", "3");
+    }
+  }
+});
+
+Deno.test("#1631 every database request carries the epoch this endpoint was deployed for", async () => {
+  const before = calls.length;
+  await rpc(ALICE, "tools/list");
+  await rpc(ALICE, "tools/call", { name: "deskilo_get_capabilities", arguments: { workspace_id: "6b1d3f0e-0000-4000-8000-000000000002" } });
+  const database = calls.slice(before).filter((c) => c.path.startsWith("/rest/v1/"));
+  assert(database.length >= 2);
+  for (const c of database) assertEquals(c.epoch, "3");
 });
 
 Deno.test("#1644 the adapter keeps only operational fields, however deep", () => {

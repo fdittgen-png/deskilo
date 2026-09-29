@@ -14,6 +14,14 @@
 // its own configuration (DESKILO_INSTALLATION_ID) and refuses to serve
 // without one.
 //
+// #1631 — it also carries the installation epoch it was deployed for
+// (DESKILO_MCP_EPOCH, a positive integer) on every database request, in
+// `x-deskilo-mcp-epoch`. The database's pre-request guard refuses a
+// request whose epoch is not its own, so after an operator resets MCP
+// authority on a restored database (operator_reset_mcp_authority moves
+// the epoch), this endpoint serves nothing until it is redeployed with the
+// new one. Without a configured epoch it serves nothing at all.
+//
 // Only CORS preflight and the protected-resource metadata are anonymous.
 
 import { Server } from "npm:@modelcontextprotocol/sdk@1.30.1/server/index.js";
@@ -266,7 +274,8 @@ export async function handle(req: Request): Promise<Response> {
     return jsonResponse({ error: "unsupported_media_type" }, 415, headers);
   }
   const installation = env("DESKILO_INSTALLATION_ID");
-  if (!/^[0-9a-f-]{36}$/.test(installation)) {
+  const epoch = env("DESKILO_MCP_EPOCH");
+  if (!/^[0-9a-f-]{36}$/.test(installation) || !/^[1-9][0-9]{0,8}$/.test(epoch)) {
     return jsonResponse({ error: "not_configured" }, 503, headers);
   }
   const authorization = req.headers.get("Authorization") ?? "";
@@ -289,7 +298,7 @@ export async function handle(req: Request): Promise<Response> {
     // Per request: this caller's token, with one deadline for Auth and RPCs.
     const db = createClient(env("SUPABASE_URL"), env("SUPABASE_ANON_KEY"), {
       global: {
-        headers: { Authorization: authorization },
+        headers: { Authorization: authorization, "x-deskilo-mcp-epoch": epoch },
         fetch: (input, init) => fetch(input, {
           ...init,
           signal: init?.signal ? AbortSignal.any([signal, init.signal]) : signal,

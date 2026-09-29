@@ -244,7 +244,8 @@ List<Override> standardTestOverrides({
               clientId: 'test-assistant', localUserId: 'test-user'),
         ))),
     mcpConnectionRepositoryProvider
-        .overrideWithValue(mcpConnections ?? FakeMcpConnectionRepository()),
+        .overrideWithValue(mcpConnections ??
+            FakeMcpConnectionRepository(installationId: kTestInstallationId)),
     mcpAdminRepositoryProvider.overrideWithValue(mcpAdmin ?? FakeMcpAdminRepository()),
     activeMcpTargetProvider
         .overrideWith((ref) => fixedMcpTarget(ref, kTestInstallationId)),

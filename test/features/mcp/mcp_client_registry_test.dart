@@ -104,9 +104,9 @@ class _GatedAdmin extends FakeMcpAdminRepository {
 
 /// One target's fakes, and whether its client was disposed.
 class _Target {
-  _Target(String name)
+  _Target(String name, String installationId)
     : admin = _GatedAdmin(name),
-      connections = FakeMcpConnectionRepository(),
+      connections = FakeMcpConnectionRepository(installationId: installationId),
       confirmations = FakeActionConfirmationRepository(),
       identity = FakeIdentityBindingRepository();
   final _GatedAdmin admin;
@@ -138,7 +138,7 @@ class _Client implements McpTargetClient {
 }
 
 class _World {
-  final targets = {_instA: _Target('A'), _instB: _Target('B')};
+  final targets = {_instA: _Target('A', _instA), _instB: _Target('B', _instB)};
   final created = <_Client>[];
   late final registry = McpClientRegistry((key, t) {
     final c = _Client(key, targets[t.installationId]!);
@@ -268,7 +268,7 @@ void main() {
     test('the active backend client refuses once another account is signed '
         'in', () async {
       var signedIn = _account;
-      final t = _Target('A');
+      final t = _Target('A', _instA);
       final client = ActiveMcpTargetClient(
         w0.a.key(McpClientPurpose.management),
         () => t.repositories,
@@ -560,6 +560,7 @@ void main() {
         w.commands,
         FakeIdentityBindingRepository(),
       );
+      w.targets[_instA]!.connections.live.add(connection(w.a));
       final result = await access.disconnect(connection(w.a));
       expect(w.targets[_instA]!.connections.calls, ['disconnect:claude']);
       expect(w.targets[_instB]!.connections.calls, isEmpty);

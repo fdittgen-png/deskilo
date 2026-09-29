@@ -79,19 +79,26 @@ class SupabaseMcpConnectionRepository implements McpConnectionRepository {
       );
 
   @override
-  Future<void> revokeScope(String clientId, String workspaceId) =>
-      _client.rpc<Object?>(
-        'revoke_mcp_workspace_scope',
-        params: {'p_client_id': clientId, 'p_workspace_id': workspaceId},
-      );
+  Future<McpRevocation> revokeScope(
+    String clientId,
+    String workspaceId,
+  ) async => McpRevocation.fromJson(
+    await _client.rpc<Object?>(
+      'revoke_mcp_workspace_scope',
+      params: {'p_client_id': clientId, 'p_workspace_id': workspaceId},
+    ),
+  );
 
   @override
-  Future<void> disconnect(String clientId) async {
-    await _client.rpc<Object?>(
-      'revoke_mcp_connection',
-      params: {'p_client_id': clientId},
+  Future<McpRevocation> disconnect(String clientId) async {
+    final ended = McpRevocation.fromJson(
+      await _client.rpc<Object?>(
+        'revoke_mcp_connection',
+        params: {'p_client_id': clientId},
+      ),
     );
     await _client.auth.oauth.revokeGrant(clientId);
+    return ended;
   }
 
   @override

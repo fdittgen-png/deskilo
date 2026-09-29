@@ -11,6 +11,9 @@
 // one workspace's consent for that assistant; a database-level
 // disconnect ends every workspace of that assistant on that installation
 // and its grant. Neither touches another installation.
+//
+// #1631 — "what they ended" is the server's answer (McpRevocation), not
+// the list the screen was showing when the person tapped.
 import '../../auth/domain/identity_binding.dart';
 import '../domain/mcp_connection.dart';
 import '../domain/mcp_context.dart';
@@ -52,7 +55,7 @@ class AssistantAccess {
     String workspaceId,
   ) async {
     final scope = _scope(connection);
-    await _commands.execute(
+    final ended = await _commands.execute(
       McpMutation<Object?>(
         scope: scope,
         operation: 'revoke_mcp_workspace_scope',
@@ -60,17 +63,12 @@ class AssistantAccess {
       ),
       (r, m) => r.connections.revokeScope(connection.clientId, workspaceId),
     );
-    return McpDisconnectResult(
-      scope: McpDisconnectScope.workspace,
-      instance: scope,
-      clientId: connection.clientId,
-      workspaces: {workspaceId},
-    );
+    return _result(McpDisconnectScope.workspace, scope, connection, ended);
   }
 
   Future<McpDisconnectResult> disconnect(McpConnectionInfo connection) async {
     final scope = _scope(connection);
-    await _commands.execute(
+    final ended = await _commands.execute(
       McpMutation<Object?>(
         scope: scope,
         operation: 'revoke_mcp_connection',
@@ -78,11 +76,30 @@ class AssistantAccess {
       ),
       (r, m) => r.connections.disconnect(connection.clientId),
     );
+    return _result(McpDisconnectScope.database, scope, connection, ended);
+  }
+
+  // #1631 — the result is what the server says it ended, on the
+  // installation it names. An answer for another installation is refused
+  // (typed), never published as this one's; a workspace the screen still
+  // listed but the server did not end is not claimed.
+  McpDisconnectResult _result(
+    McpDisconnectScope kind,
+    McpInstanceRef scope,
+    McpConnectionInfo connection,
+    McpRevocation ended,
+  ) {
+    requireProvenance(
+      ended,
+      what: 'installation',
+      expected: scope.installationId,
+      answered: ended.installationId,
+    );
     return McpDisconnectResult(
-      scope: McpDisconnectScope.database,
+      scope: kind,
       instance: scope,
       clientId: connection.clientId,
-      workspaces: {for (final w in connection.workspaces) w.id},
+      workspaces: ended.workspaces,
     );
   }
 
