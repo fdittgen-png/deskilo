@@ -7533,6 +7533,58 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpOpGetValidation => 'Eine Freigabeanfrage lesen';
 
   @override
+  String get mcpFieldName => 'Namen von Workspaces und Plätzen';
+
+  @override
+  String get mcpFieldNameSample => 'Fensterplatz 12';
+
+  @override
+  String get mcpDisclosureTitle => 'Optionale Angaben';
+
+  @override
+  String get mcpDisclosurePolicyExplain =>
+      'Assistenten erhalten minimierte Antworten. Wählen Sie, welche Angaben sie hier zusätzlich sehen dürfen; jede Person entscheidet weiterhin selbst.';
+
+  @override
+  String get mcpDisclosureNoneAllowed =>
+      'Diese Datenbank erlaubt keine optionalen Angaben für Assistenten.';
+
+  @override
+  String get mcpDisclosurePreviewNote =>
+      'Eine erfundene Antwort, die zeigt, was Assistenten sehen würden.';
+
+  @override
+  String get mcpDisclosurePreviewMinimised => 'Minimierte Antwort';
+
+  @override
+  String get mcpDisclosurePreviewDetailed => 'Ausführliche Antwort';
+
+  @override
+  String get mcpDisclosureMaximumExplain =>
+      'Das Höchstmaß, das Eigentümer in dieser Datenbank Assistenten zeigen dürfen. Es erweitert nie die Richtlinie eines Workspaces oder die Einwilligung einer Person.';
+
+  @override
+  String get mcpDisclosureMaximumSave => 'Höchstmaß speichern';
+
+  @override
+  String get mcpDisclosureMaximumSaved => 'Höchstmaß gespeichert.';
+
+  @override
+  String get mcpDisclosureMaximumRefused =>
+      'Das Höchstmaß wurde nicht gespeichert. Dafür ist Ihr zweiter Faktor nötig.';
+
+  @override
+  String get mcpDisclosureMaximumLocked =>
+      'Bestätigen Sie mit Ihrem zweiten Faktor, um das Höchstmaß zu sehen und zu ändern.';
+
+  @override
+  String get mcpDisclosureUnlock => 'Bestätigen';
+
+  @override
+  String get mcpConsentFieldsExplain =>
+      'Angaben, die er hier zusätzlich sehen darf. Lassen Sie sie aus, damit seine Antworten minimiert bleiben.';
+
+  @override
   String get mcpPolicyTitle => 'Zugriff für Assistenten';
 
   @override

@@ -35,6 +35,10 @@ class McpConsentScreen extends ConsumerStatefulWidget {
 class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
   /// workspace id → the operations chosen there; absent = not chosen.
   final _chosen = <String, Set<String>>{};
+
+  /// #1809 — workspace id → the optional fields consented there; only
+  /// ever the ones that workspace offers, and none unless ticked.
+  final _fields = <String, Set<String>>{};
   bool _busy = false;
   bool _redirected = false;
   String? _outcome;
@@ -54,9 +58,20 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
       domain: 'mcp',
       message: 'assistant connection failed',
       action: () async {
-        result = await ref.read(connectAssistantProvider).connect(request, {
-          for (final e in _chosen.entries) e.key: e.value.toList()..sort(),
-        });
+        result = await ref
+            .read(connectAssistantProvider)
+            .connect(
+              request,
+              {
+                for (final e in _chosen.entries)
+                  e.key: e.value.toList()..sort(),
+              },
+              optionalFields: {
+                for (final e in _fields.entries)
+                  if (_chosen.containsKey(e.key))
+                    e.key: e.value.toList()..sort(),
+              },
+            );
       },
     );
     if (!mounted) return;
@@ -227,6 +242,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                       _chosen[w.id] = {...w.operations};
                     } else {
                       _chosen.remove(w.id);
+                      _fields.remove(w.id);
                     }
                   }),
           ),
@@ -248,6 +264,39 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                             (on ?? false) ? chosen.add(op) : chosen.remove(op),
                       ),
               ),
+          if (chosen != null && w.optionalFields.isNotEmpty) ...[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.xl,
+                AppSpacing.sm,
+                AppSpacing.md,
+                0,
+              ),
+              child: Text(
+                l10n?.mcpConsentFieldsExplain ??
+                    'Details it may also see here. Leave them off to keep its answers minimised.',
+                key: ValueKey('mcp-consent-fields-${w.id}'),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+            for (final field in w.optionalFields)
+              CheckboxListTile(
+                key: ValueKey('mcp-consent-field-${w.id}-$field'),
+                dense: true,
+                contentPadding: const EdgeInsets.only(
+                  left: AppSpacing.xl,
+                  right: AppSpacing.md,
+                ),
+                value: _fields[w.id]?.contains(field) ?? false,
+                title: Text(mcpOptionalFieldLabel(l10n, field)),
+                onChanged: _busy
+                    ? null
+                    : (on) => setState(() {
+                        final set = _fields.putIfAbsent(w.id, () => {});
+                        (on ?? false) ? set.add(field) : set.remove(field);
+                      }),
+              ),
+          ],
         ],
       ),
     );

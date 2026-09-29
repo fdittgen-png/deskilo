@@ -7465,6 +7465,58 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpGetValidation => 'Read a validation request';
 
   @override
+  String get mcpFieldName => 'Names of workspaces and places';
+
+  @override
+  String get mcpFieldNameSample => 'Window desk 12';
+
+  @override
+  String get mcpDisclosureTitle => 'Optional details';
+
+  @override
+  String get mcpDisclosurePolicyExplain =>
+      'Assistants get minimised answers. Choose the details they may also see here; each person still chooses for themselves.';
+
+  @override
+  String get mcpDisclosureNoneAllowed =>
+      'This database lets no optional detail be shown to assistants.';
+
+  @override
+  String get mcpDisclosurePreviewNote =>
+      'A fictional answer, to show what assistants would see.';
+
+  @override
+  String get mcpDisclosurePreviewMinimised => 'Minimised answer';
+
+  @override
+  String get mcpDisclosurePreviewDetailed => 'Detailed answer';
+
+  @override
+  String get mcpDisclosureMaximumExplain =>
+      'The most that owners on this database may let assistants see. It never widens a workspace\'s policy or a person\'s consent.';
+
+  @override
+  String get mcpDisclosureMaximumSave => 'Save the maximum';
+
+  @override
+  String get mcpDisclosureMaximumSaved => 'Maximum saved.';
+
+  @override
+  String get mcpDisclosureMaximumRefused =>
+      'The maximum was not saved. It needs your second factor.';
+
+  @override
+  String get mcpDisclosureMaximumLocked =>
+      'Confirm with your second factor to see and change the maximum.';
+
+  @override
+  String get mcpDisclosureUnlock => 'Confirm';
+
+  @override
+  String get mcpConsentFieldsExplain =>
+      'Details it may also see here. Leave them off to keep its answers minimised.';
+
+  @override
   String get mcpPolicyTitle => 'Assistant access';
 
   @override

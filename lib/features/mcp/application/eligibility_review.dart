@@ -21,6 +21,14 @@ class EligibilityReview {
   Future<void> verify(String factorId, String code) =>
       _factors.verify(factorId, code);
 
+  /// #1809 — saves the installation maximum of optional fields; the
+  /// server demands aal2 as for a decision, and so does this. Null when
+  /// refused.
+  Future<Set<String>?> setDisclosureMaximum(Set<String> fields) async {
+    if (!(await _factors.state()).aal2) return null;
+    return _repository.setDisclosureMaximum(fields);
+  }
+
   Future<EligibilityDecisionStatus> decide(
     EligibilityRequest request, {
     required bool approve,

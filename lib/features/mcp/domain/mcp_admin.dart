@@ -3,7 +3,18 @@
 // #1626 — a workspace owner's MCP exposure policy; #1627 — a database
 // administrator's eligibility queue. Both are read and written through
 // the server's own RPCs (0270/0271): the app never decides who may.
+import '../../../core/mcp/mcp_operations.dart';
 import 'mcp_usage.dart';
+
+/// #1809 — a server list of optional fields, kept to the ones the
+/// contract defines ([mcpOptionalFields]) and in the contract's order.
+List<String> mcpKnownOptionalFields(Object? json) {
+  final named = {for (final x in (json is List ? json : const [])) '$x'};
+  return [
+    for (final f in mcpOptionalFields)
+      if (named.contains(f)) f,
+  ];
+}
 
 /// The owner's exposure policy for one workspace, as the server holds it.
 class McpPolicy {
@@ -15,6 +26,8 @@ class McpPolicy {
     required this.targetCeiling,
     required this.featureEnabled,
     required this.available,
+    this.optionalFields = const {},
+    this.availableOptionalFields = const [],
   });
 
   final String workspaceId;
@@ -32,6 +45,12 @@ class McpPolicy {
   /// Every implemented operation, in the server's order.
   final List<String> available;
 
+  /// #1809 — the optional fields this workspace allows assistants to see.
+  final Set<String> optionalFields;
+
+  /// #1809 — the installation maximum: the owner chooses within it.
+  final List<String> availableOptionalFields;
+
   factory McpPolicy.fromJson(Object? json) {
     final m = json is Map ? json : const <String, Object?>{};
     List<String> strings(Object? v) => [
@@ -45,6 +64,30 @@ class McpPolicy {
       targetCeiling: m['target_ceiling'] == 'workspace' ? 'workspace' : 'own',
       featureEnabled: m['feature_enabled'] == true,
       available: strings(m['available_operations']),
+      optionalFields: mcpKnownOptionalFields(m['optional_fields']).toSet(),
+      availableOptionalFields: mcpKnownOptionalFields(
+        m['available_optional_fields'],
+      ),
+    );
+  }
+}
+
+/// #1809 — the installation maximum of optional fields, as a database
+/// administrator sees it (require_database_reviewer: aal2).
+class McpDisclosureMaximum {
+  const McpDisclosureMaximum({required this.fields, required this.available});
+
+  /// The fields this database lets owners offer.
+  final Set<String> fields;
+
+  /// Every field the contract lets a person disclose.
+  final List<String> available;
+
+  factory McpDisclosureMaximum.fromJson(Object? json) {
+    final m = json is Map ? json : const <String, Object?>{};
+    return McpDisclosureMaximum(
+      fields: mcpKnownOptionalFields(m['optional_fields']).toSet(),
+      available: mcpKnownOptionalFields(m['available_fields']),
     );
   }
 }
@@ -125,7 +168,15 @@ abstract interface class McpAdminRepository {
     required bool enabled,
     required Set<String> operations,
     required String targetCeiling,
+    required Set<String> optionalFields,
   });
+
+  /// #1809 — the installation maximum (a database administrator, aal2).
+  Future<McpDisclosureMaximum> disclosureMaximum();
+
+  /// Saves the installation maximum; answers the fields the server kept,
+  /// or null when it refused.
+  Future<Set<String>?> setDisclosureMaximum(Set<String> fields);
 
   Future<List<EligibilityRequest>> eligibilityRequests();
 

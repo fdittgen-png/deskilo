@@ -43,8 +43,9 @@ class ConnectAssistant {
 
   Future<ConnectResult> connect(
     AuthorizationRequest request,
-    Map<String, List<String>> scopes,
-  ) async {
+    Map<String, List<String>> scopes, {
+    Map<String, List<String>> optionalFields = const {},
+  }) async {
     final chosen = {
       for (final e in scopes.entries)
         if (e.value.isNotEmpty) e.key: e.value,
@@ -56,6 +57,11 @@ class ConnectAssistant {
       request.clientId,
       request.authorizationId,
       chosen,
+      // #1809 — optional fields only where a workspace is chosen.
+      optionalFields: {
+        for (final e in optionalFields.entries)
+          if (chosen.containsKey(e.key) && e.value.isNotEmpty) e.key: e.value,
+      },
     );
     final redirect = await _repository.approve(request.authorizationId);
     try {

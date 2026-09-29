@@ -34,7 +34,10 @@ class McpPolicyDraft {
       mutationId = newRequestId(),
       enabled = base.enabled,
       operations = {...base.operations},
-      targetCeiling = base.targetCeiling;
+      targetCeiling = base.targetCeiling,
+      optionalFields = base.optionalFields
+          .where(base.availableOptionalFields.contains)
+          .toSet();
 
   final String workspaceId;
   final int expectedRevision;
@@ -42,6 +45,11 @@ class McpPolicyDraft {
   bool enabled;
   final Set<String> operations;
   String targetCeiling;
+
+  /// #1809 — the optional fields offered, always within the maximum the
+  /// policy was read with: a field the database no longer allows is
+  /// dropped, never kept by a save.
+  final Set<String> optionalFields;
 
   /// Operations this save would add: assistants already connected do not
   /// get them until each person consents again (0276).
@@ -59,5 +67,6 @@ class McpPolicyEditor {
     enabled: draft.enabled && draft.operations.isNotEmpty,
     operations: draft.operations,
     targetCeiling: draft.targetCeiling,
+    optionalFields: draft.optionalFields,
   );
 }

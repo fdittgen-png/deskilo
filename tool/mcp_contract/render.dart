@@ -519,6 +519,15 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     ..writeln([for (final f in contract['forbidden_inputs'] as List) "  '$f',"].join('\n'))
     ..writeln('};')
     ..writeln()
+    ..writeln('/// #1809 — every field an answer discloses only when the installation')
+    ..writeln('/// maximum, the workspace policy and the person\'s consent all name it')
+    ..writeln('/// (#1645). The app offers exactly these, never a hand-written list.')
+    ..writeln('const List<String> mcpOptionalFields = [')
+    ..writeln([
+      for (final f in {for (final op in ops) ...mcpOptionalOutput(contract, op)}.toList()..sort()) "  '$f',",
+    ].join('\n'))
+    ..writeln('];')
+    ..writeln()
     ..writeln('/// Every catalogued operation, handler or not.')
     ..writeln('const Map<String, McpOperationSpec> mcpOperations = {');
   for (final op in ops) {
