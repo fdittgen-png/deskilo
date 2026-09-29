@@ -39,8 +39,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../test/helpers/mock_providers.dart';
 import '../../test/helpers/reserve_view.dart';
+import 'onboarding_entry_recipes.dart';
+import 'onboarding_task_recipes.dart';
+import 'recipe_probe.dart';
 import 'workload.dart';
-import '../../test/features/workspace/onboarding_flow_test.dart' show pumpWithoutWorkspace;
 
 /// Runs per journey. p95 over nine is the slowest of nine — a spread,
 /// not a distribution, and the record says so.
@@ -113,19 +115,46 @@ Offset _firstSeat(WidgetTester tester) {
           scale;
 }
 
+/// #1456 — the onboarding recipes (22 September comment), on the same
+/// record. Each is the real app through the real router; see
+/// onboarding_entry_recipes.dart and onboarding_task_recipes.dart.
+final _recipes = <String, Future<RecipeRun> Function(WidgetTester)>{
+  'returning_entry': returningEntry,
+  'first_signup': firstSignup,
+  'invitation_join': invitationJoin,
+  'owner_first_booking': ownerFirstBooking,
+  'byo_signin': byoSignIn,
+  'pending_leave_return': pendingLeaveReturn,
+  'wizard_keyboard_back_edit': wizardKeyboardBackEdit,
+};
+
 void main() {
-  testWidgets('onboarding navigation keeps draft without sending a command', (tester) async {
-    final repo = await pumpWithoutWorkspace(tester);
-    await tester.enterText(find.byKey(const ValueKey('onboarding-name')), 'Benchmark');
-    await tester.tap(find.byKey(const ValueKey('wizard-next')));
-    var frames = await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('wizard-back')));
-    frames += await tester.pumpAndSettle();
-    expect(find.text('Benchmark'), findsOneWidget);
-    expect(repo.createRequests, isEmpty);
-    _measure('onboarding', 'transition_frames', frames);
-    _measure('onboarding', 'create_requests', repo.createRequests.length);
-  });
+  for (final MapEntry(key: name, value: recipe) in _recipes.entries) {
+    testWidgets('recipe $name — correctness first, then its raw values',
+        (tester) async {
+      final ms = <int>[];
+      final runs = <RecipeRun>[];
+      for (var i = 0; i < _samples; i++) {
+        final watch = Stopwatch()..start();
+        final run = await recipe(tester);
+        ms.add(watch.elapsedMilliseconds);
+        // A run that did not reach its authorized result measures
+        // nothing; it fails here rather than reporting a time.
+        expect(run.outcome, RecipeOutcome.success, reason: '$name: ${run.why}');
+        runs.add(run);
+      }
+      // Sample 0 warms the binding: the first mount rebuilds the global
+      // root focus scope once more than any later one. The counts of the
+      // rest must agree exactly, or they are not counts.
+      final counted = runs.length > 1 ? runs[1] : runs.first;
+      for (final run in runs.skip(2)) {
+        expect(diffRuns(counted, run), isEmpty, reason: name);
+      }
+      counted.metrics.forEach((metric, v) => _measure(name, metric, v));
+      _wall(name, ms);
+    });
+  }
+
   tearDownAll(() {
     final sha = Process.runSync('git', ['rev-parse', 'HEAD']).stdout as String;
     final head = [
@@ -152,6 +181,17 @@ void main() {
           'not collect (PRIVACY.md)',
       'unheld|server_ms|the backend here is in memory; round trips are '
           'counted, server milliseconds are not measured',
+      // #1456 — what the onboarding recipes cannot say.
+      'unheld|onboarding_frame_timing_device|the recipes count 16 ms pumps '
+          'of fake time on a headless VM; step, keyboard and reflow frame '
+          'timing need a profile build on a device',
+      'unheld|onboarding_wait_durations|human, e-mail and provider waits '
+          'are counted as episodes; how long a person or an administrator '
+          'takes is not measured and is never app time',
+      'unheld|screen_reader_device|semantic acknowledgement is read from '
+          'the semantics tree, not heard through a screen reader on a device',
+      'unheld|onboarding_participants|no participant has run these '
+          'recipes; comprehension and felt friction need real people',
     ];
     Directory('report').createSync(recursive: true);
     File('report/perf.psv').writeAsStringSync('${[...head, ..._rows].join('\n')}\n');

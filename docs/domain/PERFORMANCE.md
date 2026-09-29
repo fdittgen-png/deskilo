@@ -178,6 +178,77 @@ those, including an injected regression: an N+1 over 800 seats takes the
 first journey from 7 trips to 807, which the benchmark itself proves in
 `the trip count catches an N+1 the frame count cannot`.
 
+## The onboarding recipes: correctness first, then friction (#1456)
+
+The 22 September extension of #1456 asks for onboarding to be measured
+on the same seam, not a second framework. Seven named recipes run in
+`flutter test tool/bench` beside the journeys and land in the same
+`report/perf.psv`, each the real app through the real router with the
+suite's fakes behind the repositories:
+
+| recipe | from → to |
+|---|---|
+| `returning_entry` | a person with two spaces opens the app on B → B's Reserve hub, as B's member |
+| `first_signup` | sign-up → the server's e-mail → consent once → onboarding |
+| `invitation_join` | an invitation link from outside → read-only review → ONE Join → the waiting room → approved → the space |
+| `owner_first_booking` | the suggested set-up → Create → the Get started card → a first booking the repository holds |
+| `byo_signin` | an organisation's server code → verified by a probe → saved → restart → a native sign-in there |
+| `pending_leave_return` | a pending member leaves the waiting room for Profiles, and asks for then gives up assistant eligibility by link → back in the waiting room each time |
+| `wizard_keyboard_back_edit` | the creation wizard with the soft keyboard up, Escape back, an edit, forward → both answers in the space created |
+
+**A run is a success only after the recipe asserted its authorized
+screen or domain result** — the booking row, the saved server, the
+waiting room, B's name and B's role. One that skipped the assertion is
+`incomplete`; one that showed another space's answer, lost a field or
+sent the person back to a screen they had left is `incorrect`, however
+few frames it took; one the provider refused is `refused`. The gate
+fails on anything but `success 1`.
+
+What each run records, raw and never summed into a score
+(`tool/bench/recipe_probe.dart`):
+
+- **tap → acknowledgement, apart from completion.** Frames to the first
+  visible acknowledgement, to the first frame the semantics tree carries
+  it (the action reads as disabled, or a banner has words), and to the
+  authoritative answer. Held for 30 frames, a provider moves only the
+  last of the three.
+- **entry → first usable authorized screen**, with every route rendered
+  on the way that is not one of the recipe's stops (a flash) and every
+  separate loading episode (a second one is a duplicate loading screen).
+- **friction**: decisions, fields typed, fields the app made the person
+  type again, Back corrections, the person's own edits, required
+  confirmations beside duplicate unchanged ones, retries, and provider
+  round trips by call.
+- **waits** for a human, an e-mail or a provider, as counted episodes.
+  How long they last is not measured and is never folded into app time.
+
+The frames are 16 ms pumps of fake time on a headless VM: a count of
+work between two boundaries, not a frame rate. The gate holds each
+recipe's round trips at the reading (one extra request is red), no
+flash, no re-entry, no duplicate confirmation, at most one loading
+episode, acknowledgement within 5 frames and completion within 10 with
+providers that answer at once — more would be a dwell the app added.
+
+`test/perf/onboarding_recipes_test.dart` runs on every pull request and
+proves the measurement cannot be fooled: a held provider separates the
+acknowledgement from completion; a refused one is refused, not fast;
+lost input, a session that bounces the person to sign-in and back, and a
+membership cache that shows A's owner role in B are each incorrect —
+the last with one round trip FEWER than the honest run; reduced motion
+ends in the same state as normal motion (and in fewer frames, so it was
+in force); a dismissed Get started card is not a booking; one extra
+membership read and one extra rebuild of the app each show up as
+exactly that against the same recipe's baseline.
+
+Two measured limits, stated so nobody relies on more. The first mount in
+a fresh test binding rebuilds the root focus scope once more than any
+later one, so the benchmark counts from its second sample and requires
+the rest to agree exactly. And a lone extra `setState` on one widget is
+NOT reliably visible in the rebuild total: the frame it schedules can
+coalesce another element's two rebuilds into one (15 798 both ways when
+tried). The count holds rebuilt work — a subtree building again — not a
+single rebuild.
+
 ## What is still NOT held, and needs a device
 
 Plainly, so that nothing above is read as more than it is:
@@ -193,13 +264,19 @@ Plainly, so that nothing above is read as more than it is:
   Unmeasured. Frames and trips are counted; milliseconds are not.
 - **server time.** Unmeasured. The benchmark's backend is in memory.
 - **API p95.** Unmeasured, by a privacy decision — see below.
+- **the onboarding recipes on a device.** Step, keyboard and reflow
+  frame timing need a profile build on hardware; the semantic
+  acknowledgement is read from the semantics tree, not heard through
+  TalkBack or VoiceOver; how long a person takes to open an e-mail or an
+  administrator to decide is counted, not timed; and no participant has
+  run a recipe, so nothing here claims comprehension or felt friction.
 
-Each of those five is declared in `report/perf.psv` itself, as an
+Each of those is declared in `report/perf.psv` itself, as an
 `unheld|` row with its reason, and the gate fails if one disappears:
 dropping the honest "not measured" is exactly how a 2.5 s target nobody
 holds gets written down as if it were held. Closing them needs named
-physical hardware and a staged backend, which is a lab question, not a
-CI one.
+physical hardware, a staged backend and consenting participants, which
+is a lab question, not a CI one.
 
 ## API p95
 
