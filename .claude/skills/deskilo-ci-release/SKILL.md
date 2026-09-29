@@ -127,3 +127,11 @@ two branches touched the same lines.
     the universal APK (3). The AGP 10 opt-outs (`android.builtInKotlin`,
     `android.newDsl`) stay until the plugins support it.
   - The PR checks do not build Android; the release train does.
+
+## Lessons of 2026-09-29
+
+- **Master can be red with every PR green.** #1815 added a required
+  constructor parameter and #1817 added a test constructing the old shape;
+  each passed alone, the merge does not compile. `flutter analyze` on a
+  fresh worktree of origin/master finds it first — fix it in your PR with
+  the one-line change and name it in the body, rather than waiting.

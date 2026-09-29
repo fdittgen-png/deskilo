@@ -281,11 +281,13 @@ Map<String, Object?> mcpOpenApiPaths(Map<String, dynamic> contract) {
   return paths;
 }
 
-String renderMcpCatalogueSql(Map<String, dynamic> contract) {
+/// #1633 — the catalogue as the database answers it: the SQL rendering
+/// below and the readiness check comparing a target both use this.
+Map<String, Object?> mcpCatalogueJson(Map<String, dynamic> contract) {
   final ops = [
     for (final o in contract['operations'] as List) Map<String, dynamic>.from(o as Map),
   ];
-  final catalogue = {
+  return {
     'version': contract['version'],
     'operations': {
       for (final op in ops)
@@ -303,6 +305,10 @@ String renderMcpCatalogueSql(Map<String, dynamic> contract) {
         },
     },
   };
+}
+
+String renderMcpCatalogueSql(Map<String, dynamic> contract) {
+  final catalogue = mcpCatalogueJson(contract);
   return '''create or replace function public.mcp_operation_catalogue()
 returns jsonb
 language sql
