@@ -4,6 +4,7 @@
 // may offer it (per workspace, per operation), and the connections that
 // exist. The assistant never widens its own consent: every call here runs
 // from the app's own session.
+import 'mcp_admin.dart' show mcpKnownOptionalFields;
 import 'mcp_context.dart';
 import 'mcp_usage.dart';
 
@@ -29,10 +30,15 @@ class ConsentWorkspace {
     required this.id,
     required this.name,
     required this.operations,
+    this.optionalFields = const [],
   });
   final String id;
   final String name;
   final List<String> operations;
+
+  /// #1809 — the optional fields offered here (the workspace policy
+  /// within the installation maximum), or, on a connection, consented.
+  final List<String> optionalFields;
 }
 
 class ConsentOptions {
@@ -60,6 +66,7 @@ class ConsentOptions {
               operations: [
                 for (final o in (w['operations'] as List? ?? const [])) '$o',
               ],
+              optionalFields: mcpKnownOptionalFields(w['optional_fields']),
             ),
       ],
     );
@@ -110,12 +117,14 @@ abstract interface class McpConnectionRepository {
   Future<AuthorizationRequest> authorization(String authorizationId);
   Future<ConsentOptions> options();
 
-  /// Records the chosen subset: workspace id → operations.
+  /// Records the chosen subset: workspace id → operations, and #1809
+  /// workspace id → the optional fields consented there (none if absent).
   Future<void> prepare(
     String clientId,
     String authorizationId,
-    Map<String, List<String>> scopes,
-  );
+    Map<String, List<String>> scopes, {
+    Map<String, List<String>> optionalFields = const {},
+  });
 
   /// Tells Auth yes; answers where to send the browser.
   Future<String?> approve(String authorizationId);

@@ -1,0 +1,17 @@
+{
+  "mcpFieldName": "Noms des espaces et des places",
+  "mcpFieldNameSample": "Bureau fenêtre 12",
+  "mcpDisclosureTitle": "Détails facultatifs",
+  "mcpDisclosurePolicyExplain": "Les assistants reçoivent des réponses minimisées. Choisissez les détails qu'ils peuvent aussi voir ici ; chaque personne choisit encore pour elle-même.",
+  "mcpDisclosureNoneAllowed": "Cette base de données ne permet de montrer aucun détail facultatif aux assistants.",
+  "mcpDisclosurePreviewNote": "Une réponse fictive, pour montrer ce que verraient les assistants.",
+  "mcpDisclosurePreviewMinimised": "Réponse minimisée",
+  "mcpDisclosurePreviewDetailed": "Réponse détaillée",
+  "mcpDisclosureMaximumExplain": "Le maximum que les propriétaires de cette base de données peuvent laisser voir aux assistants. Il n'élargit jamais la politique d'un espace ni le consentement d'une personne.",
+  "mcpDisclosureMaximumSave": "Enregistrer le maximum",
+  "mcpDisclosureMaximumSaved": "Maximum enregistré.",
+  "mcpDisclosureMaximumRefused": "Le maximum n'a pas été enregistré. Il faut votre second facteur.",
+  "mcpDisclosureMaximumLocked": "Confirmez avec votre second facteur pour voir et modifier le maximum.",
+  "mcpDisclosureUnlock": "Confirmer",
+  "mcpConsentFieldsExplain": "Détails qu'il peut aussi voir ici. Laissez-les décochés pour garder ses réponses minimisées."
+}

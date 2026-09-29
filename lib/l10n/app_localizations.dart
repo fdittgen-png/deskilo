@@ -12679,6 +12679,96 @@ abstract class AppLocalizations {
   /// **'Read a validation request'**
   String get mcpOpGetValidation;
 
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Names of workspaces and places'**
+  String get mcpFieldName;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Window desk 12'**
+  String get mcpFieldNameSample;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Optional details'**
+  String get mcpDisclosureTitle;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants get minimised answers. Choose the details they may also see here; each person still chooses for themselves.'**
+  String get mcpDisclosurePolicyExplain;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'This database lets no optional detail be shown to assistants.'**
+  String get mcpDisclosureNoneAllowed;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'A fictional answer, to show what assistants would see.'**
+  String get mcpDisclosurePreviewNote;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Minimised answer'**
+  String get mcpDisclosurePreviewMinimised;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed answer'**
+  String get mcpDisclosurePreviewDetailed;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'The most that owners on this database may let assistants see. It never widens a workspace\'s policy or a person\'s consent.'**
+  String get mcpDisclosureMaximumExplain;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Save the maximum'**
+  String get mcpDisclosureMaximumSave;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum saved.'**
+  String get mcpDisclosureMaximumSaved;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'The maximum was not saved. It needs your second factor.'**
+  String get mcpDisclosureMaximumRefused;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm with your second factor to see and change the maximum.'**
+  String get mcpDisclosureMaximumLocked;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get mcpDisclosureUnlock;
+
+  /// #1809 mcp_disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Details it may also see here. Leave them off to keep its answers minimised.'**
+  String get mcpConsentFieldsExplain;
+
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:

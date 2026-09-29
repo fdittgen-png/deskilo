@@ -14,6 +14,9 @@ class FakeMcpConnectionRepository implements McpConnectionRepository {
   ConsentOptions consent;
   final calls = <String>[];
   final prepared = <Map<String, List<String>>>[];
+
+  /// #1809 — the optional fields each prepare consented, per workspace.
+  final preparedFields = <Map<String, List<String>>>[];
   final live = <McpConnectionInfo>[];
   bool failFinalize = false;
 
@@ -31,10 +34,12 @@ class FakeMcpConnectionRepository implements McpConnectionRepository {
   Future<void> prepare(
     String clientId,
     String authorizationId,
-    Map<String, List<String>> scopes,
-  ) async {
+    Map<String, List<String>> scopes, {
+    Map<String, List<String>> optionalFields = const {},
+  }) async {
     calls.add('prepare');
     prepared.add(scopes);
+    preparedFields.add(optionalFields);
   }
 
   @override

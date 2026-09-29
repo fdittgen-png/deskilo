@@ -27,6 +27,7 @@ class SupabaseMcpAdminRepository implements McpAdminRepository {
     required bool enabled,
     required Set<String> operations,
     required String targetCeiling,
+    required Set<String> optionalFields,
   }) async => PolicySaveResult.fromJson(
     await _client.rpc<Object?>(
       'save_mcp_policy',
@@ -37,9 +38,26 @@ class SupabaseMcpAdminRepository implements McpAdminRepository {
         'p_enabled': enabled,
         'p_operations': (operations.toList()..sort()),
         'p_target_ceiling': targetCeiling,
+        'p_optional_fields': (optionalFields.toList()..sort()),
       },
     ),
   );
+
+  @override
+  Future<McpDisclosureMaximum> disclosureMaximum() async =>
+      McpDisclosureMaximum.fromJson(
+        await _client.rpc<Object?>('mcp_disclosure_status'),
+      );
+
+  @override
+  Future<Set<String>?> setDisclosureMaximum(Set<String> fields) async {
+    final r = await _client.rpc<Object?>(
+      'set_mcp_disclosure_maximum',
+      params: {'p_fields': (fields.toList()..sort())},
+    );
+    if (r is! Map || r['status'] != 'saved') return null;
+    return mcpKnownOptionalFields(r['optional_fields']).toSet();
+  }
 
   @override
   Future<List<EligibilityRequest>> eligibilityRequests() async =>

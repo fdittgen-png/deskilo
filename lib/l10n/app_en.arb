@@ -7876,6 +7876,66 @@
   "@mcpOpGetValidation": {
     "description": "#1615 mcp_consent"
   },
+  "mcpFieldName": "Names of workspaces and places",
+  "@mcpFieldName": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpFieldNameSample": "Window desk 12",
+  "@mcpFieldNameSample": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosureTitle": "Optional details",
+  "@mcpDisclosureTitle": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosurePolicyExplain": "Assistants get minimised answers. Choose the details they may also see here; each person still chooses for themselves.",
+  "@mcpDisclosurePolicyExplain": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosureNoneAllowed": "This database lets no optional detail be shown to assistants.",
+  "@mcpDisclosureNoneAllowed": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosurePreviewNote": "A fictional answer, to show what assistants would see.",
+  "@mcpDisclosurePreviewNote": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosurePreviewMinimised": "Minimised answer",
+  "@mcpDisclosurePreviewMinimised": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosurePreviewDetailed": "Detailed answer",
+  "@mcpDisclosurePreviewDetailed": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosureMaximumExplain": "The most that owners on this database may let assistants see. It never widens a workspace's policy or a person's consent.",
+  "@mcpDisclosureMaximumExplain": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosureMaximumSave": "Save the maximum",
+  "@mcpDisclosureMaximumSave": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosureMaximumSaved": "Maximum saved.",
+  "@mcpDisclosureMaximumSaved": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosureMaximumRefused": "The maximum was not saved. It needs your second factor.",
+  "@mcpDisclosureMaximumRefused": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosureMaximumLocked": "Confirm with your second factor to see and change the maximum.",
+  "@mcpDisclosureMaximumLocked": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpDisclosureUnlock": "Confirm",
+  "@mcpDisclosureUnlock": {
+    "description": "#1809 mcp_disclosure"
+  },
+  "mcpConsentFieldsExplain": "Details it may also see here. Leave them off to keep its answers minimised.",
+  "@mcpConsentFieldsExplain": {
+    "description": "#1809 mcp_disclosure"
+  },
   "mcpPolicyTitle": "Assistant access",
   "@mcpPolicyTitle": {
     "description": "#1626 #1627 #1628 mcp_settings"

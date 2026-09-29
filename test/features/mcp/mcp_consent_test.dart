@@ -231,4 +231,102 @@ void main() {
       },
     );
   });
+
+  group('optional fields (#1809)', () {
+    FakeMcpConnectionRepository offering() => FakeMcpConnectionRepository(
+      request: const AuthorizationRequest(
+        authorizationId: _auth,
+        clientId: 'claude-desktop',
+        clientName: 'Test assistant',
+      ),
+      consent: const ConsentOptions(
+        eligible: true,
+        workspaces: [
+          ConsentWorkspace(
+            id: _a,
+            name: 'Kraftwerk',
+            operations: ['get_availability'],
+            optionalFields: ['name'],
+          ),
+          ConsentWorkspace(
+            id: _b,
+            name: 'Atelier',
+            operations: ['list_my_invoices'],
+          ),
+        ],
+      ),
+    );
+
+    test('the DTO reads the offered fields, known ones only', () {
+      final o = ConsentOptions.fromJson({
+        'eligibility': 'eligible',
+        'workspaces': [
+          {
+            'workspace_id': _a,
+            'name': 'K',
+            'operations': ['get_availability'],
+            'optional_fields': ['name', 'email'],
+          },
+        ],
+      });
+      expect(o.workspaces.single.optionalFields, ['name']);
+    });
+
+    testWidgets('only the policy\'s fields are offered, none preselected', (
+      tester,
+    ) async {
+      final r = offering();
+      await pump(tester, r);
+      await tester.tap(find.byKey(const ValueKey('mcp-consent-ws-toggle-$_a')));
+      await tester.tap(find.byKey(const ValueKey('mcp-consent-ws-toggle-$_b')));
+      await tester.pumpAndSettle();
+      final field = find.byKey(const ValueKey('mcp-consent-field-$_a-name'));
+      expect(tester.widget<CheckboxListTile>(field).value, isFalse);
+      expect(
+        find.byKey(const ValueKey('mcp-consent-field-$_b-name')),
+        findsNothing,
+        reason: 'the Atelier policy offers no optional field',
+      );
+      await tester.tap(find.byKey(const ValueKey('mcp-consent-approve')));
+      await tester.pumpAndSettle();
+      expect(r.preparedFields.single, isEmpty);
+    });
+
+    testWidgets('a chosen field is passed for its workspace only', (
+      tester,
+    ) async {
+      final r = offering();
+      await pump(tester, r);
+      await tester.tap(find.byKey(const ValueKey('mcp-consent-ws-toggle-$_a')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('mcp-consent-field-$_a-name')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('mcp-consent-approve')));
+      await tester.pumpAndSettle();
+      expect(r.prepared.single, {
+        _a: ['get_availability'],
+      });
+      expect(r.preparedFields.single, {
+        _a: ['name'],
+      });
+    });
+
+    test('the command drops fields of a workspace not chosen', () async {
+      final r = offering();
+      await ConnectAssistant(r, () async {}).connect(
+        const AuthorizationRequest(authorizationId: _auth, clientId: 'c'),
+        {
+          _a: ['get_availability'],
+          _b: [],
+        },
+        optionalFields: {
+          _a: ['name'],
+          _b: ['name'],
+        },
+      );
+      expect(r.preparedFields.single, {
+        _a: ['name'],
+      });
+    });
+  });
 }

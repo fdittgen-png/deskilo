@@ -7380,6 +7380,58 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpGetValidation => 'Leer una solicitud de validación';
 
   @override
+  String get mcpFieldName => 'Nombres de espacios y puestos';
+
+  @override
+  String get mcpFieldNameSample => 'Escritorio ventana 12';
+
+  @override
+  String get mcpDisclosureTitle => 'Detalles opcionales';
+
+  @override
+  String get mcpDisclosurePolicyExplain =>
+      'Los asistentes reciben respuestas minimizadas. Elija los detalles que también pueden ver aquí; cada persona sigue eligiendo por sí misma.';
+
+  @override
+  String get mcpDisclosureNoneAllowed =>
+      'Esta base de datos no permite mostrar ningún detalle opcional a los asistentes.';
+
+  @override
+  String get mcpDisclosurePreviewNote =>
+      'Una respuesta ficticia, para mostrar lo que verían los asistentes.';
+
+  @override
+  String get mcpDisclosurePreviewMinimised => 'Respuesta minimizada';
+
+  @override
+  String get mcpDisclosurePreviewDetailed => 'Respuesta detallada';
+
+  @override
+  String get mcpDisclosureMaximumExplain =>
+      'Lo máximo que los propietarios de esta base de datos pueden dejar ver a los asistentes. Nunca amplía la política de un espacio ni el consentimiento de una persona.';
+
+  @override
+  String get mcpDisclosureMaximumSave => 'Guardar el máximo';
+
+  @override
+  String get mcpDisclosureMaximumSaved => 'Máximo guardado.';
+
+  @override
+  String get mcpDisclosureMaximumRefused =>
+      'El máximo no se guardó. Necesita su segundo factor.';
+
+  @override
+  String get mcpDisclosureMaximumLocked =>
+      'Confirme con su segundo factor para ver y cambiar el máximo.';
+
+  @override
+  String get mcpDisclosureUnlock => 'Confirmar';
+
+  @override
+  String get mcpConsentFieldsExplain =>
+      'Detalles que también puede ver aquí. Déjelos sin marcar para mantener sus respuestas minimizadas.';
+
+  @override
   String get mcpPolicyTitle => 'Acceso de asistentes';
 
   @override

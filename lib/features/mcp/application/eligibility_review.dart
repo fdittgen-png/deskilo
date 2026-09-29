@@ -16,7 +16,11 @@ import '../domain/mcp_context.dart';
 import 'mcp_commands.dart';
 
 class EligibilityReview {
-  EligibilityReview(this._commands, this._factors);
+  EligibilityReview(this._commands, this._factors, {this.instance});
+
+  /// The installation whose maximum this screen administers; null while
+  /// it is not verified, when nothing is saved.
+  final McpInstanceRef? instance;
   final McpCommands _commands;
   final SecondFactorRepository _factors;
   final _decisionIds = <(McpInstanceRef, String, bool), String>{};
@@ -25,6 +29,23 @@ class EligibilityReview {
   Future<TotpEnrollment> enroll() => _factors.enrollTotp();
   Future<void> verify(String factorId, String code) =>
       _factors.verify(factorId, code);
+
+  /// #1809 — saves the installation maximum of optional fields; the
+  /// server demands aal2 as for a decision, and so does this. Null when
+  /// refused.
+  Future<Set<String>?> setDisclosureMaximum(Set<String> fields) async {
+    if (!(await _factors.state()).aal2) return null;
+    final scope = instance;
+    if (scope == null) throw const McpTargetUnverified('');
+    return _commands.execute(
+      McpMutation<Object?>(
+        scope: scope,
+        operation: 'set_mcp_disclosure_maximum',
+        payload: fields,
+      ),
+      (repositories, m) => repositories.admin.setDisclosureMaximum(fields),
+    );
+  }
 
   Future<EligibilityDecisionStatus> decide(
     EligibilityRequest request, {

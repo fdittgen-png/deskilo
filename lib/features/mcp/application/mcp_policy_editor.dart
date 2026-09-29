@@ -40,13 +40,17 @@ class McpPolicyPayload {
     required this.enabled,
     required Iterable<String> operations,
     required this.targetCeiling,
-  }) : operations = List.unmodifiable(operations.toList()..sort());
+    Iterable<String> optionalFields = const [],
+  }) : operations = List.unmodifiable(operations.toList()..sort()),
+       optionalFields = List.unmodifiable(optionalFields.toList()..sort());
 
   final bool enabled;
   final List<String> operations;
   final String targetCeiling;
+  final List<String> optionalFields;
 
-  String get _signature => '$enabled|$targetCeiling|${operations.join(',')}';
+  String get _signature =>
+      '$enabled|$targetCeiling|${operations.join(',')}|${optionalFields.join(',')}';
 
   @override
   bool operator ==(Object other) =>
@@ -64,7 +68,10 @@ class McpPolicyDraft {
       _mutationId = newRequestId(),
       enabled = base.enabled,
       operations = {...base.operations},
-      targetCeiling = base.targetCeiling;
+      targetCeiling = base.targetCeiling,
+      optionalFields = base.optionalFields
+          .where(base.availableOptionalFields.contains)
+          .toSet();
 
   final String workspaceId;
 
@@ -80,6 +87,11 @@ class McpPolicyDraft {
 
   String get mutationId => _mutationId;
 
+  /// #1809 — the optional fields offered, always within the maximum the
+  /// policy was read with: a field the database no longer allows is
+  /// dropped, never kept by a save.
+  final Set<String> optionalFields;
+
   /// Operations this save would add: assistants already connected do not
   /// get them until each person consents again (0276).
   Set<String> added(McpPolicy base) => operations.difference(base.operations);
@@ -92,6 +104,7 @@ class McpPolicyDraft {
       enabled: enabled && operations.isNotEmpty,
       operations: operations,
       targetCeiling: targetCeiling,
+      optionalFields: optionalFields,
     );
     final sent = _sent;
     if (sent != null && sent.payload == payload) return sent;
@@ -121,6 +134,7 @@ class McpPolicyEditor {
         enabled: p.enabled,
         operations: p.operations.toSet(),
         targetCeiling: p.targetCeiling,
+        optionalFields: p.optionalFields.toSet(),
       );
     });
   }

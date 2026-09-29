@@ -80,6 +80,7 @@ class _GatedAdmin extends FakeMcpAdminRepository {
     required bool enabled,
     required Set<String> operations,
     required String targetCeiling,
+    required Set<String> optionalFields,
   }) async {
     final gate = saveGate;
     if (gate != null) await gate.future;
@@ -91,6 +92,7 @@ class _GatedAdmin extends FakeMcpAdminRepository {
       enabled: enabled,
       operations: operations,
       ceiling: targetCeiling,
+      optionalFields: optionalFields,
     ));
     if (failure != null) throw failure;
     return PolicySaveResult(

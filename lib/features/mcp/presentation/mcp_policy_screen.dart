@@ -14,6 +14,7 @@ import '../domain/mcp_admin.dart';
 import '../domain/mcp_context.dart';
 import '../providers/mcp_providers.dart';
 import 'mcp_operation_labels.dart';
+import 'widgets/mcp_disclosure_preview.dart';
 import 'widgets/mcp_usage_cards.dart';
 
 /// #1801 — the self-hosted Swagger UI (#1799), served with the web app.
@@ -212,6 +213,7 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
         ),
         for (final group in McpOperationGroup.values)
           ..._group(l10n, policy, draft, group),
+        ..._disclosure(l10n, policy, draft),
         if (added.isNotEmpty && policy.revision > 0) ...[
           const SizedBox(height: AppSpacing.md),
           _note(
@@ -273,6 +275,51 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
         ),
     ];
   }
+
+  /// #1809 — the optional fields, only within the installation maximum,
+  /// and what they change in a fictional answer.
+  List<Widget> _disclosure(
+    AppLocalizations? l10n,
+    McpPolicy policy,
+    McpPolicyDraft draft,
+  ) => [
+    const SizedBox(height: AppSpacing.md),
+    Text(
+      l10n?.mcpDisclosureTitle ?? 'Optional details',
+      style: Theme.of(context).textTheme.titleSmall,
+    ),
+    const SizedBox(height: AppSpacing.sm),
+    Text(
+      l10n?.mcpDisclosurePolicyExplain ??
+          'Assistants get minimised answers. Choose the details they may also see '
+              'here; each person still chooses for themselves.',
+    ),
+    if (policy.availableOptionalFields.isEmpty)
+      _note(
+        'mcp-policy-fields-none',
+        l10n?.mcpDisclosureNoneAllowed ??
+            'This database lets no optional detail be shown to assistants.',
+        Icons.lock_outline,
+        InlineBannerSeverity.info,
+      ),
+    for (final field in policy.availableOptionalFields)
+      CheckboxListTile(
+        key: ValueKey('mcp-policy-field-$field'),
+        contentPadding: EdgeInsets.zero,
+        dense: true,
+        value: draft.optionalFields.contains(field),
+        title: Text(mcpOptionalFieldLabel(l10n, field)),
+        onChanged: _busy
+            ? null
+            : (on) => setState(
+                () => (on ?? false)
+                    ? draft.optionalFields.add(field)
+                    : draft.optionalFields.remove(field),
+              ),
+      ),
+    const SizedBox(height: AppSpacing.sm),
+    McpDisclosurePreview(fields: draft.optionalFields),
+  ];
 
   Widget _outcomeBanner(
     AppLocalizations? l10n,

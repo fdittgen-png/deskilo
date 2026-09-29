@@ -280,10 +280,17 @@ Future<List<EligibilityRequest>> eligibilityRequests(Ref ref) async {
   return [for (final q in queue) q.withScope(scope)];
 }
 
+/// #1809 — the installation maximum of optional fields (administrators,
+/// aal2).
+@riverpod
+Future<McpDisclosureMaximum> mcpDisclosureMaximum(Ref ref) =>
+    ref.watch(mcpAdminRepositoryProvider).disclosureMaximum();
+
 @riverpod
 EligibilityReview eligibilityReview(Ref ref) => EligibilityReview(
   ref.watch(mcpCommandsProvider),
   ref.watch(secondFactorRepositoryProvider),
+  instance: ref.watch(activeMcpTargetProvider).value?.instance,
 );
 
 @riverpod
