@@ -8290,6 +8290,206 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le schermate dei messaggi rifiutano screenshot e registrazioni dello schermo quando il dispositivo lo consente, nascondono il contenuto durante una registrazione e annunciano uno screenshot nella conversazione quando può solo essere rilevato. Un browser non può bloccare gli screenshot; lì la conversazione viene sfocata quando la scheda perde il focus.';
 
   @override
+  String messengerContextSpace(String space) {
+    return 'In $space';
+  }
+
+  @override
+  String get messengerContextAccount => 'Da persona a persona';
+
+  @override
+  String messengerContextInquiryOut(String space) {
+    return 'La tua richiesta a $space';
+  }
+
+  @override
+  String messengerContextInquiryIn(String space) {
+    return 'Richiesta a $space';
+  }
+
+  @override
+  String messengerOnServer(String server) {
+    return 'su $server';
+  }
+
+  @override
+  String messengerInboxUnavailable(String servers) {
+    return 'Non raggiungibile al momento: $servers. Le sue conversazioni mancano da questo elenco.';
+  }
+
+  @override
+  String get messengerMessageActions => 'Azioni sul messaggio';
+
+  @override
+  String get messengerForward => 'Inoltra';
+
+  @override
+  String get messengerForwardLocked =>
+      'L’autore ha bloccato l’inoltro di questo messaggio.';
+
+  @override
+  String get messengerLock => 'Blocca l’inoltro';
+
+  @override
+  String get messengerUnlock => 'Consenti l’inoltro';
+
+  @override
+  String get messengerHistory => 'Cosa è successo';
+
+  @override
+  String get messengerDelete => 'Elimina messaggio';
+
+  @override
+  String get messengerDeleteConfirm =>
+      'Eliminare questo messaggio per tutti i partecipanti alla conversazione?';
+
+  @override
+  String get messengerDeleted => 'Messaggio eliminato.';
+
+  @override
+  String get messengerForwardTitle => 'Inoltra a';
+
+  @override
+  String get messengerForwardExplain =>
+      'Tutti i partecipanti della conversazione originale, per primo l’autore, vengono informati di chi l’ha inoltrato, quando e dove.';
+
+  @override
+  String get messengerForwardNoTargets =>
+      'Nessun’altra conversazione su questo server in cui inoltrare.';
+
+  @override
+  String messengerForwarded(String target) {
+    return 'Inoltrato a $target.';
+  }
+
+  @override
+  String messengerForwardedFrom(String context, String author) {
+    return 'Inoltrato da $context · scritto da $author';
+  }
+
+  @override
+  String messengerNoticeForwarded(String actor, String target) {
+    return '$actor ha inoltrato un messaggio di questa conversazione a $target.';
+  }
+
+  @override
+  String messengerNoticeCaptured(String actor) {
+    return '$actor ha fatto uno screenshot di questa conversazione.';
+  }
+
+  @override
+  String get messengerRead => 'Letto';
+
+  @override
+  String get messengerDelivered => 'Consegnato';
+
+  @override
+  String get messengerHistoryEmpty =>
+      'Ancora nulla di registrato per questo messaggio.';
+
+  @override
+  String messengerEventSent(String actor) {
+    return 'Inviato da $actor';
+  }
+
+  @override
+  String messengerEventRead(String actor) {
+    return 'Letto da $actor';
+  }
+
+  @override
+  String messengerEventForwarded(String actor, String target) {
+    return 'Inoltrato da $actor a $target';
+  }
+
+  @override
+  String messengerEventDeleted(String actor) {
+    return 'Eliminato da $actor';
+  }
+
+  @override
+  String messengerEventCaptured(String actor) {
+    return 'Screenshot di $actor';
+  }
+
+  @override
+  String messengerEventOther(String event, String actor) {
+    return '$event · $actor';
+  }
+
+  @override
+  String get messengerWriteToHosts => 'Scrivi ai gestori';
+
+  @override
+  String get messengerHostsIntro =>
+      'Il tuo messaggio viene letto da questi gestori dello spazio:';
+
+  @override
+  String get messengerHostsNone =>
+      'In questo spazio nessuno risponde ai messaggi al momento.';
+
+  @override
+  String get messengerInquirySend => 'Invia richiesta';
+
+  @override
+  String get messengerInquiriesTitle => 'Richieste';
+
+  @override
+  String get messengerInquiriesEmpty => 'Ancora nessuna richiesta.';
+
+  @override
+  String get messengerInquiryClose => 'Chiudi richiesta';
+
+  @override
+  String get messengerInquiryClosed => 'Richiesta chiusa.';
+
+  @override
+  String messengerInquiryFrom(String name) {
+    return 'Da $name';
+  }
+
+  @override
+  String messengerNoticeForwardedPrivate(String actor) {
+    return '$actor ha inoltrato un messaggio di questa conversazione in una conversazione personale.';
+  }
+
+  @override
+  String messengerEventForwardedPrivate(String actor) {
+    return 'Inoltrato da $actor in una conversazione personale';
+  }
+
+  @override
+  String messengerEventForwardedFrom(String actor, String context) {
+    return 'Scritto originariamente da $actor in $context';
+  }
+
+  @override
+  String get messengerRefusedForwardingOff =>
+      'Questo spazio non consente di inoltrare i suoi messaggi.';
+
+  @override
+  String get messengerRefusedTooLong =>
+      'Questo messaggio è troppo lungo per quella conversazione.';
+
+  @override
+  String get messengerRefusedClosed => 'Questa richiesta è chiusa.';
+
+  @override
+  String get messengerRefusedUnavailable =>
+      'Questo spazio non accetta richieste al momento.';
+
+  @override
+  String get messengerRefusedLimit => 'Troppi in una volta. Attendi un minuto.';
+
+  @override
+  String get captureWebNotice =>
+      'Il tuo browser non può impedire gli screenshot di questa conversazione.';
+
+  @override
+  String get captureRecordingHidden =>
+      'Nascosto mentre lo schermo viene registrato o duplicato.';
+
+  @override
   String get moneyBaseFee => 'Abbonamento base';
 
   @override
