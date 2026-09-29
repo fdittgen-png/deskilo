@@ -8,7 +8,16 @@ class FakeMcpConnectionRepository implements McpConnectionRepository {
   FakeMcpConnectionRepository({
     this.request,
     this.consent = const ConsentOptions(eligible: false, workspaces: []),
+    this.installationId,
   });
+
+  /// #1631 — the installation this fake answers revocations for, as the
+  /// server names its own; null answers for nobody.
+  final String? installationId;
+
+  /// The next revocation answer, when a test needs the server to say
+  /// something other than what was asked.
+  McpRevocation? nextRevocation;
 
   AuthorizationRequest? request;
   ConsentOptions consent;
@@ -64,13 +73,37 @@ class FakeMcpConnectionRepository implements McpConnectionRepository {
   Future<List<McpConnectionInfo>> connections() async => List.of(live);
 
   @override
-  Future<void> revokeScope(String clientId, String workspaceId) async =>
-      calls.add('revokeScope:$clientId:$workspaceId');
+  Future<McpRevocation> revokeScope(
+    String clientId,
+    String workspaceId,
+  ) async {
+    calls.add('revokeScope:$clientId:$workspaceId');
+    return _answer(
+      McpRevocation(installationId: installationId, workspaces: {workspaceId}),
+    );
+  }
 
   @override
-  Future<void> disconnect(String clientId) async {
+  Future<McpRevocation> disconnect(String clientId) async {
     calls.add('disconnect:$clientId');
+    final gone = live.where((c) => c.clientId == clientId).toList();
     live.removeWhere((c) => c.clientId == clientId);
+    return _answer(
+      McpRevocation(
+        installationId: installationId,
+        workspaces: {
+          for (final c in gone)
+            for (final w in c.workspaces) w.id,
+        },
+        connectionEnded: gone.isNotEmpty,
+      ),
+    );
+  }
+
+  McpRevocation _answer(McpRevocation asked) {
+    final next = nextRevocation;
+    nextRevocation = null;
+    return next ?? asked;
   }
 
   @override

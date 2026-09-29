@@ -112,8 +112,9 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       actionConfirmationRepositoryProvider
           .overrideWithValue(FakeActionConfirmationRepository()),
       // #1615 — nor an assistant to connect.
-      mcpConnectionRepositoryProvider
-          .overrideWithValue(FakeMcpConnectionRepository()),
+      mcpConnectionRepositoryProvider.overrideWithValue(
+        FakeMcpConnectionRepository(installationId: kDemoInstallationId),
+      ),
       // #1626/#1627 — no policy to save and no queue to review; and no
       // second factor, since Demo has no Auth server to verify one.
       mcpAdminRepositoryProvider.overrideWithValue(FakeMcpAdminRepository()),

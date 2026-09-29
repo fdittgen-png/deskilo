@@ -195,3 +195,24 @@ exists twice (SQL + Dart), change both and keep the pin.
   migration defining `mcp_operation_catalogue()` must carry
   `renderMcpCatalogueSql` verbatim (`mcp_contract_test`). Render it with
   a throwaway Dart script, write the migration, delete the script.
+
+## 9. Lessons of 2026-09-29 (0310, the pgTAP file as its own harness)
+
+- **Run the pgTAP file itself on dev, rolled back.** pgTAP is available
+  but not installed on the dev project; `create extension if not exists
+  pgtap with schema extensions` INSIDE the probe's `do` block works and
+  rolls back with it. Put every statement of the file into
+  `foreach s in array array[$s$…$s$, …] loop begin execute s [into v];
+  exception when others then log; end; end loop;`, collect `not ok`
+  lines, and end with `raise exception 'PROBE failed=% log=%',
+  num_failed(), v_log`. `__tresults__` does not exist in this pgTAP —
+  `num_failed()` does. Per-statement subtransactions keep `set local
+  role` (a released subtransaction keeps its SET LOCAL).
+- **Red first, in the database.** Run that same probe BEFORE
+  `apply_migration`: the rows that fail are the behaviour the migration
+  adds (0310: 15 failures + 1 missing function), the rows that pass are
+  the positive controls. Apply, rerun, expect `failed=0` and no ERR.
+- **A multi-scene pgTAP file accumulates state.** When a revocation
+  scene ends every connection of a person, a later scene that needs the
+  second assistant must consent to it again; the probe found that one,
+  not the reasoning.

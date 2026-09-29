@@ -113,6 +113,40 @@ class McpConnectionInfo {
   ];
 }
 
+/// #1631 — what one revocation ended, as the server answered it: the
+/// installation it ran on and the workspaces whose consent it revoked
+/// there. A client invalidates exactly these context keys; it never
+/// assumes the list it was showing, and never a blanket "this user".
+class McpRevocation {
+  const McpRevocation({
+    required this.installationId,
+    this.workspaces = const {},
+    this.connectionEnded = false,
+  });
+
+  /// Null when the answer did not name one: then it is nobody's answer.
+  final String? installationId;
+  final Set<String> workspaces;
+
+  /// The whole connection ended, not only some of its workspaces.
+  final bool connectionEnded;
+
+  static McpRevocation fromJson(Object? json) {
+    final m = json is Map ? json : const <String, Object?>{};
+    final installation = m['installation_id'];
+    final workspaces = m['workspaces'];
+    final connections = m['connections'];
+    return McpRevocation(
+      installationId: installation is String ? installation.toLowerCase() : null,
+      workspaces: {
+        for (final w in workspaces is List ? workspaces : const <Object?>[])
+          if (w is String) w,
+      },
+      connectionEnded: connections is num && connections > 0,
+    );
+  }
+}
+
 abstract interface class McpConnectionRepository {
   Future<AuthorizationRequest> authorization(String authorizationId);
   Future<ConsentOptions> options();
@@ -136,10 +170,12 @@ abstract interface class McpConnectionRepository {
   Future<String?> deny(String authorizationId);
 
   Future<List<McpConnectionInfo>> connections();
-  Future<void> revokeScope(String clientId, String workspaceId);
+
+  /// #1631 — answers what the server actually ended.
+  Future<McpRevocation> revokeScope(String clientId, String workspaceId);
 
   /// This database's connection and the provider grant.
-  Future<void> disconnect(String clientId);
+  Future<McpRevocation> disconnect(String clientId);
 
   /// #1630 — this person's own usage today, per assistant.
   Future<List<McpClientUsage>> myUsage();

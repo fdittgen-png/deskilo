@@ -350,7 +350,7 @@ void main() {
 
   group('connected assistants (#1628)', () {
     FakeMcpConnectionRepository connections() =>
-        FakeMcpConnectionRepository()
+        FakeMcpConnectionRepository(installationId: kTestInstallationId)
           ..live.add(
             const McpConnectionInfo(
               clientId: 'claude',
