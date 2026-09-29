@@ -16,7 +16,6 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/navigation.dart';
 import '../../helpers/open_my_account.dart';
 
 Future<({FakeProfileRepository profile, FakeWorkspaceRepository workspace})>
