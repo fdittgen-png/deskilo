@@ -6,12 +6,13 @@ import 'package:go_router/go_router.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
 /// #1626/#1627/#1628 — the settings entries for assistants, in one
 /// place so the settings screen grows by one line. Each shows only to
 /// whom it can serve: a member of a workspace with `mcpAccess` on (their
-/// own assistants), that workspace's owner (what it exposes), and this
+/// own assistants), whoever the role matrix lets manage integrations (what it exposes), and this
 /// database's administrators (approvals), whatever the workspace.
 class McpSettingsTiles extends ConsumerWidget {
   const McpSettingsTiles({super.key});
@@ -22,7 +23,9 @@ class McpSettingsTiles extends ConsumerWidget {
     final on = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.mcpAccess);
-    final owner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
+    final manages = ref
+        .watch(myPermissionsProvider)
+        .contains(WorkspacePermission.manageIntegrations);
     final admin =
         ref
             .watch(myDatabaseCapabilitiesProvider)
@@ -39,7 +42,7 @@ class McpSettingsTiles extends ConsumerWidget {
             title: Text(l10n?.mcpAssistantsTitle ?? 'Assistants'),
             onTap: () => context.push('/assistants'),
           ),
-        if (on && owner)
+        if (on && manages)
           ListTile(
             key: const ValueKey('settings-assistant-policy'),
             leading: const Icon(Icons.admin_panel_settings_outlined),

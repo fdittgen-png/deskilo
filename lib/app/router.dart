@@ -500,12 +500,12 @@ GoRouter router(Ref ref) {
         path: '/database/assistant-approvals',
         builder: (context, state) => const EligibilityReviewScreen(),
       ),
-      // #1626 — what this workspace exposes: its owner only. Not behind
-      // mcpAccess, so an owner can always narrow or switch it off.
+      // #1626/#1826 — what this workspace exposes: whoever holds
+      // manageIntegrations (owners always; the matrix delegates it). Not
+      // behind mcpAccess, so it can always be narrowed or switched off.
       GoRoute(
         path: '/settings/assistants',
-        redirect: (context, state) =>
-            (ref.read(myMemberProvider).value?.actsAsOwner ?? false) ? null : '/messages',
+        redirect: needs(WorkspacePermission.manageIntegrations),
         builder: (context, state) => const McpPolicyScreen(),
       ),
       // #1648 — the protected client purpose selects identity or MCP consent.
