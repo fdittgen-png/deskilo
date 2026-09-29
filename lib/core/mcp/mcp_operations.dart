@@ -43,6 +43,13 @@ const Set<String> mcpForbiddenInputs = {
   'status_override',
 };
 
+/// #1809 — every field an answer discloses only when the installation
+/// maximum, the workspace policy and the person's consent all name it
+/// (#1645). The app offers exactly these, never a hand-written list.
+const List<String> mcpOptionalFields = [
+  'name',
+];
+
 /// Every catalogued operation, handler or not.
 const Map<String, McpOperationSpec> mcpOperations = {
   'list_workspaces': McpOperationSpec(

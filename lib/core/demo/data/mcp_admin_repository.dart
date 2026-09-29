@@ -22,11 +22,19 @@ class FakeMcpAdminRepository implements McpAdminRepository {
           bool enabled,
           Set<String> operations,
           String ceiling,
+          Set<String> optionalFields,
         })
       >[];
   final decisions = <({String userId, String decisionId, bool approve})>[];
   final revoked = <String>[];
   PolicySaveStatus nextSave = PolicySaveStatus.saved;
+
+  /// #1809 — the installation maximum; Demo offers no optional field.
+  McpDisclosureMaximum maximum = const McpDisclosureMaximum(
+    fields: {},
+    available: [],
+  );
+  final maximumSaves = <Set<String>>[];
 
   /// #1630 — the workspace's usage rows; Demo has none, so it shows zeros.
   List<({DateTime? day, String operation, McpUsageCounts counts})> usage = [];
@@ -52,6 +60,7 @@ class FakeMcpAdminRepository implements McpAdminRepository {
     required bool enabled,
     required Set<String> operations,
     required String targetCeiling,
+    required Set<String> optionalFields,
   }) async {
     saves.add((
       expected: expectedRevision,
@@ -59,6 +68,7 @@ class FakeMcpAdminRepository implements McpAdminRepository {
       enabled: enabled,
       operations: operations,
       ceiling: targetCeiling,
+      optionalFields: optionalFields,
     ));
     final base = await policy(workspaceId);
     if (nextSave == PolicySaveStatus.stale) {
@@ -75,11 +85,26 @@ class FakeMcpAdminRepository implements McpAdminRepository {
       targetCeiling: targetCeiling,
       featureEnabled: base.featureEnabled,
       available: base.available,
+      optionalFields: optionalFields,
+      availableOptionalFields: base.availableOptionalFields,
     );
     return PolicySaveResult(
       PolicySaveStatus.saved,
       revision: base.revision + 1,
     );
+  }
+
+  @override
+  Future<McpDisclosureMaximum> disclosureMaximum() async => maximum;
+
+  @override
+  Future<Set<String>?> setDisclosureMaximum(Set<String> fields) async {
+    maximumSaves.add(fields);
+    maximum = McpDisclosureMaximum(
+      fields: fields,
+      available: maximum.available,
+    );
+    return fields;
   }
 
   @override

@@ -124,6 +124,12 @@ McpPolicyEditor mcpPolicyEditor(Ref ref) =>
 Future<List<EligibilityRequest>> eligibilityRequests(Ref ref) =>
     ref.watch(mcpAdminRepositoryProvider).eligibilityRequests();
 
+/// #1809 — the installation maximum of optional fields (administrators,
+/// aal2).
+@riverpod
+Future<McpDisclosureMaximum> mcpDisclosureMaximum(Ref ref) =>
+    ref.watch(mcpAdminRepositoryProvider).disclosureMaximum();
+
 @riverpod
 EligibilityReview eligibilityReview(Ref ref) => EligibilityReview(
   ref.watch(mcpAdminRepositoryProvider),

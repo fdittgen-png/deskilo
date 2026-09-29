@@ -14,6 +14,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../application/eligibility_review.dart';
 import '../domain/mcp_admin.dart';
 import '../providers/mcp_providers.dart';
+import 'mcp_operation_labels.dart';
 
 /// #1627 — a database administrator reviews who may use assistants on
 /// this database. Approval is not membership, a service or consent; it
@@ -34,10 +35,13 @@ class _EligibilityReviewScreenState
   bool _busy = false;
   String? _outcome;
 
-  Future<void> _decide(EligibilityRequest request, bool approve) async {
-    if (_busy) return;
-    final review = ref.read(eligibilityReviewProvider);
-    setState(() => _busy = true);
+  /// #1809 — the maximum being edited; null until the server's is read.
+  Set<String>? _maximum;
+  String? _maximumOutcome;
+
+  /// True once the session is at aal2: asks for the authenticator code
+  /// when it is not. Every database decision passes here first.
+  Future<bool> _secondFactor(EligibilityReview review) async {
     var verified = false;
     await runGuarded(
       context,
@@ -57,6 +61,14 @@ class _EligibilityReviewScreenState
           ) ??
           false;
     }
+    return verified && mounted;
+  }
+
+  Future<void> _decide(EligibilityRequest request, bool approve) async {
+    if (_busy) return;
+    final review = ref.read(eligibilityReviewProvider);
+    setState(() => _busy = true);
+    final verified = await _secondFactor(review);
     if (!mounted) return;
     if (!verified) {
       setState(() => _busy = false);
@@ -77,6 +89,135 @@ class _EligibilityReviewScreenState
       _outcome = status?.name;
     });
     ref.invalidate(eligibilityRequestsProvider);
+  }
+
+  /// #1809 — reads the maximum once the second factor is confirmed.
+  Future<void> _unlockMaximum() async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    final verified = await _secondFactor(ref.read(eligibilityReviewProvider));
+    if (!mounted) return;
+    setState(() => _busy = false);
+    if (verified) {
+      ref.invalidate(mcpDisclosureMaximumProvider);
+      ref.invalidate(eligibilityRequestsProvider);
+    }
+  }
+
+  Future<void> _saveMaximum() async {
+    final fields = _maximum;
+    if (_busy || fields == null) return;
+    final review = ref.read(eligibilityReviewProvider);
+    setState(() => _busy = true);
+    final verified = await _secondFactor(review);
+    if (!mounted) return;
+    if (!verified) {
+      setState(() => _busy = false);
+      return;
+    }
+    Set<String>? saved;
+    await runGuarded(
+      context,
+      domain: 'mcp',
+      message: 'disclosure maximum save failed',
+      action: () async => saved = await review.setDisclosureMaximum({
+        ...fields,
+      }),
+    );
+    if (!mounted) return;
+    setState(() {
+      _busy = false;
+      _maximumOutcome = saved == null ? 'refused' : 'saved';
+      if (saved != null) _maximum = null;
+    });
+    if (saved != null) ref.invalidate(mcpDisclosureMaximumProvider);
+  }
+
+  Widget _disclosureMaximum(AppLocalizations? l10n) {
+    final theme = Theme.of(context);
+    final state = ref.watch(mcpDisclosureMaximumProvider);
+    return Card(
+      key: const ValueKey('mcp-maximum'),
+      margin: const EdgeInsets.only(top: AppSpacing.lg),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l10n?.mcpDisclosureTitle ?? 'Optional details',
+              style: theme.textTheme.titleSmall,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              l10n?.mcpDisclosureMaximumExplain ??
+                  'The most that owners on this database may let assistants see. It never '
+                      'widens a workspace\'s policy or a person\'s consent.',
+            ),
+            if (_maximumOutcome != null)
+              Padding(
+                padding: const EdgeInsets.only(top: AppSpacing.sm),
+                child: InlineBanner(
+                  key: ValueKey('mcp-maximum-outcome-$_maximumOutcome'),
+                  icon: Icons.info_outline,
+                  severity: _maximumOutcome == 'saved'
+                      ? InlineBannerSeverity.info
+                      : InlineBannerSeverity.error,
+                  text: _maximumOutcome == 'saved'
+                      ? (l10n?.mcpDisclosureMaximumSaved ?? 'Maximum saved.')
+                      : (l10n?.mcpDisclosureMaximumRefused ??
+                            'The maximum was not saved. It needs your second factor.'),
+                ),
+              ),
+            ...state.when(
+              loading: () => const [LoadingView()],
+              error: (e, _) => [
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  l10n?.mcpDisclosureMaximumLocked ??
+                      'Confirm with your second factor to see and change the maximum.',
+                  key: const ValueKey('mcp-maximum-locked'),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton(
+                  key: const ValueKey('mcp-maximum-unlock'),
+                  onPressed: _busy ? null : _unlockMaximum,
+                  child: Text(l10n?.mcpDisclosureUnlock ?? 'Confirm'),
+                ),
+              ],
+              data: (m) {
+                final draft = _maximum ??= {...m.fields};
+                return [
+                  for (final field in m.available)
+                    CheckboxListTile(
+                      key: ValueKey('mcp-maximum-field-$field'),
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      value: draft.contains(field),
+                      title: Text(mcpOptionalFieldLabel(l10n, field)),
+                      onChanged: _busy
+                          ? null
+                          : (on) => setState(
+                              () => (on ?? false)
+                                  ? draft.add(field)
+                                  : draft.remove(field),
+                            ),
+                    ),
+                  const SizedBox(height: AppSpacing.sm),
+                  FilledButton(
+                    key: const ValueKey('mcp-maximum-save'),
+                    onPressed: _busy ? null : _saveMaximum,
+                    child: Text(
+                      l10n?.mcpDisclosureMaximumSave ?? 'Save the maximum',
+                    ),
+                  ),
+                ];
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -102,9 +243,17 @@ class _EligibilityReviewScreenState
                   .watch(eligibilityRequestsProvider)
                   .when(
                     loading: () => const LoadingView(),
-                    error: (e, _) => _message(
-                      l10n?.mcpReviewUnavailable ??
-                          'The requests could not be loaded. A review needs your second factor; try again.',
+                    error: (e, _) => ListView(
+                      children: [
+                        _message(
+                          l10n?.mcpReviewUnavailable ??
+                              'The requests could not be loaded. A review needs your second factor; try again.',
+                        ),
+                        Padding(
+                          padding: AppSpacing.gutterH,
+                          child: _disclosureMaximum(l10n),
+                        ),
+                      ],
                     ),
                     data: (requests) => ListView(
                       padding: AppSpacing.gutterAll,
@@ -156,6 +305,7 @@ class _EligibilityReviewScreenState
                               ),
                             ),
                           ),
+                        _disclosureMaximum(l10n),
                       ],
                     ),
                   ),
