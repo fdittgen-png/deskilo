@@ -38,6 +38,10 @@ description: The recurring reasons a DesKilo widget or lint test fails for a rea
 | a "green" test also passes on master | it asserts a default or a stale reading | red-first against master (`git show origin/master:<file> > <file>`), then restore; if it stays green, the test proves nothing |
 | an HTTP-fixture MFA test sees aal1 after a successful verify, or an unexpected `/auth/v1/token` call | gotrue's `mfa.listFactors()` calls `refreshSession()` first, and `getAuthenticatorAssuranceLevel()` reads the `aal` claim of the (refreshed) JWT | answer `grant_type=refresh_token` with a session at the level the refresh token was issued for (encode it in the token, as `mcp_target_second_factor_test` does); a parameterless `rpc()` posts the body `null`, not `{}` |
 | a widget test asserts a toggle that a `finally` never resets | `_busy` stuck after a hang | bound platform calls with `.timeout` so a hang becomes an error |
+| a long press on a message bubble shows a tooltip, and its delete dialog never opens | an `IconButton` with a `tooltip:` INSIDE the long-pressable area wins the long-press arena at the bubble's centre | put the button BESIDE the bubble (a `Row` around it), never inside (#1824) |
+| a tap that needs "signed in" pushes `/auth` in a bare `MaterialApp` test | `ref.read(authStateProvider)` on a stream nobody watches is still loading | watch it in a `Consumer` around `home` — in the app the router keeps it alive (#1824) |
+| the second `pumpWidget` of the same screen with other arguments still shows the first one's data | same widget type at the same place REUSES its `State` (`late` fields keep the old id) | `pumpWidget(const SizedBox.shrink())` in between, or key the screen |
+| a platform-channel feature needs a test | no device in `flutter test` | mock the channel (`setMockMethodCallHandler`) for Dart→native, and `handlePlatformMessage` with `StandardMethodCodec().encodeMethodCall` for native→Dart; the native half stays a manual device check, say so (#1824 `deskilo/capture`) |
 
 Quick-view keys: `member-doc-quick` / `-download` / `-share` (one prefix
 for every member letter), `vat-report-*`, `proforma-*`.

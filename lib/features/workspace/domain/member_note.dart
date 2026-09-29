@@ -1,4 +1,5 @@
 import '../../../core/data/system_columns.dart';
+import '../../directory/domain/messenger.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// A short member-to-member notification (#456, migration 0089).
@@ -13,6 +14,9 @@ class MemberNote implements SystemStamped {
     required this.createdAt,
     this.readAt,
     this.conversationId,
+    this.noForward = false,
+    this.forwardedFrom,
+    this.notice,
     this.system = SystemColumns.none,
   });
 
@@ -32,6 +36,10 @@ class MemberNote implements SystemStamped {
             ? null
             : DateTime.parse(row['read_at'] as String).toUtc(),
         conversationId: row['conversation_id'] as String?,
+        // #1824 — absent on a server older than the messenger batch.
+        noForward: row['no_forward'] == true,
+        forwardedFrom: ForwardOrigin.fromJson(row['forwarded_from']),
+        notice: MessageNotice.fromJson(row['notice']),
       );
 
   final String id;
@@ -52,6 +60,15 @@ class MemberNote implements SystemStamped {
   /// at read time rather than a conversation. Neither has a thread to
   /// open, so a search result for one must not offer to.
   final String? conversationId;
+
+  /// #1824 — the author locked it against forwarding.
+  final bool noForward;
+
+  /// #1824 — where a forwarded copy came from; null on an original.
+  final ForwardOrigin? forwardedFrom;
+
+  /// #1824 — a system line (a forward, a screenshot), not a message.
+  final MessageNotice? notice;
 
   bool get isBroadcast => toMemberId == null;
 }

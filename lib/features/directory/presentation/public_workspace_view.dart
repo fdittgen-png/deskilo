@@ -12,6 +12,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import 'connection_dialog.dart';
+import 'messenger/inquiry_sheet.dart';
 
 class PublicWorkspaceView extends ConsumerWidget {
   const PublicWorkspaceView({
@@ -133,6 +134,20 @@ class PublicWorkspaceView extends ConsumerWidget {
                             },
                     )
                   : null,
+            ),
+          // #1824 — an inquiry addressed to the SPACE, read by its host
+          // roster, which the sheet shows before anything is written.
+          // The space's own `spaceInquiries` flag is decided on its
+          // server: a space that switched it off answers no roster.
+          if (!preview)
+            OutlinedButton.icon(
+              key: const ValueKey('write-to-hosts'),
+              icon: const Icon(Icons.contact_support_outlined),
+              label: Text(l?.messengerWriteToHosts ?? 'Write to the hosts'),
+              onPressed: () async {
+                if (!await _connected(context, ref) || !context.mounted) return;
+                await showInquirySheet(context, workspace);
+              },
             ),
           if (!preview)
             FilledButton.icon(
