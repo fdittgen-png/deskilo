@@ -108,17 +108,20 @@ class _Target {
     : admin = _GatedAdmin(name),
       connections = FakeMcpConnectionRepository(),
       confirmations = FakeActionConfirmationRepository(),
-      identity = FakeIdentityBindingRepository();
+      identity = FakeIdentityBindingRepository(),
+      secondFactor = FakeSecondFactorRepository();
   final _GatedAdmin admin;
   final FakeMcpConnectionRepository connections;
   final FakeActionConfirmationRepository confirmations;
   final FakeIdentityBindingRepository identity;
+  final FakeSecondFactorRepository secondFactor;
 
   McpRepositories get repositories => McpRepositories(
     admin: admin,
     connections: connections,
     confirmations: confirmations,
     identity: identity,
+    secondFactor: secondFactor,
   );
 }
 
@@ -611,6 +614,7 @@ void main() {
           connections: connections,
           confirmations: FakeActionConfirmationRepository(),
           identity: identity,
+          secondFactor: FakeSecondFactorRepository(),
         );
         final registry = McpClientRegistry(
           (key, _) => _StaticClient(key, repos),

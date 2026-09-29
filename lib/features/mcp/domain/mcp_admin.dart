@@ -177,7 +177,16 @@ class EligibilityRequest {
   ];
 }
 
-enum EligibilityDecisionStatus { decided, replayed, changed, refused }
+enum EligibilityDecisionStatus {
+  decided,
+  replayed,
+  changed,
+  refused,
+
+  /// #1625 — the TARGET's session is not at aal2: nothing was sent. A
+  /// second factor on another installation (the active one) never counts.
+  secondFactorRequired,
+}
 
 EligibilityDecisionStatus eligibilityDecisionFromJson(Object? json) {
   final m = json is Map ? json : const <String, Object?>{};

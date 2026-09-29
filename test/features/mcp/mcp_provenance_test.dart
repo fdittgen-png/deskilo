@@ -52,6 +52,9 @@ ProviderContainer _container({
       identityBindingRepositoryProvider.overrideWithValue(
         FakeIdentityBindingRepository(),
       ),
+      secondFactorRepositoryProvider.overrideWithValue(
+        FakeSecondFactorRepository(),
+      ),
       activeMcpTargetProvider.overrideWith(
         (ref) => fixedMcpTarget(ref, kTestInstallationId),
       ),

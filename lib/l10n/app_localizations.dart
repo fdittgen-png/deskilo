@@ -13297,6 +13297,210 @@ abstract class AppLocalizations {
   /// **'What an assistant can call, and how it is authorised'**
   String get mcpApiReferenceHint;
 
+  /// #1625 MCP status: mcpStatusTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Where you stand here'**
+  String get mcpStatusTitle;
+
+  /// #1625 MCP status: mcpStatusIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Identity'**
+  String get mcpStatusIdentity;
+
+  /// #1625 MCP status: mcpStatusEligibility
+  ///
+  /// In en, this message translates to:
+  /// **'Database approval'**
+  String get mcpStatusEligibility;
+
+  /// #1625 MCP status: mcpStatusExposure
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace offer'**
+  String get mcpStatusExposure;
+
+  /// #1625 MCP status: mcpStatusRole
+  ///
+  /// In en, this message translates to:
+  /// **'Your role'**
+  String get mcpStatusRole;
+
+  /// #1625 MCP status: mcpStatusConsent
+  ///
+  /// In en, this message translates to:
+  /// **'Your consent'**
+  String get mcpStatusConsent;
+
+  /// #1625 MCP status: mcpStatusBackend
+  ///
+  /// In en, this message translates to:
+  /// **'Server'**
+  String get mcpStatusBackend;
+
+  /// #1625 MCP status: mcpStateVerified
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get mcpStateVerified;
+
+  /// #1625 MCP status: mcpStateUnlinked
+  ///
+  /// In en, this message translates to:
+  /// **'Not linked'**
+  String get mcpStateUnlinked;
+
+  /// #1625 MCP status: mcpStateNotRequested
+  ///
+  /// In en, this message translates to:
+  /// **'Not requested'**
+  String get mcpStateNotRequested;
+
+  /// #1625 MCP status: mcpStatePending
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a decision'**
+  String get mcpStatePending;
+
+  /// #1625 MCP status: mcpStateApproved
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get mcpStateApproved;
+
+  /// #1625 MCP status: mcpStateRevoked
+  ///
+  /// In en, this message translates to:
+  /// **'Expired or withdrawn'**
+  String get mcpStateRevoked;
+
+  /// #1625 MCP status: mcpStateDisabled
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing offered'**
+  String get mcpStateDisabled;
+
+  /// #1625 MCP status: mcpStateExposed
+  ///
+  /// In en, this message translates to:
+  /// **'Operations offered'**
+  String get mcpStateExposed;
+
+  /// #1625 MCP status: mcpStateAllowed
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed'**
+  String get mcpStateAllowed;
+
+  /// #1625 MCP status: mcpStateDenied
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing for your role'**
+  String get mcpStateDenied;
+
+  /// #1625 MCP status: mcpStateMissing
+  ///
+  /// In en, this message translates to:
+  /// **'Not given'**
+  String get mcpStateMissing;
+
+  /// #1625 MCP status: mcpStateCurrent
+  ///
+  /// In en, this message translates to:
+  /// **'Given'**
+  String get mcpStateCurrent;
+
+  /// #1625 MCP status: mcpStateAvailable
+  ///
+  /// In en, this message translates to:
+  /// **'Reachable'**
+  String get mcpStateAvailable;
+
+  /// #1625 MCP status: mcpStateIncompatible
+  ///
+  /// In en, this message translates to:
+  /// **'Incompatible version'**
+  String get mcpStateIncompatible;
+
+  /// #1625 MCP status: mcpStateUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get mcpStateUnavailable;
+
+  /// #1625 MCP status: mcpNextLinkIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Next: you link your account to this database\'s identity.'**
+  String get mcpNextLinkIdentity;
+
+  /// #1625 MCP status: mcpNextRequestEligibility
+  ///
+  /// In en, this message translates to:
+  /// **'Next: you ask this database\'s administrators for approval.'**
+  String get mcpNextRequestEligibility;
+
+  /// #1625 MCP status: mcpNextAwaitEligibility
+  ///
+  /// In en, this message translates to:
+  /// **'Next: a database administrator decides your request.'**
+  String get mcpNextAwaitEligibility;
+
+  /// #1625 MCP status: mcpNextOwnerExposes
+  ///
+  /// In en, this message translates to:
+  /// **'Next: the workspace owner offers operations to assistants.'**
+  String get mcpNextOwnerExposes;
+
+  /// #1625 MCP status: mcpNextRoleDenied
+  ///
+  /// In en, this message translates to:
+  /// **'Your role leaves no operation to offer here. The workspace owner decides what each role may do.'**
+  String get mcpNextRoleDenied;
+
+  /// #1625 MCP status: mcpNextConsent
+  ///
+  /// In en, this message translates to:
+  /// **'Next: connect an assistant from the assistant itself and approve this workspace.'**
+  String get mcpNextConsent;
+
+  /// #1625 MCP status: mcpNextReady
+  ///
+  /// In en, this message translates to:
+  /// **'Ready: a connected assistant may act for you in this workspace, within what you approved.'**
+  String get mcpNextReady;
+
+  /// #1625 MCP status: mcpNextUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'The server could not answer. Nothing is assumed; try again later.'**
+  String get mcpNextUnavailable;
+
+  /// #1625 MCP status: mcpStatusOpenLinkedAccounts
+  ///
+  /// In en, this message translates to:
+  /// **'Open linked accounts'**
+  String get mcpStatusOpenLinkedAccounts;
+
+  /// #1625 MCP status: mcpOverviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Other connected databases'**
+  String get mcpOverviewTitle;
+
+  /// #1625 MCP status: mcpOverviewUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be asked right now.'**
+  String get mcpOverviewUnavailable;
+
+  /// #1625 MCP status: mcpReviewSecondFactor
+  ///
+  /// In en, this message translates to:
+  /// **'That database needs your second factor on its own session. Nothing was decided.'**
+  String get mcpReviewSecondFactor;
+
   /// #1630 mcp_usage
   ///
   /// In en, this message translates to:

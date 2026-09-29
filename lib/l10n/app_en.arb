@@ -8245,6 +8245,142 @@
   "@mcpApiReferenceHint": {
     "description": "#1801 mcp_settings"
   },
+  "mcpStatusTitle": "Where you stand here",
+  "@mcpStatusTitle": {
+    "description": "#1625 MCP status: mcpStatusTitle"
+  },
+  "mcpStatusIdentity": "Identity",
+  "@mcpStatusIdentity": {
+    "description": "#1625 MCP status: mcpStatusIdentity"
+  },
+  "mcpStatusEligibility": "Database approval",
+  "@mcpStatusEligibility": {
+    "description": "#1625 MCP status: mcpStatusEligibility"
+  },
+  "mcpStatusExposure": "Workspace offer",
+  "@mcpStatusExposure": {
+    "description": "#1625 MCP status: mcpStatusExposure"
+  },
+  "mcpStatusRole": "Your role",
+  "@mcpStatusRole": {
+    "description": "#1625 MCP status: mcpStatusRole"
+  },
+  "mcpStatusConsent": "Your consent",
+  "@mcpStatusConsent": {
+    "description": "#1625 MCP status: mcpStatusConsent"
+  },
+  "mcpStatusBackend": "Server",
+  "@mcpStatusBackend": {
+    "description": "#1625 MCP status: mcpStatusBackend"
+  },
+  "mcpStateVerified": "Verified",
+  "@mcpStateVerified": {
+    "description": "#1625 MCP status: mcpStateVerified"
+  },
+  "mcpStateUnlinked": "Not linked",
+  "@mcpStateUnlinked": {
+    "description": "#1625 MCP status: mcpStateUnlinked"
+  },
+  "mcpStateNotRequested": "Not requested",
+  "@mcpStateNotRequested": {
+    "description": "#1625 MCP status: mcpStateNotRequested"
+  },
+  "mcpStatePending": "Waiting for a decision",
+  "@mcpStatePending": {
+    "description": "#1625 MCP status: mcpStatePending"
+  },
+  "mcpStateApproved": "Approved",
+  "@mcpStateApproved": {
+    "description": "#1625 MCP status: mcpStateApproved"
+  },
+  "mcpStateRevoked": "Expired or withdrawn",
+  "@mcpStateRevoked": {
+    "description": "#1625 MCP status: mcpStateRevoked"
+  },
+  "mcpStateDisabled": "Nothing offered",
+  "@mcpStateDisabled": {
+    "description": "#1625 MCP status: mcpStateDisabled"
+  },
+  "mcpStateExposed": "Operations offered",
+  "@mcpStateExposed": {
+    "description": "#1625 MCP status: mcpStateExposed"
+  },
+  "mcpStateAllowed": "Allowed",
+  "@mcpStateAllowed": {
+    "description": "#1625 MCP status: mcpStateAllowed"
+  },
+  "mcpStateDenied": "Nothing for your role",
+  "@mcpStateDenied": {
+    "description": "#1625 MCP status: mcpStateDenied"
+  },
+  "mcpStateMissing": "Not given",
+  "@mcpStateMissing": {
+    "description": "#1625 MCP status: mcpStateMissing"
+  },
+  "mcpStateCurrent": "Given",
+  "@mcpStateCurrent": {
+    "description": "#1625 MCP status: mcpStateCurrent"
+  },
+  "mcpStateAvailable": "Reachable",
+  "@mcpStateAvailable": {
+    "description": "#1625 MCP status: mcpStateAvailable"
+  },
+  "mcpStateIncompatible": "Incompatible version",
+  "@mcpStateIncompatible": {
+    "description": "#1625 MCP status: mcpStateIncompatible"
+  },
+  "mcpStateUnavailable": "Unknown",
+  "@mcpStateUnavailable": {
+    "description": "#1625 MCP status: mcpStateUnavailable"
+  },
+  "mcpNextLinkIdentity": "Next: you link your account to this database's identity.",
+  "@mcpNextLinkIdentity": {
+    "description": "#1625 MCP status: mcpNextLinkIdentity"
+  },
+  "mcpNextRequestEligibility": "Next: you ask this database's administrators for approval.",
+  "@mcpNextRequestEligibility": {
+    "description": "#1625 MCP status: mcpNextRequestEligibility"
+  },
+  "mcpNextAwaitEligibility": "Next: a database administrator decides your request.",
+  "@mcpNextAwaitEligibility": {
+    "description": "#1625 MCP status: mcpNextAwaitEligibility"
+  },
+  "mcpNextOwnerExposes": "Next: the workspace owner offers operations to assistants.",
+  "@mcpNextOwnerExposes": {
+    "description": "#1625 MCP status: mcpNextOwnerExposes"
+  },
+  "mcpNextRoleDenied": "Your role leaves no operation to offer here. The workspace owner decides what each role may do.",
+  "@mcpNextRoleDenied": {
+    "description": "#1625 MCP status: mcpNextRoleDenied"
+  },
+  "mcpNextConsent": "Next: connect an assistant from the assistant itself and approve this workspace.",
+  "@mcpNextConsent": {
+    "description": "#1625 MCP status: mcpNextConsent"
+  },
+  "mcpNextReady": "Ready: a connected assistant may act for you in this workspace, within what you approved.",
+  "@mcpNextReady": {
+    "description": "#1625 MCP status: mcpNextReady"
+  },
+  "mcpNextUnavailable": "The server could not answer. Nothing is assumed; try again later.",
+  "@mcpNextUnavailable": {
+    "description": "#1625 MCP status: mcpNextUnavailable"
+  },
+  "mcpStatusOpenLinkedAccounts": "Open linked accounts",
+  "@mcpStatusOpenLinkedAccounts": {
+    "description": "#1625 MCP status: mcpStatusOpenLinkedAccounts"
+  },
+  "mcpOverviewTitle": "Other connected databases",
+  "@mcpOverviewTitle": {
+    "description": "#1625 MCP status: mcpOverviewTitle"
+  },
+  "mcpOverviewUnavailable": "Could not be asked right now.",
+  "@mcpOverviewUnavailable": {
+    "description": "#1625 MCP status: mcpOverviewUnavailable"
+  },
+  "mcpReviewSecondFactor": "That database needs your second factor on its own session. Nothing was decided.",
+  "@mcpReviewSecondFactor": {
+    "description": "#1625 MCP status: mcpReviewSecondFactor"
+  },
   "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
   "@mcpUsageWorkspaceTitle": {
     "description": "#1630 mcp_usage"
