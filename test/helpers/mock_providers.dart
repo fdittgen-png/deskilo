@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/demo/data/me_repository.dart';
+import 'package:deskilo/features/me/providers/me_providers.dart';
+export 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
@@ -125,6 +128,7 @@ import 'fake_credit_repository.dart';
 const kTestInstallationId = '00000000-0000-4000-8000-0000000071e5';
 
 List<Override> standardTestOverrides({
+  FakeMeRepository? me,
   FakeWorkspaceApplicationRepository? applications,
   FakeAccountActivityRepository? accountActivity,
   FakeDirectoryRepository? directory,
@@ -232,6 +236,8 @@ List<Override> standardTestOverrides({
     connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>connectedSources),
       directoryRepositoryProvider.overrideWith((ref)=>directory??FakeDirectoryRepository()),
+      // #1823 — the account layer, in memory; the account is the session's.
+      meRepositoryProvider.overrideWith((ref) => me ?? FakeMeRepository()),
       accountContactRepositoryProvider.overrideWith((ref,source)=>contacts??FakeAccountContactRepository()),
       accountActivityRepositoryProvider.overrideWithValue(accountActivity ?? FakeAccountActivityRepository()),
       workspaceApplicationRepositoryProvider.overrideWithValue(applications ?? FakeWorkspaceApplicationRepository()),

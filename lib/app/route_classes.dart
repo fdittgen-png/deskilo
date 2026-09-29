@@ -56,10 +56,16 @@ class RouteRule {
 /// Where the app opens when nothing more specific was asked for.
 const String kDefaultHome = '/reserve';
 
+/// #1823 — the person's own home, the Me layer: where the app opens when
+/// there is no space of THIS person's to return to, and where "Back to
+/// Me" leads. It needs a session and nothing else.
+const String kMeHome = '/me';
+
 /// Every route the router registers, classified. The lint in
 /// test/lint/route_policy_registry_test.dart keeps this list and
 /// router.dart in step both ways.
 const List<RouteRule> routeRules = [
+  RouteRule(kMeHome, RouteClass.nativeAccount),
   RouteRule('/discover', RouteClass.publicEntry),
   RouteRule('/connections', RouteClass.nativeAccount),
   RouteRule('/account-messages', RouteClass.nativeAccount),

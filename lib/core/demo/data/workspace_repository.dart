@@ -66,7 +66,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
             // that is about the environment says so by setting it.
             environment: 'prod',
           ),
-        ];
+        ], serverDefaultWorkspaceId = 'ws-1'; // #1823: the fixture opens in ws-1, not on Me
 
   final List<Workspace> workspaces;
 

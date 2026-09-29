@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/guarded.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -60,7 +59,6 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
       );
     }
     final sources = ref.watch(connectedSourcesProvider).value ?? [];
-    final available = ref.watch(contactAvailabilityProvider(source: _source));
     final cursor = _pages.lastOrNull;
     final provider = accountConversationsProvider(
       source: _source,
@@ -128,31 +126,16 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
               }
             },
           ),
-          SwitchListTile(
-            value: available.value ?? false,
-            onChanged: available.hasValue
-                ? (value) async {
-                    final ok = await runGuarded(
-                      context,
-                      domain: 'messages',
-                      message: 'save account availability failed',
-                      errorText:
-                          l?.portalActionFailed ??
-                          'Could not save this change. Please try again.',
-                      action: () => ref
-                          .read(accountContactActionsProvider(source: _source))
-                          .setAvailability(value),
-                    );
-                    if (ok && mounted) {
-                      ref.invalidate(
-                        contactAvailabilityProvider(source: _source),
-                      );
-                    }
-                  }
-                : null,
-            title: Text(
-              l?.portalAvailable ?? 'Let users find and message my account',
-            ),
+          // #1823 — who may find and write to me is chosen per audience
+          // in Me › Who sees me, with a live preview; the single switch
+          // that stood here is gone.
+          ListTile(
+            key: const ValueKey('portal-visibility-link'),
+            leading: const Icon(Icons.visibility_outlined),
+            title: Text(l?.portalVisibilityLink ?? 'Who can find and message me'),
+            subtitle: Text(l?.portalVisibilityLinkBody ?? 'Chosen in Me, under Who sees me.'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go('/me?tab=me'),
           ),
           TextField(
             controller: _search,

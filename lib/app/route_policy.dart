@@ -69,6 +69,41 @@ enum WorkspacesFact { loading, none, some, unavailable }
 /// My row in the ACTIVE workspace.
 enum MembershipFact { loading, none, active, pending, inactive }
 
+/// #1823 — whether THIS person has a space to be in: the space they
+/// last entered (their server default, or this device's memory of them)
+/// and still hold a membership in. [none] opens Me instead.
+enum SpaceFact { loading, none, chosen }
+
+/// [SpaceFact] from what the router reads: whether the chosen space is
+/// still being resolved, which it is, and the spaces I hold.
+SpaceFact spaceFactOf({required bool resolving, String? chosen,
+        Iterable<String> spaces = const []}) =>
+    resolving
+        ? SpaceFact.loading
+        : (chosen != null && spaces.contains(chosen)
+            ? SpaceFact.chosen
+            : SpaceFact.none);
+
+/// [WorkspacesFact] from the membership list: [count] is null while it
+/// holds no value, and a list being refreshed is loading whatever it held.
+WorkspacesFact workspacesFactOf({required bool loading, int? count,
+        required bool failed}) =>
+    loading
+        ? WorkspacesFact.loading
+        : count != null
+            ? (count == 0 ? WorkspacesFact.none : WorkspacesFact.some)
+            : (failed ? WorkspacesFact.unavailable : WorkspacesFact.loading);
+
+/// [PrivacyFact] once the profile query is read (#751): a failed fetch is
+/// its own fact, never "not accepted".
+PrivacyFact privacyFactOf({required bool loading, required bool failed,
+        required bool accepted}) =>
+    loading
+        ? PrivacyFact.loading
+        : failed
+            ? PrivacyFact.unavailable
+            : (accepted ? PrivacyFact.accepted : PrivacyFact.notAccepted);
+
 /// The wall-tablet lock (0043), already combined with the kioskMode flag
 /// by whoever builds the facts: a kiosk account with the module off is
 /// [notKiosk].
@@ -85,6 +120,7 @@ class RouteFacts {
     this.privacy = PrivacyFact.accepted,
     this.workspaces = WorkspacesFact.some,
     this.membership = MembershipFact.active,
+    this.space = SpaceFact.chosen,
     this.kiosk = KioskFact.notKiosk,
     this.featureEnabled = _everythingOn,
     this.home = kDefaultHome,
@@ -95,6 +131,7 @@ class RouteFacts {
   final PrivacyFact privacy;
   final WorkspacesFact workspaces;
   final MembershipFact membership;
+  final SpaceFact space;
   final KioskFact kiosk;
   final bool Function(WorkspaceFeature) featureEnabled;
 
@@ -121,6 +158,9 @@ enum RouteReason {
   consentAlreadyGiven,
   noWorkspace,
   workspacesUnavailable,
+
+  /// #1823 — signed in with spaces, none of them entered yet: Me.
+  noSpaceChosen,
   firstRunDone,
   membershipPending,
   notPending,
@@ -260,8 +300,9 @@ RouteDecision resolveDestination(RouteRequest request, RouteFacts facts) {
     case WorkspacesFact.loading:
       return const RouteDecision.stay();
     case WorkspacesFact.none:
-      return const RouteDecision.go(
-          '/onboarding?first=1', RouteReason.noWorkspace);
+      // #1823 — Me, which offers joining, creating and discovering a
+      // space, and holds everything else the account can do meanwhile.
+      return const RouteDecision.go(kMeHome, RouteReason.noWorkspace);
     case WorkspacesFact.unavailable:
       // Not "none": the chooser shows the failure and offers the retry;
       // onboarding would demand a creation over an unknown state.
@@ -281,7 +322,15 @@ RouteDecision resolveDestination(RouteRequest request, RouteFacts facts) {
         : const RouteDecision.go('/pending', RouteReason.membershipPending);
   }
   if (atPending) return RouteDecision.go(home, RouteReason.notPending);
-  return const RouteDecision.stay();
+  // #1823 — a space is entered, never assumed: without one of THIS
+  // person's to return to, the account's own home opens instead.
+  switch (facts.space) {
+    case SpaceFact.loading:
+    case SpaceFact.chosen:
+      return const RouteDecision.stay();
+    case SpaceFact.none:
+      return const RouteDecision.go(kMeHome, RouteReason.noSpaceChosen);
+  }
 }
 
 /// Follows [resolveDestination] to its fixed point. The router calls this

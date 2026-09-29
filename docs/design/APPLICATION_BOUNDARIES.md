@@ -17,12 +17,12 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | Finance | `money` | 21 |
 | Workspace configuration | `workspace` | 28 |
 | Workspace configuration | `members` | 3 |
-| Workspace configuration | `profile` | 7 |
+| Workspace configuration | `profile` | 9 |
 | — | `auth` | 4 |
 | — | `events` | 1 |
 | — | `kiosk` | 1 |
 
-**76 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
+**78 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
 
 ## Cross-feature imports, by direction
 
@@ -33,7 +33,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `money -> workspace` | 117 |
 | `reservations -> plan` | 69 |
 | `reservations -> workspace` | 57 |
-| `profile -> workspace` | 39 |
+| `profile -> workspace` | 41 |
 | `workspace -> money` | 35 |
 | `members -> workspace` | 34 |
 | `money -> events` | 30 |
@@ -51,31 +51,35 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `workspace -> profile` | 11 |
 | `kiosk -> reservations` | 10 |
 | `workspace -> auth` | 10 |
+| `me -> workspace` | 9 |
 | `members -> money` | 9 |
 | `members -> profile` | 9 |
 | `plan -> reservations` | 9 |
 | `calendar -> reservations` | 8 |
 | `money -> profile` | 8 |
+| `directory -> auth` | 7 |
 | `kiosk -> plan` | 7 |
 | `kiosk -> workspace` | 7 |
 | `calendar -> money` | 6 |
 | `calendar -> plan` | 6 |
-| `directory -> auth` | 6 |
 | `editor -> workspace` | 6 |
 | `profile -> auth` | 6 |
 | `events -> money` | 5 |
 | `profile -> reservations` | 5 |
 | `reservations -> events` | 5 |
 | `calendar -> events` | 4 |
+| `directory -> workspace` | 4 |
 | `events -> reservations` | 4 |
 | `mcp -> workspace` | 4 |
+| `me -> profile` | 4 |
 | `plan -> money` | 4 |
 | `workspace -> directory` | 4 |
 | `workspace -> members` | 4 |
 | `members -> plan` | 3 |
-| `directory -> workspace` | 2 |
 | `events -> plan` | 2 |
 | `kiosk -> profile` | 2 |
+| `me -> auth` | 2 |
+| `me -> directory` | 2 |
 | `money -> auth` | 2 |
 | `money -> members` | 2 |
 | `plan -> profile` | 2 |
@@ -95,7 +99,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**64 directed relationships, 747 imports.**
+**68 directed relationships, 769 imports.**
 
 Reciprocal (20): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -114,7 +118,6 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1298 |
 | `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
-| `lib/features/profile/presentation/screens/settings_screen.dart` | 1054 |
 | `lib/features/money/domain/invoice_pdf.dart` | 1050 |
 | `lib/features/editor/presentation/screens/level_canvas_screen.dart` | 1044 |
 | `lib/features/money/presentation/invoice_actions.dart` | 1027 |
@@ -125,8 +128,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/widgets/bill_view.dart` | 892 |
 | `lib/features/reservations/presentation/widgets/space_scan.dart` | 889 |
 | `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 871 |
-| `lib/app/router.dart` | 856 |
 | `lib/features/workspace/presentation/screens/availability_screen.dart` | 856 |
+| `lib/app/router.dart` | 851 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
@@ -142,9 +145,9 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/screens/legal_identity_screen.dart` | 649 |
 | `lib/features/workspace/presentation/screens/onboarding_screen.dart` | 633 |
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
-| `lib/features/workspace/providers/workspace_providers.dart` | 630 |
+| `lib/features/workspace/providers/workspace_providers.dart` | 629 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
 | `lib/features/money/presentation/invoice_documents.dart` | 608 |
 
-**40 files.**
+**39 files.**
 

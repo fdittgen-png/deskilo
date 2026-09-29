@@ -16,7 +16,7 @@ import '../l10n/app_localizations.dart';
 import 'boot_splash.dart';
 import 'router.dart';
 import 'theme.dart';
-import 'shell/development_banner.dart';
+import 'shell/layer_chrome.dart';
 
 /// The composition root: the real app, or the demonstration space
 /// wrapped around it (#1379).
@@ -92,9 +92,14 @@ class DeskiloApp extends ConsumerWidget {
         // permanent, so nobody records for ten minutes believing the
         // mode was on — or works for a day on invented names believing
         // they were real.
+        // #1823 — the layer on top decides the chrome: Me wears DesKilo's
+        // ink-blue and no strip; a space wears its brand and, when it is
+        // one, the #917 development strip.
         child: DemoControls(
           child: RecordingBanner(
-            child: DevelopmentBanner(
+            child: LayerChrome(
+              router: router,
+              animations: animations,
               child: BootSplash(child: SystemInsetsGuard(child: child)),
             ),
           ),

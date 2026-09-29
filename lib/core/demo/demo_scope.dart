@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/demo/data/me_repository.dart';
+import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
@@ -142,6 +144,7 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>[]),
       directoryRepositoryProvider.overrideWith((ref)=>FakeDirectoryRepository()),
+      meRepositoryProvider.overrideWith((ref) => FakeMeRepository()), // #1823
       accountContactRepositoryProvider.overrideWith((ref,source)=>FakeAccountContactRepository()),
       accountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository()),
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
@@ -251,6 +254,7 @@ const Set<String> demoOverriddenProviders = {
   'accountActivityRepositoryProvider',
   'connectedInstallationsProvider', 'connectedSourcesProvider',
   'directoryRepositoryProvider', 'accountContactRepositoryProvider',
+  'meRepositoryProvider', // #1823
   'deploymentRepositoryProvider',
   'workspaceFilesRepositoryProvider',
   'workspaceImportRepositoryProvider',

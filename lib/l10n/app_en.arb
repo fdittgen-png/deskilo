@@ -8422,6 +8422,277 @@
   "@mcpUsagePending": {
     "description": "#1630 mcp_usage"
   },
+  "meTabHome": "Home",
+  "@meTabHome": {
+    "description": "Me layer bottom tab: the person's home with their spaces."
+  },
+  "meTabDiscover": "Discover",
+  "@meTabDiscover": {
+    "description": "Me layer bottom tab: find published spaces."
+  },
+  "meTabMessages": "Messages",
+  "@meTabMessages": {
+    "description": "Me layer bottom tab: the person's messages."
+  },
+  "meTabMe": "Me",
+  "@meTabMe": {
+    "description": "Me layer bottom tab and title: the person's own account."
+  },
+  "meHomeTitle": "Home",
+  "@meHomeTitle": {
+    "description": "Title of the Me layer home tab."
+  },
+  "meMySpaces": "My spaces",
+  "@meMySpaces": {
+    "description": "Heading above the list of spaces the person belongs to."
+  },
+  "meHeaderOwned": "Your account · it belongs only to you",
+  "@meHeaderOwned": {
+    "description": "Line under the person's name on the Me home: this layer belongs to them alone."
+  },
+  "meNoSpaceTitle": "You are not in a space yet",
+  "@meNoSpaceTitle": {
+    "description": "Empty state title on the Me home when the person has no space."
+  },
+  "meNoSpaceBody": "Find one near you, join with an invitation code, or create your own.",
+  "@meNoSpaceBody": {
+    "description": "Empty state body on the Me home when the person has no space."
+  },
+  "meFindSpace": "Find a space",
+  "@meFindSpace": {
+    "description": "Button on the Me home: open Discover."
+  },
+  "meJoinSpace": "Join with a code",
+  "@meJoinSpace": {
+    "description": "Button on the Me home: join a space with an invitation code."
+  },
+  "meCreateSpace": "Create a space",
+  "@meCreateSpace": {
+    "description": "Button on the Me home: create a new space."
+  },
+  "meManageSpaces": "Manage my spaces",
+  "@meManageSpaces": {
+    "description": "Button on the Me home: the detailed list of spaces (default at start, site)."
+  },
+  "meSpacePending": "Waiting for approval",
+  "@meSpacePending": {
+    "description": "Subtitle of a space card whose membership awaits approval."
+  },
+  "meSpaceLastUsed": "Last used",
+  "@meSpaceLastUsed": {
+    "description": "Chip on the space the person used last."
+  },
+  "meLeaveAction": "Leave this space",
+  "@meLeaveAction": {
+    "description": "Menu item and confirm button: leave this space."
+  },
+  "meLeaveOwner": "Owners hand the space over before leaving",
+  "@meLeaveOwner": {
+    "description": "Disabled menu item for an owner, who must hand the space over first."
+  },
+  "meLeaveTitle": "Leave {name}?",
+  "@meLeaveTitle": {
+    "description": "Title of the confirmation before leaving a space.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meLeaveBody": "You stop being a member. Your bookings, invoices and messages stay with the space. To also erase your data, use Privacy.",
+  "@meLeaveBody": {
+    "description": "Body of the confirmation before leaving a space."
+  },
+  "meLeaveFailed": "Could not leave the space. Please try again.",
+  "@meLeaveFailed": {
+    "description": "Error when leaving a space failed."
+  },
+  "meLeaveDone": "You left {name}.",
+  "@meLeaveDone": {
+    "description": "Confirmation after leaving a space.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meLinkedOpenBody": "This space lives on {host}. The app works with one server at a time: opening it switches to that server and asks you to sign in there.",
+  "@meLinkedOpenBody": {
+    "description": "Explains that a space on another server opens by switching this app to that server.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "meLinkedOpen": "Open on {host}",
+  "@meLinkedOpen": {
+    "description": "Button: open a space on its own server.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "meLinkedUnavailable": "{host} did not answer: this list may be incomplete.",
+  "@meLinkedUnavailable": {
+    "description": "Banner when a linked server did not answer.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "meLinkedPendingOn": "Waiting for approval · {host}",
+  "@meLinkedPendingOn": {
+    "description": "Subtitle of a pending space on another server.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "meSectionMine": "My history and data",
+  "@meSectionMine": {
+    "description": "Section heading in Me: the person's own history and data."
+  },
+  "meWhereSpacesLive": "Where my spaces live",
+  "@meWhereSpacesLive": {
+    "description": "Row in Me opening the connected servers."
+  },
+  "meAccountInMe": "My account is in Me",
+  "@meAccountInMe": {
+    "description": "Row in a space's settings leading to the account settings in Me."
+  },
+  "meAccountInMeBody": "Photo, language, theme and sign-ins are yours in every space.",
+  "@meAccountInMeBody": {
+    "description": "Subtitle: the account settings are the person's in every space."
+  },
+  "meSpaceException": "In this space",
+  "@meSpaceException": {
+    "description": "Title of the row listing this space's own overrides of the person's preferences."
+  },
+  "spaceBackToMe": "Back to Me",
+  "@spaceBackToMe": {
+    "description": "Row and avatar tooltip in a space: return to the Me layer."
+  },
+  "spaceChipTooltip": "Switch space",
+  "@spaceChipTooltip": {
+    "description": "Tooltip on the chip naming the current space: it opens the switcher."
+  },
+  "visibilityTitle": "Who sees me",
+  "@visibilityTitle": {
+    "description": "Title of the card choosing who sees what of the account."
+  },
+  "visibilityIntro": "Each part of your account picks its own audience. Nothing is public unless you choose it.",
+  "@visibilityIntro": {
+    "description": "Intro of the visibility card."
+  },
+  "visibilityIdentity": "Name and photo",
+  "@visibilityIdentity": {
+    "description": "Visibility field: name and photo."
+  },
+  "visibilityAbout": "Profession and bio",
+  "@visibilityAbout": {
+    "description": "Visibility field: profession and bio."
+  },
+  "visibilityContact": "WhatsApp and e-mail",
+  "@visibilityContact": {
+    "description": "Visibility field: contact channels."
+  },
+  "visibilityPresence": "In the space today",
+  "@visibilityPresence": {
+    "description": "Visibility field: presence in a space today."
+  },
+  "visibilityReachability": "Who can start a conversation with me",
+  "@visibilityReachability": {
+    "description": "Reachability: who may start a conversation."
+  },
+  "visibilityNobody": "Nobody",
+  "@visibilityNobody": {
+    "description": "Audience: nobody."
+  },
+  "visibilityMySpaces": "Members of my spaces",
+  "@visibilityMySpaces": {
+    "description": "Audience: members of the person's spaces."
+  },
+  "visibilityChosenSpaces": "Members of chosen spaces",
+  "@visibilityChosenSpaces": {
+    "description": "Audience: members of chosen spaces."
+  },
+  "visibilitySignedIn": "Anyone signed in",
+  "@visibilitySignedIn": {
+    "description": "Audience: anyone with an account."
+  },
+  "visibilitySaveFailed": "Could not save who sees this. Please try again.",
+  "@visibilitySaveFailed": {
+    "description": "Error when saving an audience failed."
+  },
+  "visibilityPreviewTitle": "How others see me",
+  "@visibilityPreviewTitle": {
+    "description": "Heading of the live preview of what others see."
+  },
+  "visibilityPreviewMySpaces": "A member of my spaces",
+  "@visibilityPreviewMySpaces": {
+    "description": "Preview audience chip: a member of my spaces."
+  },
+  "visibilityPreviewSignedIn": "Anyone signed in",
+  "@visibilityPreviewSignedIn": {
+    "description": "Preview audience chip: anyone signed in."
+  },
+  "visibilityPreviewNobody": "Nobody",
+  "@visibilityPreviewNobody": {
+    "description": "Preview audience chip: nobody."
+  },
+  "visibilityPreviewNothing": "They see nothing of you.",
+  "@visibilityPreviewNothing": {
+    "description": "Preview when the audience sees nothing."
+  },
+  "visibilityPreviewFailed": "The preview could not be loaded.",
+  "@visibilityPreviewFailed": {
+    "description": "Preview failed to load."
+  },
+  "visibilityPreviewCanWrite": "Can start a conversation with you",
+  "@visibilityPreviewCanWrite": {
+    "description": "Preview line: this audience may start a conversation."
+  },
+  "visibilityPreviewCannotWrite": "Cannot start a conversation with you",
+  "@visibilityPreviewCannotWrite": {
+    "description": "Preview line: this audience may not start a conversation."
+  },
+  "visibilityChosenCount": "{count, plural, =1{Members of 1 chosen space} other{Members of {count} chosen spaces}}",
+  "@visibilityChosenCount": {
+    "description": "Audience summary for chosen spaces, with how many were chosen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "portalVisibilityLink": "Who can find and message me",
+  "@portalVisibilityLink": {
+    "description": "Row in the account messenger leading to the visibility card in Me."
+  },
+  "portalVisibilityLinkBody": "Chosen in Me, under Who sees me.",
+  "@portalVisibilityLinkBody": {
+    "description": "Subtitle: where that choice is made."
+  },
+  "portalEnterSpace": "Enter",
+  "@portalEnterSpace": {
+    "description": "Button on a public space page for a member: enter the space."
+  },
+  "portalCopyEmail": "Copy the e-mail",
+  "@portalCopyEmail": {
+    "description": "Button on a public space page: copy its e-mail address."
+  },
+  "portalEmailCopied": "E-mail copied",
+  "@portalEmailCopied": {
+    "description": "Confirmation after copying the space's e-mail."
+  },
+  "meAddressSaveFailed": "Could not save your address. Please try again.",
+  "@meAddressSaveFailed": {
+    "description": "Error when saving the postal address from My account failed."
+  },
   "featureMemberAccountMenuTitle": "Members see My account",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"
