@@ -5,19 +5,87 @@
 // connection, disconnect an assistant entirely. Removing one workspace
 // never revokes the provider grant (that would disconnect the others);
 // only a full disconnect does.
+//
+// #1625 — both go to the installation the connection was read from, and
+// say exactly what they ended: a workspace-scope disconnect ends that
+// one workspace's consent for that assistant; a database-level
+// disconnect ends every workspace of that assistant on that installation
+// and its grant. Neither touches another installation.
 import '../../auth/domain/identity_binding.dart';
 import '../domain/mcp_connection.dart';
+import '../domain/mcp_context.dart';
+import 'mcp_commands.dart';
+
+enum McpDisconnectScope { workspace, database }
+
+/// What a disconnect ended. [workspaces] are the consents it removed.
+class McpDisconnectResult {
+  const McpDisconnectResult({
+    required this.scope,
+    required this.instance,
+    required this.clientId,
+    required this.workspaces,
+  });
+
+  final McpDisconnectScope scope;
+  final McpInstanceRef instance;
+  final String clientId;
+  final Set<String> workspaces;
+
+  /// Whether this result invalidates what is shown for [context].
+  bool ends(McpContextRef context) =>
+      context.instance == instance && workspaces.contains(context.workspaceId);
+}
 
 class AssistantAccess {
-  const AssistantAccess(this._connections, this._identity);
-  final McpConnectionRepository _connections;
+  const AssistantAccess(this._commands, this._identity);
+  final McpCommands _commands;
   final IdentityBindingRepository _identity;
 
   Future<DatabaseCapabilities> requestEligibility() =>
       _identity.requestMcpEligibility();
   Future<DatabaseCapabilities> withdrawEligibility() =>
       _identity.withdrawMcpEligibility();
-  Future<void> removeWorkspace(String clientId, String workspaceId) =>
-      _connections.revokeScope(clientId, workspaceId);
-  Future<void> disconnect(String clientId) => _connections.disconnect(clientId);
+
+  Future<McpDisconnectResult> removeWorkspace(
+    McpConnectionInfo connection,
+    String workspaceId,
+  ) async {
+    final scope = _scope(connection);
+    await _commands.execute(
+      McpMutation<Object?>(
+        scope: scope,
+        operation: 'revoke_mcp_workspace_scope',
+        payload: (client: connection.clientId, workspace: workspaceId),
+      ),
+      (r, m) => r.connections.revokeScope(connection.clientId, workspaceId),
+    );
+    return McpDisconnectResult(
+      scope: McpDisconnectScope.workspace,
+      instance: scope,
+      clientId: connection.clientId,
+      workspaces: {workspaceId},
+    );
+  }
+
+  Future<McpDisconnectResult> disconnect(McpConnectionInfo connection) async {
+    final scope = _scope(connection);
+    await _commands.execute(
+      McpMutation<Object?>(
+        scope: scope,
+        operation: 'revoke_mcp_connection',
+        payload: connection.clientId,
+      ),
+      (r, m) => r.connections.disconnect(connection.clientId),
+    );
+    return McpDisconnectResult(
+      scope: McpDisconnectScope.database,
+      instance: scope,
+      clientId: connection.clientId,
+      workspaces: {for (final w in connection.workspaces) w.id},
+    );
+  }
+
+  McpInstanceRef _scope(McpConnectionInfo connection) =>
+      connection.scope ?? (throw const McpTargetUnverified(''));
 }

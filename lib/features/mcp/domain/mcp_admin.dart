@@ -3,6 +3,7 @@
 // #1626 — a workspace owner's MCP exposure policy; #1627 — a database
 // administrator's eligibility queue. Both are read and written through
 // the server's own RPCs (0270/0271): the app never decides who may.
+import 'mcp_context.dart';
 import 'mcp_usage.dart';
 
 /// The owner's exposure policy for one workspace, as the server holds it.
@@ -15,6 +16,7 @@ class McpPolicy {
     required this.targetCeiling,
     required this.featureEnabled,
     required this.available,
+    this.context,
   });
 
   final String workspaceId;
@@ -31,6 +33,20 @@ class McpPolicy {
 
   /// Every implemented operation, in the server's order.
   final List<String> available;
+
+  /// #1625 — the context it was read for; a draft saves back there.
+  final McpContextRef? context;
+
+  McpPolicy withContext(McpContextRef context) => McpPolicy(
+    workspaceId: workspaceId,
+    revision: revision,
+    enabled: enabled,
+    operations: operations,
+    targetCeiling: targetCeiling,
+    featureEnabled: featureEnabled,
+    available: available,
+    context: context,
+  );
 
   factory McpPolicy.fromJson(Object? json) {
     final m = json is Map ? json : const <String, Object?>{};
@@ -82,6 +98,7 @@ class EligibilityRequest {
     required this.email,
     required this.revision,
     this.requestedAt,
+    this.scope,
   });
 
   final String requestId;
@@ -89,6 +106,18 @@ class EligibilityRequest {
   final String email;
   final int revision;
   final DateTime? requestedAt;
+
+  /// #1625 — the installation whose queue it came from; decided there.
+  final McpInstanceRef? scope;
+
+  EligibilityRequest withScope(McpInstanceRef scope) => EligibilityRequest(
+    requestId: requestId,
+    userId: userId,
+    email: email,
+    revision: revision,
+    requestedAt: requestedAt,
+    scope: scope,
+  );
 
   static List<EligibilityRequest> listFromJson(Object? json) => [
     for (final r in json is List ? json : const [])

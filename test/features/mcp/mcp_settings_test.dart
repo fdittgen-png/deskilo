@@ -12,10 +12,16 @@ import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
 import 'package:deskilo/features/auth/domain/database_capabilities.dart';
+import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
+import 'package:deskilo/features/mcp/application/active_target_client.dart';
 import 'package:deskilo/features/mcp/application/eligibility_review.dart';
+import 'package:deskilo/features/mcp/application/mcp_client_registry.dart';
+import 'package:deskilo/features/mcp/application/mcp_commands.dart';
 import 'package:deskilo/features/mcp/application/mcp_policy_editor.dart';
 import 'package:deskilo/features/mcp/domain/mcp_admin.dart';
+import 'package:deskilo/features/mcp/domain/mcp_client.dart';
 import 'package:deskilo/features/mcp/domain/mcp_connection.dart';
+import 'package:deskilo/features/mcp/domain/mcp_context.dart';
 import 'package:deskilo/features/mcp/presentation/assistants_screen.dart';
 import 'package:deskilo/features/mcp/presentation/eligibility_review_screen.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
@@ -298,14 +304,33 @@ void main() {
       () async {
         final admin = FakeMcpAdminRepository(requests: [_request, _request]);
         final factor = FakeSecondFactorRepository();
-        final review = EligibilityReview(admin, factor);
+        final target = VerifiedMcpTarget(
+          installationId: kTestInstallationId,
+          issuer: '',
+          account: 'user-1',
+        );
+        final registry = McpClientRegistry(
+          (key, _) => ActiveMcpTargetClient(
+            key,
+            () => McpRepositories(
+              admin: admin,
+              connections: FakeMcpConnectionRepository(),
+              confirmations: FakeActionConfirmationRepository(),
+              identity: FakeIdentityBindingRepository(),
+            ),
+            currentAccount: () => 'user-1',
+          ),
+        );
+        await registry.register(target);
+        final review = EligibilityReview(McpCommands(registry), factor);
+        final request = _request.withScope(target.instance);
         expect(
-          await review.decide(_request, approve: true),
+          await review.decide(request, approve: true),
           EligibilityDecisionStatus.refused,
         );
         factor.aal2 = true;
-        await review.decide(_request, approve: true);
-        await review.decide(_request, approve: true);
+        await review.decide(request, approve: true);
+        await review.decide(request, approve: true);
         expect(admin.decisions.map((d) => d.decisionId).toSet(), hasLength(1));
       },
     );
