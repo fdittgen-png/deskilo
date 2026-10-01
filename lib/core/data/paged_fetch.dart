@@ -102,3 +102,27 @@ Future<List<Map<String, dynamic>>> fetchPages({
     }
   }
 }
+
+/// #2011 — ids per `in.(…)` request: bounded, so a large plan never builds
+/// an unbounded URL.
+const int kInChunk = 100;
+
+/// [ids] in consecutive chunks of at most [size].
+List<List<String>> chunked(List<String> ids, [int size = kInChunk]) => [
+  for (var i = 0; i < ids.length; i += size)
+    ids.sublist(i, i + size > ids.length ? ids.length : i + size),
+];
+
+/// #2011 — every row [build] selects for [ids]: the ids in bounded chunks,
+/// each chunk paged to the end ([fetchAllPages]). [build] filters by its
+/// chunk and orders totally.
+Future<List<Map<String, dynamic>>> fetchAllIn({
+  required String table,
+  required List<String> ids,
+  required PostgrestTransformBuilder<PostgrestList> Function(List<String> chunk)
+      build,
+}) async => [
+  for (final chunk in chunked(ids))
+    ...await fetchAllPages(table: table, build: () => build(chunk)),
+];
+

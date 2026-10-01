@@ -82,4 +82,13 @@ void main() {
       throwsA(isA<ExportTooLargeException>()),
     );
   });
+
+  test('#2011 — ids are sent in bounded chunks, every id exactly once', () {
+    final ids = [for (var i = 0; i < 250; i++) 'id$i'];
+    final chunks = chunked(ids);
+    expect([for (final c in chunks) c.length], [100, 100, 50]);
+    expect(chunks.expand((c) => c).toList(), ids);
+    expect(chunked(const []), isEmpty);
+  });
 }
+
