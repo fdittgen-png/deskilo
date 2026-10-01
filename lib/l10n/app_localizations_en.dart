@@ -3826,6 +3826,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get featureOptInTitle => 'Switch on an experimental feature?';
+
+  @override
+  String featureOptInBody(String features) {
+    return 'Not yet reviewed as stable: $features. It may change and has known limits. Switch on only if this space accepts that.';
+  }
+
+  @override
+  String get featureOptInConfirm => 'Switch on';
+
+  @override
+  String get featureIntakeStoppedNote =>
+      'Off: nothing new starts; what is already open can still be answered and closed.';
+
+  @override
   String get federationContinue => 'Continue with Deskilo';
 
   @override
@@ -8761,7 +8776,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureSpaceInquiriesDesc =>
-      'A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay.';
+      'A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view, so nobody starts a new inquiry; open ones stay in the hosts\' inbox to answer and close.';
 
   @override
   String get featureMessageForwardingTitle => 'Message forwarding';
