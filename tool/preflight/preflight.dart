@@ -167,8 +167,15 @@ List<Step> preflightSteps(
     // #1847 — the public network contract renders into the external and
     // internal OpenAPI documents and the Dart adapter catalogue. The
     // shared field primitives feed both contracts.
+    // #1847 B — the support matrix hashes its inputs and its evidence
+    // (fixtures and the negotiation tests), so those select it too.
     if (p == 'contracts/public_network/operations.json' ||
-        p.startsWith('tool/public_network_contract/')) {
+        p == 'contracts/public_network/support.json' ||
+        p.startsWith('tool/public_network_contract/') ||
+        p.startsWith('test/fixtures/public_network/') ||
+        p.startsWith('test/core/public_network/') ||
+        p.contains('public_network_') && p.startsWith('supabase/tests/') ||
+        p == 'test/features/directory/participant_negotiation_test.dart') {
       select('dart run tool/build_public_network_contract.dart', p);
     }
     if (p.startsWith('tool/contract_common/')) {

@@ -2,6 +2,7 @@
 // #1791: real UI affordances publish/search a page, opt into an account inbox
 // and edit employment independently of permissions. SQL tests own authorization.
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/public_network/public_network_negotiator.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/directory_screen.dart';
@@ -240,6 +241,34 @@ void main() {
         findsNothing,
       );
       expect(find.text('Request a workspace profile'), findsOneWidget);
+    },
+  );
+  testWidgets(
+    '#1847 B an action the app could not negotiate with that server is '
+    'refused before anything is sent, and says so',
+    (tester) async {
+      // The test registry's own origin: no connection dialog in between.
+      const card = PublicWorkspace(
+        'newer',
+        'https://demo.invalid',
+        'sb_publishable_test',
+        {'name': 'Newer office', 'host_type': 'company'},
+      );
+      final repo = FakeDirectoryRepository()
+        ..cards.add(card)
+        ..refuseApply = const PublicActionRefusal(
+          'workspace.profile.request',
+          PublicRefusalReason.versionUnsupported,
+        );
+      await showPortal(tester, const DirectoryScreen(), directory: repo);
+      await tester.tap(find.text('Newer office'));
+      await tester.pumpAndSettle();
+      final request = find.text('Request a workspace profile');
+      await tester.ensureVisible(request);
+      await tester.tap(request);
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('action-not-negotiated')), findsOneWidget);
+      expect(repo.requests, isEmpty);
     },
   );
   testWidgets(

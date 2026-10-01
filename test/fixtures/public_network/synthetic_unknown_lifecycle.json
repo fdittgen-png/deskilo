@@ -1,0 +1,39 @@
+{
+  "provenance": {
+    "kind": "synthetic",
+    "why": "#1850 has produced no lifecycle metadata yet. A hypothetical server that attaches a lifecycle term this client cannot interpret, marked must_understand, to ONE operation. Only that operation may become unavailable."
+  },
+  "descriptor": {
+    "protocol": "deskilo.public-network",
+    "protocol_versions": [
+      1
+    ],
+    "capabilities": [
+      "operation_header"
+    ],
+    "operations": [
+      {
+        "id": "directory.sources.register",
+        "versions": [
+          1
+        ],
+        "requires": [],
+        "unlabelled": 1
+      },
+      {
+        "id": "workspace.profile.request",
+        "versions": [
+          1
+        ],
+        "requires": [],
+        "unlabelled": 1,
+        "lifecycle": {
+          "stage_v9": "x",
+          "must_understand": [
+            "stage_v9"
+          ]
+        }
+      }
+    ]
+  }
+}

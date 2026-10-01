@@ -1,0 +1,17 @@
+{
+  "provenance": {
+    "kind": "synthetic",
+    "why": "A hypothetical server whose whole descriptor carries a term this client must understand and does not: every negotiated action on it is refused, reads stay available."
+  },
+  "descriptor": {
+    "protocol": "deskilo.public-network",
+    "protocol_versions": [
+      1
+    ],
+    "must_understand": [
+      "federation_rules"
+    ],
+    "federation_rules": {},
+    "operations": []
+  }
+}

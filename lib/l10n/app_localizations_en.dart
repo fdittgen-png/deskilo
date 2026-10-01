@@ -10159,6 +10159,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Some workspaces need a newer version of the app and are not shown.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'This action is not available between this app and that server. Updating the app may help.';
+
+  @override
   String get portalMoreDirectories => 'More directories';
 
   @override

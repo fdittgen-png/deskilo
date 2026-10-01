@@ -10229,6 +10229,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Algunos espacios requieren una versión más reciente de la aplicación y no se muestran.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Esta acción no está disponible entre esta aplicación y ese servidor. Actualizar la aplicación puede ayudar.';
+
+  @override
   String get portalMoreDirectories => 'Más directorios';
 
   @override

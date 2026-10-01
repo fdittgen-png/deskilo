@@ -67,13 +67,27 @@ void main() {
       rendered,
       reason: 'deterministic',
     );
+    final matrix = renderSupportMatrix(
+      source(),
+      jsonDecode(
+        File('contracts/public_network/support.json').readAsStringSync(),
+      ) as Map<String, dynamic>,
+      (path) => File(path).readAsStringSync(),
+    );
+    expect(
+      File(publicNetworkGeneratedPaths.supportMatrix).readAsStringSync(),
+      matrix,
+      reason:
+          'the support matrix (or a hash of its evidence) is stale: run '
+          '`dart run tool/build_public_network_contract.dart`',
+    );
   });
 
-  test('the current catalogue: seven operations with stable, unique ids, '
+  test('the current catalogue: eight operations with stable, unique ids, '
       'and the generated adapter carries each', () {
     final ids = [for (final op in ops(source())) op['id'] as String];
     expect(ids.toSet(), hasLength(ids.length));
-    expect(ids, hasLength(7));
+    expect(ids, hasLength(8));
     for (final id in ids) {
       expect(id, matches(RegExp(r'^[a-z]+(\.[a-z_]+)+$')), reason: id);
     }
@@ -111,7 +125,13 @@ void main() {
       final c = mutate(
         (c) => op(c, 'publication.page.save')['principal'] = 'anonymous',
       );
-      expect(problems(c), [contains('only the public surface is anonymous')]);
+      expect(
+        problems(c),
+        containsAll([
+          contains('only the public surface is anonymous'),
+          contains('is not executable by anon'),
+        ]),
+      );
     });
 
     test('a management operation without the owner', () {
@@ -256,8 +276,57 @@ void main() {
       );
       if (op.surface == PublicSurface.public) {
         expect(op.mutation, PublicMutation.read, reason: op.id);
-        expect(op.relation, isNotNull, reason: op.id);
+        expect(op.relation ?? op.rpc, isNotNull, reason: op.id);
       }
+    }
+  });
+
+  test('#1847 B the latest migration defining the descriptor carries the '
+      'generated one verbatim, and the captured descriptor is that one', () {
+    final defining =
+        Directory('supabase/migrations')
+            .listSync()
+            .whereType<File>()
+            .where(
+              (f) =>
+                  f.path.endsWith('.sql') &&
+                  f.readAsStringSync().contains(
+                    'function public.public_network_descriptor()',
+                  ),
+            )
+            .toList()
+          ..sort((a, b) => a.path.compareTo(b.path));
+    expect(defining, isNotEmpty);
+    expect(
+      defining.last.readAsStringSync(),
+      contains(renderPublicNetworkDescriptorSql(source())),
+      reason:
+          'a catalogue change needs a migration with '
+          'renderPublicNetworkDescriptorSql',
+    );
+    final captured = jsonDecode(
+      File('test/fixtures/public_network/descriptor_current.json')
+          .readAsStringSync(),
+    ) as Map<String, dynamic>;
+    expect(captured['descriptor'], publicNetworkDescriptor(source()));
+  });
+
+  test('#1847 B every participant mutation is revalidated by the server, '
+      'and its RPC calls the revalidation for its own operation', () {
+    final all = migrations();
+    final names = all.keys.toList()..sort();
+    for (final op in publicNetworkOperations.values) {
+      if (op.surface != PublicSurface.participant) continue;
+      expect(op.revalidated, isTrue, reason: op.id);
+      expect(op.unlabelled, isNotNull, reason: op.id);
+      final defining = names.lastWhere(
+        (k) => all[k]!.contains('function public.${op.rpc}('),
+      );
+      expect(
+        all[defining],
+        contains("perform public.public_network_require('${op.id}');"),
+        reason: '$defining: ${op.rpc} does not revalidate ${op.id}',
+      );
     }
   });
 }

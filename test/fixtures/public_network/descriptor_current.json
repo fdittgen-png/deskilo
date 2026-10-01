@@ -1,0 +1,61 @@
+{
+  "provenance": {
+    "kind": "captured",
+    "source": "public_network_descriptor() as migration 0320 defines it, read on the dev project inside a rolled-back transaction (pgTAP 107 probe), 2026-10-01; equal to renderPublicNetworkDescriptorSql's JSON (pinned by public_network_contract_test)"
+  },
+  "descriptor": {
+    "protocol": "deskilo.public-network",
+    "protocol_versions": [
+      1
+    ],
+    "capabilities": [
+      "operation_header"
+    ],
+    "operations": [
+      {
+        "id": "network.descriptor.read",
+        "versions": [
+          1
+        ],
+        "requires": []
+      },
+      {
+        "id": "directory.sources.list",
+        "versions": [
+          1
+        ],
+        "requires": []
+      },
+      {
+        "id": "directory.workspaces.search",
+        "versions": [
+          1
+        ],
+        "requires": []
+      },
+      {
+        "id": "directory.workspaces.detail",
+        "versions": [
+          1
+        ],
+        "requires": []
+      },
+      {
+        "id": "directory.sources.register",
+        "versions": [
+          1
+        ],
+        "requires": [],
+        "unlabelled": 1
+      },
+      {
+        "id": "workspace.profile.request",
+        "versions": [
+          1
+        ],
+        "requires": [],
+        "unlabelled": 1
+      }
+    ]
+  }
+}

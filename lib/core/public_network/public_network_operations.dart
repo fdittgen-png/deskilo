@@ -95,10 +95,53 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
       'document': PublicField(PublicFieldType.object, required: true, schema: 'PublicationDraft'),
     },
   ),
+  'PublicNetworkDescriptor': PublicSchema(
+    'PublicNetworkDescriptor',
+    {
+      'protocol': PublicField(PublicFieldType.enum_, required: true, values: ['deskilo.public-network']),
+      'protocol_versions': PublicField(PublicFieldType.integerList, required: true),
+      'capabilities': PublicField(PublicFieldType.stringList),
+      'operations': PublicField(PublicFieldType.array, required: true, schema: 'DescriptorOperation', maxItems: 200),
+    },
+    mustUnderstand: 'must_understand',
+  ),
+  'DescriptorOperation': PublicSchema(
+    'DescriptorOperation',
+    {
+      'id': PublicField(PublicFieldType.text, required: true, maxLength: 100),
+      'versions': PublicField(PublicFieldType.integerList, required: true),
+      'requires': PublicField(PublicFieldType.stringList),
+      'unlabelled': PublicField(PublicFieldType.integer, min: 1),
+      'lifecycle': PublicField(PublicFieldType.object, schema: 'OperationLifecycle'),
+    },
+    mustUnderstand: 'must_understand',
+  ),
+  'OperationLifecycle': PublicSchema(
+    'OperationLifecycle',
+    {
+    },
+    mustUnderstand: 'must_understand',
+  ),
 };
 
 /// Every catalogued operation, by a name its callers cannot misspell.
 abstract final class PublicNetworkOperations {
+  /// Read the installation's public network descriptor: protocol, capabilities and the version of each external operation.
+  static const networkDescriptorRead = PublicOperationSpec(
+    id: 'network.descriptor.read',
+    surface: PublicSurface.public,
+    principal: PublicPrincipal.anonymous,
+    authority: PublicAuthority.none,
+    mutation: PublicMutation.read,
+    features: [],
+    rpc: 'public_network_descriptor',
+    params: {},
+    output: 'PublicNetworkDescriptor',
+    cardinality: PublicCardinality.one,
+    versions: [1],
+    requires: [],
+  );
+
   /// List the other installations registered in this installation's public directory.
   static const directorySourcesList = PublicOperationSpec(
     id: 'directory.sources.list',
@@ -113,6 +156,9 @@ abstract final class PublicNetworkOperations {
     pageSize: 20,
     output: 'DirectorySource',
     cardinality: PublicCardinality.many,
+    versions: [1],
+    requires: [],
+    baseline: true,
   );
 
   /// Search the published workspace cards of one installation by name or address.
@@ -130,6 +176,9 @@ abstract final class PublicNetworkOperations {
     timeoutSeconds: 12,
     output: 'PublicWorkspaceCard',
     cardinality: PublicCardinality.many,
+    versions: [1],
+    requires: [],
+    baseline: true,
   );
 
   /// Read one published workspace card again, live: no row means it is no longer published.
@@ -147,6 +196,9 @@ abstract final class PublicNetworkOperations {
     timeoutSeconds: 12,
     output: 'PublicWorkspaceCard',
     cardinality: PublicCardinality.zeroOrOne,
+    versions: [1],
+    requires: [],
+    baseline: true,
   );
 
   /// The owner reads their workspace's public page, draft included.
@@ -161,6 +213,9 @@ abstract final class PublicNetworkOperations {
     params: {'p_workspace': 'uuid'},
     output: 'PublicationPage',
     cardinality: PublicCardinality.one,
+    versions: [1],
+    requires: [],
+    baseline: true,
   );
 
   /// The owner saves the public page and publishes or withdraws it; answers the public projection it produced.
@@ -176,6 +231,9 @@ abstract final class PublicNetworkOperations {
     input: {'p_document': 'PublicationInput'},
     output: 'PublicWorkspaceDocument',
     cardinality: PublicCardinality.one,
+    versions: [1],
+    requires: [],
+    baseline: true,
   );
 
   /// A signed-in account registers another installation's public endpoint in this directory, after an anonymous probe of that endpoint.
@@ -189,6 +247,11 @@ abstract final class PublicNetworkOperations {
     rpc: 'register_public_directory',
     params: {'p_origin': 'text', 'p_key': 'text'},
     cardinality: PublicCardinality.none,
+    versions: [1],
+    requires: [],
+    baseline: true,
+    unlabelled: 1,
+    revalidated: true,
   );
 
   /// A signed-in account asks to join a published workspace, through its own session on that workspace's installation; admission stays the ordinary approval flow.
@@ -202,12 +265,18 @@ abstract final class PublicNetworkOperations {
     rpc: 'request_public_workspace_profile',
     params: {'p_workspace': 'uuid'},
     cardinality: PublicCardinality.none,
+    versions: [1],
+    requires: [],
+    baseline: true,
+    unlabelled: 1,
+    revalidated: true,
   );
 
 }
 
 /// The same operations by stable identifier.
 const Map<String, PublicOperationSpec> publicNetworkOperations = {
+  'network.descriptor.read': PublicNetworkOperations.networkDescriptorRead,
   'directory.sources.list': PublicNetworkOperations.directorySourcesList,
   'directory.workspaces.search': PublicNetworkOperations.directoryWorkspacesSearch,
   'directory.workspaces.detail': PublicNetworkOperations.directoryWorkspacesDetail,
@@ -216,3 +285,9 @@ const Map<String, PublicOperationSpec> publicNetworkOperations = {
   'directory.sources.register': PublicNetworkOperations.directorySourcesRegister,
   'workspace.profile.request': PublicNetworkOperations.workspaceProfileRequest,
 };
+
+/// #1847 B — the protocol versions this client speaks.
+const List<int> publicNetworkProtocolVersions = [1];
+
+/// #1847 B — the capabilities this client understands.
+const Set<String> publicNetworkCapabilities = {'operation_header'};

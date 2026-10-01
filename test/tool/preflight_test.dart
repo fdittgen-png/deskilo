@@ -135,6 +135,11 @@ void main() {
       'dart run tool/build_public_network_contract.dart',
     ]);
     expect(
+      _commands(['test/fixtures/public_network/descriptor_current.json']),
+      ['dart run tool/build_public_network_contract.dart'],
+      reason: 'a fixture is hashed into the support matrix',
+    );
+    expect(
       _commands(['tool/contract_common/primitives.dart']),
       containsAll([
         'dart run tool/build_mcp_contract.dart',

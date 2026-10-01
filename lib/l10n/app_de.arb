@@ -6125,6 +6125,7 @@
   "portalNoWorkspaces": "Keine veröffentlichten Workspaces gefunden.",
   "portalNoLongerPublished": "Dieser Workspace ist nicht mehr veröffentlicht.",
   "portalDirectoryIncompatible": "Einige Workspaces benötigen eine neuere Version der App und werden nicht angezeigt.",
+  "portalActionNotNegotiated": "Diese Aktion ist zwischen dieser App und diesem Server nicht verfügbar. Ein App-Update kann helfen.",
   "portalMoreDirectories": "Weitere Verzeichnisse",
   "portalMessenger": "Kontonachrichten",
   "portalThisServer": "Dieser Server",

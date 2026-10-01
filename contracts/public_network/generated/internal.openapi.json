@@ -18,7 +18,8 @@
     "time": "Instants are RFC 3339 strings with an explicit offset (PostgREST answers UTC with +00:00). These operations publish no site-local time, so no site time zone is part of the projection.",
     "money": "These operations publish no amount. A currency is an ISO 4217 code. A future amount is integer minor units with its currency, never a float and never divided by 100 by convention.",
     "pagination": "Offset pages over a total order (the listed `order`, column.direction, ending in a unique key; nulls last). A full page means there may be more. Query-bound opaque cursors are not implemented yet.",
-    "input": "A management input key the contract does not list is refused before sending, never silently discarded; the server refuses it again."
+    "input": "A management input key the contract does not list is refused before sending, never silently discarded; the server refuses it again.",
+    "negotiation": "Before a participant mutation the client reads the target's descriptor (anonymous) and takes the highest version both support, provided it understands every capability the operation `requires`. A server without a descriptor is the pre-negotiation baseline: it implements version 1 of every `baseline` operation. The server revalidates the header; a capability or version claim grants nothing."
   },
   "servers": [
     {

@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/public_network/public_network_negotiator.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
@@ -183,6 +185,9 @@ class PublicWorkspaceView extends ConsumerWidget {
               ),
               onPressed: () async {
                 if (!await _connected(context, ref) || !context.mounted) return;
+                // #1847 B — an action this app could not negotiate with that
+                // server is refused before anything is sent; say so once.
+                PublicActionRefusal? refusal;
                 final ok = await runGuarded(
                   context,
                   domain: 'workspace',
@@ -190,9 +195,34 @@ class PublicWorkspaceView extends ConsumerWidget {
                   errorText:
                       l?.portalActionFailed ??
                       'Could not save this change. Please try again.',
-                  action: () =>
-                      ref.read(directoryActionsProvider).apply(workspace),
+                  action: () async {
+                    try {
+                      await ref.read(directoryActionsProvider).apply(workspace);
+                      // ignore: catch_no_st — rethrows, or hands the typed refusal to the line below, which traces it.
+                    } on PublicActionRefusal catch (r) {
+                      if (r.reason == PublicRefusalReason.unreachable) rethrow;
+                      refusal = r;
+                    }
+                  },
                 );
+                if (refusal != null) {
+                  TraceLogger.instance.warn(
+                    'workspace',
+                    'request public workspace profile not negotiated: ${refusal!.reason.name}',
+                  );
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        key: const ValueKey('action-not-negotiated'),
+                        content: Text(
+                          l?.portalActionNotNegotiated ??
+                              'This action is not available between this app and that server. Updating the app may help.',
+                        ),
+                      ),
+                    );
+                  }
+                  return;
+                }
                 if (ok && context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
