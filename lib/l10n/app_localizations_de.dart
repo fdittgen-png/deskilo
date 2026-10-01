@@ -261,6 +261,190 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceExportBundle => 'Jahresarchiv (zip)';
 
   @override
+  String get assistantSetupTitle => 'Assistenten einrichten';
+
+  @override
+  String get assistantSetupIntro =>
+      'Was Assistenten in diesem Arbeitsbereich brauchen, der Reihe nach. Jeder Schritt sagt, wer ihn erledigt.';
+
+  @override
+  String get assistantSetupNoWorkspace =>
+      'Wählen Sie zuerst einen Arbeitsbereich.';
+
+  @override
+  String get assistantSetupAllDone =>
+      'Für diesen Arbeitsbereich ist alles eingerichtet.';
+
+  @override
+  String get assistantSetupSaved => 'Gespeichert.';
+
+  @override
+  String get assistantSetupStale =>
+      'Jemand hat das Angebot inzwischen geändert. Prüfen Sie es und versuchen Sie es erneut.';
+
+  @override
+  String get assistantSetupFailed =>
+      'Speichern fehlgeschlagen. Nichts wurde geändert; versuchen Sie es erneut.';
+
+  @override
+  String get assistantSetupLinkIdentity => 'Meine Identität verknüpfen';
+
+  @override
+  String get assistantSetupTurnOn => 'Einschalten';
+
+  @override
+  String get assistantSetupRecommended => 'Empfohlene Auswahl verwenden';
+
+  @override
+  String get assistantSetupCustomise => 'Anpassen';
+
+  @override
+  String get assistantSetupRequest => 'Zugang anfragen';
+
+  @override
+  String get assistantSetupReview => 'Anfragen prüfen';
+
+  @override
+  String get assistantSetupNoConnector =>
+      'Diese App läuft ohne Server, daher gibt es keine Connector-URL.';
+
+  @override
+  String get assistantSetupCopyUrl => 'Connector-URL kopieren';
+
+  @override
+  String get assistantSetupCopied => 'Connector-URL kopiert.';
+
+  @override
+  String get assistantSetupConnectHowTo =>
+      '1. Fügen Sie in Ihrem Assistenten einen eigenen Connector mit dieser URL hinzu.\n2. Melden Sie sich auf Nachfrage mit Ihrem DesKilo-Konto an.\n3. Geben Sie diesen Arbeitsbereich und die erlaubten Vorgänge frei.';
+
+  @override
+  String get assistantSetupPreviewTitle => 'Empfohlene Auswahl';
+
+  @override
+  String get assistantSetupPreviewNone =>
+      'Keine Änderung: Der Arbeitsbereich bietet genau diese Auswahl bereits an.';
+
+  @override
+  String get assistantSetupPreviewAdds => 'Hinzugefügt';
+
+  @override
+  String get assistantSetupPreviewRemoves => 'Entfernt';
+
+  @override
+  String get assistantSetupPreviewOwn =>
+      'Assistenten sehen nur die eigenen Daten jedes Mitglieds.';
+
+  @override
+  String get assistantSetupPreviewNote =>
+      'Nur die eigenen Daten eines Mitglieds und die Verfügbarkeitsabfragen. Bereits verbundene Assistenten erhalten neue Vorgänge erst, wenn jede Person erneut zustimmt.';
+
+  @override
+  String get assistantSetupApply => 'Übernehmen';
+
+  @override
+  String get assistantSetupStepIdentity => 'Ihre Identität verknüpfen';
+
+  @override
+  String get assistantSetupStepWorkspace =>
+      'Assistenten für diesen Arbeitsbereich einschalten';
+
+  @override
+  String get assistantSetupStepPolicy => 'Festlegen, was Assistenten dürfen';
+
+  @override
+  String get assistantSetupStepEligibility =>
+      'Ihren Assistentenzugang anfragen';
+
+  @override
+  String get assistantSetupStepInstallation =>
+      'Assistenten für diese Datenbank eingeschaltet';
+
+  @override
+  String get assistantSetupStepConnect => 'Ihren Assistenten verbinden';
+
+  @override
+  String get assistantSetupReasonIdentity =>
+      'Ein Assistent handelt in Ihrem Namen, daher muss diese Datenbank wissen, dass Sie es sind.';
+
+  @override
+  String get assistantSetupReasonWorkspace =>
+      'Solange es aus ist, lehnt der Arbeitsbereich jeden Assistentenaufruf ab.';
+
+  @override
+  String get assistantSetupReasonPolicy =>
+      'Assistenten wird nichts angeboten, bis jemand die Vorgänge auswählt.';
+
+  @override
+  String get assistantSetupReasonEligibility =>
+      'Die Administratoren dieser Datenbank geben jede Person einmal frei, für alle Arbeitsbereiche darauf.';
+
+  @override
+  String get assistantSetupReasonInstallation =>
+      'Der Instanzinhaber oder eine Vertretung schaltet Assistenten für alle Arbeitsbereiche dieser Datenbank ein.';
+
+  @override
+  String get assistantSetupReasonConnect =>
+      'Fügen Sie den Connector in Ihrem Assistenten hinzu, melden Sie sich an und geben Sie diesen Arbeitsbereich frei.';
+
+  @override
+  String get assistantSetupStateDone => 'Erledigt';
+
+  @override
+  String get assistantSetupStateTodo => 'Offen';
+
+  @override
+  String get assistantSetupStateWaiting => 'Wartet';
+
+  @override
+  String get assistantSetupStateBlocked => 'Nach den Schritten oben';
+
+  @override
+  String get assistantSetupStateUnavailable => 'Konnte nicht abgefragt werden';
+
+  @override
+  String get assistantSetupActorYou => 'Wer: Sie';
+
+  @override
+  String get assistantSetupActorConfigurer =>
+      'Wer: jemand, der die Konfiguration dieses Arbeitsbereichs verwaltet';
+
+  @override
+  String get assistantSetupActorIntegrations =>
+      'Wer: jemand, der die Integrationen dieses Arbeitsbereichs verwaltet';
+
+  @override
+  String get assistantSetupActorDatabaseAdministrator =>
+      'Wer: ein Datenbankadministrator';
+
+  @override
+  String get assistantSetupActorInstanceOperator =>
+      'Wer: der Instanzinhaber oder eine Vertretung';
+
+  @override
+  String assistantSetupNextTodo(String step) {
+    return 'Nächster Schritt: $step.';
+  }
+
+  @override
+  String assistantSetupNextWaiting(String step, String actor) {
+    return 'Nächster Schritt: $step. $actor.';
+  }
+
+  @override
+  String get assistantSetupInstanceYou =>
+      'Sie sind für diese Datenbank verantwortlich: Schalten Sie Assistenten über die Instanzwerkzeuge ein.';
+
+  @override
+  String get assistantSetupInstanceNobody =>
+      'Für diese Datenbank ist noch niemand verantwortlich.';
+
+  @override
+  String assistantSetupInstanceNames(String names) {
+    return 'Verantwortlich für diese Datenbank: $names.';
+  }
+
+  @override
   String get legalIdentityAssociationRegime =>
       'Ein gemeinnütziger Verein ohne wirtschaftliche Tätigkeit unterliegt nicht der Umsatzsteuer: Wählen Sie „Nicht steuerbar“, nicht „Steuerbefreit“. Die Befreiung verlangt eine USt-IdNr., die Sie nicht haben, und die E-Rechnung würde abgelehnt. Nicht steuerbar identifiziert Ihre Registernummer den Verein.';
 

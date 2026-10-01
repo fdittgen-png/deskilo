@@ -42,11 +42,12 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `events -> workspace` | 20 |
 | `workspace -> reservations` | 17 |
 | `calendar -> workspace` | 15 |
+| `mcp -> auth` | 15 |
 | `workspace -> events` | 15 |
 | `members -> reservations` | 14 |
 | `money -> plan` | 14 |
-| `mcp -> auth` | 13 |
 | `money -> reservations` | 13 |
+| `mcp -> workspace` | 12 |
 | `plan -> workspace` | 11 |
 | `workspace -> directory` | 11 |
 | `workspace -> profile` | 11 |
@@ -66,7 +67,6 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `editor -> workspace` | 6 |
 | `profile -> auth` | 6 |
 | `events -> money` | 5 |
-| `mcp -> workspace` | 5 |
 | `profile -> reservations` | 5 |
 | `reservations -> events` | 5 |
 | `calendar -> events` | 4 |
@@ -96,7 +96,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**65 directed relationships, 763 imports.**
+**65 directed relationships, 772 imports.**
 
 Reciprocal (20): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -126,7 +126,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/widgets/bill_view.dart` | 892 |
 | `lib/features/reservations/presentation/widgets/space_scan.dart` | 889 |
 | `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 871 |
-| `lib/app/router.dart` | 856 |
+| `lib/app/router.dart` | 864 |
 | `lib/features/workspace/presentation/screens/availability_screen.dart` | 856 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |

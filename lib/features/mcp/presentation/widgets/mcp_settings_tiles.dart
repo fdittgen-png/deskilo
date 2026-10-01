@@ -42,6 +42,14 @@ class McpSettingsTiles extends ConsumerWidget {
             title: Text(l10n?.mcpAssistantsTitle ?? 'Assistants'),
             onTap: () => context.push('/assistants'),
           ),
+        // #1827 — offered before mcpAccess is on: that is its second step.
+        if (manages)
+          ListTile(
+            key: const ValueKey('settings-assistant-setup'),
+            leading: const Icon(Icons.checklist_outlined),
+            title: Text(l10n?.assistantSetupTitle ?? 'Assistant setup'),
+            onTap: () => context.push('/settings/assistant-setup'),
+          ),
         if (on && manages)
           ListTile(
             key: const ValueKey('settings-assistant-policy'),

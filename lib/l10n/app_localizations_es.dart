@@ -262,6 +262,190 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceExportBundle => 'Archivo del ejercicio (zip)';
 
   @override
+  String get assistantSetupTitle => 'Configuración de asistentes';
+
+  @override
+  String get assistantSetupIntro =>
+      'Lo que los asistentes necesitan en este espacio de trabajo, en orden. Cada paso indica quién lo realiza.';
+
+  @override
+  String get assistantSetupNoWorkspace =>
+      'Elija primero un espacio de trabajo.';
+
+  @override
+  String get assistantSetupAllDone =>
+      'Todo está configurado para este espacio de trabajo.';
+
+  @override
+  String get assistantSetupSaved => 'Guardado.';
+
+  @override
+  String get assistantSetupStale =>
+      'Alguien cambió la oferta mientras tanto. Revísela e inténtelo de nuevo.';
+
+  @override
+  String get assistantSetupFailed =>
+      'No se pudo guardar. No cambió nada; inténtelo de nuevo.';
+
+  @override
+  String get assistantSetupLinkIdentity => 'Vincular mi identidad';
+
+  @override
+  String get assistantSetupTurnOn => 'Activar';
+
+  @override
+  String get assistantSetupRecommended => 'Usar la selección recomendada';
+
+  @override
+  String get assistantSetupCustomise => 'Personalizar';
+
+  @override
+  String get assistantSetupRequest => 'Solicitar acceso';
+
+  @override
+  String get assistantSetupReview => 'Revisar solicitudes';
+
+  @override
+  String get assistantSetupNoConnector =>
+      'Esta app funciona sin servidor, así que no hay URL de conector.';
+
+  @override
+  String get assistantSetupCopyUrl => 'Copiar la URL del conector';
+
+  @override
+  String get assistantSetupCopied => 'URL del conector copiada.';
+
+  @override
+  String get assistantSetupConnectHowTo =>
+      '1. En su asistente, añada un conector personalizado con esta URL.\n2. Inicie sesión con su cuenta de DesKilo cuando se le pida.\n3. Apruebe este espacio de trabajo y las operaciones que permite.';
+
+  @override
+  String get assistantSetupPreviewTitle => 'Selección recomendada';
+
+  @override
+  String get assistantSetupPreviewNone =>
+      'Sin cambios: el espacio de trabajo ya ofrece exactamente esta selección.';
+
+  @override
+  String get assistantSetupPreviewAdds => 'Añadidas';
+
+  @override
+  String get assistantSetupPreviewRemoves => 'Retiradas';
+
+  @override
+  String get assistantSetupPreviewOwn =>
+      'Los asistentes solo ven los datos propios de cada miembro.';
+
+  @override
+  String get assistantSetupPreviewNote =>
+      'Solo los datos propios de un miembro y las consultas de disponibilidad. Los asistentes ya conectados reciben operaciones nuevas solo cuando cada persona vuelve a aprobar.';
+
+  @override
+  String get assistantSetupApply => 'Aplicar';
+
+  @override
+  String get assistantSetupStepIdentity => 'Vincule su identidad';
+
+  @override
+  String get assistantSetupStepWorkspace =>
+      'Activar asistentes en este espacio de trabajo';
+
+  @override
+  String get assistantSetupStepPolicy =>
+      'Elegir qué pueden hacer los asistentes';
+
+  @override
+  String get assistantSetupStepEligibility => 'Solicite su acceso a asistentes';
+
+  @override
+  String get assistantSetupStepInstallation =>
+      'Asistentes activados en esta base de datos';
+
+  @override
+  String get assistantSetupStepConnect => 'Conecte su asistente';
+
+  @override
+  String get assistantSetupReasonIdentity =>
+      'Un asistente actúa en su nombre, así que esta base de datos debe saber que es usted.';
+
+  @override
+  String get assistantSetupReasonWorkspace =>
+      'Mientras esté desactivado, el espacio de trabajo rechaza toda llamada de asistente.';
+
+  @override
+  String get assistantSetupReasonPolicy =>
+      'No se ofrece nada a los asistentes hasta que alguien elija las operaciones.';
+
+  @override
+  String get assistantSetupReasonEligibility =>
+      'Los administradores de esta base de datos aprueban a cada persona una vez, para todos sus espacios de trabajo.';
+
+  @override
+  String get assistantSetupReasonInstallation =>
+      'El propietario de la instancia o un delegado activa los asistentes para todos los espacios de trabajo de esta base de datos.';
+
+  @override
+  String get assistantSetupReasonConnect =>
+      'Añada el conector en su asistente, inicie sesión y apruebe este espacio de trabajo.';
+
+  @override
+  String get assistantSetupStateDone => 'Hecho';
+
+  @override
+  String get assistantSetupStateTodo => 'Pendiente';
+
+  @override
+  String get assistantSetupStateWaiting => 'En espera';
+
+  @override
+  String get assistantSetupStateBlocked => 'Después de los pasos anteriores';
+
+  @override
+  String get assistantSetupStateUnavailable => 'No se pudo consultar';
+
+  @override
+  String get assistantSetupActorYou => 'Quién: usted';
+
+  @override
+  String get assistantSetupActorConfigurer =>
+      'Quién: alguien que gestiona la configuración de este espacio de trabajo';
+
+  @override
+  String get assistantSetupActorIntegrations =>
+      'Quién: alguien que gestiona las integraciones de este espacio de trabajo';
+
+  @override
+  String get assistantSetupActorDatabaseAdministrator =>
+      'Quién: un administrador de la base de datos';
+
+  @override
+  String get assistantSetupActorInstanceOperator =>
+      'Quién: el propietario de la instancia o un delegado';
+
+  @override
+  String assistantSetupNextTodo(String step) {
+    return 'Siguiente: $step.';
+  }
+
+  @override
+  String assistantSetupNextWaiting(String step, String actor) {
+    return 'Siguiente: $step. $actor.';
+  }
+
+  @override
+  String get assistantSetupInstanceYou =>
+      'Usted responde de esta base de datos: active los asistentes desde las herramientas de la instancia.';
+
+  @override
+  String get assistantSetupInstanceNobody =>
+      'Nadie responde todavía de esta base de datos.';
+
+  @override
+  String assistantSetupInstanceNames(String names) {
+    return 'Responden de esta base de datos: $names.';
+  }
+
+  @override
   String get legalIdentityAssociationRegime =>
       'Una asociación sin actividad lucrativa no está sujeta al IVA: elija «Fuera del ámbito del IVA», no «Exento». El régimen de exención exige un número de IVA que no tiene, y la factura electrónica sería rechazada. Fuera del ámbito, su número de registro identifica a la asociación.';
 
