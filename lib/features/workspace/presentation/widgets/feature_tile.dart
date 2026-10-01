@@ -7,6 +7,7 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/feature_lifecycle.dart';
+import '../../domain/feature_operation.dart';
 import '../../domain/workspace_feature.dart';
 import '../feature_surface_labels.dart';
 import 'feature_maturity_badge.dart';
@@ -107,6 +108,11 @@ class FeatureTile extends StatelessWidget {
       if (!value && alsoEnables.isNotEmpty)
         l10n?.featureAlsoEnables(alsoEnables.join(', ')) ??
             'Switching this on also enables ${alsoEnables.join(', ')}',
+      // #1851 — what off means for a feature whose open work survives it.
+      if (!value && featureKeepsExistingWork(entry.feature))
+        l10n?.featureIntakeStoppedNote ??
+            'Off: nothing new starts; what is already open can still be '
+                'answered and closed.',
       if (value && inactive)
         l10n?.featureHeldBack ??
             'Waiting on the feature above — switch that on and this one '

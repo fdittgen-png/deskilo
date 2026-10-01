@@ -3864,6 +3864,21 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get featureOptInTitle => 'Activer une fonctionnalité expérimentale ?';
+
+  @override
+  String featureOptInBody(String features) {
+    return 'Pas encore évaluée comme stable : $features. Elle peut changer et a des limites connues. N’activez que si cet espace l’accepte.';
+  }
+
+  @override
+  String get featureOptInConfirm => 'Activer';
+
+  @override
+  String get featureIntakeStoppedNote =>
+      'Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos.';
+
+  @override
   String get federationContinue => 'Continuer avec Deskilo';
 
   @override
@@ -8618,7 +8633,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureSpaceInquiriesDesc =>
-      'Une personne connectée qui trouve la page publiée peut écrire aux hôtes : les propriétaires et les administrateurs qui ont choisi d’être contacts publics. Les hôtes sont nommés avant l’écriture, et seuls cette personne et les hôtes lisent la conversation. Désactivé, le bouton et la vue Demandes disparaissent ; les demandes enregistrées restent.';
+      'Une personne connectée qui trouve la page publiée peut écrire aux hôtes : les propriétaires et les administrateurs qui ont choisi d’être contacts publics. Les hôtes sont nommés avant l’écriture, et seuls cette personne et les hôtes lisent la conversation. Désactivé, le bouton et la vue Demandes disparaissent : personne n’ouvre de nouvelle demande ; celles en cours restent dans la boîte des hôtes pour y répondre et les clore.';
 
   @override
   String get featureMessageForwardingTitle => 'Transfert de messages';

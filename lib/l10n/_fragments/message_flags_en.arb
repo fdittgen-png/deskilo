@@ -4,7 +4,7 @@
   "@featureSpaceInquiriesTitle": {
     "description": "#1824 messenger flags: featureSpaceInquiriesTitle"
   },
-  "featureSpaceInquiriesDesc": "A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay.",
+  "featureSpaceInquiriesDesc": "A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view, so nobody starts a new inquiry; open ones stay in the hosts' inbox to answer and close.",
   "@featureSpaceInquiriesDesc": {
     "description": "#1824 messenger flags: featureSpaceInquiriesDesc"
   },

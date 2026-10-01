@@ -3857,6 +3857,21 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get featureOptInTitle => 'Experimentelle Funktion einschalten?';
+
+  @override
+  String featureOptInBody(String features) {
+    return 'Noch nicht als stabil bewertet: $features. Sie kann sich ändern und hat bekannte Grenzen. Nur einschalten, wenn dieser Space das akzeptiert.';
+  }
+
+  @override
+  String get featureOptInConfirm => 'Einschalten';
+
+  @override
+  String get featureIntakeStoppedNote =>
+      'Aus: nichts Neues beginnt; was schon offen ist, kann noch beantwortet und geschlossen werden.';
+
+  @override
   String get federationContinue => 'Weiter mit Deskilo';
 
   @override
@@ -8606,7 +8621,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureSpaceInquiriesDesc =>
-      'Eine angemeldete Person, die die veröffentlichte Seite findet, kann den Gastgebern schreiben: den Eigentümern und den Administratoren, die öffentliche Kontakte sein wollen. Die Gastgeber werden vor dem Schreiben genannt, und nur diese Person und die Gastgeber lesen das Gespräch. Aus entfernt die Schaltfläche und die Ansicht Anfragen; gespeicherte Anfragen bleiben erhalten.';
+      'Eine angemeldete Person, die die veröffentlichte Seite findet, kann den Gastgebern schreiben: den Eigentümern und den Administratoren, die öffentliche Kontakte sein wollen. Die Gastgeber werden vor dem Schreiben genannt, und nur diese Person und die Gastgeber lesen das Gespräch. Aus entfernt die Schaltfläche und die Ansicht Anfragen, sodass niemand eine neue Anfrage beginnt; offene bleiben im Posteingang der Gastgeber, um sie zu beantworten und zu schließen.';
 
   @override
   String get featureMessageForwardingTitle => 'Nachrichten weiterleiten';

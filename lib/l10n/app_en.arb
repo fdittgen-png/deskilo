@@ -4386,6 +4386,27 @@
       }
     }
   },
+  "featureOptInTitle": "Switch on an experimental feature?",
+  "@featureOptInTitle": {
+    "description": "#1851 consent dialog title before switching on an alpha/beta feature"
+  },
+  "featureOptInBody": "Not yet reviewed as stable: {features}. It may change and has known limits. Switch on only if this space accepts that.",
+  "@featureOptInBody": {
+    "description": "#1851 consent dialog body; features = the experimental feature names",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "featureOptInConfirm": "Switch on",
+  "@featureOptInConfirm": {
+    "description": "#1851 consent dialog confirm button"
+  },
+  "featureIntakeStoppedNote": "Off: nothing new starts; what is already open can still be answered and closed.",
+  "@featureIntakeStoppedNote": {
+    "description": "#1851 note on a switched-off feature whose existing work stays serviceable"
+  },
   "federationContinue": "Continue with Deskilo",
   "@federationContinue": {
     "description": "#1648 The one explicit button that starts Sign in with Deskilo in the system browser. Deskilo is the brand; do not translate it."
@@ -9218,7 +9239,7 @@
   "@featureSpaceInquiriesTitle": {
     "description": "#1824 messenger flags: featureSpaceInquiriesTitle"
   },
-  "featureSpaceInquiriesDesc": "A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay.",
+  "featureSpaceInquiriesDesc": "A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view, so nobody starts a new inquiry; open ones stay in the hosts' inbox to answer and close.",
   "@featureSpaceInquiriesDesc": {
     "description": "#1824 messenger flags: featureSpaceInquiriesDesc"
   },

@@ -2469,6 +2469,10 @@
   "featureMaturityFilterLabel": "Maturité",
   "featureMaturityFilterAll": "Tous les stades",
   "featureMaturitySemantics": "Maturité {maturity}, {lifecycle}",
+  "featureOptInTitle": "Activer une fonctionnalité expérimentale ?",
+  "featureOptInBody": "Pas encore évaluée comme stable : {features}. Elle peut changer et a des limites connues. N’activez que si cet espace l’accepte.",
+  "featureOptInConfirm": "Activer",
+  "featureIntakeStoppedNote": "Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos.",
   "federationContinue": "Continuer avec Deskilo",
   "federationPurpose": "Votre navigateur confirme votre compte Deskilo, puis vous ramène à {server}. Vos adhésions et votre historique ici restent inchangés.",
   "federationDetails": "Détails techniques",
@@ -5100,7 +5104,7 @@
   "@featureSpaceInquiriesTitle": {
     "description": "#1824 messenger flags: featureSpaceInquiriesTitle"
   },
-  "featureSpaceInquiriesDesc": "Une personne connectée qui trouve la page publiée peut écrire aux hôtes : les propriétaires et les administrateurs qui ont choisi d’être contacts publics. Les hôtes sont nommés avant l’écriture, et seuls cette personne et les hôtes lisent la conversation. Désactivé, le bouton et la vue Demandes disparaissent ; les demandes enregistrées restent.",
+  "featureSpaceInquiriesDesc": "Une personne connectée qui trouve la page publiée peut écrire aux hôtes : les propriétaires et les administrateurs qui ont choisi d’être contacts publics. Les hôtes sont nommés avant l’écriture, et seuls cette personne et les hôtes lisent la conversation. Désactivé, le bouton et la vue Demandes disparaissent : personne n’ouvre de nouvelle demande ; celles en cours restent dans la boîte des hôtes pour y répondre et les clore.",
   "@featureSpaceInquiriesDesc": {
     "description": "#1824 messenger flags: featureSpaceInquiriesDesc"
   },

@@ -3855,6 +3855,21 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get featureOptInTitle => '¿Activar una función experimental?';
+
+  @override
+  String featureOptInBody(String features) {
+    return 'Aún no evaluada como estable: $features. Puede cambiar y tiene límites conocidos. Actívela solo si este espacio lo acepta.';
+  }
+
+  @override
+  String get featureOptInConfirm => 'Activar';
+
+  @override
+  String get featureIntakeStoppedNote =>
+      'Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse.';
+
+  @override
   String get federationContinue => 'Continuar con Deskilo';
 
   @override
@@ -8587,7 +8602,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureSpaceInquiriesDesc =>
-      'Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas; las consultas guardadas se conservan.';
+      'Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas, así que nadie abre una consulta nueva; las abiertas siguen en la bandeja de los anfitriones para responderlas y cerrarlas.';
 
   @override
   String get featureMessageForwardingTitle => 'Reenvío de mensajes';

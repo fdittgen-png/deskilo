@@ -6679,6 +6679,30 @@ abstract class AppLocalizations {
   /// **'Maturity {maturity}, {lifecycle}'**
   String featureMaturitySemantics(String maturity, String lifecycle);
 
+  /// #1851 consent dialog title before switching on an alpha/beta feature
+  ///
+  /// In en, this message translates to:
+  /// **'Switch on an experimental feature?'**
+  String get featureOptInTitle;
+
+  /// #1851 consent dialog body; features = the experimental feature names
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet reviewed as stable: {features}. It may change and has known limits. Switch on only if this space accepts that.'**
+  String featureOptInBody(String features);
+
+  /// #1851 consent dialog confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Switch on'**
+  String get featureOptInConfirm;
+
+  /// #1851 note on a switched-off feature whose existing work stays serviceable
+  ///
+  /// In en, this message translates to:
+  /// **'Off: nothing new starts; what is already open can still be answered and closed.'**
+  String get featureIntakeStoppedNote;
+
   /// #1648 The one explicit button that starts Sign in with Deskilo in the system browser. Deskilo is the brand; do not translate it.
   ///
   /// In en, this message translates to:
@@ -14800,7 +14824,7 @@ abstract class AppLocalizations {
   /// #1824 messenger flags: featureSpaceInquiriesDesc
   ///
   /// In en, this message translates to:
-  /// **'A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay.'**
+  /// **'A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view, so nobody starts a new inquiry; open ones stay in the hosts\' inbox to answer and close.'**
   String get featureSpaceInquiriesDesc;
 
   /// #1824 messenger flags: featureMessageForwardingTitle

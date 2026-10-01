@@ -255,6 +255,11 @@ List<String> validateFeatureAssessments({
     if (!assessments.containsKey(f)) {
       problems.add('${f.name}: no assessment');
     }
+    // #1851 — an alpha is off until an owner opts in to it.
+    if (assessments[f]?.maturity == FeatureMaturity.alpha &&
+        featureManifest[f]?.defaultOn == true) {
+      problems.add('${f.name}: alpha but on by default');
+    }
   }
   for (final e in retired.entries) {
     if (live.contains(e.key)) {

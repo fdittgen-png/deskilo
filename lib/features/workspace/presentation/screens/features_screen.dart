@@ -7,12 +7,14 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/feature_lifecycle.dart';
+import '../../domain/feature_operation.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import '../../application/toggle_workspace_feature.dart';
 import '../widgets/feature_capability_list.dart';
 import '../widgets/feature_maturity_badge.dart';
+import '../widgets/feature_opt_in_dialog.dart';
 import '../widgets/features_filter_bar.dart';
 import '../widgets/features_view_switch.dart';
 import '../widgets/process_overview.dart';
@@ -83,6 +85,16 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
     // is the worst kind of setting: the owner has configured the thing
     // and the app disagrees, with nothing on screen to explain it.
     final alsoOn = alsoEnabledWith(raw: enabled, feature: feature);
+    // #1851 — an alpha or beta is switched on only after an explicit yes.
+    final experimental = [if (value) ...[feature, ...alsoOn]]
+        .where((f) => featureNeedsOptIn(f, assessments: widget.assessments))
+        .map((f) => featureName(l10n, f))
+        .toList();
+    if (experimental.isNotEmpty &&
+        !await confirmExperimentalOptIn(context, experimental)) {
+      return;
+    }
+    if (!context.mounted) return;
     // #1327 — the write itself (the #963 delta, then the forced
     // refetch) is application/toggle_workspace_feature.dart's decision.
     if (!await runGuarded(
