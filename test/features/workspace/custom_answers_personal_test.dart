@@ -4,7 +4,7 @@
 // question's switch says, and the screens say so.
 //
 // The owner's "personal data" switch used to decide whether an answer was
-// exported and erased. Since 0321 it decides neither: every answer is
+// exported and erased. Since 0323 it decides neither: every answer is
 // erased with the membership unless a documented retention hold keeps it.
 // The editor therefore must not let the owner believe that switching it
 // off keeps an answer, and the member answering must be told what happens

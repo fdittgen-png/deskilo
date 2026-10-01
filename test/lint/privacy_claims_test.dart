@@ -24,7 +24,7 @@ const _erasure = 'supabase/migrations/0133_calendar_hub.sql';
 /// restated the whole function here, so this is the erasure the
 /// database runs.
 const _erasureExtension =
-    'supabase/migrations/0321_custom_answers_personal.sql';
+    'supabase/migrations/0323_custom_answers_personal.sql';
 
 /// Every document that could repeat the claim, in every language it is
 /// written in.

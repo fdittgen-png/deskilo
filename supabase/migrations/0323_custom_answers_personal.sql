@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: destructive
 --
--- 0321 (#1912) — an answer linked to a member is personal data, whatever
+-- 0323 (#1912) — an answer linked to a member is personal data, whatever
 -- the question's switch says.
 --
 -- 0249 erased a leaving member's answers only where the owner had marked
@@ -248,4 +248,4 @@ delete from public.workspace_field_values v
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(321);
+select public.set_deskilo_schema_version(323);

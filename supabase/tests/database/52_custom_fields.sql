@@ -196,7 +196,7 @@ select throws_matching(
   'a type change under existing answers would reinterpret them; #1288 '
   'calls that a conflict, and a conflict is something a person decides');
 
--- ── erasure reaches every answer (0249, widened by 0321) ────────────
+-- ── erasure reaches every answer (0249, widened by 0323) ────────────
 
 select pg_temp.act_as('owner');
 select public.set_workspace_field(pg_temp.ws(), 'shirt', 'text',
@@ -218,9 +218,9 @@ select is(
   0,
   'the answers to the PERSONAL questions are gone — erasure is erasure');
 
--- #1912 (0321) reversed 0249 here: an answer stored against a member is
+-- #1912 (0323) reversed 0249 here: an answer stored against a member is
 -- about that member, so the owner's "not personal" switch keeps nothing.
--- Only a documented retention hold does (107_custom_answers_personal).
+-- Only a documented retention hold does (109_custom_answers_personal).
 select is(
   (select count(*)::int from public.workspace_field_values v
      join public.workspace_field_definitions d on d.id = v.definition_id
