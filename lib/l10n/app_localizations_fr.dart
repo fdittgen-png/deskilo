@@ -12195,6 +12195,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookingGateBlocked => 'Non réservable ainsi';
 
   @override
+  String get reserveBackToNow => 'Revenir à maintenant';
+
+  @override
+  String get bookingModeCheckInNow => 'S\'installer maintenant';
+
+  @override
+  String get bookingOverlapsAnother =>
+      'La place est déjà réservée pendant une partie de ce créneau.';
+
+  @override
   String get reverseChargeTitle =>
       'Autoliquidation pour les entreprises de l\'UE';
 

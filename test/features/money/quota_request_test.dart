@@ -20,7 +20,7 @@ import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import '../plan/plan_closed_day_test.dart'
     show ThrowingReservationRepository, pumpAvailabilityPlan;
-import '../plan/plan_screen_test.dart' show seatCenter;
+import '../plan/plan_screen_test.dart' show chooseCheckInNow, seatCenter;
 import 'money_screen_test.dart' show pumpMoney;
 
 void main() {
@@ -120,6 +120,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
     await tester.tap(find.widgetWithText(FilledButton, 'Check in'));
     await tester.pumpAndSettle();
 

@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "reserveBackToNow": "Back to now",
+  "@reserveBackToNow": {
+    "description": "#2016 Reserve time choice: reserveBackToNow"
+  },
+  "bookingModeCheckInNow": "Check in now",
+  "@bookingModeCheckInNow": {
+    "description": "#2016 Reserve time choice: bookingModeCheckInNow"
+  },
+  "bookingOverlapsAnother": "The seat is already booked during part of this time.",
+  "@bookingOverlapsAnother": {
+    "description": "#2016 Reserve time choice: bookingOverlapsAnother"
+  }
+}

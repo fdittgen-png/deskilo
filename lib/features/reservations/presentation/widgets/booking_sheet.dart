@@ -16,6 +16,7 @@ import '../../domain/booking_gate.dart';
 import '../../domain/picked_time.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
+import 'booking_sheet_parts.dart';
 import '../../../../core/i18n/format_controller.dart';
 
 /// What the booking sheet returns: the chosen window (start + end), an
@@ -29,6 +30,7 @@ class BookingChoice {
     this.forMemberId, {
     this.block = false,
     this.checkInNow = false,
+    this.walkUp = false,
   });
 
   final DateTime start;
@@ -44,7 +46,21 @@ class BookingChoice {
   /// #772 — reserve AND check in in one gesture (browsed window contains
   /// now); false for a plain reservation.
   final bool checkInNow;
+
+  /// #2016 — the action CONFIRMED in the sheet was a walk-up check-in
+  /// ("I am sitting here now"). The caller writes what the member chose
+  /// here, never a flag it captured before the sheet opened.
+  final bool walkUp;
 }
+
+/// #2016 — the walk-up a reservation sheet may switch to: "check in now"
+/// as an explicit choice, with its own window and next-booking cap.
+typedef WalkUpOption = ({
+  DateTime start,
+  DateTime end,
+  DateTime? cap,
+  bool capped,
+});
 
 /// Bottom-sheet body for booking a seat (#206): walk-up check-in or a
 /// punctual reservation. The **period is editable right here** — a
@@ -75,6 +91,9 @@ class BookingSheet extends StatefulWidget {
     this.allowBlocking = false,
     this.refusalOf,
     this.refusalTextOf,
+    this.walkUpOption,
+    this.now,
+    this.overlaps,
   });
 
   /// Null for a WHOLE-SPACE booking (0065): the sheet then shows no
@@ -90,8 +109,23 @@ class BookingSheet extends StatefulWidget {
   /// picker the sheet shows so the choice always fits the configuration.
   final BookingGranularity granularity;
 
-  /// True: live walk-up (check in now). False: future punctual reservation.
+  /// True: the sheet STARTS as a live walk-up (check in now). False: a
+  /// punctual reservation. With [walkUpOption] the member switches
+  /// between the two; the confirmed one is [BookingChoice.walkUp].
   final bool walkUp;
+
+  /// #2016 — offers "Check in now" beside "Reserve" as an explicit
+  /// choice. Null: the sheet has one action only.
+  final WalkUpOption? walkUpOption;
+
+  /// #2016 — this moment, when known: the "check in right away" switch
+  /// then follows the window being EDITED (it shows only while that
+  /// window contains now), not the one the hub browsed when it opened.
+  final DateTime? now;
+
+  /// #2016 — whether the seat is already taken somewhere in a window: a
+  /// reservation that overlaps another booking cannot be confirmed.
+  final bool Function(DateTime start, DateTime end)? overlaps;
 
   /// #772 — the browsed window CONTAINS this very moment: the plain
   /// reserve gains a "check in right away" switch (on by default), so
@@ -118,7 +152,8 @@ class BookingSheet extends StatefulWidget {
   /// #814 — the booking gate, asked for every window the member picks:
   /// a refusal disables the confirm button and names its reason. Null
   /// (feature off) keeps the server as the only judge.
-  final BookingRefusal? Function(DateTime start, DateTime end)? refusalOf;
+  final BookingRefusal? Function(DateTime start, DateTime end, bool walkUp)?
+      refusalOf;
   final String Function(BookingRefusal refusal)? refusalTextOf;
 
   @override
@@ -129,8 +164,53 @@ class _BookingSheetState extends State<BookingSheet> {
   // OFF by default: a live window must stay bookable as a plain
   // reservation — checking in is the member's explicit extra gesture.
   bool _checkInNow = false;
-  late DateTime _start = widget.start;
-  late DateTime _end = widget.initialEnd;
+  late bool _walkUp = widget.walkUp;
+  late DateTime _start = widget.walkUp && widget.walkUpOption != null
+      ? widget.walkUpOption!.start
+      : widget.start;
+  late DateTime _end = widget.walkUp && widget.walkUpOption != null
+      ? widget.walkUpOption!.end
+      : widget.initialEnd;
+
+  /// #2016 — the reservation draft kept aside while the member looks at
+  /// the walk-up, so switching back restores what they had chosen.
+  late ({DateTime start, DateTime end}) _reserveDraft = (
+    start: widget.start,
+    end: widget.initialEnd,
+  );
+
+  DateTime? get _cap => _walkUp && widget.walkUpOption != null
+      ? widget.walkUpOption!.cap
+      : widget.cap;
+  bool get _capped => _walkUp && widget.walkUpOption != null
+      ? widget.walkUpOption!.capped
+      : widget.capped;
+
+  /// #772/#2016 — the edited window contains this very moment.
+  bool get _liveWindow {
+    if (_walkUp) return false;
+    final now = widget.now;
+    if (now == null) return widget.liveWindow;
+    return !_start.isAfter(now) && _end.isAfter(now);
+  }
+
+  void _setMode(bool walkUp) {
+    final option = widget.walkUpOption;
+    if (option == null || walkUp == _walkUp) return;
+    setState(() {
+      if (walkUp) {
+        _reserveDraft = (start: _start, end: _end);
+        _start = option.start;
+        _end = option.end;
+        _pattern = null;
+      } else {
+        _start = _reserveDraft.start;
+        _end = _reserveDraft.end;
+      }
+      _walkUp = walkUp;
+      _checkInNow = false;
+    });
+  }
   SeriesPattern? _pattern;
   late DateTime _until = widget.start.add(const Duration(days: 28));
   // #638 — the subject defaults to me, EXCEPT when the caller offered a
@@ -174,11 +254,11 @@ class _BookingSheetState extends State<BookingSheet> {
     // offers them as shortcuts too, #446); full-day is a single locked
     // window; a walk-up keeps its computed end — except under hours,
     // where the implicit reservation lets the user set its end.
-    final showHalfDayPicker = !widget.walkUp &&
+    final showHalfDayPicker = !_walkUp &&
         (widget.granularity == BookingGranularity.halfDay ||
             widget.granularity == BookingGranularity.hours);
-    final showTimePickers = !widget.walkUp && !widget.fixedEnd;
-    final hoursWalkUp = widget.walkUp &&
+    final showTimePickers = !_walkUp && !widget.fixedEnd;
+    final hoursWalkUp = _walkUp &&
         widget.granularity == BookingGranularity.hours;
     // #574 — minute-grid workspaces get the SLIDER: the duration in the
     // workspace's own steps, walk-up and punctual alike (a 10:00 arrival
@@ -197,8 +277,13 @@ class _BookingSheetState extends State<BookingSheet> {
         gridStep != null && maxDuration >= gridStep && !widget.fixedEnd;
     // #814 — asked on EVERY build: the window changes with each chip,
     // picker and slider tick, and the verdict must follow it.
-    final refusal = widget.refusalOf?.call(_start, _end);
-    final showRepeat = !widget.walkUp && !_forOther && widget.allowSeries;
+    final refusal = widget.refusalOf?.call(_start, _end, _walkUp);
+    // #2016 — a reservation may not overlap another booking on the seat;
+    // a walk-up is already capped at the next one.
+    final overlap =
+        !_walkUp && (widget.overlaps?.call(_start, _end) ?? false);
+    final showRepeat = !_walkUp && !_forOther && widget.allowSeries;
+    final offerModes = widget.walkUpOption != null && !_forOther;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -231,11 +316,15 @@ class _BookingSheetState extends State<BookingSheet> {
                   anchor: HelpAnchor.reservationsBookingSheet,
                 ),
             ]),
+            if (offerModes) ...[
+              const SizedBox(height: AppSpacing.sm),
+              BookingModeSelector(walkUp: _walkUp, onChanged: _setMode),
+            ],
             const SizedBox(height: 8),
             Text(
-              widget.walkUp
+              _walkUp
                   ? '${l10n?.planStartNow ?? 'Starts now'} · '
-                      '${timeFormat.time(widget.start)}'
+                      '${timeFormat.time(_start)}'
                   : '${DateFormat.MMMEd().format(WorkspaceTime.display(_start))}'
                       ' · ${bookingRangeText(context, appFormatOf(context), l10n, _start, _end)}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -251,7 +340,7 @@ class _BookingSheetState extends State<BookingSheet> {
               _periodChips(l10n),
             ],
             if (showTimePickers) ...[
-              _timeTile(
+              BookingTimeTile(
                 key: const ValueKey('booking-from-tile'),
                 label: lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From'),
                 value: _start,
@@ -265,7 +354,7 @@ class _BookingSheetState extends State<BookingSheet> {
                   });
                 },
               ),
-              _timeTile(
+              BookingTimeTile(
                 key: const ValueKey('booking-until-tile'),
                 label: l10n?.planUntilLabel ?? 'Until',
                 value: _end,
@@ -274,7 +363,7 @@ class _BookingSheetState extends State<BookingSheet> {
                   if (!end.isAfter(_start)) {
                     end = end.add(const Duration(days: 1));
                   }
-                  final cap = widget.cap;
+                  final cap = _cap;
                   if (cap != null && end.isAfter(cap)) end = cap;
                   setState(() => _end = end);
                 },
@@ -313,7 +402,7 @@ class _BookingSheetState extends State<BookingSheet> {
             // implicitly — the start is "now", the end is the user's to
             // fill (prefilled with the end of the working day).
             if (hoursWalkUp)
-              _timeTile(
+              BookingTimeTile(
                 key: const ValueKey('booking-until-tile'),
                 label: l10n?.planUntilLabel ?? 'Until',
                 value: _end,
@@ -322,7 +411,7 @@ class _BookingSheetState extends State<BookingSheet> {
                   if (!end.isAfter(_start)) {
                     end = end.add(const Duration(days: 1));
                   }
-                  final cap = widget.cap;
+                  final cap = _cap;
                   if (cap != null && end.isAfter(cap)) end = cap;
                   setState(() => _end = end);
                 },
@@ -344,18 +433,24 @@ class _BookingSheetState extends State<BookingSheet> {
                   for (final m in widget.members)
                     DropdownMenuItem(value: m.id, child: Text(m.name)),
                 ],
-                onChanged: (id) => setState(() => _forMemberId = id),
+                onChanged: (id) {
+                  // #2016 — a walk-up is the actor sitting down; booking
+                  // for someone else is a reservation.
+                  if (id != widget.myMemberId) _setMode(false);
+                  setState(() => _forMemberId = id);
+                },
               ),
 
-            if (widget.capped && widget.cap != null)
+            if (_capped && _cap != null)
               Text(
                 l10n?.planCappedByNext(
-                      timeFormat.time(widget.cap!),
+                      timeFormat.time(_cap!),
                     ) ??
                     'The seat is reserved from '
-                        '${timeFormat.time(widget.cap!)}.',
+                        '${timeFormat.time(_cap!)}.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
+            if (overlap) const BookingOverlapNotice(),
             if (refusal != null)
               Padding(
                 padding: const EdgeInsets.only(top: 8),
@@ -408,9 +503,10 @@ class _BookingSheetState extends State<BookingSheet> {
                       onChanged: (p) => setState(() => _pattern = p),
                     ),
                     if (_pattern != null)
-                      _dateTile(
+                      BookingDateTile(
                         label: l10n?.planUntilDateLabel ?? 'Repeat until',
                         value: _until,
+                        first: widget.start,
                         onPicked: (d) => setState(() => _until = d),
                       ),
                   ],
@@ -431,11 +527,12 @@ class _BookingSheetState extends State<BookingSheet> {
             const SizedBox(height: 16),
             FilledButton(
               key: const ValueKey('booking-confirm'),
-              onPressed: refusal != null
+              onPressed: refusal != null || overlap
                   ? null
                   : () => Navigator.of(context).pop(
                 BookingChoice(
-                  checkInNow: widget.liveWindow && _checkInNow,
+                  checkInNow: _liveWindow && _checkInNow,
+                  walkUp: _walkUp,
                   _start,
                   _end,
                   _forOther ? null : _pattern,
@@ -447,12 +544,12 @@ class _BookingSheetState extends State<BookingSheet> {
                 _forOther
                     ? (l10n?.planSendForConfirmation ??
                         'Send for confirmation')
-                    : widget.walkUp
+                    : _walkUp
                         ? (lexiconText(context, key: 'planCheckInButton', fallback: l10n?.planCheckInButton ?? 'Check in'))
                         : (lexiconText(context, key: 'planReserveButton', fallback: l10n?.planReserveButton ?? 'Reserve')),
               ),
             ),
-            if (widget.liveWindow && !widget.walkUp)
+            if (_liveWindow)
               SwitchListTile(
                 key: const ValueKey('booking-check-in-now'),
                 contentPadding: EdgeInsets.zero,
@@ -485,7 +582,7 @@ class _BookingSheetState extends State<BookingSheet> {
   int _maxDurationMinutes(int step) {
     final lastSlot =
         WorkspaceTime.at(_day.year, _day.month, _day.day, 23, 45);
-    final cap = widget.cap;
+    final cap = _cap;
     final limit =
         cap != null && cap.isBefore(lastSlot) ? cap : lastSlot;
     final minutes = limit.difference(_start).inMinutes;
@@ -527,52 +624,6 @@ class _BookingSheetState extends State<BookingSheet> {
         chip('booking-day', lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day'),
             HalfDayWindows.fullDay(_day)),
       ],
-    );
-  }
-
-  Widget _timeTile({
-    required Key key,
-    required String label,
-    required DateTime value,
-    required void Function(TimeOfDay) onPicked,
-  }) {
-    final timeFormat = appFormatOf(context); // #1150
-    return ListTile(
-      key: key,
-      contentPadding: EdgeInsets.zero,
-      title: Text(label),
-      trailing: Text(timeFormat.time(value)),
-      onTap: () async {
-        final picked = await showTimePicker(
-          context: context,
-          initialTime: TimeOfDay.fromDateTime(WorkspaceTime.display(value)),
-        );
-        if (picked != null) onPicked(picked);
-      },
-    );
-  }
-
-  Widget _dateTile({
-    required String label,
-    required DateTime value,
-    required void Function(DateTime) onPicked,
-  }) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Text(label),
-      trailing: Text(DateFormat.yMMMd().format(WorkspaceTime.wall(value))),
-      onTap: () async {
-        final picked = await showDatePicker(
-          context: context,
-          initialDate: WorkspaceTime.wall(value),
-          // display(): TZDateTime.toLocal() lands in package:timezone's
-          // default-UTC tz.local (#417) — a Paris midnight became Sunday.
-          firstDate: WorkspaceTime.display(widget.start),
-          lastDate: WorkspaceTime.display(widget.start)
-              .add(const Duration(days: 180)),
-        );
-        if (picked != null) onPicked(picked);
-      },
     );
   }
 }

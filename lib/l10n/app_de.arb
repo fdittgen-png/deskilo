@@ -7436,6 +7436,9 @@
   },
   "scanCameraWebUnavailable": "Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).",
   "bookingGateBlocked": "So nicht buchbar",
+  "reserveBackToNow": "Zurück zu jetzt",
+  "bookingModeCheckInNow": "Jetzt einchecken",
+  "bookingOverlapsAnother": "Der Platz ist in einem Teil dieser Zeit bereits gebucht.",
   "reverseChargeTitle": "Reverse-Charge für EU-Unternehmen",
   "@reverseChargeTitle": {
     "description": "#895 reverse charge: reverseChargeTitle"

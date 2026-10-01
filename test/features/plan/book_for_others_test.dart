@@ -12,7 +12,8 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import 'plan_screen_test.dart' show seatCenter;
+import 'plan_screen_test.dart'
+    show chooseCheckInNow, seatCenter;
 
 const ana = Member(
   id: 'member-2',
@@ -95,6 +96,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
 
     await tester.tap(find.widgetWithText(FilledButton, 'Check in'));
     await tester.pumpAndSettle();

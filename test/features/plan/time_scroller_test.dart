@@ -11,7 +11,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/test_clock.dart';
 
-import 'plan_screen_test.dart' show foreignReservation, pumpPlan, seatCenter;
+import 'plan_screen_test.dart'
+    show chooseCheckInNow, foreignReservation, pumpPlan, seatCenter;
 
 /// Taps the header time chip [chipKey] ('reserve-from-chip'/'reserve-to-chip'),
 /// switches the Material time picker to keyboard input mode (the reliable
@@ -105,6 +106,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
     expect(find.textContaining('Starts now'), findsOneWidget);
   });
 
@@ -114,8 +116,9 @@ void main() {
 
     await pickChipTime(tester, 'reserve-to-chip', hour: '23', minute: '45');
 
-    // Browse mode entered: the Now button (now an icon) is tappable again …
-    final nowButton = tester.widget<IconButton>(
+    // Browse mode entered: the Now button (#2016: a named button) is
+    // tappable again …
+    final nowButton = tester.widget<TextButton>(
       find.byKey(const ValueKey('reserve-now-button')),
     );
     expect(nowButton.onPressed, isNotNull);

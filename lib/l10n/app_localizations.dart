@@ -20928,6 +20928,24 @@ abstract class AppLocalizations {
   /// **'Not bookable as chosen'**
   String get bookingGateBlocked;
 
+  /// #2016 Reserve time choice: reserveBackToNow
+  ///
+  /// In en, this message translates to:
+  /// **'Back to now'**
+  String get reserveBackToNow;
+
+  /// #2016 Reserve time choice: bookingModeCheckInNow
+  ///
+  /// In en, this message translates to:
+  /// **'Check in now'**
+  String get bookingModeCheckInNow;
+
+  /// #2016 Reserve time choice: bookingOverlapsAnother
+  ///
+  /// In en, this message translates to:
+  /// **'The seat is already booked during part of this time.'**
+  String get bookingOverlapsAnother;
+
   /// #895 reverse charge: reverseChargeTitle
   ///
   /// In en, this message translates to:
