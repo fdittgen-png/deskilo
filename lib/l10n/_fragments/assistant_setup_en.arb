@@ -1,0 +1,208 @@
+{
+  "@@locale": "en",
+  "assistantSetupTitle": "Assistant setup",
+  "@assistantSetupTitle": {
+    "description": "#1827 Assistant setup: assistantSetupTitle"
+  },
+  "assistantSetupIntro": "What assistants need to work in this workspace, in order. Each step says who takes it.",
+  "@assistantSetupIntro": {
+    "description": "#1827 Assistant setup: assistantSetupIntro"
+  },
+  "assistantSetupNoWorkspace": "Select a workspace first.",
+  "@assistantSetupNoWorkspace": {
+    "description": "#1827 Assistant setup: assistantSetupNoWorkspace"
+  },
+  "assistantSetupAllDone": "Everything is set up for this workspace.",
+  "@assistantSetupAllDone": {
+    "description": "#1827 Assistant setup: assistantSetupAllDone"
+  },
+  "assistantSetupSaved": "Saved.",
+  "@assistantSetupSaved": {
+    "description": "#1827 Assistant setup: assistantSetupSaved"
+  },
+  "assistantSetupStale": "Someone changed the offer meanwhile. Review it and try again.",
+  "@assistantSetupStale": {
+    "description": "#1827 Assistant setup: assistantSetupStale"
+  },
+  "assistantSetupFailed": "Could not save. Nothing changed; try again.",
+  "@assistantSetupFailed": {
+    "description": "#1827 Assistant setup: assistantSetupFailed"
+  },
+  "assistantSetupLinkIdentity": "Link my identity",
+  "@assistantSetupLinkIdentity": {
+    "description": "#1827 Assistant setup: assistantSetupLinkIdentity"
+  },
+  "assistantSetupTurnOn": "Turn on",
+  "@assistantSetupTurnOn": {
+    "description": "#1827 Assistant setup: assistantSetupTurnOn"
+  },
+  "assistantSetupRecommended": "Use the recommended set",
+  "@assistantSetupRecommended": {
+    "description": "#1827 Assistant setup: assistantSetupRecommended"
+  },
+  "assistantSetupCustomise": "Customise",
+  "@assistantSetupCustomise": {
+    "description": "#1827 Assistant setup: assistantSetupCustomise"
+  },
+  "assistantSetupRequest": "Ask for access",
+  "@assistantSetupRequest": {
+    "description": "#1827 Assistant setup: assistantSetupRequest"
+  },
+  "assistantSetupReview": "Review requests",
+  "@assistantSetupReview": {
+    "description": "#1827 Assistant setup: assistantSetupReview"
+  },
+  "assistantSetupNoConnector": "This app runs without a server, so there is no connector URL.",
+  "@assistantSetupNoConnector": {
+    "description": "#1827 Assistant setup: assistantSetupNoConnector"
+  },
+  "assistantSetupCopyUrl": "Copy connector URL",
+  "@assistantSetupCopyUrl": {
+    "description": "#1827 Assistant setup: assistantSetupCopyUrl"
+  },
+  "assistantSetupCopied": "Connector URL copied.",
+  "@assistantSetupCopied": {
+    "description": "#1827 Assistant setup: assistantSetupCopied"
+  },
+  "assistantSetupConnectHowTo": "1. In your assistant, add a custom connector with this URL.\n2. Sign in with your DesKilo account when asked.\n3. Approve this workspace and the operations you allow.",
+  "@assistantSetupConnectHowTo": {
+    "description": "#1827 Assistant setup: assistantSetupConnectHowTo"
+  },
+  "assistantSetupPreviewTitle": "Recommended set",
+  "@assistantSetupPreviewTitle": {
+    "description": "#1827 Assistant setup: assistantSetupPreviewTitle"
+  },
+  "assistantSetupPreviewNone": "No change: the workspace already offers exactly this set.",
+  "@assistantSetupPreviewNone": {
+    "description": "#1827 Assistant setup: assistantSetupPreviewNone"
+  },
+  "assistantSetupPreviewAdds": "Added",
+  "@assistantSetupPreviewAdds": {
+    "description": "#1827 Assistant setup: assistantSetupPreviewAdds"
+  },
+  "assistantSetupPreviewRemoves": "Removed",
+  "@assistantSetupPreviewRemoves": {
+    "description": "#1827 Assistant setup: assistantSetupPreviewRemoves"
+  },
+  "assistantSetupPreviewOwn": "Assistants see only each member's own records.",
+  "@assistantSetupPreviewOwn": {
+    "description": "#1827 Assistant setup: assistantSetupPreviewOwn"
+  },
+  "assistantSetupPreviewNote": "Only a member's own records and the availability reads. Assistants already connected get new operations only after each person approves again.",
+  "@assistantSetupPreviewNote": {
+    "description": "#1827 Assistant setup: assistantSetupPreviewNote"
+  },
+  "assistantSetupApply": "Apply",
+  "@assistantSetupApply": {
+    "description": "#1827 Assistant setup: assistantSetupApply"
+  },
+  "assistantSetupStepIdentity": "Link your identity",
+  "@assistantSetupStepIdentity": {
+    "description": "#1827 Assistant setup: assistantSetupStepIdentity"
+  },
+  "assistantSetupStepWorkspace": "Turn assistants on for this workspace",
+  "@assistantSetupStepWorkspace": {
+    "description": "#1827 Assistant setup: assistantSetupStepWorkspace"
+  },
+  "assistantSetupStepPolicy": "Choose what assistants may do",
+  "@assistantSetupStepPolicy": {
+    "description": "#1827 Assistant setup: assistantSetupStepPolicy"
+  },
+  "assistantSetupStepEligibility": "Ask for your assistant access",
+  "@assistantSetupStepEligibility": {
+    "description": "#1827 Assistant setup: assistantSetupStepEligibility"
+  },
+  "assistantSetupStepInstallation": "Assistants switched on for this database",
+  "@assistantSetupStepInstallation": {
+    "description": "#1827 Assistant setup: assistantSetupStepInstallation"
+  },
+  "assistantSetupStepConnect": "Connect your assistant",
+  "@assistantSetupStepConnect": {
+    "description": "#1827 Assistant setup: assistantSetupStepConnect"
+  },
+  "assistantSetupReasonIdentity": "An assistant acts as you, so this database must know it is you.",
+  "@assistantSetupReasonIdentity": {
+    "description": "#1827 Assistant setup: assistantSetupReasonIdentity"
+  },
+  "assistantSetupReasonWorkspace": "While it is off, the workspace refuses every assistant call.",
+  "@assistantSetupReasonWorkspace": {
+    "description": "#1827 Assistant setup: assistantSetupReasonWorkspace"
+  },
+  "assistantSetupReasonPolicy": "Nothing is offered to assistants until someone chooses the operations.",
+  "@assistantSetupReasonPolicy": {
+    "description": "#1827 Assistant setup: assistantSetupReasonPolicy"
+  },
+  "assistantSetupReasonEligibility": "This database's administrators approve each person once, for every workspace on it.",
+  "@assistantSetupReasonEligibility": {
+    "description": "#1827 Assistant setup: assistantSetupReasonEligibility"
+  },
+  "assistantSetupReasonInstallation": "The instance owner or a delegate switches assistants on for every workspace on this database.",
+  "@assistantSetupReasonInstallation": {
+    "description": "#1827 Assistant setup: assistantSetupReasonInstallation"
+  },
+  "assistantSetupReasonConnect": "Add the connector in your assistant, sign in, and approve this workspace.",
+  "@assistantSetupReasonConnect": {
+    "description": "#1827 Assistant setup: assistantSetupReasonConnect"
+  },
+  "assistantSetupStateDone": "Done",
+  "@assistantSetupStateDone": {
+    "description": "#1827 Assistant setup: assistantSetupStateDone"
+  },
+  "assistantSetupStateTodo": "To do",
+  "@assistantSetupStateTodo": {
+    "description": "#1827 Assistant setup: assistantSetupStateTodo"
+  },
+  "assistantSetupStateWaiting": "Waiting",
+  "@assistantSetupStateWaiting": {
+    "description": "#1827 Assistant setup: assistantSetupStateWaiting"
+  },
+  "assistantSetupStateBlocked": "After the steps above",
+  "@assistantSetupStateBlocked": {
+    "description": "#1827 Assistant setup: assistantSetupStateBlocked"
+  },
+  "assistantSetupStateUnavailable": "Could not be asked",
+  "@assistantSetupStateUnavailable": {
+    "description": "#1827 Assistant setup: assistantSetupStateUnavailable"
+  },
+  "assistantSetupActorYou": "Who: you",
+  "@assistantSetupActorYou": {
+    "description": "#1827 Assistant setup: assistantSetupActorYou"
+  },
+  "assistantSetupActorConfigurer": "Who: someone who manages this workspace's configuration",
+  "@assistantSetupActorConfigurer": {
+    "description": "#1827 Assistant setup: assistantSetupActorConfigurer"
+  },
+  "assistantSetupActorIntegrations": "Who: someone who manages this workspace's integrations",
+  "@assistantSetupActorIntegrations": {
+    "description": "#1827 Assistant setup: assistantSetupActorIntegrations"
+  },
+  "assistantSetupActorDatabaseAdministrator": "Who: a database administrator",
+  "@assistantSetupActorDatabaseAdministrator": {
+    "description": "#1827 Assistant setup: assistantSetupActorDatabaseAdministrator"
+  },
+  "assistantSetupActorInstanceOperator": "Who: the instance owner or a delegate",
+  "@assistantSetupActorInstanceOperator": {
+    "description": "#1827 Assistant setup: assistantSetupActorInstanceOperator"
+  },
+  "assistantSetupNextTodo": "Next: {step}.",
+  "@assistantSetupNextTodo": {
+    "description": "#1827 Assistant setup: assistantSetupNextTodo",
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "assistantSetupNextWaiting": "Next: {step}. {actor}.",
+  "@assistantSetupNextWaiting": {
+    "description": "#1827 Assistant setup: assistantSetupNextWaiting",
+    "placeholders": {
+      "step": {
+        "type": "String"
+      },
+      "actor": {
+        "type": "String"
+      }
+    }
+  }
+}

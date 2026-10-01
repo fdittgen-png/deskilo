@@ -260,6 +260,175 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceExportBundle => 'Year archive (zip)';
 
   @override
+  String get assistantSetupTitle => 'Assistant setup';
+
+  @override
+  String get assistantSetupIntro =>
+      'What assistants need to work in this workspace, in order. Each step says who takes it.';
+
+  @override
+  String get assistantSetupNoWorkspace => 'Select a workspace first.';
+
+  @override
+  String get assistantSetupAllDone =>
+      'Everything is set up for this workspace.';
+
+  @override
+  String get assistantSetupSaved => 'Saved.';
+
+  @override
+  String get assistantSetupStale =>
+      'Someone changed the offer meanwhile. Review it and try again.';
+
+  @override
+  String get assistantSetupFailed =>
+      'Could not save. Nothing changed; try again.';
+
+  @override
+  String get assistantSetupLinkIdentity => 'Link my identity';
+
+  @override
+  String get assistantSetupTurnOn => 'Turn on';
+
+  @override
+  String get assistantSetupRecommended => 'Use the recommended set';
+
+  @override
+  String get assistantSetupCustomise => 'Customise';
+
+  @override
+  String get assistantSetupRequest => 'Ask for access';
+
+  @override
+  String get assistantSetupReview => 'Review requests';
+
+  @override
+  String get assistantSetupNoConnector =>
+      'This app runs without a server, so there is no connector URL.';
+
+  @override
+  String get assistantSetupCopyUrl => 'Copy connector URL';
+
+  @override
+  String get assistantSetupCopied => 'Connector URL copied.';
+
+  @override
+  String get assistantSetupConnectHowTo =>
+      '1. In your assistant, add a custom connector with this URL.\n2. Sign in with your DesKilo account when asked.\n3. Approve this workspace and the operations you allow.';
+
+  @override
+  String get assistantSetupPreviewTitle => 'Recommended set';
+
+  @override
+  String get assistantSetupPreviewNone =>
+      'No change: the workspace already offers exactly this set.';
+
+  @override
+  String get assistantSetupPreviewAdds => 'Added';
+
+  @override
+  String get assistantSetupPreviewRemoves => 'Removed';
+
+  @override
+  String get assistantSetupPreviewOwn =>
+      'Assistants see only each member\'s own records.';
+
+  @override
+  String get assistantSetupPreviewNote =>
+      'Only a member\'s own records and the availability reads. Assistants already connected get new operations only after each person approves again.';
+
+  @override
+  String get assistantSetupApply => 'Apply';
+
+  @override
+  String get assistantSetupStepIdentity => 'Link your identity';
+
+  @override
+  String get assistantSetupStepWorkspace =>
+      'Turn assistants on for this workspace';
+
+  @override
+  String get assistantSetupStepPolicy => 'Choose what assistants may do';
+
+  @override
+  String get assistantSetupStepEligibility => 'Ask for your assistant access';
+
+  @override
+  String get assistantSetupStepInstallation =>
+      'Assistants switched on for this database';
+
+  @override
+  String get assistantSetupStepConnect => 'Connect your assistant';
+
+  @override
+  String get assistantSetupReasonIdentity =>
+      'An assistant acts as you, so this database must know it is you.';
+
+  @override
+  String get assistantSetupReasonWorkspace =>
+      'While it is off, the workspace refuses every assistant call.';
+
+  @override
+  String get assistantSetupReasonPolicy =>
+      'Nothing is offered to assistants until someone chooses the operations.';
+
+  @override
+  String get assistantSetupReasonEligibility =>
+      'This database\'s administrators approve each person once, for every workspace on it.';
+
+  @override
+  String get assistantSetupReasonInstallation =>
+      'The instance owner or a delegate switches assistants on for every workspace on this database.';
+
+  @override
+  String get assistantSetupReasonConnect =>
+      'Add the connector in your assistant, sign in, and approve this workspace.';
+
+  @override
+  String get assistantSetupStateDone => 'Done';
+
+  @override
+  String get assistantSetupStateTodo => 'To do';
+
+  @override
+  String get assistantSetupStateWaiting => 'Waiting';
+
+  @override
+  String get assistantSetupStateBlocked => 'After the steps above';
+
+  @override
+  String get assistantSetupStateUnavailable => 'Could not be asked';
+
+  @override
+  String get assistantSetupActorYou => 'Who: you';
+
+  @override
+  String get assistantSetupActorConfigurer =>
+      'Who: someone who manages this workspace\'s configuration';
+
+  @override
+  String get assistantSetupActorIntegrations =>
+      'Who: someone who manages this workspace\'s integrations';
+
+  @override
+  String get assistantSetupActorDatabaseAdministrator =>
+      'Who: a database administrator';
+
+  @override
+  String get assistantSetupActorInstanceOperator =>
+      'Who: the instance owner or a delegate';
+
+  @override
+  String assistantSetupNextTodo(String step) {
+    return 'Next: $step.';
+  }
+
+  @override
+  String assistantSetupNextWaiting(String step, String actor) {
+    return 'Next: $step. $actor.';
+  }
+
+  @override
   String get legalIdentityAssociationRegime =>
       'A non-profit association with no trading activity is not subject to VAT: choose \"Outside the scope of VAT\", not \"Exempt\". The exempt scheme requires a VAT number you do not have, and the e-invoice would be rejected. Outside the scope, your registration number identifies the association.';
 

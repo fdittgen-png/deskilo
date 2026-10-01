@@ -7,8 +7,11 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 
+import '../mcp/mcp_endpoint.dart';
 import 'mcp_auth_checks.dart';
 import 'mcp_readiness.dart';
+
+export '../mcp/mcp_endpoint.dart' show mcpEndpointSlug;
 
 /// What the collector measured on ONE target. Built from the target's own
 /// answers; there is deliberately no field a caller could set to "passed".
@@ -98,8 +101,6 @@ class McpReleaseExpectation {
   /// The canonical MCP resource; defaults to the project's function URL.
   final Uri? expectedResource;
 }
-
-const mcpEndpointSlug = 'deskilo-mcp';
 
 /// The routines whose contract lines readiness compares.
 bool isMcpContractRoutine(String line) => RegExp(
