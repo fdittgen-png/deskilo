@@ -168,6 +168,25 @@ else
   fail "a seat and its whole office were both booked for the same hours ($both rows). #1908"
 fi
 
+# #1908 — one member, two seats, the same hours, two connections: the
+# member lock makes the one-place rule see the first booking.
+SEAT2=00000000-0000-4000-8000-00000000c00b
+psql_q "insert into public.seats (id, workspace_id, desk_id, x, y) values ('$SEAT2', '$WS', '00000000-0000-4000-8000-00000000c007', 2, 1)" >/dev/null \
+  || fail "the second seat would not build"
+SPAN3="date_trunc('day', now()) + interval '3 days 9 hours', date_trunc('day', now()) + interval '3 days 12 hours'"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 \
+  -c "begin; insert into public.reservations (workspace_id, member_id, seat_id, starts_at, ends_at) values ('$WS', '$RIVAL', '$SEAT', $SPAN3); select pg_sleep(3); commit;" >/dev/null 2>&1 &
+first=$!
+sleep 1
+second=$(psql "$DB_URL" -qX -c "insert into public.reservations (workspace_id, member_id, seat_id, starts_at, ends_at) values ('$WS', '$RIVAL', '$SEAT2', $SPAN3)" 2>&1 || true)
+wait "$first" || fail "the first booking did not commit"
+mine=$(psql_q "select count(*) from public.reservations where member_id = '$RIVAL' and starts_at = date_trunc('day', now()) + interval '3 days 9 hours'")
+if [ "$mine" = "1" ]; then
+  say "one member, two seats at once: one booking ($(echo "$second" | grep -o 'ERROR:.*' | head -1))"
+else
+  fail "one member holds $mine places for the same hours — the one-place rule raced. #1908"
+fi
+
 # Tidy up, so a second run on the same database fails on the property
 # rather than on a primary key.
 #

@@ -19,6 +19,10 @@
 --   * holding the locks, it re-checks for an overlapping active booking
 --     anywhere on the chain, with a fresh snapshot, and refuses (23P01).
 -- Same-resource overlaps stay with the exclusion constraints.
+--
+-- It also takes an exclusive lock per MEMBER first, so one person's two
+-- concurrent bookings are counted against each other by the existing
+-- one-place / simultaneous-limit triggers instead of both passing.
 
 create or replace function public.reservation_hierarchy_guard()
 returns trigger language plpgsql volatile security definer set search_path = public as $fn$
@@ -28,6 +32,12 @@ declare
   v_level uuid;
 begin
   if new.status not in ('reserved', 'checked_in') then return new; end if;
+
+  -- One member's bookings run one at a time: the one-place and
+  -- simultaneous-limit triggers (reservations_one_place, AFTER-insert
+  -- enforce_reservation_limit) then count the member's other commands.
+  -- This trigger sorts before reservations_one_place.
+  perform pg_advisory_xact_lock(hashtextextended('resv-member:' || new.member_id, 1908));
 
   v_desk := coalesce(new.desk_id, (select s.desk_id from public.seats s where s.id = new.seat_id));
   v_office := coalesce(new.office_id, (select d.office_id from public.desks d where d.id = v_desk));
