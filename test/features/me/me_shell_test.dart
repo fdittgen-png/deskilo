@@ -90,6 +90,7 @@ void main() {
     ('me-servers', '/connections'),
     ('me-help', '/help'),
     ('settings-linked-accounts', '/linked-accounts'),
+    ('me-workspaces', '/profiles'), // #1846
   ]) {
     testWidgets('the Me tab opens $path', (tester) async {
       final router = await pumpMeApp(tester);
@@ -106,5 +107,28 @@ void main() {
     await tapIn(tester, 'me-account-list', find.byKey(const ValueKey('me-sign-out')));
     expect(auth.currentUserId, isNull);
     expect(router.state.uri.path, '/auth');
+  });
+
+  testWidgets('#1846 — Me groups its rows: profile, account, workspaces, '
+      'connected installations, in that order', (tester) async {
+    final router = await pumpMeApp(tester);
+    await goTo(tester, router, '/me?tab=me');
+    final tops = <double>[];
+    for (final title in [
+      'My profile',
+      'My account',
+      'My workspaces',
+      'Connected installations',
+    ]) {
+      final header = find.text(title).first;
+      await tester.scrollUntilVisible(header, 200,
+          scrollable: find.descendant(
+              of: find.byKey(const ValueKey('me-account-list')),
+              matching: find.byType(Scrollable)));
+      await tester.pumpAndSettle();
+      tops.add(tester.getTopLeft(header).dy);
+    }
+    // Each header was reached scrolling DOWN: the order is the list's.
+    expect(tops, hasLength(4));
   });
 }

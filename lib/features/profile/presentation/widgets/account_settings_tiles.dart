@@ -173,14 +173,27 @@ Widget _themeTile(BuildContext context, WidgetRef ref,
 /// Me › Me: the account's own rows. Rows that need a space (personal
 /// information with its space's questions, formats) appear once there is
 /// one; a space's feature that is off keeps its row off, as in Settings.
-List<Widget> accountSettingsTiles(BuildContext context, WidgetRef ref) {
+/// #1846 — the groups of Me: who others see (profile), what is private to
+/// the account, and the installations it is connected to. (My workspaces
+/// is its own door.)
+enum AccountTileGroup { profile, account, installations }
+
+List<Widget> accountSettingsTiles(
+  BuildContext context,
+  WidgetRef ref, {
+  AccountTileGroup? only,
+}) {
   final l10n = AppLocalizations.of(context);
+  bool show(AccountTileGroup g) => only == null || only == g;
+  final profile = show(AccountTileGroup.profile);
+  final account = show(AccountTileGroup.account);
+  final installations = show(AccountTileGroup.installations);
   final myProfile = ref.watch(myProfileProvider).value;
   final features = ref.watch(enabledFeaturesSyncProvider);
   final inSpace = ref.watch(currentWorkspaceProvider).value != null;
   return [
     // Profile photo (0038): shown on my directory row and detail sheet.
-    if (myProfile != null)
+    if (profile && myProfile != null)
       ListTile(
         key: const ValueKey('settings-photo'),
         leading: MemberAvatar(
@@ -199,7 +212,7 @@ List<Widget> accountSettingsTiles(BuildContext context, WidgetRef ref) {
       ),
     // #886 — the structured identity: name, postal block, contacts. The
     // legacy free-text address dialog stays while the flag is off.
-    if (inSpace && features.contains(WorkspaceFeature.personalInfo))
+    if (account && inSpace && features.contains(WorkspaceFeature.personalInfo))
       ListTile(
         key: const ValueKey('settings-personal-info'),
         leading: const Icon(Icons.contact_mail_outlined),
@@ -216,7 +229,7 @@ List<Widget> accountSettingsTiles(BuildContext context, WidgetRef ref) {
         ),
         onTap: () => context.push('/settings/personal-info'),
       )
-    else
+    else if (account)
       // Postal address (0060): printed on the member's invoices.
       ListTile(
         key: const ValueKey('settings-address'),
@@ -240,7 +253,7 @@ List<Widget> accountSettingsTiles(BuildContext context, WidgetRef ref) {
       ),
     // Opt-in WhatsApp number on my profile (#223), shared with members of
     // my workspaces. Rides the whatsappIntegration feature.
-    if (features.contains(WorkspaceFeature.whatsappIntegration))
+    if (profile && features.contains(WorkspaceFeature.whatsappIntegration))
       ListTile(
         leading: const Icon(Icons.chat_outlined),
         title: HelpDotTitle(
@@ -259,25 +272,25 @@ List<Widget> accountSettingsTiles(BuildContext context, WidgetRef ref) {
         ),
       ),
     // In-app language (#147) and theme (#160) overrides: the defaults.
-    _languageTile(context, ref, defaultsOnly: true),
-    _themeTile(context, ref, defaultsOnly: true),
+    if (account) _languageTile(context, ref, defaultsOnly: true),
+    if (account) _themeTile(context, ref, defaultsOnly: true),
     // #711 — Region & formats, behind the regionalFormats feature.
-    if (inSpace && features.contains(WorkspaceFeature.regionalFormats))
+    if (account && inSpace && features.contains(WorkspaceFeature.regionalFormats))
       const RegionalFormatsSection(),
     // Linked accounts (0051): Google/Microsoft/Apple/Facebook sign-in.
-    ListTile(
+    if (account) ListTile(
       key: const ValueKey('settings-linked-accounts'),
       leading: const Icon(Icons.link),
       title: Text(l10n?.linkedAccountsTitle ?? 'Linked accounts'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => context.push('/linked-accounts'),
     ),
-    const McpSettingsTiles(),
+    if (installations) const McpSettingsTiles(),
     // #1829 — who answers for this installation, for everyone.
-    const InstanceOwnerTile(),
+    if (installations) const InstanceOwnerTile(),
     // #969 — how the app navigates: the classic bar or the menu. Never on
     // the web, which has the menu and only the menu.
-    if (!ref.watch(platformIsWebProvider) &&
+    if (account && !ref.watch(platformIsWebProvider) &&
         features.contains(WorkspaceFeature.navigationStyle))
       ListTile(
         key: const ValueKey('settings-navigation'),
@@ -301,7 +314,7 @@ List<Widget> accountSettingsTiles(BuildContext context, WidgetRef ref) {
       ),
     // #606 — bring every dismissed contextual hint back. Rides the same
     // flag as the hints themselves: no hints, no row.
-    if (features.contains(WorkspaceFeature.formHelpHints))
+    if (account && features.contains(WorkspaceFeature.formHelpHints))
       ListTile(
         key: const ValueKey('settings-restore-hints'),
         leading: const Icon(Icons.lightbulb_outline),

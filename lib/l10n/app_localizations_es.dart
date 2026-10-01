@@ -8226,6 +8226,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpUsagePending => 'Pendientes de validación';
 
   @override
+  String get meGroupProfile => 'Mi perfil';
+
+  @override
+  String get meGroupWorkspaces => 'Mis espacios de trabajo';
+
+  @override
+  String get meGroupInstallations => 'Instalaciones conectadas';
+
+  @override
   String get meTabHome => 'Inicio';
 
   @override

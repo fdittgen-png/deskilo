@@ -8164,6 +8164,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpUsagePending => 'Awaiting validation';
 
   @override
+  String get meGroupProfile => 'My profile';
+
+  @override
+  String get meGroupWorkspaces => 'My workspaces';
+
+  @override
+  String get meGroupInstallations => 'Connected installations';
+
+  @override
   String get meTabHome => 'Home';
 
   @override

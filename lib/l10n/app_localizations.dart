@@ -14131,6 +14131,24 @@ abstract class AppLocalizations {
   /// **'Awaiting validation'**
   String get mcpUsagePending;
 
+  /// #1846 Me groups: meGroupProfile
+  ///
+  /// In en, this message translates to:
+  /// **'My profile'**
+  String get meGroupProfile;
+
+  /// #1846 Me groups: meGroupWorkspaces
+  ///
+  /// In en, this message translates to:
+  /// **'My workspaces'**
+  String get meGroupWorkspaces;
+
+  /// #1846 Me groups: meGroupInstallations
+  ///
+  /// In en, this message translates to:
+  /// **'Connected installations'**
+  String get meGroupInstallations;
+
   /// Me layer bottom tab: the person's home with their spaces.
   ///
   /// In en, this message translates to:

@@ -8242,6 +8242,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpUsagePending => 'Warten auf Freigabe';
 
   @override
+  String get meGroupProfile => 'Mein Profil';
+
+  @override
+  String get meGroupWorkspaces => 'Meine Arbeitsbereiche';
+
+  @override
+  String get meGroupInstallations => 'Verbundene Installationen';
+
+  @override
   String get meTabHome => 'Start';
 
   @override

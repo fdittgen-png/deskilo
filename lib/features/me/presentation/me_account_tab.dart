@@ -32,17 +32,28 @@ class MeAccountTab extends ConsumerWidget {
       body: ListView(
         key: const ValueKey('me-account-list'),
         children: [
-          SettingsSectionHeader(l10n?.settingsSectionAccount ?? 'My account'),
-          ...accountSettingsTiles(context, ref),
+          // #1846 — four groups: who others see, what is private to the
+          // account, the spaces it belongs to, the installations it uses.
+          SettingsSectionHeader(l10n?.meGroupProfile ?? 'My profile'),
+          ...accountSettingsTiles(context, ref, only: AccountTileGroup.profile),
           const VisibilityCard(),
-          SettingsSectionHeader(l10n?.meSectionMine ?? 'My history and data'),
+          SettingsSectionHeader(l10n?.settingsSectionAccount ?? 'My account'),
+          ...accountSettingsTiles(context, ref, only: AccountTileGroup.account),
           door('me-activity', Icons.receipt_long_outlined,
               l10n?.accountActivityTitle ?? 'My consumption and payments',
               '/account-activity'),
           door('me-privacy', Icons.shield_outlined,
               l10n?.privacyTitle ?? 'Privacy & data', '/privacy'),
+          SettingsSectionHeader(l10n?.meGroupWorkspaces ?? 'My workspaces'),
+          door('me-workspaces', Icons.workspaces_outline,
+              l10n?.meGroupWorkspaces ?? 'My workspaces', '/profiles'),
+          SettingsSectionHeader(
+              l10n?.meGroupInstallations ?? 'Connected installations'),
           door('me-servers', Icons.dns_outlined,
               l10n?.meWhereSpacesLive ?? 'Where my spaces live', '/connections'),
+          ...accountSettingsTiles(context, ref,
+              only: AccountTileGroup.installations),
+          const Divider(),
           door('me-help', Icons.help_outline, l10n?.helpTitle ?? 'Help', '/help'),
           const Divider(),
           ListTile(
