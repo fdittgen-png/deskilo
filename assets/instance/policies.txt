@@ -14,6 +14,7 @@ public.accessories.accessories_select
 public.accessories.accessories_write
 public.accessories.mcp_delegated_deny
 public.account_about.mcp_delegated_deny
+public.account_badge_pins.mcp_delegated_deny
 public.account_contact_settings.mcp_delegated_deny
 public.account_conversations.mcp_delegated_deny
 public.account_field_audience.mcp_delegated_deny
@@ -62,6 +63,8 @@ public.identity_bindings.mcp_delegated_deny
 public.identity_federation_clients.mcp_delegated_deny
 public.installation_identity.identity_public_installation
 public.installation_identity.mcp_delegated_deny
+public.instance_delegates.mcp_delegated_deny
+public.instance_owner_claims.mcp_delegated_deny
 public.invitations.invitations_select
 public.invitations.mcp_delegated_deny
 public.invoice_match_payments.invoice_match_payments_select

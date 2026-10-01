@@ -273,6 +273,8 @@ List<Widget> accountSettingsTiles(BuildContext context, WidgetRef ref) {
       onTap: () => context.push('/linked-accounts'),
     ),
     const McpSettingsTiles(),
+    // #1829 — who answers for this installation, for everyone.
+    const InstanceOwnerTile(),
     // #969 — how the app navigates: the classic bar or the menu. Never on
     // the web, which has the menu and only the menu.
     if (!ref.watch(platformIsWebProvider) &&

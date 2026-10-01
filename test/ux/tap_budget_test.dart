@@ -225,6 +225,8 @@ void main() {
     final tile = find.text('Availability');
     await tester.scrollUntilVisible(tile, 200,
         scrollable: find.byType(Scrollable).first);
+    await tester.ensureVisible(tile);
+    await tester.pumpAndSettle();
     await taps.on(tester, tile);
     final before = List.of(workspace.openWeekdays['ws-1'] ?? const <int>[]);
     await taps.on(tester, find.text('Sat'));

@@ -122,9 +122,16 @@ class FakeProfileRepository implements ProfileRepository {
   /// ever requested).
   final List<List<String>> requestedIds = [];
 
+  /// The workspace each [requestedIds] entry was asked for (#1833).
+  final List<String> requestedWorkspaces = [];
+
   @override
-  Future<List<Profile>> fetchProfiles(List<String> userIds) async {
+  Future<List<Profile>> fetchProfiles(
+    String workspaceId,
+    List<String> userIds,
+  ) async {
     requestedIds.add(List.of(userIds));
+    requestedWorkspaces.add(workspaceId);
     return profiles.where((p) => userIds.contains(p.id)).toList();
   }
 

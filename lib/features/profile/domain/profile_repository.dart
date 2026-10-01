@@ -11,9 +11,16 @@ abstract class ProfileRepository {
   /// My own profile row, or null when signed out.
   Future<Profile?> fetchMyProfile();
 
-  /// Profiles of [userIds] (auth.users ids) — the #224 directory read.
-  /// RLS trims the result to people sharing a workspace with the caller.
-  Future<List<Profile>> fetchProfiles(List<String> userIds);
+  /// Profiles of [userIds] (auth.users ids) as members of [workspaceId]
+  /// — the #224 directory read. #1833: a purpose projection, not the
+  /// row (`member_profiles`, 0319): a space mate gets the community
+  /// fields; the identity documents print only reaches holders of
+  /// `viewPersonalData`/`issueInvoices` in that space, and the person
+  /// themselves. Ids the caller may not read are absent.
+  Future<List<Profile>> fetchProfiles(
+    String workspaceId,
+    List<String> userIds,
+  );
 
   /// Writes my WhatsApp number, already normalized by
   /// [normalizeWhatsapp]; '' clears it. Throws [StateError] signed out.

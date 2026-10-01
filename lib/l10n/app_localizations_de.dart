@@ -261,6 +261,190 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceExportBundle => 'Jahresarchiv (zip)';
 
   @override
+  String get assistantSetupTitle => 'Assistenten einrichten';
+
+  @override
+  String get assistantSetupIntro =>
+      'Was Assistenten in diesem Arbeitsbereich brauchen, der Reihe nach. Jeder Schritt sagt, wer ihn erledigt.';
+
+  @override
+  String get assistantSetupNoWorkspace =>
+      'Wählen Sie zuerst einen Arbeitsbereich.';
+
+  @override
+  String get assistantSetupAllDone =>
+      'Für diesen Arbeitsbereich ist alles eingerichtet.';
+
+  @override
+  String get assistantSetupSaved => 'Gespeichert.';
+
+  @override
+  String get assistantSetupStale =>
+      'Jemand hat das Angebot inzwischen geändert. Prüfen Sie es und versuchen Sie es erneut.';
+
+  @override
+  String get assistantSetupFailed =>
+      'Speichern fehlgeschlagen. Nichts wurde geändert; versuchen Sie es erneut.';
+
+  @override
+  String get assistantSetupLinkIdentity => 'Meine Identität verknüpfen';
+
+  @override
+  String get assistantSetupTurnOn => 'Einschalten';
+
+  @override
+  String get assistantSetupRecommended => 'Empfohlene Auswahl verwenden';
+
+  @override
+  String get assistantSetupCustomise => 'Anpassen';
+
+  @override
+  String get assistantSetupRequest => 'Zugang anfragen';
+
+  @override
+  String get assistantSetupReview => 'Anfragen prüfen';
+
+  @override
+  String get assistantSetupNoConnector =>
+      'Diese App läuft ohne Server, daher gibt es keine Connector-URL.';
+
+  @override
+  String get assistantSetupCopyUrl => 'Connector-URL kopieren';
+
+  @override
+  String get assistantSetupCopied => 'Connector-URL kopiert.';
+
+  @override
+  String get assistantSetupConnectHowTo =>
+      '1. Fügen Sie in Ihrem Assistenten einen eigenen Connector mit dieser URL hinzu.\n2. Melden Sie sich auf Nachfrage mit Ihrem DesKilo-Konto an.\n3. Geben Sie diesen Arbeitsbereich und die erlaubten Vorgänge frei.';
+
+  @override
+  String get assistantSetupPreviewTitle => 'Empfohlene Auswahl';
+
+  @override
+  String get assistantSetupPreviewNone =>
+      'Keine Änderung: Der Arbeitsbereich bietet genau diese Auswahl bereits an.';
+
+  @override
+  String get assistantSetupPreviewAdds => 'Hinzugefügt';
+
+  @override
+  String get assistantSetupPreviewRemoves => 'Entfernt';
+
+  @override
+  String get assistantSetupPreviewOwn =>
+      'Assistenten sehen nur die eigenen Daten jedes Mitglieds.';
+
+  @override
+  String get assistantSetupPreviewNote =>
+      'Nur die eigenen Daten eines Mitglieds und die Verfügbarkeitsabfragen. Bereits verbundene Assistenten erhalten neue Vorgänge erst, wenn jede Person erneut zustimmt.';
+
+  @override
+  String get assistantSetupApply => 'Übernehmen';
+
+  @override
+  String get assistantSetupStepIdentity => 'Ihre Identität verknüpfen';
+
+  @override
+  String get assistantSetupStepWorkspace =>
+      'Assistenten für diesen Arbeitsbereich einschalten';
+
+  @override
+  String get assistantSetupStepPolicy => 'Festlegen, was Assistenten dürfen';
+
+  @override
+  String get assistantSetupStepEligibility =>
+      'Ihren Assistentenzugang anfragen';
+
+  @override
+  String get assistantSetupStepInstallation =>
+      'Assistenten für diese Datenbank eingeschaltet';
+
+  @override
+  String get assistantSetupStepConnect => 'Ihren Assistenten verbinden';
+
+  @override
+  String get assistantSetupReasonIdentity =>
+      'Ein Assistent handelt in Ihrem Namen, daher muss diese Datenbank wissen, dass Sie es sind.';
+
+  @override
+  String get assistantSetupReasonWorkspace =>
+      'Solange es aus ist, lehnt der Arbeitsbereich jeden Assistentenaufruf ab.';
+
+  @override
+  String get assistantSetupReasonPolicy =>
+      'Assistenten wird nichts angeboten, bis jemand die Vorgänge auswählt.';
+
+  @override
+  String get assistantSetupReasonEligibility =>
+      'Die Administratoren dieser Datenbank geben jede Person einmal frei, für alle Arbeitsbereiche darauf.';
+
+  @override
+  String get assistantSetupReasonInstallation =>
+      'Der Instanzinhaber oder eine Vertretung schaltet Assistenten für alle Arbeitsbereiche dieser Datenbank ein.';
+
+  @override
+  String get assistantSetupReasonConnect =>
+      'Fügen Sie den Connector in Ihrem Assistenten hinzu, melden Sie sich an und geben Sie diesen Arbeitsbereich frei.';
+
+  @override
+  String get assistantSetupStateDone => 'Erledigt';
+
+  @override
+  String get assistantSetupStateTodo => 'Offen';
+
+  @override
+  String get assistantSetupStateWaiting => 'Wartet';
+
+  @override
+  String get assistantSetupStateBlocked => 'Nach den Schritten oben';
+
+  @override
+  String get assistantSetupStateUnavailable => 'Konnte nicht abgefragt werden';
+
+  @override
+  String get assistantSetupActorYou => 'Wer: Sie';
+
+  @override
+  String get assistantSetupActorConfigurer =>
+      'Wer: jemand, der die Konfiguration dieses Arbeitsbereichs verwaltet';
+
+  @override
+  String get assistantSetupActorIntegrations =>
+      'Wer: jemand, der die Integrationen dieses Arbeitsbereichs verwaltet';
+
+  @override
+  String get assistantSetupActorDatabaseAdministrator =>
+      'Wer: ein Datenbankadministrator';
+
+  @override
+  String get assistantSetupActorInstanceOperator =>
+      'Wer: der Instanzinhaber oder eine Vertretung';
+
+  @override
+  String assistantSetupNextTodo(String step) {
+    return 'Nächster Schritt: $step.';
+  }
+
+  @override
+  String assistantSetupNextWaiting(String step, String actor) {
+    return 'Nächster Schritt: $step. $actor.';
+  }
+
+  @override
+  String get assistantSetupInstanceYou =>
+      'Sie sind für diese Datenbank verantwortlich: Schalten Sie Assistenten über die Instanzwerkzeuge ein.';
+
+  @override
+  String get assistantSetupInstanceNobody =>
+      'Für diese Datenbank ist noch niemand verantwortlich.';
+
+  @override
+  String assistantSetupInstanceNames(String names) {
+    return 'Verantwortlich für diese Datenbank: $names.';
+  }
+
+  @override
   String get legalIdentityAssociationRegime =>
       'Ein gemeinnütziger Verein ohne wirtschaftliche Tätigkeit unterliegt nicht der Umsatzsteuer: Wählen Sie „Nicht steuerbar“, nicht „Steuerbefreit“. Die Befreiung verlangt eine USt-IdNr., die Sie nicht haben, und die E-Rechnung würde abgelehnt. Nicht steuerbar identifiziert Ihre Registernummer den Verein.';
 
@@ -4294,6 +4478,109 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get helpTopicReadiness => 'Bereitschaftsprüfung';
+
+  @override
+  String get instanceOwnerClaimIntro =>
+      'Wem gehört diese Instanz? Geben Sie die E-Mail-Adresse ein, mit der Sie sich dort registrieren werden. Nachdem Sie diese Adresse bestätigt haben, beanspruchen Sie die Inhaberschaft unter Einstellungen → Instanzeigentümer.';
+
+  @override
+  String get instanceOwnerClaimLabel => 'E-Mail des Inhabers';
+
+  @override
+  String get instanceOwnerTitle => 'Instanzeigentümer';
+
+  @override
+  String get instanceOwnerHelp =>
+      'Diese Installation wird von allen ihren Arbeitsbereichen gemeinsam genutzt. Der Instanzeigentümer ist dafür verantwortlich: Wenden Sie sich an ihn bei allem, was die ganze Installation betrifft, etwa Assistenten.';
+
+  @override
+  String get instanceOwnerNone =>
+      'Es ist noch kein Instanzeigentümer festgelegt.';
+
+  @override
+  String get instanceOwnerCopyEmail => 'E-Mail-Adresse kopieren';
+
+  @override
+  String get instanceOwnerCopied => 'E-Mail-Adresse kopiert.';
+
+  @override
+  String get instanceYouAreOwner => 'Sie sind der Instanzeigentümer.';
+
+  @override
+  String get instanceYouAreDelegate =>
+      'Sie sind Stellvertreter des Instanzeigentümers.';
+
+  @override
+  String get instanceDelegatesTitle => 'Stellvertreter';
+
+  @override
+  String get instanceDelegatesNone => 'Keine Stellvertreter.';
+
+  @override
+  String get instanceDelegatesHelp =>
+      'Ein Stellvertreter kann die installationsweite Einrichtung der Assistenten durchführen. Er kann nicht weiter delegieren und sieht keinen anderen Arbeitsbereich.';
+
+  @override
+  String get instanceDelegateFieldLabel => 'E-Mail-Adresse eines Kontos';
+
+  @override
+  String get instanceDelegateAdd => 'Rolle delegieren';
+
+  @override
+  String get instanceDelegateWithdraw => 'Delegation entziehen';
+
+  @override
+  String get instanceDelegateWithdrawTitle => 'Diese Delegation entziehen?';
+
+  @override
+  String get instanceDelegateWithdrawBody =>
+      'Die Person verliert sofort den Zugriff auf die installationsweite Einrichtung.';
+
+  @override
+  String get instanceDelegateWithdrawConfirm => 'Entziehen';
+
+  @override
+  String get instanceDelegated => 'Delegiert.';
+
+  @override
+  String get instanceDelegateUnchanged =>
+      'Diese Person ist bereits Stellvertreter.';
+
+  @override
+  String get instanceDelegateNoAccount =>
+      'Kein Konto verwendet diese E-Mail-Adresse.';
+
+  @override
+  String get instanceDelegateUnconfirmed =>
+      'Dieses Konto hat seine E-Mail-Adresse noch nicht bestätigt.';
+
+  @override
+  String get instanceDelegateAlreadyOwner =>
+      'Der Eigentümer braucht keine Delegation.';
+
+  @override
+  String get instanceDelegateUnavailable =>
+      'Dieser Server kann noch nicht delegieren.';
+
+  @override
+  String get instanceDelegationWithdrawn => 'Delegation entzogen.';
+
+  @override
+  String get instanceClaimTitle => 'Eigentum übernehmen';
+
+  @override
+  String get instanceClaimBody =>
+      'Sie haben diese Instanz erstellt und es ist kein Eigentümer festgelegt. Mit der Übernahme sind Sie dafür verantwortlich.';
+
+  @override
+  String get instanceClaimButton => 'Eigentum übernehmen';
+
+  @override
+  String get instanceClaimDone => 'Sie sind jetzt der Instanzeigentümer.';
+
+  @override
+  String get instanceClaimFailed =>
+      'Das Eigentum konnte nicht übernommen werden.';
 
   @override
   String get featureInstanceWizard => 'Instanz-Assistent';

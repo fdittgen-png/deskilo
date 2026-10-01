@@ -35,6 +35,7 @@ import '../../../../core/country/country_catalog.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../mcp/presentation/widgets/mcp_settings_tiles.dart';
+import '../../../workspace/presentation/widgets/instance_owner_tile.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../workspace/presentation/country_names.dart';
 import '../../domain/personal_preferences.dart';

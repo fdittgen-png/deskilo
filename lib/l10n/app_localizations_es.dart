@@ -262,6 +262,190 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceExportBundle => 'Archivo del ejercicio (zip)';
 
   @override
+  String get assistantSetupTitle => 'Configuración de asistentes';
+
+  @override
+  String get assistantSetupIntro =>
+      'Lo que los asistentes necesitan en este espacio de trabajo, en orden. Cada paso indica quién lo realiza.';
+
+  @override
+  String get assistantSetupNoWorkspace =>
+      'Elija primero un espacio de trabajo.';
+
+  @override
+  String get assistantSetupAllDone =>
+      'Todo está configurado para este espacio de trabajo.';
+
+  @override
+  String get assistantSetupSaved => 'Guardado.';
+
+  @override
+  String get assistantSetupStale =>
+      'Alguien cambió la oferta mientras tanto. Revísela e inténtelo de nuevo.';
+
+  @override
+  String get assistantSetupFailed =>
+      'No se pudo guardar. No cambió nada; inténtelo de nuevo.';
+
+  @override
+  String get assistantSetupLinkIdentity => 'Vincular mi identidad';
+
+  @override
+  String get assistantSetupTurnOn => 'Activar';
+
+  @override
+  String get assistantSetupRecommended => 'Usar la selección recomendada';
+
+  @override
+  String get assistantSetupCustomise => 'Personalizar';
+
+  @override
+  String get assistantSetupRequest => 'Solicitar acceso';
+
+  @override
+  String get assistantSetupReview => 'Revisar solicitudes';
+
+  @override
+  String get assistantSetupNoConnector =>
+      'Esta app funciona sin servidor, así que no hay URL de conector.';
+
+  @override
+  String get assistantSetupCopyUrl => 'Copiar la URL del conector';
+
+  @override
+  String get assistantSetupCopied => 'URL del conector copiada.';
+
+  @override
+  String get assistantSetupConnectHowTo =>
+      '1. En su asistente, añada un conector personalizado con esta URL.\n2. Inicie sesión con su cuenta de DesKilo cuando se le pida.\n3. Apruebe este espacio de trabajo y las operaciones que permite.';
+
+  @override
+  String get assistantSetupPreviewTitle => 'Selección recomendada';
+
+  @override
+  String get assistantSetupPreviewNone =>
+      'Sin cambios: el espacio de trabajo ya ofrece exactamente esta selección.';
+
+  @override
+  String get assistantSetupPreviewAdds => 'Añadidas';
+
+  @override
+  String get assistantSetupPreviewRemoves => 'Retiradas';
+
+  @override
+  String get assistantSetupPreviewOwn =>
+      'Los asistentes solo ven los datos propios de cada miembro.';
+
+  @override
+  String get assistantSetupPreviewNote =>
+      'Solo los datos propios de un miembro y las consultas de disponibilidad. Los asistentes ya conectados reciben operaciones nuevas solo cuando cada persona vuelve a aprobar.';
+
+  @override
+  String get assistantSetupApply => 'Aplicar';
+
+  @override
+  String get assistantSetupStepIdentity => 'Vincule su identidad';
+
+  @override
+  String get assistantSetupStepWorkspace =>
+      'Activar asistentes en este espacio de trabajo';
+
+  @override
+  String get assistantSetupStepPolicy =>
+      'Elegir qué pueden hacer los asistentes';
+
+  @override
+  String get assistantSetupStepEligibility => 'Solicite su acceso a asistentes';
+
+  @override
+  String get assistantSetupStepInstallation =>
+      'Asistentes activados en esta base de datos';
+
+  @override
+  String get assistantSetupStepConnect => 'Conecte su asistente';
+
+  @override
+  String get assistantSetupReasonIdentity =>
+      'Un asistente actúa en su nombre, así que esta base de datos debe saber que es usted.';
+
+  @override
+  String get assistantSetupReasonWorkspace =>
+      'Mientras esté desactivado, el espacio de trabajo rechaza toda llamada de asistente.';
+
+  @override
+  String get assistantSetupReasonPolicy =>
+      'No se ofrece nada a los asistentes hasta que alguien elija las operaciones.';
+
+  @override
+  String get assistantSetupReasonEligibility =>
+      'Los administradores de esta base de datos aprueban a cada persona una vez, para todos sus espacios de trabajo.';
+
+  @override
+  String get assistantSetupReasonInstallation =>
+      'El propietario de la instancia o un delegado activa los asistentes para todos los espacios de trabajo de esta base de datos.';
+
+  @override
+  String get assistantSetupReasonConnect =>
+      'Añada el conector en su asistente, inicie sesión y apruebe este espacio de trabajo.';
+
+  @override
+  String get assistantSetupStateDone => 'Hecho';
+
+  @override
+  String get assistantSetupStateTodo => 'Pendiente';
+
+  @override
+  String get assistantSetupStateWaiting => 'En espera';
+
+  @override
+  String get assistantSetupStateBlocked => 'Después de los pasos anteriores';
+
+  @override
+  String get assistantSetupStateUnavailable => 'No se pudo consultar';
+
+  @override
+  String get assistantSetupActorYou => 'Quién: usted';
+
+  @override
+  String get assistantSetupActorConfigurer =>
+      'Quién: alguien que gestiona la configuración de este espacio de trabajo';
+
+  @override
+  String get assistantSetupActorIntegrations =>
+      'Quién: alguien que gestiona las integraciones de este espacio de trabajo';
+
+  @override
+  String get assistantSetupActorDatabaseAdministrator =>
+      'Quién: un administrador de la base de datos';
+
+  @override
+  String get assistantSetupActorInstanceOperator =>
+      'Quién: el propietario de la instancia o un delegado';
+
+  @override
+  String assistantSetupNextTodo(String step) {
+    return 'Siguiente: $step.';
+  }
+
+  @override
+  String assistantSetupNextWaiting(String step, String actor) {
+    return 'Siguiente: $step. $actor.';
+  }
+
+  @override
+  String get assistantSetupInstanceYou =>
+      'Usted responde de esta base de datos: active los asistentes desde las herramientas de la instancia.';
+
+  @override
+  String get assistantSetupInstanceNobody =>
+      'Nadie responde todavía de esta base de datos.';
+
+  @override
+  String assistantSetupInstanceNames(String names) {
+    return 'Responden de esta base de datos: $names.';
+  }
+
+  @override
   String get legalIdentityAssociationRegime =>
       'Una asociación sin actividad lucrativa no está sujeta al IVA: elija «Fuera del ámbito del IVA», no «Exento». El régimen de exención exige un número de IVA que no tiene, y la factura electrónica sería rechazada. Fuera del ámbito, su número de registro identifica a la asociación.';
 
@@ -4295,6 +4479,106 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helpTopicReadiness => 'admisibilidad';
+
+  @override
+  String get instanceOwnerClaimIntro =>
+      '¿A quién pertenece esta instancia? Introduzca el correo electrónico con el que se registrará en ella. Tras confirmar esa dirección, reclame la titularidad en Ajustes → Propietario de la instancia.';
+
+  @override
+  String get instanceOwnerClaimLabel => 'Correo del titular';
+
+  @override
+  String get instanceOwnerTitle => 'Propietario de la instancia';
+
+  @override
+  String get instanceOwnerHelp =>
+      'Esta instalación la comparten todos sus espacios. El propietario de la instancia responde de ella: contáctelo para todo lo que afecte a toda la instalación, como los asistentes.';
+
+  @override
+  String get instanceOwnerNone => 'Todavía no hay propietario de la instancia.';
+
+  @override
+  String get instanceOwnerCopyEmail => 'Copiar la dirección de correo';
+
+  @override
+  String get instanceOwnerCopied => 'Dirección de correo copiada.';
+
+  @override
+  String get instanceYouAreOwner => 'Usted es el propietario de la instancia.';
+
+  @override
+  String get instanceYouAreDelegate =>
+      'Usted es delegado del propietario de la instancia.';
+
+  @override
+  String get instanceDelegatesTitle => 'Delegados';
+
+  @override
+  String get instanceDelegatesNone => 'Sin delegados.';
+
+  @override
+  String get instanceDelegatesHelp =>
+      'Un delegado puede realizar la configuración de los asistentes para toda la instalación. No puede delegar a su vez ni ve ningún otro espacio.';
+
+  @override
+  String get instanceDelegateFieldLabel => 'Correo electrónico de una cuenta';
+
+  @override
+  String get instanceDelegateAdd => 'Delegar el rol';
+
+  @override
+  String get instanceDelegateWithdraw => 'Retirar la delegación';
+
+  @override
+  String get instanceDelegateWithdrawTitle => '¿Retirar esta delegación?';
+
+  @override
+  String get instanceDelegateWithdrawBody =>
+      'Esta persona pierde de inmediato el acceso a la configuración de la instalación.';
+
+  @override
+  String get instanceDelegateWithdrawConfirm => 'Retirar';
+
+  @override
+  String get instanceDelegated => 'Rol delegado.';
+
+  @override
+  String get instanceDelegateUnchanged => 'Esta persona ya es delegada.';
+
+  @override
+  String get instanceDelegateNoAccount =>
+      'Ninguna cuenta usa esta dirección de correo.';
+
+  @override
+  String get instanceDelegateUnconfirmed =>
+      'Esta cuenta aún no ha confirmado su correo electrónico.';
+
+  @override
+  String get instanceDelegateAlreadyOwner =>
+      'El propietario no necesita una delegación.';
+
+  @override
+  String get instanceDelegateUnavailable =>
+      'Este servidor aún no permite delegar.';
+
+  @override
+  String get instanceDelegationWithdrawn => 'Delegación retirada.';
+
+  @override
+  String get instanceClaimTitle => 'Asumir la propiedad';
+
+  @override
+  String get instanceClaimBody =>
+      'Usted creó esta instancia y no hay propietario definido. Al asumir la propiedad, usted responde de ella.';
+
+  @override
+  String get instanceClaimButton => 'Asumir la propiedad';
+
+  @override
+  String get instanceClaimDone => 'Ahora es el propietario de la instancia.';
+
+  @override
+  String get instanceClaimFailed => 'No se pudo asumir la propiedad.';
 
   @override
   String get featureInstanceWizard => 'Asistente de instancia';

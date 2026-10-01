@@ -50,6 +50,7 @@ import '../features/mcp/presentation/mcp_confirmation_screen.dart';
 import 'oauth_consent_route.dart';
 import '../features/mcp/presentation/assistants_screen.dart';
 import '../features/mcp/presentation/eligibility_review_screen.dart';
+import '../features/mcp/presentation/assistant_setup_screen.dart';
 import '../features/mcp/presentation/mcp_policy_screen.dart';
 import '../features/profile/presentation/screens/new_instance_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
@@ -495,13 +496,20 @@ GoRouter router(Ref ref) {
         path: '/database/assistant-approvals',
         builder: (context, state) => const EligibilityReviewScreen(),
       ),
-      // #1626 — what this workspace exposes: its owner only. Not behind
-      // mcpAccess, so an owner can always narrow or switch it off.
+      // #1626/#1826 — what this workspace exposes: whoever holds
+      // manageIntegrations (owners always; the matrix delegates it). Not
+      // behind mcpAccess, so it can always be narrowed or switched off.
       GoRoute(
         path: '/settings/assistants',
-        redirect: (context, state) =>
-            (ref.read(myMemberProvider).value?.actsAsOwner ?? false) ? null : '/messages',
+        redirect: needs(WorkspacePermission.manageIntegrations),
         builder: (context, state) => const McpPolicyScreen(),
+      ),
+      // #1827 — the guided setup, for the same people. Not behind mcpAccess:
+      // turning it on is one of its steps.
+      GoRoute(
+        path: '/settings/assistant-setup',
+        redirect: needs(WorkspacePermission.manageIntegrations),
+        builder: (context, state) => const AssistantSetupScreen(),
       ),
       // #1648 — the protected client purpose selects identity or MCP consent.
       // Every consent call requires the app's native session.

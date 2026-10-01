@@ -273,4 +273,43 @@ void main() {
           contains('version 3, current'));
     });
   });
+
+  group('#1829 — the owner claim', () {
+    test('an address is stored as the database check stores it', () {
+      expect(normaliseOwnerEmail('  Owner@Example.ORG '), 'owner@example.org');
+      expect(normaliseOwnerEmail(''), isNull);
+      expect(normaliseOwnerEmail('owner'), isNull);
+      expect(normaliseOwnerEmail('owner@host'), isNull);
+      expect(normaliseOwnerEmail('a b@example.org'), isNull);
+    });
+
+    test('records the claim through the operator function, quoted', () async {
+      final api = FakeSupabaseManagement();
+      await InstanceBuilder(api).recordOwnerClaim('ref1', "O'Brien@Example.org");
+      expect(api.sql['ref1'], [
+        "select public.operator_record_instance_owner_claim('o''brien@example.org');",
+      ]);
+    });
+
+    test('an invalid address sends nothing', () async {
+      final api = FakeSupabaseManagement();
+      await expectLater(
+        InstanceBuilder(api).recordOwnerClaim('ref1', 'nope'),
+        throwsA(isA<InstanceStepFailure>()
+            .having((e) => e.item, 'item', 'owner')),
+      );
+      expect(api.sql['ref1'], isNull);
+    });
+
+    test('a database refusal is a typed step failure', () async {
+      final api = FakeSupabaseManagement()
+        ..failSqlContaining = 'owner_claim'
+        ..failMessage = 'function does not exist';
+      await expectLater(
+        InstanceBuilder(api).recordOwnerClaim('ref1', 'owner@example.org'),
+        throwsA(isA<InstanceStepFailure>()
+            .having((e) => e.message, 'message', 'function does not exist')),
+      );
+    });
+  });
 }
