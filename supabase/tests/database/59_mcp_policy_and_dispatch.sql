@@ -67,7 +67,7 @@ select c.id, w, array['get_capabilities','create_reservation','request_reservati
 
 select pg_temp.act_as('00000000-0000-4000-8000-0000000161a2');
 select throws_ok(format($$select public.save_mcp_policy(%L, 1, gen_random_uuid(), false, array[]::text[], 'own')$$,
-  current_setting('t.a')), 'P0001', 'only the owner configures MCP exposure', 'a member cannot configure');
+  current_setting('t.a')), 'P0001', 'only those who manage integrations configure MCP exposure', 'a member cannot configure');
 select is(public.mcp_execute_v1(current_setting('t.i')::uuid, current_setting('t.a')::uuid, 'get_capabilities', '{}', null)->'error'->>'code',
   'no_client', 'a native session is not an MCP client');
 select pg_temp.act_as('00000000-0000-4000-8000-0000000161a2', 'claude-test');
