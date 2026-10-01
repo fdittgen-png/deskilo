@@ -3823,6 +3823,38 @@ class AppLocalizationsIt extends AppLocalizations {
       'Richiesto, mai presunto. Attivate ciò che questo spazio fa davvero.';
 
   @override
+  String get featureMaturityUnreviewed => 'Non valutata';
+
+  @override
+  String get featureMaturityAlpha => 'Alfa';
+
+  @override
+  String get featureMaturityBeta => 'Beta';
+
+  @override
+  String get featureMaturityStable => 'Stabile';
+
+  @override
+  String get featureLifecycleActive => 'Attiva';
+
+  @override
+  String get featureLifecycleDeprecated => 'Deprecata';
+
+  @override
+  String get featureLifecycleRetired => 'Ritirata';
+
+  @override
+  String get featureMaturityFilterLabel => 'Maturità';
+
+  @override
+  String get featureMaturityFilterAll => 'Tutte le fasi';
+
+  @override
+  String featureMaturitySemantics(String maturity, String lifecycle) {
+    return 'Maturità $maturity, $lifecycle';
+  }
+
+  @override
   String get federationContinue => 'Continua con Deskilo';
 
   @override

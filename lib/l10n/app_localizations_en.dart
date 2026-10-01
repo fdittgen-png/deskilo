@@ -3790,6 +3790,38 @@ class AppLocalizationsEn extends AppLocalizations {
       'Asked for, never assumed. Switch on what this space actually runs.';
 
   @override
+  String get featureMaturityUnreviewed => 'Unreviewed';
+
+  @override
+  String get featureMaturityAlpha => 'Alpha';
+
+  @override
+  String get featureMaturityBeta => 'Beta';
+
+  @override
+  String get featureMaturityStable => 'Stable';
+
+  @override
+  String get featureLifecycleActive => 'Active';
+
+  @override
+  String get featureLifecycleDeprecated => 'Deprecated';
+
+  @override
+  String get featureLifecycleRetired => 'Retired';
+
+  @override
+  String get featureMaturityFilterLabel => 'Maturity';
+
+  @override
+  String get featureMaturityFilterAll => 'All stages';
+
+  @override
+  String featureMaturitySemantics(String maturity, String lifecycle) {
+    return 'Maturity $maturity, $lifecycle';
+  }
+
+  @override
   String get federationContinue => 'Continue with Deskilo';
 
   @override

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/feature_lifecycle.dart';
 import '../../domain/workspace_feature.dart';
 import '../feature_copy.dart';
 import '../feature_names.dart';
@@ -31,6 +32,7 @@ class FeatureCapabilityList extends StatelessWidget {
     required this.raw,
     required this.showHint,
     required this.onChanged,
+    this.assessments = featureAssessments,
   });
 
   /// The rows that survived the screen's filter, in registry order.
@@ -46,6 +48,9 @@ class FeatureCapabilityList extends StatelessWidget {
   final bool showHint;
 
   final void Function(WorkspaceFeature feature, bool value) onChanged;
+
+  /// #1850 — the maturity ledger the badges read.
+  final Map<WorkspaceFeature, FeatureAssessment> assessments;
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +93,8 @@ class FeatureCapabilityList extends StatelessWidget {
     final requires = entry.requires;
     return FeatureTile(
       entry: entry,
+      assessment:
+          featureAssessmentOf(entry.feature, assessments: assessments),
       name: featureName(l10n, entry.feature),
       description: featureDescription(l10n, entry.feature),
       requiresLabel: requires == null

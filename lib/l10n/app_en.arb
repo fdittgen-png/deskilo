@@ -4338,6 +4338,54 @@
   "featureTierCoreDesc": "What every space needs. On from the first day.",
   "featureTierPlatform": "Platform",
   "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs.",
+  "featureMaturityUnreviewed": "Unreviewed",
+  "@featureMaturityUnreviewed": {
+    "description": "#1850 maturity badge: nobody has assessed this feature against evidence yet"
+  },
+  "featureMaturityAlpha": "Alpha",
+  "@featureMaturityAlpha": {
+    "description": "#1850 maturity badge: alpha"
+  },
+  "featureMaturityBeta": "Beta",
+  "@featureMaturityBeta": {
+    "description": "#1850 maturity badge: beta"
+  },
+  "featureMaturityStable": "Stable",
+  "@featureMaturityStable": {
+    "description": "#1850 maturity badge: stable (assessed against evidence)"
+  },
+  "featureLifecycleActive": "Active",
+  "@featureLifecycleActive": {
+    "description": "#1850 lifecycle: active"
+  },
+  "featureLifecycleDeprecated": "Deprecated",
+  "@featureLifecycleDeprecated": {
+    "description": "#1850 lifecycle badge: still served, being replaced"
+  },
+  "featureLifecycleRetired": "Retired",
+  "@featureLifecycleRetired": {
+    "description": "#1850 lifecycle: retired, key kept"
+  },
+  "featureMaturityFilterLabel": "Maturity",
+  "@featureMaturityFilterLabel": {
+    "description": "#1850 maturity filter on the Features screen"
+  },
+  "featureMaturityFilterAll": "All stages",
+  "@featureMaturityFilterAll": {
+    "description": "#1850 maturity filter: no filter"
+  },
+  "featureMaturitySemantics": "Maturity {maturity}, {lifecycle}",
+  "@featureMaturitySemantics": {
+    "description": "#1850 screen-reader label of a feature's maturity badge",
+    "placeholders": {
+      "maturity": {
+        "type": "String"
+      },
+      "lifecycle": {
+        "type": "String"
+      }
+    }
+  },
   "federationContinue": "Continue with Deskilo",
   "@federationContinue": {
     "description": "#1648 The one explicit button that starts Sign in with Deskilo in the system browser. Deskilo is the brand; do not translate it."
