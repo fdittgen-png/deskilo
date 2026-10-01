@@ -3811,6 +3811,38 @@ class AppLocalizationsDe extends AppLocalizations {
       'Angefragt, nie vorausgesetzt. Schalten Sie ein, was dieser Raum wirklich betreibt.';
 
   @override
+  String get featureMaturityUnreviewed => 'Nicht bewertet';
+
+  @override
+  String get featureMaturityAlpha => 'Alpha';
+
+  @override
+  String get featureMaturityBeta => 'Beta';
+
+  @override
+  String get featureMaturityStable => 'Stabil';
+
+  @override
+  String get featureLifecycleActive => 'Aktiv';
+
+  @override
+  String get featureLifecycleDeprecated => 'Veraltet';
+
+  @override
+  String get featureLifecycleRetired => 'Eingestellt';
+
+  @override
+  String get featureMaturityFilterLabel => 'Reife';
+
+  @override
+  String get featureMaturityFilterAll => 'Alle Stufen';
+
+  @override
+  String featureMaturitySemantics(String maturity, String lifecycle) {
+    return 'Reife $maturity, $lifecycle';
+  }
+
+  @override
   String get federationContinue => 'Weiter mit Deskilo';
 
   @override

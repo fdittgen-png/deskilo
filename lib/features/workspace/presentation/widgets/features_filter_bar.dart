@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import 'feature_maturity_badge.dart';
 
 /// The Features screen's filter line (#1190).
 ///
@@ -23,6 +24,8 @@ class FeaturesFilterBar extends StatelessWidget {
     required this.changedOnly,
     required this.onChangedOnly,
     required this.changedCount,
+    this.maturity = FeatureMaturityFilter.all,
+    this.onMaturity,
   });
 
   final TextEditingController controller;
@@ -34,6 +37,10 @@ class FeaturesFilterBar extends StatelessWidget {
 
   /// How many there are, so the chip says whether it is worth tapping.
   final int changedCount;
+
+  /// #1850 — the maturity/lifecycle filter; hidden without a callback.
+  final FeatureMaturityFilter maturity;
+  final ValueChanged<FeatureMaturityFilter>? onMaturity;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +87,11 @@ class FeaturesFilterBar extends StatelessWidget {
             selected: changedOnly,
             onSelected: onChangedOnly,
           ),
+          if (onMaturity != null) ...[
+            const SizedBox(width: AppSpacing.sm),
+            FeatureMaturityFilterButton(
+                value: maturity, onChanged: onMaturity!),
+          ],
         ],
       ),
     );

@@ -6,8 +6,10 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/feature_lifecycle.dart';
 import '../../domain/workspace_feature.dart';
 import '../feature_surface_labels.dart';
+import 'feature_maturity_badge.dart';
 
 /// #1221 — the heading of one part of the app: what it is called, what
 /// that part of the app is for, and what it looks like on the bar.
@@ -75,6 +77,7 @@ class FeatureTile extends StatelessWidget {
     required this.inactive,
     required this.alsoEnables,
     required this.onChanged,
+    this.assessment,
   });
 
   final FeatureManifestEntry entry;
@@ -90,6 +93,9 @@ class FeatureTile extends StatelessWidget {
   /// What turning this on would switch on as well, already named.
   final List<String> alsoEnables;
   final ValueChanged<bool> onChanged;
+
+  /// #1850 — the row's maturity and lifecycle; the registry's when null.
+  final FeatureAssessment? assessment;
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +143,10 @@ class FeatureTile extends StatelessWidget {
               const SizedBox(width: AppSpacing.xs),
               _TierChip(tier: entry.tier),
             ],
+            const SizedBox(width: AppSpacing.xs),
+            FeatureMaturityBadge(
+              assessment: assessment ?? featureAssessmentOf(entry.feature),
+            ),
           ],
         ),
         subtitle: Column(

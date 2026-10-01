@@ -3809,6 +3809,38 @@ class AppLocalizationsEs extends AppLocalizations {
       'Pedido, nunca supuesto. Active lo que este espacio realmente hace.';
 
   @override
+  String get featureMaturityUnreviewed => 'Sin evaluar';
+
+  @override
+  String get featureMaturityAlpha => 'Alfa';
+
+  @override
+  String get featureMaturityBeta => 'Beta';
+
+  @override
+  String get featureMaturityStable => 'Estable';
+
+  @override
+  String get featureLifecycleActive => 'Activa';
+
+  @override
+  String get featureLifecycleDeprecated => 'Obsoleta';
+
+  @override
+  String get featureLifecycleRetired => 'Retirada';
+
+  @override
+  String get featureMaturityFilterLabel => 'Madurez';
+
+  @override
+  String get featureMaturityFilterAll => 'Todas las etapas';
+
+  @override
+  String featureMaturitySemantics(String maturity, String lifecycle) {
+    return 'Madurez $maturity, $lifecycle';
+  }
+
+  @override
   String get federationContinue => 'Continuar con Deskilo';
 
   @override

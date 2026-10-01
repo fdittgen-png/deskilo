@@ -3817,6 +3817,38 @@ class AppLocalizationsFr extends AppLocalizations {
       'Demandé, jamais supposé. Activez ce que cet espace fait vraiment.';
 
   @override
+  String get featureMaturityUnreviewed => 'Non évaluée';
+
+  @override
+  String get featureMaturityAlpha => 'Alpha';
+
+  @override
+  String get featureMaturityBeta => 'Bêta';
+
+  @override
+  String get featureMaturityStable => 'Stable';
+
+  @override
+  String get featureLifecycleActive => 'Active';
+
+  @override
+  String get featureLifecycleDeprecated => 'Dépréciée';
+
+  @override
+  String get featureLifecycleRetired => 'Retirée';
+
+  @override
+  String get featureMaturityFilterLabel => 'Maturité';
+
+  @override
+  String get featureMaturityFilterAll => 'Tous les stades';
+
+  @override
+  String featureMaturitySemantics(String maturity, String lifecycle) {
+    return 'Maturité $maturity, $lifecycle';
+  }
+
+  @override
   String get federationContinue => 'Continuer avec Deskilo';
 
   @override

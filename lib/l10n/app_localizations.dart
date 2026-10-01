@@ -6595,6 +6595,66 @@ abstract class AppLocalizations {
   /// **'Asked for, never assumed. Switch on what this space actually runs.'**
   String get featureTierPlatformDesc;
 
+  /// #1850 maturity badge: nobody has assessed this feature against evidence yet
+  ///
+  /// In en, this message translates to:
+  /// **'Unreviewed'**
+  String get featureMaturityUnreviewed;
+
+  /// #1850 maturity badge: alpha
+  ///
+  /// In en, this message translates to:
+  /// **'Alpha'**
+  String get featureMaturityAlpha;
+
+  /// #1850 maturity badge: beta
+  ///
+  /// In en, this message translates to:
+  /// **'Beta'**
+  String get featureMaturityBeta;
+
+  /// #1850 maturity badge: stable (assessed against evidence)
+  ///
+  /// In en, this message translates to:
+  /// **'Stable'**
+  String get featureMaturityStable;
+
+  /// #1850 lifecycle: active
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get featureLifecycleActive;
+
+  /// #1850 lifecycle badge: still served, being replaced
+  ///
+  /// In en, this message translates to:
+  /// **'Deprecated'**
+  String get featureLifecycleDeprecated;
+
+  /// #1850 lifecycle: retired, key kept
+  ///
+  /// In en, this message translates to:
+  /// **'Retired'**
+  String get featureLifecycleRetired;
+
+  /// #1850 maturity filter on the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Maturity'**
+  String get featureMaturityFilterLabel;
+
+  /// #1850 maturity filter: no filter
+  ///
+  /// In en, this message translates to:
+  /// **'All stages'**
+  String get featureMaturityFilterAll;
+
+  /// #1850 screen-reader label of a feature's maturity badge
+  ///
+  /// In en, this message translates to:
+  /// **'Maturity {maturity}, {lifecycle}'**
+  String featureMaturitySemantics(String maturity, String lifecycle);
+
   /// #1648 The one explicit button that starts Sign in with Deskilo in the system browser. Deskilo is the brand; do not translate it.
   ///
   /// In en, this message translates to:

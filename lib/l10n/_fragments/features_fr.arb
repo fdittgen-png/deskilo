@@ -217,5 +217,15 @@
   "featureTierCore": "Essentiel",
   "featureTierCoreDesc": "Ce dont tout espace a besoin. Actif dès le premier jour.",
   "featureTierPlatform": "Plateforme",
-  "featureTierPlatformDesc": "Demandé, jamais supposé. Activez ce que cet espace fait vraiment."
+  "featureTierPlatformDesc": "Demandé, jamais supposé. Activez ce que cet espace fait vraiment.",
+  "featureMaturityUnreviewed": "Non évaluée",
+  "featureMaturityAlpha": "Alpha",
+  "featureMaturityBeta": "Bêta",
+  "featureMaturityStable": "Stable",
+  "featureLifecycleActive": "Active",
+  "featureLifecycleDeprecated": "Dépréciée",
+  "featureLifecycleRetired": "Retirée",
+  "featureMaturityFilterLabel": "Maturité",
+  "featureMaturityFilterAll": "Tous les stades",
+  "featureMaturitySemantics": "Maturité {maturity}, {lifecycle}"
 }
