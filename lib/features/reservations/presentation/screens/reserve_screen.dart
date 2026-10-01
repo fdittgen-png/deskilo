@@ -30,6 +30,7 @@ import '../widgets/getting_started_card.dart';
 import '../widgets/reserve_canvas.dart';
 import '../widgets/reserve_view_menu.dart';
 import '../widgets/reserve_hub_layout.dart';
+import '../widgets/list_space_tap.dart';
 import '../widgets/seat_list_view.dart';
 import '../widgets/stale_availability_banner.dart';
 import '../../../plan/providers/default_level_controller.dart';
@@ -921,6 +922,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 dayOpen: dayOpen,
                   onSeatTap: (seat) =>
                       onSeatTap(plan, seat, reservations, window),
+                  onSpaceTap: listSpaceTap(context, ref,
+                      level: level, plan: plan, window: window),
                 ),
               ),
             AsyncData(value: final plan) => ReserveCanvas(

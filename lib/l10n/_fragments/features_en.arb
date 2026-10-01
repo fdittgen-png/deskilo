@@ -490,5 +490,26 @@
         "type": "String"
       }
     }
+  },
+  "featureOptInTitle": "Switch on an experimental feature?",
+  "@featureOptInTitle": {
+    "description": "#1851 consent dialog title before switching on an alpha/beta feature"
+  },
+  "featureOptInBody": "Not yet reviewed as stable: {features}. It may change and has known limits. Switch on only if this space accepts that.",
+  "@featureOptInBody": {
+    "description": "#1851 consent dialog body; features = the experimental feature names",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "featureOptInConfirm": "Switch on",
+  "@featureOptInConfirm": {
+    "description": "#1851 consent dialog confirm button"
+  },
+  "featureIntakeStoppedNote": "Off: nothing new starts; what is already open can still be answered and closed.",
+  "@featureIntakeStoppedNote": {
+    "description": "#1851 note on a switched-off feature whose existing work stays serviceable"
   }
 }

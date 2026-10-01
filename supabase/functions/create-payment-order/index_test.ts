@@ -6,7 +6,14 @@
 // webhook secret its settlement needs; a provider name must be one of
 // ours, not an inherited property such as `constructor`.
 import { assertEquals, assertRejects } from "jsr:@std/assert@1";
-import { effectiveConfig, isProvider, missingFields } from "./index.ts";
+import {
+  effectiveConfig,
+  failureOutcome,
+  idempotencyKey,
+  isProvider,
+  missingFields,
+  ProviderRefusal,
+} from "./index.ts";
 
 // deno-lint-ignore no-explicit-any
 function admin(result: { data: unknown; error: unknown }): any {
@@ -56,4 +63,17 @@ Deno.test("only our own provider names are providers", () => {
   assertEquals(isProvider("constructor"), false);
   assertEquals(isProvider("toString"), false);
   assertEquals(isProvider(42), false);
+});
+
+Deno.test("#2014 B — only a provider 4xx fails the intent; the rest is unknown", () => {
+  assertEquals(failureOutcome(new ProviderRefusal(402)), "failed");
+  assertEquals(failureOutcome(new ProviderRefusal(400)), "failed");
+  assertEquals(failureOutcome(new ProviderRefusal(503)), "unknown");
+  assertEquals(failureOutcome(new TypeError("network")), "unknown");
+  assertEquals(failureOutcome(new DOMException("timeout", "TimeoutError")), "unknown");
+});
+
+Deno.test("#2014 B — one stable idempotency key per intent", () => {
+  assertEquals(idempotencyKey("i-1"), idempotencyKey("i-1"));
+  assertEquals(idempotencyKey("i-1") === idempotencyKey("i-2"), false);
 });

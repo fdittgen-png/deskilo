@@ -316,7 +316,7 @@ void main() {
   // Both land in all five languages — nothing was broken behind the
   // hole — but a gate that only sees what somebody remembered to type
   // twice is not a gate. Reading the aggregate ARB is the idiom
-  // `l10n_completeness_test`, `legal_terms_test` and
+  // `arb_key_parity_test`, `legal_terms_test` and
   // `lexicon_allow_list_test` already use.
   test('every helpTopic in the ARB matches a heading of its language\'s '
       'guide (#763, #1393)', () {
@@ -340,7 +340,7 @@ void main() {
       final topics = topicsOf(locale);
       expect(topics.keys, unorderedEquals(en.keys),
           reason: '$locale carries a different set of helpTopic keys than '
-              'en — l10n_completeness_test should have caught this first');
+              'en — arb_key_parity_test should have caught this first');
 
       final headings = File('assets/help/$locale.md')
           .readAsLinesSync()

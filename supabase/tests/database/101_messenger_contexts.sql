@@ -75,7 +75,8 @@ select is((select m->>'read_at' from jsonb_array_elements(public.inquiry_message
 reset role;
 update public.workspaces set feature_flags = feature_flags || '{"spaceInquiries":false}' where id='00000000-0000-4000-8000-0000001824b1';
 set local role authenticated;
-select throws_ok(format('select public.send_inquiry_message(%L,%L)',current_setting('t.inquiry'),'Still there?'),'P0001','inquiries unavailable','inquiries off refuses a new message');
+-- #1851: off stops NEW inquiries; an open one stays answerable (110).
+select throws_ok($$select public.start_space_inquiry('00000000-0000-4000-8000-0000001824b1','Again?')$$,'P0001','inquiries unavailable','inquiries off refuses a new inquiry');
 reset role;
 update public.workspaces set feature_flags = feature_flags || '{"spaceInquiries":true}' where id='00000000-0000-4000-8000-0000001824b1';
 -- a4 lets anyone signed in write to them, so a5 can open a personal thread.
