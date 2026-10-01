@@ -129,6 +129,20 @@ void main() {
     );
   });
 
+  test('#1847 the public network catalogue selects its own generator; the '
+      'shared field primitives select both contracts', () {
+    expect(_commands(['contracts/public_network/operations.json']), [
+      'dart run tool/build_public_network_contract.dart',
+    ]);
+    expect(
+      _commands(['tool/contract_common/primitives.dart']),
+      containsAll([
+        'dart run tool/build_mcp_contract.dart',
+        'dart run tool/build_public_network_contract.dart',
+      ]),
+    );
+  });
+
   test('a change that owns no generated tree selects nothing', () {
     expect(_commands(['.github/workflows/quality.yml']), isEmpty);
     expect(_commands(['README.md']), isEmpty);

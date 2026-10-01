@@ -8,9 +8,12 @@ part of 'directory_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// #1847 — participant actions: register an installation, ask to join.
 
 @ProviderFor(directoryActions)
 final directoryActionsProvider = DirectoryActionsProvider._();
+
+/// #1847 — participant actions: register an installation, ask to join.
 
 final class DirectoryActionsProvider
     extends
@@ -20,6 +23,7 @@ final class DirectoryActionsProvider
           DirectoryActions
         >
     with $Provider<DirectoryActions> {
+  /// #1847 — participant actions: register an installation, ask to join.
   DirectoryActionsProvider._()
     : super(
         from: null,
@@ -53,7 +57,60 @@ final class DirectoryActionsProvider
   }
 }
 
-String _$directoryActionsHash() => r'9bda07a61740d42618618f2d6da97e8885636121';
+String _$directoryActionsHash() => r'e79574581405b2df4c652b54eed0544eef6b95da';
+
+/// #1847 — the owner's publication editor (management).
+
+@ProviderFor(publicationActions)
+final publicationActionsProvider = PublicationActionsProvider._();
+
+/// #1847 — the owner's publication editor (management).
+
+final class PublicationActionsProvider
+    extends
+        $FunctionalProvider<
+          PublicationActions,
+          PublicationActions,
+          PublicationActions
+        >
+    with $Provider<PublicationActions> {
+  /// #1847 — the owner's publication editor (management).
+  PublicationActionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'publicationActionsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$publicationActionsHash();
+
+  @$internal
+  @override
+  $ProviderElement<PublicationActions> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  PublicationActions create(Ref ref) {
+    return publicationActions(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PublicationActions value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PublicationActions>(value),
+    );
+  }
+}
+
+String _$publicationActionsHash() =>
+    r'4273ad5c009dbc580dc865b9e13dba16d964d8cc';
 
 @ProviderFor(accountContactActions)
 final accountContactActionsProvider = AccountContactActionsFamily._();
@@ -139,53 +196,160 @@ final class AccountContactActionsFamily extends $Family
   String toString() => r'accountContactActionsProvider';
 }
 
-@ProviderFor(directoryRepository)
-final directoryRepositoryProvider = DirectoryRepositoryProvider._();
+/// #1847 — anonymous discovery. Holds this installation's publishable key
+/// and no session: the provider does not even watch the auth state.
 
-final class DirectoryRepositoryProvider
+@ProviderFor(publicDiscoveryRepository)
+final publicDiscoveryRepositoryProvider = PublicDiscoveryRepositoryProvider._();
+
+/// #1847 — anonymous discovery. Holds this installation's publishable key
+/// and no session: the provider does not even watch the auth state.
+
+final class PublicDiscoveryRepositoryProvider
     extends
         $FunctionalProvider<
-          DirectoryRepository,
-          DirectoryRepository,
-          DirectoryRepository
+          PublicDiscoveryRepository,
+          PublicDiscoveryRepository,
+          PublicDiscoveryRepository
         >
-    with $Provider<DirectoryRepository> {
-  DirectoryRepositoryProvider._()
+    with $Provider<PublicDiscoveryRepository> {
+  /// #1847 — anonymous discovery. Holds this installation's publishable key
+  /// and no session: the provider does not even watch the auth state.
+  PublicDiscoveryRepositoryProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'directoryRepositoryProvider',
+        name: r'publicDiscoveryRepositoryProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$directoryRepositoryHash();
+  String debugGetCreateSourceHash() => _$publicDiscoveryRepositoryHash();
 
   @$internal
   @override
-  $ProviderElement<DirectoryRepository> $createElement(
+  $ProviderElement<PublicDiscoveryRepository> $createElement(
     $ProviderPointer pointer,
   ) => $ProviderElement(pointer);
 
   @override
-  DirectoryRepository create(Ref ref) {
-    return directoryRepository(ref);
+  PublicDiscoveryRepository create(Ref ref) {
+    return publicDiscoveryRepository(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(DirectoryRepository value) {
+  Override overrideWithValue(PublicDiscoveryRepository value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<DirectoryRepository>(value),
+      providerOverride: $SyncValueProvider<PublicDiscoveryRepository>(value),
     );
   }
 }
 
-String _$directoryRepositoryHash() =>
-    r'4625428f569dcb16149861272e4c9e7caf965e7f';
+String _$publicDiscoveryRepositoryHash() =>
+    r'993959af6b8807ac467d7ad6009b7c9303f3b337';
+
+@ProviderFor(publicationRepository)
+final publicationRepositoryProvider = PublicationRepositoryProvider._();
+
+final class PublicationRepositoryProvider
+    extends
+        $FunctionalProvider<
+          PublicationRepository,
+          PublicationRepository,
+          PublicationRepository
+        >
+    with $Provider<PublicationRepository> {
+  PublicationRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'publicationRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$publicationRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<PublicationRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  PublicationRepository create(Ref ref) {
+    return publicationRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PublicationRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PublicationRepository>(value),
+    );
+  }
+}
+
+String _$publicationRepositoryHash() =>
+    r'544003e77f1ecde0cd234d4818a7df087ae5a6d1';
+
+@ProviderFor(directoryParticipantRepository)
+final directoryParticipantRepositoryProvider =
+    DirectoryParticipantRepositoryProvider._();
+
+final class DirectoryParticipantRepositoryProvider
+    extends
+        $FunctionalProvider<
+          DirectoryParticipantRepository,
+          DirectoryParticipantRepository,
+          DirectoryParticipantRepository
+        >
+    with $Provider<DirectoryParticipantRepository> {
+  DirectoryParticipantRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'directoryParticipantRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$directoryParticipantRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<DirectoryParticipantRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  DirectoryParticipantRepository create(Ref ref) {
+    return directoryParticipantRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DirectoryParticipantRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DirectoryParticipantRepository>(
+        value,
+      ),
+    );
+  }
+}
+
+String _$directoryParticipantRepositoryHash() =>
+    r'129fe8e606a89d509a8c287e942607dd1e5695eb';
 
 @ProviderFor(publicDirectory)
 final publicDirectoryProvider = PublicDirectoryFamily._();
@@ -248,7 +412,7 @@ final class PublicDirectoryProvider
   }
 }
 
-String _$publicDirectoryHash() => r'33057e01d8da85b61577ec7d95eda22553a25a9c';
+String _$publicDirectoryHash() => r'2f554efcc0f08dbb0812a8f6743ee39064a76eaa';
 
 final class PublicDirectoryFamily extends $Family
     with
@@ -276,6 +440,100 @@ final class PublicDirectoryFamily extends $Family
 
   @override
   String toString() => r'publicDirectoryProvider';
+}
+
+/// #1847 — the card as its installation publishes it now; null once it is
+/// withdrawn. Keyed by the card's identity on its own installation.
+
+@ProviderFor(publicWorkspaceDetail)
+final publicWorkspaceDetailProvider = PublicWorkspaceDetailFamily._();
+
+/// #1847 — the card as its installation publishes it now; null once it is
+/// withdrawn. Keyed by the card's identity on its own installation.
+
+final class PublicWorkspaceDetailProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PublicWorkspace?>,
+          PublicWorkspace?,
+          FutureOr<PublicWorkspace?>
+        >
+    with $FutureModifier<PublicWorkspace?>, $FutureProvider<PublicWorkspace?> {
+  /// #1847 — the card as its installation publishes it now; null once it is
+  /// withdrawn. Keyed by the card's identity on its own installation.
+  PublicWorkspaceDetailProvider._({
+    required PublicWorkspaceDetailFamily super.from,
+    required (String, String, String) super.argument,
+  }) : super(
+         retry: null,
+         name: r'publicWorkspaceDetailProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$publicWorkspaceDetailHash();
+
+  @override
+  String toString() {
+    return r'publicWorkspaceDetailProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<PublicWorkspace?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<PublicWorkspace?> create(Ref ref) {
+    final argument = this.argument as (String, String, String);
+    return publicWorkspaceDetail(ref, argument.$1, argument.$2, argument.$3);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PublicWorkspaceDetailProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$publicWorkspaceDetailHash() =>
+    r'd4a5deff534e77a1bacdab1dabf5d310bba8733b';
+
+/// #1847 — the card as its installation publishes it now; null once it is
+/// withdrawn. Keyed by the card's identity on its own installation.
+
+final class PublicWorkspaceDetailFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<PublicWorkspace?>,
+          (String, String, String)
+        > {
+  PublicWorkspaceDetailFamily._()
+    : super(
+        retry: null,
+        name: r'publicWorkspaceDetailProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #1847 — the card as its installation publishes it now; null once it is
+  /// withdrawn. Keyed by the card's identity on its own installation.
+
+  PublicWorkspaceDetailProvider call(String source, String key, String id) =>
+      PublicWorkspaceDetailProvider._(argument: (source, key, id), from: this);
+
+  @override
+  String toString() => r'publicWorkspaceDetailProvider';
 }
 
 @ProviderFor(accountContactRepository)

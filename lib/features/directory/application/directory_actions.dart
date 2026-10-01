@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../domain/public_workspace.dart';
 
-/// Admission and publication decisions shared by the editor and public cards.
-/// Server authorization remains authoritative for every operation.
-class DirectoryActions {
-  const DirectoryActions(this.repository);
-  final DirectoryRepository repository;
+/// #1847 — the owner's publication decisions (MANAGEMENT). Server
+/// authorization remains authoritative for every operation.
+class PublicationActions {
+  const PublicationActions(this.repository);
+  final PublicationRepository repository;
   Future<Map<String, dynamic>> ownPage(String workspace) =>
       repository.ownPage(workspace);
   Future<Map<String, dynamic>> savePage(
@@ -36,7 +36,13 @@ class DirectoryActions {
     }
     return repository.savePage(workspace, normalized, published);
   }
+}
 
+/// #1847 — what a signed-in account does for itself from a public card
+/// (PARTICIPANT): register an installation, ask to join.
+class DirectoryActions {
+  const DirectoryActions(this.repository);
+  final DirectoryParticipantRepository repository;
   Future<void> register(String origin, String key) =>
       repository.register(origin.trim(), key.trim());
   Future<void> apply(PublicWorkspace workspace) {

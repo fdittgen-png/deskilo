@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/directory/domain/public_workspace.dart';
 
-class FakeDirectoryRepository implements DirectoryRepository {
+/// #1847 — one in-memory directory behind all three interfaces: what the
+/// public reads, what the owner manages and what a participant asks.
+class FakeDirectoryRepository
+    implements
+        PublicDiscoveryRepository,
+        PublicationRepository,
+        DirectoryParticipantRepository {
   final cards = <PublicWorkspace>[];
   final pages = <String, Map<String, dynamic>>{};
   final requests = <String>[];
@@ -20,6 +26,15 @@ class FakeDirectoryRepository implements DirectoryRepository {
           .take(25)
           .toList(),
     );
+  }
+
+  @override
+  Future<PublicWorkspace?> detail(PublicWorkspace card) async {
+    if (fail) throw StateError('directory unavailable');
+    if (card.source.isEmpty) return card;
+    return cards
+        .where((w) => w.id == card.id && w.source == card.source)
+        .firstOrNull;
   }
 
   @override

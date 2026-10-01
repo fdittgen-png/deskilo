@@ -99,7 +99,10 @@ import 'demo_fixture.dart';
 /// The overrides that turn a scope into the Demo environment.
 ///
 /// [fixture] is the session's data; a new one is a new session.
-List<Override> demoOverrides(DemoFixture fixture) => [
+List<Override> demoOverrides(DemoFixture fixture) {
+  // #1847 — the one in-memory directory behind its three interfaces.
+  final directory = FakeDirectoryRepository();
+  return [
       // The clock first: everything the fixture seeded is relative to it,
       // so a demo opened next year still shows a booking for today.
       clockProvider.overrideWithValue(FixedClock(fixture.seededAt)),
@@ -149,7 +152,11 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       profileRepositoryProvider.overrideWithValue(fixture.profiles),
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>[]),
-      directoryRepositoryProvider.overrideWith((ref)=>FakeDirectoryRepository()),
+      // #1847 — public discovery, publication management and participant
+      // requests: three interfaces, one in-memory directory.
+      publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
+      publicationRepositoryProvider.overrideWith((ref)=>directory),
+      directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
       meRepositoryProvider.overrideWith((ref) => FakeMeRepository()), // #1823
       accountContactRepositoryProvider.overrideWith((ref,source)=>FakeAccountContactRepository()),
       // #1824 — the messenger of every server, one in-memory one each.
@@ -226,6 +233,7 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       // demonstration's synthetic rows to the device filesystem.
       cacheStoreProvider.overrideWithValue(fixture.prefs.cache),
     ];
+}
 
 /// #1625 — Demo's fictional installation id (never a real server's).
 const kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
@@ -262,7 +270,8 @@ const Set<String> demoOverriddenProviders = {
   'workspaceApplicationRepositoryProvider',
   'accountActivityRepositoryProvider',
   'connectedInstallationsProvider', 'connectedSourcesProvider',
-  'directoryRepositoryProvider', 'accountContactRepositoryProvider',
+  'publicDiscoveryRepositoryProvider', 'publicationRepositoryProvider',
+  'directoryParticipantRepositoryProvider', 'accountContactRepositoryProvider',
   'meRepositoryProvider', // #1823
   'messengerRepositoryProvider',
   'deploymentRepositoryProvider',

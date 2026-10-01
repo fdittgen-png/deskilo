@@ -10472,6 +10472,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalNoWorkspaces => 'Nessuno spazio pubblicato trovato.';
 
   @override
+  String get portalNoLongerPublished => 'Questo spazio non è più pubblicato.';
+
+  @override
+  String get portalDirectoryIncompatible =>
+      'Alcuni spazi richiedono una versione più recente dell’app e non vengono mostrati.';
+
+  @override
   String get portalMoreDirectories => 'Altre directory';
 
   @override
