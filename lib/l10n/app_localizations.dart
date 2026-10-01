@@ -2728,6 +2728,30 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}'**
   String settlementAnnexBody(int count);
 
+  /// #2015 Bounded start-up: bootFailedTitle
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo could not start'**
+  String get bootFailedTitle;
+
+  /// #2015 Bounded start-up: bootFailedBody
+  ///
+  /// In en, this message translates to:
+  /// **'The server or this device\'s secure storage did not answer. Nothing was changed. Close the app and open it again; if it keeps happening, check the network.'**
+  String get bootFailedBody;
+
+  /// #2015 Bounded start-up: bootSlowTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Starting is taking longer than usual'**
+  String get bootSlowTitle;
+
+  /// #2015 Bounded start-up: bootSlowBody
+  ///
+  /// In en, this message translates to:
+  /// **'It keeps trying. If nothing happens, close the app and open it again.'**
+  String get bootSlowBody;
+
   /// #972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable
   ///
   /// In en, this message translates to:
@@ -12444,6 +12468,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are no longer a member of this space — ask an administrator for an invitation.'**
   String get bookingNotAMember;
+
+  /// #2010 Level reorder: levelReorderStale
+  ///
+  /// In en, this message translates to:
+  /// **'The levels changed meanwhile. Nothing was saved; the current order is shown.'**
+  String get levelReorderStale;
 
   /// No description provided for @featureWorkspaceLibraryTitle.
   ///

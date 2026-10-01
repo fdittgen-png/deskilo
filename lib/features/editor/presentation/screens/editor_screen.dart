@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../plan/domain/level.dart';
 import '../delete_confirm_text.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -125,11 +126,35 @@ class _LevelList extends ConsumerWidget {
       // `newIndex > oldIndex ? newIndex - 1 : newIndex` correction must go
       // with it: keeping both would shift every downward drag by one.
       onReorderItem: (oldIndex, newIndex) async {
-        final ids = levels.map((l) => l.id).toList();
+        final expected = levels.map((l) => l.id).toList();
+        final ids = [...expected];
         final id = ids.removeAt(oldIndex);
         ids.insert(newIndex, id);
-        await ref.read(floorPlanRepositoryProvider).reorderLevels(ids);
+        // #2010 — one atomic command; a conflict or refusal saved nothing
+        // and says so, and the list re-reads what the server holds.
+        bool? saved;
+        await runGuarded(
+          context,
+          domain: 'plan',
+          message: 'reorder levels failed',
+          action: () async {
+            saved = (await ref.read(floorPlanRepositoryProvider).reorderLevels(
+                  levels.first.workspaceId,
+                  ids,
+                  expected: expected,
+                ))
+                .isSaved;
+          },
+        );
         ref.invalidate(levelsProvider);
+        if (!context.mounted || saved == null) return;
+        if (saved == false) {
+          AppSnack.error(
+            context,
+            l10n?.levelReorderStale ??
+                'The levels changed meanwhile. Nothing was saved; the current order is shown.',
+          );
+        }
       },
       itemBuilder: (context, index) {
         final level = levels[index];

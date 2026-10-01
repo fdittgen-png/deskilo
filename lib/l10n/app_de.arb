@@ -919,6 +919,10 @@
       }
     }
   },
+  "bootFailedTitle": "DesKilo konnte nicht starten",
+  "bootFailedBody": "Der Server oder der sichere Speicher dieses Geräts hat nicht geantwortet. Nichts wurde geändert. Schließen Sie die App und öffnen Sie sie erneut; wenn das weiter passiert, prüfen Sie die Netzwerkverbindung.",
+  "bootSlowTitle": "Der Start dauert länger als üblich",
+  "bootSlowBody": "Es wird weiter versucht. Wenn nichts passiert, schließen Sie die App und öffnen Sie sie erneut.",
   "eInvoiceGapBuyerLegalIdAdvisable": "Die SIREN des Käufers fehlt. Eine französische Plattform leitet danach weiter: tragen Sie sie vor der Übermittlung im Profil des Mitglieds ein. Keine Ablehnung — die Datei ist auch ohne sie gültig.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -4382,6 +4386,7 @@
   "bookingSameDayError": "Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.",
   "bookingMembershipPaused": "Deine Mitgliedschaft ist pausiert — eine Administratorin reaktiviert sie unter Mitglieder.",
   "bookingNotAMember": "Du bist kein Mitglied dieses Raums mehr — bitte eine Administratorin um eine Einladung.",
+  "levelReorderStale": "Die Ebenen wurden inzwischen geändert. Nichts wurde gespeichert; die aktuelle Reihenfolge wird angezeigt.",
   "featureWorkspaceLibraryTitle": "Raumbibliothek",
   "featureWorkspaceLibraryDesc": "Speichern Sie den Grundriss dieses Raums und wie er arbeitet als Vorlage, wählen Sie, wer sie sehen darf, laden Sie Personen per E-Mail ein und beginnen Sie mit dem, was andere anbieten.",
   "libraryTitle": "Raumbibliothek",
