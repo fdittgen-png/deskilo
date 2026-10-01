@@ -1563,6 +1563,20 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get bootFailedTitle => 'DesKilo non è riuscito ad avviarsi';
+
+  @override
+  String get bootFailedBody =>
+      'Il server o l\'archivio sicuro di questo dispositivo non ha risposto. Non è stato modificato nulla. Chiudi l\'app e riaprila; se continua a succedere, controlla la rete.';
+
+  @override
+  String get bootSlowTitle => 'L\'avvio richiede più tempo del solito';
+
+  @override
+  String get bootSlowBody =>
+      'Continua a provare. Se non succede nulla, chiudi l\'app e riaprila.';
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Manca il SIREN dell\'acquirente. Una piattaforma francese instrada in base ad esso: inseritelo nel profilo del membro prima di trasmettere. Non è un rifiuto — il file è valido senza.';
 

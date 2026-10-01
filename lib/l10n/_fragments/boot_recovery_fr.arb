@@ -1,0 +1,7 @@
+{
+  "@@locale": "fr",
+  "bootFailedTitle": "DesKilo n'a pas pu démarrer",
+  "bootFailedBody": "Le serveur ou le stockage sécurisé de cet appareil n'a pas répondu. Rien n'a été modifié. Fermez l'application et rouvrez-la ; si cela se reproduit, vérifiez le réseau.",
+  "bootSlowTitle": "Le démarrage prend plus de temps que d'habitude",
+  "bootSlowBody": "Il continue d'essayer. Si rien ne se passe, fermez l'application et rouvrez-la."
+}
