@@ -114,11 +114,30 @@ const stripeApi = () =>
 
 // ── providers ─────────────────────────────────────────────────────────
 
+/** #2014 — the provider ANSWERED and refused (HTTP status kept, body not). */
+export class ProviderRefusal extends Error {
+  constructor(readonly status: number) {
+    super(`provider refused: HTTP ${status}`);
+  }
+}
+
+/** #2014 — `failed` only for a definitive refusal (4xx); a timeout, a lost
+ * connection or a provider 5xx is UNKNOWN: the order may exist, so the
+ * intent stays pending for reconciliation instead of being declared failed. */
+export const failureOutcome = (e: unknown): "failed" | "unknown" =>
+  e instanceof ProviderRefusal && e.status >= 400 && e.status < 500
+    ? "failed"
+    : "unknown";
+
+/** #2014 — one provider order per intent: the same key on every retry. */
+export const idempotencyKey = (intentId: string) => `deskilo-intent-${intentId}`;
+
 async function createPaypalOrder(
   cfg: Record<string, string>,
   amountCents: number,
   currency: string,
   reference: string,
+  key: string,
 ): Promise<{ orderId: string; approveUrl: string }> {
   const auth = btoa(`${cfg.client_id}:${cfg.secret}`);
   const tokenRes = await fetch(`${paypalApi(cfg.env)}/v1/oauth2/token`, {
@@ -130,7 +149,7 @@ async function createPaypalOrder(
     body: "grant_type=client_credentials",
   });
   if (!tokenRes.ok) {
-    throw new Error(`paypal oauth ${tokenRes.status}: ${await tokenRes.text()}`);
+    throw new ProviderRefusal(tokenRes.status);
   }
   const { access_token } = await tokenRes.json();
   const orderRes = await fetch(`${paypalApi(cfg.env)}/v2/checkout/orders`, {
@@ -138,6 +157,7 @@ async function createPaypalOrder(
     headers: {
       Authorization: `Bearer ${access_token}`,
       "Content-Type": "application/json",
+      "PayPal-Request-Id": key,
     },
     body: JSON.stringify({
       intent: "CAPTURE",
@@ -153,7 +173,7 @@ async function createPaypalOrder(
     }),
   });
   if (!orderRes.ok) {
-    throw new Error(`paypal order ${orderRes.status}: ${await orderRes.text()}`);
+    throw new ProviderRefusal(orderRes.status);
   }
   const order = await orderRes.json();
   const approve = (order.links ?? []).find(
@@ -168,6 +188,7 @@ async function createStripeSession(
   amountCents: number,
   currency: string,
   reference: string,
+  key: string,
 ): Promise<{ orderId: string; approveUrl: string }> {
   const params = new URLSearchParams({
     mode: "payment",
@@ -184,11 +205,12 @@ async function createStripeSession(
     headers: {
       Authorization: `Bearer ${cfg.secret_key}`,
       "Content-Type": "application/x-www-form-urlencoded",
+      "Idempotency-Key": key,
     },
     body: params,
   });
   if (!res.ok) {
-    throw new Error(`stripe session ${res.status}: ${await res.text()}`);
+    throw new ProviderRefusal(res.status);
   }
   const session = await res.json();
   return { orderId: session.id, approveUrl: session.url };
@@ -199,6 +221,7 @@ async function createMolliePayment(
   amountCents: number,
   currency: string,
   reference: string,
+  key: string,
   method?: string,
 ): Promise<{ orderId: string; approveUrl: string }> {
   const res = await fetch(`${mollieApi()}/v2/payments`, {
@@ -206,6 +229,7 @@ async function createMolliePayment(
     headers: {
       Authorization: `Bearer ${cfg.api_key}`,
       "Content-Type": "application/json",
+      "Idempotency-Key": key,
     },
     body: JSON.stringify({
       amount: { currency, value: major(amountCents, currency) },
@@ -230,7 +254,7 @@ async function createMolliePayment(
     }),
   });
   if (!res.ok) {
-    throw new Error(`mollie payment ${res.status}: ${await res.text()}`);
+    throw new ProviderRefusal(res.status);
   }
   const payment = await res.json();
   return { orderId: payment.id, approveUrl: payment._links.checkout.href };
@@ -406,14 +430,15 @@ export async function handle(req: Request): Promise<Response> {
     return json({ error: "intent_open_failed" }, 500);
   }
   const reference: string = intent.reference;
+  const key = idempotencyKey(String(intent.id));
   try {
     const order = provider === "paypal"
-      ? await createPaypalOrder(cfg, amountCents, currency, reference)
+      ? await createPaypalOrder(cfg, amountCents, currency, reference, key)
       : provider === "stripe"
-      ? await createStripeSession(cfg, amountCents, currency, reference)
+      ? await createStripeSession(cfg, amountCents, currency, reference, key)
       : provider === "wero"
-      ? await createMolliePayment(cfg, amountCents, currency, reference, "wero")
-      : await createMolliePayment(cfg, amountCents, currency, reference);
+      ? await createMolliePayment(cfg, amountCents, currency, reference, key, "wero")
+      : await createMolliePayment(cfg, amountCents, currency, reference, key);
 
     const { error: insertError } = await admin
       .from("payment_intents")
@@ -437,12 +462,19 @@ export async function handle(req: Request): Promise<Response> {
       approve_url: order.approveUrl,
     });
   } catch (e) {
-    // The provider refused or timed out: the intent stays as the honest
-    // record of a failed attempt — its number is not reused.
-    await admin.from("payment_intents").update({ status: "failed" }).eq("id", intent.id);
-    const detail = e instanceof Error ? e.message : String(e);
-    console.error("payment order failed", { provider, detail });
-    return json({ error: "provider_error", provider, detail }, 502);
+    // #2014 — a definitive refusal fails the intent (its number is not
+    // reused); a timeout, lost connection or provider 5xx is UNKNOWN: the
+    // order may exist, so the intent stays pending for reconciliation and
+    // a retry with the same key cannot create a second order. Provider
+    // bodies are neither returned nor logged.
+    const outcome = failureOutcome(e);
+    const status = e instanceof ProviderRefusal ? e.status : null;
+    console.error("payment order failed", { provider, outcome, status });
+    if (outcome === "failed") {
+      await admin.from("payment_intents").update({ status: "failed" }).eq("id", intent.id);
+      return json({ error: "provider_error", provider }, 502);
+    }
+    return json({ error: "outcome_unknown", provider }, 503);
   }
 }
 

@@ -85,7 +85,7 @@ void main() {
             deprecatedIn: '1.4.0',
             replacedBy: ['usageRecords'],
           ),
-          WorkspaceFeature.services: const FeatureAssessment(
+          WorkspaceFeature.accessorySupplements: const FeatureAssessment(
             maturity: FeatureMaturity.alpha,
             rationale: 'pilot only',
           ),
@@ -264,7 +264,10 @@ void main() {
         .where(
           (p) =>
               !p.endsWith('domain/feature_lifecycle.dart') &&
-              !p.contains('features/workspace/presentation/'),
+              !p.contains('features/workspace/presentation/') &&
+              // #1851 — the opt-in gate reads maturity to ASK for
+              // consent before a switch is written; it opens nothing.
+              !p.endsWith('domain/feature_operation.dart'),
         )
         .toList();
     expect(readers, isEmpty);

@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0324 (#1908) -- a seat and its whole desk, office or level cannot both
+-- 0325 (#1908) -- a seat and its whole desk, office or level cannot both
 -- be reserved, even by two commands at the same instant.
 --
 -- The exclusion constraints guard one resource column each (seat, desk,
@@ -97,4 +97,4 @@ create trigger reservation_hierarchy_guard
   before insert on public.reservations
   for each row execute function public.reservation_hierarchy_guard();
 
-select public.set_deskilo_schema_version(324);
+select public.set_deskilo_schema_version(325);

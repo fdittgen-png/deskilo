@@ -207,7 +207,7 @@
       "prerequisites": "Stripe credentials in Settings; the webhook endpoint reachable from Stripe.",
       "limitations": "CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.",
       "provider": "stripe",
-      "fingerprint": "b5d08bedd042",
+      "fingerprint": "9f61c77bd783",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -261,7 +261,7 @@
       "prerequisites": "PayPal credentials in Settings; the webhook endpoint reachable from PayPal.",
       "limitations": "No CI check reaches the PayPal handler; the Stripe stub says nothing about PayPal.",
       "provider": "paypal",
-      "fingerprint": "afe8fdc51fe3",
+      "fingerprint": "744e8ed65fca",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -292,7 +292,7 @@
       "prerequisites": "Mollie credentials in Settings; the webhook endpoint reachable from Mollie.",
       "limitations": "The reconciliation is proved in a replayed database; no Mollie sandbox has been exercised from this repository.",
       "provider": "mollie",
-      "fingerprint": "7b67a820d3b4",
+      "fingerprint": "54d9d6845cf8",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -323,7 +323,7 @@
       "prerequisites": "Mollie credentials with Wero enabled on the Mollie account.",
       "limitations": "Wero rides Mollie's checkout; nothing beyond the client's method handling cites Wero, so the Mollie reconciliation does not count here.",
       "provider": "wero",
-      "fingerprint": "7b67a820d3b4",
+      "fingerprint": "54d9d6845cf8",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",

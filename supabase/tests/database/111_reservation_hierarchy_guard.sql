@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #1908 / 0324: a seat and its whole desk, office or level are never
+-- #1908 / 0325: a seat and its whole desk, office or level are never
 -- both reserved over the same hours; two seats under one desk, and the
 -- same spaces at other hours, still are. (The concurrent race is in
 -- scripts/concurrency_check.sh; this file proves the rule.)
