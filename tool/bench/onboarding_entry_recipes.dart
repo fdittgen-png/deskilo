@@ -321,7 +321,11 @@ Future<RecipeRun> byoSignIn(
         ...standardTestOverrides(
           auth: auth,
           backendSettings: store,
-          workspace: MeteredWorkspace(meter)..seedTwoSpaces(),
+          // #1823 — the account's server default: the space it was last
+          // in there, which a sign-in on a new device returns to.
+          workspace: MeteredWorkspace(meter)
+            ..seedTwoSpaces()
+            ..serverDefaultWorkspaceId = 'ws-a',
           floorPlan: smallPlans(meter, const ['ws-a', 'ws-b']),
           reservations: MeteredReservations(meter),
         ),

@@ -15,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/open_my_account.dart';
 
 // A 1×1 transparent PNG — enough for MemoryImage/codec to accept.
 final _png = Uint8List.fromList([
@@ -44,7 +45,7 @@ Future<void> pumpSettings(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byIcon(Icons.settings_outlined));
+  await openMyAccount(tester); // #1823: My account is in Me
   await tester.pumpAndSettle();
 }
 

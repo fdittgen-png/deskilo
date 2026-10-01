@@ -210,6 +210,10 @@ FlexSchemeColor _colorsFor(Color? brand) => brand == null
 /// route-transition theme; everything else is identical either way.
 /// [brand] is a workspace's seed colour (#1289), null for the product's.
 abstract final class DeskiloTheme {
+  /// #1823 — DesKilo's own ink-blue, the seed of the Me layer. Never a
+  /// workspace's: the person's layer wears the product's identity.
+  static const Color meLayerSeed = Color(0xFF2F3D5C);
+
   static ThemeData light({bool animations = true, Color? brand}) {
     return _finish(
       FlexThemeData.light(

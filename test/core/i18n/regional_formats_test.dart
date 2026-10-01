@@ -16,7 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/navigation.dart';
+import '../../helpers/open_my_account.dart';
 
 Future<({FakeProfileRepository profile, FakeWorkspaceRepository workspace})>
     pumpSettings(WidgetTester tester, {Map<String, dynamic> flags = const {}}) async {
@@ -31,7 +31,7 @@ Future<({FakeProfileRepository profile, FakeWorkspaceRepository workspace})>
     child: const DeskiloApp(),
   ));
   await tester.pumpAndSettle();
-  await tapAppBarIcon(tester, Icons.settings_outlined);
+  await openMyAccount(tester); // #1823: My account is in Me
   return (profile: profile, workspace: workspace);
 }
 
@@ -42,6 +42,9 @@ void main() {
     final tile = find.byKey(const ValueKey('regional-formats'));
     await tester.scrollUntilVisible(tile, 200,
         scrollable: find.byType(Scrollable).first);
+    // #1823 — in Me the row can stop at the list's edge: bring it in whole.
+    await tester.ensureVisible(tile);
+    await tester.pumpAndSettle();
     await tester.tap(tile);
     await tester.pumpAndSettle();
     final preview = find.byKey(const ValueKey('regional-sheet-preview'));
@@ -67,6 +70,9 @@ void main() {
     final tile = find.byKey(const ValueKey('regional-formats'));
     await tester.scrollUntilVisible(tile, 200,
         scrollable: find.byType(Scrollable).first);
+    // #1823 — in Me the row can stop at the list's edge: bring it in whole.
+    await tester.ensureVisible(tile);
+    await tester.pumpAndSettle();
     await tester.tap(tile);
     await tester.pumpAndSettle();
     // A screen with its own app bar — nothing under the status bar.

@@ -97,8 +97,21 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
       body: ListView(
         padding: AppSpacing.mdAll,
         children: [
+          // #1823 — who may find and write to me HERE is chosen per
+          // audience in Me › Who sees me, with a live preview; a linked
+          // server keeps its own switch below, since the card speaks for
+          // this server only.
+          ListTile(
+            key: const ValueKey('portal-visibility-link'),
+            leading: const Icon(Icons.visibility_outlined),
+            title: Text(l?.portalVisibilityLink ?? 'Who can find and message me'),
+            subtitle: Text(l?.portalVisibilityLinkBody ?? 'Chosen in Me, under Who sees me.'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go('/me?tab=me'),
+          ),
           for (final server in servers.entries)
-            _AvailabilitySwitch(source: server.key, host: server.value),
+            if (server.key.isNotEmpty)
+              _AvailabilitySwitch(source: server.key, host: server.value),
           TextField(
             controller: _search,
             decoration: InputDecoration(

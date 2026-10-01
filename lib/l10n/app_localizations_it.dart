@@ -8245,6 +8245,234 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpUsagePending => 'In attesa di convalida';
 
   @override
+  String get meTabHome => 'Home';
+
+  @override
+  String get meTabDiscover => 'Scopri';
+
+  @override
+  String get meTabMessages => 'Messaggi';
+
+  @override
+  String get meTabMe => 'Io';
+
+  @override
+  String get meHomeTitle => 'Home';
+
+  @override
+  String get meMySpaces => 'I miei spazi';
+
+  @override
+  String get meHeaderOwned => 'Il tuo account · appartiene solo a te';
+
+  @override
+  String get meNoSpaceTitle => 'Non sei ancora in nessuno spazio';
+
+  @override
+  String get meNoSpaceBody =>
+      'Trovane uno vicino a te, entra con un codice di invito o creane uno tuo.';
+
+  @override
+  String get meFindSpace => 'Trova uno spazio';
+
+  @override
+  String get meJoinSpace => 'Entra con un codice';
+
+  @override
+  String get meCreateSpace => 'Crea uno spazio';
+
+  @override
+  String get meManageSpaces => 'Gestisci i miei spazi';
+
+  @override
+  String get meSpacePending => 'In attesa di approvazione';
+
+  @override
+  String get meSpaceLastUsed => 'Ultimo usato';
+
+  @override
+  String get meLeaveAction => 'Lascia questo spazio';
+
+  @override
+  String get meLeaveOwner =>
+      'I proprietari cedono lo spazio prima di lasciarlo';
+
+  @override
+  String meLeaveTitle(String name) {
+    return 'Lasciare $name?';
+  }
+
+  @override
+  String get meLeaveBody =>
+      'Smetti di essere membro. Prenotazioni, fatture e messaggi restano nello spazio. Per cancellare anche i tuoi dati, usa Privacy.';
+
+  @override
+  String get meLeaveFailed => 'Impossibile lasciare lo spazio. Riprova.';
+
+  @override
+  String meLeaveDone(String name) {
+    return 'Hai lasciato $name.';
+  }
+
+  @override
+  String meLinkedOpenBody(String host) {
+    return 'Questo spazio si trova su $host. L\'app lavora con un server alla volta: aprirlo passa a quel server e ti chiede di accedere lì.';
+  }
+
+  @override
+  String meLinkedOpen(String host) {
+    return 'Apri su $host';
+  }
+
+  @override
+  String meLinkedUnavailable(String host) {
+    return '$host non ha risposto: questo elenco potrebbe essere incompleto.';
+  }
+
+  @override
+  String meLinkedPendingOn(String host) {
+    return 'In attesa di approvazione · $host';
+  }
+
+  @override
+  String get meSectionMine => 'Cronologia e dati personali';
+
+  @override
+  String get meWhereSpacesLive => 'Dove si trovano i miei spazi';
+
+  @override
+  String get meAccountInMe => 'Il mio account è in Io';
+
+  @override
+  String get meAccountInMeBody =>
+      'Foto, lingua, tema e accessi sono tuoi in ogni spazio.';
+
+  @override
+  String get meSpaceException => 'In questo spazio';
+
+  @override
+  String get spaceBackToMe => 'Torna a Io';
+
+  @override
+  String get spaceChipTooltip => 'Cambia spazio';
+
+  @override
+  String get visibilityTitle => 'Chi mi vede';
+
+  @override
+  String get visibilityIntro =>
+      'Ogni parte del tuo account sceglie il proprio pubblico. Niente è pubblico se non lo scegli.';
+
+  @override
+  String get visibilityIdentity => 'Nome e foto';
+
+  @override
+  String get visibilityAbout => 'Professione e biografia';
+
+  @override
+  String get visibilityContact => 'WhatsApp ed e-mail';
+
+  @override
+  String get visibilityPresence => 'Oggi nello spazio';
+
+  @override
+  String get visibilityReachability =>
+      'Chi può iniziare una conversazione con me';
+
+  @override
+  String get visibilityNobody => 'Nessuno';
+
+  @override
+  String get visibilityMySpaces => 'Membri dei miei spazi';
+
+  @override
+  String get visibilityChosenSpaces => 'Membri di spazi scelti';
+
+  @override
+  String get visibilitySignedIn => 'Chiunque abbia effettuato l\'accesso';
+
+  @override
+  String get visibilitySaveFailed =>
+      'Impossibile salvare chi lo vede. Riprova.';
+
+  @override
+  String get visibilityPreviewTitle => 'Come mi vedono gli altri';
+
+  @override
+  String get visibilityPreviewMySpaces => 'Un membro dei miei spazi';
+
+  @override
+  String get visibilityPreviewSignedIn =>
+      'Chiunque abbia effettuato l\'accesso';
+
+  @override
+  String get visibilityPreviewNobody => 'Solo io';
+
+  @override
+  String get visibilityPreviewNothing => 'Non vedono nulla di te.';
+
+  @override
+  String get visibilityPreviewFailed => 'Impossibile caricare l\'anteprima.';
+
+  @override
+  String get visibilityPreviewCanWrite =>
+      'Può iniziare una conversazione con te';
+
+  @override
+  String get visibilityPreviewCannotWrite =>
+      'Non può iniziare una conversazione con te';
+
+  @override
+  String visibilityChosenCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Membri di $count spazi scelti',
+      one: 'Membri di 1 spazio scelto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get portalVisibilityLink => 'Chi può trovarmi e scrivermi';
+
+  @override
+  String get portalVisibilityLinkBody => 'Si sceglie in Io, sotto Chi mi vede.';
+
+  @override
+  String get portalEnterSpace => 'Entra';
+
+  @override
+  String get portalCopyEmail => 'Copia l\'e-mail';
+
+  @override
+  String get portalEmailCopied => 'E-mail copiata';
+
+  @override
+  String get meAddressSaveFailed =>
+      'Impossibile salvare il tuo indirizzo. Riprova.';
+
+  @override
+  String get visibilityAboutMe => 'Su di me';
+
+  @override
+  String get visibilityAboutEmpty =>
+      'Aggiungi la tua professione e qualche parola';
+
+  @override
+  String get visibilityProfession => 'Professione';
+
+  @override
+  String get visibilityBio => 'Qualche parola su di te';
+
+  @override
+  String get visibilityAboutSaveFailed =>
+      'Impossibile salvare professione e biografia. Riprova.';
+
+  @override
+  String get portalOpenMe => 'Io: il mio account e i miei spazi';
+
+  @override
   String get featureMemberAccountMenuTitle => 'I membri vedono Il mio account';
 
   @override
