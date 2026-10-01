@@ -45,6 +45,21 @@ class PublicWorkspaceView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
+    // #1847 — the card is read again from its installation, anonymously:
+    // what the owner publishes NOW, and nothing to act on once withdrawn.
+    // A preview of one's own page, or a source that cannot be reached,
+    // keeps the card it was opened with.
+    final live = preview || this.workspace.source.isEmpty
+        ? null
+        : ref.watch(
+            publicWorkspaceDetailProvider(
+              this.workspace.source,
+              this.workspace.key,
+              this.workspace.id,
+            ),
+          );
+    final withdrawn = live is AsyncData<PublicWorkspace?> && live.value == null;
+    final workspace = live?.value ?? this.workspace;
     Widget link(String field, String label) => TextButton.icon(
       icon: const Icon(Icons.open_in_new),
       label: Text(label),
@@ -80,6 +95,15 @@ class PublicWorkspaceView extends ConsumerWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           Text(workspace.source),
+          if (withdrawn)
+            Padding(
+              padding: AppSpacing.smAll,
+              child: Text(
+                key: const ValueKey('public-workspace-withdrawn'),
+                l?.portalNoLongerPublished ??
+                    'This workspace is no longer published.',
+              ),
+            ),
           Text(switch (workspace.text('host_type')) {
             'association' => l?.portalAssociation ?? 'Association',
             'company' => l?.portalCompany ?? 'Company',
@@ -110,7 +134,9 @@ class PublicWorkspaceView extends ConsumerWidget {
                     : (l?.portalAdmin ?? 'Administrator'),
               ),
               trailing:
-                  contact['available'] == true && contact['user_id'] is String
+                  !withdrawn &&
+                      contact['available'] == true &&
+                      contact['user_id'] is String
                   ? IconButton(
                       tooltip: l?.portalChat ?? 'Chat',
                       icon: const Icon(Icons.chat_outlined),
@@ -139,7 +165,7 @@ class PublicWorkspaceView extends ConsumerWidget {
           // roster, which the sheet shows before anything is written.
           // The space's own `spaceInquiries` flag is decided on its
           // server: a space that switched it off answers no roster.
-          if (!preview)
+          if (!preview && !withdrawn)
             OutlinedButton.icon(
               key: const ValueKey('write-to-hosts'),
               icon: const Icon(Icons.contact_support_outlined),
@@ -149,7 +175,7 @@ class PublicWorkspaceView extends ConsumerWidget {
                 await showInquirySheet(context, workspace);
               },
             ),
-          if (!preview)
+          if (!preview && !withdrawn)
             FilledButton.icon(
               icon: const Icon(Icons.person_add_outlined),
               label: Text(

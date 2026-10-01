@@ -183,6 +183,66 @@ void main() {
     },
   );
   testWidgets(
+    '#1847 a card withdrawn since the search says so and offers nothing to '
+    'act on',
+    (tester) async {
+      const card = PublicWorkspace(
+        'gone',
+        'https://host.example',
+        'sb_publishable_test',
+        {
+          'name': 'Closed office',
+          'host_type': 'company',
+          'contacts': [
+            {'user_id': 'u1', 'name': 'Alice', 'owner': true, 'available': true},
+          ],
+        },
+      );
+      final repo = FakeDirectoryRepository()..cards.add(card);
+      await showPortal(tester, const DirectoryScreen(), directory: repo);
+      repo.cards.clear();
+      await tester.tap(find.text('Closed office'));
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('public-workspace-withdrawn')),
+        findsOneWidget,
+      );
+      expect(find.text('This workspace is no longer published.'), findsOneWidget);
+      expect(find.byKey(const ValueKey('write-to-hosts')), findsNothing);
+      expect(find.text('Request a workspace profile'), findsNothing);
+      expect(find.byTooltip('Chat'), findsNothing);
+      expect(repo.requests, isEmpty);
+    },
+  );
+  testWidgets(
+    '#1847 a still-published card offers its actions, and a source that '
+    'answered an uninterpretable card is named',
+    (tester) async {
+      final repo = _IncompatibleDirectory()
+        ..cards.add(
+          const PublicWorkspace(
+            'open',
+            'https://host.example',
+            'sb_publishable_test',
+            {'name': 'Open office', 'host_type': 'company'},
+          ),
+        );
+      await showPortal(tester, const DirectoryScreen(), directory: repo);
+      expect(
+        find.byKey(const ValueKey('directory-incompatible')),
+        findsOneWidget,
+      );
+      expect(find.textContaining('https://newer.example'), findsOneWidget);
+      await tester.tap(find.text('Open office'));
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('public-workspace-withdrawn')),
+        findsNothing,
+      );
+      expect(find.text('Request a workspace profile'), findsOneWidget);
+    },
+  );
+  testWidgets(
     'account messenger opt-in uses the account repository, and a private '
     'reply goes through the messenger to that person (#1824)',
     (tester) async {
@@ -233,4 +293,19 @@ void main() {
     await tester.pumpAndSettle();
     expect(repo.employed['admin'], isTrue);
   });
+}
+
+class _IncompatibleDirectory extends FakeDirectoryRepository {
+  @override
+  Future<DirectoryPage> search(
+    String query, {
+    int sourcePage = 0,
+    int workspacePage = 0,
+  }) async {
+    final page = await super.search(query, workspacePage: workspacePage);
+    return DirectoryPage(
+      page.workspaces,
+      incompatible: const ['https://newer.example'],
+    );
+  }
 }

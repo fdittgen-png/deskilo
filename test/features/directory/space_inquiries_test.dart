@@ -8,6 +8,7 @@
 // field to write in; the message opens the inquiry's thread. The hosts
 // find it in the space's Inquiries view — shown to owners and admins
 // while the workspace has `spaceInquiries` on — and can close it.
+import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
@@ -38,6 +39,9 @@ Future<void> pump(
       overrides: standardTestOverrides(
         messenger: messenger,
         workspace: workspace,
+        // #1847 — the view reads the card again from its installation:
+        // the space is published there.
+        directory: FakeDirectoryRepository()..cards.add(space),
       ),
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,

@@ -114,6 +114,13 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                         '${l?.portalDirectoryUnavailable ?? 'Some directories could not be reached. Results are incomplete.'}\n${result.unavailable.join('\n')}',
                       ),
                     ),
+                  // #1847 — a card this version cannot interpret is not
+                  // shown; its installation is named, the rest still is.
+                  if (result.incompatible.isNotEmpty)
+                    Text(
+                      key: const ValueKey('directory-incompatible'),
+                      '${l?.portalDirectoryIncompatible ?? 'Some workspaces need a newer version of the app and are not shown.'}\n${result.incompatible.join('\n')}',
+                    ),
                   if (_map)
                     SizedBox(
                       height: 300,

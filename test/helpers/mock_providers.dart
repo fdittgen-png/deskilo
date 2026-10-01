@@ -196,6 +196,7 @@ List<Override> standardTestOverrides({
 }) {
   // One home messenger per scope, so a rebuilt provider keeps its state.
   final homeMessenger = messenger ?? FakeMessengerRepository();
+  final directoryFake = directory ?? FakeDirectoryRepository();
   final workspaceRepo = () {
     final repo = workspace ?? FakeWorkspaceRepository.withWorkspace();
     if (devMode && repo is FakeWorkspaceRepository) repo.applyDevMode(true);
@@ -242,7 +243,9 @@ List<Override> standardTestOverrides({
     workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
     connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>connectedSources),
-      directoryRepositoryProvider.overrideWith((ref)=>directory??FakeDirectoryRepository()),
+      publicDiscoveryRepositoryProvider.overrideWith((ref)=>directoryFake),
+      publicationRepositoryProvider.overrideWith((ref)=>directoryFake),
+      directoryParticipantRepositoryProvider.overrideWith((ref)=>directoryFake),
       accountContactRepositoryProvider.overrideWith((ref,source)=>contacts??FakeAccountContactRepository()),
       messengerRepositoryProvider.overrideWith(
           (ref, source) => messengers[source] ?? homeMessenger),

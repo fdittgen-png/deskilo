@@ -60,7 +60,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
           'Could not save this change. Please try again.',
       action: () async {
         final page = await ref
-            .read(directoryActionsProvider)
+            .read(publicationActionsProvider)
             .ownPage(workspace);
         if (!mounted || _workspace != workspace || _account != account) return;
         final doc = Map<String, dynamic>.from(page['document'] as Map);
@@ -98,7 +98,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
           l?.portalActionFailed ??
           'Could not save this change. Please try again.',
       action: () async {
-        preview = await ref.read(directoryActionsProvider).savePage(workspace, {
+        preview = await ref.read(publicationActionsProvider).savePage(workspace, {
           'host_type': _host,
           for (final entry in _controllers.entries)
             entry.key: entry.value.text.trim(),

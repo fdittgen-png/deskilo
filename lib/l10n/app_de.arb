@@ -6042,6 +6042,8 @@
   "portalSearch": "Workspaces suchen",
   "portalDirectoryUnavailable": "Einige Verzeichnisse sind nicht erreichbar. Die Ergebnisse sind unvollständig.",
   "portalNoWorkspaces": "Keine veröffentlichten Workspaces gefunden.",
+  "portalNoLongerPublished": "Dieser Workspace ist nicht mehr veröffentlicht.",
+  "portalDirectoryIncompatible": "Einige Workspaces benötigen eine neuere Version der App und werden nicht angezeigt.",
   "portalMoreDirectories": "Weitere Verzeichnisse",
   "portalMessenger": "Kontonachrichten",
   "portalThisServer": "Dieser Server",
