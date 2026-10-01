@@ -63,9 +63,17 @@ const Map<String, String> _notExported = {
   'platform_admins':
       'who administers the platform — not the subject\'s data, and '
           'disclosing it would name other people',
+  'instance_delegates':
+      '#1829 — who the instance owner named to run installation-wide setup: '
+          'an authority row, shown by name to everyone as the people '
+          'responsible, never the subject\'s own data',
   'platform_access_log':
       'the platform owner\'s audit of their own access; the subject\'s '
           'equivalent is data_access_log, which IS exported',
+  'account_badge_pins':
+      '#1833 — the bcrypt hash of the badge sign-in PIN: a credential, '
+          'and an offline-guessable one; the export says nothing more '
+          'about it than the profile did before it moved (0319)',
   'push_endpoints':
       'a device token, rotated by the OS and useless outside a live '
           'install; exporting it would hand over a credential',

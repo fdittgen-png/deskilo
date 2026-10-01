@@ -7411,6 +7411,174 @@ abstract class AppLocalizations {
   /// **'readiness gate'**
   String get helpTopicReadiness;
 
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Instance owner'**
+  String get instanceOwnerTitle;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'This installation is shared by all its workspaces. The instance owner answers for it: contact them about anything that concerns the whole installation, such as assistants.'**
+  String get instanceOwnerHelp;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'No instance owner is set yet.'**
+  String get instanceOwnerNone;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Copy e-mail address'**
+  String get instanceOwnerCopyEmail;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail address copied.'**
+  String get instanceOwnerCopied;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'You are the instance owner.'**
+  String get instanceYouAreOwner;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'You are a delegate of the instance owner.'**
+  String get instanceYouAreDelegate;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Delegates'**
+  String get instanceDelegatesTitle;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'No delegates.'**
+  String get instanceDelegatesNone;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'A delegate can run the installation-wide setup for assistants. Delegates cannot delegate further and see no other workspace.'**
+  String get instanceDelegatesHelp;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail address of an account'**
+  String get instanceDelegateFieldLabel;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Delegate the role'**
+  String get instanceDelegateAdd;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw the delegation'**
+  String get instanceDelegateWithdraw;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw this delegation?'**
+  String get instanceDelegateWithdrawTitle;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'They lose access to the installation-wide setup immediately.'**
+  String get instanceDelegateWithdrawBody;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get instanceDelegateWithdrawConfirm;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Delegated.'**
+  String get instanceDelegated;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'This person already is a delegate.'**
+  String get instanceDelegateUnchanged;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'No account uses this e-mail address.'**
+  String get instanceDelegateNoAccount;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'This account has not confirmed its e-mail address yet.'**
+  String get instanceDelegateUnconfirmed;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'The owner does not need a delegation.'**
+  String get instanceDelegateAlreadyOwner;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'This server cannot delegate yet.'**
+  String get instanceDelegateUnavailable;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Delegation withdrawn.'**
+  String get instanceDelegationWithdrawn;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Take ownership'**
+  String get instanceClaimTitle;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'You created this instance and no owner has been set. Taking ownership makes you the person who answers for it.'**
+  String get instanceClaimBody;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Take ownership'**
+  String get instanceClaimButton;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'You are now the instance owner.'**
+  String get instanceClaimDone;
+
+  /// #1829 instance owner
+  ///
+  /// In en, this message translates to:
+  /// **'Ownership could not be taken.'**
+  String get instanceClaimFailed;
+
   /// #977 instance wizard: featureInstanceWizard
   ///
   /// In en, this message translates to:

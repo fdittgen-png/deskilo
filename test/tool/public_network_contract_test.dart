@@ -21,7 +21,7 @@ import '../../tool/public_network_contract/check.dart';
 import '../../tool/public_network_contract/render.dart';
 
 const _source = 'contracts/public_network/operations.json';
-const _pgtap = 'supabase/tests/database/106_public_network_boundary.sql';
+const _pgtap = 'supabase/tests/database/105_public_network_boundary.sql';
 
 Map<String, dynamic> source() =>
     jsonDecode(File(_source).readAsStringSync()) as Map<String, dynamic>;

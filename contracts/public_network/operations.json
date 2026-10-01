@@ -116,7 +116,7 @@
       "mutation": "read",
       "features": [],
       "consumers": ["lib/features/directory/data/supabase_public_discovery_repository.dart"],
-      "tests": ["test/features/directory/public_discovery_repository_test.dart", "supabase/tests/database/106_public_network_boundary.sql"]
+      "tests": ["test/features/directory/public_discovery_repository_test.dart", "supabase/tests/database/105_public_network_boundary.sql"]
     },
     {
       "id": "directory.workspaces.search",
@@ -130,7 +130,7 @@
       "mutation": "read",
       "features": ["publicListings"],
       "consumers": ["lib/features/directory/data/supabase_public_discovery_repository.dart"],
-      "tests": ["test/features/directory/public_discovery_repository_test.dart", "test/core/public_network/public_network_codec_test.dart", "supabase/tests/database/106_public_network_boundary.sql"]
+      "tests": ["test/features/directory/public_discovery_repository_test.dart", "test/core/public_network/public_network_codec_test.dart", "supabase/tests/database/105_public_network_boundary.sql"]
     },
     {
       "id": "directory.workspaces.detail",
@@ -144,7 +144,7 @@
       "mutation": "read",
       "features": ["publicListings"],
       "consumers": ["lib/features/directory/data/supabase_public_discovery_repository.dart"],
-      "tests": ["test/features/directory/public_discovery_repository_test.dart", "supabase/tests/database/106_public_network_boundary.sql"]
+      "tests": ["test/features/directory/public_discovery_repository_test.dart", "supabase/tests/database/105_public_network_boundary.sql"]
     },
     {
       "id": "publication.page.read",
@@ -157,7 +157,7 @@
       "mutation": "read",
       "features": [],
       "consumers": ["lib/features/directory/data/supabase_publication_repository.dart"],
-      "tests": ["test/features/directory/publication_repository_test.dart", "supabase/tests/database/106_public_network_boundary.sql"]
+      "tests": ["test/features/directory/publication_repository_test.dart", "supabase/tests/database/105_public_network_boundary.sql"]
     },
     {
       "id": "publication.page.save",
@@ -173,7 +173,7 @@
       "side_effects": ["upserts the page row", "sets the publicListings flag to the published value", "publishes or deletes the public card"],
       "features": ["publicListings"],
       "consumers": ["lib/features/directory/data/supabase_publication_repository.dart"],
-      "tests": ["test/features/directory/publication_repository_test.dart", "supabase/tests/database/106_public_network_boundary.sql"]
+      "tests": ["test/features/directory/publication_repository_test.dart", "supabase/tests/database/105_public_network_boundary.sql"]
     },
     {
       "id": "directory.sources.register",
@@ -187,7 +187,7 @@
       "idempotency": "upsert by origin; an account updates only its own registration; at most 20 per account",
       "features": [],
       "consumers": ["lib/features/directory/data/supabase_directory_participant_repository.dart"],
-      "tests": ["supabase/tests/database/106_public_network_boundary.sql"]
+      "tests": ["supabase/tests/database/105_public_network_boundary.sql"]
     },
     {
       "id": "workspace.profile.request",
@@ -202,7 +202,7 @@
       "side_effects": ["opens an ordinary membership request; never activates a membership"],
       "features": ["publicListings"],
       "consumers": ["lib/features/directory/data/supabase_directory_participant_repository.dart"],
-      "tests": ["supabase/tests/database/106_public_network_boundary.sql"]
+      "tests": ["supabase/tests/database/105_public_network_boundary.sql"]
     }
   ]
 }

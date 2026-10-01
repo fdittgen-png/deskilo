@@ -36,6 +36,7 @@ import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/demo/data/template_search_repository.dart';
 import 'package:deskilo/features/workspace/providers/template_search_providers.dart';
+import 'package:deskilo/core/demo/data/instance_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
 import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
 import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
@@ -95,6 +96,7 @@ import 'package:deskilo/features/profile/domain/profile_repository.dart';
 import 'package:deskilo/features/profile/providers/profile_providers.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
+import 'package:deskilo/features/workspace/providers/instance_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/core/demo/data/workspace_fields_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_roles_repository.dart';
@@ -156,6 +158,7 @@ List<Override> standardTestOverrides({
   FakeMcpConnectionRepository? mcpConnections,
   OAuthConsentRepository? oauthConsent,
   FakeMcpAdminRepository? mcpAdmin,
+  FakeInstanceRepository? instance,
   FakeLocalSetupRepository? localSetup,
   FakeTemplateSearchRepository? templateSearch,
   FakeIdentityBindingRepository? identityBinding,
@@ -267,6 +270,7 @@ List<Override> standardTestOverrides({
         .overrideWithValue(mcpConnections ??
             FakeMcpConnectionRepository(installationId: kTestInstallationId)),
     mcpAdminRepositoryProvider.overrideWithValue(mcpAdmin ?? FakeMcpAdminRepository()),
+    instanceRepositoryProvider.overrideWithValue(instance ?? FakeInstanceRepository()),
     activeMcpTargetProvider
         .overrideWith((ref) => fixedMcpTarget(ref, kTestInstallationId)),
     localSetupRepositoryProvider.overrideWithValue(localSetup ?? FakeLocalSetupRepository()),
