@@ -123,8 +123,8 @@ List<Measure> measures({String root = '.'}) {
 }
 
 /// The values of `enum <name>`, counted from its own body only: the
-/// manifest below it names every one of them a second time, and the
-/// pin in `feature_registry_test` is the number this must agree with.
+/// manifest below it names every one of them a second time, and
+/// `WorkspaceFeature.values.length` is what this must agree with.
 int _enumValues(String source, String name) {
   final start = source.indexOf('enum $name {');
   if (start < 0) return 0;

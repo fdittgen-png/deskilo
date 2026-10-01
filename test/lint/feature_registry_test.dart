@@ -11,188 +11,51 @@
 //   2. a featureManifest entry (defaultOn + requires),
 //   3. featureXxx / featureXxxDesc l10n keys in all five locales,
 //   4. `features.contains(...)` gates on its UI surfaces,
-//   5. this pin bumped — the number changing in review IS the check
-//      that the author thought about feature management.
+//   5. its assessment line in feature_lifecycle.dart (#1850) and its
+//      row in the generated process catalogue (#1863 retired the count
+//      pins: the catalogue row and the server registry are the review).
 // See docs/AGENT_RULES.md ("Feature management").
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/feature_names.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// 27 pre-#502 + documents (#500) + dunning + memberReports +
-/// deletionRequests (#502).
-// 30→31 (2026-08-06): #513 roleManagement.
-// 31→32 (2026-08-11): #534 vatDeclarations (requires invoicing).
-// 32→33 (2026-08-11): #544 vatManagement (rates editor + rate pickers;
-// vatDeclarations re-parented under it).
-// 33→34 (2026-08-14): #568 einvoiceCustomerDelivery (second send leg).
-// 34→35 (2026-08-22): #587 planObjectDelete (delete plan objects past
-// reservations reference; audit substitution text).
-// 35→36 (2026-08-23): #598 notificationGrouping (regroup the feed by
-// type, day or member; requires eventsTab).
-// 36→37 (2026-08-23): #600 bookingPolicies (owner-configurable booking
-// behavior matrix: past bookings, grid-vs-hours, admin check-out).
-// 37→39 (2026-08-23): #604 nfcSeatTags (chair-tag config + resolution,
-// #585 retro-flagged) and qrBadges (QR badge issuance beside nfcBadges).
-// 39→40 (2026-08-23): #606 formHelpHints (dismissible contextual help
-// hints deep-linking into the guide; Settings restores dismissed ones).
-// 40→41 (2026-08-23): #611 uiAnimations (the motion pass — purposeful
-// animations app-wide; OFF = instant everything, reduced motion wins).
-// 41→42 (2026-08-24): #616 kioskMemberPhotos (receipt shows the
-// member's profile photo; child of kioskMode).
-// 43→44 (2026-08-27): #662 badgeSignIn (sign in by scanning a badge,
-//   then a PIN; under nfcBadges — the login button must disappear with
-//   badge issuance, or it offers a credential nobody can hold).
-// 42→43 (2026-08-24): #620 planMemberPhotos (occupant photos on the
-// Plan tab and Reserve hub maps; standalone, kiosk not required).
-// 44→45 (2026-08-28): #711 regionalFormats (member format locale, clock,
-// time-zone mode; Settings → Region & formats).
-// 45→48 (2026-08-29): #718 calendarHub, #719 dataAccessLog + memberDataExport.
-// 48→49 (2026-08-29): #720 financeFaces.
-// 49→50 (2026-08-29): #726 paymentReminders.
-// 50→52 (2026-08-29): #731 supplyExpenses, #732 validationScopes.
-// 52→53 (2026-08-30): #739 priceNegotiations.
-// 53→54 (2026-08-31): #767 scheduledExpenses.
-// 54→55 (2026-09-01): #793 uniqueMonograms — avatar initials that name
-// one member instead of repeating across everyone who shares a letter.
-// 55→56 (2026-09-01): #798 messageGestures — swipe right to quote, left
-// to take back an unread message.
-// 56→58 (2026-09-01): #802 subscriptionInvoices + usageInvoices — the
-// subscription billed ahead of its month, the extras billed after it.
-// 58→59 (2026-09-01): #804 invoiceSettlement — several open invoices
-// regrouped into one, originals kept and traceable.
-// 59→60 (2026-09-01): #812 invoiceJourney — Issued → Payment →
-// Confirmation → Closed on every invoice surface, with whose move it is.
-// 60→61 (2026-09-01): #814 bookingGate — the availability parameters
-// asked BEFORE a window is offered, on every surface; closed days in
-// every view; the seat legend.
-// 61→62 (2026-09-02): #818 calendarViews — agenda / week / month over
-// the hub's feed, markers, closed days, due dates.
-// 62→63 (2026-09-02): #821 messagesHub — the Messages tab reworked.
-// 63→64 (2026-09-02): #822 reportDesigner — the full-screen report
-// designer: direct manipulation, undo, side-by-side preview.
-// 64→65 (2026-09-02): #825 memberPage — one page per member.
-// 65→66 (2026-09-02): #827 invoicingWizard — the guided month-close.
-// 66→67 (2026-09-02): #828 expenseRepartition — shared expenses split.
-// 67→68 (2026-09-02): #831 settlementFold — settled sources fold.
-// 73→74 (2026-09-04): #869 invoiceAddressWindow (place the recipient
-//   where a window envelope shows it; side follows the country).
-// 74→75 (2026-09-04): #875 reportLayouts — a design states its geometry
-//   in mm/cm/px/%; the PDF prints exactly that; coexists with bands.
-// 75→76 (2026-09-05): #886 personalInfo — the structured identity on the
-//   profile, printed by every document.
-// 76→77 (2026-09-05): #887 managedProfiles — members without an account,
-//   handed over by a bound invitation.
-// 77→78 (2026-09-05): #881 memberPaymentTerms — a member's own payment
-//   conditions, changed by validated request.
-// 78→79 (2026-09-05): #880 reportTexts — owner texts per language in
-//   every report.
-// 77→78 (2026-09-05): #873 usageReport — the month-end consumption report.
-// 79→80 (2026-09-05): #873 usageReport — the month-end consumption report.
-// 80→81 (2026-09-05): #878 vatReport — the period's VAT positions.
-// 78→79 (2026-09-05): #874 letterStandard — default positioned layouts for
-// 81→82 (2026-09-05): #874 letterStandard — default positioned layouts for
-//   every person-facing document.
-// 82→83 (2026-09-05): #903 seatDayTimeline — a part-booked seat looks
-//   part-booked; a shared one opens its day.
-// 83→84 (2026-09-06): #914 managedProfileAccess — a managed profile
-//   says who may administer it.
-// 84→85 (2026-09-06): #925 numberSequences — one screen for every series
-//   a workspace issues.
-// 85→87 (2026-09-06): #934 workspaceStatus + expenseRepartitionWizard.
-// 87→88 (2026-09-06): #945 multiSite.
-// 88→89 (2026-09-06): #946 siteDocuments.
-// 89→90 (2026-09-06): #947 vatGroups.
-// 90→91 (2026-09-06): #916 configurationTransfer.
-// 91→92 (2026-09-06): #969 navigationStyle.
-// 92→93 (2026-09-06): #970 demoMode.
-// 93→94 (2026-09-06): #977 instanceWizard.
-// 98→99 (2026-09-11): #1110 memberOrigin — how each membership began
-//   (founded, invited, delegated), recorded by the path that writes the
-//   row. Default OFF: it is new information about real people, so a
-//   workspace decides to show it rather than finding it already there.
-// #1063 — the pin now covers the TIER SPLIT as well as the count, so a
-//   new flag cannot be added without somebody deciding whether a
-//   fifteen-person community meets it on day one.
-// 99→100 (2026-09-11): #1119 memberEnvironments — the invitation carries
-//   whether the person also reaches the prod twin. Option B of the
-//   issue: dev, or dev+prod, because 0185's invariant is prod ⊆ dev.
-// 100→101 (2026-09-11): #1120 workspaceLibrary — save, share and start
-//   from a floor-plan template. Platform, default OFF.
-// 101→102 (2026-09-15): #1273 singleRoomLevelNames — a level's only room
-//   is named by the level on member surfaces. Core, default ON.
-// 102→103 (2026-09-16): #1274 publicHolidays — an owner generates the
-//   year's public holidays as closure days, with a preview. Platform,
-//   default OFF.
-// 103→104 (2026-09-16): #1277 workspaceVocabulary — a workspace renames
-//   an allow-listed set of product words per locale. Surface
-//   `everywhere`, because the legend, the shell destinations and the
-//   booking sheet all read them. Platform, default OFF: a space that
-//   keeps the product's vocabulary is not shown a control for it.
-// 104→105 (2026-09-17): #1279 carnets — prepaid half-days sold once and
-//   spent across months beyond a subscription. Platform, default OFF,
-//   under invoicing.
-// 105→106 (2026-09-18): #1289 workspaceBranding — a brand seed colour the
-//   themes derive from and the office fills, carried by a template.
-//   Everywhere, because the theme is the whole app. Platform, default
-//   OFF: the product's palette is the default and needs no switch.
-// 107→108 (2026-09-19): #1288 customFields — questions a workspace asks
-// 106→107 (2026-09-19): #1287 customRoles — roles a workspace defines
-//   itself, additive on top of the built-in four (ADR 0029). Settings,
-//   Platform, default OFF: four roles is the product's answer and needs
-//   no switch.
-// 109→110 (2026-09-20): #1514 recordingPrivacy — filming the app without
-//   filming the members: invented people substituted at the data seam,
-//   so a screenshot or a screen recording of a LIVE workspace carries no
-//   personal data. Everywhere, because the substitution reaches every
-//   screen that shows a person at once. Platform, default OFF: it is
-//   switched on for the length of a shoot and off after.
-// 110→111 (2026-09-20): #1598 memberAccountMenu — a member who
-//   administers nothing meets My account where the workspace gear was:
-//   the same screen and the same route, under the name that says whose
-//   it is. Settings, Platform, default OFF: a space that never asked
-//   keeps the gear it has always had.
-// 111→112 (2026-09-25): #1607 mcpAccess — the MCP interface is AVAILABLE
-//   to this workspace, so an AI assistant may be connected to DesKilo.
-//   Availability, never authorization: switching it on enrols nobody,
-//   approves nothing and grants no role. Settings, Platform, default
-//   OFF: no workspace is reachable by a machine it never asked for.
-// 112→113 (2026-09-25): #1643 calendarFileExport — a member saves ONE of
-//   their own bookings as an RFC 5545 calendar file: a snapshot of the
-//   instant, the resource and the venue under a UID that names the booking
-//   without naming anybody. No calendar write, no sync, no amount, no name.
-//   Reserve, Core, default ON: an interoperability courtesy every space
-//   can extend, and a switch that hides the button when it will not.
-// 113→114 (2026-09-25): #1654 memberGettingStarted — the Get started card
-//   on the Reserve hub after a join or a creation: the workspace the
-//   person is in and ONE permitted next action, from what the hub already
-//   loaded. Writes only its own dismissal; never books, pays or approves.
-//   Reserve, Core, default ON: optional help a space can hide, and OFF
-//   hides the card and nothing else.
-// 115→118 (2026-09-29): #1824 spaceInquiries, messageForwarding,
-//   captureProtection — the messenger's three space decisions. An inquiry
-//   from outside reaches only the hosts of a published page; a forward names its origin and is announced to the
-//   original conversation; message screens refuse capture where the
-//   device allows it. Messages, Core, default ON each: confidentiality
-//   and transparency are the default, a space may choose otherwise.
-// 118→119 (2026-10-01): #2051 holidayImport — the public holidays of the
-//   country and one region from an open-data source, every day a
-//   checkbox, imported under the #1274 rules. Settings, Platform, default
-//   OFF, under publicHolidays.
-const int _expectedFeatureCount = 119; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
 
 void main() {
   _tierPins();
 
-  test('every functionality is registered — the pin', () {
-    expect(
-      WorkspaceFeature.values.length,
-      _expectedFeatureCount,
-      reason: 'WorkspaceFeature has ${WorkspaceFeature.values.length} '
-          'entries, the pin says $_expectedFeatureCount. New '
-          'functionality? Add its flag (enum + manifest + names + l10n '
-          '+ UI gates) and bump the pin. Removed one? Walk the manifest '
-          'and the gates first.',
-    );
+  test('every key the server ever registered is live or retired', () {
+    // #1863 — the stable-ID contract that replaced the count pin. A flag
+    // key lives on in stored maps, templates and exports long after the
+    // migration that introduced it, so it may be retired (and stays in
+    // the #1850 ledger so it is never reused) but never silently renamed
+    // or dropped. Read from every feature_registry() the migrations ever
+    // defined, not from a hand-kept list.
+    final live = {for (final f in WorkspaceFeature.values) f.name};
+    final ever = everRegisteredFeatureKeys();
+    expect(ever, isNotEmpty, reason: 'the migrations define no registry');
+    final lost = ever
+        .where((k) => !live.contains(k) &&
+            !retiredFeatureAssessments.containsKey(k))
+        .toList()
+      ..sort();
+    expect(lost, isEmpty,
+        reason: 'these keys were registered on the server and are neither '
+            'a WorkspaceFeature nor in retiredFeatureAssessments: '
+            '${lost.join(', ')}');
+  });
+
+  test('every manifest key is a WorkspaceFeature, once', () {
+    expect(featureManifest.keys.toSet(), WorkspaceFeature.values.toSet());
+    for (final e in featureManifest.entries) {
+      expect(e.value.feature, e.key, reason: e.key.name);
+    }
+    final names = WorkspaceFeature.values.map((f) => f.dbKey).toList();
+    expect(names.toSet().length, names.length,
+        reason: 'two features share a stored key');
   });
 
   test('every feature has a manifest entry (defaultOn/requires)', () {
@@ -234,50 +97,18 @@ void main() {
   });
 }
 
-/// #1063 — how many features a NEW workspace starts with.
-///
-/// Pinned beside the total on purpose. The number that matters to the
-/// criticism this project attracts is not "how many flags exist" but
-/// "how many a fifteen-person community meets before it has asked for
-/// anything".
-// 36→37 (2026-09-15): #1273 singleRoomLevelNames — a label rule every
-// workspace started from `tiny` meets on day one.
-// 37→38 (2026-09-25): #1643 calendarFileExport — a member's own booking
-// in their own calendar, as a file that carries nothing private and
-// grants nothing. A courtesy a fifteen-person community meets on day one
-// without having asked, which is exactly what Core is for; the switch
-// exists so a space can hide the button, not so it has to find it.
-// 38→39 (2026-09-25): #1654 memberGettingStarted — the first thing a
-// newly joined member of a fifteen-person community meets is the question
-// "what do I do here?"; a card that answers it with the one permitted
-// action, and goes away when asked, is exactly what Core is for.
-// 40→43 (2026-09-29): #1824 spaceInquiries, messageForwarding,
-// captureProtection — a fifteen-person community that messages meets
-// forwarding with provenance and capture protection on day one, and an
-// inquiry only once it publishes a page.
-const int _expectedCoreCount = 43;
 
 void _tierPins() {
   test('every feature declares a tier, and the split is pinned', () {
-    expect(
-      featureManifest.length,
-      _expectedFeatureCount,
-      reason: 'the manifest and the enum must stay the same size',
-    );
-    final core = featuresOfTier(FeatureTier.core);
-    final platform = featuresOfTier(FeatureTier.platform);
-    expect(
-      core.length + platform.length,
-      _expectedFeatureCount,
-      reason: 'every feature is in exactly one tier',
-    );
-    expect(
-      core.length,
-      _expectedCoreCount,
-      reason: 'a new workspace would now meet ${core.length} features '
-          'before asking for anything; the pin says $_expectedCoreCount. '
-          'If that is the intent, move the pin and say why (#1063).',
-    );
+    final core = featuresOfTier(FeatureTier.core).toSet();
+    final platform = featuresOfTier(FeatureTier.platform).toSet();
+    expect(core.intersection(platform), isEmpty);
+    expect(core.union(platform), WorkspaceFeature.values.toSet(),
+        reason: 'every feature is in exactly one tier');
+    // #1863 — what a NEW workspace meets is no longer a count pin: every
+    // feature's tier and default are rows of the generated, drift-checked
+    // docs/design/process-catalogue.md (process_registry_test), so moving
+    // one into Core shows in review as that row changing.
   });
 
   test('a child is never in a lower tier than its parent', () {
@@ -303,7 +134,7 @@ void _tierPins() {
     final flags = defaultFeatureFlagsForNewWorkspace();
     expect(
       flags.length,
-      _expectedFeatureCount,
+      WorkspaceFeature.values.length,
       reason: 'every key is written EXPLICITLY at creation — that is what '
           'keeps resolution unchanged for workspaces that already exist',
     );
@@ -318,7 +149,24 @@ void _tierPins() {
     // chosen yet" and "chosen off" have to stay distinguishable.
     expect(
       flags.values.where((on) => on).length,
-      lessThan(_expectedFeatureCount),
+      lessThan(WorkspaceFeature.values.length),
     );
   });
+}
+
+/// Every key any migration's `feature_registry()` ever returned.
+Set<String> everRegisteredFeatureKeys() {
+  const definition = 'create or replace function public.feature_registry()';
+  final keys = <String>{};
+  for (final f in Directory('supabase/migrations').listSync().whereType<File>()) {
+    if (!f.path.endsWith('.sql')) continue;
+    final sql = f.readAsStringSync();
+    final at = sql.indexOf(definition);
+    if (at < 0) continue;
+    final open = sql.indexOf("select '", at) + "select '".length;
+    final close = sql.indexOf("'::jsonb", open);
+    keys.addAll(
+        (jsonDecode(sql.substring(open, close)) as Map<String, dynamic>).keys);
+  }
+  return keys;
 }
