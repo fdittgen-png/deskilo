@@ -16,8 +16,10 @@ part 'directory_providers.g.dart';
 
 /// user id → profile for the active workspace's members (#224): the
 /// directory derives statuses from `last_seen_at` and shows the WhatsApp
-/// button for shared numbers. RLS already trims the read to people
-/// sharing a workspace with the caller (#223).
+/// button for shared numbers. #1833: each profile is the projection the
+/// caller may read in this space — the community fields for a space
+/// mate, the printed identity only with `viewPersonalData` or
+/// `issueInvoices` (invoices, letters, the Excel export).
 @riverpod
 Future<Map<String, Profile>> memberProfiles(Ref ref) async {
   // #1514 — the seam. The directory is the densest personal page in the
@@ -30,8 +32,11 @@ Future<Map<String, Profile>> memberProfiles(Ref ref) async {
   // rejects the whole request over one malformed uuid.
   final ids = accountIdsOf(members);
   if (ids.isEmpty) return const {};
-  final profiles =
-      await ref.watch(profileRepositoryProvider).fetchProfiles(ids);
+  // #1833 — asked as members of the space these ids came from: what the
+  // caller may read of a person depends on their rights in THAT space.
+  final profiles = await ref
+      .watch(profileRepositoryProvider)
+      .fetchProfiles(members.first.workspaceId, ids);
   // Filming mode replaces the people and keeps the page.
   return {
     for (final p in profiles) p.id: recording ? recordingProfile(p) : p,

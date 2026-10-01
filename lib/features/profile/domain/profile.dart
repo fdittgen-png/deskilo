@@ -13,8 +13,9 @@ abstract final class StatusTextRules {
 
 /// A `profiles` row (0001, extended by 0028 with WhatsApp + presence,
 /// #223, and by 0029 with the status line, #231). Cross-workspace: one
-/// profile per auth user, visible to every member sharing a workspace
-/// (profiles_select RLS).
+/// profile per auth user. Another person's profile arrives as a purpose
+/// projection (#1833, `profile_projection.dart`): fields outside the
+/// purposes granted stay empty.
 class Profile implements SystemStamped {
   const Profile({
     required this.id,

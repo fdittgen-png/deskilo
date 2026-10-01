@@ -34,6 +34,7 @@ in, not a member of the row's workspace), **worker** (active member),
 |---|---|---|---|---|---|---|---|
 | profiles | select own | — | ✅ | ✅ | ✅ | ✅ | `profiles_select` |
 | profiles | select co-member | — | — | ✅ | ✅ | ✅ | `shares_workspace_with()` |
+| profiles | co-member projection | — | — | RPC | RPC | RPC | `member_profiles(ws, ids)` (0318): community fields; identity fields only with `viewPersonalData`/`issueInvoices` — see IDENTITY_PROJECTIONS.md |
 | profiles | insert | — | auto | auto | auto | auto | `handle_new_user` trigger only |
 | profiles | update own | — | ✅ | ✅ | ✅ | ✅ | `profiles_update` |
 | workspaces | select | — | — | ✅ | ✅ | ✅ | `is_member_of()` |
