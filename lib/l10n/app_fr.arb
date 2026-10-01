@@ -1494,6 +1494,10 @@
   "@workspaceFieldsSaveFailed": {
     "description": "#1288 custom fields: workspaceFieldsSaveFailed"
   },
+  "workspaceFieldsPersonalNote": "Vos réponses sont des données personnelles : elles figurent dans votre export de données et sont effacées quand vous quittez cet espace, sauf obligation légale de conservation documentée par l'espace.",
+  "@workspaceFieldsPersonalNote": {
+    "description": "#1912 custom fields: every answer is personal data"
+  },
   "featureDecisionSurfaceTitle": "Ce qui vous attend",
   "@featureDecisionSurfaceTitle": {
     "description": "#1247: featureDecisionSurfaceTitle"
@@ -6627,7 +6631,7 @@
   "@questionEditorPersonal": {
     "description": "#1288 the question editor: questionEditorPersonal"
   },
-  "questionEditorPersonalHelp": "Effacée au départ du membre, et incluse dans son export de données. Laissez activé sauf si la réponse concerne vraiment l'espace et non la personne.",
+  "questionEditorPersonalHelp": "Chaque réponse est liée à un membre : c'est une donnée personnelle, incluse dans son export de données et effacée à son départ.",
   "@questionEditorPersonalHelp": {
     "description": "#1288 the question editor: questionEditorPersonalHelp"
   },
@@ -6726,6 +6730,10 @@
   "questionTypeMultiChoice": "Plusieurs choix dans une liste",
   "@questionTypeMultiChoice": {
     "description": "#1288 the question editor: questionTypeMultiChoice"
+  },
+  "questionEditorNotPersonalWarning": "Toujours personnelle : la réponse est liée à un membre, elle est donc exportée et effacée avec l'adhésion quel que soit ce réglage. Seule une conservation légale documentée peut la garder.",
+  "@questionEditorNotPersonalWarning": {
+    "description": "#1912 the question editor: shown while the personal-data switch is off"
   },
   "eventTypeRoleChange": "Changement de rôle",
   "eventRolePromote": "{actor} promeut un membre en admin",

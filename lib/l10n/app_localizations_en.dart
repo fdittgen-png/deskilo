@@ -2264,6 +2264,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your answers to this space\'s questions were not saved. Your other details were.';
 
   @override
+  String get workspaceFieldsPersonalNote =>
+      'Your answers are personal data: they are part of your data export and are erased when you leave this space, unless the space documents a legal obligation to keep one.';
+
+  @override
   String get featureCustomRolesTitle => 'Roles this space defines';
 
   @override
@@ -11248,7 +11252,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get questionEditorPersonalHelp =>
-      'Erased when the member leaves, and carried in their data export. Leave it on unless the answer is really about the space rather than the person.';
+      'Every answer is stored against a member, so it is personal data: carried in their data export and erased when they leave.';
 
   @override
   String get questionEditorVisibility => 'Who can see the answer';
@@ -11322,6 +11326,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get questionTypeMultiChoice => 'Several of a list';
+
+  @override
+  String get questionEditorNotPersonalWarning =>
+      'Still personal: the answer is linked to a member, so it is exported and erased with the membership whatever this switch says. Only a documented retention hold can keep it.';
 
   @override
   String get eventTypeRoleChange => 'Role change';

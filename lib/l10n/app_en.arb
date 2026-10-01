@@ -2711,6 +2711,10 @@
   "@workspaceFieldsSaveFailed": {
     "description": "#1288 custom fields: workspaceFieldsSaveFailed"
   },
+  "workspaceFieldsPersonalNote": "Your answers are personal data: they are part of your data export and are erased when you leave this space, unless the space documents a legal obligation to keep one.",
+  "@workspaceFieldsPersonalNote": {
+    "description": "#1912 custom fields: every answer is personal data"
+  },
   "featureCustomRolesTitle": "Roles this space defines",
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"
@@ -11950,7 +11954,7 @@
   "@questionEditorPersonal": {
     "description": "#1288 the question editor: questionEditorPersonal"
   },
-  "questionEditorPersonalHelp": "Erased when the member leaves, and carried in their data export. Leave it on unless the answer is really about the space rather than the person.",
+  "questionEditorPersonalHelp": "Every answer is stored against a member, so it is personal data: carried in their data export and erased when they leave.",
   "@questionEditorPersonalHelp": {
     "description": "#1288 the question editor: questionEditorPersonalHelp"
   },
@@ -12049,6 +12053,10 @@
   "questionTypeMultiChoice": "Several of a list",
   "@questionTypeMultiChoice": {
     "description": "#1288 the question editor: questionTypeMultiChoice"
+  },
+  "questionEditorNotPersonalWarning": "Still personal: the answer is linked to a member, so it is exported and erased with the membership whatever this switch says. Only a documented retention hold can keep it.",
+  "@questionEditorNotPersonalWarning": {
+    "description": "#1912 the question editor: shown while the personal-data switch is off"
   },
   "eventTypeRoleChange": "Role change",
   "@eventTypeRoleChange": {

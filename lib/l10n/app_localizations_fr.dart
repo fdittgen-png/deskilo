@@ -2284,6 +2284,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vos réponses aux questions de cet espace n\'ont pas été enregistrées. Le reste de vos informations, si.';
 
   @override
+  String get workspaceFieldsPersonalNote =>
+      'Vos réponses sont des données personnelles : elles figurent dans votre export de données et sont effacées quand vous quittez cet espace, sauf obligation légale de conservation documentée par l\'espace.';
+
+  @override
   String get featureCustomRolesTitle => 'Rôles définis par cet espace';
 
   @override
@@ -11362,7 +11366,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get questionEditorPersonalHelp =>
-      'Effacée au départ du membre, et incluse dans son export de données. Laissez activé sauf si la réponse concerne vraiment l\'espace et non la personne.';
+      'Chaque réponse est liée à un membre : c\'est une donnée personnelle, incluse dans son export de données et effacée à son départ.';
 
   @override
   String get questionEditorVisibility => 'Qui voit la réponse';
@@ -11438,6 +11442,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get questionTypeMultiChoice => 'Plusieurs choix dans une liste';
+
+  @override
+  String get questionEditorNotPersonalWarning =>
+      'Toujours personnelle : la réponse est liée à un membre, elle est donc exportée et effacée avec l\'adhésion quel que soit ce réglage. Seule une conservation légale documentée peut la garder.';
 
   @override
   String get eventTypeRoleChange => 'Changement de rôle';

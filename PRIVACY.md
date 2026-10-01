@@ -81,15 +81,20 @@ processes that payment under its own privacy policy.
 | Audit and decision trail | proving who approved what | the statutory period | kept |
 | Badge hashes | opening the door | until revoked | revoked immediately |
 | Diagnostic trace | fixing a fault you report | on your device only, 512 KiB, oldest discarded | delete the app, or clear it in Settings |
-| Answers to the space's own questions, marked personal | a committee role, a joining date, an emergency contact the space asked for | while you are a member of that space | deleted |
-| Answers marked NOT personal | the space's own operational data, such as a size for a group order | for the life of the space | kept |
+| Answers to the space's own questions | a committee role, an emergency contact, a size for a group order — whatever the space asked | while you are a member of that space | deleted |
+| Answers kept under a retention hold | only a question the owner documented a legal obligation for, such as a statutory member register | the period the hold states, readable only by whoever manages personal data in that space | kept until the hold expires, then deleted |
 
-A space can ask questions of its own beyond the fields above, and the
-owner marks each one as personal or not when they define it. That single
-mark decides everything: whether the answer travels in your data export,
-whether it is deleted when you erase, and which row of this table it
-falls under. The safe answer is the default — a new question is personal
-until somebody deliberately says it is not.
+A space can ask questions of its own beyond the fields above. Every
+answer is stored against your membership, so every answer is personal
+data about you, whatever the owner ticked when they defined the
+question: it travels in your data export and it is deleted when you
+erase. The owner's "personal data" switch no longer exempts anything.
+The only exception is a retention hold the owner documents for one
+question — the legal basis in words and a period in days. An answer
+under a hold survives your erasure stamped with that basis and its
+expiry, only someone who manages personal data in that space can read
+it, and it is deleted when the hold expires. A switch set to "not
+personal" never creates a hold.
 
 A refusal from the server names the question and the rule it broke, never
 the answer, so an answer cannot reach a log through an error message.

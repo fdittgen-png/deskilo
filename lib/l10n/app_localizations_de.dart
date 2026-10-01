@@ -2278,6 +2278,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ihre Antworten auf die Fragen dieses Bereichs wurden nicht gespeichert. Ihre übrigen Angaben schon.';
 
   @override
+  String get workspaceFieldsPersonalNote =>
+      'Ihre Antworten sind personenbezogene Daten: Sie sind Teil Ihres Datenexports und werden gelöscht, wenn Sie diesen Bereich verlassen, außer der Bereich dokumentiert eine gesetzliche Aufbewahrungspflicht.';
+
+  @override
   String get featureCustomRolesTitle => 'Rollen, die dieser Bereich festlegt';
 
   @override
@@ -11349,7 +11353,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get questionEditorPersonalHelp =>
-      'Wird beim Austritt gelöscht und liegt dem Datenexport bei. Lassen Sie es an, außer die Antwort betrifft wirklich den Bereich und nicht die Person.';
+      'Jede Antwort ist einem Mitglied zugeordnet und damit personenbezogen: Sie liegt seinem Datenexport bei und wird beim Austritt gelöscht.';
 
   @override
   String get questionEditorVisibility => 'Wer die Antwort sieht';
@@ -11424,6 +11428,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get questionTypeMultiChoice => 'Mehrere aus einer Liste';
+
+  @override
+  String get questionEditorNotPersonalWarning =>
+      'Trotzdem personenbezogen: Die Antwort ist einem Mitglied zugeordnet und wird unabhängig von diesem Schalter mit der Mitgliedschaft exportiert und gelöscht. Nur eine dokumentierte Aufbewahrungspflicht kann sie behalten.';
 
   @override
   String get eventTypeRoleChange => 'Rollenwechsel';

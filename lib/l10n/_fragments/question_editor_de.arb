@@ -49,7 +49,7 @@
   "@questionEditorPersonal": {
     "description": "#1288 the question editor: questionEditorPersonal"
   },
-  "questionEditorPersonalHelp": "Wird beim Austritt gelöscht und liegt dem Datenexport bei. Lassen Sie es an, außer die Antwort betrifft wirklich den Bereich und nicht die Person.",
+  "questionEditorPersonalHelp": "Jede Antwort ist einem Mitglied zugeordnet und damit personenbezogen: Sie liegt seinem Datenexport bei und wird beim Austritt gelöscht.",
   "@questionEditorPersonalHelp": {
     "description": "#1288 the question editor: questionEditorPersonalHelp"
   },
@@ -148,5 +148,9 @@
   "questionTypeMultiChoice": "Mehrere aus einer Liste",
   "@questionTypeMultiChoice": {
     "description": "#1288 the question editor: questionTypeMultiChoice"
+  },
+  "questionEditorNotPersonalWarning": "Trotzdem personenbezogen: Die Antwort ist einem Mitglied zugeordnet und wird unabhängig von diesem Schalter mit der Mitgliedschaft exportiert und gelöscht. Nur eine dokumentierte Aufbewahrungspflicht kann sie behalten.",
+  "@questionEditorNotPersonalWarning": {
+    "description": "#1912 the question editor: shown while the personal-data switch is off"
   }
 }

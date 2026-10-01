@@ -129,6 +129,10 @@ const Map<String, String> _notExported = {
           'template must never carry answers',
   'workspace_field_value_options':
       'which choices one member made; personal in the same way',
+  'workspace_field_retention_holds':
+      'a documented legal basis for keeping one question\'s answers after '
+          'erasure (#1912); it governs personal data, so it stays with the '
+          'owner and the privacy policy rather than in a spreadsheet',
 
   // --- secrets: exporting them would hand over a credential ---------
   'payment_credentials':
