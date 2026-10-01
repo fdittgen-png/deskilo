@@ -25,7 +25,7 @@
 // So this counts them and refuses to let the number grow. A file that
 // keeps a spinner keeps its entry; a file that adopts a primitive drops
 // out of the baseline in the same commit — which is the mechanism, the
-// same one `no_hardcoded_strings_test` and `_repositoryInWidgets` use.
+// same one `l10n_audit_test` and `_repositoryInWidgets` use.
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
