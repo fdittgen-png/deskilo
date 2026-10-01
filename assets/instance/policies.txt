@@ -14,6 +14,7 @@ public.accessories.accessories_select
 public.accessories.accessories_write
 public.accessories.mcp_delegated_deny
 public.account_about.mcp_delegated_deny
+public.account_badge_pins.mcp_delegated_deny
 public.account_contact_settings.mcp_delegated_deny
 public.account_conversations.mcp_delegated_deny
 public.account_field_audience.mcp_delegated_deny

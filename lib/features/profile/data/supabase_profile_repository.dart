@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/profile.dart';
+import '../domain/profile_projection.dart';
 import '../domain/personal_info.dart';
 import '../domain/profile_repository.dart';
 
@@ -30,16 +31,24 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
-  Future<List<Profile>> fetchProfiles(List<String> userIds) async {
+  Future<List<Profile>> fetchProfiles(
+    String workspaceId,
+    List<String> userIds,
+  ) async {
     // An empty id (a managed member, #962) is not a uuid: PostgREST
     // answers 22P02 for the whole request, so it is dropped here too.
     final ids = [for (final id in userIds) if (id.isNotEmpty) id];
-    if (ids.isEmpty) return const [];
-    final rows = await _client
-        .from('profiles')
-        .select()
-        .inFilter('id', ids);
-    return rows.map(Profile.fromDb).toList();
+    if (ids.isEmpty || workspaceId.isEmpty) return const [];
+    // #1833 — never `select *` on another person's row: the projection
+    // carries only the groups the server grants this caller.
+    final rows = await _client.rpc<List<dynamic>>(
+      'member_profiles',
+      params: {'p_workspace_id': workspaceId, 'p_user_ids': ids},
+    );
+    return [
+      for (final row in rows)
+        profileFromProjection((row as Map).cast<String, dynamic>()),
+    ];
   }
 
   @override

@@ -50,7 +50,7 @@ Future<void> exportWorkspaceExcel(
       final members = await ref.read(workspaceMembersProvider.future);
       final profiles = await ref
           .read(profileRepositoryProvider)
-          .fetchProfiles(accountIdsOf(members));
+          .fetchProfiles(workspace.id, accountIdsOf(members));
       final money = ref.read(moneyRepositoryProvider);
       final events = await ref
           .read(eventRepositoryProvider)
