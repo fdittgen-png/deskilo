@@ -115,6 +115,26 @@ editable in the app (Settings, Profile). For anything else, contact
 **fdittgen@gmail.com**. You may also lodge a complaint with your
 supervisory authority.
 
+Each space is the controller of what you did in it, and a request to a
+space is recorded with the day it was received. It is answered within one
+calendar month — the same date the following month, or that month's last
+day when it has no such date — counted in the space's own time zone. A
+space may extend that by two further months only by telling you why
+within the first month; the original date stays on the record. You can
+file a request after you have left a space, and no optional setting or
+suspended feature closes that route; a space can also record a request
+you made by letter or in person.
+
+When a request is completed it says, store by store, what was removed,
+corrected, restricted, kept (with the legal basis and how long) and what
+is outside this installation. Your data export says the same about
+itself: it covers one space on one installation, not another
+installation, your devices' caches or the operator's backups. Before you
+erase, the app can show what will go and what stays — invoices and the
+ledger stay as accounting evidence, your answers to the space's
+questions go — and the membership row that keeps those records together
+is pseudonymous, not anonymous.
+
 ## Children
 
 DesKilo is a workplace tool intended for adults and is not directed at

@@ -3,7 +3,7 @@
 // #1246 — every screen we can pump, in every language, narrowed to a
 // phone.
 //
-// `l10n_completeness_test` proves the five ARB key sets are identical
+// `arb_key_parity_test` proves the five ARB key sets are identical
 // and the CI l10n gate proves the aggregates cannot drift, so a MISSING
 // translation is already a red build. What was never proved is that the
 // UI works in the other four.

@@ -12,8 +12,9 @@
 // The picker had no test at all before this. `ValueKey('timezone-search')`
 // has been on that field since #711 and nothing has ever found it, which
 // is how a hard-coded hint survived a lint whose whole subject is
-// hard-coded strings: `no_hardcoded_strings_test` greps `Text('`, and
-// this was an `InputDecoration`.
+// hard-coded strings: `no_hardcoded_strings_test` (since folded into
+// `l10n_audit_test`, #1863) grepped `Text('`, and this was an
+// `InputDecoration`.
 import 'package:deskilo/core/i18n/time_zone_picker.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';

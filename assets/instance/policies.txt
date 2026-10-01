@@ -155,6 +155,8 @@ public.reservation_requests.mcp_delegated_deny
 public.reservations.mcp_delegated_deny
 public.reservations.reservations_select
 public.retired_invite_codes.mcp_delegated_deny
+public.rights_requests.mcp_delegated_deny
+public.rights_requests.rights_requests_select
 public.seat_accessories.mcp_delegated_deny
 public.seat_accessories.seat_accessories_select
 public.seat_accessories.seat_accessories_write
