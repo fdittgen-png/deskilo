@@ -109,13 +109,13 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 
 | file | lines |
 |---|---|
-| `lib/core/demo/data/workspace_repository.dart` | 1942 |
+| `lib/core/demo/data/workspace_repository.dart` | 1991 |
 | `lib/core/demo/data/money_repository.dart` | 1800 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1522 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1538 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1420 |
+| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1316 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1299 |
-| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1298 |
 | `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
 | `lib/features/money/domain/invoice_pdf.dart` | 1050 |
@@ -129,12 +129,12 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/reservations/presentation/widgets/space_scan.dart` | 889 |
 | `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 871 |
 | `lib/app/router.dart` | 859 |
-| `lib/features/workspace/presentation/screens/availability_screen.dart` | 856 |
+| `lib/features/workspace/presentation/screens/availability_screen.dart` | 858 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
+| `lib/features/workspace/domain/workspace_repository.dart` | 781 |
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
-| `lib/features/workspace/domain/workspace_repository.dart` | 772 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
 | `lib/features/reservations/presentation/reserve_seat_actions.dart` | 762 |
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 713 |

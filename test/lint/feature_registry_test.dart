@@ -174,7 +174,11 @@ import 'package:flutter_test/flutter_test.dart';
 //   original conversation; message screens refuse capture where the
 //   device allows it. Messages, Core, default ON each: confidentiality
 //   and transparency are the default, a space may choose otherwise.
-const int _expectedFeatureCount = 118; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
+// 118→119 (2026-10-01): #2051 holidayImport — the public holidays of the
+//   country and one region from an open-data source, every day a
+//   checkbox, imported under the #1274 rules. Settings, Platform, default
+//   OFF, under publicHolidays.
+const int _expectedFeatureCount = 119; // 109 (2026-09-19): #1247 decisionSurface — one place that answers "does anything need me?", Platform, default off
 
 void main() {
   _tierPins();

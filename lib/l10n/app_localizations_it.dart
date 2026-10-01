@@ -4547,6 +4547,43 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpTopicReadiness => 'ammissibilità';
 
   @override
+  String get featureHolidayImportTitle => 'Importa i giorni festivi';
+
+  @override
+  String get featureHolidayImportDesc =>
+      'Un proprietario importa i giorni festivi del paese, e di una regione, da una fonte di dati aperti, deseleziona i giorni in cui lo spazio resta aperto e importa gli altri come giorni di chiusura. I mesi già fatturati vengono saltati e indicati.';
+
+  @override
+  String get holidayImportAction => 'Importa i giorni festivi (dati aperti)';
+
+  @override
+  String get holidayImportRegion => 'Regione';
+
+  @override
+  String get holidayImportNationwide => 'Solo festività nazionali';
+
+  @override
+  String get holidayImportUnavailable =>
+      'La fonte dei giorni festivi non è raggiungibile al momento. Riprova più tardi o usa «Aggiungi i giorni festivi».';
+
+  @override
+  String get holidayImportRetry => 'Riprova';
+
+  @override
+  String holidayImportSource(String source) {
+    return 'Fonte: $source';
+  }
+
+  @override
+  String holidayImportConfirm(int count) {
+    return 'Importa $count giorni di chiusura';
+  }
+
+  @override
+  String get holidayImportFailed =>
+      'Non è stato possibile verificare né importare i giorni festivi. Non è stato modificato nulla.';
+
+  @override
   String get instanceOwnerClaimIntro =>
       'Di chi è questa istanza? Inserisci l\'e-mail con cui ti registrerai. Dopo aver confermato l\'indirizzo, rivendica la titolarità da Impostazioni → Proprietario dell\'istanza.';
 
