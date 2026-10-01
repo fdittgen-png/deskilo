@@ -536,6 +536,312 @@ abstract class AppLocalizations {
   /// **'Year archive (zip)'**
   String get invoiceExportBundle;
 
+  /// #1827 Assistant setup: assistantSetupTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant setup'**
+  String get assistantSetupTitle;
+
+  /// #1827 Assistant setup: assistantSetupIntro
+  ///
+  /// In en, this message translates to:
+  /// **'What assistants need to work in this workspace, in order. Each step says who takes it.'**
+  String get assistantSetupIntro;
+
+  /// #1827 Assistant setup: assistantSetupNoWorkspace
+  ///
+  /// In en, this message translates to:
+  /// **'Select a workspace first.'**
+  String get assistantSetupNoWorkspace;
+
+  /// #1827 Assistant setup: assistantSetupAllDone
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is set up for this workspace.'**
+  String get assistantSetupAllDone;
+
+  /// #1827 Assistant setup: assistantSetupSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Saved.'**
+  String get assistantSetupSaved;
+
+  /// #1827 Assistant setup: assistantSetupStale
+  ///
+  /// In en, this message translates to:
+  /// **'Someone changed the offer meanwhile. Review it and try again.'**
+  String get assistantSetupStale;
+
+  /// #1827 Assistant setup: assistantSetupFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save. Nothing changed; try again.'**
+  String get assistantSetupFailed;
+
+  /// #1827 Assistant setup: assistantSetupLinkIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Link my identity'**
+  String get assistantSetupLinkIdentity;
+
+  /// #1827 Assistant setup: assistantSetupTurnOn
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get assistantSetupTurnOn;
+
+  /// #1827 Assistant setup: assistantSetupRecommended
+  ///
+  /// In en, this message translates to:
+  /// **'Use the recommended set'**
+  String get assistantSetupRecommended;
+
+  /// #1827 Assistant setup: assistantSetupCustomise
+  ///
+  /// In en, this message translates to:
+  /// **'Customise'**
+  String get assistantSetupCustomise;
+
+  /// #1827 Assistant setup: assistantSetupRequest
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for access'**
+  String get assistantSetupRequest;
+
+  /// #1827 Assistant setup: assistantSetupReview
+  ///
+  /// In en, this message translates to:
+  /// **'Review requests'**
+  String get assistantSetupReview;
+
+  /// #1827 Assistant setup: assistantSetupNoConnector
+  ///
+  /// In en, this message translates to:
+  /// **'This app runs without a server, so there is no connector URL.'**
+  String get assistantSetupNoConnector;
+
+  /// #1827 Assistant setup: assistantSetupCopyUrl
+  ///
+  /// In en, this message translates to:
+  /// **'Copy connector URL'**
+  String get assistantSetupCopyUrl;
+
+  /// #1827 Assistant setup: assistantSetupCopied
+  ///
+  /// In en, this message translates to:
+  /// **'Connector URL copied.'**
+  String get assistantSetupCopied;
+
+  /// #1827 Assistant setup: assistantSetupConnectHowTo
+  ///
+  /// In en, this message translates to:
+  /// **'1. In your assistant, add a custom connector with this URL.\n2. Sign in with your DesKilo account when asked.\n3. Approve this workspace and the operations you allow.'**
+  String get assistantSetupConnectHowTo;
+
+  /// #1827 Assistant setup: assistantSetupPreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended set'**
+  String get assistantSetupPreviewTitle;
+
+  /// #1827 Assistant setup: assistantSetupPreviewNone
+  ///
+  /// In en, this message translates to:
+  /// **'No change: the workspace already offers exactly this set.'**
+  String get assistantSetupPreviewNone;
+
+  /// #1827 Assistant setup: assistantSetupPreviewAdds
+  ///
+  /// In en, this message translates to:
+  /// **'Added'**
+  String get assistantSetupPreviewAdds;
+
+  /// #1827 Assistant setup: assistantSetupPreviewRemoves
+  ///
+  /// In en, this message translates to:
+  /// **'Removed'**
+  String get assistantSetupPreviewRemoves;
+
+  /// #1827 Assistant setup: assistantSetupPreviewOwn
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants see only each member\'s own records.'**
+  String get assistantSetupPreviewOwn;
+
+  /// #1827 Assistant setup: assistantSetupPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'Only a member\'s own records and the availability reads. Assistants already connected get new operations only after each person approves again.'**
+  String get assistantSetupPreviewNote;
+
+  /// #1827 Assistant setup: assistantSetupApply
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get assistantSetupApply;
+
+  /// #1827 Assistant setup: assistantSetupStepIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Link your identity'**
+  String get assistantSetupStepIdentity;
+
+  /// #1827 Assistant setup: assistantSetupStepWorkspace
+  ///
+  /// In en, this message translates to:
+  /// **'Turn assistants on for this workspace'**
+  String get assistantSetupStepWorkspace;
+
+  /// #1827 Assistant setup: assistantSetupStepPolicy
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what assistants may do'**
+  String get assistantSetupStepPolicy;
+
+  /// #1827 Assistant setup: assistantSetupStepEligibility
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for your assistant access'**
+  String get assistantSetupStepEligibility;
+
+  /// #1827 Assistant setup: assistantSetupStepInstallation
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants switched on for this database'**
+  String get assistantSetupStepInstallation;
+
+  /// #1827 Assistant setup: assistantSetupStepConnect
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your assistant'**
+  String get assistantSetupStepConnect;
+
+  /// #1827 Assistant setup: assistantSetupReasonIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'An assistant acts as you, so this database must know it is you.'**
+  String get assistantSetupReasonIdentity;
+
+  /// #1827 Assistant setup: assistantSetupReasonWorkspace
+  ///
+  /// In en, this message translates to:
+  /// **'While it is off, the workspace refuses every assistant call.'**
+  String get assistantSetupReasonWorkspace;
+
+  /// #1827 Assistant setup: assistantSetupReasonPolicy
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is offered to assistants until someone chooses the operations.'**
+  String get assistantSetupReasonPolicy;
+
+  /// #1827 Assistant setup: assistantSetupReasonEligibility
+  ///
+  /// In en, this message translates to:
+  /// **'This database\'s administrators approve each person once, for every workspace on it.'**
+  String get assistantSetupReasonEligibility;
+
+  /// #1827 Assistant setup: assistantSetupReasonInstallation
+  ///
+  /// In en, this message translates to:
+  /// **'The instance owner or a delegate switches assistants on for every workspace on this database.'**
+  String get assistantSetupReasonInstallation;
+
+  /// #1827 Assistant setup: assistantSetupReasonConnect
+  ///
+  /// In en, this message translates to:
+  /// **'Add the connector in your assistant, sign in, and approve this workspace.'**
+  String get assistantSetupReasonConnect;
+
+  /// #1827 Assistant setup: assistantSetupStateDone
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get assistantSetupStateDone;
+
+  /// #1827 Assistant setup: assistantSetupStateTodo
+  ///
+  /// In en, this message translates to:
+  /// **'To do'**
+  String get assistantSetupStateTodo;
+
+  /// #1827 Assistant setup: assistantSetupStateWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get assistantSetupStateWaiting;
+
+  /// #1827 Assistant setup: assistantSetupStateBlocked
+  ///
+  /// In en, this message translates to:
+  /// **'After the steps above'**
+  String get assistantSetupStateBlocked;
+
+  /// #1827 Assistant setup: assistantSetupStateUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be asked'**
+  String get assistantSetupStateUnavailable;
+
+  /// #1827 Assistant setup: assistantSetupActorYou
+  ///
+  /// In en, this message translates to:
+  /// **'Who: you'**
+  String get assistantSetupActorYou;
+
+  /// #1827 Assistant setup: assistantSetupActorConfigurer
+  ///
+  /// In en, this message translates to:
+  /// **'Who: someone who manages this workspace\'s configuration'**
+  String get assistantSetupActorConfigurer;
+
+  /// #1827 Assistant setup: assistantSetupActorIntegrations
+  ///
+  /// In en, this message translates to:
+  /// **'Who: someone who manages this workspace\'s integrations'**
+  String get assistantSetupActorIntegrations;
+
+  /// #1827 Assistant setup: assistantSetupActorDatabaseAdministrator
+  ///
+  /// In en, this message translates to:
+  /// **'Who: a database administrator'**
+  String get assistantSetupActorDatabaseAdministrator;
+
+  /// #1827 Assistant setup: assistantSetupActorInstanceOperator
+  ///
+  /// In en, this message translates to:
+  /// **'Who: the instance owner or a delegate'**
+  String get assistantSetupActorInstanceOperator;
+
+  /// #1827 Assistant setup: assistantSetupNextTodo
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {step}.'**
+  String assistantSetupNextTodo(String step);
+
+  /// #1827 Assistant setup: assistantSetupNextWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {step}. {actor}.'**
+  String assistantSetupNextWaiting(String step, String actor);
+
+  /// #1827 Assistant setup: assistantSetupInstanceYou
+  ///
+  /// In en, this message translates to:
+  /// **'You answer for this database: switch assistants on from the instance tools.'**
+  String get assistantSetupInstanceYou;
+
+  /// #1827 Assistant setup: assistantSetupInstanceNobody
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody answers for this database yet.'**
+  String get assistantSetupInstanceNobody;
+
+  /// #1827 Assistant setup: assistantSetupInstanceNames
+  ///
+  /// In en, this message translates to:
+  /// **'Answering for this database: {names}.'**
+  String assistantSetupInstanceNames(String names);
+
   /// #919 association regime: legalIdentityAssociationRegime
   ///
   /// In en, this message translates to:
@@ -7410,6 +7716,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'readiness gate'**
   String get helpTopicReadiness;
+
+  /// #1829 Instance owner claim: instanceOwnerClaimIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Who owns this instance? Enter the e-mail you will sign up with on it. After you confirm that address, claim the ownership from Settings → Instance owner.'**
+  String get instanceOwnerClaimIntro;
+
+  /// #1829 Instance owner claim: instanceOwnerClaimLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Owner e-mail'**
+  String get instanceOwnerClaimLabel;
 
   /// #1829 instance owner
   ///

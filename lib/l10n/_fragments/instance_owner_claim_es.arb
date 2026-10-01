@@ -1,0 +1,5 @@
+{
+  "@@locale": "es",
+  "instanceOwnerClaimIntro": "¿A quién pertenece esta instancia? Introduzca el correo electrónico con el que se registrará en ella. Tras confirmar esa dirección, reclame la titularidad en Ajustes → Propietario de la instancia.",
+  "instanceOwnerClaimLabel": "Correo del titular"
+}

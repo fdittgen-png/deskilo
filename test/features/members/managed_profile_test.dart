@@ -53,6 +53,8 @@ Future<FakeWorkspaceRepository> _pumpMembers(WidgetTester tester,
   // #1307 — Members & plans sits in Administration, below This workspace.
   await tester.scrollUntilVisible(find.text('Members & plans'), 200,
       scrollable: find.byType(Scrollable).first);
+  await tester.ensureVisible(find.text('Members & plans'));
+  await tester.pumpAndSettle();
   await tester.tap(find.text('Members & plans'));
   await tester.pumpAndSettle();
   return workspace;

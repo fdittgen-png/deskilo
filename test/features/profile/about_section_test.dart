@@ -45,6 +45,8 @@ void main() {
     expect(find.byKey(const ValueKey('about-issues')), findsOneWidget);
     expect(find.text('Support this project'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(const ValueKey('about-paypal')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('about-paypal')));
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('about-revolut')), 200,
