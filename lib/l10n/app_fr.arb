@@ -7501,6 +7501,9 @@
   },
   "scanCameraWebUnavailable": "Le scan par caméra n'est pas disponible dans le navigateur — saisissez le code, ou approchez un tag NFC de l'appareil (Chrome sur Android).",
   "bookingGateBlocked": "Non réservable ainsi",
+  "reserveBackToNow": "Revenir à maintenant",
+  "bookingModeCheckInNow": "S'installer maintenant",
+  "bookingOverlapsAnother": "La place est déjà réservée pendant une partie de ce créneau.",
   "reverseChargeTitle": "Autoliquidation pour les entreprises de l'UE",
   "@reverseChargeTitle": {
     "description": "#895 reverse charge: reverseChargeTitle"

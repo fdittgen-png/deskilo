@@ -72,6 +72,13 @@ Offset seatCenter(WidgetTester tester) {
   return topLeft + const Offset(5 * _cellSize, 4 * _cellSize) * scale;
 }
 
+/// #2016 — a free seat opens on Reserve; checking in now is the member's
+/// explicit choice in the sheet.
+Future<void> chooseCheckInNow(WidgetTester tester) async {
+  await tester.tap(find.byKey(const ValueKey('booking-mode-check-in')));
+  await tester.pumpAndSettle();
+}
+
 Reservation foreignReservation({
   ReservationStatus status = ReservationStatus.reserved,
 }) {
@@ -88,12 +95,13 @@ Reservation foreignReservation({
 }
 
 void main() {
-  testWidgets('tapping a free seat walks up: sheet → atomic check-in',
+  testWidgets('tapping a free seat and choosing Check in now walks up: sheet → atomic check-in',
       (tester) async {
     final env = await pumpPlan(tester);
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
     expect(find.textContaining('Starts now'), findsOneWidget);
 
     await tester.tap(find.widgetWithText(FilledButton, 'Check in'));
@@ -137,6 +145,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
     expect(find.textContaining('The seat is reserved from'), findsOneWidget);
 
     await tester.tap(find.widgetWithText(FilledButton, 'Check in'));

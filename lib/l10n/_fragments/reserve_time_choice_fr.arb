@@ -1,0 +1,6 @@
+{
+  "@@locale": "fr",
+  "reserveBackToNow": "Revenir à maintenant",
+  "bookingModeCheckInNow": "S'installer maintenant",
+  "bookingOverlapsAnother": "La place est déjà réservée pendant une partie de ce créneau."
+}

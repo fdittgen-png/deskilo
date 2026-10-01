@@ -12385,6 +12385,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookingGateBlocked => 'No reservable así';
 
   @override
+  String get reserveBackToNow => 'Volver a ahora';
+
+  @override
+  String get bookingModeCheckInNow => 'Registrarse ahora';
+
+  @override
+  String get bookingOverlapsAnother =>
+      'El puesto ya está reservado durante parte de este tiempo.';
+
+  @override
   String get reverseChargeTitle =>
       'Inversión del sujeto pasivo para empresas de la UE';
 
