@@ -26,12 +26,14 @@ Edit ALL of these in the same commit:
    description come from the ARB) + the REQUIRES map entry. Then
    `dart run tool/build_setup_l10n.dart` and commit `web/setup_l10n.js`
    AND `web/setup_catalogue.js` (the process grouping, from `workspaceProcesses`, #1330).
-5. `test/lint/feature_registry_test.dart` — pin = the enum's size, with a
-   dated `// N→N+1 (date): #issue …` changelog line.
+5. `test/lint/feature_registry_test.dart` — no count to bump (#1863): it
+   checks manifest/name/tier/dependency completeness and that every key a
+   migration ever registered is live or in `retiredFeatureAssessments`.
 6. Budgets: `test/lint/file_length_test.dart` — bump WITH a dated reason
    comment; `workspace_feature.dart` grows ~10 lines per flag.
 7. Routes: `lib/app/router.dart` GoRoute with `featureEnabled(...)`
-   redirect + `test/lint/route_registry_test.dart` pin.
+   redirect + a RouteRule. `test/lint/route_registry_test.dart` resolves
+   every deep link with all features off against a reviewed set (#1863).
 8. `workspace_process.dart` — primary subprocess or explicit internal reason;
    regenerate with `dart run tool/build_process_catalogue.dart`.
 9. **A migration** with `dart run tool/build_feature_registry_sql.dart`'s

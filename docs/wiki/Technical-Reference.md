@@ -28,7 +28,7 @@ contribute).
 |---|---|
 | `flutter_riverpod` 3 · `riverpod_annotation` · `riverpod_generator` | every provider is generated from an annotated function; no global singletons, and a widget test overrides any seam |
 | `freezed` · `json_serializable` | immutable domain models with value equality; a model is never mutated, only copied |
-| `go_router` 17 | one route registry, pinned by `route_registry_test`; every gated route redirects on its feature flag |
+| `go_router` 17 | one route registry, checked against the live router by `route_registry_test`; every gated route redirects on its feature flag |
 | `flex_color_scheme` | the theme, light and dark, from one seed |
 
 **Backend and transport**

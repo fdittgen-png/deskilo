@@ -6,7 +6,7 @@
 // memory, and by the time anyone read it the answers were off by a
 // factor of three. Replacing prose with a tool only helps if the tool
 // is right, so each measure below is tied to an authority that already
-// exists in the repository — the feature-registry pin, the schema
+// exists in the repository — the feature enum itself, the schema
 // version marker, the inventory's own file list — rather than to a
 // number this test made up.
 import 'dart:convert';
