@@ -103,6 +103,130 @@ String _export() => buildWorkspaceXml(
       vatRateLabels: const {'rate-20': 'Standard 20 %'},
     );
 
+/// Rebuilds the export inputs from a parsed document alone: new ids,
+/// sites and VAT labels named by what the file says.
+String _rebuild(WorkspaceXmlData data, {bool dropDeskPrice = false}) {
+  const ws = 'ws-r';
+  final settings = data.settings;
+  final workspace = Workspace(
+    id: ws,
+    name: settings.name,
+    countryCode: settings.countryCode,
+    currencyCode: settings.currencyCode,
+    timezone: settings.timezone,
+    inviteCode: 'NEW', // never exported
+    featureFlags: settings.featureFlags,
+    paymentInstructions: settings.paymentInstructions,
+  );
+  final siteNames = <String, String>{};
+  final vatLabels = <String, String>{};
+  final accessoryIds = <String, String>{};
+  for (final (i, a) in data.accessories.indexed) {
+    if (a.vatRate.isNotEmpty) vatLabels['vat-$i'] = a.vatRate;
+  }
+  final accessories = [
+    for (final (i, a) in data.accessories.indexed)
+      Accessory(
+        id: accessoryIds[a.name] = 'acc-$i',
+        workspaceId: ws,
+        name: a.name,
+        supplementCents: a.supplementCents,
+        active: a.active,
+        sortOrder: a.sortOrder,
+        vatRateId: a.vatRate.isEmpty ? '' : 'vat-$i',
+      ),
+  ];
+  final seatAccessories = <String, Set<String>>{};
+  final levels = <({Level level, FloorPlan plan})>[];
+  for (final (li, l) in data.levels.indexed) {
+    final levelId = 'lvl-$li';
+    final offices = <Office>[];
+    final desks = <Desk>[];
+    final seats = <Seat>[];
+    for (final (oi, o) in l.offices.indexed) {
+      final officeId = '$levelId-o$oi';
+      offices.add(
+        Office(
+          id: officeId,
+          workspaceId: ws,
+          levelId: levelId,
+          name: o.name,
+          color: o.color,
+          bookableAsWhole: o.bookableAsWhole,
+          rect: o.rect,
+          priceCents: o.priceCents,
+        ),
+      );
+      for (final (di, d) in o.desks.indexed) {
+        final deskId = '$officeId-d$di';
+        desks.add(
+          Desk(
+            id: deskId,
+            workspaceId: ws,
+            officeId: officeId,
+            name: d.name,
+            rect: d.rect,
+            priceCents: dropDeskPrice ? 0 : d.priceCents,
+            bookableAsWhole: d.bookableAsWhole,
+          ),
+        );
+        for (final (si, s) in d.seats.indexed) {
+          final seatId = '$deskId-s$si';
+          seats.add(
+            Seat(
+              id: seatId,
+              workspaceId: ws,
+              deskId: deskId,
+              name: s.name,
+              x: s.x,
+              y: s.y,
+              orientation: s.orientation,
+              chair: s.chair,
+              amenities: s.amenities,
+              blockedFrom: s.blockedFrom,
+              blockedTo: s.blockedTo,
+              nfcUid: s.nfcUid.isEmpty ? null : s.nfcUid,
+            ),
+          );
+          if (s.accessoryNames.isNotEmpty) {
+            seatAccessories[seatId] = {
+              for (final n in s.accessoryNames) accessoryIds[n]!,
+            };
+          }
+        }
+      }
+    }
+    final siteId = l.site.isEmpty ? null : 'site-$li';
+    if (siteId != null) siteNames[siteId] = l.site;
+    levels.add((
+      level: Level(
+        id: levelId,
+        workspaceId: ws,
+        name: l.name,
+        sortOrder: l.sortOrder,
+        priceCents: l.priceCents,
+        bookableAsWhole: l.bookableAsWhole,
+        siteId: siteId,
+      ),
+      plan: FloorPlan(
+        levelId: levelId,
+        offices: offices,
+        desks: desks,
+        seats: seats,
+      ),
+    ));
+  }
+  return buildWorkspaceXml(
+    workspace: workspace,
+    levels: levels,
+    accessories: accessories,
+    seatAccessories: seatAccessories,
+    configuration: data.configuration,
+    siteNames: siteNames,
+    vatRateLabels: vatLabels,
+  );
+}
+
 void main() {
   test('the export is schema 3 and carries the plan attributes by name',
       () {
@@ -132,30 +256,31 @@ void main() {
     expect(data.configuration, _configuration);
   });
 
-  test('export → import → export is byte-identical', () {
+  test('export → parse → rebuild → export is byte-identical', () {
     final once = _export();
     final data = parseWorkspaceXml(once);
-    // Re-export from the parsed structure: the plan through the import
-    // payload (what the server receives), the configuration as parsed.
+    // The import payload the server receives carries the v3 keys.
     final plan = workspaceXmlPlanToJson(data.levels).single;
     expect(plan[WorkspaceImportPlanKeys.priceCents], 50000);
     expect(plan[WorkspaceImportPlanKeys.site], 'Pézenas');
-    final seat = (((plan['offices'] as List).single as Map)['desks'] as List)
-        .single as Map;
+    final seat =
+        (((plan['offices'] as List).single as Map)['desks'] as List).single
+            as Map;
     expect(seat[WorkspaceImportPlanKeys.priceCents], 3000);
     expect(((seat['seats'] as List).single as Map)['nfc_uid'], '04a1b2c3');
-    expect(workspaceXmlAccessoriesToJson(data.accessories).single['vat_rate'],
-        'Standard 20 %');
-    final twice = buildWorkspaceXml(
-      workspace: _workspace,
-      levels: [(level: _level, plan: _plan)],
-      accessories: const [_accessory],
-      seatAccessories: const {'s1': {'a1'}},
-      configuration: data.configuration,
-      siteNames: const {'site-1': 'Pézenas'},
-      vatRateLabels: const {'rate-20': 'Standard 20 %'},
+    expect(
+      workspaceXmlAccessoriesToJson(data.accessories).single['vat_rate'],
+      'Standard 20 %',
     );
-    expect(twice, once);
+    // #1862 — the second export is built ONLY from what was parsed, under
+    // fresh ids, so a field the codec loses both ways cannot vouch for
+    // itself; the originals above are never reused.
+    expect(_rebuild(data), once);
+  });
+
+  test('the round trip notices a dropped attribute', () {
+    final data = parseWorkspaceXml(_export());
+    expect(_rebuild(data, dropDeskPrice: true), isNot(_export()));
   });
 
   test('a v2 document still parses: defaults for the attributes, no '
