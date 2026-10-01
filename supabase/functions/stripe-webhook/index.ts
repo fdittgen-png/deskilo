@@ -7,24 +7,52 @@
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 
+// #2014 — a failed credential READ is not an absent credential: it throws
+// (the caller answers 500 so Stripe retries) instead of silently falling
+// back to the installation's environment secret.
 async function webhookSecret(
   admin: SupabaseClient,
   workspaceId: string,
+  env: (name: string) => string | undefined,
 ): Promise<string> {
-  const { data } = await admin
+  const { data, error } = await admin
     .from("payment_credentials")
     .select("config")
     .eq("workspace_id", workspaceId)
     .eq("provider", "stripe")
     .maybeSingle();
+  if (error) throw new Error("credential lookup failed");
   const stored = (data?.config ?? {}) as Record<string, string>;
-  return stored.webhook_secret ?? Deno.env.get("STRIPE_WEBHOOK_SECRET") ?? "";
+  return stored.webhook_secret ?? env("STRIPE_WEBHOOK_SECRET") ?? "";
 }
+
+/// #2014 — how long an unknown session is answered with a retry: the
+/// provider can call back before the order id is stored on the intent.
+/// Older unknown sessions are acknowledged, so an unrelated event on the
+/// same Stripe account never retries without end.
+export const EARLY_CALLBACK_WINDOW_S = 3600;
+
+export interface Deps {
+  admin: () => SupabaseClient;
+  env: (name: string) => string | undefined;
+  nowS: () => number;
+}
+
+const defaultDeps: Deps = {
+  admin: () =>
+    createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    ),
+  env: (name) => Deno.env.get(name),
+  nowS: () => Date.now() / 1000,
+};
 
 async function validSignature(
   payload: string,
   header: string,
   secret: string,
+  nowS: number,
 ): Promise<boolean> {
   // #1144 — Stripe sends SEVERAL `v1=` pairs while a webhook secret is
   // being rotated (the old one stays valid up to 24 h), and its reference
@@ -35,7 +63,7 @@ async function validSignature(
   const timestamp = pairs.find(([k]) => k === "t")?.[1];
   const signatures = pairs.filter(([k]) => k === "v1").map(([, v]) => v);
   if (!timestamp || signatures.length === 0) return false;
-  if (Math.abs(Date.now() / 1000 - Number(timestamp)) > 300) return false;
+  if (Math.abs(nowS - Number(timestamp)) > 300) return false;
   const key = await crypto.subtle.importKey(
     "raw",
     new TextEncoder().encode(secret),
@@ -68,7 +96,10 @@ async function validSignature(
   return any;
 }
 
-Deno.serve(async (req: Request): Promise<Response> => {
+export async function handle(
+  req: Request,
+  deps: Deps = defaultDeps,
+): Promise<Response> {
   if (req.method !== "POST") return new Response("method_not_allowed", { status: 405 });
 
   const payload = await req.text();
@@ -82,30 +113,48 @@ Deno.serve(async (req: Request): Promise<Response> => {
     {}) as Record<string, unknown>;
   const sessionId = String(object.id ?? "");
 
-  const admin = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-  );
-  const { data: intent } = await admin
+  const admin = deps.admin();
+  // #2014 — every answer below is TRUE: 2xx only when the event was
+  // handled (or genuinely is not ours); a transient failure is a 5xx so
+  // Stripe redelivers it, never a silent "ok".
+  const { data: intent, error: lookupError } = await admin
     .from("payment_intents")
     .select("workspace_id")
     .eq("provider", "stripe")
     .eq("order_id", sessionId)
     .maybeSingle();
+  if (lookupError) {
+    console.error("stripe webhook: intent lookup failed");
+    return new Response("lookup_failed", { status: 500 });
+  }
   if (!intent) {
+    const age = deps.nowS() - Number(event.created ?? 0);
+    if (age < EARLY_CALLBACK_WINDOW_S) {
+      // The order id may not be stored yet: ask for a redelivery.
+      console.log("stripe webhook: session not associated yet, retry", sessionId);
+      return new Response("not_associated_yet", { status: 503 });
+    }
     console.log("stripe webhook: unknown session, ignoring", sessionId);
     return new Response("ok", { status: 200 });
   }
-  const secret = await webhookSecret(admin, intent.workspace_id);
+  let secret: string;
+  try {
+    secret = await webhookSecret(admin, intent.workspace_id, deps.env);
+  } catch {
+    console.error("stripe webhook: credential lookup failed");
+    return new Response("lookup_failed", { status: 500 });
+  }
   if (!secret) {
+    // Not consumed: once the secret is configured, a redelivery settles.
     console.log("stripe webhook not configured for workspace", intent.workspace_id);
-    return new Response("not_configured", { status: 200 });
+    return new Response("not_configured", { status: 503 });
   }
   if (
     !(await validSignature(
       payload,
       req.headers.get("stripe-signature") ?? "",
       secret,
+      deps.nowS(),
     ))
   ) {
     console.error("stripe webhook signature verification FAILED");
@@ -152,13 +201,19 @@ Deno.serve(async (req: Request): Promise<Response> => {
     event.type === "checkout.session.expired" ||
     event.type === "checkout.session.async_payment_failed"
   ) {
-    await admin.rpc("mark_payment_failed", {
+    const { error } = await admin.rpc("mark_payment_failed", {
       p_provider: "stripe",
       p_order_id: sessionId,
     });
+    if (error) {
+      console.error("stripe mark failed failed", error.message);
+      return new Response("mark_failed_failed", { status: 500 });
+    }
     console.log("stripe session marked failed", sessionId, event.type);
   } else {
     console.log("stripe webhook ignored event", event.type);
   }
   return new Response("ok", { status: 200 });
-});
+}
+
+if (import.meta.main) Deno.serve((req) => handle(req));
