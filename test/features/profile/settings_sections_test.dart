@@ -84,8 +84,9 @@ void main() {
           reason: '"${order[i - 1]}" must come before "${order[i]}"');
     }
     // Each section wraps what it is about.
-    expect(dy(tester, 'My account'), lessThan(dy(tester, 'Language')));
-    expect(dy(tester, 'Language'), lessThan(dy(tester, 'My membership')));
+    // #1823 — the account's own rows live in Me; this row leads there.
+    expect(dy(tester, 'My account'), lessThan(dy(tester, 'My account is in Me')));
+    expect(dy(tester, 'My account is in Me'), lessThan(dy(tester, 'My membership')));
     expect(dy(tester, 'My membership'), lessThan(dy(tester, 'Status')));
     expect(dy(tester, 'This workspace'), lessThan(dy(tester, 'Workspace')));
     expect(dy(tester, 'Features'), lessThan(dy(tester, 'Administration')));
@@ -128,7 +129,7 @@ void main() {
     }
     // The four essentials, pinned by what they are.
     expect(find.text('Sign out'), findsOneWidget);
-    expect(find.text('Language'), findsOneWidget);
+    expect(find.text('My account is in Me'), findsOneWidget); // #1823
     expect(find.byKey(const ValueKey('about-privacy')), findsOneWidget);
     expect(find.byKey(const ValueKey('settings-help')), findsOneWidget);
   });

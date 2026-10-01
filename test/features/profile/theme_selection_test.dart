@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/open_my_account.dart';
 
 /// In-memory [ThemeStore] so widget tests never touch SharedPreferences.
 class InMemoryThemeStore implements ThemeStore {
@@ -50,7 +51,7 @@ Future<void> pumpSettings(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byIcon(Icons.settings_outlined));
+  await openMyAccount(tester); // #1823: My account is in Me
   await tester.pumpAndSettle();
 }
 

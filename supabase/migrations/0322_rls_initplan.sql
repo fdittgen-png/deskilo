@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0321 (#2018) -- request-constant auth facts are evaluated once per
+-- 0322 (#2018) -- request-constant auth facts are evaluated once per
 -- statement, not once per row.
 --
 -- A policy that calls `auth.uid()`, `auth.jwt()` or `auth.role()` bare is
@@ -16,28 +16,13 @@
 -- expression moves. Permissive/restrictive, roles and commands are not
 -- touched (ALTER POLICY changes only USING / WITH CHECK).
 
-create function pg_temp.initplan(p_expr text) returns text language plpgsql immutable as $$
-declare
-  v text := p_expr;
-  f text;
-begin
-  if v is null then return null; end if;
-  foreach f in array array['uid', 'jwt', 'role'] loop
-    -- Park the already-wrapped form, wrap the bare one, restore.
-    v := replace(v, format('( SELECT auth.%s() AS %s)', f, f), format('@@%s@@', f));
-    v := replace(v, format('auth.%s()', f), format('( SELECT auth.%s() AS %s)', f, f));
-    v := replace(v, format('@@%s@@', f), format('( SELECT auth.%s() AS %s)', f, f));
-  end loop;
-  return v;
-end;
-$$;
-
 do $rewrite$
 declare
   p record;
   v_using text;
   v_check text;
   v_sql text;
+  f text;
 begin
   for p in
     select schemaname, tablename, policyname, qual, with_check
@@ -47,8 +32,19 @@ begin
        and (coalesce(qual, '') ~ 'auth\.(uid|jwt|role)\(\)'
             or coalesce(with_check, '') ~ 'auth\.(uid|jwt|role)\(\)')
   loop
-    v_using := pg_temp.initplan(p.qual);
-    v_check := pg_temp.initplan(p.with_check);
+    v_using := p.qual;
+    v_check := p.with_check;
+    -- Park the already-wrapped form, wrap the bare one, restore.
+    foreach f in array array['uid', 'jwt', 'role'] loop
+      v_using := replace(replace(replace(v_using,
+        format('( SELECT auth.%s() AS %s)', f, f), format('@@%s@@', f)),
+        format('auth.%s()', f), format('( SELECT auth.%s() AS %s)', f, f)),
+        format('@@%s@@', f), format('( SELECT auth.%s() AS %s)', f, f));
+      v_check := replace(replace(replace(v_check,
+        format('( SELECT auth.%s() AS %s)', f, f), format('@@%s@@', f)),
+        format('auth.%s()', f), format('( SELECT auth.%s() AS %s)', f, f)),
+        format('@@%s@@', f), format('( SELECT auth.%s() AS %s)', f, f));
+    end loop;
     if v_using is not distinct from p.qual and v_check is not distinct from p.with_check then
       continue;
     end if;
@@ -60,4 +56,4 @@ begin
 end;
 $rewrite$;
 
-select public.set_deskilo_schema_version(321);
+select public.set_deskilo_schema_version(322);

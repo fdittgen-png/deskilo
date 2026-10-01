@@ -24,18 +24,22 @@ import '../../core/theme/app_typography.dart';
 /// a development one. Before a workspace is loaded there is nothing to
 /// say, so nothing is shown.
 class DevelopmentBanner extends ConsumerWidget {
-  const DevelopmentBanner({super.key, required this.child});
+  const DevelopmentBanner({super.key, this.hidden = false, required this.child});
 
+  /// #1823 — the Me layer is the person's, not the space's: no strip there.
+  final bool hidden;
   final Widget child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    if (workspace == null || !workspace.isDevelopment) return child;
+    final show = !hidden && workspace != null && workspace.isDevelopment;
+    // Always the same Column, the body last: the strip coming and going
+    // (a space entered, Me reached) never rebuilds the navigator below.
     return Column(
       children: [
-        const _DevelopmentStrip(),
-        Expanded(child: child),
+        if (show) const _DevelopmentStrip(),
+        Expanded(key: const ValueKey('layer-body'), child: child),
       ],
     );
   }

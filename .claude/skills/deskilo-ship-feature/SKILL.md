@@ -37,6 +37,9 @@ Edit ALL of these in the same commit:
 9. **A migration** with `dart run tool/build_feature_registry_sql.dart`'s
    output — the server's copy of the manifest (#1333). A server gate calls
    `public.feature_effective(ws, 'key')`, never reads the flag by hand.
+10. `feature_lifecycle.dart` — the flag's `featureAssessments` line
+   (#1850): `_legacy`/unreviewed until a review names evidence ids from
+   `docs/product/capabilities.json`; maturity never gates anything.
 Validation domains grow in FOUR places (AGENT_RULES #767/#769); the
 placeholders registry has its own pin (`deskilo-reports`).
 

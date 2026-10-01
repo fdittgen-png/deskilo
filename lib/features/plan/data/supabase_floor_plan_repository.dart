@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ids/request_id.dart';
+import 'plan_media_steps.dart';
 import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -136,6 +139,30 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   static String _bgPath(String workspaceId, String levelId) =>
       '$workspaceId/$levelId';
 
+  Future<String?> _backgroundPath(String levelId) async =>
+      (await _client
+              .from('levels')
+              .select('background_path')
+              .eq('id', levelId)
+              .maybeSingle())?['background_path'] as String?;
+
+  PlanMediaSteps _media({
+    required String levelId,
+    Uint8List? bytes,
+    String? contentType,
+  }) =>
+      PlanMediaSteps(
+        upload: (path) => _client.storage.from('floor-plans').uploadBinary(
+              path,
+              bytes!,
+              fileOptions: FileOptions(contentType: contentType),
+            ),
+        publish: (path) => _client
+            .from('levels')
+            .update({'background_path': path}).eq('id', levelId),
+        remove: (path) => _client.storage.from('floor-plans').remove([path]),
+      );
+
   @override
   Future<void> setLevelBackground(
     String workspaceId,
@@ -143,15 +170,13 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     required Uint8List bytes,
     required String contentType,
   }) async {
-    final path = _bgPath(workspaceId, levelId);
-    await _client.storage.from('floor-plans').uploadBinary(
-          path,
-          bytes,
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
-        );
-    await _client
-        .from('levels')
-        .update({'background_path': path}).eq('id', levelId);
+    // #2012 — a new object per upload; the old one stays live until the
+    // level points at the new one (see PlanMediaSteps).
+    await _media(levelId: levelId, bytes: bytes, contentType: contentType)
+        .replace(
+      candidate: '${_bgPath(workspaceId, levelId)}.${newRequestId()}',
+      previous: await _backgroundPath(levelId),
+    );
     await _bust();
   }
 
@@ -160,12 +185,9 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     String workspaceId,
     String levelId,
   ) async {
-    await _client.storage.from('floor-plans').remove([
-      _bgPath(workspaceId, levelId),
-    ]);
-    await _client
-        .from('levels')
-        .update({'background_path': null}).eq('id', levelId);
+    // #2012 — the reference first, then the object.
+    await _media(levelId: levelId)
+        .clear(previous: await _backgroundPath(levelId));
     await _bust();
   }
 
@@ -341,11 +363,19 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         .single();
     final id = row['id'] as String;
     final path = _imgPath(workspaceId, id);
-    await _client.storage.from('floor-plans').uploadBinary(
-          path,
-          bytes,
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
-        );
+    try {
+      await _client.storage.from('floor-plans').uploadBinary(
+            path,
+            bytes,
+            fileOptions: FileOptions(contentType: contentType, upsert: true),
+          );
+    } catch (e, st) {
+      // #2012 — no pending row is left behind by a failed upload.
+      TraceLogger.instance.warn('plan', 'plan image upload failed',
+          error: e, stackTrace: st);
+      await _client.from('plan_images').delete().eq('id', id);
+      rethrow;
+    }
     await _client
         .from('plan_images')
         .update({'storage_path': path}).eq('id', id);
@@ -372,10 +402,17 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         .eq('id', imageId)
         .maybeSingle();
     final path = row?['storage_path'] as String?;
-    if (path != null && path != 'pending') {
-      await _client.storage.from('floor-plans').remove([path]);
-    }
+    // #2012 — the row first (no reference to a removed object), then the
+    // object, best effort.
     await _client.from('plan_images').delete().eq('id', imageId);
+    if (path != null && path != 'pending') {
+      try {
+        await _client.storage.from('floor-plans').remove([path]);
+      } catch (e, st) {
+        TraceLogger.instance.warn('plan', 'plan image object left for cleanup',
+            error: e, stackTrace: st);
+      }
+    }
     await _bust();
   }
 

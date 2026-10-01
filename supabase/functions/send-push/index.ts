@@ -13,12 +13,15 @@
 // the trigger never fails.
 
 import { refuseDelegated } from "../_shared/delegated.ts";
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 
-const supabase = createClient(
-  Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-);
+// Built on first use (not at import), so the helpers can be tested.
+let client: SupabaseClient | null = null;
+const db = (): SupabaseClient =>
+  client ??= createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  );
 
 // Generic English notification text per kind (the 0012 privacy doctrine:
 // no names, no times; a foregrounded app replaces this with its own
@@ -43,7 +46,75 @@ const TEXTS: Record<string, { title: string; body: string }> = {
   },
 };
 
-async function fcmAccessToken(sa: {
+/** #2020 — every request to Google has a deadline that covers the body
+ * too (the abort also ends a stalled body read). */
+export const FETCH_DEADLINE_MS = 10_000;
+
+/** #2020 — FCM v1 says a registration is gone with the structured
+ * `UNREGISTERED` error code. Only that prunes an endpoint: a bare 404 or
+ * 410 can be a wrong project or route, and must not wipe valid tokens. */
+export function isUnregistered(status: number, body: unknown): boolean {
+  if (status !== 404 && status !== 410 && status !== 400) return false;
+  const details = (body as { error?: { details?: unknown[] } })?.error?.details;
+  return Array.isArray(details) &&
+    details.some((d) => (d as { errorCode?: string })?.errorCode === "UNREGISTERED");
+}
+
+/** #2020 — the pending-validation badge, ONCE per distinct member (was
+ * once per device). A failed count is unknown, not zero: the member is
+ * left out of the map and the message carries no badge. */
+export async function badgeCounts(
+  // deno-lint-ignore no-explicit-any
+  supabase: any,
+  memberIds: string[],
+): Promise<Map<string, number>> {
+  const out = new Map<string, number>();
+  for (const id of new Set(memberIds)) {
+    const { count, error } = await supabase
+      .from("events")
+      .select("id", { count: "exact", head: true })
+      .eq("subject_member_id", id)
+      .eq("status", "pending");
+    if (!error && typeof count === "number") out.set(id, count);
+  }
+  return out;
+}
+
+/** #2020 — the OAuth token, reused within this worker until a minute
+ * before it expires; concurrent callers share one refresh. Keyed by the
+ * service account, so a rotated credential never reuses the old token. */
+const tokenCache = new Map<string, Promise<{ token: string; expiresAt: number }>>();
+
+export async function cachedAccessToken(
+  sa: { client_email: string; private_key: string; project_id?: string },
+  mint: typeof fcmAccessToken = fcmAccessToken,
+  nowS: () => number = () => Date.now() / 1000,
+): Promise<string> {
+  const key = `${sa.project_id ?? ""}|${sa.client_email}|${sa.private_key.length}`;
+  const cached = tokenCache.get(key);
+  if (cached) {
+    try {
+      const { token, expiresAt } = await cached;
+      if (expiresAt - 60 > nowS()) return token;
+    } catch {
+      // A failed refresh is retried below, not reused.
+    }
+  }
+  const pending = mint(sa).then((token) => ({ token, expiresAt: nowS() + 3500 }));
+  tokenCache.set(key, pending);
+  try {
+    return (await pending).token;
+  } catch (e) {
+    tokenCache.delete(key);
+    throw e;
+  }
+}
+
+export function resetTokenCacheForTests() {
+  tokenCache.clear();
+}
+
+export async function fcmAccessToken(sa: {
   client_email: string;
   private_key: string;
 }): Promise<string> {
@@ -79,12 +150,15 @@ async function fcmAccessToken(sa: {
     method: "POST",
     headers: { "content-type": "application/x-www-form-urlencoded" },
     body: `grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=${unsigned}.${sigB64}`,
+    signal: AbortSignal.timeout(FETCH_DEADLINE_MS),
   });
-  if (!res.ok) throw new Error(`token exchange failed: ${await res.text()}`);
+  // The body is not logged: it can echo credential details.
+  if (!res.ok) throw new Error(`token exchange failed: HTTP ${res.status}`);
   return (await res.json()).access_token as string;
 }
 
-Deno.serve(async (req) => {
+export async function handle(req: Request): Promise<Response> {
+  const supabase = db();
   // #1614 — system-only: a delegated (MCP) token never triggers a push.
   const delegated = refuseDelegated(req);
   if (delegated) return delegated;
@@ -179,22 +253,20 @@ Deno.serve(async (req) => {
     .like("endpoint", "fcm:%");
   if (!endpoints || endpoints.length === 0) return Response.json({ sent: 0 });
 
-  const token = await fcmAccessToken(sa);
+  const token = await cachedAccessToken(sa);
   const text = TEXTS[kind];
+  // iOS/macOS badge: each recipient's live pending count, once per member.
+  const badges = await badgeCounts(supabase, endpoints.map((ep) => ep.member_id));
   let sent = 0;
+  let failed = 0;
   for (const ep of endpoints) {
-    // iOS/macOS badge: the recipient's live pending count.
-    const { count } = await supabase
-      .from("events")
-      .select("id", { count: "exact", head: true })
-      .eq("subject_member_id", ep.member_id)
-      .eq("status", "pending");
+    const badge = badges.get(ep.member_id);
     const message = {
       message: {
         token: ep.endpoint.slice(4),
         notification: { title: text.title, body: text.body },
         data: { kind },
-        apns: { payload: { aps: { badge: count ?? 0 } } },
+        ...(badge === undefined ? {} : { apns: { payload: { aps: { badge } } } }),
       },
     };
     const res = await fetch(
@@ -206,13 +278,22 @@ Deno.serve(async (req) => {
           "content-type": "application/json",
         },
         body: JSON.stringify(message),
+        signal: AbortSignal.timeout(FETCH_DEADLINE_MS),
       },
-    );
-    if (res.ok) sent++;
-    else if (res.status === 404 || res.status === 410) {
-      // Dead token: prune the endpoint row.
+    ).catch(() => null);
+    if (res?.ok) {
+      sent++;
+      continue;
+    }
+    failed++;
+    if (!res) continue; // deadline or network: outcome unknown, kept
+    const body = await res.json().catch(() => null);
+    if (isUnregistered(res.status, body)) {
+      // A registration FCM says is gone: prune exactly that endpoint.
       await supabase.from("push_endpoints").delete().eq("endpoint", ep.endpoint);
     }
   }
-  return Response.json({ sent });
-});
+  return Response.json({ sent, failed });
+}
+
+if (import.meta.main) Deno.serve(handle);

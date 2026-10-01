@@ -6,8 +6,10 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/feature_lifecycle.dart';
 import '../../domain/workspace_feature.dart';
 import '../feature_surface_labels.dart';
+import 'feature_maturity_badge.dart';
 
 /// #1221 — the heading of one part of the app: what it is called, what
 /// that part of the app is for, and what it looks like on the bar.
@@ -75,6 +77,7 @@ class FeatureTile extends StatelessWidget {
     required this.inactive,
     required this.alsoEnables,
     required this.onChanged,
+    this.assessment,
   });
 
   final FeatureManifestEntry entry;
@@ -90,6 +93,9 @@ class FeatureTile extends StatelessWidget {
   /// What turning this on would switch on as well, already named.
   final List<String> alsoEnables;
   final ValueChanged<bool> onChanged;
+
+  /// #1850 — the row's maturity and lifecycle; the registry's when null.
+  final FeatureAssessment? assessment;
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +148,14 @@ class FeatureTile extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // #1850 — its own line: beside the title it squeezed the
+            // name at phone width and at large text.
+            Padding(
+              padding: const EdgeInsets.only(bottom: 2),
+              child: FeatureMaturityBadge(
+                assessment: assessment ?? featureAssessmentOf(entry.feature),
+              ),
+            ),
             Text(
               split.lead,
               style: held ? TextStyle(color: theme.colorScheme.error) : null,

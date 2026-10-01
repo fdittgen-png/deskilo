@@ -3790,6 +3790,38 @@ class AppLocalizationsEn extends AppLocalizations {
       'Asked for, never assumed. Switch on what this space actually runs.';
 
   @override
+  String get featureMaturityUnreviewed => 'Unreviewed';
+
+  @override
+  String get featureMaturityAlpha => 'Alpha';
+
+  @override
+  String get featureMaturityBeta => 'Beta';
+
+  @override
+  String get featureMaturityStable => 'Stable';
+
+  @override
+  String get featureLifecycleActive => 'Active';
+
+  @override
+  String get featureLifecycleDeprecated => 'Deprecated';
+
+  @override
+  String get featureLifecycleRetired => 'Retired';
+
+  @override
+  String get featureMaturityFilterLabel => 'Maturity';
+
+  @override
+  String get featureMaturityFilterAll => 'All stages';
+
+  @override
+  String featureMaturitySemantics(String maturity, String lifecycle) {
+    return 'Maturity $maturity, $lifecycle';
+  }
+
+  @override
   String get federationContinue => 'Continue with Deskilo';
 
   @override
@@ -8130,6 +8162,229 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpUsagePending => 'Awaiting validation';
+
+  @override
+  String get meTabHome => 'Home';
+
+  @override
+  String get meTabDiscover => 'Discover';
+
+  @override
+  String get meTabMessages => 'Messages';
+
+  @override
+  String get meTabMe => 'Me';
+
+  @override
+  String get meHomeTitle => 'Home';
+
+  @override
+  String get meMySpaces => 'My spaces';
+
+  @override
+  String get meHeaderOwned => 'Your account · it belongs only to you';
+
+  @override
+  String get meNoSpaceTitle => 'You are not in a space yet';
+
+  @override
+  String get meNoSpaceBody =>
+      'Find one near you, join with an invitation code, or create your own.';
+
+  @override
+  String get meFindSpace => 'Find a space';
+
+  @override
+  String get meJoinSpace => 'Join with a code';
+
+  @override
+  String get meCreateSpace => 'Create a space';
+
+  @override
+  String get meManageSpaces => 'Manage my spaces';
+
+  @override
+  String get meSpacePending => 'Waiting for approval';
+
+  @override
+  String get meSpaceLastUsed => 'Last used';
+
+  @override
+  String get meLeaveAction => 'Leave this space';
+
+  @override
+  String get meLeaveOwner => 'Owners hand the space over before leaving';
+
+  @override
+  String meLeaveTitle(String name) {
+    return 'Leave $name?';
+  }
+
+  @override
+  String get meLeaveBody =>
+      'You stop being a member. Your bookings, invoices and messages stay with the space. To also erase your data, use Privacy.';
+
+  @override
+  String get meLeaveFailed => 'Could not leave the space. Please try again.';
+
+  @override
+  String meLeaveDone(String name) {
+    return 'You left $name.';
+  }
+
+  @override
+  String meLinkedOpenBody(String host) {
+    return 'This space lives on $host. The app works with one server at a time: opening it switches to that server and asks you to sign in there.';
+  }
+
+  @override
+  String meLinkedOpen(String host) {
+    return 'Open on $host';
+  }
+
+  @override
+  String meLinkedUnavailable(String host) {
+    return '$host did not answer: this list may be incomplete.';
+  }
+
+  @override
+  String meLinkedPendingOn(String host) {
+    return 'Waiting for approval · $host';
+  }
+
+  @override
+  String get meSectionMine => 'My history and data';
+
+  @override
+  String get meWhereSpacesLive => 'Where my spaces live';
+
+  @override
+  String get meAccountInMe => 'My account is in Me';
+
+  @override
+  String get meAccountInMeBody =>
+      'Photo, language, theme and sign-ins are yours in every space.';
+
+  @override
+  String get meSpaceException => 'In this space';
+
+  @override
+  String get spaceBackToMe => 'Back to Me';
+
+  @override
+  String get spaceChipTooltip => 'Switch space';
+
+  @override
+  String get visibilityTitle => 'Who sees me';
+
+  @override
+  String get visibilityIntro =>
+      'Each part of your account picks its own audience. Nothing is public unless you choose it.';
+
+  @override
+  String get visibilityIdentity => 'Name and photo';
+
+  @override
+  String get visibilityAbout => 'Profession and bio';
+
+  @override
+  String get visibilityContact => 'WhatsApp and e-mail';
+
+  @override
+  String get visibilityPresence => 'In the space today';
+
+  @override
+  String get visibilityReachability => 'Who can start a conversation with me';
+
+  @override
+  String get visibilityNobody => 'Nobody';
+
+  @override
+  String get visibilityMySpaces => 'Members of my spaces';
+
+  @override
+  String get visibilityChosenSpaces => 'Members of chosen spaces';
+
+  @override
+  String get visibilitySignedIn => 'Anyone signed in';
+
+  @override
+  String get visibilitySaveFailed =>
+      'Could not save who sees this. Please try again.';
+
+  @override
+  String get visibilityPreviewTitle => 'How others see me';
+
+  @override
+  String get visibilityPreviewMySpaces => 'A member of my spaces';
+
+  @override
+  String get visibilityPreviewSignedIn => 'Anyone signed in';
+
+  @override
+  String get visibilityPreviewNobody => 'Only me';
+
+  @override
+  String get visibilityPreviewNothing => 'They see nothing of you.';
+
+  @override
+  String get visibilityPreviewFailed => 'The preview could not be loaded.';
+
+  @override
+  String get visibilityPreviewCanWrite => 'Can start a conversation with you';
+
+  @override
+  String get visibilityPreviewCannotWrite =>
+      'Cannot start a conversation with you';
+
+  @override
+  String visibilityChosenCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Members of $count chosen spaces',
+      one: 'Members of 1 chosen space',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get portalVisibilityLink => 'Who can find and message me';
+
+  @override
+  String get portalVisibilityLinkBody => 'Chosen in Me, under Who sees me.';
+
+  @override
+  String get portalEnterSpace => 'Enter';
+
+  @override
+  String get portalCopyEmail => 'Copy the e-mail';
+
+  @override
+  String get portalEmailCopied => 'E-mail copied';
+
+  @override
+  String get meAddressSaveFailed =>
+      'Could not save your address. Please try again.';
+
+  @override
+  String get visibilityAboutMe => 'About me';
+
+  @override
+  String get visibilityAboutEmpty => 'Add your profession and a few words';
+
+  @override
+  String get visibilityProfession => 'Profession';
+
+  @override
+  String get visibilityBio => 'A few words about you';
+
+  @override
+  String get visibilityAboutSaveFailed =>
+      'Could not save your profession and bio. Please try again.';
+
+  @override
+  String get portalOpenMe => 'Me: my account and my spaces';
 
   @override
   String get featureMemberAccountMenuTitle => 'Members see My account';
