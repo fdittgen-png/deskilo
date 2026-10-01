@@ -14,7 +14,9 @@ import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_reservation_repository.dart';
@@ -332,4 +334,32 @@ void main() {
     await _confirm(tester);
     _expectWindow(_single(repo), _pm);
   });
+
+  testWidgets('T08 — the workspace changes while the sheet is open: the '
+      'confirmed choice is dropped, nothing is booked', (tester) async {
+    final repo = await pumpHub(
+      tester,
+      granularity: BookingGranularity.halfDay,
+      clock: _clock,
+      configureWorkspace: (w) => w.workspaces.add(
+        w.workspaces.first.copyWith(id: 'ws-other', name: 'Other space'),
+      ),
+    );
+    await _openSeat(tester);
+    final container =
+        ProviderScope.containerOf(tester.element(find.byType(BookingSheet)));
+    final before = container.read(currentWorkspaceProvider).value?.id;
+    await container.read(activeWorkspaceIdProvider.notifier).select('ws-other');
+    await tester.pump();
+    final after = container.read(currentWorkspaceProvider).value?.id;
+    expect(after, isNot(before), reason: 'the switch must take effect');
+    await tester.pumpAndSettle();
+    // The hub may close the sheet on the switch; if it survives, its
+    // confirmation must still book nothing.
+    if (_key('booking-confirm').evaluate().isNotEmpty) {
+      await _confirm(tester);
+    }
+    expect(repo.reservations, isEmpty);
+  });
 }
+
