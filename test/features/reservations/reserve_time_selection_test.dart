@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_reservation_repository.dart';
-import 'reserve_hub_test.dart' show pumpHub, seatCenter;
+import 'reserve_hub_test.dart' show pickHubDate, pumpHub, seatCenter;
 
 final _day = DateTime(2026, 5, 13);
 HalfDayWindow get _am => HalfDayWindows.morning(_day);
@@ -241,6 +241,45 @@ void main() {
     final created = _single(repo);
     _expectWindow(created, _pm);
     expect(created.checkedInAt, isNull);
+  });
+
+  testWidgets('T02 — a future open day, Morning picked in the header: '
+      'no walk-up is offered (not live), the sheet reserves Morning of '
+      'that day', (tester) async {
+    final repo = await pumpHub(
+      tester,
+      granularity: BookingGranularity.halfDay,
+      clock: _clock,
+    );
+    final tomorrow = DateTime(_day.year, _day.month, _day.day + 1);
+    await pickHubDate(tester, tomorrow);
+    await _tap(tester, 'reserve-am-chip');
+    await _openSeat(tester);
+    expect(_key('booking-mode'), findsNothing,
+        reason: 'checking in tomorrow is not an action');
+    expect(_key('booking-check-in-now'), findsNothing);
+    await _confirm(tester);
+    final created = _single(repo);
+    _expectWindow(created, HalfDayWindows.morning(tomorrow));
+    expect(created.checkedInAt, isNull);
+  });
+
+  testWidgets('T04 — full-day workspace: the day is the only period, '
+      'explained by the configuration; still a reservation by default',
+      (tester) async {
+    final repo = await pumpHub(
+      tester,
+      granularity: BookingGranularity.fullDay,
+      clock: _clock,
+    );
+    await _openSeat(tester);
+    expect(_key('booking-mode'), findsOneWidget);
+    expect(_key('booking-from-tile'), findsNothing);
+    expect(_key('booking-pm'), findsNothing);
+    await _confirm(tester);
+    final created = _single(repo);
+    expect(created.checkedInAt, isNull);
+    expect(created.status, ReservationStatus.reserved);
   });
 
   testWidgets('T09 — Back to now is named: a visible word, the full action '
