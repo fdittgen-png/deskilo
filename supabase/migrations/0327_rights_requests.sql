@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0326 (#1915) — a rights request is a record with a clock, not a button.
+-- 0327 (#1915) — a rights request is a record with a clock, not a button.
 --
 -- Export (`export_my_data`) and erasure (`erase_my_membership`) already
 -- exist as self-service. What was missing is everything around them that
@@ -416,7 +416,7 @@ declare
   v_anchor text := $a$    'exported_at', now(),$a$;
 begin
   v_def := pg_get_functiondef('public.export_my_data(uuid)'::regprocedure);
-  if position(v_anchor in v_def) = 0 then raise exception '0326: export anchor missing'; end if;
+  if position(v_anchor in v_def) = 0 then raise exception '0327: export anchor missing'; end if;
   execute replace(v_def, v_anchor, $a$    'exported_at', now(),
     'rights_requests', (select coalesce(jsonb_agg(to_jsonb(rr) - 'decided_by'), '[]'::jsonb) from public.rights_requests rr where rr.requester_user_id = auth.uid() and rr.workspace_id = p_workspace_id),
     'coverage', jsonb_build_object(
@@ -431,4 +431,4 @@ $export$;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(326);
+select public.set_deskilo_schema_version(327);
