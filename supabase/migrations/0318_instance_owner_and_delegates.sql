@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0314 (#1829) -- the instance owner is visible, and can delegate.
+-- 0318 (#1829) -- the instance owner is visible, and can delegate.
 --
 -- Some decisions are about the whole installation, not one workspace: this
 -- database is shared by every workspace on it. Someone must answer for it,
@@ -226,4 +226,4 @@ grant execute on function public.claim_instance_ownership() to authenticated;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(314);
+select public.set_deskilo_schema_version(318);

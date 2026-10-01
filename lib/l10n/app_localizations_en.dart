@@ -8282,6 +8282,226 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberOriginHeading => 'How this membership began';
 
   @override
+  String get featureSpaceInquiriesTitle => 'Write to the hosts';
+
+  @override
+  String get featureSpaceInquiriesDesc =>
+      'A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay.';
+
+  @override
+  String get featureMessageForwardingTitle => 'Message forwarding';
+
+  @override
+  String get featureMessageForwardingDesc =>
+      'A message can be forwarded into another conversation the forwarder takes part in. The copy names where it came from and who wrote it, the original conversation is told who forwarded it and where, and an author can lock a message against forwarding. Off refuses forwards out of this space.';
+
+  @override
+  String get featureCaptureProtectionTitle => 'Screen capture protection';
+
+  @override
+  String get featureCaptureProtectionDesc =>
+      'Message screens refuse screenshots and screen recording where the device allows it, hide their content while the screen is recorded, and announce a screenshot in the conversation where it can only be detected. A browser cannot block screenshots; there the thread is blurred when the tab loses focus.';
+
+  @override
+  String messengerContextSpace(String space) {
+    return 'In $space';
+  }
+
+  @override
+  String get messengerContextAccount => 'Person to person';
+
+  @override
+  String messengerContextInquiryOut(String space) {
+    return 'Your inquiry to $space';
+  }
+
+  @override
+  String messengerContextInquiryIn(String space) {
+    return 'Inquiry to $space';
+  }
+
+  @override
+  String messengerOnServer(String server) {
+    return 'on $server';
+  }
+
+  @override
+  String messengerInboxUnavailable(String servers) {
+    return 'Not reachable right now: $servers. Their conversations are missing from this list.';
+  }
+
+  @override
+  String get messengerMessageActions => 'Message actions';
+
+  @override
+  String get messengerForward => 'Forward';
+
+  @override
+  String get messengerForwardLocked =>
+      'The author locked this message against forwarding.';
+
+  @override
+  String get messengerLock => 'Lock against forwarding';
+
+  @override
+  String get messengerUnlock => 'Allow forwarding';
+
+  @override
+  String get messengerHistory => 'What happened';
+
+  @override
+  String get messengerDelete => 'Delete message';
+
+  @override
+  String get messengerDeleteConfirm =>
+      'Delete this message for everyone in the conversation?';
+
+  @override
+  String get messengerDeleted => 'Message deleted.';
+
+  @override
+  String get messengerForwardTitle => 'Forward to';
+
+  @override
+  String get messengerForwardExplain =>
+      'Everyone in the original conversation, the author first, is told who forwarded it, when, and where to.';
+
+  @override
+  String get messengerForwardNoTargets =>
+      'No other conversation on this server to forward into.';
+
+  @override
+  String messengerForwarded(String target) {
+    return 'Forwarded to $target.';
+  }
+
+  @override
+  String messengerForwardedFrom(String context, String author) {
+    return 'Forwarded from $context · written by $author';
+  }
+
+  @override
+  String messengerNoticeForwarded(String actor, String target) {
+    return '$actor forwarded a message of this conversation to $target.';
+  }
+
+  @override
+  String messengerNoticeCaptured(String actor) {
+    return '$actor took a screenshot of this conversation.';
+  }
+
+  @override
+  String get messengerRead => 'Read';
+
+  @override
+  String get messengerDelivered => 'Delivered';
+
+  @override
+  String get messengerHistoryEmpty => 'Nothing recorded for this message yet.';
+
+  @override
+  String messengerEventSent(String actor) {
+    return 'Sent by $actor';
+  }
+
+  @override
+  String messengerEventRead(String actor) {
+    return 'Read by $actor';
+  }
+
+  @override
+  String messengerEventForwarded(String actor, String target) {
+    return 'Forwarded by $actor to $target';
+  }
+
+  @override
+  String messengerEventDeleted(String actor) {
+    return 'Deleted by $actor';
+  }
+
+  @override
+  String messengerEventCaptured(String actor) {
+    return 'Screenshot taken by $actor';
+  }
+
+  @override
+  String messengerEventOther(String event, String actor) {
+    return '$event · $actor';
+  }
+
+  @override
+  String get messengerWriteToHosts => 'Write to the hosts';
+
+  @override
+  String get messengerHostsIntro =>
+      'Your message is read by these hosts of the space:';
+
+  @override
+  String get messengerHostsNone =>
+      'This space has nobody answering messages right now.';
+
+  @override
+  String get messengerInquirySend => 'Send inquiry';
+
+  @override
+  String get messengerInquiriesTitle => 'Inquiries';
+
+  @override
+  String get messengerInquiriesEmpty => 'No inquiries yet.';
+
+  @override
+  String get messengerInquiryClose => 'Close inquiry';
+
+  @override
+  String get messengerInquiryClosed => 'Inquiry closed.';
+
+  @override
+  String messengerInquiryFrom(String name) {
+    return 'From $name';
+  }
+
+  @override
+  String messengerNoticeForwardedPrivate(String actor) {
+    return '$actor forwarded a message of this conversation to a personal conversation.';
+  }
+
+  @override
+  String messengerEventForwardedPrivate(String actor) {
+    return 'Forwarded by $actor to a personal conversation';
+  }
+
+  @override
+  String messengerEventForwardedFrom(String actor, String context) {
+    return 'Originally written by $actor in $context';
+  }
+
+  @override
+  String get messengerRefusedForwardingOff =>
+      'This space does not allow forwarding its messages.';
+
+  @override
+  String get messengerRefusedTooLong =>
+      'This message is too long for that conversation.';
+
+  @override
+  String get messengerRefusedClosed => 'This inquiry is closed.';
+
+  @override
+  String get messengerRefusedUnavailable =>
+      'This space does not take inquiries right now.';
+
+  @override
+  String get messengerRefusedLimit => 'Too many at once. Please wait a minute.';
+
+  @override
+  String get captureWebNotice =>
+      'Your browser cannot block screenshots of this conversation.';
+
+  @override
+  String get captureRecordingHidden =>
+      'Hidden while your screen is recorded or mirrored.';
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override

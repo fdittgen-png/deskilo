@@ -20,6 +20,11 @@ import '../../providers/workspace_providers.dart';
 import 'conversation_bubble.dart';
 import 'group_info_sheet.dart';
 import 'member_note_composer.dart';
+import '../../../../core/capture/capture_shield.dart';
+import '../../../directory/domain/messenger.dart';
+import '../../../directory/presentation/messenger/message_actions_sheet.dart';
+import '../../../directory/presentation/messenger/message_marks.dart';
+import '../../../directory/providers/messenger_providers.dart';
 
 /// A conversation, by id (#687) — the thread behind a row of the
 /// messaging centre, for a direct exchange or a group alike.
@@ -126,6 +131,42 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
   bool get _hub => ref
       .watch(enabledFeaturesSyncProvider)
       .contains(WorkspaceFeature.messagesHub);
+
+  /// #1824 — the workspace lets messages be forwarded, locked and
+  /// traced ("What happened"); off, the bubbles offer none of it.
+  bool get _forwarding => ref
+      .watch(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.messageForwarding);
+
+  void _messageActions(MemberNote note, {required bool mine}) =>
+      showMessageActions(
+        context,
+        ref,
+        MessageRef(
+          kind: MessageKind.memberNote,
+          messageId: note.id,
+          contextKind: MessageContextKind.space,
+          contextId: widget.conversationId,
+          mine: mine,
+          noForward: note.noForward,
+        ),
+        onChanged: () => ref
+            .invalidate(conversationMessagesProvider(widget.conversationId)),
+      );
+
+  /// iOS cannot refuse a screenshot, so the conversation is told.
+  Future<void> _recordCapture() async {
+    try {
+      await ref
+          .read(messengerActionsProvider())
+          .recordScreenCapture(
+              MessageContextKind.space, widget.conversationId);
+      ref.invalidate(conversationMessagesProvider(widget.conversationId));
+    } catch (e, st) {
+      TraceLogger.instance.error('messaging', 'record screen capture failed',
+          error: e, stackTrace: st);
+    }
+  }
 
   GlobalKey _keyFor(String noteId) =>
       _bubbleKeys.putIfAbsent(noteId, GlobalKey.new);
@@ -334,12 +375,22 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
               final i = messages.length - 1 - index;
               final note = messages[i];
               final previous = i > 0 ? messages[i - 1] : null;
-              final bubble = ConversationBubble(
+              // #1824 — a forward or a screenshot is a system line of the
+              // thread, never a bubble anybody could act on.
+              final bubble = note.notice != null
+                  ? MessageNoticeLine(
+                      key: ValueKey('notice-${note.id}'),
+                      notice: note.notice!,
+                    )
+                  : ConversationBubble(
                 key: hub ? _keyFor(note.id) : null,
                 note: note,
                 mine: note.fromMemberId == me?.id,
                 timeOnly: hub,
                 onQuoteTap: hub ? _scrollToQuote : null,
+                onActions: _forwarding
+                    ? () => _messageActions(note, mine: note.fromMemberId == me?.id)
+                    : null,
                 onQuote: (quoted) => setState(() {
                   _quoted = (
                     id: quoted.id,
@@ -392,11 +443,19 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
       ),
     );
 
-    final body = Column(children: [
-      header,
-      Expanded(child: list),
-      composer,
-    ]);
+    // #1824 — the thread is capture-protected while it is on screen,
+    // unless the workspace switched `captureProtection` off.
+    final body = CaptureShield(
+      enabled: ref
+          .watch(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.captureProtection),
+      onScreenshot: _recordCapture,
+      child: Column(children: [
+        header,
+        Expanded(child: list),
+        composer,
+      ]),
+    );
 
     if (widget.asPage) {
       return SizedBox(key: const ValueKey('conversation-thread'), child: body);

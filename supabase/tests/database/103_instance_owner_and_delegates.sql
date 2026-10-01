@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #1829 / 0314: the instance owner is visible to everyone on the database
+-- #1829 / 0318: the instance owner is visible to everyone on the database
 -- and can delegate. A delegate is an operator for the installation-wide
 -- steps and nothing more: they cannot delegate, withdraw or see account
 -- ids. An assistant's delegated token is never an operator. A new
