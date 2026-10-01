@@ -4478,6 +4478,101 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpTopicReadiness => 'recevabilité';
 
   @override
+  String get instanceOwnerTitle => 'Propriétaire de l\'instance';
+
+  @override
+  String get instanceOwnerHelp =>
+      'Cette installation est partagée par tous ses espaces. Le propriétaire de l\'instance en est responsable : contactez-le pour tout ce qui concerne l\'ensemble de l\'installation, comme les assistants.';
+
+  @override
+  String get instanceOwnerNone =>
+      'Aucun propriétaire d\'instance n\'est encore défini.';
+
+  @override
+  String get instanceOwnerCopyEmail => 'Copier l\'adresse e-mail';
+
+  @override
+  String get instanceOwnerCopied => 'Adresse e-mail copiée.';
+
+  @override
+  String get instanceYouAreOwner => 'Vous êtes le propriétaire de l\'instance.';
+
+  @override
+  String get instanceYouAreDelegate =>
+      'Vous êtes délégué du propriétaire de l\'instance.';
+
+  @override
+  String get instanceDelegatesTitle => 'Délégués';
+
+  @override
+  String get instanceDelegatesNone => 'Aucun délégué.';
+
+  @override
+  String get instanceDelegatesHelp =>
+      'Un délégué peut effectuer la configuration des assistants pour toute l\'installation. Il ne peut pas déléguer à son tour et ne voit aucun autre espace.';
+
+  @override
+  String get instanceDelegateFieldLabel => 'Adresse e-mail d\'un compte';
+
+  @override
+  String get instanceDelegateAdd => 'Déléguer le rôle';
+
+  @override
+  String get instanceDelegateWithdraw => 'Retirer la délégation';
+
+  @override
+  String get instanceDelegateWithdrawTitle => 'Retirer cette délégation ?';
+
+  @override
+  String get instanceDelegateWithdrawBody =>
+      'Cette personne perd immédiatement l\'accès à la configuration de l\'installation.';
+
+  @override
+  String get instanceDelegateWithdrawConfirm => 'Retirer';
+
+  @override
+  String get instanceDelegated => 'Rôle délégué.';
+
+  @override
+  String get instanceDelegateUnchanged => 'Cette personne est déjà déléguée.';
+
+  @override
+  String get instanceDelegateNoAccount =>
+      'Aucun compte n\'utilise cette adresse e-mail.';
+
+  @override
+  String get instanceDelegateUnconfirmed =>
+      'Ce compte n\'a pas encore confirmé son adresse e-mail.';
+
+  @override
+  String get instanceDelegateAlreadyOwner =>
+      'Le propriétaire n\'a pas besoin de délégation.';
+
+  @override
+  String get instanceDelegateUnavailable =>
+      'Ce serveur ne permet pas encore de déléguer.';
+
+  @override
+  String get instanceDelegationWithdrawn => 'Délégation retirée.';
+
+  @override
+  String get instanceClaimTitle => 'Devenir propriétaire';
+
+  @override
+  String get instanceClaimBody =>
+      'Vous avez créé cette instance et aucun propriétaire n\'est défini. En devenant propriétaire, vous en devenez le responsable.';
+
+  @override
+  String get instanceClaimButton => 'Devenir propriétaire';
+
+  @override
+  String get instanceClaimDone =>
+      'Vous êtes maintenant le propriétaire de l\'instance.';
+
+  @override
+  String get instanceClaimFailed => 'La propriété n\'a pas pu être prise.';
+
+  @override
   String get featureInstanceWizard => 'Assistant d\'instance';
 
   @override

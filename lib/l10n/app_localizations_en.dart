@@ -4431,6 +4431,98 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTopicReadiness => 'readiness gate';
 
   @override
+  String get instanceOwnerTitle => 'Instance owner';
+
+  @override
+  String get instanceOwnerHelp =>
+      'This installation is shared by all its workspaces. The instance owner answers for it: contact them about anything that concerns the whole installation, such as assistants.';
+
+  @override
+  String get instanceOwnerNone => 'No instance owner is set yet.';
+
+  @override
+  String get instanceOwnerCopyEmail => 'Copy e-mail address';
+
+  @override
+  String get instanceOwnerCopied => 'E-mail address copied.';
+
+  @override
+  String get instanceYouAreOwner => 'You are the instance owner.';
+
+  @override
+  String get instanceYouAreDelegate =>
+      'You are a delegate of the instance owner.';
+
+  @override
+  String get instanceDelegatesTitle => 'Delegates';
+
+  @override
+  String get instanceDelegatesNone => 'No delegates.';
+
+  @override
+  String get instanceDelegatesHelp =>
+      'A delegate can run the installation-wide setup for assistants. Delegates cannot delegate further and see no other workspace.';
+
+  @override
+  String get instanceDelegateFieldLabel => 'E-mail address of an account';
+
+  @override
+  String get instanceDelegateAdd => 'Delegate the role';
+
+  @override
+  String get instanceDelegateWithdraw => 'Withdraw the delegation';
+
+  @override
+  String get instanceDelegateWithdrawTitle => 'Withdraw this delegation?';
+
+  @override
+  String get instanceDelegateWithdrawBody =>
+      'They lose access to the installation-wide setup immediately.';
+
+  @override
+  String get instanceDelegateWithdrawConfirm => 'Withdraw';
+
+  @override
+  String get instanceDelegated => 'Delegated.';
+
+  @override
+  String get instanceDelegateUnchanged => 'This person already is a delegate.';
+
+  @override
+  String get instanceDelegateNoAccount =>
+      'No account uses this e-mail address.';
+
+  @override
+  String get instanceDelegateUnconfirmed =>
+      'This account has not confirmed its e-mail address yet.';
+
+  @override
+  String get instanceDelegateAlreadyOwner =>
+      'The owner does not need a delegation.';
+
+  @override
+  String get instanceDelegateUnavailable => 'This server cannot delegate yet.';
+
+  @override
+  String get instanceDelegationWithdrawn => 'Delegation withdrawn.';
+
+  @override
+  String get instanceClaimTitle => 'Take ownership';
+
+  @override
+  String get instanceClaimBody =>
+      'You created this instance and no owner has been set. Taking ownership makes you the person who answers for it.';
+
+  @override
+  String get instanceClaimButton => 'Take ownership';
+
+  @override
+  String get instanceClaimDone => 'You are now the instance owner.';
+
+  @override
+  String get instanceClaimFailed => 'Ownership could not be taken.';
+
+  @override
   String get featureInstanceWizard => 'Instance wizard';
 
   @override

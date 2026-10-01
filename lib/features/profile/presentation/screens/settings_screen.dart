@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../mcp/presentation/widgets/mcp_settings_tiles.dart';
+import '../../../workspace/presentation/widgets/instance_owner_tile.dart';
 import 'package:file_selector/file_selector.dart';
 import '../../../../core/l10n/lexicon.dart';
 import 'package:flutter/material.dart';
@@ -390,6 +391,8 @@ class SettingsScreen extends ConsumerWidget {
             onTap: () => context.push('/linked-accounts'),
           ),
           const McpSettingsTiles(),
+          // #1829 — who answers for this installation, for everyone.
+          const InstanceOwnerTile(),
           // #662 — the member's own half of badge sign-in. Beside My
           // badge, because the card and the PIN are two halves of one
           // credential and a member who has one and not the other
