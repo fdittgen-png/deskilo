@@ -66,11 +66,11 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `editor -> workspace` | 6 |
 | `profile -> auth` | 6 |
 | `events -> money` | 5 |
+| `mcp -> workspace` | 5 |
 | `profile -> reservations` | 5 |
 | `reservations -> events` | 5 |
 | `calendar -> events` | 4 |
 | `events -> reservations` | 4 |
-| `mcp -> workspace` | 4 |
 | `plan -> money` | 4 |
 | `workspace -> members` | 4 |
 | `members -> plan` | 3 |
@@ -96,7 +96,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**65 directed relationships, 761 imports.**
+**65 directed relationships, 762 imports.**
 
 Reciprocal (20): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 

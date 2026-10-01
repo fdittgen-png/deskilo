@@ -228,7 +228,7 @@ select public.activate_co_owner((select id from public.members where workspace_i
                                    and user_id = '00000000-0000-4000-8000-0000001631a2'));
 select public.leave_workspace(current_setting('t.a')::uuid);
 select throws_ok(format($$select public.save_mcp_policy(%L, 1, '00000000-0000-4000-8000-000000163115', false, array['get_capabilities'], 'own')$$,
-  current_setting('t.a')), 'only the owner configures MCP exposure', 'the departed owner edits nothing');
+  current_setting('t.a')), 'only those who manage integrations configure MCP exposure', 'the departed owner edits nothing');
 reset role;
 select is((select enabled and operations = array['create_reservation', 'get_capabilities'] from public.workspace_mcp_policies
             where workspace_id = current_setting('t.a')::uuid), true, 'the policy outlives its author');
