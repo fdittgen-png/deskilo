@@ -10,16 +10,20 @@ part of 'directory_providers.dart';
 // ignore_for_file: type=lint, type=warning
 /// user id → profile for the active workspace's members (#224): the
 /// directory derives statuses from `last_seen_at` and shows the WhatsApp
-/// button for shared numbers. RLS already trims the read to people
-/// sharing a workspace with the caller (#223).
+/// button for shared numbers. #1833: each profile is the projection the
+/// caller may read in this space — the community fields for a space
+/// mate, the printed identity only with `viewPersonalData` or
+/// `issueInvoices` (invoices, letters, the Excel export).
 
 @ProviderFor(memberProfiles)
 final memberProfilesProvider = MemberProfilesProvider._();
 
 /// user id → profile for the active workspace's members (#224): the
 /// directory derives statuses from `last_seen_at` and shows the WhatsApp
-/// button for shared numbers. RLS already trims the read to people
-/// sharing a workspace with the caller (#223).
+/// button for shared numbers. #1833: each profile is the projection the
+/// caller may read in this space — the community fields for a space
+/// mate, the printed identity only with `viewPersonalData` or
+/// `issueInvoices` (invoices, letters, the Excel export).
 
 final class MemberProfilesProvider
     extends
@@ -33,8 +37,10 @@ final class MemberProfilesProvider
         $FutureProvider<Map<String, Profile>> {
   /// user id → profile for the active workspace's members (#224): the
   /// directory derives statuses from `last_seen_at` and shows the WhatsApp
-  /// button for shared numbers. RLS already trims the read to people
-  /// sharing a workspace with the caller (#223).
+  /// button for shared numbers. #1833: each profile is the projection the
+  /// caller may read in this space — the community fields for a space
+  /// mate, the printed identity only with `viewPersonalData` or
+  /// `issueInvoices` (invoices, letters, the Excel export).
   MemberProfilesProvider._()
     : super(
         from: null,
@@ -61,7 +67,7 @@ final class MemberProfilesProvider
   }
 }
 
-String _$memberProfilesHash() => r'40c9509836227bef2228f37e6097e551870e4ac4';
+String _$memberProfilesHash() => r'b16eace7d4bd05f79c63ba42625a06ebdd5c7de4';
 
 /// All reservations feeding the directory's reservation chips (#237):
 /// the month windows covering now through
