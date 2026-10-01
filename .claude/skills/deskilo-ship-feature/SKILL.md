@@ -173,7 +173,7 @@ memory file, not in the wiki.
   operand because `event` was `dynamic`.
 - **A one-line string fix still needs the ×5 sweep and a pin.** "My
   badge" appeared twice in Settings because two keys held the same value
-  in all five locales — perfectly parallel, so `l10n_completeness_test`
+  in all five locales — perfectly parallel, so `arb_key_parity_test`
   was satisfied. Parallel is not correct.
 
 ## 9. Lessons of 2026-09-28 (working beside other agents)
