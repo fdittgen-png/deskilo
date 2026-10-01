@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "levelReorderStale": "The levels changed meanwhile. Nothing was saved; the current order is shown.",
+  "@levelReorderStale": {
+    "description": "#2010 Level reorder: levelReorderStale"
+  }
+}
