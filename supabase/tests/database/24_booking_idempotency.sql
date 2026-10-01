@@ -12,7 +12,7 @@
 -- network is exactly the client whose local state you cannot trust, so
 -- "I already sent this" is not something it gets to assert.
 begin;
-select plan(6);
+select plan(7);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -101,8 +101,29 @@ select throws_ok(
   'a replayable booking needs a request id',
   'the replayable path refuses to run without a key');
 
+-- #1862 — the ordinary path, really called by the member (not a no-op):
+-- a later, non-overlapping interval through create_reservation as the
+-- authenticated role, then the row it persisted.
+set local role authenticated;
 select lives_ok(
-  $$ select 1 $$, 'ordinary create_reservation is untouched by any of this');
+  $$ select public.create_reservation(
+       current_setting('deskilo.queue.ws')::uuid,
+       current_setting('deskilo.queue.seat')::uuid,
+       null,
+       current_setting('deskilo.queue.from')::timestamptz + interval '5 hours',
+       current_setting('deskilo.queue.from')::timestamptz + interval '7 hours') $$,
+  'ordinary create_reservation still books a non-overlapping interval');
+reset role;
+select is(
+  (select count(*)::int from public.reservations r
+     join public.members m on m.id = r.member_id
+    where r.workspace_id = current_setting('deskilo.queue.ws')::uuid
+      and r.seat_id = current_setting('deskilo.queue.seat')::uuid
+      and m.user_id = current_setting('deskilo.queue.u_mine')::uuid
+      and r.starts_at = current_setting('deskilo.queue.from')::timestamptz + interval '5 hours'
+      and r.ends_at = current_setting('deskilo.queue.from')::timestamptz + interval '7 hours'),
+  1,
+  'and persists it for the caller, on that seat and those hours');
 
 -- A request id is its member's own: replaying somebody else's would hand
 -- them a reservation id they may have no policy to read.
