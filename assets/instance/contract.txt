@@ -1125,7 +1125,7 @@ routine public.mcp_member_view(p_member_id uuid) -> jsonb | function | invoker |
 routine public.mcp_my_operations(p_installation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e17d1e163398
 routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:4338f0abd8f5
 routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
-routine public.mcp_policy_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0349cab749b6
+routine public.mcp_policy_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f6bf9cb4f226
 routine public.mcp_pre_request() -> void | function | invoker | stable | exec:anon,authenticated,service_role | body:020fc410aef9
 routine public.mcp_prepare_connection(p_client_id text, p_authorization_id text, p_scopes jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fde055e3093f
 routine public.mcp_project_data(p_operation text, p_value jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:8ad7149f3904
@@ -1141,7 +1141,7 @@ routine public.mcp_time_arg(p_args jsonb, p_key text) -> timestamp with time zon
 routine public.mcp_usage_cleanup(p_keep_days integer) -> integer | function | invoker | volatile | exec:service_role | body:c9dd4854acb4
 routine public.mcp_usage_note(p_spec jsonb, p_envelope jsonb) -> jsonb | function | invoker | volatile | exec:service_role | body:cc3d8f12771d
 routine public.mcp_usage_summary_mine(p_installation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:915798d3f88c
-routine public.mcp_usage_summary_workspace(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:2d09de57ff67
+routine public.mcp_usage_summary_workspace(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:333612b2f6ec
 routine public.mcp_uuid_arg(p_args jsonb, p_key text, p_required boolean) -> uuid | function | invoker | immutable | exec:service_role | body:8e8deb6fc5c3
 routine public.member_account(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bf3adfa2b319
 routine public.member_credit_balance(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:authenticated,service_role | body:68f020724478
@@ -1288,7 +1288,7 @@ routine public.revoke_workspace_template_grant(p_template_id uuid, p_email text)
 routine public.role_holds(ws uuid, p_role text, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f5ded1680290
 routine public.role_permission_catalog() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:c1cc3f2915b8
 routine public.rollback_deployment(p_deployment_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c05549d60433
-routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer, p_mutation_id uuid, p_enabled boolean, p_operations text[], p_target_ceiling text, p_allowed_clients text[], p_optional_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7b911cb3de79
+routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer, p_mutation_id uuid, p_enabled boolean, p_operations text[], p_target_ceiling text, p_allowed_clients text[], p_optional_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:119eebad959d
 routine public.save_vat_declaration(p_workspace_id uuid, p_period_start date, p_period_end date, p_lines jsonb, p_total_net_cents integer, p_total_vat_cents integer, p_currency text, p_invoice_count integer) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:08998635ec7f
 routine public.save_workspace_as_template(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[]) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:21c016636d3b
 routine public.save_workspace_as_template_once(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[], p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2800511d785e

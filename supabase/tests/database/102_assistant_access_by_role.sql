@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #1826 / 0313: what a workspace exposes to assistants is delegated by the
+-- #1826 / 0317: what a workspace exposes to assistants is delegated by the
 -- role matrix. The owner always may; an admin may only once the owner has
 -- granted `manageIntegrations`; a plain member never. The three routines
 -- behind the screen (policy status, policy save, usage summary) answer the
