@@ -13,7 +13,7 @@ description: The recurring reasons a DesKilo widget or lint test fails for a rea
 | PDF download test saves nothing after a layout change | the layout path awaits providers/fonts/images | run the whole exit inside `tester.runAsync(() async { tap; pump; pumpAndSettle })` |
 | `Found N widgets` counts off by one | a registry grew (validation cards, features switches, placeholders) | bump the pin with a dated comment; the features-screen test needs a taller `physicalSize` |
 | `no_wall_clock` lint | `DateTime.now()` in a fake | `kTestNow` |
-| `no_hardcoded_strings` lint | `Text('$x')` literal | hoist into `final count = '$x'; Text(count)` |
+| `l10n_audit` lint (displayed text) | `Text('words')` without `l10n?.key ??` | add the ARB key; a literal of interpolations only (`'$a · $b'`) is accepted |
 | `file_length` lint | a file outgrew its budget | bump with `// YYYY-MM-DD #issue reason` |
 | hundreds of changed lines in a file you barely touched | `dart format` on an unformatted legacy file | `git checkout -- file` and re-apply the edit |
 | a suite result contradicts the code | a `flutter test` ran in the background across a branch switch | never switch branches while a suite runs; re-run |

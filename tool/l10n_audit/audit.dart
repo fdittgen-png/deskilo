@@ -3,8 +3,9 @@
 // #1365 — every user-facing literal the app could show, found by reading
 // the source the way the rule is written.
 //
-// `no_hardcoded_strings_test` pins ONE shape: `Text('literal')` on one
-// line. The audit this issue asks for is wider: a label, a hint, a
+// #1863 — the one localization scanner. `no_hardcoded_strings_test` pinned
+// ONE shape, `Text('literal')` on one line; that rule now lives here as
+// [displayedText]. The audit #1365 asked for is wider: a label, a hint, a
 // tooltip, a semantic label, a snack, a dialog title, a chip — anywhere
 // a string reaches a member's eyes. This finds those positions and
 // reports what is NOT going through `AppLocalizations`.
@@ -147,6 +148,23 @@ String? _literalAt(String line, int start) {
       i++;
       continue;
     }
+    // #1863 — `${…}` is code, and its own quotes do not end the literal.
+    if (c == r'$' && i + 1 < line.length && line[i + 1] == '{') {
+      var depth = 0;
+      for (; i < line.length; i++) {
+        final d = line[i];
+        buffer.write(d);
+        if (d == '{') depth++;
+        if (d == '}' && --depth == 0) break;
+        if (d == "'" || d == '"') {
+          final close = line.indexOf(d, i + 1);
+          if (close < 0) return null;
+          buffer.write(line.substring(i + 1, close + 1));
+          i = close;
+        }
+      }
+      continue;
+    }
     if (c == quote) return buffer.toString();
     buffer.write(c);
   }
@@ -164,6 +182,14 @@ bool _isFallback(String line, int index, String? previous) {
   return false;
 }
 
+/// The position every `Text`-family literal reports. #1863 — it carries
+/// HARD RULE #1 at its strictest, the rule `no_hardcoded_strings_test`
+/// used to hold alone: a displayed-text widget takes words only from
+/// AppLocalizations — the `??` fallback, or a literal built solely from
+/// interpolated values. No key-like token, placeholder, `l10n-exempt`
+/// marker, neighbouring `Key(` or file classification excuses it.
+const String displayedText = 'displayed text';
+
 /// Every finding in [source], which is [path]'s content.
 List<Finding> auditSource(String path, String source) {
   final out = <Finding>[];
@@ -176,29 +202,53 @@ List<Finding> auditSource(String path, String source) {
     final line = lines[i];
     final trimmed = line.trimLeft();
     if (trimmed.startsWith('//')) continue;
-    if (line.contains('l10n-exempt')) continue;
-    if (_neverShown.hasMatch(line)) continue;
+    // A key, a log line or an explicit exemption hides the soft
+    // positions; it never hides a displayed-text literal.
+    final soft = !line.contains('l10n-exempt') && !_neverShown.hasMatch(line);
     for (final m in [
-      ...positions.allMatches(line).map((m) => (m, uiPositions[m.group(1)] ?? 'displayed text')),
+      ...positions.allMatches(line).map((m) => (
+            m,
+            m.group(2) != null
+                ? displayedText
+                : uiPositions[m.group(1)] ?? displayedText,
+          )),
       for (final e in _callPositions.entries)
         ...e.key.allMatches(line).map((m) => (m, e.value)),
     ]) {
-      final match = m.$1;
       final position = m.$2;
-      final at = match.end;
-      if (at >= line.length) continue;
-      if (line[at] != "'" && line[at] != '"') continue;
-      if (_isFallback(line, at, i == 0 ? null : lines[i - 1])) continue;
-      final literal = _literalAt(line, at);
+      final strict = position == displayedText;
+      if (!strict && !soft) continue;
+      // The literal may open on this line or, wrapped, on the next one;
+      // a raw string (`r'…'`) is a literal too.
+      var text = line;
+      var at = m.$1.end;
+      var lineNo = i;
+      if (at >= text.length || text.substring(at).trim().isEmpty) {
+        if (i + 1 >= lines.length) continue;
+        text = lines[i + 1];
+        at = text.length - text.trimLeft().length;
+        lineNo = i + 1;
+      }
+      if (at < text.length - 1 && text[at] == 'r') at++;
+      if (at >= text.length) continue;
+      if (text[at] != "'" && text[at] != '"') continue;
+      if (_isFallback(text, at, lineNo == 0 ? null : lines[lineNo - 1])) {
+        continue;
+      }
+      final literal = _literalAt(text, at);
       if (literal == null || literal.trim().isEmpty) continue;
-      if (_technical.hasMatch(literal)) continue;
-      if (_colourCode.hasMatch(literal)) continue;
+      // Words built only from interpolated values are already localized
+      // wherever they are written — on the `Text(` line or wrapped below.
       if (_localizedInterpolation.hasMatch(literal)) continue;
-      if (_placeholderOnly.hasMatch(literal)) continue;
       if (_onlyInterpolations(literal)) continue;
+      if (!strict) {
+        if (_technical.hasMatch(literal)) continue;
+        if (_colourCode.hasMatch(literal)) continue;
+        if (_placeholderOnly.hasMatch(literal)) continue;
+      }
       out.add(Finding(
         path: path,
-        line: i + 1,
+        line: lineNo + 1,
         position: position,
         literal: literal,
       ));

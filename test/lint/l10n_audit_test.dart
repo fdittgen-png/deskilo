@@ -2,8 +2,11 @@
 //
 // #1365 — no user-facing literal outside the ones somebody decided on.
 //
-// `no_hardcoded_strings_test` pins one shape, `Text('literal')`. This
-// reads every position where a string becomes something a member sees —
+// #1863 — this is the one localization scanner. It used to sit beside
+// `no_hardcoded_strings_test`, which pinned one shape (`Text('literal')`
+// on one line); that rule now lives here at full strength, wrapped lines
+// and raw strings included, and the old file is gone. This reads every
+// position where a string becomes something a member sees —
 // labels, hints, helpers, errors, tooltips, semantics labels, titles,
 // subtitles, snacks — and requires each literal found there to belong to
 // a file whose reason is written down in `classifiedLiterals`.
@@ -39,6 +42,21 @@ void main() {
           'tool/l10n_audit/audit.dart with the reason.\n'
           '${unclassified.join('\n')}',
     );
+  });
+
+  test('a displayed-text literal is never excused, classified or not', () {
+    // HARD RULE #1 at its strictest (#1863): a Text, SelectableText or
+    // TextSpan takes its words from AppLocalizations. A classification
+    // covers labels and tokens elsewhere in a file, never these.
+    final shown = [
+      for (final f in findings)
+        if (f.position == displayedText)
+          '${f.path}:${f.line} "${f.literal}"',
+    ];
+    expect(shown, isEmpty,
+        reason: 'add the key to an ARB fragment and use '
+            "l10n?.key ?? 'English fallback' (HARD RULE #1).\n"
+            '${shown.join('\n')}');
   });
 
   test('each classified file holds exactly the count its reason covers', () {
@@ -83,6 +101,16 @@ Widget build(BuildContext context) => Column(children: [
   Tooltip(message: 'Delete this booking', child: Icon(Icons.delete)),
   IconButton(tooltip: 'Add a member', onPressed: null, icon: Icon(Icons.add)),
   Semantics(label: 'Seat map of the ground floor', child: SizedBox()),
+  Text(
+    'A literal that wrapped is still a literal',
+  ),
+  Text(r'A raw string too'),
+  Text('Shown beside a key', key: ValueKey('k')),
+  Text('An exemption marker does not excuse it'), // l10n-exempt
+  Text('reserve.title'),
+  Text('{{ member }}'),
+  Text('assets/help/en.md'),
+  Text('\${count} items left'),
 ]);
 ''';
     final found = auditSource('lib/x.dart', caught);
@@ -92,7 +120,20 @@ Widget build(BuildContext context) => Column(children: [
       'Delete this booking',
       'Add a member',
       'Seat map of the ground floor',
+      'A literal that wrapped is still a literal',
+      'A raw string too',
+      'Shown beside a key',
+      'An exemption marker does not excuse it',
+      'reserve.title',
+      '{{ member }}',
+      'assets/help/en.md',
+      '\${count} items left',
     ]);
+    expect(
+      found.skip(5).every((f) => f.position == displayedText),
+      isTrue,
+      reason: 'every Text-family literal reports the strict position',
+    );
 
     const allowed = '''
 Widget build(BuildContext context) => Column(children: [
@@ -103,10 +144,14 @@ Widget build(BuildContext context) => Column(children: [
   ),
   TextField(decoration: InputDecoration(labelText: l10n?.name ?? 'Name')),
   Text('\$stateLabel · \$count'),
-  Text('{{ member }}'),
-  Text('reserve.title'),
+  Text(
+    '\${format.money(1)} · \${format.date(now)}',
+  ),
+  Text('\${l10n?.unread ?? 'Unread'} · \$count'),
+  InputDecoration(labelText: 'reserve.title', hintText: '{{ member }}'),
   // Text('a comment is not a violation of the rule it explains'),
-  Text('assets/help/en.md'),
+  /// Text('nor is a doc comment'),
+  Tooltip(message: 'assets/help/en.md', child: SizedBox()),
   Semantics(identifier: 'seat-4', child: SizedBox()),
 ]);
 ''';
