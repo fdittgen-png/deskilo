@@ -87,6 +87,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   Future<void> setLevelSite(String levelId, String? siteId) async {
     await _client.rpc<dynamic>('set_level_site',
         params: {'p_level_id': levelId, 'p_site_id': siteId});
+    await _bust(); // #2010 — else a warm cache shows the old site
   }
 
   @override
@@ -119,13 +120,17 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
-  Future<void> reorderLevels(List<String> orderedLevelIds) async {
-    for (var i = 0; i < orderedLevelIds.length; i++) {
-      await _client
-          .from('levels')
-          .update({'sort_order': i}).eq('id', orderedLevelIds[i]);
-    }
+  Future<LevelReorderOutcome> reorderLevels(
+    String workspaceId,
+    List<String> orderedLevelIds, {
+    required List<String> expected,
+  }) async {
+    // #2010 — one atomic command (0320); the cache is busted whatever the
+    // answer, since a conflict means it is old.
+    final answer = await _client.rpc<dynamic>('reorder_levels', params: {
+      'p_workspace_id': workspaceId, 'p_level_ids': orderedLevelIds, 'p_expected': expected});
     await _bust();
+    return LevelReorderOutcome.fromJson(answer);
   }
 
   static String _bgPath(String workspaceId, String levelId) =>
