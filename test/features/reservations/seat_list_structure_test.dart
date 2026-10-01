@@ -58,11 +58,11 @@ FloorPlan _plan() => const FloorPlan(
   ],
 );
 
-Future<List<(Desk?, Office?)>> _pump(
+Future<List<(String?, String?)>> _pump(
   WidgetTester tester, {
   required bool mayReserveWhole,
 }) async {
-  final taps = <(Desk?, Office?)>[];
+  final taps = <(String?, String?)>[];
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(),
@@ -114,7 +114,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('list-office-o1')));
     expect(taps, isEmpty, reason: 'neither is bookable as a whole');
     await tester.tap(find.byKey(const ValueKey('list-desk-d1')));
-    expect(taps.single.$1?.id, 'd1');
+    expect(taps.single.$1, 'd1');
   });
 
   testWidgets('without the right to reserve whole spaces nothing is '

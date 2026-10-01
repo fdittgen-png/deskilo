@@ -5,9 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../plan/domain/desk.dart';
 import '../../../plan/domain/floor_plan.dart';
-import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -59,7 +57,7 @@ class SeatListView extends ConsumerWidget {
   /// when this member may not reserve a space as a whole (feature off, no
   /// grant, no roster). Only a header whose space is bookable as a whole
   /// becomes actionable.
-  final void Function(Desk? desk, Office? office)? onSpaceTap;
+  final void Function(String? deskId, String? officeId)? onSpaceTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -111,10 +109,9 @@ class SeatListView extends ConsumerWidget {
                   semanticLabel: l10n?.planReserveButton ?? 'Reserve'),
           onTap: onTap,
         );
-    VoidCallback? spaceTap(Desk? desk, Office? office) {
+    VoidCallback? spaceTap({String? deskId, String? officeId, required bool whole}) {
       final tap = onSpaceTap;
-      final whole = desk?.bookableAsWhole ?? office?.bookableAsWhole ?? false;
-      return tap == null || !whole || !dayOpen ? null : () => tap(desk, office);
+      return tap == null || !whole || !dayOpen ? null : () => tap(deskId, officeId);
     }
 
     final placed = <String>{};
@@ -140,11 +137,11 @@ class SeatListView extends ConsumerWidget {
         Icons.meeting_room_outlined,
         plan.officeContextName(office, levelName: levelName, byLevel: byLevel),
         0,
-        onTap: spaceTap(null, office),
+        onTap: spaceTap(officeId: office.id, whole: office.bookableAsWhole),
       ));
       for (final desk in shown) {
         rows.add(header('list-desk-${desk.id}', Icons.table_restaurant_outlined,
-            desk.name, 16, onTap: spaceTap(desk, null)));
+            desk.name, 16, onTap: spaceTap(deskId: desk.id, whole: desk.bookableAsWhole)));
         for (final seat in seatsOf[desk.id]!) {
           placed.add(seat.id);
           rows.add(_seatRow(context, ref, seat, 32, ''));

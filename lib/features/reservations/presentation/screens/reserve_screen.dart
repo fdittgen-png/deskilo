@@ -30,6 +30,7 @@ import '../widgets/getting_started_card.dart';
 import '../widgets/reserve_canvas.dart';
 import '../widgets/reserve_view_menu.dart';
 import '../widgets/reserve_hub_layout.dart';
+import '../widgets/list_space_tap.dart';
 import '../widgets/seat_list_view.dart';
 import '../widgets/stale_availability_banner.dart';
 import '../../../plan/providers/default_level_controller.dart';
@@ -921,26 +922,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 dayOpen: dayOpen,
                   onSeatTap: (seat) =>
                       onSeatTap(plan, seat, reservations, window),
-                  // #1825 — whole office/desk from its header, the same
-                  // sheet the canvas double-tap opens.
-                  onSpaceTap: _spaceReserveAllowed()
-                      ? (desk, office) => showSpaceSheet(
-                            context,
-                            members: spaceAssignmentCandidates(ref),
-                            kind: desk != null
-                                ? SpaceKind.desk
-                                : SpaceKind.office,
-                            level: level,
-                            office: office ??
-                                plan.offices
-                                    .where((o) => o.id == desk?.officeId)
-                                    .firstOrNull,
-                            desk: desk,
-                            plan: plan,
-                            initialWindow:
-                                (start: window.start, end: window.end),
-                          )
-                      : null,
+                  onSpaceTap: listSpaceTap(context, ref,
+                      level: level, plan: plan, window: window),
                 ),
               ),
             AsyncData(value: final plan) => ReserveCanvas(
@@ -1034,20 +1017,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   /// Whether [level] offers the whole-level booking affordance to ME —
   /// the plan tab's #466 rule: feature on, level bookable, and I hold
   /// the grant OR administer (the 0079 server rule).
-  /// #1825 — whether this member may reserve a whole office or desk at
-  /// all: the feature, an active membership, and the grant, the admin
-  /// role or an assignment roster (space_scan's rule).
-  bool _spaceReserveAllowed() {
-    if (!ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.levelBooking)) {
-      return false;
-    }
-    final me = ref.watch(myMemberProvider).value;
-    if (me == null || me.status != MemberStatus.active) return false;
-    return me.canReserveLevel ||
-        me.canAdminister ||
-        spaceAssignmentCandidates(ref).isNotEmpty;
-  }
-
   bool _levelReserveVisible(Level level) {
     final features = ref.watch(enabledFeaturesSyncProvider);
     if (!features.contains(WorkspaceFeature.levelBooking)) return false;
