@@ -14,6 +14,7 @@ import '../../providers/workspace_providers.dart';
 import 'member_note_actions.dart';
 import 'member_note_body.dart';
 import 'note_check.dart';
+import '../../../directory/presentation/messenger/message_marks.dart';
 import '../../../../core/i18n/format_controller.dart';
 
 /// One chat bubble (#687), lifted out of conversation_sheet.dart so the
@@ -35,9 +36,14 @@ class ConversationBubble extends ConsumerWidget {
     this.onQuote,
     this.timeOnly = false,
     this.onQuoteTap,
+    this.onActions,
   });
 
   final MemberNote note;
+
+  /// #1824 — forward, lock, "What happened": offered when the workspace
+  /// has `messageForwarding` on. Null keeps the bubble as it was.
+  final VoidCallback? onActions;
   final bool mine;
 
   /// #821 — the stamp shows the TIME alone; the thread's day separators
@@ -144,13 +150,25 @@ class ConversationBubble extends ConsumerWidget {
       );
 
   Widget _bubble(BuildContext context, WidgetRef ref, ThemeData theme) {
+    final l10n = AppLocalizations.of(context);
     final when = timeOnly
         ? ref.watch(appFormatProvider).time(note.createdAt)
         : DateFormat.MMMd().add_Hm().format(note.createdAt.toLocal());
     final split = splitLeadingQuote(note.body);
-    return Align(
-      alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
-      child: GestureDetector(
+    // #1824 — the actions sit BESIDE the bubble, never inside it: the
+    // bubble's long press (delete) must not land on a button's tooltip.
+    final actions = onActions == null
+        ? null
+        : IconButton(
+            key: ValueKey('bubble-actions-${note.id}'),
+            tooltip: l10n?.messengerMessageActions ?? 'Message actions',
+            visualDensity: VisualDensity.compact,
+            iconSize: 18,
+            color: theme.colorScheme.onSurfaceVariant,
+            onPressed: onActions,
+            icon: const Icon(Icons.more_horiz),
+          );
+    final core = GestureDetector(
         key: ValueKey('bubble-${note.id}'),
         onLongPress: () => deleteMemberNoteGuarded(context, ref, note),
         child: Container(
@@ -192,6 +210,12 @@ class ConversationBubble extends ConsumerWidget {
                           ? null
                           : () => onQuoteTap!(split.quote!.id),
                     ),
+                  if (note.forwardedFrom != null)
+                    ForwardOriginLine(
+                      key: ValueKey('forward-origin-${note.id}'),
+                      origin: note.forwardedFrom!,
+                      color: fgMuted,
+                    ),
                   MemberNoteBody(
                     body: split.rest,
                     style: theme.textTheme.bodyMedium?.copyWith(color: fg),
@@ -201,6 +225,14 @@ class ConversationBubble extends ConsumerWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      if (note.noForward)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: Icon(Icons.lock_outline,
+                              key: ValueKey('note-locked-${note.id}'),
+                              size: 12,
+                              color: fgMuted),
+                        ),
                       Text(
                         when,
                         style: theme.textTheme.labelSmall?.copyWith(
@@ -218,7 +250,19 @@ class ConversationBubble extends ConsumerWidget {
             },
           ),
         ),
-      ),
+      );
+    return Align(
+      alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
+      child: actions == null
+          ? core
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (mine) actions,
+                Flexible(child: core),
+                if (!mine) actions,
+              ],
+            ),
     );
   }
 }

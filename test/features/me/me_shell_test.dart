@@ -3,8 +3,8 @@
 // #1823 — Me is the account's own home: with ZERO workspaces the app
 // opens there, and every one of its four tabs opens. Each affordance on
 // Home and on the Me tab is tapped and lands where it says.
-import 'package:deskilo/features/directory/presentation/account_messenger_screen.dart';
 import 'package:deskilo/features/directory/presentation/directory_screen.dart';
+import 'package:deskilo/features/me/presentation/me_messages_tab.dart';
 import 'package:deskilo/features/me/presentation/me_shell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -35,7 +35,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('me-tab-messages')));
     await tester.pumpAndSettle();
-    expect(find.byType(AccountMessengerScreen), findsOneWidget);
+    expect(find.byType(MeMessagesTab), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('me-tab-me')));
     await tester.pumpAndSettle();

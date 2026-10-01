@@ -18,6 +18,9 @@
 //   dart run tool/instance.dart federation-hook --ref <canonical project> [--apply]
 //   Uses SUPABASE_ACCESS_TOKEN; verifies the installed identity hook and reads
 //   back Auth configuration. Refuses to replace any other custom token hook.
+//   dart run tool/instance.dart mcp-inspect|mcp-enable|mcp-pilot|mcp-disable|mcp-reset --ref R …
+//   #1633 — controlled MCP activation, rollback and recovery; see
+//   tool/instance/mcp_activation.dart. Secrets from the environment only.
 //
 // `create` makes the project, waits for it, installs the schema and the
 // functions from the repository (not the asset — the repository is the
@@ -48,12 +51,14 @@ import 'build_instance.dart';
 import 'instance/db_admins.dart';
 import 'instance/federation.dart';
 import 'instance/federation_hook.dart';
+import 'instance/mcp_activation.dart';
 import 'instance/support_doctor.dart';
 
 // Dart ignores what `main` returns; the exit code is set here.
 Future<void> main(List<String> argv) async => exitCode = await run(argv);
 
 Future<int> run(List<String> argv) async {
+  if (mcpCommands.contains(argv.firstOrNull)) return runMcp(argv);
   if (argv.firstOrNull == 'federation-hook') {
     return runFederationHook(argv.skip(1).toList());
   }

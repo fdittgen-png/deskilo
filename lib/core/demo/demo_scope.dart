@@ -2,6 +2,8 @@
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
+import 'package:deskilo/core/demo/data/messenger_repository.dart';
+import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
@@ -146,6 +148,8 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       directoryRepositoryProvider.overrideWith((ref)=>FakeDirectoryRepository()),
       meRepositoryProvider.overrideWith((ref) => FakeMeRepository()), // #1823
       accountContactRepositoryProvider.overrideWith((ref,source)=>FakeAccountContactRepository()),
+      // #1824 — the messenger of every server, one in-memory one each.
+      messengerRepositoryProvider.overrideWith((ref, source) => FakeMessengerRepository()),
       accountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository()),
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
@@ -255,6 +259,7 @@ const Set<String> demoOverriddenProviders = {
   'connectedInstallationsProvider', 'connectedSourcesProvider',
   'directoryRepositoryProvider', 'accountContactRepositoryProvider',
   'meRepositoryProvider', // #1823
+  'messengerRepositoryProvider',
   'deploymentRepositoryProvider',
   'workspaceFilesRepositoryProvider',
   'workspaceImportRepositoryProvider',

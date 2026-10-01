@@ -328,6 +328,20 @@ admission of the `member_join` event (0052). `join_by_invitation` (0309)
 only classifies and then calls the existing `join_workspace`. Do not add a
 flag that a person without a membership could never have switched.
 
+## A person's own conversations have no feature flag; a space's do (#1824)
+
+Account messages and the unified inbox in Me › Messages belong to the
+person, across every server, and no workspace owns them — so no
+workspace's flag can switch them off, and their screen-capture
+protection is always on. Everything that happens INSIDE or TO a space is
+that space's decision and is flagged: `spaceInquiries` (the hosts'
+Inquiries view, and whether the space's server answers a roster at all),
+`messageForwarding` (forwarding, the lock and "What happened" on space
+messages) and `captureProtection` (space threads). The server enforces
+each with `feature_effective`; a client that cannot read another space's
+flags (a space conversation opened from the inbox, an inquiry to a space
+on another server) offers the action and lets the server refuse it.
+
 ## Validation domains grow in FOUR places (#767/#769)
 
 A new server-side validation domain (`events_type_check` +

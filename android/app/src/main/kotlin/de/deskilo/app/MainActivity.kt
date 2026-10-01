@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.view.WindowManager
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -28,6 +29,27 @@ class MainActivity : FlutterActivity() {
                 "unlock" -> result.success(
                     runCatching { stopLockTask() }.isSuccess,
                 )
+                else -> result.notImplemented()
+            }
+        }
+        // #1824 — screen-capture protection for the messenger. While a
+        // conversation is on screen the window is FLAG_SECURE: screenshots
+        // and recordings come out black and the recents preview is
+        // hidden. `enable` answers whether the screen is being captured
+        // right now; Android blocks rather than detects, so: never.
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            "deskilo/capture",
+        ).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "enable" -> {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    result.success(false)
+                }
+                "disable" -> {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    result.success(null)
+                }
                 else -> result.notImplemented()
             }
         }

@@ -77,6 +77,9 @@ const Set<String> _knownPairs = {
   'me -> auth', 'me -> directory', 'me -> profile', 'me -> workspace',
   // #1791: account-bound portal, workspace publication/employment and profile entry.
   'workspace -> directory', 'directory -> auth', 'directory -> workspace',
+  // #1824 — Me › Messages IS the unified inbox, which lives with the
+  // account messenger it grew from.
+  'me -> directory',
   'profile -> directory', 'money -> auth',
   // #1642 — Help discards local support previews when identity/workspace changes.
   'help -> auth',

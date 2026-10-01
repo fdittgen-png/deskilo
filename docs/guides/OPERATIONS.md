@@ -163,6 +163,67 @@ dump in *Backup* above, taken and verified, before anything runs. The
 forward-fix rule still holds; the tag only tells you which upgrades need a
 backup you have actually restored once.
 
+## MCP: controlled activation, rollback and recovery (#1633)
+
+MCP (assistants acting for a person) ships **off**. Native sign-in and
+every native workflow work the same whether it is off, pending or on; it is
+switched on for exactly one installation, by the infrastructure operator,
+after the target has been measured. Every command below is operator-only
+(the Management API token in `SUPABASE_ACCESS_TOKEN` is the authority; no
+workspace role or app administrator can run them), reads secrets from the
+environment only, and writes nothing without `--apply`.
+
+The inspection separates six areas, and only a measured pass passes — a
+fact that could not be read is `UNKNOWN` and blocks like a failure:
+
+| Area | What is measured |
+|---|---|
+| nativeAccess | schema version, Site URL, redirect allow-list (`deskilo://**` and the app's own path), confirmation link, recovery **code** template, OTP settings, custom SMTP — from configuration; no mail is ever sent |
+| canonicalFederation | the identity authority; the Auth URL confirmed by its own discovery document (never built by appending `/auth/v1`); the canonical issuer, federation provider and upstream callback (`<Auth URL>/callback`, `--canonical-ref`); the identity hook; an asymmetric signing key; a Site URL that is the app, not Auth |
+| databaseEligibility | administrators exist and each is a bound identity (counts only) |
+| workspaceExposure | how many workspace policies expose operations (counted, not a gate) |
+| userConsent | how many connections are active (counted, not a gate) |
+| mcpRuntime | the delegated-token guard, the catalogue and routine contract of this release, classified outputs and disclosure ceiling, limits, approved clients registered in Auth, the OAuth server capability, the deployed endpoint refusing an anonymous call, `DESKILO_INSTALLATION_ID` and `DESKILO_MCP_EPOCH` matching the database (by digest), the protected-resource metadata |
+
+The sequence. Each line is run by `test/tool/mcp_runbook_test.dart`
+against a fixture in the state named after `target:`, and must exit as
+stated.
+
+```mcp
+# 1. Inspect while MCP is off. Exit 0 = ready for a CONTROLLED activation:
+#    nothing has run through MCP yet, so this is not a business test.
+dart run tool/instance.dart mcp-inspect --ref <ref>                     # expect: exit 0 (target: off)
+dart run tool/instance.dart mcp-inspect --ref <ref>                     # expect: exit 1 (target: unconfigured)
+# 2. Enable exactly that installation and epoch. Dry run first; --apply
+#    re-measures and the database refuses stale evidence.
+dart run tool/instance.dart mcp-enable --ref <ref> --installation <installation> --epoch <epoch>          # expect: exit 0 (target: off)
+dart run tool/instance.dart mcp-enable --ref <ref> --installation <installation> --epoch <epoch> --apply  # expect: exit 0 (target: off)
+# 3. One read-only pilot call with the pilot user's own delegated token
+#    (DESKILO_PILOT_TOKEN, from the ordinary consent flow). Any failure
+#    switches MCP off again; guards, containment and the audit stay.
+dart run tool/instance.dart mcp-pilot --ref <ref> --installation <installation> --workspace <workspace>   # expect: exit 0 (target: on)
+dart run tool/instance.dart mcp-pilot --ref <ref> --installation <installation> --workspace <workspace>   # expect: exit 1 (target: pilot-fails)
+# Rollback or incident: switch off FIRST, then roll back components.
+dart run tool/instance.dart mcp-disable --ref <ref> --installation <installation> --reason rollback --apply  # expect: exit 0 (target: on)
+# Restore or clone: reset authority (refused while on). The epoch moves;
+# redeploy the endpoint with the new DESKILO_MCP_EPOCH; provision
+# administrators again with the operator's own authority.
+dart run tool/instance.dart mcp-reset --ref <ref> --installation <installation> --reason "restore drill" --apply  # expect: exit 1 (target: on)
+dart run tool/instance.dart mcp-reset --ref <ref> --installation <installation> --reason "restore drill" --apply  # expect: exit 0 (target: off)
+dart run tool/instance.dart db-admins --ref <ref> grant --email <address> --apply
+```
+
+**Lost the last administrator.** MCP stops by itself (0310). Recovery is
+the operator's `db-admins grant … --apply` for a person who already signed
+in and holds a verified identity binding — never a workspace owner, never
+the first account to arrive. Then `mcp-inspect` again: a cached pass from
+before is not evidence (the fingerprint moved).
+
+**What these commands do not prove.** A local or CI run proves the
+release; it says nothing about a customer's hooks, clients, audience,
+mail delivery or IdP. Only `mcp-inspect` against that target does, and
+only `mcp-pilot` there proves one real read-only call.
+
 ## Disaster runbook
 
 **"Nobody can sign in."** Run the doctor. If it says the Site URL is

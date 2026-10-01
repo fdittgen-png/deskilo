@@ -3,6 +3,11 @@ import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 export 'package:deskilo/core/demo/data/me_repository.dart';
+import 'package:deskilo/core/demo/data/messenger_repository.dart';
+import 'package:deskilo/features/directory/providers/messenger_providers.dart';
+import 'package:deskilo/core/capture/capture_protection.dart';
+import 'package:deskilo/core/capture/capture_providers.dart';
+export 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
@@ -134,6 +139,10 @@ List<Override> standardTestOverrides({
   FakeDirectoryRepository? directory,
   List<ConnectedInstallation> connectedSources = const [],
   FakeAccountContactRepository? contacts,
+  // #1824 — the messenger per server: '' is this one.
+  FakeMessengerRepository? messenger,
+  Map<String, FakeMessengerRepository> messengers = const {},
+  CaptureProtection? capture,
   FakePersonalPreferencesRepository? personalPreferences,
   // #1150 — most fixtures were written against workspace wall time (the
   // app's default); a few against the device's. Each test says which.
@@ -189,6 +198,8 @@ List<Override> standardTestOverrides({
   WorkspaceRolesRepository? roles,
   Locale? deviceLocale,
 }) {
+  // One home messenger per scope, so a rebuilt provider keeps its state.
+  final homeMessenger = messenger ?? FakeMessengerRepository();
   final workspaceRepo = () {
     final repo = workspace ?? FakeWorkspaceRepository.withWorkspace();
     if (devMode && repo is FakeWorkspaceRepository) repo.applyDevMode(true);
@@ -239,6 +250,10 @@ List<Override> standardTestOverrides({
       // #1823 — the account layer, in memory; the account is the session's.
       meRepositoryProvider.overrideWith((ref) => me ?? FakeMeRepository()),
       accountContactRepositoryProvider.overrideWith((ref,source)=>contacts??FakeAccountContactRepository()),
+      messengerRepositoryProvider.overrideWith(
+          (ref, source) => messengers[source] ?? homeMessenger),
+      captureProtectionProvider
+          .overrideWithValue(capture ?? CaptureProtection.inert()),
       accountActivityRepositoryProvider.overrideWithValue(accountActivity ?? FakeAccountActivityRepository()),
       workspaceApplicationRepositoryProvider.overrideWithValue(applications ?? FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(personalPreferences ?? FakePersonalPreferencesRepository()),

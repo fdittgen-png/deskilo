@@ -152,7 +152,7 @@ void main() {
   testWidgets('the account messenger no longer holds a switch: its row opens '
       'the card in Me', (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
-    await goTo(tester, router, '/me?tab=messages');
+    await pushTo(tester, router, '/account-messages');
     expect(find.byType(SwitchListTile), findsNothing);
     await tester.tap(find.byKey(const ValueKey('portal-visibility-link')));
     await tester.pumpAndSettle();

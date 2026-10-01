@@ -8476,6 +8476,228 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberOriginHeading => 'Cómo empezó esta afiliación';
 
   @override
+  String get featureSpaceInquiriesTitle => 'Escribir a los anfitriones';
+
+  @override
+  String get featureSpaceInquiriesDesc =>
+      'Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas; las consultas guardadas se conservan.';
+
+  @override
+  String get featureMessageForwardingTitle => 'Reenvío de mensajes';
+
+  @override
+  String get featureMessageForwardingDesc =>
+      'Un mensaje puede reenviarse a otra conversación en la que participe quien lo reenvía. La copia indica su origen y su autor, la conversación original sabe quién lo reenvió y adónde, y un autor puede bloquear un mensaje contra el reenvío. Desactivado, no sale ningún reenvío de este espacio.';
+
+  @override
+  String get featureCaptureProtectionTitle =>
+      'Protección contra capturas de pantalla';
+
+  @override
+  String get featureCaptureProtectionDesc =>
+      'Las pantallas de mensajes rechazan capturas y grabaciones de pantalla cuando el dispositivo lo permite, ocultan su contenido mientras se graba la pantalla y anuncian una captura en la conversación cuando solo puede detectarse. Un navegador no puede bloquear capturas; allí la conversación se difumina cuando la pestaña pierde el foco.';
+
+  @override
+  String messengerContextSpace(String space) {
+    return 'En $space';
+  }
+
+  @override
+  String get messengerContextAccount => 'De persona a persona';
+
+  @override
+  String messengerContextInquiryOut(String space) {
+    return 'Tu consulta a $space';
+  }
+
+  @override
+  String messengerContextInquiryIn(String space) {
+    return 'Consulta a $space';
+  }
+
+  @override
+  String messengerOnServer(String server) {
+    return 'en $server';
+  }
+
+  @override
+  String messengerInboxUnavailable(String servers) {
+    return 'No disponible ahora: $servers. Sus conversaciones faltan en esta lista.';
+  }
+
+  @override
+  String get messengerMessageActions => 'Acciones del mensaje';
+
+  @override
+  String get messengerForward => 'Reenviar';
+
+  @override
+  String get messengerForwardLocked =>
+      'La persona autora ha bloqueado el reenvío de este mensaje.';
+
+  @override
+  String get messengerLock => 'Bloquear el reenvío';
+
+  @override
+  String get messengerUnlock => 'Permitir el reenvío';
+
+  @override
+  String get messengerHistory => 'Qué ha pasado';
+
+  @override
+  String get messengerDelete => 'Eliminar mensaje';
+
+  @override
+  String get messengerDeleteConfirm =>
+      '¿Eliminar este mensaje para todas las personas de la conversación?';
+
+  @override
+  String get messengerDeleted => 'Mensaje eliminado.';
+
+  @override
+  String get messengerForwardTitle => 'Reenviar a';
+
+  @override
+  String get messengerForwardExplain =>
+      'Todas las personas de la conversación original, primero quien la escribió, sabrán quién la reenvió, cuándo y adónde.';
+
+  @override
+  String get messengerForwardNoTargets =>
+      'No hay otra conversación en este servidor a la que reenviar.';
+
+  @override
+  String messengerForwarded(String target) {
+    return 'Reenviado a $target.';
+  }
+
+  @override
+  String messengerForwardedFrom(String context, String author) {
+    return 'Reenviado desde $context · escrito por $author';
+  }
+
+  @override
+  String messengerNoticeForwarded(String actor, String target) {
+    return '$actor reenvió un mensaje de esta conversación a $target.';
+  }
+
+  @override
+  String messengerNoticeCaptured(String actor) {
+    return '$actor hizo una captura de pantalla de esta conversación.';
+  }
+
+  @override
+  String get messengerRead => 'Leído';
+
+  @override
+  String get messengerDelivered => 'Entregado';
+
+  @override
+  String get messengerHistoryEmpty =>
+      'Aún no hay nada registrado para este mensaje.';
+
+  @override
+  String messengerEventSent(String actor) {
+    return 'Enviado por $actor';
+  }
+
+  @override
+  String messengerEventRead(String actor) {
+    return 'Leído por $actor';
+  }
+
+  @override
+  String messengerEventForwarded(String actor, String target) {
+    return 'Reenviado por $actor a $target';
+  }
+
+  @override
+  String messengerEventDeleted(String actor) {
+    return 'Eliminado por $actor';
+  }
+
+  @override
+  String messengerEventCaptured(String actor) {
+    return 'Captura de pantalla de $actor';
+  }
+
+  @override
+  String messengerEventOther(String event, String actor) {
+    return '$event · $actor';
+  }
+
+  @override
+  String get messengerWriteToHosts => 'Escribir a los anfitriones';
+
+  @override
+  String get messengerHostsIntro =>
+      'Tu mensaje lo leen estos anfitriones del espacio:';
+
+  @override
+  String get messengerHostsNone =>
+      'En este espacio nadie responde mensajes ahora mismo.';
+
+  @override
+  String get messengerInquirySend => 'Enviar consulta';
+
+  @override
+  String get messengerInquiriesTitle => 'Consultas';
+
+  @override
+  String get messengerInquiriesEmpty => 'Aún no hay consultas.';
+
+  @override
+  String get messengerInquiryClose => 'Cerrar consulta';
+
+  @override
+  String get messengerInquiryClosed => 'Consulta cerrada.';
+
+  @override
+  String messengerInquiryFrom(String name) {
+    return 'De $name';
+  }
+
+  @override
+  String messengerNoticeForwardedPrivate(String actor) {
+    return '$actor reenvió un mensaje de esta conversación a una conversación personal.';
+  }
+
+  @override
+  String messengerEventForwardedPrivate(String actor) {
+    return 'Reenviado por $actor a una conversación personal';
+  }
+
+  @override
+  String messengerEventForwardedFrom(String actor, String context) {
+    return 'Escrito originalmente por $actor en $context';
+  }
+
+  @override
+  String get messengerRefusedForwardingOff =>
+      'Este espacio no permite reenviar sus mensajes.';
+
+  @override
+  String get messengerRefusedTooLong =>
+      'Este mensaje es demasiado largo para esa conversación.';
+
+  @override
+  String get messengerRefusedClosed => 'Esta consulta está cerrada.';
+
+  @override
+  String get messengerRefusedUnavailable =>
+      'Este espacio no acepta consultas ahora mismo.';
+
+  @override
+  String get messengerRefusedLimit => 'Demasiados a la vez. Espera un minuto.';
+
+  @override
+  String get captureWebNotice =>
+      'Tu navegador no puede impedir capturas de pantalla de esta conversación.';
+
+  @override
+  String get captureRecordingHidden =>
+      'Oculto mientras tu pantalla se graba o se duplica.';
+
+  @override
   String get moneyBaseFee => 'Suscripción base';
 
   @override

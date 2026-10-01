@@ -1043,6 +1043,18 @@ window.SETUP_L10N={
    "publicListings": [
     "Public workspace listing",
     "Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts."
+   ],
+   "spaceInquiries": [
+    "Write to the hosts",
+    "A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay."
+   ],
+   "messageForwarding": [
+    "Message forwarding",
+    "A message can be forwarded into another conversation the forwarder takes part in. The copy names where it came from and who wrote it, the original conversation is told who forwarded it and where, and an author can lock a message against forwarding. Off refuses forwards out of this space."
+   ],
+   "captureProtection": [
+    "Screen capture protection",
+    "Message screens refuse screenshots and screen recording where the device allows it, hide their content while the screen is recorded, and announce a screenshot in the conversation where it can only be detected. A browser cannot block screenshots; there the thread is blurred when the tab loses focus."
    ]
   },
   "process": {
@@ -2295,6 +2307,18 @@ window.SETUP_L10N={
    "publicListings": [
     "Présentation publique de l’espace",
     "Publiez les informations et plans choisis, avec les propriétaires visibles et les administrateurs volontaires."
+   ],
+   "spaceInquiries": [
+    "Écrire aux hôtes",
+    "Une personne connectée qui trouve la page publiée peut écrire aux hôtes : les propriétaires et les administrateurs qui ont choisi d’être contacts publics. Les hôtes sont nommés avant l’écriture, et seuls cette personne et les hôtes lisent la conversation. Désactivé, le bouton et la vue Demandes disparaissent ; les demandes enregistrées restent."
+   ],
+   "messageForwarding": [
+    "Transfert de messages",
+    "Un message peut être transféré dans une autre conversation à laquelle participe la personne qui transfère. La copie indique son origine et son auteur, la conversation d’origine est informée de qui l’a transféré et où, et un auteur peut verrouiller un message contre le transfert. Désactivé, aucun transfert ne sort de cet espace."
+   ],
+   "captureProtection": [
+    "Protection contre la capture d’écran",
+    "Les écrans de messages refusent les captures et l’enregistrement d’écran quand l’appareil le permet, masquent leur contenu pendant un enregistrement et annoncent une capture dans la conversation quand elle peut seulement être détectée. Un navigateur ne peut pas bloquer les captures ; la conversation y est floutée quand l’onglet perd le focus."
    ]
   },
   "process": {
@@ -3547,6 +3571,18 @@ window.SETUP_L10N={
    "publicListings": [
     "Öffentlicher Workspace-Eintrag",
     "Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten."
+   ],
+   "spaceInquiries": [
+    "Den Gastgebern schreiben",
+    "Eine angemeldete Person, die die veröffentlichte Seite findet, kann den Gastgebern schreiben: den Eigentümern und den Administratoren, die öffentliche Kontakte sein wollen. Die Gastgeber werden vor dem Schreiben genannt, und nur diese Person und die Gastgeber lesen das Gespräch. Aus entfernt die Schaltfläche und die Ansicht Anfragen; gespeicherte Anfragen bleiben erhalten."
+   ],
+   "messageForwarding": [
+    "Nachrichten weiterleiten",
+    "Eine Nachricht kann in ein anderes Gespräch weitergeleitet werden, an dem die weiterleitende Person teilnimmt. Die Kopie nennt Herkunft und Verfasser, das ursprüngliche Gespräch erfährt, wer sie wohin weitergeleitet hat, und Verfasser können eine Nachricht gegen Weiterleitung sperren. Aus verhindert Weiterleitungen aus diesem Bereich."
+   ],
+   "captureProtection": [
+    "Schutz vor Bildschirmaufnahmen",
+    "Nachrichtenbildschirme verweigern Bildschirmfotos und Bildschirmaufnahmen, wo das Gerät es erlaubt, verbergen ihren Inhalt während einer Aufnahme und melden ein Bildschirmfoto im Gespräch, wo es nur erkannt werden kann. Ein Browser kann Bildschirmfotos nicht verhindern; dort wird das Gespräch unscharf, sobald der Tab den Fokus verliert."
    ]
   },
   "process": {
@@ -4799,6 +4835,18 @@ window.SETUP_L10N={
    "publicListings": [
     "Anuncio público del espacio",
     "Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores."
+   ],
+   "spaceInquiries": [
+    "Escribir a los anfitriones",
+    "Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas; las consultas guardadas se conservan."
+   ],
+   "messageForwarding": [
+    "Reenvío de mensajes",
+    "Un mensaje puede reenviarse a otra conversación en la que participe quien lo reenvía. La copia indica su origen y su autor, la conversación original sabe quién lo reenvió y adónde, y un autor puede bloquear un mensaje contra el reenvío. Desactivado, no sale ningún reenvío de este espacio."
+   ],
+   "captureProtection": [
+    "Protección contra capturas de pantalla",
+    "Las pantallas de mensajes rechazan capturas y grabaciones de pantalla cuando el dispositivo lo permite, ocultan su contenido mientras se graba la pantalla y anuncian una captura en la conversación cuando solo puede detectarse. Un navegador no puede bloquear capturas; allí la conversación se difumina cuando la pestaña pierde el foco."
    ]
   },
   "process": {
@@ -6051,6 +6099,18 @@ window.SETUP_L10N={
    "publicListings": [
     "Scheda pubblica dello spazio",
     "Pubblica solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi."
+   ],
+   "spaceInquiries": [
+    "Scrivi agli host",
+    "Una persona connessa che trova la pagina pubblicata può scrivere agli host: i proprietari e gli amministratori che hanno scelto di essere contatti pubblici. Gli host vengono nominati prima di scrivere, e solo quella persona e gli host leggono la conversazione. Disattivato, il pulsante e la vista Richieste scompaiono; le richieste salvate restano."
+   ],
+   "messageForwarding": [
+    "Inoltro dei messaggi",
+    "Un messaggio può essere inoltrato in un’altra conversazione a cui partecipa chi lo inoltra. La copia indica la provenienza e l’autore, la conversazione originale viene informata di chi l’ha inoltrato e dove, e un autore può bloccare l’inoltro di un messaggio. Disattivato, nessun inoltro esce da questo spazio."
+   ],
+   "captureProtection": [
+    "Protezione dalle catture dello schermo",
+    "Le schermate dei messaggi rifiutano screenshot e registrazioni dello schermo quando il dispositivo lo consente, nascondono il contenuto durante una registrazione e annunciano uno screenshot nella conversazione quando può solo essere rilevato. Un browser non può bloccare gli screenshot; lì la conversazione viene sfocata quando la scheda perde il focus."
    ]
   },
   "process": {

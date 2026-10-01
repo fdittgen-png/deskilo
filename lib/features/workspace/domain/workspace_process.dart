@@ -109,6 +109,9 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.richMessageRefs,
       WorkspaceFeature.messageGestures,
       WorkspaceFeature.messagesHub,
+      WorkspaceFeature.spaceInquiries,
+      WorkspaceFeature.messageForwarding,
+      WorkspaceFeature.captureProtection,
     ]),
   ]),
   WorkspaceProcess('membershipCommerce', [
