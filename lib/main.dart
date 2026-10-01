@@ -83,13 +83,17 @@ Future<void> main() async {
   if (state == BootState.ready) return startApp();
   trace.warn('boot', 'essential start-up ${state.name}: recovery screen shown');
   var started = false;
-  runApp(BootRecoveryApp(
-    boot: boot,
-    onReady: () {
-      if (started) return;
-      started = true;
-      trace.log(TraceLevel.info, 'boot', 'essential start-up completed late');
-      startApp();
-    },
+  // A ProviderScope of its own (riverpod_lint): the recovery screen reads
+  // no provider, and the real app gets its full scope in startApp().
+  runApp(ProviderScope(
+    child: BootRecoveryApp(
+      boot: boot,
+      onReady: () {
+        if (started) return;
+        started = true;
+        trace.log(TraceLevel.info, 'boot', 'essential start-up completed late');
+        startApp();
+      },
+    ),
   ));
 }
