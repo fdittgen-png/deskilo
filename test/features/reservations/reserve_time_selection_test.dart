@@ -255,8 +255,11 @@ void main() {
     await pickHubDate(tester, tomorrow);
     await _tap(tester, 'reserve-am-chip');
     await _openSeat(tester);
-    expect(_key('booking-mode'), findsNothing,
-        reason: 'checking in tomorrow is not an action');
+    expect(
+      _key('booking-mode'),
+      findsNothing,
+      reason: 'checking in tomorrow is not an action',
+    );
     expect(_key('booking-check-in-now'), findsNothing);
     await _confirm(tester);
     final created = _single(repo);
@@ -265,8 +268,9 @@ void main() {
   });
 
   testWidgets('T04 — full-day workspace: the day is the only period, '
-      'explained by the configuration; still a reservation by default',
-      (tester) async {
+      'explained by the configuration; still a reservation by default', (
+    tester,
+  ) async {
     final repo = await pumpHub(
       tester,
       granularity: BookingGranularity.fullDay,
@@ -300,5 +304,32 @@ void main() {
     );
     expect(find.bySemanticsLabel('Back to now'), findsOneWidget);
     handle.dispose();
+  });
+
+  testWidgets('T09 — at 360dp with 200% text the sheet keeps both actions '
+      'and the period reachable, without overflow, and the choice still '
+      'books', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    final repo = await pumpHub(
+      tester,
+      granularity: BookingGranularity.halfDay,
+      clock: _clock,
+      size: const Size(360 * 3, 800 * 3),
+      pixelRatio: 3,
+    );
+    await _openSeat(tester);
+    expect(tester.takeException(), isNull);
+    for (final k in [
+      'booking-mode-reserve',
+      'booking-mode-check-in',
+      'booking-pm',
+    ]) {
+      await tester.ensureVisible(_key(k));
+      expect(_key(k), findsOneWidget, reason: k);
+    }
+    await _tap(tester, 'booking-pm');
+    await _confirm(tester);
+    _expectWindow(_single(repo), _pm);
   });
 }
