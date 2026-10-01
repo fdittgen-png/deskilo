@@ -46,6 +46,7 @@ import '../../features/auth/providers/oauth_consent_providers.dart';
 import 'data/action_confirmation_repository.dart';
 import 'data/local_setup_repository.dart';
 import 'data/template_search_repository.dart';
+import 'data/instance_repository.dart';
 import 'data/mcp_admin_repository.dart';
 import 'data/mcp_connection_repository.dart';
 import '../../features/mcp/providers/mcp_providers.dart';
@@ -65,6 +66,7 @@ import '../../features/workspace/providers/workspace_files_providers.dart';
 import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_import_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
+import '../../features/workspace/providers/instance_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../app/shell/shell_bar_visibility.dart';
 import '../../features/plan/providers/default_level_controller.dart';
@@ -120,6 +122,8 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       // #1626/#1627 — no policy to save and no queue to review; and no
       // second factor, since Demo has no Auth server to verify one.
       mcpAdminRepositoryProvider.overrideWithValue(FakeMcpAdminRepository()),
+      // #1829 — Demo names no instance owner: the visitor is not an account.
+      instanceRepositoryProvider.overrideWithValue(FakeInstanceRepository()),
       // #1625 — Demo's one fictional installation: nothing is verified
       // against a server, and every client borrows the fakes above.
       activeMcpTargetProvider.overrideWith(
@@ -237,6 +241,7 @@ const Set<String> demoOverriddenProviders = {
   'actionConfirmationRepositoryProvider',
   'mcpConnectionRepositoryProvider',
   'mcpAdminRepositoryProvider',
+  'instanceRepositoryProvider',
   'activeMcpTargetProvider',
   'localSetupRepositoryProvider',
   'templateSearchRepositoryProvider',

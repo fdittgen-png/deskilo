@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0318 (#1833, checkpoint A) -- what one member reads of another inside
+-- 0319 (#1833, checkpoint A) -- what one member reads of another inside
 -- a space is a purpose-specific projection, not the `profiles` row.
 --
 -- The app read a space mate with `select * from profiles`, so every
@@ -226,7 +226,7 @@ declare
      or v_profile.pin_hash <> extensions.crypt(p_pin, v_profile.pin_hash) then$a$;
 begin
   if (length(v_def) - length(replace(v_def, v_anchor, ''))) / length(v_anchor) <> 1 then
-    raise exception '0318: badge_auth_verify anchor must occur exactly once';
+    raise exception '0319: badge_auth_verify anchor must occur exactly once';
   end if;
   execute replace(v_def, v_anchor, $a$  if coalesce((select k.pin_hash from public.account_badge_pins k where k.user_id = v_member.user_id), '') = ''
      or (select k.pin_hash from public.account_badge_pins k where k.user_id = v_member.user_id)
@@ -236,4 +236,4 @@ $badge$;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(318);
+select public.set_deskilo_schema_version(319);

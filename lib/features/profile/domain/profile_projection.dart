@@ -4,7 +4,7 @@ import 'profile.dart';
 
 /// #1833 — why a field of another person's profile may be read.
 ///
-/// The server (`member_profiles`, migration 0318) decides which purposes
+/// The server (`member_profiles`, migration 0319) decides which purposes
 /// the caller holds for each person and sends one group per purpose. The
 /// field matrix is docs/security/IDENTITY_PROJECTIONS.md.
 enum ProfilePurpose {

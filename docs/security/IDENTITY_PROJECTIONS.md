@@ -3,7 +3,7 @@
 A person's identity lives on `profiles` (one row per account) plus a few
 private tables. Another person never needs the row: they need the fields
 of one **purpose**. This file is the field/audience matrix; the server is
-the authority (`member_profiles`, migration 0318) and the Dart reader is
+the authority (`member_profiles`, migration 0319) and the Dart reader is
 `lib/features/profile/domain/profile_projection.dart`. A column that is
 not listed here is projected to nobody.
 
@@ -34,7 +34,7 @@ and are read by nobody but themselves.
 | `address` | operational | legacy free-text postal block |
 | `preferred_locale` | operational | the language documents to S are printed in |
 | `format_locale`, `clock`, `time_zone_mode`, `default_workspace_id`, `privacy_accepted_*` | self only | read by `fetchMyProfile` |
-| `pin_hash`, `pin_set_at` | private auth | moved to `account_badge_pins` (0318); the columns are held empty |
+| `pin_hash`, `pin_set_at` | private auth | moved to `account_badge_pins` (0319); the columns are held empty |
 | `person_id`, `company_id`, `site_id`, system columns | none | technical |
 | profession, bio (`account_about`) | account | 0315 audiences |
 
@@ -55,7 +55,7 @@ editing a profile never rewrites them.
 | Avatar bytes | `avatars` bucket, `shares_workspace_with` | checkpoint B |
 | External/network schema | #1847 | checkpoint B |
 
-Proof: `supabase/tests/database/103_member_profile_projection.sql`
+Proof: `supabase/tests/database/104_member_profile_projection.sql`
 (authenticated-role pgTAP, one canary per private field) and
 `test/features/profile/identity_purpose_projection_test.dart` (the app
 asks for the projection and reads each field only from its group).

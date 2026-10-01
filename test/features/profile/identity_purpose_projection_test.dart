@@ -11,7 +11,7 @@
 // database did for a peer (canaries included) and the RPC route with the
 // projection `member_profiles` returns, so a reader that still takes the
 // table route fails here. What the database grants to whom is proved in
-// supabase/tests/database/103_member_profile_projection.sql; this file
+// supabase/tests/database/104_member_profile_projection.sql; this file
 // proves the app asks for the projection, for the right space, and reads
 // each field only from the group its purpose names.
 import 'dart:convert';

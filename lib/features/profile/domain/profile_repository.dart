@@ -13,7 +13,7 @@ abstract class ProfileRepository {
 
   /// Profiles of [userIds] (auth.users ids) as members of [workspaceId]
   /// — the #224 directory read. #1833: a purpose projection, not the
-  /// row (`member_profiles`, 0318): a space mate gets the community
+  /// row (`member_profiles`, 0319): a space mate gets the community
   /// fields; the identity documents print only reaches holders of
   /// `viewPersonalData`/`issueInvoices` in that space, and the person
   /// themselves. Ids the caller may not read are absent.

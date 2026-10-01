@@ -4512,6 +4512,118 @@
   "helpTopicInstances": "Instances",
   "helpTopicAccounting": "Accounting exports",
   "helpTopicReadiness": "readiness gate",
+  "instanceOwnerTitle": "Instance owner",
+  "@instanceOwnerTitle": {
+    "description": "#1829 instance owner"
+  },
+  "instanceOwnerHelp": "This installation is shared by all its workspaces. The instance owner answers for it: contact them about anything that concerns the whole installation, such as assistants.",
+  "@instanceOwnerHelp": {
+    "description": "#1829 instance owner"
+  },
+  "instanceOwnerNone": "No instance owner is set yet.",
+  "@instanceOwnerNone": {
+    "description": "#1829 instance owner"
+  },
+  "instanceOwnerCopyEmail": "Copy e-mail address",
+  "@instanceOwnerCopyEmail": {
+    "description": "#1829 instance owner"
+  },
+  "instanceOwnerCopied": "E-mail address copied.",
+  "@instanceOwnerCopied": {
+    "description": "#1829 instance owner"
+  },
+  "instanceYouAreOwner": "You are the instance owner.",
+  "@instanceYouAreOwner": {
+    "description": "#1829 instance owner"
+  },
+  "instanceYouAreDelegate": "You are a delegate of the instance owner.",
+  "@instanceYouAreDelegate": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegatesTitle": "Delegates",
+  "@instanceDelegatesTitle": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegatesNone": "No delegates.",
+  "@instanceDelegatesNone": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegatesHelp": "A delegate can run the installation-wide setup for assistants. Delegates cannot delegate further and see no other workspace.",
+  "@instanceDelegatesHelp": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateFieldLabel": "E-mail address of an account",
+  "@instanceDelegateFieldLabel": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateAdd": "Delegate the role",
+  "@instanceDelegateAdd": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateWithdraw": "Withdraw the delegation",
+  "@instanceDelegateWithdraw": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateWithdrawTitle": "Withdraw this delegation?",
+  "@instanceDelegateWithdrawTitle": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateWithdrawBody": "They lose access to the installation-wide setup immediately.",
+  "@instanceDelegateWithdrawBody": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateWithdrawConfirm": "Withdraw",
+  "@instanceDelegateWithdrawConfirm": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegated": "Delegated.",
+  "@instanceDelegated": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateUnchanged": "This person already is a delegate.",
+  "@instanceDelegateUnchanged": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateNoAccount": "No account uses this e-mail address.",
+  "@instanceDelegateNoAccount": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateUnconfirmed": "This account has not confirmed its e-mail address yet.",
+  "@instanceDelegateUnconfirmed": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateAlreadyOwner": "The owner does not need a delegation.",
+  "@instanceDelegateAlreadyOwner": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegateUnavailable": "This server cannot delegate yet.",
+  "@instanceDelegateUnavailable": {
+    "description": "#1829 instance owner"
+  },
+  "instanceDelegationWithdrawn": "Delegation withdrawn.",
+  "@instanceDelegationWithdrawn": {
+    "description": "#1829 instance owner"
+  },
+  "instanceClaimTitle": "Take ownership",
+  "@instanceClaimTitle": {
+    "description": "#1829 instance owner"
+  },
+  "instanceClaimBody": "You created this instance and no owner has been set. Taking ownership makes you the person who answers for it.",
+  "@instanceClaimBody": {
+    "description": "#1829 instance owner"
+  },
+  "instanceClaimButton": "Take ownership",
+  "@instanceClaimButton": {
+    "description": "#1829 instance owner"
+  },
+  "instanceClaimDone": "You are now the instance owner.",
+  "@instanceClaimDone": {
+    "description": "#1829 instance owner"
+  },
+  "instanceClaimFailed": "Ownership could not be taken.",
+  "@instanceClaimFailed": {
+    "description": "#1829 instance owner"
+  },
   "featureInstanceWizard": "Instance wizard",
   "@featureInstanceWizard": {
     "description": "#977 instance wizard: featureInstanceWizard"

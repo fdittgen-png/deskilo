@@ -67,7 +67,7 @@
       ],
       "prerequisites": "Membership plans configured; an allowance per plan.",
       "limitations": "Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.",
-      "fingerprint": "5df1a52f5d41",
+      "fingerprint": "5807abc70ab4",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -512,7 +512,7 @@
       ],
       "prerequisites": "None: the Demo is built into every client.",
       "limitations": "The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.",
-      "fingerprint": "164e0129aea2",
+      "fingerprint": "99f2cdb8fc7e",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
