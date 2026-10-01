@@ -80,13 +80,20 @@ class SupabaseReservationRepository implements ReservationRepository {
             TraceLogger.instance
                 .warn('booking', 'day-end sweep failed', error: e, stackTrace: st);
           }
-          return _client
-              .from('reservations')
-              .select()
-              .eq('workspace_id', workspaceId)
-              .lt('starts_at', to.toUtc().toIso8601String())
-              .gt('ends_at', from.toUtc().toIso8601String())
-              .order('starts_at', ascending: true);
+          // #1848 — paged to the end: one unranged select returns at
+          // most the server's cap, and a reservation past it would draw
+          // its seat as free. `id` makes the order total across pages.
+          return fetchAllPages(
+            table: 'reservations',
+            build: () => _client
+                .from('reservations')
+                .select()
+                .eq('workspace_id', workspaceId)
+                .lt('starts_at', to.toUtc().toIso8601String())
+                .gt('ends_at', from.toUtc().toIso8601String())
+                .order('starts_at', ascending: true)
+                .order('id', ascending: true),
+          );
         },
         parse: (payload) => [
           for (final row in payload as List)
@@ -104,7 +111,8 @@ class SupabaseReservationRepository implements ReservationRepository {
           .from('reservations')
           .select()
           .eq('workspace_id', workspaceId)
-          .order('starts_at', ascending: true),
+          .order('starts_at', ascending: true)
+          .order('id', ascending: true),
     );
     return [
       for (final row in rows) _fromRow(Map<String, dynamic>.from(row)),
