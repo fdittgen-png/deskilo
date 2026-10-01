@@ -175,12 +175,35 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
-  Future<void> reorderLevels(List<String> orderedLevelIds) async {
+  Future<LevelReorderOutcome> reorderLevels(
+    String workspaceId,
+    List<String> orderedLevelIds, {
+    required List<String> expected,
+  }) async {
+    reorderCalls++;
+    // #2010 — the server's contract: the whole permutation, from the order
+    // it was made from, or nothing.
+    final current = (levels.where((l) => l.workspaceId == workspaceId).toList()
+          ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder)))
+        .map((l) => l.id)
+        .toList();
+    if (current.join(',') != expected.join(',')) {
+      return LevelReorderOutcome.conflict;
+    }
+    if (orderedLevelIds.toSet().length != orderedLevelIds.length ||
+        orderedLevelIds.toSet().difference(current.toSet()).isNotEmpty ||
+        orderedLevelIds.length != current.length) {
+      return LevelReorderOutcome.refused;
+    }
     for (var i = 0; i < orderedLevelIds.length; i++) {
       final idx = levels.indexWhere((l) => l.id == orderedLevelIds[i]);
-      if (idx >= 0) levels[idx] = levels[idx].copyWith(sortOrder: i);
+      levels[idx] = levels[idx].copyWith(sortOrder: i);
     }
+    return LevelReorderOutcome.saved;
   }
+
+  /// #2010 — how many reorder commands were sent (one per save).
+  var reorderCalls = 0;
 
   /// levelId → background image bytes (0036).
   final backgrounds = <String, Uint8List>{};
