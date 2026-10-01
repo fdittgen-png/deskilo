@@ -1,7 +1,7 @@
 {
   "provenance": {
     "kind": "captured",
-    "source": "public_network_descriptor() as migration 0320 defines it, read on the dev project inside a rolled-back transaction (pgTAP 107 probe), 2026-10-01; equal to renderPublicNetworkDescriptorSql's JSON (pinned by public_network_contract_test)"
+    "source": "public_network_descriptor() as migration 0320 defines it, read on the dev project inside a rolled-back transaction (pgTAP 106 probe), 2026-10-01; equal to renderPublicNetworkDescriptorSql's JSON (pinned by public_network_contract_test)"
   },
   "descriptor": {
     "protocol": "deskilo.public-network",

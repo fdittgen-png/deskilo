@@ -371,7 +371,7 @@
       ],
       "tests": [
         "test/core/public_network/public_network_negotiation_test.dart",
-        "supabase/tests/database/107_public_network_negotiation.sql"
+        "supabase/tests/database/106_public_network_negotiation.sql"
       ]
     },
     {
@@ -622,7 +622,7 @@
       "tests": [
         "supabase/tests/database/105_public_network_boundary.sql",
         "test/features/directory/participant_negotiation_test.dart",
-        "supabase/tests/database/107_public_network_negotiation.sql"
+        "supabase/tests/database/106_public_network_negotiation.sql"
       ],
       "versions": [
         1
@@ -663,7 +663,7 @@
       "tests": [
         "supabase/tests/database/105_public_network_boundary.sql",
         "test/features/directory/participant_negotiation_test.dart",
-        "supabase/tests/database/107_public_network_negotiation.sql"
+        "supabase/tests/database/106_public_network_negotiation.sql"
       ],
       "versions": [
         1
