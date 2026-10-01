@@ -2,6 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/cache/cache_store.dart';
+import '../../../core/storage/active_workspace_store.dart';
 import '../../../core/trace/trace_logger.dart';
 import 'auth_providers.dart';
 
@@ -34,8 +35,23 @@ import 'auth_providers.dart';
 /// would create does not exist yet. It runs before the sweep, and the
 /// sweep before the sign-out, for the same reason in two steps — each
 /// fences what the next one can no longer reach.
+///
+/// #1823 — the leaving person's last space goes with them: the device
+/// entries that remember where they were are cleared before the session
+/// ends, while the account can still be named. The server default
+/// (`profiles.default_workspace_id`) stays: it is theirs, on their row.
 Future<void> signOutAndForget(WidgetRef ref) async {
   CacheSession.instance.invalidate();
+  final account = ref.read(authRepositoryProvider).currentUserId;
+  if (account != null) {
+    try {
+      await ref.read(activeWorkspaceStoreProvider).write(account, null);
+      await ref.read(defaultWorkspaceStoreProvider).write(account, null);
+    } catch (e, st) {
+      TraceLogger.instance.warn('workspace',
+          'sign-out could not forget the last space', error: e, stackTrace: st);
+    }
+  }
   final cache = ref.read(cacheStoreProvider);
   if (cache is ScopedCacheStore) {
     try {

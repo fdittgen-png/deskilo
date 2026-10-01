@@ -16,6 +16,7 @@ bool _wizardOff(WorkspaceFeature f) => f != WorkspaceFeature.instanceWizard;
 const out = RouteFacts(auth: AuthFact.signedOut);
 const member = RouteFacts(auth: AuthFact.signedIn);
 const zero = RouteFacts(auth: AuthFact.signedIn, workspaces: WorkspacesFact.none);
+const noSpace = RouteFacts(auth: AuthFact.signedIn, space: SpaceFact.none);
 const pendingA = RouteFacts(auth: AuthFact.signedIn, membership: MembershipFact.pending);
 const unconsented = RouteFacts(auth: AuthFact.signedIn, privacy: PrivacyFact.notAccepted);
 const profileDown = RouteFacts(auth: AuthFact.signedIn, privacy: PrivacyFact.unavailable);
@@ -68,6 +69,7 @@ final rows = <Row>[
   stay('profile loading: nothing moves', '/reserve', const RouteFacts(auth: AuthFact.signedIn, privacy: PrivacyFact.loading)),
   // zero workspaces
   go('no workspace: a workspace route goes to onboarding', '/reserve', zero, '/onboarding?first=1', RouteReason.noWorkspace),
+  stay('no workspace: Me opens', '/me', zero),
   stay('no workspace: the account pages open', '/profiles', zero),
   stay('no workspace: linked accounts open', '/linked-accounts', zero),
   stay('no workspace: the server chooser opens', '/server', zero),
@@ -95,6 +97,13 @@ final rows = <Row>[
   stay('pending: switching identity stays open', '/linked-accounts', pendingA),
   go('active in B: the waiting room bounces home', '/pending', member, '/reserve', RouteReason.notPending),
   stay('no membership row: nothing moves', '/reserve', const RouteFacts(auth: AuthFact.signedIn, membership: MembershipFact.none)),
+  // #1823 — a space is entered, never assumed
+  go('no space of mine to return to: Me', '/reserve', noSpace, '/me', RouteReason.noSpaceChosen),
+  go('no space chosen: sign-in lands on Me', '/auth', noSpace, '/reserve', RouteReason.alreadySignedIn, settled: '/me'),
+  stay('no space chosen: Me opens', '/me', noSpace),
+  stay('no space chosen: the account pages open', '/linked-accounts', noSpace),
+  stay('the chosen space still resolving: nothing moves', '/reserve', const RouteFacts(auth: AuthFact.signedIn, space: SpaceFact.loading)),
+  go('pending and no space chosen: the waiting room first', '/reserve', const RouteFacts(auth: AuthFact.signedIn, membership: MembershipFact.pending, space: SpaceFact.none), '/pending', RouteReason.membershipPending),
   // kiosk
   go('kiosk gate pending owns every route', '/help', gate, '/kiosk-gate', RouteReason.kioskGate),
   stay('kiosk gate stays', '/kiosk-gate', gate),

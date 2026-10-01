@@ -57,6 +57,7 @@ class _SlowA extends FakeWorkspaceRepository {
     );
     this.openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7];
     this.openWeekdays['ws-2'] = const [1, 2, 3, 4, 5, 6, 7];
+    serverDefaultWorkspaceId = 'ws-1'; // #1823: the person was last in A
   }
 
   final a = Completer<Member?>();

@@ -812,6 +812,13 @@ constraint workspace_field_options.workspace_field_options_definition_id_fkey FO
 constraint workspace_field_options.workspace_field_options_key_check CHECK ((key ~ '^[a-z0-9][a-z0-9_]{0,40}$'::text))
 constraint workspace_field_options.workspace_field_options_pkey PRIMARY KEY (id)
 constraint workspace_field_options.workspace_field_options_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint workspace_field_retention_holds.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint workspace_field_retention_holds.system_company_present CHECK ((company_id IS NOT NULL))
+constraint workspace_field_retention_holds.workspace_field_retention_holds_basis_check CHECK (((char_length(btrim(basis)) >= 10) AND (char_length(btrim(basis)) <= 500)))
+constraint workspace_field_retention_holds.workspace_field_retention_holds_definition_id_fkey FOREIGN KEY (definition_id) REFERENCES workspace_field_definitions(id) ON DELETE CASCADE
+constraint workspace_field_retention_holds.workspace_field_retention_holds_pkey PRIMARY KEY (id)
+constraint workspace_field_retention_holds.workspace_field_retention_holds_retain_days_check CHECK (((retain_days >= 1) AND (retain_days <= 3650)))
+constraint workspace_field_retention_holds.workspace_field_retention_holds_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_field_value_options.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint workspace_field_value_options.system_company_present CHECK ((company_id IS NOT NULL))
 constraint workspace_field_value_options.workspace_field_value_options_option_id_fkey FOREIGN KEY (option_id) REFERENCES workspace_field_options(id) ON DELETE CASCADE
@@ -821,6 +828,7 @@ constraint workspace_field_value_options.workspace_field_value_options_workspace
 constraint workspace_field_values.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint workspace_field_values.system_company_present CHECK ((company_id IS NOT NULL))
 constraint workspace_field_values.workspace_field_values_definition_id_fkey FOREIGN KEY (definition_id) REFERENCES workspace_field_definitions(id) ON DELETE CASCADE
+constraint workspace_field_values.workspace_field_values_hold_pair CHECK (((held_until IS NULL) = (hold_basis IS NULL)))
 constraint workspace_field_values.workspace_field_values_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
 constraint workspace_field_values.workspace_field_values_one_column CHECK ((((((
 CASE
@@ -963,19 +971,19 @@ routine public.can_discuss_workspace_application(p_event_id uuid) -> boolean | f
 routine public.can_manage_managed_profile(p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:bd755e2c3694
 routine public.can_read_member_note(p_workspace uuid, p_from uuid, p_to uuid, p_conversation uuid, p_created_at timestamp with time zone) -> boolean | function | definer | stable | exec:authenticated,service_role | body:de558556d5bf
 routine public.cancel_expense_schedule(p_schedule_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:efe70d30388b
-routine public.cancel_reservation(p_reservation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:d947d4b8bed8
+routine public.cancel_reservation(p_reservation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4a2e5af114ec
 routine public.cancel_series(p_series_id uuid, p_from timestamp with time zone) -> integer | function | definer | volatile | exec:authenticated,service_role | body:32e4632e19f7
 routine public.canonical_walkup_start(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> timestamp with time zone | function | definer | stable | exec:service_role | body:ebad206199df
 routine public.capture_workspace_application() -> trigger | function | definer | volatile | exec:service_role | body:4d7f356fd850
-routine public.check_in_reservation(p_reservation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:45d96b222fd6
-routine public.check_out_reservation(p_reservation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:6605f9942d18
+routine public.check_in_reservation(p_reservation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:fb198f0f2c26
+routine public.check_out_reservation(p_reservation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:33c272436fd5
 routine public.claim_instance_ownership() -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:533ed08c3b04
 routine public.clear_badge_pin() -> void | function | definer | volatile | exec:authenticated,service_role | body:257813721688
 routine public.clear_einvoice_credentials(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:32ef21c9d47e
 routine public.clear_payment_provider(p_workspace_id uuid, p_provider text) -> void | function | definer | volatile | exec:authenticated,service_role | body:0814d0c800c5
 routine public.clear_readiness_acknowledgement(p_workspace_id uuid, p_section text) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:d3e2b466bbba
 routine public.close_space_inquiry(p_inquiry uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:847119f0bdef
-routine public.complete_check_out(p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:75ef7e86988b
+routine public.complete_check_out(p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:bce60bfd206c
 routine public.configuration_change_set(p_to uuid, p_snapshot jsonb, p_entities text[], p_mode text) -> jsonb | function | definer | stable | exec:service_role | body:20f005547b90
 routine public.configuration_group_states(p_set jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:f26d382ab7a3
 routine public.confirm_expense_occurrence(p_occurrence_id uuid, p_amount_cents integer, p_reason text, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:2e9422068815
@@ -1022,7 +1030,7 @@ routine public.enforce_reservation_limit() -> trigger | function | definer | vol
 routine public.ensure_system_columns(p_table text) -> void | function | invoker | volatile | exec:service_role | body:b82cfcf514ba
 routine public.ensure_usage_records(p_workspace_id uuid, p_period text) -> integer | function | definer | volatile | exec:service_role | body:b8c745441adc
 routine public.entity_row_key(p_table text, p_row jsonb) -> text | function | invoker | immutable | exec:authenticated,service_role | body:ea5668823281
-routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:af14bd65d1b6
+routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:fdaaf680cd2d
 routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:014f4fa2fca2
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:9b491b3a3a5f
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
@@ -1033,6 +1041,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f195c36ad44b
 routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:e535a014233f
+routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:authenticated,service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
 routine public.field_definition_conflicts(p_workspace_id uuid, p_definitions jsonb) -> jsonb | function | definer | stable | exec:service_role | body:d62e757be99b
@@ -1254,6 +1263,7 @@ routine public.provision_database_admin(p_target uuid, p_can_provision boolean) 
 routine public.public_holidays(p_country text, p_year integer) -> TABLE(day date, key text) | function | invoker | immutable | exec:authenticated,service_role | body:1c6cfdb4de71
 routine public.public_identity_authority() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:4e3256312a3b
 routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:9652e2ec943e
+routine public.purge_expired_field_answer_holds() -> integer | function | definer | volatile | exec:service_role | body:8dcbf0fddd71
 routine public.readiness_section_revision(p_section jsonb) -> text | function | invoker | immutable | exec:service_role | body:c7d33070eecf
 routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with time zone, p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:5ddacb1438c6
 routine public.reconcile_workspace(p_workspace_id uuid) -> TABLE("check" text, subject uuid, detail text) | function | definer | volatile | exec:authenticated,service_role | body:62bcd10a8d15
@@ -1371,6 +1381,7 @@ routine public.set_workspace_code(p_workspace_id uuid, p_code text) -> text | fu
 routine public.set_workspace_environment(p_workspace_id uuid, p_environment text) -> void | function | definer | volatile | exec:authenticated,service_role | body:91e4a2526e19
 routine public.set_workspace_field(p_workspace_id uuid, p_key text, p_type text, p_labels jsonb, p_required boolean, p_personal_data boolean, p_visibility text, p_contexts text[], p_group_key text, p_sort_order integer, p_validation jsonb, p_active boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:711e9b8b9d4c
 routine public.set_workspace_field_options(p_definition_id uuid, p_options jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:5610a9730c82
+routine public.set_workspace_field_retention(p_workspace_id uuid, p_key text, p_basis text, p_retain_days integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:ef86a58d5d25
 routine public.set_workspace_lexicon_term(p_workspace_id uuid, p_locale text, p_key text, p_text text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:287438eabf6b
 routine public.set_workspace_role(p_workspace_id uuid, p_key text, p_permissions text[], p_names jsonb, p_sort_order integer, p_active boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d95f7b49cf2b
 routine public.set_workspace_template_visibility(p_template_id uuid, p_visibility text) -> void | function | definer | volatile | exec:authenticated,service_role | body:5d4873a900a0
@@ -1606,6 +1617,7 @@ trigger workspace_field_definitions.zz_system_columns_stamp CREATE TRIGGER zz_sy
 trigger workspace_field_labels.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_labels FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_field_option_labels.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_option_labels FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_field_options.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_options FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_field_retention_holds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_retention_holds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_field_value_options.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_value_options FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_field_values.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_values FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_mcp_policies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_mcp_policies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

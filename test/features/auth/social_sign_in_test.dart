@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/open_my_account.dart';
 
 void main() {
   Future<FakeAuthRepository> pumpSignedOut(WidgetTester tester) async {
@@ -156,7 +157,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await openMyAccount(tester); // #1823: My account is in Me
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('settings-linked-accounts')));
     await tester.pumpAndSettle();

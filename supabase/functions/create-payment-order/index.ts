@@ -50,7 +50,10 @@ const REQUIRED: Record<Provider, string[]> = {
   // PayPal, takes the member to PayPal, and can never be told the money
   // arrived. "Configured" has to mean the whole round trip.
   paypal: ["client_id", "secret", "return_url", "webhook_id"],
-  stripe: ["secret_key", "return_url"],
+  // #2014 — and `webhook_secret`, for the same reason: without it the
+  // webhook cannot verify the payment, so the member pays and is never
+  // credited.
+  stripe: ["secret_key", "return_url", "webhook_secret"],
   mollie: ["api_key", "return_url"],
   wero: ["api_key", "return_url"],
 };
@@ -70,27 +73,37 @@ const major = toMajor; // #1137 — one rule, shared with the webhooks.
 
 /** The effective config of a provider for a workspace: table row (owner UI)
  * overlaid on env-var fallbacks, per field. */
-async function effectiveConfig(
+/** #2014 — a provider name this handler supports, not an inherited
+ * property (`"constructor" in REQUIRED` is true). */
+export const isProvider = (value: unknown): value is Provider =>
+  typeof value === "string" && Object.hasOwn(REQUIRED, value);
+
+/** #2014 — a failed credential READ is not an absent credential: it
+ * throws, so no order is opened on the installation's fallback. A row
+ * that is deliberately absent still falls back to the environment. */
+export async function effectiveConfig(
   admin: SupabaseClient,
   workspaceId: string,
   provider: Provider,
+  env: (name: string) => string | undefined = (n) => Deno.env.get(n),
 ): Promise<Record<string, string>> {
-  const { data } = await admin
+  const { data, error } = await admin
     .from("payment_credentials")
     .select("config")
     .eq("workspace_id", workspaceId)
     .eq("provider", provider)
     .maybeSingle();
+  if (error) throw new Error("payment credential lookup failed");
   const stored = (data?.config ?? {}) as Record<string, string>;
   const out: Record<string, string> = {};
   for (const [field, envVar] of Object.entries(FIELD_ENV[provider])) {
-    const value = stored[field] ?? Deno.env.get(envVar) ?? "";
+    const value = stored[field] ?? env(envVar) ?? "";
     if (value) out[field] = value;
   }
   return out;
 }
 
-const missingFields = (config: Record<string, string>, provider: Provider) =>
+export const missingFields = (config: Record<string, string>, provider: Provider) =>
   REQUIRED[provider].filter((f) => !config[f]);
 
 /** Stripe's API root. `STRIPE_API_BASE` exists for the CI check
@@ -225,7 +238,7 @@ async function createMolliePayment(
 
 // ── handler ───────────────────────────────────────────────────────────
 
-Deno.serve(async (req: Request): Promise<Response> => {
+export async function handle(req: Request): Promise<Response> {
   // #1553 — the preflight is answered before anything else: it
   // carries no JWT, so any auth or body work would refuse the
   // browser's question instead of answering it.
@@ -274,8 +287,16 @@ Deno.serve(async (req: Request): Promise<Response> => {
     const providers: Provider[] = [];
     const missing: Record<string, string[]> = {};
     for (const provider of Object.keys(REQUIRED) as Provider[]) {
-      const cfg = await effectiveConfig(admin, workspaceId, provider);
-      const gap = missingFields(cfg, provider);
+      let gap: string[];
+      try {
+        gap = missingFields(
+          await effectiveConfig(admin, workspaceId, provider),
+          provider,
+        );
+      } catch {
+        // #2014 — unreadable is not offered (fail closed).
+        gap = ["config_unavailable"];
+      }
       missing[provider] = gap;
       if (gap.length === 0) providers.push(provider);
     }
@@ -315,13 +336,20 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return json({ error: "currency_mismatch", workspace: currency, sent: bodyCurrency }, 400);
   }
   if (
-    !provider || !(provider in REQUIRED) || !memberId ||
+    !isProvider(provider) || !memberId ||
     !Number.isInteger(amountCents) || amountCents <= 0 || !period
   ) {
     return json({ error: "invalid_request" }, 400);
   }
 
-  const cfg = await effectiveConfig(admin, workspaceId, provider);
+  let cfg: Record<string, string>;
+  try {
+    cfg = await effectiveConfig(admin, workspaceId, provider);
+  } catch {
+    // #2014 — no provider call on configuration we could not read.
+    console.error("payment config unavailable", { provider });
+    return json({ error: "config_unavailable" }, 503);
+  }
   const gap = missingFields(cfg, provider);
   if (gap.length > 0) {
     console.log("payment provider not configured", { provider, gap });
@@ -416,4 +444,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
     console.error("payment order failed", { provider, detail });
     return json({ error: "provider_error", provider, detail }, 502);
   }
-});
+}
+
+if (import.meta.main) Deno.serve(handle);

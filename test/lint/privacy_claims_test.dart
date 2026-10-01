@@ -20,8 +20,11 @@ import 'package:flutter_test/flutter_test.dart';
 /// The migration that owns export and erasure.
 const _erasure = 'supabase/migrations/0133_calendar_hub.sql';
 
-/// #1288 S3 — erasure was extended here, by an anchored patch.
-const _erasureExtension = 'supabase/migrations/0249_field_erasure.sql';
+/// #1288 S3 extended erasure by an anchored patch in 0249; #1912
+/// restated the whole function here, so this is the erasure the
+/// database runs.
+const _erasureExtension =
+    'supabase/migrations/0323_custom_answers_personal.sql';
 
 /// Every document that could repeat the claim, in every language it is
 /// written in.
@@ -123,8 +126,8 @@ void main() {
       'public.member_notes',
       'public.members',
       'public.profiles',
-      // #1288 S3 — the answers to the workspace's own questions, where
-      // the question is marked personal data.
+      // #1288 S3, #1912 — the answers to the workspace's own questions,
+      // whatever the question's personal-data switch says.
       'public.workspace_field_values',
       'public.workspace_field_value_options',
     ]) {
@@ -138,18 +141,33 @@ void main() {
     );
   });
 
-  test('erasure keeps the answers the owner marked NON-personal', () {
-    // The whole point of the personal_data flag: a shirt size for the
-    // association's next order is the workspace's operational data, not
-    // a fact about a person, and it survives.
-    final body = File(_erasureExtension).readAsStringSync();
-    expect(
-      body,
-      contains('d.personal_data'),
-      reason: 'erasure that deleted every answer would be simpler and '
-          'would throw away data the workspace still needs; erasure that '
-          'deleted none would be a broken promise',
+  test('erasure ignores the personal-data switch; only a hold keeps an '
+      'answer', () {
+    // #1912 — an answer stored against a member identifies that member,
+    // so a question marked "not personal" must not survive erasure. The
+    // one way an answer stays is a documented retention hold, which
+    // stamps the row with its basis and expiry.
+    final sql = File(_erasureExtension).readAsStringSync();
+    final body = sql.substring(
+      sql.indexOf('create or replace function public.erase_my_membership'),
     );
+    final erasure = body.substring(0, body.indexOf(r'$$;'));
+    expect(
+      erasure.contains('personal_data'),
+      isFalse,
+      reason: 'the owner\'s switch classifies nothing any more: an answer '
+          'linked to a member is personal whatever the switch says',
+    );
+    expect(erasure, contains('workspace_field_retention_holds'));
+    expect(erasure, contains('held_until'));
+    expect(erasure, contains('hold_basis'));
+  });
+
+  test('the retention matrix no longer promises to keep "non-personal" '
+      'answers', () {
+    final privacy = File('PRIVACY.md').readAsStringSync();
+    expect(privacy, isNot(contains('Answers marked NOT personal')));
+    expect(privacy, contains('Answers kept under a retention hold'));
   });
 
   test('the retention matrix exists and covers the classes that matter',

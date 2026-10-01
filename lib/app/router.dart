@@ -96,6 +96,7 @@ import '../features/kiosk/providers/kiosk_mode.dart';
 import '../features/money/presentation/screens/payment_config_screen.dart';
 import '../features/workspace/presentation/screens/nfc_config_screen.dart';
 import 'shell/shell_screen.dart';
+import '../features/me/presentation/me_shell.dart';
 import '../features/money/presentation/screens/number_sequences_screen.dart';
 import '../features/money/presentation/screens/workspace_status_screen.dart';
 import '../features/money/presentation/screens/repartition_wizard_screen.dart';
@@ -129,6 +130,7 @@ GoRouter router(Ref ref) {
     // Kiosk lock (0043): the active membership decides whether the app is
     // a wall tablet — re-evaluate when it resolves or changes.
     ..listen(myMemberProvider, (_, _) => reask())
+    ..listen(activeWorkspaceIdProvider, (_, _) => reask()) // #1823
     // Kiosk gate: the accept/reject decision moves the pad between the
     // gate, the locked kiosk view, and the normal app.
     ..listen(kioskModeProvider, (_, _) => reask())
@@ -191,6 +193,7 @@ GoRouter router(Ref ref) {
       final profile = ref.read(myProfileProvider);
       final workspaces = ref.read(myWorkspacesProvider);
       final member = ref.read(myMemberProvider);
+      final chosen = ref.read(activeWorkspaceIdProvider);
       final me = member.value;
       final kioskAccount = me != null &&
           me.isKiosk &&
@@ -199,25 +202,13 @@ GoRouter router(Ref ref) {
         schema: ref.read(schemaCompatibilityProvider).value ??
             SchemaCompatibility.unknown,
         auth: auth.value == null ? AuthFact.signedOut : AuthFact.signedIn,
-        privacy: profile.isLoading
-            ? PrivacyFact.loading
-            : profile.hasError
-                ? PrivacyFact.unavailable
-                : profile.value?.privacyAcceptedVersion == kPrivacyPolicyVersion
-                    ? PrivacyFact.accepted
-                    : PrivacyFact.notAccepted,
+        privacy: privacyFactOf(loading: profile.isLoading, failed: profile.hasError,
+            accepted: profile.value?.privacyAcceptedVersion == kPrivacyPolicyVersion),
         // A list being REFRESHED is loading, whatever it held before: the
         // signed-out answer is an empty list, and reading it as "none"
         // in the frame after sign-in sent everybody through onboarding.
-        workspaces: workspaces.isLoading
-            ? WorkspacesFact.loading
-            : workspaces.hasValue
-                ? (workspaces.value!.isEmpty
-                    ? WorkspacesFact.none
-                    : WorkspacesFact.some)
-                : workspaces.hasError
-                    ? WorkspacesFact.unavailable
-                    : WorkspacesFact.loading,
+        workspaces: workspacesFactOf(loading: workspaces.isLoading,
+            count: workspaces.value?.length, failed: workspaces.hasError),
         membership: member.isLoading && !member.hasValue
             ? MembershipFact.loading
             : switch (me?.status) {
@@ -226,6 +217,8 @@ GoRouter router(Ref ref) {
                 MemberStatus.pending => MembershipFact.pending,
                 _ => MembershipFact.inactive,
               },
+        space: spaceFactOf(resolving: chosen.isLoading, // #1823: a refresh is not an answer
+            chosen: chosen.value, spaces: [...?workspaces.value?.map((w) => w.id)]),
         kiosk: !kioskAccount
             ? KioskFact.notKiosk
             : switch (ref.read(kioskModeProvider)) {
@@ -249,6 +242,8 @@ GoRouter router(Ref ref) {
     },
     routes: [
       GoRoute(path: '/auth', builder: (context, state) => const AuthScreen()),
+      GoRoute(path: '/me', builder: (context, state) => // #1823 the Me layer
+          MeShell(tab: MeTab.fromQuery(state.uri.queryParameters['tab']))),
       GoRoute(
         path: '/kiosk-gate',
         builder: (context, state) => const KioskGateScreen(),

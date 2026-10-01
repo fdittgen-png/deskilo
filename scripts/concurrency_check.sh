@@ -126,6 +126,30 @@ case "$after" in
        This is the app's central invariant: one seat, one booking." ;;
 esac
 
+# #1908 — cancel vs check-in on ONE reservation. A cancels and holds its
+# transaction open; B checks in meanwhile. Without the row lock on the
+# transitions' initial read, B read the committed `reserved`, waited only
+# at its UPDATE and wrote `checked_in` over the cancellation. With it, B
+# waits for A, then sees `cancelled` and is refused.
+RES=00000000-0000-4000-8000-00000000c00a
+psql_q "insert into public.reservations (id, workspace_id, member_id, seat_id, starts_at, ends_at)
+        values ('$RES', '$WS', '$MEMBER', '$SEAT', now() - interval '10 minutes', now() + interval '2 hours')" \
+  >/dev/null || fail "the #1908 fixture reservation would not build"
+ACT="select set_config('request.jwt.claims', '{\"sub\":\"00000000-0000-4000-8000-00000000c004\",\"role\":\"authenticated\"}', true); set local role authenticated;"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 \
+  -c "begin; $ACT select public.cancel_reservation('$RES'); select pg_sleep(3); commit;" >/dev/null 2>&1 &
+canceller=$!
+sleep 1
+checkin=$(psql "$DB_URL" -qX -c "begin; $ACT select public.check_in_reservation('$RES'); commit;" 2>&1 || true)
+wait "$canceller" || fail "the cancelling session did not commit"
+final=$(psql_q "select status from public.reservations where id = '$RES'")
+if [ "$final" = "cancelled" ]; then
+  say "cancel vs check-in: the reservation stays cancelled (check-in said: $(echo "$checkin" | grep -o 'ERROR:.*' | head -1))"
+else
+  fail "a check-in overwrote a concurrent cancellation: the reservation is '$final'.
+       The transition read its state without the row lock (#1908)."
+fi
+
 # Tidy up, so a second run on the same database fails on the property
 # rather than on a primary key.
 #

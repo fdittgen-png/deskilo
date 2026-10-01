@@ -86,6 +86,9 @@ class QuestionEditorSheet extends StatefulWidget {
   static const Key keyFieldKey = Key('question-editor-key');
   static const Key typeKey = Key('question-editor-type');
   static const Key choicesKey = Key('question-editor-choices');
+  static const Key personalSwitchKey = Key('question-editor-personal');
+  static const Key notPersonalWarningKey =
+      Key('question-editor-not-personal-warning');
 
   static Key labelKeyFor(String locale) =>
       ValueKey('question-editor-label-$locale');
@@ -289,13 +292,28 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                     : (on) => setState(() => _required = on),
               ),
               SwitchListTile(
+                key: QuestionEditorSheet.personalSwitchKey,
                 contentPadding: EdgeInsets.zero,
                 title:
                     Text(l10n?.questionEditorPersonal ?? 'This is personal data'),
+                // #1912 — the switch no longer exempts an answer from
+                // export or erasure: an answer is stored against a member,
+                // so it is personal whatever the switch says, and the
+                // subtitle says so in both positions.
                 subtitle: Text(
-                  l10n?.questionEditorPersonalHelp ??
-                      'Erased when the member leaves, and carried in their '
-                          'data export.',
+                  _personal
+                      ? (l10n?.questionEditorPersonalHelp ??
+                          'Every answer is stored against a member, so it is '
+                              'personal data: carried in their data export '
+                              'and erased when they leave.')
+                      : (l10n?.questionEditorNotPersonalWarning ??
+                          'Still personal: the answer is linked to a member, '
+                              'so it is exported and erased with the '
+                              'membership whatever this switch says. Only a '
+                              'documented retention hold can keep it.'),
+                  key: _personal
+                      ? null
+                      : QuestionEditorSheet.notPersonalWarningKey,
                 ),
                 value: _personal,
                 onChanged: widget.saving

@@ -154,6 +154,7 @@ void main() {
       status: MemberStatus.active,
     ));
 
+    repo.serverDefaultWorkspaceId = 'ws-1'; // #1823: last in Kraftwerk
     await tester.pumpWidget(ProviderScope(
       overrides: standardTestOverrides(workspace: repo),
       child: const DeskiloApp(),
@@ -189,6 +190,6 @@ void main() {
     // assertions above are about permissions and not about a screen
     // that failed to build.
     expect(find.text('Sign out'), findsOneWidget);
-    expect(find.text('Language'), findsOneWidget);
+    expect(find.byKey(const ValueKey('settings-open-me')), findsOneWidget); // #1823
   });
 }

@@ -121,7 +121,7 @@ WS=$(sql "select set_config('request.jwt.claims', json_build_object('sub', '$PAY
 MEMBER=$(sql "select id from public.members where workspace_id = '$WS' and user_id = '$PAYER'")
 [ -n "$MEMBER" ] || fail "the payer is not a member of their workspace"
 sql "insert into public.payment_credentials (workspace_id, provider, config)
-     values ('$WS', 'stripe', '{\"secret_key\": \"sk_test_stub\", \"return_url\": \"https://example.test/return\"}')" >/dev/null \
+     values ('$WS', 'stripe', '{\"secret_key\": \"sk_test_stub\", \"webhook_secret\": \"whsec_test_stub\", \"return_url\": \"https://example.test/return\"}')" >/dev/null \
   || fail "could not configure the provider"
 
 intents() { sql "select count(*) from public.payment_intents where workspace_id = '$WS'"; }

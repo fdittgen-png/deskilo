@@ -61,18 +61,17 @@ String? currentAccountId(Ref ref) => ref.watch(authStateProvider).hasValue
     : ref.watch(authRepositoryProvider).currentUserId;
 
 /// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins when one is checked (#322); in-session switches
-/// still take effect immediately and last until the next start. Falls
-/// back to the first workspace when nothing matches.
+/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
+/// lands on it); in-session switches last until the next start. The
+/// device's memory is per account (#1823). Null: no space chosen yet.
 @Riverpod(keepAlive: true)
 class ActiveWorkspaceId extends _$ActiveWorkspaceId {
   @override
   Future<String?> build() async {
-    // #458: the default is the SERVER-FIRST user choice, so a fresh
-    // install lands on the default profile immediately.
+    final (account, store) = (ref.watch(currentAccountIdProvider), ref.watch(activeWorkspaceStoreProvider));
     final defaultId = await ref.watch(defaultWorkspaceIdProvider.future);
-    if (defaultId != null) return defaultId;
-    return ref.watch(activeWorkspaceStoreProvider).read();
+    if (defaultId != null || account == null) return defaultId;
+    return store.read(account);
   }
 
   /// An explicit join/create result selects this session without changing
@@ -80,7 +79,7 @@ class ActiveWorkspaceId extends _$ActiveWorkspaceId {
   void activate(String workspaceId) => state = AsyncData(workspaceId);
 
   Future<void> select(String workspaceId) async {
-    await ref.read(activeWorkspaceStoreProvider).write(workspaceId);
+    if (ref.read(currentAccountIdProvider) case final account?) await ref.read(activeWorkspaceStoreProvider).write(account, workspaceId);
     state = AsyncData(workspaceId);
     // #996 — a switch is the new default: the next start lands where
     // the user left, on the same side of the pair. Offline, the active
@@ -107,20 +106,20 @@ class ActiveWorkspaceId extends _$ActiveWorkspaceId {
 class DefaultWorkspaceId extends _$DefaultWorkspaceId {
   @override
   Future<String?> build() async {
-    final signedIn = ref.watch(authStateProvider).value != null;
-    if (!signedIn) return ref.watch(defaultWorkspaceStoreProvider).read();
+    final (account, store) = (ref.watch(currentAccountIdProvider), ref.watch(defaultWorkspaceStoreProvider));
+    if (ref.watch(authStateProvider).value == null || account == null) return null;
     try {
       final server = await ref
           .watch(workspaceRepositoryProvider)
           .fetchDefaultWorkspaceId();
-      await ref.read(defaultWorkspaceStoreProvider).write(server);
+      await store.write(account, server);
       return server;
     } catch (e, st) {
       // Offline: the cached choice keeps working.
       TraceLogger.instance.warn(
           'workspace', 'default-workspace fetch failed — using cache',
           error: e, stackTrace: st);
-      return ref.watch(defaultWorkspaceStoreProvider).read();
+      return store.read(account);
     }
   }
 
@@ -139,7 +138,7 @@ class DefaultWorkspaceId extends _$DefaultWorkspaceId {
     await ref
         .read(workspaceRepositoryProvider)
         .setDefaultWorkspaceId(next);
-    await ref.read(defaultWorkspaceStoreProvider).write(next);
+    if (ref.read(currentAccountIdProvider) case final account?) await ref.read(defaultWorkspaceStoreProvider).write(account, next);
     state = AsyncData(next);
   }
 }

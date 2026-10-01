@@ -29,6 +29,8 @@ Future<(FakeWorkspaceRepository, FakeDeploymentRepository)> _pump(
   workspace.workspaces
     ..clear()
     ..addAll(onDev ? [dev, prod] : [prod, dev]);
+  // #1823 — the person was last on the first side listed.
+  workspace.serverDefaultWorkspaceId = workspace.workspaces.first.id;
   if (!viewerOwner) {
     workspace.myMember =
         workspace.myMember.copyWith(isOwner: false, isAdmin: true);

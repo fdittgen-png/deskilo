@@ -3962,6 +3962,12 @@ abstract class AppLocalizations {
   /// **'Your answers to this space\'s questions were not saved. Your other details were.'**
   String get workspaceFieldsSaveFailed;
 
+  /// #1912 custom fields: every answer is personal data
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers are personal data: they are part of your data export and are erased when you leave this space, unless the space documents a legal obligation to keep one.'**
+  String get workspaceFieldsPersonalNote;
+
   /// #1287 custom roles: the feature switch title
   ///
   /// In en, this message translates to:
@@ -14155,6 +14161,414 @@ abstract class AppLocalizations {
   /// **'Awaiting validation'**
   String get mcpUsagePending;
 
+  /// #1846 Me groups: meGroupProfile
+  ///
+  /// In en, this message translates to:
+  /// **'My profile'**
+  String get meGroupProfile;
+
+  /// #1846 Me groups: meGroupWorkspaces
+  ///
+  /// In en, this message translates to:
+  /// **'My workspaces'**
+  String get meGroupWorkspaces;
+
+  /// #1846 Me groups: meGroupInstallations
+  ///
+  /// In en, this message translates to:
+  /// **'Connected installations'**
+  String get meGroupInstallations;
+
+  /// Me layer bottom tab: the person's home with their spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get meTabHome;
+
+  /// Me layer bottom tab: find published spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover'**
+  String get meTabDiscover;
+
+  /// Me layer bottom tab: the person's messages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get meTabMessages;
+
+  /// Me layer bottom tab and title: the person's own account.
+  ///
+  /// In en, this message translates to:
+  /// **'Me'**
+  String get meTabMe;
+
+  /// Title of the Me layer home tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get meHomeTitle;
+
+  /// Heading above the list of spaces the person belongs to.
+  ///
+  /// In en, this message translates to:
+  /// **'My spaces'**
+  String get meMySpaces;
+
+  /// Line under the person's name on the Me home: this layer belongs to them alone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account · it belongs only to you'**
+  String get meHeaderOwned;
+
+  /// Empty state title on the Me home when the person has no space.
+  ///
+  /// In en, this message translates to:
+  /// **'You are not in a space yet'**
+  String get meNoSpaceTitle;
+
+  /// Empty state body on the Me home when the person has no space.
+  ///
+  /// In en, this message translates to:
+  /// **'Find one near you, join with an invitation code, or create your own.'**
+  String get meNoSpaceBody;
+
+  /// Button on the Me home: open Discover.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a space'**
+  String get meFindSpace;
+
+  /// Button on the Me home: join a space with an invitation code.
+  ///
+  /// In en, this message translates to:
+  /// **'Join with a code'**
+  String get meJoinSpace;
+
+  /// Button on the Me home: create a new space.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a space'**
+  String get meCreateSpace;
+
+  /// Button on the Me home: the detailed list of spaces (default at start, site).
+  ///
+  /// In en, this message translates to:
+  /// **'Manage my spaces'**
+  String get meManageSpaces;
+
+  /// Subtitle of a space card whose membership awaits approval.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get meSpacePending;
+
+  /// Chip on the space the person used last.
+  ///
+  /// In en, this message translates to:
+  /// **'Last used'**
+  String get meSpaceLastUsed;
+
+  /// Menu item and confirm button: leave this space.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave this space'**
+  String get meLeaveAction;
+
+  /// Disabled menu item for an owner, who must hand the space over first.
+  ///
+  /// In en, this message translates to:
+  /// **'Owners hand the space over before leaving'**
+  String get meLeaveOwner;
+
+  /// Title of the confirmation before leaving a space.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave {name}?'**
+  String meLeaveTitle(String name);
+
+  /// Body of the confirmation before leaving a space.
+  ///
+  /// In en, this message translates to:
+  /// **'You stop being a member. Your bookings, invoices and messages stay with the space. To also erase your data, use Privacy.'**
+  String get meLeaveBody;
+
+  /// Error when leaving a space failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not leave the space. Please try again.'**
+  String get meLeaveFailed;
+
+  /// Confirmation after leaving a space.
+  ///
+  /// In en, this message translates to:
+  /// **'You left {name}.'**
+  String meLeaveDone(String name);
+
+  /// Explains that a space on another server opens by switching this app to that server.
+  ///
+  /// In en, this message translates to:
+  /// **'This space lives on {host}. The app works with one server at a time: opening it switches to that server and asks you to sign in there.'**
+  String meLinkedOpenBody(String host);
+
+  /// Button: open a space on its own server.
+  ///
+  /// In en, this message translates to:
+  /// **'Open on {host}'**
+  String meLinkedOpen(String host);
+
+  /// Banner when a linked server did not answer.
+  ///
+  /// In en, this message translates to:
+  /// **'{host} did not answer: this list may be incomplete.'**
+  String meLinkedUnavailable(String host);
+
+  /// Subtitle of a pending space on another server.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval · {host}'**
+  String meLinkedPendingOn(String host);
+
+  /// Section heading in Me: the person's own history and data.
+  ///
+  /// In en, this message translates to:
+  /// **'My history and data'**
+  String get meSectionMine;
+
+  /// Row in Me opening the connected servers.
+  ///
+  /// In en, this message translates to:
+  /// **'Where my spaces live'**
+  String get meWhereSpacesLive;
+
+  /// Row in a space's settings leading to the account settings in Me.
+  ///
+  /// In en, this message translates to:
+  /// **'My account is in Me'**
+  String get meAccountInMe;
+
+  /// Subtitle: the account settings are the person's in every space.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo, language, theme and sign-ins are yours in every space.'**
+  String get meAccountInMeBody;
+
+  /// Title of the row listing this space's own overrides of the person's preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'In this space'**
+  String get meSpaceException;
+
+  /// Row and avatar tooltip in a space: return to the Me layer.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Me'**
+  String get spaceBackToMe;
+
+  /// Tooltip on the chip naming the current space: it opens the switcher.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch space'**
+  String get spaceChipTooltip;
+
+  /// Title of the card choosing who sees what of the account.
+  ///
+  /// In en, this message translates to:
+  /// **'Who sees me'**
+  String get visibilityTitle;
+
+  /// Intro of the visibility card.
+  ///
+  /// In en, this message translates to:
+  /// **'Each part of your account picks its own audience. Nothing is public unless you choose it.'**
+  String get visibilityIntro;
+
+  /// Visibility field: name and photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Name and photo'**
+  String get visibilityIdentity;
+
+  /// Visibility field: profession and bio.
+  ///
+  /// In en, this message translates to:
+  /// **'Profession and bio'**
+  String get visibilityAbout;
+
+  /// Visibility field: contact channels.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp and e-mail'**
+  String get visibilityContact;
+
+  /// Visibility field: presence in a space today.
+  ///
+  /// In en, this message translates to:
+  /// **'In the space today'**
+  String get visibilityPresence;
+
+  /// Reachability: who may start a conversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Who can start a conversation with me'**
+  String get visibilityReachability;
+
+  /// Audience: nobody.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody'**
+  String get visibilityNobody;
+
+  /// Audience: members of the person's spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Members of my spaces'**
+  String get visibilityMySpaces;
+
+  /// Audience: members of chosen spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Members of chosen spaces'**
+  String get visibilityChosenSpaces;
+
+  /// Audience: anyone with an account.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone signed in'**
+  String get visibilitySignedIn;
+
+  /// Error when saving an audience failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save who sees this. Please try again.'**
+  String get visibilitySaveFailed;
+
+  /// Heading of the live preview of what others see.
+  ///
+  /// In en, this message translates to:
+  /// **'How others see me'**
+  String get visibilityPreviewTitle;
+
+  /// Preview audience chip: a member of my spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'A member of my spaces'**
+  String get visibilityPreviewMySpaces;
+
+  /// Preview audience chip: anyone signed in.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone signed in'**
+  String get visibilityPreviewSignedIn;
+
+  /// Preview audience chip: only me — everything, as the person alone sees it.
+  ///
+  /// In en, this message translates to:
+  /// **'Only me'**
+  String get visibilityPreviewNobody;
+
+  /// Preview when the audience sees nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'They see nothing of you.'**
+  String get visibilityPreviewNothing;
+
+  /// Preview failed to load.
+  ///
+  /// In en, this message translates to:
+  /// **'The preview could not be loaded.'**
+  String get visibilityPreviewFailed;
+
+  /// Preview line: this audience may start a conversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Can start a conversation with you'**
+  String get visibilityPreviewCanWrite;
+
+  /// Preview line: this audience may not start a conversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot start a conversation with you'**
+  String get visibilityPreviewCannotWrite;
+
+  /// Audience summary for chosen spaces, with how many were chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Members of 1 chosen space} other{Members of {count} chosen spaces}}'**
+  String visibilityChosenCount(int count);
+
+  /// Row in the account messenger leading to the visibility card in Me.
+  ///
+  /// In en, this message translates to:
+  /// **'Who can find and message me'**
+  String get portalVisibilityLink;
+
+  /// Subtitle: where that choice is made.
+  ///
+  /// In en, this message translates to:
+  /// **'Chosen in Me, under Who sees me.'**
+  String get portalVisibilityLinkBody;
+
+  /// Button on a public space page for a member: enter the space.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get portalEnterSpace;
+
+  /// Button on a public space page: copy its e-mail address.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the e-mail'**
+  String get portalCopyEmail;
+
+  /// Confirmation after copying the space's e-mail.
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail copied'**
+  String get portalEmailCopied;
+
+  /// Error when saving the postal address from My account failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save your address. Please try again.'**
+  String get meAddressSaveFailed;
+
+  /// Row and dialog title: edit my profession and bio.
+  ///
+  /// In en, this message translates to:
+  /// **'About me'**
+  String get visibilityAboutMe;
+
+  /// Subtitle when no profession or bio is written yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your profession and a few words'**
+  String get visibilityAboutEmpty;
+
+  /// Field label: profession.
+  ///
+  /// In en, this message translates to:
+  /// **'Profession'**
+  String get visibilityProfession;
+
+  /// Field label: a short bio.
+  ///
+  /// In en, this message translates to:
+  /// **'A few words about you'**
+  String get visibilityBio;
+
+  /// Error when saving profession and bio failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save your profession and bio. Please try again.'**
+  String get visibilityAboutSaveFailed;
+
+  /// Menu item on the account menu (globe) that opens the Me layer.
+  ///
+  /// In en, this message translates to:
+  /// **'Me: my account and my spaces'**
+  String get portalOpenMe;
+
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///
   /// In en, this message translates to:
@@ -19587,7 +20001,7 @@ abstract class AppLocalizations {
   /// #1288 the question editor: questionEditorPersonalHelp
   ///
   /// In en, this message translates to:
-  /// **'Erased when the member leaves, and carried in their data export. Leave it on unless the answer is really about the space rather than the person.'**
+  /// **'Every answer is stored against a member, so it is personal data: carried in their data export and erased when they leave.'**
   String get questionEditorPersonalHelp;
 
   /// #1288 the question editor: questionEditorVisibility
@@ -19733,6 +20147,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Several of a list'**
   String get questionTypeMultiChoice;
+
+  /// #1912 the question editor: shown while the personal-data switch is off
+  ///
+  /// In en, this message translates to:
+  /// **'Still personal: the answer is linked to a member, so it is exported and erased with the membership whatever this switch says. Only a documented retention hold can keep it.'**
+  String get questionEditorNotPersonalWarning;
 
   /// Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card
   ///

@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ids/request_id.dart';
+import 'plan_media_steps.dart';
 import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
 import '../../../core/cache/cached_fetch.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../domain/desk.dart';
 import '../domain/floor_plan.dart';
 import '../domain/floor_plan_repository.dart';
@@ -48,11 +52,16 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         key: 'levels:$workspaceId',
         ttl: _ttl,
         mode: CacheReadMode.cacheFirst,
-        fetchRaw: () => _client
-            .from('levels')
-            .select()
-            .eq('workspace_id', workspaceId)
-            .order('sort_order', ascending: true),
+        // #2011 — read to the end whatever the server's row cap.
+        fetchRaw: () => fetchAllPages(
+          table: 'levels',
+          build: () => _client
+              .from('levels')
+              .select()
+              .eq('workspace_id', workspaceId)
+              .order('sort_order', ascending: true)
+              .order('id', ascending: true),
+        ),
         // #572 — a PENDING member reads zero levels through RLS; caching
         // that emptiness made the workspace stay blank after approval
         // until the entry died. Emptiness is cheap to refetch and never
@@ -136,6 +145,30 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   static String _bgPath(String workspaceId, String levelId) =>
       '$workspaceId/$levelId';
 
+  Future<String?> _backgroundPath(String levelId) async =>
+      (await _client
+              .from('levels')
+              .select('background_path')
+              .eq('id', levelId)
+              .maybeSingle())?['background_path'] as String?;
+
+  PlanMediaSteps _media({
+    required String levelId,
+    Uint8List? bytes,
+    String? contentType,
+  }) =>
+      PlanMediaSteps(
+        upload: (path) => _client.storage.from('floor-plans').uploadBinary(
+              path,
+              bytes!,
+              fileOptions: FileOptions(contentType: contentType),
+            ),
+        publish: (path) => _client
+            .from('levels')
+            .update({'background_path': path}).eq('id', levelId),
+        remove: (path) => _client.storage.from('floor-plans').remove([path]),
+      );
+
   @override
   Future<void> setLevelBackground(
     String workspaceId,
@@ -143,15 +176,13 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     required Uint8List bytes,
     required String contentType,
   }) async {
-    final path = _bgPath(workspaceId, levelId);
-    await _client.storage.from('floor-plans').uploadBinary(
-          path,
-          bytes,
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
-        );
-    await _client
-        .from('levels')
-        .update({'background_path': path}).eq('id', levelId);
+    // #2012 — a new object per upload; the old one stays live until the
+    // level points at the new one (see PlanMediaSteps).
+    await _media(levelId: levelId, bytes: bytes, contentType: contentType)
+        .replace(
+      candidate: '${_bgPath(workspaceId, levelId)}.${newRequestId()}',
+      previous: await _backgroundPath(levelId),
+    );
     await _bust();
   }
 
@@ -160,12 +191,9 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     String workspaceId,
     String levelId,
   ) async {
-    await _client.storage.from('floor-plans').remove([
-      _bgPath(workspaceId, levelId),
-    ]);
-    await _client
-        .from('levels')
-        .update({'background_path': null}).eq('id', levelId);
+    // #2012 — the reference first, then the object.
+    await _media(levelId: levelId)
+        .clear(previous: await _backgroundPath(levelId));
     await _bust();
   }
 
@@ -272,27 +300,45 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         ),
       );
 
+  /// #2011 — a level's plan, complete: a row past the server's cap was a
+  /// seat drawn as missing, or its booking as free capacity.
   Future<Map<String, dynamic>> _fetchPlanRows(String levelId) async {
-    final officeRows =
-        await _client.from('offices').select().eq('level_id', levelId);
+    final officeRows = await fetchAllPages(
+      table: 'offices',
+      build: () => _client
+          .from('offices')
+          .select()
+          .eq('level_id', levelId)
+          .order('id', ascending: true),
+    );
     final officeIds =
         officeRows.map((row) => row['id'] as String).toList();
 
     var deskRows = const <Map<String, dynamic>>[];
     var seatRows = const <Map<String, dynamic>>[];
     if (officeIds.isNotEmpty) {
-      deskRows = await _client
-          .from('desks')
-          .select()
-          .inFilter('office_id', officeIds);
+      deskRows = await fetchAllIn(
+        table: 'desks',
+        ids: officeIds,
+        build: (chunk) => _client.from('desks').select().inFilter('office_id', chunk).order('id'),
+      );
       final deskIds = deskRows.map((row) => row['id'] as String).toList();
       if (deskIds.isNotEmpty) {
-        seatRows =
-            await _client.from('seats').select().inFilter('desk_id', deskIds);
+        seatRows = await fetchAllIn(
+          table: 'seats',
+          ids: deskIds,
+          build: (chunk) => _client.from('seats').select().inFilter('desk_id', chunk).order('id'),
+        );
       }
     }
-    final imageRows =
-        await _client.from('plan_images').select().eq('level_id', levelId);
+    final imageRows = await fetchAllPages(
+      table: 'plan_images',
+      build: () => _client
+          .from('plan_images')
+          .select()
+          .eq('level_id', levelId)
+          .order('id', ascending: true),
+    );
     return {
       'offices': officeRows,
       'desks': deskRows,
@@ -341,11 +387,19 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         .single();
     final id = row['id'] as String;
     final path = _imgPath(workspaceId, id);
-    await _client.storage.from('floor-plans').uploadBinary(
-          path,
-          bytes,
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
-        );
+    try {
+      await _client.storage.from('floor-plans').uploadBinary(
+            path,
+            bytes,
+            fileOptions: FileOptions(contentType: contentType, upsert: true),
+          );
+    } catch (e, st) {
+      // #2012 — no pending row is left behind by a failed upload.
+      TraceLogger.instance.warn('plan', 'plan image upload failed',
+          error: e, stackTrace: st);
+      await _client.from('plan_images').delete().eq('id', id);
+      rethrow;
+    }
     await _client
         .from('plan_images')
         .update({'storage_path': path}).eq('id', id);
@@ -372,10 +426,17 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         .eq('id', imageId)
         .maybeSingle();
     final path = row?['storage_path'] as String?;
-    if (path != null && path != 'pending') {
-      await _client.storage.from('floor-plans').remove([path]);
-    }
+    // #2012 — the row first (no reference to a removed object), then the
+    // object, best effort.
     await _client.from('plan_images').delete().eq('id', imageId);
+    if (path != null && path != 'pending') {
+      try {
+        await _client.storage.from('floor-plans').remove([path]);
+      } catch (e, st) {
+        TraceLogger.instance.warn('plan', 'plan image object left for cleanup',
+            error: e, stackTrace: st);
+      }
+    }
     await _bust();
   }
 

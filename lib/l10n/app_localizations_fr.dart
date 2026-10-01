@@ -2299,6 +2299,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vos réponses aux questions de cet espace n\'ont pas été enregistrées. Le reste de vos informations, si.';
 
   @override
+  String get workspaceFieldsPersonalNote =>
+      'Vos réponses sont des données personnelles : elles figurent dans votre export de données et sont effacées quand vous quittez cet espace, sauf obligation légale de conservation documentée par l\'espace.';
+
+  @override
   String get featureCustomRolesTitle => 'Rôles définis par cet espace';
 
   @override
@@ -8271,6 +8275,243 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpUsagePending => 'En attente de validation';
 
   @override
+  String get meGroupProfile => 'Mon profil';
+
+  @override
+  String get meGroupWorkspaces => 'Mes espaces de travail';
+
+  @override
+  String get meGroupInstallations => 'Installations connectées';
+
+  @override
+  String get meTabHome => 'Accueil';
+
+  @override
+  String get meTabDiscover => 'Découvrir';
+
+  @override
+  String get meTabMessages => 'Messages';
+
+  @override
+  String get meTabMe => 'Moi';
+
+  @override
+  String get meHomeTitle => 'Accueil';
+
+  @override
+  String get meMySpaces => 'Mes espaces';
+
+  @override
+  String get meHeaderOwned => 'Votre compte · il n\'appartient qu\'à vous';
+
+  @override
+  String get meNoSpaceTitle => 'Vous n\'êtes encore dans aucun espace';
+
+  @override
+  String get meNoSpaceBody =>
+      'Trouvez-en un près de chez vous, rejoignez-en un avec un code d\'invitation ou créez le vôtre.';
+
+  @override
+  String get meFindSpace => 'Trouver un espace';
+
+  @override
+  String get meJoinSpace => 'Rejoindre avec un code';
+
+  @override
+  String get meCreateSpace => 'Créer un espace';
+
+  @override
+  String get meManageSpaces => 'Gérer mes espaces';
+
+  @override
+  String get meSpacePending => 'En attente de validation';
+
+  @override
+  String get meSpaceLastUsed => 'Dernier utilisé';
+
+  @override
+  String get meLeaveAction => 'Quitter cet espace';
+
+  @override
+  String get meLeaveOwner =>
+      'Les propriétaires transmettent l\'espace avant de le quitter';
+
+  @override
+  String meLeaveTitle(String name) {
+    return 'Quitter $name ?';
+  }
+
+  @override
+  String get meLeaveBody =>
+      'Vous cessez d\'être membre. Vos réservations, factures et messages restent dans l\'espace. Pour effacer aussi vos données, passez par Confidentialité.';
+
+  @override
+  String get meLeaveFailed =>
+      'Impossible de quitter l\'espace. Veuillez réessayer.';
+
+  @override
+  String meLeaveDone(String name) {
+    return 'Vous avez quitté $name.';
+  }
+
+  @override
+  String meLinkedOpenBody(String host) {
+    return 'Cet espace se trouve sur $host. L\'application travaille avec un serveur à la fois : l\'ouvrir bascule vers ce serveur et vous demande de vous y connecter.';
+  }
+
+  @override
+  String meLinkedOpen(String host) {
+    return 'Ouvrir sur $host';
+  }
+
+  @override
+  String meLinkedUnavailable(String host) {
+    return '$host n\'a pas répondu : cette liste peut être incomplète.';
+  }
+
+  @override
+  String meLinkedPendingOn(String host) {
+    return 'En attente de validation · $host';
+  }
+
+  @override
+  String get meSectionMine => 'Mon historique et mes données';
+
+  @override
+  String get meWhereSpacesLive => 'Où vivent mes espaces';
+
+  @override
+  String get meAccountInMe => 'Mon compte est dans Moi';
+
+  @override
+  String get meAccountInMeBody =>
+      'Photo, langue, thème et connexions sont à vous, dans chaque espace.';
+
+  @override
+  String get meSpaceException => 'Dans cet espace';
+
+  @override
+  String get spaceBackToMe => 'Retour à Moi';
+
+  @override
+  String get spaceChipTooltip => 'Changer d\'espace';
+
+  @override
+  String get visibilityTitle => 'Qui me voit';
+
+  @override
+  String get visibilityIntro =>
+      'Chaque partie de votre compte choisit son public. Rien n\'est public sans votre choix.';
+
+  @override
+  String get visibilityIdentity => 'Nom et photo';
+
+  @override
+  String get visibilityAbout => 'Métier et présentation';
+
+  @override
+  String get visibilityContact => 'WhatsApp et e-mail';
+
+  @override
+  String get visibilityPresence => 'Présent dans l\'espace aujourd\'hui';
+
+  @override
+  String get visibilityReachability =>
+      'Qui peut démarrer une conversation avec moi';
+
+  @override
+  String get visibilityNobody => 'Personne';
+
+  @override
+  String get visibilityMySpaces => 'Membres de mes espaces';
+
+  @override
+  String get visibilityChosenSpaces => 'Membres d\'espaces choisis';
+
+  @override
+  String get visibilitySignedIn => 'Toute personne connectée';
+
+  @override
+  String get visibilitySaveFailed =>
+      'Impossible d\'enregistrer qui le voit. Veuillez réessayer.';
+
+  @override
+  String get visibilityPreviewTitle => 'Comment les autres me voient';
+
+  @override
+  String get visibilityPreviewMySpaces => 'Un membre de mes espaces';
+
+  @override
+  String get visibilityPreviewSignedIn => 'Toute personne connectée';
+
+  @override
+  String get visibilityPreviewNobody => 'Moi seul';
+
+  @override
+  String get visibilityPreviewNothing => 'Ils ne voient rien de vous.';
+
+  @override
+  String get visibilityPreviewFailed => 'L\'aperçu n\'a pas pu être chargé.';
+
+  @override
+  String get visibilityPreviewCanWrite =>
+      'Peut démarrer une conversation avec vous';
+
+  @override
+  String get visibilityPreviewCannotWrite =>
+      'Ne peut pas démarrer de conversation avec vous';
+
+  @override
+  String visibilityChosenCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Membres de $count espaces choisis',
+      one: 'Membres d\'1 espace choisi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get portalVisibilityLink => 'Qui peut me trouver et m\'écrire';
+
+  @override
+  String get portalVisibilityLinkBody =>
+      'Se choisit dans Moi, sous Qui me voit.';
+
+  @override
+  String get portalEnterSpace => 'Entrer';
+
+  @override
+  String get portalCopyEmail => 'Copier l\'e-mail';
+
+  @override
+  String get portalEmailCopied => 'E-mail copié';
+
+  @override
+  String get meAddressSaveFailed =>
+      'Impossible d\'enregistrer votre adresse. Veuillez réessayer.';
+
+  @override
+  String get visibilityAboutMe => 'À propos de moi';
+
+  @override
+  String get visibilityAboutEmpty => 'Ajoutez votre métier et quelques mots';
+
+  @override
+  String get visibilityProfession => 'Métier';
+
+  @override
+  String get visibilityBio => 'Quelques mots sur vous';
+
+  @override
+  String get visibilityAboutSaveFailed =>
+      'Impossible d\'enregistrer votre métier et votre présentation. Veuillez réessayer.';
+
+  @override
+  String get portalOpenMe => 'Moi : mon compte et mes espaces';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Les membres voient Mon compte';
 
   @override
@@ -11428,7 +11669,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get questionEditorPersonalHelp =>
-      'Effacée au départ du membre, et incluse dans son export de données. Laissez activé sauf si la réponse concerne vraiment l\'espace et non la personne.';
+      'Chaque réponse est liée à un membre : c\'est une donnée personnelle, incluse dans son export de données et effacée à son départ.';
 
   @override
   String get questionEditorVisibility => 'Qui voit la réponse';
@@ -11504,6 +11745,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get questionTypeMultiChoice => 'Plusieurs choix dans une liste';
+
+  @override
+  String get questionEditorNotPersonalWarning =>
+      'Toujours personnelle : la réponse est liée à un membre, elle est donc exportée et effacée avec l\'adhésion quel que soit ce réglage. Seule une conservation légale documentée peut la garder.';
 
   @override
   String get eventTypeRoleChange => 'Changement de rôle';
