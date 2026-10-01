@@ -217,5 +217,15 @@
   "featureTierCore": "Kern",
   "featureTierCoreDesc": "Was jeder Raum braucht. Ab dem ersten Tag an.",
   "featureTierPlatform": "Plattform",
-  "featureTierPlatformDesc": "Angefragt, nie vorausgesetzt. Schalten Sie ein, was dieser Raum wirklich betreibt."
+  "featureTierPlatformDesc": "Angefragt, nie vorausgesetzt. Schalten Sie ein, was dieser Raum wirklich betreibt.",
+  "featureMaturityUnreviewed": "Nicht bewertet",
+  "featureMaturityAlpha": "Alpha",
+  "featureMaturityBeta": "Beta",
+  "featureMaturityStable": "Stabil",
+  "featureLifecycleActive": "Aktiv",
+  "featureLifecycleDeprecated": "Veraltet",
+  "featureLifecycleRetired": "Eingestellt",
+  "featureMaturityFilterLabel": "Reife",
+  "featureMaturityFilterAll": "Alle Stufen",
+  "featureMaturitySemantics": "Reife {maturity}, {lifecycle}"
 }

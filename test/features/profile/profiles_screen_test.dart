@@ -84,7 +84,9 @@ void main() {
 
   testWidgets('a persisted choice survives a restart', (tester) async {
     final store = InMemoryActiveWorkspaceStore()..value = 'ws-2';
+    // #1823 — no server default: the device's memory of this person decides.
     final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..serverDefaultWorkspaceId = null
       ..workspaces.add(
         const Workspace(
           id: 'ws-2',

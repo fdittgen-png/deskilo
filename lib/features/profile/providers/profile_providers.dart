@@ -11,6 +11,7 @@ import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/my_profile_edits.dart';
 import '../data/supabase_profile_repository.dart';
 import '../domain/member_monogram.dart';
 import '../domain/profile.dart';
@@ -25,6 +26,11 @@ ProfileRepository profileRepository(Ref ref) =>
 /// My own profile row (#223); null while signed out. Invalidated by the
 /// WhatsApp editor after a successful save.
 // The app router keeps listening to the consent gate for its lifetime.
+/// #1823 — the writes My account makes about me (photo, invoice block).
+@riverpod
+MyProfileEdits myProfileEdits(Ref ref) =>
+    MyProfileEdits(ref.watch(profileRepositoryProvider));
+
 @Riverpod(keepAlive: true)
 Future<Profile?> myProfile(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;

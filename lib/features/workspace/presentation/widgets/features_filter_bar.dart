@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import 'feature_maturity_badge.dart';
 
 /// The Features screen's filter line (#1190).
 ///
@@ -23,6 +24,8 @@ class FeaturesFilterBar extends StatelessWidget {
     required this.changedOnly,
     required this.onChangedOnly,
     required this.changedCount,
+    this.maturity = FeatureMaturityFilter.all,
+    this.onMaturity,
   });
 
   final TextEditingController controller;
@@ -35,6 +38,10 @@ class FeaturesFilterBar extends StatelessWidget {
   /// How many there are, so the chip says whether it is worth tapping.
   final int changedCount;
 
+  /// #1850 — the maturity/lifecycle filter; hidden without a callback.
+  final FeatureMaturityFilter maturity;
+  final ValueChanged<FeatureMaturityFilter>? onMaturity;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -42,44 +49,58 @@ class FeaturesFilterBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
           AppSpacing.md, 0, AppSpacing.md, AppSpacing.sm),
-      child: Row(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: TextField(
-              key: const ValueKey('features-search'),
-              controller: controller,
-              onChanged: onQuery,
-              textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                isDense: true,
-                prefixIcon: const Icon(Icons.search),
-                labelText: l10n?.featuresSearchLabel ?? 'Search features',
-                suffixIcon: controller.text.isEmpty
-                    ? null
-                    : IconButton(
-                        key: const ValueKey('features-search-clear'),
-                        tooltip: MaterialLocalizations.of(context)
-                            .deleteButtonTooltip,
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          controller.clear();
-                          onQuery('');
-                        },
-                      ),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  key: const ValueKey('features-search'),
+                  controller: controller,
+                  onChanged: onQuery,
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    prefixIcon: const Icon(Icons.search),
+                    labelText: l10n?.featuresSearchLabel ?? 'Search features',
+                    suffixIcon: controller.text.isEmpty
+                        ? null
+                        : IconButton(
+                            key: const ValueKey('features-search-clear'),
+                            tooltip: MaterialLocalizations.of(context)
+                                .deleteButtonTooltip,
+                            icon: const Icon(Icons.clear),
+                            onPressed: () {
+                              controller.clear();
+                              onQuery('');
+                            },
+                          ),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: AppSpacing.sm),
+              FilterChip(
+                key: const ValueKey('features-filter-changed'),
+                label: Text(
+                  changedCount == 0
+                      ? changedLabel
+                      : '$changedLabel · $changedCount',
+                ),
+                selected: changedOnly,
+                onSelected: onChangedOnly,
+              ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.sm),
-          FilterChip(
-            key: const ValueKey('features-filter-changed'),
-            label: Text(
-              changedCount == 0
-                  ? changedLabel
-                  : '$changedLabel · $changedCount',
+          // #1850 — its own line: a third control beside the search
+          // overflowed the row at phone width in French.
+          if (onMaturity != null)
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.xs),
+              child: FeatureMaturityFilterButton(
+                  value: maturity, onChanged: onMaturity!),
             ),
-            selected: changedOnly,
-            onSelected: onChangedOnly,
-          ),
         ],
       ),
     );

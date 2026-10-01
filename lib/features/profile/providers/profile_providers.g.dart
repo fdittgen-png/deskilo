@@ -59,21 +59,65 @@ String _$profileRepositoryHash() => r'45c52cb7ca00235e652426023c450cae54c82031';
 /// My own profile row (#223); null while signed out. Invalidated by the
 /// WhatsApp editor after a successful save.
 // The app router keeps listening to the consent gate for its lifetime.
+/// #1823 — the writes My account makes about me (photo, invoice block).
 
-@ProviderFor(myProfile)
-final myProfileProvider = MyProfileProvider._();
+@ProviderFor(myProfileEdits)
+final myProfileEditsProvider = MyProfileEditsProvider._();
 
 /// My own profile row (#223); null while signed out. Invalidated by the
 /// WhatsApp editor after a successful save.
 // The app router keeps listening to the consent gate for its lifetime.
+/// #1823 — the writes My account makes about me (photo, invoice block).
+
+final class MyProfileEditsProvider
+    extends $FunctionalProvider<MyProfileEdits, MyProfileEdits, MyProfileEdits>
+    with $Provider<MyProfileEdits> {
+  /// My own profile row (#223); null while signed out. Invalidated by the
+  /// WhatsApp editor after a successful save.
+  // The app router keeps listening to the consent gate for its lifetime.
+  /// #1823 — the writes My account makes about me (photo, invoice block).
+  MyProfileEditsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myProfileEditsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myProfileEditsHash();
+
+  @$internal
+  @override
+  $ProviderElement<MyProfileEdits> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  MyProfileEdits create(Ref ref) {
+    return myProfileEdits(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MyProfileEdits value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MyProfileEdits>(value),
+    );
+  }
+}
+
+String _$myProfileEditsHash() => r'23f2fa00c8d847a370f3ba4d9148a6e580993063';
+
+@ProviderFor(myProfile)
+final myProfileProvider = MyProfileProvider._();
 
 final class MyProfileProvider
     extends
         $FunctionalProvider<AsyncValue<Profile?>, Profile?, FutureOr<Profile?>>
     with $FutureModifier<Profile?>, $FutureProvider<Profile?> {
-  /// My own profile row (#223); null while signed out. Invalidated by the
-  /// WhatsApp editor after a successful save.
-  // The app router keeps listening to the consent gate for its lifetime.
   MyProfileProvider._()
     : super(
         from: null,

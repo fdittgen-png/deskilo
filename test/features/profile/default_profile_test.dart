@@ -121,7 +121,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: standardTestOverrides(
-          workspace: _twoWorkspaces(),
+          // #1823 — no server default: the device's memory decides.
+          workspace: _twoWorkspaces()..serverDefaultWorkspaceId = null,
           activeWorkspace: active,
         ),
         child: const DeskiloApp(),

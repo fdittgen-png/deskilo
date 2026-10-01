@@ -17,6 +17,7 @@ import '../../helpers/fake_calendar_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/open_my_account.dart';
 
 CalendarItem _item(CalendarKind kind, String id, DateTime at,
         {String member = 'member-1', CalendarLink? link, int? cents}) =>
@@ -187,10 +188,9 @@ void main() {
       category: 'finances',
       at: kTestNow,
     ));
-    // #728 — the shield lives in the shell bar, left of the bell, on
-    // every tab; who-can-see is the first row of Privacy & data.
-    await tester.tap(find.byKey(const ValueKey('shell-privacy')));
-    await tester.pumpAndSettle();
+    // #728 — who-can-see is the first row of Privacy & data, which
+    // #1823 moved from the shell's shield into Me.
+    await openMyPrivacy(tester); // #1823: Privacy lives in Me
     await tester.tap(find.byKey(const ValueKey('privacy-who-can-see')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('access-sheet')), findsOneWidget);

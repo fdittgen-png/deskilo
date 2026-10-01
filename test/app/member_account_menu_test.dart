@@ -172,10 +172,10 @@ void main() {
       expect(find.text('This workspace'), findsNothing);
       expect(find.text('Administration'), findsNothing);
       expect(find.text('Governance'), findsNothing);
-      // …and the personal controls the issue lists stay reachable.
+      // …and the personal controls the issue lists stay reachable — since
+      // #1823 in Me, one row away.
       expect(find.text('Profiles'), findsOneWidget);
-      expect(find.byKey(const ValueKey('settings-linked-accounts')),
-          findsOneWidget);
+      expect(find.byKey(const ValueKey('settings-open-me')), findsOneWidget);
     });
 
     testWidgets(
