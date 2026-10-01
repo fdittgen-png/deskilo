@@ -1815,6 +1815,22 @@
       }
     }
   },
+  "bootFailedTitle": "DesKilo could not start",
+  "@bootFailedTitle": {
+    "description": "#2015 Bounded start-up: bootFailedTitle"
+  },
+  "bootFailedBody": "The server or this device's secure storage did not answer. Nothing was changed. Close the app and open it again; if it keeps happening, check the network.",
+  "@bootFailedBody": {
+    "description": "#2015 Bounded start-up: bootFailedBody"
+  },
+  "bootSlowTitle": "Starting is taking longer than usual",
+  "@bootSlowTitle": {
+    "description": "#2015 Bounded start-up: bootSlowTitle"
+  },
+  "bootSlowBody": "It keeps trying. If nothing happens, close the app and open it again.",
+  "@bootSlowBody": {
+    "description": "#2015 Bounded start-up: bootSlowBody"
+  },
   "eInvoiceGapBuyerLegalIdAdvisable": "The buyer's SIREN is missing. A French platform routes by it: enter it on the member's profile before transmitting. Not a refusal — the file is valid without it.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -7633,6 +7649,10 @@
   "bookingNotAMember": "You are no longer a member of this space — ask an administrator for an invitation.",
   "@bookingNotAMember": {
     "description": "Refusal when an RPC answers 'not a member of this workspace' (#1030)"
+  },
+  "levelReorderStale": "The levels changed meanwhile. Nothing was saved; the current order is shown.",
+  "@levelReorderStale": {
+    "description": "#2010 Level reorder: levelReorderStale"
   },
   "featureWorkspaceLibraryTitle": "Workspace library",
   "featureWorkspaceLibraryDesc": "Save this space's floor plan and how it works as a template, choose who may see it, invite people by e-mail, and start from what others offer.",

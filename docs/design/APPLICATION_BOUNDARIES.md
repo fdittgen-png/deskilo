@@ -143,8 +143,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
 | `lib/core/help/help_anchors.dart` | 649 |
 | `lib/features/money/presentation/screens/legal_identity_screen.dart` | 649 |
+| `lib/features/plan/data/supabase_floor_plan_repository.dart` | 636 |
 | `lib/features/workspace/presentation/screens/onboarding_screen.dart` | 633 |
-| `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
 | `lib/features/reservations/presentation/widgets/booking_sheet.dart` | 629 |
 | `lib/features/workspace/providers/workspace_providers.dart` | 629 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |

@@ -249,7 +249,7 @@ const Map<String, int> _baseline = {
   // 980→1020 (2026-08-14): #568 per-destination gateway probe parse.
   // 600→630 (2026-08-22): #585 seatIdForNfcUid + the nfc_uid column in
   // the seat row mapping.
-  'lib/features/plan/data/supabase_floor_plan_repository.dart': 631, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
+  'lib/features/plan/data/supabase_floor_plan_repository.dart': 636, // 2026-10-01 #2010 631→636: the level reorder is one atomic RPC with its expected order and outcome, and the site change busts the cache. 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
   // 1040→1130 (2026-08-31): #767 the six scheduled-expense methods live
   // beside the other money RPC wrappers they mirror.
   // 1130→1150 (2026-09-01): #802 the billing-rules read/write pair and

@@ -1272,6 +1272,7 @@ routine public.register_public_directory(p_origin text, p_key text) -> void | fu
 routine public.release_invoice_payment(p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:31f5acde6a81
 routine public.remove_conversation_participant(p_conversation_id uuid, p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:695b1773b84f
 routine public.remove_database_admin(p_target uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:06705ab617d9
+routine public.reorder_levels(p_workspace_id uuid, p_level_ids uuid[], p_expected uuid[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5ad8aa353a52
 routine public.replace_fee_bands(p_workspace_id uuid, p_bands jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:b4a4812f9fc5
 routine public.report_image_names(p_workspace_id uuid) -> SETOF text | function | definer | stable | exec:service_role | body:0d0dafdd6573
 routine public.request_invoice_issue(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_detailed boolean, p_allow_zero boolean, p_buyer_reference text, p_purchase_order text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1155ff4a4baa

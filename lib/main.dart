@@ -8,10 +8,11 @@ import 'dart:async';
 
 import 'app/app.dart';
 import 'app/app_initializer.dart';
+import 'app/bootstrap.dart';
 import 'core/files/file_saver.dart';
+import 'core/notifications/deferred_notification_service.dart';
 import 'core/notifications/local_notification_service.dart';
 import 'core/notifications/notification_providers.dart';
-import 'core/notifications/notification_service.dart';
 import 'core/trace/trace_hooks.dart';
 import 'core/trace/trace_provider_observer.dart';
 import 'core/trace/trace_logger.dart';
@@ -28,18 +29,16 @@ Future<void> main() async {
   // reported to the trace, never trusted silently.
   SystemColumns.onBreach = (detail) => trace.warn('data', detail);
 
-  // Defensive boot (#86): nothing that runs before the first frame is
-  // allowed to kill the app. A failed Supabase init degrades to the auth
-  // screen with error snackbars; failed notification init degrades to a
-  // no-op service. Both failures are logged with their stack traces.
-  try {
-    await initializeApp();
-  } catch (e, st) {
+  // Defensive boot (#86, #2015): the essential start-up runs ONCE, with a
+  // deadline. A failure or a hang shows a truthful recovery screen instead
+  // of an app whose providers would touch an uninitialised Supabase client;
+  // a late success hands over to the real app. Failures land in the trace.
+  final boot = EssentialBoot(initializeApp().catchError((Object e, StackTrace st) {
     debugPrint('Supabase initialization failed: $e\n$st');
     trace.error('boot', 'Supabase initialization failed',
         error: e, stackTrace: st);
-  }
-
+    throw e;
+  }));
   // One-time repair (Downloads pass): exports saved by older builds sit
   // in the hidden app dir — move them into the visible Downloads. Fire
   // and forget; failures land in the trace, never block boot.
@@ -50,24 +49,27 @@ Future<void> main() async {
         error: e, stackTrace: st);
   }));
 
-  NotificationService notifications = const NoopNotificationService();
+  // #2015 — local notifications never hold the first frame: the app gets
+  // the deferred service now, the platform one attaches when it is ready
+  // (#86: a failed init leaves the honest no-op behaviour).
+  final notifications = DeferredNotificationService();
   // #614: the web has no local-notification scheduling (zonedSchedule
-  // and the pending mirror both throw) — the Noop service IS the web
+  // and the pending mirror both throw) — the no-op behaviour IS the web
   // implementation, said once instead of erroring on every sweep.
   if (kIsWeb) {
     trace.log(TraceLevel.info, 'notifications',
         'web build — local notifications disabled');
   } else {
-    try {
-      notifications = await LocalNotificationService.initialize();
-    } catch (e, st) {
-      debugPrint('Notification initialization failed: $e\n$st');
-      trace.error('boot', 'Notification initialization failed',
-          error: e, stackTrace: st);
-    }
+    unawaited(LocalNotificationService.initialize().then(
+      notifications.attach,
+      onError: (Object e, StackTrace st) {
+        debugPrint('Notification initialization failed: $e\n$st');
+        trace.error('boot', 'Notification initialization failed',
+            error: e, stackTrace: st);
+      },
+    ));
   }
-
-  runApp(
+  void startApp() => runApp(
     ProviderScope(
       // #742 — every provider failure lands in the trace.
       observers: const [TraceProviderObserver()],
@@ -77,4 +79,17 @@ Future<void> main() async {
       child: const DeskiloRoot(),
     ),
   );
+  final state = await boot.settle(Future<void>.delayed(kEssentialBootDeadline));
+  if (state == BootState.ready) return startApp();
+  trace.warn('boot', 'essential start-up ${state.name}: recovery screen shown');
+  var started = false;
+  runApp(BootRecoveryApp(
+    boot: boot,
+    onReady: () {
+      if (started) return;
+      started = true;
+      trace.log(TraceLevel.info, 'boot', 'essential start-up completed late');
+      startApp();
+    },
+  ));
 }
