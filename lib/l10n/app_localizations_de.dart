@@ -7236,6 +7236,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Du bist kein Mitglied dieses Raums mehr — bitte eine Administratorin um eine Einladung.';
 
   @override
+  String get levelReorderStale =>
+      'Die Ebenen wurden inzwischen geändert. Nichts wurde gespeichert; die aktuelle Reihenfolge wird angezeigt.';
+
+  @override
   String get featureWorkspaceLibraryTitle => 'Raumbibliothek';
 
   @override

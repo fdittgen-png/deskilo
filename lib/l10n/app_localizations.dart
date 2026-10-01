@@ -12409,6 +12409,12 @@ abstract class AppLocalizations {
   /// **'You are no longer a member of this space — ask an administrator for an invitation.'**
   String get bookingNotAMember;
 
+  /// #2010 Level reorder: levelReorderStale
+  ///
+  /// In en, this message translates to:
+  /// **'The levels changed meanwhile. Nothing was saved; the current order is shown.'**
+  String get levelReorderStale;
+
   /// No description provided for @featureWorkspaceLibraryTitle.
   ///
   /// In en, this message translates to:

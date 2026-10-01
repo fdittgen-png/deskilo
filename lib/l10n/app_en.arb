@@ -7650,6 +7650,10 @@
   "@bookingNotAMember": {
     "description": "Refusal when an RPC answers 'not a member of this workspace' (#1030)"
   },
+  "levelReorderStale": "The levels changed meanwhile. Nothing was saved; the current order is shown.",
+  "@levelReorderStale": {
+    "description": "#2010 Level reorder: levelReorderStale"
+  },
   "featureWorkspaceLibraryTitle": "Workspace library",
   "featureWorkspaceLibraryDesc": "Save this space's floor plan and how it works as a template, choose who may see it, invite people by e-mail, and start from what others offer.",
   "libraryTitle": "Workspace library",

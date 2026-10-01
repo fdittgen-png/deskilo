@@ -7235,6 +7235,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non sei più membro di questo spazio — chiedi un invito a un amministratore.';
 
   @override
+  String get levelReorderStale =>
+      'I livelli sono cambiati nel frattempo. Non è stato salvato nulla; viene mostrato l\'ordine attuale.';
+
+  @override
   String get featureWorkspaceLibraryTitle => 'Biblioteca degli spazi';
 
   @override

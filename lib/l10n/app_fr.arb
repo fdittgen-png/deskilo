@@ -4376,6 +4376,7 @@
   "bookingSameDayError": "Une réservation se termine le jour où elle commence — réservez le lendemain séparément.",
   "bookingMembershipPaused": "Votre adhésion est suspendue — un administrateur la réactive dans Membres.",
   "bookingNotAMember": "Vous n'êtes plus membre de cet espace — demandez une invitation à un administrateur.",
+  "levelReorderStale": "Les niveaux ont changé entre-temps. Rien n'a été enregistré ; l'ordre actuel est affiché.",
   "featureWorkspaceLibraryTitle": "Bibliothèque d'espaces",
   "featureWorkspaceLibraryDesc": "Enregistrez le plan de cet espace et sa façon de fonctionner comme modèle, choisissez qui peut le voir, invitez des personnes par e-mail, et partez de ce que d'autres proposent.",
   "libraryTitle": "Bibliothèque d'espaces",
