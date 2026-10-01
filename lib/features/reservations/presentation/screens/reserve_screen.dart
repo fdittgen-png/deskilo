@@ -660,18 +660,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
               onChanged: (view) => setState(() => _view = view),
               onGetStarted: gettingStartedReopen(ref, guidanceKey),
             ),
-            // 'Now' returns to today AND to the live window — parity
-            // with the Plan tab, which has had it since #184.
-            //
-            // Shown only while browsing, like Plan's: an always-visible
-            // disabled button is header noise. Without it, getting back
-            // from a browsed date meant opening the picker and hunting
-            // for today, on the surface people book from most.
-            //
-            // It clears the WINDOW too, not just the day. Leaving a
-            // hand-picked window on today reads as live while showing a
-            // slot that may already be past.
-            //
             // Map <-> list, as ONE button showing the icon of what you
             // would switch TO.
             //
@@ -695,6 +683,33 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 onPressed: () => setState(() => _view = _seatList
                     ? ReserveView.plan
                     : ReserveView.list),
+              ),
+            // #2016 — 'Back to now': today AND the live window (a
+            // hand-picked window left on today reads as live while past).
+            // Only while browsing; on this row so #699's two rows hold.
+            if (!_selectedDay.isAtSameMomentAs(_today) ||
+                _windowStart != null)
+              // A word, not a clock (that read as a time editor); the
+              // full action is the tooltip and the screen-reader label.
+              Tooltip(
+                message: l10n?.reserveBackToNow ?? 'Back to now',
+                child: TextButton(
+                  key: const ValueKey('reserve-now-button'),
+                  onPressed: () => setState(() {
+                    _selectedDay = _today;
+                    _windowStart = null;
+                    _windowEnd = null;
+                  }),
+                  style: TextButton.styleFrom(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+                    minimumSize: const Size(0, kMinInteractiveDimension),
+                  ),
+                  child: Text(
+                    l10n?.planNowButton ?? 'Now',
+                    semanticsLabel: l10n?.reserveBackToNow ?? 'Back to now',
+                  ),
+                ),
               ),
       ];
       // ROW 2 — WHEN you are looking at it, plus how the plan draws.
@@ -723,24 +738,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 Text(DateFormat.MMMd().format(_selectedDay)),
               ]),
             ),
-            // 'Now' returns to today AND to the live window (#184
-            // parity). Shown only while browsing — an always-visible
-            // disabled button is header noise — and sitting HERE, beside
-            // the date and chips it undoes. It clears the WINDOW too:
-            // a hand-picked window left on today reads as live while
-            // showing a slot that may already be past.
-            if (!_selectedDay.isAtSameMomentAs(_today) ||
-                _windowStart != null)
-              IconButton(
-                key: const ValueKey('reserve-now-button'),
-                tooltip: l10n?.planNowButton ?? 'Now',
-                icon: const Icon(Icons.schedule_outlined),
-                onPressed: () => setState(() {
-                  _selectedDay = _today;
-                  _windowStart = null;
-                  _windowEnd = null;
-                }),
-              ),
             // Honest controls: the window chips act on Plan (state
             // filter + booking window) and Day (the window a free-row
             // tap books). Week books per tapped half, Month is an

@@ -24,7 +24,8 @@ import 'package:deskilo/core/time/workspace_time.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import 'plan_closed_day_test.dart' show ThrowingReservationRepository;
-import 'plan_screen_test.dart' show pumpPlan, seatCenter;
+import 'plan_screen_test.dart'
+    show chooseCheckInNow, pumpPlan, seatCenter;
 import 'time_scroller_test.dart' show planPainter;
 
 const _amChip = ValueKey('reserve-am-chip');
@@ -216,6 +217,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
 
     expect(find.textContaining('Starts now'), findsOneWidget);
     expect(find.widgetWithText(ListTile, 'Until'), findsNothing);
@@ -283,6 +285,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
     await tester.tap(find.widgetWithText(FilledButton, 'Check in'));
     await tester.pumpAndSettle();
 

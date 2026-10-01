@@ -7381,6 +7381,9 @@
   },
   "scanCameraWebUnavailable": "El escaneo con cámara no está disponible en el navegador — escriba el código o acerque una etiqueta NFC al dispositivo (Chrome en Android).",
   "bookingGateBlocked": "No reservable así",
+  "reserveBackToNow": "Volver a ahora",
+  "bookingModeCheckInNow": "Registrarse ahora",
+  "bookingOverlapsAnother": "El puesto ya está reservado durante parte de este tiempo.",
   "reverseChargeTitle": "Inversión del sujeto pasivo para empresas de la UE",
   "@reverseChargeTitle": {
     "description": "#895 reverse charge: reverseChargeTitle"

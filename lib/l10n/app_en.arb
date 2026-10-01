@@ -12765,6 +12765,18 @@
   },
   "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
   "bookingGateBlocked": "Not bookable as chosen",
+  "reserveBackToNow": "Back to now",
+  "@reserveBackToNow": {
+    "description": "#2016 Reserve time choice: reserveBackToNow"
+  },
+  "bookingModeCheckInNow": "Check in now",
+  "@bookingModeCheckInNow": {
+    "description": "#2016 Reserve time choice: bookingModeCheckInNow"
+  },
+  "bookingOverlapsAnother": "The seat is already booked during part of this time.",
+  "@bookingOverlapsAnother": {
+    "description": "#2016 Reserve time choice: bookingOverlapsAnother"
+  },
   "reverseChargeTitle": "Reverse charge for EU businesses",
   "@reverseChargeTitle": {
     "description": "#895 reverse charge: reverseChargeTitle"

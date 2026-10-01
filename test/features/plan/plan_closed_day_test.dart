@@ -22,7 +22,8 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import 'plan_screen_test.dart' show seatCenter;
+import 'plan_screen_test.dart'
+    show chooseCheckInNow, seatCenter;
 
 const _bannerKey = ValueKey('reserve-closed-banner');
 const _closedDayText = 'Closed on this day';
@@ -166,6 +167,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
 
     expect(find.textContaining('Starts now'), findsOneWidget);
   });
@@ -214,6 +216,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
     await tester.tap(find.widgetWithText(FilledButton, 'Check in'));
     await tester.pumpAndSettle();
 
@@ -235,6 +238,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
     await tester.tap(find.widgetWithText(FilledButton, 'Check in'));
     await tester.pumpAndSettle();
 

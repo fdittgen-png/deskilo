@@ -11983,6 +11983,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookingGateBlocked => 'Non prenotabile così';
 
   @override
+  String get reserveBackToNow => 'Torna ad adesso';
+
+  @override
+  String get bookingModeCheckInNow => 'Check-in adesso';
+
+  @override
+  String get bookingOverlapsAnother =>
+      'Il posto è già prenotato per parte di questo orario.';
+
+  @override
   String get reverseChargeTitle => 'Inversione contabile per imprese UE';
 
   @override

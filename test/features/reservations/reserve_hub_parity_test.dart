@@ -57,11 +57,11 @@ void main() {
               'reserve_hub_layout.dart').readAsStringSync();
     });
 
-    test('a Now button exists, as on the Plan tab', () {
+    test('a Back-to-now button exists, named in words', () {
       expect(hub, contains("ValueKey('reserve-now-button')"));
-      // Same string as Plan's: it is the same action and a second
-      // wording would read as a second feature.
-      expect(hub, contains('planNowButton'));
+      // #2016 — the Plan tab is gone, and a bare clock read as a time
+      // editor on touch: the action carries its own visible name.
+      expect(hub, contains('reserveBackToNow'));
     });
 
     test('it is CONTEXTUAL — hidden while already live', () {

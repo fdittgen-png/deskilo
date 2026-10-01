@@ -14,7 +14,8 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import 'plan_screen_test.dart' show seatCenter;
+import 'plan_screen_test.dart'
+    show chooseCheckInNow, seatCenter;
 
 /// Pumps the Plan tab (#169 harness): the seeded small plan plus the small
 /// accessory catalog (Monitor 1.00 active, Standing desk 0 active, Docking
@@ -67,6 +68,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
 
     expect(find.byKey(SeatAccessoryRow.chipsKey), findsOneWidget);
     expect(find.text('Monitor'), findsOneWidget);
@@ -113,6 +115,7 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
+    await chooseCheckInNow(tester);
 
     // The sheet itself is up …
     expect(find.textContaining('Starts now'), findsOneWidget);

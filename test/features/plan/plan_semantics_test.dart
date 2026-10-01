@@ -8,6 +8,7 @@
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:flutter/widgets.dart' show ValueKey;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -57,9 +58,9 @@ void main() {
     // sends — not a pointer event at coordinates.
     tester.semantics.tap(freeSeat);
     await tester.pumpAndSettle();
-    // The walk-up sheet's "Starts now" line proves the SAME sheet a
-    // touch opens (the plan_screen_test contract).
-    expect(find.textContaining('Starts now'), findsOneWidget);
+    // #2016 — the SAME sheet a touch opens: Reserve, with Check in now
+    // offered beside it (the plan_screen_test contract).
+    expect(find.byKey(const ValueKey('booking-mode')), findsOneWidget);
     handle.dispose();
   });
 

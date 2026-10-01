@@ -113,7 +113,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/data/supabase_money_repository.dart` | 1420 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1299 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1298 |
-| `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
+| `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1142 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
 | `lib/features/profile/presentation/screens/settings_screen.dart` | 1057 |
 | `lib/features/money/domain/invoice_pdf.dart` | 1050 |
@@ -134,7 +134,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
 | `lib/features/workspace/domain/workspace_repository.dart` | 772 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
-| `lib/features/reservations/presentation/reserve_seat_actions.dart` | 718 |
+| `lib/features/reservations/presentation/reserve_seat_actions.dart` | 762 |
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 713 |
 | `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
@@ -144,8 +144,9 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/presentation/screens/onboarding_screen.dart` | 633 |
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
 | `lib/features/workspace/providers/workspace_providers.dart` | 630 |
+| `lib/features/reservations/presentation/widgets/booking_sheet.dart` | 629 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
 | `lib/features/money/presentation/invoice_documents.dart` | 608 |
 
-**40 files.**
+**41 files.**
 

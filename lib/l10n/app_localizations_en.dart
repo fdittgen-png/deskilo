@@ -11870,6 +11870,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingGateBlocked => 'Not bookable as chosen';
 
   @override
+  String get reserveBackToNow => 'Back to now';
+
+  @override
+  String get bookingModeCheckInNow => 'Check in now';
+
+  @override
+  String get bookingOverlapsAnother =>
+      'The seat is already booked during part of this time.';
+
+  @override
   String get reverseChargeTitle => 'Reverse charge for EU businesses';
 
   @override
