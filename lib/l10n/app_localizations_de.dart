@@ -10242,6 +10242,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine veröffentlichten Workspaces gefunden.';
 
   @override
+  String get portalNoLongerPublished =>
+      'Dieser Workspace ist nicht mehr veröffentlicht.';
+
+  @override
+  String get portalDirectoryIncompatible =>
+      'Einige Workspaces benötigen eine neuere Version der App und werden nicht angezeigt.';
+
+  @override
   String get portalMoreDirectories => 'Weitere Verzeichnisse';
 
   @override

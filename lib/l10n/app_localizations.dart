@@ -17611,6 +17611,18 @@ abstract class AppLocalizations {
   /// **'No published workspaces found.'**
   String get portalNoWorkspaces;
 
+  /// No description provided for @portalNoLongerPublished.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace is no longer published.'**
+  String get portalNoLongerPublished;
+
+  /// No description provided for @portalDirectoryIncompatible.
+  ///
+  /// In en, this message translates to:
+  /// **'Some workspaces need a newer version of the app and are not shown.'**
+  String get portalDirectoryIncompatible;
+
   /// No description provided for @portalMoreDirectories.
   ///
   /// In en, this message translates to:

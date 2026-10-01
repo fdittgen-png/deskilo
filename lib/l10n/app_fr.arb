@@ -6123,6 +6123,8 @@
   "portalSearch": "Rechercher des espaces",
   "portalDirectoryUnavailable": "Certains annuaires sont inaccessibles. Les résultats sont incomplets.",
   "portalNoWorkspaces": "Aucun espace publié trouvé.",
+  "portalNoLongerPublished": "Cet espace n’est plus publié.",
+  "portalDirectoryIncompatible": "Certains espaces nécessitent une version plus récente de l’application et ne sont pas affichés.",
   "portalMoreDirectories": "Autres annuaires",
   "portalMessenger": "Messagerie du compte",
   "portalThisServer": "Ce serveur",

@@ -38,6 +38,8 @@
   "portalSearch": "Cerca spazi",
   "portalDirectoryUnavailable": "Alcune directory non sono raggiungibili. I risultati sono incompleti.",
   "portalNoWorkspaces": "Nessuno spazio pubblicato trovato.",
+  "portalNoLongerPublished": "Questo spazio non è più pubblicato.",
+  "portalDirectoryIncompatible": "Alcuni spazi richiedono una versione più recente dell’app e non vengono mostrati.",
   "portalMoreDirectories": "Altre directory",
   "portalMessenger": "Messaggi dell’account",
   "portalThisServer": "Questo server",

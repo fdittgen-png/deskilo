@@ -70,6 +70,10 @@ const List<({String command, String owns})> _order = [
     command: 'dart run tool/build_mcp_contract.dart',
     owns: 'contracts/mcp/generated/*, lib/core/mcp/mcp_operations.dart, _shared/mcp_contract.ts',
   ),
+  (
+    command: 'dart run tool/build_public_network_contract.dart',
+    owns: 'contracts/public_network/generated/*, lib/core/public_network/public_network_operations.dart',
+  ),
   (command: 'dart run tool/build_help.dart', owns: 'assets/help/*.md'),
   (
     command: 'dart run tool/record_applied_migrations.dart',
@@ -158,6 +162,18 @@ List<Step> preflightSteps(
     // function file, so the instance bundle follows it.
     if (p == 'contracts/mcp/operations.json' || p.startsWith('tool/mcp_contract/')) {
       select('dart run tool/build_mcp_contract.dart', p);
+      select('dart run tool/build_instance.dart', p);
+    }
+    // #1847 — the public network contract renders into the external and
+    // internal OpenAPI documents and the Dart adapter catalogue. The
+    // shared field primitives feed both contracts.
+    if (p == 'contracts/public_network/operations.json' ||
+        p.startsWith('tool/public_network_contract/')) {
+      select('dart run tool/build_public_network_contract.dart', p);
+    }
+    if (p.startsWith('tool/contract_common/')) {
+      select('dart run tool/build_mcp_contract.dart', p);
+      select('dart run tool/build_public_network_contract.dart', p);
       select('dart run tool/build_instance.dart', p);
     }
     if (p.startsWith('docs/wiki/')) {
