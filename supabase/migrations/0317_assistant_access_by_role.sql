@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0313 (#1826) -- assistant access is delegated by the role matrix.
+-- 0317 (#1826) -- assistant access is delegated by the role matrix.
 --
 -- The three routines behind the workspace's assistant screen answered
 -- `is_owner_of` alone, so an owner could not hand them to anyone the way
@@ -67,18 +67,18 @@ begin
      where n.nspname = 'public' and p.proname = v_step.fn
        and pg_get_function_identity_arguments(p.oid) = v_step.args;
     if v_def is null then
-      raise exception '0313: % not found', v_step.fn;
+      raise exception '0317: % not found', v_step.fn;
     end if;
     v_next := pg_temp.anchor_replace(v_def, v_step.old_text, v_step.new_text);
     if v_next is null then
-      raise exception '0313: anchor missing in %', v_step.fn;
+      raise exception '0317: anchor missing in %', v_step.fn;
     end if;
     select count(*) into v_count from regexp_matches(v_next, 'manageIntegrations', 'g');
     if v_count <> 1 then
-      raise exception '0313: % carries the permission % times, expected once', v_step.fn, v_count;
+      raise exception '0317: % carries the permission % times, expected once', v_step.fn, v_count;
     end if;
     if position('is_owner_of' in v_next) > 0 then
-      raise exception '0313: % still asks is_owner_of', v_step.fn;
+      raise exception '0317: % still asks is_owner_of', v_step.fn;
     end if;
     execute v_next;
   end loop;
@@ -87,4 +87,4 @@ $migration$;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(313);
+select public.set_deskilo_schema_version(317);

@@ -8276,6 +8276,229 @@ class AppLocalizationsFr extends AppLocalizations {
   String get memberOriginHeading => 'Comment cette adhésion a commencé';
 
   @override
+  String get featureSpaceInquiriesTitle => 'Écrire aux hôtes';
+
+  @override
+  String get featureSpaceInquiriesDesc =>
+      'Une personne connectée qui trouve la page publiée peut écrire aux hôtes : les propriétaires et les administrateurs qui ont choisi d’être contacts publics. Les hôtes sont nommés avant l’écriture, et seuls cette personne et les hôtes lisent la conversation. Désactivé, le bouton et la vue Demandes disparaissent ; les demandes enregistrées restent.';
+
+  @override
+  String get featureMessageForwardingTitle => 'Transfert de messages';
+
+  @override
+  String get featureMessageForwardingDesc =>
+      'Un message peut être transféré dans une autre conversation à laquelle participe la personne qui transfère. La copie indique son origine et son auteur, la conversation d’origine est informée de qui l’a transféré et où, et un auteur peut verrouiller un message contre le transfert. Désactivé, aucun transfert ne sort de cet espace.';
+
+  @override
+  String get featureCaptureProtectionTitle =>
+      'Protection contre la capture d’écran';
+
+  @override
+  String get featureCaptureProtectionDesc =>
+      'Les écrans de messages refusent les captures et l’enregistrement d’écran quand l’appareil le permet, masquent leur contenu pendant un enregistrement et annoncent une capture dans la conversation quand elle peut seulement être détectée. Un navigateur ne peut pas bloquer les captures ; la conversation y est floutée quand l’onglet perd le focus.';
+
+  @override
+  String messengerContextSpace(String space) {
+    return 'Dans $space';
+  }
+
+  @override
+  String get messengerContextAccount => 'De personne à personne';
+
+  @override
+  String messengerContextInquiryOut(String space) {
+    return 'Votre demande à $space';
+  }
+
+  @override
+  String messengerContextInquiryIn(String space) {
+    return 'Demande à $space';
+  }
+
+  @override
+  String messengerOnServer(String server) {
+    return 'sur $server';
+  }
+
+  @override
+  String messengerInboxUnavailable(String servers) {
+    return 'Injoignable pour le moment : $servers. Leurs conversations manquent dans cette liste.';
+  }
+
+  @override
+  String get messengerMessageActions => 'Actions sur le message';
+
+  @override
+  String get messengerForward => 'Transférer';
+
+  @override
+  String get messengerForwardLocked =>
+      'L’auteur a verrouillé ce message contre le transfert.';
+
+  @override
+  String get messengerLock => 'Interdire le transfert';
+
+  @override
+  String get messengerUnlock => 'Autoriser le transfert';
+
+  @override
+  String get messengerHistory => 'Ce qui s’est passé';
+
+  @override
+  String get messengerDelete => 'Supprimer le message';
+
+  @override
+  String get messengerDeleteConfirm =>
+      'Supprimer ce message pour tous les participants de la conversation ?';
+
+  @override
+  String get messengerDeleted => 'Message supprimé.';
+
+  @override
+  String get messengerForwardTitle => 'Transférer vers';
+
+  @override
+  String get messengerForwardExplain =>
+      'Tous les participants de la conversation d’origine, l’auteur en premier, sont informés de qui l’a transféré, quand et où.';
+
+  @override
+  String get messengerForwardNoTargets =>
+      'Aucune autre conversation sur ce serveur vers laquelle transférer.';
+
+  @override
+  String messengerForwarded(String target) {
+    return 'Transféré vers $target.';
+  }
+
+  @override
+  String messengerForwardedFrom(String context, String author) {
+    return 'Transféré depuis $context · écrit par $author';
+  }
+
+  @override
+  String messengerNoticeForwarded(String actor, String target) {
+    return '$actor a transféré un message de cette conversation vers $target.';
+  }
+
+  @override
+  String messengerNoticeCaptured(String actor) {
+    return '$actor a pris une capture d’écran de cette conversation.';
+  }
+
+  @override
+  String get messengerRead => 'Lu';
+
+  @override
+  String get messengerDelivered => 'Distribué';
+
+  @override
+  String get messengerHistoryEmpty =>
+      'Rien n’est encore enregistré pour ce message.';
+
+  @override
+  String messengerEventSent(String actor) {
+    return 'Envoyé par $actor';
+  }
+
+  @override
+  String messengerEventRead(String actor) {
+    return 'Lu par $actor';
+  }
+
+  @override
+  String messengerEventForwarded(String actor, String target) {
+    return 'Transféré par $actor vers $target';
+  }
+
+  @override
+  String messengerEventDeleted(String actor) {
+    return 'Supprimé par $actor';
+  }
+
+  @override
+  String messengerEventCaptured(String actor) {
+    return 'Capture d’écran par $actor';
+  }
+
+  @override
+  String messengerEventOther(String event, String actor) {
+    return '$event · $actor';
+  }
+
+  @override
+  String get messengerWriteToHosts => 'Écrire aux hôtes';
+
+  @override
+  String get messengerHostsIntro =>
+      'Votre message est lu par ces hôtes de l’espace :';
+
+  @override
+  String get messengerHostsNone =>
+      'Personne ne répond aux messages de cet espace pour le moment.';
+
+  @override
+  String get messengerInquirySend => 'Envoyer la demande';
+
+  @override
+  String get messengerInquiriesTitle => 'Demandes';
+
+  @override
+  String get messengerInquiriesEmpty => 'Aucune demande pour l’instant.';
+
+  @override
+  String get messengerInquiryClose => 'Clore la demande';
+
+  @override
+  String get messengerInquiryClosed => 'Demande close.';
+
+  @override
+  String messengerInquiryFrom(String name) {
+    return 'De $name';
+  }
+
+  @override
+  String messengerNoticeForwardedPrivate(String actor) {
+    return '$actor a transféré un message de cette conversation vers une conversation personnelle.';
+  }
+
+  @override
+  String messengerEventForwardedPrivate(String actor) {
+    return 'Transféré par $actor vers une conversation personnelle';
+  }
+
+  @override
+  String messengerEventForwardedFrom(String actor, String context) {
+    return 'Écrit à l’origine par $actor dans $context';
+  }
+
+  @override
+  String get messengerRefusedForwardingOff =>
+      'Cet espace n’autorise pas le transfert de ses messages.';
+
+  @override
+  String get messengerRefusedTooLong =>
+      'Ce message est trop long pour cette conversation.';
+
+  @override
+  String get messengerRefusedClosed => 'Cette demande est close.';
+
+  @override
+  String get messengerRefusedUnavailable =>
+      'Cet espace n’accepte pas de demandes pour le moment.';
+
+  @override
+  String get messengerRefusedLimit =>
+      'Trop d’un coup. Veuillez patienter une minute.';
+
+  @override
+  String get captureWebNotice =>
+      'Votre navigateur ne peut pas empêcher les captures d’écran de cette conversation.';
+
+  @override
+  String get captureRecordingHidden =>
+      'Masqué pendant l’enregistrement ou la recopie de votre écran.';
+
+  @override
   String get moneyBaseFee => 'Abonnement de base';
 
   @override

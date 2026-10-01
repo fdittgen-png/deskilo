@@ -220,6 +220,12 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.workspaceVocabulary =>
         l10n?.featureWorkspaceVocabularyTitle ?? 'Workspace vocabulary',
       WorkspaceFeature.publicListings => l10n?.featurePublicListings ?? 'Public workspace listing',
+      WorkspaceFeature.spaceInquiries =>
+        l10n?.featureSpaceInquiriesTitle ?? 'Write to the hosts',
+      WorkspaceFeature.messageForwarding =>
+        l10n?.featureMessageForwardingTitle ?? 'Message forwarding',
+      WorkspaceFeature.captureProtection =>
+        l10n?.featureCaptureProtectionTitle ?? 'Screen capture protection',
       WorkspaceFeature.workspaceBranding =>
         l10n?.featureWorkspaceBrandingTitle ?? 'Workspace colours',
       WorkspaceFeature.customRoles =>

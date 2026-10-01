@@ -8804,6 +8804,340 @@
   "memberOriginInvited": "Joined by invitation",
   "memberOriginDelegated": "Profile created by an admin",
   "memberOriginHeading": "How this membership began",
+  "featureSpaceInquiriesTitle": "Write to the hosts",
+  "@featureSpaceInquiriesTitle": {
+    "description": "#1824 messenger flags: featureSpaceInquiriesTitle"
+  },
+  "featureSpaceInquiriesDesc": "A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay.",
+  "@featureSpaceInquiriesDesc": {
+    "description": "#1824 messenger flags: featureSpaceInquiriesDesc"
+  },
+  "featureMessageForwardingTitle": "Message forwarding",
+  "@featureMessageForwardingTitle": {
+    "description": "#1824 messenger flags: featureMessageForwardingTitle"
+  },
+  "featureMessageForwardingDesc": "A message can be forwarded into another conversation the forwarder takes part in. The copy names where it came from and who wrote it, the original conversation is told who forwarded it and where, and an author can lock a message against forwarding. Off refuses forwards out of this space.",
+  "@featureMessageForwardingDesc": {
+    "description": "#1824 messenger flags: featureMessageForwardingDesc"
+  },
+  "featureCaptureProtectionTitle": "Screen capture protection",
+  "@featureCaptureProtectionTitle": {
+    "description": "#1824 messenger flags: featureCaptureProtectionTitle"
+  },
+  "featureCaptureProtectionDesc": "Message screens refuse screenshots and screen recording where the device allows it, hide their content while the screen is recorded, and announce a screenshot in the conversation where it can only be detected. A browser cannot block screenshots; there the thread is blurred when the tab loses focus.",
+  "@featureCaptureProtectionDesc": {
+    "description": "#1824 messenger flags: featureCaptureProtectionDesc"
+  },
+  "messengerContextSpace": "In {space}",
+  "@messengerContextSpace": {
+    "description": "Context label of a conversation inside a space, in the unified inbox (#1824)",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerContextAccount": "Person to person",
+  "@messengerContextAccount": {
+    "description": "Context label of a person-to-person account conversation (#1824)"
+  },
+  "messengerContextInquiryOut": "Your inquiry to {space}",
+  "@messengerContextInquiryOut": {
+    "description": "Context label of an inquiry the reader wrote to a space (#1824)",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerContextInquiryIn": "Inquiry to {space}",
+  "@messengerContextInquiryIn": {
+    "description": "Context label of an inquiry an outside person wrote to a space the reader hosts (#1824)",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerOnServer": "on {server}",
+  "@messengerOnServer": {
+    "description": "Subtitle naming the server a conversation or person lives on, only when it is not this server (#1824)",
+    "placeholders": {
+      "server": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerInboxUnavailable": "Not reachable right now: {servers}. Their conversations are missing from this list.",
+  "@messengerInboxUnavailable": {
+    "description": "Row in the unified inbox when some servers did not answer (#1824)",
+    "placeholders": {
+      "servers": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerMessageActions": "Message actions",
+  "@messengerMessageActions": {
+    "description": "Tooltip of the button that opens a message's actions (#1824)"
+  },
+  "messengerForward": "Forward",
+  "@messengerForward": {
+    "description": "Action: forward a message into another conversation (#1824)"
+  },
+  "messengerForwardLocked": "The author locked this message against forwarding.",
+  "@messengerForwardLocked": {
+    "description": "Shown instead of Forward when the author locked the message (#1824)"
+  },
+  "messengerLock": "Lock against forwarding",
+  "@messengerLock": {
+    "description": "Author action: forbid forwarding this message (#1824)"
+  },
+  "messengerUnlock": "Allow forwarding",
+  "@messengerUnlock": {
+    "description": "Author action: allow forwarding this message again (#1824)"
+  },
+  "messengerHistory": "What happened",
+  "@messengerHistory": {
+    "description": "Title and action of the sheet listing what happened to a message (#1824)"
+  },
+  "messengerDelete": "Delete message",
+  "@messengerDelete": {
+    "description": "Action: delete my own account message (#1824)"
+  },
+  "messengerDeleteConfirm": "Delete this message for everyone in the conversation?",
+  "@messengerDeleteConfirm": {
+    "description": "Confirmation before deleting my own account message (#1824)"
+  },
+  "messengerDeleted": "Message deleted.",
+  "@messengerDeleted": {
+    "description": "Confirmation after a message was deleted (#1824)"
+  },
+  "messengerForwardTitle": "Forward to",
+  "@messengerForwardTitle": {
+    "description": "Title of the forward target picker (#1824)"
+  },
+  "messengerForwardExplain": "Everyone in the original conversation, the author first, is told who forwarded it, when, and where to.",
+  "@messengerForwardExplain": {
+    "description": "Explains in the forward picker what the original conversation will be told (#1824)"
+  },
+  "messengerForwardNoTargets": "No other conversation on this server to forward into.",
+  "@messengerForwardNoTargets": {
+    "description": "Forward picker when there is no other conversation on the same server (#1824)"
+  },
+  "messengerForwarded": "Forwarded to {target}.",
+  "@messengerForwarded": {
+    "description": "Confirmation after forwarding a message (#1824)",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerForwardedFrom": "Forwarded from {context} · written by {author}",
+  "@messengerForwardedFrom": {
+    "description": "Origin line above a forwarded message (#1824)",
+    "placeholders": {
+      "context": {
+        "type": "String"
+      },
+      "author": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerNoticeForwarded": "{actor} forwarded a message of this conversation to {target}.",
+  "@messengerNoticeForwarded": {
+    "description": "System line in a conversation when one of its messages was forwarded (#1824)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerNoticeCaptured": "{actor} took a screenshot of this conversation.",
+  "@messengerNoticeCaptured": {
+    "description": "System line in a conversation when someone took a screenshot of it (iOS) (#1824)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerRead": "Read",
+  "@messengerRead": {
+    "description": "Screen-reader label of the read receipt on my message (#1824)"
+  },
+  "messengerDelivered": "Delivered",
+  "@messengerDelivered": {
+    "description": "Screen-reader label of the delivered receipt on my message (#1824)"
+  },
+  "messengerHistoryEmpty": "Nothing recorded for this message yet.",
+  "@messengerHistoryEmpty": {
+    "description": "History sheet when nothing was recorded (#1824)"
+  },
+  "messengerEventSent": "Sent by {actor}",
+  "@messengerEventSent": {
+    "description": "History line: the message was sent (#1824)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerEventRead": "Read by {actor}",
+  "@messengerEventRead": {
+    "description": "History line: the message was read (#1824)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerEventForwarded": "Forwarded by {actor} to {target}",
+  "@messengerEventForwarded": {
+    "description": "History line: the message was forwarded (#1824)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerEventDeleted": "Deleted by {actor}",
+  "@messengerEventDeleted": {
+    "description": "History line: the message was deleted (#1824)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerEventCaptured": "Screenshot taken by {actor}",
+  "@messengerEventCaptured": {
+    "description": "History line: a screenshot was taken (#1824)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerEventOther": "{event} · {actor}",
+  "@messengerEventOther": {
+    "description": "History line for an event this app version does not know (#1824)",
+    "placeholders": {
+      "event": {
+        "type": "String"
+      },
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerWriteToHosts": "Write to the hosts",
+  "@messengerWriteToHosts": {
+    "description": "Button on a published space page, and title of the inquiry sheet (#1824)"
+  },
+  "messengerHostsIntro": "Your message is read by these hosts of the space:",
+  "@messengerHostsIntro": {
+    "description": "Inquiry sheet: who will read the message (#1824)"
+  },
+  "messengerHostsNone": "This space has nobody answering messages right now.",
+  "@messengerHostsNone": {
+    "description": "Inquiry sheet when the space has no host who answers (#1824)"
+  },
+  "messengerInquirySend": "Send inquiry",
+  "@messengerInquirySend": {
+    "description": "Button sending the first message of an inquiry (#1824)"
+  },
+  "messengerInquiriesTitle": "Inquiries",
+  "@messengerInquiriesTitle": {
+    "description": "Title of the space's Inquiries view and its entry in the space inbox (#1824)"
+  },
+  "messengerInquiriesEmpty": "No inquiries yet.",
+  "@messengerInquiriesEmpty": {
+    "description": "Empty Inquiries view (#1824)"
+  },
+  "messengerInquiryClose": "Close inquiry",
+  "@messengerInquiryClose": {
+    "description": "Tooltip of the action closing an inquiry (#1824)"
+  },
+  "messengerInquiryClosed": "Inquiry closed.",
+  "@messengerInquiryClosed": {
+    "description": "Confirmation after an inquiry was closed (#1824)"
+  },
+  "messengerInquiryFrom": "From {name}",
+  "@messengerInquiryFrom": {
+    "description": "Row title in the Inquiries view: who wrote (#1824)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerNoticeForwardedPrivate": "{actor} forwarded a message of this conversation to a personal conversation.",
+  "@messengerNoticeForwardedPrivate": {
+    "description": "System line when a message of this conversation was forwarded into a personal conversation, which is never named (#1824)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerEventForwardedPrivate": "Forwarded by {actor} to a personal conversation",
+  "@messengerEventForwardedPrivate": {
+    "description": "History line: forwarded into a personal conversation, which is never named (#1824)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerEventForwardedFrom": "Originally written by {actor} in {context}",
+  "@messengerEventForwardedFrom": {
+    "description": "History line on a forwarded copy: where the original was written (#1824)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "context": {
+        "type": "String"
+      }
+    }
+  },
+  "messengerRefusedForwardingOff": "This space does not allow forwarding its messages.",
+  "@messengerRefusedForwardingOff": {
+    "description": "Refusal: the source space switched forwarding off (#1824)"
+  },
+  "messengerRefusedTooLong": "This message is too long for that conversation.",
+  "@messengerRefusedTooLong": {
+    "description": "Refusal: the message is longer than the target conversation allows (#1824)"
+  },
+  "messengerRefusedClosed": "This inquiry is closed.",
+  "@messengerRefusedClosed": {
+    "description": "Refusal: the inquiry was closed (#1824)"
+  },
+  "messengerRefusedUnavailable": "This space does not take inquiries right now.",
+  "@messengerRefusedUnavailable": {
+    "description": "Refusal: the space takes no inquiries (not published, or switched off) (#1824)"
+  },
+  "messengerRefusedLimit": "Too many at once. Please wait a minute.",
+  "@messengerRefusedLimit": {
+    "description": "Refusal: too many forwards or messages in a short time (#1824)"
+  },
+  "captureWebNotice": "Your browser cannot block screenshots of this conversation.",
+  "@captureWebNotice": {
+    "description": "Header line of a conversation on the web, where screenshots cannot be blocked (#1824)"
+  },
+  "captureRecordingHidden": "Hidden while your screen is recorded or mirrored.",
+  "@captureRecordingHidden": {
+    "description": "Shown instead of a conversation while the screen is recorded or mirrored (iOS) (#1824)"
+  },
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"

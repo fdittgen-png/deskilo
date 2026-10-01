@@ -21,7 +21,7 @@ import 'features_screen_test.dart' show pumpFeatures;
 ///   it on — the state under test is "nothing left to switch on", not
 ///   what the process ships with.
 /// * Space management — some default-off features: Partial.
-/// * Calendar & coordination — all thirteen switched off: Available.
+/// * Calendar & coordination — all sixteen switched off: Available.
 /// * Workspace & access — kiosk mode off holds its badges back while
 ///   their own switches stay on: Needs attention.
 const _fixture = <String, dynamic>{
@@ -40,6 +40,9 @@ const _fixture = <String, dynamic>{
   'richMessageRefs': false,
   'messageGestures': false,
   'messagesHub': false,
+  'spaceInquiries': false,
+  'messageForwarding': false,
+  'captureProtection': false,
 };
 
 Finder _card(String key) => find.byKey(ValueKey('process-$key'));
@@ -85,7 +88,7 @@ void main() {
       _inCard(
         'coordination',
         '0 of 3 subprocesses active · '
-            '0 of 13 features on',
+            '0 of 16 features on',
       ),
       findsOneWidget,
     );

@@ -1,8 +1,15 @@
 #include "flutter_window.h"
 
+#include <flutter/standard_method_codec.h>
+
 #include <optional>
 
 #include "flutter/generated_plugin_registrant.h"
+
+// Windows 10 2004+; older SDK headers do not name it.
+#ifndef WDA_EXCLUDEFROMCAPTURE
+#define WDA_EXCLUDEFROMCAPTURE 0x00000011
+#endif
 
 FlutterWindow::FlutterWindow(const flutter::DartProject& project)
     : project_(project) {}
@@ -25,6 +32,33 @@ bool FlutterWindow::OnCreate() {
     return false;
   }
   RegisterPlugins(flutter_controller_->engine());
+
+  // #1824 — while a conversation is on screen the window is excluded
+  // from screenshots, recordings and screen sharing. A Windows older
+  // than 2004 cannot exclude; it shows the window black instead
+  // (WDA_MONITOR). `enable` answers whether the screen is being captured
+  // right now; Windows blocks rather than detects, so: never.
+  capture_channel_ =
+      std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
+          flutter_controller_->engine()->messenger(), "deskilo/capture",
+          &flutter::StandardMethodCodec::GetInstance());
+  capture_channel_->SetMethodCallHandler(
+      [this](const flutter::MethodCall<flutter::EncodableValue>& call,
+             std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
+                 result) {
+        HWND window = GetHandle();
+        if (call.method_name() == "enable") {
+          if (!SetWindowDisplayAffinity(window, WDA_EXCLUDEFROMCAPTURE)) {
+            SetWindowDisplayAffinity(window, WDA_MONITOR);
+          }
+          result->Success(flutter::EncodableValue(false));
+        } else if (call.method_name() == "disable") {
+          SetWindowDisplayAffinity(window, WDA_NONE);
+          result->Success();
+        } else {
+          result->NotImplemented();
+        }
+      });
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
 
   flutter_controller_->engine()->SetNextFrameCallback([&]() {
@@ -40,6 +74,7 @@ bool FlutterWindow::OnCreate() {
 }
 
 void FlutterWindow::OnDestroy() {
+  capture_channel_ = nullptr;
   if (flutter_controller_) {
     flutter_controller_ = nullptr;
   }

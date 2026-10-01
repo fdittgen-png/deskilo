@@ -14215,6 +14215,342 @@ abstract class AppLocalizations {
   /// **'How this membership began'**
   String get memberOriginHeading;
 
+  /// #1824 messenger flags: featureSpaceInquiriesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Write to the hosts'**
+  String get featureSpaceInquiriesTitle;
+
+  /// #1824 messenger flags: featureSpaceInquiriesDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay.'**
+  String get featureSpaceInquiriesDesc;
+
+  /// #1824 messenger flags: featureMessageForwardingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Message forwarding'**
+  String get featureMessageForwardingTitle;
+
+  /// #1824 messenger flags: featureMessageForwardingDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A message can be forwarded into another conversation the forwarder takes part in. The copy names where it came from and who wrote it, the original conversation is told who forwarded it and where, and an author can lock a message against forwarding. Off refuses forwards out of this space.'**
+  String get featureMessageForwardingDesc;
+
+  /// #1824 messenger flags: featureCaptureProtectionTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Screen capture protection'**
+  String get featureCaptureProtectionTitle;
+
+  /// #1824 messenger flags: featureCaptureProtectionDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Message screens refuse screenshots and screen recording where the device allows it, hide their content while the screen is recorded, and announce a screenshot in the conversation where it can only be detected. A browser cannot block screenshots; there the thread is blurred when the tab loses focus.'**
+  String get featureCaptureProtectionDesc;
+
+  /// Context label of a conversation inside a space, in the unified inbox (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'In {space}'**
+  String messengerContextSpace(String space);
+
+  /// Context label of a person-to-person account conversation (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Person to person'**
+  String get messengerContextAccount;
+
+  /// Context label of an inquiry the reader wrote to a space (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Your inquiry to {space}'**
+  String messengerContextInquiryOut(String space);
+
+  /// Context label of an inquiry an outside person wrote to a space the reader hosts (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Inquiry to {space}'**
+  String messengerContextInquiryIn(String space);
+
+  /// Subtitle naming the server a conversation or person lives on, only when it is not this server (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'on {server}'**
+  String messengerOnServer(String server);
+
+  /// Row in the unified inbox when some servers did not answer (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Not reachable right now: {servers}. Their conversations are missing from this list.'**
+  String messengerInboxUnavailable(String servers);
+
+  /// Tooltip of the button that opens a message's actions (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Message actions'**
+  String get messengerMessageActions;
+
+  /// Action: forward a message into another conversation (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Forward'**
+  String get messengerForward;
+
+  /// Shown instead of Forward when the author locked the message (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'The author locked this message against forwarding.'**
+  String get messengerForwardLocked;
+
+  /// Author action: forbid forwarding this message (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Lock against forwarding'**
+  String get messengerLock;
+
+  /// Author action: allow forwarding this message again (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Allow forwarding'**
+  String get messengerUnlock;
+
+  /// Title and action of the sheet listing what happened to a message (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'What happened'**
+  String get messengerHistory;
+
+  /// Action: delete my own account message (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete message'**
+  String get messengerDelete;
+
+  /// Confirmation before deleting my own account message (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this message for everyone in the conversation?'**
+  String get messengerDeleteConfirm;
+
+  /// Confirmation after a message was deleted (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Message deleted.'**
+  String get messengerDeleted;
+
+  /// Title of the forward target picker (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Forward to'**
+  String get messengerForwardTitle;
+
+  /// Explains in the forward picker what the original conversation will be told (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone in the original conversation, the author first, is told who forwarded it, when, and where to.'**
+  String get messengerForwardExplain;
+
+  /// Forward picker when there is no other conversation on the same server (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'No other conversation on this server to forward into.'**
+  String get messengerForwardNoTargets;
+
+  /// Confirmation after forwarding a message (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Forwarded to {target}.'**
+  String messengerForwarded(String target);
+
+  /// Origin line above a forwarded message (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Forwarded from {context} · written by {author}'**
+  String messengerForwardedFrom(String context, String author);
+
+  /// System line in a conversation when one of its messages was forwarded (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} forwarded a message of this conversation to {target}.'**
+  String messengerNoticeForwarded(String actor, String target);
+
+  /// System line in a conversation when someone took a screenshot of it (iOS) (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} took a screenshot of this conversation.'**
+  String messengerNoticeCaptured(String actor);
+
+  /// Screen-reader label of the read receipt on my message (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get messengerRead;
+
+  /// Screen-reader label of the delivered receipt on my message (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get messengerDelivered;
+
+  /// History sheet when nothing was recorded (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded for this message yet.'**
+  String get messengerHistoryEmpty;
+
+  /// History line: the message was sent (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Sent by {actor}'**
+  String messengerEventSent(String actor);
+
+  /// History line: the message was read (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Read by {actor}'**
+  String messengerEventRead(String actor);
+
+  /// History line: the message was forwarded (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Forwarded by {actor} to {target}'**
+  String messengerEventForwarded(String actor, String target);
+
+  /// History line: the message was deleted (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted by {actor}'**
+  String messengerEventDeleted(String actor);
+
+  /// History line: a screenshot was taken (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Screenshot taken by {actor}'**
+  String messengerEventCaptured(String actor);
+
+  /// History line for an event this app version does not know (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'{event} · {actor}'**
+  String messengerEventOther(String event, String actor);
+
+  /// Button on a published space page, and title of the inquiry sheet (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Write to the hosts'**
+  String get messengerWriteToHosts;
+
+  /// Inquiry sheet: who will read the message (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Your message is read by these hosts of the space:'**
+  String get messengerHostsIntro;
+
+  /// Inquiry sheet when the space has no host who answers (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'This space has nobody answering messages right now.'**
+  String get messengerHostsNone;
+
+  /// Button sending the first message of an inquiry (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Send inquiry'**
+  String get messengerInquirySend;
+
+  /// Title of the space's Inquiries view and its entry in the space inbox (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Inquiries'**
+  String get messengerInquiriesTitle;
+
+  /// Empty Inquiries view (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'No inquiries yet.'**
+  String get messengerInquiriesEmpty;
+
+  /// Tooltip of the action closing an inquiry (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Close inquiry'**
+  String get messengerInquiryClose;
+
+  /// Confirmation after an inquiry was closed (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Inquiry closed.'**
+  String get messengerInquiryClosed;
+
+  /// Row title in the Inquiries view: who wrote (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'From {name}'**
+  String messengerInquiryFrom(String name);
+
+  /// System line when a message of this conversation was forwarded into a personal conversation, which is never named (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} forwarded a message of this conversation to a personal conversation.'**
+  String messengerNoticeForwardedPrivate(String actor);
+
+  /// History line: forwarded into a personal conversation, which is never named (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Forwarded by {actor} to a personal conversation'**
+  String messengerEventForwardedPrivate(String actor);
+
+  /// History line on a forwarded copy: where the original was written (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Originally written by {actor} in {context}'**
+  String messengerEventForwardedFrom(String actor, String context);
+
+  /// Refusal: the source space switched forwarding off (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'This space does not allow forwarding its messages.'**
+  String get messengerRefusedForwardingOff;
+
+  /// Refusal: the message is longer than the target conversation allows (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'This message is too long for that conversation.'**
+  String get messengerRefusedTooLong;
+
+  /// Refusal: the inquiry was closed (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'This inquiry is closed.'**
+  String get messengerRefusedClosed;
+
+  /// Refusal: the space takes no inquiries (not published, or switched off) (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'This space does not take inquiries right now.'**
+  String get messengerRefusedUnavailable;
+
+  /// Refusal: too many forwards or messages in a short time (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Too many at once. Please wait a minute.'**
+  String get messengerRefusedLimit;
+
+  /// Header line of a conversation on the web, where screenshots cannot be blocked (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Your browser cannot block screenshots of this conversation.'**
+  String get captureWebNotice;
+
+  /// Shown instead of a conversation while the screen is recorded or mirrored (iOS) (#1824)
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden while your screen is recorded or mirrored.'**
+  String get captureRecordingHidden;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:
