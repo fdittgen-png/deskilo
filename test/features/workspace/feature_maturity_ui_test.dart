@@ -38,7 +38,7 @@ Future<void> _pumpScreen(
   Map<WorkspaceFeature, FeatureAssessment>? assessments,
   Map<String, dynamic> featureFlags = const {},
 }) async {
-  tester.view.physicalSize = const Size(800, 20000);
+  tester.view.physicalSize = const Size(800, 24000);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(

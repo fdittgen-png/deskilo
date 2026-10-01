@@ -49,49 +49,58 @@ class FeaturesFilterBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
           AppSpacing.md, 0, AppSpacing.md, AppSpacing.sm),
-      child: Row(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: TextField(
-              key: const ValueKey('features-search'),
-              controller: controller,
-              onChanged: onQuery,
-              textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                isDense: true,
-                prefixIcon: const Icon(Icons.search),
-                labelText: l10n?.featuresSearchLabel ?? 'Search features',
-                suffixIcon: controller.text.isEmpty
-                    ? null
-                    : IconButton(
-                        key: const ValueKey('features-search-clear'),
-                        tooltip: MaterialLocalizations.of(context)
-                            .deleteButtonTooltip,
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          controller.clear();
-                          onQuery('');
-                        },
-                      ),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  key: const ValueKey('features-search'),
+                  controller: controller,
+                  onChanged: onQuery,
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    prefixIcon: const Icon(Icons.search),
+                    labelText: l10n?.featuresSearchLabel ?? 'Search features',
+                    suffixIcon: controller.text.isEmpty
+                        ? null
+                        : IconButton(
+                            key: const ValueKey('features-search-clear'),
+                            tooltip: MaterialLocalizations.of(context)
+                                .deleteButtonTooltip,
+                            icon: const Icon(Icons.clear),
+                            onPressed: () {
+                              controller.clear();
+                              onQuery('');
+                            },
+                          ),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: AppSpacing.sm),
+              FilterChip(
+                key: const ValueKey('features-filter-changed'),
+                label: Text(
+                  changedCount == 0
+                      ? changedLabel
+                      : '$changedLabel · $changedCount',
+                ),
+                selected: changedOnly,
+                onSelected: onChangedOnly,
+              ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.sm),
-          FilterChip(
-            key: const ValueKey('features-filter-changed'),
-            label: Text(
-              changedCount == 0
-                  ? changedLabel
-                  : '$changedLabel · $changedCount',
+          // #1850 — its own line: a third control beside the search
+          // overflowed the row at phone width in French.
+          if (onMaturity != null)
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.xs),
+              child: FeatureMaturityFilterButton(
+                  value: maturity, onChanged: onMaturity!),
             ),
-            selected: changedOnly,
-            onSelected: onChangedOnly,
-          ),
-          if (onMaturity != null) ...[
-            const SizedBox(width: AppSpacing.sm),
-            FeatureMaturityFilterButton(
-                value: maturity, onChanged: onMaturity!),
-          ],
         ],
       ),
     );

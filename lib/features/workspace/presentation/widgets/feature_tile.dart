@@ -143,15 +143,19 @@ class FeatureTile extends StatelessWidget {
               const SizedBox(width: AppSpacing.xs),
               _TierChip(tier: entry.tier),
             ],
-            const SizedBox(width: AppSpacing.xs),
-            FeatureMaturityBadge(
-              assessment: assessment ?? featureAssessmentOf(entry.feature),
-            ),
           ],
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // #1850 — its own line: beside the title it squeezed the
+            // name at phone width and at large text.
+            Padding(
+              padding: const EdgeInsets.only(bottom: 2),
+              child: FeatureMaturityBadge(
+                assessment: assessment ?? featureAssessmentOf(entry.feature),
+              ),
+            ),
             Text(
               split.lead,
               style: held ? TextStyle(color: theme.colorScheme.error) : null,
