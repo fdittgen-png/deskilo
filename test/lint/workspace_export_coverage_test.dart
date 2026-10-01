@@ -129,6 +129,10 @@ const Map<String, String> _notExported = {
           'template must never carry answers',
   'workspace_field_value_options':
       'which choices one member made; personal in the same way',
+  'rights_requests':
+      'a person\'s requests to exercise their data-protection rights '
+          '(#1915); they belong to the requester\'s own export, not to the '
+          'operator\'s spreadsheet of the space',
   'workspace_field_retention_holds':
       'a documented legal basis for keeping one question\'s answers after '
           'erasure (#1912); it governs personal data, so it stays with the '
