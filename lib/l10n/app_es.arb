@@ -1522,6 +1522,10 @@
   "@workspaceFieldsSaveFailed": {
     "description": "#1288 custom fields: workspaceFieldsSaveFailed"
   },
+  "workspaceFieldsPersonalNote": "Tus respuestas son datos personales: forman parte de tu exportación de datos y se borran cuando dejas este espacio, salvo que el espacio documente una obligación legal de conservar alguna.",
+  "@workspaceFieldsPersonalNote": {
+    "description": "#1912 custom fields: every answer is personal data"
+  },
   "featureCustomRolesTitle": "Roles que define este espacio",
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"
@@ -6710,7 +6714,7 @@
   "@questionEditorPersonal": {
     "description": "#1288 the question editor: questionEditorPersonal"
   },
-  "questionEditorPersonalHelp": "Se borra cuando la persona se va, y viaja en su exportación de datos. Déjalo activado salvo que la respuesta sea realmente del espacio y no de la persona.",
+  "questionEditorPersonalHelp": "Cada respuesta está vinculada a un miembro, así que es un dato personal: viaja en su exportación de datos y se borra cuando se va.",
   "@questionEditorPersonalHelp": {
     "description": "#1288 the question editor: questionEditorPersonalHelp"
   },
@@ -6809,6 +6813,10 @@
   "questionTypeMultiChoice": "Varias de una lista",
   "@questionTypeMultiChoice": {
     "description": "#1288 the question editor: questionTypeMultiChoice"
+  },
+  "questionEditorNotPersonalWarning": "Sigue siendo personal: la respuesta está vinculada a un miembro, así que se exporta y se borra con la membresía, diga lo que diga este interruptor. Solo una conservación legal documentada puede guardarla.",
+  "@questionEditorNotPersonalWarning": {
+    "description": "#1912 the question editor: shown while the personal-data switch is off"
   },
   "eventTypeRoleChange": "Cambio de rol",
   "eventRolePromote": "{actor} promueve a un miembro a admin",

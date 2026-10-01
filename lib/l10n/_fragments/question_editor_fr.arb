@@ -49,7 +49,7 @@
   "@questionEditorPersonal": {
     "description": "#1288 the question editor: questionEditorPersonal"
   },
-  "questionEditorPersonalHelp": "Effacée au départ du membre, et incluse dans son export de données. Laissez activé sauf si la réponse concerne vraiment l'espace et non la personne.",
+  "questionEditorPersonalHelp": "Chaque réponse est liée à un membre : c'est une donnée personnelle, incluse dans son export de données et effacée à son départ.",
   "@questionEditorPersonalHelp": {
     "description": "#1288 the question editor: questionEditorPersonalHelp"
   },
@@ -148,5 +148,9 @@
   "questionTypeMultiChoice": "Plusieurs choix dans une liste",
   "@questionTypeMultiChoice": {
     "description": "#1288 the question editor: questionTypeMultiChoice"
+  },
+  "questionEditorNotPersonalWarning": "Toujours personnelle : la réponse est liée à un membre, elle est donc exportée et effacée avec l'adhésion quel que soit ce réglage. Seule une conservation légale documentée peut la garder.",
+  "@questionEditorNotPersonalWarning": {
+    "description": "#1912 the question editor: shown while the personal-data switch is off"
   }
 }

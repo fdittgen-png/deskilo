@@ -2294,6 +2294,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le tue risposte alle domande di questo spazio non sono state salvate. Il resto dei tuoi dati sì.';
 
   @override
+  String get workspaceFieldsPersonalNote =>
+      'Le tue risposte sono dati personali: fanno parte della tua esportazione dei dati e vengono cancellate quando lasci questo spazio, salvo un obbligo legale di conservazione documentato dallo spazio.';
+
+  @override
   String get featureCustomRolesTitle => 'Ruoli definiti da questo spazio';
 
   @override
@@ -11635,7 +11639,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get questionEditorPersonalHelp =>
-      'Cancellato quando la persona esce, e incluso nella sua esportazione dei dati. Lascialo attivo a meno che la risposta riguardi davvero lo spazio e non la persona.';
+      'Ogni risposta è legata a un membro, quindi è un dato personale: è inclusa nella sua esportazione dei dati e viene cancellata quando esce.';
 
   @override
   String get questionEditorVisibility => 'Chi vede la risposta';
@@ -11710,6 +11714,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get questionTypeMultiChoice => 'Diverse di un elenco';
+
+  @override
+  String get questionEditorNotPersonalWarning =>
+      'Resta personale: la risposta è legata a un membro, quindi viene esportata e cancellata con l\'iscrizione qualunque sia questa impostazione. Solo un obbligo di conservazione documentato può mantenerla.';
 
   @override
   String get eventTypeRoleChange => 'Cambio di ruolo';

@@ -3962,6 +3962,12 @@ abstract class AppLocalizations {
   /// **'Your answers to this space\'s questions were not saved. Your other details were.'**
   String get workspaceFieldsSaveFailed;
 
+  /// #1912 custom fields: every answer is personal data
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers are personal data: they are part of your data export and are erased when you leave this space, unless the space documents a legal obligation to keep one.'**
+  String get workspaceFieldsPersonalNote;
+
   /// #1287 custom roles: the feature switch title
   ///
   /// In en, this message translates to:
@@ -19971,7 +19977,7 @@ abstract class AppLocalizations {
   /// #1288 the question editor: questionEditorPersonalHelp
   ///
   /// In en, this message translates to:
-  /// **'Erased when the member leaves, and carried in their data export. Leave it on unless the answer is really about the space rather than the person.'**
+  /// **'Every answer is stored against a member, so it is personal data: carried in their data export and erased when they leave.'**
   String get questionEditorPersonalHelp;
 
   /// #1288 the question editor: questionEditorVisibility
@@ -20117,6 +20123,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Several of a list'**
   String get questionTypeMultiChoice;
+
+  /// #1912 the question editor: shown while the personal-data switch is off
+  ///
+  /// In en, this message translates to:
+  /// **'Still personal: the answer is linked to a member, so it is exported and erased with the membership whatever this switch says. Only a documented retention hold can keep it.'**
+  String get questionEditorNotPersonalWarning;
 
   /// Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card
   ///
