@@ -1552,6 +1552,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get bootFailedTitle => 'DesKilo could not start';
+
+  @override
+  String get bootFailedBody =>
+      'The server or this device\'s secure storage did not answer. Nothing was changed. Close the app and open it again; if it keeps happening, check the network.';
+
+  @override
+  String get bootSlowTitle => 'Starting is taking longer than usual';
+
+  @override
+  String get bootSlowBody =>
+      'It keeps trying. If nothing happens, close the app and open it again.';
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'The buyer\'s SIREN is missing. A French platform routes by it: enter it on the member\'s profile before transmitting. Not a refusal — the file is valid without it.';
 
@@ -7157,6 +7171,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get bookingNotAMember =>
       'You are no longer a member of this space — ask an administrator for an invitation.';
+
+  @override
+  String get levelReorderStale =>
+      'The levels changed meanwhile. Nothing was saved; the current order is shown.';
 
   @override
   String get featureWorkspaceLibraryTitle => 'Workspace library';

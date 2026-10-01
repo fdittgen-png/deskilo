@@ -919,6 +919,10 @@
       }
     }
   },
+  "bootFailedTitle": "DesKilo non è riuscito ad avviarsi",
+  "bootFailedBody": "Il server o l'archivio sicuro di questo dispositivo non ha risposto. Non è stato modificato nulla. Chiudi l'app e riaprila; se continua a succedere, controlla la rete.",
+  "bootSlowTitle": "L'avvio richiede più tempo del solito",
+  "bootSlowBody": "Continua a provare. Se non succede nulla, chiudi l'app e riaprila.",
   "eInvoiceGapBuyerLegalIdAdvisable": "Manca il SIREN dell'acquirente. Una piattaforma francese instrada in base ad esso: inseritelo nel profilo del membro prima di trasmettere. Non è un rifiuto — il file è valido senza.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -4376,6 +4380,7 @@
   "bookingSameDayError": "Una prenotazione termina il giorno in cui inizia — prenota il giorno dopo separatamente.",
   "bookingMembershipPaused": "La tua iscrizione è sospesa — un amministratore la riattiva in Membri.",
   "bookingNotAMember": "Non sei più membro di questo spazio — chiedi un invito a un amministratore.",
+  "levelReorderStale": "I livelli sono cambiati nel frattempo. Non è stato salvato nulla; viene mostrato l'ordine attuale.",
   "featureWorkspaceLibraryTitle": "Biblioteca degli spazi",
   "featureWorkspaceLibraryDesc": "Salvate la pianta di questo spazio e il suo funzionamento come modello, scegliete chi può vederla, invitate persone via e-mail e partite da ciò che altri offrono.",
   "libraryTitle": "Biblioteca degli spazi",

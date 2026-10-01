@@ -1,0 +1,4 @@
+{
+  "@@locale": "es",
+  "levelReorderStale": "Los niveles cambiaron mientras tanto. No se guardó nada; se muestra el orden actual."
+}

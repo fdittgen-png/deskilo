@@ -205,6 +205,37 @@ void main() {
       expect(order(plans), ['Second', 'Ground', 'First']);
     });
 
+    testWidgets('#2010 — a save is ONE command carrying the order it was '
+        'made from', (tester) async {
+      final plans = await seedThreeLevels(tester);
+      final list = tester.widget<ReorderableListView>(
+          find.byType(ReorderableListView));
+      list.onReorderItem!(2, 0);
+      await tester.pumpAndSettle();
+      expect(plans.reorderCalls, 1);
+      expect(order(plans), ['Second', 'Ground', 'First']);
+      expect(find.textContaining('Nothing was saved'), findsNothing);
+    });
+
+    testWidgets('#2010 — levels moved meanwhile: nothing is saved, the '
+        'member is told, and the list shows the current order',
+        (tester) async {
+      final plans = await seedThreeLevels(tester);
+      final list = tester.widget<ReorderableListView>(
+          find.byType(ReorderableListView));
+      // Another editor saved First/Ground/Second after this list was read.
+      for (final (name, i) in [('First', 0), ('Ground', 1), ('Second', 2)]) {
+        final idx = plans.levels.indexWhere((l) => l.name == name);
+        plans.levels[idx] = plans.levels[idx].copyWith(sortOrder: i);
+      }
+      list.onReorderItem!(2, 0);
+      await tester.pumpAndSettle();
+      expect(plans.reorderCalls, 1);
+      expect(order(plans), ['First', 'Ground', 'Second'],
+          reason: 'the stale save changed nothing');
+      expect(find.textContaining('Nothing was saved'), findsOneWidget);
+    });
+
     testWidgets('the deprecated onReorder callback is no longer wired',
         (tester) async {
       await seedThreeLevels(tester);
