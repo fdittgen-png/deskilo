@@ -5,7 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../plan/domain/desk.dart';
 import '../../../plan/domain/floor_plan.dart';
+import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -31,6 +33,7 @@ class SeatListView extends ConsumerWidget {
     required this.at,
     required this.dayOpen,
     required this.onSeatTap,
+    this.onSpaceTap,
     this.windowEndOrNull,
   });
 
@@ -52,13 +55,19 @@ class SeatListView extends ConsumerWidget {
 
   final void Function(Seat seat) onSeatTap;
 
+  /// #1825 — whole-space reservation from a desk or office header; null
+  /// when this member may not reserve a space as a whole (feature off, no
+  /// grant, no roster). Only a header whose space is bookable as a whole
+  /// becomes actionable.
+  final void Function(Desk? desk, Office? office)? onSpaceTap;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final timeFormat = ref.watch(appFormatProvider); // #1150
-    final myMemberId = ref.watch(myMemberProvider).value?.id;
 
-    if (plan.seats.isEmpty) {
+    if (plan.seats.isEmpty &&
+        !plan.desks.any((d) => d.bookableAsWhole) &&
+        !plan.offices.any((o) => o.bookableAsWhole)) {
       return EmptyState(
         icon: Icons.event_seat_outlined,
         title: l10n?.planNoSeats ?? 'This level has no seats yet.',
@@ -84,12 +93,85 @@ class SeatListView extends ConsumerWidget {
           .join(' · ');
     }
 
-    final seats = [...plan.seats]..sort((a, b) => a.name.compareTo(b.name));
+    // #1825 — the structure the member reserves in: each office, its
+    // desks, each desk's seats; seats with no desk last. A desk or office
+    // with no seat still shows when it can be reserved as a whole.
+    int byName(String a, String b) => a.toLowerCase().compareTo(b.toLowerCase());
+    final rows = <Widget>[];
+    Widget header(String key, IconData icon, String name, double indent,
+        {VoidCallback? onTap}) =>
+        ListTile(
+          key: ValueKey(key),
+          contentPadding: EdgeInsetsDirectional.only(start: 16 + indent, end: 16),
+          leading: Icon(icon),
+          title: Text(name, style: Theme.of(context).textTheme.titleSmall),
+          trailing: onTap == null
+              ? null
+              : Icon(Icons.add_circle_outline,
+                  semanticLabel: l10n?.planReserveButton ?? 'Reserve'),
+          onTap: onTap,
+        );
+    VoidCallback? spaceTap(Desk? desk, Office? office) {
+      final tap = onSpaceTap;
+      final whole = desk?.bookableAsWhole ?? office?.bookableAsWhole ?? false;
+      return tap == null || !whole || !dayOpen ? null : () => tap(desk, office);
+    }
 
-    return ListView.builder(
-      itemCount: seats.length,
-      itemBuilder: (context, index) {
-        final seat = seats[index];
+    final placed = <String>{};
+    final offices = [...plan.offices]..sort((a, b) => byName(a.name, b.name));
+    for (final office in offices) {
+      final desks = [
+        for (final d in plan.desks)
+          if (d.officeId == office.id) d,
+      ]..sort((a, b) => byName(a.name, b.name));
+      final seatsOf = {
+        for (final d in desks)
+          d.id: [
+            for (final s in plan.seats)
+              if (s.deskId == d.id) s,
+          ]..sort((a, b) => byName(a.name, b.name)),
+      };
+      final shown = desks
+          .where((d) => d.bookableAsWhole || seatsOf[d.id]!.isNotEmpty)
+          .toList();
+      if (shown.isEmpty && !office.bookableAsWhole) continue;
+      rows.add(header(
+        'list-office-${office.id}',
+        Icons.meeting_room_outlined,
+        plan.officeContextName(office, levelName: levelName, byLevel: byLevel),
+        0,
+        onTap: spaceTap(null, office),
+      ));
+      for (final desk in shown) {
+        rows.add(header('list-desk-${desk.id}', Icons.table_restaurant_outlined,
+            desk.name, 16, onTap: spaceTap(desk, null)));
+        for (final seat in seatsOf[desk.id]!) {
+          placed.add(seat.id);
+          rows.add(_seatRow(context, ref, seat, 32, ''));
+        }
+      }
+    }
+    final unplaced = [
+      for (final s in plan.seats)
+        if (!placed.contains(s.id)) s,
+    ]..sort((a, b) => byName(a.name, b.name));
+    for (final seat in unplaced) {
+      rows.add(_seatRow(context, ref, seat, 0, contextOf(seat)));
+    }
+
+    return ListView(children: rows);
+  }
+
+  Widget _seatRow(
+    BuildContext context,
+    WidgetRef ref,
+    Seat seat,
+    double indent,
+    String place,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    final timeFormat = ref.watch(appFormatProvider); // #1150
+    final myMemberId = ref.watch(myMemberProvider).value?.id;
         // Browsing (#184): the row mirrors the canvas — occupancy over the
         // whole window, instant-based in live mode. Closed day (#186):
         // every row muted like the canvas, tap gated in [_onSeatTap].
@@ -204,17 +286,18 @@ class SeatListView extends ConsumerWidget {
                 ),
             ],
           ),
-          title: Text(seat.name.isEmpty ? contextOf(seat) : seat.name),
+          key: ValueKey('list-seat-${seat.id}'),
+          contentPadding:
+              EdgeInsetsDirectional.only(start: 16 + indent, end: 16),
+          title: Text(seat.name.isEmpty ? place : seat.name),
           subtitle: Text(
-            [contextOf(seat), stateText]
-                .where((s) => seat.name.isNotEmpty || s != contextOf(seat))
+            [place, stateText]
+                .where((s) => seat.name.isNotEmpty || s != place)
                 .where((s) => s.isNotEmpty)
                 .join('\n'),
           ),
-          isThreeLine: seat.name.isNotEmpty && contextOf(seat).isNotEmpty,
+          isThreeLine: seat.name.isNotEmpty && place.isNotEmpty,
           onTap: () => onSeatTap(seat),
         );
-      },
-    );
   }
 }
