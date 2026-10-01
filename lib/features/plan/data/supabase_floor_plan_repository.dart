@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
 import '../../../core/cache/cached_fetch.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../domain/desk.dart';
 import '../domain/floor_plan.dart';
 import '../domain/floor_plan_repository.dart';
@@ -51,11 +52,16 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         key: 'levels:$workspaceId',
         ttl: _ttl,
         mode: CacheReadMode.cacheFirst,
-        fetchRaw: () => _client
-            .from('levels')
-            .select()
-            .eq('workspace_id', workspaceId)
-            .order('sort_order', ascending: true),
+        // #2011 — read to the end whatever the server's row cap.
+        fetchRaw: () => fetchAllPages(
+          table: 'levels',
+          build: () => _client
+              .from('levels')
+              .select()
+              .eq('workspace_id', workspaceId)
+              .order('sort_order', ascending: true)
+              .order('id', ascending: true),
+        ),
         // #572 — a PENDING member reads zero levels through RLS; caching
         // that emptiness made the workspace stay blank after approval
         // until the entry died. Emptiness is cheap to refetch and never
@@ -294,27 +300,45 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         ),
       );
 
+  /// #2011 — a level's plan, complete: a row past the server's cap was a
+  /// seat drawn as missing, or its booking as free capacity.
   Future<Map<String, dynamic>> _fetchPlanRows(String levelId) async {
-    final officeRows =
-        await _client.from('offices').select().eq('level_id', levelId);
+    final officeRows = await fetchAllPages(
+      table: 'offices',
+      build: () => _client
+          .from('offices')
+          .select()
+          .eq('level_id', levelId)
+          .order('id', ascending: true),
+    );
     final officeIds =
         officeRows.map((row) => row['id'] as String).toList();
 
     var deskRows = const <Map<String, dynamic>>[];
     var seatRows = const <Map<String, dynamic>>[];
     if (officeIds.isNotEmpty) {
-      deskRows = await _client
-          .from('desks')
-          .select()
-          .inFilter('office_id', officeIds);
+      deskRows = await fetchAllIn(
+        table: 'desks',
+        ids: officeIds,
+        build: (chunk) => _client.from('desks').select().inFilter('office_id', chunk).order('id'),
+      );
       final deskIds = deskRows.map((row) => row['id'] as String).toList();
       if (deskIds.isNotEmpty) {
-        seatRows =
-            await _client.from('seats').select().inFilter('desk_id', deskIds);
+        seatRows = await fetchAllIn(
+          table: 'seats',
+          ids: deskIds,
+          build: (chunk) => _client.from('seats').select().inFilter('desk_id', chunk).order('id'),
+        );
       }
     }
-    final imageRows =
-        await _client.from('plan_images').select().eq('level_id', levelId);
+    final imageRows = await fetchAllPages(
+      table: 'plan_images',
+      build: () => _client
+          .from('plan_images')
+          .select()
+          .eq('level_id', levelId)
+          .order('id', ascending: true),
+    );
     return {
       'offices': officeRows,
       'desks': deskRows,

@@ -138,9 +138,9 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
 | `lib/features/reservations/presentation/reserve_seat_actions.dart` | 762 |
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 713 |
+| `lib/features/plan/data/supabase_floor_plan_repository.dart` | 697 |
 | `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
-| `lib/features/plan/data/supabase_floor_plan_repository.dart` | 673 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
 | `lib/core/help/help_anchors.dart` | 649 |
 | `lib/features/money/presentation/screens/legal_identity_screen.dart` | 649 |
