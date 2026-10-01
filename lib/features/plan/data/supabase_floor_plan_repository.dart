@@ -371,40 +371,41 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     required GridRect rect,
     required Uint8List bytes,
     required String contentType,
+    String? imageId,
   }) async {
-    final row = await _client
-        .from('plan_images')
-        .insert({
+    // #2012 — the object first, then the row that points at it: no
+    // pending row ever exists. The id is the operation's, so a retry
+    // re-uploads the same path and the insert converges on one row; a
+    // lost insert answer leaves at worst an unreferenced object.
+    final id = imageId ?? newRequestId();
+    final path = _imgPath(workspaceId, id);
+    await PlanMediaSteps(
+      upload: (path) => _client.storage.from('floor-plans').uploadBinary(
+            path,
+            bytes,
+            fileOptions: FileOptions(contentType: contentType, upsert: true),
+          ),
+      publish: (path) => _client.from('plan_images').upsert(
+        {
+          'id': id,
           'workspace_id': workspaceId,
           'level_id': levelId,
           'x': rect.x,
           'y': rect.y,
           'w': rect.w,
           'h': rect.h,
-          'storage_path': 'pending',
-        })
-        .select()
-        .single();
-    final id = row['id'] as String;
-    final path = _imgPath(workspaceId, id);
-    try {
-      await _client.storage.from('floor-plans').uploadBinary(
-            path,
-            bytes,
-            fileOptions: FileOptions(contentType: contentType, upsert: true),
-          );
-    } catch (e, st) {
-      // #2012 — no pending row is left behind by a failed upload.
-      TraceLogger.instance.warn('plan', 'plan image upload failed',
-          error: e, stackTrace: st);
-      await _client.from('plan_images').delete().eq('id', id);
-      rethrow;
-    }
-    await _client
-        .from('plan_images')
-        .update({'storage_path': path}).eq('id', id);
+          'storage_path': path!,
+        },
+        onConflict: 'id',
+        ignoreDuplicates: true,
+      ),
+      remove: (path) => _client.storage.from('floor-plans').remove([path]),
+    ).replace(candidate: path);
     await _bust();
-    return _planImageFromRow({...row, 'storage_path': path});
+    // Read back: the row a first attempt committed is the answer.
+    final row =
+        await _client.from('plan_images').select().eq('id', id).single();
+    return _planImageFromRow(row);
   }
 
   @override
