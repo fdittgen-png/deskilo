@@ -85,7 +85,7 @@ A join, an expense, a deletion or a settings change waits for the quorum the wor
 
 A member pays a bill through Stripe hosted checkout; the webhook settles the payment once and posts one credit.
 
-- **Code:** shipped · component `b5d08bedd042` · provider `stripe`
+- **Code:** shipped · component `9f61c77bd783` · provider `stripe`
 - **Needs:** Stripe credentials in Settings; the webhook endpoint reachable from Stripe.
 - **Limits:** CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.
 - **Feature flags:** `onlinePayments`
@@ -100,7 +100,7 @@ A member pays a bill through Stripe hosted checkout; the webhook settles the pay
 
 A member pays a bill through PayPal checkout; the webhook settles the payment once.
 
-- **Code:** shipped · component `afe8fdc51fe3` · provider `paypal`
+- **Code:** shipped · component `744e8ed65fca` · provider `paypal`
 - **Needs:** PayPal credentials in Settings; the webhook endpoint reachable from PayPal.
 - **Limits:** No CI check reaches the PayPal handler; the Stripe stub says nothing about PayPal.
 - **Feature flags:** `onlinePayments`
@@ -111,7 +111,7 @@ A member pays a bill through PayPal checkout; the webhook settles the payment on
 
 A member pays a bill through Mollie checkout; the webhook settles the payment once, and a replayed capture reconciles clean.
 
-- **Code:** shipped · component `7b67a820d3b4` · provider `mollie`
+- **Code:** shipped · component `54d9d6845cf8` · provider `mollie`
 - **Needs:** Mollie credentials in Settings; the webhook endpoint reachable from Mollie.
 - **Limits:** The reconciliation is proved in a replayed database; no Mollie sandbox has been exercised from this repository.
 - **Feature flags:** `onlinePayments`
@@ -122,7 +122,7 @@ A member pays a bill through Mollie checkout; the webhook settles the payment on
 
 A member pays a bill with Wero, offered through the Mollie checkout.
 
-- **Code:** shipped · component `7b67a820d3b4` · provider `wero`
+- **Code:** shipped · component `54d9d6845cf8` · provider `wero`
 - **Needs:** Mollie credentials with Wero enabled on the Mollie account.
 - **Limits:** Wero rides Mollie's checkout; nothing beyond the client's method handling cites Wero, so the Mollie reconciliation does not count here.
 - **Feature flags:** `onlinePayments`
