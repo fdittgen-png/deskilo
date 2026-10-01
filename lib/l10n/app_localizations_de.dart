@@ -4296,6 +4296,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpTopicReadiness => 'Bereitschaftsprüfung';
 
   @override
+  String get instanceOwnerClaimIntro =>
+      'Wem gehört diese Instanz? Geben Sie die E-Mail-Adresse ein, mit der Sie sich dort registrieren werden. Nachdem Sie diese Adresse bestätigt haben, beanspruchen Sie die Inhaberschaft unter Einstellungen → Instanzeigentümer.';
+
+  @override
+  String get instanceOwnerClaimLabel => 'E-Mail des Inhabers';
+
+  @override
   String get instanceOwnerTitle => 'Instanzeigentümer';
 
   @override

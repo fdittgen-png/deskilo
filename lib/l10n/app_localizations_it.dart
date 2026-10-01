@@ -4298,6 +4298,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpTopicReadiness => 'ammissibilità';
 
   @override
+  String get instanceOwnerClaimIntro =>
+      'Di chi è questa istanza? Inserisci l\'e-mail con cui ti registrerai. Dopo aver confermato l\'indirizzo, rivendica la titolarità da Impostazioni → Proprietario dell\'istanza.';
+
+  @override
+  String get instanceOwnerClaimLabel => 'E-mail del titolare';
+
+  @override
   String get instanceOwnerTitle => 'Proprietario dell\'istanza';
 
   @override

@@ -4306,6 +4306,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpTopicReadiness => 'recevabilité';
 
   @override
+  String get instanceOwnerClaimIntro =>
+      'À qui appartient cette instance ? Saisissez l\'adresse e-mail avec laquelle vous vous y inscrirez. Après avoir confirmé cette adresse, revendiquez la propriété dans Paramètres → Propriétaire de l\'instance.';
+
+  @override
+  String get instanceOwnerClaimLabel => 'E-mail du propriétaire';
+
+  @override
   String get instanceOwnerTitle => 'Propriétaire de l\'instance';
 
   @override

@@ -2645,6 +2645,8 @@
   "helpTopicInstances": "Instancias",
   "helpTopicAccounting": "Exportaciones contables",
   "helpTopicReadiness": "admisibilidad",
+  "instanceOwnerClaimIntro": "¿A quién pertenece esta instancia? Introduzca el correo electrónico con el que se registrará en ella. Tras confirmar esa dirección, reclame la titularidad en Ajustes → Propietario de la instancia.",
+  "instanceOwnerClaimLabel": "Correo del titular",
   "instanceOwnerTitle": "Propietario de la instancia",
   "instanceOwnerHelp": "Esta instalación la comparten todos sus espacios. El propietario de la instancia responde de ella: contáctelo para todo lo que afecte a toda la instalación, como los asistentes.",
   "instanceOwnerNone": "Todavía no hay propietario de la instancia.",

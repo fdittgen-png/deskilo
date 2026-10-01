@@ -4297,6 +4297,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpTopicReadiness => 'admisibilidad';
 
   @override
+  String get instanceOwnerClaimIntro =>
+      '¿A quién pertenece esta instancia? Introduzca el correo electrónico con el que se registrará en ella. Tras confirmar esa dirección, reclame la titularidad en Ajustes → Propietario de la instancia.';
+
+  @override
+  String get instanceOwnerClaimLabel => 'Correo del titular';
+
+  @override
   String get instanceOwnerTitle => 'Propietario de la instancia';
 
   @override
