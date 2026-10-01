@@ -7717,6 +7717,18 @@ abstract class AppLocalizations {
   /// **'readiness gate'**
   String get helpTopicReadiness;
 
+  /// #1829 Instance owner claim: instanceOwnerClaimIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Who owns this instance? Enter the e-mail you will sign up with on it. After you confirm that address, claim the ownership from Settings → Instance owner.'**
+  String get instanceOwnerClaimIntro;
+
+  /// #1829 Instance owner claim: instanceOwnerClaimLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Owner e-mail'**
+  String get instanceOwnerClaimLabel;
+
   /// #1829 instance owner
   ///
   /// In en, this message translates to:

@@ -1,0 +1,5 @@
+{
+  "@@locale": "fr",
+  "instanceOwnerClaimIntro": "À qui appartient cette instance ? Saisissez l'adresse e-mail avec laquelle vous vous y inscrirez. Après avoir confirmé cette adresse, revendiquez la propriété dans Paramètres → Propriétaire de l'instance.",
+  "instanceOwnerClaimLabel": "E-mail du propriétaire"
+}

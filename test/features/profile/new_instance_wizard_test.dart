@@ -98,8 +98,13 @@ void main() {
     expect(api.deployed['ref1']!.single.slug, 'send-push');
     await _tap(tester, 'wizard-next');
 
+    await tester.enterText(
+        find.byKey(const ValueKey('instance-owner-email')), ' Owner@Example.org ');
     await _tap(tester, 'instance-apply-signin');
     expect(api.authPatches['ref1']!.single['mailer_autoconfirm'], false);
+    expect(api.sql['ref1']!.last,
+        "select public.operator_record_instance_owner_claim('owner@example.org');",
+        reason: '#1829 — the creator\'s e-mail becomes the pending owner claim');
     await _tap(tester, 'wizard-next');
 
     expect(find.textContaining('https://ref1.supabase.co'), findsOneWidget);
@@ -108,6 +113,33 @@ void main() {
     await _tap(tester, 'instance-use-here');
     expect(store.value?.url, 'https://ref1.supabase.co');
     expect(store.value?.key, startsWith('sb_publishable_'));
+  });
+
+  testWidgets('#1829 — without a valid owner e-mail the sign-in step stops '
+      'and records no claim', (tester) async {
+    final (:api, store: _) = await _pump(tester);
+    await _tap(tester, 'backend-new-instance');
+    await tester.enterText(find.byKey(const ValueKey('instance-token')), 'sbp_token');
+    await _tap(tester, 'instance-check-token');
+    await _tap(tester, 'wizard-next');
+    await tester.enterText(find.byKey(const ValueKey('instance-project-name')), 'P');
+    await tester.pumpAndSettle();
+    await _tap(tester, 'instance-create-project');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-install-schema');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-deploy-functions');
+    await _tap(tester, 'wizard-next');
+    await tester.enterText(
+        find.byKey(const ValueKey('instance-owner-email')), 'not-an-address');
+    await _tap(tester, 'instance-apply-signin');
+    expect(find.byKey(const ValueKey('instance-error')), findsOneWidget);
+    expect(api.sql['ref1']!.where((q) => q.contains('owner_claim')), isEmpty);
+    final next = tester.widget<ButtonStyleButton>(find.descendant(
+        of: find.byKey(const ValueKey('wizard-next')),
+        matching: find.byWidgetPredicate((w) => w is ButtonStyleButton),
+        matchRoot: true));
+    expect(next.onPressed, isNull, reason: 'the step is not done');
   });
 
   testWidgets('a refused token is said in words; a failing migration is '
@@ -264,6 +296,8 @@ void main() {
       await _tap(tester, 'wizard-next');
       await _tap(tester, 'instance-deploy-functions');
       await _tap(tester, 'wizard-next');
+      await tester.enterText(
+          find.byKey(const ValueKey('instance-owner-email')), 'owner@example.org');
       await _tap(tester, 'instance-apply-signin');
       await _tap(tester, 'wizard-next');
       return api;

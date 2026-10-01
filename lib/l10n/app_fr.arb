@@ -2696,6 +2696,8 @@
   "helpTopicInstances": "Instances",
   "helpTopicAccounting": "Exports comptables",
   "helpTopicReadiness": "recevabilité",
+  "instanceOwnerClaimIntro": "À qui appartient cette instance ? Saisissez l'adresse e-mail avec laquelle vous vous y inscrirez. Après avoir confirmé cette adresse, revendiquez la propriété dans Paramètres → Propriétaire de l'instance.",
+  "instanceOwnerClaimLabel": "E-mail du propriétaire",
   "instanceOwnerTitle": "Propriétaire de l'instance",
   "instanceOwnerHelp": "Cette installation est partagée par tous ses espaces. Le propriétaire de l'instance en est responsable : contactez-le pour tout ce qui concerne l'ensemble de l'installation, comme les assistants.",
   "instanceOwnerNone": "Aucun propriétaire d'instance n'est encore défini.",

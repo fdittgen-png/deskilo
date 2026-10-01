@@ -2696,6 +2696,8 @@
   "helpTopicInstances": "Instanzen",
   "helpTopicAccounting": "Buchhaltungsexporte",
   "helpTopicReadiness": "Bereitschaftsprüfung",
+  "instanceOwnerClaimIntro": "Wem gehört diese Instanz? Geben Sie die E-Mail-Adresse ein, mit der Sie sich dort registrieren werden. Nachdem Sie diese Adresse bestätigt haben, beanspruchen Sie die Inhaberschaft unter Einstellungen → Instanzeigentümer.",
+  "instanceOwnerClaimLabel": "E-Mail des Inhabers",
   "instanceOwnerTitle": "Instanzeigentümer",
   "instanceOwnerHelp": "Diese Installation wird von allen ihren Arbeitsbereichen gemeinsam genutzt. Der Instanzeigentümer ist dafür verantwortlich: Wenden Sie sich an ihn bei allem, was die ganze Installation betrifft, etwa Assistenten.",
   "instanceOwnerNone": "Es ist noch kein Instanzeigentümer festgelegt.",

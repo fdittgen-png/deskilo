@@ -64,6 +64,15 @@ abstract final class InstanceAuthConfig {
 /// current item.
 typedef InstanceProgress = ({int done, int total, String current});
 
+/// #1829 — [email] as the owner-claim check of 0318 stores it (trimmed,
+/// lower case, `x@y.z`), or null when the database would refuse it.
+String? normaliseOwnerEmail(String email) {
+  final address = email.trim().toLowerCase();
+  return RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(address)
+      ? address
+      : null;
+}
+
 /// Where the schema install stopped, for the screen: the migration and
 /// the database's own words.
 class InstanceStepFailure implements Exception {
@@ -328,6 +337,27 @@ on conflict (version) do nothing;
     } on ManagementApiException catch (e, st) {
       // trace-exempt: rethrown as a typed failure, stack kept; the caller traces.
       Error.throwWithStackTrace(InstanceStepFailure('auth', e.message), st);
+    }
+  }
+
+  /// #1829 — records [email] as the new instance's pending owner claim.
+  /// Nobody is made owner here: the account that signs up with this
+  /// address, confirms it and claims from Settings → Instance becomes the
+  /// owner, once, and only while the instance has none (0318).
+  Future<void> recordOwnerClaim(String ref, String email) async {
+    final address = normaliseOwnerEmail(email);
+    if (address == null) {
+      throw const InstanceStepFailure('owner', 'not an e-mail address');
+    }
+    final literal = address.replaceAll("'", "''");
+    try {
+      await api.runSql(
+        ref,
+        "select public.operator_record_instance_owner_claim('$literal');",
+      );
+    } on ManagementApiException catch (e, st) {
+      // trace-exempt: rethrown as a typed failure, stack kept; the caller traces.
+      Error.throwWithStackTrace(InstanceStepFailure('owner', e.message), st);
     }
   }
 

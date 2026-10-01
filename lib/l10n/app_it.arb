@@ -2696,6 +2696,8 @@
   "@helpHintMessagesTip5": {
     "description": "#695 - messaging help hints"
   },
+  "instanceOwnerClaimIntro": "Di chi è questa istanza? Inserisci l'e-mail con cui ti registrerai. Dopo aver confermato l'indirizzo, rivendica la titolarità da Impostazioni → Proprietario dell'istanza.",
+  "instanceOwnerClaimLabel": "E-mail del titolare",
   "instanceOwnerTitle": "Proprietario dell'istanza",
   "instanceOwnerHelp": "Questa installazione è condivisa da tutti i suoi spazi. Il proprietario dell'istanza ne risponde: contattalo per tutto ciò che riguarda l'intera installazione, come gli assistenti.",
   "instanceOwnerNone": "Non è ancora stato definito un proprietario dell'istanza.",

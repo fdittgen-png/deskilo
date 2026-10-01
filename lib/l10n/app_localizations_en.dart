@@ -4444,6 +4444,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTopicReadiness => 'readiness gate';
 
   @override
+  String get instanceOwnerClaimIntro =>
+      'Who owns this instance? Enter the e-mail you will sign up with on it. After you confirm that address, claim the ownership from Settings → Instance owner.';
+
+  @override
+  String get instanceOwnerClaimLabel => 'Owner e-mail';
+
+  @override
   String get instanceOwnerTitle => 'Instance owner';
 
   @override
