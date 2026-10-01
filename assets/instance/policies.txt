@@ -62,6 +62,8 @@ public.identity_bindings.mcp_delegated_deny
 public.identity_federation_clients.mcp_delegated_deny
 public.installation_identity.identity_public_installation
 public.installation_identity.mcp_delegated_deny
+public.instance_delegates.mcp_delegated_deny
+public.instance_owner_claims.mcp_delegated_deny
 public.invitations.invitations_select
 public.invitations.mcp_delegated_deny
 public.invoice_match_payments.invoice_match_payments_select

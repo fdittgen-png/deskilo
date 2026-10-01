@@ -4296,6 +4296,102 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpTopicReadiness => 'Bereitschaftsprüfung';
 
   @override
+  String get instanceOwnerTitle => 'Instanzeigentümer';
+
+  @override
+  String get instanceOwnerHelp =>
+      'Diese Installation wird von allen ihren Arbeitsbereichen gemeinsam genutzt. Der Instanzeigentümer ist dafür verantwortlich: Wenden Sie sich an ihn bei allem, was die ganze Installation betrifft, etwa Assistenten.';
+
+  @override
+  String get instanceOwnerNone =>
+      'Es ist noch kein Instanzeigentümer festgelegt.';
+
+  @override
+  String get instanceOwnerCopyEmail => 'E-Mail-Adresse kopieren';
+
+  @override
+  String get instanceOwnerCopied => 'E-Mail-Adresse kopiert.';
+
+  @override
+  String get instanceYouAreOwner => 'Sie sind der Instanzeigentümer.';
+
+  @override
+  String get instanceYouAreDelegate =>
+      'Sie sind Stellvertreter des Instanzeigentümers.';
+
+  @override
+  String get instanceDelegatesTitle => 'Stellvertreter';
+
+  @override
+  String get instanceDelegatesNone => 'Keine Stellvertreter.';
+
+  @override
+  String get instanceDelegatesHelp =>
+      'Ein Stellvertreter kann die installationsweite Einrichtung der Assistenten durchführen. Er kann nicht weiter delegieren und sieht keinen anderen Arbeitsbereich.';
+
+  @override
+  String get instanceDelegateFieldLabel => 'E-Mail-Adresse eines Kontos';
+
+  @override
+  String get instanceDelegateAdd => 'Rolle delegieren';
+
+  @override
+  String get instanceDelegateWithdraw => 'Delegation entziehen';
+
+  @override
+  String get instanceDelegateWithdrawTitle => 'Diese Delegation entziehen?';
+
+  @override
+  String get instanceDelegateWithdrawBody =>
+      'Die Person verliert sofort den Zugriff auf die installationsweite Einrichtung.';
+
+  @override
+  String get instanceDelegateWithdrawConfirm => 'Entziehen';
+
+  @override
+  String get instanceDelegated => 'Delegiert.';
+
+  @override
+  String get instanceDelegateUnchanged =>
+      'Diese Person ist bereits Stellvertreter.';
+
+  @override
+  String get instanceDelegateNoAccount =>
+      'Kein Konto verwendet diese E-Mail-Adresse.';
+
+  @override
+  String get instanceDelegateUnconfirmed =>
+      'Dieses Konto hat seine E-Mail-Adresse noch nicht bestätigt.';
+
+  @override
+  String get instanceDelegateAlreadyOwner =>
+      'Der Eigentümer braucht keine Delegation.';
+
+  @override
+  String get instanceDelegateUnavailable =>
+      'Dieser Server kann noch nicht delegieren.';
+
+  @override
+  String get instanceDelegationWithdrawn => 'Delegation entzogen.';
+
+  @override
+  String get instanceClaimTitle => 'Eigentum übernehmen';
+
+  @override
+  String get instanceClaimBody =>
+      'Sie haben diese Instanz erstellt und es ist kein Eigentümer festgelegt. Mit der Übernahme sind Sie dafür verantwortlich.';
+
+  @override
+  String get instanceClaimButton => 'Eigentum übernehmen';
+
+  @override
+  String get instanceClaimDone => 'Sie sind jetzt der Instanzeigentümer.';
+
+  @override
+  String get instanceClaimFailed =>
+      'Das Eigentum konnte nicht übernommen werden.';
+
+  @override
   String get featureInstanceWizard => 'Instanz-Assistent';
 
   @override
