@@ -11,12 +11,14 @@
 // The strings exist in five languages (French rendered here).
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
+import 'package:deskilo/core/demo/data/instance_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
 import 'package:deskilo/core/mcp/mcp_operations.dart';
 import 'package:deskilo/features/auth/domain/identity_binding.dart';
 import 'package:deskilo/features/mcp/application/assistant_setup.dart';
 import 'package:deskilo/features/mcp/domain/mcp_admin.dart';
 import 'package:deskilo/features/mcp/presentation/assistant_setup_screen.dart';
+import 'package:deskilo/features/workspace/domain/instance_responsibles.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -65,6 +67,7 @@ Future<void> _pump(
   WidgetTester tester, {
   required FakeIdentityBindingRepository identity,
   required FakeMcpAdminRepository admin,
+  FakeInstanceRepository? instance,
   FakeWorkspaceRepository? workspace,
   Set<WorkspacePermission> permissions = _all,
   bool featureOn = true,
@@ -94,6 +97,7 @@ Future<void> _pump(
           identityBinding: identity,
           mcpAdmin: admin,
           workspace: workspace ?? FakeWorkspaceRepository.withWorkspace(),
+          instance: instance,
         ),
         myPermissionsProvider.overrideWithValue(permissions),
         enabledFeaturesSyncProvider.overrideWithValue(
@@ -299,6 +303,59 @@ void main() {
       find.textContaining('the instance owner or a delegate'),
       findsWidgets,
     );
+  });
+
+  testWidgets('runtime off: the step names who answers for the database, '
+      'by name only — never their address', (tester) async {
+    await _pump(
+      tester,
+      identity: _identity(eligibility: McpEligibility.eligible, runtime: false),
+      admin: FakeMcpAdminRepository(
+        policy: _policy(enabled: true, ops: {'check_in'}),
+      ),
+      instance: FakeInstanceRepository(
+        state: const InstanceResponsibles(
+          owners: [
+            InstanceResponsible(name: 'Ines', email: 'ines@example.org'),
+          ],
+          delegates: [
+            InstanceResponsible(name: 'Dario', email: 'dario@example.org'),
+          ],
+        ),
+      ),
+    );
+    expect(_key('assistant-setup-instance-names'), findsOneWidget);
+    expect(
+      find.text('Answering for this database: Ines, Dario.'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('@example.org'), findsNothing);
+  });
+
+  testWidgets('an operator looking is told it is theirs to do', (tester) async {
+    await _pump(
+      tester,
+      identity: _identity(eligibility: McpEligibility.eligible, runtime: false),
+      admin: FakeMcpAdminRepository(
+        policy: _policy(enabled: true, ops: {'check_in'}),
+      ),
+      instance: FakeInstanceRepository(
+        state: const InstanceResponsibles(you: InstanceRole.delegate),
+      ),
+    );
+    expect(_key('assistant-setup-instance-you'), findsOneWidget);
+  });
+
+  testWidgets('nobody recorded yet: said plainly', (tester) async {
+    await _pump(
+      tester,
+      identity: _identity(eligibility: McpEligibility.eligible, runtime: false),
+      admin: FakeMcpAdminRepository(
+        policy: _policy(enabled: true, ops: {'check_in'}),
+      ),
+      instance: FakeInstanceRepository(state: const InstanceResponsibles()),
+    );
+    expect(_key('assistant-setup-instance-nobody'), findsOneWidget);
   });
 
   testWidgets('connect: the backend\'s connector URL to copy', (tester) async {

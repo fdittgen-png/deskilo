@@ -204,6 +204,9 @@
   "assistantSetupActorInstanceOperator": "Qui : le propriétaire de l'instance ou un délégué",
   "assistantSetupNextTodo": "Étape suivante : {step}.",
   "assistantSetupNextWaiting": "Étape suivante : {step}. {actor}.",
+  "assistantSetupInstanceYou": "Vous répondez de cette base de données : activez les assistants depuis les outils de l'instance.",
+  "assistantSetupInstanceNobody": "Personne ne répond encore de cette base de données.",
+  "assistantSetupInstanceNames": "Répondent de cette base de données : {names}.",
   "legalIdentityAssociationRegime": "Une association sans activité lucrative n'est pas assujettie à la TVA : choisissez « Hors du champ de la TVA », pas « Franchise ». La franchise exige un numéro de TVA que vous n'avez pas, et la facture électronique serait rejetée. Hors du champ, c'est votre SIRET qui identifie l'association.",
   "@legalIdentityAssociationRegime": {
     "description": "#919 association regime: legalIdentityAssociationRegime"

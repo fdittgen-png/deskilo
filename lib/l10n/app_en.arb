@@ -514,6 +514,23 @@
       }
     }
   },
+  "assistantSetupInstanceYou": "You answer for this database: switch assistants on from the instance tools.",
+  "@assistantSetupInstanceYou": {
+    "description": "#1827 Assistant setup: assistantSetupInstanceYou"
+  },
+  "assistantSetupInstanceNobody": "Nobody answers for this database yet.",
+  "@assistantSetupInstanceNobody": {
+    "description": "#1827 Assistant setup: assistantSetupInstanceNobody"
+  },
+  "assistantSetupInstanceNames": "Answering for this database: {names}.",
+  "@assistantSetupInstanceNames": {
+    "description": "#1827 Assistant setup: assistantSetupInstanceNames",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
   "legalIdentityAssociationRegime": "A non-profit association with no trading activity is not subject to VAT: choose \"Outside the scope of VAT\", not \"Exempt\". The exempt scheme requires a VAT number you do not have, and the e-invoice would be rejected. Outside the scope, your registration number identifies the association.",
   "@legalIdentityAssociationRegime": {
     "description": "#919 association regime: legalIdentityAssociationRegime"

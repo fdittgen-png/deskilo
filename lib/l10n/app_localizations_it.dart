@@ -432,6 +432,19 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get assistantSetupInstanceYou =>
+      'Rispondi tu di questo database: attiva gli assistenti dagli strumenti dell\'istanza.';
+
+  @override
+  String get assistantSetupInstanceNobody =>
+      'Nessuno risponde ancora di questo database.';
+
+  @override
+  String assistantSetupInstanceNames(String names) {
+    return 'Rispondono di questo database: $names.';
+  }
+
+  @override
   String get legalIdentityAssociationRegime =>
       'Un\'associazione senza attività commerciale non è soggetta a IVA: scegliete «Fuori campo IVA», non «Esente». Il regime di esenzione richiede una partita IVA che non avete, e la fattura elettronica verrebbe respinta. Fuori campo, è il vostro numero di registro a identificare l\'associazione.';
 

@@ -434,6 +434,19 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get assistantSetupInstanceYou =>
+      'Vous répondez de cette base de données : activez les assistants depuis les outils de l\'instance.';
+
+  @override
+  String get assistantSetupInstanceNobody =>
+      'Personne ne répond encore de cette base de données.';
+
+  @override
+  String assistantSetupInstanceNames(String names) {
+    return 'Répondent de cette base de données : $names.';
+  }
+
+  @override
   String get legalIdentityAssociationRegime =>
       'Une association sans activité lucrative n\'est pas assujettie à la TVA : choisissez « Hors du champ de la TVA », pas « Franchise ». La franchise exige un numéro de TVA que vous n\'avez pas, et la facture électronique serait rejetée. Hors du champ, c\'est votre SIRET qui identifie l\'association.';
 

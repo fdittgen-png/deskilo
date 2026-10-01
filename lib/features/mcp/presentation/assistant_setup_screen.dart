@@ -13,6 +13,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../workspace/application/toggle_workspace_feature.dart';
 import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/providers/instance_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/assistant_setup.dart';
 import '../application/mcp_policy_editor.dart';
@@ -201,9 +202,11 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
           _StepCard(
             item: item,
             actions: _actions(l10n, scope, item),
-            extra: item.step == AssistantSetupStep.connect
-                ? const _ConnectorInstructions()
-                : null,
+            extra: switch (item.step) {
+              AssistantSetupStep.connect => const _ConnectorInstructions(),
+              AssistantSetupStep.installation => const _InstanceContact(),
+              _ => null,
+            },
           ),
       ],
     );
@@ -383,6 +386,44 @@ class _ConnectorInstructions extends ConsumerWidget {
                   '3. Approve this workspace and the operations you allow.',
         ),
       ],
+    );
+  }
+}
+
+/// #1829 — who answers for this installation, by name only: the
+/// installation step waits on them. Their addresses stay on the Instance
+/// card; nothing private is shown to explain a blocker.
+class _InstanceContact extends ConsumerWidget {
+  const _InstanceContact();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final who = ref.watch(instanceResponsiblesProvider).value;
+    if (who == null) return const SizedBox.shrink();
+    if (who.isOperator) {
+      return Text(
+        key: const ValueKey('assistant-setup-instance-you'),
+        l10n?.assistantSetupInstanceYou ??
+            'You answer for this database: switch assistants on from the '
+                'instance tools.',
+      );
+    }
+    final names = [
+      for (final p in [...who.owners, ...who.delegates])
+        if (p.name.isNotEmpty) p.name,
+    ];
+    if (names.isEmpty) {
+      return Text(
+        key: const ValueKey('assistant-setup-instance-nobody'),
+        l10n?.assistantSetupInstanceNobody ??
+            'Nobody answers for this database yet.',
+      );
+    }
+    return Text(
+      key: const ValueKey('assistant-setup-instance-names'),
+      l10n?.assistantSetupInstanceNames(names.join(', ')) ??
+          'Answering for this database: ${names.join(', ')}.',
     );
   }
 }

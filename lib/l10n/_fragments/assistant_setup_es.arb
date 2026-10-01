@@ -47,5 +47,8 @@
   "assistantSetupActorDatabaseAdministrator": "Quién: un administrador de la base de datos",
   "assistantSetupActorInstanceOperator": "Quién: el propietario de la instancia o un delegado",
   "assistantSetupNextTodo": "Siguiente: {step}.",
-  "assistantSetupNextWaiting": "Siguiente: {step}. {actor}."
+  "assistantSetupNextWaiting": "Siguiente: {step}. {actor}.",
+  "assistantSetupInstanceYou": "Usted responde de esta base de datos: active los asistentes desde las herramientas de la instancia.",
+  "assistantSetupInstanceNobody": "Nadie responde todavía de esta base de datos.",
+  "assistantSetupInstanceNames": "Responden de esta base de datos: {names}."
 }

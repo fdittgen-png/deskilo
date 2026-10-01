@@ -824,6 +824,24 @@ abstract class AppLocalizations {
   /// **'Next: {step}. {actor}.'**
   String assistantSetupNextWaiting(String step, String actor);
 
+  /// #1827 Assistant setup: assistantSetupInstanceYou
+  ///
+  /// In en, this message translates to:
+  /// **'You answer for this database: switch assistants on from the instance tools.'**
+  String get assistantSetupInstanceYou;
+
+  /// #1827 Assistant setup: assistantSetupInstanceNobody
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody answers for this database yet.'**
+  String get assistantSetupInstanceNobody;
+
+  /// #1827 Assistant setup: assistantSetupInstanceNames
+  ///
+  /// In en, this message translates to:
+  /// **'Answering for this database: {names}.'**
+  String assistantSetupInstanceNames(String names);
+
   /// #919 association regime: legalIdentityAssociationRegime
   ///
   /// In en, this message translates to:

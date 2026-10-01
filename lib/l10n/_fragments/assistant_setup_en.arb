@@ -204,5 +204,22 @@
         "type": "String"
       }
     }
+  },
+  "assistantSetupInstanceYou": "You answer for this database: switch assistants on from the instance tools.",
+  "@assistantSetupInstanceYou": {
+    "description": "#1827 Assistant setup: assistantSetupInstanceYou"
+  },
+  "assistantSetupInstanceNobody": "Nobody answers for this database yet.",
+  "@assistantSetupInstanceNobody": {
+    "description": "#1827 Assistant setup: assistantSetupInstanceNobody"
+  },
+  "assistantSetupInstanceNames": "Answering for this database: {names}.",
+  "@assistantSetupInstanceNames": {
+    "description": "#1827 Assistant setup: assistantSetupInstanceNames",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
   }
 }

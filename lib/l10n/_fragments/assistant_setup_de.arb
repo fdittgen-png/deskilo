@@ -47,5 +47,8 @@
   "assistantSetupActorDatabaseAdministrator": "Wer: ein Datenbankadministrator",
   "assistantSetupActorInstanceOperator": "Wer: der Instanzinhaber oder eine Vertretung",
   "assistantSetupNextTodo": "Nächster Schritt: {step}.",
-  "assistantSetupNextWaiting": "Nächster Schritt: {step}. {actor}."
+  "assistantSetupNextWaiting": "Nächster Schritt: {step}. {actor}.",
+  "assistantSetupInstanceYou": "Sie sind für diese Datenbank verantwortlich: Schalten Sie Assistenten über die Instanzwerkzeuge ein.",
+  "assistantSetupInstanceNobody": "Für diese Datenbank ist noch niemand verantwortlich.",
+  "assistantSetupInstanceNames": "Verantwortlich für diese Datenbank: {names}."
 }

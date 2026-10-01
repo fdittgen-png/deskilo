@@ -432,6 +432,19 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get assistantSetupInstanceYou =>
+      'Sie sind für diese Datenbank verantwortlich: Schalten Sie Assistenten über die Instanzwerkzeuge ein.';
+
+  @override
+  String get assistantSetupInstanceNobody =>
+      'Für diese Datenbank ist noch niemand verantwortlich.';
+
+  @override
+  String assistantSetupInstanceNames(String names) {
+    return 'Verantwortlich für diese Datenbank: $names.';
+  }
+
+  @override
   String get legalIdentityAssociationRegime =>
       'Ein gemeinnütziger Verein ohne wirtschaftliche Tätigkeit unterliegt nicht der Umsatzsteuer: Wählen Sie „Nicht steuerbar“, nicht „Steuerbefreit“. Die Befreiung verlangt eine USt-IdNr., die Sie nicht haben, und die E-Rechnung würde abgelehnt. Nicht steuerbar identifiziert Ihre Registernummer den Verein.';
 
