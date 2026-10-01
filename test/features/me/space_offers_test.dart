@@ -4,6 +4,7 @@
 // enters; anyone else requests a membership; a published e-mail can be
 // copied.
 import 'package:deskilo/app/shell/shell_screen.dart';
+import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/public_workspace_view.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,10 @@ PublicWorkspace _page(String id, {String source = _here, String email = ''}) =>
     });
 
 Future<GoRouter> _open(WidgetTester tester, PublicWorkspace page) async {
-  final router = await pumpMeApp(tester, workspace: twoSpaces(serverDefault: null));
+  // #1847 — the page acts only while the card is still published.
+  final router = await pumpMeApp(tester,
+      workspace: twoSpaces(serverDefault: null),
+      directory: FakeDirectoryRepository()..cards.add(page));
   await tester.pumpAndSettle();
   final navigator = Navigator.of(tester.element(find.byType(Scaffold).first));
   navigator.push(MaterialPageRoute<void>(

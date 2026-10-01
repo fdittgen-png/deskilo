@@ -9,6 +9,7 @@ import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -50,6 +51,7 @@ Future<GoRouter> pumpMeApp(
   FakeAuthRepository? auth,
   FakeMeRepository? me,
   FakePersonalPreferencesRepository? preferences,
+  FakeDirectoryRepository? directory,
   List<ConnectedInstallation> connectedSources = const [],
   Size size = const Size(800, 1600),
 }) async {
@@ -63,6 +65,7 @@ Future<GoRouter> pumpMeApp(
         auth: auth,
         me: me,
         personalPreferences: preferences,
+        directory: directory,
         connectedSources: connectedSources,
       ),
       child: const DeskiloApp(),
