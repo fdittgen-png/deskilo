@@ -246,14 +246,21 @@ void main() {
       expect(counts['foreignKeys'], greaterThan(200));
     });
 
-    test('names the schema marker the migrations end at', () {
-      final marker = RegExp(r'requiredSchemaVersion = (\d+)')
-          .firstMatch(
-            File('lib/core/instance/schema_compatibility.dart')
-                .readAsStringSync(),
-          )!
-          .group(1);
-      expect('${(committed['meta'] as Map)['schemaMarker']}', marker);
+    test('names a schema marker no newer than the migrations', () {
+      // Not equal: a migration PR does not regenerate the file (#2088);
+      // CI · Dictionary refresh does, after the merge. So the marker may
+      // lag the newest migration, never lead it.
+      final required = int.parse(
+        RegExp(r'requiredSchemaVersion = (\d+)')
+            .firstMatch(
+              File('lib/core/instance/schema_compatibility.dart')
+                  .readAsStringSync(),
+            )!
+            .group(1)!,
+      );
+      final marker = (committed['meta'] as Map)['schemaMarker'] as int;
+      expect(marker, lessThanOrEqualTo(required));
+      expect(marker, greaterThan(300));
     });
 
     test('carries no secret default and no row data', () {
@@ -325,6 +332,7 @@ void main() {
       final sh = File('scripts/db_dictionary.sh').readAsStringSync();
       expect(sh, contains('read only'));
       expect(sh, contains('DDL in between'));
+      expect(sh, contains('--advisory'));
     });
   });
 }
