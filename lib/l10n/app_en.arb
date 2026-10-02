@@ -217,6 +217,24 @@
   "@handoffChanged": {
     "description": "#1640 accountant_handoff"
   },
+  "handoffUnsupportedCurrency": "{number}: its currency has no reviewed number of decimals",
+  "@handoffUnsupportedCurrency": {
+    "description": "#1870 accountant handoff blocking finding",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffAmountOutOfRange": "{number}: a total too large to carry exactly",
+  "@handoffAmountOutOfRange": {
+    "description": "#1870 accountant handoff blocking finding",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "fecAccountExpenses": "Expenses",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"

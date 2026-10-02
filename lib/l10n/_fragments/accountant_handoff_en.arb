@@ -97,5 +97,23 @@
   "handoffChanged": "The invoices changed while you were reviewing. Export again to see the current books.",
   "@handoffChanged": {
     "description": "#1640 accountant_handoff"
+  },
+  "handoffUnsupportedCurrency": "{number}: its currency has no reviewed number of decimals",
+  "@handoffUnsupportedCurrency": {
+    "description": "#1870 accountant handoff blocking finding",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffAmountOutOfRange": "{number}: a total too large to carry exactly",
+  "@handoffAmountOutOfRange": {
+    "description": "#1870 accountant handoff blocking finding",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -398,6 +398,18 @@ abstract class AppLocalizations {
   /// **'The invoices changed while you were reviewing. Export again to see the current books.'**
   String get handoffChanged;
 
+  /// #1870 accountant handoff blocking finding
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: its currency has no reviewed number of decimals'**
+  String handoffUnsupportedCurrency(String number);
+
+  /// #1870 accountant handoff blocking finding
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a total too large to carry exactly'**
+  String handoffAmountOutOfRange(String number);
+
   /// #936 accounting exports: fecAccountExpenses
   ///
   /// In en, this message translates to:
