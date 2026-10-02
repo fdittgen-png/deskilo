@@ -115,6 +115,52 @@ final class PrivacyNoticesProvider
 
 String _$privacyNoticesHash() => r'0f85f74ac0c512eb44ad7a1a5823b8061ba529a4';
 
+/// #1915 — my rights requests, newest first.
+
+@ProviderFor(myRightsRequests)
+final myRightsRequestsProvider = MyRightsRequestsProvider._();
+
+/// #1915 — my rights requests, newest first.
+
+final class MyRightsRequestsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<RightsRequest>>,
+          List<RightsRequest>,
+          FutureOr<List<RightsRequest>>
+        >
+    with
+        $FutureModifier<List<RightsRequest>>,
+        $FutureProvider<List<RightsRequest>> {
+  /// #1915 — my rights requests, newest first.
+  MyRightsRequestsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myRightsRequestsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myRightsRequestsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<RightsRequest>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<RightsRequest>> create(Ref ref) {
+    return myRightsRequests(ref);
+  }
+}
+
+String _$myRightsRequestsHash() => r'e6118b4f767e1b029c863f5cde28f8cd119cbec9';
+
 /// #1914 — the version the consent gate asks for: the installation
 /// notice the SERVER publishes, so an operator's new notice is the one
 /// acknowledged; the shipped version while it loads or on an older

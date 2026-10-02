@@ -4821,6 +4821,91 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile verificare né importare i giorni festivi. Non è stato modificato nulla.';
 
   @override
+  String get instanceTitle => 'Installazione: assistenti';
+
+  @override
+  String get instanceIntro =>
+      'Impostazioni valide per tutti gli spazi di lavoro di questa installazione. Solo l\'operatore dell\'istanza vede questa pagina; ogni modifica richiede il secondo fattore e viene registrata.';
+
+  @override
+  String get instanceNotOperator =>
+      'Solo l\'operatore dell\'istanza gestisce gli assistenti dell\'installazione.';
+
+  @override
+  String get instanceSecondFactorNeeded =>
+      'Le modifiche qui richiedono il secondo fattore in questa sessione.';
+
+  @override
+  String get instanceConfirmSecondFactor => 'Conferma con il mio autenticatore';
+
+  @override
+  String get instanceRuntimeTitle => 'Assistenti su questa installazione';
+
+  @override
+  String get instanceRuntimeOn => 'Attivi';
+
+  @override
+  String get instanceRuntimeOff => 'Disattivati';
+
+  @override
+  String get instanceTurnOn => 'Attiva per tutti gli spazi';
+
+  @override
+  String get instanceTurnOff => 'Disattiva';
+
+  @override
+  String get instanceTurnOnConfirm =>
+      'Gli assistenti diventano utilizzabili in ogni spazio che li offre. Puoi disattivarli in qualsiasi momento.';
+
+  @override
+  String get instanceBlockers => 'Manca ancora:';
+
+  @override
+  String get instanceBlockerNoAdmin => 'un amministratore della base';
+
+  @override
+  String get instanceAdminsTitle => 'Amministratori della base';
+
+  @override
+  String get instanceAdminsHelp =>
+      'Decidono chi può usare gli assistenti. Si possono scegliere solo persone che hanno confermato la propria identità per gli assistenti.';
+
+  @override
+  String get instanceMakeAdmin => 'Nomina amministratore';
+
+  @override
+  String get instanceRemoveAdmin => 'Rimuovi';
+
+  @override
+  String get instanceNoCandidates =>
+      'Nessun altro ha ancora confermato la propria identità.';
+
+  @override
+  String get instanceYou => 'tu';
+
+  @override
+  String get instanceClientsTitle => 'Client degli assistenti';
+
+  @override
+  String get instanceClientsHelp =>
+      'Un assistente si registra da solo alla prima connessione; funziona solo dopo l\'approvazione qui.';
+
+  @override
+  String get instanceClientWaiting => 'In attesa di approvazione';
+
+  @override
+  String get instanceClientApproved => 'Approvato';
+
+  @override
+  String get instanceClientBlocked => 'Bloccato';
+
+  @override
+  String get instanceApprove => 'Approva';
+
+  @override
+  String get instanceBlock => 'Blocca';
+
+  @override
   String get instanceOwnerClaimIntro =>
       'Di chi è questa istanza? Inserisci l\'e-mail con cui ti registrerai. Dopo aver confermato l\'indirizzo, rivendica la titolarità da Impostazioni → Proprietario dell\'istanza.';
 
@@ -8572,6 +8657,32 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get mcpIdentityConflict =>
       'Un altro account detiene già questa identità qui: un amministratore della base può risolverlo.';
+
+  @override
+  String get mcpStatusGoogle => 'Accesso con Google';
+
+  @override
+  String get mcpStatusLinkGoogle => 'Collega Google';
+
+  @override
+  String get mcpStatusSignInGoogle => 'Accedi con Google';
+
+  @override
+  String get mcpStateGoogleReady => 'Accesso con Google effettuato';
+
+  @override
+  String get mcpStateGoogleOtherSession => 'Accesso effettuato in altro modo';
+
+  @override
+  String get mcpStateGoogleMissing => 'Google non collegato';
+
+  @override
+  String get mcpNextLinkGoogle =>
+      'Gli assistenti usano il tuo accesso Google. Collega prima Google a questo account; senza, l\'account non può usare assistenti.';
+
+  @override
+  String get mcpNextSignInGoogle =>
+      'Gli assistenti usano il tuo accesso Google. Accedi con Google per continuare.';
 
   @override
   String get mcpUsageWorkspaceTitle => 'Uso degli assistenti, ultimi 30 giorni';
@@ -12986,6 +13097,128 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get invoiceGapMissingBuyerVatId =>
       'Manca la partita IVA del cliente — una fattura in inversione contabile deve indicarla.';
+
+  @override
+  String get rightsRequestsTitle => 'Le mie richieste di esercizio dei diritti';
+
+  @override
+  String get rightsRequestsHint =>
+      'Chiedi allo spazio una copia, una rettifica, una limitazione o la cancellazione — risposta entro un mese di calendario.';
+
+  @override
+  String get rightsRequestsEmpty => 'Nessuna richiesta per ora.';
+
+  @override
+  String get rightsRequestNew => 'Fai una richiesta';
+
+  @override
+  String get rightsRequestAsk => 'Cosa chiedi allo spazio?';
+
+  @override
+  String get rightsRequestDetails => 'Dettagli (facoltativo)';
+
+  @override
+  String get rightsRequestSend => 'Invia la richiesta';
+
+  @override
+  String rightsRequestSent(String date) {
+    return 'Richiesta inviata — lo spazio risponde entro il $date.';
+  }
+
+  @override
+  String get rightsRequestFailed =>
+      'Non è stato possibile inviare la richiesta. Riprova.';
+
+  @override
+  String get rightsKindAccess => 'Avere una copia dei miei dati';
+
+  @override
+  String get rightsKindPortability =>
+      'Portare altrove i miei dati (leggibili da macchina)';
+
+  @override
+  String get rightsKindRectification => 'Rettificare i miei dati';
+
+  @override
+  String get rightsKindRestriction => 'Limitare l\'uso dei miei dati';
+
+  @override
+  String get rightsKindObjection => 'Oppormi a un uso dei miei dati';
+
+  @override
+  String get rightsKindErasure => 'Cancellare i miei dati';
+
+  @override
+  String rightsStatusReceived(String date) {
+    return 'Ricevuta — risposta entro il $date';
+  }
+
+  @override
+  String rightsStatusExtended(String date, String reason) {
+    return 'Prorogata al $date: $reason';
+  }
+
+  @override
+  String get rightsStatusCompleted =>
+      'Evasa — lo spazio ha registrato cosa ha fatto';
+
+  @override
+  String rightsStatusRefused(String reason) {
+    return 'Respinta: $reason';
+  }
+
+  @override
+  String get erasurePreviewTitle => 'Cosa fa qui la cancellazione';
+
+  @override
+  String get erasurePreviewRemoved => 'Cancellato';
+
+  @override
+  String get erasurePreviewKept => 'Conservato, e perché';
+
+  @override
+  String get erasurePreviewOutside => 'Fuori da questa installazione';
+
+  @override
+  String get erasureStoreMessages => 'Messaggi che hai inviato';
+
+  @override
+  String get erasureStoreAnswers => 'Le tue risposte alle domande dello spazio';
+
+  @override
+  String get erasureStoreProfile =>
+      'Il tuo profilo (se è il tuo ultimo spazio)';
+
+  @override
+  String get erasureStoreOpenBookings => 'Prenotazioni aperte — annullate';
+
+  @override
+  String get erasureStoreAccounts =>
+      'Fatture e registro — prova contabile, conservata per il periodo di legge; i documenti emessi non vengono riscritti';
+
+  @override
+  String get erasureStorePastBookings =>
+      'Prenotazioni passate — lo storico di occupazione dello spazio';
+
+  @override
+  String get erasureStoreMembership =>
+      'La riga di iscrizione — collega i dati conservati; pseudonima, non anonima';
+
+  @override
+  String get erasureStoreHeldAnswers =>
+      'Risposte soggette a un obbligo di conservazione documentato dallo spazio';
+
+  @override
+  String get erasureStoreOtherInstallations =>
+      'Un\'altra installazione DesKilo è un titolare distinto — rivolgiti direttamente a lei';
+
+  @override
+  String get erasureStoreDeviceCaches =>
+      'Copie sui tuoi dispositivi — cancellate quando esci da ciascuno';
+
+  @override
+  String get erasureStoreBackups =>
+      'Backup del gestore — scadono secondo la loro rotazione';
 
   @override
   String get featureRoleAssignmentTitle => 'Assegnazione dei ruoli';

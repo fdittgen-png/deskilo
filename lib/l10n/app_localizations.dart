@@ -8275,6 +8275,162 @@ abstract class AppLocalizations {
   /// **'The holidays could not be checked or imported. Nothing was changed.'**
   String get holidayImportFailed;
 
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Installation: assistants'**
+  String get instanceTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.'**
+  String get instanceIntro;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Only the instance operator manages the installation\'s assistants.'**
+  String get instanceNotOperator;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Changes here need your second factor on this session.'**
+  String get instanceSecondFactorNeeded;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm with my authenticator'**
+  String get instanceConfirmSecondFactor;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants on this installation'**
+  String get instanceRuntimeTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get instanceRuntimeOn;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get instanceRuntimeOff;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on for every workspace'**
+  String get instanceTurnOn;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off'**
+  String get instanceTurnOff;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants become usable in every workspace that offers them. You can turn them off again at any time.'**
+  String get instanceTurnOnConfirm;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Still missing:'**
+  String get instanceBlockers;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'a database administrator'**
+  String get instanceBlockerNoAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Database administrators'**
+  String get instanceAdminsTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.'**
+  String get instanceAdminsHelp;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Make administrator'**
+  String get instanceMakeAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get instanceRemoveAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody else has confirmed their identity yet.'**
+  String get instanceNoCandidates;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get instanceYou;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant clients'**
+  String get instanceClientsTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'An assistant registers itself the first time someone connects it; it works only once approved here.'**
+  String get instanceClientsHelp;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get instanceClientWaiting;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get instanceClientApproved;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get instanceClientBlocked;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get instanceApprove;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get instanceBlock;
+
   /// #1829 Instance owner claim: instanceOwnerClaimIntro
   ///
   /// In en, this message translates to:
@@ -14664,6 +14820,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Another account already holds this identity here — a database administrator can resolve it.'**
   String get mcpIdentityConflict;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in'**
+  String get mcpStatusGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Link Google'**
+  String get mcpStatusLinkGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get mcpStatusSignInGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in with Google'**
+  String get mcpStateGoogleReady;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in another way'**
+  String get mcpStateGoogleOtherSession;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Google not linked'**
+  String get mcpStateGoogleMissing;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.'**
+  String get mcpNextLinkGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants use your Google sign-in. Sign in with Google to continue.'**
+  String get mcpNextSignInGoogle;
 
   /// #1630 mcp_usage
   ///
@@ -22283,6 +22487,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The customer\'s VAT number is missing — a reverse-charged invoice must name it.'**
   String get invoiceGapMissingBuyerVatId;
+
+  /// #1915 rights requests: rightsRequestsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'My rights requests'**
+  String get rightsRequestsTitle;
+
+  /// #1915 rights requests: rightsRequestsHint
+  ///
+  /// In en, this message translates to:
+  /// **'Ask the space for a copy, a correction, a restriction or erasure — answered within one calendar month.'**
+  String get rightsRequestsHint;
+
+  /// #1915 rights requests: rightsRequestsEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No request yet.'**
+  String get rightsRequestsEmpty;
+
+  /// #1915 rights requests: rightsRequestNew
+  ///
+  /// In en, this message translates to:
+  /// **'Make a request'**
+  String get rightsRequestNew;
+
+  /// #1915 rights requests: rightsRequestAsk
+  ///
+  /// In en, this message translates to:
+  /// **'What do you ask the space?'**
+  String get rightsRequestAsk;
+
+  /// #1915 rights requests: rightsRequestDetails
+  ///
+  /// In en, this message translates to:
+  /// **'Details (optional)'**
+  String get rightsRequestDetails;
+
+  /// #1915 rights requests: rightsRequestSend
+  ///
+  /// In en, this message translates to:
+  /// **'Send the request'**
+  String get rightsRequestSend;
+
+  /// #1915 rights requests: rightsRequestSent
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent — the space answers by {date}.'**
+  String rightsRequestSent(String date);
+
+  /// #1915 rights requests: rightsRequestFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The request could not be sent. Please try again.'**
+  String get rightsRequestFailed;
+
+  /// #1915 rights requests: rightsKindAccess
+  ///
+  /// In en, this message translates to:
+  /// **'See a copy of my data'**
+  String get rightsKindAccess;
+
+  /// #1915 rights requests: rightsKindPortability
+  ///
+  /// In en, this message translates to:
+  /// **'Take my data elsewhere (machine-readable)'**
+  String get rightsKindPortability;
+
+  /// #1915 rights requests: rightsKindRectification
+  ///
+  /// In en, this message translates to:
+  /// **'Correct my data'**
+  String get rightsKindRectification;
+
+  /// #1915 rights requests: rightsKindRestriction
+  ///
+  /// In en, this message translates to:
+  /// **'Restrict how my data is used'**
+  String get rightsKindRestriction;
+
+  /// #1915 rights requests: rightsKindObjection
+  ///
+  /// In en, this message translates to:
+  /// **'Object to a use of my data'**
+  String get rightsKindObjection;
+
+  /// #1915 rights requests: rightsKindErasure
+  ///
+  /// In en, this message translates to:
+  /// **'Erase my data'**
+  String get rightsKindErasure;
+
+  /// #1915 rights requests: rightsStatusReceived
+  ///
+  /// In en, this message translates to:
+  /// **'Received — answer due by {date}'**
+  String rightsStatusReceived(String date);
+
+  /// #1915 rights requests: rightsStatusExtended
+  ///
+  /// In en, this message translates to:
+  /// **'Extended to {date}: {reason}'**
+  String rightsStatusExtended(String date, String reason);
+
+  /// #1915 rights requests: rightsStatusCompleted
+  ///
+  /// In en, this message translates to:
+  /// **'Answered — the space recorded what it did'**
+  String get rightsStatusCompleted;
+
+  /// #1915 rights requests: rightsStatusRefused
+  ///
+  /// In en, this message translates to:
+  /// **'Refused: {reason}'**
+  String rightsStatusRefused(String reason);
+
+  /// #1915 rights requests: erasurePreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What erasing does here'**
+  String get erasurePreviewTitle;
+
+  /// #1915 rights requests: erasurePreviewRemoved
+  ///
+  /// In en, this message translates to:
+  /// **'Removed'**
+  String get erasurePreviewRemoved;
+
+  /// #1915 rights requests: erasurePreviewKept
+  ///
+  /// In en, this message translates to:
+  /// **'Kept, and why'**
+  String get erasurePreviewKept;
+
+  /// #1915 rights requests: erasurePreviewOutside
+  ///
+  /// In en, this message translates to:
+  /// **'Outside this installation'**
+  String get erasurePreviewOutside;
+
+  /// #1915 rights requests: erasureStoreMessages
+  ///
+  /// In en, this message translates to:
+  /// **'Messages you sent'**
+  String get erasureStoreMessages;
+
+  /// #1915 rights requests: erasureStoreAnswers
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers to the space\'s questions'**
+  String get erasureStoreAnswers;
+
+  /// #1915 rights requests: erasureStoreProfile
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile (when this is your last space)'**
+  String get erasureStoreProfile;
+
+  /// #1915 rights requests: erasureStoreOpenBookings
+  ///
+  /// In en, this message translates to:
+  /// **'Open bookings — cancelled'**
+  String get erasureStoreOpenBookings;
+
+  /// #1915 rights requests: erasureStoreAccounts
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices and ledger — accounting evidence, kept for the statutory period; issued documents are not rewritten'**
+  String get erasureStoreAccounts;
+
+  /// #1915 rights requests: erasureStorePastBookings
+  ///
+  /// In en, this message translates to:
+  /// **'Past bookings — the space\'s occupancy record'**
+  String get erasureStorePastBookings;
+
+  /// #1915 rights requests: erasureStoreMembership
+  ///
+  /// In en, this message translates to:
+  /// **'The membership row — links the records kept; pseudonymous, not anonymous'**
+  String get erasureStoreMembership;
+
+  /// #1915 rights requests: erasureStoreHeldAnswers
+  ///
+  /// In en, this message translates to:
+  /// **'Answers under a retention hold the space documented'**
+  String get erasureStoreHeldAnswers;
+
+  /// #1915 rights requests: erasureStoreOtherInstallations
+  ///
+  /// In en, this message translates to:
+  /// **'Another DesKilo installation is a separate controller — ask it directly'**
+  String get erasureStoreOtherInstallations;
+
+  /// #1915 rights requests: erasureStoreDeviceCaches
+  ///
+  /// In en, this message translates to:
+  /// **'Copies on your devices — cleared when you sign out of each'**
+  String get erasureStoreDeviceCaches;
+
+  /// #1915 rights requests: erasureStoreBackups
+  ///
+  /// In en, this message translates to:
+  /// **'The operator\'s backups — expire on their rotation'**
+  String get erasureStoreBackups;
 
   /// #2085 giving roles: featureRoleAssignmentTitle
   ///

@@ -37,5 +37,13 @@
   "mcpStatusConfirmIdentity": "Meine Identität bestätigen",
   "mcpStateAfterPrevious": "Nach dem vorherigen Schritt",
   "mcpIdentityIneligible": "Dieses Konto kann noch nicht bestätigt werden — bestätigen Sie zuerst Ihre E-Mail-Adresse oder melden Sie sich mit einem Anbieter an.",
-  "mcpIdentityConflict": "Ein anderes Konto hält diese Identität hier bereits — ein Datenbankadministrator kann das klären."
+  "mcpIdentityConflict": "Ein anderes Konto hält diese Identität hier bereits — ein Datenbankadministrator kann das klären.",
+  "mcpStatusGoogle": "Google-Anmeldung",
+  "mcpStatusLinkGoogle": "Google verknüpfen",
+  "mcpStatusSignInGoogle": "Mit Google anmelden",
+  "mcpStateGoogleReady": "Mit Google angemeldet",
+  "mcpStateGoogleOtherSession": "Anders angemeldet",
+  "mcpStateGoogleMissing": "Google nicht verknüpft",
+  "mcpNextLinkGoogle": "Assistenten verwenden Ihre Google-Anmeldung. Verknüpfen Sie zuerst Google mit diesem Konto; ohne Google kann das Konto keine Assistenten nutzen.",
+  "mcpNextSignInGoogle": "Assistenten verwenden Ihre Google-Anmeldung. Melden Sie sich mit Google an, um fortzufahren."
 }

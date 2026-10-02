@@ -3,6 +3,8 @@
 // #1626 — a workspace owner's MCP exposure policy; #1627 — a database
 // administrator's eligibility queue. Both are read and written through
 // the server's own RPCs (0270/0271): the app never decides who may.
+export 'instance_operator.dart';
+import 'instance_operator.dart';
 import '../../../core/mcp/mcp_operations.dart';
 import 'mcp_context.dart';
 import 'mcp_usage.dart';
@@ -232,4 +234,15 @@ abstract interface class McpAdminRepository {
   /// #1630 — the workspace's assistant usage over 30 days, counts only
   /// (the owner or a database administrator).
   Future<McpWorkspaceUsage> workspaceUsage(String workspaceId);
+
+  /// #1827 B — the installation's assistants as the instance operator
+  /// sees them; null when the caller is not the instance operator.
+  Future<InstanceMcpOverview?> instanceOverview();
+
+  /// #1827 B — instance operator, second factor: database administrators,
+  /// assistant clients and the installation-wide runtime switch.
+  Future<void> grantAdministrator(String userId, {bool canProvision = true});
+  Future<void> revokeAdministrator(String userId);
+  Future<void> setClient(String clientId, {required bool active});
+  Future<void> setRuntime({required bool enabled});
 }

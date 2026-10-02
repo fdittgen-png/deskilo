@@ -37,5 +37,13 @@
   "mcpStatusConfirmIdentity": "Confirmer mon identité",
   "mcpStateAfterPrevious": "Après l'étape précédente",
   "mcpIdentityIneligible": "Ce compte ne peut pas encore être confirmé — confirmez d'abord votre adresse e-mail ou connectez-vous avec un fournisseur.",
-  "mcpIdentityConflict": "Un autre compte détient déjà cette identité ici — un administrateur de la base peut résoudre cela."
+  "mcpIdentityConflict": "Un autre compte détient déjà cette identité ici — un administrateur de la base peut résoudre cela.",
+  "mcpStatusGoogle": "Connexion Google",
+  "mcpStatusLinkGoogle": "Lier Google",
+  "mcpStatusSignInGoogle": "Se connecter avec Google",
+  "mcpStateGoogleReady": "Connecté avec Google",
+  "mcpStateGoogleOtherSession": "Connecté autrement",
+  "mcpStateGoogleMissing": "Google non lié",
+  "mcpNextLinkGoogle": "Les assistants utilisent votre connexion Google. Liez d'abord Google à ce compte ; sans cela, le compte ne peut pas utiliser d'assistant.",
+  "mcpNextSignInGoogle": "Les assistants utilisent votre connexion Google. Connectez-vous avec Google pour continuer."
 }

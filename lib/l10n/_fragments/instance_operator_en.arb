@@ -1,0 +1,107 @@
+{
+  "@@locale": "en",
+  "instanceTitle": "Installation: assistants",
+  "@instanceTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceIntro": "Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.",
+  "@instanceIntro": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNotOperator": "Only the instance operator manages the installation's assistants.",
+  "@instanceNotOperator": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceSecondFactorNeeded": "Changes here need your second factor on this session.",
+  "@instanceSecondFactorNeeded": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceConfirmSecondFactor": "Confirm with my authenticator",
+  "@instanceConfirmSecondFactor": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeTitle": "Assistants on this installation",
+  "@instanceRuntimeTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeOn": "On",
+  "@instanceRuntimeOn": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeOff": "Off",
+  "@instanceRuntimeOff": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOn": "Turn on for every workspace",
+  "@instanceTurnOn": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOff": "Turn off",
+  "@instanceTurnOff": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOnConfirm": "Assistants become usable in every workspace that offers them. You can turn them off again at any time.",
+  "@instanceTurnOnConfirm": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlockers": "Still missing:",
+  "@instanceBlockers": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlockerNoAdmin": "a database administrator",
+  "@instanceBlockerNoAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceAdminsTitle": "Database administrators",
+  "@instanceAdminsTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceAdminsHelp": "They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.",
+  "@instanceAdminsHelp": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceMakeAdmin": "Make administrator",
+  "@instanceMakeAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRemoveAdmin": "Remove",
+  "@instanceRemoveAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNoCandidates": "Nobody else has confirmed their identity yet.",
+  "@instanceNoCandidates": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceYou": "you",
+  "@instanceYou": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientsTitle": "Assistant clients",
+  "@instanceClientsTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientsHelp": "An assistant registers itself the first time someone connects it; it works only once approved here.",
+  "@instanceClientsHelp": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientWaiting": "Waiting for approval",
+  "@instanceClientWaiting": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientApproved": "Approved",
+  "@instanceClientApproved": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientBlocked": "Blocked",
+  "@instanceClientBlocked": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceApprove": "Approve",
+  "@instanceApprove": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlock": "Block",
+  "@instanceBlock": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  }
+}
