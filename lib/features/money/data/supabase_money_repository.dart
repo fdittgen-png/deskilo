@@ -41,7 +41,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
       table: 'invoices',
       build: () => _client
           .from('invoices')
-          .select()
+          // #1913 — the frozen due date travels with the invoice.
+          .select('*, invoice_maturities(due_on, basis)')
           .eq('workspace_id', workspaceId)
           .order('issued_at', ascending: false),
     );
@@ -585,6 +586,35 @@ class SupabaseMoneyRepository implements MoneyRepository {
     await _client.rpc<void>('record_invoice_reminder',
         params: {'p_invoice_id': invoiceId});
   }
+
+  @override
+  Future<Map<String, String>> fetchDunningHolds(String workspaceId) async {
+    final rows = await _client
+        .from('invoice_dunning_holds')
+        .select('invoice_id, reason')
+        .eq('workspace_id', workspaceId)
+        .isFilter('released_at', null);
+    return {
+      for (final row in rows)
+        row['invoice_id'] as String: row['reason'] as String,
+    };
+  }
+
+  @override
+  Future<void> placeDunningHold(
+    String invoiceId, {
+    required String reason,
+    String note = '',
+  }) =>
+      _client.rpc<void>('place_dunning_hold', params: {
+        'p_invoice_id': invoiceId,
+        'p_reason': reason,
+        'p_note': note,
+      });
+
+  @override
+  Future<void> releaseDunningHold(String invoiceId) => _client.rpc<void>(
+      'release_dunning_hold', params: {'p_invoice_id': invoiceId});
 
   @override
   Future<void> matchInvoice({

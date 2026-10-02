@@ -2046,10 +2046,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get capacityKpiPartial =>
-      'Teilweise: Plan, Öffnungszeiten und Platzsperren sind die heutigen; ihre Historie wird noch nicht erfasst.';
-
-  @override
   String get capacityKpiUnattributed =>
       'Einige Reservierungen dieses Zeitraums verweisen auf einen Platz, den es nicht mehr gibt; sie werden nicht gezählt.';
 
@@ -2071,6 +2067,25 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get capacityKpiRetry => 'Erneut versuchen';
+
+  @override
+  String capacityKpiHistorySince(String date) {
+    return 'Gezählt ab $date, dem Beginn der Historie dieses Arbeitsbereichs; frühere Zeit ist unbekannt und wird nicht gezählt.';
+  }
+
+  @override
+  String capacityKpiNotRecorded(String date) {
+    return 'Dieser Zeitraum liegt vor dem Beginn der Historie am $date; es ist nichts erfasst, das gezählt werden könnte.';
+  }
+
+  @override
+  String capacityKpiHistory(String date) {
+    return 'Historie erfasst seit $date';
+  }
+
+  @override
+  String get capacityKpiRoomsToday =>
+      'Räume ohne Plätze werden so gelesen, wie sie heute sind.';
 
   @override
   String get featureCarnetsTitle => 'Mehrfachkarten';
@@ -2906,6 +2921,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberPageNowHeading => 'Gerade jetzt';
+
+  @override
+  String get editorMediaWriteFailed =>
+      'Das Speichern des Bildes konnte nicht bestätigt werden. Erneutes Versuchen fügt es nie doppelt hinzu.';
+
+  @override
+  String get editorMediaSaving => 'Bild wird gespeichert…';
 
   @override
   String get editorBackgroundImage => 'Hintergrundbild';
@@ -7082,6 +7104,59 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get reportDesignErrorInvalidDesign =>
       'Diese Datei enthält keine lesbare Vorlage.';
+
+  @override
+  String get invoiceHoldAction => 'Mahnungen anhalten';
+
+  @override
+  String get invoiceHoldReleaseAction => 'Mahnstopp aufheben';
+
+  @override
+  String get invoiceHoldTitle => 'Warum die Mahnungen anhalten?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'Für diese Rechnung wird keine Mahnung versendet, weder von Hand noch automatisch, bis der Mahnstopp aufgehoben ist.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'Das Mitglied bestreitet sie';
+
+  @override
+  String get invoiceHoldReasonIdentity =>
+      'Falsche Person oder Identitätsfehler';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Insolvenzverfahren';
+
+  @override
+  String get invoiceHoldReasonOther => 'Ein anderer Grund';
+
+  @override
+  String get invoiceHoldNote => 'Notiz (optional)';
+
+  @override
+  String get invoiceHoldConfirm => 'Anhalten';
+
+  @override
+  String get invoiceHoldPlaced =>
+      'Die Mahnungen für diese Rechnung sind angehalten.';
+
+  @override
+  String get invoiceHoldReleased =>
+      'Die Mahnungen für diese Rechnung können fortgesetzt werden.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Mahnungen angehalten: $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'Für diese Rechnung wurde keine vereinbarte Zahlungsfrist erfasst: Es werden keine automatischen Mahnungen versendet, bis Sie sie prüfen.';
+
+  @override
+  String get invoiceHoldFailed =>
+      'Der Mahnstopp konnte nicht geändert werden. Bitte versuchen Sie es erneut.';
 
   @override
   String get invoicesManage => 'Rechnungen verwalten';

@@ -352,13 +352,26 @@ jobs:
       # signatures, grants and body digests a reviewer would otherwise have
       # to reconstruct from fifty anchored patches. Committed, like the
       # policy manifest; the full definitions ride the artifact.
+      #
+      # #1911 — the same replay, read once more as a DATA DICTIONARY:
+      # every non-system table, column, type, key and relationship from the
+      # catalogues, compared with docs/database/dictionary.json. #2088 — the
+      # comparison is ADVISORY (a warning and the artifact): a migration PR
+      # must not pay a CI round to copy the file, so `CI · Dictionary
+      # refresh` regenerates it after the merge. The contract stays a gate,
+      # and an extraction that fails outright still fails the step. Both
+      # always run, so one failing never hides the other's artifact.
       - name: Effective contract
         id: contract
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
         env:
           DB_URL: ${{ steps.migrations.outputs.db-url }}
-        run: bash scripts/contract_check.sh "$DB_URL"
+        run: |
+          rc=0
+          bash scripts/contract_check.sh "$DB_URL" || rc=1
+          bash scripts/db_dictionary.sh "$DB_URL" --advisory || rc=1
+          exit $rc
 
       # #1232 — the one property no pgTAP file can make, because every
       # one of them runs in a single transaction and a race needs two
@@ -548,7 +561,7 @@ jobs:
               "${{ steps.pgtap.outcome }}"
             printf 'Policy drift|%s|live policies equal the set the migrations build\n' \
               "${{ steps.policies.outcome }}"
-            printf 'Effective contract|%s|routines, grants, constraints and triggers of the replay equal the committed contract\n' \
+            printf 'Effective contract|%s|routines, grants, constraints and triggers of the replay equal the committed contract; the data dictionary is read from its catalogues (drift is a warning, refreshed after the merge)\n' \
               "${{ steps.contract.outcome }}"
             printf 'Restore drill|%s|seeded, dumped, restored into a fresh database, counts equal and reconciled\n' \
               "${{ steps.restore.outcome }}"

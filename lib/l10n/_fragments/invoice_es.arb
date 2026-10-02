@@ -1227,5 +1227,70 @@
   "reportDesignErrorVersion": "Ese diseño se escribió con una versión más nueva de DesKilo.",
   "reportDesignErrorUnknownKind": "Ese diseño es de un informe que este espacio no tiene.",
   "reportDesignErrorWrongKind": "Ese diseño pertenece a otro informe. Ábrelo e impórtalo allí.",
-  "reportDesignErrorInvalidDesign": "Ese archivo no contiene ningún diseño legible."
+  "reportDesignErrorInvalidDesign": "Ese archivo no contiene ningún diseño legible.",
+  "invoiceHoldAction": "Suspender los recordatorios",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Levantar la suspensión de recordatorios",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "¿Por qué suspender los recordatorios?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "No se envía ningún recordatorio para esta factura, ni a mano ni automáticamente, hasta que se levante la suspensión.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "El miembro la impugna",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Persona equivocada o error de identidad",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Procedimiento de insolvencia",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Otro motivo",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Nota (opcional)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Suspender",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "Los recordatorios de esta factura están suspendidos.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "Los recordatorios de esta factura pueden reanudarse.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Recordatorios suspendidos: {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revises.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "No se pudo cambiar la suspensión de recordatorios. Inténtalo de nuevo.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  }
 }

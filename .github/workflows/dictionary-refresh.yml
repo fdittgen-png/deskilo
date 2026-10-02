@@ -1,0 +1,120 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: CI · Dictionary refresh
+
+# #2088 — docs/database/dictionary.json follows the migrations without
+# costing a migration PR a CI round.
+#
+# `quality · database` compares the replay's data dictionary with the
+# committed file and only WARNS (#1911): a PR that adds a column would
+# otherwise fail until its author copied the file from that PR's own
+# artifact. This workflow does the copy after the merge. On every push to
+# master (and nightly, and on request) it replays the migrations, writes
+# the dictionary and its renderings, and — when they differ — keeps ONE
+# pull request from the fixed branch `ci/dictionary-refresh`, with
+# auto-merge. One run at a time and at most one waiting (GitHub replaces an
+# older pending run in the group), so a burst of merges makes one refresh
+# of the newest master. Nothing is cancelled mid-push.
+#
+# Honest limits, both reported in the run summary and never a red run:
+#  - A pull request created with the workflow token does not start the
+#    pull_request checks master requires, so the branch's `quality.yml`
+#    is DISPATCHED explicitly (the one event the token may start).
+#  - Creating pull requests from Actions is a repository setting
+#    (Settings → Actions → "Allow GitHub Actions to create and approve
+#    pull requests"). While it is off the branch is pushed and the
+#    summary names the one command that opens the PR.
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: '40 4 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: dictionary-refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+  BRANCH: ci/dictionary-refresh
+
+jobs:
+  refresh:
+    name: refresh the dictionary
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+      - uses: supabase/setup-cli@v1
+        with:
+          # The version quality.yml pins: the replay must be the same one.
+          version: 2.118.0
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - run: flutter pub get
+
+      - name: Migration replay
+        id: migrations
+        uses: ./.github/actions/local-stack
+
+      - name: Regenerate the dictionary
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
+        run: |
+          bash scripts/db_dictionary.sh "$DB_URL"
+          cp report/db-dictionary.json docs/database/dictionary.json
+          dart run tool/build_db_dictionary.dart
+
+      - name: Keep one refresh pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          summary() { echo "$*" | tee -a "$GITHUB_STEP_SUMMARY"; }
+          if git diff --quiet -- docs/database; then
+            summary "The committed dictionary already equals the replay: nothing to refresh."
+            exit 0
+          fi
+          marker=$(sed -n 's/.*"schemaMarker": \([0-9]*\).*/\1/p' docs/database/dictionary.json | head -1)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add docs/database
+          git commit -q -m "docs(database): refresh dictionary (schema marker $marker)"
+          git push -q --force origin "$BRANCH"
+          n=$(gh pr list --head "$BRANCH" --state open --json number -q '.[0].number')
+          if [ -z "$n" ]; then
+            n=$(gh pr create --base master --head "$BRANCH" \
+                  --title "docs(database): refresh dictionary" \
+                  --body "The data dictionary regenerated from the migration replay at schema marker $marker (#2088). Nothing else changes." 2>/dev/null | sed -n 's#.*/pull/\([0-9]*\)$#\1#p') || n=""
+          fi
+          if [ -z "$n" ]; then
+            summary "Branch \`$BRANCH\` is pushed with the refreshed dictionary, but Actions may not create pull requests here. Open it with: \`gh pr create --head $BRANCH --title 'docs(database): refresh dictionary' --body 'Regenerated from the replay (#2088)'\` — or allow Actions to create pull requests in the repository settings."
+            exit 0
+          fi
+          gh pr merge "$n" --auto --squash || summary "Auto-merge could not be enabled on #$n."
+          # The token's push starts no pull_request run; dispatch the
+          # required workflow on the branch so its checks report on the head.
+          gh workflow run quality.yml --ref "$BRANCH" || summary "quality.yml could not be dispatched on $BRANCH; run it by hand."
+          summary "Refresh pull request #$n (auto-merge on) at schema marker $marker."
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dictionary-refresh
+          path: report/

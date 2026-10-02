@@ -23,6 +23,7 @@ abstract final class AppSnack {
     BuildContext context,
     String text, {
     bool replace = false,
+    SnackBarAction? action,
   }) {
     final scheme = Theme.of(context).colorScheme;
     _show(
@@ -31,6 +32,7 @@ abstract final class AppSnack {
       background: scheme.error,
       foreground: scheme.onError,
       replace: replace,
+      action: action,
     );
   }
 
