@@ -10858,6 +10858,26 @@ class AppLocalizationsDe extends AppLocalizations {
       'Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten.';
 
   @override
+  String get portalFollowsWorkspace => 'Aus den Arbeitsbereichsangaben';
+
+  @override
+  String get portalCustomised => 'Angepasst';
+
+  @override
+  String get portalUseWorkspaceInfo => 'Arbeitsbereichsangaben verwenden';
+
+  @override
+  String get portalResetAll =>
+      'Alle öffentlichen Daten auf die Arbeitsbereichsangaben zurücksetzen';
+
+  @override
+  String get portalResetAllBody =>
+      'Die öffentlichen Werte aller Felder, für die es Arbeitsbereichsangaben gibt, werden durch diese ersetzt. Felder ohne Entsprechung im Arbeitsbereich behalten Ihre Eingabe.';
+
+  @override
+  String get portalResetAllConfirm => 'Zurücksetzen';
+
+  @override
   String get featuresViewProcesses => 'Prozesse';
 
   @override

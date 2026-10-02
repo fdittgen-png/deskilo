@@ -6,10 +6,15 @@
 #   scripts/db_dictionary.sh <db url>            operator export: writes
 #                                                report/db-dictionary.json
 #                                                and report/db-dictionary-run.json
-#   scripts/db_dictionary.sh <db url> --check    CI: the same, then fails
-#                                                when the committed
+#   scripts/db_dictionary.sh <db url> --check    the same, then fails when
+#                                                the committed
 #                                                docs/database/dictionary.json
 #                                                is not what the replay built
+#   scripts/db_dictionary.sh <db url> --advisory CI: the same, but drift is a
+#                                                warning, never a failure —
+#                                                the refresh workflow brings
+#                                                the file up to date after
+#                                                the merge (#2088)
 #
 # READ-ONLY: one SELECT (scripts/db_dictionary.sql) inside a read-only
 # transaction. It reads catalogues only — no row, no secret, no function
@@ -63,10 +68,14 @@ tables=$(grep -c '"kind": "table"' "$OUT/db-dictionary.json" || true)
 [ "$tables" -gt 50 ] || fail "the dictionary names only $tables tables — the replay is not what it should be"
 echo "dictionary: $tables tables, $(wc -c < "$OUT/db-dictionary.json" | tr -d ' ') bytes"
 
-if [ "$MODE" = "--check" ]; then
+if [ "$MODE" = "--check" ] || [ "$MODE" = "--advisory" ]; then
   [ -s "$COMMITTED" ] || fail "$COMMITTED is empty — commit this run's $OUT/db-dictionary.json as $COMMITTED, then run dart run tool/build_db_dictionary.dart"
   if ! diff -u "$COMMITTED" "$OUT/db-dictionary.json" > "$OUT/db-dictionary.diff"; then
     head -n 200 "$OUT/db-dictionary.diff"
+    if [ "$MODE" = "--advisory" ]; then
+      echo "::warning::docs/database/dictionary.json differs from what the migrations build — nothing to do: CI · Dictionary refresh regenerates it after the merge (the diff is the artifact's db-dictionary.diff)"
+      exit 0
+    fi
     fail "$COMMITTED is not what the migrations build — copy the run's db-dictionary.json (artifact quality-database) over it, then run dart run tool/build_db_dictionary.dart and commit the renderings"
   fi
   echo "dictionary: committed file equals the replay"
