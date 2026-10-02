@@ -318,6 +318,13 @@ enum WorkspaceFeature {
   /// data quality on demand. Platform, default OFF.
   capacityKpi,
 
+  /// #1869 — the accounting owner of a legal entity: a book profile per
+  /// issuer (functional currency, fiscal year, accounting basis) and ONE
+  /// authority mode — pre-accounting, a local book, or an external
+  /// authoritative system. Platform, default OFF, under invoicing:
+  /// member balances and invoices work without it.
+  accountingBook,
+
   /// #2085 — where a role is given and what it gives: a Roles section on
   /// each member's page (the Administrator role through the validation
   /// quorum, the workspace's own roles at once), the members holding each
@@ -1398,6 +1405,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,
+  ),
+  // #1869 — who keeps the official books is a finance decision nobody
+  // makes by default: asked for, Platform, off.
+  WorkspaceFeature.accountingBook: FeatureManifestEntry(
+    feature: WorkspaceFeature.accountingBook,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+    requires: WorkspaceFeature.invoicing,
   ),
   // #2085 — the place a role is given, and what it gives. Off, the
   // member page keeps its single "Administrator" row.

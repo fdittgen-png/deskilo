@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0335 (#2085) -- the flag behind giving roles.
+-- 0336 (#2085) -- the flag behind giving roles.
 --
 -- `roleAssignment` (Core, default ON, under roleManagement) joins the
 -- server's registry. It gates the screens that show where a role is
@@ -144,6 +144,7 @@ as $registry$
     "captureProtection": {"parent": "memberNotifications", "default": true, "core": true},
     "holidayImport": {"parent": "publicHolidays", "default": false, "core": false},
     "capacityKpi": {"parent": null, "default": false, "core": false},
+    "accountingBook": {"parent": "invoicing", "default": false, "core": false},
     "roleAssignment": {"parent": "roleManagement", "default": true, "core": true}
   }'::jsonb
 $registry$;
@@ -355,6 +356,7 @@ as $registry$
     {"id":"workspace.environment","entity":"workspace","type":"text","portability":"never","absent":"inherit","reason":"which row and which twin this is","process":"operations"},
     {"id":"workspace.feature_flags","entity":"features","type":"map","portability":"literal","absent":"inherit","process":"operations"},
     {"id":"workspace.feature_flags.accessorySupplements","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.moneyTab"],"process":"membershipCommerce"},
+    {"id":"workspace.feature_flags.accountingBook","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.invoicing"],"process":"billingPayments"},
     {"id":"workspace.feature_flags.adminInvoicing","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.invoicing"],"process":"billingPayments"},
     {"id":"workspace.feature_flags.adminLevelAssign","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.levelBooking"],"process":"reservationsUsage"},
     {"id":"workspace.feature_flags.adminSeatBlocking","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"spaceManagement"},
@@ -596,6 +598,7 @@ values (
     },
     "feature_flags": {
       "accessorySupplements": false,
+      "accountingBook": false,
       "adminInvoicing": false,
       "adminLevelAssign": false,
       "adminSeatBlocking": false,
@@ -999,4 +1002,4 @@ on conflict (key) where owner_workspace_id is null do update
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(335);
+select public.set_deskilo_schema_version(336);

@@ -88,3 +88,25 @@ be aimed at another table.
   a migration that projects history into it — not a change to this one.
   See [ADR 0006](0006-quota-overage-billing.md) for why the running
   account was chosen in the first place.
+
+## Amendment — 2026-10-02 (#1869): an optional book, chosen per issuer
+
+Nothing above changes for a workspace that does not ask for more: the
+member ledger stays a running account, append-only, and stays what a
+statement is computed from.
+
+What #1869 adds is a DECISION, not a ledger: behind the `accountingBook`
+flag (Platform, default off), someone who manages billing records, per
+issuing site, who keeps the official books — `pre_accounting` (this
+ADR's model, and what every workspace is until it says otherwise), a
+`local_book` (DesKilo becomes the book; balanced posting is #1871's, and
+it will be a NEW structure beside `ledger_entries`, never a reshaping of
+it), or an `external_book` that names the authoritative system, in which
+case whatever DesKilo derives stays labelled as derived. The profile
+also states the functional currency, the fiscal year's first day and
+the accounting basis, and takes effect from a date: versions are
+prospective and never rewrite what an earlier one governed.
+
+So `Σ debits = Σ credits` still has nothing to be the sum of in
+`ledger_entries`, and still will not: it becomes executable where a
+local book posts, and only there.

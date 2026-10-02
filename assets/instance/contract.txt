@@ -53,6 +53,20 @@ constraint account_messages.account_messages_pkey PRIMARY KEY (id)
 constraint account_messages.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint badge_auth_attempts.badge_auth_attempts_pkey PRIMARY KEY (id)
 constraint badge_auth_attempts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint book_profiles.book_profiles_accounting_basis_check CHECK ((accounting_basis = ANY (ARRAY['accrual'::text, 'cash'::text])))
+constraint book_profiles.book_profiles_authority_mode_check CHECK ((authority_mode = ANY (ARRAY['pre_accounting'::text, 'local_book'::text, 'external_book'::text])))
+constraint book_profiles.book_profiles_external_named CHECK (((authority_mode <> 'external_book'::text) OR (btrim(external_system) <> ''::text)))
+constraint book_profiles.book_profiles_external_system_check CHECK ((char_length(external_system) <= 80))
+constraint book_profiles.book_profiles_fiscal_year_start_day_check CHECK (((fiscal_year_start_day >= 1) AND (fiscal_year_start_day <= 31)))
+constraint book_profiles.book_profiles_fiscal_year_start_month_check CHECK (((fiscal_year_start_month >= 1) AND (fiscal_year_start_month <= 12)))
+constraint book_profiles.book_profiles_functional_currency_check CHECK ((functional_currency ~ '^[A-Z]{3}$'::text))
+constraint book_profiles.book_profiles_issuer_site_id_fkey FOREIGN KEY (issuer_site_id) REFERENCES sites(id) ON DELETE RESTRICT
+constraint book_profiles.book_profiles_issuer_version UNIQUE (issuer_site_id, effective_from)
+constraint book_profiles.book_profiles_pkey PRIMARY KEY (id)
+constraint book_profiles.book_profiles_revision_check CHECK ((revision >= 1))
+constraint book_profiles.book_profiles_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint book_profiles.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint book_profiles.system_company_present CHECK ((company_id IS NOT NULL))
 constraint closure_days.closure_days_pkey PRIMARY KEY (id)
 constraint closure_days.closure_days_workspace_id_day_key UNIQUE (workspace_id, day)
 constraint closure_days.closure_days_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
@@ -1024,6 +1038,7 @@ routine public.assert_workspace_open(p_workspace_id uuid, p_starts_at timestamp 
 routine public.assign_workspace_role(p_member_id uuid, p_role_id uuid, p_assign boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:242985165854
 routine public.badge_auth_verify(p_uid text, p_pin text) -> jsonb | function | definer | volatile | exec:service_role | body:b88c7b5981e4
 routine public.badge_token_hash(p_token text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:c8e6d7474786
+routine public.book_profiles(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f5fb693f89e2
 routine public.branding_clean(p_incoming jsonb, p_strict boolean) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:60f210513a9a
 routine public.buy_package(p_workspace_id uuid, p_package_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d3b206405454
 routine public.calendar_items(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_kinds text[], p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:47adeacab9c2
@@ -1104,7 +1119,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f195c36ad44b
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:98c4fb801029
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:dd714ce9351e
 routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:authenticated,service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
@@ -1409,6 +1424,7 @@ routine public.rights_requests_guard() -> trigger | function | invoker | volatil
 routine public.role_holds(ws uuid, p_role text, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f5ded1680290
 routine public.role_permission_catalog() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:c1cc3f2915b8
 routine public.rollback_deployment(p_deployment_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c05549d60433
+routine public.save_book_profile(p_workspace_id uuid, p_issuer_site_id uuid, p_authority_mode text, p_external_system text, p_functional_currency text, p_fiscal_year_start_month integer, p_fiscal_year_start_day integer, p_accounting_basis text, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a4885b43de5c
 routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer, p_mutation_id uuid, p_enabled boolean, p_operations text[], p_target_ceiling text, p_allowed_clients text[], p_optional_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:119eebad959d
 routine public.save_vat_declaration(p_workspace_id uuid, p_period_start date, p_period_end date, p_lines jsonb, p_total_net_cents integer, p_total_vat_cents integer, p_currency text, p_invoice_count integer) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:08998635ec7f
 routine public.save_workspace_as_template(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[]) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:21c016636d3b
@@ -1494,7 +1510,7 @@ routine public.system_columns_stamp() -> trigger | function | invoker | volatile
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:05c3542af0a8
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:acb5532b678c
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9e1945110fb4
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -1565,6 +1581,7 @@ trigger account_field_audience.zz_system_columns_stamp CREATE TRIGGER zz_system_
 trigger account_field_audience_spaces.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_field_audience_spaces FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_messages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_messages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger badge_auth_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.badge_auth_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger book_profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_profiles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger closure_days.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.closure_days FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversation_participants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

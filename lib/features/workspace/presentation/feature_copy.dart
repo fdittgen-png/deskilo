@@ -485,6 +485,13 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
               'Shows owners and reservation managers how much of the offered '
                   'seat time was reserved in a month, with how it is '
                   'computed and what the figure cannot know.',
+        WorkspaceFeature.accountingBook =>
+          l10n?.featureAccountingBookDesc ??
+              'Who keeps the official books of each issuer: Deskilo as '
+                  'pre-accounting, a local book, or an external accounting '
+                  'system that stays authoritative. Each issuer states its '
+                  'currency, fiscal year and accounting basis. Off: member '
+                  'balances and invoices work as before.',
         WorkspaceFeature.roleAssignment =>
           l10n?.featureRoleAssignmentDesc ??
               "Shows a Roles section on each member's page to give or take "
