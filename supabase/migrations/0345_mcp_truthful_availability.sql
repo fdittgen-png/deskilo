@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0341 (MCP parity) -- an assistant's "free" is the booking engine's own
+-- 0345 (MCP parity) -- an assistant's "free" is the booking engine's own
 -- verdict.
 --
 -- get_availability answered "free" from two facts only: no active booking
@@ -75,4 +75,4 @@ begin
 end
 $migration$;
 
-select public.set_deskilo_schema_version(341);
+select public.set_deskilo_schema_version(345);
