@@ -1257,7 +1257,7 @@ routine public.number_sequence_pair_valid(p_date_part text, p_reset text) -> boo
 routine public.number_sequence_period_key(p_workspace_id uuid, p_reset text, p_at timestamp with time zone) -> text | function | invoker | stable | exec:authenticated,service_role | body:888b4e7bfd8a
 routine public.number_sequence_restarts(p_stored text, p_current text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:31eb5248e9ec
 routine public.oauth_authorization_context(p_authorization_id text) -> jsonb | function | definer | stable | exec:authenticated | body:72d2dfa1d588
-routine public.open_payment_intent(p_workspace_id uuid, p_member_id uuid, p_provider text, p_period text, p_amount_cents integer, p_currency text) -> TABLE(id uuid, reference text) | function | definer | volatile | exec:authenticated,service_role | body:1e094dd4a232
+routine public.open_payment_intent(p_workspace_id uuid, p_member_id uuid, p_provider text, p_period text, p_amount_cents integer, p_currency text, p_request_id uuid) -> TABLE(id uuid, reference text, status text, order_id text, created_at timestamp with time zone, reused boolean) | function | definer | volatile | exec:authenticated,service_role | body:e32ff1d3be2f
 routine public.operator_activate_mcp_runtime(p_installation_id uuid, p_epoch integer, p_fingerprint text) -> jsonb | function | definer | volatile | exec:service_role | body:8d021c2c8498
 routine public.operator_approve_mcp_client(p_client_id text, p_name text, p_active boolean) -> jsonb | function | definer | volatile | exec:service_role | body:7edcf1c6a5bc
 routine public.operator_disable_mcp_runtime(p_installation_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:service_role | body:bd6a3393d787

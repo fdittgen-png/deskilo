@@ -15,7 +15,7 @@ import 'package:deskilo/features/workspace/presentation/feature_surface_labels.d
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'features_screen_test.dart' show pumpFeatures;
+import '../../helpers/screens/features.dart' show pumpFeatures;
 
 void main() {
   group('the registry', () {

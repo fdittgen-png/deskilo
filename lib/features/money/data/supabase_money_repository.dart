@@ -1337,6 +1337,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required int amountCents,
     required String currencyCode,
     required String period,
+    String? requestId,
   }) async {
     final data = await _invokePayments({
       'provider': provider.wireName,
@@ -1345,6 +1346,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'amount_cents': amountCents,
       'currency': currencyCode,
       'period': period,
+      'request_id': ?requestId,
     });
     if (data == null) {
       return const PaymentOrderStart(
@@ -1356,6 +1358,12 @@ class SupabaseMoneyRepository implements MoneyRepository {
         missing: [
           for (final v in (data['missing'] as List? ?? const [])) v as String,
         ],
+      );
+    }
+    if (data['status'] == 'paid') {
+      return PaymentOrderStart(
+        alreadyPaid: true,
+        orderId: data['order_id'] as String?,
       );
     }
     final approveUrl = data['approve_url'];

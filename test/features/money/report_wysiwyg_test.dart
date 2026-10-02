@@ -12,7 +12,7 @@ import 'package:deskilo/features/money/presentation/widgets/report_visual_editor
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'invoices_test.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 /// A valid 1×1 PNG — enough for the renderers to draw.
 final _png = base64Decode(

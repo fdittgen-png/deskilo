@@ -25,7 +25,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../features/events/events_screen_test.dart' show pumpEvents, event;
+import '../helpers/screens/events.dart' show pumpEvents, event;
 import '../helpers/fake_event_repository.dart';
 import '../helpers/fake_money_repository.dart';
 import '../helpers/mock_providers.dart';
@@ -34,7 +34,7 @@ import '../features/reservations/reserve_hub_test.dart'
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
-import '../features/money/money_faces_test.dart' show pumpFaces, openInvoice;
+import '../helpers/screens/money_faces.dart' show pumpFaces, openInvoice;
 import '../features/workspace/onboarding_flow_test.dart'
     show pumpWithoutWorkspace;
 

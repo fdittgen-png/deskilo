@@ -21,7 +21,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
-import 'invoices_test.dart' show pumpInvoices;
+import '../../helpers/screens/invoices.dart' show pumpInvoices;
 
 /// Two open invoices of member-1 regrouped into one.
 Future<({FakeMoneyRepository money, String a, String b, String settlement})>
