@@ -97,6 +97,7 @@ import '../time/clock.dart';
 import '../../features/workspace/domain/kpi_contract.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
 import 'demo_fixture.dart';
+import '../push/push_opt_out.dart';
 
 /// The overrides that turn a scope into the Demo environment.
 ///
@@ -218,6 +219,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
           .overrideWithValue(fixture.prefs.shellBarHidden),
       shellSwipeCoachStoreProvider
           .overrideWithValue(fixture.prefs.shellSwipeCoach),
+      pushOptOutStoreProvider.overrideWithValue(fixture.prefs.pushOptOut),
       frontCameraStoreProvider.overrideWithValue(fixture.prefs.frontCamera),
       activeWorkspaceStoreProvider
           .overrideWithValue(fixture.prefs.activeWorkspace),
@@ -301,6 +303,7 @@ const Set<String> demoOverriddenProviders = {
   'navigationStyleStoreProvider',
   'shellBarHiddenStoreProvider',
   'shellSwipeCoachStoreProvider',
+  'pushOptOutStoreProvider',
   'frontCameraStoreProvider',
   'activeWorkspaceStoreProvider',
   'defaultWorkspaceStoreProvider',

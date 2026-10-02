@@ -10710,6 +10710,68 @@ class AppLocalizationsIt extends AppLocalizations {
       'Pubblica solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi.';
 
   @override
+  String get privacyNoticeTitle => 'Chi tratta i tuoi dati';
+
+  @override
+  String privacyNoticeController(String name, String contact) {
+    return 'Titolare del trattamento: $name — $contact';
+  }
+
+  @override
+  String privacyNoticeRights(String contact) {
+    return 'I tuoi diritti: $contact';
+  }
+
+  @override
+  String privacyNoticeRegion(String region) {
+    return 'Regione: $region';
+  }
+
+  @override
+  String privacyNoticeTransfer(String mechanism) {
+    return 'Garanzia per il trasferimento: $mechanism';
+  }
+
+  @override
+  String get privacyNoticeNotRecorded => 'non indicato dal gestore';
+
+  @override
+  String get privacyNoticeEssential => 'Necessario per l\'account e lo spazio';
+
+  @override
+  String get privacyNoticeOptional => 'Facoltativo — puoi usare l\'app senza';
+
+  @override
+  String get privacyNoticeRightsRoute => 'I tuoi diritti e il contatto';
+
+  @override
+  String get privacySpaceNotice => 'L\'informativa privacy di questo spazio';
+
+  @override
+  String get privacySpaceNoticeRead => 'Hai preso visione di questa versione.';
+
+  @override
+  String get privacySpaceNoticeUnread => 'Non ancora letta — leggila qui.';
+
+  @override
+  String get privacySpaceNoticeAcknowledge => 'Ho letto questa informativa';
+
+  @override
+  String get privacySpaceNoticeFailed =>
+      'Non è stato possibile registrare la presa visione. Riprova.';
+
+  @override
+  String get privacyPushOnDevice => 'Notifiche push su questo dispositivo';
+
+  @override
+  String get privacyPushOnDeviceHint =>
+      'Facoltativo. Attivo, l\'indirizzo di questo dispositivo e ogni notifica passano dal servizio push; disattivo, l\'app continua a funzionare e a questo dispositivo non viene inviato nulla.';
+
+  @override
+  String get privacyPushOnDeviceFailed =>
+      'Non è stato possibile salvare la scelta. Riprova.';
+
+  @override
   String get featuresViewProcesses => 'Processi';
 
   @override
@@ -11215,7 +11277,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get privacyIntro =>
-      'I tuoi dati restano nell\'UE, non vengono mai tracciati né venduti e sono leggibili solo dai ruoli indicati dalle regole qui sotto. Questi sono i tuoi diritti secondo il GDPR — ognuno è un pulsante.';
+      'I tuoi dati non vengono mai tracciati né venduti e sono leggibili solo dai ruoli indicati dalle regole qui sotto; dove sono ospitati è indicato nell\'informativa privacy di questa installazione. Questi sono i tuoi diritti secondo il GDPR — ognuno è un pulsante.';
 
   @override
   String get privacyWhoCanSee => 'Chi può vedere i miei dati';
