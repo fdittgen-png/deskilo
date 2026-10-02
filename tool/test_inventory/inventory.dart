@@ -30,6 +30,8 @@ class TestFileEntry {
     required this.duplicate,
     required this.action,
     required this.replacement,
+    this.runner = 'root suite',
+    this.execution = '',
   });
 
   final String path;
@@ -42,10 +44,18 @@ class TestFileEntry {
   final String duplicate;
   final String action;
   final String replacement;
+
+  /// #1864 — which runner family holds the file, and who executes it
+  /// (with the condition when it only runs on demand).
+  final String runner;
+  final String execution;
 }
 
 /// Actions the triage allows (#1334).
 const actions = [
+  // #1864 — what a file is until a person has reviewed it. KEEP is a
+  // reviewed decision (reviewedDispositions), never a rule's default.
+  'UNREVIEWED',
   'KEEP',
   'KEEP+REFACTOR',
   'REPLACE',
@@ -70,23 +80,242 @@ final _plan = RegExp(r'plan\((\d+)\)');
 final _repoRead = RegExp(
     r"""(?:File|Directory)\(\s*['"](?:lib|supabase|docs|web|assets|tool|test|\.github|android|ios|pubspec)""");
 
-/// Every test file: Dart tests under `test/`, pgTAP files under
-/// `supabase/tests/database/`, sorted by path.
-List<File> testFiles({String root = '.'}) {
-  final dart = Directory('$root/test')
-      .listSync(recursive: true)
+/// #1864 — every place a test runner looks, and who runs it.
+///
+/// A family is registered here with its execution owner: the workflow
+/// that runs it and the command it must contain, or the honest note
+/// that nothing runs it automatically. A test file found outside every
+/// family, or a family whose workflow no longer runs it, fails
+/// test_inventory_test.
+class RunnerFamily {
+  const RunnerFamily({
+    required this.name,
+    required this.root,
+    required this.suffix,
+    required this.owner,
+    this.workflow,
+    this.command,
+    this.layer,
+    this.recursive = true,
+  });
+
+  final String name;
+  final String root;
+  final String suffix;
+  final String owner;
+
+  /// `.github/workflows/<workflow>` must contain [command].
+  final String? workflow;
+  final String? command;
+
+  /// Fixed layer for the family; null classifies by folder and content.
+  final String? layer;
+  final bool recursive;
+}
+
+const runnerFamilies = <RunnerFamily>[
+  RunnerFamily(
+    name: 'root suite',
+    root: 'test',
+    suffix: '_test.dart',
+    owner: 'quality.yml: flutter test, once, with coverage and the report stream',
+    workflow: 'quality.yml',
+    command: 'flutter test --coverage',
+  ),
+  RunnerFamily(
+    name: 'pgTAP',
+    root: 'supabase/tests/database',
+    suffix: '.sql',
+    recursive: false,
+    owner: 'quality.yml: quality · database (supabase test db)',
+    workflow: 'quality.yml',
+    command: 'supabase test db',
+    layer: 'database',
+  ),
+  RunnerFamily(
+    name: 'push package (Google)',
+    root: 'packages/deskilo_push/test',
+    suffix: '_test.dart',
+    owner: 'quality.yml: flutter test in packages/deskilo_push',
+    workflow: 'quality.yml',
+    command: 'working-directory: packages/deskilo_push',
+    layer: 'package',
+  ),
+  RunnerFamily(
+    name: 'Edge functions',
+    root: 'supabase/functions',
+    suffix: '_test.ts',
+    owner: 'edge-functions.yml: deno test',
+    workflow: 'edge-functions.yml',
+    command: 'deno test',
+    layer: 'edge',
+  ),
+  RunnerFamily(
+    name: 'benchmarks',
+    root: 'tool/bench',
+    suffix: '_test.dart',
+    owner: 'perf-bench.yml: flutter test tool/bench',
+    workflow: 'perf-bench.yml',
+    command: 'flutter test tool/bench',
+    layer: 'perf',
+  ),
+  RunnerFamily(
+    name: 'device integration',
+    root: 'integration_test',
+    suffix: '_test.dart',
+    owner: 'no CI runner: on a device, flutter test integration_test -d <device>',
+    layer: 'integration',
+  ),
+  RunnerFamily(
+    name: 'store assets',
+    root: 'tool/store_assets',
+    suffix: '_test.dart',
+    owner: 'no CI runner: by hand when the store graphics change',
+    layer: 'tool',
+  ),
+];
+
+/// Directories a runner never reads.
+final _ignored = RegExp(
+    r'(^|/)(\.dart_tool|\.git|build|node_modules|Pods|\.gradle|\.agent-work|\.symlinks)(/|$)');
+
+List<File> _filesOf(RunnerFamily f, String root) {
+  final dir = Directory('$root/${f.root}');
+  if (!dir.existsSync()) return const [];
+  return dir
+      .listSync(recursive: f.recursive)
       .whereType<File>()
-      .where((f) => f.path.endsWith('_test.dart'));
-  final sqlDir = Directory('$root/supabase/tests/database');
-  final sql = sqlDir.existsSync()
-      ? sqlDir
-          .listSync()
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.sql'))
-      : const <File>[];
-  final all = [...dart, ...sql]
+      .where((x) => x.path.endsWith(f.suffix))
+      .where((x) => !_ignored.hasMatch(_relative(x.path, root)))
+      .toList();
+}
+
+/// The family that owns [path] (repository-relative).
+RunnerFamily? familyOf(String path) {
+  for (final f in runnerFamilies) {
+    if (!path.startsWith('${f.root}/') || !path.endsWith(f.suffix)) continue;
+    if (!f.recursive && path.substring(f.root.length + 1).contains('/')) {
+      continue;
+    }
+    return f;
+  }
+  return null;
+}
+
+/// Every test file of every registered runner family, sorted by path.
+List<File> testFiles({String root = '.'}) {
+  final all = [for (final f in runnerFamilies) ..._filesOf(f, root)]
     ..sort((a, b) => _relative(a.path, root).compareTo(_relative(b.path, root)));
   return all;
+}
+
+/// Test-shaped files no registered family covers: a runner nobody
+/// listed, or a file put where no runner looks.
+List<String> unregisteredTestFiles({String root = '.'}) {
+  final out = <String>[];
+  for (final e in Directory(root).listSync(recursive: true, followLinks: false)) {
+    if (e is! File) continue;
+    final path = _relative(e.path, root);
+    if (_ignored.hasMatch(path)) continue;
+    final shaped = path.endsWith('_test.dart') ||
+        path.endsWith('_test.ts') ||
+        (path.startsWith('supabase/tests/') && path.endsWith('.sql'));
+    if (shaped && familyOf(path) == null) out.add(path);
+  }
+  return out..sort();
+}
+
+/// Registered families that hold no file, or whose workflow no longer
+/// contains the command that runs them.
+List<String> deadRunnerEntries({String root = '.'}) {
+  final out = <String>[];
+  for (final f in runnerFamilies) {
+    if (_filesOf(f, root).isEmpty) out.add('${f.name}: no files under ${f.root}');
+    if (f.workflow == null) continue;
+    final wf = File('$root/.github/workflows/${f.workflow}');
+    if (!wf.existsSync()) {
+      out.add('${f.name}: ${f.workflow} does not exist');
+    } else if (!wf.readAsStringSync().contains(f.command!)) {
+      out.add('${f.name}: ${f.workflow} no longer runs "${f.command}"');
+    }
+  }
+  return out;
+}
+
+/// A reviewed decision about one file (#1864): what to do with it, why,
+/// and — for a removal or replacement — the surviving test.
+typedef Disposition = ({String action, String reason, String? survivor});
+
+/// Decisions a person made. Everything else is UNREVIEWED.
+const Map<String, Disposition> reviewedDispositions = {
+  'test/core/instance/local_recovery_test.dart': (
+    action: 'KEEP',
+    reason: 'the only real disposable Auth/HTTP/Storage recovery proof; '
+        'skipped by a plain run on purpose, executed by '
+        'scripts/restore_check.sh --application',
+    survivor: null,
+  ),
+};
+
+/// What is wrong with [dispositions] against the files that exist: an
+/// unknown file, a survivor that does not exist, a replacement chain
+/// that returns to where it started.
+List<String> dispositionProblems(
+  Map<String, Disposition> dispositions,
+  Set<String> files,
+) {
+  final out = <String>[];
+  for (final MapEntry(key: path, value: d) in dispositions.entries) {
+    if (!files.contains(path)) out.add('$path: no such test file');
+    if (!actions.contains(d.action)) out.add('$path: unknown action ${d.action}');
+    if (d.reason.trim().isEmpty) out.add('$path: no reason');
+    final needsSurvivor = d.action == 'DELETE' || d.action == 'REPLACE';
+    if (needsSurvivor && d.survivor == null) {
+      out.add('$path: ${d.action} names no survivor');
+    }
+    if (d.survivor != null && !files.contains(d.survivor)) {
+      out.add('$path: survivor ${d.survivor} does not exist');
+    }
+    final seen = {path};
+    var next = d.survivor;
+    while (next != null) {
+      if (!seen.add(next)) {
+        out.add('$path: replacement cycle through $next');
+        break;
+      }
+      next = dispositions[next]?.survivor;
+    }
+  }
+  return out;
+}
+
+/// Who executes [path] and under which condition (#1864): a test that
+/// skips unless an environment variable is set is integration evidence
+/// only where something sets it.
+String _execution(String path, String source, RunnerFamily family, String root) {
+  final env = {
+    for (final m in RegExp(r"""Platform\.environment\[\s*'(\w+)'""").allMatches(source))
+      m.group(1)!,
+  };
+  final constEnv = RegExp(r"""const\s+\w+\s*=\s*'(DESKILO_\w+)'""").firstMatch(source);
+  if (constEnv != null) env.add(constEnv.group(1)!);
+  final gated = source.contains('skip:') && env.any((e) => e.startsWith('DESKILO_'));
+  if (!gated) return family.owner;
+  final vars = env.where((e) => e.startsWith('DESKILO_')).toList()..sort();
+  final owners = <String>[];
+  for (final dir in ['scripts', '.github/workflows']) {
+    final d = Directory('$root/$dir');
+    if (!d.existsSync()) continue;
+    for (final f in d.listSync(recursive: true).whereType<File>()) {
+      final text = f.readAsStringSync();
+      if (text.contains(path) || vars.any(text.contains)) {
+        owners.add(_relative(f.path, root));
+      }
+    }
+  }
+  owners.sort();
+  return 'conditional: skipped unless ${vars.join(', ')} is set; '
+      '${owners.isEmpty ? 'no automated owner sets it' : 'set by ${owners.join(', ')}'}';
 }
 
 String _relative(String path, String root) {
@@ -121,8 +350,8 @@ String statedInvariant(String source, {required bool sql}) {
   return '${space > 100 ? cut.substring(0, space) : cut}…';
 }
 
-String _layerOf(String path, String source) {
-  if (path.startsWith('supabase/')) return 'database';
+String _layerOf(String path, String source, RunnerFamily family) {
+  if (family.layer != null) return family.layer!;
   final second = path.split('/')[1];
   const named = {
     'lint': 'lint',
@@ -160,11 +389,16 @@ List<TestFileEntry> classify({String root = '.'}) {
   final entries = <TestFileEntry>[];
   for (final MapEntry(key: path, value: source) in sources.entries) {
     final sql = path.endsWith('.sql');
-    final layer = _layerOf(path, source);
+    final family = familyOf(path)!;
+    final execution = _execution(path, source, family, root);
+    final conditional = execution.startsWith('conditional:');
+    final layer = conditional ? 'integration' : _layerOf(path, source, family);
     final invariant = statedInvariant(source, sql: sql);
     final tests = sql
         ? int.tryParse(_plan.firstMatch(source)?.group(1) ?? '') ?? 0
-        : _testCall.allMatches(source).length;
+        : path.endsWith('.ts')
+            ? RegExp(r'Deno\.test\(').allMatches(source).length
+            : _testCall.allMatches(source).length;
 
     final deps = <String>[];
     if (sql) deps.add('local Supabase (pgTAP)');
@@ -224,7 +458,7 @@ List<TestFileEntry> classify({String root = '.'}) {
             r'bySemanticsLabel|getSemantics|ensureSemantics|SemanticsHandle')
         .hasMatch(source);
 
-    var action = 'KEEP';
+    var action = 'UNREVIEWED';
     var replacement = '';
     if (invariant.isEmpty) {
       action = 'KEEP+REFACTOR';
@@ -243,7 +477,16 @@ List<TestFileEntry> classify({String root = '.'}) {
       replacement = 'drive time and randomness through a seam';
     }
 
+    final reviewed = reviewedDispositions[path];
+    if (reviewed != null && action == 'UNREVIEWED') {
+      action = reviewed.action;
+      replacement = reviewed.survivor == null
+          ? reviewed.reason
+          : '${reviewed.reason} — survivor ${reviewed.survivor}';
+    }
     entries.add(TestFileEntry(
+      runner: family.name,
+      execution: execution,
       path: path,
       layer: layer,
       invariant: invariant.isEmpty ? '(not stated)' : invariant,
@@ -327,7 +570,11 @@ String render(List<TestFileEntry> entries) {
     ..writeln()
     ..writeln('## Rules')
     ..writeln()
-    ..writeln('- **Layer** — `supabase/tests/database` is `database`; `test/lint`, `a11y`, `i18n`, `perf`, `property`, `ux` (journey) and `tool` are named by folder; otherwise `widget` when the file pumps widgets, `unit` when it does not.')
+    ..writeln('- **Runner** — every registered runner family (#1864): ${runnerFamilies.map((f) => '`${f.root}` (${f.name})').join(', ')}. A test-shaped file outside them, or a family whose workflow no longer runs it, fails `test/lint/test_inventory_test.dart`.')
+    ..writeln('- **Execution** — who runs the file. A file that skips unless a `DESKILO_*` variable is set is `integration`, and names what sets it — or says that nothing does.')
+    ..writeln('- **Tests** — declarations counted in the source (a pgTAP `plan`, `Deno.test`), not executed cases: a loop or a skip changes what runs.')
+    ..writeln('- **Action** — `UNREVIEWED` unless a person recorded a decision in `reviewedDispositions` (with its reason, and a survivor for a removal). No rule assigns KEEP: a generated row is not an audit.')
+    ..writeln('- **Layer** — the family\'s own layer where it has one (`database`, `package`, `edge`, `perf`, `integration`, `tool`); in the root suite `test/lint`, `a11y`, `i18n`, `perf`, `property`, `ux` (journey) and `tool` are named by folder; otherwise `widget` when the file pumps widgets, `unit` when it does not.')
     ..writeln('- **Invariant** — the first paragraph of the header comment. A file that states none is `KEEP+REFACTOR`: a test whose purpose must be reverse-engineered cannot be judged, kept or safely deleted.')
     ..writeln('- **Deterministic** — no unless the file reads the real clock (only the files `test/lint/no_wall_clock_test.dart` exempts, each for a stated reason), uses an unseeded `Random()`, or waits a real non-zero delay. The last two are `KEEP+REFACTOR`.')
     ..writeln('- **Dependency** — fakes (`mock_providers`, `fake_*`), mocked platform channels, repository sources read from disk, a temporary filesystem, real async I/O (`runAsync`), or the local Supabase stack.')
@@ -339,10 +586,9 @@ String render(List<TestFileEntry> entries) {
     ..writeln('## Coverage still to add')
     ..writeln();
   if (missingCoverage.isEmpty) {
-    b.writeln('Nothing named and uncovered. The eleven gaps this table '
-        'tracked are closed, and each artefact was checked present rather '
-        'than inferred from its issue being shut (#1334). A row returns '
-        'here when somebody names a gap and the issue that owns it.');
+    b.writeln('No gap is recorded. This lists gaps somebody named; it is '
+        'not the result of an audit, and an empty list does not mean '
+        'nothing is uncovered (#1864).');
   } else {
     b
       ..writeln('| gap | issue | status |')
@@ -356,10 +602,10 @@ String render(List<TestFileEntry> entries) {
     ..writeln()
     ..writeln('## Files')
     ..writeln()
-    ..writeln('| test/file | layer | invariant | tests | deterministic? | integration dependency | failure value | duplicate? | action | replacement |')
-    ..writeln('|---|---|---|---:|---|---|---|---|---|---|');
+    ..writeln('| test/file | runner | execution | layer | invariant | declared tests | deterministic? | integration dependency | failure value | shared test name (candidate) | action | decision / replacement |')
+    ..writeln('|---|---|---|---|---|---:|---|---|---|---|---|---|');
   for (final e in entries) {
-    b.writeln('| `${e.path}` | ${e.layer} | ${_cell(e.invariant)} | ${e.tests} | '
+    b.writeln('| `${e.path}` | ${e.runner} | ${_cell(e.execution)} | ${e.layer} | ${_cell(e.invariant)} | ${e.tests} | '
         '${_cell(e.deterministic)} | ${_cell(e.dependency)} | ${_cell(e.failureValue)} | '
         '${_cell(e.duplicate)} | ${e.action} | ${_cell(e.replacement)} |');
   }
