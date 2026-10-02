@@ -2908,6 +2908,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberPageNowHeading => 'Gerade jetzt';
 
   @override
+  String get editorMediaWriteFailed =>
+      'Das Speichern des Bildes konnte nicht bestätigt werden. Erneutes Versuchen fügt es nie doppelt hinzu.';
+
+  @override
+  String get editorMediaSaving => 'Bild wird gespeichert…';
+
+  @override
   String get editorBackgroundImage => 'Hintergrundbild';
 
   @override

@@ -2086,6 +2086,8 @@
     }
   },
   "memberPageNowHeading": "Gerade jetzt",
+  "editorMediaWriteFailed": "Das Speichern des Bildes konnte nicht bestätigt werden. Erneutes Versuchen fügt es nie doppelt hinzu.",
+  "editorMediaSaving": "Bild wird gespeichert…",
   "editorBackgroundImage": "Hintergrundbild",
   "editorBackgroundSet": "Hintergrundbild festlegen",
   "editorBackgroundReplace": "Hintergrundbild ersetzen",
