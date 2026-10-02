@@ -14093,6 +14093,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'A result cannot come before the command it answers.';
 
   @override
+  String get taskExportIncludeIllustrations => 'Include approved illustrations';
+
+  @override
+  String get taskExportStoryboardLeftOut => 'Step left out by the reviewer.';
+
+  @override
+  String get taskExportIllustrationNotApproved =>
+      'Illustration not included: it was not approved.';
+
+  @override
+  String get taskExportLimitRecreated =>
+      'Illustrations are recreated from the recording\'s safe facts with invented place names; they are not screenshots of what was on screen.';
+
+  @override
+  String get taskExportStale =>
+      'The storyboard belongs to another version of this recording. Review it again before exporting.';
+
+  @override
+  String get taskExportWordButton => 'Export as Word document';
+
+  @override
   String get featureTaskRecorderTitle => 'Task recorder';
 
   @override

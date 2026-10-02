@@ -132,5 +132,11 @@
   "taskExportStoryboardSourceExcluded": "Écran protégé : non illustré",
   "taskExportStoryboardGap": "Lacune : rien n'a été enregistré ici",
   "taskExportStoryboardRenderFailed": "L'illustration n'a pas pu être dessinée ; cette étape reste en texte.",
-  "taskExportStoryboardOrderRefused": "Un résultat ne peut pas précéder la commande à laquelle il répond."
+  "taskExportStoryboardOrderRefused": "Un résultat ne peut pas précéder la commande à laquelle il répond.",
+  "taskExportIncludeIllustrations": "Inclure les illustrations approuvées",
+  "taskExportStoryboardLeftOut": "Étape écartée lors de la relecture.",
+  "taskExportIllustrationNotApproved": "Illustration non incluse : elle n'a pas été approuvée.",
+  "taskExportLimitRecreated": "Les illustrations sont recréées à partir des faits sûrs de l'enregistrement, avec des noms de places inventés ; ce ne sont pas des captures de l'écran.",
+  "taskExportStale": "Le storyboard correspond à une autre version de cet enregistrement. Relisez-le avant d'exporter.",
+  "taskExportWordButton": "Exporter en document Word"
 }

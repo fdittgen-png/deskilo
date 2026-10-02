@@ -24396,6 +24396,42 @@ abstract class AppLocalizations {
   /// **'A result cannot come before the command it answers.'**
   String get taskExportStoryboardOrderRefused;
 
+  /// #1866 task export (Word document): IncludeIllustrations
+  ///
+  /// In en, this message translates to:
+  /// **'Include approved illustrations'**
+  String get taskExportIncludeIllustrations;
+
+  /// #1876 storyboard and illustrations: StoryboardLeftOut
+  ///
+  /// In en, this message translates to:
+  /// **'Step left out by the reviewer.'**
+  String get taskExportStoryboardLeftOut;
+
+  /// #1866 task export (Word document): IllustrationNotApproved
+  ///
+  /// In en, this message translates to:
+  /// **'Illustration not included: it was not approved.'**
+  String get taskExportIllustrationNotApproved;
+
+  /// #1866 task export (Word document): LimitRecreated
+  ///
+  /// In en, this message translates to:
+  /// **'Illustrations are recreated from the recording\'s safe facts with invented place names; they are not screenshots of what was on screen.'**
+  String get taskExportLimitRecreated;
+
+  /// #1866 task export (Word document): Stale
+  ///
+  /// In en, this message translates to:
+  /// **'The storyboard belongs to another version of this recording. Review it again before exporting.'**
+  String get taskExportStale;
+
+  /// #1866 task export (Word document): the review screen button
+  ///
+  /// In en, this message translates to:
+  /// **'Export as Word document'**
+  String get taskExportWordButton;
+
   /// #1865 task recorder: the feature's name
   ///
   /// In en, this message translates to:

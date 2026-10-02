@@ -8798,6 +8798,12 @@
   "taskExportStoryboardGap": "Lacuna: qui non è stato registrato nulla",
   "taskExportStoryboardRenderFailed": "Impossibile disegnare l'illustrazione; questo passaggio resta testo.",
   "taskExportStoryboardOrderRefused": "Un risultato non può precedere il comando a cui risponde.",
+  "taskExportIncludeIllustrations": "Includi le illustrazioni approvate",
+  "taskExportStoryboardLeftOut": "Passaggio escluso durante la revisione.",
+  "taskExportIllustrationNotApproved": "Illustrazione non inclusa: non è stata approvata.",
+  "taskExportLimitRecreated": "Le illustrazioni sono ricreate dai dati sicuri della registrazione, con nomi di posti inventati; non sono screenshot dello schermo.",
+  "taskExportStale": "Lo storyboard appartiene a un'altra versione di questa registrazione. Rivedilo prima di esportare.",
+  "taskExportWordButton": "Esporta come documento Word",
   "featureTaskRecorderTitle": "Registratore di attività",
   "@featureTaskRecorderTitle": {
     "description": "#1865 task recorder: the feature's name"

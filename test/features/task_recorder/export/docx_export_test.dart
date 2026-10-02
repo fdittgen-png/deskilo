@@ -470,10 +470,17 @@ void main() {
       }) async {
         savedName = fileName;
         savedBytes = bytes;
-        return '/downloads/$fileName';
+        return SavedFile('/downloads/$fileName');
       });
       final result = await exporter.save(r, _l('en'));
-      expect(result, isA<TaskDocxSaved>());
+      expect(
+        result,
+        isA<TaskDocxSaved>().having(
+          (s) => s.outcome,
+          'outcome',
+          isA<SavedFile>(),
+        ),
+      );
       expect(savedName, 'procedure-book-a-desk-${recordingRevision(r)}.docx');
       expect(_unzip(savedBytes!), contains('word/document.xml'));
       expect(encodeRecordingText(r), before);
@@ -483,7 +490,7 @@ void main() {
       final r = _fixture(BookingJourney.planConfirmed);
       final before = encodeRecordingText(r);
       final cancelled = TaskDocxExporter(
-        ({required bytes, required fileName}) async => null,
+        ({required bytes, required fileName}) async => const SaveFailed(),
       );
       final throwing = TaskDocxExporter(
         ({required bytes, required fileName}) async =>
@@ -501,7 +508,7 @@ void main() {
         required fileName,
       }) async {
         calls++;
-        return fileName;
+        return DownloadRequested(fileName);
       });
       for (final name in [
         'reject_claims_complete',
@@ -540,9 +547,13 @@ void main() {
       String? savedName;
       final container = ProviderContainer(
         overrides: [
-          fileSaverProvider.overrideWithValue(
-            ({required bytes, required fileName}) async => savedName = fileName,
-          ),
+          typedFileSaverProvider.overrideWithValue(({
+            required bytes,
+            required fileName,
+          }) async {
+            savedName = fileName;
+            return SavedPrivately(fileName);
+          }),
         ],
       );
       addTearDown(container.dispose);

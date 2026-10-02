@@ -23,6 +23,9 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 
+import '../../../../core/trace/trace_logger.dart';
+import '../../storyboard/png_safety.dart';
+
 /// Why a document was refused.
 enum DocxIssue {
   /// More blocks, characters or bytes than [DocxLimits] allow.
@@ -30,6 +33,9 @@ enum DocxIssue {
 
   /// A relationship pointing outside the package.
   externalRelationship,
+
+  /// A picture that is not a well-formed PNG within the bounds.
+  badImage,
 }
 
 /// A refused document. Carries the reason, never the content.
@@ -51,10 +57,16 @@ class DocxLimits {
     this.maxBlocks = 6000,
     this.maxParagraphChars = 4000,
     this.maxBytes = 8 * 1024 * 1024,
+    this.maxImages = 60,
+    this.maxImageBytes = 6 * 1024 * 1024,
   });
 
   final int maxBlocks;
   final int maxParagraphChars;
+
+  /// Pictures in one document, and their bytes together.
+  final int maxImages;
+  final int maxImageBytes;
 
   /// The finished package, compressed.
   final int maxBytes;
@@ -67,7 +79,9 @@ enum DocxStyle {
   normal('Normal', 'Normal'),
   listNumber('ListNumber', 'List Number'),
   listBullet('ListBullet', 'List Bullet'),
-  stepDetail('StepDetail', 'Step Detail');
+  stepDetail('StepDetail', 'Step Detail'),
+  illustration('Illustration', 'Illustration'),
+  caption('Caption', 'caption');
 
   const DocxStyle(this.id, this.name);
   final String id;
@@ -120,6 +134,15 @@ class DocxParagraph extends DocxBlock {
   final bool keepWithNext;
 }
 
+/// A picture: a PNG checked and stripped again on write, scaled to fit
+/// the text width without distortion, with its alt text.
+class DocxImage extends DocxBlock {
+  const DocxImage(this.png, this.altText);
+
+  final Uint8List png;
+  final String altText;
+}
+
 /// The footer line around the page fields: `before PAGE between NUMPAGES
 /// after`.
 class DocxFooter {
@@ -163,6 +186,10 @@ const _relNs =
 const _pkgRelNs =
     'http://schemas.openxmlformats.org/package/2006/relationships';
 const _wNs = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+const _wpNs =
+    'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing';
+const _aNs = 'http://schemas.openxmlformats.org/drawingml/2006/main';
+const _picNs = 'http://schemas.openxmlformats.org/drawingml/2006/picture';
 const _xmlHead = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
 
 final _internalTarget = RegExp(r'^[A-Za-z0-9_\-]+(/[A-Za-z0-9_\-]+)*\.[a-z]+$');
@@ -215,6 +242,30 @@ Uint8List buildDocx(
   if (doc.blocks.length > limits.maxBlocks) {
     throw const DocxException(DocxIssue.tooLarge, 'blocks');
   }
+  final images = [
+    for (final b in doc.blocks)
+      if (b is DocxImage) b,
+  ];
+  if (images.length > limits.maxImages ||
+      images.fold<int>(0, (n, i) => n + i.png.length) > limits.maxImageBytes) {
+    throw const DocxException(DocxIssue.tooLarge, 'images');
+  }
+  final media = <DocxImage, (Uint8List, int, int)>{};
+  for (final image in images) {
+    try {
+      final clean = stripPngMetadata(image.png);
+      final header = readPngHeader(clean);
+      media[image] = (clean, header.width, header.height);
+    } on PngRejected catch (e, st) {
+      TraceLogger.instance.warn(
+        'recorder',
+        'document picture refused',
+        error: e,
+        stackTrace: st,
+      );
+      throw const DocxException(DocxIssue.badImage, 'image');
+    }
+  }
   for (final b in doc.blocks) {
     if (b is DocxParagraph &&
         b.runs.fold<int>(0, (n, r) => n + r.text.length) >
@@ -238,14 +289,22 @@ Uint8List buildDocx(
   );
   add(
     'word/_rels/document.xml.rels',
-    docxRelationshipsXml(const [
-      DocxRelationship('rIdStyles', 'styles', 'styles.xml'),
-      DocxRelationship('rIdNumbering', 'numbering', 'numbering.xml'),
-      DocxRelationship('rIdSettings', 'settings', 'settings.xml'),
-      DocxRelationship('rIdFooter', 'footer', 'footer1.xml'),
+    docxRelationshipsXml([
+      const DocxRelationship('rIdStyles', 'styles', 'styles.xml'),
+      const DocxRelationship('rIdNumbering', 'numbering', 'numbering.xml'),
+      const DocxRelationship('rIdSettings', 'settings', 'settings.xml'),
+      const DocxRelationship('rIdFooter', 'footer', 'footer1.xml'),
+      for (var i = 0; i < images.length; i++)
+        DocxRelationship('rIdImg${i + 1}', 'image', 'media/image${i + 1}.png'),
     ]),
   );
-  add('word/document.xml', _document(doc));
+  for (var i = 0; i < images.length; i++) {
+    final png = media[images[i]]!.$1;
+    archive.addFile(
+      ArchiveFile('word/media/image${i + 1}.png', png.length, png),
+    );
+  }
+  add('word/document.xml', _document(doc, [for (final i in images) media[i]!]));
   add('word/styles.xml', _styles(doc.languageTag));
   add('word/numbering.xml', _numbering);
   add('word/settings.xml', _settings(doc.languageTag));
@@ -283,9 +342,37 @@ String _runs(List<DocxRun> runs) {
   return out.toString();
 }
 
-String _document(DocxDocument doc) {
+/// Text width of the page (16 cm) and the tallest picture (18 cm), in
+/// EMU, so no picture is clipped or pushes a page off.
+const _maxImageWidthEmu = 16 * 360000;
+const _maxImageHeightEmu = 18 * 360000;
+
+String _drawing(int n, String alt, int width, int height) {
+  final scale = [
+    _maxImageWidthEmu / width,
+    _maxImageHeightEmu / height,
+  ].reduce((a, b) => a < b ? a : b);
+  final cx = (width * scale).floor();
+  final cy = (height * scale).floor();
+  final descr = escapeXml(alt);
+  return '<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" '
+      'distR="0"><wp:extent cx="$cx" cy="$cy"/>'
+      '<wp:docPr id="$n" name="Illustration $n" descr="$descr"/>'
+      '<wp:cNvGraphicFramePr><a:graphicFrameLocks noChangeAspect="1"/>'
+      '</wp:cNvGraphicFramePr><a:graphic><a:graphicData uri="$_picNs">'
+      '<pic:pic><pic:nvPicPr><pic:cNvPr id="$n" name="image$n.png" '
+      'descr="$descr"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill>'
+      '<a:blip r:embed="rIdImg$n"/><a:stretch><a:fillRect/></a:stretch>'
+      '</pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/>'
+      '<a:ext cx="$cx" cy="$cy"/></a:xfrm><a:prstGeom prst="rect">'
+      '<a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData>'
+      '</a:graphic></wp:inline></w:drawing></w:r>';
+}
+
+String _document(DocxDocument doc, List<(Uint8List, int, int)> media) {
   final body = StringBuffer();
   var bookmarkId = 0;
+  var image = 0;
   for (final block in doc.blocks) {
     switch (block) {
       case DocxParagraph p:
@@ -302,9 +389,17 @@ String _document(DocxDocument doc) {
         body.write(_runs(p.runs));
         if (mark != null) body.write('<w:bookmarkEnd w:id="${bookmarkId++}"/>');
         body.write('</w:p>');
+      case DocxImage i:
+        final (_, width, height) = media[image++];
+        body.write(
+          '<w:p><w:pPr><w:pStyle w:val="Illustration"/>'
+          '<w:keepNext/></w:pPr>'
+          '${_drawing(image, i.altText, width, height)}</w:p>',
+        );
     }
   }
-  return '$_xmlHead<w:document xmlns:w="$_wNs" xmlns:r="$_relNs"><w:body>'
+  return '$_xmlHead<w:document xmlns:w="$_wNs" xmlns:r="$_relNs" '
+      'xmlns:wp="$_wpNs" xmlns:a="$_aNs" xmlns:pic="$_picNs"><w:body>'
       '$body'
       '<w:sectPr><w:footerReference w:type="default" r:id="rIdFooter"/>'
       // A4 with 2.5 cm margins: fits Letter readers too without clipping.
@@ -350,6 +445,7 @@ const _contentTypes =
     '<Default Extension="rels" ContentType="application/vnd.'
     'openxmlformats-package.relationships+xml"/>'
     '<Default Extension="xml" ContentType="application/xml"/>'
+    '<Default Extension="png" ContentType="image/png"/>'
     '<Override PartName="/word/document.xml" '
     'ContentType="$_wordMain.document.main+xml"/>'
     '<Override PartName="/word/styles.xml" '
@@ -418,5 +514,7 @@ String _styles(String lang) =>
     '${_style(DocxStyle.stepDetail.id, DocxStyle.stepDetail.name, pPr: '<w:keepLines/>'
         '<w:ind w:left="567"/><w:spacing w:after="60"/>', rPr: '<w:color '
         'w:val="404040"/><w:sz w:val="20"/>')}'
+    '${_style(DocxStyle.illustration.id, DocxStyle.illustration.name, pPr: '<w:keepNext/><w:jc w:val="center"/><w:spacing w:before="120" w:after="60"/>')}'
+    '${_style(DocxStyle.caption.id, DocxStyle.caption.name, pPr: '<w:jc w:val="center"/>', rPr: '<w:i/><w:sz w:val="18"/>')}'
     '${_style('Footer', 'footer', rPr: '<w:sz w:val="18"/>')}'
     '</w:styles>';
