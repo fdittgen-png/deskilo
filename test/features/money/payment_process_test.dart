@@ -14,7 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/test_clock.dart';
-import 'invoices_test.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 import 'money_screen_test.dart' show pumpMoney, workspaceWithInstructions;
 
 Invoice _invoice(

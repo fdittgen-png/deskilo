@@ -536,6 +536,10 @@ abstract class MoneyRepository {
   /// provider's approval URL + order id, or a not-configured result naming
   /// the missing server env vars. Throws [PaymentGatewayException] on
   /// provider/auth errors so traces carry the server detail.
+  ///
+  /// [requestId] (#2014 B) names the attempt: a retry with the same id is
+  /// answered from the intent it already opened, never a second order.
+  /// A request that was already paid answers [PaymentOrderStart.alreadyPaid].
   Future<PaymentOrderStart> createPaymentOrder({
     required PaymentProvider provider,
     required String workspaceId,
@@ -543,5 +547,6 @@ abstract class MoneyRepository {
     required int amountCents,
     required String currencyCode,
     required String period,
+    String? requestId,
   });
 }

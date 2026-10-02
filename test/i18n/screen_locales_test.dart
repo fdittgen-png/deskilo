@@ -20,14 +20,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../features/editor/level_canvas_test.dart' show pumpCanvas;
-import '../features/events/events_screen_test.dart' show pumpEvents;
-import '../features/events/validation_settings_screen_test.dart'
+import '../helpers/screens/events.dart' show pumpEvents;
+import '../helpers/screens/validation_settings.dart'
     show pumpValidationSettings;
-import '../features/money/invoices_test.dart' show pumpInvoices;
-import '../features/money/money_faces_test.dart' show pumpFaces;
+import '../helpers/screens/invoices.dart' show pumpInvoices;
+import '../helpers/screens/money_faces.dart' show pumpFaces;
 import '../features/plan/accessories_screen_test.dart' show pumpAccessories;
 import '../features/reservations/reserve_hub_test.dart' show pumpHub;
-import '../features/workspace/features_screen_test.dart' show pumpFeatures;
+import '../helpers/screens/features.dart' show pumpFeatures;
 
 typedef ScreenPump = Future<void> Function(WidgetTester tester);
 
