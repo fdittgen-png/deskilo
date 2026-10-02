@@ -13603,6 +13603,14 @@
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
   },
+  "bookingSpaceChainTaken": "This space, or a space it belongs to, is already reserved in that period.",
+  "@bookingSpaceChainTaken": {
+    "description": "#1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period"
+  },
+  "bookingNoLongerCheckedIn": "This reservation is no longer checked in — it was checked out or closed in the meantime.",
+  "@bookingNoLongerCheckedIn": {
+    "description": "#1908 — a checkout lost a race: the reservation was already checked out or closed by the day-end sweep"
+  },
   "reserveMonthView": "Month",
   "@reserveMonthView": {
     "description": "Reserve hub view segment: month availability calendar (#7)"

@@ -12631,6 +12631,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportFieldGroupTexts => 'I tuoi testi';
 
   @override
+  String get bookingSpaceChainTaken =>
+      'Questo spazio, o uno spazio che lo contiene, è già prenotato in quel periodo.';
+
+  @override
+  String get bookingNoLongerCheckedIn =>
+      'Questa prenotazione non è più in corso — è stata chiusa nel frattempo.';
+
+  @override
   String get reserveMonthView => 'Mese';
 
   @override
