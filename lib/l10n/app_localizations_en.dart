@@ -14200,6 +14200,33 @@ class AppLocalizationsEn extends AppLocalizations {
       'Exemption reason (printed on the invoice)';
 
   @override
+  String get biTitle => 'Business analytics';
+
+  @override
+  String get biAreaOverview => 'Overview';
+
+  @override
+  String get biAreaCapacity => 'Space and capacity';
+
+  @override
+  String get biAreaPeople => 'People and business';
+
+  @override
+  String get biAreaFinance => 'Finance';
+
+  @override
+  String get biAreaTreasury => 'Treasury';
+
+  @override
+  String get biAreaOperations => 'Operations';
+
+  @override
+  String get biAreaPlanning => 'Planning';
+
+  @override
+  String get biAreaSaved => 'Saved analyses';
+
+  @override
   String get assistantPrefix => 'Assistant';
 
   @override

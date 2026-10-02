@@ -24630,6 +24630,60 @@ abstract class AppLocalizations {
   /// **'Exemption reason (printed on the invoice)'**
   String get vatTreatmentReasonField;
 
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Business analytics'**
+  String get biTitle;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get biAreaOverview;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Space and capacity'**
+  String get biAreaCapacity;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'People and business'**
+  String get biAreaPeople;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get biAreaFinance;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury'**
+  String get biAreaTreasury;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Operations'**
+  String get biAreaOperations;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Planning'**
+  String get biAreaPlanning;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Saved analyses'**
+  String get biAreaSaved;
+
   /// #872 one wizard idiom: assistantPrefix
   ///
   /// In en, this message translates to:

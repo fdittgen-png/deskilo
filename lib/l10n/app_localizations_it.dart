@@ -14333,6 +14333,33 @@ class AppLocalizationsIt extends AppLocalizations {
       'Motivo di esenzione (stampato sulla fattura)';
 
   @override
+  String get biTitle => 'Analisi aziendale';
+
+  @override
+  String get biAreaOverview => 'Panoramica';
+
+  @override
+  String get biAreaCapacity => 'Spazi e capacità';
+
+  @override
+  String get biAreaPeople => 'Persone e attività';
+
+  @override
+  String get biAreaFinance => 'Finanze';
+
+  @override
+  String get biAreaTreasury => 'Tesoreria';
+
+  @override
+  String get biAreaOperations => 'Operatività';
+
+  @override
+  String get biAreaPlanning => 'Pianificazione';
+
+  @override
+  String get biAreaSaved => 'Analisi salvate';
+
+  @override
   String get assistantPrefix => 'Assistente';
 
   @override
