@@ -110,12 +110,12 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | file | lines |
 |---|---|
 | `lib/core/demo/data/workspace_repository.dart` | 1991 |
-| `lib/core/demo/data/money_repository.dart` | 1800 |
+| `lib/core/demo/data/money_repository.dart` | 1801 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
 | `lib/features/workspace/domain/workspace_feature.dart` | 1538 |
-| `lib/features/money/data/supabase_money_repository.dart` | 1420 |
+| `lib/features/money/data/supabase_money_repository.dart` | 1428 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1316 |
-| `lib/features/money/presentation/screens/money_screen.dart` | 1299 |
+| `lib/features/money/presentation/screens/money_screen.dart` | 1300 |
 | `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
 | `lib/features/money/domain/invoice_pdf.dart` | 1050 |
