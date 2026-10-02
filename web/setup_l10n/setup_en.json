@@ -320,7 +320,7 @@
  "dunningFirstDays": "Days before the 1st reminder (payment term)",
  "dunningBetweenDays": "Days between reminders",
  "dunningAutomatic": "Automatic reminders",
- "dunningAutomaticDesc": "Every morning — and as soon as an owner or admin opens Money — open invoices past the term get their next reminder level: an alert in the member's feed and a notification. Unticked: a reminder stays a manual gesture.",
+ "dunningAutomaticDesc": "Every morning — and as soon as an owner or admin opens Money — invoices past their recorded payment term get their next reminder level, for the amount still outstanding and never while a payment is pending or the invoice is on hold. Unticked (the default): a reminder stays a manual gesture.",
  "einvoicePlatform": "E-invoicing platform",
  "einvoiceHint": "Where DesKilo delivers your EN 16931 invoices: an accredited platform, a Peppol access point, a national platform. The token is stored on the server and never leaves it — only put it here if you are filling in this document privately.",
  "einvoiceUrl": "Upload URL",

@@ -766,7 +766,7 @@
   "eventTypeInvoiceReminder": "Zahlungserinnerung",
   "eventInvoiceReminderLine": "Mahnstufe {level}: Rechnung {number} — {amount} noch offen",
   "dunningAutomatic": "Automatische Mahnungen",
-  "dunningAutomaticHint": "Einmal täglich erhalten offene Rechnungen nach Ablauf der Frist von selbst ihre nächste Mahnstufe — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht. Aus: Sie senden jede Mahnung selbst.",
+  "dunningAutomaticHint": "Einmal täglich erhalten Rechnungen, deren erfasste Zahlungsfrist abgelaufen ist, von selbst die nächste Mahnstufe — für den noch offenen Betrag, nie während eine Zahlung geprüft wird oder die Rechnung angehalten ist. Rechnungen ohne erfasste Frist bleiben Ihnen überlassen. Aus: Sie versenden jede Mahnung selbst.",
   "eventTypePriceNegotiation": "Preisverhandlung",
   "eventPriceNegotiationLine": "{actor} schlägt Konditionen für {member} vor: {terms}",
   "eventPriceNegotiationItems": "{count} Artikel",

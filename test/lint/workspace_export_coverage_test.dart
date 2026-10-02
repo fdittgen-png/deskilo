@@ -127,6 +127,13 @@ const Map<String, String> _notExported = {
       'an answer is the member\'s personal data, not the operator\'s copy '
           'of their space — export_my_data carries it (0248), and a '
           'template must never carry answers',
+  'invoice_maturities':
+      'the due date frozen for each invoice at issue (#1913); derived from '
+          'the invoice and the payment term, so the invoices tab already '
+          'carries what an operator needs',
+  'invoice_dunning_holds':
+      'why an invoice is not being reminded (#1913); an operational state '
+          'of the dunning flow, not a record the operator re-imports',
   'privacy_notices':
       'the published privacy notices (#1914); public text every member '
           'reads in the app, and the installation\'s own rows belong to no '
