@@ -1227,6 +1227,117 @@
   "calendarValidationRefused": "Refusé : {what}",
   "calendarEventActionValidated": "validé",
   "calendarEventActionRefused": "refusé",
+  "featureCapacityKpiTitle": "Occupation des places",
+  "@featureCapacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "featureCapacityKpiDesc": "Montre aux propriétaires et aux gestionnaires des réservations quelle part du temps de place offert a été réservée dans le mois, avec la façon dont c'est calculé et ce que le chiffre ne peut pas savoir.",
+  "@featureCapacityKpiDesc": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiTitle": "Occupation des places",
+  "@capacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRatio": "{reserved} sur {offered} heures-places réservées",
+  "@capacityKpiRatio": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiUndefined": "Aucun temps de place n'a été offert sur cette période : il n'y a pas d'occupation à montrer.",
+  "@capacityKpiUndefined": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiExplain": "Comment est-ce calculé ?",
+  "@capacityKpiExplain": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiDefinition": "Heures-places réservées pendant les heures d'ouverture, divisées par les heures-places offertes : chaque place multipliée par les heures d'ouverture des jours ouverts, moins les jours de fermeture et les blocages de places. Un bureau, une salle ou un niveau entier compte chacune de ses places une fois ; les réservations annulées ne comptent pas.",
+  "@capacityKpiDefinition": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiPhysical": "Capacité physique : {hours} heures-places",
+  "@capacityKpiPhysical": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOutside": "Réservé hors des heures offertes : {hours} heures-places, hors du ratio",
+  "@capacityKpiOutside": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOverlap": "Réservé deux fois en même temps : {hours} heures-places, comptées une fois",
+  "@capacityKpiOverlap": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRooms": "Salles sans place : {count}, {reserved} sur {offered} heures-salles réservées",
+  "@capacityKpiRooms": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiPartial": "Partiel : le plan, les heures d'ouverture et les blocages de places sont ceux d'aujourd'hui ; leur historique n'est pas encore enregistré.",
+  "@capacityKpiPartial": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiUnattributed": "Certaines réservations de la période visent un emplacement qui n'existe plus ; elles ne sont pas comptées.",
+  "@capacityKpiUnattributed": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiKnownZero": "Mesuré : rien n'a été réservé.",
+  "@capacityKpiKnownZero": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiAsOf": "Calculé {time}",
+  "@capacityKpiAsOf": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiForbidden": "Vous ne pouvez pas consulter les chiffres de capacité de cet espace.",
+  "@capacityKpiForbidden": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiUnavailable": "L'occupation des places n'a pas pu être calculée.",
+  "@capacityKpiUnavailable": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRetry": "Réessayer",
+  "@capacityKpiRetry": {
+    "description": "#1918 capacity KPI"
+  },
   "featureCarnetsTitle": "Carnets",
   "featureCarnetsDesc": "Vendre des carnets de demi-journées, dépensés sur plusieurs mois quand un membre réserve au-delà de son abonnement, facturés une seule fois à la vente.",
   "carnetsTitle": "Carnets",

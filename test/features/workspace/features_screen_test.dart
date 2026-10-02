@@ -60,7 +60,8 @@ void main() {
     // by a machine it did not ask to be reachable by, and asking is only
     // the first of the steps that lead to one being allowed in.
     // #2051 — holidayImport is the thirty-second: it writes closure days.
-    expect(onCount, featureManifest.length - 32);
+    // #1918 — capacityKpi is the thirty-third: a management figure.
+    expect(onCount, featureManifest.length - 33);
   });
 
   testWidgets(

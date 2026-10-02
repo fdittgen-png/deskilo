@@ -1227,6 +1227,117 @@
   "calendarValidationRefused": "Rifiutato: {what}",
   "calendarEventActionValidated": "convalidato",
   "calendarEventActionRefused": "rifiutato",
+  "featureCapacityKpiTitle": "Occupazione dei posti",
+  "@featureCapacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "featureCapacityKpiDesc": "Mostra ai proprietari e a chi gestisce le prenotazioni quanta parte del tempo di posto offerto è stata prenotata in un mese, come viene calcolata e cosa la cifra non può sapere.",
+  "@featureCapacityKpiDesc": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiTitle": "Occupazione dei posti",
+  "@capacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRatio": "{reserved} su {offered} ore-posto prenotate",
+  "@capacityKpiRatio": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiUndefined": "In questo periodo non è stato offerto tempo di posto, quindi non c’è occupazione da mostrare.",
+  "@capacityKpiUndefined": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiExplain": "Come viene calcolato?",
+  "@capacityKpiExplain": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiDefinition": "Ore-posto prenotate negli orari di apertura, divise per le ore-posto offerte: ogni posto per le ore di apertura dei giorni aperti, meno i giorni di chiusura e i blocchi dei posti. Una scrivania, una sala o un piano interi contano ciascuno dei loro posti una volta; le prenotazioni annullate non contano.",
+  "@capacityKpiDefinition": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiPhysical": "Capacità fisica: {hours} ore-posto",
+  "@capacityKpiPhysical": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOutside": "Prenotato fuori dalle ore offerte: {hours} ore-posto, escluse dal rapporto",
+  "@capacityKpiOutside": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOverlap": "Prenotato due volte nello stesso momento: {hours} ore-posto, contate una volta",
+  "@capacityKpiOverlap": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRooms": "Sale senza posti: {count}, {reserved} su {offered} ore-sala prenotate",
+  "@capacityKpiRooms": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiPartial": "Parziale: la planimetria, gli orari e i blocchi dei posti sono quelli di oggi; la loro storia non è ancora registrata.",
+  "@capacityKpiPartial": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiUnattributed": "Alcune prenotazioni del periodo riguardano un posto che non esiste più; non vengono contate.",
+  "@capacityKpiUnattributed": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiKnownZero": "Misurato: non è stato prenotato nulla.",
+  "@capacityKpiKnownZero": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiAsOf": "Calcolato {time}",
+  "@capacityKpiAsOf": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiForbidden": "Non puoi consultare i dati di capacità di questo spazio.",
+  "@capacityKpiForbidden": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiUnavailable": "Non è stato possibile calcolare l’occupazione dei posti.",
+  "@capacityKpiUnavailable": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRetry": "Riprova",
+  "@capacityKpiRetry": {
+    "description": "#1918 capacity KPI"
+  },
   "featureCarnetsTitle": "Carnet",
   "featureCarnetsDesc": "Vendere carnet di mezze giornate, consumati nell'arco dei mesi quando un membro prenota oltre il suo abbonamento, addebitati una sola volta alla vendita.",
   "carnetsTitle": "Carnet",
