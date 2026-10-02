@@ -19,6 +19,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import '../test_inventory/inventory.dart' show testFiles;
+
 /// One measured row of the scale table.
 class Measure {
   const Measure(this.name, this.value, this.how);
@@ -103,10 +105,9 @@ List<Measure> measures({String root = '.'}) {
         'lib/**/*.dart minus .g.dart and .freezed.dart'),
     Measure('Generated Dart files (`lib/`)', libAll.length - lib.length,
         '.g.dart and .freezed.dart under lib/'),
-    Measure('Test files (`test/` + `supabase/tests/database/`)',
-        _countIn('$root/test', '_test.dart') +
-            _countIn('$root/supabase/tests/database', '.sql'),
-        'the same set `tool/test_inventory.dart` classifies'),
+    Measure('Test files (every registered runner family)',
+        testFiles(root: root).length,
+        'the same set `tool/test_inventory.dart` classifies (#1864)'),
     Measure('SQL migrations in the repo', migrationFiles.length,
         'supabase/migrations/*.sql'),
     Measure('Supabase Edge Functions',

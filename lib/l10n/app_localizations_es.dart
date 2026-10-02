@@ -4546,6 +4546,43 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpTopicReadiness => 'admisibilidad';
 
   @override
+  String get featureHolidayImportTitle => 'Importar días festivos';
+
+  @override
+  String get featureHolidayImportDesc =>
+      'Un propietario importa los días festivos del país, y de una región, desde una fuente de datos abiertos, desmarca los días en que el espacio sigue abierto e importa el resto como días de cierre. Los meses ya facturados se omiten y se nombran.';
+
+  @override
+  String get holidayImportAction => 'Importar días festivos (datos abiertos)';
+
+  @override
+  String get holidayImportRegion => 'Región';
+
+  @override
+  String get holidayImportNationwide => 'Solo festivos nacionales';
+
+  @override
+  String get holidayImportUnavailable =>
+      'La fuente de días festivos no está disponible ahora. Inténtelo más tarde o use «Añadir días festivos».';
+
+  @override
+  String get holidayImportRetry => 'Reintentar';
+
+  @override
+  String holidayImportSource(String source) {
+    return 'Fuente: $source';
+  }
+
+  @override
+  String holidayImportConfirm(int count) {
+    return 'Importar $count días de cierre';
+  }
+
+  @override
+  String get holidayImportFailed =>
+      'No se pudieron comprobar ni importar los días festivos. No se ha cambiado nada.';
+
+  @override
   String get instanceOwnerClaimIntro =>
       '¿A quién pertenece esta instancia? Introduzca el correo electrónico con el que se registrará en ella. Tras confirmar esa dirección, reclame la titularidad en Ajustes → Propietario de la instancia.';
 

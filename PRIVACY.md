@@ -12,7 +12,7 @@ describes what the app processes and why. DesKilo is open source
 
 | Data | Purpose | Where |
 |---|---|---|
-| E-mail address, display name, password (hashed) | Your account (sign-in, password reset) | Supabase (EU region, eu-central-1) |
+| E-mail address, display name, password (hashed) | Your account (sign-in, password reset) | the database host named in the installation's privacy notice |
 | Social sign-in identity (Google, Microsoft, Apple, or Facebook user id + e-mail), if you choose it | Alternative sign-in; linked to the same account | Supabase Auth |
 | Workspace membership, role, subscription percentage | Running your coworking community | Supabase |
 | Reservations and check-ins (seat/level, time) | Desk booking — the app's core function | Supabase |
@@ -25,10 +25,14 @@ describes what the app processes and why. DesKilo is open source
 ## What we do NOT do
 
 - **No tracking, no analytics, no advertising.** The app contains no
-  third-party tracking or analytics SDK, no ad SDK, and (in every
-  flavor) no Firebase.
-- **No sale or sharing of data.** Data never leaves the service except
-  to a payment provider you explicitly pay through.
+  third-party tracking or analytics SDK and no ad SDK. Firebase is used
+  only to deliver push notifications, and only where the operator of the
+  installation configures it (see below); it is a delivery channel, not
+  analytics.
+- **No sale of data.** Data reaches only the recipients named in the
+  installation's and your space's privacy notice — for example the
+  database host, push delivery, a payment provider you pay through, or
+  an e-invoicing destination a space enables.
 - **No payment card data.** Card/wallet details are entered on the
   payment provider's own pages (PayPal, Stripe, Mollie, Wero); DesKilo
   only records that a payment happened and its amount.
@@ -45,8 +49,15 @@ payloads carry no personal data (a generic kind only).
 ## Data controller & processors
 
 Each coworking workspace is operated by its **owner** (your community),
-who determines members, prices, and payment providers. The backend is
-hosted on Supabase (Postgres, EU `eu-central-1`). If a workspace enables
+who determines members, prices, and payment providers. DesKilo can be
+installed by anyone on their own Supabase project, in a region they
+choose, so the region and any transfer outside the EU depend on the
+installation: the app shows the installation's privacy notice, and the
+space's own notice where it has one, with each recipient's role,
+purpose, legal basis, region and transfer mechanism. Where the operator
+has not recorded one of these, the notice says `unknown` rather than
+guessing. Acknowledging a notice is not consent: each acknowledgment is
+kept with the version it named, and a new version opts nobody in. If a workspace enables
 online payments, the corresponding provider (PayPal, Stripe, or Mollie)
 processes that payment under its own privacy policy.
 

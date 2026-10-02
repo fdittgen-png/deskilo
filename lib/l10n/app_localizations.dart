@@ -7831,6 +7831,66 @@ abstract class AppLocalizations {
   /// **'readiness gate'**
   String get helpTopicReadiness;
 
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Import public holidays'**
+  String get featureHolidayImportTitle;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'An owner imports the public holidays of the country, and of one region, from an open-data source, deselects the days the space stays open and imports the rest as closure days. Invoiced months are skipped and named.'**
+  String get featureHolidayImportDesc;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Import public holidays (open data)'**
+  String get holidayImportAction;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get holidayImportRegion;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Nationwide holidays only'**
+  String get holidayImportNationwide;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'The holiday source cannot be reached right now. Try again later, or use “Add public holidays”.'**
+  String get holidayImportUnavailable;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get holidayImportRetry;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Source: {source}'**
+  String holidayImportSource(String source);
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Import {count} closure days'**
+  String holidayImportConfirm(int count);
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'The holidays could not be checked or imported. Nothing was changed.'**
+  String get holidayImportFailed;
+
   /// #1829 Instance owner claim: instanceOwnerClaimIntro
   ///
   /// In en, this message translates to:

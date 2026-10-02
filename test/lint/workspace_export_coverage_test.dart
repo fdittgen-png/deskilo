@@ -134,6 +134,10 @@ const Map<String, String> _notExported = {
   'invoice_dunning_holds':
       'why an invoice is not being reminded (#1913); an operational state '
           'of the dunning flow, not a record the operator re-imports',
+  'privacy_notices':
+      'the published privacy notices (#1914); public text every member '
+          'reads in the app, and the installation\'s own rows belong to no '
+          'space at all',
   'workspace_field_value_options':
       'which choices one member made; personal in the same way',
   'rights_requests':

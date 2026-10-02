@@ -1055,6 +1055,10 @@ window.SETUP_L10N={
    "captureProtection": [
     "Screen capture protection",
     "Message screens refuse screenshots and screen recording where the device allows it, hide their content while the screen is recorded, and announce a screenshot in the conversation where it can only be detected. A browser cannot block screenshots; there the thread is blurred when the tab loses focus."
+   ],
+   "holidayImport": [
+    "Import public holidays",
+    "An owner imports the public holidays of the country, and of one region, from an open-data source, deselects the days the space stays open and imports the rest as closure days. Invoiced months are skipped and named."
    ]
   },
   "process": {
@@ -2319,6 +2323,10 @@ window.SETUP_L10N={
    "captureProtection": [
     "Protection contre la capture d’écran",
     "Les écrans de messages refusent les captures et l’enregistrement d’écran quand l’appareil le permet, masquent leur contenu pendant un enregistrement et annoncent une capture dans la conversation quand elle peut seulement être détectée. Un navigateur ne peut pas bloquer les captures ; la conversation y est floutée quand l’onglet perd le focus."
+   ],
+   "holidayImport": [
+    "Importer les jours fériés",
+    "Un propriétaire importe les jours fériés du pays, et d'une région, depuis une source de données ouvertes, désélectionne les jours où l'espace reste ouvert et importe les autres comme jours de fermeture. Les mois déjà facturés sont ignorés et nommés."
    ]
   },
   "process": {
@@ -3583,6 +3591,10 @@ window.SETUP_L10N={
    "captureProtection": [
     "Schutz vor Bildschirmaufnahmen",
     "Nachrichtenbildschirme verweigern Bildschirmfotos und Bildschirmaufnahmen, wo das Gerät es erlaubt, verbergen ihren Inhalt während einer Aufnahme und melden ein Bildschirmfoto im Gespräch, wo es nur erkannt werden kann. Ein Browser kann Bildschirmfotos nicht verhindern; dort wird das Gespräch unscharf, sobald der Tab den Fokus verliert."
+   ],
+   "holidayImport": [
+    "Feiertage importieren",
+    "Ein Eigentümer importiert die Feiertage des Landes und einer Region aus einer Open-Data-Quelle, wählt die Tage ab, an denen der Raum geöffnet bleibt, und importiert die übrigen als Schließtage. Bereits abgerechnete Monate werden übersprungen und genannt."
    ]
   },
   "process": {
@@ -4847,6 +4859,10 @@ window.SETUP_L10N={
    "captureProtection": [
     "Protección contra capturas de pantalla",
     "Las pantallas de mensajes rechazan capturas y grabaciones de pantalla cuando el dispositivo lo permite, ocultan su contenido mientras se graba la pantalla y anuncian una captura en la conversación cuando solo puede detectarse. Un navegador no puede bloquear capturas; allí la conversación se difumina cuando la pestaña pierde el foco."
+   ],
+   "holidayImport": [
+    "Importar días festivos",
+    "Un propietario importa los días festivos del país, y de una región, desde una fuente de datos abiertos, desmarca los días en que el espacio sigue abierto e importa el resto como días de cierre. Los meses ya facturados se omiten y se nombran."
    ]
   },
   "process": {
@@ -6111,6 +6127,10 @@ window.SETUP_L10N={
    "captureProtection": [
     "Protezione dalle catture dello schermo",
     "Le schermate dei messaggi rifiutano screenshot e registrazioni dello schermo quando il dispositivo lo consente, nascondono il contenuto durante una registrazione e annunciano uno screenshot nella conversazione quando può solo essere rilevato. Un browser non può bloccare gli screenshot; lì la conversazione viene sfocata quando la scheda perde il focus."
+   ],
+   "holidayImport": [
+    "Importa i giorni festivi",
+    "Un proprietario importa i giorni festivi del paese, e di una regione, da una fonte di dati aperti, deseleziona i giorni in cui lo spazio resta aperto e importa gli altri come giorni di chiusura. I mesi già fatturati vengono saltati e indicati."
    ]
   },
   "process": {

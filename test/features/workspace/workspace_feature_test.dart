@@ -83,6 +83,9 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // ON would settle that by implication; off, the question stays a
   // question until an owner answers it.
   WorkspaceFeature.decisionSurface,
+  // #2051 — importing holidays from an open-data source writes closure
+  // days, like publicHolidays: asked for, never assumed.
+  WorkspaceFeature.holidayImport,
 };
 
 /// Every other feature ships ON.
@@ -155,6 +158,7 @@ void main() {
       'memberAccountMenu': true,
       'mcpAccess': true,
       'publicListings': true,
+      'holidayImport': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

@@ -4509,6 +4509,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTopicReadiness => 'readiness gate';
 
   @override
+  String get featureHolidayImportTitle => 'Import public holidays';
+
+  @override
+  String get featureHolidayImportDesc =>
+      'An owner imports the public holidays of the country, and of one region, from an open-data source, deselects the days the space stays open and imports the rest as closure days. Invoiced months are skipped and named.';
+
+  @override
+  String get holidayImportAction => 'Import public holidays (open data)';
+
+  @override
+  String get holidayImportRegion => 'Region';
+
+  @override
+  String get holidayImportNationwide => 'Nationwide holidays only';
+
+  @override
+  String get holidayImportUnavailable =>
+      'The holiday source cannot be reached right now. Try again later, or use “Add public holidays”.';
+
+  @override
+  String get holidayImportRetry => 'Try again';
+
+  @override
+  String holidayImportSource(String source) {
+    return 'Source: $source';
+  }
+
+  @override
+  String holidayImportConfirm(int count) {
+    return 'Import $count closure days';
+  }
+
+  @override
+  String get holidayImportFailed =>
+      'The holidays could not be checked or imported. Nothing was changed.';
+
+  @override
   String get instanceOwnerClaimIntro =>
       'Who owns this instance? Enter the e-mail you will sign up with on it. After you confirm that address, claim the ownership from Settings → Instance owner.';
 
