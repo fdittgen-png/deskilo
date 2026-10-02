@@ -576,18 +576,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(levelName),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(4),
-          child: ValueListenableBuilder<bool>(
-            valueListenable: _mediaBusy,
-            builder: (_, busy, _) => busy
-                ? LinearProgressIndicator(
-                    key: const ValueKey('plan-media-progress'),
-                    semanticsLabel:
-                        l10n?.editorMediaSaving ?? 'Saving the image…')
-                : const SizedBox(height: 4),
-          ),
-        ),
+
         actions: [
           Builder(
             builder: (context) {
@@ -661,7 +650,25 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       // its pan/zoom so the next tap missed. LoadingView shows only before the
       // first plan; the error screen only when nothing else is available.
       body: shownPlan != null
-          ? _buildCanvas(shownPlan)
+          // #2012 C — the progress bar overlays the canvas: no height of
+          // its own, so 2× text keeps the layout it had.
+          ? Stack(children: [
+              Positioned.fill(child: _buildCanvas(shownPlan)),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: _mediaBusy,
+                  builder: (_, busy, _) => busy
+                      ? LinearProgressIndicator(
+                          key: const ValueKey('plan-media-progress'),
+                          semanticsLabel:
+                              l10n?.editorMediaSaving ?? 'Saving the image…')
+                      : const SizedBox.shrink(),
+                ),
+              ),
+            ])
           : switch (planAsync) {
               AsyncError() => Center(
                   child: Text(
