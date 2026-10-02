@@ -320,7 +320,7 @@
  "dunningFirstDays": "Giorni prima del 1° sollecito (termine di pagamento)",
  "dunningBetweenDays": "Giorni tra i solleciti",
  "dunningAutomatic": "Solleciti automatici",
- "dunningAutomaticDesc": "Ogni mattina — e non appena un proprietario o un admin apre Finanze — le fatture aperte oltre il termine ricevono il livello di sollecito successivo: avviso nel feed del membro e notifica. Non selezionato: il sollecito resta un gesto manuale.",
+ "dunningAutomaticDesc": "Ogni mattina — e non appena un proprietario o un admin apre Finanze — le fatture oltre la scadenza registrata passano al livello di sollecito successivo, per l'importo ancora dovuto e mai mentre un pagamento è in attesa o la fattura è sospesa. Non spuntato (predefinito): un sollecito resta un gesto manuale.",
  "einvoicePlatform": "Piattaforma di fatturazione elettronica",
  "einvoiceHint": "Dove DesKilo deposita le tue fatture EN 16931: una piattaforma accreditata, un access point Peppol, una piattaforma nazionale. Il token è conservato sul server e non ne esce mai — inseriscilo qui solo se compili questo documento in privato.",
  "einvoiceUrl": "URL di deposito",

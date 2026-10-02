@@ -186,6 +186,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les factures ont changé pendant votre relecture. Exportez à nouveau pour voir les comptes actuels.';
 
   @override
+  String handoffUnsupportedCurrency(String number) {
+    return '$number : sa devise n’a pas de nombre de décimales vérifié';
+  }
+
+  @override
+  String handoffAmountOutOfRange(String number) {
+    return '$number : un total trop grand pour être transmis exactement';
+  }
+
+  @override
   String get fecAccountExpenses => 'Achats et charges';
 
   @override
@@ -6262,7 +6272,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get dunningAutomaticHint =>
-      'Une fois par jour, les factures ouvertes au-delà du délai reçoivent d\'elles-mêmes leur niveau de relance suivant — une alerte dans le fil du membre et une notification. Désactivé : vous envoyez chaque relance vous-même.';
+      'Une fois par jour, les factures dont l\'échéance enregistrée est dépassée passent d\'elles-mêmes au niveau de relance suivant — pour le montant restant dû, jamais pendant qu\'un paiement est en attente ou que la facture est suspendue. Les factures sans échéance enregistrée restent à votre main. Désactivé : vous envoyez chaque relance vous-même.';
 
   @override
   String get eventTypePriceNegotiation => 'Négociation tarifaire';

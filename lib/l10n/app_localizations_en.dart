@@ -185,6 +185,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'The invoices changed while you were reviewing. Export again to see the current books.';
 
   @override
+  String handoffUnsupportedCurrency(String number) {
+    return '$number: its currency has no reviewed number of decimals';
+  }
+
+  @override
+  String handoffAmountOutOfRange(String number) {
+    return '$number: a total too large to carry exactly';
+  }
+
+  @override
   String get fecAccountExpenses => 'Expenses';
 
   @override
@@ -6200,7 +6210,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dunningAutomaticHint =>
-      'Once a day, open invoices past the term get their next reminder level by themselves — an alert in the member\'s feed and a push. Off: you send each reminder yourself.';
+      'Once a day, invoices past their recorded payment term get their next reminder level by themselves — for the amount still outstanding, never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you. Off: you send each reminder yourself.';
 
   @override
   String get eventTypePriceNegotiation => 'Price negotiation';

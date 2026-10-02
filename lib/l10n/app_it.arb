@@ -64,6 +64,8 @@
   "handoffBlocked": "Questo file non può essere consegnato finché la fonte non è corretta.",
   "handoffSave": "Salva file e rapporto",
   "handoffChanged": "Le fatture sono cambiate durante la revisione. Esporta di nuovo per vedere i conti attuali.",
+  "handoffUnsupportedCurrency": "{number}: la sua valuta non ha un numero di decimali verificato",
+  "handoffAmountOutOfRange": "{number}: un totale troppo grande per essere trasmesso esattamente",
   "fecAccountExpenses": "Spese",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -3931,7 +3933,7 @@
   "eventTypeInvoiceReminder": "Promemoria di pagamento",
   "eventInvoiceReminderLine": "Sollecito {level}: fattura {number} — {amount} ancora dovuti",
   "dunningAutomatic": "Solleciti automatici",
-  "dunningAutomaticHint": "Una volta al giorno, le fatture aperte oltre il termine ricevono da sole il livello di sollecito successivo — un avviso nel feed del membro e una notifica. Disattivato: invii ogni sollecito tu stesso.",
+  "dunningAutomaticHint": "Una volta al giorno, le fatture oltre la scadenza registrata passano da sole al livello di sollecito successivo — per l'importo ancora dovuto, mai mentre un pagamento è in attesa o la fattura è sospesa. Le fatture senza scadenza registrata restano a te. Disattivato: invii tu ogni sollecito.",
   "eventTypePriceNegotiation": "Negoziazione di prezzo",
   "eventPriceNegotiationLine": "{actor} propone condizioni per {member}: {terms}",
   "eventPriceNegotiationItems": "{count} articoli",

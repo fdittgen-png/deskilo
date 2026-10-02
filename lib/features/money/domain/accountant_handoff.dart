@@ -17,6 +17,7 @@ import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
 
 import 'accountant_csv.dart';
+import 'accounting_amount.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
 
@@ -68,6 +69,14 @@ enum HandoffFindingKind {
   /// Confirmed payment above what the document charges. Shown, not
   /// repaired.
   overpaid,
+
+  /// #1870 — a currency with no reviewed exponent: its minor units
+  /// cannot be read without guessing. Blocking.
+  unsupportedCurrency,
+
+  /// #1870 — a total that would pass ±(2^53 − 1) minor units, the most
+  /// a JSON reader keeps exactly. Blocking.
+  amountOutOfRange,
 }
 
 class HandoffFinding {
@@ -232,22 +241,56 @@ AccountantHandoff buildAccountantHandoff({
       );
       continue;
     }
+    // #1870 — the totals add through the exact amount: an unreviewed
+    // currency is refused rather than read as two decimals, and a sum
+    // that leaves the exact range is refused rather than wrapped.
+    int add(int a, int b) =>
+        (AccountingAmount(currency, a) + AccountingAmount(currency, b)).minor;
+    try {
+      exponentOf(currency);
+    } on AccountingException {
+      findings.add(
+        HandoffFinding(HandoffFindingKind.unsupportedCurrency, invoice.number),
+      );
+      continue;
+    }
     final t = totals
         .putIfAbsent(currency, () => {})
         .putIfAbsent(invoice.isVoided ? 'voided' : 'issued', HandoffTotals.new);
-    t.count++;
-    t.netMinor += invoice.netCents;
-    t.vatMinor += invoice.vatCents;
-    t.grossMinor += accountantGrossCents(invoice);
+    try {
+      final net = add(t.netMinor, invoice.netCents);
+      final vat = add(t.vatMinor, invoice.vatCents);
+      final gross = add(t.grossMinor, accountantGrossCents(invoice));
+      t
+        ..count += 1
+        ..netMinor = net
+        ..vatMinor = vat
+        ..grossMinor = gross;
+    } on AccountingException {
+      findings.add(
+        HandoffFinding(HandoffFindingKind.amountOutOfRange, invoice.number),
+      );
+      continue;
+    }
 
     final match = matches[invoice.id];
     if (match == null) continue;
     final p = payments.putIfAbsent(currency, HandoffPayments.new);
+    try {
+      if (match.pending) {
+        p.pendingMinor = add(p.pendingMinor, match.paidCents);
+      } else {
+        p.confirmedMinor = add(p.confirmedMinor, match.paidCents);
+      }
+    } on AccountingException {
+      findings.add(
+        HandoffFinding(HandoffFindingKind.amountOutOfRange, invoice.number),
+      );
+      continue;
+    }
     if (match.pending) {
-      p.pendingMinor += match.paidCents;
       p.pendingCount++;
     } else {
-      p.confirmedMinor += match.paidCents;
       p.confirmedCount++;
       if (invoice.chargesCents > 0 && match.paidCents > invoice.chargesCents) {
         findings.add(

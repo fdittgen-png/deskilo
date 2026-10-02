@@ -398,6 +398,18 @@ abstract class AppLocalizations {
   /// **'The invoices changed while you were reviewing. Export again to see the current books.'**
   String get handoffChanged;
 
+  /// #1870 accountant handoff blocking finding
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: its currency has no reviewed number of decimals'**
+  String handoffUnsupportedCurrency(String number);
+
+  /// #1870 accountant handoff blocking finding
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a total too large to carry exactly'**
+  String handoffAmountOutOfRange(String number);
+
   /// #936 accounting exports: fecAccountExpenses
   ///
   /// In en, this message translates to:
@@ -10750,7 +10762,7 @@ abstract class AppLocalizations {
   /// No description provided for @dunningAutomaticHint.
   ///
   /// In en, this message translates to:
-  /// **'Once a day, open invoices past the term get their next reminder level by themselves — an alert in the member\'s feed and a push. Off: you send each reminder yourself.'**
+  /// **'Once a day, invoices past their recorded payment term get their next reminder level by themselves — for the amount still outstanding, never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you. Off: you send each reminder yourself.'**
   String get dunningAutomaticHint;
 
   /// No description provided for @eventTypePriceNegotiation.

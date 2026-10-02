@@ -64,6 +64,8 @@
   "handoffBlocked": "Diese Datei kann erst übergeben werden, wenn die Quelle korrigiert ist.",
   "handoffSave": "Datei und Bericht speichern",
   "handoffChanged": "Die Rechnungen haben sich während Ihrer Prüfung geändert. Exportieren Sie erneut, um den aktuellen Stand zu sehen.",
+  "handoffUnsupportedCurrency": "{number}: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt",
+  "handoffAmountOutOfRange": "{number}: eine Summe, die zu groß ist, um exakt übertragen zu werden",
   "fecAccountExpenses": "Aufwendungen",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -3927,7 +3929,7 @@
   "eventTypeInvoiceReminder": "Zahlungserinnerung",
   "eventInvoiceReminderLine": "Mahnstufe {level}: Rechnung {number} — {amount} noch offen",
   "dunningAutomatic": "Automatische Mahnungen",
-  "dunningAutomaticHint": "Einmal täglich erhalten offene Rechnungen nach Ablauf der Frist von selbst ihre nächste Mahnstufe — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht. Aus: Sie senden jede Mahnung selbst.",
+  "dunningAutomaticHint": "Einmal täglich erhalten Rechnungen, deren erfasste Zahlungsfrist abgelaufen ist, von selbst die nächste Mahnstufe — für den noch offenen Betrag, nie während eine Zahlung geprüft wird oder die Rechnung angehalten ist. Rechnungen ohne erfasste Frist bleiben Ihnen überlassen. Aus: Sie versenden jede Mahnung selbst.",
   "eventTypePriceNegotiation": "Preisverhandlung",
   "eventPriceNegotiationLine": "{actor} schlägt Konditionen für {member} vor: {terms}",
   "eventPriceNegotiationItems": "{count} Artikel",
