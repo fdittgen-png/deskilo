@@ -1403,6 +1403,10 @@
   "@capacityKpiRoomsToday": {
     "description": "#1920 capacity KPI history"
   },
+  "permViewAnalytics": "Consultare i dati dello spazio",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
+  },
   "featureCarnetsTitle": "Carnet",
   "featureCarnetsDesc": "Vendere carnet di mezze giornate, consumati nell'arco dei mesi quando un membro prenota oltre il suo abbonamento, addebitati una sola volta alla vendita.",
   "carnetsTitle": "Carnet",

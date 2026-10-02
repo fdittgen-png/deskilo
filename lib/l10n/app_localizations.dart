@@ -3712,6 +3712,12 @@ abstract class AppLocalizations {
   /// **'Rooms without seats are read as they are today.'**
   String get capacityKpiRoomsToday;
 
+  /// #1921 permission: read aggregated operational KPIs
+  ///
+  /// In en, this message translates to:
+  /// **'Read the workspace figures'**
+  String get permViewAnalytics;
+
   /// #1279 carnets: featureCarnetsTitle
   ///
   /// In en, this message translates to:

@@ -1403,6 +1403,10 @@
   "@capacityKpiRoomsToday": {
     "description": "#1920 capacity KPI history"
   },
+  "permViewAnalytics": "Consulter les chiffres de l'espace",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
+  },
   "featureCarnetsTitle": "Carnets",
   "featureCarnetsDesc": "Vendre des carnets de demi-journées, dépensés sur plusieurs mois quand un membre réserve au-delà de son abonnement, facturés une seule fois à la vente.",
   "carnetsTitle": "Carnets",

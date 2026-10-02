@@ -66,6 +66,8 @@ void main() {
           WorkspacePermission.viewPersonalData,
           WorkspacePermission.deployToDev,
           WorkspacePermission.accessProd,
+          // #1921 — admins keep reading the capacity figures.
+          WorkspacePermission.viewAnalytics,
         },
       );
       expect(defaultPermissionsFor(PermissionRole.member), isEmpty);
@@ -210,15 +212,22 @@ void main() {
     // mentioned them elsewhere, and the RPC refused the client's own
     // payload with "unknown permission").
     // #982 — the nine permissions arrive with 0180; #989 — the three
-    // deploy permissions extend that array by anchor in 0185.
-    final latest =
-        File('supabase/migrations/0180_permission_catalog_nine.sql')
-            .readAsStringSync();
-    final catalog = RegExp(r"v_catalog text\[\] := array\[([^\]]+)\]")
-            .firstMatch(latest)!
-            .group(1)! +
-        File('supabase/migrations/0185_environment_pairs.sql')
-            .readAsStringSync();
+    // deploy permissions extend that array by anchor in 0185; 0195 moves
+    // the array into role_permission_catalog(), and #1921 reads the
+    // LATEST definition of that function.
+    final definers = Directory('supabase/migrations')
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.readAsStringSync().contains(
+            'create or replace function public.role_permission_catalog()'))
+        .toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+    final latest = definers.last.readAsStringSync();
+    final from = latest.indexOf(
+        'create or replace function public.role_permission_catalog()');
+    final catalog = RegExp(r"select array\[([^\]]+)\]")
+        .firstMatch(latest.substring(from))!
+        .group(1)!;
     for (final permission in WorkspacePermission.values) {
       expect(catalog, contains("'${permission.wireName}'"),
           reason: '${permission.wireName} must be in the SQL catalog');

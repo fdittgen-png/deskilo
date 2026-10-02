@@ -1403,6 +1403,10 @@
   "@capacityKpiRoomsToday": {
     "description": "#1920 capacity KPI history"
   },
+  "permViewAnalytics": "Kennzahlen des Arbeitsbereichs lesen",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
+  },
   "featureCarnetsTitle": "Mehrfachkarten",
   "featureCarnetsDesc": "Mehrfachkarten mit Halbtagen verkaufen, die über Monate verbraucht werden, wenn ein Mitglied über sein Abo hinaus bucht — einmal beim Verkauf berechnet.",
   "carnetsTitle": "Mehrfachkarten",

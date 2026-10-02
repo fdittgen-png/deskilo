@@ -2144,6 +2144,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le sale senza posti sono lette come sono oggi.';
 
   @override
+  String get permViewAnalytics => 'Consultare i dati dello spazio';
+
+  @override
   String get featureCarnetsTitle => 'Carnet';
 
   @override

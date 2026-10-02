@@ -1403,6 +1403,10 @@
   "@capacityKpiRoomsToday": {
     "description": "#1920 capacity KPI history"
   },
+  "permViewAnalytics": "Consultar las cifras del espacio",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
+  },
   "featureCarnetsTitle": "Bonos",
   "featureCarnetsDesc": "Vender bonos de medias jornadas que se gastan a lo largo de los meses cuando un miembro reserva más allá de su suscripción, cobrados una sola vez en la venta.",
   "carnetsTitle": "Bonos",

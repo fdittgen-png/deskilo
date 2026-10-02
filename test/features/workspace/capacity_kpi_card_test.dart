@@ -8,6 +8,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,12 +62,19 @@ Future<FakeWorkspaceRepository> _open(
   WidgetTester tester,
   _FakeKpis kpis, {
   bool on = true,
-}) async {
+}) => _openWith(
+  tester,
+  kpis,
+  FakeWorkspaceRepository.withWorkspace(featureFlags: {'capacityKpi': on}),
+);
+
+Future<FakeWorkspaceRepository> _openWith(
+  WidgetTester tester,
+  _FakeKpis kpis,
+  FakeWorkspaceRepository workspace,
+) async {
   await tester.binding.setSurfaceSize(const Size(800, 3200));
   addTearDown(() => tester.binding.setSurfaceSize(null));
-  final workspace = FakeWorkspaceRepository.withWorkspace(
-    featureFlags: {'capacityKpi': on},
-  );
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
@@ -177,5 +185,32 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('capacity-kpi-explain')));
     await tester.pumpAndSettle();
     expect(find.textContaining('History recorded since'), findsOneWidget);
+  });
+
+  testWidgets('#1921 the tile follows viewAnalytics, not a write right: an '
+      'admin whose matrix row lacks it sees nothing and asks nothing', (
+    tester,
+  ) async {
+    final kpis = _FakeKpis(_kpi);
+    final workspace =
+        FakeWorkspaceRepository.withWorkspace(
+            featureFlags: {'capacityKpi': true},
+          )
+          ..myMember = const Member(
+            id: 'member-1',
+            workspaceId: 'ws-1',
+            userId: 'user-1',
+            isAdmin: true,
+            isOwner: false,
+            status: MemberStatus.active,
+          );
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+      rolePermissions: const {
+        'admin': ['manageReservations', 'workspaceSettings'],
+      },
+    );
+    await _openWith(tester, kpis, workspace);
+    expect(find.byKey(const ValueKey('capacity-kpi-card')), findsNothing);
+    expect(kpis.calls, isEmpty);
   });
 }

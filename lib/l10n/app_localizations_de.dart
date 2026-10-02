@@ -2144,6 +2144,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Räume ohne Plätze werden so gelesen, wie sie heute sind.';
 
   @override
+  String get permViewAnalytics => 'Kennzahlen des Arbeitsbereichs lesen';
+
+  @override
   String get featureCarnetsTitle => 'Mehrfachkarten';
 
   @override
