@@ -16,6 +16,7 @@ import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -45,6 +46,26 @@ Future<void> _openSeat(WidgetTester tester) async {
 }
 
 Future<void> _confirm(WidgetTester tester) => _tap(tester, 'booking-confirm');
+
+/// Presses Tab until the focused node sits inside the widget keyed [key].
+Future<void> _tabTo(WidgetTester tester, String key) async {
+  bool inside() {
+    final ctx = FocusManager.instance.primaryFocus?.context;
+    if (ctx == null) return false;
+    var hit = ctx.widget.key == ValueKey(key);
+    ctx.visitAncestorElements((e) {
+      if (e.widget.key == ValueKey(key)) hit = true;
+      return !hit;
+    });
+    return hit;
+  }
+
+  for (var i = 0; i < 40 && !inside(); i++) {
+    await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+    await tester.pumpAndSettle();
+  }
+  expect(inside(), isTrue, reason: 'Tab never reached $key');
+}
 
 bool _selected(WidgetTester tester, String key) =>
     tester.widget<ChoiceChip>(_key(key)).selected;
@@ -308,11 +329,14 @@ void main() {
     handle.dispose();
   });
 
-  testWidgets('T09 — at 360dp with 200% text the sheet keeps both actions '
-      'and the period reachable, without overflow, and the choice still '
-      'books', (tester) async {
+  for (final locale in ['en', 'fr', 'de', 'es', 'it']) {
+  testWidgets('T09 [$locale] — at 360dp with 200% text the sheet keeps both '
+      'actions and the period reachable, without overflow, and the choice '
+      'still books', (tester) async {
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    tester.platformDispatcher.localesTestValue = [Locale(locale)];
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
     final repo = await pumpHub(
       tester,
       granularity: BookingGranularity.halfDay,
@@ -334,6 +358,7 @@ void main() {
     await _confirm(tester);
     _expectWindow(_single(repo), _pm);
   });
+  }
 
   testWidgets('T08 — the workspace changes while the sheet is open: the '
       'confirmed choice is dropped, nothing is booked', (tester) async {
@@ -361,5 +386,42 @@ void main() {
     }
     expect(repo.reservations, isEmpty);
   });
-}
 
+  testWidgets('T08 — the list entry opens the same sheet: the afternoon, '
+      'a plain reservation', (tester) async {
+    final repo = await pumpHub(
+      tester,
+      granularity: BookingGranularity.halfDay,
+      clock: _clock,
+    );
+    await _tap(tester, 'reserve-seat-view-switch');
+    await _tap(tester, 'list-seat-seat-4');
+    expect(find.byType(BookingSheet), findsOneWidget);
+    await _tap(tester, 'booking-pm');
+    await _confirm(tester);
+    final r = _single(repo);
+    _expectWindow(r, _pm);
+    expect(r.seatId, 'seat-4');
+    expect(r.checkedInAt, isNull);
+  });
+
+  testWidgets('T09 — by keyboard alone: Tab to the afternoon, Space, Tab to '
+      'confirm, Enter books it', (tester) async {
+    final repo = await pumpHub(
+      tester,
+      granularity: BookingGranularity.halfDay,
+      clock: _clock,
+    );
+    await _openSeat(tester);
+    await _tabTo(tester, 'booking-pm');
+    await tester.sendKeyEvent(LogicalKeyboardKey.space);
+    await tester.pumpAndSettle();
+    expect(_selected(tester, 'booking-pm'), isTrue);
+    await _tabTo(tester, 'booking-confirm');
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pumpAndSettle();
+    final r = _single(repo);
+    _expectWindow(r, _pm);
+    expect(r.checkedInAt, isNull);
+  });
+}
