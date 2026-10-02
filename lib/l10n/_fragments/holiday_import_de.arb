@@ -1,0 +1,52 @@
+{
+  "featureHolidayImportTitle": "Feiertage importieren",
+  "@featureHolidayImportTitle": {
+    "description": "#2051 open-data holiday import"
+  },
+  "featureHolidayImportDesc": "Ein Eigentümer importiert die Feiertage des Landes und einer Region aus einer Open-Data-Quelle, wählt die Tage ab, an denen der Raum geöffnet bleibt, und importiert die übrigen als Schließtage. Bereits abgerechnete Monate werden übersprungen und genannt.",
+  "@featureHolidayImportDesc": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportAction": "Feiertage importieren (Open Data)",
+  "@holidayImportAction": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportRegion": "Region",
+  "@holidayImportRegion": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportNationwide": "Nur bundesweite Feiertage",
+  "@holidayImportNationwide": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportUnavailable": "Die Feiertagsquelle ist gerade nicht erreichbar. Versuchen Sie es später erneut oder verwenden Sie „Feiertage hinzufügen“.",
+  "@holidayImportUnavailable": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportRetry": "Erneut versuchen",
+  "@holidayImportRetry": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportSource": "Quelle: {source}",
+  "@holidayImportSource": {
+    "description": "#2051 open-data holiday import",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "holidayImportConfirm": "{count} Schließtage importieren",
+  "@holidayImportConfirm": {
+    "description": "#2051 open-data holiday import",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "holidayImportFailed": "Die Feiertage konnten nicht geprüft oder importiert werden. Es wurde nichts geändert.",
+  "@holidayImportFailed": {
+    "description": "#2051 open-data holiday import"
+  }
+}

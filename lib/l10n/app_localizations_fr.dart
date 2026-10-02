@@ -4557,6 +4557,44 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpTopicReadiness => 'recevabilité';
 
   @override
+  String get featureHolidayImportTitle => 'Importer les jours fériés';
+
+  @override
+  String get featureHolidayImportDesc =>
+      'Un propriétaire importe les jours fériés du pays, et d\'une région, depuis une source de données ouvertes, désélectionne les jours où l\'espace reste ouvert et importe les autres comme jours de fermeture. Les mois déjà facturés sont ignorés et nommés.';
+
+  @override
+  String get holidayImportAction =>
+      'Importer les jours fériés (données ouvertes)';
+
+  @override
+  String get holidayImportRegion => 'Région';
+
+  @override
+  String get holidayImportNationwide => 'Jours fériés nationaux uniquement';
+
+  @override
+  String get holidayImportUnavailable =>
+      'La source des jours fériés est injoignable pour le moment. Réessayez plus tard, ou utilisez « Ajouter les jours fériés ».';
+
+  @override
+  String get holidayImportRetry => 'Réessayer';
+
+  @override
+  String holidayImportSource(String source) {
+    return 'Source : $source';
+  }
+
+  @override
+  String holidayImportConfirm(int count) {
+    return 'Importer $count jours de fermeture';
+  }
+
+  @override
+  String get holidayImportFailed =>
+      'Les jours fériés n\'ont pas pu être vérifiés ni importés. Rien n\'a été modifié.';
+
+  @override
   String get instanceOwnerClaimIntro =>
       'À qui appartient cette instance ? Saisissez l\'adresse e-mail avec laquelle vous vous y inscrirez. Après avoir confirmé cette adresse, revendiquez la propriété dans Paramètres → Propriétaire de l\'instance.';
 

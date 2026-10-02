@@ -50,7 +50,8 @@ window.SETUP_PROCESSES=[
     "key": "availability",
     "features": [
      "workingHours",
-     "publicHolidays"
+     "publicHolidays",
+     "holidayImport"
     ]
    },
    {

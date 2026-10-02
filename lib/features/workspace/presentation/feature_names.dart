@@ -226,6 +226,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureMessageForwardingTitle ?? 'Message forwarding',
       WorkspaceFeature.captureProtection =>
         l10n?.featureCaptureProtectionTitle ?? 'Screen capture protection',
+      WorkspaceFeature.holidayImport =>
+        l10n?.featureHolidayImportTitle ?? 'Import public holidays',
       WorkspaceFeature.workspaceBranding =>
         l10n?.featureWorkspaceBrandingTitle ?? 'Workspace colours',
       WorkspaceFeature.customRoles =>

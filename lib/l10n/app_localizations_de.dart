@@ -4545,6 +4545,43 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpTopicReadiness => 'Bereitschaftsprüfung';
 
   @override
+  String get featureHolidayImportTitle => 'Feiertage importieren';
+
+  @override
+  String get featureHolidayImportDesc =>
+      'Ein Eigentümer importiert die Feiertage des Landes und einer Region aus einer Open-Data-Quelle, wählt die Tage ab, an denen der Raum geöffnet bleibt, und importiert die übrigen als Schließtage. Bereits abgerechnete Monate werden übersprungen und genannt.';
+
+  @override
+  String get holidayImportAction => 'Feiertage importieren (Open Data)';
+
+  @override
+  String get holidayImportRegion => 'Region';
+
+  @override
+  String get holidayImportNationwide => 'Nur bundesweite Feiertage';
+
+  @override
+  String get holidayImportUnavailable =>
+      'Die Feiertagsquelle ist gerade nicht erreichbar. Versuchen Sie es später erneut oder verwenden Sie „Feiertage hinzufügen“.';
+
+  @override
+  String get holidayImportRetry => 'Erneut versuchen';
+
+  @override
+  String holidayImportSource(String source) {
+    return 'Quelle: $source';
+  }
+
+  @override
+  String holidayImportConfirm(int count) {
+    return '$count Schließtage importieren';
+  }
+
+  @override
+  String get holidayImportFailed =>
+      'Die Feiertage konnten nicht geprüft oder importiert werden. Es wurde nichts geändert.';
+
+  @override
   String get instanceOwnerClaimIntro =>
       'Wem gehört diese Instanz? Geben Sie die E-Mail-Adresse ein, mit der Sie sich dort registrieren werden. Nachdem Sie diese Adresse bestätigt haben, beanspruchen Sie die Inhaberschaft unter Einstellungen → Instanzeigentümer.';
 
