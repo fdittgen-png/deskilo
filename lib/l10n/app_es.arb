@@ -7223,8 +7223,8 @@
     "description": "#1912 the question editor: shown while the personal-data switch is off"
   },
   "eventTypeRoleChange": "Cambio de rol",
-  "eventRolePromote": "{actor} promueve a un miembro a admin",
-  "eventRoleDemote": "{actor} degrada a un admin a miembro",
+  "eventRolePromote": "{actor} pide dar el rol Administrador/a",
+  "eventRoleDemote": "{actor} pide retirar el rol Administrador/a",
   "memberMakeAdmin": "Dar el rol Administrador/a",
   "memberMakeMember": "Retirar el rol Administrador/a",
   "memberRoleChangeRequested": "Cambio de rol enviado para validación.",
@@ -8141,6 +8141,36 @@
   "roleTakeBackFailed": "El rol no se retiró.",
   "@roleTakeBackFailed": {
     "description": "#2085 giving roles: roleTakeBackFailed"
+  },
+  "eventRoleGiven": "{actor} da el rol {role} a {member}",
+  "@eventRoleGiven": {
+    "description": "#2085 giving roles: eventRoleGiven",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
+  "eventRoleTakenBack": "{actor} retira el rol {role} a {member}",
+  "@eventRoleTakenBack": {
+    "description": "#2085 giving roles: eventRoleTakenBack",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
   },
   "rolesOfSpaceTitle": "Los roles de este espacio",
   "@rolesOfSpaceTitle": {
