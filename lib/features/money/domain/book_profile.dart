@@ -181,3 +181,15 @@ BookProfile? profileOn(
   }
   return best;
 }
+
+/// Who keeps [issuerSiteId]'s books on [day]. With no profile — every
+/// workspace from before #1869, an imported configuration, a new one —
+/// the answer is pre-accounting: DesKilo as it always was, nothing
+/// posted and nothing written to decide it.
+BookAuthority authorityOn(
+  List<BookProfile> versions,
+  String issuerSiteId,
+  DateTime day,
+) =>
+    profileOn(versions, issuerSiteId, day)?.authority ??
+    BookAuthority.preAccounting;
