@@ -126,6 +126,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/wording', RouteClass.workspace),
   RouteRule('/settings/colours', RouteClass.workspace),
   RouteRule('/settings/roles-of-this-space', RouteClass.workspace),
+  RouteRule('/settings/what-you-can-do', RouteClass.workspace),
   RouteRule('/settings/questions', RouteClass.workspace),
   RouteRule('/attention', RouteClass.workspace),
   RouteRule('/settings/number-sequences', RouteClass.workspace),

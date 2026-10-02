@@ -492,6 +492,11 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'system that stays authoritative. Each issuer states its '
                   'currency, fiscal year and accounting basis. Off: member '
                   'balances and invoices work as before.',
+        WorkspaceFeature.roleAssignment =>
+          l10n?.featureRoleAssignmentDesc ??
+              "Shows a Roles section on each member's page to give or take "
+                  'back a role, the members holding each role, and lets '
+                  'every member see what they can do here.',
       WorkspaceFeature.workspaceBranding =>
           l10n?.featureWorkspaceBrandingDesc ??
               'The workspace chooses a brand colour the app derives its '

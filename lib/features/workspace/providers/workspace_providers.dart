@@ -37,6 +37,7 @@ import '../domain/workspace_document.dart';
 import '../domain/workspace_overview.dart';
 import '../domain/site.dart';
 import '../domain/workspace_template.dart';
+import 'workspace_roles_providers.dart';
 
 part 'workspace_providers.g.dart';
 
@@ -513,6 +514,8 @@ Emblems emblems(Ref ref) =>
 Set<WorkspacePermission> myPermissions(Ref ref) => effectivePermissions(
       ref.watch(myMemberProvider).value,
       ref.watch(currentWorkspaceProvider).value,
+      // #2085 — what the workspace's own roles add, as the server counts.
+      custom: ref.watch(myRolePermissionsProvider),
     );
 
 /// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies

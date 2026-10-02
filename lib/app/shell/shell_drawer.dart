@@ -117,7 +117,7 @@ class ShellDrawer extends ConsumerWidget {
       if (showAdminSection &&
           features.contains(WorkspaceFeature.roleManagement))
         _Entry('drawer-roles', Icons.admin_panel_settings_outlined,
-            l10n?.rolesTitle ?? 'Role management', () => go('/roles')),
+            l10n?.rolesTitle ?? 'Roles', () => go('/roles')),
       if (showAdminSection && features.contains(WorkspaceFeature.invoicing))
         _Entry('drawer-invoices', Icons.receipt_long_outlined,
             l10n?.settingsBillingReports ?? 'Billing & reports',
