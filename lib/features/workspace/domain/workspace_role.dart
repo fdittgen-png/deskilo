@@ -38,17 +38,6 @@ class WorkspaceRole {
       names[locale] ?? names[fallbackLocale] ?? key;
 }
 
-/// #2085 — a role's name as an event recorded it ([names] is the
-/// `role_names` map of the payload), in [locale], then English, then
-/// [fallback] (the key) when the record carries no name at all.
-String roleNameIn(Object? names, String locale, String fallback) {
-  if (names is Map) {
-    final own = names[locale] ?? names['en'];
-    if (own is String && own.trim().isNotEmpty) return own;
-  }
-  return fallback;
-}
-
 /// The roles a space defined, in the order a list shows them.
 List<WorkspaceRole> orderedRoles(Iterable<WorkspaceRole> roles) =>
     [...roles]..sort((a, b) {

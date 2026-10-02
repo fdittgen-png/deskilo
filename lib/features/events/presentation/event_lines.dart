@@ -5,7 +5,6 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../money/domain/usage_record.dart';
-import '../../workspace/domain/workspace_role.dart';
 import '../domain/event_decision.dart';
 import '../domain/validation_policy.dart';
 import '../domain/workspace_event.dart';
@@ -14,6 +13,17 @@ import 'event_labels.dart';
 // #1306 — the sentences a pending decision is shown with, shared by the
 // events face and the calendar, which carries the decisions when the
 // bell is switched off. One wording, wherever the question is asked.
+
+/// #2085 — a role's name as an event recorded it ([names] is the
+/// `role_names` map of the payload), in [locale], then English, then
+/// [fallback] (the key) when the record carries no name at all.
+String roleNameIn(Object? names, String locale, String fallback) {
+  if (names is Map) {
+    final own = names[locale] ?? names['en'];
+    if (own is String && own.trim().isNotEmpty) return own;
+  }
+  return fallback;
+}
 
 String eventLine(
   AppLocalizations? l10n,

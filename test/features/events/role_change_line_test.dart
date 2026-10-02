@@ -11,7 +11,6 @@
 import 'package:deskilo/core/i18n/money_format.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/presentation/event_lines.dart';
-import 'package:deskilo/features/workspace/domain/workspace_role.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
