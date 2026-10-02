@@ -195,6 +195,80 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get featureAccountingBookTitle => 'Buchführung';
+
+  @override
+  String get featureAccountingBookDesc =>
+      'Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher.';
+
+  @override
+  String get bookSheetTitle => 'Buchführung';
+
+  @override
+  String get bookTileEmpty =>
+      'Keine Buchführung festgelegt: DesKilo führt Mitgliedersalden und Rechnungen (Vorkontierung).';
+
+  @override
+  String get bookIssuer => 'Rechnungssteller';
+
+  @override
+  String get bookAuthorityPre => 'Vorkontierung';
+
+  @override
+  String get bookAuthorityLocal => 'DesKilo führt die Bücher';
+
+  @override
+  String get bookAuthorityExternal => 'Externes System';
+
+  @override
+  String get bookExternalSystem => 'Maßgebliches System';
+
+  @override
+  String get bookCurrency => 'Buchungswährung';
+
+  @override
+  String get bookFiscalStart => 'Das Geschäftsjahr beginnt am';
+
+  @override
+  String get bookBasisAccrual => 'Soll-Versteuerung';
+
+  @override
+  String get bookBasisCash => 'Ist-Versteuerung';
+
+  @override
+  String bookEffectiveFrom(String date) {
+    return 'Gültig ab $date';
+  }
+
+  @override
+  String bookFiscalPreview(String label, String start, String end) {
+    return 'Geschäftsjahr $label: $start – $end';
+  }
+
+  @override
+  String get bookProblemExternal =>
+      'Nennen Sie das externe System, das die offiziellen Bücher führt.';
+
+  @override
+  String get bookProblemCurrency =>
+      'Für diese Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt.';
+
+  @override
+  String get bookProblemFiscal =>
+      'Ein Geschäftsjahr beginnt an einem Tag, den jedes Jahr hat (nie am 29. Februar).';
+
+  @override
+  String get bookSaved => 'Buchführung gespeichert';
+
+  @override
+  String get bookStale =>
+      'Jemand hat diese Buchführung gespeichert, seit Sie sie geöffnet haben. Schließen und neu öffnen, um seine Fassung zu sehen.';
+
+  @override
+  String get bookSaveFailed =>
+      'Die Buchführung wurde nicht gespeichert. Prüfen Sie die Verbindung und versuchen Sie es erneut.';
+
+  @override
   String get fecAccountExpenses => 'Aufwendungen';
 
   @override

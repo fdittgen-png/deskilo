@@ -1,0 +1,23 @@
+{
+  "featureAccountingBookTitle": "Buchführung",
+  "featureAccountingBookDesc": "Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher.",
+  "bookSheetTitle": "Buchführung",
+  "bookTileEmpty": "Keine Buchführung festgelegt: DesKilo führt Mitgliedersalden und Rechnungen (Vorkontierung).",
+  "bookIssuer": "Rechnungssteller",
+  "bookAuthorityPre": "Vorkontierung",
+  "bookAuthorityLocal": "DesKilo führt die Bücher",
+  "bookAuthorityExternal": "Externes System",
+  "bookExternalSystem": "Maßgebliches System",
+  "bookCurrency": "Buchungswährung",
+  "bookFiscalStart": "Das Geschäftsjahr beginnt am",
+  "bookBasisAccrual": "Soll-Versteuerung",
+  "bookBasisCash": "Ist-Versteuerung",
+  "bookEffectiveFrom": "Gültig ab {date}",
+  "bookFiscalPreview": "Geschäftsjahr {label}: {start} – {end}",
+  "bookProblemExternal": "Nennen Sie das externe System, das die offiziellen Bücher führt.",
+  "bookProblemCurrency": "Für diese Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt.",
+  "bookProblemFiscal": "Ein Geschäftsjahr beginnt an einem Tag, den jedes Jahr hat (nie am 29. Februar).",
+  "bookSaved": "Buchführung gespeichert",
+  "bookStale": "Jemand hat diese Buchführung gespeichert, seit Sie sie geöffnet haben. Schließen und neu öffnen, um seine Fassung zu sehen.",
+  "bookSaveFailed": "Die Buchführung wurde nicht gespeichert. Prüfen Sie die Verbindung und versuchen Sie es erneut."
+}

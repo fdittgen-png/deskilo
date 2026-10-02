@@ -512,7 +512,7 @@
       ],
       "prerequisites": "None: the Demo is built into every client.",
       "limitations": "The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.",
-      "fingerprint": "9ff19a3b618f",
+      "fingerprint": "95836b19a8a8",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",

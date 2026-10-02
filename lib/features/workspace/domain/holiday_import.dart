@@ -19,6 +19,8 @@
 // Pure Dart: no Flutter, no l10n, no HTTP.
 library;
 
+import 'holiday_regions.dart';
+
 /// The one open-data source, as the sheet credits it.
 const holidaySourceName = 'Nager.Date (date.nager.at)';
 
@@ -133,9 +135,10 @@ List<ImportedHoliday> parseNagerHolidays(Object? body) {
   return days;
 }
 
-/// The regions the list names, sorted — the picker's entries.
+/// The regions the list names, sorted by region name (#2079) — the
+/// picker's entries, as ISO codes.
 List<String> holidayRegions(List<ImportedHoliday> days) =>
-    {for (final d in days) ...d.regions}.toList()..sort();
+    sortHolidayRegions([for (final d in days) ...d.regions]);
 
 /// The days that apply in [region]: nationwide ones always, regional ones
 /// only in their region. `null` = nationwide only. One entry per date —

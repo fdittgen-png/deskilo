@@ -410,6 +410,132 @@ abstract class AppLocalizations {
   /// **'{number}: a total too large to carry exactly'**
   String handoffAmountOutOfRange(String number);
 
+  /// #1869 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting book'**
+  String get featureAccountingBookTitle;
+
+  /// #1869 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Who keeps the official books of each issuer: Deskilo as pre-accounting, a local book, or an external accounting system that stays authoritative. Each issuer states its currency, fiscal year and accounting basis. Off: member balances and invoices work as before.'**
+  String get featureAccountingBookDesc;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting book'**
+  String get bookSheetTitle;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'No book set: DesKilo keeps member balances and invoices (pre-accounting).'**
+  String get bookTileEmpty;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Issuer'**
+  String get bookIssuer;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-accounting'**
+  String get bookAuthorityPre;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo is the book'**
+  String get bookAuthorityLocal;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'External system'**
+  String get bookAuthorityExternal;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Authoritative system'**
+  String get bookExternalSystem;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Functional currency'**
+  String get bookCurrency;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Fiscal year starts on'**
+  String get bookFiscalStart;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Accrual basis'**
+  String get bookBasisAccrual;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Cash basis'**
+  String get bookBasisCash;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect from {date}'**
+  String bookEffectiveFrom(String date);
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Fiscal year {label}: {start} – {end}'**
+  String bookFiscalPreview(String label, String start, String end);
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Name the external system that keeps the official books.'**
+  String get bookProblemExternal;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'This currency has no reviewed number of decimals.'**
+  String get bookProblemCurrency;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'A fiscal year starts on a day every year has (never 29 February).'**
+  String get bookProblemFiscal;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Book saved'**
+  String get bookSaved;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Someone saved this book since you opened it. Close and reopen to see their version.'**
+  String get bookStale;
+
+  /// #1869 the save failed (connection or server)
+  ///
+  /// In en, this message translates to:
+  /// **'The book was not saved. Check the connection and try again.'**
+  String get bookSaveFailed;
+
   /// #936 accounting exports: fecAccountExpenses
   ///
   /// In en, this message translates to:

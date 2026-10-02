@@ -61,7 +61,8 @@ void main() {
     // the first of the steps that lead to one being allowed in.
     // #2051 — holidayImport is the thirty-second: it writes closure days.
     // #1918 — capacityKpi is the thirty-third: a management figure.
-    expect(onCount, featureManifest.length - 33);
+    // #1869 — accountingBook is the thirty-fourth: a finance decision.
+    expect(onCount, featureManifest.length - 34);
   });
 
   testWidgets(

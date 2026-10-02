@@ -100,6 +100,7 @@ const Map<String, String> _notExported = {
   'mcp_idempotency': 'replay records of MCP calls, operational state only (#1612)',
   'mcp_action_confirmations': 'a person\'s pending confirmation of an assistant request, never portable (#1619)',
   'mcp_usage': 'the audit of MCP calls and the count the limits read, operational state only (#1630)',
+  'book_profiles': 'who keeps the official books of each issuer is a finance decision taken on this installation, never copied with the data (#1869)',
   'workspace_recovery_evidence': 'the record that an export was taken; a copy of it would claim a backup the copy never had (#1636)',
   'readiness_acknowledgements': 'a person\'s own "later" on a setup section, per installation; a copy must re-ask (#1636)',
   // --- authority a copy must not carry by itself (#1287) ------------
