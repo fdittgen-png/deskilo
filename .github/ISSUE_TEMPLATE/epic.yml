@@ -3,6 +3,10 @@ description: A piece of work larger than one PR, with a validated breakdown
 labels: ["epic"]
 title: "Epic: "
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Breakdown items must be finite checkpoints, each with its own outcome, non-goals and acceptance; no recursive decomposition. See [Ready, Done and closure](https://github.com/fdittgen-png/deskilo/blob/master/docs/AGENT_RULES.md#ready-done-and-closure). A PR that finishes only part of this issue says `Refs`, not `Closes`.
   - type: textarea
     id: goal
     attributes:
