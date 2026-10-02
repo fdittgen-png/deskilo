@@ -243,7 +243,7 @@ wait "$first_out" || fail "the first checkout did not commit"
 state=$(psql_q "select status || '|' || (checked_out_at is not null) from public.reservations where id = '$RES2'")
 case "$second_out" in
   *"not checked in"*)
-    [ "$state" = "completed|t" ] || fail "after two checkouts the reservation reads '$state'"
+    [ "$state" = "completed|true" ] || fail "after two checkouts the reservation reads '$state'"
     say "checkout vs duplicate checkout: one checkout, the duplicate refused (not checked in)" ;;
   *)
     fail "a second concurrent checkout was not refused (it said: ${second_out:-nothing — it SUCCEEDED}).
@@ -268,10 +268,10 @@ sleep 1
 manual=$(psql "$DB_URL" -qX -c "begin; $RIVAL_ACT select public.check_out_reservation('$RES3'); commit;" 2>&1 || true)
 wait "$sweeper" || fail "the day-end sweep did not commit"
 closed=$(psql_q "select status || '|' || (checked_out_at = ends_at) from public.reservations where id = '$RES3'")
-if [ "$closed" = "completed|t" ]; then
+if [ "$closed" = "completed|true" ]; then
   say "day-end vs manual checkout: closed at the booking's end, the late manual checkout refused ($(echo "$manual" | grep -o 'ERROR:.*' | head -1))"
 else
-  fail "the day-end sweep and a manual checkout raced: the reservation reads '$closed' (want completed|t). #1908"
+  fail "the day-end sweep and a manual checkout raced: the reservation reads '$closed' (want completed|true). #1908"
 fi
 
 # Tidy up, so a second run on the same database fails on the property
