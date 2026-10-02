@@ -30,7 +30,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 
 | pair | imports |
 |---|---|
-| `money -> workspace` | 120 |
+| `money -> workspace` | 122 |
 | `reservations -> plan` | 72 |
 | `reservations -> workspace` | 60 |
 | `profile -> workspace` | 40 |
@@ -99,7 +99,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**68 directed relationships, 805 imports.**
+**68 directed relationships, 807 imports.**
 
 Reciprocal (20): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -110,10 +110,10 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | file | lines |
 |---|---|
 | `lib/core/demo/data/workspace_repository.dart` | 1991 |
-| `lib/core/demo/data/money_repository.dart` | 1831 |
+| `lib/core/demo/data/money_repository.dart` | 1848 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
 | `lib/features/workspace/domain/workspace_feature.dart` | 1567 |
-| `lib/features/money/data/supabase_money_repository.dart` | 1458 |
+| `lib/features/money/data/supabase_money_repository.dart` | 1469 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1316 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1300 |
 | `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1142 |

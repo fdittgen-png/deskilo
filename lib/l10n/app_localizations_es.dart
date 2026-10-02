@@ -270,6 +270,61 @@ class AppLocalizationsEs extends AppLocalizations {
       'El libro no se guardó. Compruebe la conexión e inténtelo de nuevo.';
 
   @override
+  String get bookRoleCustomers => 'Clientes (cuentas por cobrar)';
+
+  @override
+  String get bookRoleRevenue => 'Ingresos';
+
+  @override
+  String get bookRoleBank => 'Banco';
+
+  @override
+  String get bookRoleVatOutput => 'IVA repercutido';
+
+  @override
+  String get bookRoleExpenses => 'Gastos';
+
+  @override
+  String get bookTypeAsset => 'Activo';
+
+  @override
+  String get bookTypeLiability => 'Pasivo';
+
+  @override
+  String get bookTypeEquity => 'Patrimonio neto';
+
+  @override
+  String get bookTypeIncome => 'Ingreso';
+
+  @override
+  String get bookTypeExpense => 'Gasto';
+
+  @override
+  String bookChartTitle(String site) {
+    return 'Plan contable · $site';
+  }
+
+  @override
+  String get bookChartSuggest => 'Añadir las cuentas sugeridas para revisarlas';
+
+  @override
+  String get bookAccountCode => 'Código de cuenta';
+
+  @override
+  String get bookAccountName => 'Nombre de la cuenta';
+
+  @override
+  String get bookAccountPosting => 'Admite asientos';
+
+  @override
+  String get bookMappingsTitle => 'La cuenta de cada asiento';
+
+  @override
+  String bookProblemUnmapped(String roles) {
+    return 'Asigne estas cuentas antes de iniciar un libro local: $roles.';
+  }
+
+  @override
   String get fecAccountExpenses => 'Gastos';
 
   @override
@@ -12302,6 +12357,51 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
   @override
+  String get reminderHistoryTitle => 'Historial de recordatorios';
+
+  @override
+  String get reminderHistoryRefresh => 'Comprobar de nuevo el envío';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Nivel $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Preparado';
+
+  @override
+  String get reminderStatusQueued => 'Entregado al servicio de notificaciones';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Aceptado por el servicio de notificaciones — no prueba que se haya leído';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Compartido por el remitente — su declaración, no un acuse de recibo';
+
+  @override
+  String get reminderStatusFailed => 'No entregado';
+
+  @override
+  String get reminderStatusUnknown =>
+      'Sin respuesta del servicio de notificaciones';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Registrado antes del seguimiento de envíos — desconocido';
+
+  @override
+  String get reminderOriginManual => 'a mano';
+
+  @override
+  String get reminderOriginAutomatic => 'automático';
+
+  @override
+  String get reminderOriginLegacy => 'anterior';
+
+  @override
   String get reportGuideTitle => 'Campos y marcado';
 
   @override
@@ -12731,6 +12831,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportFieldGroupTexts => 'Sus textos';
+
+  @override
+  String get bookingSpaceChainTaken =>
+      'Este espacio, o un espacio que lo contiene, ya está reservado en ese periodo.';
+
+  @override
+  String get bookingNoLongerCheckedIn =>
+      'Esta reserva ya no está registrada — se cerró mientras tanto.';
 
   @override
   String get reserveMonthView => 'Mes';

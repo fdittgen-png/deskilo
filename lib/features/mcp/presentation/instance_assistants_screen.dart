@@ -3,7 +3,7 @@
 // #1827 B — the installation's assistant switches, for the instance
 // operator: the second factor every change needs, the runtime switch with
 // what still blocks it, the database administrators, and the assistants'
-// OAuth clients. The server decides who may (0339 `instance_*`); this
+// OAuth clients. The server decides who may (0340 `instance_*`); this
 // screen only shows what it answered and asks for what the person chose.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

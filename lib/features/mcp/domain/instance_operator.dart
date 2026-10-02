@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1827 B — what the instance operator sees and switches for the whole
-// installation's assistants (0339 `instance_mcp_overview`): readiness and
+// installation's assistants (0340 `instance_mcp_overview`): readiness and
 // its blockers, the database administrators, who could become one (an
 // active identity binding), and the assistants' OAuth clients.
 

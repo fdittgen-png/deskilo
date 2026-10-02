@@ -103,12 +103,13 @@ class BookProfile {
     'fiscal_year_start_month': fiscalYearStartMonth,
     'fiscal_year_start_day': fiscalYearStartDay,
     'accounting_basis': basis.name,
-    'effective_from': _date(effectiveFrom),
+    'effective_from': bookDate(effectiveFrom),
     'revision': revision,
   };
 }
 
-String _date(DateTime d) =>
+/// A calendar date on the wire: `2026-07-01`.
+String bookDate(DateTime d) =>
     '${d.year.toString().padLeft(4, '0')}-'
     '${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 

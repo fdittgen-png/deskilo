@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- 0338 — assistants use the profile's Google sign-in and nothing else.
+-- 0339 — assistants use the profile's Google sign-in and nothing else.
 -- A Google identity opened with OAuth is ready; the same account signed
 -- in by password must sign in with Google before consenting; an account
 -- without a Google identity can neither ask for approval nor consent.
@@ -9,7 +9,7 @@ select plan(7);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
-  g uuid := '00000000-0000-4000-8000-000000000338';
+  g uuid := '00000000-0000-4000-8000-000000000339';
   e uuid := '00000000-0000-4000-8000-000000000339';
 begin
   insert into auth.users (id, instance_id, aud, role, email, encrypted_password,

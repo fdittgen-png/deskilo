@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0339 (#1827 B) -- the installation's assistant switches, in the app.
+-- 0340 (#1827 B) -- the installation's assistant switches, in the app.
 --
 -- Until now three installation-wide steps were SQL-only, through the
 -- operator_* functions (service role): making someone a database
@@ -155,4 +155,4 @@ grant execute on function public.instance_set_mcp_runtime(boolean, text) to auth
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(339);
+select public.set_deskilo_schema_version(340);

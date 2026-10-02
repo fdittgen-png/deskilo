@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #1827 B (0339) — the installation's assistant switches answer the
+-- #1827 B (0340) — the installation's assistant switches answer the
 -- instance operator only, and every change needs the second factor.
 -- A member who is not the operator is refused the overview; the operator
 -- reads it; a change at aal1 is refused before anything is touched; at

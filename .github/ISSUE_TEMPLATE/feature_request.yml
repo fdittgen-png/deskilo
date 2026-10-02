@@ -2,6 +2,10 @@ name: Feature request
 description: Propose a new feature or improvement
 labels: ["enhancement"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        The detailed outcome, non-goals and acceptance are added when the issue is triaged for implementation (bug intake stays simple). See [Ready, Done and closure](https://github.com/fdittgen-png/deskilo/blob/master/docs/AGENT_RULES.md#ready-done-and-closure). A PR that finishes only part of this issue says `Refs`, not `Closes`.
   - type: textarea
     id: problem
     attributes:

@@ -27,7 +27,7 @@ enum McpConsentState { missing, current, unavailable }
 
 enum McpBackendState { available, unavailable, incompatible }
 
-/// 0338 — assistants use the profile's Google sign-in and nothing else.
+/// 0339 — assistants use the profile's Google sign-in and nothing else.
 enum McpGoogleState {
   /// A Google identity, and this session was opened with it.
   ready,
@@ -52,10 +52,10 @@ McpGoogleState mcpGoogleState(McpGoogleSignIn? google) =>
 
 /// The one thing that would move this person forward, and who does it.
 enum McpNextStep {
-  /// 0338 — the person links Google to the account (no Google: no MCP).
+  /// 0339 — the person links Google to the account (no Google: no MCP).
   linkGoogle,
 
-  /// 0338 — the person signs in again, with Google.
+  /// 0339 — the person signs in again, with Google.
   signInWithGoogle,
 
   /// The person links their account to the installation's identity.
@@ -178,7 +178,7 @@ class McpAccessStatus {
   /// The first unmet fact, in the order they depend on each other.
   McpNextStep get next {
     if (backend != McpBackendState.available) return McpNextStep.unavailable;
-    // 0338 — Google first: without it nothing below can be used.
+    // 0339 — Google first: without it nothing below can be used.
     if (google == McpGoogleState.linkGoogle) return McpNextStep.linkGoogle;
     if (google == McpGoogleState.signInWithGoogle) {
       return McpNextStep.signInWithGoogle;
