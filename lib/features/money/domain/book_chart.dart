@@ -12,7 +12,7 @@
 // version governs what is booked from then on and rewrites nothing
 // booked before. A local book cannot start until customers, revenue and
 // bank are mapped for its first day. The server enforces the same rules
-// (0336).
+// (0338).
 
 import 'coa_preview.dart';
 import 'vat_regime.dart';

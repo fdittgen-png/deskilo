@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0336 (#1869 B) -- the chart of accounts of one issuer, and the account
+-- 0338 (#1869 B) -- the chart of accounts of one issuer, and the account
 -- each posting role books to.
 --
 -- Small on purpose: the accounts a coworking issuer touches, reviewed by
@@ -338,4 +338,4 @@ grant execute on function public.save_book_profile(uuid, uuid, text, text, text,
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(336);
+select public.set_deskilo_schema_version(338);
