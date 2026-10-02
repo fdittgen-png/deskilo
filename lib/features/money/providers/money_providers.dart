@@ -372,6 +372,14 @@ Future<MemberAccount> myAccount(Ref ref) async {
   return ref.read(moneyRepositoryProvider).fetchMemberAccount(member.id);
 }
 
+/// #1913 — invoiceId → reason of its active dunning hold.
+@Riverpod(keepAlive: true)
+Future<Map<String, String>> dunningHolds(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const {};
+  return ref.read(moneyRepositoryProvider).fetchDunningHolds(workspace.id);
+}
+
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.
 @Riverpod(keepAlive: true)
 Future<Map<String, InvoiceMatch>> invoiceMatches(Ref ref) async {

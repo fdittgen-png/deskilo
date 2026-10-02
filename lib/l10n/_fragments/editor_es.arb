@@ -1,5 +1,7 @@
 {
   "@@locale": "es",
+  "editorMediaWriteFailed": "No se pudo confirmar que la imagen se guardó. Reintentar nunca la añade dos veces.",
+  "editorMediaSaving": "Guardando la imagen…",
   "editorBackgroundImage": "Imagen de fondo",
   "editorBackgroundSet": "Establecer imagen de fondo",
   "editorBackgroundReplace": "Reemplazar imagen de fondo",

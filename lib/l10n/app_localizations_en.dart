@@ -2034,10 +2034,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get capacityKpiPartial =>
-      'Partial: the plan, the opening hours and the seat blocks are today’s; their history is not recorded yet.';
-
-  @override
   String get capacityKpiUnattributed =>
       'Some reservations in this period point to a place that no longer exists; they are not counted.';
 
@@ -2059,6 +2055,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get capacityKpiRetry => 'Try again';
+
+  @override
+  String capacityKpiHistorySince(String date) {
+    return 'Counted from $date, when this workspace’s history began; earlier time is not known and not counted.';
+  }
+
+  @override
+  String capacityKpiNotRecorded(String date) {
+    return 'This period lies before the workspace’s history began on $date; there is nothing recorded to count.';
+  }
+
+  @override
+  String capacityKpiHistory(String date) {
+    return 'History recorded since $date';
+  }
+
+  @override
+  String get capacityKpiRoomsToday =>
+      'Rooms without seats are read as they are today.';
 
   @override
   String get featureCarnetsTitle => 'Carnets';
@@ -2888,6 +2903,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get memberPageNowHeading => 'Right now';
+
+  @override
+  String get editorMediaWriteFailed =>
+      'The image could not be confirmed as saved. Trying again never adds it twice.';
+
+  @override
+  String get editorMediaSaving => 'Saving the image…';
 
   @override
   String get editorBackgroundImage => 'Background image';
@@ -7024,6 +7046,56 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get reportDesignErrorInvalidDesign =>
       'That file carries no readable design.';
+
+  @override
+  String get invoiceHoldAction => 'Hold reminders';
+
+  @override
+  String get invoiceHoldReleaseAction => 'Release the reminder hold';
+
+  @override
+  String get invoiceHoldTitle => 'Why hold the reminders?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'No reminder is sent for this invoice, by hand or automatically, until the hold is released.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'The member disputes it';
+
+  @override
+  String get invoiceHoldReasonIdentity => 'Wrong person or identity error';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Insolvency proceedings';
+
+  @override
+  String get invoiceHoldReasonOther => 'Another reason';
+
+  @override
+  String get invoiceHoldNote => 'Note (optional)';
+
+  @override
+  String get invoiceHoldConfirm => 'Hold';
+
+  @override
+  String get invoiceHoldPlaced => 'Reminders are on hold for this invoice.';
+
+  @override
+  String get invoiceHoldReleased => 'Reminders can resume for this invoice.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Reminders on hold: $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'No agreed payment term was recorded for this invoice: reminders are not sent automatically until you review it.';
+
+  @override
+  String get invoiceHoldFailed =>
+      'The reminder hold could not be changed. Please try again.';
 
   @override
   String get invoicesManage => 'Manage invoices';

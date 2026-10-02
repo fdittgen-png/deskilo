@@ -2047,10 +2047,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get capacityKpiPartial =>
-      'Parziale: la planimetria, gli orari e i blocchi dei posti sono quelli di oggi; la loro storia non è ancora registrata.';
-
-  @override
   String get capacityKpiUnattributed =>
       'Alcune prenotazioni del periodo riguardano un posto che non esiste più; non vengono contate.';
 
@@ -2072,6 +2068,25 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get capacityKpiRetry => 'Riprova';
+
+  @override
+  String capacityKpiHistorySince(String date) {
+    return 'Contato dal $date, quando è iniziata la storia di questo spazio; il tempo precedente non è noto e non viene contato.';
+  }
+
+  @override
+  String capacityKpiNotRecorded(String date) {
+    return 'Questo periodo precede l’inizio della storia dello spazio, il $date; non c’è nulla di registrato da contare.';
+  }
+
+  @override
+  String capacityKpiHistory(String date) {
+    return 'Storia registrata dal $date';
+  }
+
+  @override
+  String get capacityKpiRoomsToday =>
+      'Le sale senza posti sono lette come sono oggi.';
 
   @override
   String get featureCarnetsTitle => 'Carnet';
@@ -2906,6 +2921,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberPageNowHeading => 'In questo momento';
+
+  @override
+  String get editorMediaWriteFailed =>
+      'Non è stato possibile confermare il salvataggio dell\'immagine. Riprovare non la aggiunge mai due volte.';
+
+  @override
+  String get editorMediaSaving => 'Salvataggio dell\'immagine…';
 
   @override
   String get editorBackgroundImage => 'Immagine di sfondo';
@@ -7084,6 +7106,59 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get reportDesignErrorInvalidDesign =>
       'Questo file non contiene alcun modello leggibile.';
+
+  @override
+  String get invoiceHoldAction => 'Sospendi i solleciti';
+
+  @override
+  String get invoiceHoldReleaseAction => 'Revoca la sospensione dei solleciti';
+
+  @override
+  String get invoiceHoldTitle => 'Perché sospendere i solleciti?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'Nessun sollecito viene inviato per questa fattura, né a mano né automaticamente, finché la sospensione non viene revocata.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'Il membro la contesta';
+
+  @override
+  String get invoiceHoldReasonIdentity =>
+      'Persona sbagliata o errore d\'identità';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Procedura di insolvenza';
+
+  @override
+  String get invoiceHoldReasonOther => 'Un\'altra ragione';
+
+  @override
+  String get invoiceHoldNote => 'Nota (facoltativa)';
+
+  @override
+  String get invoiceHoldConfirm => 'Sospendi';
+
+  @override
+  String get invoiceHoldPlaced =>
+      'I solleciti per questa fattura sono sospesi.';
+
+  @override
+  String get invoiceHoldReleased =>
+      'I solleciti per questa fattura possono riprendere.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Solleciti sospesi: $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'Per questa fattura non è stata registrata una scadenza concordata: nessun sollecito automatico finché non la verifichi.';
+
+  @override
+  String get invoiceHoldFailed =>
+      'Non è stato possibile modificare la sospensione dei solleciti. Riprova.';
 
   @override
   String get invoicesManage => 'Gestire le fatture';
