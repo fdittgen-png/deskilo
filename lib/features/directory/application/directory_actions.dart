@@ -8,19 +8,24 @@ class PublicationActions {
   final PublicationRepository repository;
   Future<Map<String, dynamic>> ownPage(String workspace) =>
       repository.ownPage(workspace);
+
+  /// Saves the page. An inherited field named in [following] is left out,
+  /// so it keeps following the workspace information (#2086); any other
+  /// value, even blank, is the owner's override.
   Future<Map<String, dynamic>> savePage(
     String workspace,
     Map<String, String> document,
-    bool published,
-  ) {
+    bool published, {
+    Set<String> following = const {},
+  }) {
     final normalized = {
-      for (final entry in document.entries) entry.key: entry.value.trim(),
+      for (final entry in document.entries)
+        if (!(following.contains(entry.key) &&
+            publicInheritedFields.contains(entry.key)))
+          entry.key: entry.value.trim(),
     };
-    if (!{
-      'association',
-      'company',
-      'person',
-    }.contains(normalized['host_type'])) {
+    final host = normalized['host_type'];
+    if (host != null && !{'association', 'company', 'person'}.contains(host)) {
       throw ArgumentError('invalid host type');
     }
     for (final key in ['website', 'image_url', 'plan_url']) {
@@ -35,6 +40,19 @@ class PublicationActions {
       }
     }
     return repository.savePage(workspace, normalized, published);
+  }
+
+  /// #2086 — back to the workspace information: [fields], or every
+  /// inherited field when null.
+  Future<Map<String, dynamic>> resetPage(
+    String workspace, {
+    Set<String>? fields,
+  }) {
+    if (fields != null &&
+        (fields.isEmpty || !fields.every(publicInheritedFields.contains))) {
+      throw ArgumentError('not an inherited public field');
+    }
+    return repository.resetPage(workspace, fields: fields);
   }
 }
 
