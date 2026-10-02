@@ -85,7 +85,12 @@ enum WorkspacePermission {
   deployToDev,
 
   /// #989 — enter the production side of a pair at all.
-  accessProd;
+  accessProd,
+
+  /// #1921 — read the workspace's aggregated operational KPIs (seat
+  /// utilisation). No people, no money, no export: finance and personal
+  /// figures keep needing their own permissions.
+  viewAnalytics;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;
@@ -131,6 +136,9 @@ Set<WorkspacePermission> defaultPermissionsFor(PermissionRole role) =>
           // #989 — an admin refreshes the dev and enters the prod.
           WorkspacePermission.deployToDev,
           WorkspacePermission.accessProd,
+          // #1921 — admins already read capacity through
+          // manageReservations; the narrower right keeps that.
+          WorkspacePermission.viewAnalytics,
         },
       PermissionRole.member => <WorkspacePermission>{},
     };

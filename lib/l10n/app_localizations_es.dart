@@ -2143,6 +2143,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las salas sin puestos se leen tal como están hoy.';
 
   @override
+  String get permViewAnalytics => 'Consultar las cifras del espacio';
+
+  @override
   String get featureCarnetsTitle => 'Bonos';
 
   @override
@@ -10926,6 +10929,70 @@ class AppLocalizationsEs extends AppLocalizations {
   String get portalResetAllConfirm => 'Restablecer';
 
   @override
+  String get privacyNoticeTitle => 'Quién trata tus datos';
+
+  @override
+  String privacyNoticeController(String name, String contact) {
+    return 'Responsable del tratamiento: $name — $contact';
+  }
+
+  @override
+  String privacyNoticeRights(String contact) {
+    return 'Tus derechos: $contact';
+  }
+
+  @override
+  String privacyNoticeRegion(String region) {
+    return 'Región: $region';
+  }
+
+  @override
+  String privacyNoticeTransfer(String mechanism) {
+    return 'Garantía de transferencia: $mechanism';
+  }
+
+  @override
+  String get privacyNoticeNotRecorded => 'no registrado por el operador';
+
+  @override
+  String get privacyNoticeEssential => 'Necesario para la cuenta y el espacio';
+
+  @override
+  String get privacyNoticeOptional =>
+      'Opcional — puedes usar la aplicación sin ello';
+
+  @override
+  String get privacyNoticeRightsRoute => 'Tus derechos y el contacto';
+
+  @override
+  String get privacySpaceNotice => 'El aviso de privacidad de este espacio';
+
+  @override
+  String get privacySpaceNoticeRead =>
+      'Has tomado conocimiento de esta versión.';
+
+  @override
+  String get privacySpaceNoticeUnread => 'Aún no leído — léelo aquí.';
+
+  @override
+  String get privacySpaceNoticeAcknowledge => 'He leído este aviso';
+
+  @override
+  String get privacySpaceNoticeFailed =>
+      'No se pudo registrar la toma de conocimiento. Inténtalo de nuevo.';
+
+  @override
+  String get privacyPushOnDevice => 'Notificaciones push en este dispositivo';
+
+  @override
+  String get privacyPushOnDeviceHint =>
+      'Opcional. Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push; desactivado, la aplicación sigue funcionando y no se envía nada a este dispositivo.';
+
+  @override
+  String get privacyPushOnDeviceFailed =>
+      'No se pudo guardar la elección. Inténtalo de nuevo.';
+
+  @override
   String get featuresViewProcesses => 'Procesos';
 
   @override
@@ -11430,7 +11497,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get privacyIntro =>
-      'Sus datos permanecen en la UE, nunca se rastrean ni se venden, y solo los leen los roles que nombran las reglas de abajo. Estos son sus derechos según el RGPD — cada uno es un botón.';
+      'Tus datos nunca se rastrean ni se venden, y solo los pueden leer los roles que nombran las reglas de abajo; dónde se alojan figura en el aviso de privacidad de esta instalación. Estos son tus derechos según el RGPD — cada uno es un botón.';
 
   @override
   String get privacyWhoCanSee => 'Quién puede ver mis datos';

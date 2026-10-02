@@ -8,6 +8,7 @@ import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/profile/domain/profile_repository.dart';
 
 import 'fixture_clock.dart';
+import 'package:deskilo/features/profile/domain/privacy_notice.dart';
 
 /// In-memory [ProfileRepository] for widget/unit tests (#223).
 class FakeProfileRepository implements ProfileRepository {
@@ -82,6 +83,45 @@ class FakeProfileRepository implements ProfileRepository {
 
   /// #751 — versions accepted through [acceptPrivacyPolicy].
   final acceptedPolicyVersions = <String>[];
+
+  /// #1914 — what the server would publish; the installation notice is
+  /// the shipped version unless a test says otherwise.
+  PrivacyNotices notices = const PrivacyNotices(
+    installation: PrivacyNotice(
+      version: kPrivacyPolicyVersion,
+      controllerName: 'Demo space operator',
+      controllerContact: 'privacy@demo.invalid',
+      rightsContact: 'privacy@demo.invalid',
+      retention: 'as the privacy policy describes',
+      recipients: [],
+    ),
+  );
+
+  /// #1914 — `<workspace>:<version>` acknowledged through the fake.
+  final acknowledgedNotices = <String>[];
+
+  @override
+  Future<PrivacyNotices> fetchPrivacyNotices(String? workspaceId) async =>
+      PrivacyNotices(
+        installation: notices.installation,
+        workspace: notices.workspace,
+        workspaceId: workspaceId,
+        acknowledgedVersions: {
+          ...notices.acknowledgedVersions,
+          ...acknowledgedNotices,
+        },
+      );
+
+  @override
+  Future<void> acknowledgeWorkspaceNotice(
+    String workspaceId,
+    String version,
+  ) async {
+    if (notices.workspace?.version != version) {
+      throw StateError('that is not the current privacy notice of this space');
+    }
+    acknowledgedNotices.add('$workspaceId:$version');
+  }
 
   @override
   Future<void> acceptPrivacyPolicy(String version) async {

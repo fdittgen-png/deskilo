@@ -21,6 +21,7 @@ import '../../../calendar/presentation/widgets/access_sheet.dart';
 import '../../../calendar/providers/calendar_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../widgets/privacy_choice_tiles.dart';
 
 /// The policy the store listings, the README and the help all point at.
 const kPrivacyPolicyUrl = 'https://fdittgen-png.github.io/deskilo/privacy.html';
@@ -51,9 +52,10 @@ class PrivacyScreen extends ConsumerWidget {
           padding: AppSpacing.lgAll,
           child: Text(
             l10n?.privacyIntro ??
-                'Your data stays in the EU, is never tracked or sold, and is '
-                    'readable only by the roles the rules below name. These '
-                    'are your rights under the GDPR — each one is a button.',
+                'Your data is never tracked or sold, and is readable only by '
+                    'the roles the rules below name; where it is hosted is in '
+                    "this installation's privacy notice. These are your rights "
+                    'under the GDPR — each one is a button.',
             style: theme.textTheme.bodyMedium,
           ),
         ),
@@ -108,6 +110,10 @@ class PrivacyScreen extends ConsumerWidget {
             enabled: !isOwner,
             onTap: isOwner ? null : () => _erase(context, ref),
           ),
+        // #1914 — this space's own notice, and acknowledging it.
+        const SpaceNoticeTile(),
+        // #1914 — optional push delivery, off or on for this device.
+        const PushOptOutTile(),
         ListTile(
           key: const ValueKey('privacy-consent'),
           leading: const Icon(Icons.fact_check_outlined),

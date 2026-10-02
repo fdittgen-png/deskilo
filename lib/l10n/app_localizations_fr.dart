@@ -2149,6 +2149,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les salles sans place sont lues telles qu\'elles sont aujourd\'hui.';
 
   @override
+  String get permViewAnalytics => 'Consulter les chiffres de l\'espace';
+
+  @override
   String get featureCarnetsTitle => 'Carnets';
 
   @override
@@ -10965,6 +10968,71 @@ class AppLocalizationsFr extends AppLocalizations {
   String get portalResetAllConfirm => 'Rétablir';
 
   @override
+  String get privacyNoticeTitle => 'Qui traite vos données';
+
+  @override
+  String privacyNoticeController(String name, String contact) {
+    return 'Responsable du traitement : $name — $contact';
+  }
+
+  @override
+  String privacyNoticeRights(String contact) {
+    return 'Vos droits : $contact';
+  }
+
+  @override
+  String privacyNoticeRegion(String region) {
+    return 'Région : $region';
+  }
+
+  @override
+  String privacyNoticeTransfer(String mechanism) {
+    return 'Garantie de transfert : $mechanism';
+  }
+
+  @override
+  String get privacyNoticeNotRecorded => 'non renseigné par l\'exploitant';
+
+  @override
+  String get privacyNoticeEssential =>
+      'Nécessaire au fonctionnement du compte et de l\'espace';
+
+  @override
+  String get privacyNoticeOptional =>
+      'Facultatif — vous pouvez utiliser l\'application sans';
+
+  @override
+  String get privacyNoticeRightsRoute => 'Vos droits et le contact';
+
+  @override
+  String get privacySpaceNotice => 'La notice de confidentialité de cet espace';
+
+  @override
+  String get privacySpaceNoticeRead =>
+      'Vous avez pris connaissance de cette version.';
+
+  @override
+  String get privacySpaceNoticeUnread => 'Pas encore lue — lisez-la ici.';
+
+  @override
+  String get privacySpaceNoticeAcknowledge => 'J\'ai lu cette notice';
+
+  @override
+  String get privacySpaceNoticeFailed =>
+      'La prise de connaissance n\'a pas pu être enregistrée. Veuillez réessayer.';
+
+  @override
+  String get privacyPushOnDevice => 'Notifications push sur cet appareil';
+
+  @override
+  String get privacyPushOnDeviceHint =>
+      'Facultatif. Activé, l\'adresse de cet appareil et chaque notification passent par le service de notifications ; désactivé, l\'application fonctionne et rien n\'est envoyé à cet appareil.';
+
+  @override
+  String get privacyPushOnDeviceFailed =>
+      'Le choix n\'a pas pu être enregistré. Veuillez réessayer.';
+
+  @override
   String get featuresViewProcesses => 'Processus';
 
   @override
@@ -11470,7 +11538,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get privacyIntro =>
-      'Vos données restent dans l\'UE, ne sont ni tracées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment. Voici vos droits au titre du RGPD — chacun est un bouton.';
+      'Vos données ne sont jamais pistées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment ; leur hébergement figure dans la notice de confidentialité de cette installation. Voici vos droits au titre du RGPD — chacun est un bouton.';
 
   @override
   String get privacyWhoCanSee => 'Qui peut voir mes données';

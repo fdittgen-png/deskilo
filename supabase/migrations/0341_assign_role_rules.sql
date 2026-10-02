@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0340 (#2085) -- who may give a workspace's own role, and the record of it.
+-- 0341 (#2085) -- who may give a workspace's own role, and the record of it.
 --
 -- `assign_workspace_role` (0247) asked one question: does the caller hold
 -- manageRoles? That let anybody holding it hand a teammate a role that
@@ -109,4 +109,4 @@ grant execute on function public.assign_workspace_role(uuid, uuid, boolean)
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(340);
+select public.set_deskilo_schema_version(341);

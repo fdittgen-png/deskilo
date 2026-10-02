@@ -8,6 +8,7 @@ import '../domain/profile.dart';
 import '../domain/profile_projection.dart';
 import '../domain/personal_info.dart';
 import '../domain/profile_repository.dart';
+import '../domain/privacy_notice.dart';
 
 class SupabaseProfileRepository implements ProfileRepository {
   SupabaseProfileRepository(this._client);
@@ -147,6 +148,25 @@ class SupabaseProfileRepository implements ProfileRepository {
     'accept_privacy_policy',
     params: {'p_version': version},
   );
+
+  @override
+  Future<PrivacyNotices> fetchPrivacyNotices(String? workspaceId) async {
+    final row = await _client.rpc<dynamic>(
+      'current_privacy_notice',
+      params: {'p_workspace_id': workspaceId},
+    );
+    return row is Map
+        ? PrivacyNotices.fromJson(
+            Map<String, dynamic>.from(row),
+            workspaceId: workspaceId,
+          )
+        : PrivacyNotices.none;
+  }
+
+  @override
+  Future<void> acknowledgeWorkspaceNotice(String workspaceId, String version) =>
+      _client.rpc<void>('acknowledge_workspace_notice',
+          params: {'p_workspace_id': workspaceId, 'p_version': version});
 
   @override
   Future<void> touchLastSeen() async {

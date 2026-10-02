@@ -3,7 +3,7 @@
 // #2085 — the activity line for a role given or taken back.
 //
 // Invariant: a grant of one of the workspace's own roles is recorded by
-// `assign_workspace_role` (0340) with the role's key, its names as they
+// `assign_workspace_role` (0341) with the role's key, its names as they
 // read that day and the direction, and no `make_admin`. The activity
 // line names the role in the reader's language and the member it was
 // given to; the Administrator role's quorum request keeps its own line.

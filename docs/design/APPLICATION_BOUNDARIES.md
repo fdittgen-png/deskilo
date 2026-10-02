@@ -128,7 +128,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/widgets/bill_view.dart` | 892 |
 | `lib/features/reservations/presentation/widgets/space_scan.dart` | 889 |
 | `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 871 |
-| `lib/app/router.dart` | 869 |
+| `lib/app/router.dart` | 870 |
 | `lib/features/workspace/presentation/screens/availability_screen.dart` | 860 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 851 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
@@ -141,8 +141,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 711 |
 | `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
+| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 656 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
-| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 655 |
 | `lib/core/help/help_anchors.dart` | 649 |
 | `lib/features/workspace/presentation/screens/onboarding_screen.dart` | 633 |
 | `lib/features/workspace/providers/workspace_providers.dart` | 632 |
