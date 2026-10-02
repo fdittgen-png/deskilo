@@ -4445,6 +4445,71 @@
   "reportDesignErrorUnknownKind": "Questo modello riguarda un report che questo spazio non ha.",
   "reportDesignErrorWrongKind": "Questo modello appartiene a un altro report. Aprilo e importalo lì.",
   "reportDesignErrorInvalidDesign": "Questo file non contiene alcun modello leggibile.",
+  "invoiceHoldAction": "Sospendi i solleciti",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Revoca la sospensione dei solleciti",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "Perché sospendere i solleciti?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "Nessun sollecito viene inviato per questa fattura, né a mano né automaticamente, finché la sospensione non viene revocata.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "Il membro la contesta",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Persona sbagliata o errore d'identità",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Procedura di insolvenza",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Un'altra ragione",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Nota (facoltativa)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Sospendi",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "I solleciti per questa fattura sono sospesi.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "I solleciti per questa fattura possono riprendere.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Solleciti sospesi: {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "Per questa fattura non è stata registrata una scadenza concordata: nessun sollecito automatico finché non la verifichi.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "Non è stato possibile modificare la sospensione dei solleciti. Riprova.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Gestire le fatture",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"

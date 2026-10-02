@@ -7108,6 +7108,59 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo file non contiene alcun modello leggibile.';
 
   @override
+  String get invoiceHoldAction => 'Sospendi i solleciti';
+
+  @override
+  String get invoiceHoldReleaseAction => 'Revoca la sospensione dei solleciti';
+
+  @override
+  String get invoiceHoldTitle => 'Perché sospendere i solleciti?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'Nessun sollecito viene inviato per questa fattura, né a mano né automaticamente, finché la sospensione non viene revocata.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'Il membro la contesta';
+
+  @override
+  String get invoiceHoldReasonIdentity =>
+      'Persona sbagliata o errore d\'identità';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Procedura di insolvenza';
+
+  @override
+  String get invoiceHoldReasonOther => 'Un\'altra ragione';
+
+  @override
+  String get invoiceHoldNote => 'Nota (facoltativa)';
+
+  @override
+  String get invoiceHoldConfirm => 'Sospendi';
+
+  @override
+  String get invoiceHoldPlaced =>
+      'I solleciti per questa fattura sono sospesi.';
+
+  @override
+  String get invoiceHoldReleased =>
+      'I solleciti per questa fattura possono riprendere.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Solleciti sospesi: $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'Per questa fattura non è stata registrata una scadenza concordata: nessun sollecito automatico finché non la verifichi.';
+
+  @override
+  String get invoiceHoldFailed =>
+      'Non è stato possibile modificare la sospensione dei solleciti. Riprova.';
+
+  @override
   String get invoicesManage => 'Gestire le fatture';
 
   @override

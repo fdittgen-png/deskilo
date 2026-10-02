@@ -4445,6 +4445,71 @@
   "reportDesignErrorUnknownKind": "Cette maquette concerne un rapport que cet espace n'a pas.",
   "reportDesignErrorWrongKind": "Cette maquette appartient à un autre rapport. Ouvrez ce rapport et importez-la là.",
   "reportDesignErrorInvalidDesign": "Ce fichier ne contient aucune maquette lisible.",
+  "invoiceHoldAction": "Suspendre les relances",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Lever la suspension des relances",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "Pourquoi suspendre les relances ?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "Aucune relance n'est envoyée pour cette facture, à la main ou automatiquement, tant que la suspension n'est pas levée.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "Le membre la conteste",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Mauvaise personne ou erreur d'identité",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Procédure d'insolvabilité",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Une autre raison",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Note (facultatif)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Suspendre",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "Les relances sont suspendues pour cette facture.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "Les relances peuvent reprendre pour cette facture.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Relances suspendues : {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "Aucune échéance convenue n'a été enregistrée pour cette facture : aucune relance automatique tant que vous ne l'avez pas examinée.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "La suspension des relances n'a pas pu être modifiée. Veuillez réessayer.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Gérer les factures",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
