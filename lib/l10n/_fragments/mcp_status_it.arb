@@ -1,14 +1,14 @@
 {
   "@@locale": "it",
   "mcpStatusTitle": "A che punto sei qui",
-  "mcpStatusIdentity": "Identità",
+  "mcpStatusIdentity": "Identità per gli assistenti",
   "mcpStatusEligibility": "Approvazione del database",
   "mcpStatusExposure": "Offerta dello spazio di lavoro",
   "mcpStatusRole": "Il tuo ruolo",
   "mcpStatusConsent": "Il tuo consenso",
   "mcpStatusBackend": "Server",
   "mcpStateVerified": "Verificata",
-  "mcpStateUnlinked": "Non collegata",
+  "mcpStateUnlinked": "Non confermata",
   "mcpStateNotRequested": "Non richiesta",
   "mcpStatePending": "In attesa di una decisione",
   "mcpStateApproved": "Approvata",
@@ -22,7 +22,7 @@
   "mcpStateAvailable": "Raggiungibile",
   "mcpStateIncompatible": "Versione incompatibile",
   "mcpStateUnavailable": "Sconosciuto",
-  "mcpNextLinkIdentity": "Prossimo passo: collega il tuo account all'identità di questo database.",
+  "mcpNextLinkIdentity": "Prossimo passo: conferma la tua identità per gli assistenti su questa base, con un tocco qui sotto.",
   "mcpNextRequestEligibility": "Prossimo passo: chiedi l'approvazione agli amministratori di questo database.",
   "mcpNextAwaitEligibility": "Prossimo passo: un amministratore del database decide la tua richiesta.",
   "mcpNextOwnerExposes": "Prossimo passo: il titolare dello spazio di lavoro offre operazioni agli assistenti.",
@@ -33,5 +33,9 @@
   "mcpStatusOpenLinkedAccounts": "Apri gli account collegati",
   "mcpOverviewTitle": "Altri database collegati",
   "mcpOverviewUnavailable": "Non è stato possibile interrogarlo ora.",
-  "mcpReviewSecondFactor": "Quel database richiede il tuo secondo fattore nella propria sessione. Non è stato deciso nulla."
+  "mcpReviewSecondFactor": "Quel database richiede il tuo secondo fattore nella propria sessione. Non è stato deciso nulla.",
+  "mcpStatusConfirmIdentity": "Conferma la mia identità",
+  "mcpStateAfterPrevious": "Dopo il passaggio precedente",
+  "mcpIdentityIneligible": "Questo account non può ancora essere confermato: conferma prima il tuo indirizzo e-mail o accedi con un provider.",
+  "mcpIdentityConflict": "Un altro account detiene già questa identità qui: un amministratore della base può risolverlo."
 }

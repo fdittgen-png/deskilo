@@ -45,6 +45,11 @@ class AssistantAccess {
   final McpCommands _commands;
   final IdentityBindingRepository _identity;
 
+  /// Binds this account to the installation's identity (0269) — the
+  /// first assistant step, taken here in one tap. It confers nothing by
+  /// itself: no membership, no role, no eligibility.
+  Future<IdentityBindingStatus> confirmIdentity() => _identity.finalize();
+
   Future<DatabaseCapabilities> requestEligibility() =>
       _identity.requestMcpEligibility();
   Future<DatabaseCapabilities> withdrawEligibility() =>

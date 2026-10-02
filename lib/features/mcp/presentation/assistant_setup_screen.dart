@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'confirm_identity.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_spacing.dart';
@@ -233,8 +234,8 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
       AssistantSetupStep.identity when item.canAct => [
         button(
           'link-identity',
-          l10n?.assistantSetupLinkIdentity ?? 'Link my identity',
-          () => context.push('/linked-accounts'),
+          l10n?.assistantSetupLinkIdentity ?? 'Confirm my identity',
+          () => confirmAssistantIdentity(context, ref),
         ),
       ],
       AssistantSetupStep.workspace when item.canAct => [
