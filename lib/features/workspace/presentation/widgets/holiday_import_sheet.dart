@@ -20,6 +20,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/import_public_holidays.dart';
 import '../../domain/holiday_import.dart';
+import '../../domain/holiday_regions.dart';
 import '../../domain/public_holidays.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/holiday_import_providers.dart';
@@ -276,7 +277,10 @@ class _HolidayImportSheetState extends ConsumerState<HolidayImportSheet> {
                     ),
                   ),
                   for (final r in regions)
-                    DropdownMenuItem<String?>(value: r, child: Text(r)),
+                    DropdownMenuItem<String?>(
+                      value: r,
+                      child: _regionLabel(r, theme),
+                    ),
                 ],
                 onChanged: _busy ? null : _setRegion,
               ),
@@ -347,6 +351,27 @@ class _HolidayImportSheetState extends ConsumerState<HolidayImportSheet> {
     );
   }
 
+  /// The region's name, its code beside it as secondary text (#2079); a
+  /// code without a name is shown alone.
+  Widget _regionLabel(String code, ThemeData theme) {
+    final name = holidayRegionName(code);
+    return Text.rich(
+      TextSpan(
+        text: name,
+        children: [
+          if (name != code)
+            TextSpan(
+              text: '  $code',
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+        ],
+      ),
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
   Widget _tile(ImportedHoliday d, AppLocalizations? l10n, String locale) {
     final key = _dayKey(d.day);
     final v = _byDay[key];
@@ -354,7 +379,8 @@ class _HolidayImportSheetState extends ConsumerState<HolidayImportSheet> {
     final details = [
       DateFormat.yMMMMd(locale).format(d.day),
       if (d.name.isNotEmpty && d.name != d.localName) d.name,
-      if (d.regions.isNotEmpty) d.regions.join(', '),
+      if (d.regions.isNotEmpty)
+        sortHolidayRegions(d.regions).map(holidayRegionName).join(', '),
       if (v?.locked ?? false)
         l10n?.publicHolidaysLocked ?? 'Invoiced month — not created'
       else if (v?.present ?? false)

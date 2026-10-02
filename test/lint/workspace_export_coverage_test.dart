@@ -142,6 +142,12 @@ const Map<String, String> _notExported = {
       'the published privacy notices (#1914); public text every member '
           'reads in the app, and the installation\'s own rows belong to no '
           'space at all',
+  'reminder_intents':
+      'one row per payment reminder and its delivery status (#1922); the '
+          'invoices tab already shows reminders, and this is collection '
+          'evidence, not data an operator re-imports',
+  'reminder_attempts':
+      'the append-only delivery evidence of each reminder (#1922); as above',
   'workspace_field_value_options':
       'which choices one member made; personal in the same way',
   'rights_requests':
