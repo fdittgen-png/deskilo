@@ -9691,6 +9691,12 @@ abstract class AppLocalizations {
   /// **'The customer\'s country is missing.'**
   String get invoiceGapMissingBuyerCountry;
 
+  /// #1919 — e-invoice export refused: a credit note that also nets payments has no EN 16931 credit-note form
+  ///
+  /// In en, this message translates to:
+  /// **'This credit note also nets payments, which an EN 16931 credit note cannot state. Issue the credit on its own document.'**
+  String get invoiceGapCreditNoteWithPayments;
+
   /// Gap: BR-16 — an invoice needs at least one line
   ///
   /// In en, this message translates to:

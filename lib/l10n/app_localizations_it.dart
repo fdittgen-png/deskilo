@@ -5682,6 +5682,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceGapMissingBuyerCountry => 'Manca il paese del cliente.';
 
   @override
+  String get invoiceGapCreditNoteWithPayments =>
+      'Questa nota di credito compensa anche dei pagamenti, cosa che una nota di credito EN 16931 non può esprimere. Emetti l\'accredito su un documento a parte.';
+
+  @override
   String get invoiceGapNoChargeLines =>
       'Questa fattura non ha righe di addebito — il mese era interamente coperto dai pagamenti, quindi non c’è nulla da trasmettere.';
 

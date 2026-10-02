@@ -3501,6 +3501,7 @@
   "invoiceGapMissingExemptionReason": "Falta el motivo por el que no se cobra IVA.",
   "invoiceGapMissingSellerCountry": "Falta el país del espacio.",
   "invoiceGapMissingBuyerCountry": "Falta el país del cliente.",
+  "invoiceGapCreditNoteWithPayments": "Esta factura rectificativa también compensa pagos, algo que una nota de crédito EN 16931 no puede expresar. Emita el abono en un documento propio.",
   "invoiceGapNoChargeLines": "Esta factura no tiene ninguna línea de cargo — su mes quedó cubierto por los pagos, así que no hay nada que enviar.",
   "invoiceGapMissingSellerCity": "la ciudad de la dirección del espacio",
   "invoiceGapMissingSellerPostalCode": "el código postal de la dirección del espacio",

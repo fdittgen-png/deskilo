@@ -5680,6 +5680,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceGapMissingBuyerCountry => 'Das Land des Kunden fehlt.';
 
   @override
+  String get invoiceGapCreditNoteWithPayments =>
+      'Diese Gutschrift verrechnet auch Zahlungen, was eine EN-16931-Gutschrift nicht ausdrücken kann. Stellen Sie die Gutschrift als eigenes Dokument aus.';
+
+  @override
   String get invoiceGapNoChargeLines =>
       'Diese Rechnung hat keine Belastungsposition — ihr Monat war vollständig durch Zahlungen gedeckt, es gibt nichts zu übermitteln.';
 

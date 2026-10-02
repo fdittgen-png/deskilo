@@ -5678,6 +5678,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceGapMissingBuyerCountry => 'Falta el país del cliente.';
 
   @override
+  String get invoiceGapCreditNoteWithPayments =>
+      'Esta factura rectificativa también compensa pagos, algo que una nota de crédito EN 16931 no puede expresar. Emita el abono en un documento propio.';
+
+  @override
   String get invoiceGapNoChargeLines =>
       'Esta factura no tiene ninguna línea de cargo — su mes quedó cubierto por los pagos, así que no hay nada que enviar.';
 
