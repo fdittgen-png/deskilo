@@ -8275,6 +8275,162 @@ abstract class AppLocalizations {
   /// **'The holidays could not be checked or imported. Nothing was changed.'**
   String get holidayImportFailed;
 
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Installation: assistants'**
+  String get instanceTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.'**
+  String get instanceIntro;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Only the instance operator manages the installation\'s assistants.'**
+  String get instanceNotOperator;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Changes here need your second factor on this session.'**
+  String get instanceSecondFactorNeeded;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm with my authenticator'**
+  String get instanceConfirmSecondFactor;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants on this installation'**
+  String get instanceRuntimeTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get instanceRuntimeOn;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get instanceRuntimeOff;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on for every workspace'**
+  String get instanceTurnOn;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off'**
+  String get instanceTurnOff;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants become usable in every workspace that offers them. You can turn them off again at any time.'**
+  String get instanceTurnOnConfirm;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Still missing:'**
+  String get instanceBlockers;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'a database administrator'**
+  String get instanceBlockerNoAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Database administrators'**
+  String get instanceAdminsTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.'**
+  String get instanceAdminsHelp;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Make administrator'**
+  String get instanceMakeAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get instanceRemoveAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody else has confirmed their identity yet.'**
+  String get instanceNoCandidates;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get instanceYou;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant clients'**
+  String get instanceClientsTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'An assistant registers itself the first time someone connects it; it works only once approved here.'**
+  String get instanceClientsHelp;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get instanceClientWaiting;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get instanceClientApproved;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get instanceClientBlocked;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get instanceApprove;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get instanceBlock;
+
   /// #1829 Instance owner claim: instanceOwnerClaimIntro
   ///
   /// In en, this message translates to:
@@ -14664,6 +14820,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Another account already holds this identity here — a database administrator can resolve it.'**
   String get mcpIdentityConflict;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in'**
+  String get mcpStatusGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Link Google'**
+  String get mcpStatusLinkGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get mcpStatusSignInGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in with Google'**
+  String get mcpStateGoogleReady;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in another way'**
+  String get mcpStateGoogleOtherSession;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Google not linked'**
+  String get mcpStateGoogleMissing;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.'**
+  String get mcpNextLinkGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants use your Google sign-in. Sign in with Google to continue.'**
+  String get mcpNextSignInGoogle;
 
   /// #1630 mcp_usage
   ///

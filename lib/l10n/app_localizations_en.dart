@@ -4783,6 +4783,91 @@ class AppLocalizationsEn extends AppLocalizations {
       'The holidays could not be checked or imported. Nothing was changed.';
 
   @override
+  String get instanceTitle => 'Installation: assistants';
+
+  @override
+  String get instanceIntro =>
+      'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.';
+
+  @override
+  String get instanceNotOperator =>
+      'Only the instance operator manages the installation\'s assistants.';
+
+  @override
+  String get instanceSecondFactorNeeded =>
+      'Changes here need your second factor on this session.';
+
+  @override
+  String get instanceConfirmSecondFactor => 'Confirm with my authenticator';
+
+  @override
+  String get instanceRuntimeTitle => 'Assistants on this installation';
+
+  @override
+  String get instanceRuntimeOn => 'On';
+
+  @override
+  String get instanceRuntimeOff => 'Off';
+
+  @override
+  String get instanceTurnOn => 'Turn on for every workspace';
+
+  @override
+  String get instanceTurnOff => 'Turn off';
+
+  @override
+  String get instanceTurnOnConfirm =>
+      'Assistants become usable in every workspace that offers them. You can turn them off again at any time.';
+
+  @override
+  String get instanceBlockers => 'Still missing:';
+
+  @override
+  String get instanceBlockerNoAdmin => 'a database administrator';
+
+  @override
+  String get instanceAdminsTitle => 'Database administrators';
+
+  @override
+  String get instanceAdminsHelp =>
+      'They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.';
+
+  @override
+  String get instanceMakeAdmin => 'Make administrator';
+
+  @override
+  String get instanceRemoveAdmin => 'Remove';
+
+  @override
+  String get instanceNoCandidates =>
+      'Nobody else has confirmed their identity yet.';
+
+  @override
+  String get instanceYou => 'you';
+
+  @override
+  String get instanceClientsTitle => 'Assistant clients';
+
+  @override
+  String get instanceClientsHelp =>
+      'An assistant registers itself the first time someone connects it; it works only once approved here.';
+
+  @override
+  String get instanceClientWaiting => 'Waiting for approval';
+
+  @override
+  String get instanceClientApproved => 'Approved';
+
+  @override
+  String get instanceClientBlocked => 'Blocked';
+
+  @override
+  String get instanceApprove => 'Approve';
+
+  @override
+  String get instanceBlock => 'Block';
+
+  @override
   String get instanceOwnerClaimIntro =>
       'Who owns this instance? Enter the e-mail you will sign up with on it. After you confirm that address, claim the ownership from Settings → Instance owner.';
 
@@ -8490,6 +8575,32 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mcpIdentityConflict =>
       'Another account already holds this identity here — a database administrator can resolve it.';
+
+  @override
+  String get mcpStatusGoogle => 'Google sign-in';
+
+  @override
+  String get mcpStatusLinkGoogle => 'Link Google';
+
+  @override
+  String get mcpStatusSignInGoogle => 'Sign in with Google';
+
+  @override
+  String get mcpStateGoogleReady => 'Signed in with Google';
+
+  @override
+  String get mcpStateGoogleOtherSession => 'Signed in another way';
+
+  @override
+  String get mcpStateGoogleMissing => 'Google not linked';
+
+  @override
+  String get mcpNextLinkGoogle =>
+      'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.';
+
+  @override
+  String get mcpNextSignInGoogle =>
+      'Assistants use your Google sign-in. Sign in with Google to continue.';
 
   @override
   String get mcpUsageWorkspaceTitle => 'Assistant use, last 30 days';

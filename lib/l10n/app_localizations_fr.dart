@@ -4832,6 +4832,92 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les jours fériés n\'ont pas pu être vérifiés ni importés. Rien n\'a été modifié.';
 
   @override
+  String get instanceTitle => 'Installation : assistants';
+
+  @override
+  String get instanceIntro =>
+      'Réglages valables pour tous les espaces de travail de cette installation. Seul l\'opérateur de l\'instance voit cette page ; chaque changement exige votre second facteur et est journalisé.';
+
+  @override
+  String get instanceNotOperator =>
+      'Seul l\'opérateur de l\'instance gère les assistants de l\'installation.';
+
+  @override
+  String get instanceSecondFactorNeeded =>
+      'Les changements ici exigent votre second facteur sur cette session.';
+
+  @override
+  String get instanceConfirmSecondFactor =>
+      'Confirmer avec mon authentificateur';
+
+  @override
+  String get instanceRuntimeTitle => 'Assistants sur cette installation';
+
+  @override
+  String get instanceRuntimeOn => 'Activés';
+
+  @override
+  String get instanceRuntimeOff => 'Désactivés';
+
+  @override
+  String get instanceTurnOn => 'Activer pour tous les espaces';
+
+  @override
+  String get instanceTurnOff => 'Désactiver';
+
+  @override
+  String get instanceTurnOnConfirm =>
+      'Les assistants deviennent utilisables dans chaque espace qui les propose. Vous pouvez les désactiver à tout moment.';
+
+  @override
+  String get instanceBlockers => 'Il manque encore :';
+
+  @override
+  String get instanceBlockerNoAdmin => 'un administrateur de la base';
+
+  @override
+  String get instanceAdminsTitle => 'Administrateurs de la base';
+
+  @override
+  String get instanceAdminsHelp =>
+      'Ils décident qui peut utiliser les assistants. Seules les personnes ayant confirmé leur identité pour les assistants peuvent être choisies.';
+
+  @override
+  String get instanceMakeAdmin => 'Nommer administrateur';
+
+  @override
+  String get instanceRemoveAdmin => 'Retirer';
+
+  @override
+  String get instanceNoCandidates =>
+      'Personne d\'autre n\'a encore confirmé son identité.';
+
+  @override
+  String get instanceYou => 'vous';
+
+  @override
+  String get instanceClientsTitle => 'Clients d\'assistant';
+
+  @override
+  String get instanceClientsHelp =>
+      'Un assistant s\'enregistre lui-même à la première connexion ; il ne fonctionne qu\'une fois approuvé ici.';
+
+  @override
+  String get instanceClientWaiting => 'En attente d\'approbation';
+
+  @override
+  String get instanceClientApproved => 'Approuvé';
+
+  @override
+  String get instanceClientBlocked => 'Bloqué';
+
+  @override
+  String get instanceApprove => 'Approuver';
+
+  @override
+  String get instanceBlock => 'Bloquer';
+
+  @override
   String get instanceOwnerClaimIntro =>
       'À qui appartient cette instance ? Saisissez l\'adresse e-mail avec laquelle vous vous y inscrirez. Après avoir confirmé cette adresse, revendiquez la propriété dans Paramètres → Propriétaire de l\'instance.';
 
@@ -8584,6 +8670,32 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get mcpIdentityConflict =>
       'Un autre compte détient déjà cette identité ici — un administrateur de la base peut résoudre cela.';
+
+  @override
+  String get mcpStatusGoogle => 'Connexion Google';
+
+  @override
+  String get mcpStatusLinkGoogle => 'Lier Google';
+
+  @override
+  String get mcpStatusSignInGoogle => 'Se connecter avec Google';
+
+  @override
+  String get mcpStateGoogleReady => 'Connecté avec Google';
+
+  @override
+  String get mcpStateGoogleOtherSession => 'Connecté autrement';
+
+  @override
+  String get mcpStateGoogleMissing => 'Google non lié';
+
+  @override
+  String get mcpNextLinkGoogle =>
+      'Les assistants utilisent votre connexion Google. Liez d\'abord Google à ce compte ; sans cela, le compte ne peut pas utiliser d\'assistant.';
+
+  @override
+  String get mcpNextSignInGoogle =>
+      'Les assistants utilisent votre connexion Google. Connectez-vous avec Google pour continuer.';
 
   @override
   String get mcpUsageWorkspaceTitle =>

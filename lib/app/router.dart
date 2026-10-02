@@ -47,6 +47,7 @@ import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/backend_screen.dart';
+import '../features/mcp/presentation/instance_assistants_screen.dart';
 import '../features/mcp/presentation/mcp_confirmation_screen.dart';
 import 'oauth_consent_route.dart';
 import '../features/mcp/presentation/assistants_screen.dart';
@@ -491,6 +492,12 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/assistants',
         builder: (context, state) => const AssistantsScreen(),
+      ),
+      // #1827 B — the installation's assistant switches, for the instance
+      // operator (the server refuses everyone else; 0341).
+      GoRoute(
+        path: '/installation/assistants',
+        builder: (context, state) => const InstanceAssistantsScreen(),
       ),
       // #1627 — database administrators review eligibility; the server
       // checks administrator status and the second factor on every call.

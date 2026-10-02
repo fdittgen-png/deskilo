@@ -11,6 +11,8 @@ import '../../../l10n/app_localizations.dart';
 import '../application/connect_assistant.dart';
 import '../domain/mcp_connection.dart';
 import '../providers/mcp_providers.dart';
+import '../domain/mcp_access_status.dart';
+import '../../auth/domain/identity_binding.dart';
 import 'mcp_operation_labels.dart';
 
 /// #1615 — Auth's OAuth server sends the person here with an
@@ -33,6 +35,51 @@ class McpConsentScreen extends ConsumerStatefulWidget {
 }
 
 class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
+  /// 0340 — consent needs a Google sign-in; read once per visit.
+  late final Future<McpGoogleSignIn> _google =
+      ref.read(assistantAccessProvider).googleSignIn();
+
+  Widget _googleGate(AppLocalizations? l10n) => FutureBuilder<McpGoogleSignIn>(
+        future: _google,
+        builder: (context, snap) {
+          final state = mcpGoogleState(snap.data);
+          if (!snap.hasData || state == McpGoogleState.ready) {
+            return const SizedBox.shrink();
+          }
+          final link = state == McpGoogleState.linkGoogle;
+          return Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.md),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _banner(
+                  'mcp-consent-google-${state.name}',
+                  link
+                      ? (l10n?.mcpNextLinkGoogle ??
+                          'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.')
+                      : (l10n?.mcpNextSignInGoogle ??
+                          'Assistants use your Google sign-in. Sign in with Google to continue.'),
+                  Icons.lock_outline,
+                  InlineBannerSeverity.error,
+                ),
+                if (!link)
+                  OutlinedButton(
+                    key: const ValueKey('mcp-consent-sign-in-google'),
+                    onPressed: () => runGuarded(
+                      context,
+                      domain: 'mcp',
+                      message: 'google sign-in failed',
+                      action: () =>
+                          ref.read(assistantAccessProvider).signInWithGoogle(),
+                    ),
+                    child: Text(
+                        l10n?.mcpStatusSignInGoogle ?? 'Sign in with Google'),
+                  ),
+              ],
+            ),
+          );
+        },
+      );
   /// workspace id → the operations chosen there; absent = not chosen.
   final _chosen = <String, Set<String>>{};
 
@@ -157,6 +204,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: AppSpacing.md),
+              _googleGate(l10n),
               if (!c.options.eligible) ...[
                 _banner(
                   'mcp-consent-not-eligible',
