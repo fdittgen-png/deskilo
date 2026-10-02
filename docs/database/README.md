@@ -45,23 +45,31 @@ lives in `contracts/public_network`).
 ## How it is kept true
 
 `quality · database` replays every migration onto an empty Postgres and the
-step *Effective contract* then runs `scripts/db_dictionary.sh --check`: it
-extracts the dictionary from the replay (twice, refusing a run in which DDL
-ran in between) and fails when `docs/database/dictionary.json` differs. A
-migration that adds, removes or renames a column, key or enum therefore
-changes the committed file in the same pull request, and a reviewer reads
-the diff. `test/tool/db_dictionary_test.dart` fails when a rendering is not
-what `dictionary.json` renders, or when the extraction is incomplete.
+step *Effective contract* then runs `scripts/db_dictionary.sh --advisory`:
+it extracts the dictionary from the replay (twice, refusing a run in which
+DDL ran in between) and WARNS when `docs/database/dictionary.json` differs.
+The comparison does not fail a migration PR, so adding a column costs no
+extra CI round (#2088). Two things keep the file true instead:
 
-To regenerate after a migration:
+- `CI · Dictionary refresh` runs after every merge to master (and nightly):
+  it regenerates the JSON and the renderings from the replay and keeps ONE
+  pull request, `ci/dictionary-refresh`, with auto-merge. The workflow
+  token cannot start the required checks of a pull request, so it
+  dispatches `quality.yml` on the branch; and creating pull requests from
+  Actions is a repository setting, which, while off, leaves the pushed
+  branch and a run summary naming the command that opens the PR.
+- `test/tool/db_dictionary_test.dart` is the hard gate that needs no
+  replay: it fails when a rendering is not what `dictionary.json` renders,
+  when the extraction is incomplete or inconsistent, or when the marker
+  is newer than the migrations.
 
-1. Run the database job, download its `quality-database` artifact, copy
-   `db-dictionary.json` over `docs/database/dictionary.json` (the job's
-   diff is the review). The artifact also holds `db-dictionary-run.json`:
-   snapshot time, exact server version and the managed schemas present,
-   which are deliberately not in the committed file.
-2. `dart run tool/build_db_dictionary.dart` rewrites the CSVs and the page;
-   `--check` only verifies.
+To regenerate by hand, copy `db-dictionary.json` from a database job's
+`quality-database` artifact (or from `scripts/db_dictionary.sh`) over
+`docs/database/dictionary.json`, then run
+`dart run tool/build_db_dictionary.dart`; `--check` only verifies. The
+artifact also holds `db-dictionary-run.json`: snapshot time, exact server
+version and the managed schemas present, which are deliberately not in the
+committed file.
 
 ## Operator export
 

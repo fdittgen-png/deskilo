@@ -1,5 +1,7 @@
 {
   "@@locale": "fr",
+  "bookingSpaceChainTaken": "Cet espace, ou un espace qui le contient, est déjà réservé sur cette période.",
+  "bookingNoLongerCheckedIn": "Cette réservation n'est plus en cours — elle a été clôturée entre-temps.",
   "listWholeReservable": "Réservable en entier",
   "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
   "listCoversSeats": "{count, plural, =1{1 place} other{{count} places}}",
@@ -64,11 +66,29 @@
     }
   },
   "bookingHorizonError": "Trop loin — les réservations sont ouvertes {days} jours à l'avance.",
-  "@bookingHorizonError": {"placeholders": {"days": {"type": "int"}}},
+  "@bookingHorizonError": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "bookingTooShortError": "Trop court — une réservation dure au moins {minutes} minutes.",
-  "@bookingTooShortError": {"placeholders": {"minutes": {"type": "int"}}},
+  "@bookingTooShortError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "bookingTooLongError": "Trop long — une réservation dure au plus {minutes} minutes.",
-  "@bookingTooLongError": {"placeholders": {"minutes": {"type": "int"}}},
+  "@bookingTooLongError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "legendFree": "Libre",
   "legendReserved": "Réservée",
   "legendOccupied": "Présent",
@@ -101,7 +121,13 @@
   "legendClosed": "Jour fermé",
   "reserveClosedShort": "Fermé",
   "planCheckOutFor": "Faire sortir {name}",
-  "@planCheckOutFor": {"placeholders": {"name": {"type": "String"}}},
+  "@planCheckOutFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "scanCameraWebUnavailable": "Le scan par caméra n'est pas disponible dans le navigateur — saisissez le code, ou approchez un tag NFC de l'appareil (Chrome sur Android).",
   "bookingGateBlocked": "Non réservable ainsi"
 }

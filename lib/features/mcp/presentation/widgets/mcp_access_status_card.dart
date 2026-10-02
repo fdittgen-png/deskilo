@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+
+import '../confirm_identity.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -62,12 +63,12 @@ class McpAccessStatusCard extends ConsumerWidget {
   }
 }
 
-class _StatusCard extends StatelessWidget {
+class _StatusCard extends ConsumerWidget {
   const _StatusCard({required this.status});
   final McpAccessStatus status;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final s = status;
     final next = s.next;
@@ -100,7 +101,12 @@ class _StatusCard extends StatelessWidget {
                 dense: true,
                 contentPadding: EdgeInsets.zero,
                 title: Text(label),
-                trailing: Text(mcpStateLabel(l10n, state)),
+                // A fact that waits on an earlier unmet step is not
+                // "unknown": it is decided after that step.
+                trailing: Text(state.name == 'unavailable' &&
+                        next != McpNextStep.unavailable
+                    ? (l10n?.mcpStateAfterPrevious ?? 'After the step above')
+                    : mcpStateLabel(l10n, state)),
               ),
             _Banner(
               'mcp-status-next-${next.name}',
@@ -114,9 +120,10 @@ class _StatusCard extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   key: const ValueKey('mcp-status-link-identity'),
-                  onPressed: () => context.push('/linked-accounts'),
+                  // Taken here: the sign-in methods page cannot take it.
+                  onPressed: () => confirmAssistantIdentity(context, ref),
                   child: Text(
-                    l10n?.mcpStatusOpenLinkedAccounts ?? 'Open linked accounts',
+                    l10n?.mcpStatusConfirmIdentity ?? 'Confirm my identity',
                   ),
                 ),
               ),

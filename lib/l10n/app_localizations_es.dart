@@ -270,6 +270,61 @@ class AppLocalizationsEs extends AppLocalizations {
       'El libro no se guardó. Compruebe la conexión e inténtelo de nuevo.';
 
   @override
+  String get bookRoleCustomers => 'Clientes (cuentas por cobrar)';
+
+  @override
+  String get bookRoleRevenue => 'Ingresos';
+
+  @override
+  String get bookRoleBank => 'Banco';
+
+  @override
+  String get bookRoleVatOutput => 'IVA repercutido';
+
+  @override
+  String get bookRoleExpenses => 'Gastos';
+
+  @override
+  String get bookTypeAsset => 'Activo';
+
+  @override
+  String get bookTypeLiability => 'Pasivo';
+
+  @override
+  String get bookTypeEquity => 'Patrimonio neto';
+
+  @override
+  String get bookTypeIncome => 'Ingreso';
+
+  @override
+  String get bookTypeExpense => 'Gasto';
+
+  @override
+  String bookChartTitle(String site) {
+    return 'Plan contable · $site';
+  }
+
+  @override
+  String get bookChartSuggest => 'Añadir las cuentas sugeridas para revisarlas';
+
+  @override
+  String get bookAccountCode => 'Código de cuenta';
+
+  @override
+  String get bookAccountName => 'Nombre de la cuenta';
+
+  @override
+  String get bookAccountPosting => 'Admite asientos';
+
+  @override
+  String get bookMappingsTitle => 'La cuenta de cada asiento';
+
+  @override
+  String bookProblemUnmapped(String roles) {
+    return 'Asigne estas cuentas antes de iniciar un libro local: $roles.';
+  }
+
+  @override
   String get fecAccountExpenses => 'Gastos';
 
   @override
@@ -372,7 +427,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo guardar. No cambió nada; inténtelo de nuevo.';
 
   @override
-  String get assistantSetupLinkIdentity => 'Vincular mi identidad';
+  String get assistantSetupLinkIdentity => 'Confirmar mi identidad';
 
   @override
   String get assistantSetupTurnOn => 'Activar';
@@ -7098,6 +7153,60 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ese archivo no contiene ningún diseño legible.';
 
   @override
+  String get invoiceHoldAction => 'Suspender los recordatorios';
+
+  @override
+  String get invoiceHoldReleaseAction =>
+      'Levantar la suspensión de recordatorios';
+
+  @override
+  String get invoiceHoldTitle => '¿Por qué suspender los recordatorios?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'No se envía ningún recordatorio para esta factura, ni a mano ni automáticamente, hasta que se levante la suspensión.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'El miembro la impugna';
+
+  @override
+  String get invoiceHoldReasonIdentity =>
+      'Persona equivocada o error de identidad';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Procedimiento de insolvencia';
+
+  @override
+  String get invoiceHoldReasonOther => 'Otro motivo';
+
+  @override
+  String get invoiceHoldNote => 'Nota (opcional)';
+
+  @override
+  String get invoiceHoldConfirm => 'Suspender';
+
+  @override
+  String get invoiceHoldPlaced =>
+      'Los recordatorios de esta factura están suspendidos.';
+
+  @override
+  String get invoiceHoldReleased =>
+      'Los recordatorios de esta factura pueden reanudarse.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Recordatorios suspendidos: $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revises.';
+
+  @override
+  String get invoiceHoldFailed =>
+      'No se pudo cambiar la suspensión de recordatorios. Inténtalo de nuevo.';
+
+  @override
   String get invoicesManage => 'Gestionar facturas';
 
   @override
@@ -8246,7 +8355,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mcpEligibleNoIdentity =>
-      'Su cuenta no está vinculada a una identidad verificada en esta base de datos.';
+      'Su identidad aún no está confirmada para los asistentes en esta base.';
 
   @override
   String get mcpEligibleNot =>
@@ -8324,7 +8433,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpStatusTitle => 'Su situación aquí';
 
   @override
-  String get mcpStatusIdentity => 'Identidad';
+  String get mcpStatusIdentity => 'Identidad para asistentes';
 
   @override
   String get mcpStatusEligibility => 'Aprobación de la base de datos';
@@ -8345,7 +8454,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpStateVerified => 'Verificada';
 
   @override
-  String get mcpStateUnlinked => 'No vinculada';
+  String get mcpStateUnlinked => 'No confirmada';
 
   @override
   String get mcpStateNotRequested => 'No solicitada';
@@ -8388,7 +8497,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mcpNextLinkIdentity =>
-      'Siguiente paso: vincule su cuenta a la identidad de esta base de datos.';
+      'Siguiente paso: confirme su identidad para los asistentes en esta base, con un toque abajo.';
 
   @override
   String get mcpNextRequestEligibility =>
@@ -8430,6 +8539,20 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get mcpReviewSecondFactor =>
       'Esa base de datos necesita su segundo factor en su propia sesión. No se decidió nada.';
+
+  @override
+  String get mcpStatusConfirmIdentity => 'Confirmar mi identidad';
+
+  @override
+  String get mcpStateAfterPrevious => 'Después del paso anterior';
+
+  @override
+  String get mcpIdentityIneligible =>
+      'Esta cuenta aún no puede confirmarse: confirme primero su dirección de correo o inicie sesión con un proveedor.';
+
+  @override
+  String get mcpIdentityConflict =>
+      'Otra cuenta ya tiene esta identidad aquí: un administrador de la base puede resolverlo.';
 
   @override
   String get mcpUsageWorkspaceTitle => 'Uso de asistentes, últimos 30 días';
@@ -10783,6 +10906,26 @@ class AppLocalizationsEs extends AppLocalizations {
       'Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores.';
 
   @override
+  String get portalFollowsWorkspace => 'De la información del espacio';
+
+  @override
+  String get portalCustomised => 'Personalizado';
+
+  @override
+  String get portalUseWorkspaceInfo => 'Usar la información del espacio';
+
+  @override
+  String get portalResetAll =>
+      'Restablecer todos los datos públicos con la información del espacio';
+
+  @override
+  String get portalResetAllBody =>
+      'Los valores públicos de cada campo que tiene información en el espacio se sustituyen por ella. Los campos sin equivalente en el espacio conservan lo que escribió.';
+
+  @override
+  String get portalResetAllConfirm => 'Restablecer';
+
+  @override
   String get featuresViewProcesses => 'Procesos';
 
   @override
@@ -12103,6 +12246,51 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
   @override
+  String get reminderHistoryTitle => 'Historial de recordatorios';
+
+  @override
+  String get reminderHistoryRefresh => 'Comprobar de nuevo el envío';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Nivel $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Preparado';
+
+  @override
+  String get reminderStatusQueued => 'Entregado al servicio de notificaciones';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Aceptado por el servicio de notificaciones — no prueba que se haya leído';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Compartido por el remitente — su declaración, no un acuse de recibo';
+
+  @override
+  String get reminderStatusFailed => 'No entregado';
+
+  @override
+  String get reminderStatusUnknown =>
+      'Sin respuesta del servicio de notificaciones';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Registrado antes del seguimiento de envíos — desconocido';
+
+  @override
+  String get reminderOriginManual => 'a mano';
+
+  @override
+  String get reminderOriginAutomatic => 'automático';
+
+  @override
+  String get reminderOriginLegacy => 'anterior';
+
+  @override
   String get reportGuideTitle => 'Campos y marcado';
 
   @override
@@ -12532,6 +12720,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportFieldGroupTexts => 'Sus textos';
+
+  @override
+  String get bookingSpaceChainTaken =>
+      'Este espacio, o un espacio que lo contiene, ya está reservado en ese periodo.';
+
+  @override
+  String get bookingNoLongerCheckedIn =>
+      'Esta reserva ya no está registrada — se cerró mientras tanto.';
 
   @override
   String get listWholeReservable => 'Reservable entero';

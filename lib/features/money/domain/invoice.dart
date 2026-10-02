@@ -289,6 +289,16 @@ sealed class Invoice with _$Invoice implements SystemStamped {
 
     /// #804 — on a settlement, what it consolidated.
     @Default([]) List<SettledSource> settles,
+
+    /// #1913 (0331) — the due date frozen at issue, read from
+    /// `invoice_maturities`. Null when the server recorded none (an
+    /// invoice issued before 0331): the app then falls back to the
+    /// workspace's current term, the way such documents always printed.
+    DateTime? dueOn,
+
+    /// #1913 — on what basis [dueOn] was frozen: `document_term`,
+    /// `default_term` (the unagreed default; needs review) or `unknown`.
+    String? maturityBasis,
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _Invoice;
@@ -391,6 +401,8 @@ sealed class Invoice with _$Invoice implements SystemStamped {
       for (final source in (row['settles'] as List? ?? const []))
         SettledSource.fromSnapshot(source as Map),
     ],
+    dueOn: _maturityDueOn(row['invoice_maturities']),
+    maturityBasis: _maturityOf(row['invoice_maturities'])?['basis'] as String?,
     totalCents: (row['total_cents'] as num).toInt(),
     currency: row['currency'] as String,
     memberName: row['member_name'] as String? ?? '',
@@ -440,4 +452,20 @@ sealed class Invoice with _$Invoice implements SystemStamped {
         ),
     ],
   );
+}
+
+/// #1913 — the embedded `invoice_maturities` row: PostgREST returns the
+/// one-to-one relation as an object, older servers as a list or nothing.
+Map<Object?, Object?>? _maturityOf(Object? embedded) => switch (embedded) {
+      final Map<Object?, Object?> map => map,
+      final List<Object?> list when list.isNotEmpty && list.first is Map =>
+        list.first! as Map<Object?, Object?>,
+      _ => null,
+    };
+
+DateTime? _maturityDueOn(Object? embedded) {
+  final raw = _maturityOf(embedded)?['due_on'] as String?;
+  if (raw == null) return null;
+  final day = DateTime.parse(raw);
+  return DateTime(day.year, day.month, day.day);
 }

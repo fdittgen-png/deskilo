@@ -16,6 +16,7 @@ class SupabasePublicationRepository implements PublicationRepository {
 
   static const _read = PublicNetworkOperations.publicationPageRead;
   static const _save = PublicNetworkOperations.publicationPageSave;
+  static const _reset = PublicNetworkOperations.publicationPageReset;
 
   @override
   Future<Map<String, dynamic>> ownPage(String workspace) async =>
@@ -26,6 +27,18 @@ class SupabasePublicationRepository implements PublicationRepository {
           params: {'p_workspace': workspace},
         ),
       );
+
+  @override
+  Future<Map<String, dynamic>> resetPage(
+    String workspace, {
+    Set<String>? fields,
+  }) async => decodePublicRecord(
+    _reset.output!,
+    await client.rpc<Object?>(
+      _reset.rpc!,
+      params: {'p_workspace': workspace, 'p_fields': fields?.toList()},
+    ),
+  );
 
   @override
   Future<Map<String, dynamic>> savePage(

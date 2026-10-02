@@ -19,5 +19,22 @@
   "bookProblemFiscal": "Ein Geschäftsjahr beginnt an einem Tag, den jedes Jahr hat (nie am 29. Februar).",
   "bookSaved": "Buchführung gespeichert",
   "bookStale": "Jemand hat diese Buchführung gespeichert, seit Sie sie geöffnet haben. Schließen und neu öffnen, um seine Fassung zu sehen.",
-  "bookSaveFailed": "Die Buchführung wurde nicht gespeichert. Prüfen Sie die Verbindung und versuchen Sie es erneut."
+  "bookSaveFailed": "Die Buchführung wurde nicht gespeichert. Prüfen Sie die Verbindung und versuchen Sie es erneut.",
+  "bookRoleCustomers": "Kunden (Forderungen)",
+  "bookRoleRevenue": "Erlöse",
+  "bookRoleBank": "Bank",
+  "bookRoleVatOutput": "Umsatzsteuer",
+  "bookRoleExpenses": "Aufwand",
+  "bookTypeAsset": "Aktiva",
+  "bookTypeLiability": "Passiva",
+  "bookTypeEquity": "Eigenkapital",
+  "bookTypeIncome": "Ertrag",
+  "bookTypeExpense": "Aufwand",
+  "bookChartTitle": "Kontenplan · {site}",
+  "bookChartSuggest": "Die vorgeschlagenen Konten zur Prüfung hinzufügen",
+  "bookAccountCode": "Kontonummer",
+  "bookAccountName": "Kontobezeichnung",
+  "bookAccountPosting": "Bebuchbar",
+  "bookMappingsTitle": "Auf welches Konto jede Buchung geht",
+  "bookProblemUnmapped": "Ordnen Sie diese Konten zu, bevor eine lokale Buchführung beginnt: {roles}."
 }

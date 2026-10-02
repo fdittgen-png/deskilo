@@ -1,5 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #1869: a book profile is set per issuer by someone who manages billing,
+-- #1869: a book profile (pre-accounting here; a local book needs mapped
+-- accounts, 124) is set per issuer by someone who manages billing,
 -- with the accountingBook flag accepting new work, against the revision
 -- they read. Two issuers of one workspace keep two books; a site of
 -- another workspace cannot be named as issuer; a member, another
@@ -31,7 +32,7 @@ insert into public.sites(id,workspace_id,name,legal_id) values
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001869a1","role":"authenticated"}',true);
 set local role authenticated;
 select is((public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d1',
-  'local_book','','EUR',7,1,'accrual','2026-07-01',0))->>'revision','1','the owner sets a first profile');
+  'pre_accounting','','EUR',7,1,'accrual','2026-07-01',0))->>'revision','1','the owner sets a first profile');
 select is(jsonb_array_length(public.book_profiles('00000000-0000-4000-8000-0000001869b1')),1,'and reads it back');
 select is((public.book_profiles('00000000-0000-4000-8000-0000001869b1')->0->>'fiscal_year_start_month'),'7','with its fiscal year');
 select lives_ok($$select public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d2',
@@ -39,9 +40,9 @@ select lives_ok($$select public.save_book_profile('00000000-0000-4000-8000-00000
 select is((select count(distinct e->>'issuer_site_id') from jsonb_array_elements(public.book_profiles('00000000-0000-4000-8000-0000001869b1')) e),
   2::bigint,'two issuers, two books');
 select throws_ok($$select public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d1',
-  'local_book','','EUR',1,1,'accrual','2026-07-01',0)$$,'40001',null,'a "new" save over an existing version is stale');
+  'pre_accounting','','EUR',1,1,'accrual','2026-07-01',0)$$,'40001',null,'a "new" save over an existing version is stale');
 select is((public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d1',
-  'local_book','','EUR',1,1,'accrual','2026-07-01',1))->>'revision','2','the revision read is the revision replaced');
+  'pre_accounting','','EUR',1,1,'accrual','2026-07-01',1))->>'revision','2','the revision read is the revision replaced');
 select throws_ok($$select public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d1',
   'pre_accounting','','EUR',1,1,'accrual','2026-07-01',1)$$,'40001',null,'a save over a newer revision is stale');
 select lives_ok($$select public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d1',
@@ -51,17 +52,17 @@ select is((select count(*) from jsonb_array_elements(public.book_profiles('00000
 select throws_ok($$select public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d2',
   'external_book','','EUR',1,1,'accrual','2027-01-01',0)$$,'22023',null,'an external book names its system');
 select throws_ok($$select public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d2',
-  'local_book','','EUR',2,29,'accrual','2027-01-01',0)$$,'22023',null,'a fiscal year never starts on 29 February');
+  'pre_accounting','','EUR',2,29,'accrual','2027-01-01',0)$$,'22023',null,'a fiscal year never starts on 29 February');
 select throws_ok($$select public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d3',
-  'local_book','','EUR',1,1,'accrual','2027-01-01',0)$$,'42501',null,'another workspace''s site is no issuer here');
+  'pre_accounting','','EUR',1,1,'accrual','2027-01-01',0)$$,'42501',null,'another workspace''s site is no issuer here');
 select throws_ok($$select public.save_book_profile('00000000-0000-4000-8000-0000001869b2','00000000-0000-4000-8000-0000001869d3',
-  'local_book','','CHF',1,1,'accrual','2027-01-01',0)$$,'42501',null,'an owner of W1 sets nothing in W2');
+  'pre_accounting','','CHF',1,1,'accrual','2027-01-01',0)$$,'42501',null,'an owner of W1 sets nothing in W2');
 select throws_ok($$select public.book_profiles('00000000-0000-4000-8000-0000001869b2')$$,'42501',null,'nor reads its books');
 select throws_ok($$select * from public.book_profiles$$,'42501',null,'the table is never read directly');
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001869a2","role":"authenticated"}',true);
 select throws_ok($$select public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d2',
-  'local_book','','EUR',1,1,'accrual','2027-01-01',0)$$,'42501',null,'a plain member sets no book');
+  'pre_accounting','','EUR',1,1,'accrual','2027-01-01',0)$$,'42501',null,'a plain member sets no book');
 select throws_ok($$select public.book_profiles('00000000-0000-4000-8000-0000001869b1')$$,'42501',null,'and reads none');
 
 reset role;
@@ -72,7 +73,7 @@ update public.workspaces set feature_flags = feature_flags || '{"accountingBook"
 set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001869a1","role":"authenticated"}',true);
 select throws_ok($$select public.save_book_profile('00000000-0000-4000-8000-0000001869b1','00000000-0000-4000-8000-0000001869d2',
-  'local_book','','EUR',1,1,'accrual','2027-01-01',0)$$,'42501',null,'flag off: no new profile');
+  'pre_accounting','','EUR',1,1,'accrual','2027-01-01',0)$$,'42501',null,'flag off: no new profile');
 select is(jsonb_array_length(public.book_profiles('00000000-0000-4000-8000-0000001869b1')),3,'flag off: the configured books stay readable');
 reset role;
 select is((select count(*) from public.book_profiles),3::bigint,'exactly the three accepted saves exist');

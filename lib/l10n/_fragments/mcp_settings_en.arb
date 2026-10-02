@@ -120,7 +120,7 @@
   "@mcpEligibleExpired": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpEligibleNoIdentity": "Your account is not linked to a verified identity on this database.",
+  "mcpEligibleNoIdentity": "Your identity is not confirmed for assistants on this database yet.",
   "@mcpEligibleNoIdentity": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },

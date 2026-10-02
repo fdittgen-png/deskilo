@@ -2,7 +2,9 @@
 
 <!-- One-paragraph summary of the change. -->
 
-Closes #
+<!-- `Refs #NN` for a partial PR; `Closes #NN` only when the whole acceptance is met.
+     Ready/Done/closure rules: docs/AGENT_RULES.md#ready-done-and-closure -->
+Refs #
 
 ## Checklist
 

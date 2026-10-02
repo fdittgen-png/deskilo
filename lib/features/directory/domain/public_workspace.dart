@@ -52,10 +52,36 @@ abstract interface class PublicDiscoveryRepository {
   Future<PublicWorkspace?> detail(PublicWorkspace card);
 }
 
+/// #2086 — the public fields that have a counterpart in the workspace's
+/// own information: until the owner overrides one, it follows that
+/// information. Every other public field is only what the owner typed.
+const publicInheritedFields = ['host_type', 'address'];
+
+/// The inherited fields that follow the workspace information in [page],
+/// a `publication.page.read` answer. A page without the marker (an older
+/// server) follows nothing: what it stored is what it shows.
+Set<String> publicFollowing(Map<String, dynamic> page) {
+  final following = page['following'];
+  if (following is! Map) return {};
+  return {
+    for (final field in publicInheritedFields)
+      if (following[field] == true) field,
+  };
+}
+
 /// #1847 — the MANAGEMENT interface: the owner authors the public page.
 abstract interface class PublicationRepository {
-  /// `{published, document}` — the owner's own page, draft included.
+  /// `{published, document, following}` — the owner's own page, draft
+  /// included, inherited fields resolved (#2086).
   Future<Map<String, dynamic>> ownPage(String workspace);
+
+  /// #2086 — returns [fields] (every inherited field when null) to the
+  /// workspace information; answers the page as [ownPage] does. Never
+  /// publishes or withdraws the page.
+  Future<Map<String, dynamic>> resetPage(
+    String workspace, {
+    Set<String>? fields,
+  });
 
   /// Saves and publishes or withdraws; answers the public projection.
   Future<Map<String, dynamic>> savePage(

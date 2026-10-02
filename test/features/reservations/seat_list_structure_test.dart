@@ -39,7 +39,7 @@ FloorPlan _plan({bool officeWhole = false}) => FloorPlan(
     ),
   ],
   desks: [
-    Desk(
+    const Desk(
       id: 'd1',
       workspaceId: 'ws-1',
       officeId: 'o1',
@@ -47,7 +47,7 @@ FloorPlan _plan({bool officeWhole = false}) => FloorPlan(
       rect: _rect,
       bookableAsWhole: true,
     ),
-    Desk(
+    const Desk(
       id: 'd2',
       workspaceId: 'ws-1',
       officeId: 'o1',
@@ -56,7 +56,7 @@ FloorPlan _plan({bool officeWhole = false}) => FloorPlan(
     ),
   ],
   seats: [
-    Seat(id: 's1', workspaceId: 'ws-1', deskId: 'd2', name: 'B1', x: 0, y: 0, orientation: SeatOrientation.n,
+    const Seat(id: 's1', workspaceId: 'ws-1', deskId: 'd2', name: 'B1', x: 0, y: 0, orientation: SeatOrientation.n,
       chair: 'standard',
       amenities: [],),
   ],

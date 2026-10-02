@@ -87,6 +87,23 @@
   "bookSaved": "Livre enregistré",
   "bookStale": "Quelqu’un a enregistré ce livre depuis que vous l’avez ouvert. Fermez et rouvrez pour voir sa version.",
   "bookSaveFailed": "Le livre n’a pas été enregistré. Vérifiez la connexion et réessayez.",
+  "bookRoleCustomers": "Clients (créances)",
+  "bookRoleRevenue": "Produits",
+  "bookRoleBank": "Banque",
+  "bookRoleVatOutput": "TVA collectée",
+  "bookRoleExpenses": "Charges",
+  "bookTypeAsset": "Actif",
+  "bookTypeLiability": "Passif",
+  "bookTypeEquity": "Capitaux propres",
+  "bookTypeIncome": "Produit",
+  "bookTypeExpense": "Charge",
+  "bookChartTitle": "Plan comptable · {site}",
+  "bookChartSuggest": "Ajouter les comptes suggérés à vérifier",
+  "bookAccountCode": "Numéro de compte",
+  "bookAccountName": "Intitulé du compte",
+  "bookAccountPosting": "Reçoit des écritures",
+  "bookMappingsTitle": "Le compte de chaque écriture",
+  "bookProblemUnmapped": "Associez ces comptes avant de démarrer un livre local : {roles}.",
   "fecAccountExpenses": "Achats et charges",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -186,7 +203,7 @@
   "assistantSetupSaved": "Enregistré.",
   "assistantSetupStale": "Quelqu'un a modifié l'offre entre-temps. Vérifiez-la et réessayez.",
   "assistantSetupFailed": "Enregistrement impossible. Rien n'a changé ; réessayez.",
-  "assistantSetupLinkIdentity": "Lier mon identité",
+  "assistantSetupLinkIdentity": "Confirmer mon identité",
   "assistantSetupTurnOn": "Activer",
   "assistantSetupRecommended": "Utiliser la sélection recommandée",
   "assistantSetupCustomise": "Personnaliser",
@@ -4445,6 +4462,71 @@
   "reportDesignErrorUnknownKind": "Cette maquette concerne un rapport que cet espace n'a pas.",
   "reportDesignErrorWrongKind": "Cette maquette appartient à un autre rapport. Ouvrez ce rapport et importez-la là.",
   "reportDesignErrorInvalidDesign": "Ce fichier ne contient aucune maquette lisible.",
+  "invoiceHoldAction": "Suspendre les relances",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Lever la suspension des relances",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "Pourquoi suspendre les relances ?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "Aucune relance n'est envoyée pour cette facture, à la main ou automatiquement, tant que la suspension n'est pas levée.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "Le membre la conteste",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Mauvaise personne ou erreur d'identité",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Procédure d'insolvabilité",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Une autre raison",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Note (facultatif)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Suspendre",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "Les relances sont suspendues pour cette facture.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "Les relances peuvent reprendre pour cette facture.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Relances suspendues : {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "Aucune échéance convenue n'a été enregistrée pour cette facture : aucune relance automatique tant que vous ne l'avez pas examinée.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "La suspension des relances n'a pas pu être modifiée. Veuillez réessayer.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Gérer les factures",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
@@ -4950,7 +5032,7 @@
   "mcpEligibleYes": "Cette base vous autorise à utiliser des assistants.",
   "mcpEligibleRequested": "Vous avez demandé l'autorisation. Un administrateur de la base l'examinera.",
   "mcpEligibleExpired": "Votre autorisation a expiré. Redemandez-la pour continuer à utiliser des assistants.",
-  "mcpEligibleNoIdentity": "Votre compte n'est pas lié à une identité vérifiée sur cette base.",
+  "mcpEligibleNoIdentity": "Votre identité n'est pas encore confirmée pour les assistants sur cette base.",
   "mcpEligibleNot": "Cette base n'a pas autorisé les assistants pour vous.",
   "mcpEligibleWithdraw": "Renoncer à l'accès des assistants sur cette base",
   "mcpConnectedNoWorkspace": "Aucun espace : cet assistant ne peut rien faire ici.",
@@ -4973,14 +5055,14 @@
   "mcpApiReference": "Référence de l’API",
   "mcpApiReferenceHint": "Ce qu’un assistant peut appeler, et comment c’est autorisé",
   "mcpStatusTitle": "Où vous en êtes ici",
-  "mcpStatusIdentity": "Identité",
+  "mcpStatusIdentity": "Identité pour les assistants",
   "mcpStatusEligibility": "Approbation de la base de données",
   "mcpStatusExposure": "Offre de l'espace de travail",
   "mcpStatusRole": "Votre rôle",
   "mcpStatusConsent": "Votre consentement",
   "mcpStatusBackend": "Serveur",
   "mcpStateVerified": "Vérifiée",
-  "mcpStateUnlinked": "Non liée",
+  "mcpStateUnlinked": "Non confirmée",
   "mcpStateNotRequested": "Non demandée",
   "mcpStatePending": "En attente d'une décision",
   "mcpStateApproved": "Approuvée",
@@ -4994,7 +5076,7 @@
   "mcpStateAvailable": "Joignable",
   "mcpStateIncompatible": "Version incompatible",
   "mcpStateUnavailable": "Inconnu",
-  "mcpNextLinkIdentity": "Prochaine étape : vous liez votre compte à l'identité de cette base de données.",
+  "mcpNextLinkIdentity": "Prochaine étape : confirmez votre identité pour les assistants sur cette base — un geste ci-dessous.",
   "mcpNextRequestEligibility": "Prochaine étape : vous demandez l'approbation aux administrateurs de cette base de données.",
   "mcpNextAwaitEligibility": "Prochaine étape : un administrateur de la base de données statue sur votre demande.",
   "mcpNextOwnerExposes": "Prochaine étape : le propriétaire de l'espace de travail propose des opérations aux assistants.",
@@ -5006,6 +5088,10 @@
   "mcpOverviewTitle": "Autres bases de données connectées",
   "mcpOverviewUnavailable": "N'a pas pu être interrogée pour l'instant.",
   "mcpReviewSecondFactor": "Cette base de données exige votre second facteur dans sa propre session. Rien n'a été décidé.",
+  "mcpStatusConfirmIdentity": "Confirmer mon identité",
+  "mcpStateAfterPrevious": "Après l'étape précédente",
+  "mcpIdentityIneligible": "Ce compte ne peut pas encore être confirmé — confirmez d'abord votre adresse e-mail ou connectez-vous avec un fournisseur.",
+  "mcpIdentityConflict": "Un autre compte détient déjà cette identité ici — un administrateur de la base peut résoudre cela.",
   "mcpUsageWorkspaceTitle": "Utilisation des assistants, 30 derniers jours",
   "mcpUsageMineTitle": "Votre utilisation des assistants aujourd'hui",
   "mcpUsageUnavailable": "L'utilisation n'a pas pu être chargée.",
@@ -6439,6 +6525,12 @@
   "portalAdminVisible": "Afficher mon rôle d’administrateur publiquement",
   "featurePublicListings": "Présentation publique de l’espace",
   "featurePublicListingsDesc": "Publiez les informations et plans choisis, avec les propriétaires visibles et les administrateurs volontaires.",
+  "portalFollowsWorkspace": "Repris des informations de l’espace",
+  "portalCustomised": "Personnalisé",
+  "portalUseWorkspaceInfo": "Utiliser les informations de l’espace",
+  "portalResetAll": "Rétablir toutes les données publiques depuis les informations de l’espace",
+  "portalResetAllBody": "Les valeurs publiques de chaque champ qui a une information dans l’espace sont remplacées par celle-ci. Les champs sans équivalent dans l’espace gardent ce que vous avez saisi.",
+  "portalResetAllConfirm": "Rétablir",
   "featuresViewProcesses": "Processus",
   "featuresViewSwitches": "Interrupteurs",
   "processSearchLabel": "Rechercher processus et fonctionnalités",
@@ -7098,6 +7190,69 @@
   "refusalSession": "Votre session a expiré. Reconnectez-vous, puis réessayez.",
   "refusalAlreadyDecided": "Quelqu'un a déjà décidé. La liste affiche le résultat.",
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
+  "reminderHistoryTitle": "Historique des relances",
+  "@reminderHistoryTitle": {
+    "description": "#1922 reminder evidence: reminderHistoryTitle"
+  },
+  "reminderHistoryRefresh": "Vérifier à nouveau l'envoi",
+  "@reminderHistoryRefresh": {
+    "description": "#1922 reminder evidence: reminderHistoryRefresh"
+  },
+  "reminderHistoryLine": "Niveau {level} · {origin} · {date}",
+  "@reminderHistoryLine": {
+    "description": "#1922 reminder evidence: reminderHistoryLine",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "origin": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderStatusPrepared": "Préparée",
+  "@reminderStatusPrepared": {
+    "description": "#1922 reminder evidence: reminderStatusPrepared"
+  },
+  "reminderStatusQueued": "Confiée au service de notifications",
+  "@reminderStatusQueued": {
+    "description": "#1922 reminder evidence: reminderStatusQueued"
+  },
+  "reminderStatusAccepted": "Acceptée par le service de notifications — ce n'est pas une preuve de lecture",
+  "@reminderStatusAccepted": {
+    "description": "#1922 reminder evidence: reminderStatusAccepted"
+  },
+  "reminderStatusDeclared": "Partagée par l'expéditeur — sa déclaration, pas un accusé de réception",
+  "@reminderStatusDeclared": {
+    "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusFailed": "Non distribuée",
+  "@reminderStatusFailed": {
+    "description": "#1922 reminder evidence: reminderStatusFailed"
+  },
+  "reminderStatusUnknown": "Aucune réponse du service de notifications",
+  "@reminderStatusUnknown": {
+    "description": "#1922 reminder evidence: reminderStatusUnknown"
+  },
+  "reminderStatusLegacy": "Enregistrée avant le suivi de l'envoi — inconnu",
+  "@reminderStatusLegacy": {
+    "description": "#1922 reminder evidence: reminderStatusLegacy"
+  },
+  "reminderOriginManual": "à la main",
+  "@reminderOriginManual": {
+    "description": "#1922 reminder evidence: reminderOriginManual"
+  },
+  "reminderOriginAutomatic": "automatique",
+  "@reminderOriginAutomatic": {
+    "description": "#1922 reminder evidence: reminderOriginAutomatic"
+  },
+  "reminderOriginLegacy": "antérieure",
+  "@reminderOriginLegacy": {
+    "description": "#1922 reminder evidence: reminderOriginLegacy"
+  },
   "reportGuideTitle": "Champs et balisage",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"
@@ -7619,6 +7774,8 @@
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
   },
+  "bookingSpaceChainTaken": "Cet espace, ou un espace qui le contient, est déjà réservé sur cette période.",
+  "bookingNoLongerCheckedIn": "Cette réservation n'est plus en cours — elle a été clôturée entre-temps.",
   "listWholeReservable": "Réservable en entier",
   "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
   "listCoversSeats": "{count, plural, =1{1 place} other{{count} places}}",

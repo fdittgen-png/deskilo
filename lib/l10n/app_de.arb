@@ -87,6 +87,23 @@
   "bookSaved": "Buchführung gespeichert",
   "bookStale": "Jemand hat diese Buchführung gespeichert, seit Sie sie geöffnet haben. Schließen und neu öffnen, um seine Fassung zu sehen.",
   "bookSaveFailed": "Die Buchführung wurde nicht gespeichert. Prüfen Sie die Verbindung und versuchen Sie es erneut.",
+  "bookRoleCustomers": "Kunden (Forderungen)",
+  "bookRoleRevenue": "Erlöse",
+  "bookRoleBank": "Bank",
+  "bookRoleVatOutput": "Umsatzsteuer",
+  "bookRoleExpenses": "Aufwand",
+  "bookTypeAsset": "Aktiva",
+  "bookTypeLiability": "Passiva",
+  "bookTypeEquity": "Eigenkapital",
+  "bookTypeIncome": "Ertrag",
+  "bookTypeExpense": "Aufwand",
+  "bookChartTitle": "Kontenplan · {site}",
+  "bookChartSuggest": "Die vorgeschlagenen Konten zur Prüfung hinzufügen",
+  "bookAccountCode": "Kontonummer",
+  "bookAccountName": "Kontobezeichnung",
+  "bookAccountPosting": "Bebuchbar",
+  "bookMappingsTitle": "Auf welches Konto jede Buchung geht",
+  "bookProblemUnmapped": "Ordnen Sie diese Konten zu, bevor eine lokale Buchführung beginnt: {roles}.",
   "fecAccountExpenses": "Aufwendungen",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -186,7 +203,7 @@
   "assistantSetupSaved": "Gespeichert.",
   "assistantSetupStale": "Jemand hat das Angebot inzwischen geändert. Prüfen Sie es und versuchen Sie es erneut.",
   "assistantSetupFailed": "Speichern fehlgeschlagen. Nichts wurde geändert; versuchen Sie es erneut.",
-  "assistantSetupLinkIdentity": "Meine Identität verknüpfen",
+  "assistantSetupLinkIdentity": "Meine Identität bestätigen",
   "assistantSetupTurnOn": "Einschalten",
   "assistantSetupRecommended": "Empfohlene Auswahl verwenden",
   "assistantSetupCustomise": "Anpassen",
@@ -4441,6 +4458,71 @@
   "reportDesignErrorUnknownKind": "Diese Vorlage gehört zu einem Bericht, den dieser Space nicht hat.",
   "reportDesignErrorWrongKind": "Diese Vorlage gehört zu einem anderen Bericht. Öffnen Sie diesen und importieren Sie sie dort.",
   "reportDesignErrorInvalidDesign": "Diese Datei enthält keine lesbare Vorlage.",
+  "invoiceHoldAction": "Mahnungen anhalten",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Mahnstopp aufheben",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "Warum die Mahnungen anhalten?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "Für diese Rechnung wird keine Mahnung versendet, weder von Hand noch automatisch, bis der Mahnstopp aufgehoben ist.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "Das Mitglied bestreitet sie",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Falsche Person oder Identitätsfehler",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Insolvenzverfahren",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Ein anderer Grund",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Notiz (optional)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Anhalten",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "Die Mahnungen für diese Rechnung sind angehalten.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "Die Mahnungen für diese Rechnung können fortgesetzt werden.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Mahnungen angehalten: {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "Für diese Rechnung wurde keine vereinbarte Zahlungsfrist erfasst: Es werden keine automatischen Mahnungen versendet, bis Sie sie prüfen.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "Der Mahnstopp konnte nicht geändert werden. Bitte versuchen Sie es erneut.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicePdfDueOn": "Fällig am",
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"
@@ -4950,7 +5032,7 @@
   "mcpEligibleYes": "Diese Datenbank erlaubt Ihnen, Assistenten zu nutzen.",
   "mcpEligibleRequested": "Sie haben um Freigabe gebeten. Ein Datenbankadministrator prüft sie.",
   "mcpEligibleExpired": "Ihre Freigabe ist abgelaufen. Fragen Sie erneut an, um Assistenten weiter zu nutzen.",
-  "mcpEligibleNoIdentity": "Ihr Konto ist auf dieser Datenbank nicht mit einer bestätigten Identität verknüpft.",
+  "mcpEligibleNoIdentity": "Ihre Identität ist für Assistenten auf dieser Datenbank noch nicht bestätigt.",
   "mcpEligibleNot": "Diese Datenbank hat Assistenten für Sie nicht freigegeben.",
   "mcpEligibleWithdraw": "Assistentenzugang auf dieser Datenbank aufgeben",
   "mcpConnectedNoWorkspace": "Kein Arbeitsbereich: Dieser Assistent kann hier nichts tun.",
@@ -4973,14 +5055,14 @@
   "mcpApiReference": "API-Referenz",
   "mcpApiReferenceHint": "Was ein Assistent aufrufen kann und wie es autorisiert wird",
   "mcpStatusTitle": "Wo Sie hier stehen",
-  "mcpStatusIdentity": "Identität",
+  "mcpStatusIdentity": "Identität für Assistenten",
   "mcpStatusEligibility": "Freigabe der Datenbank",
   "mcpStatusExposure": "Angebot des Arbeitsbereichs",
   "mcpStatusRole": "Ihre Rolle",
   "mcpStatusConsent": "Ihre Zustimmung",
   "mcpStatusBackend": "Server",
   "mcpStateVerified": "Bestätigt",
-  "mcpStateUnlinked": "Nicht verknüpft",
+  "mcpStateUnlinked": "Nicht bestätigt",
   "mcpStateNotRequested": "Nicht beantragt",
   "mcpStatePending": "Wartet auf eine Entscheidung",
   "mcpStateApproved": "Freigegeben",
@@ -4994,7 +5076,7 @@
   "mcpStateAvailable": "Erreichbar",
   "mcpStateIncompatible": "Inkompatible Version",
   "mcpStateUnavailable": "Unbekannt",
-  "mcpNextLinkIdentity": "Als Nächstes: Sie verknüpfen Ihr Konto mit der Identität dieser Datenbank.",
+  "mcpNextLinkIdentity": "Nächster Schritt: Bestätigen Sie Ihre Identität für Assistenten auf dieser Datenbank — ein Tippen unten.",
   "mcpNextRequestEligibility": "Als Nächstes: Sie bitten die Administratoren dieser Datenbank um Freigabe.",
   "mcpNextAwaitEligibility": "Als Nächstes: Ein Datenbank-Administrator entscheidet über Ihre Anfrage.",
   "mcpNextOwnerExposes": "Als Nächstes: Die Inhaberin oder der Inhaber des Arbeitsbereichs bietet Assistenten Vorgänge an.",
@@ -5006,6 +5088,10 @@
   "mcpOverviewTitle": "Weitere verbundene Datenbanken",
   "mcpOverviewUnavailable": "Konnte gerade nicht abgefragt werden.",
   "mcpReviewSecondFactor": "Diese Datenbank verlangt Ihren zweiten Faktor in ihrer eigenen Sitzung. Es wurde nichts entschieden.",
+  "mcpStatusConfirmIdentity": "Meine Identität bestätigen",
+  "mcpStateAfterPrevious": "Nach dem vorherigen Schritt",
+  "mcpIdentityIneligible": "Dieses Konto kann noch nicht bestätigt werden — bestätigen Sie zuerst Ihre E-Mail-Adresse oder melden Sie sich mit einem Anbieter an.",
+  "mcpIdentityConflict": "Ein anderes Konto hält diese Identität hier bereits — ein Datenbankadministrator kann das klären.",
   "mcpUsageWorkspaceTitle": "Nutzung durch Assistenten, letzte 30 Tage",
   "mcpUsageMineTitle": "Ihre Nutzung durch Assistenten heute",
   "mcpUsageUnavailable": "Die Nutzung konnte nicht geladen werden.",
@@ -6439,6 +6525,12 @@
   "portalAdminVisible": "Mich als öffentlichen Administrator anzeigen",
   "featurePublicListings": "Öffentlicher Workspace-Eintrag",
   "featurePublicListingsDesc": "Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten.",
+  "portalFollowsWorkspace": "Aus den Arbeitsbereichsangaben",
+  "portalCustomised": "Angepasst",
+  "portalUseWorkspaceInfo": "Arbeitsbereichsangaben verwenden",
+  "portalResetAll": "Alle öffentlichen Daten auf die Arbeitsbereichsangaben zurücksetzen",
+  "portalResetAllBody": "Die öffentlichen Werte aller Felder, für die es Arbeitsbereichsangaben gibt, werden durch diese ersetzt. Felder ohne Entsprechung im Arbeitsbereich behalten Ihre Eingabe.",
+  "portalResetAllConfirm": "Zurücksetzen",
   "featuresViewProcesses": "Prozesse",
   "featuresViewSwitches": "Schalter",
   "processSearchLabel": "Prozesse und Funktionen suchen",
@@ -7098,6 +7190,69 @@
   "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
   "refusalAlreadyDecided": "Jemand hat bereits darüber entschieden. Die Liste zeigt das Ergebnis.",
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
+  "reminderHistoryTitle": "Mahnverlauf",
+  "@reminderHistoryTitle": {
+    "description": "#1922 reminder evidence: reminderHistoryTitle"
+  },
+  "reminderHistoryRefresh": "Zustellung erneut prüfen",
+  "@reminderHistoryRefresh": {
+    "description": "#1922 reminder evidence: reminderHistoryRefresh"
+  },
+  "reminderHistoryLine": "Stufe {level} · {origin} · {date}",
+  "@reminderHistoryLine": {
+    "description": "#1922 reminder evidence: reminderHistoryLine",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "origin": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderStatusPrepared": "Vorbereitet",
+  "@reminderStatusPrepared": {
+    "description": "#1922 reminder evidence: reminderStatusPrepared"
+  },
+  "reminderStatusQueued": "An den Benachrichtigungsdienst übergeben",
+  "@reminderStatusQueued": {
+    "description": "#1922 reminder evidence: reminderStatusQueued"
+  },
+  "reminderStatusAccepted": "Vom Benachrichtigungsdienst angenommen — kein Nachweis, dass sie gelesen wurde",
+  "@reminderStatusAccepted": {
+    "description": "#1922 reminder evidence: reminderStatusAccepted"
+  },
+  "reminderStatusDeclared": "Vom Absender geteilt — seine Angabe, keine Empfangsbestätigung",
+  "@reminderStatusDeclared": {
+    "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusFailed": "Nicht zugestellt",
+  "@reminderStatusFailed": {
+    "description": "#1922 reminder evidence: reminderStatusFailed"
+  },
+  "reminderStatusUnknown": "Keine Antwort des Benachrichtigungsdienstes",
+  "@reminderStatusUnknown": {
+    "description": "#1922 reminder evidence: reminderStatusUnknown"
+  },
+  "reminderStatusLegacy": "Vor der Zustellverfolgung erfasst — unbekannt",
+  "@reminderStatusLegacy": {
+    "description": "#1922 reminder evidence: reminderStatusLegacy"
+  },
+  "reminderOriginManual": "von Hand",
+  "@reminderOriginManual": {
+    "description": "#1922 reminder evidence: reminderOriginManual"
+  },
+  "reminderOriginAutomatic": "automatisch",
+  "@reminderOriginAutomatic": {
+    "description": "#1922 reminder evidence: reminderOriginAutomatic"
+  },
+  "reminderOriginLegacy": "früher",
+  "@reminderOriginLegacy": {
+    "description": "#1922 reminder evidence: reminderOriginLegacy"
+  },
   "reportGuideTitle": "Platzhalter und Markup",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"
@@ -7622,6 +7777,8 @@
   "listWholeReservable": "Als Ganzes reservierbar",
   "listCoversTables": "{count, plural, =1{1 Tisch} other{{count} Tische}}",
   "listCoversSeats": "{count, plural, =1{1 Platz} other{{count} Plätze}}",
+  "bookingSpaceChainTaken": "Dieser Platz oder ein Bereich, zu dem er gehört, ist in diesem Zeitraum bereits reserviert.",
+  "bookingNoLongerCheckedIn": "Diese Reservierung ist nicht mehr eingecheckt — sie wurde inzwischen ausgecheckt oder abgeschlossen.",
   "reserveMonthView": "Monat",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Wiederkehrende Reservierung",
