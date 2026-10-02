@@ -10686,6 +10686,25 @@ class AppLocalizationsEn extends AppLocalizations {
       'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.';
 
   @override
+  String get portalFollowsWorkspace => 'From workspace information';
+
+  @override
+  String get portalCustomised => 'Customised';
+
+  @override
+  String get portalUseWorkspaceInfo => 'Use workspace information';
+
+  @override
+  String get portalResetAll => 'Reset all public data to workspace information';
+
+  @override
+  String get portalResetAllBody =>
+      'The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.';
+
+  @override
+  String get portalResetAllConfirm => 'Reset';
+
+  @override
   String get featuresViewProcesses => 'Processes';
 
   @override

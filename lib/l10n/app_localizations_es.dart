@@ -10761,6 +10761,26 @@ class AppLocalizationsEs extends AppLocalizations {
       'Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores.';
 
   @override
+  String get portalFollowsWorkspace => 'De la información del espacio';
+
+  @override
+  String get portalCustomised => 'Personalizado';
+
+  @override
+  String get portalUseWorkspaceInfo => 'Usar la información del espacio';
+
+  @override
+  String get portalResetAll =>
+      'Restablecer todos los datos públicos con la información del espacio';
+
+  @override
+  String get portalResetAllBody =>
+      'Los valores públicos de cada campo que tiene información en el espacio se sustituyen por ella. Los campos sin equivalente en el espacio conservan lo que escribió.';
+
+  @override
+  String get portalResetAllConfirm => 'Restablecer';
+
+  @override
   String get featuresViewProcesses => 'Procesos';
 
   @override

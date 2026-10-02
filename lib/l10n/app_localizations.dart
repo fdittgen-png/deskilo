@@ -18517,6 +18517,42 @@ abstract class AppLocalizations {
   /// **'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.'**
   String get featurePublicListingsDesc;
 
+  /// No description provided for @portalFollowsWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'From workspace information'**
+  String get portalFollowsWorkspace;
+
+  /// No description provided for @portalCustomised.
+  ///
+  /// In en, this message translates to:
+  /// **'Customised'**
+  String get portalCustomised;
+
+  /// No description provided for @portalUseWorkspaceInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Use workspace information'**
+  String get portalUseWorkspaceInfo;
+
+  /// No description provided for @portalResetAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset all public data to workspace information'**
+  String get portalResetAll;
+
+  /// No description provided for @portalResetAllBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.'**
+  String get portalResetAllBody;
+
+  /// No description provided for @portalResetAllConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get portalResetAllConfirm;
+
   /// #1327 the process-first overview of the Features screen
   ///
   /// In en, this message translates to:
