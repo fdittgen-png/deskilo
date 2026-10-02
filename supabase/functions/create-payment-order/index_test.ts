@@ -91,3 +91,15 @@ Deno.test("#2014 B — a reused intent: paid, failed, stale or resend", () => {
   assertEquals(reuseVerdict({ status: "created", created_at: at(60) }, now), "resend");
   assertEquals(reuseVerdict({ status: "created", created_at: at(KEY_RETENTION_S + 1) }, now), "stale");
 });
+
+// #1863 C — replaces the source grep for `"webhook_id"`: paypal-webhook
+// refuses every event without one, so PayPal is not configured without it.
+Deno.test("PayPal without its webhook id is not configured", async () => {
+  const cfg = await effectiveConfig(
+    admin({ data: { config: { client_id: "c", secret: "s", return_url: "r" } }, error: null }),
+    "ws-1",
+    "paypal",
+    env({}),
+  );
+  assertEquals(missingFields(cfg, "paypal"), ["webhook_id"]);
+});

@@ -303,7 +303,14 @@ enum WorkspaceFeature {
   /// watermark on the web. Core, default ON: confidentiality is the
   /// default, a space may choose otherwise; account messages are always
   /// protected.
-  captureProtection;
+  captureProtection,
+
+  /// #2051 — an owner imports the official public holidays of the
+  /// workspace's country, and of one region where they differ, from an
+  /// open-data source, deselects the days the space stays open, and
+  /// imports the rest as closure days. Platform, default OFF, under
+  /// publicHolidays: the SQL generator stays the offline fallback.
+  holidayImport;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1362,6 +1369,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.messages,
     tier: FeatureTier.core,
     requires: WorkspaceFeature.memberNotifications,
+  ),
+  // #2051 — closure days written from an open-data list change what a
+  // subscription includes, like publicHolidays: asked for, Platform, off.
+  WorkspaceFeature.holidayImport: FeatureManifestEntry(
+    feature: WorkspaceFeature.holidayImport,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+    requires: WorkspaceFeature.publicHolidays,
   ),
 };
 
