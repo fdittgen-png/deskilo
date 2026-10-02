@@ -299,3 +299,31 @@ exists twice (SQL + Dart), change both and keep the pin.
   `export_my_data`, `create_invoice`) differ from the replay's, so their
   new digest cannot be computed from dev; plan the one allowed copy of
   `contract.txt` from the CI artifact.
+
+## 13. Lessons of 2026-10-02 (the two rounds every migration PR paid)
+
+Measured over 14 PRs: a PR without a migration merged in ~35 min, one
+with a migration in ~88 min (49–160). The difference was two avoidable
+rounds, each a doomed CI run plus a full rerun.
+
+- **Predict the contract digest; do not wait for CI to fail.** After
+  `apply_migration` on dev, before the FIRST push:
+  `dart run tool/contract_predict.dart sql supabase/migrations/NNNN_x.sql`,
+  run the printed query on dev with `execute_sql`, save the result row as
+  JSON (`[{"lines": [...]}]`), then
+  `dart run tool/contract_predict.dart apply supabase/migrations/NNNN_x.sql result.json`.
+  It owns only what the file defines WHOLE: a function created or dropped
+  there, the constraints and triggers of a table created there. Their dev
+  lines equal the replay's (0330 and 0332 reproduced CI's contract byte
+  for byte). Exit 2 names what it could not predict: an anchored patch,
+  or a constraint/trigger change on an existing table. Only then is the
+  CI-artifact copy still needed, and it is the ONLY reason left.
+- **Never push with a migration-number gap.** A gap fails the upgrade
+  check ("pending N, want N+1") until the lower number lands, then costs
+  a merge and another full run. Take the number at PUSH time: master's
+  latest + 1. If another open PR holds the same number, push anyway.
+  Whoever merges first keeps it; the other renames its file to the next
+  free number inside the merge-master commit it needs anyway. That means
+  the file name, `set_deskilo_schema_version(N)`, `requiredSchemaVersion`,
+  then `record_applied_migrations` and `build_instance`. Claims in
+  AGENT_HANDOFF.md are a courtesy, not a reason to leave a gap.
