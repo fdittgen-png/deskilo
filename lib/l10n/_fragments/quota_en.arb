@@ -4,7 +4,7 @@
   "@eventTypeRoleChange": {
     "description": "Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card"
   },
-  "eventRolePromote": "{actor} promotes a member to admin",
+  "eventRolePromote": "{actor} asks to give the Administrator role",
   "@eventRolePromote": {
     "description": "Feed line of a role-change event that grants admin",
     "placeholders": {
@@ -13,7 +13,7 @@
       }
     }
   },
-  "eventRoleDemote": "{actor} demotes an admin to member",
+  "eventRoleDemote": "{actor} asks to take back the Administrator role",
   "@eventRoleDemote": {
     "description": "Feed line of a role-change event that removes admin",
     "placeholders": {
@@ -22,11 +22,11 @@
       }
     }
   },
-  "memberMakeAdmin": "Make admin",
+  "memberMakeAdmin": "Give the Administrator role",
   "@memberMakeAdmin": {
     "description": "Owner action promoting a member to admin (0035)"
   },
-  "memberMakeMember": "Make regular member",
+  "memberMakeMember": "Take back the Administrator role",
   "@memberMakeMember": {
     "description": "Owner action demoting an admin to a regular member (0035)"
   },

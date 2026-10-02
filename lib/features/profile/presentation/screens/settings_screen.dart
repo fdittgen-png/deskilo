@@ -175,6 +175,17 @@ class SettingsScreen extends ConsumerWidget {
       [
           const Divider(),
           SettingsSectionHeader(l10n?.settingsSectionMembership ?? 'My membership'),
+          // #2085 — what my roles give me here, every member included.
+          if (features.contains(WorkspaceFeature.roleAssignment) &&
+              myMember != null &&
+              myMember.status == MemberStatus.active &&
+              !myMember.isKiosk)
+            ListTile(
+              key: const ValueKey('settings-what-you-can-do'),
+              leading: const Icon(Icons.verified_user_outlined),
+              title: Text(l10n?.whatYouCanDoTitle ?? 'What you can do here'),
+              onTap: () => context.push('/settings/what-you-can-do'),
+            ),
           // #662 — the member's own half of badge sign-in: the card and
           // the PIN are two halves of one credential of THIS membership,
           // so they stay with the space (#1823). #763 — the help dot rides

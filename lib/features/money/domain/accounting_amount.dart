@@ -252,6 +252,18 @@ class AccountingAmount {
     return AccountingAmount._(currency, exponent, v.toInt());
   }
 
+  /// [numerator] / [denominator] in minor units, rounded once by
+  /// [policy] — for callers that hold an exact ratio (#1870).
+  int roundedQuotient(
+    BigInt numerator,
+    BigInt denominator,
+    RoundingPolicy policy,
+  ) {
+    final v = _divide(numerator, denominator, policy);
+    _checkRange(v, currency);
+    return v.toInt();
+  }
+
   /// Splits this amount over [weights] exactly: the parts always add up
   /// to the whole, and the remainder units go, one each, to the largest
   /// fractional shares (ties to the earlier weight). A negative amount

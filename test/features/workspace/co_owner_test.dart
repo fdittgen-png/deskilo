@@ -117,7 +117,7 @@ void main() {
       tester,
       anaCoOwner: CoOwnerStatus.passive,
     );
-    expect(find.text('Co-owner (passive)'), findsOneWidget);
+    expect(find.text('Successor'), findsOneWidget);
 
     await tester.tap(find.text('Ana'));
     await tester.pumpAndSettle();

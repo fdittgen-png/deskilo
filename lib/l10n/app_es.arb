@@ -1403,6 +1403,10 @@
   "@capacityKpiRoomsToday": {
     "description": "#1920 capacity KPI history"
   },
+  "permViewAnalytics": "Consultar las cifras del espacio",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
+  },
   "featureCarnetsTitle": "Bonos",
   "featureCarnetsDesc": "Vender bonos de medias jornadas que se gastan a lo largo de los meses cuando un miembro reserva más allá de su suscripción, cobrados una sola vez en la venta.",
   "carnetsTitle": "Bonos",
@@ -1546,12 +1550,12 @@
   "consumptionRefusedQuantity": "La cantidad debe estar entre 1 y 999. No se registró nada.",
   "consumptionRefusedPeriod": "El periodo de facturación debe ser un mes (AAAA-MM). No se registró nada.",
   "coOwnerAction": "Copropiedad",
-  "coOwnerNone": "Sin rol de copropietario",
+  "coOwnerNone": "Sin copropiedad",
   "coOwnerActive": "Copropietario activo — permisos de propietario ya, sucesión automática",
-  "coOwnerPassive": "Copropietario pasivo — se convierte en propietario al activarlo o cuando el propietario se va",
+  "coOwnerPassive": "Sucesor — se convierte en propietario al activarlo o cuando el propietario se va",
   "coOwnerActivate": "Promover a propietario ahora",
   "memberCoOwnerChip": "Copropietario",
-  "memberCoOwnerPassiveChip": "Copropietario (pasivo)",
+  "memberCoOwnerPassiveChip": "Sucesor",
   "courtesyLabel": "Tratamiento",
   "@courtesyLabel": {
     "description": "#912 courtesy title: courtesyLabel"
@@ -2948,6 +2952,32 @@
   "@holidayImportFailed": {
     "description": "#2051 open-data holiday import"
   },
+  "instanceTitle": "Instalación: asistentes",
+  "instanceIntro": "Ajustes para todos los espacios de trabajo de esta instalación. Solo el operador de la instancia ve esta página; cada cambio requiere su segundo factor y queda registrado.",
+  "instanceNotOperator": "Solo el operador de la instancia gestiona los asistentes de la instalación.",
+  "instanceSecondFactorNeeded": "Los cambios aquí requieren su segundo factor en esta sesión.",
+  "instanceConfirmSecondFactor": "Confirmar con mi autenticador",
+  "instanceRuntimeTitle": "Asistentes en esta instalación",
+  "instanceRuntimeOn": "Activados",
+  "instanceRuntimeOff": "Desactivados",
+  "instanceTurnOn": "Activar para todos los espacios",
+  "instanceTurnOff": "Desactivar",
+  "instanceTurnOnConfirm": "Los asistentes pasan a poder usarse en cada espacio que los ofrece. Puede desactivarlos en cualquier momento.",
+  "instanceBlockers": "Todavía falta:",
+  "instanceBlockerNoAdmin": "un administrador de la base",
+  "instanceAdminsTitle": "Administradores de la base",
+  "instanceAdminsHelp": "Deciden quién puede usar asistentes. Solo pueden elegirse personas que confirmaron su identidad para asistentes.",
+  "instanceMakeAdmin": "Nombrar administrador",
+  "instanceRemoveAdmin": "Quitar",
+  "instanceNoCandidates": "Nadie más ha confirmado aún su identidad.",
+  "instanceYou": "usted",
+  "instanceClientsTitle": "Clientes de asistente",
+  "instanceClientsHelp": "Un asistente se registra solo la primera vez que alguien lo conecta; funciona solo después de aprobarlo aquí.",
+  "instanceClientWaiting": "Pendiente de aprobación",
+  "instanceClientApproved": "Aprobado",
+  "instanceClientBlocked": "Bloqueado",
+  "instanceApprove": "Aprobar",
+  "instanceBlock": "Bloquear",
   "instanceOwnerClaimIntro": "¿A quién pertenece esta instancia? Introduzca el correo electrónico con el que se registrará en ella. Tras confirmar esa dirección, reclame la titularidad en Ajustes → Propietario de la instancia.",
   "instanceOwnerClaimLabel": "Correo del titular",
   "instanceOwnerTitle": "Propietario de la instancia",
@@ -3518,6 +3548,7 @@
   "invoiceGapMissingExemptionReason": "Falta el motivo por el que no se cobra IVA.",
   "invoiceGapMissingSellerCountry": "Falta el país del espacio.",
   "invoiceGapMissingBuyerCountry": "Falta el país del cliente.",
+  "invoiceGapCreditNoteWithPayments": "Esta factura rectificativa también compensa pagos, algo que una nota de crédito EN 16931 no puede expresar. Emita el abono en un documento propio.",
   "invoiceGapNoChargeLines": "Esta factura no tiene ninguna línea de cargo — su mes quedó cubierto por los pagos, así que no hay nada que enviar.",
   "invoiceGapMissingSellerCity": "la ciudad de la dirección del espacio",
   "invoiceGapMissingSellerPostalCode": "el código postal de la dirección del espacio",
@@ -5092,6 +5123,14 @@
   "mcpStateAfterPrevious": "Después del paso anterior",
   "mcpIdentityIneligible": "Esta cuenta aún no puede confirmarse: confirme primero su dirección de correo o inicie sesión con un proveedor.",
   "mcpIdentityConflict": "Otra cuenta ya tiene esta identidad aquí: un administrador de la base puede resolverlo.",
+  "mcpStatusGoogle": "Inicio de sesión con Google",
+  "mcpStatusLinkGoogle": "Vincular Google",
+  "mcpStatusSignInGoogle": "Iniciar sesión con Google",
+  "mcpStateGoogleReady": "Sesión iniciada con Google",
+  "mcpStateGoogleOtherSession": "Sesión iniciada de otra forma",
+  "mcpStateGoogleMissing": "Google no vinculado",
+  "mcpNextLinkGoogle": "Los asistentes usan su inicio de sesión con Google. Vincule primero Google a esta cuenta; sin ello, la cuenta no puede usar asistentes.",
+  "mcpNextSignInGoogle": "Los asistentes usan su inicio de sesión con Google. Inicie sesión con Google para continuar.",
   "mcpUsageWorkspaceTitle": "Uso de asistentes, últimos 30 días",
   "mcpUsageMineTitle": "Su uso de asistentes hoy",
   "mcpUsageUnavailable": "No se pudo cargar el uso.",
@@ -5184,7 +5223,7 @@
   "membersTitle": "Miembros y planes",
   "membersPlanNone": "Sin plan",
   "memberRoleOwner": "Propietario",
-  "memberRoleAdmin": "Admin",
+  "memberRoleAdmin": "Administrador/a",
   "memberStatusPaused": "En pausa",
   "memberStatusExited": "Salido",
   "membersInvite": "Invitar a un miembro",
@@ -6531,6 +6570,97 @@
   "portalResetAll": "Restablecer todos los datos públicos con la información del espacio",
   "portalResetAllBody": "Los valores públicos de cada campo que tiene información en el espacio se sustituyen por ella. Los campos sin equivalente en el espacio conservan lo que escribió.",
   "portalResetAllConfirm": "Restablecer",
+  "privacyNoticeTitle": "Quién trata tus datos",
+  "@privacyNoticeTitle": {
+    "description": "#1914 privacy notice: privacyNoticeTitle"
+  },
+  "privacyNoticeController": "Responsable del tratamiento: {name} — {contact}",
+  "@privacyNoticeController": {
+    "description": "#1914 privacy notice: privacyNoticeController",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeRights": "Tus derechos: {contact}",
+  "@privacyNoticeRights": {
+    "description": "#1914 privacy notice: privacyNoticeRights",
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeRegion": "Región: {region}",
+  "@privacyNoticeRegion": {
+    "description": "#1914 privacy notice: privacyNoticeRegion",
+    "placeholders": {
+      "region": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeTransfer": "Garantía de transferencia: {mechanism}",
+  "@privacyNoticeTransfer": {
+    "description": "#1914 privacy notice: privacyNoticeTransfer",
+    "placeholders": {
+      "mechanism": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeNotRecorded": "no registrado por el operador",
+  "@privacyNoticeNotRecorded": {
+    "description": "#1914 privacy notice: privacyNoticeNotRecorded"
+  },
+  "privacyNoticeEssential": "Necesario para la cuenta y el espacio",
+  "@privacyNoticeEssential": {
+    "description": "#1914 privacy notice: privacyNoticeEssential"
+  },
+  "privacyNoticeOptional": "Opcional — puedes usar la aplicación sin ello",
+  "@privacyNoticeOptional": {
+    "description": "#1914 privacy notice: privacyNoticeOptional"
+  },
+  "privacyNoticeRightsRoute": "Tus derechos y el contacto",
+  "@privacyNoticeRightsRoute": {
+    "description": "#1914 privacy notice: privacyNoticeRightsRoute"
+  },
+  "privacySpaceNotice": "El aviso de privacidad de este espacio",
+  "@privacySpaceNotice": {
+    "description": "#1914 privacy notice: privacySpaceNotice"
+  },
+  "privacySpaceNoticeRead": "Has tomado conocimiento de esta versión.",
+  "@privacySpaceNoticeRead": {
+    "description": "#1914 privacy notice: privacySpaceNoticeRead"
+  },
+  "privacySpaceNoticeUnread": "Aún no leído — léelo aquí.",
+  "@privacySpaceNoticeUnread": {
+    "description": "#1914 privacy notice: privacySpaceNoticeUnread"
+  },
+  "privacySpaceNoticeAcknowledge": "He leído este aviso",
+  "@privacySpaceNoticeAcknowledge": {
+    "description": "#1914 privacy notice: privacySpaceNoticeAcknowledge"
+  },
+  "privacySpaceNoticeFailed": "No se pudo registrar la toma de conocimiento. Inténtalo de nuevo.",
+  "@privacySpaceNoticeFailed": {
+    "description": "#1914 privacy notice: privacySpaceNoticeFailed"
+  },
+  "privacyPushOnDevice": "Notificaciones push en este dispositivo",
+  "@privacyPushOnDevice": {
+    "description": "#1914 privacy notice: privacyPushOnDevice"
+  },
+  "privacyPushOnDeviceHint": "Opcional. Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push; desactivado, la aplicación sigue funcionando y no se envía nada a este dispositivo.",
+  "@privacyPushOnDeviceHint": {
+    "description": "#1914 privacy notice: privacyPushOnDeviceHint"
+  },
+  "privacyPushOnDeviceFailed": "No se pudo guardar la elección. Inténtalo de nuevo.",
+  "@privacyPushOnDeviceFailed": {
+    "description": "#1914 privacy notice: privacyPushOnDeviceFailed"
+  },
   "featuresViewProcesses": "Procesos",
   "featuresViewSwitches": "Interruptores",
   "processSearchLabel": "Buscar procesos y funciones",
@@ -6675,7 +6805,7 @@
   "@privacyTitle": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "Sus datos permanecen en la UE, nunca se rastrean ni se venden, y solo los leen los roles que nombran las reglas de abajo. Estos son sus derechos según el RGPD — cada uno es un botón.",
+  "privacyIntro": "Tus datos nunca se rastrean ni se venden, y solo los pueden leer los roles que nombran las reglas de abajo; dónde se alojan figura en el aviso de privacidad de esta instalación. Estos son tus derechos según el RGPD — cada uno es un botón.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },
@@ -7128,10 +7258,10 @@
     "description": "#1912 the question editor: shown while the personal-data switch is off"
   },
   "eventTypeRoleChange": "Cambio de rol",
-  "eventRolePromote": "{actor} promueve a un miembro a admin",
-  "eventRoleDemote": "{actor} degrada a un admin a miembro",
-  "memberMakeAdmin": "Hacer admin",
-  "memberMakeMember": "Hacer miembro normal",
+  "eventRolePromote": "{actor} pide dar el rol Administrador/a",
+  "eventRoleDemote": "{actor} pide retirar el rol Administrador/a",
+  "memberMakeAdmin": "Dar el rol Administrador/a",
+  "memberMakeMember": "Retirar el rol Administrador/a",
   "memberRoleChangeRequested": "Cambio de rol enviado para validación.",
   "eventTypeQuota": "Medias jornadas extra",
   "eventQuotaRequested": "{actor} solicita {halfDays} medias jornadas extra para {period}",
@@ -7776,6 +7906,9 @@
   },
   "bookingSpaceChainTaken": "Este espacio, o un espacio que lo contiene, ya está reservado en ese periodo.",
   "bookingNoLongerCheckedIn": "Esta reserva ya no está registrada — se cerró mientras tanto.",
+  "listWholeReservable": "Reservable entero",
+  "listCoversTables": "{count, plural, =1{1 mesa} other{{count} mesas}}",
+  "listCoversSeats": "{count, plural, =1{1 puesto} other{{count} puestos}}",
   "reserveMonthView": "Mes",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Reserva recurrente",
@@ -7916,11 +8049,331 @@
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
+  "rightsRequestsTitle": "Mis solicitudes de derechos",
+  "@rightsRequestsTitle": {
+    "description": "#1915 rights requests: rightsRequestsTitle"
+  },
+  "rightsRequestsHint": "Pide al espacio una copia, una rectificación, una limitación o la supresión — respuesta en un mes natural.",
+  "@rightsRequestsHint": {
+    "description": "#1915 rights requests: rightsRequestsHint"
+  },
+  "rightsRequestsEmpty": "Aún no hay solicitudes.",
+  "@rightsRequestsEmpty": {
+    "description": "#1915 rights requests: rightsRequestsEmpty"
+  },
+  "rightsRequestNew": "Hacer una solicitud",
+  "@rightsRequestNew": {
+    "description": "#1915 rights requests: rightsRequestNew"
+  },
+  "rightsRequestAsk": "¿Qué pides al espacio?",
+  "@rightsRequestAsk": {
+    "description": "#1915 rights requests: rightsRequestAsk"
+  },
+  "rightsRequestDetails": "Detalles (opcional)",
+  "@rightsRequestDetails": {
+    "description": "#1915 rights requests: rightsRequestDetails"
+  },
+  "rightsRequestSend": "Enviar la solicitud",
+  "@rightsRequestSend": {
+    "description": "#1915 rights requests: rightsRequestSend"
+  },
+  "rightsRequestSent": "Solicitud enviada — el espacio responde antes del {date}.",
+  "@rightsRequestSent": {
+    "description": "#1915 rights requests: rightsRequestSent",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestFailed": "No se pudo enviar la solicitud. Inténtalo de nuevo.",
+  "@rightsRequestFailed": {
+    "description": "#1915 rights requests: rightsRequestFailed"
+  },
+  "rightsKindAccess": "Ver una copia de mis datos",
+  "@rightsKindAccess": {
+    "description": "#1915 rights requests: rightsKindAccess"
+  },
+  "rightsKindPortability": "Llevar mis datos a otro sitio (legible por máquina)",
+  "@rightsKindPortability": {
+    "description": "#1915 rights requests: rightsKindPortability"
+  },
+  "rightsKindRectification": "Rectificar mis datos",
+  "@rightsKindRectification": {
+    "description": "#1915 rights requests: rightsKindRectification"
+  },
+  "rightsKindRestriction": "Limitar el uso de mis datos",
+  "@rightsKindRestriction": {
+    "description": "#1915 rights requests: rightsKindRestriction"
+  },
+  "rightsKindObjection": "Oponerme a un uso de mis datos",
+  "@rightsKindObjection": {
+    "description": "#1915 rights requests: rightsKindObjection"
+  },
+  "rightsKindErasure": "Suprimir mis datos",
+  "@rightsKindErasure": {
+    "description": "#1915 rights requests: rightsKindErasure"
+  },
+  "rightsStatusReceived": "Recibida — respuesta antes del {date}",
+  "@rightsStatusReceived": {
+    "description": "#1915 rights requests: rightsStatusReceived",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusExtended": "Prorrogada hasta el {date}: {reason}",
+  "@rightsStatusExtended": {
+    "description": "#1915 rights requests: rightsStatusExtended",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusCompleted": "Atendida — el espacio registró lo que hizo",
+  "@rightsStatusCompleted": {
+    "description": "#1915 rights requests: rightsStatusCompleted"
+  },
+  "rightsStatusRefused": "Denegada: {reason}",
+  "@rightsStatusRefused": {
+    "description": "#1915 rights requests: rightsStatusRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "erasurePreviewTitle": "Qué hace la supresión aquí",
+  "@erasurePreviewTitle": {
+    "description": "#1915 rights requests: erasurePreviewTitle"
+  },
+  "erasurePreviewRemoved": "Suprimido",
+  "@erasurePreviewRemoved": {
+    "description": "#1915 rights requests: erasurePreviewRemoved"
+  },
+  "erasurePreviewKept": "Conservado, y por qué",
+  "@erasurePreviewKept": {
+    "description": "#1915 rights requests: erasurePreviewKept"
+  },
+  "erasurePreviewOutside": "Fuera de esta instalación",
+  "@erasurePreviewOutside": {
+    "description": "#1915 rights requests: erasurePreviewOutside"
+  },
+  "erasureStoreMessages": "Mensajes que enviaste",
+  "@erasureStoreMessages": {
+    "description": "#1915 rights requests: erasureStoreMessages"
+  },
+  "erasureStoreAnswers": "Tus respuestas a las preguntas del espacio",
+  "@erasureStoreAnswers": {
+    "description": "#1915 rights requests: erasureStoreAnswers"
+  },
+  "erasureStoreProfile": "Tu perfil (si es tu último espacio)",
+  "@erasureStoreProfile": {
+    "description": "#1915 rights requests: erasureStoreProfile"
+  },
+  "erasureStoreOpenBookings": "Reservas abiertas — canceladas",
+  "@erasureStoreOpenBookings": {
+    "description": "#1915 rights requests: erasureStoreOpenBookings"
+  },
+  "erasureStoreAccounts": "Facturas y libro — prueba contable, conservada durante el plazo legal; los documentos emitidos no se reescriben",
+  "@erasureStoreAccounts": {
+    "description": "#1915 rights requests: erasureStoreAccounts"
+  },
+  "erasureStorePastBookings": "Reservas pasadas — el registro de ocupación del espacio",
+  "@erasureStorePastBookings": {
+    "description": "#1915 rights requests: erasureStorePastBookings"
+  },
+  "erasureStoreMembership": "La fila de membresía — enlaza los registros conservados; seudónima, no anónima",
+  "@erasureStoreMembership": {
+    "description": "#1915 rights requests: erasureStoreMembership"
+  },
+  "erasureStoreHeldAnswers": "Respuestas bajo una obligación de conservación documentada por el espacio",
+  "@erasureStoreHeldAnswers": {
+    "description": "#1915 rights requests: erasureStoreHeldAnswers"
+  },
+  "erasureStoreOtherInstallations": "Otra instalación de DesKilo es un responsable distinto — pregúntale directamente",
+  "@erasureStoreOtherInstallations": {
+    "description": "#1915 rights requests: erasureStoreOtherInstallations"
+  },
+  "erasureStoreDeviceCaches": "Copias en tus dispositivos — se borran al cerrar sesión en cada uno",
+  "@erasureStoreDeviceCaches": {
+    "description": "#1915 rights requests: erasureStoreDeviceCaches"
+  },
+  "erasureStoreBackups": "Copias de seguridad del operador — caducan según su rotación",
+  "@erasureStoreBackups": {
+    "description": "#1915 rights requests: erasureStoreBackups"
+  },
+  "featureRoleAssignmentTitle": "Asignación de roles",
+  "@featureRoleAssignmentTitle": {
+    "description": "#2085 giving roles: featureRoleAssignmentTitle"
+  },
+  "featureRoleAssignmentDesc": "Muestra una sección Roles en la página de cada miembro para dar o retirar un rol, los miembros de cada rol, y permite a cada miembro ver lo que puede hacer aquí.",
+  "@featureRoleAssignmentDesc": {
+    "description": "#2085 giving roles: featureRoleAssignmentDesc"
+  },
+  "memberRolesTitle": "Roles",
+  "@memberRolesTitle": {
+    "description": "#2085 giving roles: memberRolesTitle"
+  },
+  "memberRolesAdd": "Añadir un rol",
+  "@memberRolesAdd": {
+    "description": "#2085 giving roles: memberRolesAdd"
+  },
+  "memberRolesNone": "Ningún rol: todo lo que puede hacer un miembro.",
+  "@memberRolesNone": {
+    "description": "#2085 giving roles: memberRolesNone"
+  },
+  "memberRolesWhatTheyCanDo": "Lo que esta persona puede hacer aquí",
+  "@memberRolesWhatTheyCanDo": {
+    "description": "#2085 giving roles: memberRolesWhatTheyCanDo"
+  },
+  "roleAssignSheetTitle": "Dar un rol a {name}",
+  "@roleAssignSheetTitle": {
+    "description": "#2085 giving roles: roleAssignSheetTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roleAssignQuorumHint": "Surte efecto una vez validado.",
+  "@roleAssignQuorumHint": {
+    "description": "#2085 giving roles: roleAssignQuorumHint"
+  },
+  "roleAssignImmediateHint": "Surte efecto de inmediato.",
+  "@roleAssignImmediateHint": {
+    "description": "#2085 giving roles: roleAssignImmediateHint"
+  },
+  "roleAssignNothing": "No queda ningún rol por dar.",
+  "@roleAssignNothing": {
+    "description": "#2085 giving roles: roleAssignNothing"
+  },
+  "roleRefusalNotPermitted": "Solo alguien que gestiona los roles puede dar este.",
+  "@roleRefusalNotPermitted": {
+    "description": "#2085 giving roles: roleRefusalNotPermitted"
+  },
+  "roleRefusalOwnerOnly": "Solo el propietario da un rol que gestiona los roles.",
+  "@roleRefusalOwnerOnly": {
+    "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRefusalExceedsYours": "Este rol puede hacer cosas que tú no puedes, así que solo el propietario lo da.",
+  "@roleRefusalExceedsYours": {
+    "description": "#2085 giving roles: roleRefusalExceedsYours"
+  },
+  "roleRefusalNotAssignable": "Este miembro no puede tener este rol.",
+  "@roleRefusalNotAssignable": {
+    "description": "#2085 giving roles: roleRefusalNotAssignable"
+  },
+  "roleGiven": "Rol asignado.",
+  "@roleGiven": {
+    "description": "#2085 giving roles: roleGiven"
+  },
+  "roleTakenBack": "Rol retirado.",
+  "@roleTakenBack": {
+    "description": "#2085 giving roles: roleTakenBack"
+  },
+  "roleHoldersAdd": "Añadir un miembro",
+  "@roleHoldersAdd": {
+    "description": "#2085 giving roles: roleHoldersAdd"
+  },
+  "rolesOwnRolesLink": "Los roles de este espacio",
+  "@rolesOwnRolesLink": {
+    "description": "#2085 giving roles: rolesOwnRolesLink"
+  },
+  "whatYouCanDoTitle": "Lo que puedes hacer aquí",
+  "@whatYouCanDoTitle": {
+    "description": "#2085 giving roles: whatYouCanDoTitle"
+  },
+  "whatTheyCanDoTitle": "Lo que {name} puede hacer aquí",
+  "@whatTheyCanDoTitle": {
+    "description": "#2085 giving roles: whatTheyCanDoTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoIntro": "Aquí todas las personas son miembros: reservar, registrar la llegada, los mensajes y la propia cuenta. Los roles añaden el resto.",
+  "@whatYouCanDoIntro": {
+    "description": "#2085 giving roles: whatYouCanDoIntro"
+  },
+  "whatYouCanDoFromOwner": "Como propietario: todo",
+  "@whatYouCanDoFromOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromOwner"
+  },
+  "whatYouCanDoFromCoOwner": "Como copropietario",
+  "@whatYouCanDoFromCoOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromCoOwner"
+  },
+  "whatYouCanDoFromAdministrator": "Del rol Administrador/a",
+  "@whatYouCanDoFromAdministrator": {
+    "description": "#2085 giving roles: whatYouCanDoFromAdministrator"
+  },
+  "whatYouCanDoFromEveryMember": "Como todos los miembros",
+  "@whatYouCanDoFromEveryMember": {
+    "description": "#2085 giving roles: whatYouCanDoFromEveryMember"
+  },
+  "whatYouCanDoFromRole": "Del rol {role}",
+  "@whatYouCanDoFromRole": {
+    "description": "#2085 giving roles: whatYouCanDoFromRole",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoNothingMore": "Nada más que un miembro.",
+  "@whatYouCanDoNothingMore": {
+    "description": "#2085 giving roles: whatYouCanDoNothingMore"
+  },
+  "roleGiveFailed": "El rol no se asignó.",
+  "@roleGiveFailed": {
+    "description": "#2085 giving roles: roleGiveFailed"
+  },
+  "roleTakeBackFailed": "El rol no se retiró.",
+  "@roleTakeBackFailed": {
+    "description": "#2085 giving roles: roleTakeBackFailed"
+  },
+  "eventRoleGiven": "{actor} da el rol {role} a {member}",
+  "@eventRoleGiven": {
+    "description": "#2085 giving roles: eventRoleGiven",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
+  "eventRoleTakenBack": "{actor} retira el rol {role} a {member}",
+  "@eventRoleTakenBack": {
+    "description": "#2085 giving roles: eventRoleTakenBack",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
   "rolesOfSpaceTitle": "Los roles de este espacio",
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
-  "rolesOfSpaceSubtitle": "Cada uno añade permisos a los del rol de un miembro. Ninguno quita nada, y una propietaria los conserva todos.",
+  "rolesOfSpaceSubtitle": "Cada uno añade permisos a lo que ya pueden hacer quienes lo tienen. Ninguno quita nada, y la propietaria conserva siempre todos los permisos.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -7969,7 +8422,7 @@
   "@roleEditorSaveFailed": {
     "description": "#1528 the roles of a space: roleEditorSaveFailed"
   },
-  "roleEditorHolders": "Quién lo tiene",
+  "roleEditorHolders": "Miembros con este rol",
   "@roleEditorHolders": {
     "description": "#1528 the roles of a space: roleEditorHolders"
   },
@@ -8956,9 +9409,9 @@
   "workspaceCodeCopy": "Copiar ID",
   "workspaceCodeCopied": "Copiado",
   "inviteRoleMember": "Invitación de miembro",
-  "inviteRoleAdmin": "Invitación de admin",
+  "inviteRoleAdmin": "Invitación de administrador/a",
   "inviteAdminExplainer": "Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entrégalo solo a la persona a la que está destinado.",
-  "inviteAdminNewCode": "Nuevo código de admin",
+  "inviteAdminNewCode": "Nuevo código de administrador/a",
   "inviteOwnerNote": "No existe invitación de propietario — solo un propietario puede conceder la propiedad, en Miembros y planes.",
   "scanJoinTitle": "Escanear QR del espacio",
   "scanJoinHelp": "Apunta la cámara al QR de invitación — verás el espacio antes de unirte.",
@@ -9137,11 +9590,11 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
-  "rolesTitle": "Gestión de roles",
+  "rolesTitle": "Roles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "El propietario siempre tiene todos los permisos. Decide aquí qué pueden hacer los demás roles: un copropietario puede tener menos que un propietario.",
+  "rolesIntroEditor": "Aquí todas las personas son miembros. Un rol añade lo que pueden hacer quienes lo tienen y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
@@ -9157,11 +9610,11 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleAdmin": "Admin",
+  "roleAdmin": "Administrador/a",
   "@roleAdmin": {
     "description": "Role label (#513)"
   },
-  "roleMember": "Miembro",
+  "roleMember": "Todos los miembros",
   "@roleMember": {
     "description": "Role label (#513)"
   },

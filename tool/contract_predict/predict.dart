@@ -67,6 +67,13 @@ MigrationScope scan(String migration) {
       unsafe.add('routine $name is patched by anchor');
     }
   }
+  // A patch loop names its routines in data (`p.proname = v_step.fn`),
+  // not in a pattern above: any pg_get_functiondef left unexplained is an
+  // anchored patch whose digest only the CI replay knows.
+  if (unsafe.isEmpty &&
+      RegExp('pg_get_functiondef', caseSensitive: false).hasMatch(sql)) {
+    unsafe.add('a routine is patched by anchor (names not parsed)');
+  }
   for (final m in _alterConstraint.allMatches(sql)) {
     if (!tables.contains(m.group(1))) {
       unsafe.add('constraints of existing table ${m.group(1)} change');

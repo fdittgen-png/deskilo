@@ -66,21 +66,33 @@ String buildInvoiceUbl({
     :category,
     :exemptionCode,
     :exemptionText,
-    :charges,
-    :chargesCents,
-    :breakdown,
-    :netCents,
-    :taxCents,
-    :prepaidCents,
+    :supplies,
+    :supplyBreakdown,
+    :moneyCents,
   ) = eInvoiceTotalsOf(invoice: invoice, seller: seller, buyer: buyer);
+  // #1919 — a negative document is a CREDIT NOTE: its own root, type
+  // code and lines, every amount stated as what is credited (positive),
+  // so a charge netted on it is a negative credit-note line. Money lines
+  // (no rate) can only be a prepaid amount on an INVOICE; a credit note
+  // carrying them has no truthful UBL form, and the readiness check
+  // refuses it before export (EInvoiceGap.creditNoteWithPayments).
+  final creditNote = invoice.isCreditNote;
+  final int sign = creditNote ? -1 : 1;
+  if (creditNote && moneyCents != 0) {
+    throw ArgumentError(
+        'a credit note that nets payments has no EN 16931 credit-note form');
+  }
+  final docName = creditNote ? 'CreditNote' : 'Invoice';
+  final netCents = sign * supplyBreakdown.fold<int>(0, (sum, t) => sum + t.netCents);
+  final taxCents = sign * supplyBreakdown.fold<int>(0, (sum, t) => sum + t.vatCents);
   final issueDate = invoice.issuedAt.toIso8601String().split('T').first;
   final currency = invoice.currency;
 
   final builder = XmlBuilder();
   builder.processing('xml', 'version="1.0" encoding="UTF-8"');
-  builder.element('Invoice', nest: () {
+  builder.element(docName, nest: () {
     builder.namespace(
-        'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2');
+        'urn:oasis:names:specification:ubl:schema:xsd:$docName-2');
     builder.namespace(
         'urn:oasis:names:specification:ubl:schema:xsd:'
         'CommonBasicComponents-2',
@@ -106,9 +118,12 @@ String buildInvoiceUbl({
     cbc('IssueDate', issueDate);
     // 380 = commercial invoice; 384 = corrective (a replacement);
     // 381 = credit note — a document that gives money back (#894).
-    cbc('InvoiceTypeCode', invoice.isCreditNote
-        ? '381'
-        : invoice.replacesNumber.isNotEmpty ? '384' : '380');
+    if (creditNote) {
+      cbc('CreditNoteTypeCode', '381');
+    } else {
+      cbc('InvoiceTypeCode',
+          invoice.replacesNumber.isNotEmpty ? '384' : '380');
+    }
     cbc('DocumentCurrencyCode', currency);
     // #922 — BT-10, the buyer reference (Chorus Pro: code service). The
     // schema orders it here, after the currency and before the period.
@@ -188,10 +203,10 @@ String buildInvoiceUbl({
       money('TaxAmount', taxCents);
       // One subtotal per rate (BR-CO-18): the breakdown is per rate, not
       // per line, and its sum is the tax above.
-      for (final total in breakdown) {
+      for (final total in supplyBreakdown) {
         builder.element('cac:TaxSubtotal', nest: () {
-          money('TaxableAmount', total.netCents);
-          money('TaxAmount', total.vatCents);
+          money('TaxableAmount', sign * total.netCents);
+          money('TaxAmount', sign * total.vatCents);
           builder.element('cac:TaxCategory', nest: () {
             cbc('ID', total.category);
             // BR-S-05 wants the real rate; BR-E-05 the 0 spelled out;
@@ -217,31 +232,39 @@ String buildInvoiceUbl({
       // BR-CO-10/13: the sum of the line nets IS the tax-exclusive total.
       money('LineExtensionAmount', netCents);
       money('TaxExclusiveAmount', netCents);
-      // BR-CO-15 — and the gross is what the member was always charged.
-      money('TaxInclusiveAmount', chargesCents);
-      if (prepaidCents > 0) money('PrepaidAmount', prepaidCents);
-      money('PayableAmount', invoice.totalCents);
+      // BR-CO-15 — net plus tax; a rated reversal reduces both.
+      money('TaxInclusiveAmount', netCents + taxCents);
+      // BT-113 — money already received; never a reversed supply (#1919).
+      if (!creditNote && moneyCents > 0) money('PrepaidAmount', moneyCents);
+      money('PayableAmount', sign * invoice.totalCents);
     });
 
-    for (final (i, line) in charges.indexed) {
+    for (final (i, line) in supplies.indexed) {
       // The norm's line amount is tax-EXCLUSIVE (BT-131), so the gross
-      // price is split exactly as the breakdown above splits it.
-      final lineNet = vatSplit(line.amountCents, line.vatPercent).netCents;
+      // price is split exactly as the breakdown above splits it. #1919 —
+      // signed as the document states it: a reversal on an invoice and a
+      // charge on a credit note are negative lines.
+      final lineNet =
+          sign * vatSplit(line.amountCents, line.vatPercent).netCents;
       // #1091 — keep quantity × unit price arithmetically consistent on
       // the amount actually EMITTED. This tested the GROSS for
       // divisibility and then emitted the NET, so a line whose gross
       // divides but whose net does not (4 × €10.00 at 20% → net 8.33)
       // shipped 2.08 × 4 = 8.32 against a stated 8.33, and a strict
       // EN 16931 validator rejects the document.
-      final quantity =
-          line.quantity > 1 && lineNet % line.quantity == 0
+      final units =
+          line.quantity > 1 && lineNet.abs() % line.quantity == 0
               ? line.quantity
               : 1;
-      final unitCents = lineNet ~/ quantity;
+      // BR-27 — the item price is never negative: a negative line is a
+      // negative QUANTITY at a positive price.
+      final quantity = lineNet < 0 ? -units : units;
+      final unitCents = lineNet.abs() ~/ units;
       final lineCategory = line.vatPercent > 0 ? 'S' : category;
-      builder.element('cac:InvoiceLine', nest: () {
+      builder.element('cac:${docName}Line', nest: () {
         cbc('ID', '${i + 1}');
-        cbc('InvoicedQuantity', '$quantity', {'unitCode': 'C62'});
+        cbc(creditNote ? 'CreditedQuantity' : 'InvoicedQuantity', '$quantity',
+            {'unitCode': 'C62'});
         money('LineExtensionAmount', lineNet);
         builder.element('cac:Item', nest: () {
           cbc('Name', lineText(line));

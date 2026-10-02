@@ -29,7 +29,7 @@ Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipp
 
 A member finds a free place on the plan and holds it for a period; the database refuses a second booking of the same place at the same time, whoever asks and however many clients race.
 
-- **Code:** shipped · component `c92c581b126c`
+- **Code:** shipped · component `9e76fde8c780`
 - **Needs:** A workspace with a published plan and opening hours; booking rules in Settings.
 - **Limits:** Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.
 - **Feature flags:** `bookingGate`, `bookingPolicies`, `seriesBooking`, `autoCheckInOut`
@@ -43,7 +43,7 @@ A member finds a free place on the plan and holds it for a period; the database 
 
 A membership plan grants an allowance per month; a booking beyond it spends a carnet or is refused, and a member without a subscription never books for free.
 
-- **Code:** shipped · component `5807abc70ab4`
+- **Code:** shipped · component `5568ce1ae949`
 - **Needs:** Membership plans configured; an allowance per plan.
 - **Limits:** Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.
 - **Feature flags:** `carnets`, `usageRecords`
@@ -73,7 +73,7 @@ Every member has a ledger: subscription charges, extra usage, approved shared ex
 
 A join, an expense, a deletion or a settings change waits for the quorum the workspace configured; the decision trail records who decided and the database enforces the rule it records.
 
-- **Code:** shipped · component `3008f2db81b1`
+- **Code:** shipped · component `bf055a1decd5`
 - **Needs:** Roles assigned; a quorum per decision kind in Settings.
 - **Limits:** Quorums count distinct people by membership, not by device or session.
 - **Feature flags:** `validationScopes`, `validationChain`, `deletionRequests`
@@ -147,7 +147,7 @@ The books of a period leave as FEC, SAF-T or DATEV files an accountant can load.
 
 An invoice becomes an EN 16931 document (UBL 2.1 or Factur-X) with the references its destination platform requires.
 
-- **Code:** shipped · component `5377cf36b8d8`
+- **Code:** shipped · component `d12a32e9b77a`
 - **Needs:** A complete legal identity for the workspace; VAT configured.
 - **Limits:** Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.
 - **Feature flags:** `invoicing`, `vatManagement`
@@ -189,7 +189,7 @@ Storage objects, Auth configuration and the running application recover to a kno
 
 A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.
 
-- **Code:** shipped · component `ca67b50f1aa6`
+- **Code:** shipped · component `87bfcd68a17d`
 - **Needs:** None: the Demo is built into every client.
 - **Limits:** The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.
 - **Feature flags:** `demoMode`

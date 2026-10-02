@@ -135,6 +135,29 @@ class FakeMcpAdminRepository implements McpAdminRepository {
   @override
   Future<McpWorkspaceUsage> workspaceUsage(String workspaceId) async =>
       McpWorkspaceUsage(workspaceId: workspaceId, rows: List.of(usage));
+
+  /// #1827 B — the instance console; null = not the instance operator.
+  InstanceMcpOverview? instance;
+  final instanceCalls = <String>[];
+
+  @override
+  Future<InstanceMcpOverview?> instanceOverview() async => instance;
+
+  @override
+  Future<void> grantAdministrator(String userId, {bool canProvision = true}) async =>
+      instanceCalls.add('grant:$userId');
+
+  @override
+  Future<void> revokeAdministrator(String userId) async =>
+      instanceCalls.add('revoke:$userId');
+
+  @override
+  Future<void> setClient(String clientId, {required bool active}) async =>
+      instanceCalls.add('client:$clientId:$active');
+
+  @override
+  Future<void> setRuntime({required bool enabled}) async =>
+      instanceCalls.add('runtime:$enabled');
 }
 
 /// A second factor that is exactly what the test says: never aal2 by

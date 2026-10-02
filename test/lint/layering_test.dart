@@ -217,7 +217,7 @@ const Map<String, int> _pairBudget = {
   'members -> plan': 3,
   'members -> profile': 9,
   'members -> reservations': 14,
-  'members -> workspace': 34,
+  'members -> workspace': 35, // 2026-10-02 #2085 34→35: the member page hosts the Roles card (workspace/presentation/widgets/member_roles_card.dart), which gives the roles workspace/ defines.
   'money -> calendar': 1,
   'money -> events': 30,
   'money -> members': 2,
@@ -271,7 +271,7 @@ const Map<String, int> _pairBudget = {
   // the plan's `targetNamesProvider` so the calendar-file command can name
   // the booked space — the widget that asks for the file imports no plan
   // provider of its own, which is the point of the command.
-  'reservations -> plan': 72, // #1825 +3: list_space_tap (floor plan, level, half-day window)
+  'reservations -> plan': 73, // #1825 +1: whole_space_blocking (FloorPlan) — the whole-space rule now has ONE home shared by the plan sheet and the list. #1825 +3: list_space_tap (floor plan, level, half-day window)
   'reservations -> profile': 1,
   // 48→50 (2026-09-16): #1234 — `application/act_on_space.dart` and
   // `domain/space_act.dart` both need `BookingGranularity`: the
@@ -303,7 +303,7 @@ const Map<String, int> _pairBudget = {
   'workspace -> money': 35,
   'workspace -> plan': 25,
   'workspace -> profile': 11, // 2026-09-28 #1652 10→11: the invitation review names who is joining (my profile's e-mail).
-  'workspace -> reservations': 17,
+  'workspace -> reservations': 19, // 2026-10-02 #2085 17→19: the role's holders and "What they can do here" print member names through memberNamesProvider, the one name seam (recording privacy, #1514).
 };
 
 Iterable<File> _featureFiles() => handWrittenDartFiles('lib/features');
