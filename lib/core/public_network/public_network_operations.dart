@@ -59,7 +59,7 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
   'PublicationInput': PublicSchema(
     'PublicationInput',
     {
-      'host_type': PublicField(PublicFieldType.enum_, required: true, values: ['association', 'company', 'person']),
+      'host_type': PublicField(PublicFieldType.enum_, values: ['association', 'company', 'person']),
       'description': PublicField(PublicFieldType.text, maxLength: 4000),
       'address': PublicField(PublicFieldType.text, maxLength: 4000),
       'email': PublicField(PublicFieldType.text, maxLength: 4000),
@@ -93,6 +93,14 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
     {
       'published': PublicField(PublicFieldType.boolean, required: true),
       'document': PublicField(PublicFieldType.object, required: true, schema: 'PublicationDraft'),
+      'following': PublicField(PublicFieldType.object, schema: 'PublicationFollowing'),
+    },
+  ),
+  'PublicationFollowing': PublicSchema(
+    'PublicationFollowing',
+    {
+      'host_type': PublicField(PublicFieldType.boolean),
+      'address': PublicField(PublicFieldType.boolean),
     },
   ),
 };
@@ -178,6 +186,20 @@ abstract final class PublicNetworkOperations {
     cardinality: PublicCardinality.one,
   );
 
+  /// The owner returns inherited public fields to the workspace's own information: the named ones, or all of them when p_fields is null; answers the page as publication.page.read does.
+  static const publicationPageReset = PublicOperationSpec(
+    id: 'publication.page.reset',
+    surface: PublicSurface.management,
+    principal: PublicPrincipal.authenticated,
+    authority: PublicAuthority.owner,
+    mutation: PublicMutation.write,
+    features: ['publicListings'],
+    rpc: 'reset_workspace_public_page',
+    params: {'p_workspace': 'uuid', 'p_fields': 'text[]'},
+    output: 'PublicationPage',
+    cardinality: PublicCardinality.one,
+  );
+
   /// A signed-in account registers another installation's public endpoint in this directory, after an anonymous probe of that endpoint.
   static const directorySourcesRegister = PublicOperationSpec(
     id: 'directory.sources.register',
@@ -213,6 +235,7 @@ const Map<String, PublicOperationSpec> publicNetworkOperations = {
   'directory.workspaces.detail': PublicNetworkOperations.directoryWorkspacesDetail,
   'publication.page.read': PublicNetworkOperations.publicationPageRead,
   'publication.page.save': PublicNetworkOperations.publicationPageSave,
+  'publication.page.reset': PublicNetworkOperations.publicationPageReset,
   'directory.sources.register': PublicNetworkOperations.directorySourcesRegister,
   'workspace.profile.request': PublicNetworkOperations.workspaceProfileRequest,
 };

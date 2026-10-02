@@ -120,6 +120,10 @@ const _sqlTypes = {
   'uuid': {'type': 'string', 'format': 'uuid'},
   'text': {'type': 'string'},
   'boolean': {'type': 'boolean'},
+  'text[]': {
+    'type': ['array', 'null'],
+    'items': {'type': 'string'},
+  },
 };
 
 Map<String, Object?> _operationDoc(Map<String, dynamic> op) {

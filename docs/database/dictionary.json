@@ -19,7 +19,7 @@
             "managed platform schemas (auth, storage, realtime, ...): version-qualified, not application migrations",
             "row values, function bodies, view definitions"
         ],
-        "schemaMarker": 335,
+        "schemaMarker": 337,
         "postgresMajor": 17,
         "applicationSchema": "public"
     },

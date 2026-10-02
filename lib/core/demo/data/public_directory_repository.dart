@@ -37,22 +37,57 @@ class FakeDirectoryRepository
         .firstOrNull;
   }
 
+  /// #2086 — the workspace's own information an inherited field follows.
+  final local = <String, String>{'host_type': 'company', 'address': ''};
+
+  Map<String, dynamic> _resolved(String workspace) {
+    final stored = Map<String, dynamic>.from(
+      (pages[workspace]?['document'] as Map?) ?? const <String, dynamic>{},
+    );
+    return {
+      ...local,
+      ...stored,
+      'name': 'Demo workspace',
+      'contacts': <Map<String, dynamic>>[],
+    };
+  }
+
   @override
-  Future<Map<String, dynamic>> ownPage(String workspace) async =>
-      pages[workspace] ?? {'published': false, 'document': <String, dynamic>{}};
+  Future<Map<String, dynamic>> ownPage(String workspace) async {
+    final stored = (pages[workspace]?['document'] as Map?) ?? const {};
+    return {
+      'published': pages[workspace]?['published'] == true,
+      'document': _resolved(workspace),
+      'following': {
+        for (final field in publicInheritedFields)
+          field: !stored.containsKey(field),
+      },
+    };
+  }
+
   @override
   Future<Map<String, dynamic>> savePage(
     String workspace,
     Map<String, String> document,
     bool published,
   ) async {
-    final doc = <String, dynamic>{
-      ...document,
-      'name': 'Demo workspace',
-      'contacts': <Map<String, dynamic>>[],
+    pages[workspace] = {
+      'published': published,
+      'document': <String, dynamic>{...document},
     };
-    pages[workspace] = {'published': published, 'document': doc};
-    return doc;
+    return _resolved(workspace);
+  }
+
+  @override
+  Future<Map<String, dynamic>> resetPage(
+    String workspace, {
+    Set<String>? fields,
+  }) async {
+    final stored = pages[workspace]?['document'] as Map<String, dynamic>?;
+    stored?.removeWhere(
+      (key, _) => (fields ?? publicInheritedFields.toSet()).contains(key),
+    );
+    return ownPage(workspace);
   }
 
   @override
