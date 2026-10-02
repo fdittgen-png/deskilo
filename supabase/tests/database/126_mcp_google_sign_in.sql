@@ -9,8 +9,8 @@ select plan(7);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
-  g uuid := '00000000-0000-4000-8000-000000000339';
-  e uuid := '00000000-0000-4000-8000-000000000339';
+  g uuid := '00000000-0000-4000-8000-00000000c340';
+  e uuid := '00000000-0000-4000-8000-00000000c341';
 begin
   insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                           email_confirmed_at, created_at, updated_at)

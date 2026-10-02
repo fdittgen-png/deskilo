@@ -2,12 +2,26 @@
 -- #1622 / 0289: the financial request tools refuse bad arguments before a
 -- human is asked, stay in their workspace, and read the invoice back.
 begin;
+
+-- 0340 — assistants act only for Google accounts: every test user this
+-- file creates gets a Google identity (a trigger inside this transaction,
+-- rolled back with it).
+create function public.test_google_identity() returns trigger language plpgsql as $g$
+begin
+  insert into auth.identities (id, provider_id, user_id, identity_data, provider, created_at, updated_at)
+  values (gen_random_uuid(), 'google-' || new.id, new.id,
+          jsonb_build_object('sub', 'google-' || new.id), 'google', now(), now());
+  return new;
+end
+$g$;
+create trigger zz_test_google_identity after insert on auth.users
+  for each row execute function public.test_google_identity();
 select plan(8);
 
 create function pg_temp.act_as(p_user uuid, p_client text default null) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_strip_nulls(jsonb_build_object(
-    'sub', p_user, 'role', 'authenticated', 'client_id', p_client))::text, true);
+    'sub', p_user, 'role', 'authenticated', 'amr', jsonb_build_array(jsonb_build_object('method', 'oauth')), 'client_id', p_client))::text, true);
   execute 'set local role authenticated';
 end;
 $$;
