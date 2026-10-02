@@ -536,6 +536,108 @@ abstract class AppLocalizations {
   /// **'The book was not saved. Check the connection and try again.'**
   String get bookSaveFailed;
 
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Customers (receivable)'**
+  String get bookRoleCustomers;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get bookRoleRevenue;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get bookRoleBank;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Output VAT'**
+  String get bookRoleVatOutput;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get bookRoleExpenses;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Asset'**
+  String get bookTypeAsset;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Liability'**
+  String get bookTypeLiability;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Equity'**
+  String get bookTypeEquity;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get bookTypeIncome;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get bookTypeExpense;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Chart of accounts · {site}'**
+  String bookChartTitle(String site);
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Add the suggested accounts to review'**
+  String get bookChartSuggest;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Account code'**
+  String get bookAccountCode;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Account name'**
+  String get bookAccountName;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Takes postings'**
+  String get bookAccountPosting;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Which account each entry books to'**
+  String get bookMappingsTitle;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Map these accounts before a local book starts: {roles}.'**
+  String bookProblemUnmapped(String roles);
+
   /// #936 accounting exports: fecAccountExpenses
   ///
   /// In en, this message translates to:

@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0338 (#1921) -- purpose-scoped analytics reads.
+-- 0339 (#1921) -- purpose-scoped analytics reads.
 --
 -- The capacity KPI (0333/0336) was readable by anyone holding
 -- manageReservations: an operational WRITE right doubling as the right to
@@ -90,7 +90,7 @@ begin
   else execute v_patched; end if;
 
   if cardinality(v_missing) > 0 then
-    raise exception '0338: anchors missing in %', v_missing;
+    raise exception '0339: anchors missing in %', v_missing;
   end if;
 end
 $patch$;
@@ -500,4 +500,4 @@ grant execute on function public.template_field_registry() to authenticated;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(338);
+select public.set_deskilo_schema_version(339);
