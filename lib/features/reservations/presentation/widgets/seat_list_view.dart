@@ -11,6 +11,7 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
+import 'list_space_tap.dart';
 import '../../../../core/i18n/format_controller.dart';
 
 /// The plan's SEAT LIST (#687), ported out of the deleted Plan tab.
@@ -56,14 +57,21 @@ class SeatListView extends ConsumerWidget {
   /// #1825 — whole-space reservation from a desk or office header; null
   /// when this member may not reserve a space as a whole (feature off, no
   /// grant, no roster). Only a header whose space is bookable as a whole
-  /// becomes actionable.
+  /// becomes actionable. Called with neither id, it reserves the level.
   final void Function(String? deskId, String? officeId)? onSpaceTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
 
+    final level = ref
+        .watch(levelsProvider)
+        .value
+        ?.where((l) => l.id == plan.levelId)
+        .firstOrNull;
+    final wholeLevel = onSpaceTap != null && levelReservable(ref, level);
     if (plan.seats.isEmpty &&
+        !wholeLevel &&
         !plan.desks.any((d) => d.bookableAsWhole) &&
         !plan.offices.any((o) => o.bookableAsWhole)) {
       return EmptyState(
@@ -114,6 +122,12 @@ class SeatListView extends ConsumerWidget {
       return tap == null || !whole || !dayOpen ? null : () => tap(deskId, officeId);
     }
 
+    // #1825 — the whole level, at the top, only where the level rail
+    // offers it (its stricter rule); structure otherwise stays the rail's.
+    if (wholeLevel) {
+      rows.add(header('list-level-${plan.levelId}', Icons.layers_outlined,
+          level!.name, 0, onTap: spaceTap(whole: true)));
+    }
     final placed = <String>{};
     final offices = [...plan.offices]..sort((a, b) => byName(a.name, b.name));
     for (final office in offices) {
