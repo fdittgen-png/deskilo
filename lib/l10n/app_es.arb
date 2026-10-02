@@ -64,6 +64,8 @@
   "handoffBlocked": "Este archivo no puede entregarse hasta que se corrija el origen.",
   "handoffSave": "Guardar archivo e informe",
   "handoffChanged": "Las facturas cambiaron mientras las revisaba. Vuelva a exportar para ver las cuentas actuales.",
+  "handoffUnsupportedCurrency": "{number}: su moneda no tiene un número de decimales verificado",
+  "handoffAmountOutOfRange": "{number}: un total demasiado grande para transmitirse con exactitud",
   "fecAccountExpenses": "Gastos",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -1224,6 +1226,117 @@
   "reservationCalendarFileRefused": "Esta reserva no se puede exportar: no es tuya o ya no existe.",
   "@reservationCalendarFileRefused": {
     "description": "#1643 calendar file: reservationCalendarFileRefused"
+  },
+  "featureCapacityKpiTitle": "Ocupación de puestos",
+  "@featureCapacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "featureCapacityKpiDesc": "Muestra a los propietarios y a quienes gestionan las reservas qué parte del tiempo de puesto ofrecido se reservó en un mes, cómo se calcula y lo que la cifra no puede saber.",
+  "@featureCapacityKpiDesc": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiTitle": "Ocupación de puestos",
+  "@capacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRatio": "{reserved} de {offered} horas-puesto reservadas",
+  "@capacityKpiRatio": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiUndefined": "En este periodo no se ofreció tiempo de puesto, así que no hay ocupación que mostrar.",
+  "@capacityKpiUndefined": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiExplain": "¿Cómo se calcula?",
+  "@capacityKpiExplain": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiDefinition": "Horas-puesto reservadas dentro del horario de apertura, divididas por las horas-puesto ofrecidas: cada puesto por las horas de apertura de los días abiertos, menos los días de cierre y los bloqueos de puestos. Una mesa, sala o planta completa cuenta cada uno de sus puestos una vez; las reservas canceladas no cuentan.",
+  "@capacityKpiDefinition": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiPhysical": "Capacidad física: {hours} horas-puesto",
+  "@capacityKpiPhysical": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOutside": "Reservado fuera de las horas ofrecidas: {hours} horas-puesto, fuera del ratio",
+  "@capacityKpiOutside": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOverlap": "Reservado dos veces a la vez: {hours} horas-puesto, contadas una vez",
+  "@capacityKpiOverlap": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRooms": "Salas sin puestos: {count}, {reserved} de {offered} horas-sala reservadas",
+  "@capacityKpiRooms": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiPartial": "Parcial: el plano, el horario y los bloqueos de puestos son los de hoy; su historial aún no se registra.",
+  "@capacityKpiPartial": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiUnattributed": "Algunas reservas del periodo apuntan a un lugar que ya no existe; no se cuentan.",
+  "@capacityKpiUnattributed": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiKnownZero": "Medido: no se reservó nada.",
+  "@capacityKpiKnownZero": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiAsOf": "Calculado {time}",
+  "@capacityKpiAsOf": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiForbidden": "No puede consultar las cifras de capacidad de este espacio.",
+  "@capacityKpiForbidden": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiUnavailable": "No se pudo calcular la ocupación de puestos.",
+  "@capacityKpiUnavailable": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRetry": "Reintentar",
+  "@capacityKpiRetry": {
+    "description": "#1918 capacity KPI"
   },
   "featureCarnetsTitle": "Bonos",
   "featureCarnetsDesc": "Vender bonos de medias jornadas que se gastan a lo largo de los meses cuando un miembro reserva más allá de su suscripción, cobrados una sola vez en la venta.",

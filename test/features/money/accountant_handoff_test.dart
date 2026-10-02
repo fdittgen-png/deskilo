@@ -234,6 +234,35 @@ void main() {
       expect(r.clean, isFalse);
     });
 
+    // #1870 — the handoff sums through the exact amount: a currency
+    // with no reviewed exponent is not read as two decimals, and a total
+    // that would leave the exactly representable range is refused
+    // rather than wrapped or rounded.
+    test('an unreviewed currency blocks instead of being read as 2 decimals',
+        () {
+      final r = _export([_inv(id: '1', currency: 'XYZ'), _inv(id: '2')]).report;
+      expect(
+        r.findings.map((f) => (f.kind, f.subject)),
+        [(HandoffFindingKind.unsupportedCurrency, 'INV-1')],
+      );
+      expect(r.totals.keys, ['EUR']);
+      expect(r.clean, isFalse);
+    });
+
+    test('a total past 2^53 - 1 minor units blocks, the others still add',
+        () {
+      const half = 4503599627370496; // 2^52
+      final r = _export([
+        _inv(id: '1', charges: half, net: half, vat: 0),
+        _inv(id: '2', charges: half, net: half, vat: 0),
+        _inv(id: '3', currency: 'USD'),
+      ]).report;
+      expect(r.findings.map((f) => f.kind),
+          contains(HandoffFindingKind.amountOutOfRange));
+      expect(r.totals['USD']!['issued']!.grossMinor, 12000);
+      expect(r.clean, isFalse);
+    });
+
     test('an overpayment is shown, not blocking', () {
       final r = _export([_inv(id: '1')], {'1': _paid('1', 20000)}).report;
       expect(r.findings.single.kind, HandoffFindingKind.overpaid);

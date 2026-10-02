@@ -1086,7 +1086,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f195c36ad44b
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c83f0ee4f2de
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:98c4fb801029
 routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:authenticated,service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
@@ -1152,6 +1152,8 @@ routine public.join_workspace(p_invite_code text) -> uuid | function | definer |
 routine public.jsonb_text_array(p jsonb) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:d77408f879dc
 routine public.kiosk_act(p_workspace_id uuid, p_badge_token text, p_action text, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:36626f33c0b5
 routine public.kiosk_identify(p_workspace_id uuid, p_badge_token text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1bd2bf1f2625
+routine public.kpi_multirange_hours(p tstzmultirange) -> numeric | function | invoker | immutable | exec:authenticated,service_role | body:6e8c7b7e8ade
+routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a1b6006c5be8
 routine public.leave_conversation(p_conversation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:39d9798213e7
 routine public.leave_workspace(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:87cdc08f8a39
 routine public.ledger_entries_append_only() -> trigger | function | definer | volatile | exec:service_role | body:4da440e10a09
@@ -1297,6 +1299,7 @@ routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | functi
 routine public.payment_intents_ledger_matches() -> trigger | function | invoker | volatile | exec:service_role | body:ce5bc360638e
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
 routine public.place_dunning_hold(p_invoice_id uuid, p_reason text, p_note text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d66df323208a
+routine public.plan_media_orphans(p_workspace_id uuid, p_limit integer) -> SETOF text | function | definer | stable | exec:authenticated,service_role | body:775cccc5b72f
 routine public.post_context_notice(p_context_kind text, p_context_id uuid, p_notice jsonb, p_body text) -> uuid | function | definer | volatile | exec:service_role | body:d77a52768f00
 routine public.preview_deployment(p_from uuid, p_to uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:704ad1f8deb8
 routine public.preview_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | stable | exec:authenticated,service_role | body:e360ad9d105a
@@ -1469,7 +1472,7 @@ routine public.system_columns_stamp() -> trigger | function | invoker | volatile
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:36fcab3eb0a1
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:05c3542af0a8
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9e1945110fb4
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753

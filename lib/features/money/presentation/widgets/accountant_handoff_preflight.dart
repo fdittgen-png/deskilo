@@ -25,6 +25,12 @@ String handoffFindingLabel(AppLocalizations? l10n, HandoffFinding f) =>
       HandoffFindingKind.overpaid =>
         l10n?.handoffOverpaid(f.subject) ??
             '${f.subject}: paid more than it charges',
+      HandoffFindingKind.unsupportedCurrency =>
+        l10n?.handoffUnsupportedCurrency(f.subject) ??
+            '${f.subject}: its currency has no reviewed number of decimals',
+      HandoffFindingKind.amountOutOfRange =>
+        l10n?.handoffAmountOutOfRange(f.subject) ??
+            '${f.subject}: a total too large to carry exactly',
     };
 
 /// #1640 — before the accountant CSV is saved: what it holds, what it

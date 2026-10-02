@@ -185,6 +185,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Rechnungen haben sich während Ihrer Prüfung geändert. Exportieren Sie erneut, um den aktuellen Stand zu sehen.';
 
   @override
+  String handoffUnsupportedCurrency(String number) {
+    return '$number: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt';
+  }
+
+  @override
+  String handoffAmountOutOfRange(String number) {
+    return '$number: eine Summe, die zu groß ist, um exakt übertragen zu werden';
+  }
+
+  @override
   String get fecAccountExpenses => 'Aufwendungen';
 
   @override
@@ -1914,6 +1924,79 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get reservationCalendarFileRefused =>
       'Diese Buchung kann nicht exportiert werden: Sie gehört nicht Ihnen, oder sie existiert nicht mehr.';
+
+  @override
+  String get featureCapacityKpiTitle => 'Platzauslastung';
+
+  @override
+  String get featureCapacityKpiDesc =>
+      'Zeigt Eigentümern und Reservierungsverwaltern, wie viel der angebotenen Platzzeit eines Monats reserviert wurde, wie das berechnet wird und was die Zahl nicht wissen kann.';
+
+  @override
+  String get capacityKpiTitle => 'Platzauslastung';
+
+  @override
+  String capacityKpiRatio(String reserved, String offered) {
+    return '$reserved von $offered Platzstunden reserviert';
+  }
+
+  @override
+  String get capacityKpiUndefined =>
+      'In diesem Zeitraum wurde keine Platzzeit angeboten, daher gibt es keine Auslastung.';
+
+  @override
+  String get capacityKpiExplain => 'Wie wird das berechnet?';
+
+  @override
+  String get capacityKpiDefinition =>
+      'Reservierte Platzstunden innerhalb der Öffnungszeiten, geteilt durch angebotene Platzstunden: jeder Platz mal die Öffnungszeiten der offenen Tage, abzüglich Schließtage und Platzsperren. Ein ganzer Tisch, Raum oder eine ganze Etage zählt jeden seiner Plätze einmal; stornierte Buchungen zählen nicht.';
+
+  @override
+  String capacityKpiPhysical(String hours) {
+    return 'Physische Kapazität: $hours Platzstunden';
+  }
+
+  @override
+  String capacityKpiOutside(String hours) {
+    return 'Außerhalb der angebotenen Zeiten reserviert: $hours Platzstunden, nicht im Verhältnis';
+  }
+
+  @override
+  String capacityKpiOverlap(String hours) {
+    return 'Gleichzeitig doppelt beansprucht: $hours Platzstunden, einmal gezählt';
+  }
+
+  @override
+  String capacityKpiRooms(String count, String reserved, String offered) {
+    return 'Räume ohne Plätze: $count, $reserved von $offered Raumstunden reserviert';
+  }
+
+  @override
+  String get capacityKpiPartial =>
+      'Teilweise: Plan, Öffnungszeiten und Platzsperren sind die heutigen; ihre Historie wird noch nicht erfasst.';
+
+  @override
+  String get capacityKpiUnattributed =>
+      'Einige Reservierungen dieses Zeitraums verweisen auf einen Platz, den es nicht mehr gibt; sie werden nicht gezählt.';
+
+  @override
+  String get capacityKpiKnownZero => 'Gemessen: Es wurde nichts reserviert.';
+
+  @override
+  String capacityKpiAsOf(String time) {
+    return 'Berechnet $time';
+  }
+
+  @override
+  String get capacityKpiForbidden =>
+      'Sie dürfen die Kapazitätszahlen dieses Arbeitsbereichs nicht lesen.';
+
+  @override
+  String get capacityKpiUnavailable =>
+      'Die Platzauslastung konnte nicht berechnet werden.';
+
+  @override
+  String get capacityKpiRetry => 'Erneut versuchen';
 
   @override
   String get featureCarnetsTitle => 'Mehrfachkarten';

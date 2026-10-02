@@ -1,0 +1,252 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #1918 — the first KPI tile: seat utilisation for one month.
+//
+// The server computes the figure under the KPI contract; this card shows
+// the value, its unit and period, its numerator and denominator, what
+// the data cannot know, and when it was computed. An undefined ratio is
+// shown as undefined, a refusal as a refusal and a failure as a failure —
+// never as 0 %. Reading it changes nothing.
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/ui/loading_view.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../domain/kpi_contract.dart';
+import '../../domain/workspace_feature.dart';
+import '../../domain/workspace_permission.dart';
+import '../../providers/kpi_providers.dart';
+import '../../providers/workspace_providers.dart';
+
+/// Shown only when the feature is on and the reader may manage
+/// reservations; the server checks both again.
+class CapacityKpiCard extends ConsumerStatefulWidget {
+  const CapacityKpiCard({super.key});
+
+  @override
+  ConsumerState<CapacityKpiCard> createState() => _CapacityKpiCardState();
+}
+
+class _CapacityKpiCardState extends ConsumerState<CapacityKpiCard> {
+  late DateTime _month = () {
+    final now = ref.read(clockProvider).now();
+    return DateTime(now.year, now.month);
+  }();
+
+  void _shift(int by) =>
+      setState(() => _month = DateTime(_month.year, _month.month + by));
+
+  @override
+  Widget build(BuildContext context) {
+    final on = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.capacityKpi);
+    final may = ref
+        .watch(myPermissionsProvider)
+        .contains(WorkspacePermission.manageReservations);
+    final workspace = ref.watch(currentWorkspaceProvider).value;
+    if (!on || !may || workspace == null) return const SizedBox.shrink();
+
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    final theme = Theme.of(context);
+    final provider = seatCapacityMonthProvider(
+      workspace.id,
+      _month.year,
+      _month.month,
+    );
+    final kpi = ref.watch(provider);
+    final monthLabel = DateFormat.yMMMM(locale).format(_month);
+
+    return Card(
+      key: const ValueKey('capacity-kpi-card'),
+      margin: AppSpacing.mdAll,
+      child: Padding(
+        padding: AppSpacing.mdAll,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l10n?.capacityKpiTitle ?? 'Seat utilisation',
+                    style: theme.textTheme.titleMedium,
+                  ),
+                ),
+                IconButton(
+                  key: const ValueKey('capacity-kpi-previous'),
+                  tooltip: MaterialLocalizations.of(context)
+                      .previousMonthTooltip,
+                  icon: const Icon(Icons.chevron_left),
+                  onPressed: () => _shift(-1),
+                ),
+                Text(monthLabel, key: const ValueKey('capacity-kpi-month')),
+                IconButton(
+                  key: const ValueKey('capacity-kpi-next'),
+                  tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
+                  icon: const Icon(Icons.chevron_right),
+                  onPressed: () => _shift(1),
+                ),
+              ],
+            ),
+            switch (kpi) {
+              AsyncData(:final value) => _Figure(kpi: value),
+              AsyncError(:final error) => _Failure(
+                forbidden: error is KpiForbidden,
+                onRetry: () => ref.invalidate(provider),
+              ),
+              _ => const LoadingView(),
+            },
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Failure extends StatelessWidget {
+  const _Failure({required this.forbidden, required this.onRetry});
+
+  final bool forbidden;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    if (forbidden) {
+      return Text(
+        l10n?.capacityKpiForbidden ??
+            'You may not read the capacity figures of this workspace.',
+        key: const ValueKey('capacity-kpi-forbidden'),
+      );
+    }
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        Text(
+          l10n?.capacityKpiUnavailable ??
+              'The seat utilisation could not be computed.',
+          key: const ValueKey('capacity-kpi-unavailable'),
+        ),
+        TextButton(
+          key: const ValueKey('capacity-kpi-retry'),
+          onPressed: onRetry,
+          child: Text(l10n?.capacityKpiRetry ?? 'Try again'),
+        ),
+      ],
+    );
+  }
+}
+
+class _Figure extends StatelessWidget {
+  const _Figure({required this.kpi});
+
+  final SeatCapacityKpi kpi;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    final theme = Theme.of(context);
+    final hours = NumberFormat.decimalPatternDigits(
+      locale: locale,
+      decimalDigits: 1,
+    );
+    final ratio = kpi.utilisation;
+    final value = ratio == null
+        ? '—'
+        : NumberFormat.decimalPercentPattern(
+            locale: locale,
+            decimalDigits: 1,
+          ).format(ratio);
+    final reserved = hours.format(kpi.reservedSeatHours);
+    final offered = hours.format(kpi.offeredSeatHours);
+    final computed = DateFormat.yMd(locale)
+        .add_Hm()
+        .format(kpi.computedAt.toLocal());
+    final notes = <String>[
+      if (ratio == null)
+        l10n?.capacityKpiUndefined ??
+            'No seat time was offered in this period, so there is no '
+                'utilisation to show.',
+      if (kpi.quality.contains(KpiQuality.knownZero))
+        l10n?.capacityKpiKnownZero ?? 'Measured: nothing was reserved.',
+      if (kpi.reasons.contains('current_plan_and_hours'))
+        l10n?.capacityKpiPartial ??
+            'Partial: the plan, the opening hours and the seat blocks are '
+                'today’s; their history is not recorded yet.',
+      if (kpi.reasons.contains('unattributed_reservations'))
+        l10n?.capacityKpiUnattributed ??
+            'Some reservations in this period point to a place that no '
+                'longer exists; they are not counted.',
+    ];
+    final details = <String>[
+      l10n?.capacityKpiDefinition ??
+          'Reserved seat-hours inside the opening hours, divided by offered '
+              'seat-hours.',
+      l10n?.capacityKpiPhysical(hours.format(kpi.physicalSeatHours)) ??
+          'Physical capacity: ${hours.format(kpi.physicalSeatHours)} '
+              'seat-hours',
+      if (kpi.reservedOutsideOfferedSeatHours > 0)
+        l10n?.capacityKpiOutside(
+              hours.format(kpi.reservedOutsideOfferedSeatHours),
+            ) ??
+            'Reserved outside the offered hours: '
+                '${hours.format(kpi.reservedOutsideOfferedSeatHours)} '
+                'seat-hours, not in the ratio',
+      if (kpi.overlappingSeatHours > 0)
+        l10n?.capacityKpiOverlap(hours.format(kpi.overlappingSeatHours)) ??
+            'Claimed twice at the same time: '
+                '${hours.format(kpi.overlappingSeatHours)} seat-hours, '
+                'counted once',
+      if (kpi.roomsWithoutSeats > 0)
+        l10n?.capacityKpiRooms(
+              '${kpi.roomsWithoutSeats}',
+              hours.format(kpi.reservedRoomHours),
+              hours.format(kpi.offeredRoomHours),
+            ) ??
+            'Rooms without seats: ${kpi.roomsWithoutSeats}',
+      l10n?.capacityKpiAsOf(computed) ?? 'Computed $computed',
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          value,
+          key: const ValueKey('capacity-kpi-value'),
+          style: theme.textTheme.headlineMedium,
+        ),
+        Text(
+          l10n?.capacityKpiRatio(reserved, offered) ??
+              '$reserved of $offered seat-hours reserved',
+          key: const ValueKey('capacity-kpi-ratio'),
+        ),
+        for (final note in notes)
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.xs),
+            child: Text(note, style: theme.textTheme.bodySmall),
+          ),
+        ExpansionTile(
+          key: const ValueKey('capacity-kpi-explain'),
+          tilePadding: EdgeInsets.zero,
+          title: Text(l10n?.capacityKpiExplain ?? 'How is this computed?'),
+          children: [
+            for (final line in details)
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                  child: Text(line, style: theme.textTheme.bodySmall),
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}

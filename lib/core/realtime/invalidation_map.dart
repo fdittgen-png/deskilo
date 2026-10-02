@@ -35,6 +35,10 @@ class TableInvalidation {
 /// the receiver refreshes every mapped table instead of one.
 const kResyncSignal = '*';
 
+/// #2019 C — a profile change that moved only presence (`last_seen_at`):
+/// refreshes the presence consumer, not names or the default workspace.
+const kProfilePresenceSignal = 'profiles:presence';
+
 /// All tables with a live mapping — the resync sweep iterates these.
 const mappedTables = [
   'reservations',
@@ -109,6 +113,7 @@ TableInvalidation invalidationFor(String table) => switch (table) {
           dunningRulesProvider,
         ]),
       'closure_days' => TableInvalidation([closureDaysProvider]),
+      kProfilePresenceSignal => TableInvalidation([memberProfilesProvider]),
       'profiles' => TableInvalidation([
           memberProfilesProvider,
           memberNamesProvider,
