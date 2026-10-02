@@ -5,12 +5,20 @@
 // unknown, never a zero badge; the OAuth token is reused until a minute
 // before expiry, concurrent callers share one refresh, a rotated key gets
 // its own; only FCM's structured UNREGISTERED prunes an endpoint.
+// Checkpoint B: recipient reads page until an empty page and throw on a
+// failed page; each endpoint gets one finite outcome; Retry-After is
+// honoured once when it fits, never slept through; sends are bounded.
 import { assertEquals, assertRejects } from "jsr:@std/assert@1";
 import {
   badgeCounts,
   cachedAccessToken,
+  classify,
+  CONCURRENCY,
+  deliverAll,
   isUnregistered,
+  readAll,
   resetTokenCacheForTests,
+  retryWaitMs,
 } from "./index.ts";
 
 function countingSupabase(fail: Set<string> = new Set()) {
@@ -102,4 +110,70 @@ Deno.test("only the structured UNREGISTERED prunes", () => {
   assertEquals(isUnregistered(404, { error: { message: "Requested entity was not found." } }), false);
   assertEquals(isUnregistered(410, null), false);
   assertEquals(isUnregistered(500, unregistered), false);
+});
+
+Deno.test("readAll pages past a server cap lower than PAGE until an empty page", async () => {
+  const rows = Array.from({ length: 2500 }, (_, i) => i);
+  const cap = 400; // the server returns fewer than asked
+  const calls: number[] = [];
+  const all = await readAll<number>((from, to) => {
+    calls.push(from);
+    return Promise.resolve({ data: rows.slice(from, Math.min(to + 1, from + cap)), error: null });
+  });
+  assertEquals(all, rows); // nothing skipped, nothing doubled
+  assertEquals(calls.slice(0, 3), [0, cap, 2 * cap]);
+});
+
+Deno.test("readAll: a failed page is unknown recipients, never none", async () => {
+  await assertRejects(() =>
+    readAll((from) =>
+      Promise.resolve(from === 0 ? { data: [1], error: null } : { data: null, error: { message: "x" } })
+    )
+  );
+});
+
+Deno.test("classify: each status has one finite outcome", () => {
+  const gone = { error: { details: [{ errorCode: "UNREGISTERED" }] } };
+  assertEquals(classify(200, {}), "sent");
+  assertEquals(classify(404, gone), "unregistered");
+  assertEquals(classify(404, null), "rejected"); // generic 404 never prunes
+  assertEquals(classify(401, null), "rejected");
+  assertEquals(classify(429, null), "retryable");
+  assertEquals(classify(503, null), "retryable");
+  assertEquals(classify(null, null), "unknown"); // deadline / lost response
+});
+
+Deno.test("retryWaitMs honours Retry-After only when it fits", () => {
+  assertEquals(retryWaitMs(null), 1000);
+  assertEquals(retryWaitMs("2"), 2000);
+  assertEquals(retryWaitMs("60"), null);
+  assertEquals(retryWaitMs("soon"), null);
+});
+
+Deno.test("deliverAll: one retry after Retry-After, no resend of unknown, bounded fan-out", async () => {
+  const eps = Array.from({ length: 25 }, (_, i) => i);
+  const sends = new Map<number, number>();
+  const waits: number[] = [];
+  let inFlight = 0;
+  let peak = 0;
+  const out = await deliverAll(eps, async (ep) => {
+    sends.set(ep, (sends.get(ep) ?? 0) + 1);
+    inFlight++;
+    peak = Math.max(peak, inFlight);
+    await new Promise((r) => setTimeout(r, 1));
+    inFlight--;
+    if (ep === 1) return { status: sends.get(ep) === 1 ? 429 : 200, body: null, retryAfter: "2" };
+    if (ep === 2) return { status: 429, body: null, retryAfter: "120" };
+    if (ep === 3) return { status: null, body: null, retryAfter: null };
+    return { status: 200, body: null, retryAfter: null };
+  }, (ms) => {
+    waits.push(ms);
+    return Promise.resolve();
+  });
+  const by = new Map(out.map((r) => [r.ep, r.outcome]));
+  assertEquals([by.get(1), by.get(2), by.get(3), by.get(4)], ["sent", "retryable", "unknown", "sent"]);
+  assertEquals([sends.get(1), sends.get(2), sends.get(3)], [2, 1, 1]);
+  assertEquals(waits, [2000]);
+  assertEquals(out.length, 25);
+  assertEquals(peak <= CONCURRENCY, true);
 });

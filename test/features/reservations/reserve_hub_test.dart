@@ -59,6 +59,7 @@ Future<FakeReservationRepository> pumpHub(
   // #1183 — a test that is ABOUT the sideways layout starts there.
   Size size = const Size(800, 1400),
   double pixelRatio = 1.0,
+  void Function(FakeWorkspaceRepository)? configureWorkspace,
 }) async {
   // Portrait viewport: these tests exercise the hub's feature behaviour,
   // not the landscape split (which is covered separately). The 800×600
@@ -76,6 +77,7 @@ Future<FakeReservationRepository> pumpHub(
   if (granularity != null) {
     workspace.bookingGranularities['ws-1'] = granularity;
   }
+  configureWorkspace?.call(workspace);
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(
