@@ -1,0 +1,511 @@
+{
+ "format": 1,
+ "meta": {
+  "source": "fixture",
+  "applicationSchema": "public",
+  "schemaMarker": 1,
+  "postgresMajor": 17,
+  "excluded": [
+   "pg_catalog"
+  ],
+  "checksum": "0000000000000000000000000000000000000000000000000000000000000000",
+  "counts": {
+   "tables": 6,
+   "partitions": 1,
+   "views": 1,
+   "columns": 39,
+   "foreignKeys": 4,
+   "enums": 1,
+   "domains": 1
+  }
+ },
+ "objects": [
+  {
+   "schema": "public",
+   "name": "workspaces",
+   "kind": "table",
+   "comment": "One tenant.",
+   "columns": [
+    {
+     "position": 1,
+     "name": "id",
+     "type": "uuid",
+     "notNull": true,
+     "default": "gen_random_uuid()"
+    },
+    {
+     "position": 2,
+     "name": "name",
+     "type": "text",
+     "notNull": true
+    },
+    {
+     "position": 3,
+     "name": "price",
+     "type": "numeric(12,2)",
+     "notNull": true,
+     "default": "0"
+    },
+    {
+     "position": 4,
+     "name": "tags",
+     "type": "text[]",
+     "notNull": false
+    },
+    {
+     "position": 5,
+     "name": "status",
+     "type": "status_kind",
+     "notNull": true,
+     "default": "'open'::status_kind"
+    },
+    {
+     "position": 6,
+     "name": "api_token",
+     "type": "text",
+     "notNull": false,
+     "default": "<redacted>"
+    },
+    {
+     "position": 7,
+     "name": "name_lower",
+     "type": "text",
+     "notNull": false,
+     "generated": "s",
+     "default": "lower(name)"
+    },
+    {
+     "position": 8,
+     "name": "seq",
+     "type": "integer",
+     "notNull": true,
+     "identity": "a"
+    },
+    {
+     "position": 9,
+     "name": "company_id",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 10,
+     "name": "site_id",
+     "type": "uuid",
+     "notNull": false
+    }
+   ],
+   "constraints": [
+    {
+     "name": "workspaces_pkey",
+     "type": "primary key",
+     "columns": [
+      "id"
+     ],
+     "definition": "PRIMARY KEY (id)",
+     "validated": true,
+     "deferrable": false,
+     "inherited": false
+    }
+   ],
+   "indexes": [
+    {
+     "name": "workspaces_pkey",
+     "unique": true,
+     "primary": true,
+     "valid": true,
+     "definition": "CREATE UNIQUE INDEX workspaces_pkey ON public.workspaces USING btree (id)"
+    }
+   ]
+  },
+  {
+   "schema": "public",
+   "name": "members",
+   "kind": "table",
+   "columns": [
+    {
+     "position": 1,
+     "name": "workspace_id",
+     "type": "uuid",
+     "notNull": true
+    },
+    {
+     "position": 2,
+     "name": "user_id",
+     "type": "uuid",
+     "notNull": true
+    },
+    {
+     "position": 3,
+     "name": "manager_id",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 4,
+     "name": "workspace_ref",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 5,
+     "name": "level",
+     "type": "integer",
+     "notNull": false
+    },
+    {
+     "position": 6,
+     "name": "company_id",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 7,
+     "name": "site_id",
+     "type": "uuid",
+     "notNull": false
+    }
+   ],
+   "constraints": [
+    {
+     "name": "members_pkey",
+     "type": "primary key",
+     "columns": [
+      "workspace_id",
+      "user_id"
+     ],
+     "definition": "PRIMARY KEY (workspace_id, user_id)",
+     "validated": true,
+     "deferrable": false,
+     "inherited": false
+    },
+    {
+     "name": "members_workspace_id_fkey",
+     "type": "foreign key",
+     "columns": [
+      "workspace_id"
+     ],
+     "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+     "validated": true,
+     "deferrable": false,
+     "inherited": false,
+     "references": {
+      "schema": "public",
+      "table": "workspaces",
+      "columns": [
+       "id"
+      ]
+     },
+     "onDelete": "CASCADE",
+     "onDeleteColumns": [],
+     "onUpdate": "NO ACTION",
+     "match": "SIMPLE"
+    },
+    {
+     "name": "members_user_id_fkey",
+     "type": "foreign key",
+     "columns": [
+      "user_id"
+     ],
+     "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id)",
+     "validated": true,
+     "deferrable": false,
+     "inherited": false,
+     "references": {
+      "schema": "auth",
+      "table": "users",
+      "columns": [
+       "id"
+      ]
+     },
+     "onDelete": "NO ACTION",
+     "onDeleteColumns": [],
+     "onUpdate": "NO ACTION",
+     "match": "SIMPLE"
+    }
+   ],
+   "indexes": []
+  },
+  {
+   "schema": "public",
+   "name": "bookings",
+   "kind": "table",
+   "columns": [
+    {
+     "position": 1,
+     "name": "id",
+     "type": "uuid",
+     "notNull": true
+    },
+    {
+     "position": 2,
+     "name": "workspace_id",
+     "type": "uuid",
+     "notNull": true
+    },
+    {
+     "position": 3,
+     "name": "member_id",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 4,
+     "name": "workspace_ref",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 5,
+     "name": "company_id",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 6,
+     "name": "site_id",
+     "type": "uuid",
+     "notNull": false
+    }
+   ],
+   "constraints": [
+    {
+     "name": "bookings_pkey",
+     "type": "primary key",
+     "columns": [
+      "id"
+     ],
+     "definition": "PRIMARY KEY (id)",
+     "validated": true,
+     "deferrable": false,
+     "inherited": false
+    },
+    {
+     "name": "bookings_member_fkey",
+     "type": "foreign key",
+     "columns": [
+      "workspace_id",
+      "member_id"
+     ],
+     "definition": "FOREIGN KEY (workspace_id, member_id) REFERENCES members(workspace_id, user_id) ON DELETE SET NULL (member_id)",
+     "validated": false,
+     "deferrable": false,
+     "inherited": false,
+     "references": {
+      "schema": "public",
+      "table": "members",
+      "columns": [
+       "workspace_id",
+       "user_id"
+      ]
+     },
+     "onDelete": "SET NULL",
+     "onDeleteColumns": [
+      "member_id"
+     ],
+     "onUpdate": "NO ACTION",
+     "match": "SIMPLE"
+    }
+   ],
+   "indexes": []
+  },
+  {
+   "schema": "public",
+   "name": "import_staging",
+   "kind": "table",
+   "columns": [
+    {
+     "position": 1,
+     "name": "raw",
+     "type": "jsonb",
+     "notNull": false
+    },
+    {
+     "position": 2,
+     "name": "workspace_id",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 3,
+     "name": "company_id",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 4,
+     "name": "site_id",
+     "type": "uuid",
+     "notNull": false
+    }
+   ],
+   "constraints": [],
+   "indexes": []
+  },
+  {
+   "schema": "public",
+   "name": "events",
+   "kind": "partitioned table",
+   "partitionKey": "RANGE (happened_at)",
+   "columns": [
+    {
+     "position": 1,
+     "name": "id",
+     "type": "uuid",
+     "notNull": true
+    },
+    {
+     "position": 2,
+     "name": "happened_at",
+     "type": "timestamp with time zone",
+     "notNull": true
+    },
+    {
+     "position": 3,
+     "name": "company_id",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 4,
+     "name": "site_id",
+     "type": "uuid",
+     "notNull": false
+    }
+   ],
+   "constraints": [],
+   "indexes": []
+  },
+  {
+   "schema": "public",
+   "name": "events_2026",
+   "kind": "partition",
+   "partitionOf": "events",
+   "partitionBound": "FOR VALUES FROM ('2026-01-01') TO ('2027-01-01')",
+   "columns": [
+    {
+     "position": 1,
+     "name": "id",
+     "type": "uuid",
+     "notNull": true
+    },
+    {
+     "position": 2,
+     "name": "happened_at",
+     "type": "timestamp with time zone",
+     "notNull": true
+    },
+    {
+     "position": 3,
+     "name": "company_id",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 4,
+     "name": "site_id",
+     "type": "uuid",
+     "notNull": false
+    }
+   ],
+   "constraints": [],
+   "indexes": []
+  },
+  {
+   "schema": "public",
+   "name": "open_workspaces",
+   "kind": "view",
+   "columns": [
+    {
+     "position": 1,
+     "name": "id",
+     "type": "uuid",
+     "notNull": false
+    },
+    {
+     "position": 2,
+     "name": "name",
+     "type": "text",
+     "notNull": false
+    }
+   ],
+   "constraints": [],
+   "indexes": []
+  },
+  {
+   "schema": "billing",
+   "name": "invoices",
+   "kind": "table",
+   "columns": [
+    {
+     "position": 1,
+     "name": "id",
+     "type": "uuid",
+     "notNull": true
+    },
+    {
+     "position": 2,
+     "name": "workspace_id",
+     "type": "uuid",
+     "notNull": false
+    }
+   ],
+   "constraints": [
+    {
+     "name": "invoices_pkey",
+     "type": "primary key",
+     "columns": [
+      "id"
+     ],
+     "definition": "PRIMARY KEY (id)",
+     "validated": true,
+     "deferrable": false,
+     "inherited": false
+    },
+    {
+     "name": "invoices_ws_fkey",
+     "type": "foreign key",
+     "columns": [
+      "workspace_id"
+     ],
+     "definition": "FOREIGN KEY (workspace_id) REFERENCES public.workspaces(id)",
+     "validated": true,
+     "deferrable": false,
+     "inherited": false,
+     "references": {
+      "schema": "public",
+      "table": "workspaces",
+      "columns": [
+       "id"
+      ]
+     },
+     "onDelete": "NO ACTION",
+     "onDeleteColumns": [],
+     "onUpdate": "NO ACTION",
+     "match": "SIMPLE"
+    }
+   ],
+   "indexes": []
+  }
+ ],
+ "types": [
+  {
+   "schema": "public",
+   "name": "status_kind",
+   "kind": "enum",
+   "labels": [
+    "open",
+    "closed"
+   ]
+  },
+  {
+   "schema": "public",
+   "name": "positive_int",
+   "kind": "domain",
+   "baseType": "integer",
+   "notNull": false,
+   "checks": [
+    "CHECK ((VALUE > 0))"
+   ]
+  }
+ ]
+}

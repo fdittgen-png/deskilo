@@ -30,6 +30,8 @@ import '../domain/dunning.dart';
 import '../domain/invoice_report.dart';
 import 'report_layout_actions.dart';
 import '../providers/money_providers.dart';
+import 'dunning_hold_actions.dart';
+import 'invoice_journey.dart' show invoiceRemainingCents;
 import 'report_defaults.dart';
 import 'widgets/report_preview.dart';
 import 'e_invoice_identity.dart';
@@ -516,13 +518,19 @@ Future<void> remindInvoice(
 ) async {
   final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(invoice.currency);
+  // #1913 — the message states what is still owed, never the total of a
+  // half-paid invoice; the server records the same remainder.
+  final owed = invoiceRemainingCents(
+    invoice,
+    ref.read(invoiceMatchesProvider).value?[invoice.id],
+  );
   final message =
       l10n?.invoiceReminderMessage(
         invoice.number,
-        currency.formatMinor(invoice.totalCents),
+        currency.formatMinor(owed),
       ) ??
       'Friendly reminder: invoice ${invoice.number} — balance due '
-          '${currency.formatMinor(invoice.totalCents)}.';
+          '${currency.formatMinor(owed)}.';
   // #472: the level of THIS send — one past what was already sent,
   // capped at the configured maximum (extra sends reuse the last
   // letter).
@@ -966,6 +974,7 @@ Future<void> runInvoiceAction(
       countryCode: countryCode,
     ),
     InvoiceAction.remind => remindInvoice(context, ref, invoice),
+    InvoiceAction.dunningHold => toggleDunningHold(context, ref, invoice),
     InvoiceAction.markPaid => matchInvoiceToPayment(context, ref, invoice),
     InvoiceAction.markErroneous => voidInvoiceWithConfirm(
       context,
@@ -1024,4 +1033,3 @@ Future<List<Invoice>?> askRegroupedAnnexes(
   if (include == null) return null;
   return include ? sources : const [];
 }
-
