@@ -7010,6 +7010,55 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Datei enthält keine lesbare Vorlage.';
 
   @override
+  String get invoiceHoldAction => 'Mahnungen anhalten';
+
+  @override
+  String get invoiceHoldReleaseAction => 'Mahnstopp aufheben';
+
+  @override
+  String get invoiceHoldTitle => 'Warum die Mahnungen anhalten?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'Für diese Rechnung wird keine Mahnung versendet, weder von Hand noch automatisch, bis der Mahnstopp aufgehoben ist.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'Das Mitglied bestreitet sie';
+
+  @override
+  String get invoiceHoldReasonIdentity =>
+      'Falsche Person oder Identitätsfehler';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Insolvenzverfahren';
+
+  @override
+  String get invoiceHoldReasonOther => 'Ein anderer Grund';
+
+  @override
+  String get invoiceHoldNote => 'Notiz (optional)';
+
+  @override
+  String get invoiceHoldConfirm => 'Anhalten';
+
+  @override
+  String get invoiceHoldPlaced =>
+      'Die Mahnungen für diese Rechnung sind angehalten.';
+
+  @override
+  String get invoiceHoldReleased =>
+      'Die Mahnungen für diese Rechnung können fortgesetzt werden.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Mahnungen angehalten: $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'Für diese Rechnung wurde keine vereinbarte Zahlungsfrist erfasst: Es werden keine automatischen Mahnungen versendet, bis Sie sie prüfen.';
+
+  @override
   String get invoicesManage => 'Rechnungen verwalten';
 
   @override

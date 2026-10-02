@@ -6952,6 +6952,52 @@ class AppLocalizationsEn extends AppLocalizations {
       'That file carries no readable design.';
 
   @override
+  String get invoiceHoldAction => 'Hold reminders';
+
+  @override
+  String get invoiceHoldReleaseAction => 'Release the reminder hold';
+
+  @override
+  String get invoiceHoldTitle => 'Why hold the reminders?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'No reminder is sent for this invoice, by hand or automatically, until the hold is released.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'The member disputes it';
+
+  @override
+  String get invoiceHoldReasonIdentity => 'Wrong person or identity error';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Insolvency proceedings';
+
+  @override
+  String get invoiceHoldReasonOther => 'Another reason';
+
+  @override
+  String get invoiceHoldNote => 'Note (optional)';
+
+  @override
+  String get invoiceHoldConfirm => 'Hold';
+
+  @override
+  String get invoiceHoldPlaced => 'Reminders are on hold for this invoice.';
+
+  @override
+  String get invoiceHoldReleased => 'Reminders can resume for this invoice.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Reminders on hold: $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'No agreed payment term was recorded for this invoice: reminders are not sent automatically until you review it.';
+
+  @override
   String get invoicesManage => 'Manage invoices';
 
   @override

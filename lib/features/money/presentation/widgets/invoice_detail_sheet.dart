@@ -35,6 +35,8 @@ enum InvoiceAction {
   markPaid,
   markErroneous,
   replace,
+  // #1913 — place or release a dunning hold.
+  dunningHold,
 }
 
 /// READ an invoice, in the app (UX gap 0068: the archive could only hand
@@ -141,6 +143,9 @@ class _InvoiceDetailBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final association = ref.watch(sellerIsAssociationProvider);
+    // #1913 — an active dunning hold, for whoever issues invoices.
+    final holds = canIssue ? ref.watch(dunningHoldsProvider).value : null;
+    final heldReason = holds == null ? null : holds[invoice.id];
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
@@ -269,6 +274,20 @@ class _InvoiceDetailBody extends ConsumerWidget {
                       '${invoice.issuerName}'}'),
               // #910 — "Billed to: , SASU KaloA, …": the name was empty
               // and its comma stayed behind. Build the parts, then join.
+              // #1913 — why reminders stop, and a due date nobody agreed
+              // to, said where the issuer decides.
+              if (canIssue && heldReason != null)
+                line(l10n?.invoiceHeldNote(
+                        dunningHoldReasonLabel(l10n, heldReason)) ??
+                    'Reminders on hold: '
+                        '${dunningHoldReasonLabel(l10n, heldReason)}'),
+              if (canIssue &&
+                  invoice.maturityBasis != null &&
+                  invoice.maturityBasis != 'document_term')
+                line(l10n?.invoiceMaturityReview ??
+                    'No agreed payment term was recorded for this invoice: '
+                        'reminders are not sent automatically until '
+                        'you review it.'),
               line('${l10n?.invoicePdfBilledTo ?? 'Billed to'}: '
                   '${[
                     invoice.clientName,
@@ -489,6 +508,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
                 ...() {
                   final actions = InvoiceSheetActions(
                     invoice: invoice,
+                    heldReason: heldReason,
                     canIssue: canIssue,
                     isEu: isEu,
                     replacedByNumber: replacedByNumber,

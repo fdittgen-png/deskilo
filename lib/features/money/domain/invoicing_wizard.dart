@@ -186,6 +186,7 @@ List<WizardRemindItem> remindPlan({
     if (match != null && match.status == 'pending') continue;
     final sent = reminders[invoice.id];
     final level = dueReminderLevel(
+      dueOn: invoice.dueOn,
       issuedAt: invoice.issuedAt,
       reminderCount: sent?.count ?? 0,
       lastReminderAt: sent?.last,

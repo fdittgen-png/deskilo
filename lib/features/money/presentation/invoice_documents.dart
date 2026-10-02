@@ -89,7 +89,13 @@ InvoicePdfTemplate invoicePdfTemplateFor(WidgetRef ref) =>
 /// the workspace's reminder rules define, which is the same delay the
 /// journey counts down (`invoice_journey.dart`). One source, so the
 /// document and the app can never state two different deadlines.
-DateTime invoiceDueAt(WidgetRef ref, Invoice invoice) => invoice.issuedAt.add(
+///
+/// #1913 — the date frozen at issue (`invoice_maturities`) wins, so
+/// editing the rules never moves an issued invoice's due date; an
+/// invoice from before 0331 keeps the date its document always printed.
+DateTime invoiceDueAt(WidgetRef ref, Invoice invoice) =>
+    invoice.dueOn ??
+    invoice.issuedAt.add(
       Duration(
         days: (ref.read(dunningRulesProvider).value ?? DunningRules.defaults)
             .firstAfterDays,

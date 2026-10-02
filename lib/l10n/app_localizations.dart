@@ -11989,6 +11989,90 @@ abstract class AppLocalizations {
   /// **'That file carries no readable design.'**
   String get reportDesignErrorInvalidDesign;
 
+  /// #1913 dunning holds: invoiceHoldAction
+  ///
+  /// In en, this message translates to:
+  /// **'Hold reminders'**
+  String get invoiceHoldAction;
+
+  /// #1913 dunning holds: invoiceHoldReleaseAction
+  ///
+  /// In en, this message translates to:
+  /// **'Release the reminder hold'**
+  String get invoiceHoldReleaseAction;
+
+  /// #1913 dunning holds: invoiceHoldTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Why hold the reminders?'**
+  String get invoiceHoldTitle;
+
+  /// #1913 dunning holds: invoiceHoldExplain
+  ///
+  /// In en, this message translates to:
+  /// **'No reminder is sent for this invoice, by hand or automatically, until the hold is released.'**
+  String get invoiceHoldExplain;
+
+  /// #1913 dunning holds: invoiceHoldReasonDispute
+  ///
+  /// In en, this message translates to:
+  /// **'The member disputes it'**
+  String get invoiceHoldReasonDispute;
+
+  /// #1913 dunning holds: invoiceHoldReasonIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong person or identity error'**
+  String get invoiceHoldReasonIdentity;
+
+  /// #1913 dunning holds: invoiceHoldReasonInsolvency
+  ///
+  /// In en, this message translates to:
+  /// **'Insolvency proceedings'**
+  String get invoiceHoldReasonInsolvency;
+
+  /// #1913 dunning holds: invoiceHoldReasonOther
+  ///
+  /// In en, this message translates to:
+  /// **'Another reason'**
+  String get invoiceHoldReasonOther;
+
+  /// #1913 dunning holds: invoiceHoldNote
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get invoiceHoldNote;
+
+  /// #1913 dunning holds: invoiceHoldConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Hold'**
+  String get invoiceHoldConfirm;
+
+  /// #1913 dunning holds: invoiceHoldPlaced
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders are on hold for this invoice.'**
+  String get invoiceHoldPlaced;
+
+  /// #1913 dunning holds: invoiceHoldReleased
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders can resume for this invoice.'**
+  String get invoiceHoldReleased;
+
+  /// #1913 dunning holds: invoiceHeldNote
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders on hold: {reason}'**
+  String invoiceHeldNote(String reason);
+
+  /// #1913 dunning holds: invoiceMaturityReview
+  ///
+  /// In en, this message translates to:
+  /// **'No agreed payment term was recorded for this invoice: reminders are not sent automatically until you review it.'**
+  String get invoiceMaturityReview;
+
   /// #871 the Money tab row that opens invoice management (the billing hub)
   ///
   /// In en, this message translates to:

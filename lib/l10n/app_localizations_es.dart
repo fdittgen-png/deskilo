@@ -7002,6 +7002,56 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ese archivo no contiene ningún diseño legible.';
 
   @override
+  String get invoiceHoldAction => 'Suspender los recordatorios';
+
+  @override
+  String get invoiceHoldReleaseAction =>
+      'Levantar la suspensión de recordatorios';
+
+  @override
+  String get invoiceHoldTitle => '¿Por qué suspender los recordatorios?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'No se envía ningún recordatorio para esta factura, ni a mano ni automáticamente, hasta que se levante la suspensión.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'El miembro la impugna';
+
+  @override
+  String get invoiceHoldReasonIdentity =>
+      'Persona equivocada o error de identidad';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Procedimiento de insolvencia';
+
+  @override
+  String get invoiceHoldReasonOther => 'Otro motivo';
+
+  @override
+  String get invoiceHoldNote => 'Nota (opcional)';
+
+  @override
+  String get invoiceHoldConfirm => 'Suspender';
+
+  @override
+  String get invoiceHoldPlaced =>
+      'Los recordatorios de esta factura están suspendidos.';
+
+  @override
+  String get invoiceHoldReleased =>
+      'Los recordatorios de esta factura pueden reanudarse.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Recordatorios suspendidos: $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revises.';
+
+  @override
   String get invoicesManage => 'Gestionar facturas';
 
   @override

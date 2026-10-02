@@ -1227,5 +1227,66 @@
   "reportDesignErrorVersion": "Diese Vorlage stammt aus einer neueren DesKilo-Version.",
   "reportDesignErrorUnknownKind": "Diese Vorlage gehört zu einem Bericht, den dieser Space nicht hat.",
   "reportDesignErrorWrongKind": "Diese Vorlage gehört zu einem anderen Bericht. Öffnen Sie diesen und importieren Sie sie dort.",
-  "reportDesignErrorInvalidDesign": "Diese Datei enthält keine lesbare Vorlage."
+  "reportDesignErrorInvalidDesign": "Diese Datei enthält keine lesbare Vorlage.",
+  "invoiceHoldAction": "Mahnungen anhalten",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Mahnstopp aufheben",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "Warum die Mahnungen anhalten?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "Für diese Rechnung wird keine Mahnung versendet, weder von Hand noch automatisch, bis der Mahnstopp aufgehoben ist.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "Das Mitglied bestreitet sie",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Falsche Person oder Identitätsfehler",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Insolvenzverfahren",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Ein anderer Grund",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Notiz (optional)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Anhalten",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "Die Mahnungen für diese Rechnung sind angehalten.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "Die Mahnungen für diese Rechnung können fortgesetzt werden.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Mahnungen angehalten: {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "Für diese Rechnung wurde keine vereinbarte Zahlungsfrist erfasst: Es werden keine automatischen Mahnungen versendet, bis Sie sie prüfen.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  }
 }
