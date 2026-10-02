@@ -600,7 +600,37 @@ class FakeMoneyRepository implements MoneyRepository {
     final invoice = invoices.where((i) => i.id == invoiceId).firstOrNull;
     if (invoice == null) throw StateError('unknown invoice');
     if (invoice.isVoided) throw StateError('invoice is voided');
+    // #1913 — the server refuses a held invoice; so does the demo.
+    if (dunningHolds.containsKey(invoiceId)) {
+      throw StateError('this invoice is on hold');
+    }
     invoiceReminders.putIfAbsent(invoiceId, () => []).add(kTestNow);
+  }
+
+  /// #1913 — invoiceId → reason of its active hold.
+  final Map<String, String> dunningHolds = {};
+
+  @override
+  Future<Map<String, String>> fetchDunningHolds(String workspaceId) async =>
+      Map.of(dunningHolds);
+
+  @override
+  Future<void> placeDunningHold(
+    String invoiceId, {
+    required String reason,
+    String note = '',
+  }) async {
+    if (dunningHolds.containsKey(invoiceId)) {
+      throw StateError('this invoice is already on hold');
+    }
+    dunningHolds[invoiceId] = reason;
+  }
+
+  @override
+  Future<void> releaseDunningHold(String invoiceId) async {
+    if (dunningHolds.remove(invoiceId) == null) {
+      throw StateError('this invoice is not on hold');
+    }
   }
 
   @override

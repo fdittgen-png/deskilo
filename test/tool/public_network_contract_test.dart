@@ -69,11 +69,12 @@ void main() {
     );
   });
 
-  test('the current catalogue: seven operations with stable, unique ids, '
+  // 7→8 (2026-10-02): #2086 publication.page.reset.
+  test('the current catalogue: eight operations with stable, unique ids, '
       'and the generated adapter carries each', () {
     final ids = [for (final op in ops(source())) op['id'] as String];
     expect(ids.toSet(), hasLength(ids.length));
-    expect(ids, hasLength(7));
+    expect(ids, hasLength(8));
     for (final id in ids) {
       expect(id, matches(RegExp(r'^[a-z]+(\.[a-z_]+)+$')), reason: id);
     }

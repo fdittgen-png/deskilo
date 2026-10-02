@@ -247,6 +247,9 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   final imageBytes = <String, Uint8List>{};
   var _imgSeq = 1;
 
+  /// #2012 — the next N creates commit, then lose their answer.
+  int loseCreateAnswers = 0;
+
   @override
   Future<PlanImage> createPlanImage({
     required String workspaceId,
@@ -266,6 +269,10 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
     );
     planImages.add(image);
     imageBytes[image.id] = bytes;
+    if (loseCreateAnswers > 0) {
+      loseCreateAnswers--;
+      throw StateError('answer lost'); // #2012: committed, answer lost
+    }
     return image;
   }
 

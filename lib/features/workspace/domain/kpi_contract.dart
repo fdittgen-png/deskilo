@@ -139,6 +139,7 @@ class SeatCapacityKpi {
     required this.quality,
     required this.reasons,
     required this.computedAt,
+    this.historySince,
   });
 
   final DateTime from;
@@ -166,6 +167,10 @@ class SeatCapacityKpi {
   /// Machine reasons behind [quality] (`current_structure`, …).
   final List<String> reasons;
   final DateTime computedAt;
+
+  /// When the workspace's recorded history begins (#1920). Time before
+  /// it is not counted; null from a server that predates the history.
+  final DateTime? historySince;
 
   /// The utilisation, or null when it is undefined (nothing offered).
   double? get utilisation => ratioOfSums([
@@ -208,6 +213,7 @@ SeatCapacityKpi seatCapacityFromJson(Map<String, dynamic> json) {
         for (final r in reasons) '$r',
     ],
     computedAt: DateTime.parse('${json['computed_at']}'),
+    historySince: DateTime.tryParse('${json['history_since']}'),
   );
 }
 

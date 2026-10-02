@@ -87,17 +87,24 @@ class DunningRules {
 }
 
 /// The reminder level DUE for an open invoice under [rules], or null
-/// when none is: all levels sent, or the waiting period still runs. The
-/// clock for level 1 starts at [issuedAt]; every further level waits
-/// [DunningRules.betweenDays] after the PREVIOUS reminder.
+/// when none is: all levels sent, or the waiting period still runs.
+/// Level 1 is due on the invoice's frozen [dueOn] (#1913) when the server
+/// recorded one, and otherwise [DunningRules.firstAfterDays] after
+/// [issuedAt]; every further level waits [DunningRules.betweenDays]
+/// after the PREVIOUS reminder.
 int? dueReminderLevel({
   required DateTime issuedAt,
   required int reminderCount,
   required DateTime? lastReminderAt,
   required DunningRules rules,
   required DateTime now,
+  DateTime? dueOn,
 }) {
   if (reminderCount >= rules.levels) return null;
+  if (reminderCount == 0 && dueOn != null) {
+    final today = DateTime(now.year, now.month, now.day);
+    return today.isBefore(dueOn) ? null : 1;
+  }
   final since = reminderCount == 0 ? issuedAt : lastReminderAt ?? issuedAt;
   final waitDays =
       reminderCount == 0 ? rules.firstAfterDays : rules.betweenDays;
