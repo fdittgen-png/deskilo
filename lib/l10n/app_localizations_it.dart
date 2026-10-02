@@ -370,7 +370,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile salvare. Non è cambiato nulla; riprova.';
 
   @override
-  String get assistantSetupLinkIdentity => 'Collega la mia identità';
+  String get assistantSetupLinkIdentity => 'Conferma la mia identità';
 
   @override
   String get assistantSetupTurnOn => 'Attiva';
@@ -8314,7 +8314,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpEligibleNoIdentity =>
-      'Il tuo account non è collegato a un\'identità verificata su questo database.';
+      'La tua identità non è ancora confermata per gli assistenti su questa base.';
 
   @override
   String get mcpEligibleNot =>
@@ -8393,7 +8393,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpStatusTitle => 'A che punto sei qui';
 
   @override
-  String get mcpStatusIdentity => 'Identità';
+  String get mcpStatusIdentity => 'Identità per gli assistenti';
 
   @override
   String get mcpStatusEligibility => 'Approvazione del database';
@@ -8414,7 +8414,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpStateVerified => 'Verificata';
 
   @override
-  String get mcpStateUnlinked => 'Non collegata';
+  String get mcpStateUnlinked => 'Non confermata';
 
   @override
   String get mcpStateNotRequested => 'Non richiesta';
@@ -8457,7 +8457,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpNextLinkIdentity =>
-      'Prossimo passo: collega il tuo account all\'identità di questo database.';
+      'Prossimo passo: conferma la tua identità per gli assistenti su questa base, con un tocco qui sotto.';
 
   @override
   String get mcpNextRequestEligibility =>
@@ -8500,6 +8500,20 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get mcpReviewSecondFactor =>
       'Quel database richiede il tuo secondo fattore nella propria sessione. Non è stato deciso nulla.';
+
+  @override
+  String get mcpStatusConfirmIdentity => 'Conferma la mia identità';
+
+  @override
+  String get mcpStateAfterPrevious => 'Dopo il passaggio precedente';
+
+  @override
+  String get mcpIdentityIneligible =>
+      'Questo account non può ancora essere confermato: conferma prima il tuo indirizzo e-mail o accedi con un provider.';
+
+  @override
+  String get mcpIdentityConflict =>
+      'Un altro account detiene già questa identità qui: un amministratore della base può risolverlo.';
 
   @override
   String get mcpUsageWorkspaceTitle => 'Uso degli assistenti, ultimi 30 giorni';
