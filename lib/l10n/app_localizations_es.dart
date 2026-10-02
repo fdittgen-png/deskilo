@@ -196,6 +196,80 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get featureAccountingBookTitle => 'Libro contable';
+
+  @override
+  String get featureAccountingBookDesc =>
+      'Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes.';
+
+  @override
+  String get bookSheetTitle => 'Libro contable';
+
+  @override
+  String get bookTileEmpty =>
+      'Sin libro: DesKilo lleva los saldos de los miembros y las facturas (precontabilidad).';
+
+  @override
+  String get bookIssuer => 'Emisor';
+
+  @override
+  String get bookAuthorityPre => 'Precontabilidad';
+
+  @override
+  String get bookAuthorityLocal => 'DesKilo lleva el libro';
+
+  @override
+  String get bookAuthorityExternal => 'Sistema externo';
+
+  @override
+  String get bookExternalSystem => 'Sistema que hace fe';
+
+  @override
+  String get bookCurrency => 'Moneda funcional';
+
+  @override
+  String get bookFiscalStart => 'El ejercicio empieza el';
+
+  @override
+  String get bookBasisAccrual => 'Criterio de devengo';
+
+  @override
+  String get bookBasisCash => 'Criterio de caja';
+
+  @override
+  String bookEffectiveFrom(String date) {
+    return 'Vigente desde el $date';
+  }
+
+  @override
+  String bookFiscalPreview(String label, String start, String end) {
+    return 'Ejercicio $label: $start – $end';
+  }
+
+  @override
+  String get bookProblemExternal =>
+      'Indique el sistema externo que lleva los libros oficiales.';
+
+  @override
+  String get bookProblemCurrency =>
+      'Esta moneda no tiene un número de decimales verificado.';
+
+  @override
+  String get bookProblemFiscal =>
+      'Un ejercicio empieza un día que tiene todo año (nunca el 29 de febrero).';
+
+  @override
+  String get bookSaved => 'Libro guardado';
+
+  @override
+  String get bookStale =>
+      'Alguien guardó este libro desde que lo abrió. Cierre y vuelva a abrir para ver su versión.';
+
+  @override
+  String get bookSaveFailed =>
+      'El libro no se guardó. Compruebe la conexión e inténtelo de nuevo.';
+
+  @override
   String get fecAccountExpenses => 'Gastos';
 
   @override

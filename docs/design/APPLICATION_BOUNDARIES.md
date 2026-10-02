@@ -30,7 +30,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 
 | pair | imports |
 |---|---|
-| `money -> workspace` | 117 |
+| `money -> workspace` | 120 |
 | `reservations -> plan` | 72 |
 | `reservations -> workspace` | 60 |
 | `profile -> workspace` | 40 |
@@ -99,7 +99,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**68 directed relationships, 797 imports.**
+**68 directed relationships, 800 imports.**
 
 Reciprocal (20): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -112,7 +112,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/core/demo/data/workspace_repository.dart` | 1991 |
 | `lib/core/demo/data/money_repository.dart` | 1801 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1538 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1554 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1428 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1316 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1300 |
@@ -142,8 +142,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
+| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 655 |
 | `lib/core/help/help_anchors.dart` | 649 |
-| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 649 |
 | `lib/features/workspace/presentation/screens/onboarding_screen.dart` | 633 |
 | `lib/features/reservations/presentation/widgets/booking_sheet.dart` | 629 |
 | `lib/features/workspace/providers/workspace_providers.dart` | 629 |

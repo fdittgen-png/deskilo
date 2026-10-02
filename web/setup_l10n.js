@@ -1059,6 +1059,10 @@ window.SETUP_L10N={
    "holidayImport": [
     "Import public holidays",
     "An owner imports the public holidays of the country, and of one region, from an open-data source, deselects the days the space stays open and imports the rest as closure days. Invoiced months are skipped and named."
+   ],
+   "accountingBook": [
+    "Accounting book",
+    "Who keeps the official books of each issuer: Deskilo as pre-accounting, a local book, or an external accounting system that stays authoritative. Each issuer states its currency, fiscal year and accounting basis. Off: member balances and invoices work as before."
    ]
   },
   "process": {
@@ -2327,6 +2331,10 @@ window.SETUP_L10N={
    "holidayImport": [
     "Importer les jours fériés",
     "Un propriétaire importe les jours fériés du pays, et d'une région, depuis une source de données ouvertes, désélectionne les jours où l'espace reste ouvert et importe les autres comme jours de fermeture. Les mois déjà facturés sont ignorés et nommés."
+   ],
+   "accountingBook": [
+    "Livre comptable",
+    "Qui tient les livres officiels de chaque émetteur : Deskilo en pré-comptabilité, un livre local ou un logiciel comptable externe qui fait foi. Chaque émetteur indique sa devise, son exercice et sa base comptable. Désactivé : les soldes des membres et les factures fonctionnent comme avant."
    ]
   },
   "process": {
@@ -3595,6 +3603,10 @@ window.SETUP_L10N={
    "holidayImport": [
     "Feiertage importieren",
     "Ein Eigentümer importiert die Feiertage des Landes und einer Region aus einer Open-Data-Quelle, wählt die Tage ab, an denen der Raum geöffnet bleibt, und importiert die übrigen als Schließtage. Bereits abgerechnete Monate werden übersprungen und genannt."
+   ],
+   "accountingBook": [
+    "Buchführung",
+    "Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher."
    ]
   },
   "process": {
@@ -4863,6 +4875,10 @@ window.SETUP_L10N={
    "holidayImport": [
     "Importar días festivos",
     "Un propietario importa los días festivos del país, y de una región, desde una fuente de datos abiertos, desmarca los días en que el espacio sigue abierto e importa el resto como días de cierre. Los meses ya facturados se omiten y se nombran."
+   ],
+   "accountingBook": [
+    "Libro contable",
+    "Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes."
    ]
   },
   "process": {
@@ -6131,6 +6147,10 @@ window.SETUP_L10N={
    "holidayImport": [
     "Importa i giorni festivi",
     "Un proprietario importa i giorni festivi del paese, e di una regione, da una fonte di dati aperti, deseleziona i giorni in cui lo spazio resta aperto e importa gli altri come giorni di chiusura. I mesi già fatturati vengono saltati e indicati."
+   ],
+   "accountingBook": [
+    "Libro contabile",
+    "Chi tiene i libri ufficiali di ogni emittente: Deskilo come precontabilità, un libro locale o un sistema contabile esterno che fa fede. Ogni emittente indica valuta, esercizio e base contabile. Disattivato: i saldi dei membri e le fatture funzionano come prima."
    ]
   },
   "process": {

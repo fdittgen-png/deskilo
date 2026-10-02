@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
@@ -147,6 +149,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       eventRepositoryProvider.overrideWithValue(fixture.events),
       calendarRepositoryProvider.overrideWithValue(fixture.calendar),
       moneyRepositoryProvider.overrideWithValue(fixture.money),
+      // #1869 — book profiles in memory.
+      bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()),
       creditRepositoryProvider.overrideWithValue(fixture.credits),
       accessoryRepositoryProvider.overrideWithValue(fixture.accessories),
       profileRepositoryProvider.overrideWithValue(fixture.profiles),
@@ -244,6 +248,7 @@ const kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
 /// `demo_scope_test` compares it against what [demoOverrides] actually
 /// overrides, and against the repository providers the app declares.
 const Set<String> demoOverriddenProviders = {
+  'bookProfileRepositoryProvider', // #1869
   'clockProvider',
   'authRepositoryProvider',
   'identityBindingRepositoryProvider',

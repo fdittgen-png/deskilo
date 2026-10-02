@@ -480,6 +480,13 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'one region, from an open-data source, deselects the days '
                   'the space stays open and imports the rest as closure '
                   'days. Invoiced months are skipped and named.',
+        WorkspaceFeature.accountingBook =>
+          l10n?.featureAccountingBookDesc ??
+              'Who keeps the official books of each issuer: Deskilo as '
+                  'pre-accounting, a local book, or an external accounting '
+                  'system that stays authoritative. Each issuer states its '
+                  'currency, fiscal year and accounting basis. Off: member '
+                  'balances and invoices work as before.',
       WorkspaceFeature.workspaceBranding =>
           l10n?.featureWorkspaceBrandingDesc ??
               'The workspace chooses a brand colour the app derives its '

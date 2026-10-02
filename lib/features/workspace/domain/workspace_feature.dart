@@ -310,7 +310,14 @@ enum WorkspaceFeature {
   /// open-data source, deselects the days the space stays open, and
   /// imports the rest as closure days. Platform, default OFF, under
   /// publicHolidays: the SQL generator stays the offline fallback.
-  holidayImport;
+  holidayImport,
+
+  /// #1869 — the accounting owner of a legal entity: a book profile per
+  /// issuer (functional currency, fiscal year, accounting basis) and ONE
+  /// authority mode — pre-accounting, a local book, or an external
+  /// authoritative system. Platform, default OFF, under invoicing:
+  /// member balances and invoices work without it.
+  accountingBook;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1378,6 +1385,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.publicHolidays,
+  ),
+  // #1869 — who keeps the official books is a finance decision nobody
+  // makes by default: asked for, Platform, off.
+  WorkspaceFeature.accountingBook: FeatureManifestEntry(
+    feature: WorkspaceFeature.accountingBook,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+    requires: WorkspaceFeature.invoicing,
   ),
 };
 
