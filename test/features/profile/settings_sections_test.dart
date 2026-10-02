@@ -91,7 +91,7 @@ void main() {
     expect(dy(tester, 'This workspace'), lessThan(dy(tester, 'Workspace')));
     expect(dy(tester, 'Features'), lessThan(dy(tester, 'Administration')));
     expect(dy(tester, 'Administration'), lessThan(dy(tester, 'Members & plans')));
-    expect(dy(tester, 'Governance'), lessThan(dy(tester, 'Role management')));
+    expect(dy(tester, 'Governance'), lessThan(dy(tester, 'Roles')));
     expect(dy(tester, 'Advanced'), lessThan(dy(tester, 'Developer mode')));
     expect(dy(tester, 'Help & about'), lessThan(dy(tester, 'Help')));
     // Sections are visually separated.
@@ -116,7 +116,7 @@ void main() {
       'Features',
       'Validation rules',
       'Workspace ID & QR',
-      'Role management',
+      'Roles',
     ]) {
       expect(find.text(entry), findsNothing, reason: '"$entry" leaked');
     }
@@ -164,7 +164,7 @@ void main() {
 
     expect(find.text('This workspace'), findsOneWidget);
     expect(find.text('Billing'), findsOneWidget);
-    expect(find.text('Role management'), findsOneWidget,
+    expect(find.text('Roles'), findsOneWidget,
         reason: 'whoever holds a permission may read the matrix that grants it');
     for (final entry in ['Workspace', 'Availability', 'Features', 'Members & plans']) {
       expect(find.text(entry), findsNothing, reason: '"$entry" leaked');

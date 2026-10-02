@@ -65,7 +65,7 @@ void main() {
       (tester) async {
     final workspace = await pumpWorkspaceCode(tester);
 
-    await tester.tap(find.text('Admin invite'));
+    await tester.tap(find.text('Administrator invite'));
     await tester.pumpAndSettle();
 
     final minted = workspace.mintedInvitations.single;
@@ -82,7 +82,7 @@ void main() {
       'invitation', (tester) async {
     final workspace = await pumpWorkspaceCode(tester);
 
-    await tester.tap(find.text('Admin invite'));
+    await tester.tap(find.text('Administrator invite'));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const ValueKey('admin-invite-new')));
     await tester.tap(find.byKey(const ValueKey('admin-invite-new')));
@@ -100,7 +100,7 @@ void main() {
     await pumpWorkspaceCode(tester);
 
     expect(find.text('Member invite'), findsOneWidget);
-    expect(find.text('Admin invite'), findsOneWidget);
+    expect(find.text('Administrator invite'), findsOneWidget);
     expect(find.text('Owner invite'), findsNothing);
   });
 
