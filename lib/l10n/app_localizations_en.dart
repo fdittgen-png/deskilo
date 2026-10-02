@@ -10849,6 +10849,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalResetAllConfirm => 'Reset';
 
   @override
+  String get privacyNoticeTitle => 'Who processes your data';
+
+  @override
+  String privacyNoticeController(String name, String contact) {
+    return 'Controller: $name — $contact';
+  }
+
+  @override
+  String privacyNoticeRights(String contact) {
+    return 'Your rights: $contact';
+  }
+
+  @override
+  String privacyNoticeRegion(String region) {
+    return 'Region: $region';
+  }
+
+  @override
+  String privacyNoticeTransfer(String mechanism) {
+    return 'Transfer safeguard: $mechanism';
+  }
+
+  @override
+  String get privacyNoticeNotRecorded => 'not recorded by the operator';
+
+  @override
+  String get privacyNoticeEssential =>
+      'Needed to run the account and the space';
+
+  @override
+  String get privacyNoticeOptional =>
+      'Optional — you can use the app without it';
+
+  @override
+  String get privacyNoticeRightsRoute => 'Your rights and the contact';
+
+  @override
+  String get privacySpaceNotice => 'This space\'s privacy notice';
+
+  @override
+  String get privacySpaceNoticeRead => 'You acknowledged this version.';
+
+  @override
+  String get privacySpaceNoticeUnread => 'Not acknowledged yet — read it here.';
+
+  @override
+  String get privacySpaceNoticeAcknowledge => 'I have read this notice';
+
+  @override
+  String get privacySpaceNoticeFailed =>
+      'The acknowledgment could not be recorded. Please try again.';
+
+  @override
+  String get privacyPushOnDevice => 'Push notifications on this device';
+
+  @override
+  String get privacyPushOnDeviceHint =>
+      'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.';
+
+  @override
+  String get privacyPushOnDeviceFailed =>
+      'The choice could not be saved. Please try again.';
+
+  @override
   String get featuresViewProcesses => 'Processes';
 
   @override
@@ -11350,7 +11414,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyIntro =>
-      'Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.';
+      'Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation\'s privacy notice. These are your rights under the GDPR — each one is a button.';
 
   @override
   String get privacyWhoCanSee => 'Who can see my data';

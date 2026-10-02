@@ -12,6 +12,7 @@ import 'package:deskilo_push/deskilo_push.dart';
 
 import 'push_endpoint_repository.dart';
 import 'push_service.dart';
+import 'push_opt_out.dart';
 
 part 'push_providers.g.dart';
 
@@ -40,6 +41,9 @@ Future<PushService?> pushBootstrap(Ref ref) async {
   final connector = ref.watch(pushConnectorProvider);
   final endpoints = ref.watch(pushEndpointRepositoryProvider);
   final notifications = ref.watch(notificationServiceProvider);
+  // #1914 — turned off on this device: nothing registers, whatever the
+  // workspace allows.
+  final optedOut = ref.watch(pushOptedOutProvider.future);
   // Per-workspace feature gate (#146). selectAsync keeps the run-once
   // semantics: the provider only re-executes when the flag itself flips
   // (applying it on the next connect), not on every workspace refetch.
@@ -49,7 +53,7 @@ Future<PushService?> pushBootstrap(Ref ref) async {
       (features) => features.contains(WorkspaceFeature.pushNotifications),
     ),
   );
-  if (!pushEnabled) return null;
+  if (!pushEnabled || await optedOut) return null;
 
   AppLocalizations? l10n;
   try {

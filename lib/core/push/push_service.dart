@@ -76,6 +76,10 @@ class PushService {
     }
   }
 
+  /// #1914 — the person turned push off on this device: the server
+  /// forgets this device's endpoint, so nothing more is sent to it.
+  Future<void> optOut() => _onUnregistered();
+
   Future<void> _onUnregistered() async {
     final endpoint = _endpoint;
     _endpoint = null;

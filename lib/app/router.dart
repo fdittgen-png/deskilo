@@ -58,7 +58,6 @@ import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
 import '../features/workspace/presentation/widgets/conversation_thread.dart';
 import '../core/i18n/regional_formats_section.dart';
-import '../core/privacy/privacy_policy.dart';
 import '../features/profile/presentation/screens/consent_screen.dart';
 import '../features/profile/providers/profile_providers.dart';
 import '../features/profile/presentation/screens/privacy_screen.dart';
@@ -138,6 +137,7 @@ GoRouter router(Ref ref) {
     // #751 — the consent gate reads the profile's accepted policy version:
     // re-evaluate when the profile resolves, and after an acceptance.
     ..listen(myProfileProvider, (_, _) => reask())
+    ..listen(requiredPrivacyVersionProvider, (_, _) => reask()) // #1914
     ..listen(schemaCompatibilityProvider, (_, _) => reask()) // #1312
     // #1650 — the continuation restored from the device, or captured on
     // the way to sign-in: its destination is where sign-in returns to.
@@ -204,7 +204,8 @@ GoRouter router(Ref ref) {
             SchemaCompatibility.unknown,
         auth: auth.value == null ? AuthFact.signedOut : AuthFact.signedIn,
         privacy: privacyFactOf(loading: profile.isLoading, failed: profile.hasError,
-            accepted: profile.value?.privacyAcceptedVersion == kPrivacyPolicyVersion),
+            accepted: profile.value?.privacyAcceptedVersion ==
+                ref.read(requiredPrivacyVersionProvider)),
         // A list being REFRESHED is loading, whatever it held before: the
         // signed-out answer is an empty list, and reading it as "none"
         // in the frame after sign-in sent everybody through onboarding.
