@@ -22,6 +22,8 @@ class _Server {
   final objects = <String, int>{}; // path -> uploads
   final rows = <String, Map<String, dynamic>>{};
   final log = <String>[];
+  List<String> orphans = const [];
+  final removed = <String>[];
   bool failUpload = false;
   bool loseInsertAnswer = false;
 
@@ -34,6 +36,21 @@ class _Server {
 
   Future<http.Response> _handle(http.Request r) async {
     final path = r.url.path;
+    if (path == '/rest/v1/rpc/plan_media_orphans') {
+      log.add('orphans');
+      return http.Response(
+        jsonEncode(orphans),
+        200,
+        headers: _json,
+        request: r,
+      );
+    }
+    if (path == '/storage/v1/object/floor-plans' && r.method == 'DELETE') {
+      removed.addAll(
+        ((jsonDecode(r.body) as Map)['prefixes'] as List).cast<String>(),
+      );
+      return http.Response('[]', 200, headers: _json, request: r);
+    }
     if (path.startsWith('/storage/v1/object/floor-plans/')) {
       final key = path.substring('/storage/v1/object/floor-plans/'.length);
       log.add('upload');
@@ -102,7 +119,7 @@ void main() {
             bytes: bytes,
             contentType: 'image/png',
           );
-      expect(s.log, ['upload', 'insert']);
+      expect(s.log, ['upload', 'insert', 'orphans']);
       expect(s.rows.values.single['storage_path'], 'ws-1/img/${image.id}');
       expect(s.objects.keys, ['ws-1/img/${image.id}']);
     },
@@ -128,4 +145,10 @@ void main() {
       expect(s.rows[id]!['storage_path'], 'ws-1/img/$id');
     },
   );
+
+  test('a successful create sweeps what the server names as orphans', () async {
+    final s = _Server()..orphans = ['ws-1/img/old-abandoned'];
+    await create(s);
+    expect(s.removed, ['ws-1/img/old-abandoned']);
+  });
 }
