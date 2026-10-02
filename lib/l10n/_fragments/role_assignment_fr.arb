@@ -130,5 +130,35 @@
   "roleTakeBackFailed": "Le rôle n'a pas été retiré.",
   "@roleTakeBackFailed": {
     "description": "#2085 giving roles: roleTakeBackFailed"
+  },
+  "eventRoleGiven": "{actor} attribue le rôle {role} à {member}",
+  "@eventRoleGiven": {
+    "description": "#2085 giving roles: eventRoleGiven",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
+  "eventRoleTakenBack": "{actor} retire le rôle {role} à {member}",
+  "@eventRoleTakenBack": {
+    "description": "#2085 giving roles: eventRoleTakenBack",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -1,8 +1,8 @@
 {
   "@@locale": "it",
   "eventTypeRoleChange": "Cambio di ruolo",
-  "eventRolePromote": "{actor} promuove un membro ad admin",
-  "eventRoleDemote": "{actor} declassa un admin a membro",
+  "eventRolePromote": "{actor} chiede di dare il ruolo Amministratore",
+  "eventRoleDemote": "{actor} chiede di revocare il ruolo Amministratore",
   "memberMakeAdmin": "Dai il ruolo Amministratore",
   "memberMakeMember": "Revoca il ruolo Amministratore",
   "memberRoleChangeRequested": "Cambio di ruolo inviato per la convalida.",
