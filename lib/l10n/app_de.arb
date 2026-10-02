@@ -2952,6 +2952,32 @@
   "@holidayImportFailed": {
     "description": "#2051 open-data holiday import"
   },
+  "instanceTitle": "Installation: Assistenten",
+  "instanceIntro": "Einstellungen für alle Arbeitsbereiche dieser Installation. Nur der Instanzbetreiber sieht diese Seite; jede Änderung erfordert Ihren zweiten Faktor und wird protokolliert.",
+  "instanceNotOperator": "Nur der Instanzbetreiber verwaltet die Assistenten der Installation.",
+  "instanceSecondFactorNeeded": "Änderungen hier erfordern Ihren zweiten Faktor in dieser Sitzung.",
+  "instanceConfirmSecondFactor": "Mit meinem Authenticator bestätigen",
+  "instanceRuntimeTitle": "Assistenten auf dieser Installation",
+  "instanceRuntimeOn": "Eingeschaltet",
+  "instanceRuntimeOff": "Ausgeschaltet",
+  "instanceTurnOn": "Für alle Arbeitsbereiche einschalten",
+  "instanceTurnOff": "Ausschalten",
+  "instanceTurnOnConfirm": "Assistenten werden in jedem Arbeitsbereich nutzbar, der sie anbietet. Sie können sie jederzeit wieder ausschalten.",
+  "instanceBlockers": "Es fehlt noch:",
+  "instanceBlockerNoAdmin": "ein Datenbankadministrator",
+  "instanceAdminsTitle": "Datenbankadministratoren",
+  "instanceAdminsHelp": "Sie entscheiden, wer Assistenten nutzen darf. Wählbar ist nur, wer seine Identität für Assistenten bestätigt hat.",
+  "instanceMakeAdmin": "Zum Administrator machen",
+  "instanceRemoveAdmin": "Entfernen",
+  "instanceNoCandidates": "Noch niemand sonst hat seine Identität bestätigt.",
+  "instanceYou": "Sie",
+  "instanceClientsTitle": "Assistenten-Clients",
+  "instanceClientsHelp": "Ein Assistent registriert sich bei der ersten Verbindung selbst; er funktioniert erst nach der Freigabe hier.",
+  "instanceClientWaiting": "Wartet auf Freigabe",
+  "instanceClientApproved": "Freigegeben",
+  "instanceClientBlocked": "Gesperrt",
+  "instanceApprove": "Freigeben",
+  "instanceBlock": "Sperren",
   "instanceOwnerClaimIntro": "Wem gehört diese Instanz? Geben Sie die E-Mail-Adresse ein, mit der Sie sich dort registrieren werden. Nachdem Sie diese Adresse bestätigt haben, beanspruchen Sie die Inhaberschaft unter Einstellungen → Instanzeigentümer.",
   "instanceOwnerClaimLabel": "E-Mail des Inhabers",
   "instanceOwnerTitle": "Instanzeigentümer",
@@ -5096,6 +5122,14 @@
   "mcpStateAfterPrevious": "Nach dem vorherigen Schritt",
   "mcpIdentityIneligible": "Dieses Konto kann noch nicht bestätigt werden — bestätigen Sie zuerst Ihre E-Mail-Adresse oder melden Sie sich mit einem Anbieter an.",
   "mcpIdentityConflict": "Ein anderes Konto hält diese Identität hier bereits — ein Datenbankadministrator kann das klären.",
+  "mcpStatusGoogle": "Google-Anmeldung",
+  "mcpStatusLinkGoogle": "Google verknüpfen",
+  "mcpStatusSignInGoogle": "Mit Google anmelden",
+  "mcpStateGoogleReady": "Mit Google angemeldet",
+  "mcpStateGoogleOtherSession": "Anders angemeldet",
+  "mcpStateGoogleMissing": "Google nicht verknüpft",
+  "mcpNextLinkGoogle": "Assistenten verwenden Ihre Google-Anmeldung. Verknüpfen Sie zuerst Google mit diesem Konto; ohne Google kann das Konto keine Assistenten nutzen.",
+  "mcpNextSignInGoogle": "Assistenten verwenden Ihre Google-Anmeldung. Melden Sie sich mit Google an, um fortzufahren.",
   "mcpUsageWorkspaceTitle": "Nutzung durch Assistenten, letzte 30 Tage",
   "mcpUsageMineTitle": "Ihre Nutzung durch Assistenten heute",
   "mcpUsageUnavailable": "Die Nutzung konnte nicht geladen werden.",
@@ -8010,6 +8044,165 @@
   "invoiceGapMissingBuyerVatId": "Die USt-IdNr. des Kunden fehlt — eine Reverse-Charge-Rechnung muss sie nennen.",
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
+  },
+  "rightsRequestsTitle": "Meine Anträge auf Betroffenenrechte",
+  "@rightsRequestsTitle": {
+    "description": "#1915 rights requests: rightsRequestsTitle"
+  },
+  "rightsRequestsHint": "Bitten Sie den Bereich um eine Kopie, Berichtigung, Einschränkung oder Löschung — Antwort innerhalb eines Kalendermonats.",
+  "@rightsRequestsHint": {
+    "description": "#1915 rights requests: rightsRequestsHint"
+  },
+  "rightsRequestsEmpty": "Noch kein Antrag.",
+  "@rightsRequestsEmpty": {
+    "description": "#1915 rights requests: rightsRequestsEmpty"
+  },
+  "rightsRequestNew": "Antrag stellen",
+  "@rightsRequestNew": {
+    "description": "#1915 rights requests: rightsRequestNew"
+  },
+  "rightsRequestAsk": "Was beantragen Sie beim Bereich?",
+  "@rightsRequestAsk": {
+    "description": "#1915 rights requests: rightsRequestAsk"
+  },
+  "rightsRequestDetails": "Einzelheiten (optional)",
+  "@rightsRequestDetails": {
+    "description": "#1915 rights requests: rightsRequestDetails"
+  },
+  "rightsRequestSend": "Antrag senden",
+  "@rightsRequestSend": {
+    "description": "#1915 rights requests: rightsRequestSend"
+  },
+  "rightsRequestSent": "Antrag gesendet — der Bereich antwortet bis zum {date}.",
+  "@rightsRequestSent": {
+    "description": "#1915 rights requests: rightsRequestSent",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestFailed": "Der Antrag konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+  "@rightsRequestFailed": {
+    "description": "#1915 rights requests: rightsRequestFailed"
+  },
+  "rightsKindAccess": "Eine Kopie meiner Daten erhalten",
+  "@rightsKindAccess": {
+    "description": "#1915 rights requests: rightsKindAccess"
+  },
+  "rightsKindPortability": "Meine Daten mitnehmen (maschinenlesbar)",
+  "@rightsKindPortability": {
+    "description": "#1915 rights requests: rightsKindPortability"
+  },
+  "rightsKindRectification": "Meine Daten berichtigen",
+  "@rightsKindRectification": {
+    "description": "#1915 rights requests: rightsKindRectification"
+  },
+  "rightsKindRestriction": "Die Verarbeitung meiner Daten einschränken",
+  "@rightsKindRestriction": {
+    "description": "#1915 rights requests: rightsKindRestriction"
+  },
+  "rightsKindObjection": "Einer Verwendung meiner Daten widersprechen",
+  "@rightsKindObjection": {
+    "description": "#1915 rights requests: rightsKindObjection"
+  },
+  "rightsKindErasure": "Meine Daten löschen",
+  "@rightsKindErasure": {
+    "description": "#1915 rights requests: rightsKindErasure"
+  },
+  "rightsStatusReceived": "Eingegangen — Antwort fällig bis {date}",
+  "@rightsStatusReceived": {
+    "description": "#1915 rights requests: rightsStatusReceived",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusExtended": "Verlängert bis {date}: {reason}",
+  "@rightsStatusExtended": {
+    "description": "#1915 rights requests: rightsStatusExtended",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusCompleted": "Beantwortet — der Bereich hat festgehalten, was er getan hat",
+  "@rightsStatusCompleted": {
+    "description": "#1915 rights requests: rightsStatusCompleted"
+  },
+  "rightsStatusRefused": "Abgelehnt: {reason}",
+  "@rightsStatusRefused": {
+    "description": "#1915 rights requests: rightsStatusRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "erasurePreviewTitle": "Was die Löschung hier bewirkt",
+  "@erasurePreviewTitle": {
+    "description": "#1915 rights requests: erasurePreviewTitle"
+  },
+  "erasurePreviewRemoved": "Gelöscht",
+  "@erasurePreviewRemoved": {
+    "description": "#1915 rights requests: erasurePreviewRemoved"
+  },
+  "erasurePreviewKept": "Aufbewahrt, und warum",
+  "@erasurePreviewKept": {
+    "description": "#1915 rights requests: erasurePreviewKept"
+  },
+  "erasurePreviewOutside": "Außerhalb dieser Installation",
+  "@erasurePreviewOutside": {
+    "description": "#1915 rights requests: erasurePreviewOutside"
+  },
+  "erasureStoreMessages": "Von Ihnen gesendete Nachrichten",
+  "@erasureStoreMessages": {
+    "description": "#1915 rights requests: erasureStoreMessages"
+  },
+  "erasureStoreAnswers": "Ihre Antworten auf die Fragen des Bereichs",
+  "@erasureStoreAnswers": {
+    "description": "#1915 rights requests: erasureStoreAnswers"
+  },
+  "erasureStoreProfile": "Ihr Profil (wenn dies Ihr letzter Bereich ist)",
+  "@erasureStoreProfile": {
+    "description": "#1915 rights requests: erasureStoreProfile"
+  },
+  "erasureStoreOpenBookings": "Offene Buchungen — storniert",
+  "@erasureStoreOpenBookings": {
+    "description": "#1915 rights requests: erasureStoreOpenBookings"
+  },
+  "erasureStoreAccounts": "Rechnungen und Buchungen — Buchhaltungsbelege, für die gesetzliche Frist aufbewahrt; ausgestellte Dokumente werden nicht geändert",
+  "@erasureStoreAccounts": {
+    "description": "#1915 rights requests: erasureStoreAccounts"
+  },
+  "erasureStorePastBookings": "Vergangene Buchungen — der Belegungsnachweis des Bereichs",
+  "@erasureStorePastBookings": {
+    "description": "#1915 rights requests: erasureStorePastBookings"
+  },
+  "erasureStoreMembership": "Die Mitgliedschaftszeile — verknüpft die aufbewahrten Daten; pseudonym, nicht anonym",
+  "@erasureStoreMembership": {
+    "description": "#1915 rights requests: erasureStoreMembership"
+  },
+  "erasureStoreHeldAnswers": "Antworten unter einer vom Bereich dokumentierten Aufbewahrungspflicht",
+  "@erasureStoreHeldAnswers": {
+    "description": "#1915 rights requests: erasureStoreHeldAnswers"
+  },
+  "erasureStoreOtherInstallations": "Eine andere DesKilo-Installation ist ein eigener Verantwortlicher — wenden Sie sich direkt an sie",
+  "@erasureStoreOtherInstallations": {
+    "description": "#1915 rights requests: erasureStoreOtherInstallations"
+  },
+  "erasureStoreDeviceCaches": "Kopien auf Ihren Geräten — beim Abmelden auf jedem gelöscht",
+  "@erasureStoreDeviceCaches": {
+    "description": "#1915 rights requests: erasureStoreDeviceCaches"
+  },
+  "erasureStoreBackups": "Sicherungen des Betreibers — laufen nach ihrem Turnus ab",
+  "@erasureStoreBackups": {
+    "description": "#1915 rights requests: erasureStoreBackups"
   },
   "featureRoleAssignmentTitle": "Rollen vergeben",
   "@featureRoleAssignmentTitle": {

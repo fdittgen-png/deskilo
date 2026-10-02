@@ -863,7 +863,7 @@ final class McpAccessStatusProvider
   }
 }
 
-String _$mcpAccessStatusHash() => r'cb48ecb641949fa1b8cae426601efd3e881e636e';
+String _$mcpAccessStatusHash() => r'8162ddac3992ffdedf11fd9a354a4c610fd7928b';
 
 /// #1625 — the six separate facts for one person on one workspace.
 
@@ -1353,4 +1353,4 @@ final class AssistantAccessProvider
   }
 }
 
-String _$assistantAccessHash() => r'0d97c437347dfea75eae6255350d942121cd5e7c';
+String _$assistantAccessHash() => r'9d7298dfc931ef4c5e01d32b4ab81b630ffd7b6e';

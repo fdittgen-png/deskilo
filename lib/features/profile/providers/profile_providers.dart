@@ -18,6 +18,7 @@ import '../domain/profile.dart';
 import '../domain/profile_repository.dart';
 import '../domain/privacy_notice.dart';
 import '../../../core/privacy/privacy_policy.dart';
+import '../domain/rights_request.dart';
 
 part 'profile_providers.g.dart';
 
@@ -37,6 +38,13 @@ Future<PrivacyNotices> privacyNotices(Ref ref) async {
   if (!signedIn) return PrivacyNotices.none;
   final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
   return ref.read(profileRepositoryProvider).fetchPrivacyNotices(workspaceId);
+}
+
+/// #1915 — my rights requests, newest first.
+@riverpod
+Future<List<RightsRequest>> myRightsRequests(Ref ref) async {
+  if (ref.watch(authStateProvider).value == null) return const [];
+  return ref.read(profileRepositoryProvider).fetchMyRightsRequests();
 }
 
 /// #1914 — the version the consent gate asks for: the installation

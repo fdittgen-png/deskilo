@@ -2952,6 +2952,32 @@
   "@holidayImportFailed": {
     "description": "#2051 open-data holiday import"
   },
+  "instanceTitle": "Installazione: assistenti",
+  "instanceIntro": "Impostazioni valide per tutti gli spazi di lavoro di questa installazione. Solo l'operatore dell'istanza vede questa pagina; ogni modifica richiede il secondo fattore e viene registrata.",
+  "instanceNotOperator": "Solo l'operatore dell'istanza gestisce gli assistenti dell'installazione.",
+  "instanceSecondFactorNeeded": "Le modifiche qui richiedono il secondo fattore in questa sessione.",
+  "instanceConfirmSecondFactor": "Conferma con il mio autenticatore",
+  "instanceRuntimeTitle": "Assistenti su questa installazione",
+  "instanceRuntimeOn": "Attivi",
+  "instanceRuntimeOff": "Disattivati",
+  "instanceTurnOn": "Attiva per tutti gli spazi",
+  "instanceTurnOff": "Disattiva",
+  "instanceTurnOnConfirm": "Gli assistenti diventano utilizzabili in ogni spazio che li offre. Puoi disattivarli in qualsiasi momento.",
+  "instanceBlockers": "Manca ancora:",
+  "instanceBlockerNoAdmin": "un amministratore della base",
+  "instanceAdminsTitle": "Amministratori della base",
+  "instanceAdminsHelp": "Decidono chi può usare gli assistenti. Si possono scegliere solo persone che hanno confermato la propria identità per gli assistenti.",
+  "instanceMakeAdmin": "Nomina amministratore",
+  "instanceRemoveAdmin": "Rimuovi",
+  "instanceNoCandidates": "Nessun altro ha ancora confermato la propria identità.",
+  "instanceYou": "tu",
+  "instanceClientsTitle": "Client degli assistenti",
+  "instanceClientsHelp": "Un assistente si registra da solo alla prima connessione; funziona solo dopo l'approvazione qui.",
+  "instanceClientWaiting": "In attesa di approvazione",
+  "instanceClientApproved": "Approvato",
+  "instanceClientBlocked": "Bloccato",
+  "instanceApprove": "Approva",
+  "instanceBlock": "Blocca",
   "instanceOwnerClaimIntro": "Di chi è questa istanza? Inserisci l'e-mail con cui ti registrerai. Dopo aver confermato l'indirizzo, rivendica la titolarità da Impostazioni → Proprietario dell'istanza.",
   "instanceOwnerClaimLabel": "E-mail del titolare",
   "instanceOwnerTitle": "Proprietario dell'istanza",
@@ -5096,6 +5122,14 @@
   "mcpStateAfterPrevious": "Dopo il passaggio precedente",
   "mcpIdentityIneligible": "Questo account non può ancora essere confermato: conferma prima il tuo indirizzo e-mail o accedi con un provider.",
   "mcpIdentityConflict": "Un altro account detiene già questa identità qui: un amministratore della base può risolverlo.",
+  "mcpStatusGoogle": "Accesso con Google",
+  "mcpStatusLinkGoogle": "Collega Google",
+  "mcpStatusSignInGoogle": "Accedi con Google",
+  "mcpStateGoogleReady": "Accesso con Google effettuato",
+  "mcpStateGoogleOtherSession": "Accesso effettuato in altro modo",
+  "mcpStateGoogleMissing": "Google non collegato",
+  "mcpNextLinkGoogle": "Gli assistenti usano il tuo accesso Google. Collega prima Google a questo account; senza, l'account non può usare assistenti.",
+  "mcpNextSignInGoogle": "Gli assistenti usano il tuo accesso Google. Accedi con Google per continuare.",
   "mcpUsageWorkspaceTitle": "Uso degli assistenti, ultimi 30 giorni",
   "mcpUsageMineTitle": "Il tuo uso degli assistenti oggi",
   "mcpUsageUnavailable": "Non è stato possibile caricare l'utilizzo.",
@@ -8010,6 +8044,165 @@
   "invoiceGapMissingBuyerVatId": "Manca la partita IVA del cliente — una fattura in inversione contabile deve indicarla.",
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
+  },
+  "rightsRequestsTitle": "Le mie richieste di esercizio dei diritti",
+  "@rightsRequestsTitle": {
+    "description": "#1915 rights requests: rightsRequestsTitle"
+  },
+  "rightsRequestsHint": "Chiedi allo spazio una copia, una rettifica, una limitazione o la cancellazione — risposta entro un mese di calendario.",
+  "@rightsRequestsHint": {
+    "description": "#1915 rights requests: rightsRequestsHint"
+  },
+  "rightsRequestsEmpty": "Nessuna richiesta per ora.",
+  "@rightsRequestsEmpty": {
+    "description": "#1915 rights requests: rightsRequestsEmpty"
+  },
+  "rightsRequestNew": "Fai una richiesta",
+  "@rightsRequestNew": {
+    "description": "#1915 rights requests: rightsRequestNew"
+  },
+  "rightsRequestAsk": "Cosa chiedi allo spazio?",
+  "@rightsRequestAsk": {
+    "description": "#1915 rights requests: rightsRequestAsk"
+  },
+  "rightsRequestDetails": "Dettagli (facoltativo)",
+  "@rightsRequestDetails": {
+    "description": "#1915 rights requests: rightsRequestDetails"
+  },
+  "rightsRequestSend": "Invia la richiesta",
+  "@rightsRequestSend": {
+    "description": "#1915 rights requests: rightsRequestSend"
+  },
+  "rightsRequestSent": "Richiesta inviata — lo spazio risponde entro il {date}.",
+  "@rightsRequestSent": {
+    "description": "#1915 rights requests: rightsRequestSent",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestFailed": "Non è stato possibile inviare la richiesta. Riprova.",
+  "@rightsRequestFailed": {
+    "description": "#1915 rights requests: rightsRequestFailed"
+  },
+  "rightsKindAccess": "Avere una copia dei miei dati",
+  "@rightsKindAccess": {
+    "description": "#1915 rights requests: rightsKindAccess"
+  },
+  "rightsKindPortability": "Portare altrove i miei dati (leggibili da macchina)",
+  "@rightsKindPortability": {
+    "description": "#1915 rights requests: rightsKindPortability"
+  },
+  "rightsKindRectification": "Rettificare i miei dati",
+  "@rightsKindRectification": {
+    "description": "#1915 rights requests: rightsKindRectification"
+  },
+  "rightsKindRestriction": "Limitare l'uso dei miei dati",
+  "@rightsKindRestriction": {
+    "description": "#1915 rights requests: rightsKindRestriction"
+  },
+  "rightsKindObjection": "Oppormi a un uso dei miei dati",
+  "@rightsKindObjection": {
+    "description": "#1915 rights requests: rightsKindObjection"
+  },
+  "rightsKindErasure": "Cancellare i miei dati",
+  "@rightsKindErasure": {
+    "description": "#1915 rights requests: rightsKindErasure"
+  },
+  "rightsStatusReceived": "Ricevuta — risposta entro il {date}",
+  "@rightsStatusReceived": {
+    "description": "#1915 rights requests: rightsStatusReceived",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusExtended": "Prorogata al {date}: {reason}",
+  "@rightsStatusExtended": {
+    "description": "#1915 rights requests: rightsStatusExtended",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusCompleted": "Evasa — lo spazio ha registrato cosa ha fatto",
+  "@rightsStatusCompleted": {
+    "description": "#1915 rights requests: rightsStatusCompleted"
+  },
+  "rightsStatusRefused": "Respinta: {reason}",
+  "@rightsStatusRefused": {
+    "description": "#1915 rights requests: rightsStatusRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "erasurePreviewTitle": "Cosa fa qui la cancellazione",
+  "@erasurePreviewTitle": {
+    "description": "#1915 rights requests: erasurePreviewTitle"
+  },
+  "erasurePreviewRemoved": "Cancellato",
+  "@erasurePreviewRemoved": {
+    "description": "#1915 rights requests: erasurePreviewRemoved"
+  },
+  "erasurePreviewKept": "Conservato, e perché",
+  "@erasurePreviewKept": {
+    "description": "#1915 rights requests: erasurePreviewKept"
+  },
+  "erasurePreviewOutside": "Fuori da questa installazione",
+  "@erasurePreviewOutside": {
+    "description": "#1915 rights requests: erasurePreviewOutside"
+  },
+  "erasureStoreMessages": "Messaggi che hai inviato",
+  "@erasureStoreMessages": {
+    "description": "#1915 rights requests: erasureStoreMessages"
+  },
+  "erasureStoreAnswers": "Le tue risposte alle domande dello spazio",
+  "@erasureStoreAnswers": {
+    "description": "#1915 rights requests: erasureStoreAnswers"
+  },
+  "erasureStoreProfile": "Il tuo profilo (se è il tuo ultimo spazio)",
+  "@erasureStoreProfile": {
+    "description": "#1915 rights requests: erasureStoreProfile"
+  },
+  "erasureStoreOpenBookings": "Prenotazioni aperte — annullate",
+  "@erasureStoreOpenBookings": {
+    "description": "#1915 rights requests: erasureStoreOpenBookings"
+  },
+  "erasureStoreAccounts": "Fatture e registro — prova contabile, conservata per il periodo di legge; i documenti emessi non vengono riscritti",
+  "@erasureStoreAccounts": {
+    "description": "#1915 rights requests: erasureStoreAccounts"
+  },
+  "erasureStorePastBookings": "Prenotazioni passate — lo storico di occupazione dello spazio",
+  "@erasureStorePastBookings": {
+    "description": "#1915 rights requests: erasureStorePastBookings"
+  },
+  "erasureStoreMembership": "La riga di iscrizione — collega i dati conservati; pseudonima, non anonima",
+  "@erasureStoreMembership": {
+    "description": "#1915 rights requests: erasureStoreMembership"
+  },
+  "erasureStoreHeldAnswers": "Risposte soggette a un obbligo di conservazione documentato dallo spazio",
+  "@erasureStoreHeldAnswers": {
+    "description": "#1915 rights requests: erasureStoreHeldAnswers"
+  },
+  "erasureStoreOtherInstallations": "Un'altra installazione DesKilo è un titolare distinto — rivolgiti direttamente a lei",
+  "@erasureStoreOtherInstallations": {
+    "description": "#1915 rights requests: erasureStoreOtherInstallations"
+  },
+  "erasureStoreDeviceCaches": "Copie sui tuoi dispositivi — cancellate quando esci da ciascuno",
+  "@erasureStoreDeviceCaches": {
+    "description": "#1915 rights requests: erasureStoreDeviceCaches"
+  },
+  "erasureStoreBackups": "Backup del gestore — scadono secondo la loro rotazione",
+  "@erasureStoreBackups": {
+    "description": "#1915 rights requests: erasureStoreBackups"
   },
   "featureRoleAssignmentTitle": "Assegnazione dei ruoli",
   "@featureRoleAssignmentTitle": {

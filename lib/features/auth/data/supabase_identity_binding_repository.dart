@@ -51,6 +51,25 @@ class SupabaseIdentityBindingRepository implements IdentityBindingRepository {
   }
 
   @override
+  Future<McpGoogleSignIn> googleSignIn() async {
+    try {
+      final json = await _client.rpc<Object?>('mcp_google_status');
+      final m = json is Map ? json : const <String, Object?>{};
+      return McpGoogleSignIn(
+        linked: m['google_linked'] as bool?,
+        session: m['google_session'] as bool?,
+      );
+    } on PostgrestException catch (e, st) {
+      if (isMissingFunction(e)) {
+        TraceLogger.instance.warn('identity', 'mcp_google_status is absent',
+            error: e, stackTrace: st);
+        return McpGoogleSignIn.unknown;
+      }
+      rethrow;
+    }
+  }
+
+  @override
   Future<DatabaseCapabilities> databaseCapabilities() =>
       _capabilities('my_database_capabilities');
 

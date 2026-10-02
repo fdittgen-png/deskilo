@@ -101,7 +101,7 @@ fi
 claims() { # claims <user> [client]
   local client=""
   [ -n "${2:-}" ] && client=",\"client_id\":\"$2\""
-  printf "set local role authenticated;\nselect set_config('request.jwt.claims', '{\"sub\":\"%s\",\"role\":\"authenticated\",\"aal\":\"aal2\"%s}', true) is null;\n" \
+  printf "set local role authenticated;\nselect set_config('request.jwt.claims', '{\"sub\":\"%s\",\"role\":\"authenticated\",\"aal\":\"aal2\",\"amr\":[{\"method\":\"oauth\"}]%s}', true) is null;\n" \
     "$1" "$client"
 }
 
