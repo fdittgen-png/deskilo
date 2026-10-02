@@ -84,6 +84,10 @@ const Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'analytics_history': 'when this installation began recording analytics history (#1920); a fact about this installation, not portable configuration — an imported space starts its own history',
+  'seat_history': 'analytics evidence written by triggers on this installation (#1920); the seats it describes are exported, and an import records history from the rows it creates',
+  'opening_hours_history': 'analytics evidence written by triggers on this installation (#1920); the booking rules it describes are exported',
+  'reservation_target_history': 'analytics evidence written by triggers on this installation (#1920); the reservations it describes are exported',
   'retired_invite_codes': 'withdrawn invitation secrets of this installation, kept only to answer "revoked"; never portable configuration (#1652)',
   'workspace_public_pages': 'publication consent is installation-specific; importing a workspace must not publish it (#1791)',
   'public_workspace_cards': 'derived public projection regenerated only by explicit publication on this installation (#1791)',
@@ -100,6 +104,7 @@ const Map<String, String> _notExported = {
   'mcp_idempotency': 'replay records of MCP calls, operational state only (#1612)',
   'mcp_action_confirmations': 'a person\'s pending confirmation of an assistant request, never portable (#1619)',
   'mcp_usage': 'the audit of MCP calls and the count the limits read, operational state only (#1630)',
+  'book_profiles': 'who keeps the official books of each issuer is a finance decision taken on this installation, never copied with the data (#1869)',
   'workspace_recovery_evidence': 'the record that an export was taken; a copy of it would claim a backup the copy never had (#1636)',
   'readiness_acknowledgements': 'a person\'s own "later" on a setup section, per installation; a copy must re-ask (#1636)',
   // --- authority a copy must not carry by itself (#1287) ------------

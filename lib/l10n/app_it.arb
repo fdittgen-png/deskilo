@@ -66,6 +66,27 @@
   "handoffChanged": "Le fatture sono cambiate durante la revisione. Esporta di nuovo per vedere i conti attuali.",
   "handoffUnsupportedCurrency": "{number}: la sua valuta non ha un numero di decimali verificato",
   "handoffAmountOutOfRange": "{number}: un totale troppo grande per essere trasmesso esattamente",
+  "featureAccountingBookTitle": "Libro contabile",
+  "featureAccountingBookDesc": "Chi tiene i libri ufficiali di ogni emittente: Deskilo come precontabilità, un libro locale o un sistema contabile esterno che fa fede. Ogni emittente indica valuta, esercizio e base contabile. Disattivato: i saldi dei membri e le fatture funzionano come prima.",
+  "bookSheetTitle": "Libro contabile",
+  "bookTileEmpty": "Nessun libro: DesKilo tiene i saldi dei membri e le fatture (precontabilità).",
+  "bookIssuer": "Emittente",
+  "bookAuthorityPre": "Precontabilità",
+  "bookAuthorityLocal": "DesKilo tiene il libro",
+  "bookAuthorityExternal": "Sistema esterno",
+  "bookExternalSystem": "Sistema che fa fede",
+  "bookCurrency": "Valuta funzionale",
+  "bookFiscalStart": "L’esercizio inizia il",
+  "bookBasisAccrual": "Competenza",
+  "bookBasisCash": "Cassa",
+  "bookEffectiveFrom": "In vigore dal {date}",
+  "bookFiscalPreview": "Esercizio {label}: {start} – {end}",
+  "bookProblemExternal": "Indica il sistema esterno che tiene i libri ufficiali.",
+  "bookProblemCurrency": "Questa valuta non ha un numero di decimali verificato.",
+  "bookProblemFiscal": "Un esercizio inizia in un giorno che ogni anno ha (mai il 29 febbraio).",
+  "bookSaved": "Libro salvato",
+  "bookStale": "Qualcuno ha salvato questo libro da quando l’hai aperto. Chiudi e riapri per vedere la sua versione.",
+  "bookSaveFailed": "Il libro non è stato salvato. Controlla la connessione e riprova.",
   "fecAccountExpenses": "Spese",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -1305,10 +1326,6 @@
       }
     }
   },
-  "capacityKpiPartial": "Parziale: la planimetria, gli orari e i blocchi dei posti sono quelli di oggi; la loro storia non è ancora registrata.",
-  "@capacityKpiPartial": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiUnattributed": "Alcune prenotazioni del periodo riguardano un posto che non esiste più; non vengono contate.",
   "@capacityKpiUnattributed": {
     "description": "#1918 capacity KPI"
@@ -1337,6 +1354,37 @@
   "capacityKpiRetry": "Riprova",
   "@capacityKpiRetry": {
     "description": "#1918 capacity KPI"
+  },
+  "capacityKpiHistorySince": "Contato dal {date}, quando è iniziata la storia di questo spazio; il tempo precedente non è noto e non viene contato.",
+  "@capacityKpiHistorySince": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiNotRecorded": "Questo periodo precede l’inizio della storia dello spazio, il {date}; non c’è nulla di registrato da contare.",
+  "@capacityKpiNotRecorded": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiHistory": "Storia registrata dal {date}",
+  "@capacityKpiHistory": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRoomsToday": "Le sale senza posti sono lette come sono oggi.",
+  "@capacityKpiRoomsToday": {
+    "description": "#1920 capacity KPI history"
   },
   "featureCarnetsTitle": "Carnet",
   "featureCarnetsDesc": "Vendere carnet di mezze giornate, consumati nell'arco dei mesi quando un membro prenota oltre il suo abbonamento, addebitati una sola volta alla vendita.",
@@ -2065,6 +2113,8 @@
     }
   },
   "memberPageNowHeading": "In questo momento",
+  "editorMediaWriteFailed": "Non è stato possibile confermare il salvataggio dell'immagine. Riprovare non la aggiunge mai due volte.",
+  "editorMediaSaving": "Salvataggio dell'immagine…",
   "editorBackgroundImage": "Immagine di sfondo",
   "editorBackgroundSet": "Imposta immagine di sfondo",
   "editorBackgroundReplace": "Sostituisci immagine di sfondo",
@@ -4395,6 +4445,71 @@
   "reportDesignErrorUnknownKind": "Questo modello riguarda un report che questo spazio non ha.",
   "reportDesignErrorWrongKind": "Questo modello appartiene a un altro report. Aprilo e importalo lì.",
   "reportDesignErrorInvalidDesign": "Questo file non contiene alcun modello leggibile.",
+  "invoiceHoldAction": "Sospendi i solleciti",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Revoca la sospensione dei solleciti",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "Perché sospendere i solleciti?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "Nessun sollecito viene inviato per questa fattura, né a mano né automaticamente, finché la sospensione non viene revocata.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "Il membro la contesta",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Persona sbagliata o errore d'identità",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Procedura di insolvenza",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Un'altra ragione",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Nota (facoltativa)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Sospendi",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "I solleciti per questa fattura sono sospesi.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "I solleciti per questa fattura possono riprendere.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Solleciti sospesi: {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "Per questa fattura non è stata registrata una scadenza concordata: nessun sollecito automatico finché non la verifichi.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "Non è stato possibile modificare la sospensione dei solleciti. Riprova.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Gestire le fatture",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"

@@ -66,6 +66,27 @@
   "handoffChanged": "Les factures ont changé pendant votre relecture. Exportez à nouveau pour voir les comptes actuels.",
   "handoffUnsupportedCurrency": "{number} : sa devise n’a pas de nombre de décimales vérifié",
   "handoffAmountOutOfRange": "{number} : un total trop grand pour être transmis exactement",
+  "featureAccountingBookTitle": "Livre comptable",
+  "featureAccountingBookDesc": "Qui tient les livres officiels de chaque émetteur : Deskilo en pré-comptabilité, un livre local ou un logiciel comptable externe qui fait foi. Chaque émetteur indique sa devise, son exercice et sa base comptable. Désactivé : les soldes des membres et les factures fonctionnent comme avant.",
+  "bookSheetTitle": "Livre comptable",
+  "bookTileEmpty": "Aucun livre : DesKilo tient les soldes des membres et les factures (pré-comptabilité).",
+  "bookIssuer": "Émetteur",
+  "bookAuthorityPre": "Pré-comptabilité",
+  "bookAuthorityLocal": "DesKilo tient le livre",
+  "bookAuthorityExternal": "Logiciel externe",
+  "bookExternalSystem": "Logiciel qui fait foi",
+  "bookCurrency": "Devise de tenue",
+  "bookFiscalStart": "L’exercice commence le",
+  "bookBasisAccrual": "Engagements",
+  "bookBasisCash": "Encaissements",
+  "bookEffectiveFrom": "En vigueur à partir du {date}",
+  "bookFiscalPreview": "Exercice {label} : {start} – {end}",
+  "bookProblemExternal": "Indiquez le logiciel externe qui tient les livres officiels.",
+  "bookProblemCurrency": "Cette devise n’a pas de nombre de décimales vérifié.",
+  "bookProblemFiscal": "Un exercice commence un jour que chaque année possède (jamais le 29 février).",
+  "bookSaved": "Livre enregistré",
+  "bookStale": "Quelqu’un a enregistré ce livre depuis que vous l’avez ouvert. Fermez et rouvrez pour voir sa version.",
+  "bookSaveFailed": "Le livre n’a pas été enregistré. Vérifiez la connexion et réessayez.",
   "fecAccountExpenses": "Achats et charges",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -1305,10 +1326,6 @@
       }
     }
   },
-  "capacityKpiPartial": "Partiel : le plan, les heures d'ouverture et les blocages de places sont ceux d'aujourd'hui ; leur historique n'est pas encore enregistré.",
-  "@capacityKpiPartial": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiUnattributed": "Certaines réservations de la période visent un emplacement qui n'existe plus ; elles ne sont pas comptées.",
   "@capacityKpiUnattributed": {
     "description": "#1918 capacity KPI"
@@ -1337,6 +1354,37 @@
   "capacityKpiRetry": "Réessayer",
   "@capacityKpiRetry": {
     "description": "#1918 capacity KPI"
+  },
+  "capacityKpiHistorySince": "Compté à partir du {date}, début de l'historique de cet espace ; le temps antérieur n'est pas connu et n'est pas compté.",
+  "@capacityKpiHistorySince": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiNotRecorded": "Cette période précède le début de l'historique de l'espace, le {date} : rien n'est enregistré à compter.",
+  "@capacityKpiNotRecorded": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiHistory": "Historique enregistré depuis le {date}",
+  "@capacityKpiHistory": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRoomsToday": "Les salles sans place sont lues telles qu'elles sont aujourd'hui.",
+  "@capacityKpiRoomsToday": {
+    "description": "#1920 capacity KPI history"
   },
   "featureCarnetsTitle": "Carnets",
   "featureCarnetsDesc": "Vendre des carnets de demi-journées, dépensés sur plusieurs mois quand un membre réserve au-delà de son abonnement, facturés une seule fois à la vente.",
@@ -2065,6 +2113,8 @@
     }
   },
   "memberPageNowHeading": "En ce moment",
+  "editorMediaWriteFailed": "L'enregistrement de l'image n'a pas pu être confirmé. Réessayer ne l'ajoute jamais deux fois.",
+  "editorMediaSaving": "Enregistrement de l'image…",
   "editorBackgroundImage": "Image de fond",
   "editorBackgroundSet": "Définir l'image de fond",
   "editorBackgroundReplace": "Remplacer l'image de fond",
@@ -4395,6 +4445,71 @@
   "reportDesignErrorUnknownKind": "Cette maquette concerne un rapport que cet espace n'a pas.",
   "reportDesignErrorWrongKind": "Cette maquette appartient à un autre rapport. Ouvrez ce rapport et importez-la là.",
   "reportDesignErrorInvalidDesign": "Ce fichier ne contient aucune maquette lisible.",
+  "invoiceHoldAction": "Suspendre les relances",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Lever la suspension des relances",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "Pourquoi suspendre les relances ?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "Aucune relance n'est envoyée pour cette facture, à la main ou automatiquement, tant que la suspension n'est pas levée.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "Le membre la conteste",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Mauvaise personne ou erreur d'identité",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Procédure d'insolvabilité",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Une autre raison",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Note (facultatif)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Suspendre",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "Les relances sont suspendues pour cette facture.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "Les relances peuvent reprendre pour cette facture.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Relances suspendues : {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "Aucune échéance convenue n'a été enregistrée pour cette facture : aucune relance automatique tant que vous ne l'avez pas examinée.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "La suspension des relances n'a pas pu être modifiée. Veuillez réessayer.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Gérer les factures",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"

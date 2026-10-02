@@ -1780,6 +1780,52 @@ final class MyAccountProvider
 
 String _$myAccountHash() => r'fbdff310a8809dd898b6a0193873f380d7b8c361';
 
+/// #1913 — invoiceId → reason of its active dunning hold.
+
+@ProviderFor(dunningHolds)
+final dunningHoldsProvider = DunningHoldsProvider._();
+
+/// #1913 — invoiceId → reason of its active dunning hold.
+
+final class DunningHoldsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, String>>,
+          Map<String, String>,
+          FutureOr<Map<String, String>>
+        >
+    with
+        $FutureModifier<Map<String, String>>,
+        $FutureProvider<Map<String, String>> {
+  /// #1913 — invoiceId → reason of its active dunning hold.
+  DunningHoldsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'dunningHoldsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$dunningHoldsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, String>> create(Ref ref) {
+    return dunningHolds(ref);
+  }
+}
+
+String _$dunningHoldsHash() => r'48dbd28ac456c7bc2f5552adcdc7d891be6a31e7';
+
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.
 
 @ProviderFor(invoiceMatches)
@@ -1825,92 +1871,6 @@ final class InvoiceMatchesProvider
 }
 
 String _$invoiceMatchesHash() => r'3d539ac3cb33fb5c67caa92edc50d1d4d14cbffb';
-
-/// #1922 — the reminders of one invoice and their delivery evidence.
-
-@ProviderFor(reminderEvidence)
-final reminderEvidenceProvider = ReminderEvidenceFamily._();
-
-/// #1922 — the reminders of one invoice and their delivery evidence.
-
-final class ReminderEvidenceProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<ReminderEvidence>>,
-          List<ReminderEvidence>,
-          FutureOr<List<ReminderEvidence>>
-        >
-    with
-        $FutureModifier<List<ReminderEvidence>>,
-        $FutureProvider<List<ReminderEvidence>> {
-  /// #1922 — the reminders of one invoice and their delivery evidence.
-  ReminderEvidenceProvider._({
-    required ReminderEvidenceFamily super.from,
-    required String super.argument,
-  }) : super(
-         retry: null,
-         name: r'reminderEvidenceProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
-
-  @override
-  String debugGetCreateSourceHash() => _$reminderEvidenceHash();
-
-  @override
-  String toString() {
-    return r'reminderEvidenceProvider'
-        ''
-        '($argument)';
-  }
-
-  @$internal
-  @override
-  $FutureProviderElement<List<ReminderEvidence>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<List<ReminderEvidence>> create(Ref ref) {
-    final argument = this.argument as String;
-    return reminderEvidence(ref, argument);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is ReminderEvidenceProvider && other.argument == argument;
-  }
-
-  @override
-  int get hashCode {
-    return argument.hashCode;
-  }
-}
-
-String _$reminderEvidenceHash() => r'3916dbee7db3dcb2504b0dcfc6648fce9954500b';
-
-/// #1922 — the reminders of one invoice and their delivery evidence.
-
-final class ReminderEvidenceFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<List<ReminderEvidence>>, String> {
-  ReminderEvidenceFamily._()
-    : super(
-        retry: null,
-        name: r'reminderEvidenceProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
-
-  /// #1922 — the reminders of one invoice and their delivery evidence.
-
-  ReminderEvidenceProvider call(String invoiceId) =>
-      ReminderEvidenceProvider._(argument: invoiceId, from: this);
-
-  @override
-  String toString() => r'reminderEvidenceProvider';
-}
 
 /// invoiceId → reminder count + last instant (0066), for the archive
 /// badges.

@@ -196,6 +196,80 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get featureAccountingBookTitle => 'Livre comptable';
+
+  @override
+  String get featureAccountingBookDesc =>
+      'Qui tient les livres officiels de chaque émetteur : Deskilo en pré-comptabilité, un livre local ou un logiciel comptable externe qui fait foi. Chaque émetteur indique sa devise, son exercice et sa base comptable. Désactivé : les soldes des membres et les factures fonctionnent comme avant.';
+
+  @override
+  String get bookSheetTitle => 'Livre comptable';
+
+  @override
+  String get bookTileEmpty =>
+      'Aucun livre : DesKilo tient les soldes des membres et les factures (pré-comptabilité).';
+
+  @override
+  String get bookIssuer => 'Émetteur';
+
+  @override
+  String get bookAuthorityPre => 'Pré-comptabilité';
+
+  @override
+  String get bookAuthorityLocal => 'DesKilo tient le livre';
+
+  @override
+  String get bookAuthorityExternal => 'Logiciel externe';
+
+  @override
+  String get bookExternalSystem => 'Logiciel qui fait foi';
+
+  @override
+  String get bookCurrency => 'Devise de tenue';
+
+  @override
+  String get bookFiscalStart => 'L’exercice commence le';
+
+  @override
+  String get bookBasisAccrual => 'Engagements';
+
+  @override
+  String get bookBasisCash => 'Encaissements';
+
+  @override
+  String bookEffectiveFrom(String date) {
+    return 'En vigueur à partir du $date';
+  }
+
+  @override
+  String bookFiscalPreview(String label, String start, String end) {
+    return 'Exercice $label : $start – $end';
+  }
+
+  @override
+  String get bookProblemExternal =>
+      'Indiquez le logiciel externe qui tient les livres officiels.';
+
+  @override
+  String get bookProblemCurrency =>
+      'Cette devise n’a pas de nombre de décimales vérifié.';
+
+  @override
+  String get bookProblemFiscal =>
+      'Un exercice commence un jour que chaque année possède (jamais le 29 février).';
+
+  @override
+  String get bookSaved => 'Livre enregistré';
+
+  @override
+  String get bookStale =>
+      'Quelqu’un a enregistré ce livre depuis que vous l’avez ouvert. Fermez et rouvrez pour voir sa version.';
+
+  @override
+  String get bookSaveFailed =>
+      'Le livre n’a pas été enregistré. Vérifiez la connexion et réessayez.';
+
+  @override
   String get fecAccountExpenses => 'Achats et charges';
 
   @override
@@ -1978,10 +2052,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get capacityKpiPartial =>
-      'Partiel : le plan, les heures d\'ouverture et les blocages de places sont ceux d\'aujourd\'hui ; leur historique n\'est pas encore enregistré.';
-
-  @override
   String get capacityKpiUnattributed =>
       'Certaines réservations de la période visent un emplacement qui n\'existe plus ; elles ne sont pas comptées.';
 
@@ -2003,6 +2073,25 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get capacityKpiRetry => 'Réessayer';
+
+  @override
+  String capacityKpiHistorySince(String date) {
+    return 'Compté à partir du $date, début de l\'historique de cet espace ; le temps antérieur n\'est pas connu et n\'est pas compté.';
+  }
+
+  @override
+  String capacityKpiNotRecorded(String date) {
+    return 'Cette période précède le début de l\'historique de l\'espace, le $date : rien n\'est enregistré à compter.';
+  }
+
+  @override
+  String capacityKpiHistory(String date) {
+    return 'Historique enregistré depuis le $date';
+  }
+
+  @override
+  String get capacityKpiRoomsToday =>
+      'Les salles sans place sont lues telles qu\'elles sont aujourd\'hui.';
 
   @override
   String get featureCarnetsTitle => 'Carnets';
@@ -2837,6 +2926,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get memberPageNowHeading => 'En ce moment';
+
+  @override
+  String get editorMediaWriteFailed =>
+      'L\'enregistrement de l\'image n\'a pas pu être confirmé. Réessayer ne l\'ajoute jamais deux fois.';
+
+  @override
+  String get editorMediaSaving => 'Enregistrement de l\'image…';
 
   @override
   String get editorBackgroundImage => 'Image de fond';
@@ -7023,6 +7119,59 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get reportDesignErrorInvalidDesign =>
       'Ce fichier ne contient aucune maquette lisible.';
+
+  @override
+  String get invoiceHoldAction => 'Suspendre les relances';
+
+  @override
+  String get invoiceHoldReleaseAction => 'Lever la suspension des relances';
+
+  @override
+  String get invoiceHoldTitle => 'Pourquoi suspendre les relances ?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'Aucune relance n\'est envoyée pour cette facture, à la main ou automatiquement, tant que la suspension n\'est pas levée.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'Le membre la conteste';
+
+  @override
+  String get invoiceHoldReasonIdentity =>
+      'Mauvaise personne ou erreur d\'identité';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Procédure d\'insolvabilité';
+
+  @override
+  String get invoiceHoldReasonOther => 'Une autre raison';
+
+  @override
+  String get invoiceHoldNote => 'Note (facultatif)';
+
+  @override
+  String get invoiceHoldConfirm => 'Suspendre';
+
+  @override
+  String get invoiceHoldPlaced =>
+      'Les relances sont suspendues pour cette facture.';
+
+  @override
+  String get invoiceHoldReleased =>
+      'Les relances peuvent reprendre pour cette facture.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Relances suspendues : $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'Aucune échéance convenue n\'a été enregistrée pour cette facture : aucune relance automatique tant que vous ne l\'avez pas examinée.';
+
+  @override
+  String get invoiceHoldFailed =>
+      'La suspension des relances n\'a pas pu être modifiée. Veuillez réessayer.';
 
   @override
   String get invoicesManage => 'Gérer les factures';

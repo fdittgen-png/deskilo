@@ -88,6 +88,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.holidayImport,
   // #1918 — a management figure is asked for, never assumed.
   WorkspaceFeature.capacityKpi,
+  // #1869 — who keeps the official books is a finance decision.
+  WorkspaceFeature.accountingBook,
 };
 
 /// Every other feature ships ON.
@@ -162,6 +164,7 @@ void main() {
       'publicListings': true,
       'holidayImport': true,
       'capacityKpi': true,
+      'accountingBook': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

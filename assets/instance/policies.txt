@@ -20,7 +20,9 @@ public.account_conversations.mcp_delegated_deny
 public.account_field_audience.mcp_delegated_deny
 public.account_field_audience_spaces.mcp_delegated_deny
 public.account_messages.mcp_delegated_deny
+public.analytics_history.mcp_delegated_deny
 public.badge_auth_attempts.mcp_delegated_deny
+public.book_profiles.mcp_delegated_deny
 public.closure_days.closure_days_read
 public.closure_days.closure_days_write
 public.closure_days.mcp_delegated_deny
@@ -123,6 +125,7 @@ public.number_sequences.number_sequences_select
 public.offices.mcp_delegated_deny
 public.offices.offices_select
 public.offices.offices_write
+public.opening_hours_history.mcp_delegated_deny
 public.packages.mcp_delegated_deny
 public.packages.packages_select
 public.packages.packages_write
@@ -164,6 +167,7 @@ public.reminder_attempts.reminder_attempts_select
 public.reminder_intents.mcp_delegated_deny
 public.reminder_intents.reminder_intents_select
 public.reservation_requests.mcp_delegated_deny
+public.reservation_target_history.mcp_delegated_deny
 public.reservations.mcp_delegated_deny
 public.reservations.reservations_select
 public.retired_invite_codes.mcp_delegated_deny
@@ -172,6 +176,7 @@ public.rights_requests.rights_requests_select
 public.seat_accessories.mcp_delegated_deny
 public.seat_accessories.seat_accessories_select
 public.seat_accessories.seat_accessories_write
+public.seat_history.mcp_delegated_deny
 public.seats.mcp_delegated_deny
 public.seats.seats_select
 public.seats.seats_write

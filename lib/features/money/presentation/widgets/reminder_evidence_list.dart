@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/reminder_evidence.dart';
-import '../../providers/money_providers.dart';
+import '../../providers/reminder_evidence_providers.dart';
 
 String reminderStatusLabel(AppLocalizations? l10n, String status) =>
     switch (status) {

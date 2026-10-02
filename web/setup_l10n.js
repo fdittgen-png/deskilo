@@ -1063,6 +1063,10 @@ window.SETUP_L10N={
    "capacityKpi": [
     "Seat utilisation",
     "Shows owners and reservation managers how much of the offered seat time was reserved in a month, with how it is computed and what the figure cannot know."
+   ],
+   "accountingBook": [
+    "Accounting book",
+    "Who keeps the official books of each issuer: Deskilo as pre-accounting, a local book, or an external accounting system that stays authoritative. Each issuer states its currency, fiscal year and accounting basis. Off: member balances and invoices work as before."
    ]
   },
   "process": {
@@ -2335,6 +2339,10 @@ window.SETUP_L10N={
    "capacityKpi": [
     "Occupation des places",
     "Montre aux propriétaires et aux gestionnaires des réservations quelle part du temps de place offert a été réservée dans le mois, avec la façon dont c'est calculé et ce que le chiffre ne peut pas savoir."
+   ],
+   "accountingBook": [
+    "Livre comptable",
+    "Qui tient les livres officiels de chaque émetteur : Deskilo en pré-comptabilité, un livre local ou un logiciel comptable externe qui fait foi. Chaque émetteur indique sa devise, son exercice et sa base comptable. Désactivé : les soldes des membres et les factures fonctionnent comme avant."
    ]
   },
   "process": {
@@ -3607,6 +3615,10 @@ window.SETUP_L10N={
    "capacityKpi": [
     "Platzauslastung",
     "Zeigt Eigentümern und Reservierungsverwaltern, wie viel der angebotenen Platzzeit eines Monats reserviert wurde, wie das berechnet wird und was die Zahl nicht wissen kann."
+   ],
+   "accountingBook": [
+    "Buchführung",
+    "Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher."
    ]
   },
   "process": {
@@ -4879,6 +4891,10 @@ window.SETUP_L10N={
    "capacityKpi": [
     "Ocupación de puestos",
     "Muestra a los propietarios y a quienes gestionan las reservas qué parte del tiempo de puesto ofrecido se reservó en un mes, cómo se calcula y lo que la cifra no puede saber."
+   ],
+   "accountingBook": [
+    "Libro contable",
+    "Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes."
    ]
   },
   "process": {
@@ -6151,6 +6167,10 @@ window.SETUP_L10N={
    "capacityKpi": [
     "Occupazione dei posti",
     "Mostra ai proprietari e a chi gestisce le prenotazioni quanta parte del tempo di posto offerto è stata prenotata in un mese, come viene calcolata e cosa la cifra non può sapere."
+   ],
+   "accountingBook": [
+    "Libro contabile",
+    "Chi tiene i libri ufficiali di ogni emittente: Deskilo come precontabilità, un libro locale o un sistema contabile esterno che fa fede. Ogni emittente indica valuta, esercizio e base contabile. Disattivato: i saldi dei membri e le fatture funzionano come prima."
    ]
   },
   "process": {

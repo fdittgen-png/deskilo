@@ -18,6 +18,7 @@ import '../../domain/invoice_legal.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
+import '../widgets/book_profile_sheet.dart';
 import '../widgets/address_window_field.dart';
 
 /// The workspace's LEGAL IDENTITY (0069) — owner-only, and the reason the
@@ -379,6 +380,11 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push('/vat'),
           ),
+          // #1869 — who keeps the official books, per issuer.
+          if (ref
+              .watch(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.accountingBook))
+            const BookProfileSection(),
           if (_regime == VatRegime.vatRegistered)
             TextField(
               key: const ValueKey('legal-identity-vat-account'),

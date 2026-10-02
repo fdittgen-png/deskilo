@@ -41,7 +41,6 @@ import '../domain/vat_rate.dart';
 import '../../../core/time/clock.dart';
 import '../domain/number_sequence.dart';
 import '../domain/workspace_status.dart';
-import '../domain/reminder_evidence.dart';
 
 part 'money_providers.g.dart';
 
@@ -373,6 +372,14 @@ Future<MemberAccount> myAccount(Ref ref) async {
   return ref.read(moneyRepositoryProvider).fetchMemberAccount(member.id);
 }
 
+/// #1913 — invoiceId → reason of its active dunning hold.
+@Riverpod(keepAlive: true)
+Future<Map<String, String>> dunningHolds(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const {};
+  return ref.read(moneyRepositoryProvider).fetchDunningHolds(workspace.id);
+}
+
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.
 @Riverpod(keepAlive: true)
 Future<Map<String, InvoiceMatch>> invoiceMatches(Ref ref) async {
@@ -382,11 +389,6 @@ Future<Map<String, InvoiceMatch>> invoiceMatches(Ref ref) async {
       .read(moneyRepositoryProvider)
       .fetchInvoiceMatches(workspace.id);
 }
-
-/// #1922 — the reminders of one invoice and their delivery evidence.
-@riverpod
-Future<List<ReminderEvidence>> reminderEvidence(Ref ref, String invoiceId) =>
-    ref.read(moneyRepositoryProvider).fetchReminderEvidence(invoiceId);
 
 /// invoiceId → reminder count + last instant (0066), for the archive
 /// badges.

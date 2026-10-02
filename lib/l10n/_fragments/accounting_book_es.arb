@@ -1,0 +1,23 @@
+{
+  "featureAccountingBookTitle": "Libro contable",
+  "featureAccountingBookDesc": "Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes.",
+  "bookSheetTitle": "Libro contable",
+  "bookTileEmpty": "Sin libro: DesKilo lleva los saldos de los miembros y las facturas (precontabilidad).",
+  "bookIssuer": "Emisor",
+  "bookAuthorityPre": "Precontabilidad",
+  "bookAuthorityLocal": "DesKilo lleva el libro",
+  "bookAuthorityExternal": "Sistema externo",
+  "bookExternalSystem": "Sistema que hace fe",
+  "bookCurrency": "Moneda funcional",
+  "bookFiscalStart": "El ejercicio empieza el",
+  "bookBasisAccrual": "Criterio de devengo",
+  "bookBasisCash": "Criterio de caja",
+  "bookEffectiveFrom": "Vigente desde el {date}",
+  "bookFiscalPreview": "Ejercicio {label}: {start} – {end}",
+  "bookProblemExternal": "Indique el sistema externo que lleva los libros oficiales.",
+  "bookProblemCurrency": "Esta moneda no tiene un número de decimales verificado.",
+  "bookProblemFiscal": "Un ejercicio empieza un día que tiene todo año (nunca el 29 de febrero).",
+  "bookSaved": "Libro guardado",
+  "bookStale": "Alguien guardó este libro desde que lo abrió. Cierre y vuelva a abrir para ver su versión.",
+  "bookSaveFailed": "El libro no se guardó. Compruebe la conexión e inténtelo de nuevo."
+}
