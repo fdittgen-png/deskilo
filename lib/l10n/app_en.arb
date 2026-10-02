@@ -16179,6 +16179,208 @@
   "@biAreaSaved": {
     "description": "#1923 Web-BI area"
   },
+  "biQuarter": "Q{quarter} {year}",
+  "@biQuarter": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "quarter": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "biDimensionLevel": "Level",
+  "@biDimensionLevel": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biNotOffered": "not offered by the analyses shown",
+  "@biNotOffered": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrain": "Period length",
+  "@biGrain": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrainMonth": "Month",
+  "@biGrainMonth": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrainQuarter": "Quarter",
+  "@biGrainQuarter": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrainYear": "Year",
+  "@biGrainYear": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biCompare": "Compare with",
+  "@biCompare": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biCompareNone": "Nothing",
+  "@biCompareNone": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biComparePrevious": "The period before",
+  "@biComparePrevious": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biComparePreviousYear": "The same period a year before",
+  "@biComparePreviousYear": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biCompareCustom": "A period I choose",
+  "@biCompareCustom": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGroupBy": "Group by",
+  "@biGroupBy": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGroupNone": "No grouping",
+  "@biGroupNone": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSort": "Order",
+  "@biSort": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortUngrouped": "Order (groups only)",
+  "@biSortUngrouped": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortNatural": "As listed",
+  "@biSortNatural": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortDescending": "Highest first",
+  "@biSortDescending": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortAscending": "Lowest first",
+  "@biSortAscending": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biViewTable": "Table",
+  "@biViewTable": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biViewChart": "Chart",
+  "@biViewChart": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biChangePoints": "{value} pp",
+  "@biChangePoints": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "biForbidden": "You may not read this analysis in this workspace.",
+  "@biForbidden": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biUnavailable": "This analysis could not be computed.",
+  "@biUnavailable": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedGrain": "This analysis is not offered for that period length.",
+  "@biRefusedGrain": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedComparison": "This analysis cannot make that comparison.",
+  "@biRefusedComparison": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedGrouping": "This analysis cannot be grouped that way.",
+  "@biRefusedGrouping": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedBudget": "There are more than {count} groups; choose no grouping.",
+  "@biRefusedBudget": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biComparedNotRecorded": "{period} was not recorded (history begins {since}); there is no comparison.",
+  "@biComparedNotRecorded": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "since": {
+        "type": "String"
+      }
+    }
+  },
+  "biComparedPartial": "{period} is only partly recorded.",
+  "@biComparedPartial": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "biExposureDiffers": "The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.",
+  "@biExposureDiffers": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biComparedLine": "{period}: {value} ({change})",
+  "@biComparedLine": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biOpenSource": "Open the source",
+  "@biOpenSource": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSourceRestricted": "The source records are shown only to those who manage them.",
+  "@biSourceRestricted": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biTotal": "Total",
+  "@biTotal": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRemainder": "Not in a current group",
+  "@biRemainder": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biColumnValue": "Value",
+  "@biColumnValue": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biColumnChange": "Change",
+  "@biColumnChange": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biInvalidAddress": "This address asks for an analysis that does not exist; nothing was read.",
+  "@biInvalidAddress": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biReset": "Show the standard view",
+  "@biReset": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
   "assistantPrefix": "Assistant",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"

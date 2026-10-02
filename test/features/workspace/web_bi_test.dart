@@ -128,7 +128,10 @@ void main() {
       findsNothing,
       reason: 'an area without a module is not shown',
     );
-    expect(find.byKey(const ValueKey('capacity-kpi-card')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('bi-module-capacity.seat_utilisation')),
+      findsOneWidget,
+    );
     expect(kpis.calls, greaterThan(0));
   });
 
