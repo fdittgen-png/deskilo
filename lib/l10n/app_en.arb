@@ -2563,6 +2563,10 @@
   "@capacityKpiRoomsToday": {
     "description": "#1920 capacity KPI history"
   },
+  "permViewAnalytics": "Read the workspace figures",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
+  },
   "featureCarnetsTitle": "Carnets",
   "@featureCarnetsTitle": {
     "description": "#1279 carnets: featureCarnetsTitle"
@@ -2886,7 +2890,7 @@
   "@coOwnerAction": {
     "description": "Member-sheet action opening the co-owner dialog (0058)"
   },
-  "coOwnerNone": "No co-owner role",
+  "coOwnerNone": "No co-ownership",
   "@coOwnerNone": {
     "description": "Co-owner dialog option: clear the role"
   },
@@ -2894,7 +2898,7 @@
   "@coOwnerActive": {
     "description": "Co-owner dialog option: the active flavor"
   },
-  "coOwnerPassive": "Passive co-owner — becomes owner when activated or when the owner leaves",
+  "coOwnerPassive": "Successor — becomes owner when activated or when the owner leaves",
   "@coOwnerPassive": {
     "description": "Co-owner dialog option: the passive flavor"
   },
@@ -2906,7 +2910,7 @@
   "@memberCoOwnerChip": {
     "description": "Members-list chip for an active co-owner"
   },
-  "memberCoOwnerPassiveChip": "Co-owner (passive)",
+  "memberCoOwnerPassiveChip": "Successor",
   "@memberCoOwnerPassiveChip": {
     "description": "Members-list chip for a passive co-owner"
   },
@@ -5214,6 +5218,110 @@
   "holidayImportFailed": "The holidays could not be checked or imported. Nothing was changed.",
   "@holidayImportFailed": {
     "description": "#2051 open-data holiday import"
+  },
+  "instanceTitle": "Installation: assistants",
+  "@instanceTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceIntro": "Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.",
+  "@instanceIntro": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNotOperator": "Only the instance operator manages the installation's assistants.",
+  "@instanceNotOperator": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceSecondFactorNeeded": "Changes here need your second factor on this session.",
+  "@instanceSecondFactorNeeded": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceConfirmSecondFactor": "Confirm with my authenticator",
+  "@instanceConfirmSecondFactor": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeTitle": "Assistants on this installation",
+  "@instanceRuntimeTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeOn": "On",
+  "@instanceRuntimeOn": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeOff": "Off",
+  "@instanceRuntimeOff": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOn": "Turn on for every workspace",
+  "@instanceTurnOn": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOff": "Turn off",
+  "@instanceTurnOff": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOnConfirm": "Assistants become usable in every workspace that offers them. You can turn them off again at any time.",
+  "@instanceTurnOnConfirm": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlockers": "Still missing:",
+  "@instanceBlockers": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlockerNoAdmin": "a database administrator",
+  "@instanceBlockerNoAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceAdminsTitle": "Database administrators",
+  "@instanceAdminsTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceAdminsHelp": "They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.",
+  "@instanceAdminsHelp": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceMakeAdmin": "Make administrator",
+  "@instanceMakeAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRemoveAdmin": "Remove",
+  "@instanceRemoveAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNoCandidates": "Nobody else has confirmed their identity yet.",
+  "@instanceNoCandidates": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceYou": "you",
+  "@instanceYou": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientsTitle": "Assistant clients",
+  "@instanceClientsTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientsHelp": "An assistant registers itself the first time someone connects it; it works only once approved here.",
+  "@instanceClientsHelp": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientWaiting": "Waiting for approval",
+  "@instanceClientWaiting": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientApproved": "Approved",
+  "@instanceClientApproved": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientBlocked": "Blocked",
+  "@instanceClientBlocked": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceApprove": "Approve",
+  "@instanceApprove": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlock": "Block",
+  "@instanceBlock": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
   },
   "instanceOwnerClaimIntro": "Who owns this instance? Enter the e-mail you will sign up with on it. After you confirm that address, claim the ownership from Settings → Instance owner.",
   "@instanceOwnerClaimIntro": {
@@ -9293,6 +9401,38 @@
   "@mcpIdentityConflict": {
     "description": "MCP status card (assistant setup): identity confirmation, taken in place"
   },
+  "mcpStatusGoogle": "Google sign-in",
+  "@mcpStatusGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStatusLinkGoogle": "Link Google",
+  "@mcpStatusLinkGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStatusSignInGoogle": "Sign in with Google",
+  "@mcpStatusSignInGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleReady": "Signed in with Google",
+  "@mcpStateGoogleReady": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleOtherSession": "Signed in another way",
+  "@mcpStateGoogleOtherSession": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleMissing": "Google not linked",
+  "@mcpStateGoogleMissing": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpNextLinkGoogle": "Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.",
+  "@mcpNextLinkGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpNextSignInGoogle": "Assistants use your Google sign-in. Sign in with Google to continue.",
+  "@mcpNextSignInGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
   "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
   "@mcpUsageWorkspaceTitle": {
     "description": "#1630 mcp_usage"
@@ -9665,7 +9805,7 @@
   "@memberRoleOwner": {
     "description": "Role tag on a member row"
   },
-  "memberRoleAdmin": "Admin",
+  "memberRoleAdmin": "Administrator",
   "@memberRoleAdmin": {
     "description": "Role tag on a member row"
   },
@@ -11927,6 +12067,97 @@
   "portalResetAll": "Reset all public data to workspace information",
   "portalResetAllBody": "The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.",
   "portalResetAllConfirm": "Reset",
+  "privacyNoticeTitle": "Who processes your data",
+  "@privacyNoticeTitle": {
+    "description": "#1914 privacy notice: privacyNoticeTitle"
+  },
+  "privacyNoticeController": "Controller: {name} — {contact}",
+  "@privacyNoticeController": {
+    "description": "#1914 privacy notice: privacyNoticeController",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeRights": "Your rights: {contact}",
+  "@privacyNoticeRights": {
+    "description": "#1914 privacy notice: privacyNoticeRights",
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeRegion": "Region: {region}",
+  "@privacyNoticeRegion": {
+    "description": "#1914 privacy notice: privacyNoticeRegion",
+    "placeholders": {
+      "region": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeTransfer": "Transfer safeguard: {mechanism}",
+  "@privacyNoticeTransfer": {
+    "description": "#1914 privacy notice: privacyNoticeTransfer",
+    "placeholders": {
+      "mechanism": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeNotRecorded": "not recorded by the operator",
+  "@privacyNoticeNotRecorded": {
+    "description": "#1914 privacy notice: privacyNoticeNotRecorded"
+  },
+  "privacyNoticeEssential": "Needed to run the account and the space",
+  "@privacyNoticeEssential": {
+    "description": "#1914 privacy notice: privacyNoticeEssential"
+  },
+  "privacyNoticeOptional": "Optional — you can use the app without it",
+  "@privacyNoticeOptional": {
+    "description": "#1914 privacy notice: privacyNoticeOptional"
+  },
+  "privacyNoticeRightsRoute": "Your rights and the contact",
+  "@privacyNoticeRightsRoute": {
+    "description": "#1914 privacy notice: privacyNoticeRightsRoute"
+  },
+  "privacySpaceNotice": "This space's privacy notice",
+  "@privacySpaceNotice": {
+    "description": "#1914 privacy notice: privacySpaceNotice"
+  },
+  "privacySpaceNoticeRead": "You acknowledged this version.",
+  "@privacySpaceNoticeRead": {
+    "description": "#1914 privacy notice: privacySpaceNoticeRead"
+  },
+  "privacySpaceNoticeUnread": "Not acknowledged yet — read it here.",
+  "@privacySpaceNoticeUnread": {
+    "description": "#1914 privacy notice: privacySpaceNoticeUnread"
+  },
+  "privacySpaceNoticeAcknowledge": "I have read this notice",
+  "@privacySpaceNoticeAcknowledge": {
+    "description": "#1914 privacy notice: privacySpaceNoticeAcknowledge"
+  },
+  "privacySpaceNoticeFailed": "The acknowledgment could not be recorded. Please try again.",
+  "@privacySpaceNoticeFailed": {
+    "description": "#1914 privacy notice: privacySpaceNoticeFailed"
+  },
+  "privacyPushOnDevice": "Push notifications on this device",
+  "@privacyPushOnDevice": {
+    "description": "#1914 privacy notice: privacyPushOnDevice"
+  },
+  "privacyPushOnDeviceHint": "Optional. On, this device's address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.",
+  "@privacyPushOnDeviceHint": {
+    "description": "#1914 privacy notice: privacyPushOnDeviceHint"
+  },
+  "privacyPushOnDeviceFailed": "The choice could not be saved. Please try again.",
+  "@privacyPushOnDeviceFailed": {
+    "description": "#1914 privacy notice: privacyPushOnDeviceFailed"
+  },
   "featuresViewProcesses": "Processes",
   "@featuresViewProcesses": {
     "description": "#1327 the process-first overview of the Features screen"
@@ -12393,7 +12624,7 @@
   "@privacyTitle": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.",
+  "privacyIntro": "Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation's privacy notice. These are your rights under the GDPR — each one is a button.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },
@@ -12941,7 +13172,7 @@
   "@eventTypeRoleChange": {
     "description": "Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card"
   },
-  "eventRolePromote": "{actor} promotes a member to admin",
+  "eventRolePromote": "{actor} asks to give the Administrator role",
   "@eventRolePromote": {
     "description": "Feed line of a role-change event that grants admin",
     "placeholders": {
@@ -12950,7 +13181,7 @@
       }
     }
   },
-  "eventRoleDemote": "{actor} demotes an admin to member",
+  "eventRoleDemote": "{actor} asks to take back the Administrator role",
   "@eventRoleDemote": {
     "description": "Feed line of a role-change event that removes admin",
     "placeholders": {
@@ -12959,11 +13190,11 @@
       }
     }
   },
-  "memberMakeAdmin": "Make admin",
+  "memberMakeAdmin": "Give the Administrator role",
   "@memberMakeAdmin": {
     "description": "Owner action promoting a member to admin (0035)"
   },
-  "memberMakeMember": "Make regular member",
+  "memberMakeMember": "Take back the Administrator role",
   "@memberMakeMember": {
     "description": "Owner action demoting an admin to a regular member (0035)"
   },
@@ -13979,11 +14210,331 @@
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
+  "rightsRequestsTitle": "My rights requests",
+  "@rightsRequestsTitle": {
+    "description": "#1915 rights requests: rightsRequestsTitle"
+  },
+  "rightsRequestsHint": "Ask the space for a copy, a correction, a restriction or erasure — answered within one calendar month.",
+  "@rightsRequestsHint": {
+    "description": "#1915 rights requests: rightsRequestsHint"
+  },
+  "rightsRequestsEmpty": "No request yet.",
+  "@rightsRequestsEmpty": {
+    "description": "#1915 rights requests: rightsRequestsEmpty"
+  },
+  "rightsRequestNew": "Make a request",
+  "@rightsRequestNew": {
+    "description": "#1915 rights requests: rightsRequestNew"
+  },
+  "rightsRequestAsk": "What do you ask the space?",
+  "@rightsRequestAsk": {
+    "description": "#1915 rights requests: rightsRequestAsk"
+  },
+  "rightsRequestDetails": "Details (optional)",
+  "@rightsRequestDetails": {
+    "description": "#1915 rights requests: rightsRequestDetails"
+  },
+  "rightsRequestSend": "Send the request",
+  "@rightsRequestSend": {
+    "description": "#1915 rights requests: rightsRequestSend"
+  },
+  "rightsRequestSent": "Request sent — the space answers by {date}.",
+  "@rightsRequestSent": {
+    "description": "#1915 rights requests: rightsRequestSent",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestFailed": "The request could not be sent. Please try again.",
+  "@rightsRequestFailed": {
+    "description": "#1915 rights requests: rightsRequestFailed"
+  },
+  "rightsKindAccess": "See a copy of my data",
+  "@rightsKindAccess": {
+    "description": "#1915 rights requests: rightsKindAccess"
+  },
+  "rightsKindPortability": "Take my data elsewhere (machine-readable)",
+  "@rightsKindPortability": {
+    "description": "#1915 rights requests: rightsKindPortability"
+  },
+  "rightsKindRectification": "Correct my data",
+  "@rightsKindRectification": {
+    "description": "#1915 rights requests: rightsKindRectification"
+  },
+  "rightsKindRestriction": "Restrict how my data is used",
+  "@rightsKindRestriction": {
+    "description": "#1915 rights requests: rightsKindRestriction"
+  },
+  "rightsKindObjection": "Object to a use of my data",
+  "@rightsKindObjection": {
+    "description": "#1915 rights requests: rightsKindObjection"
+  },
+  "rightsKindErasure": "Erase my data",
+  "@rightsKindErasure": {
+    "description": "#1915 rights requests: rightsKindErasure"
+  },
+  "rightsStatusReceived": "Received — answer due by {date}",
+  "@rightsStatusReceived": {
+    "description": "#1915 rights requests: rightsStatusReceived",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusExtended": "Extended to {date}: {reason}",
+  "@rightsStatusExtended": {
+    "description": "#1915 rights requests: rightsStatusExtended",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusCompleted": "Answered — the space recorded what it did",
+  "@rightsStatusCompleted": {
+    "description": "#1915 rights requests: rightsStatusCompleted"
+  },
+  "rightsStatusRefused": "Refused: {reason}",
+  "@rightsStatusRefused": {
+    "description": "#1915 rights requests: rightsStatusRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "erasurePreviewTitle": "What erasing does here",
+  "@erasurePreviewTitle": {
+    "description": "#1915 rights requests: erasurePreviewTitle"
+  },
+  "erasurePreviewRemoved": "Removed",
+  "@erasurePreviewRemoved": {
+    "description": "#1915 rights requests: erasurePreviewRemoved"
+  },
+  "erasurePreviewKept": "Kept, and why",
+  "@erasurePreviewKept": {
+    "description": "#1915 rights requests: erasurePreviewKept"
+  },
+  "erasurePreviewOutside": "Outside this installation",
+  "@erasurePreviewOutside": {
+    "description": "#1915 rights requests: erasurePreviewOutside"
+  },
+  "erasureStoreMessages": "Messages you sent",
+  "@erasureStoreMessages": {
+    "description": "#1915 rights requests: erasureStoreMessages"
+  },
+  "erasureStoreAnswers": "Your answers to the space's questions",
+  "@erasureStoreAnswers": {
+    "description": "#1915 rights requests: erasureStoreAnswers"
+  },
+  "erasureStoreProfile": "Your profile (when this is your last space)",
+  "@erasureStoreProfile": {
+    "description": "#1915 rights requests: erasureStoreProfile"
+  },
+  "erasureStoreOpenBookings": "Open bookings — cancelled",
+  "@erasureStoreOpenBookings": {
+    "description": "#1915 rights requests: erasureStoreOpenBookings"
+  },
+  "erasureStoreAccounts": "Invoices and ledger — accounting evidence, kept for the statutory period; issued documents are not rewritten",
+  "@erasureStoreAccounts": {
+    "description": "#1915 rights requests: erasureStoreAccounts"
+  },
+  "erasureStorePastBookings": "Past bookings — the space's occupancy record",
+  "@erasureStorePastBookings": {
+    "description": "#1915 rights requests: erasureStorePastBookings"
+  },
+  "erasureStoreMembership": "The membership row — links the records kept; pseudonymous, not anonymous",
+  "@erasureStoreMembership": {
+    "description": "#1915 rights requests: erasureStoreMembership"
+  },
+  "erasureStoreHeldAnswers": "Answers under a retention hold the space documented",
+  "@erasureStoreHeldAnswers": {
+    "description": "#1915 rights requests: erasureStoreHeldAnswers"
+  },
+  "erasureStoreOtherInstallations": "Another DesKilo installation is a separate controller — ask it directly",
+  "@erasureStoreOtherInstallations": {
+    "description": "#1915 rights requests: erasureStoreOtherInstallations"
+  },
+  "erasureStoreDeviceCaches": "Copies on your devices — cleared when you sign out of each",
+  "@erasureStoreDeviceCaches": {
+    "description": "#1915 rights requests: erasureStoreDeviceCaches"
+  },
+  "erasureStoreBackups": "The operator's backups — expire on their rotation",
+  "@erasureStoreBackups": {
+    "description": "#1915 rights requests: erasureStoreBackups"
+  },
+  "featureRoleAssignmentTitle": "Giving roles",
+  "@featureRoleAssignmentTitle": {
+    "description": "#2085 giving roles: featureRoleAssignmentTitle"
+  },
+  "featureRoleAssignmentDesc": "Shows a Roles section on each member's page to give or take back a role, the members holding each role, and lets every member see what they can do here.",
+  "@featureRoleAssignmentDesc": {
+    "description": "#2085 giving roles: featureRoleAssignmentDesc"
+  },
+  "memberRolesTitle": "Roles",
+  "@memberRolesTitle": {
+    "description": "#2085 giving roles: memberRolesTitle"
+  },
+  "memberRolesAdd": "Add a role",
+  "@memberRolesAdd": {
+    "description": "#2085 giving roles: memberRolesAdd"
+  },
+  "memberRolesNone": "No role: everything a member can do.",
+  "@memberRolesNone": {
+    "description": "#2085 giving roles: memberRolesNone"
+  },
+  "memberRolesWhatTheyCanDo": "What they can do here",
+  "@memberRolesWhatTheyCanDo": {
+    "description": "#2085 giving roles: memberRolesWhatTheyCanDo"
+  },
+  "roleAssignSheetTitle": "Give a role to {name}",
+  "@roleAssignSheetTitle": {
+    "description": "#2085 giving roles: roleAssignSheetTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roleAssignQuorumHint": "Takes effect once validated.",
+  "@roleAssignQuorumHint": {
+    "description": "#2085 giving roles: roleAssignQuorumHint"
+  },
+  "roleAssignImmediateHint": "Takes effect at once.",
+  "@roleAssignImmediateHint": {
+    "description": "#2085 giving roles: roleAssignImmediateHint"
+  },
+  "roleAssignNothing": "There is no role left to give.",
+  "@roleAssignNothing": {
+    "description": "#2085 giving roles: roleAssignNothing"
+  },
+  "roleRefusalNotPermitted": "Only someone who manages roles can give this one.",
+  "@roleRefusalNotPermitted": {
+    "description": "#2085 giving roles: roleRefusalNotPermitted"
+  },
+  "roleRefusalOwnerOnly": "Only the owner gives a role that manages roles.",
+  "@roleRefusalOwnerOnly": {
+    "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRefusalExceedsYours": "This role can do things you cannot, so only the owner gives it.",
+  "@roleRefusalExceedsYours": {
+    "description": "#2085 giving roles: roleRefusalExceedsYours"
+  },
+  "roleRefusalNotAssignable": "This member cannot hold this role.",
+  "@roleRefusalNotAssignable": {
+    "description": "#2085 giving roles: roleRefusalNotAssignable"
+  },
+  "roleGiven": "Role given.",
+  "@roleGiven": {
+    "description": "#2085 giving roles: roleGiven"
+  },
+  "roleTakenBack": "Role taken back.",
+  "@roleTakenBack": {
+    "description": "#2085 giving roles: roleTakenBack"
+  },
+  "roleHoldersAdd": "Add a member",
+  "@roleHoldersAdd": {
+    "description": "#2085 giving roles: roleHoldersAdd"
+  },
+  "rolesOwnRolesLink": "The roles this space defines",
+  "@rolesOwnRolesLink": {
+    "description": "#2085 giving roles: rolesOwnRolesLink"
+  },
+  "whatYouCanDoTitle": "What you can do here",
+  "@whatYouCanDoTitle": {
+    "description": "#2085 giving roles: whatYouCanDoTitle"
+  },
+  "whatTheyCanDoTitle": "What {name} can do here",
+  "@whatTheyCanDoTitle": {
+    "description": "#2085 giving roles: whatTheyCanDoTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoIntro": "Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.",
+  "@whatYouCanDoIntro": {
+    "description": "#2085 giving roles: whatYouCanDoIntro"
+  },
+  "whatYouCanDoFromOwner": "As the owner: everything",
+  "@whatYouCanDoFromOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromOwner"
+  },
+  "whatYouCanDoFromCoOwner": "As co-owner",
+  "@whatYouCanDoFromCoOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromCoOwner"
+  },
+  "whatYouCanDoFromAdministrator": "From the Administrator role",
+  "@whatYouCanDoFromAdministrator": {
+    "description": "#2085 giving roles: whatYouCanDoFromAdministrator"
+  },
+  "whatYouCanDoFromEveryMember": "As every member",
+  "@whatYouCanDoFromEveryMember": {
+    "description": "#2085 giving roles: whatYouCanDoFromEveryMember"
+  },
+  "whatYouCanDoFromRole": "From the role {role}",
+  "@whatYouCanDoFromRole": {
+    "description": "#2085 giving roles: whatYouCanDoFromRole",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoNothingMore": "Nothing more than a member.",
+  "@whatYouCanDoNothingMore": {
+    "description": "#2085 giving roles: whatYouCanDoNothingMore"
+  },
+  "roleGiveFailed": "The role was not given.",
+  "@roleGiveFailed": {
+    "description": "#2085 giving roles: roleGiveFailed"
+  },
+  "roleTakeBackFailed": "The role was not taken back.",
+  "@roleTakeBackFailed": {
+    "description": "#2085 giving roles: roleTakeBackFailed"
+  },
+  "eventRoleGiven": "{actor} gives the role {role} to {member}",
+  "@eventRoleGiven": {
+    "description": "#2085 giving roles: eventRoleGiven",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
+  "eventRoleTakenBack": "{actor} takes back the role {role} from {member}",
+  "@eventRoleTakenBack": {
+    "description": "#2085 giving roles: eventRoleTakenBack",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
   "rolesOfSpaceTitle": "Roles this space defines",
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
-  "rolesOfSpaceSubtitle": "Each one adds permissions on top of a member's role. None ever takes one away, and an owner always keeps every one.",
+  "rolesOfSpaceSubtitle": "Each one adds permissions to what its holders can already do. None takes anything away, and the owner always keeps every permission.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -14032,7 +14583,7 @@
   "@roleEditorSaveFailed": {
     "description": "#1528 the roles of a space: roleEditorSaveFailed"
   },
-  "roleEditorHolders": "Who holds it",
+  "roleEditorHolders": "Members in this role",
   "@roleEditorHolders": {
     "description": "#1528 the roles of a space: roleEditorHolders"
   },
@@ -15894,9 +16445,9 @@
   "workspaceCodeCopy": "Copy ID",
   "workspaceCodeCopied": "Copied",
   "inviteRoleMember": "Member invite",
-  "inviteRoleAdmin": "Admin invite",
+  "inviteRoleAdmin": "Administrator invite",
   "inviteAdminExplainer": "This code is single-use: it admits ONE person as an admin, then expires. Give it only to the person it is meant for.",
-  "inviteAdminNewCode": "New admin code",
+  "inviteAdminNewCode": "New administrator code",
   "inviteOwnerNote": "There is no owner invite — only an owner can grant ownership, in Members & plans.",
   "scanJoinTitle": "Scan workspace QR",
   "onboardingScanButton": "Scan QR code",
@@ -16278,11 +16829,11 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
-  "rolesTitle": "Role management",
+  "rolesTitle": "Roles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.",
+  "rolesIntroEditor": "Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
@@ -16298,11 +16849,11 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleAdmin": "Admin",
+  "roleAdmin": "Administrator",
   "@roleAdmin": {
     "description": "Role label (#513)"
   },
-  "roleMember": "Member",
+  "roleMember": "Every member",
   "@roleMember": {
     "description": "Role label (#513)"
   },

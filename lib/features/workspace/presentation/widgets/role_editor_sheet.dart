@@ -26,6 +26,7 @@ class RoleEditorSheet extends StatefulWidget {
     required this.workspaceLocale,
     required this.onSave,
     this.saving = false,
+    this.holders,
   });
 
   final WorkspaceRole? initial;
@@ -34,6 +35,11 @@ class RoleEditorSheet extends StatefulWidget {
   final String workspaceLocale;
   final Future<void> Function(WorkspaceRole role) onSave;
   final bool saving;
+
+  /// #2085 — the members holding the role, shown under its permissions
+  /// when the role already exists. Giving it takes effect at once and
+  /// does not wait for Save.
+  final Widget? holders;
 
   static const Key saveKey = Key('role-editor-save');
   static const Key keyFieldKey = Key('role-editor-key');
@@ -169,6 +175,10 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
                             }
                           }),
                 ),
+              if (widget.holders case final holders?) ...[
+                const Divider(height: AppSpacing.xl),
+                holders,
+              ],
               const SizedBox(height: AppSpacing.lg),
               FilledButton(
                 key: RoleEditorSheet.saveKey,

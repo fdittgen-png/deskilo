@@ -56,6 +56,8 @@ class AddressWindowField extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         DropdownButtonFormField<String>(
           key: const ValueKey('invoice-address-window'),
+          // #1869 C — long window names overflowed a phone.
+          isExpanded: true,
           initialValue: value == null ? '' : addressWindowWire(value!),
           items: [
             DropdownMenuItem(

@@ -2131,6 +2131,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Rooms without seats are read as they are today.';
 
   @override
+  String get permViewAnalytics => 'Read the workspace figures';
+
+  @override
   String get featureCarnetsTitle => 'Carnets';
 
   @override
@@ -2379,7 +2382,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get coOwnerAction => 'Co-ownership';
 
   @override
-  String get coOwnerNone => 'No co-owner role';
+  String get coOwnerNone => 'No co-ownership';
 
   @override
   String get coOwnerActive =>
@@ -2387,7 +2390,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coOwnerPassive =>
-      'Passive co-owner — becomes owner when activated or when the owner leaves';
+      'Successor — becomes owner when activated or when the owner leaves';
 
   @override
   String get coOwnerActivate => 'Promote to owner now';
@@ -2396,7 +2399,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberCoOwnerChip => 'Co-owner';
 
   @override
-  String get memberCoOwnerPassiveChip => 'Co-owner (passive)';
+  String get memberCoOwnerPassiveChip => 'Successor';
 
   @override
   String get courtesyLabel => 'Form of address';
@@ -4778,6 +4781,91 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get holidayImportFailed =>
       'The holidays could not be checked or imported. Nothing was changed.';
+
+  @override
+  String get instanceTitle => 'Installation: assistants';
+
+  @override
+  String get instanceIntro =>
+      'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.';
+
+  @override
+  String get instanceNotOperator =>
+      'Only the instance operator manages the installation\'s assistants.';
+
+  @override
+  String get instanceSecondFactorNeeded =>
+      'Changes here need your second factor on this session.';
+
+  @override
+  String get instanceConfirmSecondFactor => 'Confirm with my authenticator';
+
+  @override
+  String get instanceRuntimeTitle => 'Assistants on this installation';
+
+  @override
+  String get instanceRuntimeOn => 'On';
+
+  @override
+  String get instanceRuntimeOff => 'Off';
+
+  @override
+  String get instanceTurnOn => 'Turn on for every workspace';
+
+  @override
+  String get instanceTurnOff => 'Turn off';
+
+  @override
+  String get instanceTurnOnConfirm =>
+      'Assistants become usable in every workspace that offers them. You can turn them off again at any time.';
+
+  @override
+  String get instanceBlockers => 'Still missing:';
+
+  @override
+  String get instanceBlockerNoAdmin => 'a database administrator';
+
+  @override
+  String get instanceAdminsTitle => 'Database administrators';
+
+  @override
+  String get instanceAdminsHelp =>
+      'They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.';
+
+  @override
+  String get instanceMakeAdmin => 'Make administrator';
+
+  @override
+  String get instanceRemoveAdmin => 'Remove';
+
+  @override
+  String get instanceNoCandidates =>
+      'Nobody else has confirmed their identity yet.';
+
+  @override
+  String get instanceYou => 'you';
+
+  @override
+  String get instanceClientsTitle => 'Assistant clients';
+
+  @override
+  String get instanceClientsHelp =>
+      'An assistant registers itself the first time someone connects it; it works only once approved here.';
+
+  @override
+  String get instanceClientWaiting => 'Waiting for approval';
+
+  @override
+  String get instanceClientApproved => 'Approved';
+
+  @override
+  String get instanceClientBlocked => 'Blocked';
+
+  @override
+  String get instanceApprove => 'Approve';
+
+  @override
+  String get instanceBlock => 'Block';
 
   @override
   String get instanceOwnerClaimIntro =>
@@ -8493,6 +8581,32 @@ class AppLocalizationsEn extends AppLocalizations {
       'Another account already holds this identity here — a database administrator can resolve it.';
 
   @override
+  String get mcpStatusGoogle => 'Google sign-in';
+
+  @override
+  String get mcpStatusLinkGoogle => 'Link Google';
+
+  @override
+  String get mcpStatusSignInGoogle => 'Sign in with Google';
+
+  @override
+  String get mcpStateGoogleReady => 'Signed in with Google';
+
+  @override
+  String get mcpStateGoogleOtherSession => 'Signed in another way';
+
+  @override
+  String get mcpStateGoogleMissing => 'Google not linked';
+
+  @override
+  String get mcpNextLinkGoogle =>
+      'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.';
+
+  @override
+  String get mcpNextSignInGoogle =>
+      'Assistants use your Google sign-in. Sign in with Google to continue.';
+
+  @override
   String get mcpUsageWorkspaceTitle => 'Assistant use, last 30 days';
 
   @override
@@ -8773,7 +8887,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberRoleOwner => 'Owner';
 
   @override
-  String get memberRoleAdmin => 'Admin';
+  String get memberRoleAdmin => 'Administrator';
 
   @override
   String get memberStatusPaused => 'Paused';
@@ -10850,6 +10964,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalResetAllConfirm => 'Reset';
 
   @override
+  String get privacyNoticeTitle => 'Who processes your data';
+
+  @override
+  String privacyNoticeController(String name, String contact) {
+    return 'Controller: $name — $contact';
+  }
+
+  @override
+  String privacyNoticeRights(String contact) {
+    return 'Your rights: $contact';
+  }
+
+  @override
+  String privacyNoticeRegion(String region) {
+    return 'Region: $region';
+  }
+
+  @override
+  String privacyNoticeTransfer(String mechanism) {
+    return 'Transfer safeguard: $mechanism';
+  }
+
+  @override
+  String get privacyNoticeNotRecorded => 'not recorded by the operator';
+
+  @override
+  String get privacyNoticeEssential =>
+      'Needed to run the account and the space';
+
+  @override
+  String get privacyNoticeOptional =>
+      'Optional — you can use the app without it';
+
+  @override
+  String get privacyNoticeRightsRoute => 'Your rights and the contact';
+
+  @override
+  String get privacySpaceNotice => 'This space\'s privacy notice';
+
+  @override
+  String get privacySpaceNoticeRead => 'You acknowledged this version.';
+
+  @override
+  String get privacySpaceNoticeUnread => 'Not acknowledged yet — read it here.';
+
+  @override
+  String get privacySpaceNoticeAcknowledge => 'I have read this notice';
+
+  @override
+  String get privacySpaceNoticeFailed =>
+      'The acknowledgment could not be recorded. Please try again.';
+
+  @override
+  String get privacyPushOnDevice => 'Push notifications on this device';
+
+  @override
+  String get privacyPushOnDeviceHint =>
+      'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.';
+
+  @override
+  String get privacyPushOnDeviceFailed =>
+      'The choice could not be saved. Please try again.';
+
+  @override
   String get featuresViewProcesses => 'Processes';
 
   @override
@@ -11351,7 +11529,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyIntro =>
-      'Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.';
+      'Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation\'s privacy notice. These are your rights under the GDPR — each one is a button.';
 
   @override
   String get privacyWhoCanSee => 'Who can see my data';
@@ -11991,19 +12169,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String eventRolePromote(String actor) {
-    return '$actor promotes a member to admin';
+    return '$actor asks to give the Administrator role';
   }
 
   @override
   String eventRoleDemote(String actor) {
-    return '$actor demotes an admin to member';
+    return '$actor asks to take back the Administrator role';
   }
 
   @override
-  String get memberMakeAdmin => 'Make admin';
+  String get memberMakeAdmin => 'Give the Administrator role';
 
   @override
-  String get memberMakeMember => 'Make regular member';
+  String get memberMakeMember => 'Take back the Administrator role';
 
   @override
   String get memberRoleChangeRequested => 'Role change sent for validation.';
@@ -12803,11 +12981,241 @@ class AppLocalizationsEn extends AppLocalizations {
       'The customer\'s VAT number is missing — a reverse-charged invoice must name it.';
 
   @override
+  String get rightsRequestsTitle => 'My rights requests';
+
+  @override
+  String get rightsRequestsHint =>
+      'Ask the space for a copy, a correction, a restriction or erasure — answered within one calendar month.';
+
+  @override
+  String get rightsRequestsEmpty => 'No request yet.';
+
+  @override
+  String get rightsRequestNew => 'Make a request';
+
+  @override
+  String get rightsRequestAsk => 'What do you ask the space?';
+
+  @override
+  String get rightsRequestDetails => 'Details (optional)';
+
+  @override
+  String get rightsRequestSend => 'Send the request';
+
+  @override
+  String rightsRequestSent(String date) {
+    return 'Request sent — the space answers by $date.';
+  }
+
+  @override
+  String get rightsRequestFailed =>
+      'The request could not be sent. Please try again.';
+
+  @override
+  String get rightsKindAccess => 'See a copy of my data';
+
+  @override
+  String get rightsKindPortability =>
+      'Take my data elsewhere (machine-readable)';
+
+  @override
+  String get rightsKindRectification => 'Correct my data';
+
+  @override
+  String get rightsKindRestriction => 'Restrict how my data is used';
+
+  @override
+  String get rightsKindObjection => 'Object to a use of my data';
+
+  @override
+  String get rightsKindErasure => 'Erase my data';
+
+  @override
+  String rightsStatusReceived(String date) {
+    return 'Received — answer due by $date';
+  }
+
+  @override
+  String rightsStatusExtended(String date, String reason) {
+    return 'Extended to $date: $reason';
+  }
+
+  @override
+  String get rightsStatusCompleted =>
+      'Answered — the space recorded what it did';
+
+  @override
+  String rightsStatusRefused(String reason) {
+    return 'Refused: $reason';
+  }
+
+  @override
+  String get erasurePreviewTitle => 'What erasing does here';
+
+  @override
+  String get erasurePreviewRemoved => 'Removed';
+
+  @override
+  String get erasurePreviewKept => 'Kept, and why';
+
+  @override
+  String get erasurePreviewOutside => 'Outside this installation';
+
+  @override
+  String get erasureStoreMessages => 'Messages you sent';
+
+  @override
+  String get erasureStoreAnswers => 'Your answers to the space\'s questions';
+
+  @override
+  String get erasureStoreProfile =>
+      'Your profile (when this is your last space)';
+
+  @override
+  String get erasureStoreOpenBookings => 'Open bookings — cancelled';
+
+  @override
+  String get erasureStoreAccounts =>
+      'Invoices and ledger — accounting evidence, kept for the statutory period; issued documents are not rewritten';
+
+  @override
+  String get erasureStorePastBookings =>
+      'Past bookings — the space\'s occupancy record';
+
+  @override
+  String get erasureStoreMembership =>
+      'The membership row — links the records kept; pseudonymous, not anonymous';
+
+  @override
+  String get erasureStoreHeldAnswers =>
+      'Answers under a retention hold the space documented';
+
+  @override
+  String get erasureStoreOtherInstallations =>
+      'Another DesKilo installation is a separate controller — ask it directly';
+
+  @override
+  String get erasureStoreDeviceCaches =>
+      'Copies on your devices — cleared when you sign out of each';
+
+  @override
+  String get erasureStoreBackups =>
+      'The operator\'s backups — expire on their rotation';
+
+  @override
+  String get featureRoleAssignmentTitle => 'Giving roles';
+
+  @override
+  String get featureRoleAssignmentDesc =>
+      'Shows a Roles section on each member\'s page to give or take back a role, the members holding each role, and lets every member see what they can do here.';
+
+  @override
+  String get memberRolesTitle => 'Roles';
+
+  @override
+  String get memberRolesAdd => 'Add a role';
+
+  @override
+  String get memberRolesNone => 'No role: everything a member can do.';
+
+  @override
+  String get memberRolesWhatTheyCanDo => 'What they can do here';
+
+  @override
+  String roleAssignSheetTitle(String name) {
+    return 'Give a role to $name';
+  }
+
+  @override
+  String get roleAssignQuorumHint => 'Takes effect once validated.';
+
+  @override
+  String get roleAssignImmediateHint => 'Takes effect at once.';
+
+  @override
+  String get roleAssignNothing => 'There is no role left to give.';
+
+  @override
+  String get roleRefusalNotPermitted =>
+      'Only someone who manages roles can give this one.';
+
+  @override
+  String get roleRefusalOwnerOnly =>
+      'Only the owner gives a role that manages roles.';
+
+  @override
+  String get roleRefusalExceedsYours =>
+      'This role can do things you cannot, so only the owner gives it.';
+
+  @override
+  String get roleRefusalNotAssignable => 'This member cannot hold this role.';
+
+  @override
+  String get roleGiven => 'Role given.';
+
+  @override
+  String get roleTakenBack => 'Role taken back.';
+
+  @override
+  String get roleHoldersAdd => 'Add a member';
+
+  @override
+  String get rolesOwnRolesLink => 'The roles this space defines';
+
+  @override
+  String get whatYouCanDoTitle => 'What you can do here';
+
+  @override
+  String whatTheyCanDoTitle(String name) {
+    return 'What $name can do here';
+  }
+
+  @override
+  String get whatYouCanDoIntro =>
+      'Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.';
+
+  @override
+  String get whatYouCanDoFromOwner => 'As the owner: everything';
+
+  @override
+  String get whatYouCanDoFromCoOwner => 'As co-owner';
+
+  @override
+  String get whatYouCanDoFromAdministrator => 'From the Administrator role';
+
+  @override
+  String get whatYouCanDoFromEveryMember => 'As every member';
+
+  @override
+  String whatYouCanDoFromRole(String role) {
+    return 'From the role $role';
+  }
+
+  @override
+  String get whatYouCanDoNothingMore => 'Nothing more than a member.';
+
+  @override
+  String get roleGiveFailed => 'The role was not given.';
+
+  @override
+  String get roleTakeBackFailed => 'The role was not taken back.';
+
+  @override
+  String eventRoleGiven(String actor, String role, String member) {
+    return '$actor gives the role $role to $member';
+  }
+
+  @override
+  String eventRoleTakenBack(String actor, String role, String member) {
+    return '$actor takes back the role $role from $member';
+  }
+
+  @override
   String get rolesOfSpaceTitle => 'Roles this space defines';
 
   @override
   String get rolesOfSpaceSubtitle =>
-      'Each one adds permissions on top of a member\'s role. None ever takes one away, and an owner always keeps every one.';
+      'Each one adds permissions to what its holders can already do. None takes anything away, and the owner always keeps every permission.';
 
   @override
   String get rolesOfSpaceEmpty => 'No roles yet.';
@@ -12843,7 +13251,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get roleEditorSaveFailed => 'The role was not saved.';
 
   @override
-  String get roleEditorHolders => 'Who holds it';
+  String get roleEditorHolders => 'Members in this role';
 
   @override
   String get roleEditorNobody => 'Nobody yet.';
@@ -14342,14 +14750,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inviteRoleMember => 'Member invite';
 
   @override
-  String get inviteRoleAdmin => 'Admin invite';
+  String get inviteRoleAdmin => 'Administrator invite';
 
   @override
   String get inviteAdminExplainer =>
       'This code is single-use: it admits ONE person as an admin, then expires. Give it only to the person it is meant for.';
 
   @override
-  String get inviteAdminNewCode => 'New admin code';
+  String get inviteAdminNewCode => 'New administrator code';
 
   @override
   String get inviteOwnerNote =>
@@ -14653,11 +15061,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'The central role→permission matrix: the owner decides which role holds which permission; everyone else reads their own. Off, the defaults simply apply.';
 
   @override
-  String get rolesTitle => 'Role management';
+  String get rolesTitle => 'Roles';
 
   @override
   String get rolesIntroEditor =>
-      'The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.';
+      'Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.';
 
   @override
   String get rolesIntroReadOnly =>
@@ -14670,10 +15078,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get roleOwner => 'Owner';
 
   @override
-  String get roleAdmin => 'Admin';
+  String get roleAdmin => 'Administrator';
 
   @override
-  String get roleMember => 'Member';
+  String get roleMember => 'Every member';
 
   @override
   String get permManageRoles => 'Manage roles & permissions';

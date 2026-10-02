@@ -242,6 +242,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             Expanded(
               child: DropdownButtonFormField<VatRegime>(
                 key: const ValueKey('legal-identity-regime'),
+                isExpanded: true, // #1869 C: overflowed a phone
                 initialValue: _regime,
                 items: [
                   DropdownMenuItem(

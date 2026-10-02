@@ -213,7 +213,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                             value: InviteRole.admin,
                             icon: const Icon(Icons.shield_outlined),
                             label: Text(
-                              l10n?.inviteRoleAdmin ?? 'Admin invite',
+                              l10n?.inviteRoleAdmin ?? 'Administrator invite',
                             ),
                           ),
                         ],
@@ -247,7 +247,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                             onPressed: _mintAdminCode,
                             icon: const Icon(Icons.refresh),
                             label: Text(l10n?.inviteAdminNewCode ??
-                                'New admin code'),
+                                'New administrator code'),
                           ),
                   ),
                 ),
@@ -333,7 +333,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                   key: const ValueKey('admin-invite-new'),
                   onPressed: _minting ? null : _mintAdminCode,
                   icon: const Icon(Icons.refresh),
-                  label: Text(l10n?.inviteAdminNewCode ?? 'New admin code'),
+                  label: Text(l10n?.inviteAdminNewCode ?? 'New administrator code'),
                 ),
               ],
               ],

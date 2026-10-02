@@ -14,7 +14,10 @@
 //
 // #1631 — "what they ended" is the server's answer (McpRevocation), not
 // the list the screen was showing when the person tapped.
+import '../../auth/domain/auth_repository.dart';
 import '../../auth/domain/identity_binding.dart';
+import '../../auth/domain/social_provider.dart';
+import '../domain/mcp_admin.dart';
 import '../domain/mcp_connection.dart';
 import '../domain/mcp_context.dart';
 import 'mcp_commands.dart';
@@ -41,9 +44,29 @@ class McpDisconnectResult {
 }
 
 class AssistantAccess {
-  const AssistantAccess(this._commands, this._identity);
+  const AssistantAccess(this._commands, this._identity, this._auth, this._admin);
   final McpCommands _commands;
   final IdentityBindingRepository _identity;
+  final AuthRepository _auth;
+  final McpAdminRepository _admin;
+
+  /// #1827 B — the instance operator's console (null for everyone else).
+  Future<InstanceMcpOverview?> instanceOverview() => _admin.instanceOverview();
+  Future<void> grantAdministrator(String userId) =>
+      _admin.grantAdministrator(userId);
+  Future<void> revokeAdministrator(String userId) =>
+      _admin.revokeAdministrator(userId);
+  Future<void> setClient(String clientId, {required bool active}) =>
+      _admin.setClient(clientId, active: active);
+  Future<void> setRuntime({required bool enabled}) =>
+      _admin.setRuntime(enabled: enabled);
+
+  /// 0340 — the Google facts assistants require.
+  Future<McpGoogleSignIn> googleSignIn() => _identity.googleSignIn();
+
+  /// 0340 — signs in again with Google, the only way assistants accept.
+  Future<void> signInWithGoogle() =>
+      _auth.signInWithSocial(SocialProvider.google);
 
   /// Binds this account to the installation's identity (0269) — the
   /// first assistant step, taken here in one tap. It confers nothing by

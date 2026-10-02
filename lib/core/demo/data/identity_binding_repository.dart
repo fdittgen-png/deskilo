@@ -34,6 +34,12 @@ class FakeIdentityBindingRepository implements IdentityBindingRepository {
   @override
   Future<DatabaseCapabilities> databaseCapabilities() async => capabilities;
 
+  /// 0340 — signed in with Google unless a test says otherwise.
+  McpGoogleSignIn google = const McpGoogleSignIn(linked: true, session: true);
+
+  @override
+  Future<McpGoogleSignIn> googleSignIn() async => google;
+
   /// A request never approves itself: it answers `requested`.
   @override
   Future<DatabaseCapabilities> requestMcpEligibility() async =>

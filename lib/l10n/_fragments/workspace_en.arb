@@ -72,9 +72,9 @@
   "workspaceCodeCopy": "Copy ID",
   "workspaceCodeCopied": "Copied",
   "inviteRoleMember": "Member invite",
-  "inviteRoleAdmin": "Admin invite",
+  "inviteRoleAdmin": "Administrator invite",
   "inviteAdminExplainer": "This code is single-use: it admits ONE person as an admin, then expires. Give it only to the person it is meant for.",
-  "inviteAdminNewCode": "New admin code",
+  "inviteAdminNewCode": "New administrator code",
   "inviteOwnerNote": "There is no owner invite — only an owner can grant ownership, in Members & plans.",
   "scanJoinTitle": "Scan workspace QR",
   "onboardingScanButton": "Scan QR code",
@@ -456,11 +456,11 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
-  "rolesTitle": "Role management",
+  "rolesTitle": "Roles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.",
+  "rolesIntroEditor": "Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
@@ -476,11 +476,11 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleAdmin": "Admin",
+  "roleAdmin": "Administrator",
   "@roleAdmin": {
     "description": "Role label (#513)"
   },
-  "roleMember": "Member",
+  "roleMember": "Every member",
   "@roleMember": {
     "description": "Role label (#513)"
   },

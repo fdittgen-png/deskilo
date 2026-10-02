@@ -237,9 +237,11 @@ Future<McpAccessStatus> mcpAccessStatus(Ref ref, McpContextRef context) async {
     maybe((r) => r.admin.policy(context.workspaceId)),
     maybe((r) => r.connections.options()),
     maybe((r) => r.connections.connections()),
+    maybe((r) => r.identity.googleSignIn()),
   ).wait;
   return McpAccessStatus.derive(
     context,
+    google: results.$6,
     identity: results.$1,
     capabilities: results.$2,
     policy: results.$3,
@@ -358,4 +360,6 @@ EligibilityReview eligibilityReview(Ref ref) => EligibilityReview(
 AssistantAccess assistantAccess(Ref ref) => AssistantAccess(
   ref.watch(mcpCommandsProvider),
   ref.watch(identityBindingRepositoryProvider),
+  ref.watch(authRepositoryProvider),
+  ref.watch(mcpAdminRepositoryProvider),
 );

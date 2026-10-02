@@ -6,9 +6,11 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('the catalog carries 24 permissions, wire names equal to Dart names',
+  // 24→25 (2026-10-02): #1921 viewAnalytics — read aggregated operational
+  // KPIs without holding a write right.
+  test('the catalog carries 25 permissions, wire names equal to Dart names',
       () {
-    expect(WorkspacePermission.values, hasLength(24));
+    expect(WorkspacePermission.values, hasLength(25));
     for (final p in WorkspacePermission.values) {
       expect(p.wireName, p.name);
     }

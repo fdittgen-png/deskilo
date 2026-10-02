@@ -37,5 +37,13 @@
   "mcpStatusConfirmIdentity": "Confirmar mi identidad",
   "mcpStateAfterPrevious": "Después del paso anterior",
   "mcpIdentityIneligible": "Esta cuenta aún no puede confirmarse: confirme primero su dirección de correo o inicie sesión con un proveedor.",
-  "mcpIdentityConflict": "Otra cuenta ya tiene esta identidad aquí: un administrador de la base puede resolverlo."
+  "mcpIdentityConflict": "Otra cuenta ya tiene esta identidad aquí: un administrador de la base puede resolverlo.",
+  "mcpStatusGoogle": "Inicio de sesión con Google",
+  "mcpStatusLinkGoogle": "Vincular Google",
+  "mcpStatusSignInGoogle": "Iniciar sesión con Google",
+  "mcpStateGoogleReady": "Sesión iniciada con Google",
+  "mcpStateGoogleOtherSession": "Sesión iniciada de otra forma",
+  "mcpStateGoogleMissing": "Google no vinculado",
+  "mcpNextLinkGoogle": "Los asistentes usan su inicio de sesión con Google. Vincule primero Google a esta cuenta; sin ello, la cuenta no puede usar asistentes.",
+  "mcpNextSignInGoogle": "Los asistentes usan su inicio de sesión con Google. Inicie sesión con Google para continuar."
 }
