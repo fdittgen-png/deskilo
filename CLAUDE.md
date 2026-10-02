@@ -17,7 +17,9 @@ identity form, one-branch-at-a-time). This file only indexes the skills.
 | `project-evolution-playbook` | the project-agnostic method; copy it to other repos |
 
 Global skills that also apply: `git-pr-workflow`, `flutter-dart-best-practices`,
-`dart-flutter-mcp`, `epic-triage` / `epic-scaffolder`, the platform deployment skills.
+`dart-flutter-mcp`, the platform deployment skills.
+
+Ready, Done, closure (`Refs` vs `Closes`) and the glossary: `docs/AGENT_RULES.md#ready-done-and-closure`.
 
 ## Non-negotiables in one breath
 

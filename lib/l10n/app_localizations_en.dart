@@ -12142,6 +12142,50 @@ class AppLocalizationsEn extends AppLocalizations {
       'This changed in the meantime. Reopen it to see where it stands.';
 
   @override
+  String get reminderHistoryTitle => 'Reminder history';
+
+  @override
+  String get reminderHistoryRefresh => 'Check delivery again';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Level $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Prepared';
+
+  @override
+  String get reminderStatusQueued => 'Handed to the push service';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Accepted by the push service — not proof it was read';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Shared by the sender — their statement, not a receipt';
+
+  @override
+  String get reminderStatusFailed => 'Not delivered';
+
+  @override
+  String get reminderStatusUnknown => 'No answer from the push service';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Recorded before delivery was tracked — unknown';
+
+  @override
+  String get reminderOriginManual => 'by hand';
+
+  @override
+  String get reminderOriginAutomatic => 'automatic';
+
+  @override
+  String get reminderOriginLegacy => 'earlier';
+
+  @override
   String get reportGuideTitle => 'Placeholders and markup';
 
   @override
@@ -12563,6 +12607,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportFieldGroupTexts => 'Your texts';
+
+  @override
+  String get bookingSpaceChainTaken =>
+      'This space, or a space it belongs to, is already reserved in that period.';
+
+  @override
+  String get bookingNoLongerCheckedIn =>
+      'This reservation is no longer checked in — it was checked out or closed in the meantime.';
 
   @override
   String get reserveMonthView => 'Month';

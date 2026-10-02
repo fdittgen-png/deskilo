@@ -148,6 +148,20 @@ String bookingErrorText(
     return l10n?.levelFeatureOff ??
         'Office & level reservations are switched off in Features.';
   }
+  // #1908 — the hierarchy guard (0325/0326): a seat and its whole desk,
+  // office or level overlap. Before the level wording, which it contains.
+  if (message.contains('that space is already reserved in that period')) {
+    return l10n?.bookingSpaceChainTaken ??
+        'This space, or a space it belongs to, is already reserved in that '
+            'period.';
+  }
+  // #1908 — a checkout that lost the race to another checkout or to the
+  // day-end sweep: the reservation is already closed.
+  if (message.contains('not checked in')) {
+    return l10n?.bookingNoLongerCheckedIn ??
+        'This reservation is no longer checked in — it was checked out or '
+            'closed in the meantime.';
+  }
   if (message.contains('reservations in that period') ||
       message.contains('already reserved') ||
       message.contains('reserved as a whole')) {

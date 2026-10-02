@@ -12254,6 +12254,51 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nel frattempo è cambiato. Riaprilo per vedere a che punto è.';
 
   @override
+  String get reminderHistoryTitle => 'Cronologia dei solleciti';
+
+  @override
+  String get reminderHistoryRefresh => 'Verifica di nuovo l\'invio';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Livello $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Preparato';
+
+  @override
+  String get reminderStatusQueued => 'Affidato al servizio di notifiche';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Accettato dal servizio di notifiche — non prova che sia stato letto';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Condiviso dal mittente — una sua dichiarazione, non una ricevuta';
+
+  @override
+  String get reminderStatusFailed => 'Non consegnato';
+
+  @override
+  String get reminderStatusUnknown =>
+      'Nessuna risposta dal servizio di notifiche';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Registrato prima del tracciamento degli invii — sconosciuto';
+
+  @override
+  String get reminderOriginManual => 'a mano';
+
+  @override
+  String get reminderOriginAutomatic => 'automatico';
+
+  @override
+  String get reminderOriginLegacy => 'precedente';
+
+  @override
   String get reportGuideTitle => 'Campi e marcatura';
 
   @override
@@ -12684,6 +12729,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportFieldGroupTexts => 'I tuoi testi';
+
+  @override
+  String get bookingSpaceChainTaken =>
+      'Questo spazio, o uno spazio che lo contiene, è già prenotato in quel periodo.';
+
+  @override
+  String get bookingNoLongerCheckedIn =>
+      'Questa prenotazione non è più in corso — è stata chiusa nel frattempo.';
 
   @override
   String get reserveMonthView => 'Mese';
