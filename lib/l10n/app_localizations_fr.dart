@@ -2839,6 +2839,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get memberPageNowHeading => 'En ce moment';
 
   @override
+  String get editorMediaWriteFailed =>
+      'L\'enregistrement de l\'image n\'a pas pu être confirmé. Réessayer ne l\'ajoute jamais deux fois.';
+
+  @override
+  String get editorMediaSaving => 'Enregistrement de l\'image…';
+
+  @override
   String get editorBackgroundImage => 'Image de fond';
 
   @override

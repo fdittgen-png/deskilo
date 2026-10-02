@@ -2816,6 +2816,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberPageNowHeading => 'Right now';
 
   @override
+  String get editorMediaWriteFailed =>
+      'The image could not be confirmed as saved. Trying again never adds it twice.';
+
+  @override
+  String get editorMediaSaving => 'Saving the image…';
+
+  @override
   String get editorBackgroundImage => 'Background image';
 
   @override

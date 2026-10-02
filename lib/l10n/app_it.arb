@@ -2065,6 +2065,8 @@
     }
   },
   "memberPageNowHeading": "In questo momento",
+  "editorMediaWriteFailed": "Non è stato possibile confermare il salvataggio dell'immagine. Riprovare non la aggiunge mai due volte.",
+  "editorMediaSaving": "Salvataggio dell'immagine…",
   "editorBackgroundImage": "Immagine di sfondo",
   "editorBackgroundSet": "Imposta immagine di sfondo",
   "editorBackgroundReplace": "Sostituisci immagine di sfondo",

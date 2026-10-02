@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/canvas_controls.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -32,6 +31,8 @@ import '../widgets/seat_properties_sheet.dart';
 import '../widgets/space_properties_sheet.dart';
 import '../widgets/text_prompt_dialog.dart';
 import 'editor_tool.dart';
+import '../plan_media_write.dart';
+import '../../../../core/ids/request_id.dart';
 
 /// Canvas dimensions in grid cells and the logical cell size at scale 1 —
 /// aliases of the shared [PlanCanvasMetrics] so the editor can never drift
@@ -59,6 +60,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   /// six-segment row no longer fitted and Select was one of the two
   /// that fell off the end.
   EditorTool? _tool;
+
+  /// #2012 C — a plan-media write is in flight (progress; no second one).
+  final _mediaBusy = ValueNotifier(false);
   ({int x, int y})? _dragStart;
   GridRect? _marquee;
   bool _marqueeValid = true;
@@ -86,6 +90,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   @override
   void dispose() {
     _viewTransform.dispose();
+    _mediaBusy.dispose();
     super.dispose();
   }
 
@@ -462,7 +467,6 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   /// the tap. It draws BELOW the offices/tables/seats, so you can then
   /// place real tables and seats on top of the photo.
   Future<void> _placeImage(BuildContext context, ({int x, int y}) cell) async {
-    final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     const group = XTypeGroup(
@@ -475,41 +479,36 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     const w = 16, h = 12;
     final x = cell.x.clamp(0, GridCanvas.widthCells - w);
     final y = cell.y.clamp(0, GridCanvas.heightCells - h);
-    try {
-      final bytes = await file.readAsBytes();
-      final contentType = file.mimeType ??
-          (file.name.toLowerCase().endsWith('.png')
-              ? 'image/png'
-              : 'image/jpeg');
-      await ref.read(floorPlanRepositoryProvider).createPlanImage(
+    final bytes = await file.readAsBytes();
+    final contentType = file.mimeType ??
+        (file.name.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg');
+    // #2012 C — one id for this image, kept across a "Try again".
+    final imageId = newRequestId();
+    if (!context.mounted) return;
+    await runPlanMediaWrite(
+      context,
+      busy: _mediaBusy,
+      trace: 'place image failed',
+      write: () => ref.read(floorPlanRepositoryProvider).createPlanImage(
             workspaceId: workspace.id,
             levelId: widget.levelId,
             rect: GridRect(x: x, y: y, w: w, h: h),
             bytes: bytes,
             contentType: contentType,
-          );
-    } catch (e, st) {
-      debugPrint('place image failed: $e\n$st');
-      TraceLogger.instance.error(
-          'editor', 'place image failed', error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-      return;
-    }
-    ref.invalidate(floorPlanProvider(widget.levelId));
-    // Back to the resting state so the fresh image can be moved or
-    // resized at once.
-    if (context.mounted) setState(() => _tool = null);
+            imageId: imageId,
+          ),
+      onDone: () {
+        ref.invalidate(floorPlanProvider(widget.levelId));
+        // Back to the resting state so the fresh image can be moved or
+        // resized at once.
+        if (mounted) setState(() => _tool = null);
+      },
+    );
   }
 
   /// Owner picks a photo/blueprint of the real space as this level's
   /// background (0036); it's uploaded and painted behind the grid.
   Future<void> _pickBackground(BuildContext context) async {
-    final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     const group = XTypeGroup(
@@ -519,58 +518,40 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     );
     final file = await ref.read(filePickerProvider)(group);
     if (file == null || !context.mounted) return;
-    try {
-      final bytes = await file.readAsBytes();
-      final contentType = file.mimeType ??
-          (file.name.toLowerCase().endsWith('.png')
-              ? 'image/png'
-              : 'image/jpeg');
-      await ref.read(floorPlanRepositoryProvider).setLevelBackground(
+    final bytes = await file.readAsBytes();
+    final contentType = file.mimeType ??
+        (file.name.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg');
+    if (!context.mounted) return;
+    await runPlanMediaWrite(
+      context,
+      busy: _mediaBusy,
+      trace: 'set background failed',
+      write: () => ref.read(floorPlanRepositoryProvider).setLevelBackground(
             workspace.id,
             widget.levelId,
             bytes: bytes,
             contentType: contentType,
-          );
-    } catch (e, st) {
-      debugPrint('set background failed: $e\n$st');
-      TraceLogger.instance.error(
-          'editor', 'set background failed', error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-      return;
-    }
-    ref
-      ..invalidate(levelsProvider)
-      ..invalidate(levelBackgroundProvider(widget.levelId));
+          ),
+      onDone: _backgroundChanged,
+    );
   }
 
+  void _backgroundChanged() => ref
+    ..invalidate(levelsProvider)
+    ..invalidate(levelBackgroundProvider(widget.levelId));
+
   Future<void> _removeBackground(BuildContext context) async {
-    final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    try {
-      await ref
+    await runPlanMediaWrite(
+      context,
+      busy: _mediaBusy,
+      trace: 'remove background failed',
+      write: () => ref
           .read(floorPlanRepositoryProvider)
-          .clearLevelBackground(workspace.id, widget.levelId);
-    } catch (e, st) {
-      debugPrint('remove background failed: $e\n$st');
-      TraceLogger.instance.error(
-          'editor', 'remove background failed', error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-      return;
-    }
-    ref
-      ..invalidate(levelsProvider)
-      ..invalidate(levelBackgroundProvider(widget.levelId));
+          .clearLevelBackground(workspace.id, widget.levelId),
+      onDone: _backgroundChanged,
+    );
   }
 
   @override
@@ -595,6 +576,18 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(levelName),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(4),
+          child: ValueListenableBuilder<bool>(
+            valueListenable: _mediaBusy,
+            builder: (_, busy, _) => busy
+                ? LinearProgressIndicator(
+                    key: const ValueKey('plan-media-progress'),
+                    semanticsLabel:
+                        l10n?.editorMediaSaving ?? 'Saving the image…')
+                : const SizedBox(height: 4),
+          ),
+        ),
         actions: [
           Builder(
             builder: (context) {

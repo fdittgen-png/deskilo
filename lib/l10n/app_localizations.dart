@@ -4880,6 +4880,18 @@ abstract class AppLocalizations {
   /// **'Right now'**
   String get memberPageNowHeading;
 
+  /// #2012 — a plan image or background write failed or its answer was lost; offered with Try again
+  ///
+  /// In en, this message translates to:
+  /// **'The image could not be confirmed as saved. Trying again never adds it twice.'**
+  String get editorMediaWriteFailed;
+
+  /// #2012 — screen-reader label of the progress bar while a plan image or background is saved
+  ///
+  /// In en, this message translates to:
+  /// **'Saving the image…'**
+  String get editorMediaSaving;
+
   /// Editor app-bar action opening the level background-image menu (0036)
   ///
   /// In en, this message translates to:

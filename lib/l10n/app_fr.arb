@@ -2065,6 +2065,8 @@
     }
   },
   "memberPageNowHeading": "En ce moment",
+  "editorMediaWriteFailed": "L'enregistrement de l'image n'a pas pu être confirmé. Réessayer ne l'ajoute jamais deux fois.",
+  "editorMediaSaving": "Enregistrement de l'image…",
   "editorBackgroundImage": "Image de fond",
   "editorBackgroundSet": "Définir l'image de fond",
   "editorBackgroundReplace": "Remplacer l'image de fond",
