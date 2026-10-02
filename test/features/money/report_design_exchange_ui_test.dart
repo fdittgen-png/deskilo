@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'invoices_test.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 import 'report_designer_test.dart' show openEditor;
 
 const _invoice = ReportKind(id: 'invoice', slot: ReportRootSlot());

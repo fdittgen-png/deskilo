@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/test_clock.dart';
 import 'invoice_writeoff_test.dart' show partialMatch;
-import 'invoices_test.dart' show seededMoney;
+import '../../helpers/screens/invoices.dart' show seededMoney;
 
 void main() {
   test('a second payment covering the REMAINDER settles the invoice — '

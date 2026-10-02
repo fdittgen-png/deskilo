@@ -13,7 +13,7 @@ import 'package:deskilo/features/events/presentation/validation_workflow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'validation_settings_screen_test.dart' show pumpValidationSettings;
+import '../../helpers/screens/validation_settings.dart' show pumpValidationSettings;
 
 void main() {
   test('every event type belongs to a workflow, and each workflow is used',

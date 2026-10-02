@@ -10,7 +10,7 @@ import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'invoices_test.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 void main() {
   testWidgets(

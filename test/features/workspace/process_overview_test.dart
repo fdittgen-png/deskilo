@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'features_screen_test.dart' show pumpFeatures;
+import '../../helpers/screens/features.dart' show pumpFeatures;
 
 /// One stored map that puts four processes in four different states:
 ///

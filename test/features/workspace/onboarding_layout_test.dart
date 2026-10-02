@@ -1,41 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #1653: real create fields and actions stay reachable with constrained space.
-import 'package:deskilo/core/motion/motion.dart';
-import 'package:deskilo/features/workspace/presentation/screens/onboarding_screen.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/mock_providers.dart';
-
-Future<void> pumpOnboardingLayout(WidgetTester tester, {
-  Size size = const Size(360, 740), double? scale,
-  String locale = 'en', double keyboard = 0, bool animations = true, bool? reducedMotion,
-}) async {
-  tester.view.physicalSize = size;
-  tester.view.devicePixelRatio = 1;
-  addTearDown(tester.view.reset);
-  await tester.pumpWidget(ProviderScope(
-    overrides: standardTestOverrides(workspace: FakeWorkspaceRepository()),
-    child: MaterialApp(
-      locale: Locale(locale),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      builder: (context, child) => MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          disableAnimations: reducedMotion ?? MediaQuery.disableAnimationsOf(context),
-          textScaler: scale == null ? MediaQuery.textScalerOf(context)
-              : TextScaler.linear(scale),
-          viewInsets: EdgeInsets.only(bottom: keyboard),
-          padding: const EdgeInsets.only(bottom: 24)),
-        child: child!),
-      home: MotionSettings(animationsEnabled: animations,
-        child: const OnboardingScreen()),
-    ),
-  ));
-  await tester.pump();
-}
+import '../../helpers/screens/onboarding_layout.dart';
 
 void main() {
   for (final locale in ['en', 'fr', 'de', 'es', 'it']) {

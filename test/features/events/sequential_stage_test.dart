@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
-import 'events_screen_test.dart' show pumpEvents;
+import '../../helpers/screens/events.dart' show pumpEvents;
 
 ValidationPolicy _policy({required bool sequential, int required = 3}) =>
     ValidationPolicy(

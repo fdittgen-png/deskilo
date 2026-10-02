@@ -5,35 +5,13 @@
 // The boot splash shows the app's face and used to hand over to a
 // sign-in screen that dropped it, so the brand vanished at exactly the
 // moment somebody is deciding whether they opened the right app.
-import 'package:deskilo/app/app.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/mock_providers.dart';
+import '../../helpers/screens/signin.dart';
 
 Finder get _logo => find.byKey(const ValueKey('signin-logo'));
 Finder get _title => find.text('DesKilo');
-
-Future<void> pumpSignIn(
-  WidgetTester tester, {
-  Size size = const Size(400, 800),
-  double textScale = 1,
-}) async {
-  tester.view.physicalSize = size;
-  tester.view.devicePixelRatio = 1;
-  addTearDown(tester.view.reset);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(auth: FakeAuthRepository()),
-      child: MediaQuery(
-        data: MediaQueryData(textScaler: TextScaler.linear(textScale)),
-        child: const DeskiloApp(),
-      ),
-    ),
-  );
-  await tester.pumpAndSettle();
-}
 
 void main() {
   testWidgets('the mark sits to the LEFT of the name, on one line',
