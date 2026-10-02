@@ -21,7 +21,8 @@ WorkspaceRolesRepository workspaceRolesRepository(Ref ref) =>
 ///
 /// The flag is read here rather than on each surface, so a space that
 /// never turned it on makes no request at all.
-@riverpod
+// #2085 — kept alive: myPermissions (kept alive) reads it.
+@Riverpod(keepAlive: true)
 Future<List<WorkspaceRole>> workspaceRoles(Ref ref) async {
   if (!ref
       .watch(enabledFeaturesSyncProvider)
@@ -45,7 +46,8 @@ Future<List<String>> roleMembers(Ref ref, String roleId) async {
 /// #2085 — who holds which of the workspace's own roles: member id → the
 /// ids of the roles they hold. Empty while the feature is off, like the
 /// roles themselves.
-@riverpod
+// #2085 — kept alive: myPermissions (kept alive) reads it.
+@Riverpod(keepAlive: true)
 Future<Map<String, Set<String>>> workspaceRoleAssignments(Ref ref) async {
   if (!ref
       .watch(enabledFeaturesSyncProvider)
@@ -65,7 +67,8 @@ Future<Map<String, Set<String>>> workspaceRoleAssignments(Ref ref) async {
 /// treasurer was granted the finances by the server and never shown the
 /// way there. `effectivePermissions` still drops them while `customRoles`
 /// is off, exactly as the server does.
-@riverpod
+// #2085 — kept alive: myPermissions (kept alive) reads it.
+@Riverpod(keepAlive: true)
 Set<WorkspacePermission> myRolePermissions(Ref ref) {
   final me = ref.watch(myMemberProvider).value;
   if (me == null) return const {};

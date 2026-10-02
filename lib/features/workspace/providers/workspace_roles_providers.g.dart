@@ -65,6 +65,7 @@ String _$workspaceRolesRepositoryHash() =>
 ///
 /// The flag is read here rather than on each surface, so a space that
 /// never turned it on makes no request at all.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
 
 @ProviderFor(workspaceRoles)
 final workspaceRolesProvider = WorkspaceRolesProvider._();
@@ -73,6 +74,7 @@ final workspaceRolesProvider = WorkspaceRolesProvider._();
 ///
 /// The flag is read here rather than on each surface, so a space that
 /// never turned it on makes no request at all.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
 
 final class WorkspaceRolesProvider
     extends
@@ -88,13 +90,14 @@ final class WorkspaceRolesProvider
   ///
   /// The flag is read here rather than on each surface, so a space that
   /// never turned it on makes no request at all.
+  // #2085 — kept alive: myPermissions (kept alive) reads it.
   WorkspaceRolesProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'workspaceRolesProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -114,7 +117,7 @@ final class WorkspaceRolesProvider
   }
 }
 
-String _$workspaceRolesHash() => r'48a5f3749b483f26205b1b1bf33ec39bf2aee6ad';
+String _$workspaceRolesHash() => r'47307c0cf5f4b05359e2434070e5133e32976973';
 
 /// Who holds one role.
 
@@ -203,6 +206,7 @@ final class RoleMembersFamily extends $Family
 /// #2085 — who holds which of the workspace's own roles: member id → the
 /// ids of the roles they hold. Empty while the feature is off, like the
 /// roles themselves.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
 
 @ProviderFor(workspaceRoleAssignments)
 final workspaceRoleAssignmentsProvider = WorkspaceRoleAssignmentsProvider._();
@@ -210,6 +214,7 @@ final workspaceRoleAssignmentsProvider = WorkspaceRoleAssignmentsProvider._();
 /// #2085 — who holds which of the workspace's own roles: member id → the
 /// ids of the roles they hold. Empty while the feature is off, like the
 /// roles themselves.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
 
 final class WorkspaceRoleAssignmentsProvider
     extends
@@ -224,13 +229,14 @@ final class WorkspaceRoleAssignmentsProvider
   /// #2085 — who holds which of the workspace's own roles: member id → the
   /// ids of the roles they hold. Empty while the feature is off, like the
   /// roles themselves.
+  // #2085 — kept alive: myPermissions (kept alive) reads it.
   WorkspaceRoleAssignmentsProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'workspaceRoleAssignmentsProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -251,7 +257,7 @@ final class WorkspaceRoleAssignmentsProvider
 }
 
 String _$workspaceRoleAssignmentsHash() =>
-    r'd4d1959f1c793aed3ae9898f9ccd3a028f243b63';
+    r'be2f8a4bb0196777ba901018a0110957a27b3cda';
 
 /// #2085 — what the roles I hold add to my permissions.
 ///
@@ -259,6 +265,7 @@ String _$workspaceRoleAssignmentsHash() =>
 /// treasurer was granted the finances by the server and never shown the
 /// way there. `effectivePermissions` still drops them while `customRoles`
 /// is off, exactly as the server does.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
 
 @ProviderFor(myRolePermissions)
 final myRolePermissionsProvider = MyRolePermissionsProvider._();
@@ -269,6 +276,7 @@ final myRolePermissionsProvider = MyRolePermissionsProvider._();
 /// treasurer was granted the finances by the server and never shown the
 /// way there. `effectivePermissions` still drops them while `customRoles`
 /// is off, exactly as the server does.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
 
 final class MyRolePermissionsProvider
     extends
@@ -284,13 +292,14 @@ final class MyRolePermissionsProvider
   /// treasurer was granted the finances by the server and never shown the
   /// way there. `effectivePermissions` still drops them while `customRoles`
   /// is off, exactly as the server does.
+  // #2085 — kept alive: myPermissions (kept alive) reads it.
   MyRolePermissionsProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'myRolePermissionsProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -318,4 +327,4 @@ final class MyRolePermissionsProvider
   }
 }
 
-String _$myRolePermissionsHash() => r'e5a0b2ece357b36bd43c6bb8ed020f536989c18b';
+String _$myRolePermissionsHash() => r'b0b63a31a57b3fa378e80cc42c4d8ca7c3480c38';
