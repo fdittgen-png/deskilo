@@ -270,6 +270,61 @@ class AppLocalizationsEs extends AppLocalizations {
       'El libro no se guardó. Compruebe la conexión e inténtelo de nuevo.';
 
   @override
+  String get bookRoleCustomers => 'Clientes (cuentas por cobrar)';
+
+  @override
+  String get bookRoleRevenue => 'Ingresos';
+
+  @override
+  String get bookRoleBank => 'Banco';
+
+  @override
+  String get bookRoleVatOutput => 'IVA repercutido';
+
+  @override
+  String get bookRoleExpenses => 'Gastos';
+
+  @override
+  String get bookTypeAsset => 'Activo';
+
+  @override
+  String get bookTypeLiability => 'Pasivo';
+
+  @override
+  String get bookTypeEquity => 'Patrimonio neto';
+
+  @override
+  String get bookTypeIncome => 'Ingreso';
+
+  @override
+  String get bookTypeExpense => 'Gasto';
+
+  @override
+  String bookChartTitle(String site) {
+    return 'Plan contable · $site';
+  }
+
+  @override
+  String get bookChartSuggest => 'Añadir las cuentas sugeridas para revisarlas';
+
+  @override
+  String get bookAccountCode => 'Código de cuenta';
+
+  @override
+  String get bookAccountName => 'Nombre de la cuenta';
+
+  @override
+  String get bookAccountPosting => 'Admite asientos';
+
+  @override
+  String get bookMappingsTitle => 'La cuenta de cada asiento';
+
+  @override
+  String bookProblemUnmapped(String roles) {
+    return 'Asigne estas cuentas antes de iniciar un libro local: $roles.';
+  }
+
+  @override
   String get fecAccountExpenses => 'Gastos';
 
   @override

@@ -270,6 +270,61 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le livre n’a pas été enregistré. Vérifiez la connexion et réessayez.';
 
   @override
+  String get bookRoleCustomers => 'Clients (créances)';
+
+  @override
+  String get bookRoleRevenue => 'Produits';
+
+  @override
+  String get bookRoleBank => 'Banque';
+
+  @override
+  String get bookRoleVatOutput => 'TVA collectée';
+
+  @override
+  String get bookRoleExpenses => 'Charges';
+
+  @override
+  String get bookTypeAsset => 'Actif';
+
+  @override
+  String get bookTypeLiability => 'Passif';
+
+  @override
+  String get bookTypeEquity => 'Capitaux propres';
+
+  @override
+  String get bookTypeIncome => 'Produit';
+
+  @override
+  String get bookTypeExpense => 'Charge';
+
+  @override
+  String bookChartTitle(String site) {
+    return 'Plan comptable · $site';
+  }
+
+  @override
+  String get bookChartSuggest => 'Ajouter les comptes suggérés à vérifier';
+
+  @override
+  String get bookAccountCode => 'Numéro de compte';
+
+  @override
+  String get bookAccountName => 'Intitulé du compte';
+
+  @override
+  String get bookAccountPosting => 'Reçoit des écritures';
+
+  @override
+  String get bookMappingsTitle => 'Le compte de chaque écriture';
+
+  @override
+  String bookProblemUnmapped(String roles) {
+    return 'Associez ces comptes avant de démarrer un livre local : $roles.';
+  }
+
+  @override
   String get fecAccountExpenses => 'Achats et charges';
 
   @override

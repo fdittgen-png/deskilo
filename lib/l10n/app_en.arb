@@ -335,6 +335,84 @@
   "@bookSaveFailed": {
     "description": "#1869 the save failed (connection or server)"
   },
+  "bookRoleCustomers": "Customers (receivable)",
+  "@bookRoleCustomers": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleRevenue": "Revenue",
+  "@bookRoleRevenue": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleBank": "Bank",
+  "@bookRoleBank": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleVatOutput": "Output VAT",
+  "@bookRoleVatOutput": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleExpenses": "Expenses",
+  "@bookRoleExpenses": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeAsset": "Asset",
+  "@bookTypeAsset": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeLiability": "Liability",
+  "@bookTypeLiability": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeEquity": "Equity",
+  "@bookTypeEquity": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeIncome": "Income",
+  "@bookTypeIncome": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeExpense": "Expense",
+  "@bookTypeExpense": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookChartTitle": "Chart of accounts · {site}",
+  "@bookChartTitle": {
+    "description": "#1869 B chart of accounts",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "bookChartSuggest": "Add the suggested accounts to review",
+  "@bookChartSuggest": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountCode": "Account code",
+  "@bookAccountCode": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountName": "Account name",
+  "@bookAccountName": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountPosting": "Takes postings",
+  "@bookAccountPosting": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookMappingsTitle": "Which account each entry books to",
+  "@bookMappingsTitle": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookProblemUnmapped": "Map these accounts before a local book starts: {roles}.",
+  "@bookProblemUnmapped": {
+    "description": "#1869 B chart of accounts",
+    "placeholders": {
+      "roles": {
+        "type": "String"
+      }
+    }
+  },
   "fecAccountExpenses": "Expenses",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
