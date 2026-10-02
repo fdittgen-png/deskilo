@@ -23610,6 +23610,630 @@ abstract class AppLocalizations {
   /// **'Lets a person record the steps of a task on this workspace\'s screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here.'**
   String get featureTaskRecorderDesc;
 
+  /// #1865 task recorder: taskRecorderTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Task recorder'**
+  String get taskRecorderTitle;
+
+  /// #1865 task recorder: taskRecorderRecordThisTask
+  ///
+  /// In en, this message translates to:
+  /// **'Record this task'**
+  String get taskRecorderRecordThisTask;
+
+  /// #1865 task recorder: taskRecorderDisclosureTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Before you record'**
+  String get taskRecorderDisclosureTitle;
+
+  /// #1865 task recorder: taskRecorderDisclosureBody
+  ///
+  /// In en, this message translates to:
+  /// **'The recorder notes the steps you take on this workspace\'s screens — which screen, which action, what the app answered — on this device only. It never keeps what you type, names, amounts, messages, codes or passwords. Sign-in, payment, messages and other protected screens leave only a marker. Nothing is uploaded: you decide what to export.'**
+  String get taskRecorderDisclosureBody;
+
+  /// #1865 task recorder: taskRecorderLimits
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {steps} steps or {minutes} minutes per recording. Recordings are deleted from this device after {days} days; a file you exported is yours and stays where you saved it.'**
+  String taskRecorderLimits(int steps, int minutes, int days);
+
+  /// #1865 task recorder: taskRecorderStart
+  ///
+  /// In en, this message translates to:
+  /// **'Start recording'**
+  String get taskRecorderStart;
+
+  /// #1865 task recorder: taskRecorderUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Recording is not switched on in this workspace.'**
+  String get taskRecorderUnavailable;
+
+  /// #1865 task recorder: taskRecorderSignedOut
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to record a task.'**
+  String get taskRecorderSignedOut;
+
+  /// #1865 task recorder: taskRecorderStartFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The recording could not start on this device.'**
+  String get taskRecorderStartFailed;
+
+  /// #1865 task recorder: taskRecorderPause
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get taskRecorderPause;
+
+  /// #1865 task recorder: taskRecorderResume
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get taskRecorderResume;
+
+  /// #1865 task recorder: taskRecorderStop
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get taskRecorderStop;
+
+  /// #1865 task recorder: taskRecorderDiscard
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get taskRecorderDiscard;
+
+  /// #1865 task recorder: taskRecorderAddNote
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note'**
+  String get taskRecorderAddNote;
+
+  /// #1865 task recorder: taskRecorderNoteHint
+  ///
+  /// In en, this message translates to:
+  /// **'Your own words, kept as you write them'**
+  String get taskRecorderNoteHint;
+
+  /// #1865 task recorder: taskRecorderRecording
+  ///
+  /// In en, this message translates to:
+  /// **'Recording'**
+  String get taskRecorderRecording;
+
+  /// #1865 task recorder: taskRecorderPaused
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get taskRecorderPaused;
+
+  /// #1865 task recorder: taskRecorderIndicator
+  ///
+  /// In en, this message translates to:
+  /// **'Recording a task: {count} steps'**
+  String taskRecorderIndicator(int count);
+
+  /// #1865 task recorder: taskRecorderMyRecordings
+  ///
+  /// In en, this message translates to:
+  /// **'My recordings on this device'**
+  String get taskRecorderMyRecordings;
+
+  /// #1865 task recorder: taskRecorderNoRecordings
+  ///
+  /// In en, this message translates to:
+  /// **'No recordings on this device.'**
+  String get taskRecorderNoRecordings;
+
+  /// #1865 task recorder: taskRecorderStepCount
+  ///
+  /// In en, this message translates to:
+  /// **'{count} steps'**
+  String taskRecorderStepCount(int count);
+
+  /// #1865 task recorder: taskRecorderUntitled
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled task'**
+  String get taskRecorderUntitled;
+
+  /// #1865 task recorder: taskRecorderUnreadable
+  ///
+  /// In en, this message translates to:
+  /// **'This recording cannot be read. You can delete it.'**
+  String get taskRecorderUnreadable;
+
+  /// #1865 task recorder: taskRecorderCompletenessComplete
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get taskRecorderCompletenessComplete;
+
+  /// #1865 task recorder: taskRecorderCompletenessPartial
+  ///
+  /// In en, this message translates to:
+  /// **'Partial'**
+  String get taskRecorderCompletenessPartial;
+
+  /// #1865 task recorder: taskRecorderCompletenessInterrupted
+  ///
+  /// In en, this message translates to:
+  /// **'Interrupted'**
+  String get taskRecorderCompletenessInterrupted;
+
+  /// #1865 task recorder: taskRecorderEndStopped
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped by you'**
+  String get taskRecorderEndStopped;
+
+  /// #1865 task recorder: taskRecorderEndScopeChanged
+  ///
+  /// In en, this message translates to:
+  /// **'Ended: the account or workspace changed'**
+  String get taskRecorderEndScopeChanged;
+
+  /// #1865 task recorder: taskRecorderEndLimitReached
+  ///
+  /// In en, this message translates to:
+  /// **'Ended: a limit was reached'**
+  String get taskRecorderEndLimitReached;
+
+  /// #1865 task recorder: taskRecorderEndStorageFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Ended: it could not be saved on this device'**
+  String get taskRecorderEndStorageFailed;
+
+  /// #1865 task recorder: taskRecorderEndInterrupted
+  ///
+  /// In en, this message translates to:
+  /// **'Interrupted: the app stopped while recording'**
+  String get taskRecorderEndInterrupted;
+
+  /// #1865 task recorder: taskRecorderActionOpenReserve
+  ///
+  /// In en, this message translates to:
+  /// **'Opened Reserve'**
+  String get taskRecorderActionOpenReserve;
+
+  /// #1865 task recorder: taskRecorderActionSelectDate
+  ///
+  /// In en, this message translates to:
+  /// **'Chose the day'**
+  String get taskRecorderActionSelectDate;
+
+  /// #1865 task recorder: taskRecorderActionSelectPeriod
+  ///
+  /// In en, this message translates to:
+  /// **'Chose the period'**
+  String get taskRecorderActionSelectPeriod;
+
+  /// #1865 task recorder: taskRecorderActionSwitchView
+  ///
+  /// In en, this message translates to:
+  /// **'Switched the view'**
+  String get taskRecorderActionSwitchView;
+
+  /// #1865 task recorder: taskRecorderActionSelectResource
+  ///
+  /// In en, this message translates to:
+  /// **'Chose a place'**
+  String get taskRecorderActionSelectResource;
+
+  /// #1865 task recorder: taskRecorderActionChangeField
+  ///
+  /// In en, this message translates to:
+  /// **'Changed a booking detail'**
+  String get taskRecorderActionChangeField;
+
+  /// #1865 task recorder: taskRecorderActionConfirmBooking
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed the booking'**
+  String get taskRecorderActionConfirmBooking;
+
+  /// #1865 task recorder: taskRecorderActionCancelReview
+  ///
+  /// In en, this message translates to:
+  /// **'Closed the booking without booking'**
+  String get taskRecorderActionCancelReview;
+
+  /// #1865 task recorder: taskRecorderActionViewDetails
+  ///
+  /// In en, this message translates to:
+  /// **'Opened the reservation'**
+  String get taskRecorderActionViewDetails;
+
+  /// #1865 task recorder: taskRecorderActionBack
+  ///
+  /// In en, this message translates to:
+  /// **'Went back'**
+  String get taskRecorderActionBack;
+
+  /// #1865 task recorder: taskRecorderOutcomeConfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Booked'**
+  String get taskRecorderOutcomeConfirmed;
+
+  /// #1865 task recorder: taskRecorderOutcomeRequested
+  ///
+  /// In en, this message translates to:
+  /// **'Sent for confirmation'**
+  String get taskRecorderOutcomeRequested;
+
+  /// #1865 task recorder: taskRecorderOutcomeSeries
+  ///
+  /// In en, this message translates to:
+  /// **'Series booked'**
+  String get taskRecorderOutcomeSeries;
+
+  /// #1865 task recorder: taskRecorderOutcomeRefused
+  ///
+  /// In en, this message translates to:
+  /// **'Refused'**
+  String get taskRecorderOutcomeRefused;
+
+  /// #1865 task recorder: taskRecorderOutcomeUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'No answer came'**
+  String get taskRecorderOutcomeUnknown;
+
+  /// #1865 task recorder: taskRecorderNoOutcome
+  ///
+  /// In en, this message translates to:
+  /// **'No answer recorded'**
+  String get taskRecorderNoOutcome;
+
+  /// #1865 task recorder: taskRecorderStepExcluded
+  ///
+  /// In en, this message translates to:
+  /// **'A protected screen — not recorded'**
+  String get taskRecorderStepExcluded;
+
+  /// #1865 task recorder: taskRecorderStepUnrecorded
+  ///
+  /// In en, this message translates to:
+  /// **'A step the recorder cannot describe'**
+  String get taskRecorderStepUnrecorded;
+
+  /// #1865 task recorder: taskRecorderStepNote
+  ///
+  /// In en, this message translates to:
+  /// **'Your note'**
+  String get taskRecorderStepNote;
+
+  /// #1865 task recorder: taskRecorderSegmentGap
+  ///
+  /// In en, this message translates to:
+  /// **'Paused here'**
+  String get taskRecorderSegmentGap;
+
+  /// #1865 task recorder: taskRecorderExport
+  ///
+  /// In en, this message translates to:
+  /// **'Export a file'**
+  String get taskRecorderExport;
+
+  /// #1865 task recorder: taskRecorderExportPreview
+  ///
+  /// In en, this message translates to:
+  /// **'What the file will contain'**
+  String get taskRecorderExportPreview;
+
+  /// #1865 task recorder: taskRecorderSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Saved: {path}'**
+  String taskRecorderSaved(String path);
+
+  /// #1865 task recorder: taskRecorderSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The file could not be saved.'**
+  String get taskRecorderSaveFailed;
+
+  /// #1865 task recorder: taskRecorderSaveNoPath
+  ///
+  /// In en, this message translates to:
+  /// **'The file was handed to your browser or device; it did not say where it went.'**
+  String get taskRecorderSaveNoPath;
+
+  /// #1865 task recorder: taskRecorderDelete
+  ///
+  /// In en, this message translates to:
+  /// **'Delete from this device'**
+  String get taskRecorderDelete;
+
+  /// #1865 task recorder: taskRecorderDeleteConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this recording from this device? Files you exported are not affected, and nothing in the workspace changes.'**
+  String get taskRecorderDeleteConfirm;
+
+  /// #1865 task recorder: taskRecorderLeaveOut
+  ///
+  /// In en, this message translates to:
+  /// **'Leave out of the export'**
+  String get taskRecorderLeaveOut;
+
+  /// #1865 task recorder: taskRecorderPutBack
+  ///
+  /// In en, this message translates to:
+  /// **'Put back'**
+  String get taskRecorderPutBack;
+
+  /// #1865 task recorder: taskRecorderEditedNote
+  ///
+  /// In en, this message translates to:
+  /// **'Edited copy: {count} steps left out. The recording on this device is unchanged.'**
+  String taskRecorderEditedNote(int count);
+
+  /// #1865 task recorder: taskRecorderOpenRecorder
+  ///
+  /// In en, this message translates to:
+  /// **'Open the task recorder'**
+  String get taskRecorderOpenRecorder;
+
+  /// #1865 task recorder: taskRecorderValueToday
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get taskRecorderValueToday;
+
+  /// #1865 task recorder: taskRecorderValueTomorrow
+  ///
+  /// In en, this message translates to:
+  /// **'tomorrow'**
+  String get taskRecorderValueTomorrow;
+
+  /// #1865 task recorder: taskRecorderValueLaterThisWeek
+  ///
+  /// In en, this message translates to:
+  /// **'later this week'**
+  String get taskRecorderValueLaterThisWeek;
+
+  /// #1865 task recorder: taskRecorderValueLater
+  ///
+  /// In en, this message translates to:
+  /// **'a later day'**
+  String get taskRecorderValueLater;
+
+  /// #1865 task recorder: taskRecorderValuePast
+  ///
+  /// In en, this message translates to:
+  /// **'a past day'**
+  String get taskRecorderValuePast;
+
+  /// #1865 task recorder: taskRecorderValueFullDay
+  ///
+  /// In en, this message translates to:
+  /// **'full day'**
+  String get taskRecorderValueFullDay;
+
+  /// #1865 task recorder: taskRecorderValueMorning
+  ///
+  /// In en, this message translates to:
+  /// **'morning'**
+  String get taskRecorderValueMorning;
+
+  /// #1865 task recorder: taskRecorderValueAfternoon
+  ///
+  /// In en, this message translates to:
+  /// **'afternoon'**
+  String get taskRecorderValueAfternoon;
+
+  /// #1865 task recorder: taskRecorderValueHours
+  ///
+  /// In en, this message translates to:
+  /// **'by the hour'**
+  String get taskRecorderValueHours;
+
+  /// #1865 task recorder: taskRecorderValueCustom
+  ///
+  /// In en, this message translates to:
+  /// **'custom times'**
+  String get taskRecorderValueCustom;
+
+  /// #1865 task recorder: taskRecorderValuePlan
+  ///
+  /// In en, this message translates to:
+  /// **'plan'**
+  String get taskRecorderValuePlan;
+
+  /// #1865 task recorder: taskRecorderValueList
+  ///
+  /// In en, this message translates to:
+  /// **'list'**
+  String get taskRecorderValueList;
+
+  /// #1865 task recorder: taskRecorderValueDesk
+  ///
+  /// In en, this message translates to:
+  /// **'a desk'**
+  String get taskRecorderValueDesk;
+
+  /// #1865 task recorder: taskRecorderValueRoom
+  ///
+  /// In en, this message translates to:
+  /// **'a room'**
+  String get taskRecorderValueRoom;
+
+  /// #1865 task recorder: taskRecorderValueOther
+  ///
+  /// In en, this message translates to:
+  /// **'other'**
+  String get taskRecorderValueOther;
+
+  /// #1865 task recorder: taskRecorderValueSelf
+  ///
+  /// In en, this message translates to:
+  /// **'for me'**
+  String get taskRecorderValueSelf;
+
+  /// #1865 task recorder: taskRecorderValueOtherMember
+  ///
+  /// In en, this message translates to:
+  /// **'for another member'**
+  String get taskRecorderValueOtherMember;
+
+  /// #1865 task recorder: taskRecorderValueOnce
+  ///
+  /// In en, this message translates to:
+  /// **'once'**
+  String get taskRecorderValueOnce;
+
+  /// #1865 task recorder: taskRecorderValueSeries
+  ///
+  /// In en, this message translates to:
+  /// **'repeating'**
+  String get taskRecorderValueSeries;
+
+  /// #1865 task recorder: taskRecorderValueCheckIn
+  ///
+  /// In en, this message translates to:
+  /// **'with check-in'**
+  String get taskRecorderValueCheckIn;
+
+  /// #1865 task recorder: taskRecorderValueNoCheckIn
+  ///
+  /// In en, this message translates to:
+  /// **'without check-in'**
+  String get taskRecorderValueNoCheckIn;
+
+  /// #1865 task recorder: taskRecorderValueAllBooked
+  ///
+  /// In en, this message translates to:
+  /// **'every date booked'**
+  String get taskRecorderValueAllBooked;
+
+  /// #1865 task recorder: taskRecorderValuePartiallyBooked
+  ///
+  /// In en, this message translates to:
+  /// **'some dates refused'**
+  String get taskRecorderValuePartiallyBooked;
+
+  /// #1865 task recorder: taskRecorderValueConflict
+  ///
+  /// In en, this message translates to:
+  /// **'already taken'**
+  String get taskRecorderValueConflict;
+
+  /// #1865 task recorder: taskRecorderValuePolicy
+  ///
+  /// In en, this message translates to:
+  /// **'a booking rule'**
+  String get taskRecorderValuePolicy;
+
+  /// #1865 task recorder: taskRecorderValueQuota
+  ///
+  /// In en, this message translates to:
+  /// **'an allowance'**
+  String get taskRecorderValueQuota;
+
+  /// #1865 task recorder: taskRecorderValuePermission
+  ///
+  /// In en, this message translates to:
+  /// **'a permission'**
+  String get taskRecorderValuePermission;
+
+  /// #1865 task recorder: taskRecorderValueClosed
+  ///
+  /// In en, this message translates to:
+  /// **'closed'**
+  String get taskRecorderValueClosed;
+
+  /// #1865 task recorder: taskRecorderValueOffline
+  ///
+  /// In en, this message translates to:
+  /// **'offline'**
+  String get taskRecorderValueOffline;
+
+  /// #1865 task recorder: taskRecorderValueWithheld
+  ///
+  /// In en, this message translates to:
+  /// **'not recorded'**
+  String get taskRecorderValueWithheld;
+
+  /// #1865 task recorder: taskRecorderFieldForWhom
+  ///
+  /// In en, this message translates to:
+  /// **'who it is for'**
+  String get taskRecorderFieldForWhom;
+
+  /// #1865 task recorder: taskRecorderFieldRepeat
+  ///
+  /// In en, this message translates to:
+  /// **'repeat'**
+  String get taskRecorderFieldRepeat;
+
+  /// #1865 task recorder: taskRecorderFieldCheckIn
+  ///
+  /// In en, this message translates to:
+  /// **'check-in'**
+  String get taskRecorderFieldCheckIn;
+
+  /// #1865 task recorder: taskRecorderFieldTime
+  ///
+  /// In en, this message translates to:
+  /// **'time'**
+  String get taskRecorderFieldTime;
+
+  /// #1865 task recorder: taskRecorderFieldAccessories
+  ///
+  /// In en, this message translates to:
+  /// **'accessories'**
+  String get taskRecorderFieldAccessories;
+
+  /// #1865 task recorder: taskRecorderProtectedAuthentication
+  ///
+  /// In en, this message translates to:
+  /// **'sign-in'**
+  String get taskRecorderProtectedAuthentication;
+
+  /// #1865 task recorder: taskRecorderProtectedPayment
+  ///
+  /// In en, this message translates to:
+  /// **'payment'**
+  String get taskRecorderProtectedPayment;
+
+  /// #1865 task recorder: taskRecorderProtectedProvider
+  ///
+  /// In en, this message translates to:
+  /// **'a provider\'s screen'**
+  String get taskRecorderProtectedProvider;
+
+  /// #1865 task recorder: taskRecorderProtectedSecrets
+  ///
+  /// In en, this message translates to:
+  /// **'keys and secrets'**
+  String get taskRecorderProtectedSecrets;
+
+  /// #1865 task recorder: taskRecorderProtectedMessenger
+  ///
+  /// In en, this message translates to:
+  /// **'messages'**
+  String get taskRecorderProtectedMessenger;
+
+  /// #1865 task recorder: taskRecorderProtectedIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'identity'**
+  String get taskRecorderProtectedIdentity;
+
+  /// #1865 task recorder: taskRecorderProtectedOperator
+  ///
+  /// In en, this message translates to:
+  /// **'installation operator'**
+  String get taskRecorderProtectedOperator;
+
   /// #1659 template_capabilities
   ///
   /// In en, this message translates to:

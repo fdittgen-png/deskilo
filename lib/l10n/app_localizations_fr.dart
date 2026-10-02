@@ -13780,6 +13780,345 @@ class AppLocalizationsFr extends AppLocalizations {
       'Permet d\'enregistrer les étapes d\'une tâche sur les écrans de cet espace, sur son propre appareil, de les relire et d\'exporter un fichier sans aucune valeur saisie. Rien n\'est envoyé. Désactivé : personne n\'enregistre ici.';
 
   @override
+  String get taskRecorderTitle => 'Enregistreur de tâches';
+
+  @override
+  String get taskRecorderRecordThisTask => 'Enregistrer cette tâche';
+
+  @override
+  String get taskRecorderDisclosureTitle => 'Avant d\'enregistrer';
+
+  @override
+  String get taskRecorderDisclosureBody =>
+      'L\'enregistreur note les étapes que vous faites sur les écrans de cet espace — quel écran, quelle action, ce que l\'application a répondu — sur cet appareil uniquement. Il ne garde jamais ce que vous tapez, ni noms, montants, messages, codes ou mots de passe. La connexion, le paiement, les messages et les autres écrans protégés ne laissent qu\'un repère. Rien n\'est envoyé : vous décidez de ce que vous exportez.';
+
+  @override
+  String taskRecorderLimits(int steps, int minutes, int days) {
+    return 'Jusqu\'à $steps étapes ou $minutes minutes par enregistrement. Les enregistrements sont effacés de cet appareil après $days jours ; un fichier exporté vous appartient et reste là où vous l\'avez enregistré.';
+  }
+
+  @override
+  String get taskRecorderStart => 'Commencer l\'enregistrement';
+
+  @override
+  String get taskRecorderUnavailable =>
+      'L\'enregistrement n\'est pas activé dans cet espace.';
+
+  @override
+  String get taskRecorderSignedOut =>
+      'Connectez-vous pour enregistrer une tâche.';
+
+  @override
+  String get taskRecorderStartFailed =>
+      'L\'enregistrement n\'a pas pu démarrer sur cet appareil.';
+
+  @override
+  String get taskRecorderPause => 'Pause';
+
+  @override
+  String get taskRecorderResume => 'Reprendre';
+
+  @override
+  String get taskRecorderStop => 'Arrêter';
+
+  @override
+  String get taskRecorderDiscard => 'Jeter';
+
+  @override
+  String get taskRecorderAddNote => 'Ajouter une note';
+
+  @override
+  String get taskRecorderNoteHint =>
+      'Vos propres mots, gardés tels que vous les écrivez';
+
+  @override
+  String get taskRecorderRecording => 'Enregistrement en cours';
+
+  @override
+  String get taskRecorderPaused => 'En pause';
+
+  @override
+  String taskRecorderIndicator(int count) {
+    return 'Enregistrement d\'une tâche : $count étapes';
+  }
+
+  @override
+  String get taskRecorderMyRecordings => 'Mes enregistrements sur cet appareil';
+
+  @override
+  String get taskRecorderNoRecordings =>
+      'Aucun enregistrement sur cet appareil.';
+
+  @override
+  String taskRecorderStepCount(int count) {
+    return '$count étapes';
+  }
+
+  @override
+  String get taskRecorderUntitled => 'Tâche sans titre';
+
+  @override
+  String get taskRecorderUnreadable =>
+      'Cet enregistrement est illisible. Vous pouvez le supprimer.';
+
+  @override
+  String get taskRecorderCompletenessComplete => 'Complet';
+
+  @override
+  String get taskRecorderCompletenessPartial => 'Partiel';
+
+  @override
+  String get taskRecorderCompletenessInterrupted => 'Interrompu';
+
+  @override
+  String get taskRecorderEndStopped => 'Arrêté par vous';
+
+  @override
+  String get taskRecorderEndScopeChanged =>
+      'Terminé : le compte ou l\'espace a changé';
+
+  @override
+  String get taskRecorderEndLimitReached =>
+      'Terminé : une limite a été atteinte';
+
+  @override
+  String get taskRecorderEndStorageFailed =>
+      'Terminé : impossible de l\'enregistrer sur cet appareil';
+
+  @override
+  String get taskRecorderEndInterrupted =>
+      'Interrompu : l\'application s\'est arrêtée pendant l\'enregistrement';
+
+  @override
+  String get taskRecorderActionOpenReserve => 'A ouvert Réserver';
+
+  @override
+  String get taskRecorderActionSelectDate => 'A choisi le jour';
+
+  @override
+  String get taskRecorderActionSelectPeriod => 'A choisi la période';
+
+  @override
+  String get taskRecorderActionSwitchView => 'A changé de vue';
+
+  @override
+  String get taskRecorderActionSelectResource => 'A choisi une place';
+
+  @override
+  String get taskRecorderActionChangeField =>
+      'A modifié un détail de la réservation';
+
+  @override
+  String get taskRecorderActionConfirmBooking => 'A confirmé la réservation';
+
+  @override
+  String get taskRecorderActionCancelReview =>
+      'A fermé la réservation sans réserver';
+
+  @override
+  String get taskRecorderActionViewDetails => 'A ouvert la réservation';
+
+  @override
+  String get taskRecorderActionBack => 'Est revenu en arrière';
+
+  @override
+  String get taskRecorderOutcomeConfirmed => 'Réservé';
+
+  @override
+  String get taskRecorderOutcomeRequested => 'Envoyé pour confirmation';
+
+  @override
+  String get taskRecorderOutcomeSeries => 'Série réservée';
+
+  @override
+  String get taskRecorderOutcomeRefused => 'Refusé';
+
+  @override
+  String get taskRecorderOutcomeUnknown => 'Aucune réponse n\'est arrivée';
+
+  @override
+  String get taskRecorderNoOutcome => 'Aucune réponse enregistrée';
+
+  @override
+  String get taskRecorderStepExcluded => 'Un écran protégé — non enregistré';
+
+  @override
+  String get taskRecorderStepUnrecorded =>
+      'Une étape que l\'enregistreur ne sait pas décrire';
+
+  @override
+  String get taskRecorderStepNote => 'Votre note';
+
+  @override
+  String get taskRecorderSegmentGap => 'En pause ici';
+
+  @override
+  String get taskRecorderExport => 'Exporter un fichier';
+
+  @override
+  String get taskRecorderExportPreview => 'Ce que le fichier contiendra';
+
+  @override
+  String taskRecorderSaved(String path) {
+    return 'Enregistré : $path';
+  }
+
+  @override
+  String get taskRecorderSaveFailed =>
+      'Le fichier n\'a pas pu être enregistré.';
+
+  @override
+  String get taskRecorderSaveNoPath =>
+      'Le fichier a été remis à votre navigateur ou appareil, qui n\'a pas dit où il l\'a mis.';
+
+  @override
+  String get taskRecorderDelete => 'Supprimer de cet appareil';
+
+  @override
+  String get taskRecorderDeleteConfirm =>
+      'Supprimer cet enregistrement de cet appareil ? Les fichiers exportés ne sont pas touchés et rien ne change dans l\'espace.';
+
+  @override
+  String get taskRecorderLeaveOut => 'Exclure de l\'export';
+
+  @override
+  String get taskRecorderPutBack => 'Remettre';
+
+  @override
+  String taskRecorderEditedNote(int count) {
+    return 'Copie modifiée : $count étapes exclues. L\'enregistrement sur cet appareil reste inchangé.';
+  }
+
+  @override
+  String get taskRecorderOpenRecorder => 'Ouvrir l\'enregistreur de tâches';
+
+  @override
+  String get taskRecorderValueToday => 'aujourd\'hui';
+
+  @override
+  String get taskRecorderValueTomorrow => 'demain';
+
+  @override
+  String get taskRecorderValueLaterThisWeek => 'plus tard cette semaine';
+
+  @override
+  String get taskRecorderValueLater => 'un jour plus tard';
+
+  @override
+  String get taskRecorderValuePast => 'un jour passé';
+
+  @override
+  String get taskRecorderValueFullDay => 'journée entière';
+
+  @override
+  String get taskRecorderValueMorning => 'matin';
+
+  @override
+  String get taskRecorderValueAfternoon => 'après-midi';
+
+  @override
+  String get taskRecorderValueHours => 'à l\'heure';
+
+  @override
+  String get taskRecorderValueCustom => 'horaires choisis';
+
+  @override
+  String get taskRecorderValuePlan => 'plan';
+
+  @override
+  String get taskRecorderValueList => 'liste';
+
+  @override
+  String get taskRecorderValueDesk => 'un bureau';
+
+  @override
+  String get taskRecorderValueRoom => 'une salle';
+
+  @override
+  String get taskRecorderValueOther => 'autre';
+
+  @override
+  String get taskRecorderValueSelf => 'pour moi';
+
+  @override
+  String get taskRecorderValueOtherMember => 'pour un autre membre';
+
+  @override
+  String get taskRecorderValueOnce => 'une fois';
+
+  @override
+  String get taskRecorderValueSeries => 'répétée';
+
+  @override
+  String get taskRecorderValueCheckIn => 'avec arrivée';
+
+  @override
+  String get taskRecorderValueNoCheckIn => 'sans arrivée';
+
+  @override
+  String get taskRecorderValueAllBooked => 'toutes les dates réservées';
+
+  @override
+  String get taskRecorderValuePartiallyBooked => 'certaines dates refusées';
+
+  @override
+  String get taskRecorderValueConflict => 'déjà pris';
+
+  @override
+  String get taskRecorderValuePolicy => 'une règle de réservation';
+
+  @override
+  String get taskRecorderValueQuota => 'un quota';
+
+  @override
+  String get taskRecorderValuePermission => 'une autorisation';
+
+  @override
+  String get taskRecorderValueClosed => 'fermé';
+
+  @override
+  String get taskRecorderValueOffline => 'hors ligne';
+
+  @override
+  String get taskRecorderValueWithheld => 'non enregistré';
+
+  @override
+  String get taskRecorderFieldForWhom => 'pour qui';
+
+  @override
+  String get taskRecorderFieldRepeat => 'répétition';
+
+  @override
+  String get taskRecorderFieldCheckIn => 'arrivée';
+
+  @override
+  String get taskRecorderFieldTime => 'horaire';
+
+  @override
+  String get taskRecorderFieldAccessories => 'accessoires';
+
+  @override
+  String get taskRecorderProtectedAuthentication => 'connexion';
+
+  @override
+  String get taskRecorderProtectedPayment => 'paiement';
+
+  @override
+  String get taskRecorderProtectedProvider => 'écran d\'un fournisseur';
+
+  @override
+  String get taskRecorderProtectedSecrets => 'clés et secrets';
+
+  @override
+  String get taskRecorderProtectedMessenger => 'messages';
+
+  @override
+  String get taskRecorderProtectedIdentity => 'identité';
+
+  @override
+  String get taskRecorderProtectedOperator => 'opérateur de l\'installation';
+
+  @override
   String get capabilityMultiApproval => 'Deux validations ou plus';
 
   @override
