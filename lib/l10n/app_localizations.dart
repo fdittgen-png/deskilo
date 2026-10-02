@@ -22488,6 +22488,210 @@ abstract class AppLocalizations {
   /// **'The customer\'s VAT number is missing — a reverse-charged invoice must name it.'**
   String get invoiceGapMissingBuyerVatId;
 
+  /// #1915 rights requests: rightsRequestsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'My rights requests'**
+  String get rightsRequestsTitle;
+
+  /// #1915 rights requests: rightsRequestsHint
+  ///
+  /// In en, this message translates to:
+  /// **'Ask the space for a copy, a correction, a restriction or erasure — answered within one calendar month.'**
+  String get rightsRequestsHint;
+
+  /// #1915 rights requests: rightsRequestsEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No request yet.'**
+  String get rightsRequestsEmpty;
+
+  /// #1915 rights requests: rightsRequestNew
+  ///
+  /// In en, this message translates to:
+  /// **'Make a request'**
+  String get rightsRequestNew;
+
+  /// #1915 rights requests: rightsRequestAsk
+  ///
+  /// In en, this message translates to:
+  /// **'What do you ask the space?'**
+  String get rightsRequestAsk;
+
+  /// #1915 rights requests: rightsRequestDetails
+  ///
+  /// In en, this message translates to:
+  /// **'Details (optional)'**
+  String get rightsRequestDetails;
+
+  /// #1915 rights requests: rightsRequestSend
+  ///
+  /// In en, this message translates to:
+  /// **'Send the request'**
+  String get rightsRequestSend;
+
+  /// #1915 rights requests: rightsRequestSent
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent — the space answers by {date}.'**
+  String rightsRequestSent(String date);
+
+  /// #1915 rights requests: rightsRequestFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The request could not be sent. Please try again.'**
+  String get rightsRequestFailed;
+
+  /// #1915 rights requests: rightsKindAccess
+  ///
+  /// In en, this message translates to:
+  /// **'See a copy of my data'**
+  String get rightsKindAccess;
+
+  /// #1915 rights requests: rightsKindPortability
+  ///
+  /// In en, this message translates to:
+  /// **'Take my data elsewhere (machine-readable)'**
+  String get rightsKindPortability;
+
+  /// #1915 rights requests: rightsKindRectification
+  ///
+  /// In en, this message translates to:
+  /// **'Correct my data'**
+  String get rightsKindRectification;
+
+  /// #1915 rights requests: rightsKindRestriction
+  ///
+  /// In en, this message translates to:
+  /// **'Restrict how my data is used'**
+  String get rightsKindRestriction;
+
+  /// #1915 rights requests: rightsKindObjection
+  ///
+  /// In en, this message translates to:
+  /// **'Object to a use of my data'**
+  String get rightsKindObjection;
+
+  /// #1915 rights requests: rightsKindErasure
+  ///
+  /// In en, this message translates to:
+  /// **'Erase my data'**
+  String get rightsKindErasure;
+
+  /// #1915 rights requests: rightsStatusReceived
+  ///
+  /// In en, this message translates to:
+  /// **'Received — answer due by {date}'**
+  String rightsStatusReceived(String date);
+
+  /// #1915 rights requests: rightsStatusExtended
+  ///
+  /// In en, this message translates to:
+  /// **'Extended to {date}: {reason}'**
+  String rightsStatusExtended(String date, String reason);
+
+  /// #1915 rights requests: rightsStatusCompleted
+  ///
+  /// In en, this message translates to:
+  /// **'Answered — the space recorded what it did'**
+  String get rightsStatusCompleted;
+
+  /// #1915 rights requests: rightsStatusRefused
+  ///
+  /// In en, this message translates to:
+  /// **'Refused: {reason}'**
+  String rightsStatusRefused(String reason);
+
+  /// #1915 rights requests: erasurePreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What erasing does here'**
+  String get erasurePreviewTitle;
+
+  /// #1915 rights requests: erasurePreviewRemoved
+  ///
+  /// In en, this message translates to:
+  /// **'Removed'**
+  String get erasurePreviewRemoved;
+
+  /// #1915 rights requests: erasurePreviewKept
+  ///
+  /// In en, this message translates to:
+  /// **'Kept, and why'**
+  String get erasurePreviewKept;
+
+  /// #1915 rights requests: erasurePreviewOutside
+  ///
+  /// In en, this message translates to:
+  /// **'Outside this installation'**
+  String get erasurePreviewOutside;
+
+  /// #1915 rights requests: erasureStoreMessages
+  ///
+  /// In en, this message translates to:
+  /// **'Messages you sent'**
+  String get erasureStoreMessages;
+
+  /// #1915 rights requests: erasureStoreAnswers
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers to the space\'s questions'**
+  String get erasureStoreAnswers;
+
+  /// #1915 rights requests: erasureStoreProfile
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile (when this is your last space)'**
+  String get erasureStoreProfile;
+
+  /// #1915 rights requests: erasureStoreOpenBookings
+  ///
+  /// In en, this message translates to:
+  /// **'Open bookings — cancelled'**
+  String get erasureStoreOpenBookings;
+
+  /// #1915 rights requests: erasureStoreAccounts
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices and ledger — accounting evidence, kept for the statutory period; issued documents are not rewritten'**
+  String get erasureStoreAccounts;
+
+  /// #1915 rights requests: erasureStorePastBookings
+  ///
+  /// In en, this message translates to:
+  /// **'Past bookings — the space\'s occupancy record'**
+  String get erasureStorePastBookings;
+
+  /// #1915 rights requests: erasureStoreMembership
+  ///
+  /// In en, this message translates to:
+  /// **'The membership row — links the records kept; pseudonymous, not anonymous'**
+  String get erasureStoreMembership;
+
+  /// #1915 rights requests: erasureStoreHeldAnswers
+  ///
+  /// In en, this message translates to:
+  /// **'Answers under a retention hold the space documented'**
+  String get erasureStoreHeldAnswers;
+
+  /// #1915 rights requests: erasureStoreOtherInstallations
+  ///
+  /// In en, this message translates to:
+  /// **'Another DesKilo installation is a separate controller — ask it directly'**
+  String get erasureStoreOtherInstallations;
+
+  /// #1915 rights requests: erasureStoreDeviceCaches
+  ///
+  /// In en, this message translates to:
+  /// **'Copies on your devices — cleared when you sign out of each'**
+  String get erasureStoreDeviceCaches;
+
+  /// #1915 rights requests: erasureStoreBackups
+  ///
+  /// In en, this message translates to:
+  /// **'The operator\'s backups — expire on their rotation'**
+  String get erasureStoreBackups;
+
   /// #2085 giving roles: featureRoleAssignmentTitle
   ///
   /// In en, this message translates to:

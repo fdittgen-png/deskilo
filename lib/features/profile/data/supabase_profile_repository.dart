@@ -9,6 +9,7 @@ import '../domain/profile_projection.dart';
 import '../domain/personal_info.dart';
 import '../domain/profile_repository.dart';
 import '../domain/privacy_notice.dart';
+import '../domain/rights_request.dart';
 
 class SupabaseProfileRepository implements ProfileRepository {
   SupabaseProfileRepository(this._client);
@@ -161,6 +162,40 @@ class SupabaseProfileRepository implements ProfileRepository {
             workspaceId: workspaceId,
           )
         : PrivacyNotices.none;
+  }
+
+  @override
+  Future<RightsRequest> submitRightsRequest({
+    required String workspaceId,
+    required String kind,
+    required String details,
+    required String clientRequestId,
+  }) async {
+    final row = await _client.rpc<dynamic>('submit_rights_request', params: {
+      'p_workspace_id': workspaceId,
+      'p_kind': kind,
+      'p_details': details,
+      'p_client_request_id': clientRequestId,
+    });
+    return RightsRequest.fromJson(Map<String, dynamic>.from(row as Map));
+  }
+
+  @override
+  Future<List<RightsRequest>> fetchMyRightsRequests() async {
+    final rows = await _client.rpc<dynamic>('my_rights_requests');
+    return [
+      for (final row in (rows as List? ?? const []))
+        RightsRequest.fromJson(Map<String, dynamic>.from(row as Map)),
+    ];
+  }
+
+  @override
+  Future<ErasurePreview> previewMyErasure(String workspaceId) async {
+    final row = await _client.rpc<dynamic>('preview_my_erasure',
+        params: {'p_workspace_id': workspaceId});
+    return row is Map
+        ? ErasurePreview.fromJson(Map<String, dynamic>.from(row))
+        : const ErasurePreview();
   }
 
   @override

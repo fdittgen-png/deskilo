@@ -13079,6 +13079,128 @@ class AppLocalizationsEs extends AppLocalizations {
       'Falta el NIF-IVA del cliente — una factura con inversión del sujeto pasivo debe indicarlo.';
 
   @override
+  String get rightsRequestsTitle => 'Mis solicitudes de derechos';
+
+  @override
+  String get rightsRequestsHint =>
+      'Pide al espacio una copia, una rectificación, una limitación o la supresión — respuesta en un mes natural.';
+
+  @override
+  String get rightsRequestsEmpty => 'Aún no hay solicitudes.';
+
+  @override
+  String get rightsRequestNew => 'Hacer una solicitud';
+
+  @override
+  String get rightsRequestAsk => '¿Qué pides al espacio?';
+
+  @override
+  String get rightsRequestDetails => 'Detalles (opcional)';
+
+  @override
+  String get rightsRequestSend => 'Enviar la solicitud';
+
+  @override
+  String rightsRequestSent(String date) {
+    return 'Solicitud enviada — el espacio responde antes del $date.';
+  }
+
+  @override
+  String get rightsRequestFailed =>
+      'No se pudo enviar la solicitud. Inténtalo de nuevo.';
+
+  @override
+  String get rightsKindAccess => 'Ver una copia de mis datos';
+
+  @override
+  String get rightsKindPortability =>
+      'Llevar mis datos a otro sitio (legible por máquina)';
+
+  @override
+  String get rightsKindRectification => 'Rectificar mis datos';
+
+  @override
+  String get rightsKindRestriction => 'Limitar el uso de mis datos';
+
+  @override
+  String get rightsKindObjection => 'Oponerme a un uso de mis datos';
+
+  @override
+  String get rightsKindErasure => 'Suprimir mis datos';
+
+  @override
+  String rightsStatusReceived(String date) {
+    return 'Recibida — respuesta antes del $date';
+  }
+
+  @override
+  String rightsStatusExtended(String date, String reason) {
+    return 'Prorrogada hasta el $date: $reason';
+  }
+
+  @override
+  String get rightsStatusCompleted =>
+      'Atendida — el espacio registró lo que hizo';
+
+  @override
+  String rightsStatusRefused(String reason) {
+    return 'Denegada: $reason';
+  }
+
+  @override
+  String get erasurePreviewTitle => 'Qué hace la supresión aquí';
+
+  @override
+  String get erasurePreviewRemoved => 'Suprimido';
+
+  @override
+  String get erasurePreviewKept => 'Conservado, y por qué';
+
+  @override
+  String get erasurePreviewOutside => 'Fuera de esta instalación';
+
+  @override
+  String get erasureStoreMessages => 'Mensajes que enviaste';
+
+  @override
+  String get erasureStoreAnswers =>
+      'Tus respuestas a las preguntas del espacio';
+
+  @override
+  String get erasureStoreProfile => 'Tu perfil (si es tu último espacio)';
+
+  @override
+  String get erasureStoreOpenBookings => 'Reservas abiertas — canceladas';
+
+  @override
+  String get erasureStoreAccounts =>
+      'Facturas y libro — prueba contable, conservada durante el plazo legal; los documentos emitidos no se reescriben';
+
+  @override
+  String get erasureStorePastBookings =>
+      'Reservas pasadas — el registro de ocupación del espacio';
+
+  @override
+  String get erasureStoreMembership =>
+      'La fila de membresía — enlaza los registros conservados; seudónima, no anónima';
+
+  @override
+  String get erasureStoreHeldAnswers =>
+      'Respuestas bajo una obligación de conservación documentada por el espacio';
+
+  @override
+  String get erasureStoreOtherInstallations =>
+      'Otra instalación de DesKilo es un responsable distinto — pregúntale directamente';
+
+  @override
+  String get erasureStoreDeviceCaches =>
+      'Copias en tus dispositivos — se borran al cerrar sesión en cada uno';
+
+  @override
+  String get erasureStoreBackups =>
+      'Copias de seguridad del operador — caducan según su rotación';
+
+  @override
   String get featureRoleAssignmentTitle => 'Asignación de roles';
 
   @override

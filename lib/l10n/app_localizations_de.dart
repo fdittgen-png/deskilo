@@ -13100,6 +13100,130 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die USt-IdNr. des Kunden fehlt — eine Reverse-Charge-Rechnung muss sie nennen.';
 
   @override
+  String get rightsRequestsTitle => 'Meine Anträge auf Betroffenenrechte';
+
+  @override
+  String get rightsRequestsHint =>
+      'Bitten Sie den Bereich um eine Kopie, Berichtigung, Einschränkung oder Löschung — Antwort innerhalb eines Kalendermonats.';
+
+  @override
+  String get rightsRequestsEmpty => 'Noch kein Antrag.';
+
+  @override
+  String get rightsRequestNew => 'Antrag stellen';
+
+  @override
+  String get rightsRequestAsk => 'Was beantragen Sie beim Bereich?';
+
+  @override
+  String get rightsRequestDetails => 'Einzelheiten (optional)';
+
+  @override
+  String get rightsRequestSend => 'Antrag senden';
+
+  @override
+  String rightsRequestSent(String date) {
+    return 'Antrag gesendet — der Bereich antwortet bis zum $date.';
+  }
+
+  @override
+  String get rightsRequestFailed =>
+      'Der Antrag konnte nicht gesendet werden. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get rightsKindAccess => 'Eine Kopie meiner Daten erhalten';
+
+  @override
+  String get rightsKindPortability => 'Meine Daten mitnehmen (maschinenlesbar)';
+
+  @override
+  String get rightsKindRectification => 'Meine Daten berichtigen';
+
+  @override
+  String get rightsKindRestriction =>
+      'Die Verarbeitung meiner Daten einschränken';
+
+  @override
+  String get rightsKindObjection =>
+      'Einer Verwendung meiner Daten widersprechen';
+
+  @override
+  String get rightsKindErasure => 'Meine Daten löschen';
+
+  @override
+  String rightsStatusReceived(String date) {
+    return 'Eingegangen — Antwort fällig bis $date';
+  }
+
+  @override
+  String rightsStatusExtended(String date, String reason) {
+    return 'Verlängert bis $date: $reason';
+  }
+
+  @override
+  String get rightsStatusCompleted =>
+      'Beantwortet — der Bereich hat festgehalten, was er getan hat';
+
+  @override
+  String rightsStatusRefused(String reason) {
+    return 'Abgelehnt: $reason';
+  }
+
+  @override
+  String get erasurePreviewTitle => 'Was die Löschung hier bewirkt';
+
+  @override
+  String get erasurePreviewRemoved => 'Gelöscht';
+
+  @override
+  String get erasurePreviewKept => 'Aufbewahrt, und warum';
+
+  @override
+  String get erasurePreviewOutside => 'Außerhalb dieser Installation';
+
+  @override
+  String get erasureStoreMessages => 'Von Ihnen gesendete Nachrichten';
+
+  @override
+  String get erasureStoreAnswers =>
+      'Ihre Antworten auf die Fragen des Bereichs';
+
+  @override
+  String get erasureStoreProfile =>
+      'Ihr Profil (wenn dies Ihr letzter Bereich ist)';
+
+  @override
+  String get erasureStoreOpenBookings => 'Offene Buchungen — storniert';
+
+  @override
+  String get erasureStoreAccounts =>
+      'Rechnungen und Buchungen — Buchhaltungsbelege, für die gesetzliche Frist aufbewahrt; ausgestellte Dokumente werden nicht geändert';
+
+  @override
+  String get erasureStorePastBookings =>
+      'Vergangene Buchungen — der Belegungsnachweis des Bereichs';
+
+  @override
+  String get erasureStoreMembership =>
+      'Die Mitgliedschaftszeile — verknüpft die aufbewahrten Daten; pseudonym, nicht anonym';
+
+  @override
+  String get erasureStoreHeldAnswers =>
+      'Antworten unter einer vom Bereich dokumentierten Aufbewahrungspflicht';
+
+  @override
+  String get erasureStoreOtherInstallations =>
+      'Eine andere DesKilo-Installation ist ein eigener Verantwortlicher — wenden Sie sich direkt an sie';
+
+  @override
+  String get erasureStoreDeviceCaches =>
+      'Kopien auf Ihren Geräten — beim Abmelden auf jedem gelöscht';
+
+  @override
+  String get erasureStoreBackups =>
+      'Sicherungen des Betreibers — laufen nach ihrem Turnus ab';
+
+  @override
   String get featureRoleAssignmentTitle => 'Rollen vergeben';
 
   @override
