@@ -3820,7 +3820,7 @@
   "eventTypeInvoiceReminder": "Recordatorio de pago",
   "eventInvoiceReminderLine": "Recordatorio {level}: factura {number} — {amount} pendientes",
   "dunningAutomatic": "Recordatorios automáticos",
-  "dunningAutomaticHint": "Una vez al día, las facturas abiertas más allá del plazo reciben solas su siguiente nivel de recordatorio — un aviso en el feed del miembro y una notificación. Desactivado: envías cada recordatorio tú mismo.",
+  "dunningAutomaticHint": "Una vez al día, las facturas que superan su plazo de pago registrado pasan solas al siguiente nivel de recordatorio — por el importe aún pendiente, nunca mientras un pago está pendiente o la factura está en suspenso. Las facturas sin plazo registrado quedan en tus manos. Desactivado: envías cada recordatorio tú mismo.",
   "eventTypePriceNegotiation": "Negociación de precios",
   "eventPriceNegotiationLine": "{actor} propone condiciones para {member}: {terms}",
   "eventPriceNegotiationItems": "{count} artículos",

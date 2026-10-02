@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/help/help_hint_providers.dart';
-import '../../../../core/help/help_tips.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -18,6 +18,64 @@ VoidCallback? gettingStartedReopen(WidgetRef ref, String? key) {
   final dismissed = ref.watch(dismissedHelpHintsProvider).value;
   if (key == null || dismissed == null || !dismissed.contains(key)) return null;
   return () => ref.read(dismissedHelpHintsProvider.notifier).restore(key);
+}
+
+/// The hint the Get started card would show now, or null when it shows
+/// nothing (flag off, dismissed, still loading, or no card for these
+/// facts). The card and [ReserveHelpHost] ask the same question.
+GettingStartedHint? visibleGettingStartedHint(
+  WidgetRef ref, {
+  required GettingStartedFacts facts,
+  required String? seenKey,
+  String? workspaceId,
+}) {
+  final dismissed = ref.watch(dismissedHelpHintsProvider).value;
+  if (dismissed == null) return null;
+  final standing = facts.membership.known ? facts.membership.value : null;
+  // Only someone who may configure the space asks; a refusal reads as
+  // no answer, and no answer guides nobody.
+  final readiness = workspaceId != null &&
+          (standing == MembershipStanding.owner ||
+              standing == MembershipStanding.administrator)
+      ? ref.watch(workspaceReadinessProvider(workspaceId)).value
+      : null;
+  final hint = chooseGettingStartedHint(facts,
+      dismissed: seenKey == null || dismissed.contains(seenKey),
+      ownerGuidance: readinessGuidance(readiness));
+  return hint != null && hint.showsCard ? hint : null;
+}
+
+/// #1853 A — the Reserve hub's ONE help slot. The Get started card names
+/// the current next step, so it outranks the generic tip carousel; the
+/// carousel takes the slot only when there is no next step to show.
+/// Each keeps its own flag and its own dismissal key — nothing is merged
+/// or re-enabled — and the two never render together.
+class ReserveHelpHost extends ConsumerWidget {
+  const ReserveHelpHost({
+    required this.facts,
+    required this.seenKey,
+    required this.onChooseTime,
+    this.workspaceId,
+    super.key,
+  });
+
+  final GettingStartedFacts facts;
+  final String? seenKey;
+  final VoidCallback onChooseTime;
+  final String? workspaceId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final next = visibleGettingStartedHint(ref,
+        facts: facts, seenKey: seenKey, workspaceId: workspaceId);
+    if (next == null) return const HelpHint(HelpHintId.reserve);
+    return GettingStartedCard(
+      facts: facts,
+      seenKey: seenKey,
+      onChooseTime: onChooseTime,
+      workspaceId: workspaceId,
+    );
+  }
 }
 
 class GettingStartedCard extends ConsumerWidget {
@@ -41,21 +99,9 @@ class GettingStartedCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final seenKey = this.seenKey;
-    final dismissed = ref.watch(dismissedHelpHintsProvider).value;
-    if (dismissed == null) return const SizedBox.shrink();
-    final standing = facts.membership.known ? facts.membership.value : null;
-    final workspaceId = this.workspaceId;
-    // Only someone who may configure the space asks; a refusal reads as
-    // no answer, and no answer guides nobody.
-    final readiness = workspaceId != null &&
-            (standing == MembershipStanding.owner ||
-                standing == MembershipStanding.administrator)
-        ? ref.watch(workspaceReadinessProvider(workspaceId)).value
-        : null;
-    final hint = chooseGettingStartedHint(facts,
-      dismissed: seenKey == null || dismissed.contains(seenKey),
-      ownerGuidance: readinessGuidance(readiness));
-    if (hint == null || !hint.showsCard) return const SizedBox.shrink();
+    final hint = visibleGettingStartedHint(ref,
+        facts: facts, seenKey: seenKey, workspaceId: workspaceId);
+    if (hint == null) return const SizedBox.shrink();
 
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;

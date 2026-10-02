@@ -6177,7 +6177,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get dunningAutomaticHint =>
-      'Una volta al giorno, le fatture aperte oltre il termine ricevono da sole il livello di sollecito successivo — un avviso nel feed del membro e una notifica. Disattivato: invii ogni sollecito tu stesso.';
+      'Una volta al giorno, le fatture oltre la scadenza registrata passano da sole al livello di sollecito successivo — per l\'importo ancora dovuto, mai mentre un pagamento è in attesa o la fattura è sospesa. Le fatture senza scadenza registrata restano a te. Disattivato: invii tu ogni sollecito.';
 
   @override
   String get eventTypePriceNegotiation => 'Negoziazione di prezzo';

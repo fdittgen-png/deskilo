@@ -320,7 +320,7 @@
  "dunningFirstDays": "Jours avant la 1re relance (délai de paiement)",
  "dunningBetweenDays": "Jours entre les relances",
  "dunningAutomatic": "Relances automatiques",
- "dunningAutomaticDesc": "Chaque matin — et dès qu'un propriétaire ou admin ouvre Finances — les factures ouvertes au-delà du délai reçoivent leur niveau de relance suivant : alerte dans le fil du membre et notification. Décoché : la relance reste un geste manuel.",
+ "dunningAutomaticDesc": "Chaque matin — et dès qu'un propriétaire ou un admin ouvre Finances — les factures dont l'échéance enregistrée est dépassée passent au niveau de relance suivant, pour le montant restant dû et jamais pendant qu'un paiement est en attente ou que la facture est suspendue. Décoché (par défaut) : une relance reste un geste manuel.",
  "einvoicePlatform": "Plateforme de facturation électronique",
  "einvoiceHint": "Là où DesKilo dépose vos factures EN 16931 : une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Le jeton est stocké côté serveur et n'en ressort jamais — ne le mettez ici que si vous remplissez ce document en privé.",
  "einvoiceUrl": "URL de dépôt",

@@ -320,7 +320,7 @@
  "dunningFirstDays": "Tage bis zur 1. Mahnung (Zahlungsziel)",
  "dunningBetweenDays": "Tage zwischen den Mahnungen",
  "dunningAutomatic": "Automatische Mahnungen",
- "dunningAutomaticDesc": "Jeden Morgen — und sobald ein Inhaber oder Admin Finanzen öffnet — erhalten offene Rechnungen nach Ablauf der Frist ihre nächste Mahnstufe: eine Meldung im Feed des Mitglieds und eine Benachrichtigung. Nicht angekreuzt: Die Mahnung bleibt ein manueller Schritt.",
+ "dunningAutomaticDesc": "Jeden Morgen — und sobald ein Eigentümer oder Admin Finanzen öffnet — erhalten Rechnungen nach Ablauf ihrer erfassten Zahlungsfrist die nächste Mahnstufe, für den noch offenen Betrag und nie während eine Zahlung geprüft wird oder die Rechnung angehalten ist. Nicht angehakt (Standard): Eine Mahnung bleibt eine manuelle Handlung.",
  "einvoicePlatform": "E-Rechnungs-Plattform",
  "einvoiceHint": "Wohin DesKilo Ihre EN-16931-Rechnungen liefert: eine zugelassene Plattform, ein Peppol-Zugangspunkt, eine nationale Plattform. Das Token wird auf dem Server gespeichert und verlässt ihn nie — tragen Sie es hier nur ein, wenn Sie dieses Dokument privat ausfüllen.",
  "einvoiceUrl": "Upload-URL",
