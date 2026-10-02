@@ -1,0 +1,38 @@
+{
+  "biTitle": "Análisis de negocio",
+  "@biTitle": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaOverview": "Resumen",
+  "@biAreaOverview": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaCapacity": "Espacios y capacidad",
+  "@biAreaCapacity": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaPeople": "Personas y negocio",
+  "@biAreaPeople": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaFinance": "Finanzas",
+  "@biAreaFinance": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaTreasury": "Tesorería",
+  "@biAreaTreasury": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaOperations": "Operaciones",
+  "@biAreaOperations": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaPlanning": "Planificación",
+  "@biAreaPlanning": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaSaved": "Análisis guardados",
+  "@biAreaSaved": {
+    "description": "#1923 Web-BI area"
+  }
+}

@@ -14631,6 +14631,33 @@ class AppLocalizationsFr extends AppLocalizations {
       'Motif d\'exonération (imprimé sur la facture)';
 
   @override
+  String get biTitle => 'Analyse d’activité';
+
+  @override
+  String get biAreaOverview => 'Vue d’ensemble';
+
+  @override
+  String get biAreaCapacity => 'Espaces et capacité';
+
+  @override
+  String get biAreaPeople => 'Personnes et activité';
+
+  @override
+  String get biAreaFinance => 'Finances';
+
+  @override
+  String get biAreaTreasury => 'Trésorerie';
+
+  @override
+  String get biAreaOperations => 'Exploitation';
+
+  @override
+  String get biAreaPlanning => 'Planification';
+
+  @override
+  String get biAreaSaved => 'Analyses enregistrées';
+
+  @override
   String get assistantPrefix => 'Assistant';
 
   @override

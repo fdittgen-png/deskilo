@@ -125,8 +125,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/workspace/domain/workspace_xml.dart` | 964 |
 | `lib/features/members/presentation/screens/member_page.dart` | 955 |
 | `lib/features/members/presentation/screens/directory_screen.dart` | 946 |
+| `lib/app/router.dart` | 892 |
 | `lib/features/money/presentation/widgets/bill_view.dart` | 892 |
-| `lib/app/router.dart` | 877 |
 | `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 871 |
 | `lib/features/reservations/presentation/widgets/space_scan.dart` | 864 |
 | `lib/features/workspace/presentation/screens/availability_screen.dart` | 860 |

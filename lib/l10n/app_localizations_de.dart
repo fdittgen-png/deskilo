@@ -14609,6 +14609,33 @@ class AppLocalizationsDe extends AppLocalizations {
       'Befreiungsgrund (auf der Rechnung gedruckt)';
 
   @override
+  String get biTitle => 'Geschäftsanalyse';
+
+  @override
+  String get biAreaOverview => 'Überblick';
+
+  @override
+  String get biAreaCapacity => 'Flächen und Kapazität';
+
+  @override
+  String get biAreaPeople => 'Personen und Geschäft';
+
+  @override
+  String get biAreaFinance => 'Finanzen';
+
+  @override
+  String get biAreaTreasury => 'Liquidität';
+
+  @override
+  String get biAreaOperations => 'Betrieb';
+
+  @override
+  String get biAreaPlanning => 'Planung';
+
+  @override
+  String get biAreaSaved => 'Gespeicherte Analysen';
+
+  @override
   String get assistantPrefix => 'Assistent';
 
   @override

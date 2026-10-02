@@ -76,6 +76,9 @@ import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/reservations/presentation/screens/reserve_screen.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/presentation/screens/availability_screen.dart';
+import '../features/workspace/presentation/screens/bi_screen.dart';
+import '../features/workspace/domain/bi_modules.dart';
+import '../core/navigation/navigation_style.dart';
 import '../features/workspace/presentation/screens/features_screen.dart';
 import '../features/workspace/presentation/screens/members_screen.dart';
 import '../features/workspace/domain/member.dart';
@@ -811,6 +814,18 @@ GoRouter router(Ref ref) {
           return allowed ? null : '/messages';
         },
         builder: (context, state) => const ValidationSettingsScreen(),
+      ),
+      // #1923 — Web-BI: web build only, and only with a module this
+      // reader may see; a native link is turned away before any fetch.
+      GoRoute(
+        path: '/bi',
+        redirect: (context, state) => biAvailable(
+                platformIsWeb: ref.read(platformIsWebProvider),
+                features: ref.read(enabledFeaturesSyncProvider),
+                permissions: ref.read(myPermissionsProvider))
+            ? null
+            : '/messages',
+        builder: (context, state) => const BiScreen(),
       ),
       GoRoute(
         path: '/availability',
