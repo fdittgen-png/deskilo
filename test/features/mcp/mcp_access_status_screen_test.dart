@@ -142,22 +142,35 @@ void main() {
     expect(_key('mcp-overview-title'), findsNothing);
   });
 
-  testWidgets('an unlinked identity is the next step, and the button opens '
-      'linked accounts', (tester) async {
-    await _pump(
-      tester,
-      standardTestOverrides(
-        identityBinding: _identity(
-          IdentityBindingState.unlinked,
-          McpEligibility.noIdentity,
-        ),
-      ),
-    );
+  testWidgets('an unlinked identity is the next step, and the button '
+      'confirms it here — not the sign-in methods page', (tester) async {
+    final identity = _identity(
+      IdentityBindingState.unlinked,
+      McpEligibility.noIdentity,
+    )..finalizeAnswer =
+        const IdentityBindingStatus(state: IdentityBindingState.verified);
+    await _pump(tester, standardTestOverrides(identityBinding: identity));
     expect(_key('mcp-status-identity-unlinked'), findsOneWidget);
     expect(_key('mcp-status-next-linkIdentity'), findsOneWidget);
+    // The role cannot be judged before approval: not "unknown".
+    expect(find.text('After the step above'), findsWidgets);
     await tester.tap(_key('mcp-status-link-identity'));
     await tester.pumpAndSettle();
-    expect(_key('linked-page'), findsOneWidget);
+    expect(identity.finalizeCalls, 1);
+    expect(_key('linked-page'), findsNothing);
+    expect(_key('mcp-status-identity-verified'), findsOneWidget);
+  });
+
+  testWidgets('a refused confirmation says why', (tester) async {
+    final identity = _identity(
+      IdentityBindingState.unlinked,
+      McpEligibility.noIdentity,
+    )..finalizeAnswer =
+        const IdentityBindingStatus(state: IdentityBindingState.ineligible);
+    await _pump(tester, standardTestOverrides(identityBinding: identity));
+    await tester.tap(_key('mcp-status-link-identity'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('confirm your e-mail address'), findsOneWidget);
   });
 
   testWidgets('a server that predates the answers reads unknown and '

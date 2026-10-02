@@ -1,5 +1,7 @@
 {
   "@@locale": "es",
+  "bookingSpaceChainTaken": "Este espacio, o un espacio que lo contiene, ya está reservado en ese periodo.",
+  "bookingNoLongerCheckedIn": "Esta reserva ya no está registrada — se cerró mientras tanto.",
   "reserveMonthView": "Mes",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Reserva recurrente",

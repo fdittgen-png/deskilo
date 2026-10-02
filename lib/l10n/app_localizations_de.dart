@@ -371,7 +371,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Speichern fehlgeschlagen. Nichts wurde geändert; versuchen Sie es erneut.';
 
   @override
-  String get assistantSetupLinkIdentity => 'Meine Identität verknüpfen';
+  String get assistantSetupLinkIdentity => 'Meine Identität bestätigen';
 
   @override
   String get assistantSetupTurnOn => 'Einschalten';
@@ -8313,7 +8313,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mcpEligibleNoIdentity =>
-      'Ihr Konto ist auf dieser Datenbank nicht mit einer bestätigten Identität verknüpft.';
+      'Ihre Identität ist für Assistenten auf dieser Datenbank noch nicht bestätigt.';
 
   @override
   String get mcpEligibleNot =>
@@ -8392,7 +8392,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpStatusTitle => 'Wo Sie hier stehen';
 
   @override
-  String get mcpStatusIdentity => 'Identität';
+  String get mcpStatusIdentity => 'Identität für Assistenten';
 
   @override
   String get mcpStatusEligibility => 'Freigabe der Datenbank';
@@ -8413,7 +8413,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpStateVerified => 'Bestätigt';
 
   @override
-  String get mcpStateUnlinked => 'Nicht verknüpft';
+  String get mcpStateUnlinked => 'Nicht bestätigt';
 
   @override
   String get mcpStateNotRequested => 'Nicht beantragt';
@@ -8456,7 +8456,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mcpNextLinkIdentity =>
-      'Als Nächstes: Sie verknüpfen Ihr Konto mit der Identität dieser Datenbank.';
+      'Nächster Schritt: Bestätigen Sie Ihre Identität für Assistenten auf dieser Datenbank — ein Tippen unten.';
 
   @override
   String get mcpNextRequestEligibility =>
@@ -8498,6 +8498,20 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get mcpReviewSecondFactor =>
       'Diese Datenbank verlangt Ihren zweiten Faktor in ihrer eigenen Sitzung. Es wurde nichts entschieden.';
+
+  @override
+  String get mcpStatusConfirmIdentity => 'Meine Identität bestätigen';
+
+  @override
+  String get mcpStateAfterPrevious => 'Nach dem vorherigen Schritt';
+
+  @override
+  String get mcpIdentityIneligible =>
+      'Dieses Konto kann noch nicht bestätigt werden — bestätigen Sie zuerst Ihre E-Mail-Adresse oder melden Sie sich mit einem Anbieter an.';
+
+  @override
+  String get mcpIdentityConflict =>
+      'Ein anderes Konto hält diese Identität hier bereits — ein Datenbankadministrator kann das klären.';
 
   @override
   String get mcpUsageWorkspaceTitle =>
@@ -12198,6 +12212,51 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
 
   @override
+  String get reminderHistoryTitle => 'Mahnverlauf';
+
+  @override
+  String get reminderHistoryRefresh => 'Zustellung erneut prüfen';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Stufe $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Vorbereitet';
+
+  @override
+  String get reminderStatusQueued => 'An den Benachrichtigungsdienst übergeben';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Vom Benachrichtigungsdienst angenommen — kein Nachweis, dass sie gelesen wurde';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Vom Absender geteilt — seine Angabe, keine Empfangsbestätigung';
+
+  @override
+  String get reminderStatusFailed => 'Nicht zugestellt';
+
+  @override
+  String get reminderStatusUnknown =>
+      'Keine Antwort des Benachrichtigungsdienstes';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Vor der Zustellverfolgung erfasst — unbekannt';
+
+  @override
+  String get reminderOriginManual => 'von Hand';
+
+  @override
+  String get reminderOriginAutomatic => 'automatisch';
+
+  @override
+  String get reminderOriginLegacy => 'früher';
+
+  @override
   String get reportGuideTitle => 'Platzhalter und Markup';
 
   @override
@@ -12625,6 +12684,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportFieldGroupTexts => 'Ihre Texte';
+
+  @override
+  String get bookingSpaceChainTaken =>
+      'Dieser Platz oder ein Bereich, zu dem er gehört, ist in diesem Zeitraum bereits reserviert.';
+
+  @override
+  String get bookingNoLongerCheckedIn =>
+      'Diese Reservierung ist nicht mehr eingecheckt — sie wurde inzwischen ausgecheckt oder abgeschlossen.';
 
   @override
   String get reserveMonthView => 'Monat';
