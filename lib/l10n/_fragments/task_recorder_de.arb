@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "featureTaskRecorderTitle": "Aufgabenrekorder",
+  "@featureTaskRecorderTitle": {
+    "description": "#1865 task recorder: the feature's name"
+  },
+  "featureTaskRecorderDesc": "Erlaubt, die Schritte einer Aufgabe auf den Bildschirmen dieses Arbeitsbereichs auf dem eigenen Gerät aufzuzeichnen, sie zu prüfen und eine Datei ohne eingegebene Werte zu exportieren. Nichts wird hochgeladen. Aus: Hier zeichnet niemand auf.",
+  "@featureTaskRecorderDesc": {
+    "description": "#1865 task recorder: the feature's description"
+  }
+}

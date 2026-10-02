@@ -13754,6 +13754,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get supportDemo => 'Demo: simulierter lokaler Kontext';
 
   @override
+  String get featureTaskRecorderTitle => 'Aufgabenrekorder';
+
+  @override
+  String get featureTaskRecorderDesc =>
+      'Erlaubt, die Schritte einer Aufgabe auf den Bildschirmen dieses Arbeitsbereichs auf dem eigenen Gerät aufzuzeichnen, sie zu prüfen und eine Datei ohne eingegebene Werte zu exportieren. Nichts wird hochgeladen. Aus: Hier zeichnet niemand auf.';
+
+  @override
   String get capabilityMultiApproval => 'Zwei oder mehr Freigaben';
 
   @override

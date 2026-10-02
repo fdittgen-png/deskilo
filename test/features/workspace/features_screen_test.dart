@@ -62,7 +62,9 @@ void main() {
     // #2051 — holidayImport is the thirty-second: it writes closure days.
     // #1918 — capacityKpi is the thirty-third: a management figure.
     // #1869 — accountingBook is the thirty-fourth: a finance decision.
-    expect(onCount, featureManifest.length - 34);
+    // #1865 — taskRecorder is the thirty-fifth: recording is offered
+    // deliberately.
+    expect(onCount, featureManifest.length - 35);
   });
 
   testWidgets(

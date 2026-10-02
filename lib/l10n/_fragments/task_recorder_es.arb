@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "featureTaskRecorderTitle": "Grabador de tareas",
+  "@featureTaskRecorderTitle": {
+    "description": "#1865 task recorder: the feature's name"
+  },
+  "featureTaskRecorderDesc": "Permite grabar los pasos de una tarea en las pantallas de este espacio, en el propio dispositivo, revisarlos y exportar un archivo sin ningún valor escrito. No se envía nada. Desactivado: nadie graba aquí.",
+  "@featureTaskRecorderDesc": {
+    "description": "#1865 task recorder: the feature's description"
+  }
+}

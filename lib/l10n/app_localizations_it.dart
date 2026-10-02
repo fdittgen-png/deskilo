@@ -13750,6 +13750,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get supportDemo => 'Demo: contesto locale simulato';
 
   @override
+  String get featureTaskRecorderTitle => 'Registratore di attività';
+
+  @override
+  String get featureTaskRecorderDesc =>
+      'Consente di registrare i passaggi di un\'attività sulle schermate di questo spazio, sul proprio dispositivo, rivederli ed esportare un file senza alcun valore digitato. Nulla viene inviato. Disattivato: qui nessuno registra.';
+
+  @override
   String get capabilityMultiApproval => 'Due o più approvazioni';
 
   @override

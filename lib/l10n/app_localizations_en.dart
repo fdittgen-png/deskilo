@@ -13625,6 +13625,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportDemo => 'Demo: simulated local context';
 
   @override
+  String get featureTaskRecorderTitle => 'Task recorder';
+
+  @override
+  String get featureTaskRecorderDesc =>
+      'Lets a person record the steps of a task on this workspace\'s screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here.';
+
+  @override
   String get capabilityMultiApproval => 'Two or more approvals';
 
   @override

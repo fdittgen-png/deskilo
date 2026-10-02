@@ -1,0 +1,125 @@
+{
+  "format": "deskilo.task-recording",
+  "schema_version": 1,
+  "action_contract_version": 1,
+  "platform": "android",
+  "kind": "source",
+  "title": "Book a desk",
+  "prerequisites": [
+    {
+      "id": "signed_in"
+    },
+    {
+      "id": "starts_on",
+      "value": "reservations.reserve"
+    }
+  ],
+  "segments": [
+    {
+      "index": 0,
+      "start_ms": 0,
+      "end_ms": 4500
+    }
+  ],
+  "steps": [
+    {
+      "seq": 1,
+      "segment": 0,
+      "elapsed_ms": 400,
+      "kind": "action",
+      "surface": "reservations.reserve",
+      "action": "reservations.open_reserve",
+      "action_version": 1
+    },
+    {
+      "seq": 2,
+      "segment": 0,
+      "elapsed_ms": 800,
+      "kind": "action",
+      "surface": "reservations.reserve",
+      "action": "reservations.select_date",
+      "action_version": 1,
+      "payload": {
+        "date_relation": "2026-10-03 for Zelda"
+      }
+    },
+    {
+      "seq": 3,
+      "segment": 0,
+      "elapsed_ms": 1200,
+      "kind": "action",
+      "surface": "reservations.reserve",
+      "action": "reservations.select_period",
+      "action_version": 1,
+      "payload": {
+        "period": "morning"
+      }
+    },
+    {
+      "seq": 4,
+      "segment": 0,
+      "elapsed_ms": 1600,
+      "kind": "action",
+      "surface": "reservations.reserve",
+      "action": "reservations.switch_view",
+      "action_version": 1,
+      "payload": {
+        "view_mode": "list"
+      }
+    },
+    {
+      "seq": 5,
+      "segment": 0,
+      "elapsed_ms": 2000,
+      "kind": "action",
+      "surface": "reservations.reserve",
+      "action": "reservations.select_resource",
+      "action_version": 1,
+      "payload": {
+        "resource_kind": "desk",
+        "view_mode": "list"
+      }
+    },
+    {
+      "seq": 6,
+      "segment": 0,
+      "elapsed_ms": 2400,
+      "kind": "action",
+      "surface": "reservations.booking_sheet",
+      "action": "reservations.change_booking_field",
+      "action_version": 1,
+      "target": "check_in"
+    },
+    {
+      "seq": 7,
+      "segment": 0,
+      "elapsed_ms": 3200,
+      "kind": "action",
+      "surface": "reservations.booking_sheet",
+      "action": "reservations.confirm_booking",
+      "action_version": 1,
+      "payload": {
+        "check_in": "yes",
+        "for_whom": "self",
+        "repeat": "once"
+      },
+      "op": "op1",
+      "state": "attempted"
+    },
+    {
+      "seq": 8,
+      "segment": 0,
+      "elapsed_ms": 4100,
+      "kind": "observation",
+      "surface": "reservations.booking_sheet",
+      "payload": {
+        "refusal": "conflict"
+      },
+      "op": "op1",
+      "state": "refused",
+      "outcome": "booking.refused"
+    }
+  ],
+  "end_reason": "stopped",
+  "completeness": "complete"
+}

@@ -23598,6 +23598,18 @@ abstract class AppLocalizations {
   /// **'Demo: simulated local context'**
   String get supportDemo;
 
+  /// #1865 task recorder: the feature's name
+  ///
+  /// In en, this message translates to:
+  /// **'Task recorder'**
+  String get featureTaskRecorderTitle;
+
+  /// #1865 task recorder: the feature's description
+  ///
+  /// In en, this message translates to:
+  /// **'Lets a person record the steps of a task on this workspace\'s screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here.'**
+  String get featureTaskRecorderDesc;
+
   /// #1659 template_capabilities
   ///
   /// In en, this message translates to:

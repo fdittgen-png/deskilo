@@ -8665,6 +8665,14 @@
       }
     }
   },
+  "featureTaskRecorderTitle": "Enregistreur de tâches",
+  "@featureTaskRecorderTitle": {
+    "description": "#1865 task recorder: the feature's name"
+  },
+  "featureTaskRecorderDesc": "Permet d'enregistrer les étapes d'une tâche sur les écrans de cet espace, sur son propre appareil, de les relire et d'exporter un fichier sans aucune valeur saisie. Rien n'est envoyé. Désactivé : personne n'enregistre ici.",
+  "@featureTaskRecorderDesc": {
+    "description": "#1865 task recorder: the feature's description"
+  },
   "capabilityMultiApproval": "Deux validations ou plus",
   "capabilityRefundApprovals": "Deux validations pour les remboursements",
   "capabilityPayAsYouGo": "Paiement à l'usage",

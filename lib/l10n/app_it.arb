@@ -8665,6 +8665,14 @@
       }
     }
   },
+  "featureTaskRecorderTitle": "Registratore di attività",
+  "@featureTaskRecorderTitle": {
+    "description": "#1865 task recorder: the feature's name"
+  },
+  "featureTaskRecorderDesc": "Consente di registrare i passaggi di un'attività sulle schermate di questo spazio, sul proprio dispositivo, rivederli ed esportare un file senza alcun valore digitato. Nulla viene inviato. Disattivato: qui nessuno registra.",
+  "@featureTaskRecorderDesc": {
+    "description": "#1865 task recorder: the feature's description"
+  },
   "capabilityMultiApproval": "Due o più approvazioni",
   "capabilityRefundApprovals": "Due approvazioni per i rimborsi",
   "capabilityPayAsYouGo": "Pagamento a consumo",
