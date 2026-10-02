@@ -141,8 +141,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 711 |
 | `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
+| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 656 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
-| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 655 |
 | `lib/core/help/help_anchors.dart` | 649 |
 | `lib/features/workspace/presentation/screens/onboarding_screen.dart` | 633 |
 | `lib/features/workspace/providers/workspace_providers.dart` | 632 |

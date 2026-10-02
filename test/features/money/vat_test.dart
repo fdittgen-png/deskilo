@@ -643,6 +643,18 @@ void main() {
       expect(entries.last['Credit'], '240,00');
     });
   });
+
+  // #1870 — exact arithmetic at a three-decimal rate, a half rounded away
+  // from zero as the server's round(numeric) does.
+  test('a 9.975 % split is exact: 1099.75 gross is 1000.00 + 99.75', () {
+    expect(vatSplit(109975, 9.975), (netCents: 100000, vatCents: 9975));
+    expect(vatSplit(114975, 14.975), (netCents: 100000, vatCents: 14975));
+    expect(vatSplit(105, 5), (netCents: 100, vatCents: 5));
+    // 15 cents at 50 %: net exactly 10.
+    expect(vatSplit(15, 50), (netCents: 10, vatCents: 5));
+    // 1 cent at 100 %... capped below 100; 3 cents at 20 % → 2.5 → 3 net.
+    expect(vatSplit(3, 20), (netCents: 3, vatCents: 0));
+  });
 }
 
 /// '240,00' → 24000, so a test can check a journal balances.
