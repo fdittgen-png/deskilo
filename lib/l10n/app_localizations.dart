@@ -20751,13 +20751,13 @@ abstract class AppLocalizations {
   /// Feed line of a role-change event that grants admin
   ///
   /// In en, this message translates to:
-  /// **'{actor} promotes a member to admin'**
+  /// **'{actor} asks to give the Administrator role'**
   String eventRolePromote(String actor);
 
   /// Feed line of a role-change event that removes admin
   ///
   /// In en, this message translates to:
-  /// **'{actor} demotes an admin to member'**
+  /// **'{actor} asks to take back the Administrator role'**
   String eventRoleDemote(String actor);
 
   /// Owner action promoting a member to admin (0035)
@@ -22349,6 +22349,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The role was not taken back.'**
   String get roleTakeBackFailed;
+
+  /// #2085 giving roles: eventRoleGiven
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} gives the role {role} to {member}'**
+  String eventRoleGiven(String actor, String role, String member);
+
+  /// #2085 giving roles: eventRoleTakenBack
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} takes back the role {role} from {member}'**
+  String eventRoleTakenBack(String actor, String role, String member);
 
   /// #1528 the roles of a space: rolesOfSpaceTitle
   ///

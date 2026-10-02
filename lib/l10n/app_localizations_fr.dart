@@ -12114,12 +12114,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String eventRolePromote(String actor) {
-    return '$actor promeut un membre en admin';
+    return '$actor demande à attribuer le rôle Administrateur·rice';
   }
 
   @override
   String eventRoleDemote(String actor) {
-    return '$actor rétrograde un admin en membre';
+    return '$actor demande à retirer le rôle Administrateur·rice';
   }
 
   @override
@@ -13037,6 +13037,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get roleTakeBackFailed => 'Le rôle n\'a pas été retiré.';
+
+  @override
+  String eventRoleGiven(String actor, String role, String member) {
+    return '$actor attribue le rôle $role à $member';
+  }
+
+  @override
+  String eventRoleTakenBack(String actor, String role, String member) {
+    return '$actor retire le rôle $role à $member';
+  }
 
   @override
   String get rolesOfSpaceTitle => 'Les rôles de cet espace';

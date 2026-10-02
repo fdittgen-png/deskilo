@@ -7128,8 +7128,8 @@
     "description": "#1912 the question editor: shown while the personal-data switch is off"
   },
   "eventTypeRoleChange": "Rollenwechsel",
-  "eventRolePromote": "{actor} befördert ein Mitglied zum Admin",
-  "eventRoleDemote": "{actor} stuft einen Admin zum Mitglied zurück",
+  "eventRolePromote": "{actor} beantragt die Rolle Administrator:in",
+  "eventRoleDemote": "{actor} beantragt, die Rolle Administrator:in zu entziehen",
   "memberMakeAdmin": "Rolle Administrator:in geben",
   "memberMakeMember": "Rolle Administrator:in entziehen",
   "memberRoleChangeRequested": "Rollenwechsel zur Freigabe gesendet.",
@@ -8046,6 +8046,36 @@
   "roleTakeBackFailed": "Die Rolle wurde nicht entzogen.",
   "@roleTakeBackFailed": {
     "description": "#2085 giving roles: roleTakeBackFailed"
+  },
+  "eventRoleGiven": "{actor} gibt {member} die Rolle {role}",
+  "@eventRoleGiven": {
+    "description": "#2085 giving roles: eventRoleGiven",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
+  "eventRoleTakenBack": "{actor} entzieht {member} die Rolle {role}",
+  "@eventRoleTakenBack": {
+    "description": "#2085 giving roles: eventRoleTakenBack",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
   },
   "rolesOfSpaceTitle": "Rollen dieses Bereichs",
   "@rolesOfSpaceTitle": {

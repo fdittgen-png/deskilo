@@ -171,7 +171,7 @@
       ],
       "prerequisites": "Roles assigned; a quorum per decision kind in Settings.",
       "limitations": "Quorums count distinct people by membership, not by device or session.",
-      "fingerprint": "3008f2db81b1",
+      "fingerprint": "143067dfccb9",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",

@@ -5,6 +5,7 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../money/domain/usage_record.dart';
+import '../../workspace/domain/workspace_role.dart';
 import '../domain/event_decision.dart';
 import '../domain/validation_policy.dart';
 import '../domain/workspace_event.dart';
@@ -72,6 +73,22 @@ String eventLine(
         ) ??
         '$actor requests ${event.payload['half_days']} extra '
             'half-days for ${event.payload['period']}',
+    // #2085 — a workspace's own role, given or taken back at once: the
+    // payload names the role (as it read that day) and the direction.
+    (EventType.roleChange, _) when event.payload.containsKey('role_key') =>
+      () {
+        final role = roleNameIn(
+          event.payload['role_names'],
+          l10n?.localeName ?? 'en',
+          '${event.payload['role_key']}',
+        );
+        final member = names[event.subjectMemberId] ?? '';
+        return event.payload['assign'] == true
+            ? (l10n?.eventRoleGiven(actor, role, member) ??
+                '$actor gives the role $role to $member')
+            : (l10n?.eventRoleTakenBack(actor, role, member) ??
+                '$actor takes back the role $role from $member');
+      }(),
     (EventType.roleChange, _) => (event.payload['make_admin'] == true
             ? l10n?.eventRolePromote(actor)
             : l10n?.eventRoleDemote(actor)) ??
@@ -169,7 +186,11 @@ String eventLine(
   };
   // Service charges name no actor in the title, so always say whose bill
   // it lands on; other types only when an admin acted for someone else.
-  if (!event.actorIsSubject || event.type == EventType.serviceCharge) {
+  // #2085 — a role given or taken back already names its member.
+  final namesMember = event.type == EventType.roleChange &&
+      event.payload.containsKey('role_key');
+  if ((!event.actorIsSubject || event.type == EventType.serviceCharge) &&
+      !namesMember) {
     final subject = names[event.subjectMemberId] ?? '';
     line = '$line ${l10n?.eventForSubject(subject) ?? 'for $subject'}';
   }
