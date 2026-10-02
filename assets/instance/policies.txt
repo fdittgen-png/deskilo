@@ -137,6 +137,10 @@ public.platform_admins.mcp_delegated_deny
 public.platform_admins.platform_admins_self
 public.price_negotiations.mcp_delegated_deny
 public.price_negotiations.price_negotiations_select
+public.privacy_notice_acknowledgments.mcp_delegated_deny
+public.privacy_notice_acknowledgments.privacy_notice_acknowledgments_select
+public.privacy_notices.mcp_delegated_deny
+public.privacy_notices.privacy_notices_select
 public.profiles.mcp_delegated_deny
 public.profiles.profiles_select
 public.profiles.profiles_update

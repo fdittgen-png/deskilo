@@ -127,6 +127,10 @@ const Map<String, String> _notExported = {
       'an answer is the member\'s personal data, not the operator\'s copy '
           'of their space — export_my_data carries it (0248), and a '
           'template must never carry answers',
+  'privacy_notices':
+      'the published privacy notices (#1914); public text every member '
+          'reads in the app, and the installation\'s own rows belong to no '
+          'space at all',
   'workspace_field_value_options':
       'which choices one member made; personal in the same way',
   'rights_requests':
