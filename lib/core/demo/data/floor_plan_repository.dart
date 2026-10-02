@@ -254,9 +254,12 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
     required GridRect rect,
     required Uint8List bytes,
     required String contentType,
+    String? imageId,
   }) async {
+    final existing = planImages.where((im) => im.id == imageId);
+    if (existing.isNotEmpty) return existing.first;
     final image = PlanImage(
-      id: 'img-${_imgSeq++}',
+      id: imageId ?? 'img-${_imgSeq++}',
       levelId: levelId,
       rect: rect,
       storagePath: '$workspaceId/img/img-$_imgSeq',

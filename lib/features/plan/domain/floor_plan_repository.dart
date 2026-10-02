@@ -65,12 +65,17 @@ abstract class FloorPlanRepository {
 
   /// Owner-only: place a new illustration image on [levelId] at [rect];
   /// uploads [bytes] to the floor-plans bucket. Returns the created row.
+  ///
+  /// [imageId] is the operation's identity (#2012): a retry with the same
+  /// id after a failed or lost answer converges on ONE image, never a
+  /// second row.
   Future<PlanImage> createPlanImage({
     required String workspaceId,
     required String levelId,
     required GridRect rect,
     required Uint8List bytes,
     required String contentType,
+    String? imageId,
   });
 
   /// Owner-only: move/resize an illustration image.
