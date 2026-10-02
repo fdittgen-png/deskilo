@@ -14658,6 +14658,145 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biAreaSaved => 'Analyses enregistrées';
 
   @override
+  String biQuarter(String quarter, String year) {
+    return 'T$quarter $year';
+  }
+
+  @override
+  String get biDimensionLevel => 'Niveau';
+
+  @override
+  String get biNotOffered => 'non proposé par les analyses affichées';
+
+  @override
+  String get biGrain => 'Durée de la période';
+
+  @override
+  String get biGrainMonth => 'Mois';
+
+  @override
+  String get biGrainQuarter => 'Trimestre';
+
+  @override
+  String get biGrainYear => 'Année';
+
+  @override
+  String get biCompare => 'Comparer avec';
+
+  @override
+  String get biCompareNone => 'Rien';
+
+  @override
+  String get biComparePrevious => 'La période précédente';
+
+  @override
+  String get biComparePreviousYear => 'La même période un an avant';
+
+  @override
+  String get biCompareCustom => 'Une période que je choisis';
+
+  @override
+  String get biGroupBy => 'Regrouper par';
+
+  @override
+  String get biGroupNone => 'Sans regroupement';
+
+  @override
+  String get biSort => 'Ordre';
+
+  @override
+  String get biSortUngrouped => 'Ordre (groupes seulement)';
+
+  @override
+  String get biSortNatural => 'Comme listé';
+
+  @override
+  String get biSortDescending => 'Le plus élevé d’abord';
+
+  @override
+  String get biSortAscending => 'Le plus bas d’abord';
+
+  @override
+  String get biViewTable => 'Tableau';
+
+  @override
+  String get biViewChart => 'Graphique';
+
+  @override
+  String biChangePoints(String value) {
+    return '$value pts';
+  }
+
+  @override
+  String get biForbidden =>
+      'Vous ne pouvez pas lire cette analyse dans cet espace.';
+
+  @override
+  String get biUnavailable => 'Cette analyse n’a pas pu être calculée.';
+
+  @override
+  String get biRefusedGrain =>
+      'Cette analyse n’est pas proposée pour cette durée de période.';
+
+  @override
+  String get biRefusedComparison =>
+      'Cette analyse ne peut pas faire cette comparaison.';
+
+  @override
+  String get biRefusedGrouping =>
+      'Cette analyse ne peut pas être regroupée ainsi.';
+
+  @override
+  String biRefusedBudget(String count) {
+    return 'Il y a plus de $count groupes ; choisissez « Sans regroupement ».';
+  }
+
+  @override
+  String biComparedNotRecorded(String period, String since) {
+    return '$period n’a pas été enregistré (l’historique commence le $since) ; pas de comparaison.';
+  }
+
+  @override
+  String biComparedPartial(String period) {
+    return '$period n’est enregistré qu’en partie.';
+  }
+
+  @override
+  String get biExposureDiffers =>
+      'Les deux périodes n’offrent pas la même base ; le taux en tient compte, les chiffres bruts ne se comparent pas directement.';
+
+  @override
+  String biComparedLine(String period, String value, String change) {
+    return '$period : $value ($change)';
+  }
+
+  @override
+  String get biOpenSource => 'Ouvrir la source';
+
+  @override
+  String get biSourceRestricted =>
+      'Les données sources ne sont montrées qu’à ceux qui les gèrent.';
+
+  @override
+  String get biTotal => 'Total';
+
+  @override
+  String get biRemainder => 'Hors des groupes actuels';
+
+  @override
+  String get biColumnValue => 'Valeur';
+
+  @override
+  String get biColumnChange => 'Écart';
+
+  @override
+  String get biInvalidAddress =>
+      'Cette adresse demande une analyse qui n’existe pas ; rien n’a été lu.';
+
+  @override
+  String get biReset => 'Afficher la vue standard';
+
+  @override
   String get assistantPrefix => 'Assistant';
 
   @override

@@ -25128,6 +25128,246 @@ abstract class AppLocalizations {
   /// **'Saved analyses'**
   String get biAreaSaved;
 
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Q{quarter} {year}'**
+  String biQuarter(String quarter, String year);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get biDimensionLevel;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'not offered by the analyses shown'**
+  String get biNotOffered;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Period length'**
+  String get biGrain;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get biGrainMonth;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Quarter'**
+  String get biGrainQuarter;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get biGrainYear;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Compare with'**
+  String get biCompare;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing'**
+  String get biCompareNone;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The period before'**
+  String get biComparePrevious;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The same period a year before'**
+  String get biComparePreviousYear;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'A period I choose'**
+  String get biCompareCustom;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Group by'**
+  String get biGroupBy;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'No grouping'**
+  String get biGroupNone;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get biSort;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Order (groups only)'**
+  String get biSortUngrouped;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'As listed'**
+  String get biSortNatural;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Highest first'**
+  String get biSortDescending;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest first'**
+  String get biSortAscending;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Table'**
+  String get biViewTable;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Chart'**
+  String get biViewChart;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{value} pp'**
+  String biChangePoints(String value);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read this analysis in this workspace.'**
+  String get biForbidden;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis could not be computed.'**
+  String get biUnavailable;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis is not offered for that period length.'**
+  String get biRefusedGrain;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis cannot make that comparison.'**
+  String get biRefusedComparison;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis cannot be grouped that way.'**
+  String get biRefusedGrouping;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'There are more than {count} groups; choose no grouping.'**
+  String biRefusedBudget(String count);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{period} was not recorded (history begins {since}); there is no comparison.'**
+  String biComparedNotRecorded(String period, String since);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{period} is only partly recorded.'**
+  String biComparedPartial(String period);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.'**
+  String get biExposureDiffers;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{period}: {value} ({change})'**
+  String biComparedLine(String period, String value, String change);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Open the source'**
+  String get biOpenSource;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The source records are shown only to those who manage them.'**
+  String get biSourceRestricted;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get biTotal;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Not in a current group'**
+  String get biRemainder;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get biColumnValue;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get biColumnChange;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This address asks for an analysis that does not exist; nothing was read.'**
+  String get biInvalidAddress;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Show the standard view'**
+  String get biReset;
+
   /// #872 one wizard idiom: assistantPrefix
   ///
   /// In en, this message translates to:

@@ -152,10 +152,6 @@ class _Figure extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context).toString();
     final theme = Theme.of(context);
-    final hours = NumberFormat.decimalPatternDigits(
-      locale: locale,
-      decimalDigits: 1,
-    );
     final ratio = kpi.utilisation;
     final value = ratio == null
         ? '—'
@@ -163,70 +159,9 @@ class _Figure extends StatelessWidget {
             locale: locale,
             decimalDigits: 1,
           ).format(ratio);
-    final reserved = hours.format(kpi.reservedSeatHours);
-    final offered = hours.format(kpi.offeredSeatHours);
-    final computed = DateFormat.yMd(locale)
-        .add_Hm()
-        .format(kpi.computedAt.toLocal());
-    final since = kpi.historySince;
-    final sinceLabel = since == null
-        ? ''
-        : DateFormat.yMMMd(locale).format(since.toLocal());
-    final notRecorded = kpi.quality.contains(KpiQuality.notRecorded);
-    final notes = <String>[
-      if (notRecorded)
-        l10n?.capacityKpiNotRecorded(sinceLabel) ??
-            'This period lies before the workspace’s history began on '
-                '$sinceLabel; there is nothing recorded to count.'
-      else if (ratio == null)
-        l10n?.capacityKpiUndefined ??
-            'No seat time was offered in this period, so there is no '
-                'utilisation to show.',
-      if (kpi.quality.contains(KpiQuality.knownZero))
-        l10n?.capacityKpiKnownZero ?? 'Measured: nothing was reserved.',
-      if (!notRecorded && kpi.reasons.contains('history_not_recorded_before'))
-        l10n?.capacityKpiHistorySince(sinceLabel) ??
-            'Counted from $sinceLabel, when this workspace’s history '
-                'began; earlier time is not known and not counted.',
-      if (kpi.reasons.contains('unattributed_reservations'))
-        l10n?.capacityKpiUnattributed ??
-            'Some reservations in this period point to a place that no '
-                'longer exists; they are not counted.',
-    ];
-    final details = <String>[
-      l10n?.capacityKpiDefinition ??
-          'Reserved seat-hours inside the opening hours, divided by offered '
-              'seat-hours.',
-      l10n?.capacityKpiPhysical(hours.format(kpi.physicalSeatHours)) ??
-          'Physical capacity: ${hours.format(kpi.physicalSeatHours)} '
-              'seat-hours',
-      if (kpi.reservedOutsideOfferedSeatHours > 0)
-        l10n?.capacityKpiOutside(
-              hours.format(kpi.reservedOutsideOfferedSeatHours),
-            ) ??
-            'Reserved outside the offered hours: '
-                '${hours.format(kpi.reservedOutsideOfferedSeatHours)} '
-                'seat-hours, not in the ratio',
-      if (kpi.overlappingSeatHours > 0)
-        l10n?.capacityKpiOverlap(hours.format(kpi.overlappingSeatHours)) ??
-            'Claimed twice at the same time: '
-                '${hours.format(kpi.overlappingSeatHours)} seat-hours, '
-                'counted once',
-      if (kpi.roomsWithoutSeats > 0)
-        l10n?.capacityKpiRooms(
-              '${kpi.roomsWithoutSeats}',
-              hours.format(kpi.reservedRoomHours),
-              hours.format(kpi.offeredRoomHours),
-            ) ??
-            'Rooms without seats: ${kpi.roomsWithoutSeats}',
-      if (kpi.reasons.contains('rooms_current_structure'))
-        l10n?.capacityKpiRoomsToday ??
-            'Rooms without seats are read as they are today.',
-      if (since != null)
-        l10n?.capacityKpiHistory(sinceLabel) ??
-            'History recorded since $sinceLabel',
-      l10n?.capacityKpiAsOf(computed) ?? 'Computed $computed',
-    ];
+    final notes = capacityKpiNotes(kpi, l10n, locale);
+    final details = capacityKpiDetails(kpi, l10n, locale);
+    final ratioLine = capacityKpiRatioLine(kpi, l10n, locale);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,11 +171,7 @@ class _Figure extends StatelessWidget {
           key: const ValueKey('capacity-kpi-value'),
           style: theme.textTheme.headlineMedium,
         ),
-        Text(
-          l10n?.capacityKpiRatio(reserved, offered) ??
-              '$reserved of $offered seat-hours reserved',
-          key: const ValueKey('capacity-kpi-ratio'),
-        ),
+        Text(ratioLine, key: const ValueKey('capacity-kpi-ratio')),
         for (final note in notes)
           Padding(
             padding: const EdgeInsets.only(top: AppSpacing.xs),
@@ -264,4 +195,105 @@ class _Figure extends StatelessWidget {
       ],
     );
   }
+}
+
+NumberFormat _hours(String locale) =>
+    NumberFormat.decimalPatternDigits(locale: locale, decimalDigits: 1);
+
+String _since(SeatCapacityKpi kpi, String locale) {
+  final since = kpi.historySince;
+  return since == null ? '' : DateFormat.yMMMd(locale).format(since.toLocal());
+}
+
+/// "25 of 100 seat-hours reserved" — the ratio's two sides (#1918). The
+/// Web-BI module (#1923) prints the same line.
+String capacityKpiRatioLine(
+  SeatCapacityKpi kpi,
+  AppLocalizations? l10n,
+  String locale,
+) {
+  final hours = _hours(locale);
+  final reserved = hours.format(kpi.reservedSeatHours);
+  final offered = hours.format(kpi.offeredSeatHours);
+  return l10n?.capacityKpiRatio(reserved, offered) ??
+      '$reserved of $offered seat-hours reserved';
+}
+
+/// What the figure cannot know or does not count, shown beside it.
+List<String> capacityKpiNotes(
+  SeatCapacityKpi kpi,
+  AppLocalizations? l10n,
+  String locale,
+) {
+  final sinceLabel = _since(kpi, locale);
+  final ratio = kpi.utilisation;
+  final notRecorded = kpi.quality.contains(KpiQuality.notRecorded);
+  return <String>[
+    if (notRecorded)
+      l10n?.capacityKpiNotRecorded(sinceLabel) ??
+          'This period lies before the workspace’s history began on '
+              '$sinceLabel; there is nothing recorded to count.'
+    else if (ratio == null)
+      l10n?.capacityKpiUndefined ??
+          'No seat time was offered in this period, so there is no '
+              'utilisation to show.',
+    if (kpi.quality.contains(KpiQuality.knownZero))
+      l10n?.capacityKpiKnownZero ?? 'Measured: nothing was reserved.',
+    if (!notRecorded && kpi.reasons.contains('history_not_recorded_before'))
+      l10n?.capacityKpiHistorySince(sinceLabel) ??
+          'Counted from $sinceLabel, when this workspace’s history '
+              'began; earlier time is not known and not counted.',
+    if (kpi.reasons.contains('unattributed_reservations'))
+      l10n?.capacityKpiUnattributed ??
+          'Some reservations in this period point to a place that no '
+              'longer exists; they are not counted.',
+  ];
+}
+
+/// How the figure is made, for the explanation.
+List<String> capacityKpiDetails(
+  SeatCapacityKpi kpi,
+  AppLocalizations? l10n,
+  String locale,
+) {
+  final hours = _hours(locale);
+  final since = kpi.historySince;
+  final sinceLabel = _since(kpi, locale);
+  final computed = DateFormat.yMd(locale)
+      .add_Hm()
+      .format(kpi.computedAt.toLocal());
+  return <String>[
+    l10n?.capacityKpiDefinition ??
+        'Reserved seat-hours inside the opening hours, divided by offered '
+            'seat-hours.',
+    l10n?.capacityKpiPhysical(hours.format(kpi.physicalSeatHours)) ??
+        'Physical capacity: ${hours.format(kpi.physicalSeatHours)} '
+            'seat-hours',
+    if (kpi.reservedOutsideOfferedSeatHours > 0)
+      l10n?.capacityKpiOutside(
+            hours.format(kpi.reservedOutsideOfferedSeatHours),
+          ) ??
+          'Reserved outside the offered hours: '
+              '${hours.format(kpi.reservedOutsideOfferedSeatHours)} '
+              'seat-hours, not in the ratio',
+    if (kpi.overlappingSeatHours > 0)
+      l10n?.capacityKpiOverlap(hours.format(kpi.overlappingSeatHours)) ??
+          'Claimed twice at the same time: '
+              '${hours.format(kpi.overlappingSeatHours)} seat-hours, '
+              'counted once',
+    if (kpi.roomsWithoutSeats > 0)
+      l10n?.capacityKpiRooms(
+            '${kpi.roomsWithoutSeats}',
+            hours.format(kpi.reservedRoomHours),
+            hours.format(kpi.offeredRoomHours),
+          ) ??
+          'Rooms without seats: ${kpi.roomsWithoutSeats}',
+    if (kpi.reasons.contains('rooms_current_structure'))
+      l10n?.capacityKpiRoomsToday ??
+          'Rooms without seats are read as they are today.',
+    if (since != null)
+      l10n?.capacityKpiHistory(sinceLabel) ??
+          'History recorded since $sinceLabel',
+    l10n?.capacityKpiAsOf(computed) ?? 'Computed $computed',
+  ];
 }

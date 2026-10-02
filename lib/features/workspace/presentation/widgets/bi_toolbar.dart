@@ -1,0 +1,250 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #1923 B — the one analysis toolbar of the Web-BI page. Every module
+// reads the same context; an option no visible module can answer is
+// shown disabled with its reason, never offered and then ignored.
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../domain/bi_modules.dart';
+import '../../domain/bi_query.dart';
+
+/// The period's name: "March 2026", "Q1 2026", "2026".
+String biPeriodLabel(BiPeriod p, AppLocalizations? l10n, String locale) =>
+    switch (p.grain) {
+      BiGrain.month => DateFormat.yMMMM(
+        locale,
+      ).format(DateTime(p.year, p.index)),
+      BiGrain.quarter =>
+        l10n?.biQuarter('${p.index}', '${p.year}') ?? 'Q${p.index} ${p.year}',
+      BiGrain.year => '${p.year}',
+    };
+
+String biDimensionName(AppLocalizations? l10n, String dimension) =>
+    switch (dimension) {
+      'level' => l10n?.biDimensionLevel ?? 'Level',
+      _ => dimension,
+    };
+
+class BiToolbar extends StatelessWidget {
+  const BiToolbar({
+    super.key,
+    required this.query,
+    required this.modules,
+    required this.today,
+    required this.onChanged,
+  });
+
+  final BiQueryContext query;
+
+  /// The modules on the page: an option none of them supports is
+  /// disabled with its reason.
+  final List<BiModule> modules;
+
+  /// The workspace date relative periods resolve against.
+  final DateTime today;
+  final ValueChanged<BiQueryContext> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    final material = MaterialLocalizations.of(context);
+    final notOffered =
+        l10n?.biNotOffered ?? 'not offered by the analyses shown';
+    final current = query.current(today);
+
+    DropdownMenuItem<T> item<T>(T value, String label, bool supported) =>
+        DropdownMenuItem<T>(
+          value: value,
+          enabled: supported,
+          child: Text(supported ? label : '$label — $notOffered'),
+        );
+
+    Widget field<T>({
+      required String keyName,
+      required String label,
+      required T value,
+      required List<DropdownMenuItem<T>> items,
+      required ValueChanged<T> onSelected,
+      bool enabled = true,
+    }) => SizedBox(
+      width: 200,
+      // A stateless dropdown: the value is the address's, so Back and a
+      // reload show what is asked, never a field's stale selection.
+      child: InputDecorator(
+        decoration: InputDecoration(
+          labelText: label,
+          border: const OutlineInputBorder(),
+          isDense: true,
+          enabled: enabled,
+        ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<T>(
+            key: ValueKey('bi-$keyName'),
+            value: value,
+            isExpanded: true,
+            isDense: true,
+            items: items,
+            onChanged: enabled
+                ? (v) {
+                    if (v != null && v != value) onSelected(v);
+                  }
+                : null,
+          ),
+        ),
+      ),
+    );
+
+    Widget stepper(String keyName, BiPeriod p, ValueChanged<int> shift) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          key: ValueKey('bi-$keyName-previous'),
+          tooltip: material.previousPageTooltip,
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () => shift(-1),
+        ),
+        Text(
+          biPeriodLabel(p, l10n, locale),
+          key: ValueKey('bi-$keyName-label'),
+        ),
+        IconButton(
+          key: ValueKey('bi-$keyName-next'),
+          tooltip: material.nextPageTooltip,
+          icon: const Icon(Icons.chevron_right),
+          onPressed: () => shift(1),
+        ),
+      ],
+    );
+
+    final grouped = query.groupBy != null;
+    final compared = query.compared(today);
+    return Padding(
+      padding: AppSpacing.mdAll,
+      child: Wrap(
+        key: const ValueKey('bi-toolbar'),
+        spacing: AppSpacing.md,
+        runSpacing: AppSpacing.sm,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          field<BiGrain>(
+            keyName: 'grain',
+            label: l10n?.biGrain ?? 'Period length',
+            value: query.grain,
+            items: [
+              for (final g in BiGrain.values)
+                item(g, switch (g) {
+                  BiGrain.month => l10n?.biGrainMonth ?? 'Month',
+                  BiGrain.quarter => l10n?.biGrainQuarter ?? 'Quarter',
+                  BiGrain.year => l10n?.biGrainYear ?? 'Year',
+                }, modules.any((m) => m.grains.contains(g))),
+            ],
+            onSelected: (g) => onChanged(query.copyWith(grain: g)),
+          ),
+          stepper(
+            'period',
+            current,
+            (by) => onChanged(
+              query.copyWith(
+                period: query.period.isRelative
+                    ? BiPeriodRef.relative(query.period.offset! + by)
+                    : BiPeriodRef.fixed(current.shift(by)),
+              ),
+            ),
+          ),
+          field<BiComparison>(
+            keyName: 'comparison',
+            label: l10n?.biCompare ?? 'Compare with',
+            value: query.comparison,
+            items: [
+              for (final c in BiComparison.values)
+                item(c, switch (c) {
+                  BiComparison.none => l10n?.biCompareNone ?? 'Nothing',
+                  BiComparison.previousPeriod =>
+                    l10n?.biComparePrevious ?? 'The period before',
+                  BiComparison.previousYear =>
+                    l10n?.biComparePreviousYear ??
+                        'The same period a year before',
+                  BiComparison.custom =>
+                    l10n?.biCompareCustom ?? 'A period I choose',
+                }, modules.any((m) => m.comparisons.contains(c))),
+            ],
+            onSelected: (c) => onChanged(
+              query.copyWith(
+                comparison: c,
+                comparedWith: c == BiComparison.custom
+                    ? current.shift(-1)
+                    : null,
+              ),
+            ),
+          ),
+          if (query.comparison == BiComparison.custom && compared != null)
+            stepper(
+              'compared',
+              compared,
+              (by) =>
+                  onChanged(query.copyWith(comparedWith: compared.shift(by))),
+            ),
+          field<String>(
+            keyName: 'group',
+            label: l10n?.biGroupBy ?? 'Group by',
+            value: query.groupBy ?? '',
+            items: [
+              item('', l10n?.biGroupNone ?? 'No grouping', true),
+              for (final d in biDimensions)
+                item(
+                  d,
+                  biDimensionName(l10n, d),
+                  modules.any((m) => m.groupings.contains(d)),
+                ),
+            ],
+            onSelected: (d) => onChanged(
+              d.isEmpty
+                  ? query.copyWith(clearGroupBy: true)
+                  : query.copyWith(groupBy: d),
+            ),
+          ),
+          field<BiSort>(
+            keyName: 'sort',
+            label: grouped
+                ? l10n?.biSort ?? 'Order'
+                : l10n?.biSortUngrouped ?? 'Order (groups only)',
+            value: query.sort,
+            enabled: grouped,
+            items: [
+              for (final s in BiSort.values)
+                item(s, switch (s) {
+                  BiSort.natural => l10n?.biSortNatural ?? 'As listed',
+                  BiSort.valueDescending =>
+                    l10n?.biSortDescending ?? 'Highest first',
+                  BiSort.valueAscending =>
+                    l10n?.biSortAscending ?? 'Lowest first',
+                }, true),
+            ],
+            onSelected: (s) => onChanged(query.copyWith(sort: s)),
+          ),
+          SegmentedButton<BiView>(
+            key: const ValueKey('bi-view'),
+            segments: [
+              ButtonSegment(
+                value: BiView.table,
+                icon: const Icon(Icons.table_rows_outlined),
+                label: Text(l10n?.biViewTable ?? 'Table'),
+              ),
+              ButtonSegment(
+                value: BiView.chart,
+                icon: const Icon(Icons.bar_chart),
+                label: Text(l10n?.biViewChart ?? 'Chart'),
+              ),
+            ],
+            selected: {query.view},
+            onSelectionChanged: (v) => onChanged(query.copyWith(view: v.first)),
+          ),
+        ],
+      ),
+    );
+  }
+}

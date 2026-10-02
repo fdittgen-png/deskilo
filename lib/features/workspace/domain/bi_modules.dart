@@ -10,6 +10,8 @@
 // Pure Dart.
 library;
 
+import 'bi_query.dart';
+import 'kpi_contract.dart';
 import 'workspace_feature.dart';
 import 'workspace_permission.dart';
 
@@ -32,6 +34,16 @@ class BiModule {
     required this.area,
     required this.feature,
     required this.permissions,
+    required this.aggregation,
+    this.grains = const {BiGrain.month, BiGrain.quarter, BiGrain.year},
+    this.comparisons = const {
+      BiComparison.none,
+      BiComparison.previousPeriod,
+      BiComparison.previousYear,
+      BiComparison.custom,
+    },
+    this.groupings = const {},
+    this.drill,
   });
 
   /// Stable id — the KPI id when the module shows one KPI.
@@ -41,6 +53,41 @@ class BiModule {
 
   /// Every right the module needs (mirrors the KPI registry, #1921).
   final Set<WorkspacePermission> permissions;
+
+  /// How the figure combines over groups and time (#1918, B).
+  final KpiAggregation aggregation;
+
+  /// What the shared toolbar may ask of this module (#1923 B). An
+  /// option outside these is refused with its reason, never ignored.
+  final Set<BiGrain> grains;
+  final Set<BiComparison> comparisons;
+
+  /// Dimension names from [biDimensions].
+  final Set<String> groupings;
+
+  /// Where the figure comes from, for the reader allowed to go there.
+  final BiDrill? drill;
+
+  /// Why [context] cannot be answered by this module; empty when it can.
+  Set<BiUnsupported> unsupported(BiQueryContext context) => {
+    if (!grains.contains(context.grain)) BiUnsupported.grain,
+    if (!comparisons.contains(context.comparison)) BiUnsupported.comparison,
+    if (context.groupBy case final g? when !groupings.contains(g))
+      BiUnsupported.grouping,
+  };
+}
+
+/// The part of a context a module cannot answer.
+enum BiUnsupported { grain, comparison, grouping }
+
+/// A drill-through to the existing screen the figure is made from. The
+/// target screen applies its own rights; [permission] decides whether
+/// the link is offered or explained as restricted.
+class BiDrill {
+  const BiDrill({required this.route, required this.permission});
+
+  final String route;
+  final WorkspacePermission permission;
 }
 
 /// The registered modules. A new dashboard adds itself here.
@@ -50,6 +97,14 @@ const biModules = <BiModule>[
     area: BiArea.capacity,
     feature: WorkspaceFeature.capacityKpi,
     permissions: {WorkspacePermission.viewAnalytics},
+    aggregation: KpiAggregation.ratioOfSums,
+    groupings: {'level'},
+    // Offered seat time is made of the opening hours and closures set
+    // there; that screen is where the denominator comes from.
+    drill: BiDrill(
+      route: '/availability',
+      permission: WorkspacePermission.workspaceSettings,
+    ),
   ),
 ];
 
