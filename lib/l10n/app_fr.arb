@@ -7260,6 +7260,69 @@
   "refusalSession": "Votre session a expiré. Reconnectez-vous, puis réessayez.",
   "refusalAlreadyDecided": "Quelqu'un a déjà décidé. La liste affiche le résultat.",
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
+  "reminderHistoryTitle": "Historique des relances",
+  "@reminderHistoryTitle": {
+    "description": "#1922 reminder evidence: reminderHistoryTitle"
+  },
+  "reminderHistoryRefresh": "Vérifier à nouveau l'envoi",
+  "@reminderHistoryRefresh": {
+    "description": "#1922 reminder evidence: reminderHistoryRefresh"
+  },
+  "reminderHistoryLine": "Niveau {level} · {origin} · {date}",
+  "@reminderHistoryLine": {
+    "description": "#1922 reminder evidence: reminderHistoryLine",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "origin": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderStatusPrepared": "Préparée",
+  "@reminderStatusPrepared": {
+    "description": "#1922 reminder evidence: reminderStatusPrepared"
+  },
+  "reminderStatusQueued": "Confiée au service de notifications",
+  "@reminderStatusQueued": {
+    "description": "#1922 reminder evidence: reminderStatusQueued"
+  },
+  "reminderStatusAccepted": "Acceptée par le service de notifications — ce n'est pas une preuve de lecture",
+  "@reminderStatusAccepted": {
+    "description": "#1922 reminder evidence: reminderStatusAccepted"
+  },
+  "reminderStatusDeclared": "Partagée par l'expéditeur — sa déclaration, pas un accusé de réception",
+  "@reminderStatusDeclared": {
+    "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusFailed": "Non distribuée",
+  "@reminderStatusFailed": {
+    "description": "#1922 reminder evidence: reminderStatusFailed"
+  },
+  "reminderStatusUnknown": "Aucune réponse du service de notifications",
+  "@reminderStatusUnknown": {
+    "description": "#1922 reminder evidence: reminderStatusUnknown"
+  },
+  "reminderStatusLegacy": "Enregistrée avant le suivi de l'envoi — inconnu",
+  "@reminderStatusLegacy": {
+    "description": "#1922 reminder evidence: reminderStatusLegacy"
+  },
+  "reminderOriginManual": "à la main",
+  "@reminderOriginManual": {
+    "description": "#1922 reminder evidence: reminderOriginManual"
+  },
+  "reminderOriginAutomatic": "automatique",
+  "@reminderOriginAutomatic": {
+    "description": "#1922 reminder evidence: reminderOriginAutomatic"
+  },
+  "reminderOriginLegacy": "antérieure",
+  "@reminderOriginLegacy": {
+    "description": "#1922 reminder evidence: reminderOriginLegacy"
+  },
   "reportGuideTitle": "Champs et balisage",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"
@@ -7781,6 +7844,8 @@
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
   },
+  "bookingSpaceChainTaken": "Cet espace, ou un espace qui le contient, est déjà réservé sur cette période.",
+  "bookingNoLongerCheckedIn": "Cette réservation n'est plus en cours — elle a été clôturée entre-temps.",
   "reserveMonthView": "Mois",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Réservation récurrente",

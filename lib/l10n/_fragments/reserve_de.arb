@@ -1,5 +1,7 @@
 {
   "@@locale": "de",
+  "bookingSpaceChainTaken": "Dieser Platz oder ein Bereich, zu dem er gehört, ist in diesem Zeitraum bereits reserviert.",
+  "bookingNoLongerCheckedIn": "Diese Reservierung ist nicht mehr eingecheckt — sie wurde inzwischen ausgecheckt oder abgeschlossen.",
   "reserveMonthView": "Monat",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Wiederkehrende Reservierung",
