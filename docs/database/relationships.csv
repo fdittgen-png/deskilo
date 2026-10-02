@@ -11,6 +11,8 @@ defined,public.account_field_audience_spaces,user_id,auth.users,id,account_field
 defined,public.account_field_audience_spaces,workspace_id,public.workspaces,id,account_field_audience_spaces_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.account_messages,author_id,auth.users,id,account_messages_author_id_fkey,SET NULL,NO ACTION,true
 defined,public.account_messages,conversation_id,public.account_conversations,id,account_messages_conversation_id_fkey,CASCADE,NO ACTION,true
+defined,public.book_profiles,issuer_site_id,public.sites,id,book_profiles_issuer_site_id_fkey,RESTRICT,NO ACTION,true
+defined,public.book_profiles,workspace_id,public.workspaces,id,book_profiles_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.closure_days,workspace_id,public.workspaces,id,closure_days_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.conversation_participants,conversation_id,public.conversations,id,conversation_participants_conversation_id_fkey,CASCADE,NO ACTION,true
 defined,public.conversation_participants,member_id,public.members,id,conversation_participants_member_id_fkey,CASCADE,NO ACTION,true

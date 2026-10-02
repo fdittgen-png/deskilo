@@ -3,14 +3,14 @@
         "counts": {
             "enums": 0,
             "views": 0,
-            "tables": 121,
-            "columns": 1769,
+            "tables": 122,
+            "columns": 1786,
             "domains": 0,
             "partitions": 0,
-            "foreignKeys": 292
+            "foreignKeys": 294
         },
         "source": "PostgreSQL catalogues (pg_class, pg_attribute, pg_constraint, pg_index, pg_inherits, pg_type) of the migration replay",
-        "checksum": "07a95008c3e75490e5f0d3abb98127824524dc239676fa6a5d8a954dc96b6a22",
+        "checksum": "0f10ec078d790d248bf2b50f574836fae6eec7e8075e561e24dc85da7f2870b6",
         "excluded": [
             "pg_catalog",
             "information_schema",
@@ -19,7 +19,7 @@
             "managed platform schemas (auth, storage, realtime, ...): version-qualified, not application migrations",
             "row values, function bodies, view definitions"
         ],
-        "schemaMarker": 334,
+        "schemaMarker": 335,
         "postgresMajor": 17,
         "applicationSchema": "public"
     },
@@ -1484,6 +1484,327 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK ((modified_datetime >= created_datetime))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "book_profiles",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "issuer_site_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "authority_mode",
+                    "type": "text",
+                    "default": "'pre_accounting'::text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "external_system",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "functional_currency",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "fiscal_year_start_month",
+                    "type": "smallint",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "fiscal_year_start_day",
+                    "type": "smallint",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "accounting_basis",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "effective_from",
+                    "type": "date",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 13
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 16
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 17
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "book_profiles_issuer_version",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX book_profiles_issuer_version ON public.book_profiles USING btree (issuer_site_id, effective_from)"
+                },
+                {
+                    "name": "book_profiles_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX book_profiles_pkey ON public.book_profiles USING btree (id)"
+                },
+                {
+                    "name": "book_profiles_workspace_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX book_profiles_workspace_idx ON public.book_profiles USING btree (workspace_id, issuer_site_id, effective_from)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "book_profiles_accounting_basis_check",
+                    "type": "check",
+                    "columns": [
+                        "accounting_basis"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((accounting_basis = ANY (ARRAY['accrual'::text, 'cash'::text])))"
+                },
+                {
+                    "name": "book_profiles_authority_mode_check",
+                    "type": "check",
+                    "columns": [
+                        "authority_mode"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((authority_mode = ANY (ARRAY['pre_accounting'::text, 'local_book'::text, 'external_book'::text])))"
+                },
+                {
+                    "name": "book_profiles_external_named",
+                    "type": "check",
+                    "columns": [
+                        "authority_mode",
+                        "external_system"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((authority_mode <> 'external_book'::text) OR (btrim(external_system) <> ''::text)))"
+                },
+                {
+                    "name": "book_profiles_external_system_check",
+                    "type": "check",
+                    "columns": [
+                        "external_system"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(external_system) <= 80))"
+                },
+                {
+                    "name": "book_profiles_fiscal_year_start_day_check",
+                    "type": "check",
+                    "columns": [
+                        "fiscal_year_start_day"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((fiscal_year_start_day >= 1) AND (fiscal_year_start_day <= 31)))"
+                },
+                {
+                    "name": "book_profiles_fiscal_year_start_month_check",
+                    "type": "check",
+                    "columns": [
+                        "fiscal_year_start_month"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((fiscal_year_start_month >= 1) AND (fiscal_year_start_month <= 12)))"
+                },
+                {
+                    "name": "book_profiles_functional_currency_check",
+                    "type": "check",
+                    "columns": [
+                        "functional_currency"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((functional_currency ~ '^[A-Z]{3}$'::text))"
+                },
+                {
+                    "name": "book_profiles_issuer_site_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "issuer_site_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (issuer_site_id) REFERENCES sites(id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "sites",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "book_profiles_issuer_version",
+                    "type": "unique",
+                    "columns": [
+                        "issuer_site_id",
+                        "effective_from"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (issuer_site_id, effective_from)"
+                },
+                {
+                    "name": "book_profiles_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "book_profiles_revision_check",
+                    "type": "check",
+                    "columns": [
+                        "revision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((revision >= 1))"
+                },
+                {
+                    "name": "book_profiles_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
                 }
             ]
         },
