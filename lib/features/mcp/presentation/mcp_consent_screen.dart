@@ -35,7 +35,7 @@ class McpConsentScreen extends ConsumerStatefulWidget {
 }
 
 class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
-  /// 0339 — consent needs a Google sign-in; read once per visit.
+  /// 0340 — consent needs a Google sign-in; read once per visit.
   late final Future<McpGoogleSignIn> _google =
       ref.read(assistantAccessProvider).googleSignIn();
 

@@ -609,7 +609,7 @@ void main() {
     );
     expect(
       _chipTextByKey(tester, const ValueKey('directory-role-member-3')),
-      'Admin',
+      'Administrator',
     );
     expect(
       find.byKey(const ValueKey('directory-role-member-4')),

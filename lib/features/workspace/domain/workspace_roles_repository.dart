@@ -15,6 +15,9 @@ abstract class WorkspaceRolesRepository {
   /// Member ids holding [roleId].
   Future<List<String>> fetchRoleMembers(String roleId);
 
+  /// #2085 — every assignment in [workspaceId]: member id → role ids.
+  Future<Map<String, Set<String>>> fetchAssignments(String workspaceId);
+
   /// Defines or redefines a role; returns its id.
   Future<String> setRole(String workspaceId, WorkspaceRole role);
 

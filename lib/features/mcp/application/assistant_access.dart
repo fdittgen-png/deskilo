@@ -61,10 +61,10 @@ class AssistantAccess {
   Future<void> setRuntime({required bool enabled}) =>
       _admin.setRuntime(enabled: enabled);
 
-  /// 0339 — the Google facts assistants require.
+  /// 0340 — the Google facts assistants require.
   Future<McpGoogleSignIn> googleSignIn() => _identity.googleSignIn();
 
-  /// 0339 — signs in again with Google, the only way assistants accept.
+  /// 0340 — signs in again with Google, the only way assistants accept.
   Future<void> signInWithGoogle() =>
       _auth.signInWithSocial(SocialProvider.google);
 

@@ -228,6 +228,7 @@ begin
       "reportLayouts": false,
       "reportTexts": false,
       "richMessageRefs": true,
+      "roleAssignment": true,
       "roleManagement": true,
       "scheduledExpenses": false,
       "seatDayTimeline": true,

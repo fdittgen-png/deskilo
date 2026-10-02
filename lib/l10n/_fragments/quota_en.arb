@@ -22,11 +22,11 @@
       }
     }
   },
-  "memberMakeAdmin": "Make admin",
+  "memberMakeAdmin": "Give the Administrator role",
   "@memberMakeAdmin": {
     "description": "Owner action promoting a member to admin (0035)"
   },
-  "memberMakeMember": "Make regular member",
+  "memberMakeMember": "Take back the Administrator role",
   "@memberMakeMember": {
     "description": "Owner action demoting an admin to a regular member (0035)"
   },

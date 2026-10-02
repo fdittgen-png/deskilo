@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- 0339 — assistants use the profile's Google sign-in and nothing else.
+-- 0340 — assistants use the profile's Google sign-in and nothing else.
 -- A Google identity opened with OAuth is ready; the same account signed
 -- in by password must sign in with Google before consenting; an account
 -- without a Google identity can neither ask for approval nor consent.

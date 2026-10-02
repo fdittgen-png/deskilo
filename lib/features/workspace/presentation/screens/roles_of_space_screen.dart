@@ -21,7 +21,9 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
+import '../../domain/workspace_feature.dart';
 import '../widgets/role_editor_sheet.dart';
+import '../widgets/role_holders_section.dart';
 import 'roles_screen_labels.dart';
 
 class RolesOfSpaceScreen extends ConsumerStatefulWidget {
@@ -51,6 +53,13 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
         initial: role,
         workspaceLocale: locale,
         saving: _saving,
+        // #2085 — who holds it, given and taken back here too.
+        holders: role != null &&
+                ref
+                    .read(enabledFeaturesSyncProvider)
+                    .contains(WorkspaceFeature.roleAssignment)
+            ? RoleHoldersSection(role: role)
+            : null,
         onSave: (draft) async {
           Navigator.of(sheetContext).pop();
           await _save(workspace.id, draft);

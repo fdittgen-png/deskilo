@@ -30,6 +30,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/presentation/member_admin_actions.dart';
 import '../../../workspace/presentation/member_vat_treatment.dart';
+import '../../../workspace/presentation/widgets/member_roles_card.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/presentation/widgets/invite_sheet.dart';
 import '../../../workspace/domain/invite_uri.dart';
@@ -160,6 +161,7 @@ class _MemberPageBody extends ConsumerWidget {
     final kioskOn = features.contains(WorkspaceFeature.kioskMode);
     final coOwnerOn = features.contains(WorkspaceFeature.coOwner);
     final levelOn = features.contains(WorkspaceFeature.levelBooking);
+    final rolesOn = features.contains(WorkspaceFeature.roleAssignment);
     final negotiationVisible = !isSelf &&
         me != null &&
         features.contains(WorkspaceFeature.priceNegotiations) &&
@@ -289,17 +291,18 @@ class _MemberPageBody extends ConsumerWidget {
           subtitle: memberStatusLabel(l10n, member.status),
           onTap: () => toggleMemberPaused(context, ref, member),
         ),
-      if (isOwner && !member.isOwner && !member.isKiosk && active)
+      // #2085 — with roleAssignment the Roles card gives this one too.
+      if (isOwner && !member.isOwner && !member.isKiosk && active && !rolesOn)
         _ManageTile(
           tileKey: const ValueKey('member-page-role'),
           icon: member.isAdmin
               ? Icons.remove_moderator_outlined
               : Icons.add_moderator_outlined,
           title: member.isAdmin
-              ? (l10n?.memberMakeMember ?? 'Make regular member')
-              : (l10n?.memberMakeAdmin ?? 'Make admin'),
+              ? (l10n?.memberMakeMember ?? 'Take back the Administrator role')
+              : (l10n?.memberMakeAdmin ?? 'Give the Administrator role'),
           subtitle: member.isAdmin
-              ? (l10n?.memberRoleAdmin ?? 'Admin')
+              ? (l10n?.memberRoleAdmin ?? 'Administrator')
               : (l10n?.memberRoleMember ?? 'Member'),
           onTap: () => requestMemberRoleChange(context, ref, member),
         ),
@@ -320,7 +323,7 @@ class _MemberPageBody extends ConsumerWidget {
           subtitle: switch (member.coOwner) {
             CoOwnerStatus.active => l10n?.memberCoOwnerChip ?? 'Co-owner',
             CoOwnerStatus.passive =>
-              l10n?.memberCoOwnerPassiveChip ?? 'Co-owner (passive)',
+              l10n?.memberCoOwnerPassiveChip ?? 'Successor',
             CoOwnerStatus.none => l10n?.memberPageNone ?? 'None',
           },
           onTap: () => pickMemberCoOwner(context, ref, member),
@@ -537,6 +540,13 @@ class _MemberPageBody extends ConsumerWidget {
           if (features.contains(WorkspaceFeature.memberPaymentTerms) &&
               (isSelf || canAdmin))
             PaymentTermsCard(member: member, isSelf: isSelf),
+          // #2085 — the one place a member is given a role.
+          if (rolesOn &&
+              !member.isKiosk &&
+              (isSelf ||
+                  canAdmin ||
+                  perms.contains(WorkspacePermission.manageRoles)))
+            MemberRolesCard(member: member, name: name),
           if (groups.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.lg),
             Text(
@@ -605,13 +615,13 @@ class _HeaderCard extends StatelessWidget {
             foreground: theme.colorScheme.onPrimary,
             background: theme.colorScheme.primary),
       if (member.isAdmin && !member.isOwner)
-        _Chip(l10n?.memberRoleAdmin ?? 'Admin',
+        _Chip(l10n?.memberRoleAdmin ?? 'Administrator',
             foreground: theme.colorScheme.primary, outlined: true),
       if (member.coOwner == CoOwnerStatus.active)
         _Chip(l10n?.memberCoOwnerChip ?? 'Co-owner',
             foreground: theme.colorScheme.primary, outlined: true),
       if (member.coOwner == CoOwnerStatus.passive)
-        _Chip(l10n?.memberCoOwnerPassiveChip ?? 'Co-owner (passive)',
+        _Chip(l10n?.memberCoOwnerPassiveChip ?? 'Successor',
             foreground: theme.colorScheme.onSurfaceVariant, outlined: true),
       if (member.isKiosk)
         _Chip(l10n?.memberKioskLabel ?? 'Kiosk',

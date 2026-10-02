@@ -1730,7 +1730,7 @@ final class MyPermissionsProvider
   }
 }
 
-String _$myPermissionsHash() => r'54909a43d3e7193da3d9f3f1f5b811ce3eb27d74';
+String _$myPermissionsHash() => r'91d95ae4eb75b760bad053f4c1154b8111f0e3f0';
 
 /// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies
 /// to EVERY member — gates the e-invoice test environments and the

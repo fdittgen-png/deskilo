@@ -110,7 +110,7 @@ class SupabaseMcpAdminRepository implements McpAdminRepository {
           ? InstanceMcpOverview.fromJson(Map<String, dynamic>.from(json))
           : null;
     } on PostgrestException catch (e, st) {
-      // Not the instance operator, or a server before 0340: no console.
+      // Not the instance operator, or a server before 0341: no console.
       if (isMissingFunction(e) || e.message.contains('instance operator')) {
         TraceLogger.instance.warn('mcp', 'no instance console here',
             error: e, stackTrace: st);

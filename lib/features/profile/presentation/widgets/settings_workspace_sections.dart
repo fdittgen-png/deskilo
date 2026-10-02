@@ -165,7 +165,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-roles'),
         leading: const Icon(Icons.admin_panel_settings_outlined),
-        title: Text(l10n?.rolesTitle ?? 'Role management'),
+        title: Text(l10n?.rolesTitle ?? 'Roles'),
         onTap: () => context.push('/roles'),
       ),
     // #990 — deploying between the two sides of the pair: the question the
