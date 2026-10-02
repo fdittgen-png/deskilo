@@ -2718,6 +2718,56 @@
   "helpTopicInstances": "Instancias",
   "helpTopicAccounting": "Exportaciones contables",
   "helpTopicReadiness": "admisibilidad",
+  "featureHolidayImportTitle": "Importar días festivos",
+  "@featureHolidayImportTitle": {
+    "description": "#2051 open-data holiday import"
+  },
+  "featureHolidayImportDesc": "Un propietario importa los días festivos del país, y de una región, desde una fuente de datos abiertos, desmarca los días en que el espacio sigue abierto e importa el resto como días de cierre. Los meses ya facturados se omiten y se nombran.",
+  "@featureHolidayImportDesc": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportAction": "Importar días festivos (datos abiertos)",
+  "@holidayImportAction": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportRegion": "Región",
+  "@holidayImportRegion": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportNationwide": "Solo festivos nacionales",
+  "@holidayImportNationwide": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportUnavailable": "La fuente de días festivos no está disponible ahora. Inténtelo más tarde o use «Añadir días festivos».",
+  "@holidayImportUnavailable": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportRetry": "Reintentar",
+  "@holidayImportRetry": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportSource": "Fuente: {source}",
+  "@holidayImportSource": {
+    "description": "#2051 open-data holiday import",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "holidayImportConfirm": "Importar {count} días de cierre",
+  "@holidayImportConfirm": {
+    "description": "#2051 open-data holiday import",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "holidayImportFailed": "No se pudieron comprobar ni importar los días festivos. No se ha cambiado nada.",
+  "@holidayImportFailed": {
+    "description": "#2051 open-data holiday import"
+  },
   "instanceOwnerClaimIntro": "¿A quién pertenece esta instancia? Introduzca el correo electrónico con el que se registrará en ella. Tras confirmar esa dirección, reclame la titularidad en Ajustes → Propietario de la instancia.",
   "instanceOwnerClaimLabel": "Correo del titular",
   "instanceOwnerTitle": "Propietario de la instancia",

@@ -139,3 +139,19 @@ Deno.test("a bad signature is refused before anything is written", async () => {
   assertEquals(res.status, 400);
   assertEquals(fake.rpcCalls, []);
 });
+
+// #1863 C — replaces the source grep for `filter(([k]) => k === "v1")`.
+// During a secret rollover Stripe sends one v1 per active secret; the
+// valid one may come FIRST (a last-wins parse drops it) or last.
+Deno.test("every v1 signature is tried: valid first or last, both settle", async () => {
+  const body = JSON.stringify(paid());
+  const good = (await signed(body)).split(",")[1];
+  const other = (await signed(body, "whsec_old")).split(",")[1];
+  for (const header of [`t=${NOW},${good},${other}`, `t=${NOW},${other},${good}`]) {
+    const fake = fakeAdmin({});
+    const req = new Request("http://x", { method: "POST", body, headers: { "stripe-signature": header } });
+    // deno-lint-ignore no-explicit-any
+    const res = await handle(req, { admin: () => fake.admin as any, env: () => undefined, nowS: () => NOW });
+    assertEquals([res.status, fake.rpcCalls], [200, ["settle_online_payment"]], header);
+  }
+});

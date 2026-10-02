@@ -60,6 +60,81 @@ export function isUnregistered(status: number, body: unknown): boolean {
     details.some((d) => (d as { errorCode?: string })?.errorCode === "UNREGISTERED");
 }
 
+/** #2020 — a read that is complete whatever the server's row cap: pages
+ * of [PAGE] rows until an EMPTY page (a short page can be the cap, not
+ * the end). A failed page throws — recipients are unknown, never none. */
+export const PAGE = 1000;
+
+export async function readAll<T>(
+  page: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: unknown }>,
+): Promise<T[]> {
+  const out: T[] = [];
+  // The next page starts after what was RECEIVED, so a cap below PAGE
+  // skips nothing.
+  for (;;) {
+    const from = out.length;
+    const { data, error } = await page(from, from + PAGE - 1);
+    if (error) throw new Error("recipient query failed");
+    if (!data || data.length === 0) return out;
+    out.push(...data);
+  }
+}
+
+export function chunked<T>(items: T[], size = 100): T[][] {
+  const out: T[][] = [];
+  for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
+  return out;
+}
+
+/** #2020 — one finite outcome per endpoint. No response (deadline,
+ * network) is unknown: FCM may have delivered it, so it is not resent. */
+export type Outcome = "sent" | "unregistered" | "retryable" | "rejected" | "unknown";
+
+export function classify(status: number | null, body: unknown): Outcome {
+  if (status === null) return "unknown";
+  if (status >= 200 && status < 300) return "sent";
+  if (isUnregistered(status, body)) return "unregistered";
+  if (status === 429 || status >= 500) return "retryable";
+  return "rejected";
+}
+
+/** #2020 — at most one retry, and only when the wait fits the call:
+ * Retry-After in seconds (default 1 s), capped at [MAX_RETRY_WAIT_MS];
+ * a longer wait is reported retryable instead of slept through. */
+export const MAX_RETRY_WAIT_MS = 5_000;
+
+export function retryWaitMs(retryAfter: string | null): number | null {
+  const s = retryAfter === null ? 1 : Number(retryAfter);
+  if (!Number.isFinite(s) || s < 0) return null;
+  const ms = s * 1000;
+  return ms <= MAX_RETRY_WAIT_MS ? ms : null;
+}
+
+/** #2020 — sends to every endpoint, [CONCURRENCY] at a time. */
+export const CONCURRENCY = 10;
+
+export async function deliverAll<E>(
+  endpoints: E[],
+  send: (ep: E) => Promise<{ status: number | null; body: unknown; retryAfter: string | null }>,
+  sleep: (ms: number) => Promise<void> = (ms) => new Promise((r) => setTimeout(r, ms)),
+): Promise<{ ep: E; outcome: Outcome }[]> {
+  const out: { ep: E; outcome: Outcome }[] = [];
+  for (const batch of chunked(endpoints, CONCURRENCY)) {
+    out.push(...await Promise.all(batch.map(async (ep) => {
+      let r = await send(ep);
+      let outcome = classify(r.status, r.body);
+      const wait = outcome === "retryable" ? retryWaitMs(r.retryAfter) : null;
+      if (wait !== null) {
+        await sleep(wait);
+        r = await send(ep);
+        outcome = classify(r.status, r.body);
+      }
+      return { ep, outcome };
+    })));
+  }
+  return out;
+}
+
 /** #2020 — the pending-validation badge, ONCE per distinct member (was
  * once per device). A failed count is unknown, not zero: the member is
  * left out of the map and the message carries no badge. */
@@ -158,6 +233,15 @@ export async function fcmAccessToken(sa: {
 }
 
 export async function handle(req: Request): Promise<Response> {
+  try {
+    return await deliver(req);
+  } catch (e) {
+    if ((e as Error).message !== "recipient query failed") throw e;
+    return Response.json({ error: "recipients unknown" }, { status: 502 });
+  }
+}
+
+async function deliver(req: Request): Promise<Response> {
   const supabase = db();
   // #1614 — system-only: a delegated (MCP) token never triggers a push.
   const delegated = refuseDelegated(req);
@@ -191,21 +275,30 @@ export async function handle(req: Request): Promise<Response> {
     if (note.to_member_id) {
       recipients = [{ id: note.to_member_id }];
     } else if (note.conversation_id) {
-      const { data: participants } = await supabase
-        .from("conversation_participants")
-        .select("member_id")
-        .eq("conversation_id", note.conversation_id)
-        .is("left_at", null)
-        .neq("member_id", note.from_member_id);
-      recipients = (participants ?? []).map((p) => ({ id: p.member_id }));
+      const participants = await readAll<{ member_id: string }>((from, to) =>
+        supabase
+          .from("conversation_participants")
+          .select("member_id")
+          .eq("conversation_id", note.conversation_id)
+          .is("left_at", null)
+          .neq("member_id", note.from_member_id)
+          .order("member_id")
+          .range(from, to)
+      );
+      recipients = participants.map((p) => ({ id: p.member_id }));
     } else {
-      const { data: admins } = await supabase
-        .from("members")
-        .select("id, is_admin, is_owner")
-        .eq("workspace_id", note.workspace_id)
-        .eq("status", "active")
-        .neq("id", note.from_member_id);
-      recipients = (admins ?? []).filter((m) => m.is_admin || m.is_owner);
+      const admins = await readAll<{ id: string; is_admin: boolean; is_owner: boolean }>(
+        (from, to) =>
+          supabase
+            .from("members")
+            .select("id, is_admin, is_owner")
+            .eq("workspace_id", note.workspace_id)
+            .eq("status", "active")
+            .neq("id", note.from_member_id)
+            .order("id")
+            .range(from, to),
+      );
+      recipients = admins.filter((m) => m.is_admin || m.is_owner);
     }
   } else {
     // Load the event ourselves — never trust the caller's content.
@@ -227,13 +320,18 @@ export async function handle(req: Request): Promise<Response> {
     kind = eventKind;
 
     // Recipients — the 0082 rules, re-derived here for fcm rows.
-    const { data: members } = await supabase
-      .from("members")
-      .select("id, is_admin, is_owner")
-      .eq("workspace_id", event.workspace_id)
-      .eq("status", "active")
-      .neq("id", event.actor_member_id);
-    recipients = (members ?? []).filter((m) =>
+    const members = await readAll<{ id: string; is_admin: boolean; is_owner: boolean }>(
+      (from, to) =>
+        supabase
+          .from("members")
+          .select("id, is_admin, is_owner")
+          .eq("workspace_id", event.workspace_id)
+          .eq("status", "active")
+          .neq("id", event.actor_member_id)
+          .order("id")
+          .range(from, to),
+    );
+    recipients = members.filter((m) =>
       kind === "reservation_cancelled"
         ? m.id === event.subject_member_id || m.is_admin || m.is_owner
         : m.id === event.subject_member_id
@@ -246,20 +344,27 @@ export async function handle(req: Request): Promise<Response> {
   }
   if (recipients.length === 0) return Response.json({ sent: 0 });
 
-  const { data: endpoints } = await supabase
-    .from("push_endpoints")
-    .select("member_id, endpoint")
-    .in("member_id", recipients.map((m) => m.id))
-    .like("endpoint", "fcm:%");
-  if (!endpoints || endpoints.length === 0) return Response.json({ sent: 0 });
+  const endpoints: { member_id: string; endpoint: string }[] = [];
+  for (const ids of chunked(recipients.map((m) => m.id))) {
+    endpoints.push(
+      ...await readAll<{ member_id: string; endpoint: string }>((from, to) =>
+        supabase
+          .from("push_endpoints")
+          .select("member_id, endpoint")
+          .in("member_id", ids)
+          .like("endpoint", "fcm:%")
+          .order("endpoint")
+          .range(from, to)
+      ),
+    );
+  }
+  if (endpoints.length === 0) return Response.json({ sent: 0 });
 
   const token = await cachedAccessToken(sa);
   const text = TEXTS[kind];
   // iOS/macOS badge: each recipient's live pending count, once per member.
   const badges = await badgeCounts(supabase, endpoints.map((ep) => ep.member_id));
-  let sent = 0;
-  let failed = 0;
-  for (const ep of endpoints) {
+  const results = await deliverAll(endpoints, async (ep) => {
     const badge = badges.get(ep.member_id);
     const message = {
       message: {
@@ -269,31 +374,41 @@ export async function handle(req: Request): Promise<Response> {
         ...(badge === undefined ? {} : { apns: { payload: { aps: { badge } } } }),
       },
     };
-    const res = await fetch(
-      `https://fcm.googleapis.com/v1/projects/${sa.project_id}/messages:send`,
-      {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${token}`,
-          "content-type": "application/json",
+    try {
+      const res = await fetch(
+        `https://fcm.googleapis.com/v1/projects/${sa.project_id}/messages:send`,
+        {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(message),
+          signal: AbortSignal.timeout(FETCH_DEADLINE_MS),
         },
-        body: JSON.stringify(message),
-        signal: AbortSignal.timeout(FETCH_DEADLINE_MS),
-      },
-    ).catch(() => null);
-    if (res?.ok) {
-      sent++;
-      continue;
+      );
+      // The same signal bounds the body read: a stalled body is unknown.
+      const body = await res.json().catch(() => null);
+      return { status: res.status, body, retryAfter: res.headers.get("retry-after") };
+    } catch {
+      return { status: null, body: null, retryAfter: null };
     }
-    failed++;
-    if (!res) continue; // deadline or network: outcome unknown, kept
-    const body = await res.json().catch(() => null);
-    if (isUnregistered(res.status, body)) {
-      // A registration FCM says is gone: prune exactly that endpoint.
+  });
+  const tally: Record<Outcome, number> = {
+    sent: 0,
+    unregistered: 0,
+    retryable: 0,
+    rejected: 0,
+    unknown: 0,
+  };
+  for (const { ep, outcome } of results) {
+    tally[outcome]++;
+    // A registration FCM says is gone: prune exactly that endpoint.
+    if (outcome === "unregistered") {
       await supabase.from("push_endpoints").delete().eq("endpoint", ep.endpoint);
     }
   }
-  return Response.json({ sent, failed });
+  return Response.json({ ...tally, failed: results.length - tally.sent });
 }
 
 if (import.meta.main) Deno.serve(handle);

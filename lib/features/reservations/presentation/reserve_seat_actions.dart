@@ -584,6 +584,9 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       ),
     );
     if (choice == null || !mounted) return;
+    // #2016 T08 — the choice belongs to the workspace the sheet opened for:
+    // after a switch it is dropped, never booked in either workspace.
+    if (ref.read(currentWorkspaceProvider).value?.id != workspace.id) return;
     // Blocking is not a booking: it takes the seat OUT of service from
     // now, open-ended, and returns before any reservation is created.
     if (choice.block) {

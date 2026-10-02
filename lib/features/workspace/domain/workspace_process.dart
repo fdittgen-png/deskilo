@@ -61,6 +61,7 @@ const workspaceProcesses = <WorkspaceProcess>[
     WorkspaceSubprocess('availability', [
       WorkspaceFeature.workingHours,
       WorkspaceFeature.publicHolidays,
+      WorkspaceFeature.holidayImport,
     ]),
     WorkspaceSubprocess('presentation', [
       WorkspaceFeature.planMemberPhotos,

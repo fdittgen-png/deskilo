@@ -1,8 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #1137 / #1144 — the payment functions convert money ONE way and verify
-// a Stripe signature the way Stripe does. Deno is not in the Flutter CI,
-// so this reads the sources; `edge-functions.yml` typechecks them.
+// #1137 — the payment functions convert money ONE way: through
+// `_shared/money.ts`, never a literal `* 100` (a yen has no minor digits).
+// This narrow architecture guard is the only source check left here.
+//
+// #1863 C — the other source claims this file used to grep are proven by
+// running the real handlers (`deno test` in edge-functions.yml, and
+// scripts/edge_payment_check.sh with scripts/payment_scenarios/ in the
+// quality workflow). Where each claim lives now:
+//   * every Stripe v1 signature is tried → stripe-webhook/index_test.ts
+//     "every v1 signature is tried" (red under a last-wins parse);
+//   * the currency is the workspace's, the amount whole minor units →
+//     edge_payment_check.sh step 3b (USD body on an EUR workspace and a
+//     fractional amount: 400, no intent, no provider call); the provider's
+//     record equals the intent → payment_scenarios/stripe.sh;
+//   * Mollie reports to THIS backend's mollie-webhook → mollie.sh
+//     "creation" (webhookUrl read back from the stub);
+//   * an approved PayPal order is captured once, with a request id →
+//     paypal.sh scenarios 1, 7, 8, 9; PayPal needs `webhook_id` →
+//     create-payment-order/index_test.ts "PayPal without its webhook id";
+//   * Stripe settles on payment_status, async success/failure →
+//     stripe.sh scenarios 2 and 3.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -24,69 +42,5 @@ void main() {
           reason: '$slug must convert through the shared rule');
     }
     expect(_src('create-payment-order'), contains('from "../_shared/money.ts"'));
-  });
-
-  test('the Stripe verifier keeps every v1 signature', () {
-    final s = _src('stripe-webhook');
-    expect(s, isNot(contains('Object.fromEntries')),
-        reason: 'fromEntries keeps only the LAST v1 — rollover breaks');
-    expect(s, contains('filter(([k]) => k === "v1")'));
-  });
-
-  test('the order takes the currency from the workspace, not the body', () {
-    final s = _src('create-payment-order');
-    expect(s, contains('ws?.currency_code'));
-    expect(s, isNot(contains('(body.currency as string) ?? "EUR"')));
-    expect(s, contains('Number.isInteger(amountCents)'));
-  });
-
-  // #1556 — Mollie and Wero settle ONLY through `mollie-webhook`; there
-  // is no polling behind it and the redirect proves nothing about the
-  // money. A payment created without `webhookUrl` is a payment nobody
-  // is ever told about, and the word appeared nowhere in the repository.
-  test('a Mollie payment says where to report its outcome', () {
-    final s = _src('create-payment-order');
-    expect(s, contains('webhookUrl:'),
-        reason: 'without it the member pays and the account is never '
-            'credited — the webhook is the only settlement path');
-    expect(s, contains('functions/v1/mollie-webhook'),
-        reason: 'and it points at the deployment that asked for it');
-    expect(s, contains('Deno.env.get("SUPABASE_URL")'),
-        reason: 'derived from this backend, never compiled in: a '
-            'self-hoster\'s callbacks must not land on another project');
-  });
-
-  // #1555 — approval moves no money. An order with `intent: "CAPTURE"`
-  // still has to be captured, and nothing ever called capture, so the
-  // flow waited for a PAYMENT.CAPTURE.COMPLETED that could not arrive.
-  test('an approved PayPal order is captured, once', () {
-    final s = _src('paypal-webhook');
-    expect(s, contains('CHECKOUT.ORDER.APPROVED'),
-        reason: 'the approval is the signal to capture; ignoring it '
-            'leaves the member charged nothing and told everything');
-    expect(s, contains('/capture'),
-        reason: 'no call to the capture endpoint exists anywhere else');
-    expect(s, contains('PayPal-Request-Id'),
-        reason: 'PayPal redelivers events: without an idempotency key a '
-            'second APPROVED takes the money twice');
-    expect(_src('create-payment-order'), contains('"webhook_id"'),
-        reason: 'paypal-webhook refuses every event without a webhook_id, '
-            'so an instance without one can never be told the money '
-            'arrived — "configured" has to mean the whole round trip');
-  });
-
-  // #1554 — `completed` is the checkout finishing, not the money
-  // arriving: a delayed method ends the session `unpaid` and settles
-  // days later, or fails.
-  test('Stripe settles on payment, not on the checkout closing', () {
-    final s = _src('stripe-webhook');
-    expect(s, contains('payment_status'),
-        reason: 'crediting a completed session without reading '
-            'payment_status posts a ledger entry for money that may '
-            'never come');
-    expect(s, contains('async_payment_succeeded'),
-        reason: 'and the delayed success was being logged and dropped, '
-            'so a SEPA payment that DID arrive was never credited');
-    expect(s, contains('async_payment_failed'));
   });
 }

@@ -26,7 +26,7 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 
 ## Feature management (lifetime rule, #502)
 
-- EVERY user-facing functionality ships behind a `WorkspaceFeature` flag — for the lifetime of this project. A new functionality lands with: the enum value, a `featureManifest` entry (defaultOn/requires), `featureXxx`/`featureXxxDesc` l10n keys ×5, `features.contains(...)` gates on its UI surfaces, and the bumped pin in `test/lint/feature_registry_test.dart`.
+- EVERY user-facing functionality ships behind a `WorkspaceFeature` flag — for the lifetime of this project. A new functionality lands with: the enum value, a `featureManifest` entry (defaultOn/requires), `featureXxx`/`featureXxxDesc` l10n keys ×5, `features.contains(...)` gates on its UI surfaces, its assessment line in `feature_lifecycle.dart` and its row in the generated process catalogue (#1863 retired the count pin: `test/lint/feature_registry_test.dart` now checks completeness, stable keys, tiers and dependencies).
 - Default ON unless the feature is risky or needs owner setup; dependent features declare `requires` so the Features screen explains the chain.
 - OFF must degrade honestly: the entry points disappear (and their routes redirect); already-stored data stays untouched.
 
@@ -516,7 +516,7 @@ never does.
 
 Every functionality adds itself to the SAME lines: the `WorkspaceFeature`
 enum and manifest, `feature_names.dart`, `features_screen.dart`, the
-registry pin, `web/setup.html` FEATURES/REQUIRES, the file budgets, the
+process catalogue, `web/setup.html` FEATURES/REQUIRES, the file budgets, the
 placeholder list and its pin. Two branches cut from the same master
 that both add there CONFLICT on merge, and the rebase repeats for every
 branch behind. So: cut a branch from master, open its PR, merge it, THEN

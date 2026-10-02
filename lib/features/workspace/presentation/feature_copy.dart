@@ -474,6 +474,12 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
               'Message screens refuse screenshots and screen recording '
                   'where the device allows it, and announce a screenshot '
                   'where it can only be detected.',
+        WorkspaceFeature.holidayImport =>
+          l10n?.featureHolidayImportDesc ??
+              'An owner imports the public holidays of the country, and of '
+                  'one region, from an open-data source, deselects the days '
+                  'the space stays open and imports the rest as closure '
+                  'days. Invoiced months are skipped and named.',
       WorkspaceFeature.workspaceBranding =>
           l10n?.featureWorkspaceBrandingDesc ??
               'The workspace chooses a brand colour the app derives its '

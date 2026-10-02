@@ -133,7 +133,8 @@ void main() {
     // #1607 — mcpAccess is the thirtieth: a workspace is never reachable
     // by a machine it did not ask to be reachable by, and asking is only
     // the first of the steps that lead to one being allowed in.
-    expect(onCount, featureManifest.length - 31);
+    // #2051 — holidayImport is the thirty-second: it writes closure days.
+    expect(onCount, featureManifest.length - 32);
   });
 
   testWidgets(

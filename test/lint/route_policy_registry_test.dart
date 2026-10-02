@@ -7,37 +7,21 @@
 // a rule is a screen nobody can open — reachable in a widget test that
 // pumps it directly, dead in the app. The other direction rots too: a
 // rule for a route that was deleted keeps a boundary alive for nothing.
-// Both are read from the source, the same way route_registry_test pins
-// the count.
+// #1863 — both are read from the live GoRouter
+// (test/helpers/router_paths.dart), not from a regexp over router.dart.
 import 'dart:io';
 
 import 'package:deskilo/app/route_classes.dart';
-import 'package:deskilo/app/schema_gate.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// The absolute paths router.dart registers. A relative `path:` (a
-/// nested GoRoute) is joined to the last absolute one above it.
-Set<String> routerPaths() {
-  final source = File('lib/app/router.dart').readAsStringSync();
-  final paths = <String>{};
-  var parent = '';
-  for (final m in RegExp(r"path:\s*(?:'([^']+)'|(kSchemaUpdateRoute))")
-      .allMatches(source)) {
-    final raw = m.group(1) ?? kSchemaUpdateRoute;
-    if (raw.startsWith('/')) {
-      parent = raw;
-      paths.add(raw);
-    } else {
-      paths.add('$parent/$raw');
-    }
-  }
-  return paths;
-}
+import '../helpers/router_paths.dart';
 
 void main() {
-  test('every router path has a class', () {
-    final unknown = routerPaths()
+  testWidgets('every router path has a class', (tester) async {
+    final app = await bootRouter(tester);
+    final unknown = registeredRoutePaths(app.router.configuration.routes)
         .where((p) => classifyRoute(p) == RouteClass.unknown)
+        .toSet()
         .toList()
       ..sort();
     expect(
@@ -49,8 +33,10 @@ void main() {
     );
   });
 
-  test('every rule names a registered route', () {
-    final registered = routerPaths();
+  testWidgets('every rule names a registered route', (tester) async {
+    final app = await bootRouter(tester);
+    final registered =
+        registeredRoutePaths(app.router.configuration.routes).toSet();
     final dead = routeRules
         .map((r) => r.pattern)
         .where((p) => !registered.contains(p))

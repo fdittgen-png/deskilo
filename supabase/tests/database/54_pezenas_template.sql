@@ -173,6 +173,7 @@ begin
       "expenseRepartitionWizard": false,
       "financeFaces": true,
       "formHelpHints": true,
+      "holidayImport": false,
       "instanceWizard": false,
       "invoiceAddressWindow": false,
       "invoiceJourney": false,
