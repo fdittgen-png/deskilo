@@ -102,7 +102,7 @@
   "@privacyTitle": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.",
+  "privacyIntro": "Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation's privacy notice. These are your rights under the GDPR — each one is a button.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },

@@ -3712,6 +3712,12 @@ abstract class AppLocalizations {
   /// **'Rooms without seats are read as they are today.'**
   String get capacityKpiRoomsToday;
 
+  /// #1921 permission: read aggregated operational KPIs
+  ///
+  /// In en, this message translates to:
+  /// **'Read the workspace figures'**
+  String get permViewAnalytics;
+
   /// #1279 carnets: featureCarnetsTitle
   ///
   /// In en, this message translates to:
@@ -19003,6 +19009,108 @@ abstract class AppLocalizations {
   /// **'Reset'**
   String get portalResetAllConfirm;
 
+  /// #1914 privacy notice: privacyNoticeTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Who processes your data'**
+  String get privacyNoticeTitle;
+
+  /// #1914 privacy notice: privacyNoticeController
+  ///
+  /// In en, this message translates to:
+  /// **'Controller: {name} — {contact}'**
+  String privacyNoticeController(String name, String contact);
+
+  /// #1914 privacy notice: privacyNoticeRights
+  ///
+  /// In en, this message translates to:
+  /// **'Your rights: {contact}'**
+  String privacyNoticeRights(String contact);
+
+  /// #1914 privacy notice: privacyNoticeRegion
+  ///
+  /// In en, this message translates to:
+  /// **'Region: {region}'**
+  String privacyNoticeRegion(String region);
+
+  /// #1914 privacy notice: privacyNoticeTransfer
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer safeguard: {mechanism}'**
+  String privacyNoticeTransfer(String mechanism);
+
+  /// #1914 privacy notice: privacyNoticeNotRecorded
+  ///
+  /// In en, this message translates to:
+  /// **'not recorded by the operator'**
+  String get privacyNoticeNotRecorded;
+
+  /// #1914 privacy notice: privacyNoticeEssential
+  ///
+  /// In en, this message translates to:
+  /// **'Needed to run the account and the space'**
+  String get privacyNoticeEssential;
+
+  /// #1914 privacy notice: privacyNoticeOptional
+  ///
+  /// In en, this message translates to:
+  /// **'Optional — you can use the app without it'**
+  String get privacyNoticeOptional;
+
+  /// #1914 privacy notice: privacyNoticeRightsRoute
+  ///
+  /// In en, this message translates to:
+  /// **'Your rights and the contact'**
+  String get privacyNoticeRightsRoute;
+
+  /// #1914 privacy notice: privacySpaceNotice
+  ///
+  /// In en, this message translates to:
+  /// **'This space\'s privacy notice'**
+  String get privacySpaceNotice;
+
+  /// #1914 privacy notice: privacySpaceNoticeRead
+  ///
+  /// In en, this message translates to:
+  /// **'You acknowledged this version.'**
+  String get privacySpaceNoticeRead;
+
+  /// #1914 privacy notice: privacySpaceNoticeUnread
+  ///
+  /// In en, this message translates to:
+  /// **'Not acknowledged yet — read it here.'**
+  String get privacySpaceNoticeUnread;
+
+  /// #1914 privacy notice: privacySpaceNoticeAcknowledge
+  ///
+  /// In en, this message translates to:
+  /// **'I have read this notice'**
+  String get privacySpaceNoticeAcknowledge;
+
+  /// #1914 privacy notice: privacySpaceNoticeFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The acknowledgment could not be recorded. Please try again.'**
+  String get privacySpaceNoticeFailed;
+
+  /// #1914 privacy notice: privacyPushOnDevice
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications on this device'**
+  String get privacyPushOnDevice;
+
+  /// #1914 privacy notice: privacyPushOnDeviceHint
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.'**
+  String get privacyPushOnDeviceHint;
+
+  /// #1914 privacy notice: privacyPushOnDeviceFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The choice could not be saved. Please try again.'**
+  String get privacyPushOnDeviceFailed;
+
   /// #1327 the process-first overview of the Features screen
   ///
   /// In en, this message translates to:
@@ -19852,7 +19960,7 @@ abstract class AppLocalizations {
   /// #719 - privacy & data
   ///
   /// In en, this message translates to:
-  /// **'Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.'**
+  /// **'Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation\'s privacy notice. These are your rights under the GDPR — each one is a button.'**
   String get privacyIntro;
 
   /// #719 - privacy & data

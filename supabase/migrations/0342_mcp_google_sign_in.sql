@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0340 (MCP) -- an assistant acts only for someone who signs in with Google.
+-- 0342 (MCP) -- an assistant acts only for someone who signs in with Google.
 --
 -- Owner decision (2026-10-02): the MCP uses the authentication already
 -- configured in the person's profile, which is Google. An account with a
@@ -134,4 +134,4 @@ $migration$;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(340);
+select public.set_deskilo_schema_version(342);

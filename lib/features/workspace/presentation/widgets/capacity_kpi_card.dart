@@ -21,8 +21,8 @@ import '../../domain/workspace_permission.dart';
 import '../../providers/kpi_providers.dart';
 import '../../providers/workspace_providers.dart';
 
-/// Shown only when the feature is on and the reader may manage
-/// reservations; the server checks both again.
+/// Shown only when the feature is on and the reader holds viewAnalytics
+/// (#1921); the server checks both again.
 class CapacityKpiCard extends ConsumerStatefulWidget {
   const CapacityKpiCard({super.key});
 
@@ -46,7 +46,7 @@ class _CapacityKpiCardState extends ConsumerState<CapacityKpiCard> {
         .contains(WorkspaceFeature.capacityKpi);
     final may = ref
         .watch(myPermissionsProvider)
-        .contains(WorkspacePermission.manageReservations);
+        .contains(WorkspacePermission.viewAnalytics);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     if (!on || !may || workspace == null) return const SizedBox.shrink();
 
