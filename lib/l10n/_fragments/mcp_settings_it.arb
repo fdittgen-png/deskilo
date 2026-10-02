@@ -28,7 +28,7 @@
   "mcpEligibleYes": "Questo database ti consente di usare gli assistenti.",
   "mcpEligibleRequested": "Hai chiesto l'approvazione. Un amministratore del database la esaminerà.",
   "mcpEligibleExpired": "La tua approvazione è scaduta. Richiedila di nuovo per continuare a usare gli assistenti.",
-  "mcpEligibleNoIdentity": "Il tuo account non è collegato a un'identità verificata su questo database.",
+  "mcpEligibleNoIdentity": "La tua identità non è ancora confermata per gli assistenti su questa base.",
   "mcpEligibleNot": "Questo database non ha approvato gli assistenti per te.",
   "mcpEligibleWithdraw": "Rinuncia all'accesso degli assistenti su questo database",
   "mcpConnectedNoWorkspace": "Nessuno spazio: questo assistente non può fare nulla qui.",

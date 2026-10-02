@@ -536,6 +536,108 @@ abstract class AppLocalizations {
   /// **'The book was not saved. Check the connection and try again.'**
   String get bookSaveFailed;
 
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Customers (receivable)'**
+  String get bookRoleCustomers;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get bookRoleRevenue;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get bookRoleBank;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Output VAT'**
+  String get bookRoleVatOutput;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get bookRoleExpenses;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Asset'**
+  String get bookTypeAsset;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Liability'**
+  String get bookTypeLiability;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Equity'**
+  String get bookTypeEquity;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get bookTypeIncome;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get bookTypeExpense;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Chart of accounts · {site}'**
+  String bookChartTitle(String site);
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Add the suggested accounts to review'**
+  String get bookChartSuggest;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Account code'**
+  String get bookAccountCode;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Account name'**
+  String get bookAccountName;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Takes postings'**
+  String get bookAccountPosting;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Which account each entry books to'**
+  String get bookMappingsTitle;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Map these accounts before a local book starts: {roles}.'**
+  String bookProblemUnmapped(String roles);
+
   /// #936 accounting exports: fecAccountExpenses
   ///
   /// In en, this message translates to:
@@ -719,7 +821,7 @@ abstract class AppLocalizations {
   /// #1827 Assistant setup: assistantSetupLinkIdentity
   ///
   /// In en, this message translates to:
-  /// **'Link my identity'**
+  /// **'Confirm my identity'**
   String get assistantSetupLinkIdentity;
 
   /// #1827 Assistant setup: assistantSetupTurnOn
@@ -14206,7 +14308,7 @@ abstract class AppLocalizations {
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:
-  /// **'Your account is not linked to a verified identity on this database.'**
+  /// **'Your identity is not confirmed for assistants on this database yet.'**
   String get mcpEligibleNoIdentity;
 
   /// #1626 #1627 #1628 mcp_settings
@@ -14344,7 +14446,7 @@ abstract class AppLocalizations {
   /// #1625 MCP status: mcpStatusIdentity
   ///
   /// In en, this message translates to:
-  /// **'Identity'**
+  /// **'Identity for assistants'**
   String get mcpStatusIdentity;
 
   /// #1625 MCP status: mcpStatusEligibility
@@ -14386,7 +14488,7 @@ abstract class AppLocalizations {
   /// #1625 MCP status: mcpStateUnlinked
   ///
   /// In en, this message translates to:
-  /// **'Not linked'**
+  /// **'Not confirmed'**
   String get mcpStateUnlinked;
 
   /// #1625 MCP status: mcpStateNotRequested
@@ -14470,7 +14572,7 @@ abstract class AppLocalizations {
   /// #1625 MCP status: mcpNextLinkIdentity
   ///
   /// In en, this message translates to:
-  /// **'Next: you link your account to this database\'s identity.'**
+  /// **'Next: confirm your identity for assistants on this database — one tap below.'**
   String get mcpNextLinkIdentity;
 
   /// #1625 MCP status: mcpNextRequestEligibility
@@ -14538,6 +14640,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That database needs your second factor on its own session. Nothing was decided.'**
   String get mcpReviewSecondFactor;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm my identity'**
+  String get mcpStatusConfirmIdentity;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'After the step above'**
+  String get mcpStateAfterPrevious;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'This account cannot be confirmed yet — confirm your e-mail address or sign in with a provider first.'**
+  String get mcpIdentityIneligible;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'Another account already holds this identity here — a database administrator can resolve it.'**
+  String get mcpIdentityConflict;
 
   /// #1630 mcp_usage
   ///
@@ -18643,6 +18769,42 @@ abstract class AppLocalizations {
   /// **'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.'**
   String get featurePublicListingsDesc;
 
+  /// No description provided for @portalFollowsWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'From workspace information'**
+  String get portalFollowsWorkspace;
+
+  /// No description provided for @portalCustomised.
+  ///
+  /// In en, this message translates to:
+  /// **'Customised'**
+  String get portalCustomised;
+
+  /// No description provided for @portalUseWorkspaceInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Use workspace information'**
+  String get portalUseWorkspaceInfo;
+
+  /// No description provided for @portalResetAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset all public data to workspace information'**
+  String get portalResetAll;
+
+  /// No description provided for @portalResetAllBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.'**
+  String get portalResetAllBody;
+
+  /// No description provided for @portalResetAllConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get portalResetAllConfirm;
+
   /// #1327 the process-first overview of the Features screen
   ///
   /// In en, this message translates to:
@@ -20874,6 +21036,84 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #1922 reminder evidence: reminderHistoryTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder history'**
+  String get reminderHistoryTitle;
+
+  /// #1922 reminder evidence: reminderHistoryRefresh
+  ///
+  /// In en, this message translates to:
+  /// **'Check delivery again'**
+  String get reminderHistoryRefresh;
+
+  /// #1922 reminder evidence: reminderHistoryLine
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level} · {origin} · {date}'**
+  String reminderHistoryLine(int level, String origin, String date);
+
+  /// #1922 reminder evidence: reminderStatusPrepared
+  ///
+  /// In en, this message translates to:
+  /// **'Prepared'**
+  String get reminderStatusPrepared;
+
+  /// #1922 reminder evidence: reminderStatusQueued
+  ///
+  /// In en, this message translates to:
+  /// **'Handed to the push service'**
+  String get reminderStatusQueued;
+
+  /// #1922 reminder evidence: reminderStatusAccepted
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted by the push service — not proof it was read'**
+  String get reminderStatusAccepted;
+
+  /// #1922 reminder evidence: reminderStatusDeclared
+  ///
+  /// In en, this message translates to:
+  /// **'Shared by the sender — their statement, not a receipt'**
+  String get reminderStatusDeclared;
+
+  /// #1922 reminder evidence: reminderStatusFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Not delivered'**
+  String get reminderStatusFailed;
+
+  /// #1922 reminder evidence: reminderStatusUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'No answer from the push service'**
+  String get reminderStatusUnknown;
+
+  /// #1922 reminder evidence: reminderStatusLegacy
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded before delivery was tracked — unknown'**
+  String get reminderStatusLegacy;
+
+  /// #1922 reminder evidence: reminderOriginManual
+  ///
+  /// In en, this message translates to:
+  /// **'by hand'**
+  String get reminderOriginManual;
+
+  /// #1922 reminder evidence: reminderOriginAutomatic
+  ///
+  /// In en, this message translates to:
+  /// **'automatic'**
+  String get reminderOriginAutomatic;
+
+  /// #1922 reminder evidence: reminderOriginLegacy
+  ///
+  /// In en, this message translates to:
+  /// **'earlier'**
+  String get reminderOriginLegacy;
+
   /// #966 report guide: reportGuideTitle
   ///
   /// In en, this message translates to:
@@ -21647,6 +21887,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your texts'**
   String get reportFieldGroupTexts;
+
+  /// #1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period
+  ///
+  /// In en, this message translates to:
+  /// **'This space, or a space it belongs to, is already reserved in that period.'**
+  String get bookingSpaceChainTaken;
+
+  /// #1908 — a checkout lost a race: the reservation was already checked out or closed by the day-end sweep
+  ///
+  /// In en, this message translates to:
+  /// **'This reservation is no longer checked in — it was checked out or closed in the meantime.'**
+  String get bookingNoLongerCheckedIn;
 
   /// Reserve hub view segment: month availability calendar (#7)
   ///

@@ -7,7 +7,7 @@
   "assistantSetupSaved": "Enregistré.",
   "assistantSetupStale": "Quelqu'un a modifié l'offre entre-temps. Vérifiez-la et réessayez.",
   "assistantSetupFailed": "Enregistrement impossible. Rien n'a changé ; réessayez.",
-  "assistantSetupLinkIdentity": "Lier mon identité",
+  "assistantSetupLinkIdentity": "Confirmer mon identité",
   "assistantSetupTurnOn": "Activer",
   "assistantSetupRecommended": "Utiliser la sélection recommandée",
   "assistantSetupCustomise": "Personnaliser",

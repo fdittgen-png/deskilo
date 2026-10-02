@@ -10,9 +10,11 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/book_chart.dart';
 import '../../domain/book_profile.dart';
 import '../../application/save_book_profile.dart';
 import '../../providers/book_profile_providers.dart';
+import 'book_chart_sheet.dart';
 
 String bookAuthorityLabel(AppLocalizations? l10n, BookAuthority a) =>
     switch (a) {
@@ -70,6 +72,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   var _basis = AccountingBasis.accrual;
   DateTime? _from;
   var _saving = false;
+  List<BookMapping> _mappings = const [];
 
   @override
   void initState() {
@@ -124,8 +127,9 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
       errorText:
           l10n?.bookSaveFailed ??
           'The book was not saved. Check the connection and try again.',
-      action: () async =>
-          outcome = await ref.read(bookProfileCommandsProvider).save(draft),
+      action: () async => outcome = await ref
+          .read(bookProfileCommandsProvider)
+          .save(draft, mappings: _mappings),
     );
     if (!mounted) return;
     setState(() => _saving = false);
@@ -156,6 +160,15 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
     final problems = draft == null
         ? const <BookProfileProblem>[]
         : validateBookProfile(draft);
+    _mappings = ref.watch(bookChartProvider).value?.mappings ?? const [];
+    // #1869 B — a local book waits for its required roles to be mapped.
+    final unmapped = draft == null || draft.authority != BookAuthority.localBook
+        ? const <BookRole>[]
+        : missingForLocalBook(
+            _mappings,
+            draft.issuerSiteId,
+            draft.effectiveFrom,
+          );
     final dates = DateFormat.yMMMd(locale);
     final year = draft == null || problems.isNotEmpty
         ? null
@@ -321,10 +334,24 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
                 bookProblemLabel(l10n, p),
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
+            if (unmapped.isNotEmpty)
+              Text(
+                l10n?.bookProblemUnmapped(
+                      unmapped.map((r) => bookRoleLabel(l10n, r)).join(', '),
+                    ) ??
+                    'Map these accounts before a local book starts: '
+                        '${unmapped.map((r) => bookRoleLabel(l10n, r)).join(', ')}.',
+                key: const ValueKey('book-unmapped'),
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
             const SizedBox(height: AppSpacing.md),
             FilledButton(
               key: const ValueKey('book-save'),
-              onPressed: draft == null || problems.isNotEmpty || _saving
+              onPressed:
+                  draft == null ||
+                      problems.isNotEmpty ||
+                      unmapped.isNotEmpty ||
+                      _saving
                   ? null
                   : () => _save(draft),
               child: Text(l10n?.commonSave ?? 'Save'),
@@ -370,6 +397,18 @@ class BookProfileSection extends ConsumerWidget {
           trailing: const Icon(Icons.add),
           onTap: () => showBookProfileSheet(context),
         ),
+        for (final site in sites.values)
+          ListTile(
+            key: ValueKey('book-chart-${site.id}'),
+            dense: true,
+            contentPadding: const EdgeInsets.only(left: AppSpacing.lg),
+            leading: const Icon(Icons.account_tree_outlined),
+            title: Text(
+              l10n?.bookChartTitle(site.name) ??
+                  'Chart of accounts · ${site.name}',
+            ),
+            onTap: () => showBookChartSheet(context, site),
+          ),
         for (final p in profiles)
           ListTile(
             key: ValueKey(

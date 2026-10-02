@@ -19,5 +19,22 @@
   "bookProblemFiscal": "Un ejercicio empieza un día que tiene todo año (nunca el 29 de febrero).",
   "bookSaved": "Libro guardado",
   "bookStale": "Alguien guardó este libro desde que lo abrió. Cierre y vuelva a abrir para ver su versión.",
-  "bookSaveFailed": "El libro no se guardó. Compruebe la conexión e inténtelo de nuevo."
+  "bookSaveFailed": "El libro no se guardó. Compruebe la conexión e inténtelo de nuevo.",
+  "bookRoleCustomers": "Clientes (cuentas por cobrar)",
+  "bookRoleRevenue": "Ingresos",
+  "bookRoleBank": "Banco",
+  "bookRoleVatOutput": "IVA repercutido",
+  "bookRoleExpenses": "Gastos",
+  "bookTypeAsset": "Activo",
+  "bookTypeLiability": "Pasivo",
+  "bookTypeEquity": "Patrimonio neto",
+  "bookTypeIncome": "Ingreso",
+  "bookTypeExpense": "Gasto",
+  "bookChartTitle": "Plan contable · {site}",
+  "bookChartSuggest": "Añadir las cuentas sugeridas para revisarlas",
+  "bookAccountCode": "Código de cuenta",
+  "bookAccountName": "Nombre de la cuenta",
+  "bookAccountPosting": "Admite asientos",
+  "bookMappingsTitle": "La cuenta de cada asiento",
+  "bookProblemUnmapped": "Asigne estas cuentas antes de iniciar un libro local: {roles}."
 }

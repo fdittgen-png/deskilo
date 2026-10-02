@@ -49,5 +49,11 @@
   "portalEmploymentHint": "L’emploi ne change ni les accès ni l’abonnement. Le versement des salaires n’est pas activé.",
   "portalAdminVisible": "Afficher mon rôle d’administrateur publiquement",
   "featurePublicListings": "Présentation publique de l’espace",
-  "featurePublicListingsDesc": "Publiez les informations et plans choisis, avec les propriétaires visibles et les administrateurs volontaires."
+  "featurePublicListingsDesc": "Publiez les informations et plans choisis, avec les propriétaires visibles et les administrateurs volontaires.",
+  "portalFollowsWorkspace": "Repris des informations de l’espace",
+  "portalCustomised": "Personnalisé",
+  "portalUseWorkspaceInfo": "Utiliser les informations de l’espace",
+  "portalResetAll": "Rétablir toutes les données publiques depuis les informations de l’espace",
+  "portalResetAllBody": "Les valeurs publiques de chaque champ qui a une information dans l’espace sont remplacées par celle-ci. Les champs sans équivalent dans l’espace gardent ce que vous avez saisi.",
+  "portalResetAllConfirm": "Rétablir"
 }

@@ -269,6 +269,61 @@ class AppLocalizationsEn extends AppLocalizations {
       'The book was not saved. Check the connection and try again.';
 
   @override
+  String get bookRoleCustomers => 'Customers (receivable)';
+
+  @override
+  String get bookRoleRevenue => 'Revenue';
+
+  @override
+  String get bookRoleBank => 'Bank';
+
+  @override
+  String get bookRoleVatOutput => 'Output VAT';
+
+  @override
+  String get bookRoleExpenses => 'Expenses';
+
+  @override
+  String get bookTypeAsset => 'Asset';
+
+  @override
+  String get bookTypeLiability => 'Liability';
+
+  @override
+  String get bookTypeEquity => 'Equity';
+
+  @override
+  String get bookTypeIncome => 'Income';
+
+  @override
+  String get bookTypeExpense => 'Expense';
+
+  @override
+  String bookChartTitle(String site) {
+    return 'Chart of accounts · $site';
+  }
+
+  @override
+  String get bookChartSuggest => 'Add the suggested accounts to review';
+
+  @override
+  String get bookAccountCode => 'Account code';
+
+  @override
+  String get bookAccountName => 'Account name';
+
+  @override
+  String get bookAccountPosting => 'Takes postings';
+
+  @override
+  String get bookMappingsTitle => 'Which account each entry books to';
+
+  @override
+  String bookProblemUnmapped(String roles) {
+    return 'Map these accounts before a local book starts: $roles.';
+  }
+
+  @override
   String get fecAccountExpenses => 'Expenses';
 
   @override
@@ -369,7 +424,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not save. Nothing changed; try again.';
 
   @override
-  String get assistantSetupLinkIdentity => 'Link my identity';
+  String get assistantSetupLinkIdentity => 'Confirm my identity';
 
   @override
   String get assistantSetupTurnOn => 'Turn on';
@@ -8239,7 +8294,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpEligibleNoIdentity =>
-      'Your account is not linked to a verified identity on this database.';
+      'Your identity is not confirmed for assistants on this database yet.';
 
   @override
   String get mcpEligibleNot =>
@@ -8316,7 +8371,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpStatusTitle => 'Where you stand here';
 
   @override
-  String get mcpStatusIdentity => 'Identity';
+  String get mcpStatusIdentity => 'Identity for assistants';
 
   @override
   String get mcpStatusEligibility => 'Database approval';
@@ -8337,7 +8392,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpStateVerified => 'Verified';
 
   @override
-  String get mcpStateUnlinked => 'Not linked';
+  String get mcpStateUnlinked => 'Not confirmed';
 
   @override
   String get mcpStateNotRequested => 'Not requested';
@@ -8380,7 +8435,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpNextLinkIdentity =>
-      'Next: you link your account to this database\'s identity.';
+      'Next: confirm your identity for assistants on this database — one tap below.';
 
   @override
   String get mcpNextRequestEligibility =>
@@ -8422,6 +8477,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mcpReviewSecondFactor =>
       'That database needs your second factor on its own session. Nothing was decided.';
+
+  @override
+  String get mcpStatusConfirmIdentity => 'Confirm my identity';
+
+  @override
+  String get mcpStateAfterPrevious => 'After the step above';
+
+  @override
+  String get mcpIdentityIneligible =>
+      'This account cannot be confirmed yet — confirm your e-mail address or sign in with a provider first.';
+
+  @override
+  String get mcpIdentityConflict =>
+      'Another account already holds this identity here — a database administrator can resolve it.';
 
   @override
   String get mcpUsageWorkspaceTitle => 'Assistant use, last 30 days';
@@ -10762,6 +10831,25 @@ class AppLocalizationsEn extends AppLocalizations {
       'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.';
 
   @override
+  String get portalFollowsWorkspace => 'From workspace information';
+
+  @override
+  String get portalCustomised => 'Customised';
+
+  @override
+  String get portalUseWorkspaceInfo => 'Use workspace information';
+
+  @override
+  String get portalResetAll => 'Reset all public data to workspace information';
+
+  @override
+  String get portalResetAllBody =>
+      'The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.';
+
+  @override
+  String get portalResetAllConfirm => 'Reset';
+
+  @override
   String get featuresViewProcesses => 'Processes';
 
   @override
@@ -12072,6 +12160,50 @@ class AppLocalizationsEn extends AppLocalizations {
       'This changed in the meantime. Reopen it to see where it stands.';
 
   @override
+  String get reminderHistoryTitle => 'Reminder history';
+
+  @override
+  String get reminderHistoryRefresh => 'Check delivery again';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Level $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Prepared';
+
+  @override
+  String get reminderStatusQueued => 'Handed to the push service';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Accepted by the push service — not proof it was read';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Shared by the sender — their statement, not a receipt';
+
+  @override
+  String get reminderStatusFailed => 'Not delivered';
+
+  @override
+  String get reminderStatusUnknown => 'No answer from the push service';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Recorded before delivery was tracked — unknown';
+
+  @override
+  String get reminderOriginManual => 'by hand';
+
+  @override
+  String get reminderOriginAutomatic => 'automatic';
+
+  @override
+  String get reminderOriginLegacy => 'earlier';
+
+  @override
   String get reportGuideTitle => 'Placeholders and markup';
 
   @override
@@ -12493,6 +12625,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportFieldGroupTexts => 'Your texts';
+
+  @override
+  String get bookingSpaceChainTaken =>
+      'This space, or a space it belongs to, is already reserved in that period.';
+
+  @override
+  String get bookingNoLongerCheckedIn =>
+      'This reservation is no longer checked in — it was checked out or closed in the meantime.';
 
   @override
   String get reserveMonthView => 'Month';
