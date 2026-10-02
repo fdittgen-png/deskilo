@@ -7,7 +7,7 @@
   "assistantSetupSaved": "Guardado.",
   "assistantSetupStale": "Alguien cambió la oferta mientras tanto. Revísela e inténtelo de nuevo.",
   "assistantSetupFailed": "No se pudo guardar. No cambió nada; inténtelo de nuevo.",
-  "assistantSetupLinkIdentity": "Vincular mi identidad",
+  "assistantSetupLinkIdentity": "Confirmar mi identidad",
   "assistantSetupTurnOn": "Activar",
   "assistantSetupRecommended": "Usar la selección recomendada",
   "assistantSetupCustomise": "Personalizar",

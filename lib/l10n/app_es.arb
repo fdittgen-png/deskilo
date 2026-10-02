@@ -186,7 +186,7 @@
   "assistantSetupSaved": "Guardado.",
   "assistantSetupStale": "Alguien cambió la oferta mientras tanto. Revísela e inténtelo de nuevo.",
   "assistantSetupFailed": "No se pudo guardar. No cambió nada; inténtelo de nuevo.",
-  "assistantSetupLinkIdentity": "Vincular mi identidad",
+  "assistantSetupLinkIdentity": "Confirmar mi identidad",
   "assistantSetupTurnOn": "Activar",
   "assistantSetupRecommended": "Usar la selección recomendada",
   "assistantSetupCustomise": "Personalizar",
@@ -5019,7 +5019,7 @@
   "mcpEligibleYes": "Esta base de datos le permite usar asistentes.",
   "mcpEligibleRequested": "Solicitó la aprobación. Un administrador de la base de datos la revisará.",
   "mcpEligibleExpired": "Su aprobación caducó. Vuelva a solicitarla para seguir usando asistentes.",
-  "mcpEligibleNoIdentity": "Su cuenta no está vinculada a una identidad verificada en esta base de datos.",
+  "mcpEligibleNoIdentity": "Su identidad aún no está confirmada para los asistentes en esta base.",
   "mcpEligibleNot": "Esta base de datos no ha aprobado asistentes para usted.",
   "mcpEligibleWithdraw": "Renunciar al acceso de asistentes en esta base de datos",
   "mcpConnectedNoWorkspace": "Ningún espacio: este asistente no puede hacer nada aquí.",
@@ -5042,14 +5042,14 @@
   "mcpApiReference": "Referencia de la API",
   "mcpApiReferenceHint": "Qué puede llamar un asistente y cómo se autoriza",
   "mcpStatusTitle": "Su situación aquí",
-  "mcpStatusIdentity": "Identidad",
+  "mcpStatusIdentity": "Identidad para asistentes",
   "mcpStatusEligibility": "Aprobación de la base de datos",
   "mcpStatusExposure": "Oferta del espacio de trabajo",
   "mcpStatusRole": "Su rol",
   "mcpStatusConsent": "Su consentimiento",
   "mcpStatusBackend": "Servidor",
   "mcpStateVerified": "Verificada",
-  "mcpStateUnlinked": "No vinculada",
+  "mcpStateUnlinked": "No confirmada",
   "mcpStateNotRequested": "No solicitada",
   "mcpStatePending": "En espera de una decisión",
   "mcpStateApproved": "Aprobada",
@@ -5063,7 +5063,7 @@
   "mcpStateAvailable": "Accesible",
   "mcpStateIncompatible": "Versión incompatible",
   "mcpStateUnavailable": "Desconocido",
-  "mcpNextLinkIdentity": "Siguiente paso: vincule su cuenta a la identidad de esta base de datos.",
+  "mcpNextLinkIdentity": "Siguiente paso: confirme su identidad para los asistentes en esta base, con un toque abajo.",
   "mcpNextRequestEligibility": "Siguiente paso: pida la aprobación a los administradores de esta base de datos.",
   "mcpNextAwaitEligibility": "Siguiente paso: un administrador de la base de datos decide su solicitud.",
   "mcpNextOwnerExposes": "Siguiente paso: el propietario del espacio de trabajo ofrece operaciones a los asistentes.",
@@ -5075,6 +5075,10 @@
   "mcpOverviewTitle": "Otras bases de datos conectadas",
   "mcpOverviewUnavailable": "No se pudo consultar ahora.",
   "mcpReviewSecondFactor": "Esa base de datos necesita su segundo factor en su propia sesión. No se decidió nada.",
+  "mcpStatusConfirmIdentity": "Confirmar mi identidad",
+  "mcpStateAfterPrevious": "Después del paso anterior",
+  "mcpIdentityIneligible": "Esta cuenta aún no puede confirmarse: confirme primero su dirección de correo o inicie sesión con un proveedor.",
+  "mcpIdentityConflict": "Otra cuenta ya tiene esta identidad aquí: un administrador de la base puede resolverlo.",
   "mcpUsageWorkspaceTitle": "Uso de asistentes, últimos 30 días",
   "mcpUsageMineTitle": "Su uso de asistentes hoy",
   "mcpUsageUnavailable": "No se pudo cargar el uso.",
@@ -7173,6 +7177,69 @@
   "refusalSession": "Su sesión ha terminado. Vuelva a iniciar sesión e inténtelo de nuevo.",
   "refusalAlreadyDecided": "Alguien ya lo ha decidido. La lista muestra el resultado.",
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
+  "reminderHistoryTitle": "Historial de recordatorios",
+  "@reminderHistoryTitle": {
+    "description": "#1922 reminder evidence: reminderHistoryTitle"
+  },
+  "reminderHistoryRefresh": "Comprobar de nuevo el envío",
+  "@reminderHistoryRefresh": {
+    "description": "#1922 reminder evidence: reminderHistoryRefresh"
+  },
+  "reminderHistoryLine": "Nivel {level} · {origin} · {date}",
+  "@reminderHistoryLine": {
+    "description": "#1922 reminder evidence: reminderHistoryLine",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "origin": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderStatusPrepared": "Preparado",
+  "@reminderStatusPrepared": {
+    "description": "#1922 reminder evidence: reminderStatusPrepared"
+  },
+  "reminderStatusQueued": "Entregado al servicio de notificaciones",
+  "@reminderStatusQueued": {
+    "description": "#1922 reminder evidence: reminderStatusQueued"
+  },
+  "reminderStatusAccepted": "Aceptado por el servicio de notificaciones — no prueba que se haya leído",
+  "@reminderStatusAccepted": {
+    "description": "#1922 reminder evidence: reminderStatusAccepted"
+  },
+  "reminderStatusDeclared": "Compartido por el remitente — su declaración, no un acuse de recibo",
+  "@reminderStatusDeclared": {
+    "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusFailed": "No entregado",
+  "@reminderStatusFailed": {
+    "description": "#1922 reminder evidence: reminderStatusFailed"
+  },
+  "reminderStatusUnknown": "Sin respuesta del servicio de notificaciones",
+  "@reminderStatusUnknown": {
+    "description": "#1922 reminder evidence: reminderStatusUnknown"
+  },
+  "reminderStatusLegacy": "Registrado antes del seguimiento de envíos — desconocido",
+  "@reminderStatusLegacy": {
+    "description": "#1922 reminder evidence: reminderStatusLegacy"
+  },
+  "reminderOriginManual": "a mano",
+  "@reminderOriginManual": {
+    "description": "#1922 reminder evidence: reminderOriginManual"
+  },
+  "reminderOriginAutomatic": "automático",
+  "@reminderOriginAutomatic": {
+    "description": "#1922 reminder evidence: reminderOriginAutomatic"
+  },
+  "reminderOriginLegacy": "anterior",
+  "@reminderOriginLegacy": {
+    "description": "#1922 reminder evidence: reminderOriginLegacy"
+  },
   "reportGuideTitle": "Campos y marcado",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"
@@ -7694,6 +7761,8 @@
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
   },
+  "bookingSpaceChainTaken": "Este espacio, o un espacio que lo contiene, ya está reservado en ese periodo.",
+  "bookingNoLongerCheckedIn": "Esta reserva ya no está registrada — se cerró mientras tanto.",
   "reserveMonthView": "Mes",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Reserva recurrente",

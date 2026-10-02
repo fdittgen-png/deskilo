@@ -455,7 +455,7 @@
   "@assistantSetupFailed": {
     "description": "#1827 Assistant setup: assistantSetupFailed"
   },
-  "assistantSetupLinkIdentity": "Link my identity",
+  "assistantSetupLinkIdentity": "Confirm my identity",
   "@assistantSetupLinkIdentity": {
     "description": "#1827 Assistant setup: assistantSetupLinkIdentity"
   },
@@ -8975,7 +8975,7 @@
   "@mcpEligibleExpired": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpEligibleNoIdentity": "Your account is not linked to a verified identity on this database.",
+  "mcpEligibleNoIdentity": "Your identity is not confirmed for assistants on this database yet.",
   "@mcpEligibleNoIdentity": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
@@ -9067,7 +9067,7 @@
   "@mcpStatusTitle": {
     "description": "#1625 MCP status: mcpStatusTitle"
   },
-  "mcpStatusIdentity": "Identity",
+  "mcpStatusIdentity": "Identity for assistants",
   "@mcpStatusIdentity": {
     "description": "#1625 MCP status: mcpStatusIdentity"
   },
@@ -9095,7 +9095,7 @@
   "@mcpStateVerified": {
     "description": "#1625 MCP status: mcpStateVerified"
   },
-  "mcpStateUnlinked": "Not linked",
+  "mcpStateUnlinked": "Not confirmed",
   "@mcpStateUnlinked": {
     "description": "#1625 MCP status: mcpStateUnlinked"
   },
@@ -9151,7 +9151,7 @@
   "@mcpStateUnavailable": {
     "description": "#1625 MCP status: mcpStateUnavailable"
   },
-  "mcpNextLinkIdentity": "Next: you link your account to this database's identity.",
+  "mcpNextLinkIdentity": "Next: confirm your identity for assistants on this database — one tap below.",
   "@mcpNextLinkIdentity": {
     "description": "#1625 MCP status: mcpNextLinkIdentity"
   },
@@ -9198,6 +9198,22 @@
   "mcpReviewSecondFactor": "That database needs your second factor on its own session. Nothing was decided.",
   "@mcpReviewSecondFactor": {
     "description": "#1625 MCP status: mcpReviewSecondFactor"
+  },
+  "mcpStatusConfirmIdentity": "Confirm my identity",
+  "@mcpStatusConfirmIdentity": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpStateAfterPrevious": "After the step above",
+  "@mcpStateAfterPrevious": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpIdentityIneligible": "This account cannot be confirmed yet — confirm your e-mail address or sign in with a provider first.",
+  "@mcpIdentityIneligible": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpIdentityConflict": "Another account already holds this identity here — a database administrator can resolve it.",
+  "@mcpIdentityConflict": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
   },
   "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
   "@mcpUsageWorkspaceTitle": {
@@ -13086,6 +13102,69 @@
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
   },
+  "reminderHistoryTitle": "Reminder history",
+  "@reminderHistoryTitle": {
+    "description": "#1922 reminder evidence: reminderHistoryTitle"
+  },
+  "reminderHistoryRefresh": "Check delivery again",
+  "@reminderHistoryRefresh": {
+    "description": "#1922 reminder evidence: reminderHistoryRefresh"
+  },
+  "reminderHistoryLine": "Level {level} · {origin} · {date}",
+  "@reminderHistoryLine": {
+    "description": "#1922 reminder evidence: reminderHistoryLine",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "origin": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderStatusPrepared": "Prepared",
+  "@reminderStatusPrepared": {
+    "description": "#1922 reminder evidence: reminderStatusPrepared"
+  },
+  "reminderStatusQueued": "Handed to the push service",
+  "@reminderStatusQueued": {
+    "description": "#1922 reminder evidence: reminderStatusQueued"
+  },
+  "reminderStatusAccepted": "Accepted by the push service — not proof it was read",
+  "@reminderStatusAccepted": {
+    "description": "#1922 reminder evidence: reminderStatusAccepted"
+  },
+  "reminderStatusDeclared": "Shared by the sender — their statement, not a receipt",
+  "@reminderStatusDeclared": {
+    "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusFailed": "Not delivered",
+  "@reminderStatusFailed": {
+    "description": "#1922 reminder evidence: reminderStatusFailed"
+  },
+  "reminderStatusUnknown": "No answer from the push service",
+  "@reminderStatusUnknown": {
+    "description": "#1922 reminder evidence: reminderStatusUnknown"
+  },
+  "reminderStatusLegacy": "Recorded before delivery was tracked — unknown",
+  "@reminderStatusLegacy": {
+    "description": "#1922 reminder evidence: reminderStatusLegacy"
+  },
+  "reminderOriginManual": "by hand",
+  "@reminderOriginManual": {
+    "description": "#1922 reminder evidence: reminderOriginManual"
+  },
+  "reminderOriginAutomatic": "automatic",
+  "@reminderOriginAutomatic": {
+    "description": "#1922 reminder evidence: reminderOriginAutomatic"
+  },
+  "reminderOriginLegacy": "earlier",
+  "@reminderOriginLegacy": {
+    "description": "#1922 reminder evidence: reminderOriginLegacy"
+  },
   "reportGuideTitle": "Placeholders and markup",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"
@@ -13606,6 +13685,14 @@
   "reportFieldGroupTexts": "Your texts",
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
+  },
+  "bookingSpaceChainTaken": "This space, or a space it belongs to, is already reserved in that period.",
+  "@bookingSpaceChainTaken": {
+    "description": "#1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period"
+  },
+  "bookingNoLongerCheckedIn": "This reservation is no longer checked in — it was checked out or closed in the meantime.",
+  "@bookingNoLongerCheckedIn": {
+    "description": "#1908 — a checkout lost a race: the reservation was already checked out or closed by the day-end sweep"
   },
   "reserveMonthView": "Month",
   "@reserveMonthView": {

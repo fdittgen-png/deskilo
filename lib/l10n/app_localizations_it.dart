@@ -370,7 +370,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile salvare. Non è cambiato nulla; riprova.';
 
   @override
-  String get assistantSetupLinkIdentity => 'Collega la mia identità';
+  String get assistantSetupLinkIdentity => 'Conferma la mia identità';
 
   @override
   String get assistantSetupTurnOn => 'Attiva';
@@ -8317,7 +8317,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpEligibleNoIdentity =>
-      'Il tuo account non è collegato a un\'identità verificata su questo database.';
+      'La tua identità non è ancora confermata per gli assistenti su questa base.';
 
   @override
   String get mcpEligibleNot =>
@@ -8396,7 +8396,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpStatusTitle => 'A che punto sei qui';
 
   @override
-  String get mcpStatusIdentity => 'Identità';
+  String get mcpStatusIdentity => 'Identità per gli assistenti';
 
   @override
   String get mcpStatusEligibility => 'Approvazione del database';
@@ -8417,7 +8417,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpStateVerified => 'Verificata';
 
   @override
-  String get mcpStateUnlinked => 'Non collegata';
+  String get mcpStateUnlinked => 'Non confermata';
 
   @override
   String get mcpStateNotRequested => 'Non richiesta';
@@ -8460,7 +8460,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpNextLinkIdentity =>
-      'Prossimo passo: collega il tuo account all\'identità di questo database.';
+      'Prossimo passo: conferma la tua identità per gli assistenti su questa base, con un tocco qui sotto.';
 
   @override
   String get mcpNextRequestEligibility =>
@@ -8503,6 +8503,20 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get mcpReviewSecondFactor =>
       'Quel database richiede il tuo secondo fattore nella propria sessione. Non è stato deciso nulla.';
+
+  @override
+  String get mcpStatusConfirmIdentity => 'Conferma la mia identità';
+
+  @override
+  String get mcpStateAfterPrevious => 'Dopo il passaggio precedente';
+
+  @override
+  String get mcpIdentityIneligible =>
+      'Questo account non può ancora essere confermato: conferma prima il tuo indirizzo e-mail o accedi con un provider.';
+
+  @override
+  String get mcpIdentityConflict =>
+      'Un altro account detiene già questa identità qui: un amministratore della base può risolverlo.';
 
   @override
   String get mcpUsageWorkspaceTitle => 'Uso degli assistenti, ultimi 30 giorni';
@@ -12202,6 +12216,51 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nel frattempo è cambiato. Riaprilo per vedere a che punto è.';
 
   @override
+  String get reminderHistoryTitle => 'Cronologia dei solleciti';
+
+  @override
+  String get reminderHistoryRefresh => 'Verifica di nuovo l\'invio';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Livello $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Preparato';
+
+  @override
+  String get reminderStatusQueued => 'Affidato al servizio di notifiche';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Accettato dal servizio di notifiche — non prova che sia stato letto';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Condiviso dal mittente — una sua dichiarazione, non una ricevuta';
+
+  @override
+  String get reminderStatusFailed => 'Non consegnato';
+
+  @override
+  String get reminderStatusUnknown =>
+      'Nessuna risposta dal servizio di notifiche';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Registrato prima del tracciamento degli invii — sconosciuto';
+
+  @override
+  String get reminderOriginManual => 'a mano';
+
+  @override
+  String get reminderOriginAutomatic => 'automatico';
+
+  @override
+  String get reminderOriginLegacy => 'precedente';
+
+  @override
   String get reportGuideTitle => 'Campi e marcatura';
 
   @override
@@ -12632,6 +12691,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportFieldGroupTexts => 'I tuoi testi';
+
+  @override
+  String get bookingSpaceChainTaken =>
+      'Questo spazio, o uno spazio che lo contiene, è già prenotato in quel periodo.';
+
+  @override
+  String get bookingNoLongerCheckedIn =>
+      'Questa prenotazione non è più in corso — è stata chiusa nel frattempo.';
 
   @override
   String get reserveMonthView => 'Mese';
