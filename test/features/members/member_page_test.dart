@@ -178,7 +178,13 @@ void main() {
     expect(find.byKey(const ValueKey('member-page-since')), findsNothing);
 
     await _pumpPage(tester, 'member-2');
-    expect(find.text('Owner'), findsOneWidget);
+    // #2085 — the header says it at a glance; the Roles card says it again
+    // where roles are given, so the header is asked on its own.
+    expect(
+        find.descendant(
+            of: find.byKey(const ValueKey('member-page-header')),
+            matching: find.text('Owner')),
+        findsOneWidget);
   });
 
   testWidgets('"Right now" is one sentence: checked in with the seat and '
@@ -219,7 +225,10 @@ void main() {
 
   testWidgets('the Manage rows carry their CURRENT value, and a change '
       'shows on the row at once', (tester) async {
-    await _pumpPage(tester, 'member-3', flags: const {'levelBooking': true});
+    // #2085 — the single Administrator row is the flag-off shape; with
+    // roleAssignment the Roles card replaces it (member_roles_card_test).
+    await _pumpPage(tester, 'member-3',
+        flags: const {'levelBooking': true, 'roleAssignment': false});
     expect(_subtitle(tester, 'member-page-reservation-limit'), 'No limit');
     expect(_subtitle(tester, 'member-page-simultaneous'),
         'Workspace default (1)');
