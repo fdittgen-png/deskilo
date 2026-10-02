@@ -30,7 +30,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 
 | pair | imports |
 |---|---|
-| `money -> workspace` | 120 |
+| `money -> workspace` | 122 |
 | `reservations -> plan` | 72 |
 | `reservations -> workspace` | 60 |
 | `profile -> workspace` | 40 |

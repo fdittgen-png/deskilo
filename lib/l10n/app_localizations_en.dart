@@ -269,6 +269,61 @@ class AppLocalizationsEn extends AppLocalizations {
       'The book was not saved. Check the connection and try again.';
 
   @override
+  String get bookRoleCustomers => 'Customers (receivable)';
+
+  @override
+  String get bookRoleRevenue => 'Revenue';
+
+  @override
+  String get bookRoleBank => 'Bank';
+
+  @override
+  String get bookRoleVatOutput => 'Output VAT';
+
+  @override
+  String get bookRoleExpenses => 'Expenses';
+
+  @override
+  String get bookTypeAsset => 'Asset';
+
+  @override
+  String get bookTypeLiability => 'Liability';
+
+  @override
+  String get bookTypeEquity => 'Equity';
+
+  @override
+  String get bookTypeIncome => 'Income';
+
+  @override
+  String get bookTypeExpense => 'Expense';
+
+  @override
+  String bookChartTitle(String site) {
+    return 'Chart of accounts · $site';
+  }
+
+  @override
+  String get bookChartSuggest => 'Add the suggested accounts to review';
+
+  @override
+  String get bookAccountCode => 'Account code';
+
+  @override
+  String get bookAccountName => 'Account name';
+
+  @override
+  String get bookAccountPosting => 'Takes postings';
+
+  @override
+  String get bookMappingsTitle => 'Which account each entry books to';
+
+  @override
+  String bookProblemUnmapped(String roles) {
+    return 'Map these accounts before a local book starts: $roles.';
+  }
+
+  @override
   String get fecAccountExpenses => 'Expenses';
 
   @override

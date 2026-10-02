@@ -269,6 +269,62 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Buchführung wurde nicht gespeichert. Prüfen Sie die Verbindung und versuchen Sie es erneut.';
 
   @override
+  String get bookRoleCustomers => 'Kunden (Forderungen)';
+
+  @override
+  String get bookRoleRevenue => 'Erlöse';
+
+  @override
+  String get bookRoleBank => 'Bank';
+
+  @override
+  String get bookRoleVatOutput => 'Umsatzsteuer';
+
+  @override
+  String get bookRoleExpenses => 'Aufwand';
+
+  @override
+  String get bookTypeAsset => 'Aktiva';
+
+  @override
+  String get bookTypeLiability => 'Passiva';
+
+  @override
+  String get bookTypeEquity => 'Eigenkapital';
+
+  @override
+  String get bookTypeIncome => 'Ertrag';
+
+  @override
+  String get bookTypeExpense => 'Aufwand';
+
+  @override
+  String bookChartTitle(String site) {
+    return 'Kontenplan · $site';
+  }
+
+  @override
+  String get bookChartSuggest =>
+      'Die vorgeschlagenen Konten zur Prüfung hinzufügen';
+
+  @override
+  String get bookAccountCode => 'Kontonummer';
+
+  @override
+  String get bookAccountName => 'Kontobezeichnung';
+
+  @override
+  String get bookAccountPosting => 'Bebuchbar';
+
+  @override
+  String get bookMappingsTitle => 'Auf welches Konto jede Buchung geht';
+
+  @override
+  String bookProblemUnmapped(String roles) {
+    return 'Ordnen Sie diese Konten zu, bevor eine lokale Buchführung beginnt: $roles.';
+  }
+
+  @override
   String get fecAccountExpenses => 'Aufwendungen';
 
   @override
