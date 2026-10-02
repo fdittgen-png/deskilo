@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'profile.dart';
 import 'privacy_notice.dart';
+import 'rights_request.dart';
 
 /// Pure-Dart profile boundary (#223). Implemented by Supabase in data/,
 /// faked in tests — presentation never sees supabase_flutter types.
@@ -71,6 +72,21 @@ abstract class ProfileRepository {
   /// `current_privacy_notice`): the installation's, [workspaceId]'s own
   /// when I am a member, and the versions I acknowledged.
   Future<PrivacyNotices> fetchPrivacyNotices(String? workspaceId);
+
+  /// #1915 (0327) — files a rights request with the space's controller.
+  /// [clientRequestId] makes a retried submission return the same request.
+  Future<RightsRequest> submitRightsRequest({
+    required String workspaceId,
+    required String kind,
+    required String details,
+    required String clientRequestId,
+  });
+
+  /// #1915 — my requests, in every space, newest first.
+  Future<List<RightsRequest>> fetchMyRightsRequests();
+
+  /// #1915 — what erasing my membership of [workspaceId] would do.
+  Future<ErasurePreview> previewMyErasure(String workspaceId);
 
   /// #1914 — acknowledges the CURRENT notice of a space I belong to.
   Future<void> acknowledgeWorkspaceNotice(String workspaceId, String version);
