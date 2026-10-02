@@ -154,6 +154,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.expenseRepartition,
     ]),
     WorkspaceSubprocess('tax', [
+      WorkspaceFeature.accountingBook,
       WorkspaceFeature.vatManagement,
       WorkspaceFeature.vatDeclarations,
       WorkspaceFeature.vatGroups,

@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0335 (#1920) -- the history the capacity KPI needs, recorded where it
+-- 0336 (#1920) -- the history the capacity KPI needs, recorded where it
 -- is written.
 --
 -- capacity.seat_utilisation (0333) read today's plan, today's opening
@@ -498,4 +498,4 @@ grant execute on function public.kpi_seat_capacity(uuid, timestamptz, timestampt
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(335);
+select public.set_deskilo_schema_version(336);
