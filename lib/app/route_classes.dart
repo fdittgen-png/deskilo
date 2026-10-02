@@ -87,6 +87,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/oauth/consent', RouteClass.nativeAccount),
   RouteRule('/assistants', RouteClass.nativeAccount),
   RouteRule('/database/assistant-approvals', RouteClass.nativeAccount),
+  RouteRule('/installation/assistants', RouteClass.nativeAccount),
   RouteRule('/settings/assistants', RouteClass.workspace),
   RouteRule('/settings/assistant-setup', RouteClass.workspace),
   RouteRule('/kiosk-gate', RouteClass.workspace),

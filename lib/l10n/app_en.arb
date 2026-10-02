@@ -5137,6 +5137,110 @@
   "@holidayImportFailed": {
     "description": "#2051 open-data holiday import"
   },
+  "instanceTitle": "Installation: assistants",
+  "@instanceTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceIntro": "Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.",
+  "@instanceIntro": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNotOperator": "Only the instance operator manages the installation's assistants.",
+  "@instanceNotOperator": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceSecondFactorNeeded": "Changes here need your second factor on this session.",
+  "@instanceSecondFactorNeeded": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceConfirmSecondFactor": "Confirm with my authenticator",
+  "@instanceConfirmSecondFactor": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeTitle": "Assistants on this installation",
+  "@instanceRuntimeTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeOn": "On",
+  "@instanceRuntimeOn": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeOff": "Off",
+  "@instanceRuntimeOff": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOn": "Turn on for every workspace",
+  "@instanceTurnOn": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOff": "Turn off",
+  "@instanceTurnOff": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOnConfirm": "Assistants become usable in every workspace that offers them. You can turn them off again at any time.",
+  "@instanceTurnOnConfirm": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlockers": "Still missing:",
+  "@instanceBlockers": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlockerNoAdmin": "a database administrator",
+  "@instanceBlockerNoAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceAdminsTitle": "Database administrators",
+  "@instanceAdminsTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceAdminsHelp": "They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.",
+  "@instanceAdminsHelp": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceMakeAdmin": "Make administrator",
+  "@instanceMakeAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRemoveAdmin": "Remove",
+  "@instanceRemoveAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNoCandidates": "Nobody else has confirmed their identity yet.",
+  "@instanceNoCandidates": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceYou": "you",
+  "@instanceYou": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientsTitle": "Assistant clients",
+  "@instanceClientsTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientsHelp": "An assistant registers itself the first time someone connects it; it works only once approved here.",
+  "@instanceClientsHelp": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientWaiting": "Waiting for approval",
+  "@instanceClientWaiting": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientApproved": "Approved",
+  "@instanceClientApproved": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientBlocked": "Blocked",
+  "@instanceClientBlocked": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceApprove": "Approve",
+  "@instanceApprove": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlock": "Block",
+  "@instanceBlock": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
   "instanceOwnerClaimIntro": "Who owns this instance? Enter the e-mail you will sign up with on it. After you confirm that address, claim the ownership from Settings → Instance owner.",
   "@instanceOwnerClaimIntro": {
     "description": "#1829 Instance owner claim: instanceOwnerClaimIntro"
@@ -9210,6 +9314,38 @@
   "mcpIdentityConflict": "Another account already holds this identity here — a database administrator can resolve it.",
   "@mcpIdentityConflict": {
     "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpStatusGoogle": "Google sign-in",
+  "@mcpStatusGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStatusLinkGoogle": "Link Google",
+  "@mcpStatusLinkGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStatusSignInGoogle": "Sign in with Google",
+  "@mcpStatusSignInGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleReady": "Signed in with Google",
+  "@mcpStateGoogleReady": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleOtherSession": "Signed in another way",
+  "@mcpStateGoogleOtherSession": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleMissing": "Google not linked",
+  "@mcpStateGoogleMissing": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpNextLinkGoogle": "Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.",
+  "@mcpNextLinkGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpNextSignInGoogle": "Assistants use your Google sign-in. Sign in with Google to continue.",
+  "@mcpNextSignInGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
   },
   "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
   "@mcpUsageWorkspaceTitle": {

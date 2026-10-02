@@ -75,6 +75,17 @@ class IdentityBindingStatus {
   }
 }
 
+/// 0338 — assistants use the Google sign-in configured in the profile and
+/// nothing else: whether the account has a Google identity, and whether
+/// THIS session was opened with it. Null facts: the server could not say.
+class McpGoogleSignIn {
+  const McpGoogleSignIn({required this.linked, required this.session});
+  static const unknown = McpGoogleSignIn(linked: null, session: null);
+
+  final bool? linked;
+  final bool? session;
+}
+
 /// The caller's own binding. Implementations answer for the signed-in
 /// account only; there is no way to ask about anybody else.
 abstract interface class IdentityBindingRepository {
@@ -91,4 +102,7 @@ abstract interface class IdentityBindingRepository {
 
   /// Withdraws a pending request and gives up a current approval.
   Future<DatabaseCapabilities> withdrawMcpEligibility();
+
+  /// 0338 — the Google facts assistants require.
+  Future<McpGoogleSignIn> googleSignIn();
 }

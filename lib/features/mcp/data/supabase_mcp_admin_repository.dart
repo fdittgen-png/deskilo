@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/backend/schema_version.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/mcp_admin.dart';
 import '../domain/mcp_usage.dart';
 
@@ -99,4 +101,46 @@ class SupabaseMcpAdminRepository implements McpAdminRepository {
           params: {'p_workspace_id': workspaceId},
         ),
       );
+
+  @override
+  Future<InstanceMcpOverview?> instanceOverview() async {
+    try {
+      final json = await _client.rpc<Object?>('instance_mcp_overview');
+      return json is Map
+          ? InstanceMcpOverview.fromJson(Map<String, dynamic>.from(json))
+          : null;
+    } on PostgrestException catch (e, st) {
+      // Not the instance operator, or a server before 0339: no console.
+      if (isMissingFunction(e) || e.message.contains('instance operator')) {
+        TraceLogger.instance.warn('mcp', 'no instance console here',
+            error: e, stackTrace: st);
+        return null;
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> grantAdministrator(String userId, {bool canProvision = true}) =>
+      _client.rpc<Object?>('instance_grant_database_admin', params: {
+        'p_target': userId,
+        'p_can_provision': canProvision,
+      });
+
+  @override
+  Future<void> revokeAdministrator(String userId) => _client.rpc<Object?>(
+      'instance_revoke_database_admin', params: {'p_target': userId});
+
+  @override
+  Future<void> setClient(String clientId, {required bool active}) =>
+      _client.rpc<Object?>('instance_set_mcp_client', params: {
+        'p_client_id': clientId,
+        'p_active': active,
+      });
+
+  @override
+  Future<void> setRuntime({required bool enabled}) =>
+      _client.rpc<Object?>('instance_set_mcp_runtime', params: {
+        'p_enabled': enabled,
+      });
 }

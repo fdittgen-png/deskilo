@@ -1255,6 +1255,9 @@ routine public.mcp_execute_v1(p_installation_id uuid, p_workspace_id uuid, p_ope
 routine public.mcp_facade_guard_status() -> jsonb | function | definer | stable | exec:service_role | body:748551105071
 routine public.mcp_finalize_connection(p_authorization_id text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:4cd8c9cf651f
 routine public.mcp_get_action_confirmation(p_confirmation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:28d6a1c6fb1a
+routine public.mcp_google_session() -> boolean | function | definer | stable | exec:authenticated,service_role | body:a6894391266b
+routine public.mcp_google_status() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:2e72d95cdb7f
+routine public.mcp_has_google_identity() -> boolean | function | definer | stable | exec:authenticated,service_role | body:1ab87e419ad4
 routine public.mcp_invalidate_consent(p_user uuid, p_client text, p_workspace uuid, p_reason text, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:3d26fc1f6b81
 routine public.mcp_invoice_view(p_invoice_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:10e6845f4369
 routine public.mcp_is_delegated() -> boolean | function | invoker | stable | exec:anon,authenticated,service_role | body:6c3314325efe

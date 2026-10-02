@@ -27,8 +27,37 @@ enum McpConsentState { missing, current, unavailable }
 
 enum McpBackendState { available, unavailable, incompatible }
 
+/// 0338 — assistants use the profile's Google sign-in and nothing else.
+enum McpGoogleState {
+  /// A Google identity, and this session was opened with it.
+  ready,
+
+  /// Google is linked, but this session used another way in.
+  signInWithGoogle,
+
+  /// The account has no Google identity: no assistant for it.
+  linkGoogle,
+
+  /// The server could not say.
+  unavailable,
+}
+
+McpGoogleState mcpGoogleState(McpGoogleSignIn? google) =>
+    switch ((google?.linked, google?.session)) {
+      (true, true) => McpGoogleState.ready,
+      (true, false) => McpGoogleState.signInWithGoogle,
+      (false, _) => McpGoogleState.linkGoogle,
+      _ => McpGoogleState.unavailable,
+    };
+
 /// The one thing that would move this person forward, and who does it.
 enum McpNextStep {
+  /// 0338 — the person links Google to the account (no Google: no MCP).
+  linkGoogle,
+
+  /// 0338 — the person signs in again, with Google.
+  signInWithGoogle,
+
   /// The person links their account to the installation's identity.
   linkIdentity,
 
@@ -83,6 +112,7 @@ McpBackendState mcpBackendState(
 class McpAccessStatus {
   const McpAccessStatus({
     required this.context,
+    this.google = McpGoogleState.ready,
     required this.identity,
     required this.eligibility,
     required this.exposure,
@@ -92,6 +122,7 @@ class McpAccessStatus {
   });
 
   final McpContextRef context;
+  final McpGoogleState google;
   final McpIdentityState identity;
   final McpEligibilityState eligibility;
   final McpExposureState exposure;
@@ -103,6 +134,7 @@ class McpAccessStatus {
   /// `unavailable`, never promoted to a permissive state.
   factory McpAccessStatus.derive(
     McpContextRef context, {
+    McpGoogleSignIn? google,
     required IdentityBindingStatus? identity,
     required DatabaseCapabilities? capabilities,
     required McpPolicy? policy,
@@ -133,6 +165,7 @@ class McpAccessStatus {
         : McpConsentState.missing;
     return McpAccessStatus(
       context: context,
+      google: mcpGoogleState(google),
       identity: mcpIdentityState(identity),
       eligibility: mcpEligibilityState(capabilities),
       exposure: exposure,
@@ -145,6 +178,12 @@ class McpAccessStatus {
   /// The first unmet fact, in the order they depend on each other.
   McpNextStep get next {
     if (backend != McpBackendState.available) return McpNextStep.unavailable;
+    // 0338 — Google first: without it nothing below can be used.
+    if (google == McpGoogleState.linkGoogle) return McpNextStep.linkGoogle;
+    if (google == McpGoogleState.signInWithGoogle) {
+      return McpNextStep.signInWithGoogle;
+    }
+    if (google == McpGoogleState.unavailable) return McpNextStep.unavailable;
     if (identity == McpIdentityState.unavailable) return McpNextStep.unavailable;
     if (identity == McpIdentityState.unlinked) return McpNextStep.linkIdentity;
     switch (eligibility) {

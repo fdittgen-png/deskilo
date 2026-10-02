@@ -13,6 +13,7 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
+import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
 import 'package:deskilo/features/auth/domain/identity_binding.dart';
@@ -288,5 +289,35 @@ void main() {
         );
       },
     );
+  });
+
+  // 0340 — assistants use the profile's Google sign-in and nothing else.
+  testWidgets('no Google identity: the first step is to link Google, and '
+      'the button opens the sign-in methods page', (tester) async {
+    final identity = _identity(
+      IdentityBindingState.verified,
+      McpEligibility.eligible,
+    )..google = const McpGoogleSignIn(linked: false, session: false);
+    await _pump(tester, standardTestOverrides(identityBinding: identity));
+    expect(_key('mcp-status-google-linkGoogle'), findsOneWidget);
+    expect(_key('mcp-status-next-linkGoogle'), findsOneWidget);
+    await tester.tap(_key('mcp-status-link-google'));
+    await tester.pumpAndSettle();
+    expect(_key('linked-page'), findsOneWidget);
+  });
+
+  testWidgets('Google linked but signed in another way: sign in with Google',
+      (tester) async {
+    final auth = FakeAuthRepository.signedIn();
+    final identity = _identity(
+      IdentityBindingState.verified,
+      McpEligibility.eligible,
+    )..google = const McpGoogleSignIn(linked: true, session: false);
+    await _pump(
+        tester, standardTestOverrides(identityBinding: identity, auth: auth));
+    expect(_key('mcp-status-google-signInWithGoogle'), findsOneWidget);
+    await tester.tap(_key('mcp-status-sign-in-google'));
+    await tester.pumpAndSettle();
+    expect(auth.socialSignIns, [SocialProvider.google]);
   });
 }
