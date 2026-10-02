@@ -269,6 +269,62 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Buchführung wurde nicht gespeichert. Prüfen Sie die Verbindung und versuchen Sie es erneut.';
 
   @override
+  String get bookRoleCustomers => 'Kunden (Forderungen)';
+
+  @override
+  String get bookRoleRevenue => 'Erlöse';
+
+  @override
+  String get bookRoleBank => 'Bank';
+
+  @override
+  String get bookRoleVatOutput => 'Umsatzsteuer';
+
+  @override
+  String get bookRoleExpenses => 'Aufwand';
+
+  @override
+  String get bookTypeAsset => 'Aktiva';
+
+  @override
+  String get bookTypeLiability => 'Passiva';
+
+  @override
+  String get bookTypeEquity => 'Eigenkapital';
+
+  @override
+  String get bookTypeIncome => 'Ertrag';
+
+  @override
+  String get bookTypeExpense => 'Aufwand';
+
+  @override
+  String bookChartTitle(String site) {
+    return 'Kontenplan · $site';
+  }
+
+  @override
+  String get bookChartSuggest =>
+      'Die vorgeschlagenen Konten zur Prüfung hinzufügen';
+
+  @override
+  String get bookAccountCode => 'Kontonummer';
+
+  @override
+  String get bookAccountName => 'Kontobezeichnung';
+
+  @override
+  String get bookAccountPosting => 'Bebuchbar';
+
+  @override
+  String get bookMappingsTitle => 'Auf welches Konto jede Buchung geht';
+
+  @override
+  String bookProblemUnmapped(String roles) {
+    return 'Ordnen Sie diese Konten zu, bevor eine lokale Buchführung beginnt: $roles.';
+  }
+
+  @override
   String get fecAccountExpenses => 'Aufwendungen';
 
   @override
@@ -371,7 +427,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Speichern fehlgeschlagen. Nichts wurde geändert; versuchen Sie es erneut.';
 
   @override
-  String get assistantSetupLinkIdentity => 'Meine Identität verknüpfen';
+  String get assistantSetupLinkIdentity => 'Meine Identität bestätigen';
 
   @override
   String get assistantSetupTurnOn => 'Einschalten';
@@ -8313,7 +8369,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mcpEligibleNoIdentity =>
-      'Ihr Konto ist auf dieser Datenbank nicht mit einer bestätigten Identität verknüpft.';
+      'Ihre Identität ist für Assistenten auf dieser Datenbank noch nicht bestätigt.';
 
   @override
   String get mcpEligibleNot =>
@@ -8392,7 +8448,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpStatusTitle => 'Wo Sie hier stehen';
 
   @override
-  String get mcpStatusIdentity => 'Identität';
+  String get mcpStatusIdentity => 'Identität für Assistenten';
 
   @override
   String get mcpStatusEligibility => 'Freigabe der Datenbank';
@@ -8413,7 +8469,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpStateVerified => 'Bestätigt';
 
   @override
-  String get mcpStateUnlinked => 'Nicht verknüpft';
+  String get mcpStateUnlinked => 'Nicht bestätigt';
 
   @override
   String get mcpStateNotRequested => 'Nicht beantragt';
@@ -8456,7 +8512,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mcpNextLinkIdentity =>
-      'Als Nächstes: Sie verknüpfen Ihr Konto mit der Identität dieser Datenbank.';
+      'Nächster Schritt: Bestätigen Sie Ihre Identität für Assistenten auf dieser Datenbank — ein Tippen unten.';
 
   @override
   String get mcpNextRequestEligibility =>
@@ -8498,6 +8554,20 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get mcpReviewSecondFactor =>
       'Diese Datenbank verlangt Ihren zweiten Faktor in ihrer eigenen Sitzung. Es wurde nichts entschieden.';
+
+  @override
+  String get mcpStatusConfirmIdentity => 'Meine Identität bestätigen';
+
+  @override
+  String get mcpStateAfterPrevious => 'Nach dem vorherigen Schritt';
+
+  @override
+  String get mcpIdentityIneligible =>
+      'Dieses Konto kann noch nicht bestätigt werden — bestätigen Sie zuerst Ihre E-Mail-Adresse oder melden Sie sich mit einem Anbieter an.';
+
+  @override
+  String get mcpIdentityConflict =>
+      'Ein anderes Konto hält diese Identität hier bereits — ein Datenbankadministrator kann das klären.';
 
   @override
   String get mcpUsageWorkspaceTitle =>

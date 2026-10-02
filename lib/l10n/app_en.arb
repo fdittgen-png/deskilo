@@ -335,6 +335,84 @@
   "@bookSaveFailed": {
     "description": "#1869 the save failed (connection or server)"
   },
+  "bookRoleCustomers": "Customers (receivable)",
+  "@bookRoleCustomers": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleRevenue": "Revenue",
+  "@bookRoleRevenue": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleBank": "Bank",
+  "@bookRoleBank": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleVatOutput": "Output VAT",
+  "@bookRoleVatOutput": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleExpenses": "Expenses",
+  "@bookRoleExpenses": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeAsset": "Asset",
+  "@bookTypeAsset": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeLiability": "Liability",
+  "@bookTypeLiability": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeEquity": "Equity",
+  "@bookTypeEquity": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeIncome": "Income",
+  "@bookTypeIncome": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeExpense": "Expense",
+  "@bookTypeExpense": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookChartTitle": "Chart of accounts · {site}",
+  "@bookChartTitle": {
+    "description": "#1869 B chart of accounts",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "bookChartSuggest": "Add the suggested accounts to review",
+  "@bookChartSuggest": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountCode": "Account code",
+  "@bookAccountCode": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountName": "Account name",
+  "@bookAccountName": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountPosting": "Takes postings",
+  "@bookAccountPosting": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookMappingsTitle": "Which account each entry books to",
+  "@bookMappingsTitle": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookProblemUnmapped": "Map these accounts before a local book starts: {roles}.",
+  "@bookProblemUnmapped": {
+    "description": "#1869 B chart of accounts",
+    "placeholders": {
+      "roles": {
+        "type": "String"
+      }
+    }
+  },
   "fecAccountExpenses": "Expenses",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -455,7 +533,7 @@
   "@assistantSetupFailed": {
     "description": "#1827 Assistant setup: assistantSetupFailed"
   },
-  "assistantSetupLinkIdentity": "Link my identity",
+  "assistantSetupLinkIdentity": "Confirm my identity",
   "@assistantSetupLinkIdentity": {
     "description": "#1827 Assistant setup: assistantSetupLinkIdentity"
   },
@@ -8971,7 +9049,7 @@
   "@mcpEligibleExpired": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpEligibleNoIdentity": "Your account is not linked to a verified identity on this database.",
+  "mcpEligibleNoIdentity": "Your identity is not confirmed for assistants on this database yet.",
   "@mcpEligibleNoIdentity": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
@@ -9063,7 +9141,7 @@
   "@mcpStatusTitle": {
     "description": "#1625 MCP status: mcpStatusTitle"
   },
-  "mcpStatusIdentity": "Identity",
+  "mcpStatusIdentity": "Identity for assistants",
   "@mcpStatusIdentity": {
     "description": "#1625 MCP status: mcpStatusIdentity"
   },
@@ -9091,7 +9169,7 @@
   "@mcpStateVerified": {
     "description": "#1625 MCP status: mcpStateVerified"
   },
-  "mcpStateUnlinked": "Not linked",
+  "mcpStateUnlinked": "Not confirmed",
   "@mcpStateUnlinked": {
     "description": "#1625 MCP status: mcpStateUnlinked"
   },
@@ -9147,7 +9225,7 @@
   "@mcpStateUnavailable": {
     "description": "#1625 MCP status: mcpStateUnavailable"
   },
-  "mcpNextLinkIdentity": "Next: you link your account to this database's identity.",
+  "mcpNextLinkIdentity": "Next: confirm your identity for assistants on this database — one tap below.",
   "@mcpNextLinkIdentity": {
     "description": "#1625 MCP status: mcpNextLinkIdentity"
   },
@@ -9194,6 +9272,22 @@
   "mcpReviewSecondFactor": "That database needs your second factor on its own session. Nothing was decided.",
   "@mcpReviewSecondFactor": {
     "description": "#1625 MCP status: mcpReviewSecondFactor"
+  },
+  "mcpStatusConfirmIdentity": "Confirm my identity",
+  "@mcpStatusConfirmIdentity": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpStateAfterPrevious": "After the step above",
+  "@mcpStateAfterPrevious": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpIdentityIneligible": "This account cannot be confirmed yet — confirm your e-mail address or sign in with a provider first.",
+  "@mcpIdentityIneligible": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpIdentityConflict": "Another account already holds this identity here — a database administrator can resolve it.",
+  "@mcpIdentityConflict": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
   },
   "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
   "@mcpUsageWorkspaceTitle": {

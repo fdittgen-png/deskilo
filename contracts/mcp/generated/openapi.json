@@ -11,7 +11,7 @@
       "url": "{supabase_url}",
       "variables": {
         "supabase_url": {
-          "default": "https://your-project.supabase.co"
+          "default": "https://zwzbynivewivvjmripeb.supabase.co"
         }
       }
     }
@@ -1137,8 +1137,8 @@
         "description": "A resource-bound token from the installation's own OAuth server (authorization code with PKCE). Its scopes name the identity; they grant no business operation.",
         "flows": {
           "authorizationCode": {
-            "authorizationUrl": "/auth/v1/oauth/authorize",
-            "tokenUrl": "/auth/v1/oauth/token",
+            "authorizationUrl": "https://zwzbynivewivvjmripeb.supabase.co/auth/v1/oauth/authorize",
+            "tokenUrl": "https://zwzbynivewivvjmripeb.supabase.co/auth/v1/oauth/token",
             "scopes": {
               "openid": "Who is connecting",
               "email": "The e-mail of that person",

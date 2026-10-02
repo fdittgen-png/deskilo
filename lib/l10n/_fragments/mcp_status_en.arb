@@ -4,7 +4,7 @@
   "@mcpStatusTitle": {
     "description": "#1625 MCP status: mcpStatusTitle"
   },
-  "mcpStatusIdentity": "Identity",
+  "mcpStatusIdentity": "Identity for assistants",
   "@mcpStatusIdentity": {
     "description": "#1625 MCP status: mcpStatusIdentity"
   },
@@ -32,7 +32,7 @@
   "@mcpStateVerified": {
     "description": "#1625 MCP status: mcpStateVerified"
   },
-  "mcpStateUnlinked": "Not linked",
+  "mcpStateUnlinked": "Not confirmed",
   "@mcpStateUnlinked": {
     "description": "#1625 MCP status: mcpStateUnlinked"
   },
@@ -88,7 +88,7 @@
   "@mcpStateUnavailable": {
     "description": "#1625 MCP status: mcpStateUnavailable"
   },
-  "mcpNextLinkIdentity": "Next: you link your account to this database's identity.",
+  "mcpNextLinkIdentity": "Next: confirm your identity for assistants on this database — one tap below.",
   "@mcpNextLinkIdentity": {
     "description": "#1625 MCP status: mcpNextLinkIdentity"
   },
@@ -135,5 +135,21 @@
   "mcpReviewSecondFactor": "That database needs your second factor on its own session. Nothing was decided.",
   "@mcpReviewSecondFactor": {
     "description": "#1625 MCP status: mcpReviewSecondFactor"
+  },
+  "mcpStatusConfirmIdentity": "Confirm my identity",
+  "@mcpStatusConfirmIdentity": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpStateAfterPrevious": "After the step above",
+  "@mcpStateAfterPrevious": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpIdentityIneligible": "This account cannot be confirmed yet — confirm your e-mail address or sign in with a provider first.",
+  "@mcpIdentityIneligible": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpIdentityConflict": "Another account already holds this identity here — a database administrator can resolve it.",
+  "@mcpIdentityConflict": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
   }
 }

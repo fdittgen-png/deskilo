@@ -19,5 +19,22 @@
   "bookProblemFiscal": "Un esercizio inizia in un giorno che ogni anno ha (mai il 29 febbraio).",
   "bookSaved": "Libro salvato",
   "bookStale": "Qualcuno ha salvato questo libro da quando l’hai aperto. Chiudi e riapri per vedere la sua versione.",
-  "bookSaveFailed": "Il libro non è stato salvato. Controlla la connessione e riprova."
+  "bookSaveFailed": "Il libro non è stato salvato. Controlla la connessione e riprova.",
+  "bookRoleCustomers": "Clienti (crediti)",
+  "bookRoleRevenue": "Ricavi",
+  "bookRoleBank": "Banca",
+  "bookRoleVatOutput": "IVA a debito",
+  "bookRoleExpenses": "Costi",
+  "bookTypeAsset": "Attività",
+  "bookTypeLiability": "Passività",
+  "bookTypeEquity": "Patrimonio netto",
+  "bookTypeIncome": "Ricavo",
+  "bookTypeExpense": "Costo",
+  "bookChartTitle": "Piano dei conti · {site}",
+  "bookChartSuggest": "Aggiungi i conti suggeriti da verificare",
+  "bookAccountCode": "Codice conto",
+  "bookAccountName": "Nome del conto",
+  "bookAccountPosting": "Riceve registrazioni",
+  "bookMappingsTitle": "Il conto di ogni registrazione",
+  "bookProblemUnmapped": "Associa questi conti prima di avviare un libro locale: {roles}."
 }

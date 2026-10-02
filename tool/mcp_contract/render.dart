@@ -8,6 +8,7 @@
 import 'dart:convert';
 
 import '../contract_common/primitives.dart';
+import 'package:deskilo/core/backend/backend_config.dart';
 
 export '../contract_common/primitives.dart' show fieldSchema;
 
@@ -76,8 +77,10 @@ const Map<String, Object?> mcpSecuritySchemes = {
         'identity; they grant no business operation.',
     'flows': {
       'authorizationCode': {
-        'authorizationUrl': '/auth/v1/oauth/authorize',
-        'tokenUrl': '/auth/v1/oauth/token',
+        // Absolute: a relative URL resolves against the docs page's own
+        // origin, not the backend, and the flow lands nowhere.
+        'authorizationUrl': '${BackendConfig.supabaseUrl}/auth/v1/oauth/authorize',
+        'tokenUrl': '${BackendConfig.supabaseUrl}/auth/v1/oauth/token',
         'scopes': {
           'openid': 'Who is connecting',
           'email': 'The e-mail of that person',
@@ -563,7 +566,10 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
       {
         'url': '{supabase_url}',
         'variables': {
-          'supabase_url': {'default': 'https://your-project.supabase.co'},
+          // The app's own backend (BackendConfig): the page works against
+          // the real project out of the box; a self-hoster's build-time
+          // SUPABASE_URL lands here too when the contract is rebuilt.
+          'supabase_url': {'default': BackendConfig.supabaseUrl},
         },
       },
     ],

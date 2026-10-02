@@ -536,6 +536,108 @@ abstract class AppLocalizations {
   /// **'The book was not saved. Check the connection and try again.'**
   String get bookSaveFailed;
 
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Customers (receivable)'**
+  String get bookRoleCustomers;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get bookRoleRevenue;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get bookRoleBank;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Output VAT'**
+  String get bookRoleVatOutput;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get bookRoleExpenses;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Asset'**
+  String get bookTypeAsset;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Liability'**
+  String get bookTypeLiability;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Equity'**
+  String get bookTypeEquity;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get bookTypeIncome;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get bookTypeExpense;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Chart of accounts · {site}'**
+  String bookChartTitle(String site);
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Add the suggested accounts to review'**
+  String get bookChartSuggest;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Account code'**
+  String get bookAccountCode;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Account name'**
+  String get bookAccountName;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Takes postings'**
+  String get bookAccountPosting;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Which account each entry books to'**
+  String get bookMappingsTitle;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Map these accounts before a local book starts: {roles}.'**
+  String bookProblemUnmapped(String roles);
+
   /// #936 accounting exports: fecAccountExpenses
   ///
   /// In en, this message translates to:
@@ -719,7 +821,7 @@ abstract class AppLocalizations {
   /// #1827 Assistant setup: assistantSetupLinkIdentity
   ///
   /// In en, this message translates to:
-  /// **'Link my identity'**
+  /// **'Confirm my identity'**
   String get assistantSetupLinkIdentity;
 
   /// #1827 Assistant setup: assistantSetupTurnOn
@@ -14200,7 +14302,7 @@ abstract class AppLocalizations {
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:
-  /// **'Your account is not linked to a verified identity on this database.'**
+  /// **'Your identity is not confirmed for assistants on this database yet.'**
   String get mcpEligibleNoIdentity;
 
   /// #1626 #1627 #1628 mcp_settings
@@ -14338,7 +14440,7 @@ abstract class AppLocalizations {
   /// #1625 MCP status: mcpStatusIdentity
   ///
   /// In en, this message translates to:
-  /// **'Identity'**
+  /// **'Identity for assistants'**
   String get mcpStatusIdentity;
 
   /// #1625 MCP status: mcpStatusEligibility
@@ -14380,7 +14482,7 @@ abstract class AppLocalizations {
   /// #1625 MCP status: mcpStateUnlinked
   ///
   /// In en, this message translates to:
-  /// **'Not linked'**
+  /// **'Not confirmed'**
   String get mcpStateUnlinked;
 
   /// #1625 MCP status: mcpStateNotRequested
@@ -14464,7 +14566,7 @@ abstract class AppLocalizations {
   /// #1625 MCP status: mcpNextLinkIdentity
   ///
   /// In en, this message translates to:
-  /// **'Next: you link your account to this database\'s identity.'**
+  /// **'Next: confirm your identity for assistants on this database — one tap below.'**
   String get mcpNextLinkIdentity;
 
   /// #1625 MCP status: mcpNextRequestEligibility
@@ -14532,6 +14634,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That database needs your second factor on its own session. Nothing was decided.'**
   String get mcpReviewSecondFactor;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm my identity'**
+  String get mcpStatusConfirmIdentity;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'After the step above'**
+  String get mcpStateAfterPrevious;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'This account cannot be confirmed yet — confirm your e-mail address or sign in with a provider first.'**
+  String get mcpIdentityIneligible;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'Another account already holds this identity here — a database administrator can resolve it.'**
+  String get mcpIdentityConflict;
 
   /// #1630 mcp_usage
   ///

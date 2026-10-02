@@ -269,6 +269,61 @@ class AppLocalizationsEn extends AppLocalizations {
       'The book was not saved. Check the connection and try again.';
 
   @override
+  String get bookRoleCustomers => 'Customers (receivable)';
+
+  @override
+  String get bookRoleRevenue => 'Revenue';
+
+  @override
+  String get bookRoleBank => 'Bank';
+
+  @override
+  String get bookRoleVatOutput => 'Output VAT';
+
+  @override
+  String get bookRoleExpenses => 'Expenses';
+
+  @override
+  String get bookTypeAsset => 'Asset';
+
+  @override
+  String get bookTypeLiability => 'Liability';
+
+  @override
+  String get bookTypeEquity => 'Equity';
+
+  @override
+  String get bookTypeIncome => 'Income';
+
+  @override
+  String get bookTypeExpense => 'Expense';
+
+  @override
+  String bookChartTitle(String site) {
+    return 'Chart of accounts · $site';
+  }
+
+  @override
+  String get bookChartSuggest => 'Add the suggested accounts to review';
+
+  @override
+  String get bookAccountCode => 'Account code';
+
+  @override
+  String get bookAccountName => 'Account name';
+
+  @override
+  String get bookAccountPosting => 'Takes postings';
+
+  @override
+  String get bookMappingsTitle => 'Which account each entry books to';
+
+  @override
+  String bookProblemUnmapped(String roles) {
+    return 'Map these accounts before a local book starts: $roles.';
+  }
+
+  @override
   String get fecAccountExpenses => 'Expenses';
 
   @override
@@ -369,7 +424,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not save. Nothing changed; try again.';
 
   @override
-  String get assistantSetupLinkIdentity => 'Link my identity';
+  String get assistantSetupLinkIdentity => 'Confirm my identity';
 
   @override
   String get assistantSetupTurnOn => 'Turn on';
@@ -8235,7 +8290,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpEligibleNoIdentity =>
-      'Your account is not linked to a verified identity on this database.';
+      'Your identity is not confirmed for assistants on this database yet.';
 
   @override
   String get mcpEligibleNot =>
@@ -8312,7 +8367,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpStatusTitle => 'Where you stand here';
 
   @override
-  String get mcpStatusIdentity => 'Identity';
+  String get mcpStatusIdentity => 'Identity for assistants';
 
   @override
   String get mcpStatusEligibility => 'Database approval';
@@ -8333,7 +8388,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpStateVerified => 'Verified';
 
   @override
-  String get mcpStateUnlinked => 'Not linked';
+  String get mcpStateUnlinked => 'Not confirmed';
 
   @override
   String get mcpStateNotRequested => 'Not requested';
@@ -8376,7 +8431,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpNextLinkIdentity =>
-      'Next: you link your account to this database\'s identity.';
+      'Next: confirm your identity for assistants on this database — one tap below.';
 
   @override
   String get mcpNextRequestEligibility =>
@@ -8418,6 +8473,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mcpReviewSecondFactor =>
       'That database needs your second factor on its own session. Nothing was decided.';
+
+  @override
+  String get mcpStatusConfirmIdentity => 'Confirm my identity';
+
+  @override
+  String get mcpStateAfterPrevious => 'After the step above';
+
+  @override
+  String get mcpIdentityIneligible =>
+      'This account cannot be confirmed yet — confirm your e-mail address or sign in with a provider first.';
+
+  @override
+  String get mcpIdentityConflict =>
+      'Another account already holds this identity here — a database administrator can resolve it.';
 
   @override
   String get mcpUsageWorkspaceTitle => 'Assistant use, last 30 days';

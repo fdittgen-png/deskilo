@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/save_book_profile.dart';
 import '../data/supabase_book_profile_repository.dart';
+import '../domain/book_chart.dart';
 import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
 
@@ -28,4 +29,18 @@ Future<List<BookProfile>> bookProfiles(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return repository.fetchBookProfiles(workspace.id);
+}
+
+/// #1869 B — every issuer's accounts and role mappings in the current
+/// workspace; invalidated after a save.
+@riverpod
+Future<({List<BookAccount> accounts, List<BookMapping> mappings})> bookChart(
+  Ref ref,
+) async {
+  final repository = ref.watch(bookProfileRepositoryProvider);
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) {
+    return (accounts: <BookAccount>[], mappings: <BookMapping>[]);
+  }
+  return repository.fetchBookChart(workspace.id);
 }
