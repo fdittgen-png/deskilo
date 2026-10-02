@@ -12007,6 +12007,51 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
   @override
+  String get reminderHistoryTitle => 'Historial de recordatorios';
+
+  @override
+  String get reminderHistoryRefresh => 'Comprobar de nuevo el envío';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Nivel $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Preparado';
+
+  @override
+  String get reminderStatusQueued => 'Entregado al servicio de notificaciones';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Aceptado por el servicio de notificaciones — no prueba que se haya leído';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Compartido por el remitente — su declaración, no un acuse de recibo';
+
+  @override
+  String get reminderStatusFailed => 'No entregado';
+
+  @override
+  String get reminderStatusUnknown =>
+      'Sin respuesta del servicio de notificaciones';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Registrado antes del seguimiento de envíos — desconocido';
+
+  @override
+  String get reminderOriginManual => 'a mano';
+
+  @override
+  String get reminderOriginAutomatic => 'automático';
+
+  @override
+  String get reminderOriginLegacy => 'anterior';
+
+  @override
   String get reportGuideTitle => 'Campos y marcado';
 
   @override

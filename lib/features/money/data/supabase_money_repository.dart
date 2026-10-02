@@ -31,6 +31,7 @@ import '../domain/number_sequence.dart';
 import '../domain/workspace_status.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../domain/reminder_evidence.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
   @override
@@ -628,6 +629,16 @@ class SupabaseMoneyRepository implements MoneyRepository {
           eventId: row['event_id'] as String?,
         ),
     };
+  }
+
+  @override
+  Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId) async {
+    final rows = await _client.rpc<dynamic>('invoice_reminder_evidence',
+        params: {'p_invoice_id': invoiceId});
+    return [
+      for (final row in (rows as List? ?? const []))
+        ReminderEvidence.fromJson(Map<String, dynamic>.from(row as Map)),
+    ];
   }
 
   @override

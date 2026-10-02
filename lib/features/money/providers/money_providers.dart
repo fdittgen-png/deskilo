@@ -41,6 +41,7 @@ import '../domain/vat_rate.dart';
 import '../../../core/time/clock.dart';
 import '../domain/number_sequence.dart';
 import '../domain/workspace_status.dart';
+import '../domain/reminder_evidence.dart';
 
 part 'money_providers.g.dart';
 
@@ -381,6 +382,11 @@ Future<Map<String, InvoiceMatch>> invoiceMatches(Ref ref) async {
       .read(moneyRepositoryProvider)
       .fetchInvoiceMatches(workspace.id);
 }
+
+/// #1922 — the reminders of one invoice and their delivery evidence.
+@riverpod
+Future<List<ReminderEvidence>> reminderEvidence(Ref ref, String invoiceId) =>
+    ref.read(moneyRepositoryProvider).fetchReminderEvidence(invoiceId);
 
 /// invoiceId → reminder count + last instant (0066), for the archive
 /// badges.

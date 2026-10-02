@@ -7048,6 +7048,69 @@
   "refusalSession": "La tua sessione è scaduta. Accedi di nuovo, poi riprova.",
   "refusalAlreadyDecided": "Qualcuno ha già deciso. L'elenco mostra l'esito.",
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Riaprilo per vedere a che punto è.",
+  "reminderHistoryTitle": "Cronologia dei solleciti",
+  "@reminderHistoryTitle": {
+    "description": "#1922 reminder evidence: reminderHistoryTitle"
+  },
+  "reminderHistoryRefresh": "Verifica di nuovo l'invio",
+  "@reminderHistoryRefresh": {
+    "description": "#1922 reminder evidence: reminderHistoryRefresh"
+  },
+  "reminderHistoryLine": "Livello {level} · {origin} · {date}",
+  "@reminderHistoryLine": {
+    "description": "#1922 reminder evidence: reminderHistoryLine",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "origin": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderStatusPrepared": "Preparato",
+  "@reminderStatusPrepared": {
+    "description": "#1922 reminder evidence: reminderStatusPrepared"
+  },
+  "reminderStatusQueued": "Affidato al servizio di notifiche",
+  "@reminderStatusQueued": {
+    "description": "#1922 reminder evidence: reminderStatusQueued"
+  },
+  "reminderStatusAccepted": "Accettato dal servizio di notifiche — non prova che sia stato letto",
+  "@reminderStatusAccepted": {
+    "description": "#1922 reminder evidence: reminderStatusAccepted"
+  },
+  "reminderStatusDeclared": "Condiviso dal mittente — una sua dichiarazione, non una ricevuta",
+  "@reminderStatusDeclared": {
+    "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusFailed": "Non consegnato",
+  "@reminderStatusFailed": {
+    "description": "#1922 reminder evidence: reminderStatusFailed"
+  },
+  "reminderStatusUnknown": "Nessuna risposta dal servizio di notifiche",
+  "@reminderStatusUnknown": {
+    "description": "#1922 reminder evidence: reminderStatusUnknown"
+  },
+  "reminderStatusLegacy": "Registrato prima del tracciamento degli invii — sconosciuto",
+  "@reminderStatusLegacy": {
+    "description": "#1922 reminder evidence: reminderStatusLegacy"
+  },
+  "reminderOriginManual": "a mano",
+  "@reminderOriginManual": {
+    "description": "#1922 reminder evidence: reminderOriginManual"
+  },
+  "reminderOriginAutomatic": "automatico",
+  "@reminderOriginAutomatic": {
+    "description": "#1922 reminder evidence: reminderOriginAutomatic"
+  },
+  "reminderOriginLegacy": "precedente",
+  "@reminderOriginLegacy": {
+    "description": "#1922 reminder evidence: reminderOriginLegacy"
+  },
   "reportGuideTitle": "Campi e marcatura",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"

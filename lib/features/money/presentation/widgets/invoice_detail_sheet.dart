@@ -22,6 +22,7 @@ import 'invoice_journey_view.dart';
 import '../invoice_actions.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import 'invoice_sheet_actions.dart';
+import 'reminder_evidence_list.dart';
 
 /// What the reader asked for after looking at an invoice. The sheet only
 /// DECIDES — the screen runs the action with its own live context, so no
@@ -276,6 +277,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
                   ].map((p) => p.trim()).where((p) => p.isNotEmpty).join(', ')}'),
               const Divider(height: AppSpacing.xl),
 
+              ReminderEvidenceList(invoiceId: invoice.id),
               // The positions, exactly as the PDF prints them.
               for (final (i, position) in invoice.lines.indexed)
                 Padding(

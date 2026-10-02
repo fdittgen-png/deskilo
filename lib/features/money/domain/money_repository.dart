@@ -24,6 +24,7 @@ import 'statement.dart';
 import 'subscription_levels.dart';
 import 'number_sequence.dart';
 import 'workspace_status.dart';
+import 'reminder_evidence.dart';
 
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
 /// event created by [recordPayment] must be confirmed by the other side
@@ -265,6 +266,11 @@ abstract class MoneyRepository {
   Future<void> remindInvoice(String invoiceId);
 
   /// invoiceId → reminder count + last reminder instant (0066).
+  /// #1922 (0334) — the reminders of one invoice and what is known about
+  /// their delivery (RPC `invoice_reminder_evidence`): issuers and the
+  /// invoice's own member only.
+  Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId);
+
   Future<Map<String, ({int count, DateTime last})>> fetchInvoiceReminders(
     String workspaceId,
   );
