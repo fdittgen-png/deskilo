@@ -139,6 +139,7 @@ begin
     },
     "feature_flags": {
       "accessorySupplements": false,
+      "accountingBook": false,
       "adminInvoicing": false,
       "adminLevelAssign": false,
       "adminSeatBlocking": false,

@@ -316,7 +316,14 @@ enum WorkspaceFeature {
   /// offered seat-hours for a month, computed by the server under the
   /// one KPI contract, with its definition, numerator, denominator and
   /// data quality on demand. Platform, default OFF.
-  capacityKpi;
+  capacityKpi,
+
+  /// #1869 — the accounting owner of a legal entity: a book profile per
+  /// issuer (functional currency, fiscal year, accounting basis) and ONE
+  /// authority mode — pre-accounting, a local book, or an external
+  /// authoritative system. Platform, default OFF, under invoicing:
+  /// member balances and invoices work without it.
+  accountingBook;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1391,6 +1398,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,
+  ),
+  // #1869 — who keeps the official books is a finance decision nobody
+  // makes by default: asked for, Platform, off.
+  WorkspaceFeature.accountingBook: FeatureManifestEntry(
+    feature: WorkspaceFeature.accountingBook,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+    requires: WorkspaceFeature.invoicing,
   ),
 };
 

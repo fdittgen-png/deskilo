@@ -100,6 +100,7 @@ const Map<String, String> _notExported = {
   'mcp_idempotency': 'replay records of MCP calls, operational state only (#1612)',
   'mcp_action_confirmations': 'a person\'s pending confirmation of an assistant request, never portable (#1619)',
   'mcp_usage': 'the audit of MCP calls and the count the limits read, operational state only (#1630)',
+  'book_profiles': 'who keeps the official books of each issuer is a finance decision taken on this installation, never copied with the data (#1869)',
   'workspace_recovery_evidence': 'the record that an export was taken; a copy of it would claim a backup the copy never had (#1636)',
   'readiness_acknowledgements': 'a person\'s own "later" on a setup section, per installation; a copy must re-ask (#1636)',
   // --- authority a copy must not carry by itself (#1287) ------------
@@ -138,6 +139,12 @@ const Map<String, String> _notExported = {
       'the published privacy notices (#1914); public text every member '
           'reads in the app, and the installation\'s own rows belong to no '
           'space at all',
+  'reminder_intents':
+      'one row per payment reminder and its delivery status (#1922); the '
+          'invoices tab already shows reminders, and this is collection '
+          'evidence, not data an operator re-imports',
+  'reminder_attempts':
+      'the append-only delivery evidence of each reminder (#1922); as above',
   'workspace_field_value_options':
       'which choices one member made; personal in the same way',
   'rights_requests':

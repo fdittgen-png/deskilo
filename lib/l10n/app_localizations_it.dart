@@ -195,6 +195,80 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get featureAccountingBookTitle => 'Libro contabile';
+
+  @override
+  String get featureAccountingBookDesc =>
+      'Chi tiene i libri ufficiali di ogni emittente: Deskilo come precontabilità, un libro locale o un sistema contabile esterno che fa fede. Ogni emittente indica valuta, esercizio e base contabile. Disattivato: i saldi dei membri e le fatture funzionano come prima.';
+
+  @override
+  String get bookSheetTitle => 'Libro contabile';
+
+  @override
+  String get bookTileEmpty =>
+      'Nessun libro: DesKilo tiene i saldi dei membri e le fatture (precontabilità).';
+
+  @override
+  String get bookIssuer => 'Emittente';
+
+  @override
+  String get bookAuthorityPre => 'Precontabilità';
+
+  @override
+  String get bookAuthorityLocal => 'DesKilo tiene il libro';
+
+  @override
+  String get bookAuthorityExternal => 'Sistema esterno';
+
+  @override
+  String get bookExternalSystem => 'Sistema che fa fede';
+
+  @override
+  String get bookCurrency => 'Valuta funzionale';
+
+  @override
+  String get bookFiscalStart => 'L’esercizio inizia il';
+
+  @override
+  String get bookBasisAccrual => 'Competenza';
+
+  @override
+  String get bookBasisCash => 'Cassa';
+
+  @override
+  String bookEffectiveFrom(String date) {
+    return 'In vigore dal $date';
+  }
+
+  @override
+  String bookFiscalPreview(String label, String start, String end) {
+    return 'Esercizio $label: $start – $end';
+  }
+
+  @override
+  String get bookProblemExternal =>
+      'Indica il sistema esterno che tiene i libri ufficiali.';
+
+  @override
+  String get bookProblemCurrency =>
+      'Questa valuta non ha un numero di decimali verificato.';
+
+  @override
+  String get bookProblemFiscal =>
+      'Un esercizio inizia in un giorno che ogni anno ha (mai il 29 febbraio).';
+
+  @override
+  String get bookSaved => 'Libro salvato';
+
+  @override
+  String get bookStale =>
+      'Qualcuno ha salvato questo libro da quando l’hai aperto. Chiudi e riapri per vedere la sua versione.';
+
+  @override
+  String get bookSaveFailed =>
+      'Il libro non è stato salvato. Controlla la connessione e riprova.';
+
+  @override
   String get fecAccountExpenses => 'Spese';
 
   @override
