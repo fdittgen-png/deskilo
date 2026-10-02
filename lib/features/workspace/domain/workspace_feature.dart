@@ -316,7 +316,14 @@ enum WorkspaceFeature {
   /// offered seat-hours for a month, computed by the server under the
   /// one KPI contract, with its definition, numerator, denominator and
   /// data quality on demand. Platform, default OFF.
-  capacityKpi;
+  capacityKpi,
+
+  /// #2085 — where a role is given and what it gives: a Roles section on
+  /// each member's page (the Administrator role through the validation
+  /// quorum, the workspace's own roles at once), the members holding each
+  /// role in its editor, and "What you can do here" for every member.
+  /// Under roleManagement; Core, default ON.
+  roleAssignment;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1391,6 +1398,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,
+  ),
+  // #2085 — the place a role is given, and what it gives. Off, the
+  // member page keeps its single "Administrator" row.
+  WorkspaceFeature.roleAssignment: FeatureManifestEntry(
+    feature: WorkspaceFeature.roleAssignment,
+    surface: FeatureSurface.members,
+    tier: FeatureTier.core,
+    requires: WorkspaceFeature.roleManagement,
   ),
 };
 

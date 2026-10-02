@@ -1063,6 +1063,10 @@ window.SETUP_L10N={
    "capacityKpi": [
     "Seat utilisation",
     "Shows owners and reservation managers how much of the offered seat time was reserved in a month, with how it is computed and what the figure cannot know."
+   ],
+   "roleAssignment": [
+    "Giving roles",
+    "Shows a Roles section on each member's page to give or take back a role, the members holding each role, and lets every member see what they can do here."
    ]
   },
   "process": {
@@ -2335,6 +2339,10 @@ window.SETUP_L10N={
    "capacityKpi": [
     "Occupation des places",
     "Montre aux propriétaires et aux gestionnaires des réservations quelle part du temps de place offert a été réservée dans le mois, avec la façon dont c'est calculé et ce que le chiffre ne peut pas savoir."
+   ],
+   "roleAssignment": [
+    "Attribution des rôles",
+    "Affiche une section Rôles sur la page de chaque membre pour attribuer ou retirer un rôle, les membres ayant chaque rôle, et permet à chacun de voir ce qu'il peut faire ici."
    ]
   },
   "process": {
@@ -3607,6 +3615,10 @@ window.SETUP_L10N={
    "capacityKpi": [
     "Platzauslastung",
     "Zeigt Eigentümern und Reservierungsverwaltern, wie viel der angebotenen Platzzeit eines Monats reserviert wurde, wie das berechnet wird und was die Zahl nicht wissen kann."
+   ],
+   "roleAssignment": [
+    "Rollen vergeben",
+    "Zeigt auf der Seite jedes Mitglieds einen Bereich Rollen, um eine Rolle zu geben oder zu entziehen, die Mitglieder jeder Rolle, und lässt jedes Mitglied sehen, was es hier tun kann."
    ]
   },
   "process": {
@@ -4879,6 +4891,10 @@ window.SETUP_L10N={
    "capacityKpi": [
     "Ocupación de puestos",
     "Muestra a los propietarios y a quienes gestionan las reservas qué parte del tiempo de puesto ofrecido se reservó en un mes, cómo se calcula y lo que la cifra no puede saber."
+   ],
+   "roleAssignment": [
+    "Asignación de roles",
+    "Muestra una sección Roles en la página de cada miembro para dar o retirar un rol, los miembros de cada rol, y permite a cada miembro ver lo que puede hacer aquí."
    ]
   },
   "process": {
@@ -6151,6 +6167,10 @@ window.SETUP_L10N={
    "capacityKpi": [
     "Occupazione dei posti",
     "Mostra ai proprietari e a chi gestisce le prenotazioni quanta parte del tempo di posto offerto è stata prenotata in un mese, come viene calcolata e cosa la cifra non può sapere."
+   ],
+   "roleAssignment": [
+    "Assegnazione dei ruoli",
+    "Mostra una sezione Ruoli nella pagina di ogni membro per dare o revocare un ruolo, i membri di ogni ruolo, e permette a ogni membro di vedere cosa può fare qui."
    ]
   },
   "process": {

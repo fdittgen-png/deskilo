@@ -2,6 +2,7 @@
 import 'roles_screen_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
@@ -9,6 +10,7 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -22,13 +24,15 @@ import '../../providers/workspace_providers.dart';
 class RolesScreen extends ConsumerWidget {
   const RolesScreen({super.key});
 
+  static const Key ownRolesKey = Key('roles-own-roles');
+
 
   String _roleLabel(AppLocalizations? l10n, PermissionRole role) =>
       switch (role) {
         PermissionRole.owner => l10n?.roleOwner ?? 'Owner',
         PermissionRole.coOwner => l10n?.memberCoOwnerChip ?? 'Co-owner',
-        PermissionRole.admin => l10n?.roleAdmin ?? 'Admin',
-        PermissionRole.member => l10n?.roleMember ?? 'Member',
+        PermissionRole.admin => l10n?.roleAdmin ?? 'Administrator',
+        PermissionRole.member => l10n?.roleMember ?? 'Every member',
       };
 
   Future<void> _toggle(
@@ -74,10 +78,16 @@ class RolesScreen extends ConsumerWidget {
     final myPerms = ref.watch(myPermissionsProvider);
     final canEdit = myPerms.contains(WorkspacePermission.manageRoles);
     final myRole = me == null ? null : permissionRoleOf(me);
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    // #2085 — one Roles entry: the space's own roles are reached from
+    // here, by whoever defines them or gives them.
+    final ownRolesLink = features.contains(WorkspaceFeature.roleAssignment) &&
+        features.contains(WorkspaceFeature.customRoles) &&
+        ((me?.actsAsOwner ?? false) || canEdit);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.rolesTitle ?? 'Role management'),
+        title: Text(l10n?.rolesTitle ?? 'Roles'),
       ),
       body: ListView(
         padding: AppSpacing.lgAll,
@@ -85,15 +95,27 @@ class RolesScreen extends ConsumerWidget {
           Text(
             canEdit
                 ? (l10n?.rolesIntroEditor ??
-                    'The owner always holds every permission. Decide '
-                        'here what the other roles may do — a co-owner '
-                        'can hold less than an owner.')
+                    'Everyone here is a member. A role adds what its '
+                        'holders may do and never takes anything away. The '
+                        'owner always holds every permission; a co-owner '
+                        'may hold less.')
                 : (l10n?.rolesIntroReadOnly ??
                     'Read-only: these are the permissions each role '
                         'holds. Your role is highlighted.'),
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: AppSpacing.md),
+          if (ownRolesLink)
+            Card(
+              child: ListTile(
+                key: RolesScreen.ownRolesKey,
+                leading: const Icon(Icons.badge_outlined),
+                title: Text(l10n?.rolesOwnRolesLink ??
+                    'The roles this space defines'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push('/settings/roles-of-this-space'),
+              ),
+            ),
           for (final role in PermissionRole.values) ...[
             Builder(builder: (context) {
               final granted = permissionsForRole(role, workspace);

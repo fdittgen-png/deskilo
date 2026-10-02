@@ -230,6 +230,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureHolidayImportTitle ?? 'Import public holidays',
       WorkspaceFeature.capacityKpi =>
         l10n?.featureCapacityKpiTitle ?? 'Seat utilisation',
+      WorkspaceFeature.roleAssignment =>
+        l10n?.featureRoleAssignmentTitle ?? 'Giving roles',
       WorkspaceFeature.workspaceBranding =>
         l10n?.featureWorkspaceBrandingTitle ?? 'Workspace colours',
       WorkspaceFeature.customRoles =>

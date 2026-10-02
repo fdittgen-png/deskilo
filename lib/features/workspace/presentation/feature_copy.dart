@@ -485,6 +485,11 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
               'Shows owners and reservation managers how much of the offered '
                   'seat time was reserved in a month, with how it is '
                   'computed and what the figure cannot know.',
+        WorkspaceFeature.roleAssignment =>
+          l10n?.featureRoleAssignmentDesc ??
+              "Shows a Roles section on each member's page to give or take "
+                  'back a role, the members holding each role, and lets '
+                  'every member see what they can do here.',
       WorkspaceFeature.workspaceBranding =>
           l10n?.featureWorkspaceBrandingDesc ??
               'The workspace chooses a brand colour the app derives its '

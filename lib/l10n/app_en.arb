@@ -2681,7 +2681,7 @@
   "@coOwnerAction": {
     "description": "Member-sheet action opening the co-owner dialog (0058)"
   },
-  "coOwnerNone": "No co-owner role",
+  "coOwnerNone": "No co-ownership",
   "@coOwnerNone": {
     "description": "Co-owner dialog option: clear the role"
   },
@@ -2689,7 +2689,7 @@
   "@coOwnerActive": {
     "description": "Co-owner dialog option: the active flavor"
   },
-  "coOwnerPassive": "Passive co-owner — becomes owner when activated or when the owner leaves",
+  "coOwnerPassive": "Successor — becomes owner when activated or when the owner leaves",
   "@coOwnerPassive": {
     "description": "Co-owner dialog option: the passive flavor"
   },
@@ -2701,7 +2701,7 @@
   "@memberCoOwnerChip": {
     "description": "Members-list chip for an active co-owner"
   },
-  "memberCoOwnerPassiveChip": "Co-owner (passive)",
+  "memberCoOwnerPassiveChip": "Successor",
   "@memberCoOwnerPassiveChip": {
     "description": "Members-list chip for a passive co-owner"
   },
@@ -9367,7 +9367,7 @@
   "@memberRoleOwner": {
     "description": "Role tag on a member row"
   },
-  "memberRoleAdmin": "Admin",
+  "memberRoleAdmin": "Administrator",
   "@memberRoleAdmin": {
     "description": "Role tag on a member row"
   },
@@ -12655,11 +12655,11 @@
       }
     }
   },
-  "memberMakeAdmin": "Make admin",
+  "memberMakeAdmin": "Give the Administrator role",
   "@memberMakeAdmin": {
     "description": "Owner action promoting a member to admin (0035)"
   },
-  "memberMakeMember": "Make regular member",
+  "memberMakeMember": "Take back the Administrator role",
   "@memberMakeMember": {
     "description": "Owner action demoting an admin to a regular member (0035)"
   },
@@ -13604,11 +13604,142 @@
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
+  "featureRoleAssignmentTitle": "Giving roles",
+  "@featureRoleAssignmentTitle": {
+    "description": "#2085 giving roles: featureRoleAssignmentTitle"
+  },
+  "featureRoleAssignmentDesc": "Shows a Roles section on each member's page to give or take back a role, the members holding each role, and lets every member see what they can do here.",
+  "@featureRoleAssignmentDesc": {
+    "description": "#2085 giving roles: featureRoleAssignmentDesc"
+  },
+  "memberRolesTitle": "Roles",
+  "@memberRolesTitle": {
+    "description": "#2085 giving roles: memberRolesTitle"
+  },
+  "memberRolesAdd": "Add a role",
+  "@memberRolesAdd": {
+    "description": "#2085 giving roles: memberRolesAdd"
+  },
+  "memberRolesNone": "No role: everything a member can do.",
+  "@memberRolesNone": {
+    "description": "#2085 giving roles: memberRolesNone"
+  },
+  "memberRolesWhatTheyCanDo": "What they can do here",
+  "@memberRolesWhatTheyCanDo": {
+    "description": "#2085 giving roles: memberRolesWhatTheyCanDo"
+  },
+  "roleAssignSheetTitle": "Give a role to {name}",
+  "@roleAssignSheetTitle": {
+    "description": "#2085 giving roles: roleAssignSheetTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roleAssignQuorumHint": "Takes effect once validated.",
+  "@roleAssignQuorumHint": {
+    "description": "#2085 giving roles: roleAssignQuorumHint"
+  },
+  "roleAssignImmediateHint": "Takes effect at once.",
+  "@roleAssignImmediateHint": {
+    "description": "#2085 giving roles: roleAssignImmediateHint"
+  },
+  "roleAssignNothing": "There is no role left to give.",
+  "@roleAssignNothing": {
+    "description": "#2085 giving roles: roleAssignNothing"
+  },
+  "roleRefusalNotPermitted": "Only someone who manages roles can give this one.",
+  "@roleRefusalNotPermitted": {
+    "description": "#2085 giving roles: roleRefusalNotPermitted"
+  },
+  "roleRefusalOwnerOnly": "Only the owner gives a role that manages roles.",
+  "@roleRefusalOwnerOnly": {
+    "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRefusalExceedsYours": "This role can do things you cannot, so only the owner gives it.",
+  "@roleRefusalExceedsYours": {
+    "description": "#2085 giving roles: roleRefusalExceedsYours"
+  },
+  "roleRefusalNotAssignable": "This member cannot hold this role.",
+  "@roleRefusalNotAssignable": {
+    "description": "#2085 giving roles: roleRefusalNotAssignable"
+  },
+  "roleGiven": "Role given.",
+  "@roleGiven": {
+    "description": "#2085 giving roles: roleGiven"
+  },
+  "roleTakenBack": "Role taken back.",
+  "@roleTakenBack": {
+    "description": "#2085 giving roles: roleTakenBack"
+  },
+  "roleHoldersAdd": "Add a member",
+  "@roleHoldersAdd": {
+    "description": "#2085 giving roles: roleHoldersAdd"
+  },
+  "rolesOwnRolesLink": "The roles this space defines",
+  "@rolesOwnRolesLink": {
+    "description": "#2085 giving roles: rolesOwnRolesLink"
+  },
+  "whatYouCanDoTitle": "What you can do here",
+  "@whatYouCanDoTitle": {
+    "description": "#2085 giving roles: whatYouCanDoTitle"
+  },
+  "whatTheyCanDoTitle": "What {name} can do here",
+  "@whatTheyCanDoTitle": {
+    "description": "#2085 giving roles: whatTheyCanDoTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoIntro": "Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.",
+  "@whatYouCanDoIntro": {
+    "description": "#2085 giving roles: whatYouCanDoIntro"
+  },
+  "whatYouCanDoFromOwner": "As the owner: everything",
+  "@whatYouCanDoFromOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromOwner"
+  },
+  "whatYouCanDoFromCoOwner": "As co-owner",
+  "@whatYouCanDoFromCoOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromCoOwner"
+  },
+  "whatYouCanDoFromAdministrator": "From the Administrator role",
+  "@whatYouCanDoFromAdministrator": {
+    "description": "#2085 giving roles: whatYouCanDoFromAdministrator"
+  },
+  "whatYouCanDoFromEveryMember": "As every member",
+  "@whatYouCanDoFromEveryMember": {
+    "description": "#2085 giving roles: whatYouCanDoFromEveryMember"
+  },
+  "whatYouCanDoFromRole": "From the role {role}",
+  "@whatYouCanDoFromRole": {
+    "description": "#2085 giving roles: whatYouCanDoFromRole",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoNothingMore": "Nothing more than a member.",
+  "@whatYouCanDoNothingMore": {
+    "description": "#2085 giving roles: whatYouCanDoNothingMore"
+  },
+  "roleGiveFailed": "The role was not given.",
+  "@roleGiveFailed": {
+    "description": "#2085 giving roles: roleGiveFailed"
+  },
+  "roleTakeBackFailed": "The role was not taken back.",
+  "@roleTakeBackFailed": {
+    "description": "#2085 giving roles: roleTakeBackFailed"
+  },
   "rolesOfSpaceTitle": "Roles this space defines",
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
-  "rolesOfSpaceSubtitle": "Each one adds permissions on top of a member's role. None ever takes one away, and an owner always keeps every one.",
+  "rolesOfSpaceSubtitle": "Each one adds permissions to what its holders can already do. None takes anything away, and the owner always keeps every permission.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -13657,7 +13788,7 @@
   "@roleEditorSaveFailed": {
     "description": "#1528 the roles of a space: roleEditorSaveFailed"
   },
-  "roleEditorHolders": "Who holds it",
+  "roleEditorHolders": "Members in this role",
   "@roleEditorHolders": {
     "description": "#1528 the roles of a space: roleEditorHolders"
   },
@@ -15519,9 +15650,9 @@
   "workspaceCodeCopy": "Copy ID",
   "workspaceCodeCopied": "Copied",
   "inviteRoleMember": "Member invite",
-  "inviteRoleAdmin": "Admin invite",
+  "inviteRoleAdmin": "Administrator invite",
   "inviteAdminExplainer": "This code is single-use: it admits ONE person as an admin, then expires. Give it only to the person it is meant for.",
-  "inviteAdminNewCode": "New admin code",
+  "inviteAdminNewCode": "New administrator code",
   "inviteOwnerNote": "There is no owner invite — only an owner can grant ownership, in Members & plans.",
   "scanJoinTitle": "Scan workspace QR",
   "onboardingScanButton": "Scan QR code",
@@ -15903,11 +16034,11 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
-  "rolesTitle": "Role management",
+  "rolesTitle": "Roles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.",
+  "rolesIntroEditor": "Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
@@ -15923,11 +16054,11 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleAdmin": "Admin",
+  "roleAdmin": "Administrator",
   "@roleAdmin": {
     "description": "Role label (#513)"
   },
-  "roleMember": "Member",
+  "roleMember": "Every member",
   "@roleMember": {
     "description": "Role label (#513)"
   },

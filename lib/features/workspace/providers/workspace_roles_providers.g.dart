@@ -199,3 +199,123 @@ final class RoleMembersFamily extends $Family
   @override
   String toString() => r'roleMembersProvider';
 }
+
+/// #2085 — who holds which of the workspace's own roles: member id → the
+/// ids of the roles they hold. Empty while the feature is off, like the
+/// roles themselves.
+
+@ProviderFor(workspaceRoleAssignments)
+final workspaceRoleAssignmentsProvider = WorkspaceRoleAssignmentsProvider._();
+
+/// #2085 — who holds which of the workspace's own roles: member id → the
+/// ids of the roles they hold. Empty while the feature is off, like the
+/// roles themselves.
+
+final class WorkspaceRoleAssignmentsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, Set<String>>>,
+          Map<String, Set<String>>,
+          FutureOr<Map<String, Set<String>>>
+        >
+    with
+        $FutureModifier<Map<String, Set<String>>>,
+        $FutureProvider<Map<String, Set<String>>> {
+  /// #2085 — who holds which of the workspace's own roles: member id → the
+  /// ids of the roles they hold. Empty while the feature is off, like the
+  /// roles themselves.
+  WorkspaceRoleAssignmentsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceRoleAssignmentsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceRoleAssignmentsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, Set<String>>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, Set<String>>> create(Ref ref) {
+    return workspaceRoleAssignments(ref);
+  }
+}
+
+String _$workspaceRoleAssignmentsHash() =>
+    r'd4d1959f1c793aed3ae9898f9ccd3a028f243b63';
+
+/// #2085 — what the roles I hold add to my permissions.
+///
+/// `has_permission` has counted them since 0247; the app did not, so a
+/// treasurer was granted the finances by the server and never shown the
+/// way there. `effectivePermissions` still drops them while `customRoles`
+/// is off, exactly as the server does.
+
+@ProviderFor(myRolePermissions)
+final myRolePermissionsProvider = MyRolePermissionsProvider._();
+
+/// #2085 — what the roles I hold add to my permissions.
+///
+/// `has_permission` has counted them since 0247; the app did not, so a
+/// treasurer was granted the finances by the server and never shown the
+/// way there. `effectivePermissions` still drops them while `customRoles`
+/// is off, exactly as the server does.
+
+final class MyRolePermissionsProvider
+    extends
+        $FunctionalProvider<
+          Set<WorkspacePermission>,
+          Set<WorkspacePermission>,
+          Set<WorkspacePermission>
+        >
+    with $Provider<Set<WorkspacePermission>> {
+  /// #2085 — what the roles I hold add to my permissions.
+  ///
+  /// `has_permission` has counted them since 0247; the app did not, so a
+  /// treasurer was granted the finances by the server and never shown the
+  /// way there. `effectivePermissions` still drops them while `customRoles`
+  /// is off, exactly as the server does.
+  MyRolePermissionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myRolePermissionsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myRolePermissionsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Set<WorkspacePermission>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  Set<WorkspacePermission> create(Ref ref) {
+    return myRolePermissions(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Set<WorkspacePermission> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Set<WorkspacePermission>>(value),
+    );
+  }
+}
+
+String _$myRolePermissionsHash() => r'e5a0b2ece357b36bd43c6bb8ed020f536989c18b';
