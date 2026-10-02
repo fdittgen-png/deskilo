@@ -20,14 +20,24 @@ import 'invoices_test.dart' show pumpInvoices, seededMoney;
 
 void main() {
   group('DunningRules.automatic', () {
-    test('defaults on, round-trips, and reads an old rule set as on', () {
-      expect(const DunningRules().automatic, isTrue);
-      expect(DunningRules.fromJson(const {'levels': 2}).automatic, isTrue);
-      expect(DunningRules.fromJson(const {'automatic': false}).automatic,
-          isFalse);
-      final off = const DunningRules().copyWith(automatic: false);
-      expect(DunningRules.fromJson(off.toJson()), off);
-      expect(off.toJson()[DunningRules.keyAutomatic], false);
+    test('#1913: defaults off, reads a rule set without the key as off, '
+        'and round-trips', () {
+      expect(const DunningRules().automatic, isFalse);
+      expect(DunningRules.fromJson(const {'levels': 2}).automatic, isFalse);
+      expect(
+          DunningRules.fromJson(const {'automatic': true}).automatic, isTrue);
+      final on = const DunningRules().copyWith(automatic: true);
+      expect(DunningRules.fromJson(on.toJson()), on);
+      expect(on.toJson()[DunningRules.keyAutomatic], true);
+    });
+
+    test('#1913: equality includes automatic, and equal rules hash equally',
+        () {
+      const off = DunningRules();
+      final on = off.copyWith(automatic: true);
+      expect(on == off, isFalse);
+      expect(off.copyWith(automatic: false), off);
+      expect(off.copyWith(automatic: false).hashCode, off.hashCode);
     });
 
     test('dueReminderLevel is the sweep\'s clock: first delay from issue, '
@@ -61,12 +71,13 @@ void main() {
     await tester.pumpAndSettle();
     final toggle = find.byKey(const ValueKey('dunning-automatic'));
     expect(toggle, findsOneWidget);
-    expect(tester.widget<SwitchListTile>(toggle).value, isTrue);
+    // #1913: automation is never on until the owner turns it on.
+    expect(tester.widget<SwitchListTile>(toggle).value, isFalse);
     await tester.tap(toggle);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('dunning-save')));
     await tester.pumpAndSettle();
-    expect(money.dunningRules.automatic, isFalse);
+    expect(money.dunningRules.automatic, isTrue);
   });
 
   testWidgets('a reminder the sweep produced reads in the feed as its own '

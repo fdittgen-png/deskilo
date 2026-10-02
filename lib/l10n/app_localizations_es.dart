@@ -6135,7 +6135,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dunningAutomaticHint =>
-      'Una vez al día, las facturas abiertas más allá del plazo reciben solas su siguiente nivel de recordatorio — un aviso en el feed del miembro y una notificación. Desactivado: envías cada recordatorio tú mismo.';
+      'Una vez al día, las facturas que superan su plazo de pago registrado pasan solas al siguiente nivel de recordatorio — por el importe aún pendiente, nunca mientras un pago está pendiente o la factura está en suspenso. Las facturas sin plazo registrado quedan en tus manos. Desactivado: envías cada recordatorio tú mismo.';
 
   @override
   String get eventTypePriceNegotiation => 'Negociación de precios';

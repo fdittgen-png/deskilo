@@ -6141,7 +6141,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get dunningAutomaticHint =>
-      'Einmal täglich erhalten offene Rechnungen nach Ablauf der Frist von selbst ihre nächste Mahnstufe — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht. Aus: Sie senden jede Mahnung selbst.';
+      'Einmal täglich erhalten Rechnungen, deren erfasste Zahlungsfrist abgelaufen ist, von selbst die nächste Mahnstufe — für den noch offenen Betrag, nie während eine Zahlung geprüft wird oder die Rechnung angehalten ist. Rechnungen ohne erfasste Frist bleiben Ihnen überlassen. Aus: Sie versenden jede Mahnung selbst.';
 
   @override
   String get eventTypePriceNegotiation => 'Preisverhandlung';
