@@ -15,6 +15,7 @@ import 'invoice_detail_sheet.dart';
 class InvoiceSheetActions {
   const InvoiceSheetActions({
     required this.invoice,
+    this.heldReason,
     required this.canIssue,
     required this.isEu,
     required this.replacedByNumber,
@@ -22,6 +23,9 @@ class InvoiceSheetActions {
   });
 
   final Invoice invoice;
+
+  /// #1913 — the reason of the active dunning hold, or null.
+  final String? heldReason;
   final bool canIssue;
   final bool isEu;
 
@@ -103,6 +107,22 @@ List<(InvoiceAction, Widget)> build(
               label: l10n?.invoiceRemindAction ?? 'Send a reminder',
               action: InvoiceAction.remind,
               primary: expected == InvoiceAction.remind,
+            ),
+          ),
+        if (invoice.totalCents > 0)
+          (
+            InvoiceAction.dunningHold,
+            _button(
+              context,
+              key: 'invoice-hold-action',
+              icon: heldReason == null
+                  ? Icons.pause_circle_outline
+                  : Icons.play_circle_outline,
+              label: heldReason == null
+                  ? l10n?.invoiceHoldAction ?? 'Hold reminders'
+                  : l10n?.invoiceHoldReleaseAction ??
+                      'Release the reminder hold',
+              action: InvoiceAction.dunningHold,
             ),
           ),
         (

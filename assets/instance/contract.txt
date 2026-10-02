@@ -51,6 +51,10 @@ constraint account_messages.account_messages_body_check CHECK (((length(btrim(bo
 constraint account_messages.account_messages_conversation_id_fkey FOREIGN KEY (conversation_id) REFERENCES account_conversations(id) ON DELETE CASCADE
 constraint account_messages.account_messages_pkey PRIMARY KEY (id)
 constraint account_messages.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint analytics_history.analytics_history_pkey PRIMARY KEY (workspace_id)
+constraint analytics_history.analytics_history_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint analytics_history.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint analytics_history.system_company_present CHECK ((company_id IS NOT NULL))
 constraint badge_auth_attempts.badge_auth_attempts_pkey PRIMARY KEY (id)
 constraint badge_auth_attempts.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint book_profiles.book_profiles_accounting_basis_check CHECK ((accounting_basis = ANY (ARRAY['accrual'::text, 'cash'::text])))
@@ -538,6 +542,11 @@ constraint offices.offices_x_check CHECK ((x >= 0))
 constraint offices.offices_y_check CHECK ((y >= 0))
 constraint offices.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint offices.system_company_present CHECK ((company_id IS NOT NULL))
+constraint opening_hours_history.opening_hours_history_one_at_a_time EXCLUDE USING gist (workspace_id WITH =, valid WITH &&)
+constraint opening_hours_history.opening_hours_history_pkey PRIMARY KEY (id)
+constraint opening_hours_history.opening_hours_history_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint opening_hours_history.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint opening_hours_history.system_company_present CHECK ((company_id IS NOT NULL))
 constraint packages.packages_days_check CHECK (((days >= 1) AND (days <= 365)))
 constraint packages.packages_name_check CHECK (((char_length(name) >= 1) AND (char_length(name) <= 80)))
 constraint packages.packages_pkey PRIMARY KEY (id)
@@ -698,6 +707,12 @@ constraint reservation_requests.reservation_requests_reservation_id_fkey FOREIGN
 constraint reservation_requests.reservation_requests_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint reservation_requests.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint reservation_requests.system_company_present CHECK ((company_id IS NOT NULL))
+constraint reservation_target_history.reservation_target_history_one_target CHECK ((num_nonnulls(seat_id, desk_id, office_id, level_id) = 1))
+constraint reservation_target_history.reservation_target_history_pkey PRIMARY KEY (id)
+constraint reservation_target_history.reservation_target_history_reservation_id_fkey FOREIGN KEY (reservation_id) REFERENCES reservations(id) ON DELETE CASCADE
+constraint reservation_target_history.reservation_target_history_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint reservation_target_history.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint reservation_target_history.system_company_present CHECK ((company_id IS NOT NULL))
 constraint reservations.reservations_desk_id_fkey FOREIGN KEY (desk_id) REFERENCES desks(id) ON DELETE RESTRICT
 constraint reservations.reservations_desk_no_overlap EXCLUDE USING gist (desk_id WITH =, tstzrange(starts_at, ends_at) WITH &&) WHERE (((desk_id IS NOT NULL) AND (status = ANY (ARRAY['reserved'::text, 'checked_in'::text]))))
 constraint reservations.reservations_level_id_fkey FOREIGN KEY (level_id) REFERENCES levels(id) ON DELETE RESTRICT
@@ -756,6 +771,11 @@ constraint seat_accessories.seat_accessories_seat_id_fkey FOREIGN KEY (seat_id) 
 constraint seat_accessories.seat_accessories_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint seat_accessories.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint seat_accessories.system_company_present CHECK ((company_id IS NOT NULL))
+constraint seat_history.seat_history_one_at_a_time EXCLUDE USING gist (seat_id WITH =, valid WITH &&)
+constraint seat_history.seat_history_pkey PRIMARY KEY (id)
+constraint seat_history.seat_history_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint seat_history.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint seat_history.system_company_present CHECK ((company_id IS NOT NULL))
 constraint seats.seats_desk_id_fkey FOREIGN KEY (desk_id) REFERENCES desks(id) ON DELETE CASCADE
 constraint seats.seats_name_check CHECK ((char_length(name) <= 80))
 constraint seats.seats_nfc_uid_check CHECK (((nfc_uid IS NULL) OR (nfc_uid ~ '^[0-9a-f]{8,20}$'::text)))
@@ -1017,6 +1037,11 @@ routine public.acknowledge_workspace_notice(p_workspace_id uuid, p_version text)
 routine public.activate_co_owner(p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4d5034f3958e
 routine public.add_conversation_participant(p_conversation_id uuid, p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:3d7e8f0c883d
 routine public.admin_create_reservation_for(p_workspace_id uuid, p_subject_member_id uuid, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_level_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0fd8239dcca0
+routine public.analytics_hours_of(p_rules jsonb) -> TABLE(open_weekdays integer[], work_start_minutes integer, work_end_minutes integer) | function | invoker | immutable | exec:service_role | body:ea757b899ebc
+routine public.analytics_reservation_target() -> trigger | function | definer | volatile | exec:service_role | body:a3d6ccbbb048
+routine public.analytics_seat_changed() -> trigger | function | definer | volatile | exec:service_role | body:1638777ebde6
+routine public.analytics_seat_reopen(p_seat_id uuid) -> void | function | definer | volatile | exec:service_role | body:aa6ce4d41137
+routine public.analytics_workspace_changed() -> trigger | function | definer | volatile | exec:service_role | body:2ecc9180a068
 routine public.apply_expense_occurrence_decision() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:7345bbfc47c5
 routine public.apply_expense_repartition(p_id uuid) -> void | function | definer | volatile | exec:service_role | body:22d1a03f9f1d
 routine public.apply_expense_repartition_decision() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:91388b8827fc
@@ -1187,7 +1212,7 @@ routine public.jsonb_text_array(p jsonb) -> text[] | function | invoker | immuta
 routine public.kiosk_act(p_workspace_id uuid, p_badge_token text, p_action text, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:36626f33c0b5
 routine public.kiosk_identify(p_workspace_id uuid, p_badge_token text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1bd2bf1f2625
 routine public.kpi_multirange_hours(p tstzmultirange) -> numeric | function | invoker | immutable | exec:authenticated,service_role | body:6e8c7b7e8ade
-routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a1b6006c5be8
+routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6ae2324751be
 routine public.leave_conversation(p_conversation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:39d9798213e7
 routine public.leave_workspace(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:87cdc08f8a39
 routine public.ledger_entries_append_only() -> trigger | function | definer | volatile | exec:service_role | body:4da440e10a09
@@ -1582,6 +1607,7 @@ trigger account_conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_c
 trigger account_field_audience.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_field_audience FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_field_audience_spaces.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_field_audience_spaces FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_messages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_messages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger analytics_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.analytics_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger badge_auth_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.badge_auth_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_profiles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger closure_days.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.closure_days FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -1595,6 +1621,7 @@ trigger database_authority_audit.database_authority_audit_append_only CREATE TRI
 trigger database_authority_audit.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.database_authority_audit FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger deployments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.deployments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger deskilo_schema_version.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.deskilo_schema_version FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger desks.analytics_seat_history CREATE TRIGGER analytics_seat_history AFTER UPDATE OF office_id ON public.desks FOR EACH ROW WHEN ((new.office_id IS DISTINCT FROM old.office_id)) EXECUTE FUNCTION analytics_seat_changed()
 trigger desks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.desks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger directory_people.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.directory_people FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger einvoice_credentials.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.einvoice_credentials FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -1679,7 +1706,9 @@ trigger members.refresh_public_members CREATE TRIGGER refresh_public_members AFT
 trigger members.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.members FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger message_events.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.message_events FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger number_sequences.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.number_sequences FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger offices.analytics_seat_history CREATE TRIGGER analytics_seat_history AFTER UPDATE OF level_id ON public.offices FOR EACH ROW WHEN ((new.level_id IS DISTINCT FROM old.level_id)) EXECUTE FUNCTION analytics_seat_changed()
 trigger offices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.offices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger opening_hours_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.opening_hours_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger packages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.packages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger payment_credentials.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.payment_credentials FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger payment_intents.payment_intents_ledger_matches CREATE TRIGGER payment_intents_ledger_matches BEFORE INSERT OR UPDATE OF ledger_entry_id, workspace_id, member_id, amount_cents ON public.payment_intents FOR EACH ROW EXECUTE FUNCTION payment_intents_ledger_matches()
@@ -1706,6 +1735,8 @@ trigger reminder_attempts.reminder_attempts_append_only CREATE TRIGGER reminder_
 trigger reminder_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reminder_intents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_intents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reservation_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger reservation_target_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_target_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger reservations.analytics_reservation_target CREATE TRIGGER analytics_reservation_target AFTER INSERT OR UPDATE OF seat_id, desk_id, office_id, level_id ON public.reservations FOR EACH ROW EXECUTE FUNCTION analytics_reservation_target()
 trigger reservations.enforce_reservation_limit CREATE TRIGGER enforce_reservation_limit AFTER INSERT ON public.reservations FOR EACH ROW EXECUTE FUNCTION enforce_reservation_limit()
 trigger reservations.reservation_hierarchy_guard CREATE TRIGGER reservation_hierarchy_guard BEFORE INSERT ON public.reservations FOR EACH ROW EXECUTE FUNCTION reservation_hierarchy_guard()
 trigger reservations.reservation_hierarchy_guard_update CREATE TRIGGER reservation_hierarchy_guard_update BEFORE UPDATE OF starts_at, ends_at, seat_id, desk_id, office_id, level_id, member_id, status ON public.reservations FOR EACH ROW WHEN (((new.status = ANY (ARRAY['reserved'::text, 'checked_in'::text])) AND ((((((((old.starts_at IS DISTINCT FROM new.starts_at) OR (old.ends_at IS DISTINCT FROM new.ends_at)) OR (old.seat_id IS DISTINCT FROM new.seat_id)) OR (old.desk_id IS DISTINCT FROM new.desk_id)) OR (old.office_id IS DISTINCT FROM new.office_id)) OR (old.level_id IS DISTINCT FROM new.level_id)) OR (old.member_id IS DISTINCT FROM new.member_id)) OR (old.status IS DISTINCT FROM new.status)))) EXECUTE FUNCTION reservation_hierarchy_guard()
@@ -1719,6 +1750,9 @@ trigger rights_requests.rights_requests_guard CREATE TRIGGER rights_requests_gua
 trigger rights_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.rights_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger seat_accessories.seat_accessories_same_workspace CREATE TRIGGER seat_accessories_same_workspace BEFORE INSERT OR UPDATE ON public.seat_accessories FOR EACH ROW EXECUTE FUNCTION seat_accessories_same_workspace()
 trigger seat_accessories.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.seat_accessories FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger seat_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.seat_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger seats.analytics_seat_history CREATE TRIGGER analytics_seat_history AFTER INSERT OR DELETE ON public.seats FOR EACH ROW EXECUTE FUNCTION analytics_seat_changed()
+trigger seats.analytics_seat_history_update CREATE TRIGGER analytics_seat_history_update AFTER UPDATE OF desk_id, blocked_from, blocked_to ON public.seats FOR EACH ROW WHEN (((new.desk_id IS DISTINCT FROM old.desk_id) OR (new.blocked_from IS DISTINCT FROM old.blocked_from) OR (new.blocked_to IS DISTINCT FROM old.blocked_to))) EXECUTE FUNCTION analytics_seat_changed()
 trigger seats.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.seats FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger services.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.services FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger sites.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.sites FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -1751,6 +1785,7 @@ trigger workspace_template_applications.zz_system_columns_stamp CREATE TRIGGER z
 trigger workspace_template_grants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_template_grants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_templates.template_regional_capture CREATE TRIGGER template_regional_capture BEFORE INSERT OR UPDATE ON public.workspace_templates FOR EACH ROW EXECUTE FUNCTION template_regional_capture()
 trigger workspace_templates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_templates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspaces.analytics_opening_hours CREATE TRIGGER analytics_opening_hours AFTER INSERT OR UPDATE OF booking_rules ON public.workspaces FOR EACH ROW EXECUTE FUNCTION analytics_workspace_changed()
 trigger workspaces.refresh_public_workspace CREATE TRIGGER refresh_public_workspace AFTER UPDATE OF name, feature_flags, booking_rules, currency_code, address, street, postal_code, city, invoice_legal ON public.workspaces FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
 trigger workspaces.retire_invite_code CREATE TRIGGER retire_invite_code AFTER UPDATE OF invite_code ON public.workspaces FOR EACH ROW EXECUTE FUNCTION retire_invite_code()
 trigger workspaces.stamp_accessory_supplements_since CREATE TRIGGER stamp_accessory_supplements_since BEFORE UPDATE OF feature_flags ON public.workspaces FOR EACH ROW EXECUTE FUNCTION stamp_accessory_supplements_since()

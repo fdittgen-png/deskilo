@@ -259,14 +259,7 @@ class InvoiceJourney {
     String replacedByNumber = '',
   }) {
     final lifecycle = invoiceLifecycleOf(invoice, match);
-    final remaining = switch (lifecycle) {
-      InvoiceLifecycle.open ||
-      InvoiceLifecycle.awaitingValidation =>
-        invoice.totalCents,
-      InvoiceLifecycle.partiallyPaid =>
-        invoice.totalCents - (match?.paidCents ?? 0),
-      _ => 0,
-    };
+    final remaining = invoiceRemainingCents(invoice, match);
     final settled = invoice.settledByInvoiceId != null &&
         (lifecycle == InvoiceLifecycle.open ||
             lifecycle == InvoiceLifecycle.partiallyPaid);
@@ -297,14 +290,19 @@ class InvoiceJourney {
       // from this moment, at this moment. A Duration loses or gains an
       // hour across a clock change, and this date is printed on the
       // document and starts the dunning clock.
-      dueOn: addCalendarDays(invoice.issuedAt, rules.firstAfterDays),
-      daysToTerm: rules.firstAfterDays -
-          calendarDaysBetween(invoice.issuedAt, now),
+      // #1913 — the due date frozen at issue wins; an invoice from before
+      // 0331 keeps the date its document always printed.
+      dueOn: invoice.dueOn ??
+          addCalendarDays(invoice.issuedAt, rules.firstAfterDays),
+      daysToTerm: invoice.dueOn != null
+          ? calendarDaysBetween(now, invoice.dueOn!)
+          : rules.firstAfterDays - calendarDaysBetween(invoice.issuedAt, now),
       reminderDue: remaining > 0 &&
               !settled &&
               (lifecycle == InvoiceLifecycle.open ||
                   lifecycle == InvoiceLifecycle.partiallyPaid)
           ? dueReminderLevel(
+              dueOn: invoice.dueOn,
               issuedAt: invoice.issuedAt,
               reminderCount: count,
               lastReminderAt: reminder?.last,
@@ -382,3 +380,18 @@ InvoiceStageCounts stageCountsOf({
     closed: closed,
   );
 }
+
+/// #1913 — what is still owed on [invoice]: the whole total while open or
+/// while a payment awaits validation (a pending payment does not make
+/// the balance disappear), the remainder after a confirmed partial
+/// payment, nothing once paid, cancelled or refunded. The journey, the
+/// reminder message and the server's `invoice_dunning_state` agree.
+int invoiceRemainingCents(Invoice invoice, InvoiceMatch? match) =>
+    switch (invoiceLifecycleOf(invoice, match)) {
+      InvoiceLifecycle.open ||
+      InvoiceLifecycle.awaitingValidation =>
+        invoice.totalCents,
+      InvoiceLifecycle.partiallyPaid =>
+        invoice.totalCents - (match?.paidCents ?? 0),
+      _ => 0,
+    };

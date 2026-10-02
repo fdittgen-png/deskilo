@@ -48,12 +48,14 @@ void main() {
       'offered_room_hours': 8.0,
       'reserved_room_hours': '3.00',
       'quality': ['partial', 'from_a_newer_server'],
-      'reasons': ['current_plan_and_hours'],
+      'reasons': ['history_not_recorded_before'],
+      'history_since': '2026-10-02T09:00:00Z',
       'computed_at': '2026-10-01T10:00:00Z',
     });
     expect(kpi.offeredSeatHours, 76);
     expect(kpi.utilisation, closeTo(10 / 76, 1e-12));
     expect(kpi.reservedRoomHours, 3);
+    expect(kpi.historySince, DateTime.utc(2026, 10, 2, 9));
     expect(kpi.quality, {
       KpiQuality.partial,
     }, reason: 'an unknown quality word is ignored, not guessed');
