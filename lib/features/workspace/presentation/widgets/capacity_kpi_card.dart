@@ -168,17 +168,26 @@ class _Figure extends StatelessWidget {
     final computed = DateFormat.yMd(locale)
         .add_Hm()
         .format(kpi.computedAt.toLocal());
+    final since = kpi.historySince;
+    final sinceLabel = since == null
+        ? ''
+        : DateFormat.yMMMd(locale).format(since.toLocal());
+    final notRecorded = kpi.quality.contains(KpiQuality.notRecorded);
     final notes = <String>[
-      if (ratio == null)
+      if (notRecorded)
+        l10n?.capacityKpiNotRecorded(sinceLabel) ??
+            'This period lies before the workspace’s history began on '
+                '$sinceLabel; there is nothing recorded to count.'
+      else if (ratio == null)
         l10n?.capacityKpiUndefined ??
             'No seat time was offered in this period, so there is no '
                 'utilisation to show.',
       if (kpi.quality.contains(KpiQuality.knownZero))
         l10n?.capacityKpiKnownZero ?? 'Measured: nothing was reserved.',
-      if (kpi.reasons.contains('current_plan_and_hours'))
-        l10n?.capacityKpiPartial ??
-            'Partial: the plan, the opening hours and the seat blocks are '
-                'today’s; their history is not recorded yet.',
+      if (!notRecorded && kpi.reasons.contains('history_not_recorded_before'))
+        l10n?.capacityKpiHistorySince(sinceLabel) ??
+            'Counted from $sinceLabel, when this workspace’s history '
+                'began; earlier time is not known and not counted.',
       if (kpi.reasons.contains('unattributed_reservations'))
         l10n?.capacityKpiUnattributed ??
             'Some reservations in this period point to a place that no '
@@ -210,6 +219,12 @@ class _Figure extends StatelessWidget {
               hours.format(kpi.offeredRoomHours),
             ) ??
             'Rooms without seats: ${kpi.roomsWithoutSeats}',
+      if (kpi.reasons.contains('rooms_current_structure'))
+        l10n?.capacityKpiRoomsToday ??
+            'Rooms without seats are read as they are today.',
+      if (since != null)
+        l10n?.capacityKpiHistory(sinceLabel) ??
+            'History recorded since $sinceLabel',
       l10n?.capacityKpiAsOf(computed) ?? 'Computed $computed',
     ];
 

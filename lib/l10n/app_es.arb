@@ -1326,10 +1326,6 @@
       }
     }
   },
-  "capacityKpiPartial": "Parcial: el plano, el horario y los bloqueos de puestos son los de hoy; su historial aún no se registra.",
-  "@capacityKpiPartial": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiUnattributed": "Algunas reservas del periodo apuntan a un lugar que ya no existe; no se cuentan.",
   "@capacityKpiUnattributed": {
     "description": "#1918 capacity KPI"
@@ -1358,6 +1354,37 @@
   "capacityKpiRetry": "Reintentar",
   "@capacityKpiRetry": {
     "description": "#1918 capacity KPI"
+  },
+  "capacityKpiHistorySince": "Contado desde el {date}, cuando empezó el historial de este espacio; el tiempo anterior no se conoce y no se cuenta.",
+  "@capacityKpiHistorySince": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiNotRecorded": "Este periodo es anterior al inicio del historial del espacio, el {date}; no hay nada registrado que contar.",
+  "@capacityKpiNotRecorded": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiHistory": "Historial registrado desde el {date}",
+  "@capacityKpiHistory": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRoomsToday": "Las salas sin puestos se leen tal como están hoy.",
+  "@capacityKpiRoomsToday": {
+    "description": "#1920 capacity KPI history"
   },
   "featureCarnetsTitle": "Bonos",
   "featureCarnetsDesc": "Vender bonos de medias jornadas que se gastan a lo largo de los meses cuando un miembro reserva más allá de su suscripción, cobrados una sola vez en la venta.",
