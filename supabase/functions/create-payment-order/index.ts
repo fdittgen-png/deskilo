@@ -132,6 +132,25 @@ export const failureOutcome = (e: unknown): "failed" | "unknown" =>
 /** #2014 — one provider order per intent: the same key on every retry. */
 export const idempotencyKey = (intentId: string) => `deskilo-intent-${intentId}`;
 
+/** #2014 B — the client's request id: a UUID, or absent (legacy). */
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** #2014 B — providers keep an idempotency key for about a day. A reused
+ * intent older than that is never sent again: the key could have expired
+ * and the provider would open a second order. */
+export const KEY_RETENTION_S = 23 * 3600;
+
+/** #2014 B — what a REUSED intent allows, from its stored state. */
+export function reuseVerdict(
+  intent: { status: string; created_at: string },
+  nowMs: number,
+): "paid" | "failed" | "stale" | "resend" {
+  if (intent.status === "captured") return "paid";
+  if (intent.status === "failed") return "failed";
+  const ageS = (nowMs - Date.parse(intent.created_at)) / 1000;
+  return ageS > KEY_RETENTION_S ? "stale" : "resend";
+}
+
 async function createPaypalOrder(
   cfg: Record<string, string>,
   amountCents: number,
@@ -359,9 +378,11 @@ export async function handle(req: Request): Promise<Response> {
   if (bodyCurrency && bodyCurrency !== currency) {
     return json({ error: "currency_mismatch", workspace: currency, sent: bodyCurrency }, 400);
   }
+  const requestId = body.request_id == null ? null : String(body.request_id);
   if (
     !isProvider(provider) || !memberId ||
-    !Number.isInteger(amountCents) || amountCents <= 0 || !period
+    !Number.isInteger(amountCents) || amountCents <= 0 || !period ||
+    (requestId !== null && !UUID_RE.test(requestId))
   ) {
     return json({ error: "invalid_request" }, 400);
   }
@@ -422,6 +443,7 @@ export async function handle(req: Request): Promise<Response> {
       p_period: period,
       p_amount_cents: amountCents,
       p_currency: currency,
+      p_request_id: requestId,
     },
   );
   const intent = Array.isArray(opened) ? opened[0] : opened;
@@ -430,6 +452,19 @@ export async function handle(req: Request): Promise<Response> {
     return json({ error: "intent_open_failed" }, 500);
   }
   const reference: string = intent.reference;
+  // #2014 B — a retry of the same request answers from the intent it
+  // already opened: paid is paid, failed needs a new request, and a
+  // pending one is sent again under the SAME key, so the provider returns
+  // the order it already made instead of a second one.
+  if (intent.reused) {
+    const verdict = reuseVerdict(intent, Date.now());
+    if (verdict === "paid") {
+      return json({ status: "paid", provider, order_id: intent.order_id });
+    }
+    if (verdict !== "resend") {
+      return json({ error: verdict === "failed" ? "intent_failed" : "intent_stale", provider }, 409);
+    }
+  }
   const key = idempotencyKey(String(intent.id));
   try {
     const order = provider === "paypal"
@@ -443,7 +478,9 @@ export async function handle(req: Request): Promise<Response> {
     const { error: insertError } = await admin
       .from("payment_intents")
       .update({ order_id: order.orderId })
-      .eq("id", intent.id);
+      .eq("id", intent.id)
+      // A reused intent already associated keeps its association.
+      .like("order_id", "pending:%");
     if (insertError) {
       console.error("payment intent update failed", insertError.message);
       return json({ error: "intent_insert_failed" }, 500);
