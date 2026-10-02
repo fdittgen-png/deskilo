@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- 0341 — an assistant's "free" is the booking engine's own verdict.
+-- 0345 — an assistant's "free" is the booking engine's own verdict.
 -- mcp_seat_bookable tries the booking as the member and always rolls it
 -- back: a free seat answers null and leaves no row behind; a seat another
 -- member holds answers the engine's refusal; get_availability asks it.

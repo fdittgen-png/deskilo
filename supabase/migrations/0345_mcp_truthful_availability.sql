@@ -59,9 +59,9 @@ begin
   select pg_get_functiondef(p.oid) into v_def
     from pg_proc p join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname = 'mcp_read_v1';
-  if v_def is null then raise exception '0341: mcp_read_v1 not found'; end if;
+  if v_def is null then raise exception '0345: mcp_read_v1 not found'; end if;
   if position('mcp_seat_bookable' in v_def) > 0 then
-    raise exception '0341: mcp_read_v1 already asks the engine';
+    raise exception '0345: mcp_read_v1 already asks the engine';
   end if;
   v_next := pg_temp.anchor_replace(v_def,
     $a$'free', not exists (select 1 from public.reservations x
@@ -70,7 +70,7 @@ begin
                          and not (s.blocked_from is not null and s.blocked_from < v_to
                                   and coalesce(s.blocked_to, 'infinity') > v_from)) as r$a$,
     $b$'free', public.mcp_seat_bookable(p_workspace_id, s.id, v_from, v_to) is null) as r$b$);
-  if v_next is null then raise exception '0341: get_availability anchor missing'; end if;
+  if v_next is null then raise exception '0345: get_availability anchor missing'; end if;
   execute v_next;
 end
 $migration$;
