@@ -21,7 +21,7 @@
       ],
       "prerequisites": "A workspace with a published plan and opening hours; booking rules in Settings.",
       "limitations": "Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.",
-      "fingerprint": "b9c0ce72c99f",
+      "fingerprint": "ac7c6ab80f66",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
