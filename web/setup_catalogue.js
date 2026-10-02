@@ -11,6 +11,7 @@ window.SETUP_PROCESSES=[
      "membersDirectory",
      "coOwner",
      "roleManagement",
+     "roleAssignment",
      "customRoles",
      "customFields",
      "personalInfo",

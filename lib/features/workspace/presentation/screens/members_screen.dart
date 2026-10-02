@@ -22,6 +22,7 @@ import '../member_admin_actions.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/member_roles_card.dart';
 import '../widgets/open_conversation.dart';
 import '../widgets/member_note_dialog.dart';
 
@@ -65,6 +66,9 @@ class MembersScreen extends ConsumerWidget {
     final reportsOn = ref
         .read(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.memberReports);
+    final rolesOn = ref
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.roleAssignment);
     final actions = <Widget>[
       if(isOwner||isSelf)MemberEmploymentTile(member:member.id,editable:isOwner),
       // #494 — the standing financial agreement, sent by owner/admin.
@@ -197,15 +201,28 @@ class MembersScreen extends ConsumerWidget {
           topic: l10n?.helpHintBadgesTopic ?? 'NFC badges',
           onTap: () => showMemberBadgesDialog(context, ref, member, name),
         ),
-      if (isOwner && !member.isOwner && !member.isKiosk && active)
+      // #2085 — with roleAssignment, "Add a role" offers the
+      // Administrator role and the space's own, each with its rule.
+      if (rolesOn &&
+          !isSelf &&
+          !member.isKiosk &&
+          active &&
+          canGiveRoles(ref.read(myMemberProvider).value, perms))
+        _sheetAction(
+          context,
+          icon: Icons.badge_outlined,
+          label: l10n?.memberRolesAdd ?? 'Add a role',
+          onTap: () => showRoleAssignSheet(context, ref, member, name),
+        ),
+      if (isOwner && !member.isOwner && !member.isKiosk && active && !rolesOn)
         _sheetAction(
           context,
           icon: member.isAdmin
               ? Icons.remove_moderator_outlined
               : Icons.add_moderator_outlined,
           label: member.isAdmin
-              ? (l10n?.memberMakeMember ?? 'Make regular member')
-              : (l10n?.memberMakeAdmin ?? 'Make admin'),
+              ? (l10n?.memberMakeMember ?? 'Take back the Administrator role')
+              : (l10n?.memberMakeAdmin ?? 'Give the Administrator role'),
           onTap: () => requestMemberRoleChange(context, ref, member),
         ),
       // Co-ownership (0058): owner-level callers appoint active/passive
@@ -460,9 +477,9 @@ class MembersScreen extends ConsumerWidget {
                         Text(l10n?.memberCoOwnerChip ?? 'Co-owner'),
                       if (member.coOwner == CoOwnerStatus.passive)
                         Text(l10n?.memberCoOwnerPassiveChip ??
-                            'Co-owner (passive)'),
+                            'Successor'),
                       if (member.isAdmin && !member.isOwner)
-                        Text(l10n?.memberRoleAdmin ?? 'Admin'),
+                        Text(l10n?.memberRoleAdmin ?? 'Administrator'),
                       if (member.status == MemberStatus.pending)
                         Text(
                           l10n?.memberStatusPending ?? 'Pending',

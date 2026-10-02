@@ -57,6 +57,20 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
   }
 
   @override
+  Future<Map<String, Set<String>>> fetchAssignments(String workspaceId) async {
+    final rows = await _client
+        .from('workspace_role_members')
+        .select('member_id, role_id')
+        .eq('workspace_id', workspaceId);
+    final out = <String, Set<String>>{};
+    for (final row in rows as List) {
+      final map = Map<String, dynamic>.from(row as Map);
+      (out['${map['member_id']}'] ??= <String>{}).add('${map['role_id']}');
+    }
+    return out;
+  }
+
+  @override
   Future<String> setRole(String workspaceId, WorkspaceRole role) async {
     final id = await _client.rpc<dynamic>('set_workspace_role', params: {
       'p_workspace_id': workspaceId,

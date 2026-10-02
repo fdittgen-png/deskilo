@@ -387,7 +387,7 @@ Widget? _roleBadge(
       padding: const EdgeInsets.only(left: AppSpacing.xs),
       child: _StatusChip(
         chipKey: ValueKey('directory-role-${member.id}'),
-        label: l10n?.memberRoleAdmin ?? 'Admin',
+        label: l10n?.memberRoleAdmin ?? 'Administrator',
         foreground: theme.colorScheme.primary,
         outlined: true,
       ),
@@ -436,7 +436,7 @@ Future<void> showMemberProfileSheet(
       final role = member.isOwner
           ? (l10n?.memberRoleOwner ?? 'Owner')
           : member.isAdmin
-          ? (l10n?.memberRoleAdmin ?? 'Admin')
+          ? (l10n?.memberRoleAdmin ?? 'Administrator')
           : (l10n?.memberRoleMember ?? 'Member');
       final chips = <Widget>[
         ?_reservationChip(

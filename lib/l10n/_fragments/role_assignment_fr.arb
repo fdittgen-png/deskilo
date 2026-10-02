@@ -1,0 +1,134 @@
+{
+  "@@locale": "fr",
+  "featureRoleAssignmentTitle": "Attribution des rôles",
+  "@featureRoleAssignmentTitle": {
+    "description": "#2085 giving roles: featureRoleAssignmentTitle"
+  },
+  "featureRoleAssignmentDesc": "Affiche une section Rôles sur la page de chaque membre pour attribuer ou retirer un rôle, les membres ayant chaque rôle, et permet à chacun de voir ce qu'il peut faire ici.",
+  "@featureRoleAssignmentDesc": {
+    "description": "#2085 giving roles: featureRoleAssignmentDesc"
+  },
+  "memberRolesTitle": "Rôles",
+  "@memberRolesTitle": {
+    "description": "#2085 giving roles: memberRolesTitle"
+  },
+  "memberRolesAdd": "Ajouter un rôle",
+  "@memberRolesAdd": {
+    "description": "#2085 giving roles: memberRolesAdd"
+  },
+  "memberRolesNone": "Aucun rôle : tout ce que peut faire un membre.",
+  "@memberRolesNone": {
+    "description": "#2085 giving roles: memberRolesNone"
+  },
+  "memberRolesWhatTheyCanDo": "Ce que cette personne peut faire ici",
+  "@memberRolesWhatTheyCanDo": {
+    "description": "#2085 giving roles: memberRolesWhatTheyCanDo"
+  },
+  "roleAssignSheetTitle": "Attribuer un rôle à {name}",
+  "@roleAssignSheetTitle": {
+    "description": "#2085 giving roles: roleAssignSheetTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roleAssignQuorumHint": "Prend effet une fois validé.",
+  "@roleAssignQuorumHint": {
+    "description": "#2085 giving roles: roleAssignQuorumHint"
+  },
+  "roleAssignImmediateHint": "Prend effet immédiatement.",
+  "@roleAssignImmediateHint": {
+    "description": "#2085 giving roles: roleAssignImmediateHint"
+  },
+  "roleAssignNothing": "Il ne reste aucun rôle à attribuer.",
+  "@roleAssignNothing": {
+    "description": "#2085 giving roles: roleAssignNothing"
+  },
+  "roleRefusalNotPermitted": "Seule une personne qui gère les rôles peut attribuer celui-ci.",
+  "@roleRefusalNotPermitted": {
+    "description": "#2085 giving roles: roleRefusalNotPermitted"
+  },
+  "roleRefusalOwnerOnly": "Seul le propriétaire attribue un rôle qui gère les rôles.",
+  "@roleRefusalOwnerOnly": {
+    "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRefusalExceedsYours": "Ce rôle permet des choses que vous ne pouvez pas faire : seul le propriétaire l'attribue.",
+  "@roleRefusalExceedsYours": {
+    "description": "#2085 giving roles: roleRefusalExceedsYours"
+  },
+  "roleRefusalNotAssignable": "Ce membre ne peut pas avoir ce rôle.",
+  "@roleRefusalNotAssignable": {
+    "description": "#2085 giving roles: roleRefusalNotAssignable"
+  },
+  "roleGiven": "Rôle attribué.",
+  "@roleGiven": {
+    "description": "#2085 giving roles: roleGiven"
+  },
+  "roleTakenBack": "Rôle retiré.",
+  "@roleTakenBack": {
+    "description": "#2085 giving roles: roleTakenBack"
+  },
+  "roleHoldersAdd": "Ajouter un membre",
+  "@roleHoldersAdd": {
+    "description": "#2085 giving roles: roleHoldersAdd"
+  },
+  "rolesOwnRolesLink": "Les rôles de cet espace",
+  "@rolesOwnRolesLink": {
+    "description": "#2085 giving roles: rolesOwnRolesLink"
+  },
+  "whatYouCanDoTitle": "Ce que vous pouvez faire ici",
+  "@whatYouCanDoTitle": {
+    "description": "#2085 giving roles: whatYouCanDoTitle"
+  },
+  "whatTheyCanDoTitle": "Ce que {name} peut faire ici",
+  "@whatTheyCanDoTitle": {
+    "description": "#2085 giving roles: whatTheyCanDoTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoIntro": "Ici, tout le monde est membre : réserver, pointer, les messages et son propre compte. Les rôles ajoutent le reste.",
+  "@whatYouCanDoIntro": {
+    "description": "#2085 giving roles: whatYouCanDoIntro"
+  },
+  "whatYouCanDoFromOwner": "En tant que propriétaire : tout",
+  "@whatYouCanDoFromOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromOwner"
+  },
+  "whatYouCanDoFromCoOwner": "En tant que copropriétaire",
+  "@whatYouCanDoFromCoOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromCoOwner"
+  },
+  "whatYouCanDoFromAdministrator": "Du rôle Administrateur·rice",
+  "@whatYouCanDoFromAdministrator": {
+    "description": "#2085 giving roles: whatYouCanDoFromAdministrator"
+  },
+  "whatYouCanDoFromEveryMember": "Comme tous les membres",
+  "@whatYouCanDoFromEveryMember": {
+    "description": "#2085 giving roles: whatYouCanDoFromEveryMember"
+  },
+  "whatYouCanDoFromRole": "Du rôle {role}",
+  "@whatYouCanDoFromRole": {
+    "description": "#2085 giving roles: whatYouCanDoFromRole",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoNothingMore": "Rien de plus qu'un membre.",
+  "@whatYouCanDoNothingMore": {
+    "description": "#2085 giving roles: whatYouCanDoNothingMore"
+  },
+  "roleGiveFailed": "Le rôle n'a pas été attribué.",
+  "@roleGiveFailed": {
+    "description": "#2085 giving roles: roleGiveFailed"
+  },
+  "roleTakeBackFailed": "Le rôle n'a pas été retiré.",
+  "@roleTakeBackFailed": {
+    "description": "#2085 giving roles: roleTakeBackFailed"
+  }
+}

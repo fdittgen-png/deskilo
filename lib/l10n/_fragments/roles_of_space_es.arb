@@ -4,7 +4,7 @@
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
-  "rolesOfSpaceSubtitle": "Cada uno añade permisos a los del rol de un miembro. Ninguno quita nada, y una propietaria los conserva todos.",
+  "rolesOfSpaceSubtitle": "Cada uno añade permisos a lo que ya pueden hacer quienes lo tienen. Ninguno quita nada, y la propietaria conserva siempre todos los permisos.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -53,7 +53,7 @@
   "@roleEditorSaveFailed": {
     "description": "#1528 the roles of a space: roleEditorSaveFailed"
   },
-  "roleEditorHolders": "Quién lo tiene",
+  "roleEditorHolders": "Miembros con este rol",
   "@roleEditorHolders": {
     "description": "#1528 the roles of a space: roleEditorHolders"
   },
