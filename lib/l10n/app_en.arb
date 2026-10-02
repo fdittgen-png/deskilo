@@ -2347,6 +2347,117 @@
   "@reservationCalendarFileRefused": {
     "description": "#1643 calendar file: reservationCalendarFileRefused"
   },
+  "featureCapacityKpiTitle": "Seat utilisation",
+  "@featureCapacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "featureCapacityKpiDesc": "Shows owners and reservation managers how much of the offered seat time was reserved in a month, with how it is computed and what the figure cannot know.",
+  "@featureCapacityKpiDesc": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiTitle": "Seat utilisation",
+  "@capacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRatio": "{reserved} of {offered} seat-hours reserved",
+  "@capacityKpiRatio": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiUndefined": "No seat time was offered in this period, so there is no utilisation to show.",
+  "@capacityKpiUndefined": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiExplain": "How is this computed?",
+  "@capacityKpiExplain": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiDefinition": "Reserved seat-hours inside the opening hours, divided by offered seat-hours: every seat times the opening hours of the open days, minus closure days and seat blocks. A whole desk, room or level counts each of its seats once; cancelled bookings do not count.",
+  "@capacityKpiDefinition": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiPhysical": "Physical capacity: {hours} seat-hours",
+  "@capacityKpiPhysical": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOutside": "Reserved outside the offered hours: {hours} seat-hours, not in the ratio",
+  "@capacityKpiOutside": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOverlap": "Claimed twice at the same time: {hours} seat-hours, counted once",
+  "@capacityKpiOverlap": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRooms": "Rooms without seats: {count}, {reserved} of {offered} room-hours reserved",
+  "@capacityKpiRooms": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiPartial": "Partial: the plan, the opening hours and the seat blocks are today’s; their history is not recorded yet.",
+  "@capacityKpiPartial": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiUnattributed": "Some reservations in this period point to a place that no longer exists; they are not counted.",
+  "@capacityKpiUnattributed": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiKnownZero": "Measured: nothing was reserved.",
+  "@capacityKpiKnownZero": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiAsOf": "Computed {time}",
+  "@capacityKpiAsOf": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiForbidden": "You may not read the capacity figures of this workspace.",
+  "@capacityKpiForbidden": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiUnavailable": "The seat utilisation could not be computed.",
+  "@capacityKpiUnavailable": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRetry": "Try again",
+  "@capacityKpiRetry": {
+    "description": "#1918 capacity KPI"
+  },
   "featureCarnetsTitle": "Carnets",
   "@featureCarnetsTitle": {
     "description": "#1279 carnets: featureCarnetsTitle"

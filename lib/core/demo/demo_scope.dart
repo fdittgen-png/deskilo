@@ -96,6 +96,8 @@ import '../share/file_sharer.dart';
 import '../share/text_sharer.dart';
 import '../theme/theme_controller.dart';
 import '../time/clock.dart';
+import '../../features/workspace/domain/kpi_contract.dart';
+import '../../features/workspace/providers/kpi_providers.dart';
 import 'demo_fixture.dart';
 
 /// The overrides that turn a scope into the Demo environment.
@@ -173,6 +175,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       workspaceImportRepositoryProvider.overrideWithValue(fixture.imports),
       workspaceFieldsRepositoryProvider.overrideWithValue(fixture.fields),
       workspaceRolesRepositoryProvider.overrideWithValue(fixture.roles),
+      // #1918 — no server to compute capacity on: the tile says so.
+      kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
 
       // #1377 — the ways an effect could leave the app, each pointed at
       // something inert. A payment, an invitation, an e-invoice and a
@@ -284,6 +288,7 @@ const Set<String> demoOverriddenProviders = {
   'workspaceImportRepositoryProvider',
   'workspaceFieldsRepositoryProvider',
   'workspaceRolesRepositoryProvider',
+  'kpiRepositoryProvider',
   'realtimeSyncProvider',
   'notificationServiceProvider',
   'appBadgeProvider',

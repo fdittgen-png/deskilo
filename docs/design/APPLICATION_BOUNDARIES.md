@@ -112,7 +112,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/core/demo/data/workspace_repository.dart` | 1991 |
 | `lib/core/demo/data/money_repository.dart` | 1801 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1554 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1567 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1428 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1316 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1300 |
@@ -128,8 +128,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/widgets/bill_view.dart` | 892 |
 | `lib/features/reservations/presentation/widgets/space_scan.dart` | 889 |
 | `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 871 |
+| `lib/features/workspace/presentation/screens/availability_screen.dart` | 860 |
 | `lib/app/router.dart` | 859 |
-| `lib/features/workspace/presentation/screens/availability_screen.dart` | 858 |
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
@@ -138,7 +138,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
 | `lib/features/reservations/presentation/reserve_seat_actions.dart` | 765 |
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 713 |
-| `lib/features/plan/data/supabase_floor_plan_repository.dart` | 698 |
+| `lib/features/plan/data/supabase_floor_plan_repository.dart` | 711 |
 | `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |

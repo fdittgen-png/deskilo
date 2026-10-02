@@ -480,6 +480,11 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'one region, from an open-data source, deselects the days '
                   'the space stays open and imports the rest as closure '
                   'days. Invoiced months are skipped and named.',
+        WorkspaceFeature.capacityKpi =>
+          l10n?.featureCapacityKpiDesc ??
+              'Shows owners and reservation managers how much of the offered '
+                  'seat time was reserved in a month, with how it is '
+                  'computed and what the figure cannot know.',
         WorkspaceFeature.accountingBook =>
           l10n?.featureAccountingBookDesc ??
               'Who keeps the official books of each issuer: Deskilo as '

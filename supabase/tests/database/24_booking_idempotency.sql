@@ -12,7 +12,7 @@
 -- network is exactly the client whose local state you cannot trust, so
 -- "I already sent this" is not something it gets to assert.
 begin;
-select plan(7);
+select plan(10);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -93,6 +93,38 @@ select is(
     where workspace_id = current_setting('deskilo.queue.ws')::uuid)::int,
   1,
   'and books it exactly once — which is what makes an offline queue safe');
+
+-- #2016 — what the confirmed choice PERSISTS. A plain reservation (the
+-- sheet's Reserve, check-in false) is reserved and not checked in; an
+-- explicit "check in now" (true) starts checked in. The client sends the
+-- final mode; the row must say the same.
+select is(
+  (select status || '|' || coalesce(checked_in_at::text, 'none') from public.reservations
+    where id = current_setting('deskilo.queue.first')::uuid),
+  'reserved|none',
+  'a plain reservation persists as reserved, never checked in');
+
+select lives_ok(
+  $$ select public.create_reservation_once(
+       gen_random_uuid(),
+       current_setting('deskilo.queue.ws')::uuid,
+       current_setting('deskilo.queue.seat')::uuid,
+       null, null, null,
+       now(),
+       -- inside the workspace's day, so the file is green at any hour
+       least(now() + interval '1 hour',
+             (date_trunc('day', now() at time zone 'Europe/Paris')
+               + interval '1 day' - interval '1 minute') at time zone 'Europe/Paris'),
+       true) $$,
+  'an explicit check-in now is accepted');
+
+select is(
+  (select count(*)::int from public.reservations
+    where workspace_id = current_setting('deskilo.queue.ws')::uuid
+      and status = 'checked_in' and checked_in_at is not null
+      and starts_at <= now()),
+  1,
+  'and persists as checked in, started now');
 
 -- ------------------------------------------------------------ the guards
 select throws_ok(

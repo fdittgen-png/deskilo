@@ -1988,6 +1988,79 @@ class AppLocalizationsEn extends AppLocalizations {
       'This booking cannot be exported: it is not yours, or it no longer exists.';
 
   @override
+  String get featureCapacityKpiTitle => 'Seat utilisation';
+
+  @override
+  String get featureCapacityKpiDesc =>
+      'Shows owners and reservation managers how much of the offered seat time was reserved in a month, with how it is computed and what the figure cannot know.';
+
+  @override
+  String get capacityKpiTitle => 'Seat utilisation';
+
+  @override
+  String capacityKpiRatio(String reserved, String offered) {
+    return '$reserved of $offered seat-hours reserved';
+  }
+
+  @override
+  String get capacityKpiUndefined =>
+      'No seat time was offered in this period, so there is no utilisation to show.';
+
+  @override
+  String get capacityKpiExplain => 'How is this computed?';
+
+  @override
+  String get capacityKpiDefinition =>
+      'Reserved seat-hours inside the opening hours, divided by offered seat-hours: every seat times the opening hours of the open days, minus closure days and seat blocks. A whole desk, room or level counts each of its seats once; cancelled bookings do not count.';
+
+  @override
+  String capacityKpiPhysical(String hours) {
+    return 'Physical capacity: $hours seat-hours';
+  }
+
+  @override
+  String capacityKpiOutside(String hours) {
+    return 'Reserved outside the offered hours: $hours seat-hours, not in the ratio';
+  }
+
+  @override
+  String capacityKpiOverlap(String hours) {
+    return 'Claimed twice at the same time: $hours seat-hours, counted once';
+  }
+
+  @override
+  String capacityKpiRooms(String count, String reserved, String offered) {
+    return 'Rooms without seats: $count, $reserved of $offered room-hours reserved';
+  }
+
+  @override
+  String get capacityKpiPartial =>
+      'Partial: the plan, the opening hours and the seat blocks are today’s; their history is not recorded yet.';
+
+  @override
+  String get capacityKpiUnattributed =>
+      'Some reservations in this period point to a place that no longer exists; they are not counted.';
+
+  @override
+  String get capacityKpiKnownZero => 'Measured: nothing was reserved.';
+
+  @override
+  String capacityKpiAsOf(String time) {
+    return 'Computed $time';
+  }
+
+  @override
+  String get capacityKpiForbidden =>
+      'You may not read the capacity figures of this workspace.';
+
+  @override
+  String get capacityKpiUnavailable =>
+      'The seat utilisation could not be computed.';
+
+  @override
+  String get capacityKpiRetry => 'Try again';
+
+  @override
   String get featureCarnetsTitle => 'Carnets';
 
   @override

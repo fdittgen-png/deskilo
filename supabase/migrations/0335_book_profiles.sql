@@ -298,6 +298,7 @@ as $registry$
     "messageForwarding": {"parent": "memberNotifications", "default": true, "core": true},
     "captureProtection": {"parent": "memberNotifications", "default": true, "core": true},
     "holidayImport": {"parent": "publicHolidays", "default": false, "core": false},
+    "capacityKpi": {"parent": null, "default": false, "core": false},
     "accountingBook": {"parent": "invoicing", "default": false, "core": false}
   }'::jsonb
 $registry$;
@@ -523,6 +524,7 @@ as $registry$
     {"id":"workspace.feature_flags.calendarTab","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"coordination"},
     {"id":"workspace.feature_flags.calendarValidations","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.calendarHub"],"process":"coordination"},
     {"id":"workspace.feature_flags.calendarViews","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.calendarHub"],"process":"coordination"},
+    {"id":"workspace.feature_flags.capacityKpi","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"spaceManagement"},
     {"id":"workspace.feature_flags.captureProtection","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.memberNotifications"],"process":"coordination"},
     {"id":"workspace.feature_flags.carnets","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.invoicing"],"process":"membershipCommerce"},
     {"id":"workspace.feature_flags.coOwner","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"workspaceAccess"},
@@ -762,6 +764,7 @@ values (
       "calendarTab": true,
       "calendarValidations": true,
       "calendarViews": true,
+      "capacityKpi": false,
       "captureProtection": true,
       "carnets": true,
       "coOwner": false,

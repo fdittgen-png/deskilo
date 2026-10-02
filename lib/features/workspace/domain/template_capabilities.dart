@@ -348,14 +348,6 @@ class CapabilityVocabulary {
       final n = normalizeSearch(phrase);
       if (n.isNotEmpty) _phrases.add((id: id, phrase: n));
     }
-    // The app's own labels first: when a label and a synonym are the same
-    // phrase ("Carnets" is the feature's name and a French synonym of
-    // credit packs), the name on the screen is what the person meant.
-    for (final entry in labels.entries) {
-      for (final p in entry.value) {
-        add(entry.key, p);
-      }
-    }
     for (final c in capabilityCatalog) {
       add(c.id, c.id);
       for (final list in c.synonyms.values) {
@@ -364,15 +356,18 @@ class CapabilityVocabulary {
         }
       }
     }
+    for (final entry in labels.entries) {
+      for (final p in entry.value) {
+        add(entry.key, p);
+      }
+    }
     // Longest phrases first: "two approvals for refunds" before "two approvals".
-    // #1869 — and, between phrases of one length, the order they were
-    // added in. List.sort is not stable: when two capabilities shared a
-    // phrase, which one a query meant changed whenever the list grew by
-    // one entry (adding the accountingBook flag flipped "Carnets").
-    final order = {for (var i = 0; i < _phrases.length; i++) _phrases[i]: i};
+    // Ties break by id: List.sort is not stable, so without it the owner
+    // of a phrase two capabilities share ("carnets") changed whenever a
+    // feature was added to the registry (#1918).
     _phrases.sort((a, b) {
       final byLength = b.phrase.length.compareTo(a.phrase.length);
-      return byLength != 0 ? byLength : order[a]!.compareTo(order[b]!);
+      return byLength != 0 ? byLength : a.id.compareTo(b.id);
     });
   }
 

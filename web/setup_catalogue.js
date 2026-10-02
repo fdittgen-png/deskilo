@@ -51,7 +51,8 @@ window.SETUP_PROCESSES=[
     "features": [
      "workingHours",
      "publicHolidays",
-     "holidayImport"
+     "holidayImport",
+     "capacityKpi"
     ]
    },
    {

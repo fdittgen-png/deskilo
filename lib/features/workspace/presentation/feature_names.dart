@@ -228,6 +228,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureCaptureProtectionTitle ?? 'Screen capture protection',
       WorkspaceFeature.holidayImport =>
         l10n?.featureHolidayImportTitle ?? 'Import public holidays',
+      WorkspaceFeature.capacityKpi =>
+        l10n?.featureCapacityKpiTitle ?? 'Seat utilisation',
       WorkspaceFeature.accountingBook =>
         l10n?.featureAccountingBookTitle ?? 'Accounting book',
       WorkspaceFeature.workspaceBranding =>

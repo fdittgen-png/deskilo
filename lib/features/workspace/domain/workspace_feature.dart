@@ -312,6 +312,12 @@ enum WorkspaceFeature {
   /// publicHolidays: the SQL generator stays the offline fallback.
   holidayImport,
 
+  /// #1918 — seat utilisation on the Availability screen: reserved over
+  /// offered seat-hours for a month, computed by the server under the
+  /// one KPI contract, with its definition, numerator, denominator and
+  /// data quality on demand. Platform, default OFF.
+  capacityKpi,
+
   /// #1869 — the accounting owner of a legal entity: a book profile per
   /// issuer (functional currency, fiscal year, accounting basis) and ONE
   /// authority mode — pre-accounting, a local book, or an external
@@ -1385,6 +1391,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.publicHolidays,
+  ),
+  // #1918 — a management figure, asked for: Platform, off.
+  WorkspaceFeature.capacityKpi: FeatureManifestEntry(
+    feature: WorkspaceFeature.capacityKpi,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
   ),
   // #1869 — who keeps the official books is a finance decision nobody
   // makes by default: asked for, Platform, off.

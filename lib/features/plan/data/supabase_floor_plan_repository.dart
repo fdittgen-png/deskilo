@@ -2,6 +2,7 @@
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ids/request_id.dart';
 import 'plan_media_steps.dart';
+import 'plan_media_sweep.dart';
 import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -152,6 +153,15 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
               .eq('id', levelId)
               .maybeSingle())?['background_path'] as String?;
 
+  /// #2012 B — after a plan-media write, the bounded orphan cleanup.
+  Future<void> _sweep(String workspaceId) => sweepPlanMediaOrphans(
+        list: () async => [
+          for (final p in await _client.rpc<List<dynamic>>('plan_media_orphans',
+              params: {'p_workspace_id': workspaceId})) p as String,
+        ],
+        remove: (paths) => _client.storage.from('floor-plans').remove(paths),
+      );
+
   PlanMediaSteps _media({
     required String levelId,
     Uint8List? bytes,
@@ -184,6 +194,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       previous: await _backgroundPath(levelId),
     );
     await _bust();
+    await _sweep(workspaceId);
   }
 
   @override
@@ -195,6 +206,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     await _media(levelId: levelId)
         .clear(previous: await _backgroundPath(levelId));
     await _bust();
+    await _sweep(workspaceId);
   }
 
   @override
@@ -402,6 +414,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       remove: (path) => _client.storage.from('floor-plans').remove([path]),
     ).replace(candidate: path);
     await _bust();
+    await _sweep(workspaceId);
     // Read back: the row a first attempt committed is the answer.
     final row =
         await _client.from('plan_images').select().eq('id', id).single();
