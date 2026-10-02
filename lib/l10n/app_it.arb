@@ -7590,6 +7590,8 @@
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
   },
+  "bookingSpaceChainTaken": "Questo spazio, o uno spazio che lo contiene, è già prenotato in quel periodo.",
+  "bookingNoLongerCheckedIn": "Questa prenotazione non è più in corso — è stata chiusa nel frattempo.",
   "reserveMonthView": "Mese",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Prenotazione ricorrente",

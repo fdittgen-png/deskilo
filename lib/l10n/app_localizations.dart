@@ -21522,6 +21522,18 @@ abstract class AppLocalizations {
   /// **'Your texts'**
   String get reportFieldGroupTexts;
 
+  /// #1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period
+  ///
+  /// In en, this message translates to:
+  /// **'This space, or a space it belongs to, is already reserved in that period.'**
+  String get bookingSpaceChainTaken;
+
+  /// #1908 — a checkout lost a race: the reservation was already checked out or closed by the day-end sweep
+  ///
+  /// In en, this message translates to:
+  /// **'This reservation is no longer checked in — it was checked out or closed in the meantime.'**
+  String get bookingNoLongerCheckedIn;
+
   /// Reserve hub view segment: month availability calendar (#7)
   ///
   /// In en, this message translates to:
