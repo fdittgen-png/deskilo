@@ -101,6 +101,56 @@ void main() {
     );
   });
 
+  test('#2086 ownPage keeps which inherited fields follow the workspace '
+      'information', () async {
+    answer = {
+      'published': true,
+      'document': {'host_type': 'company', 'address': '1 Local Street'},
+      'following': {'host_type': true, 'address': false, 'secret': true},
+    };
+    final page = await repository().ownPage(workspace);
+    expect(page['following'], {'host_type': true, 'address': false});
+  });
+
+  test('#2086 resetPage calls the contract\'s RPC with the named fields, or '
+      'null for all, and reads the PublicationPage answer', () async {
+    answer = {
+      'published': false,
+      'document': {'address': '1 Local Street', 'invite_code': 'CANARY'},
+      'following': {'host_type': true, 'address': true},
+    };
+    final page = await repository().resetPage(workspace, fields: {'address'});
+    expect(page['published'], isFalse);
+    expect('$page', isNot(contains('CANARY')));
+    await repository().resetPage(workspace);
+    expect(
+      seen.map((r) => r.url.path).toSet(),
+      {'/rest/v1/rpc/${PublicNetworkOperations.publicationPageReset.rpc}'},
+    );
+    expect(jsonDecode(seen.first.body), {
+      'p_workspace': workspace,
+      'p_fields': ['address'],
+    });
+    expect(jsonDecode(seen.last.body), {
+      'p_workspace': workspace,
+      'p_fields': null,
+    });
+    expect(
+      (jsonDecode(seen.last.body) as Map).keys.toSet(),
+      PublicNetworkOperations.publicationPageReset.params.keys.toSet(),
+    );
+  });
+
+  test('#2086 a save without the inherited fields is a valid input: they '
+      'follow the workspace information', () async {
+    answer = {'name': 'Mine', 'host_type': 'association'};
+    await repository().savePage(workspace, {'description': 'Desks'}, true);
+    expect(
+      ((jsonDecode(seen.single.body) as Map)['p_document'] as Map).keys,
+      ['description'],
+    );
+  });
+
   test('an input key the contract does not list is refused before any '
       'request', () async {
     await expectLater(

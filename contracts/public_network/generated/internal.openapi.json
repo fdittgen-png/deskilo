@@ -160,6 +160,81 @@
           }
         }
       }
+    },
+    "/rest/v1/rpc/reset_workspace_public_page": {
+      "post": {
+        "operationId": "publicationPageReset",
+        "summary": "The owner returns inherited public fields to the workspace's own information: the named ones, or all of them when p_fields is null; answers the page as publication.page.read does.",
+        "x-deskilo-operation": "publication.page.reset",
+        "x-deskilo-surface": "management",
+        "x-deskilo-principal": "authenticated",
+        "x-deskilo-authority": "owner",
+        "x-deskilo-mutation": "write",
+        "x-deskilo-features": [
+          "publicListings"
+        ],
+        "x-deskilo-idempotency": "clearing an override that is already cleared has no effect",
+        "x-deskilo-side-effects": [
+          "removes the named overrides from the page row",
+          "refreshes the public card when the page is published; never publishes or withdraws it"
+        ],
+        "x-deskilo-cardinality": "one",
+        "security": [
+          {
+            "sessionBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "p_workspace",
+                  "p_fields"
+                ],
+                "properties": {
+                  "p_workspace": {
+                    "type": "string",
+                    "format": "uuid",
+                    "x-sql-type": "uuid"
+                  },
+                  "p_fields": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "x-sql-type": "text[]"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The allow-listed answer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationPage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No session, or a session that may not do this (PostgREST 42501)"
+          },
+          "400": {
+            "description": "A refusal: PostgREST error body with the SQL message"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -310,12 +385,10 @@
         "x-must-understand": "must_understand"
       },
       "PublicationInput": {
-        "description": "What the owner may write. Exactly the keys save_workspace_public_page accepts; every value is a string.",
+        "description": "What the owner may write. Exactly the keys save_workspace_public_page accepts; every value is a string. An inherited field (host_type, address) that is absent follows the workspace's own information (#2086); a present one, even blank, overrides it.",
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "host_type"
-        ],
+        "required": [],
         "properties": {
           "host_type": {
             "type": "string",
@@ -420,7 +493,7 @@
         }
       },
       "PublicationPage": {
-        "description": "Whether the page is published, and its draft.",
+        "description": "Whether the page is published, its draft with every inherited field resolved, and which inherited fields follow the workspace information.",
         "type": "object",
         "additionalProperties": true,
         "required": [
@@ -433,6 +506,23 @@
           },
           "document": {
             "$ref": "#/components/schemas/PublicationDraft"
+          },
+          "following": {
+            "$ref": "#/components/schemas/PublicationFollowing"
+          }
+        }
+      },
+      "PublicationFollowing": {
+        "description": "Per inherited public field: true while it follows the workspace's own information, false once the owner overrode it (#2086).",
+        "type": "object",
+        "additionalProperties": true,
+        "required": [],
+        "properties": {
+          "host_type": {
+            "type": "boolean"
+          },
+          "address": {
+            "type": "boolean"
           }
         }
       }

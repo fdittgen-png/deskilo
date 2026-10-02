@@ -38,6 +38,10 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
   bool _loading = false;
   String _host = 'association';
   bool _published = false, _loaded = false, _busy = false, _failed = false;
+
+  /// #2086 — the inherited fields that still follow the workspace
+  /// information; editing one makes it the owner's override.
+  Set<String> _following = {};
   @override
   void dispose() {
     for (final c in _controllers.values) {
@@ -70,6 +74,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
           }
           _host = doc['host_type'] as String? ?? 'association';
           _published = page['published'] == true;
+          _following = publicFollowing(page);
           _loaded = true;
         });
       },
@@ -98,11 +103,16 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
           l?.portalActionFailed ??
           'Could not save this change. Please try again.',
       action: () async {
-        preview = await ref.read(publicationActionsProvider).savePage(workspace, {
-          'host_type': _host,
-          for (final entry in _controllers.entries)
-            entry.key: entry.value.text.trim(),
-        }, _published);
+        preview = await ref.read(publicationActionsProvider).savePage(
+          workspace,
+          {
+            'host_type': _host,
+            for (final entry in _controllers.entries)
+              entry.key: entry.value.text.trim(),
+          },
+          _published,
+          following: _following,
+        );
       },
     );
     if (!mounted || _workspace != workspace || _account != account) return;
@@ -120,6 +130,95 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       );
     }
   }
+
+  /// #2086 — back to the workspace information: [fields], or every
+  /// inherited field when null. Only those fields are refreshed, so an
+  /// unsaved edit elsewhere on the page survives.
+  Future<void> _reset(Set<String>? fields) async {
+    if (_busy || !_loaded) return;
+    final workspace = _workspace;
+    final account = _account;
+    if (workspace == null) return;
+    final l = AppLocalizations.of(context);
+    if (fields == null && !await _confirmResetAll(l)) return;
+    if (!mounted) return;
+    Map<String, dynamic>? page;
+    setState(() => _busy = true);
+    await runGuarded(
+      context,
+      domain: 'directory',
+      message: 'reset public page to workspace information failed',
+      errorText:
+          l?.portalActionFailed ??
+          'Could not save this change. Please try again.',
+      action: () async {
+        page = await ref
+            .read(publicationActionsProvider)
+            .resetPage(workspace, fields: fields);
+      },
+    );
+    if (!mounted || _workspace != workspace || _account != account) return;
+    setState(() {
+      _busy = false;
+      final answer = page;
+      if (answer == null) return;
+      final doc = Map<String, dynamic>.from(answer['document'] as Map);
+      for (final field in fields ?? publicInheritedFields.toSet()) {
+        if (field == 'host_type') {
+          _host = doc['host_type'] as String? ?? _host;
+        } else {
+          _controllers[field]?.text = doc[field] as String? ?? '';
+        }
+      }
+      _following = publicFollowing(answer);
+    });
+    if (page != null) ref.invalidate(publicDirectoryProvider);
+  }
+
+  Future<bool> _confirmResetAll(AppLocalizations? l) async {
+    final material = MaterialLocalizations.of(context);
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(
+          l?.portalResetAll ??
+              'Reset all public data to workspace information',
+        ),
+        content: Text(
+          l?.portalResetAllBody ??
+              'The public values of every field that has workspace '
+                  'information are replaced by it. Fields without a '
+                  'workspace counterpart keep what you typed.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(material.cancelButtonLabel),
+          ),
+          FilledButton(
+            key: const ValueKey('public-page-reset-all-confirm'),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l?.portalResetAllConfirm ?? 'Reset'),
+          ),
+        ],
+      ),
+    );
+    return ok ?? false;
+  }
+
+  void _override(String field) {
+    if (_following.contains(field)) {
+      setState(() => _following = {..._following}..remove(field));
+    }
+  }
+
+  Widget _inheritance(String field, AppLocalizations? l) => _InheritedStatus(
+    key: ValueKey('public-page-inherit-$field'),
+    following: _following.contains(field),
+    busy: _busy,
+    l: l,
+    onReset: () => _reset({field}),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -182,6 +281,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                   ),
                 ),
                 DropdownButtonFormField<String>(
+                  key: ValueKey('public-page-host-$_host'),
                   initialValue: _host,
                   items: [
                     for (final type in ['association', 'company', 'person'])
@@ -197,21 +297,47 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                   ],
                   onChanged: _busy
                       ? null
-                      : (v) => setState(() => _host = v ?? _host),
+                      : (v) {
+                          if (v == null || v == _host) return;
+                          _override('host_type');
+                          setState(() => _host = v);
+                        },
                 ),
+                _inheritance('host_type', l),
                 for (final field in _fields)
                   Padding(
                     padding: AppSpacing.smAll,
-                    child: TextField(
-                      controller: _controllers[field],
-                      enabled: !_busy,
-                      maxLength: 4000,
-                      maxLines: field == 'description' || field == 'plans'
-                          ? 3
-                          : 1,
-                      decoration: InputDecoration(labelText: labels[field]),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextField(
+                          controller: _controllers[field],
+                          enabled: !_busy,
+                          maxLength: 4000,
+                          maxLines: field == 'description' || field == 'plans'
+                              ? 3
+                              : 1,
+                          onChanged: (_) => _override(field),
+                          decoration: InputDecoration(
+                            labelText: labels[field],
+                          ),
+                        ),
+                        if (publicInheritedFields.contains(field))
+                          _inheritance(field, l),
+                      ],
                     ),
                   ),
+                Padding(
+                  padding: AppSpacing.smAll,
+                  child: OutlinedButton(
+                    key: const ValueKey('public-page-reset-all'),
+                    onPressed: _busy ? null : () => _reset(null),
+                    child: Text(
+                      l?.portalResetAll ??
+                          'Reset all public data to workspace information',
+                    ),
+                  ),
+                ),
                 FilledButton(
                   onPressed: _busy ? null : _save,
                   child: Text(
@@ -221,6 +347,47 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                 ),
               ],
             ),
+    );
+  }
+}
+
+/// #2086 — whether an inherited public field follows the workspace
+/// information or holds the owner's own value, with the way back.
+class _InheritedStatus extends StatelessWidget {
+  const _InheritedStatus({
+    super.key,
+    required this.following,
+    required this.busy,
+    required this.l,
+    required this.onReset,
+  });
+  final bool following, busy;
+  final AppLocalizations? l;
+  final VoidCallback onReset;
+
+  @override
+  Widget build(BuildContext context) {
+    final status = following
+        ? l?.portalFollowsWorkspace ?? 'From workspace information'
+        : l?.portalCustomised ?? 'Customised';
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 8,
+      children: [
+        Icon(
+          following ? Icons.link : Icons.edit_outlined,
+          size: 16,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+        Text(status, style: Theme.of(context).textTheme.bodySmall),
+        if (!following)
+          TextButton(
+            onPressed: busy ? null : onReset,
+            child: Text(
+              l?.portalUseWorkspaceInfo ?? 'Use workspace information',
+            ),
+          ),
+      ],
     );
   }
 }
