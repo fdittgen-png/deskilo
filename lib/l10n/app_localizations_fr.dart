@@ -14190,6 +14190,64 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet enregistrement ne peut pas être exporté en document Word.';
 
   @override
+  String get taskExportSceneLater => 'Plus tard';
+
+  @override
+  String get taskExportSceneBookingTitle => 'Réserver une place';
+
+  @override
+  String get taskExportSceneDetailTitle => 'Réservation';
+
+  @override
+  String get taskExportSceneConfirm => 'Confirmer';
+
+  @override
+  String get taskExportSceneCancel => 'Annuler';
+
+  @override
+  String get taskExportSceneProvenance =>
+      'Illustration recréée à partir de l\'enregistrement, pas une capture d\'écran';
+
+  @override
+  String taskExportSceneAlt(String screen, String step) {
+    return 'Illustration : $screen – $step';
+  }
+
+  @override
+  String get taskExportStoryboardInclude => 'Inclure';
+
+  @override
+  String get taskExportStoryboardApprove => 'Approuver l\'illustration';
+
+  @override
+  String get taskExportStoryboardMoveUp => 'Monter';
+
+  @override
+  String get taskExportStoryboardMoveDown => 'Descendre';
+
+  @override
+  String get taskExportStoryboardSourceScene =>
+      'Illustration recréée (pas une capture d\'écran)';
+
+  @override
+  String get taskExportStoryboardSourceText => 'Diapositive de texte';
+
+  @override
+  String get taskExportStoryboardSourceExcluded =>
+      'Écran protégé : non illustré';
+
+  @override
+  String get taskExportStoryboardGap => 'Lacune : rien n\'a été enregistré ici';
+
+  @override
+  String get taskExportStoryboardRenderFailed =>
+      'L\'illustration n\'a pas pu être dessinée ; cette étape reste en texte.';
+
+  @override
+  String get taskExportStoryboardOrderRefused =>
+      'Un résultat ne peut pas précéder la commande à laquelle il répond.';
+
+  @override
   String get featureTaskRecorderTitle => 'Enregistreur de tâches';
 
   @override

@@ -115,5 +115,22 @@
   "taskExportFooter": "Pagina {page} di {pages}",
   "taskExportSaved": "Documento Word salvato: {file}",
   "taskExportSaveFailed": "Impossibile salvare il documento Word. La registrazione è invariata.",
-  "taskExportRefused": "Questa registrazione non può essere esportata come documento Word."
+  "taskExportRefused": "Questa registrazione non può essere esportata come documento Word.",
+  "taskExportSceneLater": "Più avanti",
+  "taskExportSceneBookingTitle": "Prenota un posto",
+  "taskExportSceneDetailTitle": "Prenotazione",
+  "taskExportSceneConfirm": "Conferma",
+  "taskExportSceneCancel": "Annulla",
+  "taskExportSceneProvenance": "Illustrazione ricreata dalla registrazione, non uno screenshot",
+  "taskExportSceneAlt": "Illustrazione: {screen} – {step}",
+  "taskExportStoryboardInclude": "Includi",
+  "taskExportStoryboardApprove": "Approva l'illustrazione",
+  "taskExportStoryboardMoveUp": "Sposta su",
+  "taskExportStoryboardMoveDown": "Sposta giù",
+  "taskExportStoryboardSourceScene": "Illustrazione ricreata (non uno screenshot)",
+  "taskExportStoryboardSourceText": "Diapositiva di testo",
+  "taskExportStoryboardSourceExcluded": "Schermata protetta: non illustrata",
+  "taskExportStoryboardGap": "Lacuna: qui non è stato registrato nulla",
+  "taskExportStoryboardRenderFailed": "Impossibile disegnare l'illustrazione; questo passaggio resta testo.",
+  "taskExportStoryboardOrderRefused": "Un risultato non può precedere il comando a cui risponde."
 }
