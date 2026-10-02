@@ -225,6 +225,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.captureProtection: _legacy,
   WorkspaceFeature.holidayImport: _legacy,
   WorkspaceFeature.capacityKpi: _legacy,
+  WorkspaceFeature.accountingBook: _legacy,
 };
 
 /// Keys that were registered once and are gone. They stay here so a

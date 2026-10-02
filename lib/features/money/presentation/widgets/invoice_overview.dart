@@ -59,7 +59,11 @@ class InvoiceExposure {
     open.sort((a, b) => a.issuedAt.compareTo(b.issuedAt));
     final overdue = [
       for (final i in open)
-        if (now.difference(i.issuedAt).inDays >= rules.firstAfterDays) i,
+        // #1913 — the frozen due date wins; older invoices keep the term.
+        if (i.dueOn != null
+            ? !DateTime(now.year, now.month, now.day).isBefore(i.dueOn!)
+            : now.difference(i.issuedAt).inDays >= rules.firstAfterDays)
+          i,
     ];
     return InvoiceExposure(
       open: open,

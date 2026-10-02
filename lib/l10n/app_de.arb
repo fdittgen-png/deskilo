@@ -66,6 +66,27 @@
   "handoffChanged": "Die Rechnungen haben sich während Ihrer Prüfung geändert. Exportieren Sie erneut, um den aktuellen Stand zu sehen.",
   "handoffUnsupportedCurrency": "{number}: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt",
   "handoffAmountOutOfRange": "{number}: eine Summe, die zu groß ist, um exakt übertragen zu werden",
+  "featureAccountingBookTitle": "Buchführung",
+  "featureAccountingBookDesc": "Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher.",
+  "bookSheetTitle": "Buchführung",
+  "bookTileEmpty": "Keine Buchführung festgelegt: DesKilo führt Mitgliedersalden und Rechnungen (Vorkontierung).",
+  "bookIssuer": "Rechnungssteller",
+  "bookAuthorityPre": "Vorkontierung",
+  "bookAuthorityLocal": "DesKilo führt die Bücher",
+  "bookAuthorityExternal": "Externes System",
+  "bookExternalSystem": "Maßgebliches System",
+  "bookCurrency": "Buchungswährung",
+  "bookFiscalStart": "Das Geschäftsjahr beginnt am",
+  "bookBasisAccrual": "Soll-Versteuerung",
+  "bookBasisCash": "Ist-Versteuerung",
+  "bookEffectiveFrom": "Gültig ab {date}",
+  "bookFiscalPreview": "Geschäftsjahr {label}: {start} – {end}",
+  "bookProblemExternal": "Nennen Sie das externe System, das die offiziellen Bücher führt.",
+  "bookProblemCurrency": "Für diese Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt.",
+  "bookProblemFiscal": "Ein Geschäftsjahr beginnt an einem Tag, den jedes Jahr hat (nie am 29. Februar).",
+  "bookSaved": "Buchführung gespeichert",
+  "bookStale": "Jemand hat diese Buchführung gespeichert, seit Sie sie geöffnet haben. Schließen und neu öffnen, um seine Fassung zu sehen.",
+  "bookSaveFailed": "Die Buchführung wurde nicht gespeichert. Prüfen Sie die Verbindung und versuchen Sie es erneut.",
   "fecAccountExpenses": "Aufwendungen",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -1305,10 +1326,6 @@
       }
     }
   },
-  "capacityKpiPartial": "Teilweise: Plan, Öffnungszeiten und Platzsperren sind die heutigen; ihre Historie wird noch nicht erfasst.",
-  "@capacityKpiPartial": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiUnattributed": "Einige Reservierungen dieses Zeitraums verweisen auf einen Platz, den es nicht mehr gibt; sie werden nicht gezählt.",
   "@capacityKpiUnattributed": {
     "description": "#1918 capacity KPI"
@@ -1337,6 +1354,37 @@
   "capacityKpiRetry": "Erneut versuchen",
   "@capacityKpiRetry": {
     "description": "#1918 capacity KPI"
+  },
+  "capacityKpiHistorySince": "Gezählt ab {date}, dem Beginn der Historie dieses Arbeitsbereichs; frühere Zeit ist unbekannt und wird nicht gezählt.",
+  "@capacityKpiHistorySince": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiNotRecorded": "Dieser Zeitraum liegt vor dem Beginn der Historie am {date}; es ist nichts erfasst, das gezählt werden könnte.",
+  "@capacityKpiNotRecorded": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiHistory": "Historie erfasst seit {date}",
+  "@capacityKpiHistory": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRoomsToday": "Räume ohne Plätze werden so gelesen, wie sie heute sind.",
+  "@capacityKpiRoomsToday": {
+    "description": "#1920 capacity KPI history"
   },
   "featureCarnetsTitle": "Mehrfachkarten",
   "featureCarnetsDesc": "Mehrfachkarten mit Halbtagen verkaufen, die über Monate verbraucht werden, wenn ein Mitglied über sein Abo hinaus bucht — einmal beim Verkauf berechnet.",
@@ -2065,6 +2113,8 @@
     }
   },
   "memberPageNowHeading": "Gerade jetzt",
+  "editorMediaWriteFailed": "Das Speichern des Bildes konnte nicht bestätigt werden. Erneutes Versuchen fügt es nie doppelt hinzu.",
+  "editorMediaSaving": "Bild wird gespeichert…",
   "editorBackgroundImage": "Hintergrundbild",
   "editorBackgroundSet": "Hintergrundbild festlegen",
   "editorBackgroundReplace": "Hintergrundbild ersetzen",
@@ -4391,6 +4441,71 @@
   "reportDesignErrorUnknownKind": "Diese Vorlage gehört zu einem Bericht, den dieser Space nicht hat.",
   "reportDesignErrorWrongKind": "Diese Vorlage gehört zu einem anderen Bericht. Öffnen Sie diesen und importieren Sie sie dort.",
   "reportDesignErrorInvalidDesign": "Diese Datei enthält keine lesbare Vorlage.",
+  "invoiceHoldAction": "Mahnungen anhalten",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Mahnstopp aufheben",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "Warum die Mahnungen anhalten?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "Für diese Rechnung wird keine Mahnung versendet, weder von Hand noch automatisch, bis der Mahnstopp aufgehoben ist.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "Das Mitglied bestreitet sie",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Falsche Person oder Identitätsfehler",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Insolvenzverfahren",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Ein anderer Grund",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Notiz (optional)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Anhalten",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "Die Mahnungen für diese Rechnung sind angehalten.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "Die Mahnungen für diese Rechnung können fortgesetzt werden.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Mahnungen angehalten: {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "Für diese Rechnung wurde keine vereinbarte Zahlungsfrist erfasst: Es werden keine automatischen Mahnungen versendet, bis Sie sie prüfen.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "Der Mahnstopp konnte nicht geändert werden. Bitte versuchen Sie es erneut.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicePdfDueOn": "Fällig am",
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"
@@ -6389,6 +6504,12 @@
   "portalAdminVisible": "Mich als öffentlichen Administrator anzeigen",
   "featurePublicListings": "Öffentlicher Workspace-Eintrag",
   "featurePublicListingsDesc": "Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten.",
+  "portalFollowsWorkspace": "Aus den Arbeitsbereichsangaben",
+  "portalCustomised": "Angepasst",
+  "portalUseWorkspaceInfo": "Arbeitsbereichsangaben verwenden",
+  "portalResetAll": "Alle öffentlichen Daten auf die Arbeitsbereichsangaben zurücksetzen",
+  "portalResetAllBody": "Die öffentlichen Werte aller Felder, für die es Arbeitsbereichsangaben gibt, werden durch diese ersetzt. Felder ohne Entsprechung im Arbeitsbereich behalten Ihre Eingabe.",
+  "portalResetAllConfirm": "Zurücksetzen",
   "privacyNoticeTitle": "Wer Ihre Daten verarbeitet",
   "@privacyNoticeTitle": {
     "description": "#1914 privacy notice: privacyNoticeTitle"

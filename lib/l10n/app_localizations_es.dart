@@ -196,6 +196,80 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get featureAccountingBookTitle => 'Libro contable';
+
+  @override
+  String get featureAccountingBookDesc =>
+      'Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes.';
+
+  @override
+  String get bookSheetTitle => 'Libro contable';
+
+  @override
+  String get bookTileEmpty =>
+      'Sin libro: DesKilo lleva los saldos de los miembros y las facturas (precontabilidad).';
+
+  @override
+  String get bookIssuer => 'Emisor';
+
+  @override
+  String get bookAuthorityPre => 'Precontabilidad';
+
+  @override
+  String get bookAuthorityLocal => 'DesKilo lleva el libro';
+
+  @override
+  String get bookAuthorityExternal => 'Sistema externo';
+
+  @override
+  String get bookExternalSystem => 'Sistema que hace fe';
+
+  @override
+  String get bookCurrency => 'Moneda funcional';
+
+  @override
+  String get bookFiscalStart => 'El ejercicio empieza el';
+
+  @override
+  String get bookBasisAccrual => 'Criterio de devengo';
+
+  @override
+  String get bookBasisCash => 'Criterio de caja';
+
+  @override
+  String bookEffectiveFrom(String date) {
+    return 'Vigente desde el $date';
+  }
+
+  @override
+  String bookFiscalPreview(String label, String start, String end) {
+    return 'Ejercicio $label: $start – $end';
+  }
+
+  @override
+  String get bookProblemExternal =>
+      'Indique el sistema externo que lleva los libros oficiales.';
+
+  @override
+  String get bookProblemCurrency =>
+      'Esta moneda no tiene un número de decimales verificado.';
+
+  @override
+  String get bookProblemFiscal =>
+      'Un ejercicio empieza un día que tiene todo año (nunca el 29 de febrero).';
+
+  @override
+  String get bookSaved => 'Libro guardado';
+
+  @override
+  String get bookStale =>
+      'Alguien guardó este libro desde que lo abrió. Cierre y vuelva a abrir para ver su versión.';
+
+  @override
+  String get bookSaveFailed =>
+      'El libro no se guardó. Compruebe la conexión e inténtelo de nuevo.';
+
+  @override
   String get fecAccountExpenses => 'Gastos';
 
   @override
@@ -1972,10 +2046,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get capacityKpiPartial =>
-      'Parcial: el plano, el horario y los bloqueos de puestos son los de hoy; su historial aún no se registra.';
-
-  @override
   String get capacityKpiUnattributed =>
       'Algunas reservas del periodo apuntan a un lugar que ya no existe; no se cuentan.';
 
@@ -1997,6 +2067,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get capacityKpiRetry => 'Reintentar';
+
+  @override
+  String capacityKpiHistorySince(String date) {
+    return 'Contado desde el $date, cuando empezó el historial de este espacio; el tiempo anterior no se conoce y no se cuenta.';
+  }
+
+  @override
+  String capacityKpiNotRecorded(String date) {
+    return 'Este periodo es anterior al inicio del historial del espacio, el $date; no hay nada registrado que contar.';
+  }
+
+  @override
+  String capacityKpiHistory(String date) {
+    return 'Historial registrado desde el $date';
+  }
+
+  @override
+  String get capacityKpiRoomsToday =>
+      'Las salas sin puestos se leen tal como están hoy.';
 
   @override
   String get featureCarnetsTitle => 'Bonos';
@@ -2833,6 +2922,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberPageNowHeading => 'Ahora mismo';
+
+  @override
+  String get editorMediaWriteFailed =>
+      'No se pudo confirmar que la imagen se guardó. Reintentar nunca la añade dos veces.';
+
+  @override
+  String get editorMediaSaving => 'Guardando la imagen…';
 
   @override
   String get editorBackgroundImage => 'Imagen de fondo';
@@ -7002,6 +7098,60 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ese archivo no contiene ningún diseño legible.';
 
   @override
+  String get invoiceHoldAction => 'Suspender los recordatorios';
+
+  @override
+  String get invoiceHoldReleaseAction =>
+      'Levantar la suspensión de recordatorios';
+
+  @override
+  String get invoiceHoldTitle => '¿Por qué suspender los recordatorios?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'No se envía ningún recordatorio para esta factura, ni a mano ni automáticamente, hasta que se levante la suspensión.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'El miembro la impugna';
+
+  @override
+  String get invoiceHoldReasonIdentity =>
+      'Persona equivocada o error de identidad';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Procedimiento de insolvencia';
+
+  @override
+  String get invoiceHoldReasonOther => 'Otro motivo';
+
+  @override
+  String get invoiceHoldNote => 'Nota (opcional)';
+
+  @override
+  String get invoiceHoldConfirm => 'Suspender';
+
+  @override
+  String get invoiceHoldPlaced =>
+      'Los recordatorios de esta factura están suspendidos.';
+
+  @override
+  String get invoiceHoldReleased =>
+      'Los recordatorios de esta factura pueden reanudarse.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Recordatorios suspendidos: $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revises.';
+
+  @override
+  String get invoiceHoldFailed =>
+      'No se pudo cambiar la suspensión de recordatorios. Inténtalo de nuevo.';
+
+  @override
   String get invoicesManage => 'Gestionar facturas';
 
   @override
@@ -10685,6 +10835,26 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featurePublicListingsDesc =>
       'Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores.';
+
+  @override
+  String get portalFollowsWorkspace => 'De la información del espacio';
+
+  @override
+  String get portalCustomised => 'Personalizado';
+
+  @override
+  String get portalUseWorkspaceInfo => 'Usar la información del espacio';
+
+  @override
+  String get portalResetAll =>
+      'Restablecer todos los datos públicos con la información del espacio';
+
+  @override
+  String get portalResetAllBody =>
+      'Los valores públicos de cada campo que tiene información en el espacio se sustituyen por ella. Los campos sin equivalente en el espacio conservan lo que escribió.';
+
+  @override
+  String get portalResetAllConfirm => 'Restablecer';
 
   @override
   String get privacyNoticeTitle => 'Quién trata tus datos';
