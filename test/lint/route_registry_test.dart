@@ -43,6 +43,9 @@ const Set<String> _openWithEveryFeatureOff = {
   '/mcp/confirm/:id',
   '/assistants',
   '/database/assistant-approvals',
+  // #1827 B — installation-wide, for the instance operator: no workspace
+  // flag owns it; the server (0341) refuses everyone else.
+  '/installation/assistants',
   '/settings/assistants',
   '/settings/assistant-setup',
   '/oauth/consent',

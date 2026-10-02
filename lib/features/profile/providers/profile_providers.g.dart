@@ -60,22 +60,169 @@ String _$profileRepositoryHash() => r'45c52cb7ca00235e652426023c450cae54c82031';
 /// WhatsApp editor after a successful save.
 // The app router keeps listening to the consent gate for its lifetime.
 /// #1823 — the writes My account makes about me (photo, invoice block).
+/// #1914 — the notices that apply to the signed-in person in the current
+/// space; [PrivacyNotices.none] signed out or when the server has none.
 
-@ProviderFor(myProfileEdits)
-final myProfileEditsProvider = MyProfileEditsProvider._();
+@ProviderFor(privacyNotices)
+final privacyNoticesProvider = PrivacyNoticesProvider._();
 
 /// My own profile row (#223); null while signed out. Invalidated by the
 /// WhatsApp editor after a successful save.
 // The app router keeps listening to the consent gate for its lifetime.
 /// #1823 — the writes My account makes about me (photo, invoice block).
+/// #1914 — the notices that apply to the signed-in person in the current
+/// space; [PrivacyNotices.none] signed out or when the server has none.
 
-final class MyProfileEditsProvider
-    extends $FunctionalProvider<MyProfileEdits, MyProfileEdits, MyProfileEdits>
-    with $Provider<MyProfileEdits> {
+final class PrivacyNoticesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PrivacyNotices>,
+          PrivacyNotices,
+          FutureOr<PrivacyNotices>
+        >
+    with $FutureModifier<PrivacyNotices>, $FutureProvider<PrivacyNotices> {
   /// My own profile row (#223); null while signed out. Invalidated by the
   /// WhatsApp editor after a successful save.
   // The app router keeps listening to the consent gate for its lifetime.
   /// #1823 — the writes My account makes about me (photo, invoice block).
+  /// #1914 — the notices that apply to the signed-in person in the current
+  /// space; [PrivacyNotices.none] signed out or when the server has none.
+  PrivacyNoticesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'privacyNoticesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$privacyNoticesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<PrivacyNotices> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<PrivacyNotices> create(Ref ref) {
+    return privacyNotices(ref);
+  }
+}
+
+String _$privacyNoticesHash() => r'0f85f74ac0c512eb44ad7a1a5823b8061ba529a4';
+
+/// #1915 — my rights requests, newest first.
+
+@ProviderFor(myRightsRequests)
+final myRightsRequestsProvider = MyRightsRequestsProvider._();
+
+/// #1915 — my rights requests, newest first.
+
+final class MyRightsRequestsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<RightsRequest>>,
+          List<RightsRequest>,
+          FutureOr<List<RightsRequest>>
+        >
+    with
+        $FutureModifier<List<RightsRequest>>,
+        $FutureProvider<List<RightsRequest>> {
+  /// #1915 — my rights requests, newest first.
+  MyRightsRequestsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myRightsRequestsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myRightsRequestsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<RightsRequest>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<RightsRequest>> create(Ref ref) {
+    return myRightsRequests(ref);
+  }
+}
+
+String _$myRightsRequestsHash() => r'e6118b4f767e1b029c863f5cde28f8cd119cbec9';
+
+/// #1914 — the version the consent gate asks for: the installation
+/// notice the SERVER publishes, so an operator's new notice is the one
+/// acknowledged; the shipped version while it loads or on an older
+/// server.
+
+@ProviderFor(requiredPrivacyVersion)
+final requiredPrivacyVersionProvider = RequiredPrivacyVersionProvider._();
+
+/// #1914 — the version the consent gate asks for: the installation
+/// notice the SERVER publishes, so an operator's new notice is the one
+/// acknowledged; the shipped version while it loads or on an older
+/// server.
+
+final class RequiredPrivacyVersionProvider
+    extends $FunctionalProvider<String, String, String>
+    with $Provider<String> {
+  /// #1914 — the version the consent gate asks for: the installation
+  /// notice the SERVER publishes, so an operator's new notice is the one
+  /// acknowledged; the shipped version while it loads or on an older
+  /// server.
+  RequiredPrivacyVersionProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'requiredPrivacyVersionProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$requiredPrivacyVersionHash();
+
+  @$internal
+  @override
+  $ProviderElement<String> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  String create(Ref ref) {
+    return requiredPrivacyVersion(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(String value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<String>(value),
+    );
+  }
+}
+
+String _$requiredPrivacyVersionHash() =>
+    r'cb7a6ad0fa28ee3307088c5ab848fb91c4944295';
+
+@ProviderFor(myProfileEdits)
+final myProfileEditsProvider = MyProfileEditsProvider._();
+
+final class MyProfileEditsProvider
+    extends $FunctionalProvider<MyProfileEdits, MyProfileEdits, MyProfileEdits>
+    with $Provider<MyProfileEdits> {
   MyProfileEditsProvider._()
     : super(
         from: null,

@@ -3,6 +3,7 @@ import '../features/workspace/presentation/screens/colours_screen.dart';
 import '../features/workspace/presentation/screens/attention_screen.dart';
 import '../features/workspace/presentation/screens/questions_screen.dart';
 import '../features/workspace/presentation/screens/roles_of_space_screen.dart';
+import '../features/workspace/presentation/screens/what_you_can_do_screen.dart';
 import '../features/workspace/presentation/screens/deployment_screen.dart';
 import '../features/workspace/presentation/screens/wording_screen.dart';
 import '../features/directory/presentation/directory_screen.dart' as discovery;
@@ -46,6 +47,7 @@ import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/backend_screen.dart';
+import '../features/mcp/presentation/instance_assistants_screen.dart';
 import '../features/mcp/presentation/mcp_confirmation_screen.dart';
 import 'oauth_consent_route.dart';
 import '../features/mcp/presentation/assistants_screen.dart';
@@ -57,7 +59,6 @@ import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
 import '../features/workspace/presentation/widgets/conversation_thread.dart';
 import '../core/i18n/regional_formats_section.dart';
-import '../core/privacy/privacy_policy.dart';
 import '../features/profile/presentation/screens/consent_screen.dart';
 import '../features/profile/providers/profile_providers.dart';
 import '../features/profile/presentation/screens/privacy_screen.dart';
@@ -137,6 +138,7 @@ GoRouter router(Ref ref) {
     // #751 — the consent gate reads the profile's accepted policy version:
     // re-evaluate when the profile resolves, and after an acceptance.
     ..listen(myProfileProvider, (_, _) => reask())
+    ..listen(requiredPrivacyVersionProvider, (_, _) => reask()) // #1914
     ..listen(schemaCompatibilityProvider, (_, _) => reask()) // #1312
     // #1650 — the continuation restored from the device, or captured on
     // the way to sign-in: its destination is where sign-in returns to.
@@ -203,7 +205,8 @@ GoRouter router(Ref ref) {
             SchemaCompatibility.unknown,
         auth: auth.value == null ? AuthFact.signedOut : AuthFact.signedIn,
         privacy: privacyFactOf(loading: profile.isLoading, failed: profile.hasError,
-            accepted: profile.value?.privacyAcceptedVersion == kPrivacyPolicyVersion),
+            accepted: profile.value?.privacyAcceptedVersion ==
+                ref.read(requiredPrivacyVersionProvider)),
         // A list being REFRESHED is loading, whatever it held before: the
         // signed-out answer is an empty list, and reading it as "none"
         // in the frame after sign-in sent everybody through onboarding.
@@ -489,6 +492,12 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/assistants',
         builder: (context, state) => const AssistantsScreen(),
+      ),
+      // #1827 B — the installation's assistant switches, for the instance
+      // operator (the server refuses everyone else; 0341).
+      GoRoute(
+        path: '/installation/assistants',
+        builder: (context, state) => const InstanceAssistantsScreen(),
       ),
       // #1627 — database administrators review eligibility; the server
       // checks administrator status and the second factor on every call.
@@ -848,6 +857,15 @@ GoRouter router(Ref ref) {
       GoRoute(path: '/settings/public-page',redirect:(context,state)=>(ref.read(myMemberProvider).value?.actsAsOwner??false)?null:'/profiles',builder:(context,state)=>const PublicPageEditor()),
       GoRoute(path: '/applications',
           builder: (context, state) => const WorkspaceApplicationsScreen()),
+      // #2085 — what my roles give me here (or, for whoever administers
+      // members or roles, what someone else's give them).
+      GoRoute(
+        path: '/settings/what-you-can-do',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.roleAssignment) ? null : '/settings',
+        builder: (context, state) => WhatYouCanDoScreen(
+            memberId: state.uri.queryParameters['member']),
+      ),
     ],
   );
   ref.onDispose(router.dispose);

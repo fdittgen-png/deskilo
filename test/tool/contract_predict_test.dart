@@ -87,4 +87,15 @@ alter table public.reservations add constraint r_y check (true);
     expect(parseEntries('["a"]'), ['a']);
     expect(parseEntries('[{"lines": null}]'), isEmpty);
   });
+
+  test('a patch loop that names its routines in data is refused too', () {
+    final s = scan(r'''
+do $m$ begin
+  for v in select * from (values ('mcp_execute_v1', 'x')) t(fn, a) loop
+    select pg_get_functiondef(p.oid) into d from pg_proc p where p.proname = v.fn;
+  end loop;
+end $m$;
+''');
+    expect(s.unsafe, ['a routine is patched by anchor (names not parsed)']);
+  });
 }

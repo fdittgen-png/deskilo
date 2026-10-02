@@ -2143,6 +2143,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las salas sin puestos se leen tal como están hoy.';
 
   @override
+  String get permViewAnalytics => 'Consultar las cifras del espacio';
+
+  @override
   String get featureCarnetsTitle => 'Bonos';
 
   @override
@@ -2395,7 +2398,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get coOwnerAction => 'Copropiedad';
 
   @override
-  String get coOwnerNone => 'Sin rol de copropietario';
+  String get coOwnerNone => 'Sin copropiedad';
 
   @override
   String get coOwnerActive =>
@@ -2403,7 +2406,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get coOwnerPassive =>
-      'Copropietario pasivo — se convierte en propietario al activarlo o cuando el propietario se va';
+      'Sucesor — se convierte en propietario al activarlo o cuando el propietario se va';
 
   @override
   String get coOwnerActivate => 'Promover a propietario ahora';
@@ -2412,7 +2415,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberCoOwnerChip => 'Copropietario';
 
   @override
-  String get memberCoOwnerPassiveChip => 'Copropietario (pasivo)';
+  String get memberCoOwnerPassiveChip => 'Sucesor';
 
   @override
   String get courtesyLabel => 'Tratamiento';
@@ -4815,6 +4818,91 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get holidayImportFailed =>
       'No se pudieron comprobar ni importar los días festivos. No se ha cambiado nada.';
+
+  @override
+  String get instanceTitle => 'Instalación: asistentes';
+
+  @override
+  String get instanceIntro =>
+      'Ajustes para todos los espacios de trabajo de esta instalación. Solo el operador de la instancia ve esta página; cada cambio requiere su segundo factor y queda registrado.';
+
+  @override
+  String get instanceNotOperator =>
+      'Solo el operador de la instancia gestiona los asistentes de la instalación.';
+
+  @override
+  String get instanceSecondFactorNeeded =>
+      'Los cambios aquí requieren su segundo factor en esta sesión.';
+
+  @override
+  String get instanceConfirmSecondFactor => 'Confirmar con mi autenticador';
+
+  @override
+  String get instanceRuntimeTitle => 'Asistentes en esta instalación';
+
+  @override
+  String get instanceRuntimeOn => 'Activados';
+
+  @override
+  String get instanceRuntimeOff => 'Desactivados';
+
+  @override
+  String get instanceTurnOn => 'Activar para todos los espacios';
+
+  @override
+  String get instanceTurnOff => 'Desactivar';
+
+  @override
+  String get instanceTurnOnConfirm =>
+      'Los asistentes pasan a poder usarse en cada espacio que los ofrece. Puede desactivarlos en cualquier momento.';
+
+  @override
+  String get instanceBlockers => 'Todavía falta:';
+
+  @override
+  String get instanceBlockerNoAdmin => 'un administrador de la base';
+
+  @override
+  String get instanceAdminsTitle => 'Administradores de la base';
+
+  @override
+  String get instanceAdminsHelp =>
+      'Deciden quién puede usar asistentes. Solo pueden elegirse personas que confirmaron su identidad para asistentes.';
+
+  @override
+  String get instanceMakeAdmin => 'Nombrar administrador';
+
+  @override
+  String get instanceRemoveAdmin => 'Quitar';
+
+  @override
+  String get instanceNoCandidates =>
+      'Nadie más ha confirmado aún su identidad.';
+
+  @override
+  String get instanceYou => 'usted';
+
+  @override
+  String get instanceClientsTitle => 'Clientes de asistente';
+
+  @override
+  String get instanceClientsHelp =>
+      'Un asistente se registra solo la primera vez que alguien lo conecta; funciona solo después de aprobarlo aquí.';
+
+  @override
+  String get instanceClientWaiting => 'Pendiente de aprobación';
+
+  @override
+  String get instanceClientApproved => 'Aprobado';
+
+  @override
+  String get instanceClientBlocked => 'Bloqueado';
+
+  @override
+  String get instanceApprove => 'Aprobar';
+
+  @override
+  String get instanceBlock => 'Bloquear';
 
   @override
   String get instanceOwnerClaimIntro =>
@@ -8555,6 +8643,32 @@ class AppLocalizationsEs extends AppLocalizations {
       'Otra cuenta ya tiene esta identidad aquí: un administrador de la base puede resolverlo.';
 
   @override
+  String get mcpStatusGoogle => 'Inicio de sesión con Google';
+
+  @override
+  String get mcpStatusLinkGoogle => 'Vincular Google';
+
+  @override
+  String get mcpStatusSignInGoogle => 'Iniciar sesión con Google';
+
+  @override
+  String get mcpStateGoogleReady => 'Sesión iniciada con Google';
+
+  @override
+  String get mcpStateGoogleOtherSession => 'Sesión iniciada de otra forma';
+
+  @override
+  String get mcpStateGoogleMissing => 'Google no vinculado';
+
+  @override
+  String get mcpNextLinkGoogle =>
+      'Los asistentes usan su inicio de sesión con Google. Vincule primero Google a esta cuenta; sin ello, la cuenta no puede usar asistentes.';
+
+  @override
+  String get mcpNextSignInGoogle =>
+      'Los asistentes usan su inicio de sesión con Google. Inicie sesión con Google para continuar.';
+
+  @override
   String get mcpUsageWorkspaceTitle => 'Uso de asistentes, últimos 30 días';
 
   @override
@@ -8839,7 +8953,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberRoleOwner => 'Propietario';
 
   @override
-  String get memberRoleAdmin => 'Admin';
+  String get memberRoleAdmin => 'Administrador/a';
 
   @override
   String get memberStatusPaused => 'En pausa';
@@ -10926,6 +11040,70 @@ class AppLocalizationsEs extends AppLocalizations {
   String get portalResetAllConfirm => 'Restablecer';
 
   @override
+  String get privacyNoticeTitle => 'Quién trata tus datos';
+
+  @override
+  String privacyNoticeController(String name, String contact) {
+    return 'Responsable del tratamiento: $name — $contact';
+  }
+
+  @override
+  String privacyNoticeRights(String contact) {
+    return 'Tus derechos: $contact';
+  }
+
+  @override
+  String privacyNoticeRegion(String region) {
+    return 'Región: $region';
+  }
+
+  @override
+  String privacyNoticeTransfer(String mechanism) {
+    return 'Garantía de transferencia: $mechanism';
+  }
+
+  @override
+  String get privacyNoticeNotRecorded => 'no registrado por el operador';
+
+  @override
+  String get privacyNoticeEssential => 'Necesario para la cuenta y el espacio';
+
+  @override
+  String get privacyNoticeOptional =>
+      'Opcional — puedes usar la aplicación sin ello';
+
+  @override
+  String get privacyNoticeRightsRoute => 'Tus derechos y el contacto';
+
+  @override
+  String get privacySpaceNotice => 'El aviso de privacidad de este espacio';
+
+  @override
+  String get privacySpaceNoticeRead =>
+      'Has tomado conocimiento de esta versión.';
+
+  @override
+  String get privacySpaceNoticeUnread => 'Aún no leído — léelo aquí.';
+
+  @override
+  String get privacySpaceNoticeAcknowledge => 'He leído este aviso';
+
+  @override
+  String get privacySpaceNoticeFailed =>
+      'No se pudo registrar la toma de conocimiento. Inténtalo de nuevo.';
+
+  @override
+  String get privacyPushOnDevice => 'Notificaciones push en este dispositivo';
+
+  @override
+  String get privacyPushOnDeviceHint =>
+      'Opcional. Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push; desactivado, la aplicación sigue funcionando y no se envía nada a este dispositivo.';
+
+  @override
+  String get privacyPushOnDeviceFailed =>
+      'No se pudo guardar la elección. Inténtalo de nuevo.';
+
+  @override
   String get featuresViewProcesses => 'Procesos';
 
   @override
@@ -11430,7 +11608,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get privacyIntro =>
-      'Sus datos permanecen en la UE, nunca se rastrean ni se venden, y solo los leen los roles que nombran las reglas de abajo. Estos son sus derechos según el RGPD — cada uno es un botón.';
+      'Tus datos nunca se rastrean ni se venden, y solo los pueden leer los roles que nombran las reglas de abajo; dónde se alojan figura en el aviso de privacidad de esta instalación. Estos son tus derechos según el RGPD — cada uno es un botón.';
 
   @override
   String get privacyWhoCanSee => 'Quién puede ver mis datos';
@@ -12075,19 +12253,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String eventRolePromote(String actor) {
-    return '$actor promueve a un miembro a admin';
+    return '$actor pide dar el rol Administrador/a';
   }
 
   @override
   String eventRoleDemote(String actor) {
-    return '$actor degrada a un admin a miembro';
+    return '$actor pide retirar el rol Administrador/a';
   }
 
   @override
-  String get memberMakeAdmin => 'Hacer admin';
+  String get memberMakeAdmin => 'Dar el rol Administrador/a';
 
   @override
-  String get memberMakeMember => 'Hacer miembro normal';
+  String get memberMakeMember => 'Retirar el rol Administrador/a';
 
   @override
   String get memberRoleChangeRequested =>
@@ -12926,11 +13104,243 @@ class AppLocalizationsEs extends AppLocalizations {
       'Falta el NIF-IVA del cliente — una factura con inversión del sujeto pasivo debe indicarlo.';
 
   @override
+  String get rightsRequestsTitle => 'Mis solicitudes de derechos';
+
+  @override
+  String get rightsRequestsHint =>
+      'Pide al espacio una copia, una rectificación, una limitación o la supresión — respuesta en un mes natural.';
+
+  @override
+  String get rightsRequestsEmpty => 'Aún no hay solicitudes.';
+
+  @override
+  String get rightsRequestNew => 'Hacer una solicitud';
+
+  @override
+  String get rightsRequestAsk => '¿Qué pides al espacio?';
+
+  @override
+  String get rightsRequestDetails => 'Detalles (opcional)';
+
+  @override
+  String get rightsRequestSend => 'Enviar la solicitud';
+
+  @override
+  String rightsRequestSent(String date) {
+    return 'Solicitud enviada — el espacio responde antes del $date.';
+  }
+
+  @override
+  String get rightsRequestFailed =>
+      'No se pudo enviar la solicitud. Inténtalo de nuevo.';
+
+  @override
+  String get rightsKindAccess => 'Ver una copia de mis datos';
+
+  @override
+  String get rightsKindPortability =>
+      'Llevar mis datos a otro sitio (legible por máquina)';
+
+  @override
+  String get rightsKindRectification => 'Rectificar mis datos';
+
+  @override
+  String get rightsKindRestriction => 'Limitar el uso de mis datos';
+
+  @override
+  String get rightsKindObjection => 'Oponerme a un uso de mis datos';
+
+  @override
+  String get rightsKindErasure => 'Suprimir mis datos';
+
+  @override
+  String rightsStatusReceived(String date) {
+    return 'Recibida — respuesta antes del $date';
+  }
+
+  @override
+  String rightsStatusExtended(String date, String reason) {
+    return 'Prorrogada hasta el $date: $reason';
+  }
+
+  @override
+  String get rightsStatusCompleted =>
+      'Atendida — el espacio registró lo que hizo';
+
+  @override
+  String rightsStatusRefused(String reason) {
+    return 'Denegada: $reason';
+  }
+
+  @override
+  String get erasurePreviewTitle => 'Qué hace la supresión aquí';
+
+  @override
+  String get erasurePreviewRemoved => 'Suprimido';
+
+  @override
+  String get erasurePreviewKept => 'Conservado, y por qué';
+
+  @override
+  String get erasurePreviewOutside => 'Fuera de esta instalación';
+
+  @override
+  String get erasureStoreMessages => 'Mensajes que enviaste';
+
+  @override
+  String get erasureStoreAnswers =>
+      'Tus respuestas a las preguntas del espacio';
+
+  @override
+  String get erasureStoreProfile => 'Tu perfil (si es tu último espacio)';
+
+  @override
+  String get erasureStoreOpenBookings => 'Reservas abiertas — canceladas';
+
+  @override
+  String get erasureStoreAccounts =>
+      'Facturas y libro — prueba contable, conservada durante el plazo legal; los documentos emitidos no se reescriben';
+
+  @override
+  String get erasureStorePastBookings =>
+      'Reservas pasadas — el registro de ocupación del espacio';
+
+  @override
+  String get erasureStoreMembership =>
+      'La fila de membresía — enlaza los registros conservados; seudónima, no anónima';
+
+  @override
+  String get erasureStoreHeldAnswers =>
+      'Respuestas bajo una obligación de conservación documentada por el espacio';
+
+  @override
+  String get erasureStoreOtherInstallations =>
+      'Otra instalación de DesKilo es un responsable distinto — pregúntale directamente';
+
+  @override
+  String get erasureStoreDeviceCaches =>
+      'Copias en tus dispositivos — se borran al cerrar sesión en cada uno';
+
+  @override
+  String get erasureStoreBackups =>
+      'Copias de seguridad del operador — caducan según su rotación';
+
+  @override
+  String get featureRoleAssignmentTitle => 'Asignación de roles';
+
+  @override
+  String get featureRoleAssignmentDesc =>
+      'Muestra una sección Roles en la página de cada miembro para dar o retirar un rol, los miembros de cada rol, y permite a cada miembro ver lo que puede hacer aquí.';
+
+  @override
+  String get memberRolesTitle => 'Roles';
+
+  @override
+  String get memberRolesAdd => 'Añadir un rol';
+
+  @override
+  String get memberRolesNone =>
+      'Ningún rol: todo lo que puede hacer un miembro.';
+
+  @override
+  String get memberRolesWhatTheyCanDo => 'Lo que esta persona puede hacer aquí';
+
+  @override
+  String roleAssignSheetTitle(String name) {
+    return 'Dar un rol a $name';
+  }
+
+  @override
+  String get roleAssignQuorumHint => 'Surte efecto una vez validado.';
+
+  @override
+  String get roleAssignImmediateHint => 'Surte efecto de inmediato.';
+
+  @override
+  String get roleAssignNothing => 'No queda ningún rol por dar.';
+
+  @override
+  String get roleRefusalNotPermitted =>
+      'Solo alguien que gestiona los roles puede dar este.';
+
+  @override
+  String get roleRefusalOwnerOnly =>
+      'Solo el propietario da un rol que gestiona los roles.';
+
+  @override
+  String get roleRefusalExceedsYours =>
+      'Este rol puede hacer cosas que tú no puedes, así que solo el propietario lo da.';
+
+  @override
+  String get roleRefusalNotAssignable =>
+      'Este miembro no puede tener este rol.';
+
+  @override
+  String get roleGiven => 'Rol asignado.';
+
+  @override
+  String get roleTakenBack => 'Rol retirado.';
+
+  @override
+  String get roleHoldersAdd => 'Añadir un miembro';
+
+  @override
+  String get rolesOwnRolesLink => 'Los roles de este espacio';
+
+  @override
+  String get whatYouCanDoTitle => 'Lo que puedes hacer aquí';
+
+  @override
+  String whatTheyCanDoTitle(String name) {
+    return 'Lo que $name puede hacer aquí';
+  }
+
+  @override
+  String get whatYouCanDoIntro =>
+      'Aquí todas las personas son miembros: reservar, registrar la llegada, los mensajes y la propia cuenta. Los roles añaden el resto.';
+
+  @override
+  String get whatYouCanDoFromOwner => 'Como propietario: todo';
+
+  @override
+  String get whatYouCanDoFromCoOwner => 'Como copropietario';
+
+  @override
+  String get whatYouCanDoFromAdministrator => 'Del rol Administrador/a';
+
+  @override
+  String get whatYouCanDoFromEveryMember => 'Como todos los miembros';
+
+  @override
+  String whatYouCanDoFromRole(String role) {
+    return 'Del rol $role';
+  }
+
+  @override
+  String get whatYouCanDoNothingMore => 'Nada más que un miembro.';
+
+  @override
+  String get roleGiveFailed => 'El rol no se asignó.';
+
+  @override
+  String get roleTakeBackFailed => 'El rol no se retiró.';
+
+  @override
+  String eventRoleGiven(String actor, String role, String member) {
+    return '$actor da el rol $role a $member';
+  }
+
+  @override
+  String eventRoleTakenBack(String actor, String role, String member) {
+    return '$actor retira el rol $role a $member';
+  }
+
+  @override
   String get rolesOfSpaceTitle => 'Los roles de este espacio';
 
   @override
   String get rolesOfSpaceSubtitle =>
-      'Cada uno añade permisos a los del rol de un miembro. Ninguno quita nada, y una propietaria los conserva todos.';
+      'Cada uno añade permisos a lo que ya pueden hacer quienes lo tienen. Ninguno quita nada, y la propietaria conserva siempre todos los permisos.';
 
   @override
   String get rolesOfSpaceEmpty => 'Todavía no hay roles.';
@@ -12966,7 +13376,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get roleEditorSaveFailed => 'El rol no se ha guardado.';
 
   @override
-  String get roleEditorHolders => 'Quién lo tiene';
+  String get roleEditorHolders => 'Miembros con este rol';
 
   @override
   String get roleEditorNobody => 'Nadie todavía.';
@@ -14475,14 +14885,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get inviteRoleMember => 'Invitación de miembro';
 
   @override
-  String get inviteRoleAdmin => 'Invitación de admin';
+  String get inviteRoleAdmin => 'Invitación de administrador/a';
 
   @override
   String get inviteAdminExplainer =>
       'Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entrégalo solo a la persona a la que está destinado.';
 
   @override
-  String get inviteAdminNewCode => 'Nuevo código de admin';
+  String get inviteAdminNewCode => 'Nuevo código de administrador/a';
 
   @override
   String get inviteOwnerNote =>
@@ -14788,11 +15198,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'La matriz central rol→permiso: el propietario decide qué permiso tiene cada rol; los demás consultan los suyos. Desactivada, simplemente aplican los valores por defecto.';
 
   @override
-  String get rolesTitle => 'Gestión de roles';
+  String get rolesTitle => 'Roles';
 
   @override
   String get rolesIntroEditor =>
-      'El propietario siempre tiene todos los permisos. Decide aquí qué pueden hacer los demás roles: un copropietario puede tener menos que un propietario.';
+      'Aquí todas las personas son miembros. Un rol añade lo que pueden hacer quienes lo tienen y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.';
 
   @override
   String get rolesIntroReadOnly =>
@@ -14805,10 +15215,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get roleOwner => 'Propietario';
 
   @override
-  String get roleAdmin => 'Admin';
+  String get roleAdmin => 'Administrador/a';
 
   @override
-  String get roleMember => 'Miembro';
+  String get roleMember => 'Todos los miembros';
 
   @override
   String get permManageRoles => 'Gestionar roles y permisos';

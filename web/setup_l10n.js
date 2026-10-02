@@ -406,8 +406,9 @@ window.SETUP_L10N={
    "rolesTitle": "Roles and validations",
    "rolesWhy": "Who can do what, and which actions wait for a confirmation before they count. The owner always holds every permission.",
    "roleCoOwner": "Co-owner",
-   "roleAdmin": "Admin",
+   "roleAdmin": "Administrator",
    "roleMember": "Member",
+   "roleEveryMember": "Every member",
    "rolesDefaultMatrixHint": "Without role management, the default matrix applies: admins manage members, documents, services and expenses and view the finances; co-owners have everything.",
    "rolesAdminInvoicingDep": "{feature} is on: the feature itself delegates the permission to issue invoices to admins.",
    "rolesDefaultRule": "Default validation rule",
@@ -1067,6 +1068,10 @@ window.SETUP_L10N={
    "accountingBook": [
     "Accounting book",
     "Who keeps the official books of each issuer: Deskilo as pre-accounting, a local book, or an external accounting system that stays authoritative. Each issuer states its currency, fiscal year and accounting basis. Off: member balances and invoices work as before."
+   ],
+   "roleAssignment": [
+    "Giving roles",
+    "Shows a Roles section on each member's page to give or take back a role, the members holding each role, and lets every member see what they can do here."
    ]
   },
   "process": {
@@ -1682,8 +1687,9 @@ window.SETUP_L10N={
    "rolesTitle": "Rôles et validations",
    "rolesWhy": "Qui peut faire quoi, et quelles actions attendent une confirmation avant de compter. Le propriétaire détient toujours toutes les permissions.",
    "roleCoOwner": "Copropriétaire",
-   "roleAdmin": "Admin",
+   "roleAdmin": "Administrateur·rice",
    "roleMember": "Membre",
+   "roleEveryMember": "Tous les membres",
    "rolesDefaultMatrixHint": "Sans gestion des rôles, la matrice par défaut s'applique : les admins gèrent membres, documents, services, dépenses et consultent les finances ; les copropriétaires ont tout.",
    "rolesAdminInvoicingDep": "{feature} est activé : la permission d'émission est déléguée aux admins par la fonctionnalité elle-même.",
    "rolesDefaultRule": "Règle de validation par défaut",
@@ -2343,6 +2349,10 @@ window.SETUP_L10N={
    "accountingBook": [
     "Livre comptable",
     "Qui tient les livres officiels de chaque émetteur : Deskilo en pré-comptabilité, un livre local ou un logiciel comptable externe qui fait foi. Chaque émetteur indique sa devise, son exercice et sa base comptable. Désactivé : les soldes des membres et les factures fonctionnent comme avant."
+   ],
+   "roleAssignment": [
+    "Attribution des rôles",
+    "Affiche une section Rôles sur la page de chaque membre pour attribuer ou retirer un rôle, les membres ayant chaque rôle, et permet à chacun de voir ce qu'il peut faire ici."
    ]
   },
   "process": {
@@ -2958,8 +2968,9 @@ window.SETUP_L10N={
    "rolesTitle": "Rollen und Validierungen",
    "rolesWhy": "Wer was darf und welche Aktionen auf eine Bestätigung warten, bevor sie zählen. Der Inhaber hat immer alle Berechtigungen.",
    "roleCoOwner": "Mit-Inhaberin",
-   "roleAdmin": "Admin",
+   "roleAdmin": "Administrator:in",
    "roleMember": "Mitglied",
+   "roleEveryMember": "Alle Mitglieder",
    "rolesDefaultMatrixHint": "Ohne Rollenverwaltung gilt die Standardmatrix: Admins verwalten Mitglieder, Dokumente, Services und Ausgaben und sehen die Finanzen; Mit-Inhaberinnen haben alles.",
    "rolesAdminInvoicingDep": "{feature} ist aktiv: Die Funktion selbst überträgt die Berechtigung zum Ausstellen von Rechnungen an die Admins.",
    "rolesDefaultRule": "Standard-Validierungsregel",
@@ -3619,6 +3630,10 @@ window.SETUP_L10N={
    "accountingBook": [
     "Buchführung",
     "Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher."
+   ],
+   "roleAssignment": [
+    "Rollen vergeben",
+    "Zeigt auf der Seite jedes Mitglieds einen Bereich Rollen, um eine Rolle zu geben oder zu entziehen, die Mitglieder jeder Rolle, und lässt jedes Mitglied sehen, was es hier tun kann."
    ]
   },
   "process": {
@@ -4234,8 +4249,9 @@ window.SETUP_L10N={
    "rolesTitle": "Roles y validaciones",
    "rolesWhy": "Quién puede hacer qué y qué acciones esperan una confirmación antes de contar. El propietario siempre tiene todos los permisos.",
    "roleCoOwner": "Copropietario",
-   "roleAdmin": "Admin",
+   "roleAdmin": "Administrador/a",
    "roleMember": "Miembro",
+   "roleEveryMember": "Todos los miembros",
    "rolesDefaultMatrixHint": "Sin gestión de roles se aplica la matriz predeterminada: los admins gestionan miembros, documentos, servicios y gastos y consultan las finanzas; los copropietarios lo tienen todo.",
    "rolesAdminInvoicingDep": "{feature} está activada: la propia función delega en los admins el permiso de emitir facturas.",
    "rolesDefaultRule": "Regla de validación predeterminada",
@@ -4895,6 +4911,10 @@ window.SETUP_L10N={
    "accountingBook": [
     "Libro contable",
     "Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes."
+   ],
+   "roleAssignment": [
+    "Asignación de roles",
+    "Muestra una sección Roles en la página de cada miembro para dar o retirar un rol, los miembros de cada rol, y permite a cada miembro ver lo que puede hacer aquí."
    ]
   },
   "process": {
@@ -5510,8 +5530,9 @@ window.SETUP_L10N={
    "rolesTitle": "Ruoli e validazioni",
    "rolesWhy": "Chi può fare cosa, e quali azioni attendono una conferma prima di contare. Il proprietario detiene sempre tutti i permessi.",
    "roleCoOwner": "Comproprietario",
-   "roleAdmin": "Admin",
+   "roleAdmin": "Amministratore",
    "roleMember": "Membro",
+   "roleEveryMember": "Tutti i membri",
    "rolesDefaultMatrixHint": "Senza gestione dei ruoli si applica la matrice predefinita: gli admin gestiscono membri, documenti, servizi e spese e consultano le finanze; i comproprietari hanno tutto.",
    "rolesAdminInvoicingDep": "{feature} è attiva: la funzionalità stessa delega agli admin il permesso di emettere fatture.",
    "rolesDefaultRule": "Regola di validazione predefinita",
@@ -6171,6 +6192,10 @@ window.SETUP_L10N={
    "accountingBook": [
     "Libro contabile",
     "Chi tiene i libri ufficiali di ogni emittente: Deskilo come precontabilità, un libro locale o un sistema contabile esterno che fa fede. Ogni emittente indica valuta, esercizio e base contabile. Disattivato: i saldi dei membri e le fatture funzionano come prima."
+   ],
+   "roleAssignment": [
+    "Assegnazione dei ruoli",
+    "Mostra una sezione Ruoli nella pagina di ogni membro per dare o revocare un ruolo, i membri di ogni ruolo, e permette a ogni membro di vedere cosa può fare qui."
    ]
   },
   "process": {

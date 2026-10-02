@@ -16,6 +16,9 @@ import '../data/supabase_profile_repository.dart';
 import '../domain/member_monogram.dart';
 import '../domain/profile.dart';
 import '../domain/profile_repository.dart';
+import '../domain/privacy_notice.dart';
+import '../../../core/privacy/privacy_policy.dart';
+import '../domain/rights_request.dart';
 
 part 'profile_providers.g.dart';
 
@@ -27,6 +30,32 @@ ProfileRepository profileRepository(Ref ref) =>
 /// WhatsApp editor after a successful save.
 // The app router keeps listening to the consent gate for its lifetime.
 /// #1823 — the writes My account makes about me (photo, invoice block).
+/// #1914 — the notices that apply to the signed-in person in the current
+/// space; [PrivacyNotices.none] signed out or when the server has none.
+@Riverpod(keepAlive: true)
+Future<PrivacyNotices> privacyNotices(Ref ref) async {
+  final signedIn = ref.watch(authStateProvider).value != null;
+  if (!signedIn) return PrivacyNotices.none;
+  final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
+  return ref.read(profileRepositoryProvider).fetchPrivacyNotices(workspaceId);
+}
+
+/// #1915 — my rights requests, newest first.
+@riverpod
+Future<List<RightsRequest>> myRightsRequests(Ref ref) async {
+  if (ref.watch(authStateProvider).value == null) return const [];
+  return ref.read(profileRepositoryProvider).fetchMyRightsRequests();
+}
+
+/// #1914 — the version the consent gate asks for: the installation
+/// notice the SERVER publishes, so an operator's new notice is the one
+/// acknowledged; the shipped version while it loads or on an older
+/// server.
+@Riverpod(keepAlive: true)
+String requiredPrivacyVersion(Ref ref) =>
+    ref.watch(privacyNoticesProvider).value?.installation?.version ??
+    kPrivacyPolicyVersion;
+
 @riverpod
 MyProfileEdits myProfileEdits(Ref ref) =>
     MyProfileEdits(ref.watch(profileRepositoryProvider));

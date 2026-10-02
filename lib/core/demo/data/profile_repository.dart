@@ -8,6 +8,8 @@ import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/profile/domain/profile_repository.dart';
 
 import 'fixture_clock.dart';
+import 'package:deskilo/features/profile/domain/privacy_notice.dart';
+import 'package:deskilo/features/profile/domain/rights_request.dart';
 
 /// In-memory [ProfileRepository] for widget/unit tests (#223).
 class FakeProfileRepository implements ProfileRepository {
@@ -82,6 +84,82 @@ class FakeProfileRepository implements ProfileRepository {
 
   /// #751 — versions accepted through [acceptPrivacyPolicy].
   final acceptedPolicyVersions = <String>[];
+
+  /// #1914 — what the server would publish; the installation notice is
+  /// the shipped version unless a test says otherwise.
+  PrivacyNotices notices = const PrivacyNotices(
+    installation: PrivacyNotice(
+      version: kPrivacyPolicyVersion,
+      controllerName: 'Demo space operator',
+      controllerContact: 'privacy@demo.invalid',
+      rightsContact: 'privacy@demo.invalid',
+      retention: 'as the privacy policy describes',
+      recipients: [],
+    ),
+  );
+
+  /// #1914 — `<workspace>:<version>` acknowledged through the fake.
+  final acknowledgedNotices = <String>[];
+
+  @override
+  Future<PrivacyNotices> fetchPrivacyNotices(String? workspaceId) async =>
+      PrivacyNotices(
+        installation: notices.installation,
+        workspace: notices.workspace,
+        workspaceId: workspaceId,
+        acknowledgedVersions: {
+          ...notices.acknowledgedVersions,
+          ...acknowledgedNotices,
+        },
+      );
+
+  /// #1915 — requests filed through the fake, newest first.
+  final rightsRequests = <RightsRequest>[];
+
+  /// #1915 — what [previewMyErasure] answers.
+  ErasurePreview erasurePreview = const ErasurePreview();
+
+  @override
+  Future<RightsRequest> submitRightsRequest({
+    required String workspaceId,
+    required String kind,
+    required String details,
+    required String clientRequestId,
+  }) async {
+    final existing =
+        rightsRequests.where((r) => r.id == clientRequestId).firstOrNull;
+    if (existing != null) return existing;
+    final now = kTestNow;
+    final request = RightsRequest(
+      id: clientRequestId,
+      kind: kind,
+      details: details,
+      status: 'received',
+      receivedAt: now,
+      dueOn: DateTime(now.year, now.month + 1, now.day),
+    );
+    rightsRequests.insert(0, request);
+    return request;
+  }
+
+  @override
+  Future<List<RightsRequest>> fetchMyRightsRequests() async =>
+      List.of(rightsRequests);
+
+  @override
+  Future<ErasurePreview> previewMyErasure(String workspaceId) async =>
+      erasurePreview;
+
+  @override
+  Future<void> acknowledgeWorkspaceNotice(
+    String workspaceId,
+    String version,
+  ) async {
+    if (notices.workspace?.version != version) {
+      throw StateError('that is not the current privacy notice of this space');
+    }
+    acknowledgedNotices.add('$workspaceId:$version');
+  }
 
   @override
   Future<void> acceptPrivacyPolicy(String version) async {

@@ -14,6 +14,17 @@ import 'event_labels.dart';
 // events face and the calendar, which carries the decisions when the
 // bell is switched off. One wording, wherever the question is asked.
 
+/// #2085 — a role's name as an event recorded it ([names] is the
+/// `role_names` map of the payload), in [locale], then English, then
+/// [fallback] (the key) when the record carries no name at all.
+String roleNameIn(Object? names, String locale, String fallback) {
+  if (names is Map) {
+    final own = names[locale] ?? names['en'];
+    if (own is String && own.trim().isNotEmpty) return own;
+  }
+  return fallback;
+}
+
 String eventLine(
   AppLocalizations? l10n,
   WorkspaceEvent event,
@@ -72,6 +83,22 @@ String eventLine(
         ) ??
         '$actor requests ${event.payload['half_days']} extra '
             'half-days for ${event.payload['period']}',
+    // #2085 — a workspace's own role, given or taken back at once: the
+    // payload names the role (as it read that day) and the direction.
+    (EventType.roleChange, _) when event.payload.containsKey('role_key') =>
+      () {
+        final role = roleNameIn(
+          event.payload['role_names'],
+          l10n?.localeName ?? 'en',
+          '${event.payload['role_key']}',
+        );
+        final member = names[event.subjectMemberId] ?? '';
+        return event.payload['assign'] == true
+            ? (l10n?.eventRoleGiven(actor, role, member) ??
+                '$actor gives the role $role to $member')
+            : (l10n?.eventRoleTakenBack(actor, role, member) ??
+                '$actor takes back the role $role from $member');
+      }(),
     (EventType.roleChange, _) => (event.payload['make_admin'] == true
             ? l10n?.eventRolePromote(actor)
             : l10n?.eventRoleDemote(actor)) ??
@@ -169,7 +196,11 @@ String eventLine(
   };
   // Service charges name no actor in the title, so always say whose bill
   // it lands on; other types only when an admin acted for someone else.
-  if (!event.actorIsSubject || event.type == EventType.serviceCharge) {
+  // #2085 — a role given or taken back already names its member.
+  final namesMember = event.type == EventType.roleChange &&
+      event.payload.containsKey('role_key');
+  if ((!event.actorIsSubject || event.type == EventType.serviceCharge) &&
+      !namesMember) {
     final subject = names[event.subjectMemberId] ?? '';
     line = '$line ${l10n?.eventForSubject(subject) ?? 'for $subject'}';
   }

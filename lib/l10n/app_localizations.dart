@@ -3712,6 +3712,12 @@ abstract class AppLocalizations {
   /// **'Rooms without seats are read as they are today.'**
   String get capacityKpiRoomsToday;
 
+  /// #1921 permission: read aggregated operational KPIs
+  ///
+  /// In en, this message translates to:
+  /// **'Read the workspace figures'**
+  String get permViewAnalytics;
+
   /// #1279 carnets: featureCarnetsTitle
   ///
   /// In en, this message translates to:
@@ -4121,7 +4127,7 @@ abstract class AppLocalizations {
   /// Co-owner dialog option: clear the role
   ///
   /// In en, this message translates to:
-  /// **'No co-owner role'**
+  /// **'No co-ownership'**
   String get coOwnerNone;
 
   /// Co-owner dialog option: the active flavor
@@ -4133,7 +4139,7 @@ abstract class AppLocalizations {
   /// Co-owner dialog option: the passive flavor
   ///
   /// In en, this message translates to:
-  /// **'Passive co-owner — becomes owner when activated or when the owner leaves'**
+  /// **'Successor — becomes owner when activated or when the owner leaves'**
   String get coOwnerPassive;
 
   /// Member-sheet action promoting a co-owner to full owner
@@ -4151,7 +4157,7 @@ abstract class AppLocalizations {
   /// Members-list chip for a passive co-owner
   ///
   /// In en, this message translates to:
-  /// **'Co-owner (passive)'**
+  /// **'Successor'**
   String get memberCoOwnerPassiveChip;
 
   /// #912 courtesy title: courtesyLabel
@@ -8268,6 +8274,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The holidays could not be checked or imported. Nothing was changed.'**
   String get holidayImportFailed;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Installation: assistants'**
+  String get instanceTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.'**
+  String get instanceIntro;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Only the instance operator manages the installation\'s assistants.'**
+  String get instanceNotOperator;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Changes here need your second factor on this session.'**
+  String get instanceSecondFactorNeeded;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm with my authenticator'**
+  String get instanceConfirmSecondFactor;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants on this installation'**
+  String get instanceRuntimeTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get instanceRuntimeOn;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get instanceRuntimeOff;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on for every workspace'**
+  String get instanceTurnOn;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off'**
+  String get instanceTurnOff;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants become usable in every workspace that offers them. You can turn them off again at any time.'**
+  String get instanceTurnOnConfirm;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Still missing:'**
+  String get instanceBlockers;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'a database administrator'**
+  String get instanceBlockerNoAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Database administrators'**
+  String get instanceAdminsTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.'**
+  String get instanceAdminsHelp;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Make administrator'**
+  String get instanceMakeAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get instanceRemoveAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody else has confirmed their identity yet.'**
+  String get instanceNoCandidates;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get instanceYou;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant clients'**
+  String get instanceClientsTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'An assistant registers itself the first time someone connects it; it works only once approved here.'**
+  String get instanceClientsHelp;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get instanceClientWaiting;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get instanceClientApproved;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get instanceClientBlocked;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get instanceApprove;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get instanceBlock;
 
   /// #1829 Instance owner claim: instanceOwnerClaimIntro
   ///
@@ -14659,6 +14821,54 @@ abstract class AppLocalizations {
   /// **'Another account already holds this identity here — a database administrator can resolve it.'**
   String get mcpIdentityConflict;
 
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in'**
+  String get mcpStatusGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Link Google'**
+  String get mcpStatusLinkGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get mcpStatusSignInGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in with Google'**
+  String get mcpStateGoogleReady;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in another way'**
+  String get mcpStateGoogleOtherSession;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Google not linked'**
+  String get mcpStateGoogleMissing;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.'**
+  String get mcpNextLinkGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants use your Google sign-in. Sign in with Google to continue.'**
+  String get mcpNextSignInGoogle;
+
   /// #1630 mcp_usage
   ///
   /// In en, this message translates to:
@@ -15160,7 +15370,7 @@ abstract class AppLocalizations {
   /// Role tag on a member row
   ///
   /// In en, this message translates to:
-  /// **'Admin'**
+  /// **'Administrator'**
   String get memberRoleAdmin;
 
   /// Status tag: membership paused (no fee, no access)
@@ -18799,6 +19009,108 @@ abstract class AppLocalizations {
   /// **'Reset'**
   String get portalResetAllConfirm;
 
+  /// #1914 privacy notice: privacyNoticeTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Who processes your data'**
+  String get privacyNoticeTitle;
+
+  /// #1914 privacy notice: privacyNoticeController
+  ///
+  /// In en, this message translates to:
+  /// **'Controller: {name} — {contact}'**
+  String privacyNoticeController(String name, String contact);
+
+  /// #1914 privacy notice: privacyNoticeRights
+  ///
+  /// In en, this message translates to:
+  /// **'Your rights: {contact}'**
+  String privacyNoticeRights(String contact);
+
+  /// #1914 privacy notice: privacyNoticeRegion
+  ///
+  /// In en, this message translates to:
+  /// **'Region: {region}'**
+  String privacyNoticeRegion(String region);
+
+  /// #1914 privacy notice: privacyNoticeTransfer
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer safeguard: {mechanism}'**
+  String privacyNoticeTransfer(String mechanism);
+
+  /// #1914 privacy notice: privacyNoticeNotRecorded
+  ///
+  /// In en, this message translates to:
+  /// **'not recorded by the operator'**
+  String get privacyNoticeNotRecorded;
+
+  /// #1914 privacy notice: privacyNoticeEssential
+  ///
+  /// In en, this message translates to:
+  /// **'Needed to run the account and the space'**
+  String get privacyNoticeEssential;
+
+  /// #1914 privacy notice: privacyNoticeOptional
+  ///
+  /// In en, this message translates to:
+  /// **'Optional — you can use the app without it'**
+  String get privacyNoticeOptional;
+
+  /// #1914 privacy notice: privacyNoticeRightsRoute
+  ///
+  /// In en, this message translates to:
+  /// **'Your rights and the contact'**
+  String get privacyNoticeRightsRoute;
+
+  /// #1914 privacy notice: privacySpaceNotice
+  ///
+  /// In en, this message translates to:
+  /// **'This space\'s privacy notice'**
+  String get privacySpaceNotice;
+
+  /// #1914 privacy notice: privacySpaceNoticeRead
+  ///
+  /// In en, this message translates to:
+  /// **'You acknowledged this version.'**
+  String get privacySpaceNoticeRead;
+
+  /// #1914 privacy notice: privacySpaceNoticeUnread
+  ///
+  /// In en, this message translates to:
+  /// **'Not acknowledged yet — read it here.'**
+  String get privacySpaceNoticeUnread;
+
+  /// #1914 privacy notice: privacySpaceNoticeAcknowledge
+  ///
+  /// In en, this message translates to:
+  /// **'I have read this notice'**
+  String get privacySpaceNoticeAcknowledge;
+
+  /// #1914 privacy notice: privacySpaceNoticeFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The acknowledgment could not be recorded. Please try again.'**
+  String get privacySpaceNoticeFailed;
+
+  /// #1914 privacy notice: privacyPushOnDevice
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications on this device'**
+  String get privacyPushOnDevice;
+
+  /// #1914 privacy notice: privacyPushOnDeviceHint
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.'**
+  String get privacyPushOnDeviceHint;
+
+  /// #1914 privacy notice: privacyPushOnDeviceFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The choice could not be saved. Please try again.'**
+  String get privacyPushOnDeviceFailed;
+
   /// #1327 the process-first overview of the Features screen
   ///
   /// In en, this message translates to:
@@ -19648,7 +19960,7 @@ abstract class AppLocalizations {
   /// #719 - privacy & data
   ///
   /// In en, this message translates to:
-  /// **'Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.'**
+  /// **'Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation\'s privacy notice. These are your rights under the GDPR — each one is a button.'**
   String get privacyIntro;
 
   /// #719 - privacy & data
@@ -20751,25 +21063,25 @@ abstract class AppLocalizations {
   /// Feed line of a role-change event that grants admin
   ///
   /// In en, this message translates to:
-  /// **'{actor} promotes a member to admin'**
+  /// **'{actor} asks to give the Administrator role'**
   String eventRolePromote(String actor);
 
   /// Feed line of a role-change event that removes admin
   ///
   /// In en, this message translates to:
-  /// **'{actor} demotes an admin to member'**
+  /// **'{actor} asks to take back the Administrator role'**
   String eventRoleDemote(String actor);
 
   /// Owner action promoting a member to admin (0035)
   ///
   /// In en, this message translates to:
-  /// **'Make admin'**
+  /// **'Give the Administrator role'**
   String get memberMakeAdmin;
 
   /// Owner action demoting an admin to a regular member (0035)
   ///
   /// In en, this message translates to:
-  /// **'Make regular member'**
+  /// **'Take back the Administrator role'**
   String get memberMakeMember;
 
   /// Snackbar after an owner requested a role change (0035)
@@ -22194,6 +22506,396 @@ abstract class AppLocalizations {
   /// **'The customer\'s VAT number is missing — a reverse-charged invoice must name it.'**
   String get invoiceGapMissingBuyerVatId;
 
+  /// #1915 rights requests: rightsRequestsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'My rights requests'**
+  String get rightsRequestsTitle;
+
+  /// #1915 rights requests: rightsRequestsHint
+  ///
+  /// In en, this message translates to:
+  /// **'Ask the space for a copy, a correction, a restriction or erasure — answered within one calendar month.'**
+  String get rightsRequestsHint;
+
+  /// #1915 rights requests: rightsRequestsEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No request yet.'**
+  String get rightsRequestsEmpty;
+
+  /// #1915 rights requests: rightsRequestNew
+  ///
+  /// In en, this message translates to:
+  /// **'Make a request'**
+  String get rightsRequestNew;
+
+  /// #1915 rights requests: rightsRequestAsk
+  ///
+  /// In en, this message translates to:
+  /// **'What do you ask the space?'**
+  String get rightsRequestAsk;
+
+  /// #1915 rights requests: rightsRequestDetails
+  ///
+  /// In en, this message translates to:
+  /// **'Details (optional)'**
+  String get rightsRequestDetails;
+
+  /// #1915 rights requests: rightsRequestSend
+  ///
+  /// In en, this message translates to:
+  /// **'Send the request'**
+  String get rightsRequestSend;
+
+  /// #1915 rights requests: rightsRequestSent
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent — the space answers by {date}.'**
+  String rightsRequestSent(String date);
+
+  /// #1915 rights requests: rightsRequestFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The request could not be sent. Please try again.'**
+  String get rightsRequestFailed;
+
+  /// #1915 rights requests: rightsKindAccess
+  ///
+  /// In en, this message translates to:
+  /// **'See a copy of my data'**
+  String get rightsKindAccess;
+
+  /// #1915 rights requests: rightsKindPortability
+  ///
+  /// In en, this message translates to:
+  /// **'Take my data elsewhere (machine-readable)'**
+  String get rightsKindPortability;
+
+  /// #1915 rights requests: rightsKindRectification
+  ///
+  /// In en, this message translates to:
+  /// **'Correct my data'**
+  String get rightsKindRectification;
+
+  /// #1915 rights requests: rightsKindRestriction
+  ///
+  /// In en, this message translates to:
+  /// **'Restrict how my data is used'**
+  String get rightsKindRestriction;
+
+  /// #1915 rights requests: rightsKindObjection
+  ///
+  /// In en, this message translates to:
+  /// **'Object to a use of my data'**
+  String get rightsKindObjection;
+
+  /// #1915 rights requests: rightsKindErasure
+  ///
+  /// In en, this message translates to:
+  /// **'Erase my data'**
+  String get rightsKindErasure;
+
+  /// #1915 rights requests: rightsStatusReceived
+  ///
+  /// In en, this message translates to:
+  /// **'Received — answer due by {date}'**
+  String rightsStatusReceived(String date);
+
+  /// #1915 rights requests: rightsStatusExtended
+  ///
+  /// In en, this message translates to:
+  /// **'Extended to {date}: {reason}'**
+  String rightsStatusExtended(String date, String reason);
+
+  /// #1915 rights requests: rightsStatusCompleted
+  ///
+  /// In en, this message translates to:
+  /// **'Answered — the space recorded what it did'**
+  String get rightsStatusCompleted;
+
+  /// #1915 rights requests: rightsStatusRefused
+  ///
+  /// In en, this message translates to:
+  /// **'Refused: {reason}'**
+  String rightsStatusRefused(String reason);
+
+  /// #1915 rights requests: erasurePreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What erasing does here'**
+  String get erasurePreviewTitle;
+
+  /// #1915 rights requests: erasurePreviewRemoved
+  ///
+  /// In en, this message translates to:
+  /// **'Removed'**
+  String get erasurePreviewRemoved;
+
+  /// #1915 rights requests: erasurePreviewKept
+  ///
+  /// In en, this message translates to:
+  /// **'Kept, and why'**
+  String get erasurePreviewKept;
+
+  /// #1915 rights requests: erasurePreviewOutside
+  ///
+  /// In en, this message translates to:
+  /// **'Outside this installation'**
+  String get erasurePreviewOutside;
+
+  /// #1915 rights requests: erasureStoreMessages
+  ///
+  /// In en, this message translates to:
+  /// **'Messages you sent'**
+  String get erasureStoreMessages;
+
+  /// #1915 rights requests: erasureStoreAnswers
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers to the space\'s questions'**
+  String get erasureStoreAnswers;
+
+  /// #1915 rights requests: erasureStoreProfile
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile (when this is your last space)'**
+  String get erasureStoreProfile;
+
+  /// #1915 rights requests: erasureStoreOpenBookings
+  ///
+  /// In en, this message translates to:
+  /// **'Open bookings — cancelled'**
+  String get erasureStoreOpenBookings;
+
+  /// #1915 rights requests: erasureStoreAccounts
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices and ledger — accounting evidence, kept for the statutory period; issued documents are not rewritten'**
+  String get erasureStoreAccounts;
+
+  /// #1915 rights requests: erasureStorePastBookings
+  ///
+  /// In en, this message translates to:
+  /// **'Past bookings — the space\'s occupancy record'**
+  String get erasureStorePastBookings;
+
+  /// #1915 rights requests: erasureStoreMembership
+  ///
+  /// In en, this message translates to:
+  /// **'The membership row — links the records kept; pseudonymous, not anonymous'**
+  String get erasureStoreMembership;
+
+  /// #1915 rights requests: erasureStoreHeldAnswers
+  ///
+  /// In en, this message translates to:
+  /// **'Answers under a retention hold the space documented'**
+  String get erasureStoreHeldAnswers;
+
+  /// #1915 rights requests: erasureStoreOtherInstallations
+  ///
+  /// In en, this message translates to:
+  /// **'Another DesKilo installation is a separate controller — ask it directly'**
+  String get erasureStoreOtherInstallations;
+
+  /// #1915 rights requests: erasureStoreDeviceCaches
+  ///
+  /// In en, this message translates to:
+  /// **'Copies on your devices — cleared when you sign out of each'**
+  String get erasureStoreDeviceCaches;
+
+  /// #1915 rights requests: erasureStoreBackups
+  ///
+  /// In en, this message translates to:
+  /// **'The operator\'s backups — expire on their rotation'**
+  String get erasureStoreBackups;
+
+  /// #2085 giving roles: featureRoleAssignmentTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Giving roles'**
+  String get featureRoleAssignmentTitle;
+
+  /// #2085 giving roles: featureRoleAssignmentDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Shows a Roles section on each member\'s page to give or take back a role, the members holding each role, and lets every member see what they can do here.'**
+  String get featureRoleAssignmentDesc;
+
+  /// #2085 giving roles: memberRolesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Roles'**
+  String get memberRolesTitle;
+
+  /// #2085 giving roles: memberRolesAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a role'**
+  String get memberRolesAdd;
+
+  /// #2085 giving roles: memberRolesNone
+  ///
+  /// In en, this message translates to:
+  /// **'No role: everything a member can do.'**
+  String get memberRolesNone;
+
+  /// #2085 giving roles: memberRolesWhatTheyCanDo
+  ///
+  /// In en, this message translates to:
+  /// **'What they can do here'**
+  String get memberRolesWhatTheyCanDo;
+
+  /// #2085 giving roles: roleAssignSheetTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Give a role to {name}'**
+  String roleAssignSheetTitle(String name);
+
+  /// #2085 giving roles: roleAssignQuorumHint
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect once validated.'**
+  String get roleAssignQuorumHint;
+
+  /// #2085 giving roles: roleAssignImmediateHint
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect at once.'**
+  String get roleAssignImmediateHint;
+
+  /// #2085 giving roles: roleAssignNothing
+  ///
+  /// In en, this message translates to:
+  /// **'There is no role left to give.'**
+  String get roleAssignNothing;
+
+  /// #2085 giving roles: roleRefusalNotPermitted
+  ///
+  /// In en, this message translates to:
+  /// **'Only someone who manages roles can give this one.'**
+  String get roleRefusalNotPermitted;
+
+  /// #2085 giving roles: roleRefusalOwnerOnly
+  ///
+  /// In en, this message translates to:
+  /// **'Only the owner gives a role that manages roles.'**
+  String get roleRefusalOwnerOnly;
+
+  /// #2085 giving roles: roleRefusalExceedsYours
+  ///
+  /// In en, this message translates to:
+  /// **'This role can do things you cannot, so only the owner gives it.'**
+  String get roleRefusalExceedsYours;
+
+  /// #2085 giving roles: roleRefusalNotAssignable
+  ///
+  /// In en, this message translates to:
+  /// **'This member cannot hold this role.'**
+  String get roleRefusalNotAssignable;
+
+  /// #2085 giving roles: roleGiven
+  ///
+  /// In en, this message translates to:
+  /// **'Role given.'**
+  String get roleGiven;
+
+  /// #2085 giving roles: roleTakenBack
+  ///
+  /// In en, this message translates to:
+  /// **'Role taken back.'**
+  String get roleTakenBack;
+
+  /// #2085 giving roles: roleHoldersAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a member'**
+  String get roleHoldersAdd;
+
+  /// #2085 giving roles: rolesOwnRolesLink
+  ///
+  /// In en, this message translates to:
+  /// **'The roles this space defines'**
+  String get rolesOwnRolesLink;
+
+  /// #2085 giving roles: whatYouCanDoTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What you can do here'**
+  String get whatYouCanDoTitle;
+
+  /// #2085 giving roles: whatTheyCanDoTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What {name} can do here'**
+  String whatTheyCanDoTitle(String name);
+
+  /// #2085 giving roles: whatYouCanDoIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.'**
+  String get whatYouCanDoIntro;
+
+  /// #2085 giving roles: whatYouCanDoFromOwner
+  ///
+  /// In en, this message translates to:
+  /// **'As the owner: everything'**
+  String get whatYouCanDoFromOwner;
+
+  /// #2085 giving roles: whatYouCanDoFromCoOwner
+  ///
+  /// In en, this message translates to:
+  /// **'As co-owner'**
+  String get whatYouCanDoFromCoOwner;
+
+  /// #2085 giving roles: whatYouCanDoFromAdministrator
+  ///
+  /// In en, this message translates to:
+  /// **'From the Administrator role'**
+  String get whatYouCanDoFromAdministrator;
+
+  /// #2085 giving roles: whatYouCanDoFromEveryMember
+  ///
+  /// In en, this message translates to:
+  /// **'As every member'**
+  String get whatYouCanDoFromEveryMember;
+
+  /// #2085 giving roles: whatYouCanDoFromRole
+  ///
+  /// In en, this message translates to:
+  /// **'From the role {role}'**
+  String whatYouCanDoFromRole(String role);
+
+  /// #2085 giving roles: whatYouCanDoNothingMore
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing more than a member.'**
+  String get whatYouCanDoNothingMore;
+
+  /// #2085 giving roles: roleGiveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The role was not given.'**
+  String get roleGiveFailed;
+
+  /// #2085 giving roles: roleTakeBackFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The role was not taken back.'**
+  String get roleTakeBackFailed;
+
+  /// #2085 giving roles: eventRoleGiven
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} gives the role {role} to {member}'**
+  String eventRoleGiven(String actor, String role, String member);
+
+  /// #2085 giving roles: eventRoleTakenBack
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} takes back the role {role} from {member}'**
+  String eventRoleTakenBack(String actor, String role, String member);
+
   /// #1528 the roles of a space: rolesOfSpaceTitle
   ///
   /// In en, this message translates to:
@@ -22203,7 +22905,7 @@ abstract class AppLocalizations {
   /// #1528 the roles of a space: rolesOfSpaceSubtitle
   ///
   /// In en, this message translates to:
-  /// **'Each one adds permissions on top of a member\'s role. None ever takes one away, and an owner always keeps every one.'**
+  /// **'Each one adds permissions to what its holders can already do. None takes anything away, and the owner always keeps every permission.'**
   String get rolesOfSpaceSubtitle;
 
   /// #1528 the roles of a space: rolesOfSpaceEmpty
@@ -22269,7 +22971,7 @@ abstract class AppLocalizations {
   /// #1528 the roles of a space: roleEditorHolders
   ///
   /// In en, this message translates to:
-  /// **'Who holds it'**
+  /// **'Members in this role'**
   String get roleEditorHolders;
 
   /// #1528 the roles of a space: roleEditorNobody
@@ -24915,7 +25617,7 @@ abstract class AppLocalizations {
   /// Segment label: invite QR/code that joins as an admin
   ///
   /// In en, this message translates to:
-  /// **'Admin invite'**
+  /// **'Administrator invite'**
   String get inviteRoleAdmin;
 
   /// Explainer under the admin invite QR
@@ -24927,7 +25629,7 @@ abstract class AppLocalizations {
   /// No description provided for @inviteAdminNewCode.
   ///
   /// In en, this message translates to:
-  /// **'New admin code'**
+  /// **'New administrator code'**
   String get inviteAdminNewCode;
 
   /// Footnote on the invite screen: owner role is never invitable
@@ -25479,13 +26181,13 @@ abstract class AppLocalizations {
   /// Roles screen title (#513)
   ///
   /// In en, this message translates to:
-  /// **'Role management'**
+  /// **'Roles'**
   String get rolesTitle;
 
   /// Roles screen intro for editors (#513)
   ///
   /// In en, this message translates to:
-  /// **'The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.'**
+  /// **'Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.'**
   String get rolesIntroEditor;
 
   /// Roles screen intro for non-editors (#513)
@@ -25509,13 +26211,13 @@ abstract class AppLocalizations {
   /// Role label (#513)
   ///
   /// In en, this message translates to:
-  /// **'Admin'**
+  /// **'Administrator'**
   String get roleAdmin;
 
   /// Role label (#513)
   ///
   /// In en, this message translates to:
-  /// **'Member'**
+  /// **'Every member'**
   String get roleMember;
 
   /// Permission label (#513)

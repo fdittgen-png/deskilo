@@ -8,6 +8,7 @@
 // of the test, not a timing hope.
 import 'dart:async';
 
+import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
@@ -540,6 +541,8 @@ void main() {
         final access = AssistantAccess(
           w.commands,
           FakeIdentityBindingRepository(),
+          FakeAuthRepository(),
+          FakeMcpAdminRepository(),
         );
         final result = await access.removeWorkspace(connection(w.a), 'wa');
         expect(w.targets[_instA]!.connections.calls, ['revokeScope:claude:wa']);
@@ -562,6 +565,8 @@ void main() {
       final access = AssistantAccess(
         w.commands,
         FakeIdentityBindingRepository(),
+        FakeAuthRepository(),
+          FakeMcpAdminRepository(),
       );
       w.targets[_instA]!.connections.live.add(connection(w.a));
       final result = await access.disconnect(connection(w.a));
@@ -670,6 +675,7 @@ void main() {
       expect(s.next, McpNextStep.unavailable);
       final pending = McpAccessStatus.derive(
         _w0Ctx,
+        google: const McpGoogleSignIn(linked: true, session: true),
         identity: const IdentityBindingStatus(
           state: IdentityBindingState.unlinked,
         ),

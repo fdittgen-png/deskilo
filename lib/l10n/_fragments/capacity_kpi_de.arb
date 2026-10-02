@@ -136,5 +136,9 @@
   "capacityKpiRoomsToday": "Räume ohne Plätze werden so gelesen, wie sie heute sind.",
   "@capacityKpiRoomsToday": {
     "description": "#1920 capacity KPI history"
+  },
+  "permViewAnalytics": "Kennzahlen des Arbeitsbereichs lesen",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
   }
 }

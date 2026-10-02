@@ -217,7 +217,7 @@ const Map<String, int> _pairBudget = {
   'members -> plan': 3,
   'members -> profile': 9,
   'members -> reservations': 14,
-  'members -> workspace': 34,
+  'members -> workspace': 35, // 2026-10-02 #2085 34→35: the member page hosts the Roles card (workspace/presentation/widgets/member_roles_card.dart), which gives the roles workspace/ defines.
   'money -> calendar': 1,
   'money -> events': 30,
   'money -> members': 2,
@@ -303,7 +303,7 @@ const Map<String, int> _pairBudget = {
   'workspace -> money': 35,
   'workspace -> plan': 25,
   'workspace -> profile': 11, // 2026-09-28 #1652 10→11: the invitation review names who is joining (my profile's e-mail).
-  'workspace -> reservations': 17,
+  'workspace -> reservations': 19, // 2026-10-02 #2085 17→19: the role's holders and "What they can do here" print member names through memberNamesProvider, the one name seam (recording privacy, #1514).
 };
 
 Iterable<File> _featureFiles() => handWrittenDartFiles('lib/features');

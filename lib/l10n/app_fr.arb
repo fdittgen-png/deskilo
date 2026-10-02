@@ -1403,6 +1403,10 @@
   "@capacityKpiRoomsToday": {
     "description": "#1920 capacity KPI history"
   },
+  "permViewAnalytics": "Consulter les chiffres de l'espace",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
+  },
   "featureCarnetsTitle": "Carnets",
   "featureCarnetsDesc": "Vendre des carnets de demi-journées, dépensés sur plusieurs mois quand un membre réserve au-delà de son abonnement, facturés une seule fois à la vente.",
   "carnetsTitle": "Carnets",
@@ -1546,12 +1550,12 @@
   "consumptionRefusedQuantity": "La quantité doit être comprise entre 1 et 999. Rien n'a été enregistré.",
   "consumptionRefusedPeriod": "La période de facturation doit être un mois (AAAA-MM). Rien n'a été enregistré.",
   "coOwnerAction": "Copropriété",
-  "coOwnerNone": "Aucun rôle de copropriétaire",
+  "coOwnerNone": "Aucune copropriété",
   "coOwnerActive": "Copropriétaire actif — permissions de propriétaire immédiates, succession automatique",
-  "coOwnerPassive": "Copropriétaire passif — devient propriétaire à l'activation ou au départ du propriétaire",
+  "coOwnerPassive": "Successeur — devient propriétaire à l'activation ou au départ du propriétaire",
   "coOwnerActivate": "Promouvoir propriétaire maintenant",
   "memberCoOwnerChip": "Copropriétaire",
-  "memberCoOwnerPassiveChip": "Copropriétaire (passif)",
+  "memberCoOwnerPassiveChip": "Successeur",
   "courtesyLabel": "Formule d’appel",
   "@courtesyLabel": {
     "description": "#912 courtesy title: courtesyLabel"
@@ -2948,6 +2952,32 @@
   "@holidayImportFailed": {
     "description": "#2051 open-data holiday import"
   },
+  "instanceTitle": "Installation : assistants",
+  "instanceIntro": "Réglages valables pour tous les espaces de travail de cette installation. Seul l'opérateur de l'instance voit cette page ; chaque changement exige votre second facteur et est journalisé.",
+  "instanceNotOperator": "Seul l'opérateur de l'instance gère les assistants de l'installation.",
+  "instanceSecondFactorNeeded": "Les changements ici exigent votre second facteur sur cette session.",
+  "instanceConfirmSecondFactor": "Confirmer avec mon authentificateur",
+  "instanceRuntimeTitle": "Assistants sur cette installation",
+  "instanceRuntimeOn": "Activés",
+  "instanceRuntimeOff": "Désactivés",
+  "instanceTurnOn": "Activer pour tous les espaces",
+  "instanceTurnOff": "Désactiver",
+  "instanceTurnOnConfirm": "Les assistants deviennent utilisables dans chaque espace qui les propose. Vous pouvez les désactiver à tout moment.",
+  "instanceBlockers": "Il manque encore :",
+  "instanceBlockerNoAdmin": "un administrateur de la base",
+  "instanceAdminsTitle": "Administrateurs de la base",
+  "instanceAdminsHelp": "Ils décident qui peut utiliser les assistants. Seules les personnes ayant confirmé leur identité pour les assistants peuvent être choisies.",
+  "instanceMakeAdmin": "Nommer administrateur",
+  "instanceRemoveAdmin": "Retirer",
+  "instanceNoCandidates": "Personne d'autre n'a encore confirmé son identité.",
+  "instanceYou": "vous",
+  "instanceClientsTitle": "Clients d'assistant",
+  "instanceClientsHelp": "Un assistant s'enregistre lui-même à la première connexion ; il ne fonctionne qu'une fois approuvé ici.",
+  "instanceClientWaiting": "En attente d'approbation",
+  "instanceClientApproved": "Approuvé",
+  "instanceClientBlocked": "Bloqué",
+  "instanceApprove": "Approuver",
+  "instanceBlock": "Bloquer",
   "instanceOwnerClaimIntro": "À qui appartient cette instance ? Saisissez l'adresse e-mail avec laquelle vous vous y inscrirez. Après avoir confirmé cette adresse, revendiquez la propriété dans Paramètres → Propriétaire de l'instance.",
   "instanceOwnerClaimLabel": "E-mail du propriétaire",
   "instanceOwnerTitle": "Propriétaire de l'instance",
@@ -5092,6 +5122,14 @@
   "mcpStateAfterPrevious": "Après l'étape précédente",
   "mcpIdentityIneligible": "Ce compte ne peut pas encore être confirmé — confirmez d'abord votre adresse e-mail ou connectez-vous avec un fournisseur.",
   "mcpIdentityConflict": "Un autre compte détient déjà cette identité ici — un administrateur de la base peut résoudre cela.",
+  "mcpStatusGoogle": "Connexion Google",
+  "mcpStatusLinkGoogle": "Lier Google",
+  "mcpStatusSignInGoogle": "Se connecter avec Google",
+  "mcpStateGoogleReady": "Connecté avec Google",
+  "mcpStateGoogleOtherSession": "Connecté autrement",
+  "mcpStateGoogleMissing": "Google non lié",
+  "mcpNextLinkGoogle": "Les assistants utilisent votre connexion Google. Liez d'abord Google à ce compte ; sans cela, le compte ne peut pas utiliser d'assistant.",
+  "mcpNextSignInGoogle": "Les assistants utilisent votre connexion Google. Connectez-vous avec Google pour continuer.",
   "mcpUsageWorkspaceTitle": "Utilisation des assistants, 30 derniers jours",
   "mcpUsageMineTitle": "Votre utilisation des assistants aujourd'hui",
   "mcpUsageUnavailable": "L'utilisation n'a pas pu être chargée.",
@@ -5184,7 +5222,7 @@
   "membersTitle": "Membres et forfaits",
   "membersPlanNone": "Aucun forfait",
   "memberRoleOwner": "Propriétaire",
-  "memberRoleAdmin": "Admin",
+  "memberRoleAdmin": "Administrateur·rice",
   "memberStatusPaused": "En pause",
   "memberStatusExited": "Parti",
   "membersInvite": "Inviter un membre",
@@ -6531,6 +6569,97 @@
   "portalResetAll": "Rétablir toutes les données publiques depuis les informations de l’espace",
   "portalResetAllBody": "Les valeurs publiques de chaque champ qui a une information dans l’espace sont remplacées par celle-ci. Les champs sans équivalent dans l’espace gardent ce que vous avez saisi.",
   "portalResetAllConfirm": "Rétablir",
+  "privacyNoticeTitle": "Qui traite vos données",
+  "@privacyNoticeTitle": {
+    "description": "#1914 privacy notice: privacyNoticeTitle"
+  },
+  "privacyNoticeController": "Responsable du traitement : {name} — {contact}",
+  "@privacyNoticeController": {
+    "description": "#1914 privacy notice: privacyNoticeController",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeRights": "Vos droits : {contact}",
+  "@privacyNoticeRights": {
+    "description": "#1914 privacy notice: privacyNoticeRights",
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeRegion": "Région : {region}",
+  "@privacyNoticeRegion": {
+    "description": "#1914 privacy notice: privacyNoticeRegion",
+    "placeholders": {
+      "region": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeTransfer": "Garantie de transfert : {mechanism}",
+  "@privacyNoticeTransfer": {
+    "description": "#1914 privacy notice: privacyNoticeTransfer",
+    "placeholders": {
+      "mechanism": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeNotRecorded": "non renseigné par l'exploitant",
+  "@privacyNoticeNotRecorded": {
+    "description": "#1914 privacy notice: privacyNoticeNotRecorded"
+  },
+  "privacyNoticeEssential": "Nécessaire au fonctionnement du compte et de l'espace",
+  "@privacyNoticeEssential": {
+    "description": "#1914 privacy notice: privacyNoticeEssential"
+  },
+  "privacyNoticeOptional": "Facultatif — vous pouvez utiliser l'application sans",
+  "@privacyNoticeOptional": {
+    "description": "#1914 privacy notice: privacyNoticeOptional"
+  },
+  "privacyNoticeRightsRoute": "Vos droits et le contact",
+  "@privacyNoticeRightsRoute": {
+    "description": "#1914 privacy notice: privacyNoticeRightsRoute"
+  },
+  "privacySpaceNotice": "La notice de confidentialité de cet espace",
+  "@privacySpaceNotice": {
+    "description": "#1914 privacy notice: privacySpaceNotice"
+  },
+  "privacySpaceNoticeRead": "Vous avez pris connaissance de cette version.",
+  "@privacySpaceNoticeRead": {
+    "description": "#1914 privacy notice: privacySpaceNoticeRead"
+  },
+  "privacySpaceNoticeUnread": "Pas encore lue — lisez-la ici.",
+  "@privacySpaceNoticeUnread": {
+    "description": "#1914 privacy notice: privacySpaceNoticeUnread"
+  },
+  "privacySpaceNoticeAcknowledge": "J'ai lu cette notice",
+  "@privacySpaceNoticeAcknowledge": {
+    "description": "#1914 privacy notice: privacySpaceNoticeAcknowledge"
+  },
+  "privacySpaceNoticeFailed": "La prise de connaissance n'a pas pu être enregistrée. Veuillez réessayer.",
+  "@privacySpaceNoticeFailed": {
+    "description": "#1914 privacy notice: privacySpaceNoticeFailed"
+  },
+  "privacyPushOnDevice": "Notifications push sur cet appareil",
+  "@privacyPushOnDevice": {
+    "description": "#1914 privacy notice: privacyPushOnDevice"
+  },
+  "privacyPushOnDeviceHint": "Facultatif. Activé, l'adresse de cet appareil et chaque notification passent par le service de notifications ; désactivé, l'application fonctionne et rien n'est envoyé à cet appareil.",
+  "@privacyPushOnDeviceHint": {
+    "description": "#1914 privacy notice: privacyPushOnDeviceHint"
+  },
+  "privacyPushOnDeviceFailed": "Le choix n'a pas pu être enregistré. Veuillez réessayer.",
+  "@privacyPushOnDeviceFailed": {
+    "description": "#1914 privacy notice: privacyPushOnDeviceFailed"
+  },
   "featuresViewProcesses": "Processus",
   "featuresViewSwitches": "Interrupteurs",
   "processSearchLabel": "Rechercher processus et fonctionnalités",
@@ -6675,7 +6804,7 @@
   "@privacyTitle": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "Vos données restent dans l'UE, ne sont ni tracées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment. Voici vos droits au titre du RGPD — chacun est un bouton.",
+  "privacyIntro": "Vos données ne sont jamais pistées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment ; leur hébergement figure dans la notice de confidentialité de cette installation. Voici vos droits au titre du RGPD — chacun est un bouton.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },
@@ -7128,10 +7257,10 @@
     "description": "#1912 the question editor: shown while the personal-data switch is off"
   },
   "eventTypeRoleChange": "Changement de rôle",
-  "eventRolePromote": "{actor} promeut un membre en admin",
-  "eventRoleDemote": "{actor} rétrograde un admin en membre",
-  "memberMakeAdmin": "Nommer admin",
-  "memberMakeMember": "Rendre membre simple",
+  "eventRolePromote": "{actor} demande à attribuer le rôle Administrateur·rice",
+  "eventRoleDemote": "{actor} demande à retirer le rôle Administrateur·rice",
+  "memberMakeAdmin": "Attribuer le rôle Administrateur·rice",
+  "memberMakeMember": "Retirer le rôle Administrateur·rice",
   "memberRoleChangeRequested": "Changement de rôle envoyé pour validation.",
   "eventTypeQuota": "Demi-journées supplémentaires",
   "eventQuotaRequested": "{actor} demande {halfDays} demi-journées supplémentaires pour {period}",
@@ -7919,11 +8048,331 @@
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
+  "rightsRequestsTitle": "Mes demandes d'exercice de droits",
+  "@rightsRequestsTitle": {
+    "description": "#1915 rights requests: rightsRequestsTitle"
+  },
+  "rightsRequestsHint": "Demandez à l'espace une copie, une rectification, une limitation ou un effacement — réponse sous un mois calendaire.",
+  "@rightsRequestsHint": {
+    "description": "#1915 rights requests: rightsRequestsHint"
+  },
+  "rightsRequestsEmpty": "Aucune demande pour le moment.",
+  "@rightsRequestsEmpty": {
+    "description": "#1915 rights requests: rightsRequestsEmpty"
+  },
+  "rightsRequestNew": "Faire une demande",
+  "@rightsRequestNew": {
+    "description": "#1915 rights requests: rightsRequestNew"
+  },
+  "rightsRequestAsk": "Que demandez-vous à l'espace ?",
+  "@rightsRequestAsk": {
+    "description": "#1915 rights requests: rightsRequestAsk"
+  },
+  "rightsRequestDetails": "Précisions (facultatif)",
+  "@rightsRequestDetails": {
+    "description": "#1915 rights requests: rightsRequestDetails"
+  },
+  "rightsRequestSend": "Envoyer la demande",
+  "@rightsRequestSend": {
+    "description": "#1915 rights requests: rightsRequestSend"
+  },
+  "rightsRequestSent": "Demande envoyée — l'espace répond d'ici le {date}.",
+  "@rightsRequestSent": {
+    "description": "#1915 rights requests: rightsRequestSent",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestFailed": "La demande n'a pas pu être envoyée. Veuillez réessayer.",
+  "@rightsRequestFailed": {
+    "description": "#1915 rights requests: rightsRequestFailed"
+  },
+  "rightsKindAccess": "Obtenir une copie de mes données",
+  "@rightsKindAccess": {
+    "description": "#1915 rights requests: rightsKindAccess"
+  },
+  "rightsKindPortability": "Récupérer mes données (format lisible par machine)",
+  "@rightsKindPortability": {
+    "description": "#1915 rights requests: rightsKindPortability"
+  },
+  "rightsKindRectification": "Rectifier mes données",
+  "@rightsKindRectification": {
+    "description": "#1915 rights requests: rightsKindRectification"
+  },
+  "rightsKindRestriction": "Limiter l'utilisation de mes données",
+  "@rightsKindRestriction": {
+    "description": "#1915 rights requests: rightsKindRestriction"
+  },
+  "rightsKindObjection": "M'opposer à une utilisation de mes données",
+  "@rightsKindObjection": {
+    "description": "#1915 rights requests: rightsKindObjection"
+  },
+  "rightsKindErasure": "Effacer mes données",
+  "@rightsKindErasure": {
+    "description": "#1915 rights requests: rightsKindErasure"
+  },
+  "rightsStatusReceived": "Reçue — réponse due le {date}",
+  "@rightsStatusReceived": {
+    "description": "#1915 rights requests: rightsStatusReceived",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusExtended": "Prolongée jusqu'au {date} : {reason}",
+  "@rightsStatusExtended": {
+    "description": "#1915 rights requests: rightsStatusExtended",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusCompleted": "Traitée — l'espace a consigné ce qu'il a fait",
+  "@rightsStatusCompleted": {
+    "description": "#1915 rights requests: rightsStatusCompleted"
+  },
+  "rightsStatusRefused": "Refusée : {reason}",
+  "@rightsStatusRefused": {
+    "description": "#1915 rights requests: rightsStatusRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "erasurePreviewTitle": "Ce que l'effacement fait ici",
+  "@erasurePreviewTitle": {
+    "description": "#1915 rights requests: erasurePreviewTitle"
+  },
+  "erasurePreviewRemoved": "Supprimé",
+  "@erasurePreviewRemoved": {
+    "description": "#1915 rights requests: erasurePreviewRemoved"
+  },
+  "erasurePreviewKept": "Conservé, et pourquoi",
+  "@erasurePreviewKept": {
+    "description": "#1915 rights requests: erasurePreviewKept"
+  },
+  "erasurePreviewOutside": "Hors de cette installation",
+  "@erasurePreviewOutside": {
+    "description": "#1915 rights requests: erasurePreviewOutside"
+  },
+  "erasureStoreMessages": "Messages que vous avez envoyés",
+  "@erasureStoreMessages": {
+    "description": "#1915 rights requests: erasureStoreMessages"
+  },
+  "erasureStoreAnswers": "Vos réponses aux questions de l'espace",
+  "@erasureStoreAnswers": {
+    "description": "#1915 rights requests: erasureStoreAnswers"
+  },
+  "erasureStoreProfile": "Votre profil (si c'est votre dernier espace)",
+  "@erasureStoreProfile": {
+    "description": "#1915 rights requests: erasureStoreProfile"
+  },
+  "erasureStoreOpenBookings": "Réservations à venir — annulées",
+  "@erasureStoreOpenBookings": {
+    "description": "#1915 rights requests: erasureStoreOpenBookings"
+  },
+  "erasureStoreAccounts": "Factures et grand livre — pièces comptables, conservées pendant la durée légale ; les documents émis ne sont pas réécrits",
+  "@erasureStoreAccounts": {
+    "description": "#1915 rights requests: erasureStoreAccounts"
+  },
+  "erasureStorePastBookings": "Réservations passées — l'historique d'occupation de l'espace",
+  "@erasureStorePastBookings": {
+    "description": "#1915 rights requests: erasureStorePastBookings"
+  },
+  "erasureStoreMembership": "La ligne d'adhésion — relie les données conservées ; pseudonyme, pas anonyme",
+  "@erasureStoreMembership": {
+    "description": "#1915 rights requests: erasureStoreMembership"
+  },
+  "erasureStoreHeldAnswers": "Réponses sous une obligation de conservation documentée par l'espace",
+  "@erasureStoreHeldAnswers": {
+    "description": "#1915 rights requests: erasureStoreHeldAnswers"
+  },
+  "erasureStoreOtherInstallations": "Une autre installation DesKilo est un responsable distinct — adressez-vous à elle",
+  "@erasureStoreOtherInstallations": {
+    "description": "#1915 rights requests: erasureStoreOtherInstallations"
+  },
+  "erasureStoreDeviceCaches": "Copies sur vos appareils — effacées à la déconnexion de chacun",
+  "@erasureStoreDeviceCaches": {
+    "description": "#1915 rights requests: erasureStoreDeviceCaches"
+  },
+  "erasureStoreBackups": "Sauvegardes de l'exploitant — expirent selon leur rotation",
+  "@erasureStoreBackups": {
+    "description": "#1915 rights requests: erasureStoreBackups"
+  },
+  "featureRoleAssignmentTitle": "Attribution des rôles",
+  "@featureRoleAssignmentTitle": {
+    "description": "#2085 giving roles: featureRoleAssignmentTitle"
+  },
+  "featureRoleAssignmentDesc": "Affiche une section Rôles sur la page de chaque membre pour attribuer ou retirer un rôle, les membres ayant chaque rôle, et permet à chacun de voir ce qu'il peut faire ici.",
+  "@featureRoleAssignmentDesc": {
+    "description": "#2085 giving roles: featureRoleAssignmentDesc"
+  },
+  "memberRolesTitle": "Rôles",
+  "@memberRolesTitle": {
+    "description": "#2085 giving roles: memberRolesTitle"
+  },
+  "memberRolesAdd": "Ajouter un rôle",
+  "@memberRolesAdd": {
+    "description": "#2085 giving roles: memberRolesAdd"
+  },
+  "memberRolesNone": "Aucun rôle : tout ce que peut faire un membre.",
+  "@memberRolesNone": {
+    "description": "#2085 giving roles: memberRolesNone"
+  },
+  "memberRolesWhatTheyCanDo": "Ce que cette personne peut faire ici",
+  "@memberRolesWhatTheyCanDo": {
+    "description": "#2085 giving roles: memberRolesWhatTheyCanDo"
+  },
+  "roleAssignSheetTitle": "Attribuer un rôle à {name}",
+  "@roleAssignSheetTitle": {
+    "description": "#2085 giving roles: roleAssignSheetTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roleAssignQuorumHint": "Prend effet une fois validé.",
+  "@roleAssignQuorumHint": {
+    "description": "#2085 giving roles: roleAssignQuorumHint"
+  },
+  "roleAssignImmediateHint": "Prend effet immédiatement.",
+  "@roleAssignImmediateHint": {
+    "description": "#2085 giving roles: roleAssignImmediateHint"
+  },
+  "roleAssignNothing": "Il ne reste aucun rôle à attribuer.",
+  "@roleAssignNothing": {
+    "description": "#2085 giving roles: roleAssignNothing"
+  },
+  "roleRefusalNotPermitted": "Seule une personne qui gère les rôles peut attribuer celui-ci.",
+  "@roleRefusalNotPermitted": {
+    "description": "#2085 giving roles: roleRefusalNotPermitted"
+  },
+  "roleRefusalOwnerOnly": "Seul le propriétaire attribue un rôle qui gère les rôles.",
+  "@roleRefusalOwnerOnly": {
+    "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRefusalExceedsYours": "Ce rôle permet des choses que vous ne pouvez pas faire : seul le propriétaire l'attribue.",
+  "@roleRefusalExceedsYours": {
+    "description": "#2085 giving roles: roleRefusalExceedsYours"
+  },
+  "roleRefusalNotAssignable": "Ce membre ne peut pas avoir ce rôle.",
+  "@roleRefusalNotAssignable": {
+    "description": "#2085 giving roles: roleRefusalNotAssignable"
+  },
+  "roleGiven": "Rôle attribué.",
+  "@roleGiven": {
+    "description": "#2085 giving roles: roleGiven"
+  },
+  "roleTakenBack": "Rôle retiré.",
+  "@roleTakenBack": {
+    "description": "#2085 giving roles: roleTakenBack"
+  },
+  "roleHoldersAdd": "Ajouter un membre",
+  "@roleHoldersAdd": {
+    "description": "#2085 giving roles: roleHoldersAdd"
+  },
+  "rolesOwnRolesLink": "Les rôles de cet espace",
+  "@rolesOwnRolesLink": {
+    "description": "#2085 giving roles: rolesOwnRolesLink"
+  },
+  "whatYouCanDoTitle": "Ce que vous pouvez faire ici",
+  "@whatYouCanDoTitle": {
+    "description": "#2085 giving roles: whatYouCanDoTitle"
+  },
+  "whatTheyCanDoTitle": "Ce que {name} peut faire ici",
+  "@whatTheyCanDoTitle": {
+    "description": "#2085 giving roles: whatTheyCanDoTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoIntro": "Ici, tout le monde est membre : réserver, pointer, les messages et son propre compte. Les rôles ajoutent le reste.",
+  "@whatYouCanDoIntro": {
+    "description": "#2085 giving roles: whatYouCanDoIntro"
+  },
+  "whatYouCanDoFromOwner": "En tant que propriétaire : tout",
+  "@whatYouCanDoFromOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromOwner"
+  },
+  "whatYouCanDoFromCoOwner": "En tant que copropriétaire",
+  "@whatYouCanDoFromCoOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromCoOwner"
+  },
+  "whatYouCanDoFromAdministrator": "Du rôle Administrateur·rice",
+  "@whatYouCanDoFromAdministrator": {
+    "description": "#2085 giving roles: whatYouCanDoFromAdministrator"
+  },
+  "whatYouCanDoFromEveryMember": "Comme tous les membres",
+  "@whatYouCanDoFromEveryMember": {
+    "description": "#2085 giving roles: whatYouCanDoFromEveryMember"
+  },
+  "whatYouCanDoFromRole": "Du rôle {role}",
+  "@whatYouCanDoFromRole": {
+    "description": "#2085 giving roles: whatYouCanDoFromRole",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoNothingMore": "Rien de plus qu'un membre.",
+  "@whatYouCanDoNothingMore": {
+    "description": "#2085 giving roles: whatYouCanDoNothingMore"
+  },
+  "roleGiveFailed": "Le rôle n'a pas été attribué.",
+  "@roleGiveFailed": {
+    "description": "#2085 giving roles: roleGiveFailed"
+  },
+  "roleTakeBackFailed": "Le rôle n'a pas été retiré.",
+  "@roleTakeBackFailed": {
+    "description": "#2085 giving roles: roleTakeBackFailed"
+  },
+  "eventRoleGiven": "{actor} attribue le rôle {role} à {member}",
+  "@eventRoleGiven": {
+    "description": "#2085 giving roles: eventRoleGiven",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
+  "eventRoleTakenBack": "{actor} retire le rôle {role} à {member}",
+  "@eventRoleTakenBack": {
+    "description": "#2085 giving roles: eventRoleTakenBack",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
   "rolesOfSpaceTitle": "Les rôles de cet espace",
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
-  "rolesOfSpaceSubtitle": "Chacun ajoute des permissions à celles du rôle d'un membre. Aucun n'en retire, et un propriétaire les garde toutes.",
+  "rolesOfSpaceSubtitle": "Chacun ajoute des permissions à ce que ses titulaires peuvent déjà faire. Aucun ne retire rien, et le propriétaire garde toujours toutes les permissions.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -7972,7 +8421,7 @@
   "@roleEditorSaveFailed": {
     "description": "#1528 the roles of a space: roleEditorSaveFailed"
   },
-  "roleEditorHolders": "Qui le tient",
+  "roleEditorHolders": "Membres ayant ce rôle",
   "@roleEditorHolders": {
     "description": "#1528 the roles of a space: roleEditorHolders"
   },
@@ -8959,9 +9408,9 @@
   "workspaceCodeCopy": "Copier l'ID",
   "workspaceCodeCopied": "Copié",
   "inviteRoleMember": "Invitation membre",
-  "inviteRoleAdmin": "Invitation admin",
+  "inviteRoleAdmin": "Invitation administrateur·rice",
   "inviteAdminExplainer": "Ce code est à usage unique : il admet UNE personne comme admin, puis expire. Ne le remettez qu'à la personne à qui il est destiné.",
-  "inviteAdminNewCode": "Nouveau code admin",
+  "inviteAdminNewCode": "Nouveau code administrateur·rice",
   "inviteOwnerNote": "Il n'existe pas d'invitation propriétaire — seul un propriétaire peut accorder la propriété, dans Membres & forfaits.",
   "scanJoinTitle": "Scanner le QR de l'espace",
   "scanJoinHelp": "Visez le QR d’invitation avec la caméra — vous voyez l’espace avant d’adhérer.",
@@ -9140,11 +9589,11 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
-  "rolesTitle": "Gestion des rôles",
+  "rolesTitle": "Rôles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "Le propriétaire détient toujours toutes les permissions. Décidez ici ce que les autres rôles peuvent faire — un copropriétaire peut en détenir moins qu'un propriétaire.",
+  "rolesIntroEditor": "Ici, tout le monde est membre. Un rôle ajoute ce que ses titulaires peuvent faire et ne retire jamais rien. Le propriétaire détient toujours toutes les permissions ; un copropriétaire peut en avoir moins.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
@@ -9160,11 +9609,11 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleAdmin": "Admin",
+  "roleAdmin": "Administrateur·rice",
   "@roleAdmin": {
     "description": "Role label (#513)"
   },
-  "roleMember": "Membre",
+  "roleMember": "Tous les membres",
   "@roleMember": {
     "description": "Role label (#513)"
   },
