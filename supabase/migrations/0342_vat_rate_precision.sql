@@ -20,4 +20,4 @@ alter table public.ledger_entries
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(341);
+select public.set_deskilo_schema_version(342);
