@@ -16,7 +16,8 @@ import 'space_scan.dart';
 /// through the same sheet the canvas double-tap opens. Null when this
 /// member may not reserve a space as a whole: the feature, an active
 /// membership, and the grant, the admin role or an assignment roster
-/// (space_scan's rule).
+/// (space_scan's rule). Called with neither a desk nor an office, it
+/// opens the whole LEVEL — offered only where [levelReservable] says so.
 void Function(String? deskId, String? officeId)? listSpaceTap(
   BuildContext context,
   WidgetRef ref, {
@@ -38,7 +39,11 @@ void Function(String? deskId, String? officeId)? listSpaceTap(
     showSpaceSheet(
       context,
       members: roster,
-      kind: desk != null ? SpaceKind.desk : SpaceKind.office,
+      kind: desk != null
+          ? SpaceKind.desk
+          : officeId != null
+              ? SpaceKind.office
+              : SpaceKind.level,
       level: level,
       office: plan.offices
           .where((o) => o.id == (officeId ?? desk?.officeId))
@@ -48,4 +53,19 @@ void Function(String? deskId, String? officeId)? listSpaceTap(
       initialWindow: (start: window.start, end: window.end),
     );
   };
+}
+
+/// #1825 — whether [level] offers its whole-level reservation to me: the
+/// level rail's stricter #466 rule (feature on, level bookable as a
+/// whole, and the grant or the admin role; a roster alone is not enough).
+bool levelReservable(WidgetRef ref, Level? level) {
+  if (level == null || !level.bookableAsWhole) return false;
+  if (!ref
+      .watch(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.levelBooking)) {
+    return false;
+  }
+  final me = ref.watch(myMemberProvider).value;
+  if (me == null || me.status != MemberStatus.active) return false;
+  return me.canReserveLevel || me.canAdminister;
 }

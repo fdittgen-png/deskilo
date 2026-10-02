@@ -5,7 +5,10 @@
 // desk or office header is actionable only when the space is bookable as
 // a whole AND the member may reserve whole spaces; tapping it opens the
 // whole-space sheet for exactly that space. A bookable desk with no seat
-// still appears.
+// still appears. The whole level heads the list where the level rail
+// offers it: bookable as a whole and the grant or admin role.
+import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
+import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
@@ -61,11 +64,27 @@ FloorPlan _plan() => const FloorPlan(
 Future<List<(String?, String?)>> _pump(
   WidgetTester tester, {
   required bool mayReserveWhole,
+  bool levelWhole = false,
 }) async {
   final taps = <(String?, String?)>[];
+  final floorPlan = FakeFloorPlanRepository()
+    ..levels.add(Level(
+      id: 'l1',
+      workspaceId: 'ws-1',
+      name: 'Ground floor',
+      sortOrder: 0,
+      bookableAsWhole: levelWhole,
+    ));
+  final workspace = FakeWorkspaceRepository.withWorkspace(
+    featureFlags: {'levelBooking': true},
+  );
+  workspace.myMember = workspace.myMember.copyWith(
+    canReserveLevel: mayReserveWhole,
+  );
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(),
+      overrides:
+          standardTestOverrides(floorPlan: floorPlan, workspace: workspace),
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
@@ -124,5 +143,22 @@ void main() {
       find.byKey(const ValueKey('list-desk-d1')),
     );
     expect(tile.onTap, isNull);
+  });
+
+  testWidgets('a level bookable as a whole heads the list and opens the '
+      'level', (tester) async {
+    final taps = await _pump(tester, mayReserveWhole: true, levelWhole: true);
+    double top(String key) => tester.getTopLeft(find.byKey(ValueKey(key))).dy;
+    expect(top('list-level-l1'), lessThan(top('list-office-o1')));
+    await tester.tap(find.byKey(const ValueKey('list-level-l1')));
+    expect(taps.single, (null, null), reason: 'neither desk nor office');
+  });
+
+  testWidgets('no level header when the level is not bookable as a whole, '
+      'or the member may not reserve whole spaces', (tester) async {
+    await _pump(tester, mayReserveWhole: true);
+    expect(find.byKey(const ValueKey('list-level-l1')), findsNothing);
+    await _pump(tester, mayReserveWhole: false, levelWhole: true);
+    expect(find.byKey(const ValueKey('list-level-l1')), findsNothing);
   });
 }
