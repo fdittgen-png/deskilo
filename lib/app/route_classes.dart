@@ -56,10 +56,16 @@ class RouteRule {
 /// Where the app opens when nothing more specific was asked for.
 const String kDefaultHome = '/reserve';
 
+/// #1823 — the person's own home, the Me layer: where the app opens when
+/// there is no space of THIS person's to return to, and where "Back to
+/// Me" leads. It needs a session and nothing else.
+const String kMeHome = '/me';
+
 /// Every route the router registers, classified. The lint in
 /// test/lint/route_policy_registry_test.dart keeps this list and
 /// router.dart in step both ways.
 const List<RouteRule> routeRules = [
+  RouteRule(kMeHome, RouteClass.nativeAccount),
   RouteRule('/discover', RouteClass.publicEntry),
   RouteRule('/connections', RouteClass.nativeAccount),
   RouteRule('/account-messages', RouteClass.nativeAccount),
@@ -81,7 +87,9 @@ const List<RouteRule> routeRules = [
   RouteRule('/oauth/consent', RouteClass.nativeAccount),
   RouteRule('/assistants', RouteClass.nativeAccount),
   RouteRule('/database/assistant-approvals', RouteClass.nativeAccount),
+  RouteRule('/installation/assistants', RouteClass.nativeAccount),
   RouteRule('/settings/assistants', RouteClass.workspace),
+  RouteRule('/settings/assistant-setup', RouteClass.workspace),
   RouteRule('/kiosk-gate', RouteClass.workspace),
   RouteRule('/kiosk', RouteClass.workspace),
   RouteRule('/pending', RouteClass.workspace),
@@ -119,6 +127,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/wording', RouteClass.workspace),
   RouteRule('/settings/colours', RouteClass.workspace),
   RouteRule('/settings/roles-of-this-space', RouteClass.workspace),
+  RouteRule('/settings/what-you-can-do', RouteClass.workspace),
   RouteRule('/settings/questions', RouteClass.workspace),
   RouteRule('/attention', RouteClass.workspace),
   RouteRule('/settings/number-sequences', RouteClass.workspace),
@@ -134,6 +143,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/workspace-settings', RouteClass.workspace),
   RouteRule('/validation', RouteClass.workspace),
   RouteRule('/availability', RouteClass.workspace),
+  RouteRule('/bi', RouteClass.workspace), // #1923
   RouteRule('/members', RouteClass.workspace),
   RouteRule('/editor', RouteClass.workspace),
   RouteRule('/editor/level/:levelId', RouteClass.workspace),

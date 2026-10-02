@@ -217,5 +217,19 @@
   "featureTierCore": "Esencial",
   "featureTierCoreDesc": "Lo que todo espacio necesita. Activo desde el primer día.",
   "featureTierPlatform": "Plataforma",
-  "featureTierPlatformDesc": "Pedido, nunca supuesto. Active lo que este espacio realmente hace."
+  "featureTierPlatformDesc": "Pedido, nunca supuesto. Active lo que este espacio realmente hace.",
+  "featureMaturityUnreviewed": "Sin evaluar",
+  "featureMaturityAlpha": "Alfa",
+  "featureMaturityBeta": "Beta",
+  "featureMaturityStable": "Estable",
+  "featureLifecycleActive": "Activa",
+  "featureLifecycleDeprecated": "Obsoleta",
+  "featureLifecycleRetired": "Retirada",
+  "featureMaturityFilterLabel": "Madurez",
+  "featureMaturityFilterAll": "Todas las etapas",
+  "featureMaturitySemantics": "Madurez {maturity}, {lifecycle}",
+  "featureOptInTitle": "¿Activar una función experimental?",
+  "featureOptInBody": "Aún no evaluada como estable: {features}. Puede cambiar y tiene límites conocidos. Actívela solo si este espacio lo acepta.",
+  "featureOptInConfirm": "Activar",
+  "featureIntakeStoppedNote": "Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse."
 }

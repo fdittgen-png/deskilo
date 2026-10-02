@@ -26,17 +26,22 @@ Edit ALL of these in the same commit:
    description come from the ARB) + the REQUIRES map entry. Then
    `dart run tool/build_setup_l10n.dart` and commit `web/setup_l10n.js`
    AND `web/setup_catalogue.js` (the process grouping, from `workspaceProcesses`, #1330).
-5. `test/lint/feature_registry_test.dart` — pin = the enum's size, with a
-   dated `// N→N+1 (date): #issue …` changelog line.
+5. `test/lint/feature_registry_test.dart` — no count to bump (#1863): it
+   checks manifest/name/tier/dependency completeness and that every key a
+   migration ever registered is live or in `retiredFeatureAssessments`.
 6. Budgets: `test/lint/file_length_test.dart` — bump WITH a dated reason
    comment; `workspace_feature.dart` grows ~10 lines per flag.
 7. Routes: `lib/app/router.dart` GoRoute with `featureEnabled(...)`
-   redirect + `test/lint/route_registry_test.dart` pin.
+   redirect + a RouteRule. `test/lint/route_registry_test.dart` resolves
+   every deep link with all features off against a reviewed set (#1863).
 8. `workspace_process.dart` — primary subprocess or explicit internal reason;
    regenerate with `dart run tool/build_process_catalogue.dart`.
 9. **A migration** with `dart run tool/build_feature_registry_sql.dart`'s
    output — the server's copy of the manifest (#1333). A server gate calls
    `public.feature_effective(ws, 'key')`, never reads the flag by hand.
+10. `feature_lifecycle.dart` — the flag's `featureAssessments` line
+   (#1850): `_legacy`/unreviewed until a review names evidence ids from
+   `docs/product/capabilities.json`; maturity never gates anything.
 Validation domains grow in FOUR places (AGENT_RULES #767/#769); the
 placeholders registry has its own pin (`deskilo-reports`).
 
@@ -170,7 +175,7 @@ memory file, not in the wiki.
   operand because `event` was `dynamic`.
 - **A one-line string fix still needs the ×5 sweep and a pin.** "My
   badge" appeared twice in Settings because two keys held the same value
-  in all five locales — perfectly parallel, so `l10n_completeness_test`
+  in all five locales — perfectly parallel, so `arb_key_parity_test`
   was satisfied. Parallel is not correct.
 
 ## 9. Lessons of 2026-09-28 (working beside other agents)

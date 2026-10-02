@@ -2,7 +2,7 @@
 //
 // #1246 — the words a tax authority reads are pinned, per language.
 //
-// `l10n_completeness_test` proves the five key sets are identical: it
+// `arb_key_parity_test` proves the five key sets are identical: it
 // would pass on "Facture" translated as "Bill", and on a credit note
 // that says "Note de crédit" where French accounting law says **avoir**.
 // These are not preferences. A word on an issued invoice is part of the

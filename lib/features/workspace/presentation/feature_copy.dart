@@ -474,6 +474,35 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
               'Message screens refuse screenshots and screen recording '
                   'where the device allows it, and announce a screenshot '
                   'where it can only be detected.',
+        WorkspaceFeature.holidayImport =>
+          l10n?.featureHolidayImportDesc ??
+              'An owner imports the public holidays of the country, and of '
+                  'one region, from an open-data source, deselects the days '
+                  'the space stays open and imports the rest as closure '
+                  'days. Invoiced months are skipped and named.',
+        WorkspaceFeature.capacityKpi =>
+          l10n?.featureCapacityKpiDesc ??
+              'Shows owners and reservation managers how much of the offered '
+                  'seat time was reserved in a month, with how it is '
+                  'computed and what the figure cannot know.',
+        WorkspaceFeature.accountingBook =>
+          l10n?.featureAccountingBookDesc ??
+              'Who keeps the official books of each issuer: Deskilo as '
+                  'pre-accounting, a local book, or an external accounting '
+                  'system that stays authoritative. Each issuer states its '
+                  'currency, fiscal year and accounting basis. Off: member '
+                  'balances and invoices work as before.',
+        WorkspaceFeature.roleAssignment =>
+          l10n?.featureRoleAssignmentDesc ??
+              "Shows a Roles section on each member's page to give or take "
+                  'back a role, the members holding each role, and lets '
+                  'every member see what they can do here.',
+        WorkspaceFeature.taskRecorder =>
+          l10n?.featureTaskRecorderDesc ??
+              'Lets a person record the steps of a task on this '
+                  "workspace's screens, on their own device, review them and "
+                  'export a file without any value they typed. Nothing is '
+                  'uploaded. Off: nobody records here.',
       WorkspaceFeature.workspaceBranding =>
           l10n?.featureWorkspaceBrandingDesc ??
               'The workspace chooses a brand colour the app derives its '

@@ -1,0 +1,180 @@
+{
+  "featureAccountingBookTitle": "Accounting book",
+  "@featureAccountingBookTitle": {
+    "description": "#1869 feature name"
+  },
+  "featureAccountingBookDesc": "Who keeps the official books of each issuer: Deskilo as pre-accounting, a local book, or an external accounting system that stays authoritative. Each issuer states its currency, fiscal year and accounting basis. Off: member balances and invoices work as before.",
+  "@featureAccountingBookDesc": {
+    "description": "#1869 feature description"
+  },
+  "bookSheetTitle": "Accounting book",
+  "@bookSheetTitle": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookTileEmpty": "No book set: DesKilo keeps member balances and invoices (pre-accounting).",
+  "@bookTileEmpty": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookIssuer": "Issuer",
+  "@bookIssuer": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookAuthorityPre": "Pre-accounting",
+  "@bookAuthorityPre": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookAuthorityLocal": "DesKilo is the book",
+  "@bookAuthorityLocal": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookAuthorityExternal": "External system",
+  "@bookAuthorityExternal": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookExternalSystem": "Authoritative system",
+  "@bookExternalSystem": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookCurrency": "Functional currency",
+  "@bookCurrency": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookFiscalStart": "Fiscal year starts on",
+  "@bookFiscalStart": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookBasisAccrual": "Accrual basis",
+  "@bookBasisAccrual": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookBasisCash": "Cash basis",
+  "@bookBasisCash": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookEffectiveFrom": "Takes effect from {date}",
+  "@bookEffectiveFrom": {
+    "description": "#1869 accounting book sheet",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bookFiscalPreview": "Fiscal year {label}: {start} – {end}",
+  "@bookFiscalPreview": {
+    "description": "#1869 accounting book sheet",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "bookProblemExternal": "Name the external system that keeps the official books.",
+  "@bookProblemExternal": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookProblemCurrency": "This currency has no reviewed number of decimals.",
+  "@bookProblemCurrency": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookProblemFiscal": "A fiscal year starts on a day every year has (never 29 February).",
+  "@bookProblemFiscal": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookSaved": "Book saved",
+  "@bookSaved": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookStale": "Someone saved this book since you opened it. Close and reopen to see their version.",
+  "@bookStale": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookSaveFailed": "The book was not saved. Check the connection and try again.",
+  "@bookSaveFailed": {
+    "description": "#1869 the save failed (connection or server)"
+  },
+  "bookRoleCustomers": "Customers (receivable)",
+  "@bookRoleCustomers": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleRevenue": "Revenue",
+  "@bookRoleRevenue": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleBank": "Bank",
+  "@bookRoleBank": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleVatOutput": "Output VAT",
+  "@bookRoleVatOutput": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleExpenses": "Expenses",
+  "@bookRoleExpenses": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeAsset": "Asset",
+  "@bookTypeAsset": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeLiability": "Liability",
+  "@bookTypeLiability": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeEquity": "Equity",
+  "@bookTypeEquity": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeIncome": "Income",
+  "@bookTypeIncome": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeExpense": "Expense",
+  "@bookTypeExpense": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookChartTitle": "Chart of accounts · {site}",
+  "@bookChartTitle": {
+    "description": "#1869 B chart of accounts",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "bookChartSuggest": "Add the suggested accounts to review",
+  "@bookChartSuggest": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountCode": "Account code",
+  "@bookAccountCode": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountName": "Account name",
+  "@bookAccountName": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountPosting": "Takes postings",
+  "@bookAccountPosting": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookMappingsTitle": "Which account each entry books to",
+  "@bookMappingsTitle": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookProblemUnmapped": "Map these accounts before a local book starts: {roles}.",
+  "@bookProblemUnmapped": {
+    "description": "#1869 B chart of accounts",
+    "placeholders": {
+      "roles": {
+        "type": "String"
+      }
+    }
+  }
+}

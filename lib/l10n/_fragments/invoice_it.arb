@@ -284,6 +284,7 @@
   "invoiceGapMissingExemptionReason": "Manca il motivo per cui non si applica l'IVA.",
   "invoiceGapMissingSellerCountry": "Manca il paese dello spazio.",
   "invoiceGapMissingBuyerCountry": "Manca il paese del cliente.",
+  "invoiceGapCreditNoteWithPayments": "Questa nota di credito compensa anche dei pagamenti, cosa che una nota di credito EN 16931 non può esprimere. Emetti l'accredito su un documento a parte.",
   "invoiceGapNoChargeLines": "Questa fattura non ha righe di addebito — il mese era interamente coperto dai pagamenti, quindi non c’è nulla da trasmettere.",
   "invoiceGapMissingSellerCity": "la città dell'indirizzo dello spazio",
   "invoiceGapMissingSellerPostalCode": "il codice postale dell'indirizzo dello spazio",
@@ -766,7 +767,7 @@
   "eventTypeInvoiceReminder": "Promemoria di pagamento",
   "eventInvoiceReminderLine": "Sollecito {level}: fattura {number} — {amount} ancora dovuti",
   "dunningAutomatic": "Solleciti automatici",
-  "dunningAutomaticHint": "Una volta al giorno, le fatture aperte oltre il termine ricevono da sole il livello di sollecito successivo — un avviso nel feed del membro e una notifica. Disattivato: invii ogni sollecito tu stesso.",
+  "dunningAutomaticHint": "Una volta al giorno, le fatture oltre la scadenza registrata passano da sole al livello di sollecito successivo — per l'importo ancora dovuto, mai mentre un pagamento è in attesa o la fattura è sospesa. Le fatture senza scadenza registrata restano a te. Disattivato: invii tu ogni sollecito.",
   "eventTypePriceNegotiation": "Negoziazione di prezzo",
   "eventPriceNegotiationLine": "{actor} propone condizioni per {member}: {terms}",
   "eventPriceNegotiationItems": "{count} articoli",
@@ -1227,5 +1228,70 @@
   "reportDesignErrorVersion": "Questo modello viene da una versione più recente di DesKilo.",
   "reportDesignErrorUnknownKind": "Questo modello riguarda un report che questo spazio non ha.",
   "reportDesignErrorWrongKind": "Questo modello appartiene a un altro report. Aprilo e importalo lì.",
-  "reportDesignErrorInvalidDesign": "Questo file non contiene alcun modello leggibile."
+  "reportDesignErrorInvalidDesign": "Questo file non contiene alcun modello leggibile.",
+  "invoiceHoldAction": "Sospendi i solleciti",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Revoca la sospensione dei solleciti",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "Perché sospendere i solleciti?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "Nessun sollecito viene inviato per questa fattura, né a mano né automaticamente, finché la sospensione non viene revocata.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "Il membro la contesta",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Persona sbagliata o errore d'identità",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Procedura di insolvenza",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Un'altra ragione",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Nota (facoltativa)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Sospendi",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "I solleciti per questa fattura sono sospesi.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "I solleciti per questa fattura possono riprendere.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Solleciti sospesi: {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "Per questa fattura non è stata registrata una scadenza concordata: nessun sollecito automatico finché non la verifichi.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "Non è stato possibile modificare la sospensione dei solleciti. Riprova.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  }
 }

@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/test_clock.dart';
-import 'invoices_test.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 InvoiceMatch partialMatch(String invoiceId, {DateTime? writeoffAt}) =>
     InvoiceMatch(

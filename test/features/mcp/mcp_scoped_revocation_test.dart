@@ -8,6 +8,7 @@
 // UUID and workspace id on a second installation are never touched.
 import 'dart:async';
 
+import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
@@ -67,6 +68,8 @@ class _World {
   late final access = AssistantAccess(
     commands,
     FakeIdentityBindingRepository(),
+    FakeAuthRepository(),
+          FakeMcpAdminRepository(),
   );
   final a = VerifiedMcpTarget(
     installationId: _instA,

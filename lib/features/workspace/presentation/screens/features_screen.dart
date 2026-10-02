@@ -6,11 +6,15 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/feature_lifecycle.dart';
+import '../../domain/feature_operation.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import '../../application/toggle_workspace_feature.dart';
 import '../widgets/feature_capability_list.dart';
+import '../widgets/feature_maturity_badge.dart';
+import '../widgets/feature_opt_in_dialog.dart';
 import '../widgets/features_filter_bar.dart';
 import '../widgets/features_view_switch.dart';
 import '../widgets/process_overview.dart';
@@ -22,7 +26,10 @@ import '../feature_names.dart';
 /// whole for support (search, Changed, one flip). A toggle writes its
 /// delta and refetches, so the gates apply immediately.
 class FeaturesScreen extends ConsumerStatefulWidget {
-  const FeaturesScreen({super.key});
+  const FeaturesScreen({super.key, this.assessments = featureAssessments});
+
+  /// #1850 — the maturity ledger; a test hands in its own.
+  final Map<WorkspaceFeature, FeatureAssessment> assessments;
 
   @override
   ConsumerState<FeaturesScreen> createState() => _FeaturesScreenState();
@@ -33,6 +40,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
   String _query = '';
   bool _changedOnly = false;
   bool _switches = false;
+  var _maturity = FeatureMaturityFilter.all;
 
   /// A feature tapped on the overview, shown among the switches — the
   /// only place a flag is written until #1329's process activation.
@@ -77,6 +85,16 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
     // is the worst kind of setting: the owner has configured the thing
     // and the app disagrees, with nothing on screen to explain it.
     final alsoOn = alsoEnabledWith(raw: enabled, feature: feature);
+    // #1851 — an alpha or beta is switched on only after an explicit yes.
+    final experimental = [if (value) ...[feature, ...alsoOn]]
+        .where((f) => featureNeedsOptIn(f, assessments: widget.assessments))
+        .map((f) => featureName(l10n, f))
+        .toList();
+    if (experimental.isNotEmpty &&
+        !await confirmExperimentalOptIn(context, experimental)) {
+      return;
+    }
+    if (!context.mounted) return;
     // #1327 — the write itself (the #963 delta, then the forced
     // refetch) is application/toggle_workspace_feature.dart's decision.
     if (!await runGuarded(
@@ -129,6 +147,9 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
       if (_changedOnly && raw.contains(entry.feature) == entry.defaultOn) {
         continue;
       }
+      final assessment = featureAssessmentOf(entry.feature,
+          assessments: widget.assessments);
+      if (!featureMaturityFilterMatches(_maturity, assessment)) continue;
       if (!_matches(
         featureName(l10n, entry.feature),
         featureDescription(l10n, entry.feature),
@@ -164,16 +185,21 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                     onChangedOnly: (value) =>
                         setState(() => _changedOnly = value),
                     changedCount: changedCount,
+                    maturity: _maturity,
+                    onMaturity: (value) => setState(() => _maturity = value),
                   ),
                   Expanded(
                     child: FeatureCapabilityList(
                       rows: rows,
                       raw: raw,
+                      assessments: widget.assessments,
                       // Hidden while filtering: somebody who typed a name
                       // is past being introduced. The list takes the
                       // answer, not the filter state — "is the owner
                       // filtering" is a question about these controls.
-                      showHint: _query.isEmpty && !_changedOnly,
+                      showHint: _query.isEmpty &&
+                          !_changedOnly &&
+                          _maturity == FeatureMaturityFilter.all,
                       onChanged: (feature, value) => _toggle(
                           context, ref, workspace, raw, feature, value),
                     ),

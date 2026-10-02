@@ -34,8 +34,15 @@ abstract class FloorPlanRepository {
   });
   Future<void> deleteLevel(String levelId);
 
-  /// Persists a new level order; index in [orderedLevelIds] becomes sort_order.
-  Future<void> reorderLevels(List<String> orderedLevelIds);
+  /// #2010 — persists a new level order in ONE command: [orderedLevelIds]
+  /// is the whole permutation (index becomes sort_order) and [expected] is
+  /// the order it was made from. A stale [expected] is a conflict and a
+  /// list that is not a permutation is refused; neither writes anything.
+  Future<LevelReorderOutcome> reorderLevels(
+    String workspaceId,
+    List<String> orderedLevelIds, {
+    required List<String> expected,
+  });
 
   /// Owner-only: set a level's background image (0036) — uploads [bytes]
   /// to the floor-plans bucket at `<workspaceId>/<levelId>` and records
@@ -58,12 +65,17 @@ abstract class FloorPlanRepository {
 
   /// Owner-only: place a new illustration image on [levelId] at [rect];
   /// uploads [bytes] to the floor-plans bucket. Returns the created row.
+  ///
+  /// [imageId] is the operation's identity (#2012): a retry with the same
+  /// id after a failed or lost answer converges on ONE image, never a
+  /// second row.
   Future<PlanImage> createPlanImage({
     required String workspaceId,
     required String levelId,
     required GridRect rect,
     required Uint8List bytes,
     required String contentType,
+    String? imageId,
   });
 
   /// Owner-only: move/resize an illustration image.
@@ -131,4 +143,24 @@ abstract class FloorPlanRepository {
   /// #585 — the seat carrying NFC tag [uid] (normalized lowercase hex)
   /// in [workspaceId], or null when the tag is linked to no chair.
   Future<String?> seatIdForNfcUid(String workspaceId, String uid);
+}
+
+/// #2010 — what a level reorder did: saved whole, or nothing.
+enum LevelReorderOutcome {
+  saved,
+
+  /// The levels moved since the editor read them.
+  conflict,
+
+  /// Not a permutation of the workspace's levels.
+  refused;
+
+  bool get isSaved => this == saved;
+
+  static LevelReorderOutcome fromJson(Object? json) =>
+      switch (json is Map ? json['status'] : null) {
+        'saved' => saved,
+        'conflict' => conflict,
+        _ => refused,
+      };
 }

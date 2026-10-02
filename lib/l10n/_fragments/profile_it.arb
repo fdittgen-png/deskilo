@@ -30,7 +30,7 @@
   "@privacyTitle": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "I tuoi dati restano nell'UE, non vengono mai tracciati né venduti e sono leggibili solo dai ruoli indicati dalle regole qui sotto. Questi sono i tuoi diritti secondo il GDPR — ognuno è un pulsante.",
+  "privacyIntro": "I tuoi dati non vengono mai tracciati né venduti e sono leggibili solo dai ruoli indicati dalle regole qui sotto; dove sono ospitati è indicato nell'informativa privacy di questa installazione. Questi sono i tuoi diritti secondo il GDPR — ognuno è un pulsante.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },

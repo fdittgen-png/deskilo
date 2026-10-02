@@ -1194,6 +1194,24 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
+  Future<HolidayGeneration> importClosureDays(
+    String workspaceId, {
+    required List<({DateTime day, String name})> days,
+    bool apply = false,
+  }) async {
+    // #2051 — the same rules as generate_closure_days, on the owner's list.
+    final row = await _client.rpc<dynamic>('import_closure_days', params: {
+      'p_workspace_id': workspaceId,
+      'p_days': [
+        for (final d in days)
+          {'day': d.day.toIso8601String().substring(0, 10), 'name': d.name},
+      ],
+      'p_apply': apply,
+    });
+    return holidayGenerationFromJson(Map<String, dynamic>.from(row as Map));
+  }
+
+  @override
   Future<ClosureDay> addClosureDay(
     String workspaceId,
     DateTime day,

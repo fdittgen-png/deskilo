@@ -7,7 +7,7 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 ## HARD RULES
 
 1. **No hard-coded user-facing text.** Every string goes through ARB / `AppLocalizations` with a defensive English fallback. English (`en`) is the canonical locale — every key must exist there. FR, DE, ES and IT are maintained launch locales: every new key needs all five translations in the same PR. Enforced by a lint test with a ratchet-to-zero baseline.
-2. **Never develop without a GitHub issue.** Large work (> 1 PR or multiple subsystems) becomes an Epic with a maintainer-validated breakdown before implementation starts.
+2. **Never develop without a GitHub issue.** Work larger than one PR is split into finite checkpoints that are already stated in the issue (or its approved breakdown); do not run a recursive decomposition pass. See [Ready, Done and closure](#ready-done-and-closure).
 3. **Clean codegen before push.** After touching any freezed class or `@riverpod` annotation: `dart run build_runner build --delete-conflicting-outputs` from clean; commit the generated files; zero drift on push.
 4. **Locale key parity.** The key-parity test fails CI if any locale is missing keys vs. `app_en.arb`.
 5. **The setup questionnaire never lags the app.** Any change to a configurable parameter updates `web/setup.html` — field, XML export, XML import — in the SAME PR. Gated by `test/lint/setup_html_test.dart`; see the section below.
@@ -26,7 +26,7 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 
 ## Feature management (lifetime rule, #502)
 
-- EVERY user-facing functionality ships behind a `WorkspaceFeature` flag — for the lifetime of this project. A new functionality lands with: the enum value, a `featureManifest` entry (defaultOn/requires), `featureXxx`/`featureXxxDesc` l10n keys ×5, `features.contains(...)` gates on its UI surfaces, and the bumped pin in `test/lint/feature_registry_test.dart`.
+- EVERY user-facing functionality ships behind a `WorkspaceFeature` flag — for the lifetime of this project. A new functionality lands with: the enum value, a `featureManifest` entry (defaultOn/requires), `featureXxx`/`featureXxxDesc` l10n keys ×5, `features.contains(...)` gates on its UI surfaces, its assessment line in `feature_lifecycle.dart` and its row in the generated process catalogue (#1863 retired the count pin: `test/lint/feature_registry_test.dart` now checks completeness, stable keys, tiers and dependencies).
 - Default ON unless the feature is risky or needs owner setup; dependent features declare `requires` so the Features screen explains the chain.
 - OFF must degrade honestly: the entry points disappear (and their routes redirect); already-stored data stays untouched.
 
@@ -109,9 +109,31 @@ on a given day keeps its numbers by saying so in its heading —
 `<!-- dated: YYYY-MM-DD — why -->` — because history is allowed to be
 dated; a claim about today is not.
 
+## Ready, Done and closure
+
+The one shared reference for issues, PRs and agents (canonical wording and the current execution directive live in [#1447](https://github.com/fdittgen-png/deskilo/issues/1447); this section is its checked-in summary, not a second policy).
+
+**Ready** — a checkpoint states the affected user and outcome, current vs expected behaviour, a minimal proving scenario, the exact producer prerequisite (or none), non-goals, business risk, the real consumer, the test layers that apply, and an ownership/size boundary. Refresh `master` and read the body plus later owner corrections first; a missing current proof means `unverified`, not `unimplemented`.
+
+**Done** — the producer and its real consumer work through success, refusal and recovery paths; acceptance maps to named tests; migration, setup, help, locale and registry changes of the slice are complete; the candidate SHA has green required checks. Operator, device or provider proof that is still missing is `NOT RUN` / `BLOCKED`, never `PASS`.
+
+**STOP** when Ready's outcome is Done. No speculative abstractions, extra platforms, unrelated cleanup or repeated polish cycles. An unrelated defect found on the way is filed separately; a regression the slice caused is fixed inside it.
+
+**Status words:** `still-open/unverified`, `implemented-in-PR #N`, `verified-at-SHA`, `blocked-by <checkpoint>`, `released-in`. Implemented is not verified, verified is not released.
+
+**Closure rules (in force):**
+- A partial PR says `Refs #NN`. `Closes #NN` is for the PR that meets the whole acceptance, and the issue is only treated as closed once that PR is merged on `master` with any required release/device/operator evidence recorded.
+- A queued auto-merge is not a merge; a changed head SHA invalidates earlier evidence.
+- One registry-touching branch at a time (see below).
+- A migration takes the number master's latest plus one at push time, and is applied to the dev project before the first push; rebase and renumber if master moved.
+- No tool or AI mentions in issues, commits, PR bodies or any other artifact.
+- Repeating the same failing test or conflict after only a new head SHA is a stop signal: record it and change the approach once, with evidence, instead of looping.
+
+**Glossary:** *Checkpoint* — a reviewable slice with its own consumer and tests. *Release gate* — evidence required before a capability is switched on. *Installation* — one verified backend identity; *workspace* — a business scope inside it. *Public / participant / management* — API surfaces (anonymous / authenticated / internal); distinct from the social / community / operational data purposes.
+
 ## Git rules
 
-- Branch off `master`; conventional commits; PRs < 400 lines (excluding generated); squash-merge; `Closes #NN`.
+- Branch off `master`; conventional commits; PRs < 400 lines (excluding generated); squash-merge; `Refs #NN` for a partial PR, `Closes #NN` only when the whole acceptance is met (see [Ready, Done and closure](#ready-done-and-closure)).
 - Forbidden: direct commits to `master`, force-push to `master`, `--no-verify`, amending pushed commits.
 
 ## The setup questionnaire (`web/setup.html`) — no exceptions
@@ -516,7 +538,7 @@ never does.
 
 Every functionality adds itself to the SAME lines: the `WorkspaceFeature`
 enum and manifest, `feature_names.dart`, `features_screen.dart`, the
-registry pin, `web/setup.html` FEATURES/REQUIRES, the file budgets, the
+process catalogue, `web/setup.html` FEATURES/REQUIRES, the file budgets, the
 placeholder list and its pin. Two branches cut from the same master
 that both add there CONFLICT on merge, and the rebase repeats for every
 branch behind. So: cut a branch from master, open its PR, merge it, THEN

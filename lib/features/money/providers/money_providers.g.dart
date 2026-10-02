@@ -1780,6 +1780,52 @@ final class MyAccountProvider
 
 String _$myAccountHash() => r'fbdff310a8809dd898b6a0193873f380d7b8c361';
 
+/// #1913 — invoiceId → reason of its active dunning hold.
+
+@ProviderFor(dunningHolds)
+final dunningHoldsProvider = DunningHoldsProvider._();
+
+/// #1913 — invoiceId → reason of its active dunning hold.
+
+final class DunningHoldsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, String>>,
+          Map<String, String>,
+          FutureOr<Map<String, String>>
+        >
+    with
+        $FutureModifier<Map<String, String>>,
+        $FutureProvider<Map<String, String>> {
+  /// #1913 — invoiceId → reason of its active dunning hold.
+  DunningHoldsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'dunningHoldsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$dunningHoldsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, String>> create(Ref ref) {
+    return dunningHolds(ref);
+  }
+}
+
+String _$dunningHoldsHash() => r'48dbd28ac456c7bc2f5552adcdc7d891be6a31e7';
+
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.
 
 @ProviderFor(invoiceMatches)

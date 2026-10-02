@@ -303,7 +303,42 @@ enum WorkspaceFeature {
   /// watermark on the web. Core, default ON: confidentiality is the
   /// default, a space may choose otherwise; account messages are always
   /// protected.
-  captureProtection;
+  captureProtection,
+
+  /// #2051 — an owner imports the official public holidays of the
+  /// workspace's country, and of one region where they differ, from an
+  /// open-data source, deselects the days the space stays open, and
+  /// imports the rest as closure days. Platform, default OFF, under
+  /// publicHolidays: the SQL generator stays the offline fallback.
+  holidayImport,
+
+  /// #1918 — seat utilisation on the Availability screen: reserved over
+  /// offered seat-hours for a month, computed by the server under the
+  /// one KPI contract, with its definition, numerator, denominator and
+  /// data quality on demand. Platform, default OFF.
+  capacityKpi,
+
+  /// #1869 — the accounting owner of a legal entity: a book profile per
+  /// issuer (functional currency, fiscal year, accounting basis) and ONE
+  /// authority mode — pre-accounting, a local book, or an external
+  /// authoritative system. Platform, default OFF, under invoicing:
+  /// member balances and invoices work without it.
+  accountingBook,
+
+  /// #2085 — where a role is given and what it gives: a Roles section on
+  /// each member's page (the Administrator role through the validation
+  /// quorum, the workspace's own roles at once), the members holding each
+  /// role in its editor, and "What you can do here" for every member.
+  /// Under roleManagement; Core, default ON.
+  roleAssignment,
+
+  /// #1865 — "Record this task": a person records, on this device and
+  /// for themselves, the semantic steps of a task on the workspace's
+  /// screens, reviews them and exports a minimized file. Nothing is
+  /// uploaded. Gates recording on workspace screens only; the local
+  /// workbench and its outputs are not workspace features. Platform,
+  /// default OFF.
+  taskRecorder;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1362,6 +1397,47 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.messages,
     tier: FeatureTier.core,
     requires: WorkspaceFeature.memberNotifications,
+  ),
+  // #2051 — closure days written from an open-data list change what a
+  // subscription includes, like publicHolidays: asked for, Platform, off.
+  WorkspaceFeature.holidayImport: FeatureManifestEntry(
+    feature: WorkspaceFeature.holidayImport,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+    requires: WorkspaceFeature.publicHolidays,
+  ),
+  // #1918 — a management figure, asked for: Platform, off.
+  WorkspaceFeature.capacityKpi: FeatureManifestEntry(
+    feature: WorkspaceFeature.capacityKpi,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #1869 — who keeps the official books is a finance decision nobody
+  // makes by default: asked for, Platform, off.
+  WorkspaceFeature.accountingBook: FeatureManifestEntry(
+    feature: WorkspaceFeature.accountingBook,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+    requires: WorkspaceFeature.invoicing,
+  ),
+  // #2085 — the place a role is given, and what it gives. Off, the
+  // member page keeps its single "Administrator" row.
+  WorkspaceFeature.roleAssignment: FeatureManifestEntry(
+    feature: WorkspaceFeature.roleAssignment,
+    surface: FeatureSurface.members,
+    tier: FeatureTier.core,
+    requires: WorkspaceFeature.roleManagement,
+  ),
+  // #1865 — recording a task is something a space offers its people
+  // deliberately: asked for, Platform, off.
+  WorkspaceFeature.taskRecorder: FeatureManifestEntry(
+    feature: WorkspaceFeature.taskRecorder,
+    surface: FeatureSurface.everywhere,
+    tier: FeatureTier.platform,
+    defaultOn: false,
   ),
 };
 

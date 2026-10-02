@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/demo/data/me_repository.dart';
+import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
@@ -92,12 +96,18 @@ import '../share/file_sharer.dart';
 import '../share/text_sharer.dart';
 import '../theme/theme_controller.dart';
 import '../time/clock.dart';
+import '../../features/workspace/domain/kpi_contract.dart';
+import '../../features/workspace/providers/kpi_providers.dart';
 import 'demo_fixture.dart';
+import '../push/push_opt_out.dart';
 
 /// The overrides that turn a scope into the Demo environment.
 ///
 /// [fixture] is the session's data; a new one is a new session.
-List<Override> demoOverrides(DemoFixture fixture) => [
+List<Override> demoOverrides(DemoFixture fixture) {
+  // #1847 — the one in-memory directory behind its three interfaces.
+  final directory = FakeDirectoryRepository();
+  return [
       // The clock first: everything the fixture seeded is relative to it,
       // so a demo opened next year still shows a booking for today.
       clockProvider.overrideWithValue(FixedClock(fixture.seededAt)),
@@ -142,12 +152,19 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       eventRepositoryProvider.overrideWithValue(fixture.events),
       calendarRepositoryProvider.overrideWithValue(fixture.calendar),
       moneyRepositoryProvider.overrideWithValue(fixture.money),
+      // #1869 — book profiles in memory.
+      bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()),
       creditRepositoryProvider.overrideWithValue(fixture.credits),
       accessoryRepositoryProvider.overrideWithValue(fixture.accessories),
       profileRepositoryProvider.overrideWithValue(fixture.profiles),
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>[]),
-      directoryRepositoryProvider.overrideWith((ref)=>FakeDirectoryRepository()),
+      // #1847 — public discovery, publication management and participant
+      // requests: three interfaces, one in-memory directory.
+      publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
+      publicationRepositoryProvider.overrideWith((ref)=>directory),
+      directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
+      meRepositoryProvider.overrideWith((ref) => FakeMeRepository()), // #1823
       accountContactRepositoryProvider.overrideWith((ref,source)=>FakeAccountContactRepository()),
       // #1824 — the messenger of every server, one in-memory one each.
       messengerRepositoryProvider.overrideWith((ref, source) => FakeMessengerRepository()),
@@ -159,6 +176,8 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       workspaceImportRepositoryProvider.overrideWithValue(fixture.imports),
       workspaceFieldsRepositoryProvider.overrideWithValue(fixture.fields),
       workspaceRolesRepositoryProvider.overrideWithValue(fixture.roles),
+      // #1918 — no server to compute capacity on: the tile says so.
+      kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
 
       // #1377 — the ways an effect could leave the app, each pointed at
       // something inert. A payment, an invitation, an e-invoice and a
@@ -204,6 +223,7 @@ List<Override> demoOverrides(DemoFixture fixture) => [
           .overrideWithValue(fixture.prefs.shellBarHidden),
       shellSwipeCoachStoreProvider
           .overrideWithValue(fixture.prefs.shellSwipeCoach),
+      pushOptOutStoreProvider.overrideWithValue(fixture.prefs.pushOptOut),
       frontCameraStoreProvider.overrideWithValue(fixture.prefs.frontCamera),
       activeWorkspaceStoreProvider
           .overrideWithValue(fixture.prefs.activeWorkspace),
@@ -223,6 +243,7 @@ List<Override> demoOverrides(DemoFixture fixture) => [
       // demonstration's synthetic rows to the device filesystem.
       cacheStoreProvider.overrideWithValue(fixture.prefs.cache),
     ];
+}
 
 /// #1625 — Demo's fictional installation id (never a real server's).
 const kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
@@ -233,6 +254,7 @@ const kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
 /// `demo_scope_test` compares it against what [demoOverrides] actually
 /// overrides, and against the repository providers the app declares.
 const Set<String> demoOverriddenProviders = {
+  'bookProfileRepositoryProvider', // #1869
   'clockProvider',
   'authRepositoryProvider',
   'identityBindingRepositoryProvider',
@@ -259,13 +281,16 @@ const Set<String> demoOverriddenProviders = {
   'workspaceApplicationRepositoryProvider',
   'accountActivityRepositoryProvider',
   'connectedInstallationsProvider', 'connectedSourcesProvider',
-  'directoryRepositoryProvider', 'accountContactRepositoryProvider',
+  'publicDiscoveryRepositoryProvider', 'publicationRepositoryProvider',
+  'directoryParticipantRepositoryProvider', 'accountContactRepositoryProvider',
+  'meRepositoryProvider', // #1823
   'messengerRepositoryProvider',
   'deploymentRepositoryProvider',
   'workspaceFilesRepositoryProvider',
   'workspaceImportRepositoryProvider',
   'workspaceFieldsRepositoryProvider',
   'workspaceRolesRepositoryProvider',
+  'kpiRepositoryProvider',
   'realtimeSyncProvider',
   'notificationServiceProvider',
   'appBadgeProvider',
@@ -283,6 +308,7 @@ const Set<String> demoOverriddenProviders = {
   'navigationStyleStoreProvider',
   'shellBarHiddenStoreProvider',
   'shellSwipeCoachStoreProvider',
+  'pushOptOutStoreProvider',
   'frontCameraStoreProvider',
   'activeWorkspaceStoreProvider',
   'defaultWorkspaceStoreProvider',

@@ -71,11 +71,14 @@ const Map<String, int> _repositoryInWidgets = {
 };
 
 const Set<String> _knownPairs = {
+  // #1823 — the Me layer is the account's home: it shows the account
+  // messenger and discovery (directory), my spaces and memberships
+  // (workspace), my photo and account rows (profile), and signs out (auth).
+  'me -> auth', 'me -> directory', 'me -> profile', 'me -> workspace',
   // #1791: account-bound portal, workspace publication/employment and profile entry.
   'workspace -> directory', 'directory -> auth', 'directory -> workspace',
   // #1824 — Me › Messages IS the unified inbox, which lives with the
-  // account messenger it grew from.
-  'me -> directory',
+  // account messenger it grew from ('me -> directory', above).
   'profile -> directory', 'money -> auth',
   // #1642 — Help discards local support previews when identity/workspace changes.
   'help -> auth',
@@ -214,7 +217,7 @@ const Map<String, int> _pairBudget = {
   'members -> plan': 3,
   'members -> profile': 9,
   'members -> reservations': 14,
-  'members -> workspace': 34,
+  'members -> workspace': 35, // 2026-10-02 #2085 34→35: the member page hosts the Roles card (workspace/presentation/widgets/member_roles_card.dart), which gives the roles workspace/ defines.
   'money -> calendar': 1,
   'money -> events': 30,
   'money -> members': 2,
@@ -223,7 +226,7 @@ const Map<String, int> _pairBudget = {
   'money -> reservations': 13,
   // 2026-09-15 #1310 S0 112→113: the invoice register asks for the
   // exportData permission before offering the accounting export.
-  'money -> workspace': 117, // 2026-09-19 #1449 116→117: save_legal_identity.dart names WorkspaceRepository — the command writes both aggregates, which is the point of it; the SCREEN stopped importing it, so the coupling moved from presentation into application where it is one line // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
+  'money -> workspace': 122, // 2026-10-02 #1869 B 120→122: the chart sheet names its issuer site and reads the current workspace, as the book sheet does; 2026-10-02 #1869 117→120: a book profile belongs to an issuer, which IS a workspace site, and is read for the current workspace — the book sheet names the site, the providers the current workspace; // 2026-09-19 #1449 116→117: save_legal_identity.dart names WorkspaceRepository — the command writes both aggregates, which is the point of it; the SCREEN stopped importing it, so the coupling moved from presentation into application where it is one line // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
   'plan -> events': 1,
   'plan -> members': 1,
   'plan -> money': 4,
@@ -268,7 +271,7 @@ const Map<String, int> _pairBudget = {
   // the plan's `targetNamesProvider` so the calendar-file command can name
   // the booked space — the widget that asks for the file imports no plan
   // provider of its own, which is the point of the command.
-  'reservations -> plan': 69,
+  'reservations -> plan': 73, // #1825 +1: whole_space_blocking (FloorPlan) — the whole-space rule now has ONE home shared by the plan sheet and the list. #1825 +3: list_space_tap (floor plan, level, half-day window)
   'reservations -> profile': 1,
   // 48→50 (2026-09-16): #1234 — `application/act_on_space.dart` and
   // `domain/space_act.dart` both need `BookingGranularity`: the
@@ -285,7 +288,7 @@ const Map<String, int> _pairBudget = {
   // BookingPolicies remain owned by workspace, not duplicated in the card.
   // 2026-09-27 #1636: +3 — the Get started card's owner guidance reads
   // the workspace readiness check (domain, provider, section labels).
-  'reservations -> workspace': 57,
+  'reservations -> workspace': 60, // #1825 +3: list_space_tap (member, feature, providers)
   'workspace -> auth': 10, // 2026-09-28 #1652 9→10: the invitation review offers Change account (sign-out) beside Join, and a wrong-account answer offers the same.  // 2026-09-28 #1791: account-scoped applications and replies work without membership.  // 2026-09-26 #1636 3→4 and #1654 4→5: a pending creation draft names the account that sent it, so a restart resumes it for that account only (application/creation_intent.dart); #1654: the onboarding handoff listens to the auth stream to discard completions after an account change
   // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
   // *does anything need me?* by ASSEMBLING signals that already exist:
@@ -298,9 +301,9 @@ const Map<String, int> _pairBudget = {
   'workspace -> events': 15, // 2026-09-27 #1657 13→15: widgets/local_setup_views.dart names a validation policy by its event-type label (the domain enum and its label), for the named-validators slot and the apply sheet's note
   'workspace -> members': 4,
   'workspace -> money': 35,
-  'workspace -> plan': 25,
+  'workspace -> plan': 26, // 2026-10-02 #1923 B 25→26: the Web-BI query groups capacity by the workspace's levels (levelsProvider), the one level seam.
   'workspace -> profile': 11, // 2026-09-28 #1652 10→11: the invitation review names who is joining (my profile's e-mail).
-  'workspace -> reservations': 17,
+  'workspace -> reservations': 19, // 2026-10-02 #2085 17→19: the role's holders and "What they can do here" print member names through memberNamesProvider, the one name seam (recording privacy, #1514).
 };
 
 Iterable<File> _featureFiles() => handWrittenDartFiles('lib/features');

@@ -30,7 +30,7 @@
   "@privacyTitle": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "Deine Daten bleiben in der EU, werden nie getrackt oder verkauft und sind nur für die Rollen lesbar, die die Regeln unten nennen. Das sind deine Rechte nach der DSGVO — jedes ist ein Knopf.",
+  "privacyIntro": "Ihre Daten werden nie verfolgt oder verkauft und sind nur für die Rollen lesbar, die die Regeln unten nennen; wo sie gespeichert sind, steht in den Datenschutzhinweisen dieser Installation. Das sind Ihre Rechte nach der DSGVO — jedes ist eine Schaltfläche.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },

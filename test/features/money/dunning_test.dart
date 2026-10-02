@@ -12,7 +12,7 @@ import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'invoices_test.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 void main() {
   final issued = DateTime.utc(2026, 7, 1);

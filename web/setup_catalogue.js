@@ -11,6 +11,7 @@ window.SETUP_PROCESSES=[
      "membersDirectory",
      "coOwner",
      "roleManagement",
+     "roleAssignment",
      "customRoles",
      "customFields",
      "personalInfo",
@@ -50,7 +51,9 @@ window.SETUP_PROCESSES=[
     "key": "availability",
     "features": [
      "workingHours",
-     "publicHolidays"
+     "publicHolidays",
+     "holidayImport",
+     "capacityKpi"
     ]
    },
    {
@@ -187,6 +190,7 @@ window.SETUP_PROCESSES=[
    {
     "key": "tax",
     "features": [
+     "accountingBook",
      "vatManagement",
      "vatDeclarations",
      "vatGroups",
@@ -251,6 +255,7 @@ window.SETUP_PROCESSES=[
      "decisionSurface",
      "formHelpHints",
      "memberGettingStarted",
+     "taskRecorder",
      "uiAnimations",
      "regionalFormats",
      "navigationStyle",

@@ -83,6 +83,15 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // ON would settle that by implication; off, the question stays a
   // question until an owner answers it.
   WorkspaceFeature.decisionSurface,
+  // #2051 — importing holidays from an open-data source writes closure
+  // days, like publicHolidays: asked for, never assumed.
+  WorkspaceFeature.holidayImport,
+  // #1918 — a management figure is asked for, never assumed.
+  WorkspaceFeature.capacityKpi,
+  // #1869 — who keeps the official books is a finance decision.
+  WorkspaceFeature.accountingBook,
+  // #1865 — recording a task is offered deliberately, never by default.
+  WorkspaceFeature.taskRecorder,
 };
 
 /// Every other feature ships ON.
@@ -155,6 +164,10 @@ void main() {
       'memberAccountMenu': true,
       'mcpAccess': true,
       'publicListings': true,
+      'holidayImport': true,
+      'capacityKpi': true,
+      'accountingBook': true,
+      'taskRecorder': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

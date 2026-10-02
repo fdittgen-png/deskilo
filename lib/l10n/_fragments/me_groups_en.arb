@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "meGroupProfile": "My profile",
+  "@meGroupProfile": {
+    "description": "#1846 Me groups: meGroupProfile"
+  },
+  "meGroupWorkspaces": "My workspaces",
+  "@meGroupWorkspaces": {
+    "description": "#1846 Me groups: meGroupWorkspaces"
+  },
+  "meGroupInstallations": "Connected installations",
+  "@meGroupInstallations": {
+    "description": "#1846 Me groups: meGroupInstallations"
+  }
+}

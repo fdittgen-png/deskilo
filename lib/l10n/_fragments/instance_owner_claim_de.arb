@@ -1,0 +1,5 @@
+{
+  "@@locale": "de",
+  "instanceOwnerClaimIntro": "Wem gehört diese Instanz? Geben Sie die E-Mail-Adresse ein, mit der Sie sich dort registrieren werden. Nachdem Sie diese Adresse bestätigt haben, beanspruchen Sie die Inhaberschaft unter Einstellungen → Instanzeigentümer.",
+  "instanceOwnerClaimLabel": "E-Mail des Inhabers"
+}

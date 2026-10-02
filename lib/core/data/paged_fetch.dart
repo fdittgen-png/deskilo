@@ -8,17 +8,17 @@
 // For a screen that is a display bug; for an export it is a silent loss
 // of the operator's data, discovered only when somebody counts.
 //
-// So export reads page until a page comes back short, which is the one
-// termination condition that is correct whatever the cap happens to be
-// — we never have to know the number, and a cap changed in the
-// dashboard cannot quietly break the export.
+// So reads page until a page comes back EMPTY (#1848): a short page is
+// what every page looks like when the server's cap is below the page
+// size, so "short means the end" silently dropped everything past the
+// first cap's worth. Empty is the one end signal that holds whatever the
+// cap is — we never have to know the number.
 library;
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-/// Rows per request. Comfortably under Supabase's default `max_rows` of
-/// 1000, so a full page is always the page size rather than the cap —
-/// which is what makes "a short page means the end" true.
+/// Rows per request. Under Supabase's default `max_rows` of 1000; a
+/// lower cap only means more, shorter pages (#1848).
 const int kExportPageSize = 500;
 
 /// A hard ceiling on total rows, so a bug in the termination condition
@@ -67,21 +67,62 @@ Future<List<Map<String, dynamic>>> fetchAllPages({
   required PostgrestTransformBuilder<PostgrestList> Function() build,
   int pageSize = kExportPageSize,
   int maxRows = kExportMaxRows,
+}) =>
+    fetchPages(
+      table: table,
+      page: (from, to) async => [
+        for (final row in await build().range(from, to))
+          Map<String, dynamic>.from(row),
+      ],
+      pageSize: pageSize,
+      maxRows: maxRows,
+    );
+
+/// #1848 — the paging loop, with the page read handed in (tests drive it
+/// with a server that caps below the page size).
+///
+/// A page SHORTER than requested is not the end: a server whose cap is
+/// below [pageSize] returns short pages all the way through. The next
+/// page starts after the rows actually returned, and only an EMPTY page
+/// ends the read. The caller's order must be total (add a unique
+/// tie-breaker such as `id`), or rows can repeat or vanish between pages.
+Future<List<Map<String, dynamic>>> fetchPages({
+  required String table,
+  required Future<List<Map<String, dynamic>>> Function(int from, int to) page,
+  int pageSize = kExportPageSize,
+  int maxRows = kExportMaxRows,
 }) async {
   final all = <Map<String, dynamic>>[];
-  var from = 0;
-
   while (true) {
-    final page = await build().range(from, from + pageSize - 1);
-    all.addAll(page.map(Map<String, dynamic>.from));
-
-    // A short page is the end of the data — the only signal that does
-    // not depend on knowing the server's cap.
-    if (page.length < pageSize) return all;
-
-    from += pageSize;
+    final rows = await page(all.length, all.length + pageSize - 1);
+    if (rows.isEmpty) return all;
+    all.addAll(rows);
     if (all.length >= maxRows) {
       throw ExportTooLargeException(table, maxRows);
     }
   }
 }
+
+/// #2011 — ids per `in.(…)` request: bounded, so a large plan never builds
+/// an unbounded URL.
+const int kInChunk = 100;
+
+/// [ids] in consecutive chunks of at most [size].
+List<List<String>> chunked(List<String> ids, [int size = kInChunk]) => [
+  for (var i = 0; i < ids.length; i += size)
+    ids.sublist(i, i + size > ids.length ? ids.length : i + size),
+];
+
+/// #2011 — every row [build] selects for [ids]: the ids in bounded chunks,
+/// each chunk paged to the end ([fetchAllPages]). [build] filters by its
+/// chunk and orders totally.
+Future<List<Map<String, dynamic>>> fetchAllIn({
+  required String table,
+  required List<String> ids,
+  required PostgrestTransformBuilder<PostgrestList> Function(List<String> chunk)
+      build,
+}) async => [
+  for (final chunk in chunked(ids))
+    ...await fetchAllPages(table: table, build: () => build(chunk)),
+];
+

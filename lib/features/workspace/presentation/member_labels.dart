@@ -9,7 +9,7 @@ import '../domain/member.dart';
 String memberRoleLabel(AppLocalizations? l10n, Member member) => member.isOwner
     ? (l10n?.memberRoleOwner ?? 'Owner')
     : member.isAdmin
-        ? (l10n?.memberRoleAdmin ?? 'Admin')
+        ? (l10n?.memberRoleAdmin ?? 'Administrator')
         : (l10n?.memberRoleMember ?? 'Member');
 
 /// Active / Paused / Pending / Exited.

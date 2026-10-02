@@ -30,7 +30,7 @@
   "@privacyTitle": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "Sus datos permanecen en la UE, nunca se rastrean ni se venden, y solo los leen los roles que nombran las reglas de abajo. Estos son sus derechos según el RGPD — cada uno es un botón.",
+  "privacyIntro": "Tus datos nunca se rastrean ni se venden, y solo los pueden leer los roles que nombran las reglas de abajo; dónde se alojan figura en el aviso de privacidad de esta instalación. Estos son tus derechos según el RGPD — cada uno es un botón.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },

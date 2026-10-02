@@ -93,6 +93,9 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     _sub = null;
     _debounce?.cancel();
     _debounce = null;
+    // #2019 — signals collected for the old channel never flush into the
+    // next workspace's batch.
+    _pending.clear();
     final observer = _observer;
     if (observer != null) {
       WidgetsBinding.instance.removeObserver(observer);
@@ -109,14 +112,26 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     final entries = tables.contains(kResyncSignal)
         ? mappedTables.map(invalidationFor)
         : tables.map(invalidationFor);
-    unawaited(_applyAll(entries.toList(growable: false)));
+    unawaited(_applyAll(entries.toList(growable: false), _generation));
   }
+
+  /// #2019 — batches that actually invalidated (tests).
+  @visibleForTesting
+  int appliedBatches = 0;
 
   /// #1084 — the disk cache is busted ONCE and, crucially, BEFORE the
   /// providers are invalidated. Firing the bust unawaited and
   /// invalidating synchronously let the refetch win the race and land
   /// back on the entry that was about to be deleted.
-  Future<void> _applyAll(List<TableInvalidation> entries) async {
+  ///
+  /// #2019 — the batch belongs to the build [generation] it was collected
+  /// under: after the awaited bust, a batch whose build was superseded (a
+  /// workspace, account or installation switch) invalidates nothing. And
+  /// each provider is invalidated once, however many tables named it.
+  Future<void> _applyAll(
+    List<TableInvalidation> entries,
+    int generation,
+  ) async {
     if (entries.any((e) => e.bustsPlanCache)) {
       try {
         await ref.read(floorPlanRepositoryProvider).invalidateCache();
@@ -131,11 +146,13 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
         );
       }
     }
-    if (!ref.mounted) return;
-    for (final entry in entries) {
-      for (final provider in entry.providers) {
-        ref.invalidate(provider);
-      }
+    if (!ref.mounted || generation != _generation) return;
+    final providers = {
+      for (final entry in entries) ...entry.providers,
+    };
+    for (final provider in providers) {
+      ref.invalidate(provider);
     }
+    appliedBatches++;
   }
 }

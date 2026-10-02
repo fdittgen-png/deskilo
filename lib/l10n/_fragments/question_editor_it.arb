@@ -49,7 +49,7 @@
   "@questionEditorPersonal": {
     "description": "#1288 the question editor: questionEditorPersonal"
   },
-  "questionEditorPersonalHelp": "Cancellato quando la persona esce, e incluso nella sua esportazione dei dati. Lascialo attivo a meno che la risposta riguardi davvero lo spazio e non la persona.",
+  "questionEditorPersonalHelp": "Ogni risposta è legata a un membro, quindi è un dato personale: è inclusa nella sua esportazione dei dati e viene cancellata quando esce.",
   "@questionEditorPersonalHelp": {
     "description": "#1288 the question editor: questionEditorPersonalHelp"
   },
@@ -148,5 +148,9 @@
   "questionTypeMultiChoice": "Diverse di un elenco",
   "@questionTypeMultiChoice": {
     "description": "#1288 the question editor: questionTypeMultiChoice"
+  },
+  "questionEditorNotPersonalWarning": "Resta personale: la risposta è legata a un membro, quindi viene esportata e cancellata con l'iscrizione qualunque sia questa impostazione. Solo un obbligo di conservazione documentato può mantenerla.",
+  "@questionEditorNotPersonalWarning": {
+    "description": "#1912 the question editor: shown while the personal-data switch is off"
   }
 }

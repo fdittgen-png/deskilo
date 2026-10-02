@@ -102,5 +102,9 @@
   "workspaceFieldsSaveFailed": "Le tue risposte alle domande di questo spazio non sono state salvate. Il resto dei tuoi dati sì.",
   "@workspaceFieldsSaveFailed": {
     "description": "#1288 custom fields: workspaceFieldsSaveFailed"
+  },
+  "workspaceFieldsPersonalNote": "Le tue risposte sono dati personali: fanno parte della tua esportazione dei dati e vengono cancellate quando lasci questo spazio, salvo un obbligo legale di conservazione documentato dallo spazio.",
+  "@workspaceFieldsPersonalNote": {
+    "description": "#1912 custom fields: every answer is personal data"
   }
 }

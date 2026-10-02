@@ -4,11 +4,11 @@ Thanks for helping! The project follows the same working methodology as its sibl
 
 ## Workflow
 
-- **Issue first.** No code without a GitHub issue. Work larger than one PR becomes an **Epic** with a validated breakdown.
+- **Issue first.** No code without a GitHub issue. Work larger than one PR is split into finite checkpoints stated in the issue; Ready, Done and the closure rules are in [`docs/AGENT_RULES.md`](docs/AGENT_RULES.md#ready-done-and-closure).
 - Branch off `master`: `feat/`, `fix/`, `refactor/`, `test/`, `docs/`, `chore/`, `ci/`, `perf/`, `style/`.
 - **Conventional commits**: `type(scope): imperative subject under 72 chars, no trailing period`.
 - One concern per branch, short-lived (1–3 days). **PRs under 400 lines** (excluding generated files) — split if larger.
-- Every change is a PR; squash-merge only; link the issue (`Closes #NN`).
+- Every change is a PR; squash-merge only; link the issue: `Refs #NN` for a partial PR, `Closes #NN` only when the whole acceptance is met.
 - Forbidden: direct commits to `master`, force-push to `master`, `--no-verify`, amending pushed commits.
 
 ## Hard rules

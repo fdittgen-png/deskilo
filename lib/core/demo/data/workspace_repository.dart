@@ -66,7 +66,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
             // that is about the environment says so by setting it.
             environment: 'prod',
           ),
-        ];
+        ], serverDefaultWorkspaceId = 'ws-1'; // #1823: the fixture opens in ws-1, not on Me
 
   final List<Workspace> workspaces;
 
@@ -1642,6 +1642,55 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     return HolidayGeneration(
       days: holidayGeneration.days,
       lockedMonths: holidayGeneration.lockedMonths,
+      created: created,
+    );
+  }
+
+  /// #2051 — months the fake treats as invoiced (`2026-07`), and every
+  /// import call in order, so a test can prove which days were sent.
+  final Set<String> invoicedMonths = {};
+  final holidayImportCalls =
+      <({List<({DateTime day, String name})> days, bool apply})>[];
+
+  @override
+  Future<HolidayGeneration> importClosureDays(
+    String workspaceId, {
+    required List<({DateTime day, String name})> days,
+    bool apply = false,
+  }) async {
+    holidayImportCalls.add((days: List.of(days), apply: apply));
+    String month(DateTime d) =>
+        '${d.year}-${d.month.toString().padLeft(2, '0')}';
+    bool present(DateTime d) => closureDays.any(
+        (c) => c.workspaceId == workspaceId && c.day == d);
+    final answer = [
+      for (final d in days)
+        (
+          day: d.day,
+          key: d.name,
+          locked: invoicedMonths.contains(month(d.day)),
+          present: present(d.day),
+        ),
+    ];
+    var created = 0;
+    if (apply) {
+      for (final d in answer.where((d) => !d.locked && !d.present)) {
+        closureDays.add(ClosureDay(
+          id: 'closure-${_nextId++}',
+          workspaceId: workspaceId,
+          day: d.day,
+          reason: d.key,
+        ));
+        created++;
+      }
+    }
+    return HolidayGeneration(
+      days: answer,
+      lockedMonths: {
+        for (final d in answer)
+          if (d.locked) month(d.day),
+      }.toList()
+        ..sort(),
       created: created,
     );
   }

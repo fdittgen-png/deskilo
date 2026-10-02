@@ -101,6 +101,7 @@ class WorkspaceFieldsSection extends StatefulWidget {
   final bool enabled;
 
   static const Key sectionKey = Key('workspace-fields-section');
+  static const Key personalNoteKey = Key('workspace-fields-personal-note');
 
   /// The key of one question's control, for tests and for focus.
   static Key keyOf(String fieldKey) => ValueKey('workspace-field-$fieldKey');
@@ -164,6 +165,17 @@ class _WorkspaceFieldsSectionState extends State<WorkspaceFieldsSection> {
               l10n?.workspaceFieldsTitle(widget.workspaceName) ??
                   'Questions from ${widget.workspaceName}',
               style: theme.textTheme.labelLarge,
+            ),
+            // #1912 — every answer is stored against the membership, so
+            // every answer is personal data, whatever the owner ticked.
+            Text(
+              l10n?.workspaceFieldsPersonalNote ??
+                  'Your answers are personal data: they are part of your '
+                      'data export and are erased when you leave this space, '
+                      'unless the space documents a legal obligation to keep '
+                      'one.',
+              key: WorkspaceFieldsSection.personalNoteKey,
+              style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: AppSpacing.sm),
             for (final field in widget.fields) ...[

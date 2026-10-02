@@ -362,7 +362,13 @@ class CapabilityVocabulary {
       }
     }
     // Longest phrases first: "two approvals for refunds" before "two approvals".
-    _phrases.sort((a, b) => b.phrase.length.compareTo(a.phrase.length));
+    // Ties break by id: List.sort is not stable, so without it the owner
+    // of a phrase two capabilities share ("carnets") changed whenever a
+    // feature was added to the registry (#1918).
+    _phrases.sort((a, b) {
+      final byLength = b.phrase.length.compareTo(a.phrase.length);
+      return byLength != 0 ? byLength : a.id.compareTo(b.id);
+    });
   }
 
   final List<({String id, String phrase})> _phrases = [];

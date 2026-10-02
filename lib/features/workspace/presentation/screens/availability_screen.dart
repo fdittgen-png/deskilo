@@ -20,8 +20,10 @@ import '../../providers/workspace_providers.dart';
 import '../widgets/legend_profile_tile.dart';
 import '../widgets/work_hours_provenance_row.dart';
 import '../widgets/availability_tiles.dart';
+import '../widgets/capacity_kpi_card.dart';
 import '../../application/generate_public_holidays.dart';
 import '../widgets/public_holidays_sheet.dart';
+import '../widgets/holiday_import_sheet.dart';
 import '../../../../core/time/clock.dart';
 
 /// Owner-only availability editor (#127): which ISO weekdays (1=Mon..7=Sun,
@@ -772,6 +774,7 @@ class AvailabilityScreen extends ConsumerWidget {
                         ref.read(workspaceRepositoryProvider)),
                   ),
                 ),
+              if (holidaysOn) const HolidayImportTile(), // #2051
               if (closures.isEmpty)
                 Padding(
                   padding: AppSpacing.lgH,
@@ -793,6 +796,7 @@ class AvailabilityScreen extends ConsumerWidget {
                     onPressed: () => _removeClosure(context, ref, closure),
                   ),
                 ),
+              const CapacityKpiCard(), // #1918, gated inside
               const SizedBox(height: 80), // keep the FAB off the last row
             ],
           ),

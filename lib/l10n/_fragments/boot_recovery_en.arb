@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "bootFailedTitle": "DesKilo could not start",
+  "@bootFailedTitle": {
+    "description": "#2015 Bounded start-up: bootFailedTitle"
+  },
+  "bootFailedBody": "The server or this device's secure storage did not answer. Nothing was changed. Close the app and open it again; if it keeps happening, check the network.",
+  "@bootFailedBody": {
+    "description": "#2015 Bounded start-up: bootFailedBody"
+  },
+  "bootSlowTitle": "Starting is taking longer than usual",
+  "@bootSlowTitle": {
+    "description": "#2015 Bounded start-up: bootSlowTitle"
+  },
+  "bootSlowBody": "It keeps trying. If nothing happens, close the app and open it again.",
+  "@bootSlowBody": {
+    "description": "#2015 Bounded start-up: bootSlowBody"
+  }
+}

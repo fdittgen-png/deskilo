@@ -66,6 +66,9 @@ String eInvoiceGapText(AppLocalizations? l10n, EInvoiceGap gap) =>
           "The customer's VAT number does not have its country's shape — check it.",
       EInvoiceGap.noChargeLines => l10n?.invoiceGapNoChargeLines ??
           'This invoice has no charge line — there is no invoice to send.',
+      EInvoiceGap.creditNoteWithPayments =>
+        l10n?.invoiceGapCreditNoteWithPayments ??
+            'This credit note also nets payments, which an EN 16931 credit note cannot state. Issue the credit on its own document.',
       EInvoiceGap.missingSellerCity => l10n?.invoiceGapMissingSellerCity ??
           'the city of the workspace address',
       EInvoiceGap.missingSellerPostalCode =>

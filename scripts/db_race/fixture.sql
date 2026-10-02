@@ -57,6 +57,10 @@ select u.id, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authentic
        u.tag || '-' || :'run' || '@race.deskilo.test', '', now(), now(), now()
   from (values (:'o'::uuid, 'owner'), (:'b'::uuid, 'admin-b'), (:'c'::uuid, 'admin-c'),
                (:'d'::uuid, 'member-d'), (:'r'::uuid, 'member-r')) u(id, tag);
+-- 0340 — assistants act only for Google accounts.
+insert into auth.identities (id, provider_id, user_id, identity_data, provider, created_at, updated_at)
+select gen_random_uuid(), 'google-' || u.id, u.id, jsonb_build_object('sub', 'google-' || u.id), 'google', now(), now()
+  from (values (:'o'::uuid), (:'b'::uuid), (:'c'::uuid), (:'d'::uuid), (:'r'::uuid)) u(id);
 insert into public.identity_authority (kind, issuer) values ('native', 'https://auth.deskilo.test/auth/v1')
 on conflict (singleton) do update set kind = excluded.kind, issuer = excluded.issuer, oidc_provider = null;
 insert into public.mcp_clients (client_id, name) values ('claude-test', 'Test assistant') on conflict do nothing;

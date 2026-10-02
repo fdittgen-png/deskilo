@@ -398,6 +398,246 @@ abstract class AppLocalizations {
   /// **'The invoices changed while you were reviewing. Export again to see the current books.'**
   String get handoffChanged;
 
+  /// #1870 accountant handoff blocking finding
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: its currency has no reviewed number of decimals'**
+  String handoffUnsupportedCurrency(String number);
+
+  /// #1870 accountant handoff blocking finding
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a total too large to carry exactly'**
+  String handoffAmountOutOfRange(String number);
+
+  /// #1869 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting book'**
+  String get featureAccountingBookTitle;
+
+  /// #1869 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Who keeps the official books of each issuer: Deskilo as pre-accounting, a local book, or an external accounting system that stays authoritative. Each issuer states its currency, fiscal year and accounting basis. Off: member balances and invoices work as before.'**
+  String get featureAccountingBookDesc;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting book'**
+  String get bookSheetTitle;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'No book set: DesKilo keeps member balances and invoices (pre-accounting).'**
+  String get bookTileEmpty;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Issuer'**
+  String get bookIssuer;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-accounting'**
+  String get bookAuthorityPre;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo is the book'**
+  String get bookAuthorityLocal;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'External system'**
+  String get bookAuthorityExternal;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Authoritative system'**
+  String get bookExternalSystem;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Functional currency'**
+  String get bookCurrency;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Fiscal year starts on'**
+  String get bookFiscalStart;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Accrual basis'**
+  String get bookBasisAccrual;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Cash basis'**
+  String get bookBasisCash;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect from {date}'**
+  String bookEffectiveFrom(String date);
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Fiscal year {label}: {start} – {end}'**
+  String bookFiscalPreview(String label, String start, String end);
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Name the external system that keeps the official books.'**
+  String get bookProblemExternal;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'This currency has no reviewed number of decimals.'**
+  String get bookProblemCurrency;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'A fiscal year starts on a day every year has (never 29 February).'**
+  String get bookProblemFiscal;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Book saved'**
+  String get bookSaved;
+
+  /// #1869 accounting book sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Someone saved this book since you opened it. Close and reopen to see their version.'**
+  String get bookStale;
+
+  /// #1869 the save failed (connection or server)
+  ///
+  /// In en, this message translates to:
+  /// **'The book was not saved. Check the connection and try again.'**
+  String get bookSaveFailed;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Customers (receivable)'**
+  String get bookRoleCustomers;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get bookRoleRevenue;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get bookRoleBank;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Output VAT'**
+  String get bookRoleVatOutput;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get bookRoleExpenses;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Asset'**
+  String get bookTypeAsset;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Liability'**
+  String get bookTypeLiability;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Equity'**
+  String get bookTypeEquity;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get bookTypeIncome;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get bookTypeExpense;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Chart of accounts · {site}'**
+  String bookChartTitle(String site);
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Add the suggested accounts to review'**
+  String get bookChartSuggest;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Account code'**
+  String get bookAccountCode;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Account name'**
+  String get bookAccountName;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Takes postings'**
+  String get bookAccountPosting;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Which account each entry books to'**
+  String get bookMappingsTitle;
+
+  /// #1869 B chart of accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Map these accounts before a local book starts: {roles}.'**
+  String bookProblemUnmapped(String roles);
+
   /// #936 accounting exports: fecAccountExpenses
   ///
   /// In en, this message translates to:
@@ -535,6 +775,312 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Year archive (zip)'**
   String get invoiceExportBundle;
+
+  /// #1827 Assistant setup: assistantSetupTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant setup'**
+  String get assistantSetupTitle;
+
+  /// #1827 Assistant setup: assistantSetupIntro
+  ///
+  /// In en, this message translates to:
+  /// **'What assistants need to work in this workspace, in order. Each step says who takes it.'**
+  String get assistantSetupIntro;
+
+  /// #1827 Assistant setup: assistantSetupNoWorkspace
+  ///
+  /// In en, this message translates to:
+  /// **'Select a workspace first.'**
+  String get assistantSetupNoWorkspace;
+
+  /// #1827 Assistant setup: assistantSetupAllDone
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is set up for this workspace.'**
+  String get assistantSetupAllDone;
+
+  /// #1827 Assistant setup: assistantSetupSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Saved.'**
+  String get assistantSetupSaved;
+
+  /// #1827 Assistant setup: assistantSetupStale
+  ///
+  /// In en, this message translates to:
+  /// **'Someone changed the offer meanwhile. Review it and try again.'**
+  String get assistantSetupStale;
+
+  /// #1827 Assistant setup: assistantSetupFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save. Nothing changed; try again.'**
+  String get assistantSetupFailed;
+
+  /// #1827 Assistant setup: assistantSetupLinkIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm my identity'**
+  String get assistantSetupLinkIdentity;
+
+  /// #1827 Assistant setup: assistantSetupTurnOn
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get assistantSetupTurnOn;
+
+  /// #1827 Assistant setup: assistantSetupRecommended
+  ///
+  /// In en, this message translates to:
+  /// **'Use the recommended set'**
+  String get assistantSetupRecommended;
+
+  /// #1827 Assistant setup: assistantSetupCustomise
+  ///
+  /// In en, this message translates to:
+  /// **'Customise'**
+  String get assistantSetupCustomise;
+
+  /// #1827 Assistant setup: assistantSetupRequest
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for access'**
+  String get assistantSetupRequest;
+
+  /// #1827 Assistant setup: assistantSetupReview
+  ///
+  /// In en, this message translates to:
+  /// **'Review requests'**
+  String get assistantSetupReview;
+
+  /// #1827 Assistant setup: assistantSetupNoConnector
+  ///
+  /// In en, this message translates to:
+  /// **'This app runs without a server, so there is no connector URL.'**
+  String get assistantSetupNoConnector;
+
+  /// #1827 Assistant setup: assistantSetupCopyUrl
+  ///
+  /// In en, this message translates to:
+  /// **'Copy connector URL'**
+  String get assistantSetupCopyUrl;
+
+  /// #1827 Assistant setup: assistantSetupCopied
+  ///
+  /// In en, this message translates to:
+  /// **'Connector URL copied.'**
+  String get assistantSetupCopied;
+
+  /// #1827 Assistant setup: assistantSetupConnectHowTo
+  ///
+  /// In en, this message translates to:
+  /// **'1. In your assistant, add a custom connector with this URL.\n2. Sign in with your DesKilo account when asked.\n3. Approve this workspace and the operations you allow.'**
+  String get assistantSetupConnectHowTo;
+
+  /// #1827 Assistant setup: assistantSetupPreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended set'**
+  String get assistantSetupPreviewTitle;
+
+  /// #1827 Assistant setup: assistantSetupPreviewNone
+  ///
+  /// In en, this message translates to:
+  /// **'No change: the workspace already offers exactly this set.'**
+  String get assistantSetupPreviewNone;
+
+  /// #1827 Assistant setup: assistantSetupPreviewAdds
+  ///
+  /// In en, this message translates to:
+  /// **'Added'**
+  String get assistantSetupPreviewAdds;
+
+  /// #1827 Assistant setup: assistantSetupPreviewRemoves
+  ///
+  /// In en, this message translates to:
+  /// **'Removed'**
+  String get assistantSetupPreviewRemoves;
+
+  /// #1827 Assistant setup: assistantSetupPreviewOwn
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants see only each member\'s own records.'**
+  String get assistantSetupPreviewOwn;
+
+  /// #1827 Assistant setup: assistantSetupPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'Only a member\'s own records and the availability reads. Assistants already connected get new operations only after each person approves again.'**
+  String get assistantSetupPreviewNote;
+
+  /// #1827 Assistant setup: assistantSetupApply
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get assistantSetupApply;
+
+  /// #1827 Assistant setup: assistantSetupStepIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Link your identity'**
+  String get assistantSetupStepIdentity;
+
+  /// #1827 Assistant setup: assistantSetupStepWorkspace
+  ///
+  /// In en, this message translates to:
+  /// **'Turn assistants on for this workspace'**
+  String get assistantSetupStepWorkspace;
+
+  /// #1827 Assistant setup: assistantSetupStepPolicy
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what assistants may do'**
+  String get assistantSetupStepPolicy;
+
+  /// #1827 Assistant setup: assistantSetupStepEligibility
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for your assistant access'**
+  String get assistantSetupStepEligibility;
+
+  /// #1827 Assistant setup: assistantSetupStepInstallation
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants switched on for this database'**
+  String get assistantSetupStepInstallation;
+
+  /// #1827 Assistant setup: assistantSetupStepConnect
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your assistant'**
+  String get assistantSetupStepConnect;
+
+  /// #1827 Assistant setup: assistantSetupReasonIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'An assistant acts as you, so this database must know it is you.'**
+  String get assistantSetupReasonIdentity;
+
+  /// #1827 Assistant setup: assistantSetupReasonWorkspace
+  ///
+  /// In en, this message translates to:
+  /// **'While it is off, the workspace refuses every assistant call.'**
+  String get assistantSetupReasonWorkspace;
+
+  /// #1827 Assistant setup: assistantSetupReasonPolicy
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is offered to assistants until someone chooses the operations.'**
+  String get assistantSetupReasonPolicy;
+
+  /// #1827 Assistant setup: assistantSetupReasonEligibility
+  ///
+  /// In en, this message translates to:
+  /// **'This database\'s administrators approve each person once, for every workspace on it.'**
+  String get assistantSetupReasonEligibility;
+
+  /// #1827 Assistant setup: assistantSetupReasonInstallation
+  ///
+  /// In en, this message translates to:
+  /// **'The instance owner or a delegate switches assistants on for every workspace on this database.'**
+  String get assistantSetupReasonInstallation;
+
+  /// #1827 Assistant setup: assistantSetupReasonConnect
+  ///
+  /// In en, this message translates to:
+  /// **'Add the connector in your assistant, sign in, and approve this workspace.'**
+  String get assistantSetupReasonConnect;
+
+  /// #1827 Assistant setup: assistantSetupStateDone
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get assistantSetupStateDone;
+
+  /// #1827 Assistant setup: assistantSetupStateTodo
+  ///
+  /// In en, this message translates to:
+  /// **'To do'**
+  String get assistantSetupStateTodo;
+
+  /// #1827 Assistant setup: assistantSetupStateWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get assistantSetupStateWaiting;
+
+  /// #1827 Assistant setup: assistantSetupStateBlocked
+  ///
+  /// In en, this message translates to:
+  /// **'After the steps above'**
+  String get assistantSetupStateBlocked;
+
+  /// #1827 Assistant setup: assistantSetupStateUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be asked'**
+  String get assistantSetupStateUnavailable;
+
+  /// #1827 Assistant setup: assistantSetupActorYou
+  ///
+  /// In en, this message translates to:
+  /// **'Who: you'**
+  String get assistantSetupActorYou;
+
+  /// #1827 Assistant setup: assistantSetupActorConfigurer
+  ///
+  /// In en, this message translates to:
+  /// **'Who: someone who manages this workspace\'s configuration'**
+  String get assistantSetupActorConfigurer;
+
+  /// #1827 Assistant setup: assistantSetupActorIntegrations
+  ///
+  /// In en, this message translates to:
+  /// **'Who: someone who manages this workspace\'s integrations'**
+  String get assistantSetupActorIntegrations;
+
+  /// #1827 Assistant setup: assistantSetupActorDatabaseAdministrator
+  ///
+  /// In en, this message translates to:
+  /// **'Who: a database administrator'**
+  String get assistantSetupActorDatabaseAdministrator;
+
+  /// #1827 Assistant setup: assistantSetupActorInstanceOperator
+  ///
+  /// In en, this message translates to:
+  /// **'Who: the instance owner or a delegate'**
+  String get assistantSetupActorInstanceOperator;
+
+  /// #1827 Assistant setup: assistantSetupNextTodo
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {step}.'**
+  String assistantSetupNextTodo(String step);
+
+  /// #1827 Assistant setup: assistantSetupNextWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {step}. {actor}.'**
+  String assistantSetupNextWaiting(String step, String actor);
+
+  /// #1827 Assistant setup: assistantSetupInstanceYou
+  ///
+  /// In en, this message translates to:
+  /// **'You answer for this database: switch assistants on from the instance tools.'**
+  String get assistantSetupInstanceYou;
+
+  /// #1827 Assistant setup: assistantSetupInstanceNobody
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody answers for this database yet.'**
+  String get assistantSetupInstanceNobody;
+
+  /// #1827 Assistant setup: assistantSetupInstanceNames
+  ///
+  /// In en, this message translates to:
+  /// **'Answering for this database: {names}.'**
+  String assistantSetupInstanceNames(String names);
 
   /// #919 association regime: legalIdentityAssociationRegime
   ///
@@ -2422,6 +2968,30 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}'**
   String settlementAnnexBody(int count);
 
+  /// #2015 Bounded start-up: bootFailedTitle
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo could not start'**
+  String get bootFailedTitle;
+
+  /// #2015 Bounded start-up: bootFailedBody
+  ///
+  /// In en, this message translates to:
+  /// **'The server or this device\'s secure storage did not answer. Nothing was changed. Close the app and open it again; if it keeps happening, check the network.'**
+  String get bootFailedBody;
+
+  /// #2015 Bounded start-up: bootSlowTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Starting is taking longer than usual'**
+  String get bootSlowTitle;
+
+  /// #2015 Bounded start-up: bootSlowBody
+  ///
+  /// In en, this message translates to:
+  /// **'It keeps trying. If nothing happens, close the app and open it again.'**
+  String get bootSlowBody;
+
   /// #972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable
   ///
   /// In en, this message translates to:
@@ -3016,6 +3586,138 @@ abstract class AppLocalizations {
   /// **'This booking cannot be exported: it is not yours, or it no longer exists.'**
   String get reservationCalendarFileRefused;
 
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Seat utilisation'**
+  String get featureCapacityKpiTitle;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Shows owners and reservation managers how much of the offered seat time was reserved in a month, with how it is computed and what the figure cannot know.'**
+  String get featureCapacityKpiDesc;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Seat utilisation'**
+  String get capacityKpiTitle;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'{reserved} of {offered} seat-hours reserved'**
+  String capacityKpiRatio(String reserved, String offered);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'No seat time was offered in this period, so there is no utilisation to show.'**
+  String get capacityKpiUndefined;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'How is this computed?'**
+  String get capacityKpiExplain;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved seat-hours inside the opening hours, divided by offered seat-hours: every seat times the opening hours of the open days, minus closure days and seat blocks. A whole desk, room or level counts each of its seats once; cancelled bookings do not count.'**
+  String get capacityKpiDefinition;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Physical capacity: {hours} seat-hours'**
+  String capacityKpiPhysical(String hours);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved outside the offered hours: {hours} seat-hours, not in the ratio'**
+  String capacityKpiOutside(String hours);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Claimed twice at the same time: {hours} seat-hours, counted once'**
+  String capacityKpiOverlap(String hours);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms without seats: {count}, {reserved} of {offered} room-hours reserved'**
+  String capacityKpiRooms(String count, String reserved, String offered);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Some reservations in this period point to a place that no longer exists; they are not counted.'**
+  String get capacityKpiUnattributed;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Measured: nothing was reserved.'**
+  String get capacityKpiKnownZero;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Computed {time}'**
+  String capacityKpiAsOf(String time);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read the capacity figures of this workspace.'**
+  String get capacityKpiForbidden;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'The seat utilisation could not be computed.'**
+  String get capacityKpiUnavailable;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get capacityKpiRetry;
+
+  /// #1920 capacity KPI history
+  ///
+  /// In en, this message translates to:
+  /// **'Counted from {date}, when this workspace’s history began; earlier time is not known and not counted.'**
+  String capacityKpiHistorySince(String date);
+
+  /// #1920 capacity KPI history
+  ///
+  /// In en, this message translates to:
+  /// **'This period lies before the workspace’s history began on {date}; there is nothing recorded to count.'**
+  String capacityKpiNotRecorded(String date);
+
+  /// #1920 capacity KPI history
+  ///
+  /// In en, this message translates to:
+  /// **'History recorded since {date}'**
+  String capacityKpiHistory(String date);
+
+  /// #1920 capacity KPI history
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms without seats are read as they are today.'**
+  String get capacityKpiRoomsToday;
+
+  /// #1921 permission: read aggregated operational KPIs
+  ///
+  /// In en, this message translates to:
+  /// **'Read the workspace figures'**
+  String get permViewAnalytics;
+
   /// #1279 carnets: featureCarnetsTitle
   ///
   /// In en, this message translates to:
@@ -3425,7 +4127,7 @@ abstract class AppLocalizations {
   /// Co-owner dialog option: clear the role
   ///
   /// In en, this message translates to:
-  /// **'No co-owner role'**
+  /// **'No co-ownership'**
   String get coOwnerNone;
 
   /// Co-owner dialog option: the active flavor
@@ -3437,7 +4139,7 @@ abstract class AppLocalizations {
   /// Co-owner dialog option: the passive flavor
   ///
   /// In en, this message translates to:
-  /// **'Passive co-owner — becomes owner when activated or when the owner leaves'**
+  /// **'Successor — becomes owner when activated or when the owner leaves'**
   String get coOwnerPassive;
 
   /// Member-sheet action promoting a co-owner to full owner
@@ -3455,7 +4157,7 @@ abstract class AppLocalizations {
   /// Members-list chip for a passive co-owner
   ///
   /// In en, this message translates to:
-  /// **'Co-owner (passive)'**
+  /// **'Successor'**
   String get memberCoOwnerPassiveChip;
 
   /// #912 courtesy title: courtesyLabel
@@ -3631,6 +4333,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your answers to this space\'s questions were not saved. Your other details were.'**
   String get workspaceFieldsSaveFailed;
+
+  /// #1912 custom fields: every answer is personal data
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers are personal data: they are part of your data export and are erased when you leave this space, unless the space documents a legal obligation to keep one.'**
+  String get workspaceFieldsPersonalNote;
 
   /// #1287 custom roles: the feature switch title
   ///
@@ -4423,6 +5131,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Right now'**
   String get memberPageNowHeading;
+
+  /// #2012 — a plan image or background write failed or its answer was lost; offered with Try again
+  ///
+  /// In en, this message translates to:
+  /// **'The image could not be confirmed as saved. Trying again never adds it twice.'**
+  String get editorMediaWriteFailed;
+
+  /// #2012 — screen-reader label of the progress bar while a plan image or background is saved
+  ///
+  /// In en, this message translates to:
+  /// **'Saving the image…'**
+  String get editorMediaSaving;
 
   /// Editor app-bar action opening the level background-image menu (0036)
   ///
@@ -6289,6 +7009,90 @@ abstract class AppLocalizations {
   /// **'Asked for, never assumed. Switch on what this space actually runs.'**
   String get featureTierPlatformDesc;
 
+  /// #1850 maturity badge: nobody has assessed this feature against evidence yet
+  ///
+  /// In en, this message translates to:
+  /// **'Unreviewed'**
+  String get featureMaturityUnreviewed;
+
+  /// #1850 maturity badge: alpha
+  ///
+  /// In en, this message translates to:
+  /// **'Alpha'**
+  String get featureMaturityAlpha;
+
+  /// #1850 maturity badge: beta
+  ///
+  /// In en, this message translates to:
+  /// **'Beta'**
+  String get featureMaturityBeta;
+
+  /// #1850 maturity badge: stable (assessed against evidence)
+  ///
+  /// In en, this message translates to:
+  /// **'Stable'**
+  String get featureMaturityStable;
+
+  /// #1850 lifecycle: active
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get featureLifecycleActive;
+
+  /// #1850 lifecycle badge: still served, being replaced
+  ///
+  /// In en, this message translates to:
+  /// **'Deprecated'**
+  String get featureLifecycleDeprecated;
+
+  /// #1850 lifecycle: retired, key kept
+  ///
+  /// In en, this message translates to:
+  /// **'Retired'**
+  String get featureLifecycleRetired;
+
+  /// #1850 maturity filter on the Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Maturity'**
+  String get featureMaturityFilterLabel;
+
+  /// #1850 maturity filter: no filter
+  ///
+  /// In en, this message translates to:
+  /// **'All stages'**
+  String get featureMaturityFilterAll;
+
+  /// #1850 screen-reader label of a feature's maturity badge
+  ///
+  /// In en, this message translates to:
+  /// **'Maturity {maturity}, {lifecycle}'**
+  String featureMaturitySemantics(String maturity, String lifecycle);
+
+  /// #1851 consent dialog title before switching on an alpha/beta feature
+  ///
+  /// In en, this message translates to:
+  /// **'Switch on an experimental feature?'**
+  String get featureOptInTitle;
+
+  /// #1851 consent dialog body; features = the experimental feature names
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet reviewed as stable: {features}. It may change and has known limits. Switch on only if this space accepts that.'**
+  String featureOptInBody(String features);
+
+  /// #1851 consent dialog confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Switch on'**
+  String get featureOptInConfirm;
+
+  /// #1851 note on a switched-off feature whose existing work stays serviceable
+  ///
+  /// In en, this message translates to:
+  /// **'Off: nothing new starts; what is already open can still be answered and closed.'**
+  String get featureIntakeStoppedNote;
+
   /// #1648 The one explicit button that starts Sign in with Deskilo in the system browser. Deskilo is the brand; do not translate it.
   ///
   /// In en, this message translates to:
@@ -7410,6 +8214,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'readiness gate'**
   String get helpTopicReadiness;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Import public holidays'**
+  String get featureHolidayImportTitle;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'An owner imports the public holidays of the country, and of one region, from an open-data source, deselects the days the space stays open and imports the rest as closure days. Invoiced months are skipped and named.'**
+  String get featureHolidayImportDesc;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Import public holidays (open data)'**
+  String get holidayImportAction;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get holidayImportRegion;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Nationwide holidays only'**
+  String get holidayImportNationwide;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'The holiday source cannot be reached right now. Try again later, or use “Add public holidays”.'**
+  String get holidayImportUnavailable;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get holidayImportRetry;
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Source: {source}'**
+  String holidayImportSource(String source);
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'Import {count} closure days'**
+  String holidayImportConfirm(int count);
+
+  /// #2051 open-data holiday import
+  ///
+  /// In en, this message translates to:
+  /// **'The holidays could not be checked or imported. Nothing was changed.'**
+  String get holidayImportFailed;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Installation: assistants'**
+  String get instanceTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.'**
+  String get instanceIntro;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Only the instance operator manages the installation\'s assistants.'**
+  String get instanceNotOperator;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Changes here need your second factor on this session.'**
+  String get instanceSecondFactorNeeded;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm with my authenticator'**
+  String get instanceConfirmSecondFactor;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants on this installation'**
+  String get instanceRuntimeTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get instanceRuntimeOn;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get instanceRuntimeOff;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on for every workspace'**
+  String get instanceTurnOn;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off'**
+  String get instanceTurnOff;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants become usable in every workspace that offers them. You can turn them off again at any time.'**
+  String get instanceTurnOnConfirm;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Still missing:'**
+  String get instanceBlockers;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'a database administrator'**
+  String get instanceBlockerNoAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Database administrators'**
+  String get instanceAdminsTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.'**
+  String get instanceAdminsHelp;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Make administrator'**
+  String get instanceMakeAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get instanceRemoveAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody else has confirmed their identity yet.'**
+  String get instanceNoCandidates;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get instanceYou;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant clients'**
+  String get instanceClientsTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'An assistant registers itself the first time someone connects it; it works only once approved here.'**
+  String get instanceClientsHelp;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get instanceClientWaiting;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get instanceClientApproved;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get instanceClientBlocked;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get instanceApprove;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get instanceBlock;
+
+  /// #1829 Instance owner claim: instanceOwnerClaimIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Who owns this instance? Enter the e-mail you will sign up with on it. After you confirm that address, claim the ownership from Settings → Instance owner.'**
+  String get instanceOwnerClaimIntro;
+
+  /// #1829 Instance owner claim: instanceOwnerClaimLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Owner e-mail'**
+  String get instanceOwnerClaimLabel;
 
   /// #1829 instance owner
   ///
@@ -8923,6 +9955,12 @@ abstract class AppLocalizations {
   /// **'The customer\'s country is missing.'**
   String get invoiceGapMissingBuyerCountry;
 
+  /// #1919 — e-invoice export refused: a credit note that also nets payments has no EN 16931 credit-note form
+  ///
+  /// In en, this message translates to:
+  /// **'This credit note also nets payments, which an EN 16931 credit note cannot state. Issue the credit on its own document.'**
+  String get invoiceGapCreditNoteWithPayments;
+
   /// Gap: BR-16 — an invoice needs at least one line
   ///
   /// In en, this message translates to:
@@ -10150,7 +11188,7 @@ abstract class AppLocalizations {
   /// No description provided for @dunningAutomaticHint.
   ///
   /// In en, this message translates to:
-  /// **'Once a day, open invoices past the term get their next reminder level by themselves — an alert in the member\'s feed and a push. Off: you send each reminder yourself.'**
+  /// **'Once a day, invoices past their recorded payment term get their next reminder level by themselves — for the amount still outstanding, never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you. Off: you send each reminder yourself.'**
   String get dunningAutomaticHint;
 
   /// No description provided for @eventTypePriceNegotiation.
@@ -11377,6 +12415,96 @@ abstract class AppLocalizations {
   /// **'That file carries no readable design.'**
   String get reportDesignErrorInvalidDesign;
 
+  /// #1913 dunning holds: invoiceHoldAction
+  ///
+  /// In en, this message translates to:
+  /// **'Hold reminders'**
+  String get invoiceHoldAction;
+
+  /// #1913 dunning holds: invoiceHoldReleaseAction
+  ///
+  /// In en, this message translates to:
+  /// **'Release the reminder hold'**
+  String get invoiceHoldReleaseAction;
+
+  /// #1913 dunning holds: invoiceHoldTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Why hold the reminders?'**
+  String get invoiceHoldTitle;
+
+  /// #1913 dunning holds: invoiceHoldExplain
+  ///
+  /// In en, this message translates to:
+  /// **'No reminder is sent for this invoice, by hand or automatically, until the hold is released.'**
+  String get invoiceHoldExplain;
+
+  /// #1913 dunning holds: invoiceHoldReasonDispute
+  ///
+  /// In en, this message translates to:
+  /// **'The member disputes it'**
+  String get invoiceHoldReasonDispute;
+
+  /// #1913 dunning holds: invoiceHoldReasonIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong person or identity error'**
+  String get invoiceHoldReasonIdentity;
+
+  /// #1913 dunning holds: invoiceHoldReasonInsolvency
+  ///
+  /// In en, this message translates to:
+  /// **'Insolvency proceedings'**
+  String get invoiceHoldReasonInsolvency;
+
+  /// #1913 dunning holds: invoiceHoldReasonOther
+  ///
+  /// In en, this message translates to:
+  /// **'Another reason'**
+  String get invoiceHoldReasonOther;
+
+  /// #1913 dunning holds: invoiceHoldNote
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get invoiceHoldNote;
+
+  /// #1913 dunning holds: invoiceHoldConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Hold'**
+  String get invoiceHoldConfirm;
+
+  /// #1913 dunning holds: invoiceHoldPlaced
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders are on hold for this invoice.'**
+  String get invoiceHoldPlaced;
+
+  /// #1913 dunning holds: invoiceHoldReleased
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders can resume for this invoice.'**
+  String get invoiceHoldReleased;
+
+  /// #1913 dunning holds: invoiceHeldNote
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders on hold: {reason}'**
+  String invoiceHeldNote(String reason);
+
+  /// #1913 dunning holds: invoiceMaturityReview
+  ///
+  /// In en, this message translates to:
+  /// **'No agreed payment term was recorded for this invoice: reminders are not sent automatically until you review it.'**
+  String get invoiceMaturityReview;
+
+  /// #1913 dunning holds: invoiceHoldFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The reminder hold could not be changed. Please try again.'**
+  String get invoiceHoldFailed;
+
   /// #871 the Money tab row that opens invoice management (the billing hub)
   ///
   /// In en, this message translates to:
@@ -12066,6 +13194,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are no longer a member of this space — ask an administrator for an invitation.'**
   String get bookingNotAMember;
+
+  /// #2010 Level reorder: levelReorderStale
+  ///
+  /// In en, this message translates to:
+  /// **'The levels changed meanwhile. Nothing was saved; the current order is shown.'**
+  String get levelReorderStale;
 
   /// No description provided for @featureWorkspaceLibraryTitle.
   ///
@@ -13336,7 +14470,7 @@ abstract class AppLocalizations {
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:
-  /// **'Your account is not linked to a verified identity on this database.'**
+  /// **'Your identity is not confirmed for assistants on this database yet.'**
   String get mcpEligibleNoIdentity;
 
   /// #1626 #1627 #1628 mcp_settings
@@ -13474,7 +14608,7 @@ abstract class AppLocalizations {
   /// #1625 MCP status: mcpStatusIdentity
   ///
   /// In en, this message translates to:
-  /// **'Identity'**
+  /// **'Identity for assistants'**
   String get mcpStatusIdentity;
 
   /// #1625 MCP status: mcpStatusEligibility
@@ -13516,7 +14650,7 @@ abstract class AppLocalizations {
   /// #1625 MCP status: mcpStateUnlinked
   ///
   /// In en, this message translates to:
-  /// **'Not linked'**
+  /// **'Not confirmed'**
   String get mcpStateUnlinked;
 
   /// #1625 MCP status: mcpStateNotRequested
@@ -13600,7 +14734,7 @@ abstract class AppLocalizations {
   /// #1625 MCP status: mcpNextLinkIdentity
   ///
   /// In en, this message translates to:
-  /// **'Next: you link your account to this database\'s identity.'**
+  /// **'Next: confirm your identity for assistants on this database — one tap below.'**
   String get mcpNextLinkIdentity;
 
   /// #1625 MCP status: mcpNextRequestEligibility
@@ -13669,6 +14803,78 @@ abstract class AppLocalizations {
   /// **'That database needs your second factor on its own session. Nothing was decided.'**
   String get mcpReviewSecondFactor;
 
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm my identity'**
+  String get mcpStatusConfirmIdentity;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'After the step above'**
+  String get mcpStateAfterPrevious;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'This account cannot be confirmed yet — confirm your e-mail address or sign in with a provider first.'**
+  String get mcpIdentityIneligible;
+
+  /// MCP status card (assistant setup): identity confirmation, taken in place
+  ///
+  /// In en, this message translates to:
+  /// **'Another account already holds this identity here — a database administrator can resolve it.'**
+  String get mcpIdentityConflict;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in'**
+  String get mcpStatusGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Link Google'**
+  String get mcpStatusLinkGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get mcpStatusSignInGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in with Google'**
+  String get mcpStateGoogleReady;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in another way'**
+  String get mcpStateGoogleOtherSession;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Google not linked'**
+  String get mcpStateGoogleMissing;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.'**
+  String get mcpNextLinkGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants use your Google sign-in. Sign in with Google to continue.'**
+  String get mcpNextSignInGoogle;
+
   /// #1630 mcp_usage
   ///
   /// In en, this message translates to:
@@ -13723,6 +14929,414 @@ abstract class AppLocalizations {
   /// **'Awaiting validation'**
   String get mcpUsagePending;
 
+  /// #1846 Me groups: meGroupProfile
+  ///
+  /// In en, this message translates to:
+  /// **'My profile'**
+  String get meGroupProfile;
+
+  /// #1846 Me groups: meGroupWorkspaces
+  ///
+  /// In en, this message translates to:
+  /// **'My workspaces'**
+  String get meGroupWorkspaces;
+
+  /// #1846 Me groups: meGroupInstallations
+  ///
+  /// In en, this message translates to:
+  /// **'Connected installations'**
+  String get meGroupInstallations;
+
+  /// Me layer bottom tab: the person's home with their spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get meTabHome;
+
+  /// Me layer bottom tab: find published spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover'**
+  String get meTabDiscover;
+
+  /// Me layer bottom tab: the person's messages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get meTabMessages;
+
+  /// Me layer bottom tab and title: the person's own account.
+  ///
+  /// In en, this message translates to:
+  /// **'Me'**
+  String get meTabMe;
+
+  /// Title of the Me layer home tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get meHomeTitle;
+
+  /// Heading above the list of spaces the person belongs to.
+  ///
+  /// In en, this message translates to:
+  /// **'My spaces'**
+  String get meMySpaces;
+
+  /// Line under the person's name on the Me home: this layer belongs to them alone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account · it belongs only to you'**
+  String get meHeaderOwned;
+
+  /// Empty state title on the Me home when the person has no space.
+  ///
+  /// In en, this message translates to:
+  /// **'You are not in a space yet'**
+  String get meNoSpaceTitle;
+
+  /// Empty state body on the Me home when the person has no space.
+  ///
+  /// In en, this message translates to:
+  /// **'Find one near you, join with an invitation code, or create your own.'**
+  String get meNoSpaceBody;
+
+  /// Button on the Me home: open Discover.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a space'**
+  String get meFindSpace;
+
+  /// Button on the Me home: join a space with an invitation code.
+  ///
+  /// In en, this message translates to:
+  /// **'Join with a code'**
+  String get meJoinSpace;
+
+  /// Button on the Me home: create a new space.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a space'**
+  String get meCreateSpace;
+
+  /// Button on the Me home: the detailed list of spaces (default at start, site).
+  ///
+  /// In en, this message translates to:
+  /// **'Manage my spaces'**
+  String get meManageSpaces;
+
+  /// Subtitle of a space card whose membership awaits approval.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get meSpacePending;
+
+  /// Chip on the space the person used last.
+  ///
+  /// In en, this message translates to:
+  /// **'Last used'**
+  String get meSpaceLastUsed;
+
+  /// Menu item and confirm button: leave this space.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave this space'**
+  String get meLeaveAction;
+
+  /// Disabled menu item for an owner, who must hand the space over first.
+  ///
+  /// In en, this message translates to:
+  /// **'Owners hand the space over before leaving'**
+  String get meLeaveOwner;
+
+  /// Title of the confirmation before leaving a space.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave {name}?'**
+  String meLeaveTitle(String name);
+
+  /// Body of the confirmation before leaving a space.
+  ///
+  /// In en, this message translates to:
+  /// **'You stop being a member. Your bookings, invoices and messages stay with the space. To also erase your data, use Privacy.'**
+  String get meLeaveBody;
+
+  /// Error when leaving a space failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not leave the space. Please try again.'**
+  String get meLeaveFailed;
+
+  /// Confirmation after leaving a space.
+  ///
+  /// In en, this message translates to:
+  /// **'You left {name}.'**
+  String meLeaveDone(String name);
+
+  /// Explains that a space on another server opens by switching this app to that server.
+  ///
+  /// In en, this message translates to:
+  /// **'This space lives on {host}. The app works with one server at a time: opening it switches to that server and asks you to sign in there.'**
+  String meLinkedOpenBody(String host);
+
+  /// Button: open a space on its own server.
+  ///
+  /// In en, this message translates to:
+  /// **'Open on {host}'**
+  String meLinkedOpen(String host);
+
+  /// Banner when a linked server did not answer.
+  ///
+  /// In en, this message translates to:
+  /// **'{host} did not answer: this list may be incomplete.'**
+  String meLinkedUnavailable(String host);
+
+  /// Subtitle of a pending space on another server.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval · {host}'**
+  String meLinkedPendingOn(String host);
+
+  /// Section heading in Me: the person's own history and data.
+  ///
+  /// In en, this message translates to:
+  /// **'My history and data'**
+  String get meSectionMine;
+
+  /// Row in Me opening the connected servers.
+  ///
+  /// In en, this message translates to:
+  /// **'Where my spaces live'**
+  String get meWhereSpacesLive;
+
+  /// Row in a space's settings leading to the account settings in Me.
+  ///
+  /// In en, this message translates to:
+  /// **'My account is in Me'**
+  String get meAccountInMe;
+
+  /// Subtitle: the account settings are the person's in every space.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo, language, theme and sign-ins are yours in every space.'**
+  String get meAccountInMeBody;
+
+  /// Title of the row listing this space's own overrides of the person's preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'In this space'**
+  String get meSpaceException;
+
+  /// Row and avatar tooltip in a space: return to the Me layer.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Me'**
+  String get spaceBackToMe;
+
+  /// Tooltip on the chip naming the current space: it opens the switcher.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch space'**
+  String get spaceChipTooltip;
+
+  /// Title of the card choosing who sees what of the account.
+  ///
+  /// In en, this message translates to:
+  /// **'Who sees me'**
+  String get visibilityTitle;
+
+  /// Intro of the visibility card.
+  ///
+  /// In en, this message translates to:
+  /// **'Each part of your account picks its own audience. Nothing is public unless you choose it.'**
+  String get visibilityIntro;
+
+  /// Visibility field: name and photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Name and photo'**
+  String get visibilityIdentity;
+
+  /// Visibility field: profession and bio.
+  ///
+  /// In en, this message translates to:
+  /// **'Profession and bio'**
+  String get visibilityAbout;
+
+  /// Visibility field: contact channels.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp and e-mail'**
+  String get visibilityContact;
+
+  /// Visibility field: presence in a space today.
+  ///
+  /// In en, this message translates to:
+  /// **'In the space today'**
+  String get visibilityPresence;
+
+  /// Reachability: who may start a conversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Who can start a conversation with me'**
+  String get visibilityReachability;
+
+  /// Audience: nobody.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody'**
+  String get visibilityNobody;
+
+  /// Audience: members of the person's spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Members of my spaces'**
+  String get visibilityMySpaces;
+
+  /// Audience: members of chosen spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Members of chosen spaces'**
+  String get visibilityChosenSpaces;
+
+  /// Audience: anyone with an account.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone signed in'**
+  String get visibilitySignedIn;
+
+  /// Error when saving an audience failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save who sees this. Please try again.'**
+  String get visibilitySaveFailed;
+
+  /// Heading of the live preview of what others see.
+  ///
+  /// In en, this message translates to:
+  /// **'How others see me'**
+  String get visibilityPreviewTitle;
+
+  /// Preview audience chip: a member of my spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'A member of my spaces'**
+  String get visibilityPreviewMySpaces;
+
+  /// Preview audience chip: anyone signed in.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone signed in'**
+  String get visibilityPreviewSignedIn;
+
+  /// Preview audience chip: only me — everything, as the person alone sees it.
+  ///
+  /// In en, this message translates to:
+  /// **'Only me'**
+  String get visibilityPreviewNobody;
+
+  /// Preview when the audience sees nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'They see nothing of you.'**
+  String get visibilityPreviewNothing;
+
+  /// Preview failed to load.
+  ///
+  /// In en, this message translates to:
+  /// **'The preview could not be loaded.'**
+  String get visibilityPreviewFailed;
+
+  /// Preview line: this audience may start a conversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Can start a conversation with you'**
+  String get visibilityPreviewCanWrite;
+
+  /// Preview line: this audience may not start a conversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot start a conversation with you'**
+  String get visibilityPreviewCannotWrite;
+
+  /// Audience summary for chosen spaces, with how many were chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Members of 1 chosen space} other{Members of {count} chosen spaces}}'**
+  String visibilityChosenCount(int count);
+
+  /// Row in the account messenger leading to the visibility card in Me.
+  ///
+  /// In en, this message translates to:
+  /// **'Who can find and message me'**
+  String get portalVisibilityLink;
+
+  /// Subtitle: where that choice is made.
+  ///
+  /// In en, this message translates to:
+  /// **'Chosen in Me, under Who sees me.'**
+  String get portalVisibilityLinkBody;
+
+  /// Button on a public space page for a member: enter the space.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get portalEnterSpace;
+
+  /// Button on a public space page: copy its e-mail address.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the e-mail'**
+  String get portalCopyEmail;
+
+  /// Confirmation after copying the space's e-mail.
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail copied'**
+  String get portalEmailCopied;
+
+  /// Error when saving the postal address from My account failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save your address. Please try again.'**
+  String get meAddressSaveFailed;
+
+  /// Row and dialog title: edit my profession and bio.
+  ///
+  /// In en, this message translates to:
+  /// **'About me'**
+  String get visibilityAboutMe;
+
+  /// Subtitle when no profession or bio is written yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your profession and a few words'**
+  String get visibilityAboutEmpty;
+
+  /// Field label: profession.
+  ///
+  /// In en, this message translates to:
+  /// **'Profession'**
+  String get visibilityProfession;
+
+  /// Field label: a short bio.
+  ///
+  /// In en, this message translates to:
+  /// **'A few words about you'**
+  String get visibilityBio;
+
+  /// Error when saving profession and bio failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save your profession and bio. Please try again.'**
+  String get visibilityAboutSaveFailed;
+
+  /// Menu item on the account menu (globe) that opens the Me layer.
+  ///
+  /// In en, this message translates to:
+  /// **'Me: my account and my spaces'**
+  String get portalOpenMe;
+
   /// #1598 member account menu: featureMemberAccountMenuTitle
   ///
   /// In en, this message translates to:
@@ -13762,7 +15376,7 @@ abstract class AppLocalizations {
   /// Role tag on a member row
   ///
   /// In en, this message translates to:
-  /// **'Admin'**
+  /// **'Administrator'**
   String get memberRoleAdmin;
 
   /// Status tag: membership paused (no fee, no access)
@@ -14392,7 +16006,7 @@ abstract class AppLocalizations {
   /// #1824 messenger flags: featureSpaceInquiriesDesc
   ///
   /// In en, this message translates to:
-  /// **'A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay.'**
+  /// **'A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view, so nobody starts a new inquiry; open ones stay in the hosts\' inbox to answer and close.'**
   String get featureSpaceInquiriesDesc;
 
   /// #1824 messenger flags: featureMessageForwardingTitle
@@ -17293,6 +18907,18 @@ abstract class AppLocalizations {
   /// **'No published workspaces found.'**
   String get portalNoWorkspaces;
 
+  /// No description provided for @portalNoLongerPublished.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace is no longer published.'**
+  String get portalNoLongerPublished;
+
+  /// No description provided for @portalDirectoryIncompatible.
+  ///
+  /// In en, this message translates to:
+  /// **'Some workspaces need a newer version of the app and are not shown.'**
+  String get portalDirectoryIncompatible;
+
   /// No description provided for @portalMoreDirectories.
   ///
   /// In en, this message translates to:
@@ -17352,6 +18978,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.'**
   String get featurePublicListingsDesc;
+
+  /// No description provided for @portalFollowsWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'From workspace information'**
+  String get portalFollowsWorkspace;
+
+  /// No description provided for @portalCustomised.
+  ///
+  /// In en, this message translates to:
+  /// **'Customised'**
+  String get portalCustomised;
+
+  /// No description provided for @portalUseWorkspaceInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Use workspace information'**
+  String get portalUseWorkspaceInfo;
+
+  /// No description provided for @portalResetAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset all public data to workspace information'**
+  String get portalResetAll;
+
+  /// No description provided for @portalResetAllBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.'**
+  String get portalResetAllBody;
+
+  /// No description provided for @portalResetAllConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get portalResetAllConfirm;
+
+  /// #1914 privacy notice: privacyNoticeTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Who processes your data'**
+  String get privacyNoticeTitle;
+
+  /// #1914 privacy notice: privacyNoticeController
+  ///
+  /// In en, this message translates to:
+  /// **'Controller: {name} — {contact}'**
+  String privacyNoticeController(String name, String contact);
+
+  /// #1914 privacy notice: privacyNoticeRights
+  ///
+  /// In en, this message translates to:
+  /// **'Your rights: {contact}'**
+  String privacyNoticeRights(String contact);
+
+  /// #1914 privacy notice: privacyNoticeRegion
+  ///
+  /// In en, this message translates to:
+  /// **'Region: {region}'**
+  String privacyNoticeRegion(String region);
+
+  /// #1914 privacy notice: privacyNoticeTransfer
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer safeguard: {mechanism}'**
+  String privacyNoticeTransfer(String mechanism);
+
+  /// #1914 privacy notice: privacyNoticeNotRecorded
+  ///
+  /// In en, this message translates to:
+  /// **'not recorded by the operator'**
+  String get privacyNoticeNotRecorded;
+
+  /// #1914 privacy notice: privacyNoticeEssential
+  ///
+  /// In en, this message translates to:
+  /// **'Needed to run the account and the space'**
+  String get privacyNoticeEssential;
+
+  /// #1914 privacy notice: privacyNoticeOptional
+  ///
+  /// In en, this message translates to:
+  /// **'Optional — you can use the app without it'**
+  String get privacyNoticeOptional;
+
+  /// #1914 privacy notice: privacyNoticeRightsRoute
+  ///
+  /// In en, this message translates to:
+  /// **'Your rights and the contact'**
+  String get privacyNoticeRightsRoute;
+
+  /// #1914 privacy notice: privacySpaceNotice
+  ///
+  /// In en, this message translates to:
+  /// **'This space\'s privacy notice'**
+  String get privacySpaceNotice;
+
+  /// #1914 privacy notice: privacySpaceNoticeRead
+  ///
+  /// In en, this message translates to:
+  /// **'You acknowledged this version.'**
+  String get privacySpaceNoticeRead;
+
+  /// #1914 privacy notice: privacySpaceNoticeUnread
+  ///
+  /// In en, this message translates to:
+  /// **'Not acknowledged yet — read it here.'**
+  String get privacySpaceNoticeUnread;
+
+  /// #1914 privacy notice: privacySpaceNoticeAcknowledge
+  ///
+  /// In en, this message translates to:
+  /// **'I have read this notice'**
+  String get privacySpaceNoticeAcknowledge;
+
+  /// #1914 privacy notice: privacySpaceNoticeFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The acknowledgment could not be recorded. Please try again.'**
+  String get privacySpaceNoticeFailed;
+
+  /// #1914 privacy notice: privacyPushOnDevice
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications on this device'**
+  String get privacyPushOnDevice;
+
+  /// #1914 privacy notice: privacyPushOnDeviceHint
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.'**
+  String get privacyPushOnDeviceHint;
+
+  /// #1914 privacy notice: privacyPushOnDeviceFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The choice could not be saved. Please try again.'**
+  String get privacyPushOnDeviceFailed;
 
   /// #1327 the process-first overview of the Features screen
   ///
@@ -18202,7 +19966,7 @@ abstract class AppLocalizations {
   /// #719 - privacy & data
   ///
   /// In en, this message translates to:
-  /// **'Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.'**
+  /// **'Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation\'s privacy notice. These are your rights under the GDPR — each one is a button.'**
   String get privacyIntro;
 
   /// #719 - privacy & data
@@ -19143,7 +20907,7 @@ abstract class AppLocalizations {
   /// #1288 the question editor: questionEditorPersonalHelp
   ///
   /// In en, this message translates to:
-  /// **'Erased when the member leaves, and carried in their data export. Leave it on unless the answer is really about the space rather than the person.'**
+  /// **'Every answer is stored against a member, so it is personal data: carried in their data export and erased when they leave.'**
   String get questionEditorPersonalHelp;
 
   /// #1288 the question editor: questionEditorVisibility
@@ -19290,6 +21054,12 @@ abstract class AppLocalizations {
   /// **'Several of a list'**
   String get questionTypeMultiChoice;
 
+  /// #1912 the question editor: shown while the personal-data switch is off
+  ///
+  /// In en, this message translates to:
+  /// **'Still personal: the answer is linked to a member, so it is exported and erased with the membership whatever this switch says. Only a documented retention hold can keep it.'**
+  String get questionEditorNotPersonalWarning;
+
   /// Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card
   ///
   /// In en, this message translates to:
@@ -19299,25 +21069,25 @@ abstract class AppLocalizations {
   /// Feed line of a role-change event that grants admin
   ///
   /// In en, this message translates to:
-  /// **'{actor} promotes a member to admin'**
+  /// **'{actor} asks to give the Administrator role'**
   String eventRolePromote(String actor);
 
   /// Feed line of a role-change event that removes admin
   ///
   /// In en, this message translates to:
-  /// **'{actor} demotes an admin to member'**
+  /// **'{actor} asks to take back the Administrator role'**
   String eventRoleDemote(String actor);
 
   /// Owner action promoting a member to admin (0035)
   ///
   /// In en, this message translates to:
-  /// **'Make admin'**
+  /// **'Give the Administrator role'**
   String get memberMakeAdmin;
 
   /// Owner action demoting an admin to a regular member (0035)
   ///
   /// In en, this message translates to:
-  /// **'Make regular member'**
+  /// **'Take back the Administrator role'**
   String get memberMakeMember;
 
   /// Snackbar after an owner requested a role change (0035)
@@ -19577,6 +21347,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
+
+  /// #1922 reminder evidence: reminderHistoryTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder history'**
+  String get reminderHistoryTitle;
+
+  /// #1922 reminder evidence: reminderHistoryRefresh
+  ///
+  /// In en, this message translates to:
+  /// **'Check delivery again'**
+  String get reminderHistoryRefresh;
+
+  /// #1922 reminder evidence: reminderHistoryLine
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level} · {origin} · {date}'**
+  String reminderHistoryLine(int level, String origin, String date);
+
+  /// #1922 reminder evidence: reminderStatusPrepared
+  ///
+  /// In en, this message translates to:
+  /// **'Prepared'**
+  String get reminderStatusPrepared;
+
+  /// #1922 reminder evidence: reminderStatusQueued
+  ///
+  /// In en, this message translates to:
+  /// **'Handed to the push service'**
+  String get reminderStatusQueued;
+
+  /// #1922 reminder evidence: reminderStatusAccepted
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted by the push service — not proof it was read'**
+  String get reminderStatusAccepted;
+
+  /// #1922 reminder evidence: reminderStatusDeclared
+  ///
+  /// In en, this message translates to:
+  /// **'Shared by the sender — their statement, not a receipt'**
+  String get reminderStatusDeclared;
+
+  /// #1922 reminder evidence: reminderStatusFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Not delivered'**
+  String get reminderStatusFailed;
+
+  /// #1922 reminder evidence: reminderStatusUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'No answer from the push service'**
+  String get reminderStatusUnknown;
+
+  /// #1922 reminder evidence: reminderStatusLegacy
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded before delivery was tracked — unknown'**
+  String get reminderStatusLegacy;
+
+  /// #1922 reminder evidence: reminderOriginManual
+  ///
+  /// In en, this message translates to:
+  /// **'by hand'**
+  String get reminderOriginManual;
+
+  /// #1922 reminder evidence: reminderOriginAutomatic
+  ///
+  /// In en, this message translates to:
+  /// **'automatic'**
+  String get reminderOriginAutomatic;
+
+  /// #1922 reminder evidence: reminderOriginLegacy
+  ///
+  /// In en, this message translates to:
+  /// **'earlier'**
+  String get reminderOriginLegacy;
 
   /// #966 report guide: reportGuideTitle
   ///
@@ -20352,6 +22200,36 @@ abstract class AppLocalizations {
   /// **'Your texts'**
   String get reportFieldGroupTexts;
 
+  /// #1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period
+  ///
+  /// In en, this message translates to:
+  /// **'This space, or a space it belongs to, is already reserved in that period.'**
+  String get bookingSpaceChainTaken;
+
+  /// #1908 — a checkout lost a race: the reservation was already checked out or closed by the day-end sweep
+  ///
+  /// In en, this message translates to:
+  /// **'This reservation is no longer checked in — it was checked out or closed in the meantime.'**
+  String get bookingNoLongerCheckedIn;
+
+  /// #1825 — reserve list: a header whose space this member can reserve as a whole
+  ///
+  /// In en, this message translates to:
+  /// **'Reservable as a whole'**
+  String get listWholeReservable;
+
+  /// #1825 — what a whole-space reservation includes: its tables
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 table} other{{count} tables}}'**
+  String listCoversTables(int count);
+
+  /// #1825 — what a whole-space reservation includes: its seats
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 seat} other{{count} seats}}'**
+  String listCoversSeats(int count);
+
   /// Reserve hub view segment: month availability calendar (#7)
   ///
   /// In en, this message translates to:
@@ -20598,6 +22476,24 @@ abstract class AppLocalizations {
   /// **'Not bookable as chosen'**
   String get bookingGateBlocked;
 
+  /// #2016 Reserve time choice: reserveBackToNow
+  ///
+  /// In en, this message translates to:
+  /// **'Back to now'**
+  String get reserveBackToNow;
+
+  /// #2016 Reserve time choice: bookingModeCheckInNow
+  ///
+  /// In en, this message translates to:
+  /// **'Check in now'**
+  String get bookingModeCheckInNow;
+
+  /// #2016 Reserve time choice: bookingOverlapsAnother
+  ///
+  /// In en, this message translates to:
+  /// **'The seat is already booked during part of this time.'**
+  String get bookingOverlapsAnother;
+
   /// #895 reverse charge: reverseChargeTitle
   ///
   /// In en, this message translates to:
@@ -20616,6 +22512,396 @@ abstract class AppLocalizations {
   /// **'The customer\'s VAT number is missing — a reverse-charged invoice must name it.'**
   String get invoiceGapMissingBuyerVatId;
 
+  /// #1915 rights requests: rightsRequestsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'My rights requests'**
+  String get rightsRequestsTitle;
+
+  /// #1915 rights requests: rightsRequestsHint
+  ///
+  /// In en, this message translates to:
+  /// **'Ask the space for a copy, a correction, a restriction or erasure — answered within one calendar month.'**
+  String get rightsRequestsHint;
+
+  /// #1915 rights requests: rightsRequestsEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No request yet.'**
+  String get rightsRequestsEmpty;
+
+  /// #1915 rights requests: rightsRequestNew
+  ///
+  /// In en, this message translates to:
+  /// **'Make a request'**
+  String get rightsRequestNew;
+
+  /// #1915 rights requests: rightsRequestAsk
+  ///
+  /// In en, this message translates to:
+  /// **'What do you ask the space?'**
+  String get rightsRequestAsk;
+
+  /// #1915 rights requests: rightsRequestDetails
+  ///
+  /// In en, this message translates to:
+  /// **'Details (optional)'**
+  String get rightsRequestDetails;
+
+  /// #1915 rights requests: rightsRequestSend
+  ///
+  /// In en, this message translates to:
+  /// **'Send the request'**
+  String get rightsRequestSend;
+
+  /// #1915 rights requests: rightsRequestSent
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent — the space answers by {date}.'**
+  String rightsRequestSent(String date);
+
+  /// #1915 rights requests: rightsRequestFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The request could not be sent. Please try again.'**
+  String get rightsRequestFailed;
+
+  /// #1915 rights requests: rightsKindAccess
+  ///
+  /// In en, this message translates to:
+  /// **'See a copy of my data'**
+  String get rightsKindAccess;
+
+  /// #1915 rights requests: rightsKindPortability
+  ///
+  /// In en, this message translates to:
+  /// **'Take my data elsewhere (machine-readable)'**
+  String get rightsKindPortability;
+
+  /// #1915 rights requests: rightsKindRectification
+  ///
+  /// In en, this message translates to:
+  /// **'Correct my data'**
+  String get rightsKindRectification;
+
+  /// #1915 rights requests: rightsKindRestriction
+  ///
+  /// In en, this message translates to:
+  /// **'Restrict how my data is used'**
+  String get rightsKindRestriction;
+
+  /// #1915 rights requests: rightsKindObjection
+  ///
+  /// In en, this message translates to:
+  /// **'Object to a use of my data'**
+  String get rightsKindObjection;
+
+  /// #1915 rights requests: rightsKindErasure
+  ///
+  /// In en, this message translates to:
+  /// **'Erase my data'**
+  String get rightsKindErasure;
+
+  /// #1915 rights requests: rightsStatusReceived
+  ///
+  /// In en, this message translates to:
+  /// **'Received — answer due by {date}'**
+  String rightsStatusReceived(String date);
+
+  /// #1915 rights requests: rightsStatusExtended
+  ///
+  /// In en, this message translates to:
+  /// **'Extended to {date}: {reason}'**
+  String rightsStatusExtended(String date, String reason);
+
+  /// #1915 rights requests: rightsStatusCompleted
+  ///
+  /// In en, this message translates to:
+  /// **'Answered — the space recorded what it did'**
+  String get rightsStatusCompleted;
+
+  /// #1915 rights requests: rightsStatusRefused
+  ///
+  /// In en, this message translates to:
+  /// **'Refused: {reason}'**
+  String rightsStatusRefused(String reason);
+
+  /// #1915 rights requests: erasurePreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What erasing does here'**
+  String get erasurePreviewTitle;
+
+  /// #1915 rights requests: erasurePreviewRemoved
+  ///
+  /// In en, this message translates to:
+  /// **'Removed'**
+  String get erasurePreviewRemoved;
+
+  /// #1915 rights requests: erasurePreviewKept
+  ///
+  /// In en, this message translates to:
+  /// **'Kept, and why'**
+  String get erasurePreviewKept;
+
+  /// #1915 rights requests: erasurePreviewOutside
+  ///
+  /// In en, this message translates to:
+  /// **'Outside this installation'**
+  String get erasurePreviewOutside;
+
+  /// #1915 rights requests: erasureStoreMessages
+  ///
+  /// In en, this message translates to:
+  /// **'Messages you sent'**
+  String get erasureStoreMessages;
+
+  /// #1915 rights requests: erasureStoreAnswers
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers to the space\'s questions'**
+  String get erasureStoreAnswers;
+
+  /// #1915 rights requests: erasureStoreProfile
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile (when this is your last space)'**
+  String get erasureStoreProfile;
+
+  /// #1915 rights requests: erasureStoreOpenBookings
+  ///
+  /// In en, this message translates to:
+  /// **'Open bookings — cancelled'**
+  String get erasureStoreOpenBookings;
+
+  /// #1915 rights requests: erasureStoreAccounts
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices and ledger — accounting evidence, kept for the statutory period; issued documents are not rewritten'**
+  String get erasureStoreAccounts;
+
+  /// #1915 rights requests: erasureStorePastBookings
+  ///
+  /// In en, this message translates to:
+  /// **'Past bookings — the space\'s occupancy record'**
+  String get erasureStorePastBookings;
+
+  /// #1915 rights requests: erasureStoreMembership
+  ///
+  /// In en, this message translates to:
+  /// **'The membership row — links the records kept; pseudonymous, not anonymous'**
+  String get erasureStoreMembership;
+
+  /// #1915 rights requests: erasureStoreHeldAnswers
+  ///
+  /// In en, this message translates to:
+  /// **'Answers under a retention hold the space documented'**
+  String get erasureStoreHeldAnswers;
+
+  /// #1915 rights requests: erasureStoreOtherInstallations
+  ///
+  /// In en, this message translates to:
+  /// **'Another DesKilo installation is a separate controller — ask it directly'**
+  String get erasureStoreOtherInstallations;
+
+  /// #1915 rights requests: erasureStoreDeviceCaches
+  ///
+  /// In en, this message translates to:
+  /// **'Copies on your devices — cleared when you sign out of each'**
+  String get erasureStoreDeviceCaches;
+
+  /// #1915 rights requests: erasureStoreBackups
+  ///
+  /// In en, this message translates to:
+  /// **'The operator\'s backups — expire on their rotation'**
+  String get erasureStoreBackups;
+
+  /// #2085 giving roles: featureRoleAssignmentTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Giving roles'**
+  String get featureRoleAssignmentTitle;
+
+  /// #2085 giving roles: featureRoleAssignmentDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Shows a Roles section on each member\'s page to give or take back a role, the members holding each role, and lets every member see what they can do here.'**
+  String get featureRoleAssignmentDesc;
+
+  /// #2085 giving roles: memberRolesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Roles'**
+  String get memberRolesTitle;
+
+  /// #2085 giving roles: memberRolesAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a role'**
+  String get memberRolesAdd;
+
+  /// #2085 giving roles: memberRolesNone
+  ///
+  /// In en, this message translates to:
+  /// **'No role: everything a member can do.'**
+  String get memberRolesNone;
+
+  /// #2085 giving roles: memberRolesWhatTheyCanDo
+  ///
+  /// In en, this message translates to:
+  /// **'What they can do here'**
+  String get memberRolesWhatTheyCanDo;
+
+  /// #2085 giving roles: roleAssignSheetTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Give a role to {name}'**
+  String roleAssignSheetTitle(String name);
+
+  /// #2085 giving roles: roleAssignQuorumHint
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect once validated.'**
+  String get roleAssignQuorumHint;
+
+  /// #2085 giving roles: roleAssignImmediateHint
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect at once.'**
+  String get roleAssignImmediateHint;
+
+  /// #2085 giving roles: roleAssignNothing
+  ///
+  /// In en, this message translates to:
+  /// **'There is no role left to give.'**
+  String get roleAssignNothing;
+
+  /// #2085 giving roles: roleRefusalNotPermitted
+  ///
+  /// In en, this message translates to:
+  /// **'Only someone who manages roles can give this one.'**
+  String get roleRefusalNotPermitted;
+
+  /// #2085 giving roles: roleRefusalOwnerOnly
+  ///
+  /// In en, this message translates to:
+  /// **'Only the owner gives a role that manages roles.'**
+  String get roleRefusalOwnerOnly;
+
+  /// #2085 giving roles: roleRefusalExceedsYours
+  ///
+  /// In en, this message translates to:
+  /// **'This role can do things you cannot, so only the owner gives it.'**
+  String get roleRefusalExceedsYours;
+
+  /// #2085 giving roles: roleRefusalNotAssignable
+  ///
+  /// In en, this message translates to:
+  /// **'This member cannot hold this role.'**
+  String get roleRefusalNotAssignable;
+
+  /// #2085 giving roles: roleGiven
+  ///
+  /// In en, this message translates to:
+  /// **'Role given.'**
+  String get roleGiven;
+
+  /// #2085 giving roles: roleTakenBack
+  ///
+  /// In en, this message translates to:
+  /// **'Role taken back.'**
+  String get roleTakenBack;
+
+  /// #2085 giving roles: roleHoldersAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a member'**
+  String get roleHoldersAdd;
+
+  /// #2085 giving roles: rolesOwnRolesLink
+  ///
+  /// In en, this message translates to:
+  /// **'The roles this space defines'**
+  String get rolesOwnRolesLink;
+
+  /// #2085 giving roles: whatYouCanDoTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What you can do here'**
+  String get whatYouCanDoTitle;
+
+  /// #2085 giving roles: whatTheyCanDoTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What {name} can do here'**
+  String whatTheyCanDoTitle(String name);
+
+  /// #2085 giving roles: whatYouCanDoIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.'**
+  String get whatYouCanDoIntro;
+
+  /// #2085 giving roles: whatYouCanDoFromOwner
+  ///
+  /// In en, this message translates to:
+  /// **'As the owner: everything'**
+  String get whatYouCanDoFromOwner;
+
+  /// #2085 giving roles: whatYouCanDoFromCoOwner
+  ///
+  /// In en, this message translates to:
+  /// **'As co-owner'**
+  String get whatYouCanDoFromCoOwner;
+
+  /// #2085 giving roles: whatYouCanDoFromAdministrator
+  ///
+  /// In en, this message translates to:
+  /// **'From the Administrator role'**
+  String get whatYouCanDoFromAdministrator;
+
+  /// #2085 giving roles: whatYouCanDoFromEveryMember
+  ///
+  /// In en, this message translates to:
+  /// **'As every member'**
+  String get whatYouCanDoFromEveryMember;
+
+  /// #2085 giving roles: whatYouCanDoFromRole
+  ///
+  /// In en, this message translates to:
+  /// **'From the role {role}'**
+  String whatYouCanDoFromRole(String role);
+
+  /// #2085 giving roles: whatYouCanDoNothingMore
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing more than a member.'**
+  String get whatYouCanDoNothingMore;
+
+  /// #2085 giving roles: roleGiveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The role was not given.'**
+  String get roleGiveFailed;
+
+  /// #2085 giving roles: roleTakeBackFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The role was not taken back.'**
+  String get roleTakeBackFailed;
+
+  /// #2085 giving roles: eventRoleGiven
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} gives the role {role} to {member}'**
+  String eventRoleGiven(String actor, String role, String member);
+
+  /// #2085 giving roles: eventRoleTakenBack
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} takes back the role {role} from {member}'**
+  String eventRoleTakenBack(String actor, String role, String member);
+
   /// #1528 the roles of a space: rolesOfSpaceTitle
   ///
   /// In en, this message translates to:
@@ -20625,7 +22911,7 @@ abstract class AppLocalizations {
   /// #1528 the roles of a space: rolesOfSpaceSubtitle
   ///
   /// In en, this message translates to:
-  /// **'Each one adds permissions on top of a member\'s role. None ever takes one away, and an owner always keeps every one.'**
+  /// **'Each one adds permissions to what its holders can already do. None takes anything away, and the owner always keeps every permission.'**
   String get rolesOfSpaceSubtitle;
 
   /// #1528 the roles of a space: rolesOfSpaceEmpty
@@ -20691,7 +22977,7 @@ abstract class AppLocalizations {
   /// #1528 the roles of a space: roleEditorHolders
   ///
   /// In en, this message translates to:
-  /// **'Who holds it'**
+  /// **'Members in this role'**
   String get roleEditorHolders;
 
   /// #1528 the roles of a space: roleEditorNobody
@@ -21311,6 +23597,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Demo: simulated local context'**
   String get supportDemo;
+
+  /// #1865 task recorder: the feature's name
+  ///
+  /// In en, this message translates to:
+  /// **'Task recorder'**
+  String get featureTaskRecorderTitle;
+
+  /// #1865 task recorder: the feature's description
+  ///
+  /// In en, this message translates to:
+  /// **'Lets a person record the steps of a task on this workspace\'s screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here.'**
+  String get featureTaskRecorderDesc;
 
   /// #1659 template_capabilities
   ///
@@ -22788,6 +25086,300 @@ abstract class AppLocalizations {
   /// **'Exemption reason (printed on the invoice)'**
   String get vatTreatmentReasonField;
 
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Business analytics'**
+  String get biTitle;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get biAreaOverview;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Space and capacity'**
+  String get biAreaCapacity;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'People and business'**
+  String get biAreaPeople;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get biAreaFinance;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury'**
+  String get biAreaTreasury;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Operations'**
+  String get biAreaOperations;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Planning'**
+  String get biAreaPlanning;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Saved analyses'**
+  String get biAreaSaved;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Q{quarter} {year}'**
+  String biQuarter(String quarter, String year);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get biDimensionLevel;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'not offered by the analyses shown'**
+  String get biNotOffered;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Period length'**
+  String get biGrain;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get biGrainMonth;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Quarter'**
+  String get biGrainQuarter;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get biGrainYear;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Compare with'**
+  String get biCompare;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing'**
+  String get biCompareNone;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The period before'**
+  String get biComparePrevious;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The same period a year before'**
+  String get biComparePreviousYear;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'A period I choose'**
+  String get biCompareCustom;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Group by'**
+  String get biGroupBy;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'No grouping'**
+  String get biGroupNone;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get biSort;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Order (groups only)'**
+  String get biSortUngrouped;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'As listed'**
+  String get biSortNatural;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Highest first'**
+  String get biSortDescending;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest first'**
+  String get biSortAscending;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Table'**
+  String get biViewTable;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Chart'**
+  String get biViewChart;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{value} pp'**
+  String biChangePoints(String value);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read this analysis in this workspace.'**
+  String get biForbidden;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis could not be computed.'**
+  String get biUnavailable;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis is not offered for that period length.'**
+  String get biRefusedGrain;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis cannot make that comparison.'**
+  String get biRefusedComparison;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis cannot be grouped that way.'**
+  String get biRefusedGrouping;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'There are more than {count} groups; choose no grouping.'**
+  String biRefusedBudget(String count);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{period} was not recorded (history begins {since}); there is no comparison.'**
+  String biComparedNotRecorded(String period, String since);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{period} is only partly recorded.'**
+  String biComparedPartial(String period);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.'**
+  String get biExposureDiffers;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{period}: {value} ({change})'**
+  String biComparedLine(String period, String value, String change);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Open the source'**
+  String get biOpenSource;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The source records are shown only to those who manage them.'**
+  String get biSourceRestricted;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get biTotal;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Not in a current group'**
+  String get biRemainder;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get biColumnValue;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get biColumnChange;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This address asks for an analysis that does not exist; nothing was read.'**
+  String get biInvalidAddress;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Show the standard view'**
+  String get biReset;
+
   /// #872 one wizard idiom: assistantPrefix
   ///
   /// In en, this message translates to:
@@ -23337,7 +25929,7 @@ abstract class AppLocalizations {
   /// Segment label: invite QR/code that joins as an admin
   ///
   /// In en, this message translates to:
-  /// **'Admin invite'**
+  /// **'Administrator invite'**
   String get inviteRoleAdmin;
 
   /// Explainer under the admin invite QR
@@ -23349,7 +25941,7 @@ abstract class AppLocalizations {
   /// No description provided for @inviteAdminNewCode.
   ///
   /// In en, this message translates to:
-  /// **'New admin code'**
+  /// **'New administrator code'**
   String get inviteAdminNewCode;
 
   /// Footnote on the invite screen: owner role is never invitable
@@ -23901,13 +26493,13 @@ abstract class AppLocalizations {
   /// Roles screen title (#513)
   ///
   /// In en, this message translates to:
-  /// **'Role management'**
+  /// **'Roles'**
   String get rolesTitle;
 
   /// Roles screen intro for editors (#513)
   ///
   /// In en, this message translates to:
-  /// **'The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.'**
+  /// **'Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.'**
   String get rolesIntroEditor;
 
   /// Roles screen intro for non-editors (#513)
@@ -23931,13 +26523,13 @@ abstract class AppLocalizations {
   /// Role label (#513)
   ///
   /// In en, this message translates to:
-  /// **'Admin'**
+  /// **'Administrator'**
   String get roleAdmin;
 
   /// Role label (#513)
   ///
   /// In en, this message translates to:
-  /// **'Member'**
+  /// **'Every member'**
   String get roleMember;
 
   /// Permission label (#513)

@@ -186,6 +186,145 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las facturas cambiaron mientras las revisaba. Vuelva a exportar para ver las cuentas actuales.';
 
   @override
+  String handoffUnsupportedCurrency(String number) {
+    return '$number: su moneda no tiene un número de decimales verificado';
+  }
+
+  @override
+  String handoffAmountOutOfRange(String number) {
+    return '$number: un total demasiado grande para transmitirse con exactitud';
+  }
+
+  @override
+  String get featureAccountingBookTitle => 'Libro contable';
+
+  @override
+  String get featureAccountingBookDesc =>
+      'Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes.';
+
+  @override
+  String get bookSheetTitle => 'Libro contable';
+
+  @override
+  String get bookTileEmpty =>
+      'Sin libro: DesKilo lleva los saldos de los miembros y las facturas (precontabilidad).';
+
+  @override
+  String get bookIssuer => 'Emisor';
+
+  @override
+  String get bookAuthorityPre => 'Precontabilidad';
+
+  @override
+  String get bookAuthorityLocal => 'DesKilo lleva el libro';
+
+  @override
+  String get bookAuthorityExternal => 'Sistema externo';
+
+  @override
+  String get bookExternalSystem => 'Sistema que hace fe';
+
+  @override
+  String get bookCurrency => 'Moneda funcional';
+
+  @override
+  String get bookFiscalStart => 'El ejercicio empieza el';
+
+  @override
+  String get bookBasisAccrual => 'Criterio de devengo';
+
+  @override
+  String get bookBasisCash => 'Criterio de caja';
+
+  @override
+  String bookEffectiveFrom(String date) {
+    return 'Vigente desde el $date';
+  }
+
+  @override
+  String bookFiscalPreview(String label, String start, String end) {
+    return 'Ejercicio $label: $start – $end';
+  }
+
+  @override
+  String get bookProblemExternal =>
+      'Indique el sistema externo que lleva los libros oficiales.';
+
+  @override
+  String get bookProblemCurrency =>
+      'Esta moneda no tiene un número de decimales verificado.';
+
+  @override
+  String get bookProblemFiscal =>
+      'Un ejercicio empieza un día que tiene todo año (nunca el 29 de febrero).';
+
+  @override
+  String get bookSaved => 'Libro guardado';
+
+  @override
+  String get bookStale =>
+      'Alguien guardó este libro desde que lo abrió. Cierre y vuelva a abrir para ver su versión.';
+
+  @override
+  String get bookSaveFailed =>
+      'El libro no se guardó. Compruebe la conexión e inténtelo de nuevo.';
+
+  @override
+  String get bookRoleCustomers => 'Clientes (cuentas por cobrar)';
+
+  @override
+  String get bookRoleRevenue => 'Ingresos';
+
+  @override
+  String get bookRoleBank => 'Banco';
+
+  @override
+  String get bookRoleVatOutput => 'IVA repercutido';
+
+  @override
+  String get bookRoleExpenses => 'Gastos';
+
+  @override
+  String get bookTypeAsset => 'Activo';
+
+  @override
+  String get bookTypeLiability => 'Pasivo';
+
+  @override
+  String get bookTypeEquity => 'Patrimonio neto';
+
+  @override
+  String get bookTypeIncome => 'Ingreso';
+
+  @override
+  String get bookTypeExpense => 'Gasto';
+
+  @override
+  String bookChartTitle(String site) {
+    return 'Plan contable · $site';
+  }
+
+  @override
+  String get bookChartSuggest => 'Añadir las cuentas sugeridas para revisarlas';
+
+  @override
+  String get bookAccountCode => 'Código de cuenta';
+
+  @override
+  String get bookAccountName => 'Nombre de la cuenta';
+
+  @override
+  String get bookAccountPosting => 'Admite asientos';
+
+  @override
+  String get bookMappingsTitle => 'La cuenta de cada asiento';
+
+  @override
+  String bookProblemUnmapped(String roles) {
+    return 'Asigne estas cuentas antes de iniciar un libro local: $roles.';
+  }
+
+  @override
   String get fecAccountExpenses => 'Gastos';
 
   @override
@@ -260,6 +399,190 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceExportBundle => 'Archivo del ejercicio (zip)';
+
+  @override
+  String get assistantSetupTitle => 'Configuración de asistentes';
+
+  @override
+  String get assistantSetupIntro =>
+      'Lo que los asistentes necesitan en este espacio de trabajo, en orden. Cada paso indica quién lo realiza.';
+
+  @override
+  String get assistantSetupNoWorkspace =>
+      'Elija primero un espacio de trabajo.';
+
+  @override
+  String get assistantSetupAllDone =>
+      'Todo está configurado para este espacio de trabajo.';
+
+  @override
+  String get assistantSetupSaved => 'Guardado.';
+
+  @override
+  String get assistantSetupStale =>
+      'Alguien cambió la oferta mientras tanto. Revísela e inténtelo de nuevo.';
+
+  @override
+  String get assistantSetupFailed =>
+      'No se pudo guardar. No cambió nada; inténtelo de nuevo.';
+
+  @override
+  String get assistantSetupLinkIdentity => 'Confirmar mi identidad';
+
+  @override
+  String get assistantSetupTurnOn => 'Activar';
+
+  @override
+  String get assistantSetupRecommended => 'Usar la selección recomendada';
+
+  @override
+  String get assistantSetupCustomise => 'Personalizar';
+
+  @override
+  String get assistantSetupRequest => 'Solicitar acceso';
+
+  @override
+  String get assistantSetupReview => 'Revisar solicitudes';
+
+  @override
+  String get assistantSetupNoConnector =>
+      'Esta app funciona sin servidor, así que no hay URL de conector.';
+
+  @override
+  String get assistantSetupCopyUrl => 'Copiar la URL del conector';
+
+  @override
+  String get assistantSetupCopied => 'URL del conector copiada.';
+
+  @override
+  String get assistantSetupConnectHowTo =>
+      '1. En su asistente, añada un conector personalizado con esta URL.\n2. Inicie sesión con su cuenta de DesKilo cuando se le pida.\n3. Apruebe este espacio de trabajo y las operaciones que permite.';
+
+  @override
+  String get assistantSetupPreviewTitle => 'Selección recomendada';
+
+  @override
+  String get assistantSetupPreviewNone =>
+      'Sin cambios: el espacio de trabajo ya ofrece exactamente esta selección.';
+
+  @override
+  String get assistantSetupPreviewAdds => 'Añadidas';
+
+  @override
+  String get assistantSetupPreviewRemoves => 'Retiradas';
+
+  @override
+  String get assistantSetupPreviewOwn =>
+      'Los asistentes solo ven los datos propios de cada miembro.';
+
+  @override
+  String get assistantSetupPreviewNote =>
+      'Solo los datos propios de un miembro y las consultas de disponibilidad. Los asistentes ya conectados reciben operaciones nuevas solo cuando cada persona vuelve a aprobar.';
+
+  @override
+  String get assistantSetupApply => 'Aplicar';
+
+  @override
+  String get assistantSetupStepIdentity => 'Vincule su identidad';
+
+  @override
+  String get assistantSetupStepWorkspace =>
+      'Activar asistentes en este espacio de trabajo';
+
+  @override
+  String get assistantSetupStepPolicy =>
+      'Elegir qué pueden hacer los asistentes';
+
+  @override
+  String get assistantSetupStepEligibility => 'Solicite su acceso a asistentes';
+
+  @override
+  String get assistantSetupStepInstallation =>
+      'Asistentes activados en esta base de datos';
+
+  @override
+  String get assistantSetupStepConnect => 'Conecte su asistente';
+
+  @override
+  String get assistantSetupReasonIdentity =>
+      'Un asistente actúa en su nombre, así que esta base de datos debe saber que es usted.';
+
+  @override
+  String get assistantSetupReasonWorkspace =>
+      'Mientras esté desactivado, el espacio de trabajo rechaza toda llamada de asistente.';
+
+  @override
+  String get assistantSetupReasonPolicy =>
+      'No se ofrece nada a los asistentes hasta que alguien elija las operaciones.';
+
+  @override
+  String get assistantSetupReasonEligibility =>
+      'Los administradores de esta base de datos aprueban a cada persona una vez, para todos sus espacios de trabajo.';
+
+  @override
+  String get assistantSetupReasonInstallation =>
+      'El propietario de la instancia o un delegado activa los asistentes para todos los espacios de trabajo de esta base de datos.';
+
+  @override
+  String get assistantSetupReasonConnect =>
+      'Añada el conector en su asistente, inicie sesión y apruebe este espacio de trabajo.';
+
+  @override
+  String get assistantSetupStateDone => 'Hecho';
+
+  @override
+  String get assistantSetupStateTodo => 'Pendiente';
+
+  @override
+  String get assistantSetupStateWaiting => 'En espera';
+
+  @override
+  String get assistantSetupStateBlocked => 'Después de los pasos anteriores';
+
+  @override
+  String get assistantSetupStateUnavailable => 'No se pudo consultar';
+
+  @override
+  String get assistantSetupActorYou => 'Quién: usted';
+
+  @override
+  String get assistantSetupActorConfigurer =>
+      'Quién: alguien que gestiona la configuración de este espacio de trabajo';
+
+  @override
+  String get assistantSetupActorIntegrations =>
+      'Quién: alguien que gestiona las integraciones de este espacio de trabajo';
+
+  @override
+  String get assistantSetupActorDatabaseAdministrator =>
+      'Quién: un administrador de la base de datos';
+
+  @override
+  String get assistantSetupActorInstanceOperator =>
+      'Quién: el propietario de la instancia o un delegado';
+
+  @override
+  String assistantSetupNextTodo(String step) {
+    return 'Siguiente: $step.';
+  }
+
+  @override
+  String assistantSetupNextWaiting(String step, String actor) {
+    return 'Siguiente: $step. $actor.';
+  }
+
+  @override
+  String get assistantSetupInstanceYou =>
+      'Usted responde de esta base de datos: active los asistentes desde las herramientas de la instancia.';
+
+  @override
+  String get assistantSetupInstanceNobody =>
+      'Nadie responde todavía de esta base de datos.';
+
+  @override
+  String assistantSetupInstanceNames(String names) {
+    return 'Responden de esta base de datos: $names.';
+  }
 
   @override
   String get legalIdentityAssociationRegime =>
@@ -1379,6 +1702,20 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get bootFailedTitle => 'DesKilo no pudo iniciarse';
+
+  @override
+  String get bootFailedBody =>
+      'El servidor o el almacenamiento seguro de este dispositivo no respondió. No se cambió nada. Cierre la aplicación y vuelva a abrirla; si sigue ocurriendo, compruebe la red.';
+
+  @override
+  String get bootSlowTitle => 'El inicio tarda más de lo habitual';
+
+  @override
+  String get bootSlowBody =>
+      'Sigue intentándolo. Si no ocurre nada, cierre la aplicación y vuelva a abrirla.';
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Falta el SIREN del comprador. Una plataforma francesa enruta por él: introdúzcalo en el perfil del miembro antes de transmitir. No es un rechazo — el archivo es válido sin él.';
 
@@ -1718,6 +2055,97 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta reserva no se puede exportar: no es tuya o ya no existe.';
 
   @override
+  String get featureCapacityKpiTitle => 'Ocupación de puestos';
+
+  @override
+  String get featureCapacityKpiDesc =>
+      'Muestra a los propietarios y a quienes gestionan las reservas qué parte del tiempo de puesto ofrecido se reservó en un mes, cómo se calcula y lo que la cifra no puede saber.';
+
+  @override
+  String get capacityKpiTitle => 'Ocupación de puestos';
+
+  @override
+  String capacityKpiRatio(String reserved, String offered) {
+    return '$reserved de $offered horas-puesto reservadas';
+  }
+
+  @override
+  String get capacityKpiUndefined =>
+      'En este periodo no se ofreció tiempo de puesto, así que no hay ocupación que mostrar.';
+
+  @override
+  String get capacityKpiExplain => '¿Cómo se calcula?';
+
+  @override
+  String get capacityKpiDefinition =>
+      'Horas-puesto reservadas dentro del horario de apertura, divididas por las horas-puesto ofrecidas: cada puesto por las horas de apertura de los días abiertos, menos los días de cierre y los bloqueos de puestos. Una mesa, sala o planta completa cuenta cada uno de sus puestos una vez; las reservas canceladas no cuentan.';
+
+  @override
+  String capacityKpiPhysical(String hours) {
+    return 'Capacidad física: $hours horas-puesto';
+  }
+
+  @override
+  String capacityKpiOutside(String hours) {
+    return 'Reservado fuera de las horas ofrecidas: $hours horas-puesto, fuera del ratio';
+  }
+
+  @override
+  String capacityKpiOverlap(String hours) {
+    return 'Reservado dos veces a la vez: $hours horas-puesto, contadas una vez';
+  }
+
+  @override
+  String capacityKpiRooms(String count, String reserved, String offered) {
+    return 'Salas sin puestos: $count, $reserved de $offered horas-sala reservadas';
+  }
+
+  @override
+  String get capacityKpiUnattributed =>
+      'Algunas reservas del periodo apuntan a un lugar que ya no existe; no se cuentan.';
+
+  @override
+  String get capacityKpiKnownZero => 'Medido: no se reservó nada.';
+
+  @override
+  String capacityKpiAsOf(String time) {
+    return 'Calculado $time';
+  }
+
+  @override
+  String get capacityKpiForbidden =>
+      'No puede consultar las cifras de capacidad de este espacio.';
+
+  @override
+  String get capacityKpiUnavailable =>
+      'No se pudo calcular la ocupación de puestos.';
+
+  @override
+  String get capacityKpiRetry => 'Reintentar';
+
+  @override
+  String capacityKpiHistorySince(String date) {
+    return 'Contado desde el $date, cuando empezó el historial de este espacio; el tiempo anterior no se conoce y no se cuenta.';
+  }
+
+  @override
+  String capacityKpiNotRecorded(String date) {
+    return 'Este periodo es anterior al inicio del historial del espacio, el $date; no hay nada registrado que contar.';
+  }
+
+  @override
+  String capacityKpiHistory(String date) {
+    return 'Historial registrado desde el $date';
+  }
+
+  @override
+  String get capacityKpiRoomsToday =>
+      'Las salas sin puestos se leen tal como están hoy.';
+
+  @override
+  String get permViewAnalytics => 'Consultar las cifras del espacio';
+
+  @override
   String get featureCarnetsTitle => 'Bonos';
 
   @override
@@ -1970,7 +2398,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get coOwnerAction => 'Copropiedad';
 
   @override
-  String get coOwnerNone => 'Sin rol de copropietario';
+  String get coOwnerNone => 'Sin copropiedad';
 
   @override
   String get coOwnerActive =>
@@ -1978,7 +2406,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get coOwnerPassive =>
-      'Copropietario pasivo — se convierte en propietario al activarlo o cuando el propietario se va';
+      'Sucesor — se convierte en propietario al activarlo o cuando el propietario se va';
 
   @override
   String get coOwnerActivate => 'Promover a propietario ahora';
@@ -1987,7 +2415,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberCoOwnerChip => 'Copropietario';
 
   @override
-  String get memberCoOwnerPassiveChip => 'Copropietario (pasivo)';
+  String get memberCoOwnerPassiveChip => 'Sucesor';
 
   @override
   String get courtesyLabel => 'Tratamiento';
@@ -2094,6 +2522,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get workspaceFieldsSaveFailed =>
       'Tus respuestas a las preguntas de este espacio no se han guardado. El resto de tus datos sí.';
+
+  @override
+  String get workspaceFieldsPersonalNote =>
+      'Tus respuestas son datos personales: forman parte de tu exportación de datos y se borran cuando dejas este espacio, salvo que el espacio documente una obligación legal de conservar alguna.';
 
   @override
   String get featureCustomRolesTitle => 'Roles que define este espacio';
@@ -2548,6 +2980,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberPageNowHeading => 'Ahora mismo';
+
+  @override
+  String get editorMediaWriteFailed =>
+      'No se pudo confirmar que la imagen se guardó. Reintentar nunca la añade dos veces.';
+
+  @override
+  String get editorMediaSaving => 'Guardando la imagen…';
 
   @override
   String get editorBackgroundImage => 'Imagen de fondo';
@@ -3625,6 +4064,53 @@ class AppLocalizationsEs extends AppLocalizations {
       'Pedido, nunca supuesto. Active lo que este espacio realmente hace.';
 
   @override
+  String get featureMaturityUnreviewed => 'Sin evaluar';
+
+  @override
+  String get featureMaturityAlpha => 'Alfa';
+
+  @override
+  String get featureMaturityBeta => 'Beta';
+
+  @override
+  String get featureMaturityStable => 'Estable';
+
+  @override
+  String get featureLifecycleActive => 'Activa';
+
+  @override
+  String get featureLifecycleDeprecated => 'Obsoleta';
+
+  @override
+  String get featureLifecycleRetired => 'Retirada';
+
+  @override
+  String get featureMaturityFilterLabel => 'Madurez';
+
+  @override
+  String get featureMaturityFilterAll => 'Todas las etapas';
+
+  @override
+  String featureMaturitySemantics(String maturity, String lifecycle) {
+    return 'Madurez $maturity, $lifecycle';
+  }
+
+  @override
+  String get featureOptInTitle => '¿Activar una función experimental?';
+
+  @override
+  String featureOptInBody(String features) {
+    return 'Aún no evaluada como estable: $features. Puede cambiar y tiene límites conocidos. Actívela solo si este espacio lo acepta.';
+  }
+
+  @override
+  String get featureOptInConfirm => 'Activar';
+
+  @override
+  String get featureIntakeStoppedNote =>
+      'Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse.';
+
+  @override
   String get federationContinue => 'Continuar con Deskilo';
 
   @override
@@ -4295,6 +4781,135 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helpTopicReadiness => 'admisibilidad';
+
+  @override
+  String get featureHolidayImportTitle => 'Importar días festivos';
+
+  @override
+  String get featureHolidayImportDesc =>
+      'Un propietario importa los días festivos del país, y de una región, desde una fuente de datos abiertos, desmarca los días en que el espacio sigue abierto e importa el resto como días de cierre. Los meses ya facturados se omiten y se nombran.';
+
+  @override
+  String get holidayImportAction => 'Importar días festivos (datos abiertos)';
+
+  @override
+  String get holidayImportRegion => 'Región';
+
+  @override
+  String get holidayImportNationwide => 'Solo festivos nacionales';
+
+  @override
+  String get holidayImportUnavailable =>
+      'La fuente de días festivos no está disponible ahora. Inténtelo más tarde o use «Añadir días festivos».';
+
+  @override
+  String get holidayImportRetry => 'Reintentar';
+
+  @override
+  String holidayImportSource(String source) {
+    return 'Fuente: $source';
+  }
+
+  @override
+  String holidayImportConfirm(int count) {
+    return 'Importar $count días de cierre';
+  }
+
+  @override
+  String get holidayImportFailed =>
+      'No se pudieron comprobar ni importar los días festivos. No se ha cambiado nada.';
+
+  @override
+  String get instanceTitle => 'Instalación: asistentes';
+
+  @override
+  String get instanceIntro =>
+      'Ajustes para todos los espacios de trabajo de esta instalación. Solo el operador de la instancia ve esta página; cada cambio requiere su segundo factor y queda registrado.';
+
+  @override
+  String get instanceNotOperator =>
+      'Solo el operador de la instancia gestiona los asistentes de la instalación.';
+
+  @override
+  String get instanceSecondFactorNeeded =>
+      'Los cambios aquí requieren su segundo factor en esta sesión.';
+
+  @override
+  String get instanceConfirmSecondFactor => 'Confirmar con mi autenticador';
+
+  @override
+  String get instanceRuntimeTitle => 'Asistentes en esta instalación';
+
+  @override
+  String get instanceRuntimeOn => 'Activados';
+
+  @override
+  String get instanceRuntimeOff => 'Desactivados';
+
+  @override
+  String get instanceTurnOn => 'Activar para todos los espacios';
+
+  @override
+  String get instanceTurnOff => 'Desactivar';
+
+  @override
+  String get instanceTurnOnConfirm =>
+      'Los asistentes pasan a poder usarse en cada espacio que los ofrece. Puede desactivarlos en cualquier momento.';
+
+  @override
+  String get instanceBlockers => 'Todavía falta:';
+
+  @override
+  String get instanceBlockerNoAdmin => 'un administrador de la base';
+
+  @override
+  String get instanceAdminsTitle => 'Administradores de la base';
+
+  @override
+  String get instanceAdminsHelp =>
+      'Deciden quién puede usar asistentes. Solo pueden elegirse personas que confirmaron su identidad para asistentes.';
+
+  @override
+  String get instanceMakeAdmin => 'Nombrar administrador';
+
+  @override
+  String get instanceRemoveAdmin => 'Quitar';
+
+  @override
+  String get instanceNoCandidates =>
+      'Nadie más ha confirmado aún su identidad.';
+
+  @override
+  String get instanceYou => 'usted';
+
+  @override
+  String get instanceClientsTitle => 'Clientes de asistente';
+
+  @override
+  String get instanceClientsHelp =>
+      'Un asistente se registra solo la primera vez que alguien lo conecta; funciona solo después de aprobarlo aquí.';
+
+  @override
+  String get instanceClientWaiting => 'Pendiente de aprobación';
+
+  @override
+  String get instanceClientApproved => 'Aprobado';
+
+  @override
+  String get instanceClientBlocked => 'Bloqueado';
+
+  @override
+  String get instanceApprove => 'Aprobar';
+
+  @override
+  String get instanceBlock => 'Bloquear';
+
+  @override
+  String get instanceOwnerClaimIntro =>
+      '¿A quién pertenece esta instancia? Introduzca el correo electrónico con el que se registrará en ella. Tras confirmar esa dirección, reclame la titularidad en Ajustes → Propietario de la instancia.';
+
+  @override
+  String get instanceOwnerClaimLabel => 'Correo del titular';
 
   @override
   String get instanceOwnerTitle => 'Propietario de la instancia';
@@ -5206,6 +5821,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceGapMissingBuyerCountry => 'Falta el país del cliente.';
 
   @override
+  String get invoiceGapCreditNoteWithPayments =>
+      'Esta factura rectificativa también compensa pagos, algo que una nota de crédito EN 16931 no puede expresar. Emita el abono en un documento propio.';
+
+  @override
   String get invoiceGapNoChargeLines =>
       'Esta factura no tiene ninguna línea de cargo — su mes quedó cubierto por los pagos, así que no hay nada que enviar.';
 
@@ -5879,7 +6498,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dunningAutomaticHint =>
-      'Una vez al día, las facturas abiertas más allá del plazo reciben solas su siguiente nivel de recordatorio — un aviso en el feed del miembro y una notificación. Desactivado: envías cada recordatorio tú mismo.';
+      'Una vez al día, las facturas que superan su plazo de pago registrado pasan solas al siguiente nivel de recordatorio — por el importe aún pendiente, nunca mientras un pago está pendiente o la factura está en suspenso. Las facturas sin plazo registrado quedan en tus manos. Desactivado: envías cada recordatorio tú mismo.';
 
   @override
   String get eventTypePriceNegotiation => 'Negociación de precios';
@@ -6626,6 +7245,60 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ese archivo no contiene ningún diseño legible.';
 
   @override
+  String get invoiceHoldAction => 'Suspender los recordatorios';
+
+  @override
+  String get invoiceHoldReleaseAction =>
+      'Levantar la suspensión de recordatorios';
+
+  @override
+  String get invoiceHoldTitle => '¿Por qué suspender los recordatorios?';
+
+  @override
+  String get invoiceHoldExplain =>
+      'No se envía ningún recordatorio para esta factura, ni a mano ni automáticamente, hasta que se levante la suspensión.';
+
+  @override
+  String get invoiceHoldReasonDispute => 'El miembro la impugna';
+
+  @override
+  String get invoiceHoldReasonIdentity =>
+      'Persona equivocada o error de identidad';
+
+  @override
+  String get invoiceHoldReasonInsolvency => 'Procedimiento de insolvencia';
+
+  @override
+  String get invoiceHoldReasonOther => 'Otro motivo';
+
+  @override
+  String get invoiceHoldNote => 'Nota (opcional)';
+
+  @override
+  String get invoiceHoldConfirm => 'Suspender';
+
+  @override
+  String get invoiceHoldPlaced =>
+      'Los recordatorios de esta factura están suspendidos.';
+
+  @override
+  String get invoiceHoldReleased =>
+      'Los recordatorios de esta factura pueden reanudarse.';
+
+  @override
+  String invoiceHeldNote(String reason) {
+    return 'Recordatorios suspendidos: $reason';
+  }
+
+  @override
+  String get invoiceMaturityReview =>
+      'No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revises.';
+
+  @override
+  String get invoiceHoldFailed =>
+      'No se pudo cambiar la suspensión de recordatorios. Inténtalo de nuevo.';
+
+  @override
   String get invoicesManage => 'Gestionar facturas';
 
   @override
@@ -7018,6 +7691,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get bookingNotAMember =>
       'Ya no es miembro de este espacio — pida una invitación a un administrador.';
+
+  @override
+  String get levelReorderStale =>
+      'Los niveles cambiaron mientras tanto. No se guardó nada; se muestra el orden actual.';
 
   @override
   String get featureWorkspaceLibraryTitle => 'Biblioteca de espacios';
@@ -7770,7 +8447,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mcpEligibleNoIdentity =>
-      'Su cuenta no está vinculada a una identidad verificada en esta base de datos.';
+      'Su identidad aún no está confirmada para los asistentes en esta base.';
 
   @override
   String get mcpEligibleNot =>
@@ -7848,7 +8525,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpStatusTitle => 'Su situación aquí';
 
   @override
-  String get mcpStatusIdentity => 'Identidad';
+  String get mcpStatusIdentity => 'Identidad para asistentes';
 
   @override
   String get mcpStatusEligibility => 'Aprobación de la base de datos';
@@ -7869,7 +8546,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpStateVerified => 'Verificada';
 
   @override
-  String get mcpStateUnlinked => 'No vinculada';
+  String get mcpStateUnlinked => 'No confirmada';
 
   @override
   String get mcpStateNotRequested => 'No solicitada';
@@ -7912,7 +8589,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mcpNextLinkIdentity =>
-      'Siguiente paso: vincule su cuenta a la identidad de esta base de datos.';
+      'Siguiente paso: confirme su identidad para los asistentes en esta base, con un toque abajo.';
 
   @override
   String get mcpNextRequestEligibility =>
@@ -7956,6 +8633,46 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esa base de datos necesita su segundo factor en su propia sesión. No se decidió nada.';
 
   @override
+  String get mcpStatusConfirmIdentity => 'Confirmar mi identidad';
+
+  @override
+  String get mcpStateAfterPrevious => 'Después del paso anterior';
+
+  @override
+  String get mcpIdentityIneligible =>
+      'Esta cuenta aún no puede confirmarse: confirme primero su dirección de correo o inicie sesión con un proveedor.';
+
+  @override
+  String get mcpIdentityConflict =>
+      'Otra cuenta ya tiene esta identidad aquí: un administrador de la base puede resolverlo.';
+
+  @override
+  String get mcpStatusGoogle => 'Inicio de sesión con Google';
+
+  @override
+  String get mcpStatusLinkGoogle => 'Vincular Google';
+
+  @override
+  String get mcpStatusSignInGoogle => 'Iniciar sesión con Google';
+
+  @override
+  String get mcpStateGoogleReady => 'Sesión iniciada con Google';
+
+  @override
+  String get mcpStateGoogleOtherSession => 'Sesión iniciada de otra forma';
+
+  @override
+  String get mcpStateGoogleMissing => 'Google no vinculado';
+
+  @override
+  String get mcpNextLinkGoogle =>
+      'Los asistentes usan su inicio de sesión con Google. Vincule primero Google a esta cuenta; sin ello, la cuenta no puede usar asistentes.';
+
+  @override
+  String get mcpNextSignInGoogle =>
+      'Los asistentes usan su inicio de sesión con Google. Inicie sesión con Google para continuar.';
+
+  @override
   String get mcpUsageWorkspaceTitle => 'Uso de asistentes, últimos 30 días';
 
   @override
@@ -7985,6 +8702,242 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpUsagePending => 'Pendientes de validación';
 
   @override
+  String get meGroupProfile => 'Mi perfil';
+
+  @override
+  String get meGroupWorkspaces => 'Mis espacios de trabajo';
+
+  @override
+  String get meGroupInstallations => 'Instalaciones conectadas';
+
+  @override
+  String get meTabHome => 'Inicio';
+
+  @override
+  String get meTabDiscover => 'Descubrir';
+
+  @override
+  String get meTabMessages => 'Mensajes';
+
+  @override
+  String get meTabMe => 'Yo';
+
+  @override
+  String get meHomeTitle => 'Inicio';
+
+  @override
+  String get meMySpaces => 'Mis espacios';
+
+  @override
+  String get meHeaderOwned => 'Tu cuenta · solo te pertenece a ti';
+
+  @override
+  String get meNoSpaceTitle => 'Aún no estás en ningún espacio';
+
+  @override
+  String get meNoSpaceBody =>
+      'Busca uno cerca de ti, únete con un código de invitación o crea el tuyo.';
+
+  @override
+  String get meFindSpace => 'Buscar un espacio';
+
+  @override
+  String get meJoinSpace => 'Unirse con un código';
+
+  @override
+  String get meCreateSpace => 'Crear un espacio';
+
+  @override
+  String get meManageSpaces => 'Gestionar mis espacios';
+
+  @override
+  String get meSpacePending => 'Pendiente de aprobación';
+
+  @override
+  String get meSpaceLastUsed => 'Último usado';
+
+  @override
+  String get meLeaveAction => 'Salir de este espacio';
+
+  @override
+  String get meLeaveOwner =>
+      'Los propietarios traspasan el espacio antes de salir';
+
+  @override
+  String meLeaveTitle(String name) {
+    return '¿Salir de $name?';
+  }
+
+  @override
+  String get meLeaveBody =>
+      'Dejas de ser miembro. Tus reservas, facturas y mensajes se quedan en el espacio. Para borrar también tus datos, usa Privacidad.';
+
+  @override
+  String get meLeaveFailed =>
+      'No se pudo salir del espacio. Inténtalo de nuevo.';
+
+  @override
+  String meLeaveDone(String name) {
+    return 'Has salido de $name.';
+  }
+
+  @override
+  String meLinkedOpenBody(String host) {
+    return 'Este espacio está en $host. La app trabaja con un servidor a la vez: abrirlo cambia a ese servidor y te pide iniciar sesión allí.';
+  }
+
+  @override
+  String meLinkedOpen(String host) {
+    return 'Abrir en $host';
+  }
+
+  @override
+  String meLinkedUnavailable(String host) {
+    return '$host no respondió: esta lista puede estar incompleta.';
+  }
+
+  @override
+  String meLinkedPendingOn(String host) {
+    return 'Pendiente de aprobación · $host';
+  }
+
+  @override
+  String get meSectionMine => 'Mi historial y mis datos';
+
+  @override
+  String get meWhereSpacesLive => 'Dónde están mis espacios';
+
+  @override
+  String get meAccountInMe => 'Mi cuenta está en Yo';
+
+  @override
+  String get meAccountInMeBody =>
+      'Foto, idioma, tema e inicios de sesión son tuyos en todos los espacios.';
+
+  @override
+  String get meSpaceException => 'En este espacio';
+
+  @override
+  String get spaceBackToMe => 'Volver a Yo';
+
+  @override
+  String get spaceChipTooltip => 'Cambiar de espacio';
+
+  @override
+  String get visibilityTitle => 'Quién me ve';
+
+  @override
+  String get visibilityIntro =>
+      'Cada parte de tu cuenta elige su propio público. Nada es público si no lo eliges.';
+
+  @override
+  String get visibilityIdentity => 'Nombre y foto';
+
+  @override
+  String get visibilityAbout => 'Profesión y biografía';
+
+  @override
+  String get visibilityContact => 'WhatsApp y correo';
+
+  @override
+  String get visibilityPresence => 'Hoy en el espacio';
+
+  @override
+  String get visibilityReachability =>
+      'Quién puede iniciar una conversación conmigo';
+
+  @override
+  String get visibilityNobody => 'Nadie';
+
+  @override
+  String get visibilityMySpaces => 'Miembros de mis espacios';
+
+  @override
+  String get visibilityChosenSpaces => 'Miembros de espacios elegidos';
+
+  @override
+  String get visibilitySignedIn => 'Cualquiera con sesión iniciada';
+
+  @override
+  String get visibilitySaveFailed =>
+      'No se pudo guardar quién lo ve. Inténtalo de nuevo.';
+
+  @override
+  String get visibilityPreviewTitle => 'Cómo me ven los demás';
+
+  @override
+  String get visibilityPreviewMySpaces => 'Un miembro de mis espacios';
+
+  @override
+  String get visibilityPreviewSignedIn => 'Cualquiera con sesión iniciada';
+
+  @override
+  String get visibilityPreviewNobody => 'Solo yo';
+
+  @override
+  String get visibilityPreviewNothing => 'No ven nada de ti.';
+
+  @override
+  String get visibilityPreviewFailed => 'No se pudo cargar la vista previa.';
+
+  @override
+  String get visibilityPreviewCanWrite =>
+      'Puede iniciar una conversación contigo';
+
+  @override
+  String get visibilityPreviewCannotWrite =>
+      'No puede iniciar una conversación contigo';
+
+  @override
+  String visibilityChosenCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Miembros de $count espacios elegidos',
+      one: 'Miembros de 1 espacio elegido',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get portalVisibilityLink => 'Quién puede encontrarme y escribirme';
+
+  @override
+  String get portalVisibilityLinkBody => 'Se elige en Yo, en Quién me ve.';
+
+  @override
+  String get portalEnterSpace => 'Entrar';
+
+  @override
+  String get portalCopyEmail => 'Copiar el correo';
+
+  @override
+  String get portalEmailCopied => 'Correo copiado';
+
+  @override
+  String get meAddressSaveFailed =>
+      'No se pudo guardar tu dirección. Inténtalo de nuevo.';
+
+  @override
+  String get visibilityAboutMe => 'Sobre mí';
+
+  @override
+  String get visibilityAboutEmpty => 'Añade tu profesión y unas palabras';
+
+  @override
+  String get visibilityProfession => 'Profesión';
+
+  @override
+  String get visibilityBio => 'Unas palabras sobre ti';
+
+  @override
+  String get visibilityAboutSaveFailed =>
+      'No se pudieron guardar tu profesión y biografía. Inténtalo de nuevo.';
+
+  @override
+  String get portalOpenMe => 'Yo: mi cuenta y mis espacios';
+
+  @override
   String get featureMemberAccountMenuTitle => 'Los miembros ven Mi cuenta';
 
   @override
@@ -8004,7 +8957,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberRoleOwner => 'Propietario';
 
   @override
-  String get memberRoleAdmin => 'Admin';
+  String get memberRoleAdmin => 'Administrador/a';
 
   @override
   String get memberStatusPaused => 'En pausa';
@@ -8346,7 +9299,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureSpaceInquiriesDesc =>
-      'Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas; las consultas guardadas se conservan.';
+      'Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas, así que nadie abre una consulta nueva; las abiertas siguen en la bandeja de los anfitriones para responderlas y cerrarlas.';
 
   @override
   String get featureMessageForwardingTitle => 'Reenvío de mensajes';
@@ -10031,6 +10984,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get portalNoWorkspaces => 'No se encontraron espacios publicados.';
 
   @override
+  String get portalNoLongerPublished => 'Este espacio ya no está publicado.';
+
+  @override
+  String get portalDirectoryIncompatible =>
+      'Algunos espacios requieren una versión más reciente de la aplicación y no se muestran.';
+
+  @override
   String get portalMoreDirectories => 'Más directorios';
 
   @override
@@ -10062,6 +11022,90 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featurePublicListingsDesc =>
       'Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores.';
+
+  @override
+  String get portalFollowsWorkspace => 'De la información del espacio';
+
+  @override
+  String get portalCustomised => 'Personalizado';
+
+  @override
+  String get portalUseWorkspaceInfo => 'Usar la información del espacio';
+
+  @override
+  String get portalResetAll =>
+      'Restablecer todos los datos públicos con la información del espacio';
+
+  @override
+  String get portalResetAllBody =>
+      'Los valores públicos de cada campo que tiene información en el espacio se sustituyen por ella. Los campos sin equivalente en el espacio conservan lo que escribió.';
+
+  @override
+  String get portalResetAllConfirm => 'Restablecer';
+
+  @override
+  String get privacyNoticeTitle => 'Quién trata tus datos';
+
+  @override
+  String privacyNoticeController(String name, String contact) {
+    return 'Responsable del tratamiento: $name — $contact';
+  }
+
+  @override
+  String privacyNoticeRights(String contact) {
+    return 'Tus derechos: $contact';
+  }
+
+  @override
+  String privacyNoticeRegion(String region) {
+    return 'Región: $region';
+  }
+
+  @override
+  String privacyNoticeTransfer(String mechanism) {
+    return 'Garantía de transferencia: $mechanism';
+  }
+
+  @override
+  String get privacyNoticeNotRecorded => 'no registrado por el operador';
+
+  @override
+  String get privacyNoticeEssential => 'Necesario para la cuenta y el espacio';
+
+  @override
+  String get privacyNoticeOptional =>
+      'Opcional — puedes usar la aplicación sin ello';
+
+  @override
+  String get privacyNoticeRightsRoute => 'Tus derechos y el contacto';
+
+  @override
+  String get privacySpaceNotice => 'El aviso de privacidad de este espacio';
+
+  @override
+  String get privacySpaceNoticeRead =>
+      'Has tomado conocimiento de esta versión.';
+
+  @override
+  String get privacySpaceNoticeUnread => 'Aún no leído — léelo aquí.';
+
+  @override
+  String get privacySpaceNoticeAcknowledge => 'He leído este aviso';
+
+  @override
+  String get privacySpaceNoticeFailed =>
+      'No se pudo registrar la toma de conocimiento. Inténtalo de nuevo.';
+
+  @override
+  String get privacyPushOnDevice => 'Notificaciones push en este dispositivo';
+
+  @override
+  String get privacyPushOnDeviceHint =>
+      'Opcional. Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push; desactivado, la aplicación sigue funcionando y no se envía nada a este dispositivo.';
+
+  @override
+  String get privacyPushOnDeviceFailed =>
+      'No se pudo guardar la elección. Inténtalo de nuevo.';
 
   @override
   String get featuresViewProcesses => 'Procesos';
@@ -10568,7 +11612,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get privacyIntro =>
-      'Sus datos permanecen en la UE, nunca se rastrean ni se venden, y solo los leen los roles que nombran las reglas de abajo. Estos son sus derechos según el RGPD — cada uno es un botón.';
+      'Tus datos nunca se rastrean ni se venden, y solo los pueden leer los roles que nombran las reglas de abajo; dónde se alojan figura en el aviso de privacidad de esta instalación. Estos son tus derechos según el RGPD — cada uno es un botón.';
 
   @override
   String get privacyWhoCanSee => 'Quién puede ver mis datos';
@@ -11127,7 +12171,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get questionEditorPersonalHelp =>
-      'Se borra cuando la persona se va, y viaja en su exportación de datos. Déjalo activado salvo que la respuesta sea realmente del espacio y no de la persona.';
+      'Cada respuesta está vinculada a un miembro, así que es un dato personal: viaja en su exportación de datos y se borra cuando se va.';
 
   @override
   String get questionEditorVisibility => 'Quién ve la respuesta';
@@ -11205,23 +12249,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get questionTypeMultiChoice => 'Varias de una lista';
 
   @override
+  String get questionEditorNotPersonalWarning =>
+      'Sigue siendo personal: la respuesta está vinculada a un miembro, así que se exporta y se borra con la membresía, diga lo que diga este interruptor. Solo una conservación legal documentada puede guardarla.';
+
+  @override
   String get eventTypeRoleChange => 'Cambio de rol';
 
   @override
   String eventRolePromote(String actor) {
-    return '$actor promueve a un miembro a admin';
+    return '$actor pide dar el rol Administrador/a';
   }
 
   @override
   String eventRoleDemote(String actor) {
-    return '$actor degrada a un admin a miembro';
+    return '$actor pide retirar el rol Administrador/a';
   }
 
   @override
-  String get memberMakeAdmin => 'Hacer admin';
+  String get memberMakeAdmin => 'Dar el rol Administrador/a';
 
   @override
-  String get memberMakeMember => 'Hacer miembro normal';
+  String get memberMakeMember => 'Retirar el rol Administrador/a';
 
   @override
   String get memberRoleChangeRequested =>
@@ -11378,6 +12426,51 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
+
+  @override
+  String get reminderHistoryTitle => 'Historial de recordatorios';
+
+  @override
+  String get reminderHistoryRefresh => 'Comprobar de nuevo el envío';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Nivel $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Preparado';
+
+  @override
+  String get reminderStatusQueued => 'Entregado al servicio de notificaciones';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Aceptado por el servicio de notificaciones — no prueba que se haya leído';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Compartido por el remitente — su declaración, no un acuse de recibo';
+
+  @override
+  String get reminderStatusFailed => 'No entregado';
+
+  @override
+  String get reminderStatusUnknown =>
+      'Sin respuesta del servicio de notificaciones';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Registrado antes del seguimiento de envíos — desconocido';
+
+  @override
+  String get reminderOriginManual => 'a mano';
+
+  @override
+  String get reminderOriginAutomatic => 'automático';
+
+  @override
+  String get reminderOriginLegacy => 'anterior';
 
   @override
   String get reportGuideTitle => 'Campos y marcado';
@@ -11811,6 +12904,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportFieldGroupTexts => 'Sus textos';
 
   @override
+  String get bookingSpaceChainTaken =>
+      'Este espacio, o un espacio que lo contiene, ya está reservado en ese periodo.';
+
+  @override
+  String get bookingNoLongerCheckedIn =>
+      'Esta reserva ya no está registrada — se cerró mientras tanto.';
+
+  @override
+  String get listWholeReservable => 'Reservable entero';
+
+  @override
+  String listCoversTables(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mesas',
+      one: '1 mesa',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String listCoversSeats(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count puestos',
+      one: '1 puesto',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get reserveMonthView => 'Mes';
 
   @override
@@ -11960,6 +13086,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookingGateBlocked => 'No reservable así';
 
   @override
+  String get reserveBackToNow => 'Volver a ahora';
+
+  @override
+  String get bookingModeCheckInNow => 'Registrarse ahora';
+
+  @override
+  String get bookingOverlapsAnother =>
+      'El puesto ya está reservado durante parte de este tiempo.';
+
+  @override
   String get reverseChargeTitle =>
       'Inversión del sujeto pasivo para empresas de la UE';
 
@@ -11972,11 +13108,243 @@ class AppLocalizationsEs extends AppLocalizations {
       'Falta el NIF-IVA del cliente — una factura con inversión del sujeto pasivo debe indicarlo.';
 
   @override
+  String get rightsRequestsTitle => 'Mis solicitudes de derechos';
+
+  @override
+  String get rightsRequestsHint =>
+      'Pide al espacio una copia, una rectificación, una limitación o la supresión — respuesta en un mes natural.';
+
+  @override
+  String get rightsRequestsEmpty => 'Aún no hay solicitudes.';
+
+  @override
+  String get rightsRequestNew => 'Hacer una solicitud';
+
+  @override
+  String get rightsRequestAsk => '¿Qué pides al espacio?';
+
+  @override
+  String get rightsRequestDetails => 'Detalles (opcional)';
+
+  @override
+  String get rightsRequestSend => 'Enviar la solicitud';
+
+  @override
+  String rightsRequestSent(String date) {
+    return 'Solicitud enviada — el espacio responde antes del $date.';
+  }
+
+  @override
+  String get rightsRequestFailed =>
+      'No se pudo enviar la solicitud. Inténtalo de nuevo.';
+
+  @override
+  String get rightsKindAccess => 'Ver una copia de mis datos';
+
+  @override
+  String get rightsKindPortability =>
+      'Llevar mis datos a otro sitio (legible por máquina)';
+
+  @override
+  String get rightsKindRectification => 'Rectificar mis datos';
+
+  @override
+  String get rightsKindRestriction => 'Limitar el uso de mis datos';
+
+  @override
+  String get rightsKindObjection => 'Oponerme a un uso de mis datos';
+
+  @override
+  String get rightsKindErasure => 'Suprimir mis datos';
+
+  @override
+  String rightsStatusReceived(String date) {
+    return 'Recibida — respuesta antes del $date';
+  }
+
+  @override
+  String rightsStatusExtended(String date, String reason) {
+    return 'Prorrogada hasta el $date: $reason';
+  }
+
+  @override
+  String get rightsStatusCompleted =>
+      'Atendida — el espacio registró lo que hizo';
+
+  @override
+  String rightsStatusRefused(String reason) {
+    return 'Denegada: $reason';
+  }
+
+  @override
+  String get erasurePreviewTitle => 'Qué hace la supresión aquí';
+
+  @override
+  String get erasurePreviewRemoved => 'Suprimido';
+
+  @override
+  String get erasurePreviewKept => 'Conservado, y por qué';
+
+  @override
+  String get erasurePreviewOutside => 'Fuera de esta instalación';
+
+  @override
+  String get erasureStoreMessages => 'Mensajes que enviaste';
+
+  @override
+  String get erasureStoreAnswers =>
+      'Tus respuestas a las preguntas del espacio';
+
+  @override
+  String get erasureStoreProfile => 'Tu perfil (si es tu último espacio)';
+
+  @override
+  String get erasureStoreOpenBookings => 'Reservas abiertas — canceladas';
+
+  @override
+  String get erasureStoreAccounts =>
+      'Facturas y libro — prueba contable, conservada durante el plazo legal; los documentos emitidos no se reescriben';
+
+  @override
+  String get erasureStorePastBookings =>
+      'Reservas pasadas — el registro de ocupación del espacio';
+
+  @override
+  String get erasureStoreMembership =>
+      'La fila de membresía — enlaza los registros conservados; seudónima, no anónima';
+
+  @override
+  String get erasureStoreHeldAnswers =>
+      'Respuestas bajo una obligación de conservación documentada por el espacio';
+
+  @override
+  String get erasureStoreOtherInstallations =>
+      'Otra instalación de DesKilo es un responsable distinto — pregúntale directamente';
+
+  @override
+  String get erasureStoreDeviceCaches =>
+      'Copias en tus dispositivos — se borran al cerrar sesión en cada uno';
+
+  @override
+  String get erasureStoreBackups =>
+      'Copias de seguridad del operador — caducan según su rotación';
+
+  @override
+  String get featureRoleAssignmentTitle => 'Asignación de roles';
+
+  @override
+  String get featureRoleAssignmentDesc =>
+      'Muestra una sección Roles en la página de cada miembro para dar o retirar un rol, los miembros de cada rol, y permite a cada miembro ver lo que puede hacer aquí.';
+
+  @override
+  String get memberRolesTitle => 'Roles';
+
+  @override
+  String get memberRolesAdd => 'Añadir un rol';
+
+  @override
+  String get memberRolesNone =>
+      'Ningún rol: todo lo que puede hacer un miembro.';
+
+  @override
+  String get memberRolesWhatTheyCanDo => 'Lo que esta persona puede hacer aquí';
+
+  @override
+  String roleAssignSheetTitle(String name) {
+    return 'Dar un rol a $name';
+  }
+
+  @override
+  String get roleAssignQuorumHint => 'Surte efecto una vez validado.';
+
+  @override
+  String get roleAssignImmediateHint => 'Surte efecto de inmediato.';
+
+  @override
+  String get roleAssignNothing => 'No queda ningún rol por dar.';
+
+  @override
+  String get roleRefusalNotPermitted =>
+      'Solo alguien que gestiona los roles puede dar este.';
+
+  @override
+  String get roleRefusalOwnerOnly =>
+      'Solo el propietario da un rol que gestiona los roles.';
+
+  @override
+  String get roleRefusalExceedsYours =>
+      'Este rol puede hacer cosas que tú no puedes, así que solo el propietario lo da.';
+
+  @override
+  String get roleRefusalNotAssignable =>
+      'Este miembro no puede tener este rol.';
+
+  @override
+  String get roleGiven => 'Rol asignado.';
+
+  @override
+  String get roleTakenBack => 'Rol retirado.';
+
+  @override
+  String get roleHoldersAdd => 'Añadir un miembro';
+
+  @override
+  String get rolesOwnRolesLink => 'Los roles de este espacio';
+
+  @override
+  String get whatYouCanDoTitle => 'Lo que puedes hacer aquí';
+
+  @override
+  String whatTheyCanDoTitle(String name) {
+    return 'Lo que $name puede hacer aquí';
+  }
+
+  @override
+  String get whatYouCanDoIntro =>
+      'Aquí todas las personas son miembros: reservar, registrar la llegada, los mensajes y la propia cuenta. Los roles añaden el resto.';
+
+  @override
+  String get whatYouCanDoFromOwner => 'Como propietario: todo';
+
+  @override
+  String get whatYouCanDoFromCoOwner => 'Como copropietario';
+
+  @override
+  String get whatYouCanDoFromAdministrator => 'Del rol Administrador/a';
+
+  @override
+  String get whatYouCanDoFromEveryMember => 'Como todos los miembros';
+
+  @override
+  String whatYouCanDoFromRole(String role) {
+    return 'Del rol $role';
+  }
+
+  @override
+  String get whatYouCanDoNothingMore => 'Nada más que un miembro.';
+
+  @override
+  String get roleGiveFailed => 'El rol no se asignó.';
+
+  @override
+  String get roleTakeBackFailed => 'El rol no se retiró.';
+
+  @override
+  String eventRoleGiven(String actor, String role, String member) {
+    return '$actor da el rol $role a $member';
+  }
+
+  @override
+  String eventRoleTakenBack(String actor, String role, String member) {
+    return '$actor retira el rol $role a $member';
+  }
+
+  @override
   String get rolesOfSpaceTitle => 'Los roles de este espacio';
 
   @override
   String get rolesOfSpaceSubtitle =>
-      'Cada uno añade permisos a los del rol de un miembro. Ninguno quita nada, y una propietaria los conserva todos.';
+      'Cada uno añade permisos a lo que ya pueden hacer quienes lo tienen. Ninguno quita nada, y la propietaria conserva siempre todos los permisos.';
 
   @override
   String get rolesOfSpaceEmpty => 'Todavía no hay roles.';
@@ -12012,7 +13380,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get roleEditorSaveFailed => 'El rol no se ha guardado.';
 
   @override
-  String get roleEditorHolders => 'Quién lo tiene';
+  String get roleEditorHolders => 'Miembros con este rol';
 
   @override
   String get roleEditorNobody => 'Nadie todavía.';
@@ -12362,6 +13730,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get supportDemo => 'Demo: contexto local simulado';
+
+  @override
+  String get featureTaskRecorderTitle => 'Grabador de tareas';
+
+  @override
+  String get featureTaskRecorderDesc =>
+      'Permite grabar los pasos de una tarea en las pantallas de este espacio, en el propio dispositivo, revisarlos y exportar un archivo sin ningún valor escrito. No se envía nada. Desactivado: nadie graba aquí.';
 
   @override
   String get capabilityMultiApproval => 'Dos o más aprobaciones';
@@ -13218,6 +14593,170 @@ class AppLocalizationsEs extends AppLocalizations {
       'Motivo de exención (impreso en la factura)';
 
   @override
+  String get biTitle => 'Análisis de negocio';
+
+  @override
+  String get biAreaOverview => 'Resumen';
+
+  @override
+  String get biAreaCapacity => 'Espacios y capacidad';
+
+  @override
+  String get biAreaPeople => 'Personas y negocio';
+
+  @override
+  String get biAreaFinance => 'Finanzas';
+
+  @override
+  String get biAreaTreasury => 'Tesorería';
+
+  @override
+  String get biAreaOperations => 'Operaciones';
+
+  @override
+  String get biAreaPlanning => 'Planificación';
+
+  @override
+  String get biAreaSaved => 'Análisis guardados';
+
+  @override
+  String biQuarter(String quarter, String year) {
+    return 'T$quarter $year';
+  }
+
+  @override
+  String get biDimensionLevel => 'Planta';
+
+  @override
+  String get biNotOffered => 'no lo ofrecen los análisis mostrados';
+
+  @override
+  String get biGrain => 'Duración del periodo';
+
+  @override
+  String get biGrainMonth => 'Mes';
+
+  @override
+  String get biGrainQuarter => 'Trimestre';
+
+  @override
+  String get biGrainYear => 'Año';
+
+  @override
+  String get biCompare => 'Comparar con';
+
+  @override
+  String get biCompareNone => 'Nada';
+
+  @override
+  String get biComparePrevious => 'El periodo anterior';
+
+  @override
+  String get biComparePreviousYear => 'El mismo periodo un año antes';
+
+  @override
+  String get biCompareCustom => 'Un periodo que elijo';
+
+  @override
+  String get biGroupBy => 'Agrupar por';
+
+  @override
+  String get biGroupNone => 'Sin agrupar';
+
+  @override
+  String get biSort => 'Orden';
+
+  @override
+  String get biSortUngrouped => 'Orden (solo grupos)';
+
+  @override
+  String get biSortNatural => 'Como en la lista';
+
+  @override
+  String get biSortDescending => 'Mayor primero';
+
+  @override
+  String get biSortAscending => 'Menor primero';
+
+  @override
+  String get biViewTable => 'Tabla';
+
+  @override
+  String get biViewChart => 'Gráfico';
+
+  @override
+  String biChangePoints(String value) {
+    return '$value p. p.';
+  }
+
+  @override
+  String get biForbidden => 'No puede leer este análisis en este espacio.';
+
+  @override
+  String get biUnavailable => 'No se pudo calcular este análisis.';
+
+  @override
+  String get biRefusedGrain =>
+      'Este análisis no se ofrece para esa duración de periodo.';
+
+  @override
+  String get biRefusedComparison =>
+      'Este análisis no puede hacer esa comparación.';
+
+  @override
+  String get biRefusedGrouping => 'Este análisis no se puede agrupar así.';
+
+  @override
+  String biRefusedBudget(String count) {
+    return 'Hay más de $count grupos; elija «Sin agrupar».';
+  }
+
+  @override
+  String biComparedNotRecorded(String period, String since) {
+    return '$period no se registró (el historial empieza el $since); no hay comparación.';
+  }
+
+  @override
+  String biComparedPartial(String period) {
+    return '$period solo está registrado en parte.';
+  }
+
+  @override
+  String get biExposureDiffers =>
+      'Los dos periodos no ofrecen la misma base; la tasa lo tiene en cuenta, las cifras brutas no se comparan directamente.';
+
+  @override
+  String biComparedLine(String period, String value, String change) {
+    return '$period: $value ($change)';
+  }
+
+  @override
+  String get biOpenSource => 'Abrir la fuente';
+
+  @override
+  String get biSourceRestricted =>
+      'Los registros de origen solo los ven quienes los gestionan.';
+
+  @override
+  String get biTotal => 'Total';
+
+  @override
+  String get biRemainder => 'Fuera de los grupos actuales';
+
+  @override
+  String get biColumnValue => 'Valor';
+
+  @override
+  String get biColumnChange => 'Variación';
+
+  @override
+  String get biInvalidAddress =>
+      'Esta dirección pide un análisis que no existe; no se ha leído nada.';
+
+  @override
+  String get biReset => 'Mostrar la vista estándar';
+
+  @override
   String get assistantPrefix => 'Asistente';
 
   @override
@@ -13521,14 +15060,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get inviteRoleMember => 'Invitación de miembro';
 
   @override
-  String get inviteRoleAdmin => 'Invitación de admin';
+  String get inviteRoleAdmin => 'Invitación de administrador/a';
 
   @override
   String get inviteAdminExplainer =>
       'Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entrégalo solo a la persona a la que está destinado.';
 
   @override
-  String get inviteAdminNewCode => 'Nuevo código de admin';
+  String get inviteAdminNewCode => 'Nuevo código de administrador/a';
 
   @override
   String get inviteOwnerNote =>
@@ -13834,11 +15373,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'La matriz central rol→permiso: el propietario decide qué permiso tiene cada rol; los demás consultan los suyos. Desactivada, simplemente aplican los valores por defecto.';
 
   @override
-  String get rolesTitle => 'Gestión de roles';
+  String get rolesTitle => 'Roles';
 
   @override
   String get rolesIntroEditor =>
-      'El propietario siempre tiene todos los permisos. Decide aquí qué pueden hacer los demás roles: un copropietario puede tener menos que un propietario.';
+      'Aquí todas las personas son miembros. Un rol añade lo que pueden hacer quienes lo tienen y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.';
 
   @override
   String get rolesIntroReadOnly =>
@@ -13851,10 +15390,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get roleOwner => 'Propietario';
 
   @override
-  String get roleAdmin => 'Admin';
+  String get roleAdmin => 'Administrador/a';
 
   @override
-  String get roleMember => 'Miembro';
+  String get roleMember => 'Todos los miembros';
 
   @override
   String get permManageRoles => 'Gestionar roles y permisos';

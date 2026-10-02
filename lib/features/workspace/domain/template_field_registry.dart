@@ -113,7 +113,7 @@ const templatePermissions = ['manageRoles', 'manageMembers', 'manageValidation',
   'approveExpenses', 'viewNegotiations', 'manageNegotiations', 'paymentTermsEdit',
   'manageSites', 'manageBilling', 'manageReservations', 'operateKiosk', 'exportData',
   'designDocuments', 'viewPersonalData', 'manageIntegrations', 'manageConfiguration',
-  'deployToProd', 'deployToDev', 'accessProd'];
+  'deployToProd', 'deployToDev', 'accessProd', 'viewAnalytics'];
 
 /// The overridable terms of `lexiconAllowList`, pinned by the same lint.
 const templateLexiconTerms = ['legendFree', 'legendReserved', 'legendOccupied', 'legendMine',

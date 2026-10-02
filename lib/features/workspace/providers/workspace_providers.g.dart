@@ -152,23 +152,23 @@ final class CurrentAccountIdProvider
 String _$currentAccountIdHash() => r'0e58676f400e0be2643ef2cd4e24f43767217634';
 
 /// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins when one is checked (#322); in-session switches
-/// still take effect immediately and last until the next start. Falls
-/// back to the first workspace when nothing matches.
+/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
+/// lands on it); in-session switches last until the next start. The
+/// device's memory is per account (#1823). Null: no space chosen yet.
 
 @ProviderFor(ActiveWorkspaceId)
 final activeWorkspaceIdProvider = ActiveWorkspaceIdProvider._();
 
 /// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins when one is checked (#322); in-session switches
-/// still take effect immediately and last until the next start. Falls
-/// back to the first workspace when nothing matches.
+/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
+/// lands on it); in-session switches last until the next start. The
+/// device's memory is per account (#1823). Null: no space chosen yet.
 final class ActiveWorkspaceIdProvider
     extends $AsyncNotifierProvider<ActiveWorkspaceId, String?> {
   /// The persisted active-profile choice (#89). At START-UP the user's
-  /// DEFAULT profile wins when one is checked (#322); in-session switches
-  /// still take effect immediately and last until the next start. Falls
-  /// back to the first workspace when nothing matches.
+  /// DEFAULT profile wins (#322; server-first since #458, so a fresh install
+  /// lands on it); in-session switches last until the next start. The
+  /// device's memory is per account (#1823). Null: no space chosen yet.
   ActiveWorkspaceIdProvider._()
     : super(
         from: null,
@@ -188,12 +188,12 @@ final class ActiveWorkspaceIdProvider
   ActiveWorkspaceId create() => ActiveWorkspaceId();
 }
 
-String _$activeWorkspaceIdHash() => r'fa3fb3aab037d027ee29639c5472de6245f77dd3';
+String _$activeWorkspaceIdHash() => r'11572777c00137223a96da5357a820aeb210be14';
 
 /// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins when one is checked (#322); in-session switches
-/// still take effect immediately and last until the next start. Falls
-/// back to the first workspace when nothing matches.
+/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
+/// lands on it); in-session switches last until the next start. The
+/// device's memory is per account (#1823). Null: no space chosen yet.
 
 abstract class _$ActiveWorkspaceId extends $AsyncNotifier<String?> {
   FutureOr<String?> build();
@@ -263,7 +263,7 @@ final class DefaultWorkspaceIdProvider
 }
 
 String _$defaultWorkspaceIdHash() =>
-    r'33a0efae5d3f102c9c1816be7383ce2e0c100db6';
+    r'67bfd6c5a540a2fc6f5049e5bbb3c864bb50c12c';
 
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the
@@ -1730,7 +1730,7 @@ final class MyPermissionsProvider
   }
 }
 
-String _$myPermissionsHash() => r'54909a43d3e7193da3d9f3f1f5b811ce3eb27d74';
+String _$myPermissionsHash() => r'91d95ae4eb75b760bad053f4c1154b8111f0e3f0';
 
 /// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies
 /// to EVERY member — gates the e-invoice test environments and the

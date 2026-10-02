@@ -38,6 +38,8 @@
   "portalSearch": "Cerca spazi",
   "portalDirectoryUnavailable": "Alcune directory non sono raggiungibili. I risultati sono incompleti.",
   "portalNoWorkspaces": "Nessuno spazio pubblicato trovato.",
+  "portalNoLongerPublished": "Questo spazio non è più pubblicato.",
+  "portalDirectoryIncompatible": "Alcuni spazi richiedono una versione più recente dell’app e non vengono mostrati.",
   "portalMoreDirectories": "Altre directory",
   "portalMessenger": "Messaggi dell’account",
   "portalThisServer": "Questo server",
@@ -47,5 +49,11 @@
   "portalEmploymentHint": "Il rapporto di lavoro non modifica accessi o abbonamenti. I pagamenti degli stipendi non sono abilitati.",
   "portalAdminVisible": "Mostrami come amministratore pubblico",
   "featurePublicListings": "Scheda pubblica dello spazio",
-  "featurePublicListingsDesc": "Pubblica solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi."
+  "featurePublicListingsDesc": "Pubblica solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi.",
+  "portalFollowsWorkspace": "Dalle informazioni dello spazio",
+  "portalCustomised": "Personalizzato",
+  "portalUseWorkspaceInfo": "Usa le informazioni dello spazio",
+  "portalResetAll": "Ripristina tutti i dati pubblici dalle informazioni dello spazio",
+  "portalResetAllBody": "I valori pubblici di ogni campo che ha un’informazione nello spazio vengono sostituiti da essa. I campi senza corrispondenza nello spazio mantengono ciò che hai scritto.",
+  "portalResetAllConfirm": "Ripristina"
 }

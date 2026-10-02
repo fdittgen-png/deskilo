@@ -6,8 +6,6 @@
 // through the controller; the flag off restores the single column.
 // #726 — an invoice past the workspace's term reads overdue on the
 // Payments and Invoices faces, with the way to settle it.
-import 'package:deskilo/app/app.dart';
-import 'package:deskilo/features/money/domain/bill_sections.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/money/providers/money_face_controller.dart';
@@ -18,58 +16,7 @@ import 'package:intl/intl.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/navigation.dart';
-
-Future<FakeMoneyRepository> pumpFaces(
-  WidgetTester tester, {
-  FakeMoneyRepository? money,
-  Map<String, dynamic> flags = const {},
-  bool admin = true,
-  // #1339 — the responsive matrix asks for a narrow surface. Every
-  // other caller keeps the tall one this file has always used, so
-  // nothing existing changes.
-  Size size = const Size(800, 1400),
-}) async {
-  tester.view.physicalSize = size;
-  tester.view.devicePixelRatio = 1.0;
-  addTearDown(tester.view.reset);
-  money ??= FakeMoneyRepository();
-  final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: flags);
-  if (!admin) {
-    workspace.myMember =
-        workspace.myMember.copyWith(isAdmin: false, isOwner: false);
-  }
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(money: money, workspace: workspace),
-      child: const DeskiloApp(),
-    ),
-  );
-  await tester.pumpAndSettle();
-  // #1246 — by icon, not by the English label (see navigation.dart).
-  await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
-  await tester.pumpAndSettle();
-  return money;
-}
-
-Future<void> face(WidgetTester tester, MoneyFace face) async {
-  await tester.tap(find.byKey(ValueKey('money-face-${face.name}')));
-  await tester.pumpAndSettle();
-}
-
-/// An OPEN invoice for me, issued [ageDays] ago.
-Future<String> openInvoice(FakeMoneyRepository money, {int ageDays = 0}) async {
-  final id = await money.createInvoice(
-    workspaceId: 'ws-1',
-    memberId: 'member-1',
-    period: currentPeriod(kTestNow),
-  );
-  final i = money.invoices.indexWhere((x) => x.id == id);
-  money.invoices[i] = money.invoices[i].copyWith(
-    issuedAt: kTestNow.subtract(Duration(days: ageDays)),
-  );
-  return id;
-}
+import '../../helpers/screens/money_faces.dart';
 
 void main() {
   testWidgets('Statement is the first face: the month as it stands',

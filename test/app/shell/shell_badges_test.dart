@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../features/events/events_screen_test.dart' show event;
+import '../../helpers/screens/events.dart' show event;
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_pref_stores.dart';
 import '../../helpers/mock_providers.dart';

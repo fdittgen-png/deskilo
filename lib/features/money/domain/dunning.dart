@@ -2,14 +2,17 @@
 
 /// Mahnwesen (#472): the parameterizable dunning policy of a workspace,
 /// stored in `workspaces.dunning_rules` (migration 0093) — and the pure
-/// suggestion rule derived from it. Nothing ever fires automatically: a
-/// human always sends; the app only SAYS when a reminder is due.
+/// suggestion rule derived from it. A human sends reminders unless the
+/// owner explicitly turned [automatic] on (#726); since #1913 automation
+/// is never a default. Whether a reminder may actually be sent is the
+/// server's `invoice_dunning_state` — frozen maturity, collectible
+/// remainder and holds — which the sweep and the manual action share.
 class DunningRules {
   const DunningRules({
     this.levels = 3,
     this.firstAfterDays = 14,
     this.betweenDays = 14,
-    this.automatic = true,
+    this.automatic = false,
   });
 
   factory DunningRules.fromJson(Map<String, dynamic> json) {
@@ -22,7 +25,9 @@ class DunningRules {
       levels: read(keyLevels, 3, max: 9),
       firstAfterDays: read(keyFirstAfterDays, 14),
       betweenDays: read(keyBetweenDays, 14),
-      automatic: json[keyAutomatic] != false,
+      // #1913: automation is an explicit owner choice; a missing key
+      // means off, never on.
+      automatic: json[keyAutomatic] == true,
     );
   }
 
@@ -73,7 +78,8 @@ class DunningRules {
       other is DunningRules &&
       other.levels == levels &&
       other.firstAfterDays == firstAfterDays &&
-      other.betweenDays == betweenDays;
+      other.betweenDays == betweenDays &&
+      other.automatic == automatic;
 
   @override
   int get hashCode =>
@@ -81,17 +87,24 @@ class DunningRules {
 }
 
 /// The reminder level DUE for an open invoice under [rules], or null
-/// when none is: all levels sent, or the waiting period still runs. The
-/// clock for level 1 starts at [issuedAt]; every further level waits
-/// [DunningRules.betweenDays] after the PREVIOUS reminder.
+/// when none is: all levels sent, or the waiting period still runs.
+/// Level 1 is due on the invoice's frozen [dueOn] (#1913) when the server
+/// recorded one, and otherwise [DunningRules.firstAfterDays] after
+/// [issuedAt]; every further level waits [DunningRules.betweenDays]
+/// after the PREVIOUS reminder.
 int? dueReminderLevel({
   required DateTime issuedAt,
   required int reminderCount,
   required DateTime? lastReminderAt,
   required DunningRules rules,
   required DateTime now,
+  DateTime? dueOn,
 }) {
   if (reminderCount >= rules.levels) return null;
+  if (reminderCount == 0 && dueOn != null) {
+    final today = DateTime(now.year, now.month, now.day);
+    return today.isBefore(dueOn) ? null : 1;
+  }
   final since = reminderCount == 0 ? issuedAt : lastReminderAt ?? issuedAt;
   final waitDays =
       reminderCount == 0 ? rules.firstAfterDays : rules.betweenDays;

@@ -29,7 +29,7 @@ Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipp
 
 A member finds a free place on the plan and holds it for a period; the database refuses a second booking of the same place at the same time, whoever asks and however many clients race.
 
-- **Code:** shipped · component `b2e8ceaf80f8`
+- **Code:** shipped · component `9e76fde8c780`
 - **Needs:** A workspace with a published plan and opening hours; booking rules in Settings.
 - **Limits:** Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.
 - **Feature flags:** `bookingGate`, `bookingPolicies`, `seriesBooking`, `autoCheckInOut`
@@ -43,7 +43,7 @@ A member finds a free place on the plan and holds it for a period; the database 
 
 A membership plan grants an allowance per month; a booking beyond it spends a carnet or is refused, and a member without a subscription never books for free.
 
-- **Code:** shipped · component `5807abc70ab4`
+- **Code:** shipped · component `5568ce1ae949`
 - **Needs:** Membership plans configured; an allowance per plan.
 - **Limits:** Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.
 - **Feature flags:** `carnets`, `usageRecords`
@@ -73,7 +73,7 @@ Every member has a ledger: subscription charges, extra usage, approved shared ex
 
 A join, an expense, a deletion or a settings change waits for the quorum the workspace configured; the decision trail records who decided and the database enforces the rule it records.
 
-- **Code:** shipped · component `4a7ae0f756c8`
+- **Code:** shipped · component `bf055a1decd5`
 - **Needs:** Roles assigned; a quorum per decision kind in Settings.
 - **Limits:** Quorums count distinct people by membership, not by device or session.
 - **Feature flags:** `validationScopes`, `validationChain`, `deletionRequests`
@@ -85,7 +85,7 @@ A join, an expense, a deletion or a settings change waits for the quorum the wor
 
 A member pays a bill through Stripe hosted checkout; the webhook settles the payment once and posts one credit.
 
-- **Code:** shipped · component `f02ef9bf2d8d` · provider `stripe`
+- **Code:** shipped · component `4bee329bbfce` · provider `stripe`
 - **Needs:** Stripe credentials in Settings; the webhook endpoint reachable from Stripe.
 - **Limits:** CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.
 - **Feature flags:** `onlinePayments`
@@ -100,7 +100,7 @@ A member pays a bill through Stripe hosted checkout; the webhook settles the pay
 
 A member pays a bill through PayPal checkout; the webhook settles the payment once.
 
-- **Code:** shipped · component `8706a3a0445b` · provider `paypal`
+- **Code:** shipped · component `aa62ab891c68` · provider `paypal`
 - **Needs:** PayPal credentials in Settings; the webhook endpoint reachable from PayPal.
 - **Limits:** No CI check reaches the PayPal handler; the Stripe stub says nothing about PayPal.
 - **Feature flags:** `onlinePayments`
@@ -111,7 +111,7 @@ A member pays a bill through PayPal checkout; the webhook settles the payment on
 
 A member pays a bill through Mollie checkout; the webhook settles the payment once, and a replayed capture reconciles clean.
 
-- **Code:** shipped · component `2f98e5ff4ca8` · provider `mollie`
+- **Code:** shipped · component `e22646d72292` · provider `mollie`
 - **Needs:** Mollie credentials in Settings; the webhook endpoint reachable from Mollie.
 - **Limits:** The reconciliation is proved in a replayed database; no Mollie sandbox has been exercised from this repository.
 - **Feature flags:** `onlinePayments`
@@ -122,7 +122,7 @@ A member pays a bill through Mollie checkout; the webhook settles the payment on
 
 A member pays a bill with Wero, offered through the Mollie checkout.
 
-- **Code:** shipped · component `2f98e5ff4ca8` · provider `wero`
+- **Code:** shipped · component `e22646d72292` · provider `wero`
 - **Needs:** Mollie credentials with Wero enabled on the Mollie account.
 - **Limits:** Wero rides Mollie's checkout; nothing beyond the client's method handling cites Wero, so the Mollie reconciliation does not count here.
 - **Feature flags:** `onlinePayments`
@@ -147,7 +147,7 @@ The books of a period leave as FEC, SAF-T or DATEV files an accountant can load.
 
 An invoice becomes an EN 16931 document (UBL 2.1 or Factur-X) with the references its destination platform requires.
 
-- **Code:** shipped · component `5377cf36b8d8`
+- **Code:** shipped · component `d12a32e9b77a`
 - **Needs:** A complete legal identity for the workspace; VAT configured.
 - **Limits:** Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.
 - **Feature flags:** `invoicing`, `vatManagement`
@@ -189,7 +189,7 @@ Storage objects, Auth configuration and the running application recover to a kno
 
 A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.
 
-- **Code:** shipped · component `99f2cdb8fc7e`
+- **Code:** shipped · component `87bfcd68a17d`
 - **Needs:** None: the Demo is built into every client.
 - **Limits:** The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.
 - **Feature flags:** `demoMode`

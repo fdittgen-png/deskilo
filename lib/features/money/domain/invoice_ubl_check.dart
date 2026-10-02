@@ -37,8 +37,14 @@ enum EInvoiceGap {
 
   /// BR-16 — an invoice has at least one line. A month whose payments
   /// cover everything has only credits, which the norm carries as a
-  /// prepaid amount, not as lines: there is no invoice to send.
+  /// prepaid amount, not as lines: there is no invoice to send. (#1919 —
+  /// a rated reversal IS a line: a pure avoir is a credit note to send.)
   noChargeLines,
+
+  /// #1919 — a credit note that also nets payments (lines with no rate):
+  /// an EN 16931 credit note has no truthful place for money already
+  /// moved, so the document is refused rather than mis-stated.
+  creditNoteWithPayments,
 
   /// Not fatal for the norm, but national profiles (XRechnung, Peppol
   /// BIS) require the seller's city…
@@ -157,8 +163,12 @@ EInvoiceReadiness checkEInvoiceReadiness({
       EInvoiceGap.buyerVatIdFormat,
     if (invoice.isReverseCharged && buyer.vatId.trim().isEmpty)
       EInvoiceGap.missingBuyerVatId,
-    if (!invoice.lines.any((l) => l.amountCents > 0))
+    if (!invoice.lines
+        .any((l) => l.amountCents > 0 || (l.amountCents < 0 && l.vatPercent > 0)))
       EInvoiceGap.noChargeLines,
+    if (invoice.isCreditNote &&
+        invoice.lines.any((l) => l.amountCents < 0 && l.vatPercent == 0))
+      EInvoiceGap.creditNoteWithPayments,
     if (seller.city.isEmpty) EInvoiceGap.missingSellerCity,
     if (seller.postalCode.isEmpty) EInvoiceGap.missingSellerPostalCode,
     if (destination == 'government' &&

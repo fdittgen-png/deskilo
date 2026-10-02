@@ -3,7 +3,8 @@
 // #1826 — the Settings entry for what a workspace exposes to assistants
 // follows the role matrix: whoever holds manageIntegrations sees it (an
 // owner always does, an admin once the owner delegates it), nobody else,
-// and never with the feature off.
+// and never with the feature off. #1827 — the guided setup is the one entry
+// offered with the feature off: turning it on is one of its steps.
 import 'package:deskilo/features/auth/domain/database_capabilities.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/mcp/presentation/widgets/mcp_settings_tiles.dart';
@@ -66,6 +67,24 @@ void main() {
     );
     expect(find.byKey(policyTile), findsNothing);
     expect(find.byKey(ownTile), findsOneWidget);
+  });
+
+  testWidgets('#1827: the setup entry shows to a holder of '
+      'manageIntegrations even with the feature off, never to others', (
+    tester,
+  ) async {
+    const setupTile = ValueKey('settings-assistant-setup');
+    await pumpTiles(
+      tester,
+      permissions: {WorkspacePermission.manageIntegrations},
+      features: const {},
+    );
+    expect(find.byKey(setupTile), findsOneWidget);
+    await pumpTiles(
+      tester,
+      permissions: {WorkspacePermission.manageMembers},
+    );
+    expect(find.byKey(setupTile), findsNothing);
   });
 
   testWidgets('with the feature off neither entry shows', (tester) async {

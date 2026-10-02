@@ -1,0 +1,231 @@
+{
+  "x-purpose": "#1847 checkpoint A. The ONE hand-written source of the public network contract: the operations an independently hosted Deskilo may perform against another installation's CURRENT discovery surface, classified public / participant / management. `dart run tool/build_public_network_contract.dart` renders the external and internal OpenAPI documents and the Dart adapter; test/tool/public_network_contract_test.dart fails when a rendering drifts, a binding is not what the SQL grants, or an operation has no consumer and test. The catalogue grants nothing: SQL grants, RLS and the RPC bodies stay the authority. Only implemented operations are listed; later features add their own operation, consumer and tests together.",
+  "protocol": "deskilo.public-network",
+  "version": 1,
+  "surfaces": {
+    "public": "Anonymous discovery of deliberately published projections. The request carries the installation's publishable key only; a session bearer is never sent (a fresh client per origin behind OriginOnlyClient).",
+    "participant": "An authenticated account acting for itself on the target installation, through its own session there. Capability or build claims grant nothing.",
+    "management": "Workspace authority (the owner) authoring what the public surface shows. Native sessions only (mcp_require_native); never reachable anonymously. Internal documentation only."
+  },
+  "semantics": {
+    "absent": "An omitted key and a JSON null are the same: absent. A required field that is absent refuses the record.",
+    "unknown_fields": "A key a schema does not list is dropped by the adapter. That is how an additive optional field from a newer server is ignored, and why a private field that leaks into a response never reaches a screen.",
+    "must_understand": "A schema with `must_understand` names the key under which a server lists terms the reader must understand. A listed term this version does not know refuses the whole record; it is never silently dropped.",
+    "invalid_values": "A required field with a wrong type, an over-long text or an enum value this version does not know refuses the record. An optional field with such a value is dropped: optional fields are descriptive only.",
+    "time": "Instants are RFC 3339 strings with an explicit offset (PostgREST answers UTC with +00:00). These operations publish no site-local time, so no site time zone is part of the projection.",
+    "money": "These operations publish no amount. A currency is an ISO 4217 code. A future amount is integer minor units with its currency, never a float and never divided by 100 by convention.",
+    "pagination": "Offset pages over a total order (the listed `order`, column.direction, ending in a unique key; nulls last). A full page means there may be more. Query-bound opaque cursors are not implemented yet.",
+    "input": "A management input key the contract does not list is refused before sending, never silently discarded; the server refuses it again."
+  },
+  "schemas": {
+    "DirectorySource": {
+      "description": "A registered public endpoint of another installation: its origin and its publishable key. Never a session, a secret key or a private listing copy.",
+      "fields": {
+        "origin": {"type": "https_origin", "required": true},
+        "publishable_key": {"type": "text", "required": true, "maxLength": 4096}
+      }
+    },
+    "PublicContact": {
+      "description": "An owner, or an administrator who opted into public visibility. user_id is an account reference published only so a participant can open a conversation; it grants nothing.",
+      "fields": {
+        "user_id": {"type": "uuid"},
+        "name": {"type": "text", "required": true, "maxLength": 200},
+        "owner": {"type": "boolean", "required": true},
+        "available": {"type": "boolean", "required": true}
+      }
+    },
+    "PublicWorkspaceDocument": {
+      "description": "The projection the owner approved for public display, plus the workspace name, currency, booking unit and consenting contacts. No invitation code, plan, occupancy, price, internal note or operator stamp.",
+      "must_understand": "must_understand",
+      "fields": {
+        "name": {"type": "text", "required": true, "maxLength": 200},
+        "host_type": {"type": "enum", "required": true, "values": ["association", "company", "person"]},
+        "currency": {"type": "currency"},
+        "booking_unit": {"type": "enum", "values": ["flexible", "half_day", "minutes_5", "minutes_15", "minutes_30", "minutes_60", "full_day", "hours"]},
+        "description": {"type": "text", "maxLength": 4000},
+        "address": {"type": "text", "maxLength": 4000},
+        "email": {"type": "text", "maxLength": 4000},
+        "phone": {"type": "text", "maxLength": 4000},
+        "website": {"type": "https_url", "maxLength": 4000},
+        "image_url": {"type": "https_url", "maxLength": 4000},
+        "plan_url": {"type": "https_url", "maxLength": 4000},
+        "plans": {"type": "text", "maxLength": 4000},
+        "latitude": {"type": "decimal", "min": -90, "max": 90},
+        "longitude": {"type": "decimal", "min": -180, "max": 180},
+        "contacts": {"type": "array", "items": "PublicContact", "maxItems": 100}
+      }
+    },
+    "PublicWorkspaceCard": {
+      "description": "One published workspace, as the anonymous table read returns it.",
+      "fields": {
+        "workspace_id": {"type": "uuid", "required": true},
+        "name": {"type": "text", "required": true, "maxLength": 200},
+        "updated_at": {"type": "datetime", "required": true},
+        "document": {"type": "object", "schema": "PublicWorkspaceDocument", "required": true}
+      }
+    },
+    "PublicationInput": {
+      "description": "What the owner may write. Exactly the keys save_workspace_public_page accepts; every value is a string. An inherited field (host_type, address) that is absent follows the workspace's own information (#2086); a present one, even blank, overrides it.",
+      "fields": {
+        "host_type": {"type": "enum", "values": ["association", "company", "person"]},
+        "description": {"type": "text", "maxLength": 4000},
+        "address": {"type": "text", "maxLength": 4000},
+        "email": {"type": "text", "maxLength": 4000},
+        "phone": {"type": "text", "maxLength": 4000},
+        "website": {"type": "text", "maxLength": 4000},
+        "image_url": {"type": "text", "maxLength": 4000},
+        "plan_url": {"type": "text", "maxLength": 4000},
+        "plans": {"type": "text", "maxLength": 4000},
+        "latitude": {"type": "text", "maxLength": 4000},
+        "longitude": {"type": "text", "maxLength": 4000}
+      }
+    },
+    "PublicationDraft": {
+      "description": "The owner's own page as the editor reads it back, published or not. Management output: every field optional, an unsaved page is empty.",
+      "fields": {
+        "host_type": {"type": "text", "maxLength": 4000},
+        "description": {"type": "text", "maxLength": 4000},
+        "address": {"type": "text", "maxLength": 4000},
+        "email": {"type": "text", "maxLength": 4000},
+        "phone": {"type": "text", "maxLength": 4000},
+        "website": {"type": "text", "maxLength": 4000},
+        "image_url": {"type": "text", "maxLength": 4000},
+        "plan_url": {"type": "text", "maxLength": 4000},
+        "plans": {"type": "text", "maxLength": 4000},
+        "latitude": {"type": "text", "maxLength": 4000},
+        "longitude": {"type": "text", "maxLength": 4000}
+      }
+    },
+    "PublicationPage": {
+      "description": "Whether the page is published, its draft with every inherited field resolved, and which inherited fields follow the workspace information.",
+      "fields": {
+        "published": {"type": "boolean", "required": true},
+        "document": {"type": "object", "schema": "PublicationDraft", "required": true},
+        "following": {"type": "object", "schema": "PublicationFollowing"}
+      }
+    },
+    "PublicationFollowing": {
+      "description": "Per inherited public field: true while it follows the workspace's own information, false once the owner overrode it (#2086).",
+      "fields": {
+        "host_type": {"type": "boolean"},
+        "address": {"type": "boolean"}
+      }
+    }
+  },
+  "operations": [
+    {
+      "id": "directory.sources.list",
+      "summary": "List the other installations registered in this installation's public directory.",
+      "surface": "public",
+      "principal": "anonymous",
+      "binding": {"kind": "table", "method": "GET", "relation": "public_directory_sources", "select": ["origin", "publishable_key"], "order": ["origin.asc"]},
+      "pagination": {"kind": "offset", "page_size": 20},
+      "output": {"schema": "DirectorySource", "cardinality": "many"},
+      "mutation": "read",
+      "features": [],
+      "consumers": ["lib/features/directory/data/supabase_public_discovery_repository.dart"],
+      "tests": ["test/features/directory/public_discovery_repository_test.dart", "supabase/tests/database/105_public_network_boundary.sql"]
+    },
+    {
+      "id": "directory.workspaces.search",
+      "summary": "Search the published workspace cards of one installation by name or address.",
+      "surface": "public",
+      "principal": "anonymous",
+      "binding": {"kind": "table", "method": "GET", "relation": "public_workspace_cards", "select": ["workspace_id", "name", "document", "updated_at"], "order": ["name.asc", "workspace_id.asc"], "filters": {"search_text": "ilike %query% with % and _ escaped; omitted for a blank query"}},
+      "pagination": {"kind": "offset", "page_size": 25},
+      "limits": {"timeout_seconds": 12},
+      "output": {"schema": "PublicWorkspaceCard", "cardinality": "many"},
+      "mutation": "read",
+      "features": ["publicListings"],
+      "consumers": ["lib/features/directory/data/supabase_public_discovery_repository.dart"],
+      "tests": ["test/features/directory/public_discovery_repository_test.dart", "test/core/public_network/public_network_codec_test.dart", "supabase/tests/database/105_public_network_boundary.sql"]
+    },
+    {
+      "id": "directory.workspaces.detail",
+      "summary": "Read one published workspace card again, live: no row means it is no longer published.",
+      "surface": "public",
+      "principal": "anonymous",
+      "binding": {"kind": "table", "method": "GET", "relation": "public_workspace_cards", "select": ["workspace_id", "name", "document", "updated_at"], "order": ["workspace_id.asc"], "filters": {"workspace_id": "eq"}},
+      "pagination": {"kind": "none", "page_size": 1},
+      "limits": {"timeout_seconds": 12},
+      "output": {"schema": "PublicWorkspaceCard", "cardinality": "zero_or_one"},
+      "mutation": "read",
+      "features": ["publicListings"],
+      "consumers": ["lib/features/directory/data/supabase_public_discovery_repository.dart"],
+      "tests": ["test/features/directory/public_discovery_repository_test.dart", "supabase/tests/database/105_public_network_boundary.sql"]
+    },
+    {
+      "id": "publication.page.read",
+      "summary": "The owner reads their workspace's public page, draft included.",
+      "surface": "management",
+      "principal": "authenticated",
+      "authority": "owner",
+      "binding": {"kind": "rpc", "method": "POST", "rpc": "my_workspace_public_page", "params": {"p_workspace": "uuid"}},
+      "output": {"schema": "PublicationPage", "cardinality": "one"},
+      "mutation": "read",
+      "features": [],
+      "consumers": ["lib/features/directory/data/supabase_publication_repository.dart"],
+      "tests": ["test/features/directory/publication_repository_test.dart", "supabase/tests/database/105_public_network_boundary.sql"]
+    },
+    {
+      "id": "publication.page.save",
+      "summary": "The owner saves the public page and publishes or withdraws it; answers the public projection it produced.",
+      "surface": "management",
+      "principal": "authenticated",
+      "authority": "owner",
+      "binding": {"kind": "rpc", "method": "POST", "rpc": "save_workspace_public_page", "params": {"p_workspace": "uuid", "p_document": "jsonb", "p_published": "boolean"}},
+      "input": {"p_document": "PublicationInput"},
+      "output": {"schema": "PublicWorkspaceDocument", "cardinality": "one"},
+      "mutation": "write",
+      "idempotency": "replace: the same document and flag saved twice has one effect; last write wins, there is no expected-revision check yet",
+      "side_effects": ["upserts the page row", "sets the publicListings flag to the published value", "publishes or deletes the public card"],
+      "features": ["publicListings"],
+      "consumers": ["lib/features/directory/data/supabase_publication_repository.dart"],
+      "tests": ["test/features/directory/publication_repository_test.dart", "supabase/tests/database/105_public_network_boundary.sql"]
+    },
+    {
+      "id": "publication.page.reset",
+      "summary": "The owner returns inherited public fields to the workspace's own information: the named ones, or all of them when p_fields is null; answers the page as publication.page.read does.",
+      "surface": "management",
+      "principal": "authenticated",
+      "authority": "owner",
+      "binding": {"kind": "rpc", "method": "POST", "rpc": "reset_workspace_public_page", "params": {"p_workspace": "uuid", "p_fields": "text[]"}},
+      "output": {"schema": "PublicationPage", "cardinality": "one"},
+      "mutation": "write",
+      "idempotency": "clearing an override that is already cleared has no effect",
+      "side_effects": ["removes the named overrides from the page row", "refreshes the public card when the page is published; never publishes or withdraws it"],
+      "features": ["publicListings"],
+      "consumers": ["lib/features/directory/data/supabase_publication_repository.dart"],
+      "tests": ["test/features/directory/publication_repository_test.dart", "supabase/tests/database/123_public_page_defaults.sql"]
+    },
+    {
+      "id": "directory.sources.register",
+      "summary": "A signed-in account registers another installation's public endpoint in this directory, after an anonymous probe of that endpoint.",
+      "surface": "participant",
+      "principal": "authenticated",
+      "authority": "self",
+      "binding": {"kind": "rpc", "method": "POST", "rpc": "register_public_directory", "params": {"p_origin": "text", "p_key": "text"}},
+      "output": {"cardinality": "none"},
+      "mutation": "write",
+      "idempotency": "upsert by origin; an account updates only its own registration; at most 20 per account",
+      "features": [],
+      "consumers": ["lib/features/directory/data/supabase_directory_participant_repository.dart"],
+      "tests": ["supabase/tests/database/105_public_network_boundary.sql"]
+    },
+    {
+      "id": "workspace.profile.request",
+      "summary": "A signed-in account asks to join a published workspace, through its own session on that workspace's installation; admission stays the ordinary approval flow.",
+      "surface": "participant",
+      "principal": "authenticated",
+      "authority": "self",
+      "binding": {"kind": "rpc", "method": "POST", "rpc": "request_public_workspace_profile", "params": {"p_workspace": "uuid"}},
+      "output": {"cardinality": "none"},
+      "mutation": "request",
+      "idempotency": "as join_workspace: a pending or existing membership is not duplicated",
+      "side_effects": ["opens an ordinary membership request; never activates a membership"],
+      "features": ["publicListings"],
+      "consumers": ["lib/features/directory/data/supabase_directory_participant_repository.dart"],
+      "tests": ["supabase/tests/database/105_public_network_boundary.sql"]
+    }
+  ]
+}

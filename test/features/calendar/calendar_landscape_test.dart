@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart' show kTestNow;
-import 'calendar_hub_test.dart' show pumpHub;
+import '../../helpers/screens/calendar_hub.dart' show pumpHub;
 
 /// Turn the phone sideways: 2316×1080 at 3×, the device the batch was
 /// shot on.

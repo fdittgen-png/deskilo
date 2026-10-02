@@ -121,7 +121,7 @@ WS=$(sql "select set_config('request.jwt.claims', json_build_object('sub', '$PAY
 MEMBER=$(sql "select id from public.members where workspace_id = '$WS' and user_id = '$PAYER'")
 [ -n "$MEMBER" ] || fail "the payer is not a member of their workspace"
 sql "insert into public.payment_credentials (workspace_id, provider, config)
-     values ('$WS', 'stripe', '{\"secret_key\": \"sk_test_stub\", \"return_url\": \"https://example.test/return\"}')" >/dev/null \
+     values ('$WS', 'stripe', '{\"secret_key\": \"sk_test_stub\", \"webhook_secret\": \"whsec_test_stub\", \"return_url\": \"https://example.test/return\"}')" >/dev/null \
   || fail "could not configure the provider"
 
 intents() { sql "select count(*) from public.payment_intents where workspace_id = '$WS'"; }
@@ -145,6 +145,18 @@ code=$(call -H "Authorization: Bearer $STRANGER_JWT")
 [ "$(intents)" = "0" ] || fail "a refused call left an intent"
 [ ! -s "$WORK/hits" ] || fail "a refused call reached the provider"
 echo "no token: 401; someone else's bill: 403; no intent, no provider call"
+
+# 3b. #1138 / #1863 — the currency is the workspace's and the amount whole
+#     minor units: a body naming another currency, or a fractional amount,
+#     is refused before any intent or provider call.
+code=$(BODY="${BODY/\"currency\":\"EUR\"/\"currency\":\"USD\"}" call -H "Authorization: Bearer $PAYER_JWT")
+[ "$code" = "400" ] && grep -q currency_mismatch "$WORK/out" \
+  || fail "a body in USD on an EUR workspace answered $code: $(cat "$WORK/out")"
+code=$(BODY="${BODY/2500/25.5}" call -H "Authorization: Bearer $PAYER_JWT")
+[ "$code" = "400" ] || fail "a fractional amount answered $code: $(cat "$WORK/out")"
+[ "$(intents)" = "0" ] || fail "a refused body left an intent"
+[ ! -s "$WORK/hits" ] || fail "a refused body reached the provider"
+echo "another currency or a fractional amount: 400; no intent, no provider call"
 
 # 4. The member paying their own bill.
 code=$(call -H "Authorization: Bearer $PAYER_JWT")

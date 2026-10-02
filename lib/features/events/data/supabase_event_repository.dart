@@ -15,15 +15,48 @@ class SupabaseEventRepository implements EventRepository {
 
   final SupabaseClient _client;
 
+  /// #1909 — one timeout sweep in flight per workspace: concurrent feed
+  /// reads (several screens refreshing at once) share it instead of each
+  /// running the multi-pass sweep.
+  final _sweeps = <String, Future<void>>{};
+
+  Future<void> _sweep(String workspaceId) {
+    final running = _sweeps[workspaceId];
+    if (running != null) return running;
+    final started = _runSweep(workspaceId);
+    _sweeps[workspaceId] = started;
+    return started;
+  }
+
+  Future<void> _runSweep(String workspaceId) async {
+    try {
+      await _client.rpc<dynamic>('sweep_pending_events',
+          params: {'p_workspace_id': workspaceId});
+    } finally {
+      _sweeps.remove(workspaceId)?.ignore(); // that is this future: done
+    }
+  }
+
+  /// #1909 — newest first in the order the index already holds
+  /// (`created_at DESC` is NULLS FIRST; the column is NOT NULL, so this is
+  /// the same order the feed always meant), with `id` as the tie-breaker
+  /// that makes paging total. The default `nullsFirst: false` emitted
+  /// `nullslast`, which the index cannot serve: the feed scanned every
+  /// event of the workspace and sorted them (measured: 713 rows and a
+  /// top-N sort for 100, against 101 rows and an incremental sort).
+  PostgrestTransformBuilder<PostgrestList> _newestFirst(
+          PostgrestFilterBuilder<PostgrestList> q) =>
+      q
+          .order('created_at', ascending: false, nullsFirst: true)
+          .order('id', ascending: false, nullsFirst: true);
+
   @override
   Future<List<WorkspaceEvent>> fetchEvents(
     String workspaceId, {
     int limit = 100,
   }) async {
     // Lazy timeout sweep before reading (spec §8.2).
-    await _client.rpc<dynamic>('sweep_pending_events', params: {
-      'p_workspace_id': workspaceId,
-    });
+    await _sweep(workspaceId);
     // #1310 S2 — a limit of 0 means "everything", for the export.
     //
     // The feed asks for a page and gets one; the workspace export asks
@@ -33,19 +66,13 @@ class SupabaseEventRepository implements EventRepository {
     if (limit <= 0) {
       final rows = await fetchAllPages(
         table: 'events',
-        build: () => _client
-            .from('events')
-            .select()
-            .eq('workspace_id', workspaceId)
-            .order('created_at', ascending: false),
+        build: () => _newestFirst(
+            _client.from('events').select().eq('workspace_id', workspaceId)),
       );
       return rows.map(_fromRow).toList();
     }
-    final rows = await _client
-        .from('events')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('created_at', ascending: false)
+    final rows = await _newestFirst(
+            _client.from('events').select().eq('workspace_id', workspaceId))
         .limit(limit);
     return rows.map(_fromRow).toList();
   }
@@ -121,11 +148,18 @@ class SupabaseEventRepository implements EventRepository {
   ) async {
     if (eventIds.isEmpty) return const {};
     // RLS already scopes rows to events of workspaces I belong to.
-    final rows = await _client
-        .from('event_decisions')
-        .select()
-        .inFilter('event_id', eventIds)
-        .order('decided_at', ascending: true);
+    // #1909 — the ids in bounded chunks, each read to the end, totally
+    // ordered (one unbounded `in.(…)` URL grew with the feed).
+    final rows = await fetchAllIn(
+      table: 'event_decisions',
+      ids: eventIds,
+      build: (chunk) => _client
+          .from('event_decisions')
+          .select()
+          .inFilter('event_id', chunk)
+          .order('decided_at', ascending: true)
+          .order('id', ascending: true),
+    );
     final grouped = <String, List<EventDecision>>{};
     for (final row in rows) {
       final decision = _decisionFromRow(row);

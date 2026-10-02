@@ -31,6 +31,7 @@ import '../domain/number_sequence.dart';
 import '../domain/workspace_status.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../domain/reminder_evidence.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
   @override
@@ -41,7 +42,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
       table: 'invoices',
       build: () => _client
           .from('invoices')
-          .select()
+          // #1913 — the frozen due date travels with the invoice.
+          .select('*, invoice_maturities(due_on, basis)')
           .eq('workspace_id', workspaceId)
           .order('issued_at', ascending: false),
     );
@@ -587,6 +589,35 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
+  Future<Map<String, String>> fetchDunningHolds(String workspaceId) async {
+    final rows = await _client
+        .from('invoice_dunning_holds')
+        .select('invoice_id, reason')
+        .eq('workspace_id', workspaceId)
+        .isFilter('released_at', null);
+    return {
+      for (final row in rows)
+        row['invoice_id'] as String: row['reason'] as String,
+    };
+  }
+
+  @override
+  Future<void> placeDunningHold(
+    String invoiceId, {
+    required String reason,
+    String note = '',
+  }) =>
+      _client.rpc<void>('place_dunning_hold', params: {
+        'p_invoice_id': invoiceId,
+        'p_reason': reason,
+        'p_note': note,
+      });
+
+  @override
+  Future<void> releaseDunningHold(String invoiceId) => _client.rpc<void>(
+      'release_dunning_hold', params: {'p_invoice_id': invoiceId});
+
+  @override
   Future<void> matchInvoice({
     required String invoiceId,
     required String paymentLedgerId,
@@ -628,6 +659,16 @@ class SupabaseMoneyRepository implements MoneyRepository {
           eventId: row['event_id'] as String?,
         ),
     };
+  }
+
+  @override
+  Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId) async {
+    final rows = await _client.rpc<dynamic>('invoice_reminder_evidence',
+        params: {'p_invoice_id': invoiceId});
+    return [
+      for (final row in (rows as List? ?? const []))
+        ReminderEvidence.fromJson(Map<String, dynamic>.from(row as Map)),
+    ];
   }
 
   @override
@@ -1337,6 +1378,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required int amountCents,
     required String currencyCode,
     required String period,
+    String? requestId,
   }) async {
     final data = await _invokePayments({
       'provider': provider.wireName,
@@ -1345,6 +1387,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'amount_cents': amountCents,
       'currency': currencyCode,
       'period': period,
+      'request_id': ?requestId,
     });
     if (data == null) {
       return const PaymentOrderStart(
@@ -1356,6 +1399,12 @@ class SupabaseMoneyRepository implements MoneyRepository {
         missing: [
           for (final v in (data['missing'] as List? ?? const [])) v as String,
         ],
+      );
+    }
+    if (data['status'] == 'paid') {
+      return PaymentOrderStart(
+        alreadyPaid: true,
+        orderId: data['order_id'] as String?,
       );
     }
     final approveUrl = data['approve_url'];

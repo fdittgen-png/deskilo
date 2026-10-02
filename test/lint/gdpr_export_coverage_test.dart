@@ -106,6 +106,8 @@ const Set<String> _exported = {
   'workspace_application_messages', // #1791: own replies and admission discussions.
   'member_preference_overrides', // #1791: own scoped preferences accompany the profile.
   'members',
+  'privacy_notice_acknowledgments', // #1914: which notice versions the person acknowledged.
+  'rights_requests', // #1915: the person's own rights requests and their outcome.
   // #1287 — which roles this member was given, and when. 0247 adds the
   // key by an anchored patch, not a restatement.
   'workspace_role_members',

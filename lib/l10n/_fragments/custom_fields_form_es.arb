@@ -102,5 +102,9 @@
   "workspaceFieldsSaveFailed": "Tus respuestas a las preguntas de este espacio no se han guardado. El resto de tus datos sí.",
   "@workspaceFieldsSaveFailed": {
     "description": "#1288 custom fields: workspaceFieldsSaveFailed"
+  },
+  "workspaceFieldsPersonalNote": "Tus respuestas son datos personales: forman parte de tu exportación de datos y se borran cuando dejas este espacio, salvo que el espacio documente una obligación legal de conservar alguna.",
+  "@workspaceFieldsPersonalNote": {
+    "description": "#1912 custom fields: every answer is personal data"
   }
 }

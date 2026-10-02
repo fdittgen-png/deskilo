@@ -39,6 +39,7 @@ import 'shell_slot.dart';
 import '../../core/time/clock.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_title_bar.dart';
+import 'space_chip.dart';
 
 /// #821 — the conversations I muted; empty when the list cannot be
 /// read, so a failing fetch silences nothing by accident.
@@ -352,7 +353,8 @@ class ShellScreen extends ConsumerWidget {
       appBar: ShellTitleBar(
         collapsible: !webShell && visibleBranches.isNotEmpty,
         appBar: AppBar(
-        title: Text(tabTitles[navigationShell.currentIndex]),
+        // #1823 — the chip names the space; the tab sits under it.
+        title: SpaceChip(tabTitle: tabTitles[navigationShell.currentIndex]),
         actions: [
           // The editor sits on BOTH map surfaces (field request). Plan
           // and Réserver draw the same canvas from the same providers,
@@ -390,14 +392,8 @@ class ShellScreen extends ConsumerWidget {
           // reading one there is reading it everywhere — while the count
           // stays visible from every tab, which a tab inside the inbox
           // could not offer. Hidden when the workspace gated events off.
-          // #719 → the GDPR rights, one tap from every tab: who can see
-          // my data, export, erase, the policy.
-          IconButton(
-            key: const ValueKey('shell-privacy'),
-            icon: const Icon(Icons.shield_outlined),
-            tooltip: l10n?.privacyTitle ?? 'Privacy & data',
-            onPressed: () => context.push('/privacy'),
-          ),
+          // #719 → the GDPR rights moved to Me › Me with the rest of the
+          // person's own pages (#1823); the avatar below is one tap away.
           if (features.contains(WorkspaceFeature.eventsTab))
             IconButton(
               key: const ValueKey('shell-events-bell'),
@@ -427,6 +423,7 @@ class ShellScreen extends ConsumerWidget {
                 : (l10n?.settingsTitle ?? 'Settings'),
             onPressed: () => context.push('/settings'),
           ),
+          const BackToMeButton(), // #1823
         ],
         ),
       ),

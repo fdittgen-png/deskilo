@@ -80,28 +80,51 @@ class InMemoryFrontCameraStore implements FrontCameraStore {
   Future<void> write(bool enabled) async => value = enabled;
 }
 
+/// The account [InMemoryActiveWorkspaceStore.value] and
+/// [InMemoryDefaultWorkspaceStore.value] read and write: the suite's
+/// signed-in person (`FakeAuthRepository.signedIn`).
+const String kInMemoryStoreAccount = 'user-1';
+
 /// In-memory [ActiveWorkspaceStore] so widget tests never touch
-/// SharedPreferences platform channels.
+/// SharedPreferences platform channels. Per account since #1823.
 class InMemoryActiveWorkspaceStore implements ActiveWorkspaceStore {
-  String? value;
+  final Map<String, String> byAccount = {};
+
+  /// The entry of [kInMemoryStoreAccount].
+  String? get value => byAccount[kInMemoryStoreAccount];
+  set value(String? id) => id == null
+      ? byAccount.remove(kInMemoryStoreAccount)
+      : byAccount[kInMemoryStoreAccount] = id;
 
   @override
-  Future<String?> read() async => value;
+  Future<String?> read(String account) async => byAccount[account];
 
   @override
-  Future<void> write(String? workspaceId) async => value = workspaceId;
+  Future<void> write(String account, String? workspaceId) async =>
+      workspaceId == null
+          ? byAccount.remove(account)
+          : byAccount[account] = workspaceId;
 }
 
 /// In-memory [DefaultWorkspaceStore] (#322) so widget tests never touch
-/// SharedPreferences.
+/// SharedPreferences. Per account since #1823.
 class InMemoryDefaultWorkspaceStore implements DefaultWorkspaceStore {
-  String? value;
+  final Map<String, String> byAccount = {};
+
+  /// The entry of [kInMemoryStoreAccount].
+  String? get value => byAccount[kInMemoryStoreAccount];
+  set value(String? id) => id == null
+      ? byAccount.remove(kInMemoryStoreAccount)
+      : byAccount[kInMemoryStoreAccount] = id;
 
   @override
-  Future<String?> read() async => value;
+  Future<String?> read(String account) async => byAccount[account];
 
   @override
-  Future<void> write(String? workspaceId) async => value = workspaceId;
+  Future<void> write(String account, String? workspaceId) async =>
+      workspaceId == null
+          ? byAccount.remove(account)
+          : byAccount[account] = workspaceId;
 }
 
 /// App-icon badge fake (#426): records every count written.

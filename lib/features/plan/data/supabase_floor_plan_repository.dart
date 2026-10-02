@@ -1,10 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ids/request_id.dart';
+import 'plan_media_steps.dart';
+import 'plan_media_sweep.dart';
 import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
 import '../../../core/cache/cached_fetch.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../domain/desk.dart';
 import '../domain/floor_plan.dart';
 import '../domain/floor_plan_repository.dart';
@@ -48,11 +53,16 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         key: 'levels:$workspaceId',
         ttl: _ttl,
         mode: CacheReadMode.cacheFirst,
-        fetchRaw: () => _client
-            .from('levels')
-            .select()
-            .eq('workspace_id', workspaceId)
-            .order('sort_order', ascending: true),
+        // #2011 — read to the end whatever the server's row cap.
+        fetchRaw: () => fetchAllPages(
+          table: 'levels',
+          build: () => _client
+              .from('levels')
+              .select()
+              .eq('workspace_id', workspaceId)
+              .order('sort_order', ascending: true)
+              .order('id', ascending: true),
+        ),
         // #572 — a PENDING member reads zero levels through RLS; caching
         // that emptiness made the workspace stay blank after approval
         // until the entry died. Emptiness is cheap to refetch and never
@@ -87,6 +97,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   Future<void> setLevelSite(String levelId, String? siteId) async {
     await _client.rpc<dynamic>('set_level_site',
         params: {'p_level_id': levelId, 'p_site_id': siteId});
+    await _bust(); // #2010 — else a warm cache shows the old site
   }
 
   @override
@@ -119,17 +130,54 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
-  Future<void> reorderLevels(List<String> orderedLevelIds) async {
-    for (var i = 0; i < orderedLevelIds.length; i++) {
-      await _client
-          .from('levels')
-          .update({'sort_order': i}).eq('id', orderedLevelIds[i]);
-    }
+  Future<LevelReorderOutcome> reorderLevels(
+    String workspaceId,
+    List<String> orderedLevelIds, {
+    required List<String> expected,
+  }) async {
+    // #2010 — one atomic command (0320); the cache is busted whatever the
+    // answer, since a conflict means it is old.
+    final answer = await _client.rpc<dynamic>('reorder_levels', params: {
+      'p_workspace_id': workspaceId, 'p_level_ids': orderedLevelIds, 'p_expected': expected});
     await _bust();
+    return LevelReorderOutcome.fromJson(answer);
   }
 
   static String _bgPath(String workspaceId, String levelId) =>
       '$workspaceId/$levelId';
+
+  Future<String?> _backgroundPath(String levelId) async =>
+      (await _client
+              .from('levels')
+              .select('background_path')
+              .eq('id', levelId)
+              .maybeSingle())?['background_path'] as String?;
+
+  /// #2012 B — after a plan-media write, the bounded orphan cleanup.
+  Future<void> _sweep(String workspaceId) => sweepPlanMediaOrphans(
+        list: () async => [
+          for (final p in await _client.rpc<List<dynamic>>('plan_media_orphans',
+              params: {'p_workspace_id': workspaceId})) p as String,
+        ],
+        remove: (paths) => _client.storage.from('floor-plans').remove(paths),
+      );
+
+  PlanMediaSteps _media({
+    required String levelId,
+    Uint8List? bytes,
+    String? contentType,
+  }) =>
+      PlanMediaSteps(
+        upload: (path) => _client.storage.from('floor-plans').uploadBinary(
+              path,
+              bytes!,
+              fileOptions: FileOptions(contentType: contentType),
+            ),
+        publish: (path) => _client
+            .from('levels')
+            .update({'background_path': path}).eq('id', levelId),
+        remove: (path) => _client.storage.from('floor-plans').remove([path]),
+      );
 
   @override
   Future<void> setLevelBackground(
@@ -138,16 +186,15 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     required Uint8List bytes,
     required String contentType,
   }) async {
-    final path = _bgPath(workspaceId, levelId);
-    await _client.storage.from('floor-plans').uploadBinary(
-          path,
-          bytes,
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
-        );
-    await _client
-        .from('levels')
-        .update({'background_path': path}).eq('id', levelId);
+    // #2012 — a new object per upload; the old one stays live until the
+    // level points at the new one (see PlanMediaSteps).
+    await _media(levelId: levelId, bytes: bytes, contentType: contentType)
+        .replace(
+      candidate: '${_bgPath(workspaceId, levelId)}.${newRequestId()}',
+      previous: await _backgroundPath(levelId),
+    );
     await _bust();
+    await _sweep(workspaceId);
   }
 
   @override
@@ -155,13 +202,11 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     String workspaceId,
     String levelId,
   ) async {
-    await _client.storage.from('floor-plans').remove([
-      _bgPath(workspaceId, levelId),
-    ]);
-    await _client
-        .from('levels')
-        .update({'background_path': null}).eq('id', levelId);
+    // #2012 — the reference first, then the object.
+    await _media(levelId: levelId)
+        .clear(previous: await _backgroundPath(levelId));
     await _bust();
+    await _sweep(workspaceId);
   }
 
   @override
@@ -267,27 +312,45 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         ),
       );
 
+  /// #2011 — a level's plan, complete: a row past the server's cap was a
+  /// seat drawn as missing, or its booking as free capacity.
   Future<Map<String, dynamic>> _fetchPlanRows(String levelId) async {
-    final officeRows =
-        await _client.from('offices').select().eq('level_id', levelId);
+    final officeRows = await fetchAllPages(
+      table: 'offices',
+      build: () => _client
+          .from('offices')
+          .select()
+          .eq('level_id', levelId)
+          .order('id', ascending: true),
+    );
     final officeIds =
         officeRows.map((row) => row['id'] as String).toList();
 
     var deskRows = const <Map<String, dynamic>>[];
     var seatRows = const <Map<String, dynamic>>[];
     if (officeIds.isNotEmpty) {
-      deskRows = await _client
-          .from('desks')
-          .select()
-          .inFilter('office_id', officeIds);
+      deskRows = await fetchAllIn(
+        table: 'desks',
+        ids: officeIds,
+        build: (chunk) => _client.from('desks').select().inFilter('office_id', chunk).order('id'),
+      );
       final deskIds = deskRows.map((row) => row['id'] as String).toList();
       if (deskIds.isNotEmpty) {
-        seatRows =
-            await _client.from('seats').select().inFilter('desk_id', deskIds);
+        seatRows = await fetchAllIn(
+          table: 'seats',
+          ids: deskIds,
+          build: (chunk) => _client.from('seats').select().inFilter('desk_id', chunk).order('id'),
+        );
       }
     }
-    final imageRows =
-        await _client.from('plan_images').select().eq('level_id', levelId);
+    final imageRows = await fetchAllPages(
+      table: 'plan_images',
+      build: () => _client
+          .from('plan_images')
+          .select()
+          .eq('level_id', levelId)
+          .order('id', ascending: true),
+    );
     return {
       'offices': officeRows,
       'desks': deskRows,
@@ -320,32 +383,42 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     required GridRect rect,
     required Uint8List bytes,
     required String contentType,
+    String? imageId,
   }) async {
-    final row = await _client
-        .from('plan_images')
-        .insert({
+    // #2012 — the object first, then the row that points at it: no
+    // pending row ever exists. The id is the operation's, so a retry
+    // re-uploads the same path and the insert converges on one row; a
+    // lost insert answer leaves at worst an unreferenced object.
+    final id = imageId ?? newRequestId();
+    final path = _imgPath(workspaceId, id);
+    await PlanMediaSteps(
+      upload: (path) => _client.storage.from('floor-plans').uploadBinary(
+            path,
+            bytes,
+            fileOptions: FileOptions(contentType: contentType, upsert: true),
+          ),
+      publish: (path) => _client.from('plan_images').upsert(
+        {
+          'id': id,
           'workspace_id': workspaceId,
           'level_id': levelId,
           'x': rect.x,
           'y': rect.y,
           'w': rect.w,
           'h': rect.h,
-          'storage_path': 'pending',
-        })
-        .select()
-        .single();
-    final id = row['id'] as String;
-    final path = _imgPath(workspaceId, id);
-    await _client.storage.from('floor-plans').uploadBinary(
-          path,
-          bytes,
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
-        );
-    await _client
-        .from('plan_images')
-        .update({'storage_path': path}).eq('id', id);
+          'storage_path': path!,
+        },
+        onConflict: 'id',
+        ignoreDuplicates: true,
+      ),
+      remove: (path) => _client.storage.from('floor-plans').remove([path]),
+    ).replace(candidate: path);
     await _bust();
-    return _planImageFromRow({...row, 'storage_path': path});
+    await _sweep(workspaceId);
+    // Read back: the row a first attempt committed is the answer.
+    final row =
+        await _client.from('plan_images').select().eq('id', id).single();
+    return _planImageFromRow(row);
   }
 
   @override
@@ -367,10 +440,17 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         .eq('id', imageId)
         .maybeSingle();
     final path = row?['storage_path'] as String?;
-    if (path != null && path != 'pending') {
-      await _client.storage.from('floor-plans').remove([path]);
-    }
+    // #2012 — the row first (no reference to a removed object), then the
+    // object, best effort.
     await _client.from('plan_images').delete().eq('id', imageId);
+    if (path != null && path != 'pending') {
+      try {
+        await _client.storage.from('floor-plans').remove([path]);
+      } catch (e, st) {
+        TraceLogger.instance.warn('plan', 'plan image object left for cleanup',
+            error: e, stackTrace: st);
+      }
+    }
     await _bust();
   }
 

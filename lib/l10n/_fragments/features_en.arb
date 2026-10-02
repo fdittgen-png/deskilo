@@ -442,5 +442,74 @@
   "featureTierCore": "Core",
   "featureTierCoreDesc": "What every space needs. On from the first day.",
   "featureTierPlatform": "Platform",
-  "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs."
+  "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs.",
+  "featureMaturityUnreviewed": "Unreviewed",
+  "@featureMaturityUnreviewed": {
+    "description": "#1850 maturity badge: nobody has assessed this feature against evidence yet"
+  },
+  "featureMaturityAlpha": "Alpha",
+  "@featureMaturityAlpha": {
+    "description": "#1850 maturity badge: alpha"
+  },
+  "featureMaturityBeta": "Beta",
+  "@featureMaturityBeta": {
+    "description": "#1850 maturity badge: beta"
+  },
+  "featureMaturityStable": "Stable",
+  "@featureMaturityStable": {
+    "description": "#1850 maturity badge: stable (assessed against evidence)"
+  },
+  "featureLifecycleActive": "Active",
+  "@featureLifecycleActive": {
+    "description": "#1850 lifecycle: active"
+  },
+  "featureLifecycleDeprecated": "Deprecated",
+  "@featureLifecycleDeprecated": {
+    "description": "#1850 lifecycle badge: still served, being replaced"
+  },
+  "featureLifecycleRetired": "Retired",
+  "@featureLifecycleRetired": {
+    "description": "#1850 lifecycle: retired, key kept"
+  },
+  "featureMaturityFilterLabel": "Maturity",
+  "@featureMaturityFilterLabel": {
+    "description": "#1850 maturity filter on the Features screen"
+  },
+  "featureMaturityFilterAll": "All stages",
+  "@featureMaturityFilterAll": {
+    "description": "#1850 maturity filter: no filter"
+  },
+  "featureMaturitySemantics": "Maturity {maturity}, {lifecycle}",
+  "@featureMaturitySemantics": {
+    "description": "#1850 screen-reader label of a feature's maturity badge",
+    "placeholders": {
+      "maturity": {
+        "type": "String"
+      },
+      "lifecycle": {
+        "type": "String"
+      }
+    }
+  },
+  "featureOptInTitle": "Switch on an experimental feature?",
+  "@featureOptInTitle": {
+    "description": "#1851 consent dialog title before switching on an alpha/beta feature"
+  },
+  "featureOptInBody": "Not yet reviewed as stable: {features}. It may change and has known limits. Switch on only if this space accepts that.",
+  "@featureOptInBody": {
+    "description": "#1851 consent dialog body; features = the experimental feature names",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "featureOptInConfirm": "Switch on",
+  "@featureOptInConfirm": {
+    "description": "#1851 consent dialog confirm button"
+  },
+  "featureIntakeStoppedNote": "Off: nothing new starts; what is already open can still be answered and closed.",
+  "@featureIntakeStoppedNote": {
+    "description": "#1851 note on a switched-off feature whose existing work stays serviceable"
+  }
 }

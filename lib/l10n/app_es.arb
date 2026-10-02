@@ -64,6 +64,46 @@
   "handoffBlocked": "Este archivo no puede entregarse hasta que se corrija el origen.",
   "handoffSave": "Guardar archivo e informe",
   "handoffChanged": "Las facturas cambiaron mientras las revisaba. Vuelva a exportar para ver las cuentas actuales.",
+  "handoffUnsupportedCurrency": "{number}: su moneda no tiene un número de decimales verificado",
+  "handoffAmountOutOfRange": "{number}: un total demasiado grande para transmitirse con exactitud",
+  "featureAccountingBookTitle": "Libro contable",
+  "featureAccountingBookDesc": "Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes.",
+  "bookSheetTitle": "Libro contable",
+  "bookTileEmpty": "Sin libro: DesKilo lleva los saldos de los miembros y las facturas (precontabilidad).",
+  "bookIssuer": "Emisor",
+  "bookAuthorityPre": "Precontabilidad",
+  "bookAuthorityLocal": "DesKilo lleva el libro",
+  "bookAuthorityExternal": "Sistema externo",
+  "bookExternalSystem": "Sistema que hace fe",
+  "bookCurrency": "Moneda funcional",
+  "bookFiscalStart": "El ejercicio empieza el",
+  "bookBasisAccrual": "Criterio de devengo",
+  "bookBasisCash": "Criterio de caja",
+  "bookEffectiveFrom": "Vigente desde el {date}",
+  "bookFiscalPreview": "Ejercicio {label}: {start} – {end}",
+  "bookProblemExternal": "Indique el sistema externo que lleva los libros oficiales.",
+  "bookProblemCurrency": "Esta moneda no tiene un número de decimales verificado.",
+  "bookProblemFiscal": "Un ejercicio empieza un día que tiene todo año (nunca el 29 de febrero).",
+  "bookSaved": "Libro guardado",
+  "bookStale": "Alguien guardó este libro desde que lo abrió. Cierre y vuelva a abrir para ver su versión.",
+  "bookSaveFailed": "El libro no se guardó. Compruebe la conexión e inténtelo de nuevo.",
+  "bookRoleCustomers": "Clientes (cuentas por cobrar)",
+  "bookRoleRevenue": "Ingresos",
+  "bookRoleBank": "Banco",
+  "bookRoleVatOutput": "IVA repercutido",
+  "bookRoleExpenses": "Gastos",
+  "bookTypeAsset": "Activo",
+  "bookTypeLiability": "Pasivo",
+  "bookTypeEquity": "Patrimonio neto",
+  "bookTypeIncome": "Ingreso",
+  "bookTypeExpense": "Gasto",
+  "bookChartTitle": "Plan contable · {site}",
+  "bookChartSuggest": "Añadir las cuentas sugeridas para revisarlas",
+  "bookAccountCode": "Código de cuenta",
+  "bookAccountName": "Nombre de la cuenta",
+  "bookAccountPosting": "Admite asientos",
+  "bookMappingsTitle": "La cuenta de cada asiento",
+  "bookProblemUnmapped": "Asigne estas cuentas antes de iniciar un libro local: {roles}.",
   "fecAccountExpenses": "Gastos",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -156,6 +196,57 @@
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"
   },
+  "assistantSetupTitle": "Configuración de asistentes",
+  "assistantSetupIntro": "Lo que los asistentes necesitan en este espacio de trabajo, en orden. Cada paso indica quién lo realiza.",
+  "assistantSetupNoWorkspace": "Elija primero un espacio de trabajo.",
+  "assistantSetupAllDone": "Todo está configurado para este espacio de trabajo.",
+  "assistantSetupSaved": "Guardado.",
+  "assistantSetupStale": "Alguien cambió la oferta mientras tanto. Revísela e inténtelo de nuevo.",
+  "assistantSetupFailed": "No se pudo guardar. No cambió nada; inténtelo de nuevo.",
+  "assistantSetupLinkIdentity": "Confirmar mi identidad",
+  "assistantSetupTurnOn": "Activar",
+  "assistantSetupRecommended": "Usar la selección recomendada",
+  "assistantSetupCustomise": "Personalizar",
+  "assistantSetupRequest": "Solicitar acceso",
+  "assistantSetupReview": "Revisar solicitudes",
+  "assistantSetupNoConnector": "Esta app funciona sin servidor, así que no hay URL de conector.",
+  "assistantSetupCopyUrl": "Copiar la URL del conector",
+  "assistantSetupCopied": "URL del conector copiada.",
+  "assistantSetupConnectHowTo": "1. En su asistente, añada un conector personalizado con esta URL.\n2. Inicie sesión con su cuenta de DesKilo cuando se le pida.\n3. Apruebe este espacio de trabajo y las operaciones que permite.",
+  "assistantSetupPreviewTitle": "Selección recomendada",
+  "assistantSetupPreviewNone": "Sin cambios: el espacio de trabajo ya ofrece exactamente esta selección.",
+  "assistantSetupPreviewAdds": "Añadidas",
+  "assistantSetupPreviewRemoves": "Retiradas",
+  "assistantSetupPreviewOwn": "Los asistentes solo ven los datos propios de cada miembro.",
+  "assistantSetupPreviewNote": "Solo los datos propios de un miembro y las consultas de disponibilidad. Los asistentes ya conectados reciben operaciones nuevas solo cuando cada persona vuelve a aprobar.",
+  "assistantSetupApply": "Aplicar",
+  "assistantSetupStepIdentity": "Vincule su identidad",
+  "assistantSetupStepWorkspace": "Activar asistentes en este espacio de trabajo",
+  "assistantSetupStepPolicy": "Elegir qué pueden hacer los asistentes",
+  "assistantSetupStepEligibility": "Solicite su acceso a asistentes",
+  "assistantSetupStepInstallation": "Asistentes activados en esta base de datos",
+  "assistantSetupStepConnect": "Conecte su asistente",
+  "assistantSetupReasonIdentity": "Un asistente actúa en su nombre, así que esta base de datos debe saber que es usted.",
+  "assistantSetupReasonWorkspace": "Mientras esté desactivado, el espacio de trabajo rechaza toda llamada de asistente.",
+  "assistantSetupReasonPolicy": "No se ofrece nada a los asistentes hasta que alguien elija las operaciones.",
+  "assistantSetupReasonEligibility": "Los administradores de esta base de datos aprueban a cada persona una vez, para todos sus espacios de trabajo.",
+  "assistantSetupReasonInstallation": "El propietario de la instancia o un delegado activa los asistentes para todos los espacios de trabajo de esta base de datos.",
+  "assistantSetupReasonConnect": "Añada el conector en su asistente, inicie sesión y apruebe este espacio de trabajo.",
+  "assistantSetupStateDone": "Hecho",
+  "assistantSetupStateTodo": "Pendiente",
+  "assistantSetupStateWaiting": "En espera",
+  "assistantSetupStateBlocked": "Después de los pasos anteriores",
+  "assistantSetupStateUnavailable": "No se pudo consultar",
+  "assistantSetupActorYou": "Quién: usted",
+  "assistantSetupActorConfigurer": "Quién: alguien que gestiona la configuración de este espacio de trabajo",
+  "assistantSetupActorIntegrations": "Quién: alguien que gestiona las integraciones de este espacio de trabajo",
+  "assistantSetupActorDatabaseAdministrator": "Quién: un administrador de la base de datos",
+  "assistantSetupActorInstanceOperator": "Quién: el propietario de la instancia o un delegado",
+  "assistantSetupNextTodo": "Siguiente: {step}.",
+  "assistantSetupNextWaiting": "Siguiente: {step}. {actor}.",
+  "assistantSetupInstanceYou": "Usted responde de esta base de datos: active los asistentes desde las herramientas de la instancia.",
+  "assistantSetupInstanceNobody": "Nadie responde todavía de esta base de datos.",
+  "assistantSetupInstanceNames": "Responden de esta base de datos: {names}.",
   "legalIdentityAssociationRegime": "Una asociación sin actividad lucrativa no está sujeta al IVA: elija «Fuera del ámbito del IVA», no «Exento». El régimen de exención exige un número de IVA que no tiene, y la factura electrónica sería rechazada. Fuera del ámbito, su número de registro identifica a la asociación.",
   "@legalIdentityAssociationRegime": {
     "description": "#919 association regime: legalIdentityAssociationRegime"
@@ -868,6 +959,10 @@
       }
     }
   },
+  "bootFailedTitle": "DesKilo no pudo iniciarse",
+  "bootFailedBody": "El servidor o el almacenamiento seguro de este dispositivo no respondió. No se cambió nada. Cierre la aplicación y vuelva a abrirla; si sigue ocurriendo, compruebe la red.",
+  "bootSlowTitle": "El inicio tarda más de lo habitual",
+  "bootSlowBody": "Sigue intentándolo. Si no ocurre nada, cierre la aplicación y vuelva a abrirla.",
   "eInvoiceGapBuyerLegalIdAdvisable": "Falta el SIREN del comprador. Una plataforma francesa enruta por él: introdúzcalo en el perfil del miembro antes de transmitir. No es un rechazo — el archivo es válido sin él.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -1170,6 +1265,148 @@
   "@reservationCalendarFileRefused": {
     "description": "#1643 calendar file: reservationCalendarFileRefused"
   },
+  "featureCapacityKpiTitle": "Ocupación de puestos",
+  "@featureCapacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "featureCapacityKpiDesc": "Muestra a los propietarios y a quienes gestionan las reservas qué parte del tiempo de puesto ofrecido se reservó en un mes, cómo se calcula y lo que la cifra no puede saber.",
+  "@featureCapacityKpiDesc": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiTitle": "Ocupación de puestos",
+  "@capacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRatio": "{reserved} de {offered} horas-puesto reservadas",
+  "@capacityKpiRatio": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiUndefined": "En este periodo no se ofreció tiempo de puesto, así que no hay ocupación que mostrar.",
+  "@capacityKpiUndefined": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiExplain": "¿Cómo se calcula?",
+  "@capacityKpiExplain": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiDefinition": "Horas-puesto reservadas dentro del horario de apertura, divididas por las horas-puesto ofrecidas: cada puesto por las horas de apertura de los días abiertos, menos los días de cierre y los bloqueos de puestos. Una mesa, sala o planta completa cuenta cada uno de sus puestos una vez; las reservas canceladas no cuentan.",
+  "@capacityKpiDefinition": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiPhysical": "Capacidad física: {hours} horas-puesto",
+  "@capacityKpiPhysical": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOutside": "Reservado fuera de las horas ofrecidas: {hours} horas-puesto, fuera del ratio",
+  "@capacityKpiOutside": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOverlap": "Reservado dos veces a la vez: {hours} horas-puesto, contadas una vez",
+  "@capacityKpiOverlap": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRooms": "Salas sin puestos: {count}, {reserved} de {offered} horas-sala reservadas",
+  "@capacityKpiRooms": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiUnattributed": "Algunas reservas del periodo apuntan a un lugar que ya no existe; no se cuentan.",
+  "@capacityKpiUnattributed": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiKnownZero": "Medido: no se reservó nada.",
+  "@capacityKpiKnownZero": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiAsOf": "Calculado {time}",
+  "@capacityKpiAsOf": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiForbidden": "No puede consultar las cifras de capacidad de este espacio.",
+  "@capacityKpiForbidden": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiUnavailable": "No se pudo calcular la ocupación de puestos.",
+  "@capacityKpiUnavailable": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRetry": "Reintentar",
+  "@capacityKpiRetry": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiHistorySince": "Contado desde el {date}, cuando empezó el historial de este espacio; el tiempo anterior no se conoce y no se cuenta.",
+  "@capacityKpiHistorySince": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiNotRecorded": "Este periodo es anterior al inicio del historial del espacio, el {date}; no hay nada registrado que contar.",
+  "@capacityKpiNotRecorded": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiHistory": "Historial registrado desde el {date}",
+  "@capacityKpiHistory": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRoomsToday": "Las salas sin puestos se leen tal como están hoy.",
+  "@capacityKpiRoomsToday": {
+    "description": "#1920 capacity KPI history"
+  },
+  "permViewAnalytics": "Consultar las cifras del espacio",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
+  },
   "featureCarnetsTitle": "Bonos",
   "featureCarnetsDesc": "Vender bonos de medias jornadas que se gastan a lo largo de los meses cuando un miembro reserva más allá de su suscripción, cobrados una sola vez en la venta.",
   "carnetsTitle": "Bonos",
@@ -1313,12 +1550,12 @@
   "consumptionRefusedQuantity": "La cantidad debe estar entre 1 y 999. No se registró nada.",
   "consumptionRefusedPeriod": "El periodo de facturación debe ser un mes (AAAA-MM). No se registró nada.",
   "coOwnerAction": "Copropiedad",
-  "coOwnerNone": "Sin rol de copropietario",
+  "coOwnerNone": "Sin copropiedad",
   "coOwnerActive": "Copropietario activo — permisos de propietario ya, sucesión automática",
-  "coOwnerPassive": "Copropietario pasivo — se convierte en propietario al activarlo o cuando el propietario se va",
+  "coOwnerPassive": "Sucesor — se convierte en propietario al activarlo o cuando el propietario se va",
   "coOwnerActivate": "Promover a propietario ahora",
   "memberCoOwnerChip": "Copropietario",
-  "memberCoOwnerPassiveChip": "Copropietario (pasivo)",
+  "memberCoOwnerPassiveChip": "Sucesor",
   "courtesyLabel": "Tratamiento",
   "@courtesyLabel": {
     "description": "#912 courtesy title: courtesyLabel"
@@ -1466,6 +1703,10 @@
   "workspaceFieldsSaveFailed": "Tus respuestas a las preguntas de este espacio no se han guardado. El resto de tus datos sí.",
   "@workspaceFieldsSaveFailed": {
     "description": "#1288 custom fields: workspaceFieldsSaveFailed"
+  },
+  "workspaceFieldsPersonalNote": "Tus respuestas son datos personales: forman parte de tu exportación de datos y se borran cuando dejas este espacio, salvo que el espacio documente una obligación legal de conservar alguna.",
+  "@workspaceFieldsPersonalNote": {
+    "description": "#1912 custom fields: every answer is personal data"
   },
   "featureCustomRolesTitle": "Roles que define este espacio",
   "@featureCustomRolesTitle": {
@@ -1893,6 +2134,8 @@
     }
   },
   "memberPageNowHeading": "Ahora mismo",
+  "editorMediaWriteFailed": "No se pudo confirmar que la imagen se guardó. Reintentar nunca la añade dos veces.",
+  "editorMediaSaving": "Guardando la imagen…",
   "editorBackgroundImage": "Imagen de fondo",
   "editorBackgroundSet": "Establecer imagen de fondo",
   "editorBackgroundReplace": "Reemplazar imagen de fondo",
@@ -2404,6 +2647,20 @@
   "featureTierCoreDesc": "Lo que todo espacio necesita. Activo desde el primer día.",
   "featureTierPlatform": "Plataforma",
   "featureTierPlatformDesc": "Pedido, nunca supuesto. Active lo que este espacio realmente hace.",
+  "featureMaturityUnreviewed": "Sin evaluar",
+  "featureMaturityAlpha": "Alfa",
+  "featureMaturityBeta": "Beta",
+  "featureMaturityStable": "Estable",
+  "featureLifecycleActive": "Activa",
+  "featureLifecycleDeprecated": "Obsoleta",
+  "featureLifecycleRetired": "Retirada",
+  "featureMaturityFilterLabel": "Madurez",
+  "featureMaturityFilterAll": "Todas las etapas",
+  "featureMaturitySemantics": "Madurez {maturity}, {lifecycle}",
+  "featureOptInTitle": "¿Activar una función experimental?",
+  "featureOptInBody": "Aún no evaluada como estable: {features}. Puede cambiar y tiene límites conocidos. Actívela solo si este espacio lo acepta.",
+  "featureOptInConfirm": "Activar",
+  "featureIntakeStoppedNote": "Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse.",
   "federationContinue": "Continuar con Deskilo",
   "federationPurpose": "Tu navegador confirma tu cuenta de Deskilo y luego te devuelve a {server}. Tus membresías y tu historial aquí no cambian.",
   "federationDetails": "Detalles técnicos",
@@ -2645,6 +2902,84 @@
   "helpTopicInstances": "Instancias",
   "helpTopicAccounting": "Exportaciones contables",
   "helpTopicReadiness": "admisibilidad",
+  "featureHolidayImportTitle": "Importar días festivos",
+  "@featureHolidayImportTitle": {
+    "description": "#2051 open-data holiday import"
+  },
+  "featureHolidayImportDesc": "Un propietario importa los días festivos del país, y de una región, desde una fuente de datos abiertos, desmarca los días en que el espacio sigue abierto e importa el resto como días de cierre. Los meses ya facturados se omiten y se nombran.",
+  "@featureHolidayImportDesc": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportAction": "Importar días festivos (datos abiertos)",
+  "@holidayImportAction": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportRegion": "Región",
+  "@holidayImportRegion": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportNationwide": "Solo festivos nacionales",
+  "@holidayImportNationwide": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportUnavailable": "La fuente de días festivos no está disponible ahora. Inténtelo más tarde o use «Añadir días festivos».",
+  "@holidayImportUnavailable": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportRetry": "Reintentar",
+  "@holidayImportRetry": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportSource": "Fuente: {source}",
+  "@holidayImportSource": {
+    "description": "#2051 open-data holiday import",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "holidayImportConfirm": "Importar {count} días de cierre",
+  "@holidayImportConfirm": {
+    "description": "#2051 open-data holiday import",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "holidayImportFailed": "No se pudieron comprobar ni importar los días festivos. No se ha cambiado nada.",
+  "@holidayImportFailed": {
+    "description": "#2051 open-data holiday import"
+  },
+  "instanceTitle": "Instalación: asistentes",
+  "instanceIntro": "Ajustes para todos los espacios de trabajo de esta instalación. Solo el operador de la instancia ve esta página; cada cambio requiere su segundo factor y queda registrado.",
+  "instanceNotOperator": "Solo el operador de la instancia gestiona los asistentes de la instalación.",
+  "instanceSecondFactorNeeded": "Los cambios aquí requieren su segundo factor en esta sesión.",
+  "instanceConfirmSecondFactor": "Confirmar con mi autenticador",
+  "instanceRuntimeTitle": "Asistentes en esta instalación",
+  "instanceRuntimeOn": "Activados",
+  "instanceRuntimeOff": "Desactivados",
+  "instanceTurnOn": "Activar para todos los espacios",
+  "instanceTurnOff": "Desactivar",
+  "instanceTurnOnConfirm": "Los asistentes pasan a poder usarse en cada espacio que los ofrece. Puede desactivarlos en cualquier momento.",
+  "instanceBlockers": "Todavía falta:",
+  "instanceBlockerNoAdmin": "un administrador de la base",
+  "instanceAdminsTitle": "Administradores de la base",
+  "instanceAdminsHelp": "Deciden quién puede usar asistentes. Solo pueden elegirse personas que confirmaron su identidad para asistentes.",
+  "instanceMakeAdmin": "Nombrar administrador",
+  "instanceRemoveAdmin": "Quitar",
+  "instanceNoCandidates": "Nadie más ha confirmado aún su identidad.",
+  "instanceYou": "usted",
+  "instanceClientsTitle": "Clientes de asistente",
+  "instanceClientsHelp": "Un asistente se registra solo la primera vez que alguien lo conecta; funciona solo después de aprobarlo aquí.",
+  "instanceClientWaiting": "Pendiente de aprobación",
+  "instanceClientApproved": "Aprobado",
+  "instanceClientBlocked": "Bloqueado",
+  "instanceApprove": "Aprobar",
+  "instanceBlock": "Bloquear",
+  "instanceOwnerClaimIntro": "¿A quién pertenece esta instancia? Introduzca el correo electrónico con el que se registrará en ella. Tras confirmar esa dirección, reclame la titularidad en Ajustes → Propietario de la instancia.",
+  "instanceOwnerClaimLabel": "Correo del titular",
   "instanceOwnerTitle": "Propietario de la instancia",
   "instanceOwnerHelp": "Esta instalación la comparten todos sus espacios. El propietario de la instancia responde de ella: contáctelo para todo lo que afecte a toda la instalación, como los asistentes.",
   "instanceOwnerNone": "Todavía no hay propietario de la instancia.",
@@ -3213,6 +3548,7 @@
   "invoiceGapMissingExemptionReason": "Falta el motivo por el que no se cobra IVA.",
   "invoiceGapMissingSellerCountry": "Falta el país del espacio.",
   "invoiceGapMissingBuyerCountry": "Falta el país del cliente.",
+  "invoiceGapCreditNoteWithPayments": "Esta factura rectificativa también compensa pagos, algo que una nota de crédito EN 16931 no puede expresar. Emita el abono en un documento propio.",
   "invoiceGapNoChargeLines": "Esta factura no tiene ninguna línea de cargo — su mes quedó cubierto por los pagos, así que no hay nada que enviar.",
   "invoiceGapMissingSellerCity": "la ciudad de la dirección del espacio",
   "invoiceGapMissingSellerPostalCode": "el código postal de la dirección del espacio",
@@ -3695,7 +4031,7 @@
   "eventTypeInvoiceReminder": "Recordatorio de pago",
   "eventInvoiceReminderLine": "Recordatorio {level}: factura {number} — {amount} pendientes",
   "dunningAutomatic": "Recordatorios automáticos",
-  "dunningAutomaticHint": "Una vez al día, las facturas abiertas más allá del plazo reciben solas su siguiente nivel de recordatorio — un aviso en el feed del miembro y una notificación. Desactivado: envías cada recordatorio tú mismo.",
+  "dunningAutomaticHint": "Una vez al día, las facturas que superan su plazo de pago registrado pasan solas al siguiente nivel de recordatorio — por el importe aún pendiente, nunca mientras un pago está pendiente o la factura está en suspenso. Las facturas sin plazo registrado quedan en tus manos. Desactivado: envías cada recordatorio tú mismo.",
   "eventTypePriceNegotiation": "Negociación de precios",
   "eventPriceNegotiationLine": "{actor} propone condiciones para {member}: {terms}",
   "eventPriceNegotiationItems": "{count} artículos",
@@ -4157,6 +4493,71 @@
   "reportDesignErrorUnknownKind": "Ese diseño es de un informe que este espacio no tiene.",
   "reportDesignErrorWrongKind": "Ese diseño pertenece a otro informe. Ábrelo e impórtalo allí.",
   "reportDesignErrorInvalidDesign": "Ese archivo no contiene ningún diseño legible.",
+  "invoiceHoldAction": "Suspender los recordatorios",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Levantar la suspensión de recordatorios",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "¿Por qué suspender los recordatorios?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "No se envía ningún recordatorio para esta factura, ni a mano ni automáticamente, hasta que se levante la suspensión.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "El miembro la impugna",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Persona equivocada o error de identidad",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Procedimiento de insolvencia",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Otro motivo",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Nota (opcional)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Suspender",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "Los recordatorios de esta factura están suspendidos.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "Los recordatorios de esta factura pueden reanudarse.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Recordatorios suspendidos: {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revises.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "No se pudo cambiar la suspensión de recordatorios. Inténtalo de nuevo.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Gestionar facturas",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
@@ -4319,6 +4720,7 @@
   "bookingSameDayError": "Una reserva termina el día en que empieza: reserva el día siguiente por separado.",
   "bookingMembershipPaused": "Su afiliación está en pausa — un administrador la reactiva en Miembros.",
   "bookingNotAMember": "Ya no es miembro de este espacio — pida una invitación a un administrador.",
+  "levelReorderStale": "Los niveles cambiaron mientras tanto. No se guardó nada; se muestra el orden actual.",
   "featureWorkspaceLibraryTitle": "Biblioteca de espacios",
   "featureWorkspaceLibraryDesc": "Guarde el plano de este espacio y cómo funciona como plantilla, elija quién puede verla, invite a personas por e-mail y parta de lo que otros ofrecen.",
   "libraryTitle": "Biblioteca de espacios",
@@ -4661,7 +5063,7 @@
   "mcpEligibleYes": "Esta base de datos le permite usar asistentes.",
   "mcpEligibleRequested": "Solicitó la aprobación. Un administrador de la base de datos la revisará.",
   "mcpEligibleExpired": "Su aprobación caducó. Vuelva a solicitarla para seguir usando asistentes.",
-  "mcpEligibleNoIdentity": "Su cuenta no está vinculada a una identidad verificada en esta base de datos.",
+  "mcpEligibleNoIdentity": "Su identidad aún no está confirmada para los asistentes en esta base.",
   "mcpEligibleNot": "Esta base de datos no ha aprobado asistentes para usted.",
   "mcpEligibleWithdraw": "Renunciar al acceso de asistentes en esta base de datos",
   "mcpConnectedNoWorkspace": "Ningún espacio: este asistente no puede hacer nada aquí.",
@@ -4684,14 +5086,14 @@
   "mcpApiReference": "Referencia de la API",
   "mcpApiReferenceHint": "Qué puede llamar un asistente y cómo se autoriza",
   "mcpStatusTitle": "Su situación aquí",
-  "mcpStatusIdentity": "Identidad",
+  "mcpStatusIdentity": "Identidad para asistentes",
   "mcpStatusEligibility": "Aprobación de la base de datos",
   "mcpStatusExposure": "Oferta del espacio de trabajo",
   "mcpStatusRole": "Su rol",
   "mcpStatusConsent": "Su consentimiento",
   "mcpStatusBackend": "Servidor",
   "mcpStateVerified": "Verificada",
-  "mcpStateUnlinked": "No vinculada",
+  "mcpStateUnlinked": "No confirmada",
   "mcpStateNotRequested": "No solicitada",
   "mcpStatePending": "En espera de una decisión",
   "mcpStateApproved": "Aprobada",
@@ -4705,7 +5107,7 @@
   "mcpStateAvailable": "Accesible",
   "mcpStateIncompatible": "Versión incompatible",
   "mcpStateUnavailable": "Desconocido",
-  "mcpNextLinkIdentity": "Siguiente paso: vincule su cuenta a la identidad de esta base de datos.",
+  "mcpNextLinkIdentity": "Siguiente paso: confirme su identidad para los asistentes en esta base, con un toque abajo.",
   "mcpNextRequestEligibility": "Siguiente paso: pida la aprobación a los administradores de esta base de datos.",
   "mcpNextAwaitEligibility": "Siguiente paso: un administrador de la base de datos decide su solicitud.",
   "mcpNextOwnerExposes": "Siguiente paso: el propietario del espacio de trabajo ofrece operaciones a los asistentes.",
@@ -4717,6 +5119,18 @@
   "mcpOverviewTitle": "Otras bases de datos conectadas",
   "mcpOverviewUnavailable": "No se pudo consultar ahora.",
   "mcpReviewSecondFactor": "Esa base de datos necesita su segundo factor en su propia sesión. No se decidió nada.",
+  "mcpStatusConfirmIdentity": "Confirmar mi identidad",
+  "mcpStateAfterPrevious": "Después del paso anterior",
+  "mcpIdentityIneligible": "Esta cuenta aún no puede confirmarse: confirme primero su dirección de correo o inicie sesión con un proveedor.",
+  "mcpIdentityConflict": "Otra cuenta ya tiene esta identidad aquí: un administrador de la base puede resolverlo.",
+  "mcpStatusGoogle": "Inicio de sesión con Google",
+  "mcpStatusLinkGoogle": "Vincular Google",
+  "mcpStatusSignInGoogle": "Iniciar sesión con Google",
+  "mcpStateGoogleReady": "Sesión iniciada con Google",
+  "mcpStateGoogleOtherSession": "Sesión iniciada de otra forma",
+  "mcpStateGoogleMissing": "Google no vinculado",
+  "mcpNextLinkGoogle": "Los asistentes usan su inicio de sesión con Google. Vincule primero Google a esta cuenta; sin ello, la cuenta no puede usar asistentes.",
+  "mcpNextSignInGoogle": "Los asistentes usan su inicio de sesión con Google. Inicie sesión con Google para continuar.",
   "mcpUsageWorkspaceTitle": "Uso de asistentes, últimos 30 días",
   "mcpUsageMineTitle": "Su uso de asistentes hoy",
   "mcpUsageUnavailable": "No se pudo cargar el uso.",
@@ -4726,6 +5140,74 @@
   "mcpUsageRefusals": "Rechazadas",
   "mcpUsageApplied": "Aplicadas",
   "mcpUsagePending": "Pendientes de validación",
+  "meGroupProfile": "Mi perfil",
+  "meGroupWorkspaces": "Mis espacios de trabajo",
+  "meGroupInstallations": "Instalaciones conectadas",
+  "meTabHome": "Inicio",
+  "meTabDiscover": "Descubrir",
+  "meTabMessages": "Mensajes",
+  "meTabMe": "Yo",
+  "meHomeTitle": "Inicio",
+  "meMySpaces": "Mis espacios",
+  "meHeaderOwned": "Tu cuenta · solo te pertenece a ti",
+  "meNoSpaceTitle": "Aún no estás en ningún espacio",
+  "meNoSpaceBody": "Busca uno cerca de ti, únete con un código de invitación o crea el tuyo.",
+  "meFindSpace": "Buscar un espacio",
+  "meJoinSpace": "Unirse con un código",
+  "meCreateSpace": "Crear un espacio",
+  "meManageSpaces": "Gestionar mis espacios",
+  "meSpacePending": "Pendiente de aprobación",
+  "meSpaceLastUsed": "Último usado",
+  "meLeaveAction": "Salir de este espacio",
+  "meLeaveOwner": "Los propietarios traspasan el espacio antes de salir",
+  "meLeaveTitle": "¿Salir de {name}?",
+  "meLeaveBody": "Dejas de ser miembro. Tus reservas, facturas y mensajes se quedan en el espacio. Para borrar también tus datos, usa Privacidad.",
+  "meLeaveFailed": "No se pudo salir del espacio. Inténtalo de nuevo.",
+  "meLeaveDone": "Has salido de {name}.",
+  "meLinkedOpenBody": "Este espacio está en {host}. La app trabaja con un servidor a la vez: abrirlo cambia a ese servidor y te pide iniciar sesión allí.",
+  "meLinkedOpen": "Abrir en {host}",
+  "meLinkedUnavailable": "{host} no respondió: esta lista puede estar incompleta.",
+  "meLinkedPendingOn": "Pendiente de aprobación · {host}",
+  "meSectionMine": "Mi historial y mis datos",
+  "meWhereSpacesLive": "Dónde están mis espacios",
+  "meAccountInMe": "Mi cuenta está en Yo",
+  "meAccountInMeBody": "Foto, idioma, tema e inicios de sesión son tuyos en todos los espacios.",
+  "meSpaceException": "En este espacio",
+  "spaceBackToMe": "Volver a Yo",
+  "spaceChipTooltip": "Cambiar de espacio",
+  "visibilityTitle": "Quién me ve",
+  "visibilityIntro": "Cada parte de tu cuenta elige su propio público. Nada es público si no lo eliges.",
+  "visibilityIdentity": "Nombre y foto",
+  "visibilityAbout": "Profesión y biografía",
+  "visibilityContact": "WhatsApp y correo",
+  "visibilityPresence": "Hoy en el espacio",
+  "visibilityReachability": "Quién puede iniciar una conversación conmigo",
+  "visibilityNobody": "Nadie",
+  "visibilityMySpaces": "Miembros de mis espacios",
+  "visibilityChosenSpaces": "Miembros de espacios elegidos",
+  "visibilitySignedIn": "Cualquiera con sesión iniciada",
+  "visibilitySaveFailed": "No se pudo guardar quién lo ve. Inténtalo de nuevo.",
+  "visibilityPreviewTitle": "Cómo me ven los demás",
+  "visibilityPreviewMySpaces": "Un miembro de mis espacios",
+  "visibilityPreviewSignedIn": "Cualquiera con sesión iniciada",
+  "visibilityPreviewNobody": "Solo yo",
+  "visibilityPreviewNothing": "No ven nada de ti.",
+  "visibilityPreviewFailed": "No se pudo cargar la vista previa.",
+  "visibilityPreviewCanWrite": "Puede iniciar una conversación contigo",
+  "visibilityPreviewCannotWrite": "No puede iniciar una conversación contigo",
+  "visibilityChosenCount": "{count, plural, =1{Miembros de 1 espacio elegido} other{Miembros de {count} espacios elegidos}}",
+  "portalVisibilityLink": "Quién puede encontrarme y escribirme",
+  "portalVisibilityLinkBody": "Se elige en Yo, en Quién me ve.",
+  "portalEnterSpace": "Entrar",
+  "portalCopyEmail": "Copiar el correo",
+  "portalEmailCopied": "Correo copiado",
+  "meAddressSaveFailed": "No se pudo guardar tu dirección. Inténtalo de nuevo.",
+  "visibilityAboutMe": "Sobre mí",
+  "visibilityAboutEmpty": "Añade tu profesión y unas palabras",
+  "visibilityProfession": "Profesión",
+  "visibilityBio": "Unas palabras sobre ti",
+  "visibilityAboutSaveFailed": "No se pudieron guardar tu profesión y biografía. Inténtalo de nuevo.",
+  "portalOpenMe": "Yo: mi cuenta y mis espacios",
   "featureMemberAccountMenuTitle": "Los miembros ven Mi cuenta",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"
@@ -4741,7 +5223,7 @@
   "membersTitle": "Miembros y planes",
   "membersPlanNone": "Sin plan",
   "memberRoleOwner": "Propietario",
-  "memberRoleAdmin": "Admin",
+  "memberRoleAdmin": "Administrador/a",
   "memberStatusPaused": "En pausa",
   "memberStatusExited": "Salido",
   "membersInvite": "Invitar a un miembro",
@@ -5032,7 +5514,7 @@
   "@featureSpaceInquiriesTitle": {
     "description": "#1824 messenger flags: featureSpaceInquiriesTitle"
   },
-  "featureSpaceInquiriesDesc": "Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas; las consultas guardadas se conservan.",
+  "featureSpaceInquiriesDesc": "Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas, así que nadie abre una consulta nueva; las abiertas siguen en la bandeja de los anfitriones para responderlas y cerrarlas.",
   "@featureSpaceInquiriesDesc": {
     "description": "#1824 messenger flags: featureSpaceInquiriesDesc"
   },
@@ -6070,6 +6552,8 @@
   "portalSearch": "Buscar espacios",
   "portalDirectoryUnavailable": "Algunos directorios no están disponibles. Los resultados están incompletos.",
   "portalNoWorkspaces": "No se encontraron espacios publicados.",
+  "portalNoLongerPublished": "Este espacio ya no está publicado.",
+  "portalDirectoryIncompatible": "Algunos espacios requieren una versión más reciente de la aplicación y no se muestran.",
   "portalMoreDirectories": "Más directorios",
   "portalMessenger": "Mensajería de la cuenta",
   "portalThisServer": "Este servidor",
@@ -6080,6 +6564,103 @@
   "portalAdminVisible": "Mostrarme como administrador público",
   "featurePublicListings": "Anuncio público del espacio",
   "featurePublicListingsDesc": "Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores.",
+  "portalFollowsWorkspace": "De la información del espacio",
+  "portalCustomised": "Personalizado",
+  "portalUseWorkspaceInfo": "Usar la información del espacio",
+  "portalResetAll": "Restablecer todos los datos públicos con la información del espacio",
+  "portalResetAllBody": "Los valores públicos de cada campo que tiene información en el espacio se sustituyen por ella. Los campos sin equivalente en el espacio conservan lo que escribió.",
+  "portalResetAllConfirm": "Restablecer",
+  "privacyNoticeTitle": "Quién trata tus datos",
+  "@privacyNoticeTitle": {
+    "description": "#1914 privacy notice: privacyNoticeTitle"
+  },
+  "privacyNoticeController": "Responsable del tratamiento: {name} — {contact}",
+  "@privacyNoticeController": {
+    "description": "#1914 privacy notice: privacyNoticeController",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeRights": "Tus derechos: {contact}",
+  "@privacyNoticeRights": {
+    "description": "#1914 privacy notice: privacyNoticeRights",
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeRegion": "Región: {region}",
+  "@privacyNoticeRegion": {
+    "description": "#1914 privacy notice: privacyNoticeRegion",
+    "placeholders": {
+      "region": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeTransfer": "Garantía de transferencia: {mechanism}",
+  "@privacyNoticeTransfer": {
+    "description": "#1914 privacy notice: privacyNoticeTransfer",
+    "placeholders": {
+      "mechanism": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeNotRecorded": "no registrado por el operador",
+  "@privacyNoticeNotRecorded": {
+    "description": "#1914 privacy notice: privacyNoticeNotRecorded"
+  },
+  "privacyNoticeEssential": "Necesario para la cuenta y el espacio",
+  "@privacyNoticeEssential": {
+    "description": "#1914 privacy notice: privacyNoticeEssential"
+  },
+  "privacyNoticeOptional": "Opcional — puedes usar la aplicación sin ello",
+  "@privacyNoticeOptional": {
+    "description": "#1914 privacy notice: privacyNoticeOptional"
+  },
+  "privacyNoticeRightsRoute": "Tus derechos y el contacto",
+  "@privacyNoticeRightsRoute": {
+    "description": "#1914 privacy notice: privacyNoticeRightsRoute"
+  },
+  "privacySpaceNotice": "El aviso de privacidad de este espacio",
+  "@privacySpaceNotice": {
+    "description": "#1914 privacy notice: privacySpaceNotice"
+  },
+  "privacySpaceNoticeRead": "Has tomado conocimiento de esta versión.",
+  "@privacySpaceNoticeRead": {
+    "description": "#1914 privacy notice: privacySpaceNoticeRead"
+  },
+  "privacySpaceNoticeUnread": "Aún no leído — léelo aquí.",
+  "@privacySpaceNoticeUnread": {
+    "description": "#1914 privacy notice: privacySpaceNoticeUnread"
+  },
+  "privacySpaceNoticeAcknowledge": "He leído este aviso",
+  "@privacySpaceNoticeAcknowledge": {
+    "description": "#1914 privacy notice: privacySpaceNoticeAcknowledge"
+  },
+  "privacySpaceNoticeFailed": "No se pudo registrar la toma de conocimiento. Inténtalo de nuevo.",
+  "@privacySpaceNoticeFailed": {
+    "description": "#1914 privacy notice: privacySpaceNoticeFailed"
+  },
+  "privacyPushOnDevice": "Notificaciones push en este dispositivo",
+  "@privacyPushOnDevice": {
+    "description": "#1914 privacy notice: privacyPushOnDevice"
+  },
+  "privacyPushOnDeviceHint": "Opcional. Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push; desactivado, la aplicación sigue funcionando y no se envía nada a este dispositivo.",
+  "@privacyPushOnDeviceHint": {
+    "description": "#1914 privacy notice: privacyPushOnDeviceHint"
+  },
+  "privacyPushOnDeviceFailed": "No se pudo guardar la elección. Inténtalo de nuevo.",
+  "@privacyPushOnDeviceFailed": {
+    "description": "#1914 privacy notice: privacyPushOnDeviceFailed"
+  },
   "featuresViewProcesses": "Procesos",
   "featuresViewSwitches": "Interruptores",
   "processSearchLabel": "Buscar procesos y funciones",
@@ -6224,7 +6805,7 @@
   "@privacyTitle": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "Sus datos permanecen en la UE, nunca se rastrean ni se venden, y solo los leen los roles que nombran las reglas de abajo. Estos son sus derechos según el RGPD — cada uno es un botón.",
+  "privacyIntro": "Tus datos nunca se rastrean ni se venden, y solo los pueden leer los roles que nombran las reglas de abajo; dónde se alojan figura en el aviso de privacidad de esta instalación. Estos son tus derechos según el RGPD — cada uno es un botón.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },
@@ -6572,7 +7153,7 @@
   "@questionEditorPersonal": {
     "description": "#1288 the question editor: questionEditorPersonal"
   },
-  "questionEditorPersonalHelp": "Se borra cuando la persona se va, y viaja en su exportación de datos. Déjalo activado salvo que la respuesta sea realmente del espacio y no de la persona.",
+  "questionEditorPersonalHelp": "Cada respuesta está vinculada a un miembro, así que es un dato personal: viaja en su exportación de datos y se borra cuando se va.",
   "@questionEditorPersonalHelp": {
     "description": "#1288 the question editor: questionEditorPersonalHelp"
   },
@@ -6672,11 +7253,15 @@
   "@questionTypeMultiChoice": {
     "description": "#1288 the question editor: questionTypeMultiChoice"
   },
+  "questionEditorNotPersonalWarning": "Sigue siendo personal: la respuesta está vinculada a un miembro, así que se exporta y se borra con la membresía, diga lo que diga este interruptor. Solo una conservación legal documentada puede guardarla.",
+  "@questionEditorNotPersonalWarning": {
+    "description": "#1912 the question editor: shown while the personal-data switch is off"
+  },
   "eventTypeRoleChange": "Cambio de rol",
-  "eventRolePromote": "{actor} promueve a un miembro a admin",
-  "eventRoleDemote": "{actor} degrada a un admin a miembro",
-  "memberMakeAdmin": "Hacer admin",
-  "memberMakeMember": "Hacer miembro normal",
+  "eventRolePromote": "{actor} pide dar el rol Administrador/a",
+  "eventRoleDemote": "{actor} pide retirar el rol Administrador/a",
+  "memberMakeAdmin": "Dar el rol Administrador/a",
+  "memberMakeMember": "Retirar el rol Administrador/a",
   "memberRoleChangeRequested": "Cambio de rol enviado para validación.",
   "eventTypeQuota": "Medias jornadas extra",
   "eventQuotaRequested": "{actor} solicita {halfDays} medias jornadas extra para {period}",
@@ -6735,6 +7320,69 @@
   "refusalSession": "Su sesión ha terminado. Vuelva a iniciar sesión e inténtelo de nuevo.",
   "refusalAlreadyDecided": "Alguien ya lo ha decidido. La lista muestra el resultado.",
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
+  "reminderHistoryTitle": "Historial de recordatorios",
+  "@reminderHistoryTitle": {
+    "description": "#1922 reminder evidence: reminderHistoryTitle"
+  },
+  "reminderHistoryRefresh": "Comprobar de nuevo el envío",
+  "@reminderHistoryRefresh": {
+    "description": "#1922 reminder evidence: reminderHistoryRefresh"
+  },
+  "reminderHistoryLine": "Nivel {level} · {origin} · {date}",
+  "@reminderHistoryLine": {
+    "description": "#1922 reminder evidence: reminderHistoryLine",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "origin": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderStatusPrepared": "Preparado",
+  "@reminderStatusPrepared": {
+    "description": "#1922 reminder evidence: reminderStatusPrepared"
+  },
+  "reminderStatusQueued": "Entregado al servicio de notificaciones",
+  "@reminderStatusQueued": {
+    "description": "#1922 reminder evidence: reminderStatusQueued"
+  },
+  "reminderStatusAccepted": "Aceptado por el servicio de notificaciones — no prueba que se haya leído",
+  "@reminderStatusAccepted": {
+    "description": "#1922 reminder evidence: reminderStatusAccepted"
+  },
+  "reminderStatusDeclared": "Compartido por el remitente — su declaración, no un acuse de recibo",
+  "@reminderStatusDeclared": {
+    "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusFailed": "No entregado",
+  "@reminderStatusFailed": {
+    "description": "#1922 reminder evidence: reminderStatusFailed"
+  },
+  "reminderStatusUnknown": "Sin respuesta del servicio de notificaciones",
+  "@reminderStatusUnknown": {
+    "description": "#1922 reminder evidence: reminderStatusUnknown"
+  },
+  "reminderStatusLegacy": "Registrado antes del seguimiento de envíos — desconocido",
+  "@reminderStatusLegacy": {
+    "description": "#1922 reminder evidence: reminderStatusLegacy"
+  },
+  "reminderOriginManual": "a mano",
+  "@reminderOriginManual": {
+    "description": "#1922 reminder evidence: reminderOriginManual"
+  },
+  "reminderOriginAutomatic": "automático",
+  "@reminderOriginAutomatic": {
+    "description": "#1922 reminder evidence: reminderOriginAutomatic"
+  },
+  "reminderOriginLegacy": "anterior",
+  "@reminderOriginLegacy": {
+    "description": "#1922 reminder evidence: reminderOriginLegacy"
+  },
   "reportGuideTitle": "Campos y marcado",
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"
@@ -7256,6 +7904,11 @@
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
   },
+  "bookingSpaceChainTaken": "Este espacio, o un espacio que lo contiene, ya está reservado en ese periodo.",
+  "bookingNoLongerCheckedIn": "Esta reserva ya no está registrada — se cerró mientras tanto.",
+  "listWholeReservable": "Reservable entero",
+  "listCoversTables": "{count, plural, =1{1 mesa} other{{count} mesas}}",
+  "listCoversSeats": "{count, plural, =1{1 puesto} other{{count} puestos}}",
   "reserveMonthView": "Mes",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Reserva recurrente",
@@ -7381,6 +8034,9 @@
   },
   "scanCameraWebUnavailable": "El escaneo con cámara no está disponible en el navegador — escriba el código o acerque una etiqueta NFC al dispositivo (Chrome en Android).",
   "bookingGateBlocked": "No reservable así",
+  "reserveBackToNow": "Volver a ahora",
+  "bookingModeCheckInNow": "Registrarse ahora",
+  "bookingOverlapsAnother": "El puesto ya está reservado durante parte de este tiempo.",
   "reverseChargeTitle": "Inversión del sujeto pasivo para empresas de la UE",
   "@reverseChargeTitle": {
     "description": "#895 reverse charge: reverseChargeTitle"
@@ -7393,11 +8049,331 @@
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
+  "rightsRequestsTitle": "Mis solicitudes de derechos",
+  "@rightsRequestsTitle": {
+    "description": "#1915 rights requests: rightsRequestsTitle"
+  },
+  "rightsRequestsHint": "Pide al espacio una copia, una rectificación, una limitación o la supresión — respuesta en un mes natural.",
+  "@rightsRequestsHint": {
+    "description": "#1915 rights requests: rightsRequestsHint"
+  },
+  "rightsRequestsEmpty": "Aún no hay solicitudes.",
+  "@rightsRequestsEmpty": {
+    "description": "#1915 rights requests: rightsRequestsEmpty"
+  },
+  "rightsRequestNew": "Hacer una solicitud",
+  "@rightsRequestNew": {
+    "description": "#1915 rights requests: rightsRequestNew"
+  },
+  "rightsRequestAsk": "¿Qué pides al espacio?",
+  "@rightsRequestAsk": {
+    "description": "#1915 rights requests: rightsRequestAsk"
+  },
+  "rightsRequestDetails": "Detalles (opcional)",
+  "@rightsRequestDetails": {
+    "description": "#1915 rights requests: rightsRequestDetails"
+  },
+  "rightsRequestSend": "Enviar la solicitud",
+  "@rightsRequestSend": {
+    "description": "#1915 rights requests: rightsRequestSend"
+  },
+  "rightsRequestSent": "Solicitud enviada — el espacio responde antes del {date}.",
+  "@rightsRequestSent": {
+    "description": "#1915 rights requests: rightsRequestSent",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestFailed": "No se pudo enviar la solicitud. Inténtalo de nuevo.",
+  "@rightsRequestFailed": {
+    "description": "#1915 rights requests: rightsRequestFailed"
+  },
+  "rightsKindAccess": "Ver una copia de mis datos",
+  "@rightsKindAccess": {
+    "description": "#1915 rights requests: rightsKindAccess"
+  },
+  "rightsKindPortability": "Llevar mis datos a otro sitio (legible por máquina)",
+  "@rightsKindPortability": {
+    "description": "#1915 rights requests: rightsKindPortability"
+  },
+  "rightsKindRectification": "Rectificar mis datos",
+  "@rightsKindRectification": {
+    "description": "#1915 rights requests: rightsKindRectification"
+  },
+  "rightsKindRestriction": "Limitar el uso de mis datos",
+  "@rightsKindRestriction": {
+    "description": "#1915 rights requests: rightsKindRestriction"
+  },
+  "rightsKindObjection": "Oponerme a un uso de mis datos",
+  "@rightsKindObjection": {
+    "description": "#1915 rights requests: rightsKindObjection"
+  },
+  "rightsKindErasure": "Suprimir mis datos",
+  "@rightsKindErasure": {
+    "description": "#1915 rights requests: rightsKindErasure"
+  },
+  "rightsStatusReceived": "Recibida — respuesta antes del {date}",
+  "@rightsStatusReceived": {
+    "description": "#1915 rights requests: rightsStatusReceived",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusExtended": "Prorrogada hasta el {date}: {reason}",
+  "@rightsStatusExtended": {
+    "description": "#1915 rights requests: rightsStatusExtended",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusCompleted": "Atendida — el espacio registró lo que hizo",
+  "@rightsStatusCompleted": {
+    "description": "#1915 rights requests: rightsStatusCompleted"
+  },
+  "rightsStatusRefused": "Denegada: {reason}",
+  "@rightsStatusRefused": {
+    "description": "#1915 rights requests: rightsStatusRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "erasurePreviewTitle": "Qué hace la supresión aquí",
+  "@erasurePreviewTitle": {
+    "description": "#1915 rights requests: erasurePreviewTitle"
+  },
+  "erasurePreviewRemoved": "Suprimido",
+  "@erasurePreviewRemoved": {
+    "description": "#1915 rights requests: erasurePreviewRemoved"
+  },
+  "erasurePreviewKept": "Conservado, y por qué",
+  "@erasurePreviewKept": {
+    "description": "#1915 rights requests: erasurePreviewKept"
+  },
+  "erasurePreviewOutside": "Fuera de esta instalación",
+  "@erasurePreviewOutside": {
+    "description": "#1915 rights requests: erasurePreviewOutside"
+  },
+  "erasureStoreMessages": "Mensajes que enviaste",
+  "@erasureStoreMessages": {
+    "description": "#1915 rights requests: erasureStoreMessages"
+  },
+  "erasureStoreAnswers": "Tus respuestas a las preguntas del espacio",
+  "@erasureStoreAnswers": {
+    "description": "#1915 rights requests: erasureStoreAnswers"
+  },
+  "erasureStoreProfile": "Tu perfil (si es tu último espacio)",
+  "@erasureStoreProfile": {
+    "description": "#1915 rights requests: erasureStoreProfile"
+  },
+  "erasureStoreOpenBookings": "Reservas abiertas — canceladas",
+  "@erasureStoreOpenBookings": {
+    "description": "#1915 rights requests: erasureStoreOpenBookings"
+  },
+  "erasureStoreAccounts": "Facturas y libro — prueba contable, conservada durante el plazo legal; los documentos emitidos no se reescriben",
+  "@erasureStoreAccounts": {
+    "description": "#1915 rights requests: erasureStoreAccounts"
+  },
+  "erasureStorePastBookings": "Reservas pasadas — el registro de ocupación del espacio",
+  "@erasureStorePastBookings": {
+    "description": "#1915 rights requests: erasureStorePastBookings"
+  },
+  "erasureStoreMembership": "La fila de membresía — enlaza los registros conservados; seudónima, no anónima",
+  "@erasureStoreMembership": {
+    "description": "#1915 rights requests: erasureStoreMembership"
+  },
+  "erasureStoreHeldAnswers": "Respuestas bajo una obligación de conservación documentada por el espacio",
+  "@erasureStoreHeldAnswers": {
+    "description": "#1915 rights requests: erasureStoreHeldAnswers"
+  },
+  "erasureStoreOtherInstallations": "Otra instalación de DesKilo es un responsable distinto — pregúntale directamente",
+  "@erasureStoreOtherInstallations": {
+    "description": "#1915 rights requests: erasureStoreOtherInstallations"
+  },
+  "erasureStoreDeviceCaches": "Copias en tus dispositivos — se borran al cerrar sesión en cada uno",
+  "@erasureStoreDeviceCaches": {
+    "description": "#1915 rights requests: erasureStoreDeviceCaches"
+  },
+  "erasureStoreBackups": "Copias de seguridad del operador — caducan según su rotación",
+  "@erasureStoreBackups": {
+    "description": "#1915 rights requests: erasureStoreBackups"
+  },
+  "featureRoleAssignmentTitle": "Asignación de roles",
+  "@featureRoleAssignmentTitle": {
+    "description": "#2085 giving roles: featureRoleAssignmentTitle"
+  },
+  "featureRoleAssignmentDesc": "Muestra una sección Roles en la página de cada miembro para dar o retirar un rol, los miembros de cada rol, y permite a cada miembro ver lo que puede hacer aquí.",
+  "@featureRoleAssignmentDesc": {
+    "description": "#2085 giving roles: featureRoleAssignmentDesc"
+  },
+  "memberRolesTitle": "Roles",
+  "@memberRolesTitle": {
+    "description": "#2085 giving roles: memberRolesTitle"
+  },
+  "memberRolesAdd": "Añadir un rol",
+  "@memberRolesAdd": {
+    "description": "#2085 giving roles: memberRolesAdd"
+  },
+  "memberRolesNone": "Ningún rol: todo lo que puede hacer un miembro.",
+  "@memberRolesNone": {
+    "description": "#2085 giving roles: memberRolesNone"
+  },
+  "memberRolesWhatTheyCanDo": "Lo que esta persona puede hacer aquí",
+  "@memberRolesWhatTheyCanDo": {
+    "description": "#2085 giving roles: memberRolesWhatTheyCanDo"
+  },
+  "roleAssignSheetTitle": "Dar un rol a {name}",
+  "@roleAssignSheetTitle": {
+    "description": "#2085 giving roles: roleAssignSheetTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roleAssignQuorumHint": "Surte efecto una vez validado.",
+  "@roleAssignQuorumHint": {
+    "description": "#2085 giving roles: roleAssignQuorumHint"
+  },
+  "roleAssignImmediateHint": "Surte efecto de inmediato.",
+  "@roleAssignImmediateHint": {
+    "description": "#2085 giving roles: roleAssignImmediateHint"
+  },
+  "roleAssignNothing": "No queda ningún rol por dar.",
+  "@roleAssignNothing": {
+    "description": "#2085 giving roles: roleAssignNothing"
+  },
+  "roleRefusalNotPermitted": "Solo alguien que gestiona los roles puede dar este.",
+  "@roleRefusalNotPermitted": {
+    "description": "#2085 giving roles: roleRefusalNotPermitted"
+  },
+  "roleRefusalOwnerOnly": "Solo el propietario da un rol que gestiona los roles.",
+  "@roleRefusalOwnerOnly": {
+    "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRefusalExceedsYours": "Este rol puede hacer cosas que tú no puedes, así que solo el propietario lo da.",
+  "@roleRefusalExceedsYours": {
+    "description": "#2085 giving roles: roleRefusalExceedsYours"
+  },
+  "roleRefusalNotAssignable": "Este miembro no puede tener este rol.",
+  "@roleRefusalNotAssignable": {
+    "description": "#2085 giving roles: roleRefusalNotAssignable"
+  },
+  "roleGiven": "Rol asignado.",
+  "@roleGiven": {
+    "description": "#2085 giving roles: roleGiven"
+  },
+  "roleTakenBack": "Rol retirado.",
+  "@roleTakenBack": {
+    "description": "#2085 giving roles: roleTakenBack"
+  },
+  "roleHoldersAdd": "Añadir un miembro",
+  "@roleHoldersAdd": {
+    "description": "#2085 giving roles: roleHoldersAdd"
+  },
+  "rolesOwnRolesLink": "Los roles de este espacio",
+  "@rolesOwnRolesLink": {
+    "description": "#2085 giving roles: rolesOwnRolesLink"
+  },
+  "whatYouCanDoTitle": "Lo que puedes hacer aquí",
+  "@whatYouCanDoTitle": {
+    "description": "#2085 giving roles: whatYouCanDoTitle"
+  },
+  "whatTheyCanDoTitle": "Lo que {name} puede hacer aquí",
+  "@whatTheyCanDoTitle": {
+    "description": "#2085 giving roles: whatTheyCanDoTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoIntro": "Aquí todas las personas son miembros: reservar, registrar la llegada, los mensajes y la propia cuenta. Los roles añaden el resto.",
+  "@whatYouCanDoIntro": {
+    "description": "#2085 giving roles: whatYouCanDoIntro"
+  },
+  "whatYouCanDoFromOwner": "Como propietario: todo",
+  "@whatYouCanDoFromOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromOwner"
+  },
+  "whatYouCanDoFromCoOwner": "Como copropietario",
+  "@whatYouCanDoFromCoOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromCoOwner"
+  },
+  "whatYouCanDoFromAdministrator": "Del rol Administrador/a",
+  "@whatYouCanDoFromAdministrator": {
+    "description": "#2085 giving roles: whatYouCanDoFromAdministrator"
+  },
+  "whatYouCanDoFromEveryMember": "Como todos los miembros",
+  "@whatYouCanDoFromEveryMember": {
+    "description": "#2085 giving roles: whatYouCanDoFromEveryMember"
+  },
+  "whatYouCanDoFromRole": "Del rol {role}",
+  "@whatYouCanDoFromRole": {
+    "description": "#2085 giving roles: whatYouCanDoFromRole",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoNothingMore": "Nada más que un miembro.",
+  "@whatYouCanDoNothingMore": {
+    "description": "#2085 giving roles: whatYouCanDoNothingMore"
+  },
+  "roleGiveFailed": "El rol no se asignó.",
+  "@roleGiveFailed": {
+    "description": "#2085 giving roles: roleGiveFailed"
+  },
+  "roleTakeBackFailed": "El rol no se retiró.",
+  "@roleTakeBackFailed": {
+    "description": "#2085 giving roles: roleTakeBackFailed"
+  },
+  "eventRoleGiven": "{actor} da el rol {role} a {member}",
+  "@eventRoleGiven": {
+    "description": "#2085 giving roles: eventRoleGiven",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
+  "eventRoleTakenBack": "{actor} retira el rol {role} a {member}",
+  "@eventRoleTakenBack": {
+    "description": "#2085 giving roles: eventRoleTakenBack",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
   "rolesOfSpaceTitle": "Los roles de este espacio",
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
-  "rolesOfSpaceSubtitle": "Cada uno añade permisos a los del rol de un miembro. Ninguno quita nada, y una propietaria los conserva todos.",
+  "rolesOfSpaceSubtitle": "Cada uno añade permisos a lo que ya pueden hacer quienes lo tienen. Ninguno quita nada, y la propietaria conserva siempre todos los permisos.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -7446,7 +8422,7 @@
   "@roleEditorSaveFailed": {
     "description": "#1528 the roles of a space: roleEditorSaveFailed"
   },
-  "roleEditorHolders": "Quién lo tiene",
+  "roleEditorHolders": "Miembros con este rol",
   "@roleEditorHolders": {
     "description": "#1528 the roles of a space: roleEditorHolders"
   },
@@ -7688,6 +8664,14 @@
         "format": "decimalPattern"
       }
     }
+  },
+  "featureTaskRecorderTitle": "Grabador de tareas",
+  "@featureTaskRecorderTitle": {
+    "description": "#1865 task recorder: the feature's name"
+  },
+  "featureTaskRecorderDesc": "Permite grabar los pasos de una tarea en las pantallas de este espacio, en el propio dispositivo, revisarlos y exportar un archivo sin ningún valor escrito. No se envía nada. Desactivado: nadie graba aquí.",
+  "@featureTaskRecorderDesc": {
+    "description": "#1865 task recorder: the feature's description"
   },
   "capabilityMultiApproval": "Dos o más aprobaciones",
   "capabilityRefundApprovals": "Dos aprobaciones para reembolsos",
@@ -8148,6 +9132,82 @@
   "@vatTreatmentReasonField": {
     "description": "#985 VAT versions and counterparty: vatTreatmentReasonField"
   },
+  "biTitle": "Análisis de negocio",
+  "@biTitle": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaOverview": "Resumen",
+  "@biAreaOverview": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaCapacity": "Espacios y capacidad",
+  "@biAreaCapacity": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaPeople": "Personas y negocio",
+  "@biAreaPeople": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaFinance": "Finanzas",
+  "@biAreaFinance": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaTreasury": "Tesorería",
+  "@biAreaTreasury": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaOperations": "Operaciones",
+  "@biAreaOperations": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaPlanning": "Planificación",
+  "@biAreaPlanning": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaSaved": "Análisis guardados",
+  "@biAreaSaved": {
+    "description": "#1923 Web-BI area"
+  },
+  "biQuarter": "T{quarter} {year}",
+  "biDimensionLevel": "Planta",
+  "biNotOffered": "no lo ofrecen los análisis mostrados",
+  "biGrain": "Duración del periodo",
+  "biGrainMonth": "Mes",
+  "biGrainQuarter": "Trimestre",
+  "biGrainYear": "Año",
+  "biCompare": "Comparar con",
+  "biCompareNone": "Nada",
+  "biComparePrevious": "El periodo anterior",
+  "biComparePreviousYear": "El mismo periodo un año antes",
+  "biCompareCustom": "Un periodo que elijo",
+  "biGroupBy": "Agrupar por",
+  "biGroupNone": "Sin agrupar",
+  "biSort": "Orden",
+  "biSortUngrouped": "Orden (solo grupos)",
+  "biSortNatural": "Como en la lista",
+  "biSortDescending": "Mayor primero",
+  "biSortAscending": "Menor primero",
+  "biViewTable": "Tabla",
+  "biViewChart": "Gráfico",
+  "biChangePoints": "{value} p. p.",
+  "biForbidden": "No puede leer este análisis en este espacio.",
+  "biUnavailable": "No se pudo calcular este análisis.",
+  "biRefusedGrain": "Este análisis no se ofrece para esa duración de periodo.",
+  "biRefusedComparison": "Este análisis no puede hacer esa comparación.",
+  "biRefusedGrouping": "Este análisis no se puede agrupar así.",
+  "biRefusedBudget": "Hay más de {count} grupos; elija «Sin agrupar».",
+  "biComparedNotRecorded": "{period} no se registró (el historial empieza el {since}); no hay comparación.",
+  "biComparedPartial": "{period} solo está registrado en parte.",
+  "biExposureDiffers": "Los dos periodos no ofrecen la misma base; la tasa lo tiene en cuenta, las cifras brutas no se comparan directamente.",
+  "biComparedLine": "{period}: {value} ({change})",
+  "biOpenSource": "Abrir la fuente",
+  "biSourceRestricted": "Los registros de origen solo los ven quienes los gestionan.",
+  "biTotal": "Total",
+  "biRemainder": "Fuera de los grupos actuales",
+  "biColumnValue": "Valor",
+  "biColumnChange": "Variación",
+  "biInvalidAddress": "Esta dirección pide un análisis que no existe; no se ha leído nada.",
+  "biReset": "Mostrar la vista estándar",
   "assistantPrefix": "Asistente",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"
@@ -8433,9 +9493,9 @@
   "workspaceCodeCopy": "Copiar ID",
   "workspaceCodeCopied": "Copiado",
   "inviteRoleMember": "Invitación de miembro",
-  "inviteRoleAdmin": "Invitación de admin",
+  "inviteRoleAdmin": "Invitación de administrador/a",
   "inviteAdminExplainer": "Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entrégalo solo a la persona a la que está destinado.",
-  "inviteAdminNewCode": "Nuevo código de admin",
+  "inviteAdminNewCode": "Nuevo código de administrador/a",
   "inviteOwnerNote": "No existe invitación de propietario — solo un propietario puede conceder la propiedad, en Miembros y planes.",
   "scanJoinTitle": "Escanear QR del espacio",
   "scanJoinHelp": "Apunta la cámara al QR de invitación — verás el espacio antes de unirte.",
@@ -8614,11 +9674,11 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
-  "rolesTitle": "Gestión de roles",
+  "rolesTitle": "Roles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "El propietario siempre tiene todos los permisos. Decide aquí qué pueden hacer los demás roles: un copropietario puede tener menos que un propietario.",
+  "rolesIntroEditor": "Aquí todas las personas son miembros. Un rol añade lo que pueden hacer quienes lo tienen y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
@@ -8634,11 +9694,11 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleAdmin": "Admin",
+  "roleAdmin": "Administrador/a",
   "@roleAdmin": {
     "description": "Role label (#513)"
   },
-  "roleMember": "Miembro",
+  "roleMember": "Todos los miembros",
   "@roleMember": {
     "description": "Role label (#513)"
   },
