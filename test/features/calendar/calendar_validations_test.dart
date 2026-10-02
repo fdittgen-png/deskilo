@@ -13,7 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'calendar_hub_test.dart' show pumpHub;
+import '../../helpers/screens/calendar_hub.dart' show pumpHub;
 
 CalendarItem _decision({required bool accepted, String type = 'expense'}) =>
     CalendarItem(

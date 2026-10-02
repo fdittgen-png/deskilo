@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'validation_settings_screen_test.dart' show admin, pumpValidationSettings;
+import '../../helpers/screens/validation_settings.dart' show admin, pumpValidationSettings;
 
 Member plain(String id) => admin(id).copyWith(isAdmin: false);
 Member owner(String id) => admin(id).copyWith(isOwner: true);
