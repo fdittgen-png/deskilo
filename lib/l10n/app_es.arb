@@ -4456,6 +4456,10 @@
   "@invoiceMaturityReview": {
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
+  "invoiceHoldFailed": "No se pudo cambiar la suspensión de recordatorios. Inténtalo de nuevo.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Gestionar facturas",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"

@@ -12073,6 +12073,12 @@ abstract class AppLocalizations {
   /// **'No agreed payment term was recorded for this invoice: reminders are not sent automatically until you review it.'**
   String get invoiceMaturityReview;
 
+  /// #1913 dunning holds: invoiceHoldFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The reminder hold could not be changed. Please try again.'**
+  String get invoiceHoldFailed;
+
   /// #871 the Money tab row that opens invoice management (the billing hub)
   ///
   /// In en, this message translates to:

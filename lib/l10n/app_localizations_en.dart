@@ -6998,6 +6998,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'No agreed payment term was recorded for this invoice: reminders are not sent automatically until you review it.';
 
   @override
+  String get invoiceHoldFailed =>
+      'The reminder hold could not be changed. Please try again.';
+
+  @override
   String get invoicesManage => 'Manage invoices';
 
   @override

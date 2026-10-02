@@ -7074,6 +7074,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune échéance convenue n\'a été enregistrée pour cette facture : aucune relance automatique tant que vous ne l\'avez pas examinée.';
 
   @override
+  String get invoiceHoldFailed =>
+      'La suspension des relances n\'a pas pu être modifiée. Veuillez réessayer.';
+
+  @override
   String get invoicesManage => 'Gérer les factures';
 
   @override

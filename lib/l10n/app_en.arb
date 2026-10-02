@@ -7577,6 +7577,10 @@
   "@invoiceMaturityReview": {
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
+  "invoiceHoldFailed": "The reminder hold could not be changed. Please try again.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Manage invoices",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"

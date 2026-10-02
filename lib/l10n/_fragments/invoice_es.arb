@@ -1288,5 +1288,9 @@
   "invoiceMaturityReview": "No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revises.",
   "@invoiceMaturityReview": {
     "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "No se pudo cambiar la suspensión de recordatorios. Inténtalo de nuevo.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
   }
 }

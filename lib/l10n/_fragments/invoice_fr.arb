@@ -1288,5 +1288,9 @@
   "invoiceMaturityReview": "Aucune échéance convenue n'a été enregistrée pour cette facture : aucune relance automatique tant que vous ne l'avez pas examinée.",
   "@invoiceMaturityReview": {
     "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "La suspension des relances n'a pas pu être modifiée. Veuillez réessayer.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
   }
 }

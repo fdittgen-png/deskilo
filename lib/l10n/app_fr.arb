@@ -4456,6 +4456,10 @@
   "@invoiceMaturityReview": {
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
+  "invoiceHoldFailed": "La suspension des relances n'a pas pu être modifiée. Veuillez réessayer.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Gérer les factures",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"

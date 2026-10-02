@@ -2013,5 +2013,9 @@
   "invoiceMaturityReview": "No agreed payment term was recorded for this invoice: reminders are not sent automatically until you review it.",
   "@invoiceMaturityReview": {
     "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "The reminder hold could not be changed. Please try again.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
   }
 }

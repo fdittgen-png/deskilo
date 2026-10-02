@@ -7061,6 +7061,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Per questa fattura non è stata registrata una scadenza concordata: nessun sollecito automatico finché non la verifichi.';
 
   @override
+  String get invoiceHoldFailed =>
+      'Non è stato possibile modificare la sospensione dei solleciti. Riprova.';
+
+  @override
   String get invoicesManage => 'Gestire le fatture';
 
   @override

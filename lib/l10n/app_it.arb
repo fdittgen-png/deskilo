@@ -4456,6 +4456,10 @@
   "@invoiceMaturityReview": {
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
+  "invoiceHoldFailed": "Non è stato possibile modificare la sospensione dei solleciti. Riprova.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Gestire le fatture",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"

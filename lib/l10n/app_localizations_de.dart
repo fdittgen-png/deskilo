@@ -7059,6 +7059,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Für diese Rechnung wurde keine vereinbarte Zahlungsfrist erfasst: Es werden keine automatischen Mahnungen versendet, bis Sie sie prüfen.';
 
   @override
+  String get invoiceHoldFailed =>
+      'Der Mahnstopp konnte nicht geändert werden. Bitte versuchen Sie es erneut.';
+
+  @override
   String get invoicesManage => 'Rechnungen verwalten';
 
   @override

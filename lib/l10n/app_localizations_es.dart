@@ -7052,6 +7052,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revises.';
 
   @override
+  String get invoiceHoldFailed =>
+      'No se pudo cambiar la suspensión de recordatorios. Inténtalo de nuevo.';
+
+  @override
   String get invoicesManage => 'Gestionar facturas';
 
   @override
