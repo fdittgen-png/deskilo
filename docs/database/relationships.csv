@@ -1,0 +1,6 @@
+kind,from,from_columns,to,to_columns,constraint,on_delete,on_update,validated
+defined,billing.invoices,workspace_id,public.workspaces,id,invoices_ws_fkey,NO ACTION,NO ACTION,true
+defined,public.bookings,workspace_id member_id,public.members,workspace_id user_id,bookings_member_fkey,SET NULL (member_id),NO ACTION,false
+defined,public.members,user_id,auth.users,id,members_user_id_fkey,NO ACTION,NO ACTION,true
+defined,public.members,workspace_id,public.workspaces,id,members_workspace_id_fkey,CASCADE,NO ACTION,true
+inferred,public.import_staging,workspace_id,public.workspaces,id,,,,

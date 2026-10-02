@@ -1,0 +1,176 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DesKilo data dictionary</title><style>body{font:15px/1.5 system-ui,sans-serif;margin:0;color:#1b1f24;background:#fff}
+header,main{max-width:1100px;margin:0 auto;padding:0 16px}
+h1{margin:24px 0 8px}h2{margin:32px 0 4px;font-size:20px}h3{margin:16px 0 4px;font-size:15px}
+table{border-collapse:collapse;width:100%;margin:4px 0 8px;font-size:13px}
+th,td{border:1px solid #d0d7de;padding:3px 6px;text-align:left;vertical-align:top}
+th{background:#f6f8fa}code{font:12px ui-monospace,monospace}
+nav ul{columns:3;list-style:none;padding:0;font-size:13px}
+.kind{color:#57606a;font-weight:normal;font-size:13px}.muted{color:#57606a}
+.inferred{font-style:italic}input{width:100%;padding:8px;font-size:15px;margin:8px 0}
+section.obj{border-top:2px solid #d0d7de}svg{max-width:100%;height:auto;margin:4px 0}
+@media (prefers-color-scheme:dark){body{background:#0d1117;color:#e6edf3}
+th{background:#161b22}th,td{border-color:#30363d}section.obj{border-color:#30363d}
+a{color:#58a6ff}.kind,.muted{color:#8b949e}}
+</style></head><body>
+<header><h1>DesKilo data dictionary</h1>
+<p>Generated from the PostgreSQL catalogues of the migration replay, never written by hand. It describes the CURRENT data model; proposed schemas are not in it.</p>
+<table><tbody>
+<tr><th>Source</th><td>fixture</td></tr>
+<tr><th>Application schema</th><td>public</td></tr>
+<tr><th>Schema marker (last migration)</th><td>334</td></tr>
+<tr><th>PostgreSQL major version</th><td>17</td></tr>
+<tr><th>Counts</th><td>6 tables, 1 partitions, 1 views, 39 columns, 4 foreignKeys, 1 enums, 1 domains</td></tr>
+<tr><th>Catalogue checksum (sha-256)</th><td>0000000000000000000000000000000000000000000000000000000000000000</td></tr>
+<tr><th>Not in this document</th><td>pg_catalog</td></tr>
+</tbody></table>
+<input id="q" type="search" placeholder="Search tables and columns" aria-label="Search tables and columns"></header><main>
+<nav aria-label="Tables"><ul>
+<li data-s="billing.invoices"><a href="#t-billing__invoices">billing.invoices</a></li>
+<li data-s="public.bookings"><a href="#t-public__bookings">public.bookings</a></li>
+<li data-s="public.events"><a href="#t-public__events">public.events</a></li>
+<li data-s="public.events_2026"><a href="#t-public__events_2026">public.events_2026</a></li>
+<li data-s="public.import_staging"><a href="#t-public__import_staging">public.import_staging</a></li>
+<li data-s="public.members"><a href="#t-public__members">public.members</a></li>
+<li data-s="public.open_workspaces"><a href="#t-public__open_workspaces">public.open_workspaces</a></li>
+<li data-s="public.workspaces"><a href="#t-public__workspaces">public.workspaces</a></li>
+</ul></nav>
+<h2>Enumerated and domain types</h2><table><tbody>
+<tr><td><code>public.status_kind</code></td><td>enum</td><td>open, closed</td></tr>
+<tr><td><code>public.positive_int</code></td><td>domain</td><td>integer CHECK ((VALUE &gt; 0))</td></tr>
+</tbody></table>
+<section class="obj" id="t-billing__invoices" data-s="billing.invoices table  id uuid workspace_id uuid">
+<h2>billing.invoices <span class="kind">table</span></h2>
+<table><thead><tr><th>#</th><th>Column</th><th>Type</th><th>Null</th><th>Default / generated</th><th>Comment</th></tr></thead><tbody>
+<tr id="c-billing__invoices__id"><td>1</td><td><code>id</code></td><td>uuid</td><td>NOT NULL</td><td><code></code></td><td></td></tr>
+<tr id="c-billing__invoices__workspace_id"><td>2</td><td><code>workspace_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+</tbody></table>
+<h3>Constraints</h3><table><tbody>
+<tr><td><code>invoices_pkey</code></td><td>primary key</td><td><code>PRIMARY KEY (id)</code></td></tr>
+<tr><td><code>invoices_ws_fkey</code></td><td>foreign key</td><td><code>FOREIGN KEY (workspace_id) REFERENCES public.workspaces(id)</code></td></tr>
+</tbody></table>
+<h3>Relationships</h3><table><thead><tr><th>Kind</th><th>From</th><th>To</th><th>On delete</th></tr></thead><tbody>
+<tr class="defined"><td>foreign key</td><td><a href="#t-billing__invoices">billing.invoices</a> (workspace_id)</td><td><a href="#t-public__workspaces">public.workspaces</a> (id)</td><td>NO ACTION</td></tr>
+</tbody></table>
+<p class="muted">Left: tables that reference this one. Right: tables this one references.</p><svg role="img" width="720" height="68" viewBox="0 0 720 68" aria-label="Relations of billing.invoices"><rect x="245.0" y="22.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="251.0" y="39.0" font-size="12" fill="currentColor">billing.invoices</text><a href="#t-public__workspaces"><rect x="485.0" y="20.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="491.0" y="37.0" font-size="12" fill="currentColor">public.workspaces</text></a><line x1="485.0" y1="32.0" x2="475.0" y2="34.0" stroke="currentColor" opacity="0.4"/></svg>
+</section>
+<section class="obj" id="t-public__bookings" data-s="public.bookings table  id uuid workspace_id uuid member_id uuid workspace_ref uuid company_id uuid site_id uuid">
+<h2>public.bookings <span class="kind">table</span></h2>
+<table><thead><tr><th>#</th><th>Column</th><th>Type</th><th>Null</th><th>Default / generated</th><th>Comment</th></tr></thead><tbody>
+<tr id="c-public__bookings__id"><td>1</td><td><code>id</code></td><td>uuid</td><td>NOT NULL</td><td><code></code></td><td></td></tr>
+<tr id="c-public__bookings__workspace_id"><td>2</td><td><code>workspace_id</code></td><td>uuid</td><td>NOT NULL</td><td><code></code></td><td></td></tr>
+<tr id="c-public__bookings__member_id"><td>3</td><td><code>member_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__bookings__workspace_ref"><td>4</td><td><code>workspace_ref</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__bookings__company_id"><td>5</td><td><code>company_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__bookings__site_id"><td>6</td><td><code>site_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+</tbody></table>
+<h3>Constraints</h3><table><tbody>
+<tr><td><code>bookings_pkey</code></td><td>primary key</td><td><code>PRIMARY KEY (id)</code></td></tr>
+<tr><td><code>bookings_member_fkey</code></td><td>foreign key</td><td><code>FOREIGN KEY (workspace_id, member_id) REFERENCES members(workspace_id, user_id) ON DELETE SET NULL (member_id)</code> <b>NOT VALID</b></td></tr>
+</tbody></table>
+<h3>Relationships</h3><table><thead><tr><th>Kind</th><th>From</th><th>To</th><th>On delete</th></tr></thead><tbody>
+<tr class="defined"><td>foreign key</td><td><a href="#t-public__bookings">public.bookings</a> (workspace_id, member_id)</td><td><a href="#t-public__members">public.members</a> (workspace_id, user_id)</td><td>SET NULL (member_id)</td></tr>
+</tbody></table>
+<p class="muted">Left: tables that reference this one. Right: tables this one references.</p><svg role="img" width="720" height="68" viewBox="0 0 720 68" aria-label="Relations of public.bookings"><rect x="245.0" y="22.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="251.0" y="39.0" font-size="12" fill="currentColor">public.bookings</text><a href="#t-public__members"><rect x="485.0" y="20.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="491.0" y="37.0" font-size="12" fill="currentColor">public.members</text></a><line x1="485.0" y1="32.0" x2="475.0" y2="34.0" stroke="currentColor" opacity="0.4"/></svg>
+</section>
+<section class="obj" id="t-public__events" data-s="public.events partitioned table  id uuid happened_at timestamp with time zone company_id uuid site_id uuid">
+<h2>public.events <span class="kind">partitioned table</span></h2>
+<p>Partitioned by <code>RANGE (happened_at)</code></p>
+<table><thead><tr><th>#</th><th>Column</th><th>Type</th><th>Null</th><th>Default / generated</th><th>Comment</th></tr></thead><tbody>
+<tr id="c-public__events__id"><td>1</td><td><code>id</code></td><td>uuid</td><td>NOT NULL</td><td><code></code></td><td></td></tr>
+<tr id="c-public__events__happened_at"><td>2</td><td><code>happened_at</code></td><td>timestamp with time zone</td><td>NOT NULL</td><td><code></code></td><td></td></tr>
+<tr id="c-public__events__company_id"><td>3</td><td><code>company_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__events__site_id"><td>4</td><td><code>site_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+</tbody></table>
+<p class="muted">No constraints (no primary key).</p>
+</section>
+<section class="obj" id="t-public__events_2026" data-s="public.events_2026 partition  id uuid happened_at timestamp with time zone company_id uuid site_id uuid">
+<h2>public.events_2026 <span class="kind">partition</span></h2>
+<p>Partition of <a href="#t-public__events">public.events</a>: <code>FOR VALUES FROM ('2026-01-01') TO ('2027-01-01')</code></p>
+<table><thead><tr><th>#</th><th>Column</th><th>Type</th><th>Null</th><th>Default / generated</th><th>Comment</th></tr></thead><tbody>
+<tr id="c-public__events_2026__id"><td>1</td><td><code>id</code></td><td>uuid</td><td>NOT NULL</td><td><code></code></td><td></td></tr>
+<tr id="c-public__events_2026__happened_at"><td>2</td><td><code>happened_at</code></td><td>timestamp with time zone</td><td>NOT NULL</td><td><code></code></td><td></td></tr>
+<tr id="c-public__events_2026__company_id"><td>3</td><td><code>company_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__events_2026__site_id"><td>4</td><td><code>site_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+</tbody></table>
+<p class="muted">No constraints (no primary key).</p>
+</section>
+<section class="obj" id="t-public__import_staging" data-s="public.import_staging table  raw jsonb workspace_id uuid company_id uuid site_id uuid">
+<h2>public.import_staging <span class="kind">table</span></h2>
+<table><thead><tr><th>#</th><th>Column</th><th>Type</th><th>Null</th><th>Default / generated</th><th>Comment</th></tr></thead><tbody>
+<tr id="c-public__import_staging__raw"><td>1</td><td><code>raw</code></td><td>jsonb</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__import_staging__workspace_id"><td>2</td><td><code>workspace_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__import_staging__company_id"><td>3</td><td><code>company_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__import_staging__site_id"><td>4</td><td><code>site_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+</tbody></table>
+<p class="muted">No constraints (no primary key).</p>
+<h3>Relationships</h3><table><thead><tr><th>Kind</th><th>From</th><th>To</th><th>On delete</th></tr></thead><tbody>
+<tr class="inferred"><td>inferred, not enforced</td><td><a href="#t-public__import_staging">public.import_staging</a> (workspace_id)</td><td><a href="#t-public__workspaces">public.workspaces</a> (id)</td><td></td></tr>
+</tbody></table>
+<p class="muted">Left: tables that reference this one. Right: tables this one references.</p><svg role="img" width="720" height="68" viewBox="0 0 720 68" aria-label="Relations of public.import_staging"><rect x="245.0" y="22.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="251.0" y="39.0" font-size="12" fill="currentColor">public.import_staging</text><a href="#t-public__workspaces"><rect x="485.0" y="20.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="491.0" y="37.0" font-size="12" fill="currentColor">public.workspaces</text></a><line x1="485.0" y1="32.0" x2="475.0" y2="34.0" stroke="currentColor" opacity="0.4"/></svg>
+</section>
+<section class="obj" id="t-public__members" data-s="public.members table  workspace_id uuid user_id uuid manager_id uuid workspace_ref uuid level integer company_id uuid site_id uuid">
+<h2>public.members <span class="kind">table</span></h2>
+<table><thead><tr><th>#</th><th>Column</th><th>Type</th><th>Null</th><th>Default / generated</th><th>Comment</th></tr></thead><tbody>
+<tr id="c-public__members__workspace_id"><td>1</td><td><code>workspace_id</code></td><td>uuid</td><td>NOT NULL</td><td><code></code></td><td></td></tr>
+<tr id="c-public__members__user_id"><td>2</td><td><code>user_id</code></td><td>uuid</td><td>NOT NULL</td><td><code></code></td><td></td></tr>
+<tr id="c-public__members__manager_id"><td>3</td><td><code>manager_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__members__workspace_ref"><td>4</td><td><code>workspace_ref</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__members__level"><td>5</td><td><code>level</code></td><td>integer</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__members__company_id"><td>6</td><td><code>company_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__members__site_id"><td>7</td><td><code>site_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+</tbody></table>
+<h3>Constraints</h3><table><tbody>
+<tr><td><code>members_pkey</code></td><td>primary key</td><td><code>PRIMARY KEY (workspace_id, user_id)</code></td></tr>
+<tr><td><code>members_workspace_id_fkey</code></td><td>foreign key</td><td><code>FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE</code></td></tr>
+<tr><td><code>members_user_id_fkey</code></td><td>foreign key</td><td><code>FOREIGN KEY (user_id) REFERENCES auth.users(id)</code></td></tr>
+</tbody></table>
+<h3>Relationships</h3><table><thead><tr><th>Kind</th><th>From</th><th>To</th><th>On delete</th></tr></thead><tbody>
+<tr class="defined"><td>foreign key</td><td><a href="#t-public__members">public.members</a> (workspace_id)</td><td><a href="#t-public__workspaces">public.workspaces</a> (id)</td><td>CASCADE</td></tr>
+<tr class="defined"><td>foreign key</td><td><a href="#t-public__members">public.members</a> (user_id)</td><td>auth.users <span class="muted">(managed)</span> (id)</td><td>NO ACTION</td></tr>
+<tr class="defined"><td>foreign key</td><td><a href="#t-public__bookings">public.bookings</a> (workspace_id, member_id)</td><td><a href="#t-public__members">public.members</a> (workspace_id, user_id)</td><td>SET NULL (member_id)</td></tr>
+</tbody></table>
+<p class="muted">Left: tables that reference this one. Right: tables this one references.</p><svg role="img" width="720" height="96" viewBox="0 0 720 96" aria-label="Relations of public.members"><rect x="245.0" y="36.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="251.0" y="53.0" font-size="12" fill="currentColor">public.members</text><a href="#t-public__bookings"><rect x="5.0" y="20.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="11.0" y="37.0" font-size="12" fill="currentColor">public.bookings</text></a><line x1="235.0" y1="32.0" x2="245.0" y2="48.0" stroke="currentColor" opacity="0.4"/><rect x="485.0" y="20.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="491.0" y="37.0" font-size="12" fill="currentColor">auth.users</text><line x1="485.0" y1="32.0" x2="475.0" y2="48.0" stroke="currentColor" opacity="0.4"/><a href="#t-public__workspaces"><rect x="485.0" y="48.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="491.0" y="65.0" font-size="12" fill="currentColor">public.workspaces</text></a><line x1="485.0" y1="60.0" x2="475.0" y2="48.0" stroke="currentColor" opacity="0.4"/></svg>
+</section>
+<section class="obj" id="t-public__open_workspaces" data-s="public.open_workspaces view  id uuid name text">
+<h2>public.open_workspaces <span class="kind">view</span></h2>
+<table><thead><tr><th>#</th><th>Column</th><th>Type</th><th>Null</th><th>Default / generated</th><th>Comment</th></tr></thead><tbody>
+<tr id="c-public__open_workspaces__id"><td>1</td><td><code>id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__open_workspaces__name"><td>2</td><td><code>name</code></td><td>text</td><td>null</td><td><code></code></td><td></td></tr>
+</tbody></table>
+</section>
+<section class="obj" id="t-public__workspaces" data-s="public.workspaces table one tenant. id uuid name text price numeric(12,2) tags text[] status status_kind api_token text name_lower text seq integer company_id uuid site_id uuid">
+<h2>public.workspaces <span class="kind">table</span></h2>
+<p>One tenant.</p>
+<table><thead><tr><th>#</th><th>Column</th><th>Type</th><th>Null</th><th>Default / generated</th><th>Comment</th></tr></thead><tbody>
+<tr id="c-public__workspaces__id"><td>1</td><td><code>id</code></td><td>uuid</td><td>NOT NULL</td><td><code>gen_random_uuid()</code></td><td></td></tr>
+<tr id="c-public__workspaces__name"><td>2</td><td><code>name</code></td><td>text</td><td>NOT NULL</td><td><code></code></td><td></td></tr>
+<tr id="c-public__workspaces__price"><td>3</td><td><code>price</code></td><td>numeric(12,2)</td><td>NOT NULL</td><td><code>0</code></td><td></td></tr>
+<tr id="c-public__workspaces__tags"><td>4</td><td><code>tags</code></td><td>text[]</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__workspaces__status"><td>5</td><td><code>status</code></td><td>status_kind</td><td>NOT NULL</td><td><code>'open'::status_kind</code></td><td></td></tr>
+<tr id="c-public__workspaces__api_token"><td>6</td><td><code>api_token</code></td><td>text</td><td>null</td><td><code>&lt;redacted&gt;</code></td><td></td></tr>
+<tr id="c-public__workspaces__name_lower"><td>7</td><td><code>name_lower</code></td><td>text</td><td>null</td><td><code>generated stored: lower(name)</code></td><td></td></tr>
+<tr id="c-public__workspaces__seq"><td>8</td><td><code>seq</code></td><td>integer</td><td>NOT NULL</td><td><code>identity always</code></td><td></td></tr>
+<tr id="c-public__workspaces__company_id"><td>9</td><td><code>company_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+<tr id="c-public__workspaces__site_id"><td>10</td><td><code>site_id</code></td><td>uuid</td><td>null</td><td><code></code></td><td></td></tr>
+</tbody></table>
+<h3>Constraints</h3><table><tbody>
+<tr><td><code>workspaces_pkey</code></td><td>primary key</td><td><code>PRIMARY KEY (id)</code></td></tr>
+</tbody></table>
+<h3>Indexes</h3><table><tbody>
+<tr><td><code>workspaces_pkey</code></td><td><code>CREATE UNIQUE INDEX workspaces_pkey ON public.workspaces USING btree (id)</code></td></tr>
+</tbody></table>
+<h3>Relationships</h3><table><thead><tr><th>Kind</th><th>From</th><th>To</th><th>On delete</th></tr></thead><tbody>
+<tr class="defined"><td>foreign key</td><td><a href="#t-billing__invoices">billing.invoices</a> (workspace_id)</td><td><a href="#t-public__workspaces">public.workspaces</a> (id)</td><td>NO ACTION</td></tr>
+<tr class="defined"><td>foreign key</td><td><a href="#t-public__members">public.members</a> (workspace_id)</td><td><a href="#t-public__workspaces">public.workspaces</a> (id)</td><td>CASCADE</td></tr>
+<tr class="inferred"><td>inferred, not enforced</td><td><a href="#t-public__import_staging">public.import_staging</a> (workspace_id)</td><td><a href="#t-public__workspaces">public.workspaces</a> (id)</td><td></td></tr>
+</tbody></table>
+<p class="muted">Left: tables that reference this one. Right: tables this one references.</p><svg role="img" width="720" height="124" viewBox="0 0 720 124" aria-label="Relations of public.workspaces"><rect x="245.0" y="50.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="251.0" y="67.0" font-size="12" fill="currentColor">public.workspaces</text><a href="#t-billing__invoices"><rect x="5.0" y="20.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="11.0" y="37.0" font-size="12" fill="currentColor">billing.invoices</text></a><line x1="235.0" y1="32.0" x2="245.0" y2="62.0" stroke="currentColor" opacity="0.4"/><a href="#t-public__import_staging"><rect x="5.0" y="48.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="11.0" y="65.0" font-size="12" fill="currentColor">public.import_staging</text></a><line x1="235.0" y1="60.0" x2="245.0" y2="62.0" stroke="currentColor" opacity="0.4"/><a href="#t-public__members"><rect x="5.0" y="76.0" width="230" height="24" rx="4" fill="none" stroke="currentColor" opacity="0.6"/><text x="11.0" y="93.0" font-size="12" fill="currentColor">public.members</text></a><line x1="235.0" y1="88.0" x2="245.0" y2="62.0" stroke="currentColor" opacity="0.4"/></svg>
+</section>
+</main><script>document.getElementById('q').addEventListener('input',function(e){
+var q=e.target.value.toLowerCase().trim();
+document.querySelectorAll('[data-s]').forEach(function(n){
+n.hidden=q!==''&&n.getAttribute('data-s').indexOf(q)<0;});});
+</script></body></html>
