@@ -185,6 +185,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Rechnungen haben sich während Ihrer Prüfung geändert. Exportieren Sie erneut, um den aktuellen Stand zu sehen.';
 
   @override
+  String handoffUnsupportedCurrency(String number) {
+    return '$number: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt';
+  }
+
+  @override
+  String handoffAmountOutOfRange(String number) {
+    return '$number: eine Summe, die zu groß ist, um exakt übertragen zu werden';
+  }
+
+  @override
   String get fecAccountExpenses => 'Aufwendungen';
 
   @override

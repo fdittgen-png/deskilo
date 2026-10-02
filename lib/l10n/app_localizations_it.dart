@@ -185,6 +185,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le fatture sono cambiate durante la revisione. Esporta di nuovo per vedere i conti attuali.';
 
   @override
+  String handoffUnsupportedCurrency(String number) {
+    return '$number: la sua valuta non ha un numero di decimali verificato';
+  }
+
+  @override
+  String handoffAmountOutOfRange(String number) {
+    return '$number: un totale troppo grande per essere trasmesso esattamente';
+  }
+
+  @override
   String get fecAccountExpenses => 'Spese';
 
   @override

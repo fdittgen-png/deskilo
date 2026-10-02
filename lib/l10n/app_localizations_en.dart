@@ -185,6 +185,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'The invoices changed while you were reviewing. Export again to see the current books.';
 
   @override
+  String handoffUnsupportedCurrency(String number) {
+    return '$number: its currency has no reviewed number of decimals';
+  }
+
+  @override
+  String handoffAmountOutOfRange(String number) {
+    return '$number: a total too large to carry exactly';
+  }
+
+  @override
   String get fecAccountExpenses => 'Expenses';
 
   @override

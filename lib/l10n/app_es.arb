@@ -64,6 +64,8 @@
   "handoffBlocked": "Este archivo no puede entregarse hasta que se corrija el origen.",
   "handoffSave": "Guardar archivo e informe",
   "handoffChanged": "Las facturas cambiaron mientras las revisaba. Vuelva a exportar para ver las cuentas actuales.",
+  "handoffUnsupportedCurrency": "{number}: su moneda no tiene un número de decimales verificado",
+  "handoffAmountOutOfRange": "{number}: un total demasiado grande para transmitirse con exactitud",
   "fecAccountExpenses": "Gastos",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
