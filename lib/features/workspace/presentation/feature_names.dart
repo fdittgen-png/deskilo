@@ -234,6 +234,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureAccountingBookTitle ?? 'Accounting book',
       WorkspaceFeature.roleAssignment =>
         l10n?.featureRoleAssignmentTitle ?? 'Giving roles',
+      WorkspaceFeature.taskRecorder =>
+        l10n?.featureTaskRecorderTitle ?? 'Task recorder',
       WorkspaceFeature.workspaceBranding =>
         l10n?.featureWorkspaceBrandingTitle ?? 'Workspace colours',
       WorkspaceFeature.customRoles =>

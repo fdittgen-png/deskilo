@@ -13732,6 +13732,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get supportDemo => 'Demo: contexto local simulado';
 
   @override
+  String get featureTaskRecorderTitle => 'Grabador de tareas';
+
+  @override
+  String get featureTaskRecorderDesc =>
+      'Permite grabar los pasos de una tarea en las pantallas de este espacio, en el propio dispositivo, revisarlos y exportar un archivo sin ningún valor escrito. No se envía nada. Desactivado: nadie graba aquí.';
+
+  @override
   String get capabilityMultiApproval => 'Dos o más aprobaciones';
 
   @override

@@ -112,7 +112,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/core/demo/data/workspace_repository.dart` | 1991 |
 | `lib/core/demo/data/money_repository.dart` | 1848 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1582 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1598 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1469 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1316 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1300 |

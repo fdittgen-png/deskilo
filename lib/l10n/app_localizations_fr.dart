@@ -13773,6 +13773,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get supportDemo => 'Démo : contexte local simulé';
 
   @override
+  String get featureTaskRecorderTitle => 'Enregistreur de tâches';
+
+  @override
+  String get featureTaskRecorderDesc =>
+      'Permet d\'enregistrer les étapes d\'une tâche sur les écrans de cet espace, sur son propre appareil, de les relire et d\'exporter un fichier sans aucune valeur saisie. Rien n\'est envoyé. Désactivé : personne n\'enregistre ici.';
+
+  @override
   String get capabilityMultiApproval => 'Deux validations ou plus';
 
   @override

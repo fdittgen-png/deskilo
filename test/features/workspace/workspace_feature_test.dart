@@ -90,6 +90,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.capacityKpi,
   // #1869 — who keeps the official books is a finance decision.
   WorkspaceFeature.accountingBook,
+  // #1865 — recording a task is offered deliberately, never by default.
+  WorkspaceFeature.taskRecorder,
 };
 
 /// Every other feature ships ON.
@@ -165,6 +167,7 @@ void main() {
       'holidayImport': true,
       'capacityKpi': true,
       'accountingBook': true,
+      'taskRecorder': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

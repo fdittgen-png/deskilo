@@ -497,6 +497,12 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
               "Shows a Roles section on each member's page to give or take "
                   'back a role, the members holding each role, and lets '
                   'every member see what they can do here.',
+        WorkspaceFeature.taskRecorder =>
+          l10n?.featureTaskRecorderDesc ??
+              'Lets a person record the steps of a task on this '
+                  "workspace's screens, on their own device, review them and "
+                  'export a file without any value they typed. Nothing is '
+                  'uploaded. Off: nobody records here.',
       WorkspaceFeature.workspaceBranding =>
           l10n?.featureWorkspaceBrandingDesc ??
               'The workspace chooses a brand colour the app derives its '

@@ -1167,7 +1167,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f195c36ad44b
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:75058dae7455
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:904b116a6e6e
 routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:authenticated,service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
@@ -1573,7 +1573,7 @@ routine public.system_columns_stamp() -> trigger | function | invoker | volatile
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:42bfe405b6a8
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9f9bd5eaa142
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9e1945110fb4
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
