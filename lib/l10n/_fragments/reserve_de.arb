@@ -1,5 +1,8 @@
 {
   "@@locale": "de",
+  "listWholeReservable": "Als Ganzes reservierbar",
+  "listCoversTables": "{count, plural, =1{1 Tisch} other{{count} Tische}}",
+  "listCoversSeats": "{count, plural, =1{1 Platz} other{{count} Plätze}}",
   "bookingSpaceChainTaken": "Dieser Platz oder ein Bereich, zu dem er gehört, ist in diesem Zeitraum bereits reserviert.",
   "bookingNoLongerCheckedIn": "Diese Reservierung ist nicht mehr eingecheckt — sie wurde inzwischen ausgecheckt oder abgeschlossen.",
   "reserveMonthView": "Monat",

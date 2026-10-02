@@ -271,7 +271,7 @@ const Map<String, int> _pairBudget = {
   // the plan's `targetNamesProvider` so the calendar-file command can name
   // the booked space — the widget that asks for the file imports no plan
   // provider of its own, which is the point of the command.
-  'reservations -> plan': 72, // #1825 +3: list_space_tap (floor plan, level, half-day window)
+  'reservations -> plan': 73, // #1825 +1: whole_space_blocking (FloorPlan) — the whole-space rule now has ONE home shared by the plan sheet and the list. #1825 +3: list_space_tap (floor plan, level, half-day window)
   'reservations -> profile': 1,
   // 48→50 (2026-09-16): #1234 — `application/act_on_space.dart` and
   // `domain/space_act.dart` both need `BookingGranularity`: the

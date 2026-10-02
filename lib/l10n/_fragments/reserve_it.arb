@@ -2,6 +2,9 @@
   "@@locale": "it",
   "bookingSpaceChainTaken": "Questo spazio, o uno spazio che lo contiene, è già prenotato in quel periodo.",
   "bookingNoLongerCheckedIn": "Questa prenotazione non è più in corso — è stata chiusa nel frattempo.",
+  "listWholeReservable": "Prenotabile per intero",
+  "listCoversTables": "{count, plural, =1{1 tavolo} other{{count} tavoli}}",
+  "listCoversSeats": "{count, plural, =1{1 posto} other{{count} posti}}",
   "reserveMonthView": "Mese",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Prenotazione ricorrente",
@@ -63,11 +66,29 @@
     }
   },
   "bookingHorizonError": "Troppo lontano — le prenotazioni sono aperte con {days} giorni di anticipo.",
-  "@bookingHorizonError": {"placeholders": {"days": {"type": "int"}}},
+  "@bookingHorizonError": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "bookingTooShortError": "Troppo breve — una prenotazione dura almeno {minutes} minuti.",
-  "@bookingTooShortError": {"placeholders": {"minutes": {"type": "int"}}},
+  "@bookingTooShortError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "bookingTooLongError": "Troppo lunga — una prenotazione dura al massimo {minutes} minuti.",
-  "@bookingTooLongError": {"placeholders": {"minutes": {"type": "int"}}},
+  "@bookingTooLongError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "legendFree": "Libera",
   "legendReserved": "Prenotata",
   "legendOccupied": "Con check-in",
@@ -100,7 +121,13 @@
   "legendClosed": "Giorno chiuso",
   "reserveClosedShort": "Chiuso",
   "planCheckOutFor": "Check-out di {name}",
-  "@planCheckOutFor": {"placeholders": {"name": {"type": "String"}}},
+  "@planCheckOutFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "scanCameraWebUnavailable": "La scansione con fotocamera non è disponibile nel browser — digita il codice o avvicina un tag NFC al dispositivo (Chrome su Android).",
   "bookingGateBlocked": "Non prenotabile così"
 }
