@@ -167,6 +167,34 @@ jobs:
         continue-on-error: true
         run: bash scripts/coverage_gate.sh
 
+      # #1864 B — where that one run spent its time, read from the same
+      # stream (no second run): load apart from test bodies, the overlap
+      # of parallel files instead of a false sum, keyed to this candidate.
+      # Advisory: it reports and never decides a verdict. The bounded
+      # copy keeps identities and times only, no printed or error text.
+      - name: Test timings from the test stream
+        if: always()
+        continue-on-error: true
+        run: |
+          dart run tool/test_timings.dart \
+            --events report/tests.jsonl \
+            --candidate "$GITHUB_SHA" \
+            --profile 'quality.yml: flutter test --coverage' \
+            --runtime "$(flutter --version | head -n 1)" \
+            --out report/test-timings.md \
+            --raw-out report/test-events.jsonl
+          cat report/test-timings.md >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-timings
+          retention-days: 14
+          if-no-files-found: ignore
+          path: |
+            report/test-timings.md
+            report/test-events.jsonl
+
       # ADVISORY, deliberately non-blocking. Master DOES have protection
       # — one required context, this job's name — and `branch_protection.sh`
       # names the two the database half should add. Applying that is a
