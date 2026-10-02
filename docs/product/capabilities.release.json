@@ -400,7 +400,7 @@
       ],
       "prerequisites": "A complete legal identity for the workspace; VAT configured.",
       "limitations": "Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.",
-      "fingerprint": "5377cf36b8d8",
+      "fingerprint": "d12a32e9b77a",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",

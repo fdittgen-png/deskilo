@@ -6458,6 +6458,10 @@
   "@invoiceGapMissingBuyerCountry": {
     "description": "Gap: BR-11 — buyer country"
   },
+  "invoiceGapCreditNoteWithPayments": "This credit note also nets payments, which an EN 16931 credit note cannot state. Issue the credit on its own document.",
+  "@invoiceGapCreditNoteWithPayments": {
+    "description": "#1919 — e-invoice export refused: a credit note that also nets payments has no EN 16931 credit-note form"
+  },
   "invoiceGapNoChargeLines": "This invoice has no charge line — its month was fully covered by payments, so there is no invoice to send.",
   "@invoiceGapNoChargeLines": {
     "description": "Gap: BR-16 — an invoice needs at least one line"

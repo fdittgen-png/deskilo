@@ -147,7 +147,7 @@ The books of a period leave as FEC, SAF-T or DATEV files an accountant can load.
 
 An invoice becomes an EN 16931 document (UBL 2.1 or Factur-X) with the references its destination platform requires.
 
-- **Code:** shipped · component `5377cf36b8d8`
+- **Code:** shipped · component `d12a32e9b77a`
 - **Needs:** A complete legal identity for the workspace; VAT configured.
 - **Limits:** Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.
 - **Feature flags:** `invoicing`, `vatManagement`

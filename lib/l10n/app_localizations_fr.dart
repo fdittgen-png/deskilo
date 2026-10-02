@@ -5836,6 +5836,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceGapMissingBuyerCountry => 'Le pays du client manque.';
 
   @override
+  String get invoiceGapCreditNoteWithPayments =>
+      'Cet avoir compense aussi des paiements, ce qu\'un avoir EN 16931 ne peut pas exprimer. Émettez l\'avoir sur un document distinct.';
+
+  @override
   String get invoiceGapNoChargeLines =>
       'Cette facture n\'a aucune ligne de charge — son mois était entièrement couvert par des paiements, il n\'y a donc rien à transmettre.';
 

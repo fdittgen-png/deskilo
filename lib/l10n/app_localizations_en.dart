@@ -5783,6 +5783,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The customer\'s country is missing.';
 
   @override
+  String get invoiceGapCreditNoteWithPayments =>
+      'This credit note also nets payments, which an EN 16931 credit note cannot state. Issue the credit on its own document.';
+
+  @override
   String get invoiceGapNoChargeLines =>
       'This invoice has no charge line — its month was fully covered by payments, so there is no invoice to send.';
 
