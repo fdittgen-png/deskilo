@@ -39,6 +39,12 @@ class _FakeSource implements HolidaySource {
         regions: const ['DE-BY'],
       ),
       (
+        day: DateTime(year, 3, 8),
+        localName: 'Frauentag',
+        name: "Women's Day",
+        regions: const ['XX-99', 'DE-BW'],
+      ),
+      (
         day: DateTime(year, 5, 1),
         localName: 'Tag der Arbeit',
         name: 'Labour Day',
@@ -189,5 +195,35 @@ void main() {
       findsNothing,
     );
     expect(workspace.holidayImportCalls.single.apply, isFalse);
+  });
+
+  testWidgets('the region picker shows names, code beside, sorted by name', (
+    tester,
+  ) async {
+    final workspace = _workspace();
+    await _open(tester, workspace, _FakeSource());
+    await tester.ensureVisible(find.byKey(_tile));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(_tile));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('holiday-import-region')));
+    await tester.pumpAndSettle();
+    Finder entry(String name) => find.textContaining(name);
+    final bw = tester.getTopLeft(entry('Baden-Württemberg').last).dy;
+    final by = tester.getTopLeft(entry('Bayern').last).dy;
+    final unknown = tester.getTopLeft(entry('XX-99').last).dy;
+    expect(bw, lessThan(by), reason: 'sorted by name, not by code');
+    expect(by, lessThan(unknown), reason: 'the unknown code sorts by itself');
+    expect(
+      find.textContaining('Bayern  DE-BY', findRichText: true),
+      findsWidgets,
+      reason: 'the code is the secondary text beside the name',
+    );
+    expect(
+      find.textContaining('XX-99  XX-99', findRichText: true),
+      findsNothing,
+      reason: 'a code without a name is shown once, as itself',
+    );
   });
 }
