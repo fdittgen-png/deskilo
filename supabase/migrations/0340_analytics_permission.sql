@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0339 (#1921) -- purpose-scoped analytics reads.
+-- 0340 (#1921) -- purpose-scoped analytics reads.
 --
 -- The capacity KPI (0333/0336) was readable by anyone holding
 -- manageReservations: an operational WRITE right doubling as the right to
@@ -90,7 +90,7 @@ begin
   else execute v_patched; end if;
 
   if cardinality(v_missing) > 0 then
-    raise exception '0339: anchors missing in %', v_missing;
+    raise exception '0340: anchors missing in %', v_missing;
   end if;
 end
 $patch$;
@@ -391,6 +391,7 @@ as $registry$
     {"id":"workspace.feature_flags.reportLayouts","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.reportDesigner"],"process":"documentsInformation"},
     {"id":"workspace.feature_flags.reportTexts","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.reportDesigner"],"process":"documentsInformation"},
     {"id":"workspace.feature_flags.richMessageRefs","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.memberNotifications"],"process":"coordination"},
+    {"id":"workspace.feature_flags.roleAssignment","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.roleManagement"],"process":"workspaceAccess"},
     {"id":"workspace.feature_flags.roleManagement","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"workspaceAccess"},
     {"id":"workspace.feature_flags.scheduledExpenses","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.moneyTab"],"process":"billingPayments"},
     {"id":"workspace.feature_flags.seatDayTimeline","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"reservationsUsage"},
@@ -500,4 +501,4 @@ grant execute on function public.template_field_registry() to authenticated;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(339);
+select public.set_deskilo_schema_version(340);

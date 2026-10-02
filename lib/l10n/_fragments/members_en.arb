@@ -12,7 +12,7 @@
   "@memberRoleOwner": {
     "description": "Role tag on a member row"
   },
-  "memberRoleAdmin": "Admin",
+  "memberRoleAdmin": "Administrator",
   "@memberRoleAdmin": {
     "description": "Role tag on a member row"
   },

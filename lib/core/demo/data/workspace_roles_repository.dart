@@ -27,6 +27,17 @@ class FakeWorkspaceRoles implements WorkspaceRolesRepository {
       List.of(assignments[roleId] ?? const []);
 
   @override
+  Future<Map<String, Set<String>>> fetchAssignments(String workspaceId) async {
+    final out = <String, Set<String>>{};
+    for (final entry in assignments.entries) {
+      for (final memberId in entry.value) {
+        (out[memberId] ??= <String>{}).add(entry.key);
+      }
+    }
+    return out;
+  }
+
+  @override
   Future<String> setRole(String workspaceId, WorkspaceRole role) async {
     if (WorkspaceRole.builtInKeys.contains(role.key)) {
       throw StateError('the built-in roles are not redefined here');

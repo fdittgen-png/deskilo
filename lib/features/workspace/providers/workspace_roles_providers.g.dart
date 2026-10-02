@@ -65,6 +65,7 @@ String _$workspaceRolesRepositoryHash() =>
 ///
 /// The flag is read here rather than on each surface, so a space that
 /// never turned it on makes no request at all.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
 
 @ProviderFor(workspaceRoles)
 final workspaceRolesProvider = WorkspaceRolesProvider._();
@@ -73,6 +74,7 @@ final workspaceRolesProvider = WorkspaceRolesProvider._();
 ///
 /// The flag is read here rather than on each surface, so a space that
 /// never turned it on makes no request at all.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
 
 final class WorkspaceRolesProvider
     extends
@@ -88,13 +90,14 @@ final class WorkspaceRolesProvider
   ///
   /// The flag is read here rather than on each surface, so a space that
   /// never turned it on makes no request at all.
+  // #2085 — kept alive: myPermissions (kept alive) reads it.
   WorkspaceRolesProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'workspaceRolesProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -114,7 +117,7 @@ final class WorkspaceRolesProvider
   }
 }
 
-String _$workspaceRolesHash() => r'48a5f3749b483f26205b1b1bf33ec39bf2aee6ad';
+String _$workspaceRolesHash() => r'47307c0cf5f4b05359e2434070e5133e32976973';
 
 /// Who holds one role.
 
@@ -199,3 +202,129 @@ final class RoleMembersFamily extends $Family
   @override
   String toString() => r'roleMembersProvider';
 }
+
+/// #2085 — who holds which of the workspace's own roles: member id → the
+/// ids of the roles they hold. Empty while the feature is off, like the
+/// roles themselves.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
+
+@ProviderFor(workspaceRoleAssignments)
+final workspaceRoleAssignmentsProvider = WorkspaceRoleAssignmentsProvider._();
+
+/// #2085 — who holds which of the workspace's own roles: member id → the
+/// ids of the roles they hold. Empty while the feature is off, like the
+/// roles themselves.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
+
+final class WorkspaceRoleAssignmentsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, Set<String>>>,
+          Map<String, Set<String>>,
+          FutureOr<Map<String, Set<String>>>
+        >
+    with
+        $FutureModifier<Map<String, Set<String>>>,
+        $FutureProvider<Map<String, Set<String>>> {
+  /// #2085 — who holds which of the workspace's own roles: member id → the
+  /// ids of the roles they hold. Empty while the feature is off, like the
+  /// roles themselves.
+  // #2085 — kept alive: myPermissions (kept alive) reads it.
+  WorkspaceRoleAssignmentsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceRoleAssignmentsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceRoleAssignmentsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, Set<String>>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, Set<String>>> create(Ref ref) {
+    return workspaceRoleAssignments(ref);
+  }
+}
+
+String _$workspaceRoleAssignmentsHash() =>
+    r'be2f8a4bb0196777ba901018a0110957a27b3cda';
+
+/// #2085 — what the roles I hold add to my permissions.
+///
+/// `has_permission` has counted them since 0247; the app did not, so a
+/// treasurer was granted the finances by the server and never shown the
+/// way there. `effectivePermissions` still drops them while `customRoles`
+/// is off, exactly as the server does.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
+
+@ProviderFor(myRolePermissions)
+final myRolePermissionsProvider = MyRolePermissionsProvider._();
+
+/// #2085 — what the roles I hold add to my permissions.
+///
+/// `has_permission` has counted them since 0247; the app did not, so a
+/// treasurer was granted the finances by the server and never shown the
+/// way there. `effectivePermissions` still drops them while `customRoles`
+/// is off, exactly as the server does.
+// #2085 — kept alive: myPermissions (kept alive) reads it.
+
+final class MyRolePermissionsProvider
+    extends
+        $FunctionalProvider<
+          Set<WorkspacePermission>,
+          Set<WorkspacePermission>,
+          Set<WorkspacePermission>
+        >
+    with $Provider<Set<WorkspacePermission>> {
+  /// #2085 — what the roles I hold add to my permissions.
+  ///
+  /// `has_permission` has counted them since 0247; the app did not, so a
+  /// treasurer was granted the finances by the server and never shown the
+  /// way there. `effectivePermissions` still drops them while `customRoles`
+  /// is off, exactly as the server does.
+  // #2085 — kept alive: myPermissions (kept alive) reads it.
+  MyRolePermissionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myRolePermissionsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myRolePermissionsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Set<WorkspacePermission>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  Set<WorkspacePermission> create(Ref ref) {
+    return myRolePermissions(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Set<WorkspacePermission> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Set<WorkspacePermission>>(value),
+    );
+  }
+}
+
+String _$myRolePermissionsHash() => r'b0b63a31a57b3fa378e80cc42c4d8ca7c3480c38';

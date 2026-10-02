@@ -3,6 +3,7 @@ import '../features/workspace/presentation/screens/colours_screen.dart';
 import '../features/workspace/presentation/screens/attention_screen.dart';
 import '../features/workspace/presentation/screens/questions_screen.dart';
 import '../features/workspace/presentation/screens/roles_of_space_screen.dart';
+import '../features/workspace/presentation/screens/what_you_can_do_screen.dart';
 import '../features/workspace/presentation/screens/deployment_screen.dart';
 import '../features/workspace/presentation/screens/wording_screen.dart';
 import '../features/directory/presentation/directory_screen.dart' as discovery;
@@ -848,6 +849,15 @@ GoRouter router(Ref ref) {
       GoRoute(path: '/settings/public-page',redirect:(context,state)=>(ref.read(myMemberProvider).value?.actsAsOwner??false)?null:'/profiles',builder:(context,state)=>const PublicPageEditor()),
       GoRoute(path: '/applications',
           builder: (context, state) => const WorkspaceApplicationsScreen()),
+      // #2085 — what my roles give me here (or, for whoever administers
+      // members or roles, what someone else's give them).
+      GoRoute(
+        path: '/settings/what-you-can-do',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.roleAssignment) ? null : '/settings',
+        builder: (context, state) => WhatYouCanDoScreen(
+            memberId: state.uri.queryParameters['member']),
+      ),
     ],
   );
   ref.onDispose(router.dispose);

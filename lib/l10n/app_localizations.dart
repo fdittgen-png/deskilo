@@ -4127,7 +4127,7 @@ abstract class AppLocalizations {
   /// Co-owner dialog option: clear the role
   ///
   /// In en, this message translates to:
-  /// **'No co-owner role'**
+  /// **'No co-ownership'**
   String get coOwnerNone;
 
   /// Co-owner dialog option: the active flavor
@@ -4139,7 +4139,7 @@ abstract class AppLocalizations {
   /// Co-owner dialog option: the passive flavor
   ///
   /// In en, this message translates to:
-  /// **'Passive co-owner — becomes owner when activated or when the owner leaves'**
+  /// **'Successor — becomes owner when activated or when the owner leaves'**
   String get coOwnerPassive;
 
   /// Member-sheet action promoting a co-owner to full owner
@@ -4157,7 +4157,7 @@ abstract class AppLocalizations {
   /// Members-list chip for a passive co-owner
   ///
   /// In en, this message translates to:
-  /// **'Co-owner (passive)'**
+  /// **'Successor'**
   String get memberCoOwnerPassiveChip;
 
   /// #912 courtesy title: courtesyLabel
@@ -15166,7 +15166,7 @@ abstract class AppLocalizations {
   /// Role tag on a member row
   ///
   /// In en, this message translates to:
-  /// **'Admin'**
+  /// **'Administrator'**
   String get memberRoleAdmin;
 
   /// Status tag: membership paused (no fee, no access)
@@ -20769,13 +20769,13 @@ abstract class AppLocalizations {
   /// Owner action promoting a member to admin (0035)
   ///
   /// In en, this message translates to:
-  /// **'Make admin'**
+  /// **'Give the Administrator role'**
   String get memberMakeAdmin;
 
   /// Owner action demoting an admin to a regular member (0035)
   ///
   /// In en, this message translates to:
-  /// **'Make regular member'**
+  /// **'Take back the Administrator role'**
   String get memberMakeMember;
 
   /// Snackbar after an owner requested a role change (0035)
@@ -22182,6 +22182,180 @@ abstract class AppLocalizations {
   /// **'The customer\'s VAT number is missing — a reverse-charged invoice must name it.'**
   String get invoiceGapMissingBuyerVatId;
 
+  /// #2085 giving roles: featureRoleAssignmentTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Giving roles'**
+  String get featureRoleAssignmentTitle;
+
+  /// #2085 giving roles: featureRoleAssignmentDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Shows a Roles section on each member\'s page to give or take back a role, the members holding each role, and lets every member see what they can do here.'**
+  String get featureRoleAssignmentDesc;
+
+  /// #2085 giving roles: memberRolesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Roles'**
+  String get memberRolesTitle;
+
+  /// #2085 giving roles: memberRolesAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a role'**
+  String get memberRolesAdd;
+
+  /// #2085 giving roles: memberRolesNone
+  ///
+  /// In en, this message translates to:
+  /// **'No role: everything a member can do.'**
+  String get memberRolesNone;
+
+  /// #2085 giving roles: memberRolesWhatTheyCanDo
+  ///
+  /// In en, this message translates to:
+  /// **'What they can do here'**
+  String get memberRolesWhatTheyCanDo;
+
+  /// #2085 giving roles: roleAssignSheetTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Give a role to {name}'**
+  String roleAssignSheetTitle(String name);
+
+  /// #2085 giving roles: roleAssignQuorumHint
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect once validated.'**
+  String get roleAssignQuorumHint;
+
+  /// #2085 giving roles: roleAssignImmediateHint
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect at once.'**
+  String get roleAssignImmediateHint;
+
+  /// #2085 giving roles: roleAssignNothing
+  ///
+  /// In en, this message translates to:
+  /// **'There is no role left to give.'**
+  String get roleAssignNothing;
+
+  /// #2085 giving roles: roleRefusalNotPermitted
+  ///
+  /// In en, this message translates to:
+  /// **'Only someone who manages roles can give this one.'**
+  String get roleRefusalNotPermitted;
+
+  /// #2085 giving roles: roleRefusalOwnerOnly
+  ///
+  /// In en, this message translates to:
+  /// **'Only the owner gives a role that manages roles.'**
+  String get roleRefusalOwnerOnly;
+
+  /// #2085 giving roles: roleRefusalExceedsYours
+  ///
+  /// In en, this message translates to:
+  /// **'This role can do things you cannot, so only the owner gives it.'**
+  String get roleRefusalExceedsYours;
+
+  /// #2085 giving roles: roleRefusalNotAssignable
+  ///
+  /// In en, this message translates to:
+  /// **'This member cannot hold this role.'**
+  String get roleRefusalNotAssignable;
+
+  /// #2085 giving roles: roleGiven
+  ///
+  /// In en, this message translates to:
+  /// **'Role given.'**
+  String get roleGiven;
+
+  /// #2085 giving roles: roleTakenBack
+  ///
+  /// In en, this message translates to:
+  /// **'Role taken back.'**
+  String get roleTakenBack;
+
+  /// #2085 giving roles: roleHoldersAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a member'**
+  String get roleHoldersAdd;
+
+  /// #2085 giving roles: rolesOwnRolesLink
+  ///
+  /// In en, this message translates to:
+  /// **'The roles this space defines'**
+  String get rolesOwnRolesLink;
+
+  /// #2085 giving roles: whatYouCanDoTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What you can do here'**
+  String get whatYouCanDoTitle;
+
+  /// #2085 giving roles: whatTheyCanDoTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What {name} can do here'**
+  String whatTheyCanDoTitle(String name);
+
+  /// #2085 giving roles: whatYouCanDoIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.'**
+  String get whatYouCanDoIntro;
+
+  /// #2085 giving roles: whatYouCanDoFromOwner
+  ///
+  /// In en, this message translates to:
+  /// **'As the owner: everything'**
+  String get whatYouCanDoFromOwner;
+
+  /// #2085 giving roles: whatYouCanDoFromCoOwner
+  ///
+  /// In en, this message translates to:
+  /// **'As co-owner'**
+  String get whatYouCanDoFromCoOwner;
+
+  /// #2085 giving roles: whatYouCanDoFromAdministrator
+  ///
+  /// In en, this message translates to:
+  /// **'From the Administrator role'**
+  String get whatYouCanDoFromAdministrator;
+
+  /// #2085 giving roles: whatYouCanDoFromEveryMember
+  ///
+  /// In en, this message translates to:
+  /// **'As every member'**
+  String get whatYouCanDoFromEveryMember;
+
+  /// #2085 giving roles: whatYouCanDoFromRole
+  ///
+  /// In en, this message translates to:
+  /// **'From the role {role}'**
+  String whatYouCanDoFromRole(String role);
+
+  /// #2085 giving roles: whatYouCanDoNothingMore
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing more than a member.'**
+  String get whatYouCanDoNothingMore;
+
+  /// #2085 giving roles: roleGiveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The role was not given.'**
+  String get roleGiveFailed;
+
+  /// #2085 giving roles: roleTakeBackFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The role was not taken back.'**
+  String get roleTakeBackFailed;
+
   /// #1528 the roles of a space: rolesOfSpaceTitle
   ///
   /// In en, this message translates to:
@@ -22191,7 +22365,7 @@ abstract class AppLocalizations {
   /// #1528 the roles of a space: rolesOfSpaceSubtitle
   ///
   /// In en, this message translates to:
-  /// **'Each one adds permissions on top of a member\'s role. None ever takes one away, and an owner always keeps every one.'**
+  /// **'Each one adds permissions to what its holders can already do. None takes anything away, and the owner always keeps every permission.'**
   String get rolesOfSpaceSubtitle;
 
   /// #1528 the roles of a space: rolesOfSpaceEmpty
@@ -22257,7 +22431,7 @@ abstract class AppLocalizations {
   /// #1528 the roles of a space: roleEditorHolders
   ///
   /// In en, this message translates to:
-  /// **'Who holds it'**
+  /// **'Members in this role'**
   String get roleEditorHolders;
 
   /// #1528 the roles of a space: roleEditorNobody
@@ -24903,7 +25077,7 @@ abstract class AppLocalizations {
   /// Segment label: invite QR/code that joins as an admin
   ///
   /// In en, this message translates to:
-  /// **'Admin invite'**
+  /// **'Administrator invite'**
   String get inviteRoleAdmin;
 
   /// Explainer under the admin invite QR
@@ -24915,7 +25089,7 @@ abstract class AppLocalizations {
   /// No description provided for @inviteAdminNewCode.
   ///
   /// In en, this message translates to:
-  /// **'New admin code'**
+  /// **'New administrator code'**
   String get inviteAdminNewCode;
 
   /// Footnote on the invite screen: owner role is never invitable
@@ -25467,13 +25641,13 @@ abstract class AppLocalizations {
   /// Roles screen title (#513)
   ///
   /// In en, this message translates to:
-  /// **'Role management'**
+  /// **'Roles'**
   String get rolesTitle;
 
   /// Roles screen intro for editors (#513)
   ///
   /// In en, this message translates to:
-  /// **'The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.'**
+  /// **'Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.'**
   String get rolesIntroEditor;
 
   /// Roles screen intro for non-editors (#513)
@@ -25497,13 +25671,13 @@ abstract class AppLocalizations {
   /// Role label (#513)
   ///
   /// In en, this message translates to:
-  /// **'Admin'**
+  /// **'Administrator'**
   String get roleAdmin;
 
   /// Role label (#513)
   ///
   /// In en, this message translates to:
-  /// **'Member'**
+  /// **'Every member'**
   String get roleMember;
 
   /// Permission label (#513)
