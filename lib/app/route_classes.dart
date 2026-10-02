@@ -79,6 +79,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/consent', RouteClass.nativeAccount),
   RouteRule('/profiles', RouteClass.nativeAccount),
   RouteRule('/applications', RouteClass.nativeAccount),
+  // #1865 — the account's own recordings on this device.
+  RouteRule('/task-recorder', RouteClass.nativeAccount),
   RouteRule('/account-activity', RouteClass.nativeAccount),
   RouteRule('/linked-accounts', RouteClass.nativeAccount),
   RouteRule('/onboarding', RouteClass.nativeAccount),
