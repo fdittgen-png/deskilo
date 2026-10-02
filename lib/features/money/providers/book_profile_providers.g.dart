@@ -156,3 +156,61 @@ final class BookProfilesProvider
 }
 
 String _$bookProfilesHash() => r'07dd02e47d1738fb991f5f7df9d7a72635b7e336';
+
+/// #1869 B — every issuer's accounts and role mappings in the current
+/// workspace; invalidated after a save.
+
+@ProviderFor(bookChart)
+final bookChartProvider = BookChartProvider._();
+
+/// #1869 B — every issuer's accounts and role mappings in the current
+/// workspace; invalidated after a save.
+
+final class BookChartProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<
+            ({List<BookAccount> accounts, List<BookMapping> mappings})
+          >,
+          ({List<BookAccount> accounts, List<BookMapping> mappings}),
+          FutureOr<({List<BookAccount> accounts, List<BookMapping> mappings})>
+        >
+    with
+        $FutureModifier<
+          ({List<BookAccount> accounts, List<BookMapping> mappings})
+        >,
+        $FutureProvider<
+          ({List<BookAccount> accounts, List<BookMapping> mappings})
+        > {
+  /// #1869 B — every issuer's accounts and role mappings in the current
+  /// workspace; invalidated after a save.
+  BookChartProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'bookChartProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookChartHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<
+    ({List<BookAccount> accounts, List<BookMapping> mappings})
+  >
+  $createElement($ProviderPointer pointer) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<({List<BookAccount> accounts, List<BookMapping> mappings})> create(
+    Ref ref,
+  ) {
+    return bookChart(ref);
+  }
+}
+
+String _$bookChartHash() => r'975cd6e18c476a84226bbc161354c24da6a3e02f';
