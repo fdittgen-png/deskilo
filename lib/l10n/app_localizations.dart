@@ -21552,6 +21552,24 @@ abstract class AppLocalizations {
   /// **'Your texts'**
   String get reportFieldGroupTexts;
 
+  /// #1825 — reserve list: a header whose space this member can reserve as a whole
+  ///
+  /// In en, this message translates to:
+  /// **'Reservable as a whole'**
+  String get listWholeReservable;
+
+  /// #1825 — what a whole-space reservation includes: its tables
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 table} other{{count} tables}}'**
+  String listCoversTables(int count);
+
+  /// #1825 — what a whole-space reservation includes: its seats
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 seat} other{{count} seats}}'**
+  String listCoversSeats(int count);
+
   /// Reserve hub view segment: month availability calendar (#7)
   ///
   /// In en, this message translates to:

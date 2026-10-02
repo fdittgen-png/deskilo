@@ -7619,6 +7619,9 @@
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
   },
+  "listWholeReservable": "Réservable en entier",
+  "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
+  "listCoversSeats": "{count, plural, =1{1 place} other{{count} places}}",
   "reserveMonthView": "Mois",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Réservation récurrente",

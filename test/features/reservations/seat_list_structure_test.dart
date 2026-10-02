@@ -9,6 +9,7 @@
 // offers it: bookable as a whole and the grant or admin role.
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
@@ -24,7 +25,7 @@ import '../../helpers/mock_providers.dart';
 
 const _rect = GridRect(x: 0, y: 0, w: 2, h: 2);
 
-FloorPlan _plan() => const FloorPlan(
+FloorPlan _plan({bool officeWhole = false}) => FloorPlan(
   levelId: 'l1',
   offices: [
     Office(
@@ -33,7 +34,7 @@ FloorPlan _plan() => const FloorPlan(
       levelId: 'l1',
       name: 'Atelier',
       color: 0,
-      bookableAsWhole: false,
+      bookableAsWhole: officeWhole,
       rect: _rect,
     ),
   ],
@@ -65,6 +66,10 @@ Future<List<(String?, String?)>> _pump(
   WidgetTester tester, {
   required bool mayReserveWhole,
   bool levelWhole = false,
+  bool officeWhole = false,
+  bool dayOpen = true,
+  List<Reservation> reservations = const [],
+  Map<String, bool> flags = const {},
 }) async {
   final taps = <(String?, String?)>[];
   final floorPlan = FakeFloorPlanRepository()
@@ -76,7 +81,7 @@ Future<List<(String?, String?)>> _pump(
       bookableAsWhole: levelWhole,
     ));
   final workspace = FakeWorkspaceRepository.withWorkspace(
-    featureFlags: {'levelBooking': true},
+    featureFlags: {'levelBooking': true, ...flags},
   );
   workspace.myMember = workspace.myMember.copyWith(
     canReserveLevel: mayReserveWhole,
@@ -90,11 +95,12 @@ Future<List<(String?, String?)>> _pump(
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
           body: SeatListView(
-            plan: _plan(),
-            reservations: const [],
-            names: const {},
+            plan: _plan(officeWhole: officeWhole),
+            reservations: reservations,
+            names: const {'m-2': 'Ana'},
             at: DateTime.utc(2026, 5, 13, 9),
-            dayOpen: true,
+            windowEndOrNull: DateTime.utc(2026, 5, 13, 13),
+            dayOpen: dayOpen,
             onSeatTap: (_) {},
             onSpaceTap: mayReserveWhole ? (d, o) => taps.add((d, o)) : null,
           ),
@@ -149,7 +155,9 @@ void main() {
       'level', (tester) async {
     final taps = await _pump(tester, mayReserveWhole: true, levelWhole: true);
     double top(String key) => tester.getTopLeft(find.byKey(ValueKey(key))).dy;
-    expect(top('list-level-l1'), lessThan(top('list-office-o1')));
+    // The level's only room is named by the level (#1273), so the desks
+    // follow the level header directly.
+    expect(top('list-level-l1'), lessThan(top('list-desk-d1')));
     await tester.tap(find.byKey(const ValueKey('list-level-l1')));
     expect(taps.single, (null, null), reason: 'neither desk nor office');
   });
@@ -160,5 +168,73 @@ void main() {
     expect(find.byKey(const ValueKey('list-level-l1')), findsNothing);
     await _pump(tester, mayReserveWhole: false, levelWhole: true);
     expect(find.byKey(const ValueKey('list-level-l1')), findsNothing);
+  });
+
+  testWidgets('a reservable header says what it covers', (tester) async {
+    await _pump(tester, mayReserveWhole: true, officeWhole: true);
+    expect(
+      find.descendant(
+          of: find.byKey(const ValueKey('list-office-o1')),
+          matching: find.text('Reservable as a whole · 2 tables · 1 seat')),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+          of: find.byKey(const ValueKey('list-desk-d1')),
+          matching: find.text('Reservable as a whole')),
+      findsOneWidget,
+      reason: 'a seatless bookable desk covers no seats',
+    );
+  });
+
+  testWidgets('a seat taken in the window makes its room unavailable and '
+      'names the holder; the free desk stays reservable', (tester) async {
+    final taps = await _pump(
+      tester,
+      mayReserveWhole: true,
+      officeWhole: true,
+      reservations: [
+        Reservation(
+          id: 'r1',
+          workspaceId: 'ws-1',
+          memberId: 'm-2',
+          seatId: 's1',
+          startsAt: DateTime.utc(2026, 5, 13, 8),
+          endsAt: DateTime.utc(2026, 5, 13, 12),
+          status: ReservationStatus.reserved,
+        ),
+      ],
+    );
+    expect(
+      find.descendant(
+          of: find.byKey(const ValueKey('list-office-o1')),
+          matching: find.text('Reserved by Ana')),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey('list-office-o1')));
+    expect(taps, isEmpty, reason: 'a taken room is not offered');
+    await tester.tap(find.byKey(const ValueKey('list-desk-d1')));
+    expect(taps.single, ('d1', null));
+  });
+
+  testWidgets('a closed day: headers are not actionable', (tester) async {
+    await _pump(tester, mayReserveWhole: true, officeWhole: true, dayOpen: false);
+    for (final k in ['list-office-o1', 'list-desk-d1']) {
+      expect(tester.widget<ListTile>(find.byKey(ValueKey(k))).onTap, isNull,
+          reason: k);
+    }
+  });
+
+  testWidgets('a single-room level named by its room prints one header '
+      '(#1273)', (tester) async {
+    await _pump(
+      tester,
+      mayReserveWhole: true,
+      levelWhole: true,
+      flags: {'singleRoomLevelNames': true},
+    );
+    expect(find.byKey(const ValueKey('list-level-l1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('list-office-o1')), findsNothing);
+    expect(find.byKey(const ValueKey('list-desk-d2')), findsOneWidget);
   });
 }

@@ -12534,6 +12534,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportFieldGroupTexts => 'Sus textos';
 
   @override
+  String get listWholeReservable => 'Reservable entero';
+
+  @override
+  String listCoversTables(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mesas',
+      one: '1 mesa',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String listCoversSeats(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count puestos',
+      one: '1 puesto',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get reserveMonthView => 'Mes';
 
   @override

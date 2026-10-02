@@ -13532,6 +13532,28 @@
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
   },
+  "listWholeReservable": "Reservable as a whole",
+  "@listWholeReservable": {
+    "description": "#1825 — reserve list: a header whose space this member can reserve as a whole"
+  },
+  "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
+  "@listCoversTables": {
+    "description": "#1825 — what a whole-space reservation includes: its tables",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listCoversSeats": "{count, plural, =1{1 seat} other{{count} seats}}",
+  "@listCoversSeats": {
+    "description": "#1825 — what a whole-space reservation includes: its seats",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reserveMonthView": "Month",
   "@reserveMonthView": {
     "description": "Reserve hub view segment: month availability calendar (#7)"

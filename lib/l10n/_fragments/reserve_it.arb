@@ -1,5 +1,8 @@
 {
   "@@locale": "it",
+  "listWholeReservable": "Prenotabile per intero",
+  "listCoversTables": "{count, plural, =1{1 tavolo} other{{count} tavoli}}",
+  "listCoversSeats": "{count, plural, =1{1 posto} other{{count} posti}}",
   "reserveMonthView": "Mese",
   "monthFreeCount": "{free}/{total}",
   "reservationRecurring": "Prenotazione ricorrente",
