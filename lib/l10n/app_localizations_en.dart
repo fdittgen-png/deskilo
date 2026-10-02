@@ -12866,6 +12866,128 @@ class AppLocalizationsEn extends AppLocalizations {
       'The customer\'s VAT number is missing — a reverse-charged invoice must name it.';
 
   @override
+  String get rightsRequestsTitle => 'My rights requests';
+
+  @override
+  String get rightsRequestsHint =>
+      'Ask the space for a copy, a correction, a restriction or erasure — answered within one calendar month.';
+
+  @override
+  String get rightsRequestsEmpty => 'No request yet.';
+
+  @override
+  String get rightsRequestNew => 'Make a request';
+
+  @override
+  String get rightsRequestAsk => 'What do you ask the space?';
+
+  @override
+  String get rightsRequestDetails => 'Details (optional)';
+
+  @override
+  String get rightsRequestSend => 'Send the request';
+
+  @override
+  String rightsRequestSent(String date) {
+    return 'Request sent — the space answers by $date.';
+  }
+
+  @override
+  String get rightsRequestFailed =>
+      'The request could not be sent. Please try again.';
+
+  @override
+  String get rightsKindAccess => 'See a copy of my data';
+
+  @override
+  String get rightsKindPortability =>
+      'Take my data elsewhere (machine-readable)';
+
+  @override
+  String get rightsKindRectification => 'Correct my data';
+
+  @override
+  String get rightsKindRestriction => 'Restrict how my data is used';
+
+  @override
+  String get rightsKindObjection => 'Object to a use of my data';
+
+  @override
+  String get rightsKindErasure => 'Erase my data';
+
+  @override
+  String rightsStatusReceived(String date) {
+    return 'Received — answer due by $date';
+  }
+
+  @override
+  String rightsStatusExtended(String date, String reason) {
+    return 'Extended to $date: $reason';
+  }
+
+  @override
+  String get rightsStatusCompleted =>
+      'Answered — the space recorded what it did';
+
+  @override
+  String rightsStatusRefused(String reason) {
+    return 'Refused: $reason';
+  }
+
+  @override
+  String get erasurePreviewTitle => 'What erasing does here';
+
+  @override
+  String get erasurePreviewRemoved => 'Removed';
+
+  @override
+  String get erasurePreviewKept => 'Kept, and why';
+
+  @override
+  String get erasurePreviewOutside => 'Outside this installation';
+
+  @override
+  String get erasureStoreMessages => 'Messages you sent';
+
+  @override
+  String get erasureStoreAnswers => 'Your answers to the space\'s questions';
+
+  @override
+  String get erasureStoreProfile =>
+      'Your profile (when this is your last space)';
+
+  @override
+  String get erasureStoreOpenBookings => 'Open bookings — cancelled';
+
+  @override
+  String get erasureStoreAccounts =>
+      'Invoices and ledger — accounting evidence, kept for the statutory period; issued documents are not rewritten';
+
+  @override
+  String get erasureStorePastBookings =>
+      'Past bookings — the space\'s occupancy record';
+
+  @override
+  String get erasureStoreMembership =>
+      'The membership row — links the records kept; pseudonymous, not anonymous';
+
+  @override
+  String get erasureStoreHeldAnswers =>
+      'Answers under a retention hold the space documented';
+
+  @override
+  String get erasureStoreOtherInstallations =>
+      'Another DesKilo installation is a separate controller — ask it directly';
+
+  @override
+  String get erasureStoreDeviceCaches =>
+      'Copies on your devices — cleared when you sign out of each';
+
+  @override
+  String get erasureStoreBackups =>
+      'The operator\'s backups — expire on their rotation';
+
+  @override
   String get featureRoleAssignmentTitle => 'Giving roles';
 
   @override

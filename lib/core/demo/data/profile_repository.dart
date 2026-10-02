@@ -9,6 +9,7 @@ import 'package:deskilo/features/profile/domain/profile_repository.dart';
 
 import 'fixture_clock.dart';
 import 'package:deskilo/features/profile/domain/privacy_notice.dart';
+import 'package:deskilo/features/profile/domain/rights_request.dart';
 
 /// In-memory [ProfileRepository] for widget/unit tests (#223).
 class FakeProfileRepository implements ProfileRepository {
@@ -111,6 +112,43 @@ class FakeProfileRepository implements ProfileRepository {
           ...acknowledgedNotices,
         },
       );
+
+  /// #1915 — requests filed through the fake, newest first.
+  final rightsRequests = <RightsRequest>[];
+
+  /// #1915 — what [previewMyErasure] answers.
+  ErasurePreview erasurePreview = const ErasurePreview();
+
+  @override
+  Future<RightsRequest> submitRightsRequest({
+    required String workspaceId,
+    required String kind,
+    required String details,
+    required String clientRequestId,
+  }) async {
+    final existing =
+        rightsRequests.where((r) => r.id == clientRequestId).firstOrNull;
+    if (existing != null) return existing;
+    final now = kTestNow;
+    final request = RightsRequest(
+      id: clientRequestId,
+      kind: kind,
+      details: details,
+      status: 'received',
+      receivedAt: now,
+      dueOn: DateTime(now.year, now.month + 1, now.day),
+    );
+    rightsRequests.insert(0, request);
+    return request;
+  }
+
+  @override
+  Future<List<RightsRequest>> fetchMyRightsRequests() async =>
+      List.of(rightsRequests);
+
+  @override
+  Future<ErasurePreview> previewMyErasure(String workspaceId) async =>
+      erasurePreview;
 
   @override
   Future<void> acknowledgeWorkspaceNotice(
