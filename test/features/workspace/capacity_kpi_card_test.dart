@@ -35,19 +35,27 @@ class _FakeKpis implements KpiRepository {
   }
 }
 
-SeatCapacityKpi _kpi({double offered = 76, double reserved = 10}) =>
-    seatCapacityFromJson({
-      'from': '2026-10-01T00:00:00Z',
-      'to': '2026-11-01T00:00:00Z',
-      'seats': 10,
-      'physical_seat_hours': 80,
-      'offered_seat_hours': offered,
-      'reserved_seat_hours': reserved,
-      'reserved_outside_offered_seat_hours': 1,
-      'quality': offered == 0 ? ['not_applicable'] : <String>[],
-      'reasons': const <String>[],
-      'computed_at': '2026-10-01T10:00:00Z',
-    });
+SeatCapacityKpi _kpi({
+  double offered = 76,
+  double reserved = 10,
+  List<String> quality = const [],
+  List<String> reasons = const [],
+}) => seatCapacityFromJson({
+  'history_since': '2026-09-01T00:00:00Z',
+  'from': '2026-10-01T00:00:00Z',
+  'to': '2026-11-01T00:00:00Z',
+  'seats': 10,
+  'physical_seat_hours': 80,
+  'offered_seat_hours': offered,
+  'reserved_seat_hours': reserved,
+  'reserved_outside_offered_seat_hours': 1,
+  'quality': [
+    ...quality,
+    if (offered == 0 && quality.isEmpty) 'not_applicable',
+  ],
+  'reasons': reasons,
+  'computed_at': '2026-10-01T10:00:00Z',
+});
 
 Future<FakeWorkspaceRepository> _open(
   WidgetTester tester,
@@ -142,5 +150,32 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('capacity-kpi-retry')));
     await tester.pumpAndSettle();
     expect(tester.widget<Text>(find.byKey(_value)).data, '13.2%');
+  });
+
+  testWidgets('#1920 a period before the history is said, not filled in; a '
+      'period across its start is counted from it', (tester) async {
+    final kpis = _FakeKpis(
+      () => _kpi(
+        offered: 0,
+        reserved: 0,
+        quality: ['not_recorded'],
+        reasons: ['history_not_recorded_before'],
+      ),
+    );
+    await _open(tester, kpis);
+    expect(tester.widget<Text>(find.byKey(_value)).data, '—');
+    expect(
+      find.textContaining('before the workspace’s history began'),
+      findsOneWidget,
+    );
+
+    kpis.answer = () =>
+        _kpi(quality: ['partial'], reasons: ['history_not_recorded_before']);
+    await tester.tap(find.byKey(const ValueKey('capacity-kpi-next')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Counted from'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('capacity-kpi-explain')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('History recorded since'), findsOneWidget);
   });
 }

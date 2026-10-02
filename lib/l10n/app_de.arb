@@ -1305,10 +1305,6 @@
       }
     }
   },
-  "capacityKpiPartial": "Teilweise: Plan, Öffnungszeiten und Platzsperren sind die heutigen; ihre Historie wird noch nicht erfasst.",
-  "@capacityKpiPartial": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiUnattributed": "Einige Reservierungen dieses Zeitraums verweisen auf einen Platz, den es nicht mehr gibt; sie werden nicht gezählt.",
   "@capacityKpiUnattributed": {
     "description": "#1918 capacity KPI"
@@ -1337,6 +1333,37 @@
   "capacityKpiRetry": "Erneut versuchen",
   "@capacityKpiRetry": {
     "description": "#1918 capacity KPI"
+  },
+  "capacityKpiHistorySince": "Gezählt ab {date}, dem Beginn der Historie dieses Arbeitsbereichs; frühere Zeit ist unbekannt und wird nicht gezählt.",
+  "@capacityKpiHistorySince": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiNotRecorded": "Dieser Zeitraum liegt vor dem Beginn der Historie am {date}; es ist nichts erfasst, das gezählt werden könnte.",
+  "@capacityKpiNotRecorded": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiHistory": "Historie erfasst seit {date}",
+  "@capacityKpiHistory": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRoomsToday": "Räume ohne Plätze werden so gelesen, wie sie heute sind.",
+  "@capacityKpiRoomsToday": {
+    "description": "#1920 capacity KPI history"
   },
   "featureCarnetsTitle": "Mehrfachkarten",
   "featureCarnetsDesc": "Mehrfachkarten mit Halbtagen verkaufen, die über Monate verbraucht werden, wenn ein Mitglied über sein Abo hinaus bucht — einmal beim Verkauf berechnet.",

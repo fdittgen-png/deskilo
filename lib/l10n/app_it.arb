@@ -1305,10 +1305,6 @@
       }
     }
   },
-  "capacityKpiPartial": "Parziale: la planimetria, gli orari e i blocchi dei posti sono quelli di oggi; la loro storia non è ancora registrata.",
-  "@capacityKpiPartial": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiUnattributed": "Alcune prenotazioni del periodo riguardano un posto che non esiste più; non vengono contate.",
   "@capacityKpiUnattributed": {
     "description": "#1918 capacity KPI"
@@ -1337,6 +1333,37 @@
   "capacityKpiRetry": "Riprova",
   "@capacityKpiRetry": {
     "description": "#1918 capacity KPI"
+  },
+  "capacityKpiHistorySince": "Contato dal {date}, quando è iniziata la storia di questo spazio; il tempo precedente non è noto e non viene contato.",
+  "@capacityKpiHistorySince": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiNotRecorded": "Questo periodo precede l’inizio della storia dello spazio, il {date}; non c’è nulla di registrato da contare.",
+  "@capacityKpiNotRecorded": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiHistory": "Storia registrata dal {date}",
+  "@capacityKpiHistory": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRoomsToday": "Le sale senza posti sono lette come sono oggi.",
+  "@capacityKpiRoomsToday": {
+    "description": "#1920 capacity KPI history"
   },
   "featureCarnetsTitle": "Carnet",
   "featureCarnetsDesc": "Vendere carnet di mezze giornate, consumati nell'arco dei mesi quando un membro prenota oltre il suo abbonamento, addebitati una sola volta alla vendita.",

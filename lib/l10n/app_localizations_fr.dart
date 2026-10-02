@@ -1978,10 +1978,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get capacityKpiPartial =>
-      'Partiel : le plan, les heures d\'ouverture et les blocages de places sont ceux d\'aujourd\'hui ; leur historique n\'est pas encore enregistré.';
-
-  @override
   String get capacityKpiUnattributed =>
       'Certaines réservations de la période visent un emplacement qui n\'existe plus ; elles ne sont pas comptées.';
 
@@ -2003,6 +1999,25 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get capacityKpiRetry => 'Réessayer';
+
+  @override
+  String capacityKpiHistorySince(String date) {
+    return 'Compté à partir du $date, début de l\'historique de cet espace ; le temps antérieur n\'est pas connu et n\'est pas compté.';
+  }
+
+  @override
+  String capacityKpiNotRecorded(String date) {
+    return 'Cette période précède le début de l\'historique de l\'espace, le $date : rien n\'est enregistré à compter.';
+  }
+
+  @override
+  String capacityKpiHistory(String date) {
+    return 'Historique enregistré depuis le $date';
+  }
+
+  @override
+  String get capacityKpiRoomsToday =>
+      'Les salles sans place sont lues telles qu\'elles sont aujourd\'hui.';
 
   @override
   String get featureCarnetsTitle => 'Carnets';

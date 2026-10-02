@@ -3427,12 +3427,6 @@ abstract class AppLocalizations {
   /// #1918 capacity KPI
   ///
   /// In en, this message translates to:
-  /// **'Partial: the plan, the opening hours and the seat blocks are today’s; their history is not recorded yet.'**
-  String get capacityKpiPartial;
-
-  /// #1918 capacity KPI
-  ///
-  /// In en, this message translates to:
   /// **'Some reservations in this period point to a place that no longer exists; they are not counted.'**
   String get capacityKpiUnattributed;
 
@@ -3465,6 +3459,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get capacityKpiRetry;
+
+  /// #1920 capacity KPI history
+  ///
+  /// In en, this message translates to:
+  /// **'Counted from {date}, when this workspace’s history began; earlier time is not known and not counted.'**
+  String capacityKpiHistorySince(String date);
+
+  /// #1920 capacity KPI history
+  ///
+  /// In en, this message translates to:
+  /// **'This period lies before the workspace’s history began on {date}; there is nothing recorded to count.'**
+  String capacityKpiNotRecorded(String date);
+
+  /// #1920 capacity KPI history
+  ///
+  /// In en, this message translates to:
+  /// **'History recorded since {date}'**
+  String capacityKpiHistory(String date);
+
+  /// #1920 capacity KPI history
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms without seats are read as they are today.'**
+  String get capacityKpiRoomsToday;
 
   /// #1279 carnets: featureCarnetsTitle
   ///
