@@ -571,6 +571,16 @@ constraint price_negotiations.price_negotiations_subscription_pct_check CHECK ((
 constraint price_negotiations.price_negotiations_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint price_negotiations.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint price_negotiations.system_company_present CHECK ((company_id IS NOT NULL))
+constraint privacy_notice_acknowledgments.privacy_notice_acknowledgments_notice_id_fkey FOREIGN KEY (notice_id) REFERENCES privacy_notices(id) ON DELETE CASCADE
+constraint privacy_notice_acknowledgments.privacy_notice_acknowledgments_pkey PRIMARY KEY (id)
+constraint privacy_notice_acknowledgments.privacy_notice_acknowledgments_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+constraint privacy_notice_acknowledgments.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint privacy_notices.privacy_notices_pkey PRIMARY KEY (id)
+constraint privacy_notices.privacy_notices_published_by_fkey FOREIGN KEY (published_by) REFERENCES auth.users(id) ON DELETE SET NULL
+constraint privacy_notices.privacy_notices_space_id_fkey FOREIGN KEY (space_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint privacy_notices.privacy_notices_status_check CHECK ((status = ANY (ARRAY['published'::text, 'superseded'::text])))
+constraint privacy_notices.privacy_notices_version_check CHECK ((version ~ '^[0-9A-Za-z._-]{1,40}$'::text))
+constraint privacy_notices.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint profiles.profiles_address_check CHECK ((char_length(address) <= 400))
 constraint profiles.profiles_city_check CHECK ((char_length(city) <= 120))
 constraint profiles.profiles_clock_check CHECK ((clock = ANY (ARRAY['auto'::text, '24h'::text, '12h'::text])))
@@ -947,12 +957,13 @@ constraint workspaces.workspaces_vat_account_check CHECK ((char_length(vat_accou
 constraint workspaces.workspaces_vat_id_check CHECK ((char_length(vat_id) <= 20))
 constraint workspaces.workspaces_vat_regime_check CHECK ((vat_regime = ANY (ARRAY['not_subject'::text, 'exempt'::text, 'vat_registered'::text])))
 constraint workspaces.workspaces_whatsapp_group_check CHECK (((whatsapp_group = ''::text) OR (whatsapp_group ~ '^https://chat\.whatsapp\.com/'::text)))
-routine public.accept_privacy_policy(p_version text) -> void | function | definer | volatile | exec:authenticated,service_role | body:7866ce14e28c
+routine public.accept_privacy_policy(p_version text) -> void | function | definer | volatile | exec:authenticated,service_role | body:f66d5b7a2f31
 routine public.account_audience_of(p_user uuid, p_field text) -> text | function | definer | stable | exec:service_role | body:f3ecc8c826e6
 routine public.account_display_name(p_user uuid) -> text | function | definer | stable | exec:service_role | body:23e2dc88d818
 routine public.account_field_visible_to(p_owner uuid, p_field text, p_viewer uuid) -> boolean | function | definer | stable | exec:service_role | body:bec66f5ef969
 routine public.account_projection(p_user uuid, p_fields text[]) -> jsonb | function | definer | stable | exec:service_role | body:78eb18577763
 routine public.acknowledge_readiness_section(p_workspace_id uuid, p_section text) -> readiness_acknowledgements | function | definer | volatile | exec:authenticated,service_role | body:a7969e26c0e0
+routine public.acknowledge_workspace_notice(p_workspace_id uuid, p_version text) -> void | function | definer | volatile | exec:authenticated,service_role | body:359ab91b1c36
 routine public.activate_co_owner(p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4d5034f3958e
 routine public.add_conversation_participant(p_conversation_id uuid, p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:3d7e8f0c883d
 routine public.admin_create_reservation_for(p_workspace_id uuid, p_subject_member_id uuid, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_level_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0fd8239dcca0
@@ -1014,6 +1025,7 @@ routine public.create_series(p_workspace_id uuid, p_seat_id uuid, p_first_start 
 routine public.create_workspace(p_name text, p_country_code text, p_currency_code text, p_timezone text, p_environment text, p_with_twin boolean, p_feature_flags jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:7362a342e0eb
 routine public.create_workspace_once(p_client_request_id uuid, p_name text, p_country_code text, p_currency_code text, p_timezone text, p_environment text, p_with_twin boolean, p_feature_flags jsonb, p_template_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:1be3d02c11a4
 routine public.create_workspace_twin(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0349d249d0aa
+routine public.current_privacy_notice(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:18b05ca5e88e
 routine public.database_administrator_deleted() -> trigger | function | definer | volatile | exec:service_role | body:0c760eddc629
 routine public.database_authority_audit_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:4df85237f376
 routine public.decide_mcp_eligibility(p_subject uuid, p_decision_id uuid, p_approve boolean, p_expected_revision integer, p_valid_days integer, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:182c92ef19ef
@@ -1049,7 +1061,7 @@ routine public.event_type_view_permissions(p_type text) -> text[] | function | i
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:9b491b3a3a5f
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:50db203e93fa
-routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8003070ff959
+routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:776a18485af2
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:68dd0f873a84
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:99a275c44fd9
@@ -1271,6 +1283,7 @@ routine public.preview_my_account(p_as text) -> jsonb | function | definer | sta
 routine public.preview_my_erasure(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:56604b8e5fdf
 routine public.preview_my_member_profile(p_as text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a93755c4c74e
 routine public.preview_workspace_template(p_workspace_id uuid, p_template_id uuid, p_groups text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b115c43eb789
+routine public.privacy_notice_manifest_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:a749c88d5751
 routine public.profile_directory_person() -> trigger | function | definer | volatile | exec:service_role | body:6ae1f1405a18
 routine public.profile_full_name(p profiles) -> text | function | invoker | immutable | exec:authenticated,service_role | body:02ff110b4db3
 routine public.profile_person_name(p profiles) -> text | function | invoker | immutable | exec:authenticated,service_role | body:e98ff75cb6c9
@@ -1282,6 +1295,7 @@ routine public.provision_database_admin(p_target uuid, p_can_provision boolean) 
 routine public.public_holidays(p_country text, p_year integer) -> TABLE(day date, key text) | function | invoker | immutable | exec:authenticated,service_role | body:1c6cfdb4de71
 routine public.public_identity_authority() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:4e3256312a3b
 routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:9652e2ec943e
+routine public.publish_privacy_notice(p_workspace_id uuid, p_version text, p_manifest jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fc12cf39df7d
 routine public.purge_expired_field_answer_holds() -> integer | function | definer | volatile | exec:service_role | body:8dcbf0fddd71
 routine public.readiness_section_revision(p_section jsonb) -> text | function | invoker | immutable | exec:service_role | body:c7d33070eecf
 routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with time zone, p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:5ddacb1438c6
@@ -1605,6 +1619,8 @@ trigger plans.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEF
 trigger platform_access_log.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.platform_access_log FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger platform_admins.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.platform_admins FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger price_negotiations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.price_negotiations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger privacy_notice_acknowledgments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.privacy_notice_acknowledgments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger privacy_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.privacy_notices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger profiles.profiles_directory_person CREATE TRIGGER profiles_directory_person BEFORE INSERT OR UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION profile_directory_person()
 trigger profiles.profiles_person_preferences CREATE TRIGGER profiles_person_preferences AFTER INSERT OR UPDATE OF format_locale, clock, time_zone_mode, preferred_locale ON public.profiles FOR EACH ROW EXECUTE FUNCTION sync_person_preferences()
 trigger profiles.refresh_public_profile CREATE TRIGGER refresh_public_profile AFTER UPDATE OF display_name ON public.profiles FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
