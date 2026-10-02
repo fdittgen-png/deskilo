@@ -1,0 +1,549 @@
+{
+  "@@locale": "en",
+  "taskExportDocFallbackTitle": "Task procedure",
+  "@taskExportDocFallbackTitle": {
+    "description": "#1866 task export (Word document): DocFallbackTitle"
+  },
+  "taskExportIntro": "This document describes, step by step, a task recorded in DesKilo. It is documentation: it does not replay the task and it does not prove that the task succeeded. Only what the recording observed is stated as observed.",
+  "@taskExportIntro": {
+    "description": "#1866 task export (Word document): Intro"
+  },
+  "taskExportSectionAbout": "About this recording",
+  "@taskExportSectionAbout": {
+    "description": "#1866 task export (Word document): SectionAbout"
+  },
+  "taskExportSectionBefore": "Before you start",
+  "@taskExportSectionBefore": {
+    "description": "#1866 task export (Word document): SectionBefore"
+  },
+  "taskExportSectionSteps": "Steps",
+  "@taskExportSectionSteps": {
+    "description": "#1866 task export (Word document): SectionSteps"
+  },
+  "taskExportSectionLimits": "Limitations",
+  "@taskExportSectionLimits": {
+    "description": "#1866 task export (Word document): SectionLimits"
+  },
+  "taskExportKindSource": "Original capture: the steps were observed by the recorder.",
+  "@taskExportKindSource": {
+    "description": "#1866 task export (Word document): KindSource"
+  },
+  "taskExportKindEdited": "Edited procedure: derived from a recording and changed by a person.",
+  "@taskExportKindEdited": {
+    "description": "#1866 task export (Word document): KindEdited"
+  },
+  "taskExportCompletenessComplete": "Complete: the recording was stopped by the person and every command received an answer.",
+  "@taskExportCompletenessComplete": {
+    "description": "#1866 task export (Word document): CompletenessComplete"
+  },
+  "taskExportCompletenessPartial": "Partial: the recording ended early or a command received no answer.",
+  "@taskExportCompletenessPartial": {
+    "description": "#1866 task export (Word document): CompletenessPartial"
+  },
+  "taskExportCompletenessInterrupted": "Interrupted: the app stopped while recording.",
+  "@taskExportCompletenessInterrupted": {
+    "description": "#1866 task export (Word document): CompletenessInterrupted"
+  },
+  "taskExportEndStopped": "Ended by the person who recorded it.",
+  "@taskExportEndStopped": {
+    "description": "#1866 task export (Word document): EndStopped"
+  },
+  "taskExportEndScopeChanged": "Ended because the account, workspace or installation changed.",
+  "@taskExportEndScopeChanged": {
+    "description": "#1866 task export (Word document): EndScopeChanged"
+  },
+  "taskExportEndLimitReached": "Ended because a step, size or duration limit was reached.",
+  "@taskExportEndLimitReached": {
+    "description": "#1866 task export (Word document): EndLimitReached"
+  },
+  "taskExportEndStorageFailed": "Ended because writing the recording failed.",
+  "@taskExportEndStorageFailed": {
+    "description": "#1866 task export (Word document): EndStorageFailed"
+  },
+  "taskExportEndInterrupted": "Ended because the app stopped.",
+  "@taskExportEndInterrupted": {
+    "description": "#1866 task export (Word document): EndInterrupted"
+  },
+  "taskExportPlatform": "Recorded on: {platform}",
+  "@taskExportPlatform": {
+    "description": "#1866 task export (Word document): Platform",
+    "placeholders": {
+      "platform": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportDuration": "Duration: {minutes} min {seconds} s",
+  "@taskExportDuration": {
+    "description": "#1866 task export (Word document): Duration",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportPauses": "{count, plural, =0{No pause} =1{Paused once} other{Paused {count} times}}",
+  "@taskExportPauses": {
+    "description": "#1866 task export (Word document): Pauses",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportVersion": "Recording format {schema}, action contract {contract}",
+  "@taskExportVersion": {
+    "description": "#1866 task export (Word document): Version",
+    "placeholders": {
+      "schema": {
+        "type": "int"
+      },
+      "contract": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportRevision": "Content revision: {revision}",
+  "@taskExportRevision": {
+    "description": "#1866 task export (Word document): Revision",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportPrereqSignedIn": "You are signed in.",
+  "@taskExportPrereqSignedIn": {
+    "description": "#1866 task export (Word document): PrereqSignedIn"
+  },
+  "taskExportPrereqWorkspaceMember": "You are a member of the workspace.",
+  "@taskExportPrereqWorkspaceMember": {
+    "description": "#1866 task export (Word document): PrereqWorkspaceMember"
+  },
+  "taskExportPrereqStartsOn": "Start on {screen}.",
+  "@taskExportPrereqStartsOn": {
+    "description": "#1866 task export (Word document): PrereqStartsOn",
+    "placeholders": {
+      "screen": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportPrereqBookablePlace": "At least one place can be booked.",
+  "@taskExportPrereqBookablePlace": {
+    "description": "#1866 task export (Word document): PrereqBookablePlace"
+  },
+  "taskExportPrereqUnknown": "A condition this version cannot describe.",
+  "@taskExportPrereqUnknown": {
+    "description": "#1866 task export (Word document): PrereqUnknown"
+  },
+  "taskExportSurfaceReserve": "the Reserve screen",
+  "@taskExportSurfaceReserve": {
+    "description": "#1866 task export (Word document): SurfaceReserve"
+  },
+  "taskExportSurfaceBookingSheet": "the booking sheet",
+  "@taskExportSurfaceBookingSheet": {
+    "description": "#1866 task export (Word document): SurfaceBookingSheet"
+  },
+  "taskExportSurfaceReservationDetail": "the reservation details",
+  "@taskExportSurfaceReservationDetail": {
+    "description": "#1866 task export (Word document): SurfaceReservationDetail"
+  },
+  "taskExportSurfaceAny": "any screen",
+  "@taskExportSurfaceAny": {
+    "description": "#1866 task export (Word document): SurfaceAny"
+  },
+  "taskExportSurfaceUnknown": "a screen this version cannot describe",
+  "@taskExportSurfaceUnknown": {
+    "description": "#1866 task export (Word document): SurfaceUnknown"
+  },
+  "taskExportOnScreen": "Screen: {screen}",
+  "@taskExportOnScreen": {
+    "description": "#1866 task export (Word document): OnScreen",
+    "placeholders": {
+      "screen": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportActionOpenReserve": "Open the Reserve screen.",
+  "@taskExportActionOpenReserve": {
+    "description": "#1866 task export (Word document): ActionOpenReserve"
+  },
+  "taskExportActionSelectDate": "Choose the date.",
+  "@taskExportActionSelectDate": {
+    "description": "#1866 task export (Word document): ActionSelectDate"
+  },
+  "taskExportActionSelectPeriod": "Choose the period.",
+  "@taskExportActionSelectPeriod": {
+    "description": "#1866 task export (Word document): ActionSelectPeriod"
+  },
+  "taskExportActionSwitchView": "Switch the view.",
+  "@taskExportActionSwitchView": {
+    "description": "#1866 task export (Word document): ActionSwitchView"
+  },
+  "taskExportActionSelectResource": "Choose a place.",
+  "@taskExportActionSelectResource": {
+    "description": "#1866 task export (Word document): ActionSelectResource"
+  },
+  "taskExportActionChangeField": "Change the field: {field}.",
+  "@taskExportActionChangeField": {
+    "description": "#1866 task export (Word document): ActionChangeField",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportActionConfirmBooking": "Confirm the booking.",
+  "@taskExportActionConfirmBooking": {
+    "description": "#1866 task export (Word document): ActionConfirmBooking"
+  },
+  "taskExportActionCancelReview": "Cancel the review without booking.",
+  "@taskExportActionCancelReview": {
+    "description": "#1866 task export (Word document): ActionCancelReview"
+  },
+  "taskExportActionViewDetails": "Open the reservation details.",
+  "@taskExportActionViewDetails": {
+    "description": "#1866 task export (Word document): ActionViewDetails"
+  },
+  "taskExportActionBack": "Go back.",
+  "@taskExportActionBack": {
+    "description": "#1866 task export (Word document): ActionBack"
+  },
+  "taskExportActionUnknown": "An action this version cannot describe.",
+  "@taskExportActionUnknown": {
+    "description": "#1866 task export (Word document): ActionUnknown"
+  },
+  "taskExportFieldDateRelation": "Date",
+  "@taskExportFieldDateRelation": {
+    "description": "#1866 task export (Word document): FieldDateRelation"
+  },
+  "taskExportFieldPeriod": "Period",
+  "@taskExportFieldPeriod": {
+    "description": "#1866 task export (Word document): FieldPeriod"
+  },
+  "taskExportFieldViewMode": "View",
+  "@taskExportFieldViewMode": {
+    "description": "#1866 task export (Word document): FieldViewMode"
+  },
+  "taskExportFieldResourceKind": "Kind of place",
+  "@taskExportFieldResourceKind": {
+    "description": "#1866 task export (Word document): FieldResourceKind"
+  },
+  "taskExportFieldForWhom": "For whom",
+  "@taskExportFieldForWhom": {
+    "description": "#1866 task export (Word document): FieldForWhom"
+  },
+  "taskExportFieldRepeat": "Repeat",
+  "@taskExportFieldRepeat": {
+    "description": "#1866 task export (Word document): FieldRepeat"
+  },
+  "taskExportFieldCheckIn": "Check in",
+  "@taskExportFieldCheckIn": {
+    "description": "#1866 task export (Word document): FieldCheckIn"
+  },
+  "taskExportFieldSeriesResult": "Series",
+  "@taskExportFieldSeriesResult": {
+    "description": "#1866 task export (Word document): FieldSeriesResult"
+  },
+  "taskExportFieldRefusal": "Reason",
+  "@taskExportFieldRefusal": {
+    "description": "#1866 task export (Word document): FieldRefusal"
+  },
+  "taskExportFieldTime": "Time",
+  "@taskExportFieldTime": {
+    "description": "#1866 task export (Word document): FieldTime"
+  },
+  "taskExportFieldAccessories": "Accessories",
+  "@taskExportFieldAccessories": {
+    "description": "#1866 task export (Word document): FieldAccessories"
+  },
+  "taskExportFieldUnknown": "a field this version cannot describe",
+  "@taskExportFieldUnknown": {
+    "description": "#1866 task export (Word document): FieldUnknown"
+  },
+  "taskExportDetail": "{field}: {value}",
+  "@taskExportDetail": {
+    "description": "#1866 task export (Word document): Detail",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportValueToday": "today",
+  "@taskExportValueToday": {
+    "description": "#1866 task export (Word document): ValueToday"
+  },
+  "taskExportValueTomorrow": "tomorrow",
+  "@taskExportValueTomorrow": {
+    "description": "#1866 task export (Word document): ValueTomorrow"
+  },
+  "taskExportValueLaterThisWeek": "later this week",
+  "@taskExportValueLaterThisWeek": {
+    "description": "#1866 task export (Word document): ValueLaterThisWeek"
+  },
+  "taskExportValueLater": "later",
+  "@taskExportValueLater": {
+    "description": "#1866 task export (Word document): ValueLater"
+  },
+  "taskExportValuePast": "a past day",
+  "@taskExportValuePast": {
+    "description": "#1866 task export (Word document): ValuePast"
+  },
+  "taskExportValueFullDay": "full day",
+  "@taskExportValueFullDay": {
+    "description": "#1866 task export (Word document): ValueFullDay"
+  },
+  "taskExportValueMorning": "morning",
+  "@taskExportValueMorning": {
+    "description": "#1866 task export (Word document): ValueMorning"
+  },
+  "taskExportValueAfternoon": "afternoon",
+  "@taskExportValueAfternoon": {
+    "description": "#1866 task export (Word document): ValueAfternoon"
+  },
+  "taskExportValueHours": "by the hour",
+  "@taskExportValueHours": {
+    "description": "#1866 task export (Word document): ValueHours"
+  },
+  "taskExportValueCustom": "custom",
+  "@taskExportValueCustom": {
+    "description": "#1866 task export (Word document): ValueCustom"
+  },
+  "taskExportValuePlan": "floor plan",
+  "@taskExportValuePlan": {
+    "description": "#1866 task export (Word document): ValuePlan"
+  },
+  "taskExportValueList": "list",
+  "@taskExportValueList": {
+    "description": "#1866 task export (Word document): ValueList"
+  },
+  "taskExportValueDesk": "a desk",
+  "@taskExportValueDesk": {
+    "description": "#1866 task export (Word document): ValueDesk"
+  },
+  "taskExportValueRoom": "a room",
+  "@taskExportValueRoom": {
+    "description": "#1866 task export (Word document): ValueRoom"
+  },
+  "taskExportValueOtherPlace": "another kind of place",
+  "@taskExportValueOtherPlace": {
+    "description": "#1866 task export (Word document): ValueOtherPlace"
+  },
+  "taskExportValueSelf": "myself",
+  "@taskExportValueSelf": {
+    "description": "#1866 task export (Word document): ValueSelf"
+  },
+  "taskExportValueOtherMember": "another member",
+  "@taskExportValueOtherMember": {
+    "description": "#1866 task export (Word document): ValueOtherMember"
+  },
+  "taskExportValueOnce": "once",
+  "@taskExportValueOnce": {
+    "description": "#1866 task export (Word document): ValueOnce"
+  },
+  "taskExportValueSeries": "as a series",
+  "@taskExportValueSeries": {
+    "description": "#1866 task export (Word document): ValueSeries"
+  },
+  "taskExportValueYes": "yes",
+  "@taskExportValueYes": {
+    "description": "#1866 task export (Word document): ValueYes"
+  },
+  "taskExportValueNo": "no",
+  "@taskExportValueNo": {
+    "description": "#1866 task export (Word document): ValueNo"
+  },
+  "taskExportValueAllBooked": "all booked",
+  "@taskExportValueAllBooked": {
+    "description": "#1866 task export (Word document): ValueAllBooked"
+  },
+  "taskExportValuePartiallyBooked": "partly booked",
+  "@taskExportValuePartiallyBooked": {
+    "description": "#1866 task export (Word document): ValuePartiallyBooked"
+  },
+  "taskExportValueConflict": "the place was already taken",
+  "@taskExportValueConflict": {
+    "description": "#1866 task export (Word document): ValueConflict"
+  },
+  "taskExportValuePolicy": "a booking rule",
+  "@taskExportValuePolicy": {
+    "description": "#1866 task export (Word document): ValuePolicy"
+  },
+  "taskExportValueQuota": "a quota",
+  "@taskExportValueQuota": {
+    "description": "#1866 task export (Word document): ValueQuota"
+  },
+  "taskExportValuePermission": "a missing permission",
+  "@taskExportValuePermission": {
+    "description": "#1866 task export (Word document): ValuePermission"
+  },
+  "taskExportValueClosed": "the workspace was closed",
+  "@taskExportValueClosed": {
+    "description": "#1866 task export (Word document): ValueClosed"
+  },
+  "taskExportValueOffline": "no connection",
+  "@taskExportValueOffline": {
+    "description": "#1866 task export (Word document): ValueOffline"
+  },
+  "taskExportValueOtherReason": "another reason",
+  "@taskExportValueOtherReason": {
+    "description": "#1866 task export (Word document): ValueOtherReason"
+  },
+  "taskExportValueWithheld": "not recorded",
+  "@taskExportValueWithheld": {
+    "description": "#1866 task export (Word document): ValueWithheld"
+  },
+  "taskExportResult": "Result: {outcome}",
+  "@taskExportResult": {
+    "description": "#1866 task export (Word document): Result",
+    "placeholders": {
+      "outcome": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportOutcomeConfirmed": "the booking was confirmed",
+  "@taskExportOutcomeConfirmed": {
+    "description": "#1866 task export (Word document): OutcomeConfirmed"
+  },
+  "taskExportOutcomeRequested": "the booking was requested and waits for a decision",
+  "@taskExportOutcomeRequested": {
+    "description": "#1866 task export (Word document): OutcomeRequested"
+  },
+  "taskExportOutcomeSeriesBooked": "the series was booked",
+  "@taskExportOutcomeSeriesBooked": {
+    "description": "#1866 task export (Word document): OutcomeSeriesBooked"
+  },
+  "taskExportOutcomeRefused": "the booking was refused",
+  "@taskExportOutcomeRefused": {
+    "description": "#1866 task export (Word document): OutcomeRefused"
+  },
+  "taskExportOutcomeUnknown": "no answer could be confirmed; the outcome is unknown",
+  "@taskExportOutcomeUnknown": {
+    "description": "#1866 task export (Word document): OutcomeUnknown"
+  },
+  "taskExportOutcomeUnregistered": "an outcome this version cannot describe",
+  "@taskExportOutcomeUnregistered": {
+    "description": "#1866 task export (Word document): OutcomeUnregistered"
+  },
+  "taskExportNoResult": "No result was recorded for this command.",
+  "@taskExportNoResult": {
+    "description": "#1866 task export (Word document): NoResult"
+  },
+  "taskExportAuthored": "Added while editing: not observed by the recorder.",
+  "@taskExportAuthored": {
+    "description": "#1866 task export (Word document): Authored"
+  },
+  "taskExportNote": "Note written by the person who recorded (their own words): {note}",
+  "@taskExportNote": {
+    "description": "#1866 task export (Word document): Note",
+    "placeholders": {
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportNoteOmitted": "A personal note was left out of this document.",
+  "@taskExportNoteOmitted": {
+    "description": "#1866 task export (Word document): NoteOmitted"
+  },
+  "taskExportExcluded": "A protected screen was visited ({category}); nothing on it was recorded.",
+  "@taskExportExcluded": {
+    "description": "#1866 task export (Word document): Excluded",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportProtectedAuthentication": "sign-in",
+  "@taskExportProtectedAuthentication": {
+    "description": "#1866 task export (Word document): ProtectedAuthentication"
+  },
+  "taskExportProtectedPayment": "payment",
+  "@taskExportProtectedPayment": {
+    "description": "#1866 task export (Word document): ProtectedPayment"
+  },
+  "taskExportProtectedProvider": "provider",
+  "@taskExportProtectedProvider": {
+    "description": "#1866 task export (Word document): ProtectedProvider"
+  },
+  "taskExportProtectedSecrets": "secrets",
+  "@taskExportProtectedSecrets": {
+    "description": "#1866 task export (Word document): ProtectedSecrets"
+  },
+  "taskExportProtectedMessenger": "messages",
+  "@taskExportProtectedMessenger": {
+    "description": "#1866 task export (Word document): ProtectedMessenger"
+  },
+  "taskExportProtectedIdentity": "identity",
+  "@taskExportProtectedIdentity": {
+    "description": "#1866 task export (Word document): ProtectedIdentity"
+  },
+  "taskExportProtectedOperator": "operator",
+  "@taskExportProtectedOperator": {
+    "description": "#1866 task export (Word document): ProtectedOperator"
+  },
+  "taskExportUnrecorded": "A step this version cannot describe.",
+  "@taskExportUnrecorded": {
+    "description": "#1866 task export (Word document): Unrecorded"
+  },
+  "taskExportLimitValues": "Values that were typed or chosen are never recorded: only their kind appears, and \"not recorded\" stands in for anything else.",
+  "@taskExportLimitValues": {
+    "description": "#1866 task export (Word document): LimitValues"
+  },
+  "taskExportLimitNoIllustrations": "This document has no illustrations.",
+  "@taskExportLimitNoIllustrations": {
+    "description": "#1866 task export (Word document): LimitNoIllustrations"
+  },
+  "taskExportLimitNotRunnable": "Some steps come from a newer version and cannot be described here.",
+  "@taskExportLimitNotRunnable": {
+    "description": "#1866 task export (Word document): LimitNotRunnable"
+  },
+  "taskExportLimitIncomplete": "The recording is incomplete: what happened after the last step shown is not known.",
+  "@taskExportLimitIncomplete": {
+    "description": "#1866 task export (Word document): LimitIncomplete"
+  },
+  "taskExportLimitEdited": "Steps marked as added while editing were written by a person, not observed.",
+  "@taskExportLimitEdited": {
+    "description": "#1866 task export (Word document): LimitEdited"
+  },
+  "taskExportFooter": "Page {page} of {pages}",
+  "@taskExportFooter": {
+    "description": "#1866 task export (Word document): Footer",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      },
+      "pages": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportSaved": "Word document saved: {file}",
+  "@taskExportSaved": {
+    "description": "#1866 task export (Word document): Saved",
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportSaveFailed": "The Word document could not be saved. The recording is unchanged.",
+  "@taskExportSaveFailed": {
+    "description": "#1866 task export (Word document): SaveFailed"
+  },
+  "taskExportRefused": "This recording cannot be exported as a Word document.",
+  "@taskExportRefused": {
+    "description": "#1866 task export (Word document): Refused"
+  }
+}
