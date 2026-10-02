@@ -13032,7 +13032,7 @@
   "@eventTypeRoleChange": {
     "description": "Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card"
   },
-  "eventRolePromote": "{actor} promotes a member to admin",
+  "eventRolePromote": "{actor} asks to give the Administrator role",
   "@eventRolePromote": {
     "description": "Feed line of a role-change event that grants admin",
     "placeholders": {
@@ -13041,7 +13041,7 @@
       }
     }
   },
-  "eventRoleDemote": "{actor} demotes an admin to member",
+  "eventRoleDemote": "{actor} asks to take back the Administrator role",
   "@eventRoleDemote": {
     "description": "Feed line of a role-change event that removes admin",
     "placeholders": {
@@ -14200,6 +14200,36 @@
   "roleTakeBackFailed": "The role was not taken back.",
   "@roleTakeBackFailed": {
     "description": "#2085 giving roles: roleTakeBackFailed"
+  },
+  "eventRoleGiven": "{actor} gives the role {role} to {member}",
+  "@eventRoleGiven": {
+    "description": "#2085 giving roles: eventRoleGiven",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
+  "eventRoleTakenBack": "{actor} takes back the role {role} from {member}",
+  "@eventRoleTakenBack": {
+    "description": "#2085 giving roles: eventRoleTakenBack",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
   },
   "rolesOfSpaceTitle": "Roles this space defines",
   "@rolesOfSpaceTitle": {
