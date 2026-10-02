@@ -20904,6 +20904,84 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #1922 reminder evidence: reminderHistoryTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder history'**
+  String get reminderHistoryTitle;
+
+  /// #1922 reminder evidence: reminderHistoryRefresh
+  ///
+  /// In en, this message translates to:
+  /// **'Check delivery again'**
+  String get reminderHistoryRefresh;
+
+  /// #1922 reminder evidence: reminderHistoryLine
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level} · {origin} · {date}'**
+  String reminderHistoryLine(int level, String origin, String date);
+
+  /// #1922 reminder evidence: reminderStatusPrepared
+  ///
+  /// In en, this message translates to:
+  /// **'Prepared'**
+  String get reminderStatusPrepared;
+
+  /// #1922 reminder evidence: reminderStatusQueued
+  ///
+  /// In en, this message translates to:
+  /// **'Handed to the push service'**
+  String get reminderStatusQueued;
+
+  /// #1922 reminder evidence: reminderStatusAccepted
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted by the push service — not proof it was read'**
+  String get reminderStatusAccepted;
+
+  /// #1922 reminder evidence: reminderStatusDeclared
+  ///
+  /// In en, this message translates to:
+  /// **'Shared by the sender — their statement, not a receipt'**
+  String get reminderStatusDeclared;
+
+  /// #1922 reminder evidence: reminderStatusFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Not delivered'**
+  String get reminderStatusFailed;
+
+  /// #1922 reminder evidence: reminderStatusUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'No answer from the push service'**
+  String get reminderStatusUnknown;
+
+  /// #1922 reminder evidence: reminderStatusLegacy
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded before delivery was tracked — unknown'**
+  String get reminderStatusLegacy;
+
+  /// #1922 reminder evidence: reminderOriginManual
+  ///
+  /// In en, this message translates to:
+  /// **'by hand'**
+  String get reminderOriginManual;
+
+  /// #1922 reminder evidence: reminderOriginAutomatic
+  ///
+  /// In en, this message translates to:
+  /// **'automatic'**
+  String get reminderOriginAutomatic;
+
+  /// #1922 reminder evidence: reminderOriginLegacy
+  ///
+  /// In en, this message translates to:
+  /// **'earlier'**
+  String get reminderOriginLegacy;
+
   /// #966 report guide: reportGuideTitle
   ///
   /// In en, this message translates to:

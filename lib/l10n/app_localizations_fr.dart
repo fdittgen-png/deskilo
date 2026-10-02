@@ -12216,6 +12216,51 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String get reminderHistoryTitle => 'Historique des relances';
+
+  @override
+  String get reminderHistoryRefresh => 'Vérifier à nouveau l\'envoi';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Niveau $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Préparée';
+
+  @override
+  String get reminderStatusQueued => 'Confiée au service de notifications';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Acceptée par le service de notifications — ce n\'est pas une preuve de lecture';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Partagée par l\'expéditeur — sa déclaration, pas un accusé de réception';
+
+  @override
+  String get reminderStatusFailed => 'Non distribuée';
+
+  @override
+  String get reminderStatusUnknown =>
+      'Aucune réponse du service de notifications';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Enregistrée avant le suivi de l\'envoi — inconnu';
+
+  @override
+  String get reminderOriginManual => 'à la main';
+
+  @override
+  String get reminderOriginAutomatic => 'automatique';
+
+  @override
+  String get reminderOriginLegacy => 'antérieure';
+
+  @override
   String get reportGuideTitle => 'Champs et balisage';
 
   @override

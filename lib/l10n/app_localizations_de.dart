@@ -12198,6 +12198,51 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
 
   @override
+  String get reminderHistoryTitle => 'Mahnverlauf';
+
+  @override
+  String get reminderHistoryRefresh => 'Zustellung erneut prüfen';
+
+  @override
+  String reminderHistoryLine(int level, String origin, String date) {
+    return 'Stufe $level · $origin · $date';
+  }
+
+  @override
+  String get reminderStatusPrepared => 'Vorbereitet';
+
+  @override
+  String get reminderStatusQueued => 'An den Benachrichtigungsdienst übergeben';
+
+  @override
+  String get reminderStatusAccepted =>
+      'Vom Benachrichtigungsdienst angenommen — kein Nachweis, dass sie gelesen wurde';
+
+  @override
+  String get reminderStatusDeclared =>
+      'Vom Absender geteilt — seine Angabe, keine Empfangsbestätigung';
+
+  @override
+  String get reminderStatusFailed => 'Nicht zugestellt';
+
+  @override
+  String get reminderStatusUnknown =>
+      'Keine Antwort des Benachrichtigungsdienstes';
+
+  @override
+  String get reminderStatusLegacy =>
+      'Vor der Zustellverfolgung erfasst — unbekannt';
+
+  @override
+  String get reminderOriginManual => 'von Hand';
+
+  @override
+  String get reminderOriginAutomatic => 'automatisch';
+
+  @override
+  String get reminderOriginLegacy => 'früher';
+
+  @override
   String get reportGuideTitle => 'Platzhalter und Markup';
 
   @override
