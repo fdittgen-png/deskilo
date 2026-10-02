@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0337 (#2085) -- the flag behind giving roles.
+-- 0338 (#2085) -- the flag behind giving roles.
 --
 -- `roleAssignment` (Core, default ON, under roleManagement) joins the
 -- server's registry. It gates the screens that show where a role is
@@ -1002,4 +1002,4 @@ on conflict (key) where owner_workspace_id is null do update
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(337);
+select public.set_deskilo_schema_version(338);
