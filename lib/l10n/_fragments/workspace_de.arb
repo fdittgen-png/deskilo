@@ -33,9 +33,9 @@
   "workspaceCodeCopy": "ID kopieren",
   "workspaceCodeCopied": "Kopiert",
   "inviteRoleMember": "Mitglieder-Einladung",
-  "inviteRoleAdmin": "Admin-Einladung",
+  "inviteRoleAdmin": "Einladung als Administrator:in",
   "inviteAdminExplainer": "Dieser Code ist einmalig nutzbar: Er lässt EINE Person als Admin beitreten und verfällt dann. Gib ihn nur der Person, für die er bestimmt ist.",
-  "inviteAdminNewCode": "Neuer Admin-Code",
+  "inviteAdminNewCode": "Neuer Code für Administrator:innen",
   "inviteOwnerNote": "Es gibt keine Eigentümer-Einladung — nur ein Eigentümer kann Eigentum vergeben, unter Mitglieder & Tarife.",
   "scanJoinTitle": "Workspace-QR scannen",
   "scanJoinHelp": "Richte die Kamera auf den Einladungs-QR — du siehst den Bereich, bevor du beitrittst.",
@@ -214,11 +214,11 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
-  "rolesTitle": "Rollenverwaltung",
+  "rolesTitle": "Rollen",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "Die Inhaberin hält immer alle Berechtigungen. Lege hier fest, was die anderen Rollen dürfen — ein Co-Inhaber kann weniger halten als ein Inhaber.",
+  "rolesIntroEditor": "Hier ist jede Person Mitglied. Eine Rolle ergänzt, was ihre Inhaber dürfen, und nimmt nie etwas weg. Die Inhaberin hält immer alle Berechtigungen; eine Mit-Inhaberin kann weniger halten.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
@@ -234,11 +234,11 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleAdmin": "Admin",
+  "roleAdmin": "Administrator:in",
   "@roleAdmin": {
     "description": "Role label (#513)"
   },
-  "roleMember": "Mitglied",
+  "roleMember": "Alle Mitglieder",
   "@roleMember": {
     "description": "Role label (#513)"
   },

@@ -1546,12 +1546,12 @@
   "consumptionRefusedQuantity": "La cantidad debe estar entre 1 y 999. No se registró nada.",
   "consumptionRefusedPeriod": "El periodo de facturación debe ser un mes (AAAA-MM). No se registró nada.",
   "coOwnerAction": "Copropiedad",
-  "coOwnerNone": "Sin rol de copropietario",
+  "coOwnerNone": "Sin copropiedad",
   "coOwnerActive": "Copropietario activo — permisos de propietario ya, sucesión automática",
-  "coOwnerPassive": "Copropietario pasivo — se convierte en propietario al activarlo o cuando el propietario se va",
+  "coOwnerPassive": "Sucesor — se convierte en propietario al activarlo o cuando el propietario se va",
   "coOwnerActivate": "Promover a propietario ahora",
   "memberCoOwnerChip": "Copropietario",
-  "memberCoOwnerPassiveChip": "Copropietario (pasivo)",
+  "memberCoOwnerPassiveChip": "Sucesor",
   "courtesyLabel": "Tratamiento",
   "@courtesyLabel": {
     "description": "#912 courtesy title: courtesyLabel"
@@ -5184,7 +5184,7 @@
   "membersTitle": "Miembros y planes",
   "membersPlanNone": "Sin plan",
   "memberRoleOwner": "Propietario",
-  "memberRoleAdmin": "Admin",
+  "memberRoleAdmin": "Administrador/a",
   "memberStatusPaused": "En pausa",
   "memberStatusExited": "Salido",
   "membersInvite": "Invitar a un miembro",
@@ -7221,8 +7221,8 @@
   "eventTypeRoleChange": "Cambio de rol",
   "eventRolePromote": "{actor} promueve a un miembro a admin",
   "eventRoleDemote": "{actor} degrada a un admin a miembro",
-  "memberMakeAdmin": "Hacer admin",
-  "memberMakeMember": "Hacer miembro normal",
+  "memberMakeAdmin": "Dar el rol Administrador/a",
+  "memberMakeMember": "Retirar el rol Administrador/a",
   "memberRoleChangeRequested": "Cambio de rol enviado para validación.",
   "eventTypeQuota": "Medias jornadas extra",
   "eventQuotaRequested": "{actor} solicita {halfDays} medias jornadas extra para {period}",
@@ -8007,11 +8007,142 @@
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
+  "featureRoleAssignmentTitle": "Asignación de roles",
+  "@featureRoleAssignmentTitle": {
+    "description": "#2085 giving roles: featureRoleAssignmentTitle"
+  },
+  "featureRoleAssignmentDesc": "Muestra una sección Roles en la página de cada miembro para dar o retirar un rol, los miembros de cada rol, y permite a cada miembro ver lo que puede hacer aquí.",
+  "@featureRoleAssignmentDesc": {
+    "description": "#2085 giving roles: featureRoleAssignmentDesc"
+  },
+  "memberRolesTitle": "Roles",
+  "@memberRolesTitle": {
+    "description": "#2085 giving roles: memberRolesTitle"
+  },
+  "memberRolesAdd": "Añadir un rol",
+  "@memberRolesAdd": {
+    "description": "#2085 giving roles: memberRolesAdd"
+  },
+  "memberRolesNone": "Ningún rol: todo lo que puede hacer un miembro.",
+  "@memberRolesNone": {
+    "description": "#2085 giving roles: memberRolesNone"
+  },
+  "memberRolesWhatTheyCanDo": "Lo que esta persona puede hacer aquí",
+  "@memberRolesWhatTheyCanDo": {
+    "description": "#2085 giving roles: memberRolesWhatTheyCanDo"
+  },
+  "roleAssignSheetTitle": "Dar un rol a {name}",
+  "@roleAssignSheetTitle": {
+    "description": "#2085 giving roles: roleAssignSheetTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roleAssignQuorumHint": "Surte efecto una vez validado.",
+  "@roleAssignQuorumHint": {
+    "description": "#2085 giving roles: roleAssignQuorumHint"
+  },
+  "roleAssignImmediateHint": "Surte efecto de inmediato.",
+  "@roleAssignImmediateHint": {
+    "description": "#2085 giving roles: roleAssignImmediateHint"
+  },
+  "roleAssignNothing": "No queda ningún rol por dar.",
+  "@roleAssignNothing": {
+    "description": "#2085 giving roles: roleAssignNothing"
+  },
+  "roleRefusalNotPermitted": "Solo alguien que gestiona los roles puede dar este.",
+  "@roleRefusalNotPermitted": {
+    "description": "#2085 giving roles: roleRefusalNotPermitted"
+  },
+  "roleRefusalOwnerOnly": "Solo el propietario da un rol que gestiona los roles.",
+  "@roleRefusalOwnerOnly": {
+    "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRefusalExceedsYours": "Este rol puede hacer cosas que tú no puedes, así que solo el propietario lo da.",
+  "@roleRefusalExceedsYours": {
+    "description": "#2085 giving roles: roleRefusalExceedsYours"
+  },
+  "roleRefusalNotAssignable": "Este miembro no puede tener este rol.",
+  "@roleRefusalNotAssignable": {
+    "description": "#2085 giving roles: roleRefusalNotAssignable"
+  },
+  "roleGiven": "Rol asignado.",
+  "@roleGiven": {
+    "description": "#2085 giving roles: roleGiven"
+  },
+  "roleTakenBack": "Rol retirado.",
+  "@roleTakenBack": {
+    "description": "#2085 giving roles: roleTakenBack"
+  },
+  "roleHoldersAdd": "Añadir un miembro",
+  "@roleHoldersAdd": {
+    "description": "#2085 giving roles: roleHoldersAdd"
+  },
+  "rolesOwnRolesLink": "Los roles de este espacio",
+  "@rolesOwnRolesLink": {
+    "description": "#2085 giving roles: rolesOwnRolesLink"
+  },
+  "whatYouCanDoTitle": "Lo que puedes hacer aquí",
+  "@whatYouCanDoTitle": {
+    "description": "#2085 giving roles: whatYouCanDoTitle"
+  },
+  "whatTheyCanDoTitle": "Lo que {name} puede hacer aquí",
+  "@whatTheyCanDoTitle": {
+    "description": "#2085 giving roles: whatTheyCanDoTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoIntro": "Aquí todas las personas son miembros: reservar, registrar la llegada, los mensajes y la propia cuenta. Los roles añaden el resto.",
+  "@whatYouCanDoIntro": {
+    "description": "#2085 giving roles: whatYouCanDoIntro"
+  },
+  "whatYouCanDoFromOwner": "Como propietario: todo",
+  "@whatYouCanDoFromOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromOwner"
+  },
+  "whatYouCanDoFromCoOwner": "Como copropietario",
+  "@whatYouCanDoFromCoOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromCoOwner"
+  },
+  "whatYouCanDoFromAdministrator": "Del rol Administrador/a",
+  "@whatYouCanDoFromAdministrator": {
+    "description": "#2085 giving roles: whatYouCanDoFromAdministrator"
+  },
+  "whatYouCanDoFromEveryMember": "Como todos los miembros",
+  "@whatYouCanDoFromEveryMember": {
+    "description": "#2085 giving roles: whatYouCanDoFromEveryMember"
+  },
+  "whatYouCanDoFromRole": "Del rol {role}",
+  "@whatYouCanDoFromRole": {
+    "description": "#2085 giving roles: whatYouCanDoFromRole",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoNothingMore": "Nada más que un miembro.",
+  "@whatYouCanDoNothingMore": {
+    "description": "#2085 giving roles: whatYouCanDoNothingMore"
+  },
+  "roleGiveFailed": "El rol no se asignó.",
+  "@roleGiveFailed": {
+    "description": "#2085 giving roles: roleGiveFailed"
+  },
+  "roleTakeBackFailed": "El rol no se retiró.",
+  "@roleTakeBackFailed": {
+    "description": "#2085 giving roles: roleTakeBackFailed"
+  },
   "rolesOfSpaceTitle": "Los roles de este espacio",
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
-  "rolesOfSpaceSubtitle": "Cada uno añade permisos a los del rol de un miembro. Ninguno quita nada, y una propietaria los conserva todos.",
+  "rolesOfSpaceSubtitle": "Cada uno añade permisos a lo que ya pueden hacer quienes lo tienen. Ninguno quita nada, y la propietaria conserva siempre todos los permisos.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -8060,7 +8191,7 @@
   "@roleEditorSaveFailed": {
     "description": "#1528 the roles of a space: roleEditorSaveFailed"
   },
-  "roleEditorHolders": "Quién lo tiene",
+  "roleEditorHolders": "Miembros con este rol",
   "@roleEditorHolders": {
     "description": "#1528 the roles of a space: roleEditorHolders"
   },
@@ -9047,9 +9178,9 @@
   "workspaceCodeCopy": "Copiar ID",
   "workspaceCodeCopied": "Copiado",
   "inviteRoleMember": "Invitación de miembro",
-  "inviteRoleAdmin": "Invitación de admin",
+  "inviteRoleAdmin": "Invitación de administrador/a",
   "inviteAdminExplainer": "Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entrégalo solo a la persona a la que está destinado.",
-  "inviteAdminNewCode": "Nuevo código de admin",
+  "inviteAdminNewCode": "Nuevo código de administrador/a",
   "inviteOwnerNote": "No existe invitación de propietario — solo un propietario puede conceder la propiedad, en Miembros y planes.",
   "scanJoinTitle": "Escanear QR del espacio",
   "scanJoinHelp": "Apunta la cámara al QR de invitación — verás el espacio antes de unirte.",
@@ -9228,11 +9359,11 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
-  "rolesTitle": "Gestión de roles",
+  "rolesTitle": "Roles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "El propietario siempre tiene todos los permisos. Decide aquí qué pueden hacer los demás roles: un copropietario puede tener menos que un propietario.",
+  "rolesIntroEditor": "Aquí todas las personas son miembros. Un rol añade lo que pueden hacer quienes lo tienen y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
@@ -9248,11 +9379,11 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleAdmin": "Admin",
+  "roleAdmin": "Administrador/a",
   "@roleAdmin": {
     "description": "Role label (#513)"
   },
-  "roleMember": "Miembro",
+  "roleMember": "Todos los miembros",
   "@roleMember": {
     "description": "Role label (#513)"
   },

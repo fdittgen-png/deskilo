@@ -48,4 +48,8 @@ final class RouterProvider
   }
 }
 
+<<<<<<< HEAD
 String _$routerHash() => r'0469b4392d70f3f0f6d0fe61f696930643cb296f';
+=======
+String _$routerHash() => r'6da082f2faf9a0f41534310cd13a500fdc102cb9';
+>>>>>>> origin/master

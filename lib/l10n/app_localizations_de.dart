@@ -2394,7 +2394,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get coOwnerAction => 'Mit-Inhaberschaft';
 
   @override
-  String get coOwnerNone => 'Keine Mit-Inhaber-Rolle';
+  String get coOwnerNone => 'Keine Mit-Inhaberschaft';
 
   @override
   String get coOwnerActive =>
@@ -2402,7 +2402,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get coOwnerPassive =>
-      'Passive Mit-Inhaberin — wird Inhaberin bei Aktivierung oder wenn der Inhaber geht';
+      'Nachfolgerin — wird Inhaberin bei Aktivierung oder wenn der Inhaber geht';
 
   @override
   String get coOwnerActivate => 'Jetzt zur Inhaberin machen';
@@ -2411,7 +2411,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberCoOwnerChip => 'Mit-Inhaberin';
 
   @override
-  String get memberCoOwnerPassiveChip => 'Mit-Inhaberin (passiv)';
+  String get memberCoOwnerPassiveChip => 'Nachfolgerin';
 
   @override
   String get courtesyLabel => 'Anrede';
@@ -8855,7 +8855,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberRoleOwner => 'Inhaber';
 
   @override
-  String get memberRoleAdmin => 'Admin';
+  String get memberRoleAdmin => 'Administrator:in';
 
   @override
   String get memberStatusPaused => 'Pausiert';
@@ -12172,10 +12172,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get memberMakeAdmin => 'Zum Admin machen';
+  String get memberMakeAdmin => 'Rolle Administrator:in geben';
 
   @override
-  String get memberMakeMember => 'Zum normalen Mitglied machen';
+  String get memberMakeMember => 'Rolle Administrator:in entziehen';
 
   @override
   String get memberRoleChangeRequested =>
@@ -12985,11 +12985,110 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die USt-IdNr. des Kunden fehlt — eine Reverse-Charge-Rechnung muss sie nennen.';
 
   @override
+  String get featureRoleAssignmentTitle => 'Rollen vergeben';
+
+  @override
+  String get featureRoleAssignmentDesc =>
+      'Zeigt auf der Seite jedes Mitglieds einen Bereich Rollen, um eine Rolle zu geben oder zu entziehen, die Mitglieder jeder Rolle, und lässt jedes Mitglied sehen, was es hier tun kann.';
+
+  @override
+  String get memberRolesTitle => 'Rollen';
+
+  @override
+  String get memberRolesAdd => 'Rolle hinzufügen';
+
+  @override
+  String get memberRolesNone => 'Keine Rolle: alles, was ein Mitglied kann.';
+
+  @override
+  String get memberRolesWhatTheyCanDo => 'Was diese Person hier tun kann';
+
+  @override
+  String roleAssignSheetTitle(String name) {
+    return '$name eine Rolle geben';
+  }
+
+  @override
+  String get roleAssignQuorumHint => 'Wirkt, sobald es freigegeben ist.';
+
+  @override
+  String get roleAssignImmediateHint => 'Wirkt sofort.';
+
+  @override
+  String get roleAssignNothing => 'Es gibt keine Rolle mehr zu vergeben.';
+
+  @override
+  String get roleRefusalNotPermitted =>
+      'Nur wer Rollen verwaltet, kann diese vergeben.';
+
+  @override
+  String get roleRefusalOwnerOnly =>
+      'Nur die Inhaberin vergibt eine Rolle, die Rollen verwaltet.';
+
+  @override
+  String get roleRefusalExceedsYours =>
+      'Diese Rolle darf mehr als du, deshalb vergibt sie nur die Inhaberin.';
+
+  @override
+  String get roleRefusalNotAssignable =>
+      'Dieses Mitglied kann diese Rolle nicht haben.';
+
+  @override
+  String get roleGiven => 'Rolle vergeben.';
+
+  @override
+  String get roleTakenBack => 'Rolle entzogen.';
+
+  @override
+  String get roleHoldersAdd => 'Mitglied hinzufügen';
+
+  @override
+  String get rolesOwnRolesLink => 'Die Rollen dieses Bereichs';
+
+  @override
+  String get whatYouCanDoTitle => 'Was du hier tun kannst';
+
+  @override
+  String whatTheyCanDoTitle(String name) {
+    return 'Was $name hier tun kann';
+  }
+
+  @override
+  String get whatYouCanDoIntro =>
+      'Hier ist jede Person Mitglied: buchen, einchecken, Nachrichten und das eigene Konto. Rollen ergänzen den Rest.';
+
+  @override
+  String get whatYouCanDoFromOwner => 'Als Inhaberin: alles';
+
+  @override
+  String get whatYouCanDoFromCoOwner => 'Als Mit-Inhaberin';
+
+  @override
+  String get whatYouCanDoFromAdministrator => 'Aus der Rolle Administrator:in';
+
+  @override
+  String get whatYouCanDoFromEveryMember => 'Wie alle Mitglieder';
+
+  @override
+  String whatYouCanDoFromRole(String role) {
+    return 'Aus der Rolle $role';
+  }
+
+  @override
+  String get whatYouCanDoNothingMore => 'Nicht mehr als ein Mitglied.';
+
+  @override
+  String get roleGiveFailed => 'Die Rolle wurde nicht vergeben.';
+
+  @override
+  String get roleTakeBackFailed => 'Die Rolle wurde nicht entzogen.';
+
+  @override
   String get rolesOfSpaceTitle => 'Rollen dieses Bereichs';
 
   @override
   String get rolesOfSpaceSubtitle =>
-      'Jede ergänzt die Rechte der Rolle eines Mitglieds. Keine nimmt etwas weg, und eine Inhaberin behält alle.';
+      'Jede ergänzt Rechte zu dem, was ihre Inhaber schon dürfen. Keine nimmt etwas weg, und die Inhaberin behält immer alle Rechte.';
 
   @override
   String get rolesOfSpaceEmpty => 'Noch keine Rollen.';
@@ -13025,7 +13124,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get roleEditorSaveFailed => 'Die Rolle wurde nicht gespeichert.';
 
   @override
-  String get roleEditorHolders => 'Wer sie hat';
+  String get roleEditorHolders => 'Mitglieder mit dieser Rolle';
 
   @override
   String get roleEditorNobody => 'Noch niemand.';
@@ -14537,14 +14636,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get inviteRoleMember => 'Mitglieder-Einladung';
 
   @override
-  String get inviteRoleAdmin => 'Admin-Einladung';
+  String get inviteRoleAdmin => 'Einladung als Administrator:in';
 
   @override
   String get inviteAdminExplainer =>
       'Dieser Code ist einmalig nutzbar: Er lässt EINE Person als Admin beitreten und verfällt dann. Gib ihn nur der Person, für die er bestimmt ist.';
 
   @override
-  String get inviteAdminNewCode => 'Neuer Admin-Code';
+  String get inviteAdminNewCode => 'Neuer Code für Administrator:innen';
 
   @override
   String get inviteOwnerNote =>
@@ -14850,11 +14949,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die zentrale Rolle→Berechtigung-Matrix: Die Inhaberin entscheidet, welche Rolle welche Berechtigung hält; alle anderen lesen ihre eigenen. Aus: Es gelten einfach die Standardwerte.';
 
   @override
-  String get rolesTitle => 'Rollenverwaltung';
+  String get rolesTitle => 'Rollen';
 
   @override
   String get rolesIntroEditor =>
-      'Die Inhaberin hält immer alle Berechtigungen. Lege hier fest, was die anderen Rollen dürfen — ein Co-Inhaber kann weniger halten als ein Inhaber.';
+      'Hier ist jede Person Mitglied. Eine Rolle ergänzt, was ihre Inhaber dürfen, und nimmt nie etwas weg. Die Inhaberin hält immer alle Berechtigungen; eine Mit-Inhaberin kann weniger halten.';
 
   @override
   String get rolesIntroReadOnly =>
@@ -14867,10 +14966,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get roleOwner => 'Inhaber';
 
   @override
-  String get roleAdmin => 'Admin';
+  String get roleAdmin => 'Administrator:in';
 
   @override
-  String get roleMember => 'Mitglied';
+  String get roleMember => 'Alle Mitglieder';
 
   @override
   String get permManageRoles => 'Rollen & Berechtigungen verwalten';
