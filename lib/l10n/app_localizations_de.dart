@@ -12930,6 +12930,31 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Reservierung ist nicht mehr eingecheckt — sie wurde inzwischen ausgecheckt oder abgeschlossen.';
 
   @override
+  String get listWholeReservable => 'Als Ganzes reservierbar';
+
+  @override
+  String listCoversTables(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Tische',
+      one: '1 Tisch',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String listCoversSeats(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Plätze',
+      one: '1 Platz',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get reserveMonthView => 'Monat';
 
   @override

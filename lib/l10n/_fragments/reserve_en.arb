@@ -8,6 +8,28 @@
   "@bookingNoLongerCheckedIn": {
     "description": "#1908 — a checkout lost a race: the reservation was already checked out or closed by the day-end sweep"
   },
+  "listWholeReservable": "Reservable as a whole",
+  "@listWholeReservable": {
+    "description": "#1825 — reserve list: a header whose space this member can reserve as a whole"
+  },
+  "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
+  "@listCoversTables": {
+    "description": "#1825 — what a whole-space reservation includes: its tables",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listCoversSeats": "{count, plural, =1{1 seat} other{{count} seats}}",
+  "@listCoversSeats": {
+    "description": "#1825 — what a whole-space reservation includes: its seats",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reserveMonthView": "Month",
   "@reserveMonthView": {
     "description": "Reserve hub view segment: month availability calendar (#7)"
@@ -127,11 +149,29 @@
     }
   },
   "bookingHorizonError": "Too far ahead — bookings are open {days} days in advance.",
-  "@bookingHorizonError": {"placeholders": {"days": {"type": "int"}}},
+  "@bookingHorizonError": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "bookingTooShortError": "Too short — a booking lasts at least {minutes} minutes.",
-  "@bookingTooShortError": {"placeholders": {"minutes": {"type": "int"}}},
+  "@bookingTooShortError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "bookingTooLongError": "Too long — a booking lasts at most {minutes} minutes.",
-  "@bookingTooLongError": {"placeholders": {"minutes": {"type": "int"}}},
+  "@bookingTooLongError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "legendFree": "Free",
   "legendReserved": "Reserved",
   "legendOccupied": "Checked in",
@@ -164,7 +204,13 @@
   "legendClosed": "Closed day",
   "reserveClosedShort": "Closed",
   "planCheckOutFor": "Check out {name}",
-  "@planCheckOutFor": {"placeholders": {"name": {"type": "String"}}},
+  "@planCheckOutFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
   "bookingGateBlocked": "Not bookable as chosen"
 }
