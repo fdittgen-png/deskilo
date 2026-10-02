@@ -5,9 +5,7 @@
 // can name its holder. One rule for the plan's space sheet and the
 // reserve list; moved here unchanged from space_scan (#622, #1087). The
 // server re-checks everything (offices/levels elsewhere, series, races).
-import '../../plan/domain/desk.dart';
 import '../../plan/domain/floor_plan.dart';
-import '../../plan/domain/seat.dart';
 import 'reservation.dart';
 import 'space_code.dart';
 
@@ -26,8 +24,8 @@ Reservation? wholeSpaceBlocking({
 }) {
   bool inWindow(Reservation r) => r.coversRange(from, to);
   bool same(String? a, String? b) => b != null && a == b;
-  final desks = plan?.desks ?? const <Desk>[];
-  final seats = plan?.seats ?? const <Seat>[];
+  final desks = plan?.desks ?? const [];
+  final seats = plan?.seats ?? const [];
   final seatIds = switch (kind) {
     SpaceKind.desk => {
       for (final s in seats)
