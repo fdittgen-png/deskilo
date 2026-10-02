@@ -30,7 +30,7 @@
   "@privacyTitle": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "Vos données restent dans l'UE, ne sont ni tracées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment. Voici vos droits au titre du RGPD — chacun est un bouton.",
+  "privacyIntro": "Vos données ne sont jamais pistées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment ; leur hébergement figure dans la notice de confidentialité de cette installation. Voici vos droits au titre du RGPD — chacun est un bouton.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },

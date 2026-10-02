@@ -1188,7 +1188,7 @@ routine public.guarded_role_permissions(p_workspace_id uuid, p_incoming jsonb, p
 routine public.handle_new_user() -> trigger | function | definer | volatile | exec:service_role | body:283ccda0aedd
 routine public.has_badge_pin() -> boolean | function | definer | stable | exec:authenticated,service_role | body:b706db9793bb
 routine public.has_permission(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:3fbfe0580efb
-routine public.has_permission_raw(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:1302e072a90e
+routine public.has_permission_raw(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:c89e4a3763c3
 routine public.holds_template_grant(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:a6279099b1a5
 routine public.identity_binding_revoked_cascade() -> trigger | function | definer | volatile | exec:service_role | body:9f261f2a737d
 routine public.identity_binding_revoked_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:dfbda10ae4a1
@@ -1235,7 +1235,9 @@ routine public.jsonb_text_array(p jsonb) -> text[] | function | invoker | immuta
 routine public.kiosk_act(p_workspace_id uuid, p_badge_token text, p_action text, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:36626f33c0b5
 routine public.kiosk_identify(p_workspace_id uuid, p_badge_token text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1bd2bf1f2625
 routine public.kpi_multirange_hours(p tstzmultirange) -> numeric | function | invoker | immutable | exec:authenticated,service_role | body:6e8c7b7e8ade
-routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6ae2324751be
+routine public.kpi_readable(p_workspace_id uuid, p_kpi text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f8729471516e
+routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:89cc89143ea4
+routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5a23ca0b91bf
 routine public.leave_conversation(p_conversation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:39d9798213e7
 routine public.leave_workspace(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:87cdc08f8a39
 routine public.ledger_entries_append_only() -> trigger | function | definer | volatile | exec:service_role | body:4da440e10a09
@@ -1471,7 +1473,7 @@ routine public.rights_due_on(p_received timestamp with time zone, p_timezone tex
 routine public.rights_outcome_valid(p_outcome jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:6f796d1ba736
 routine public.rights_requests_guard() -> trigger | function | invoker | volatile | exec:service_role | body:dbf713b357cb
 routine public.role_holds(ws uuid, p_role text, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f5ded1680290
-routine public.role_permission_catalog() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:c1cc3f2915b8
+routine public.role_permission_catalog() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:7fd7a8a84dac
 routine public.rollback_deployment(p_deployment_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c05549d60433
 routine public.save_book_account(p_workspace_id uuid, p_issuer_site_id uuid, p_id uuid, p_code text, p_name text, p_account_type text, p_is_posting boolean, p_origin text, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2c67bbfdc2b4
 routine public.save_book_mapping(p_workspace_id uuid, p_issuer_site_id uuid, p_role text, p_account_id uuid, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6eff4c88c7c4
@@ -1561,7 +1563,7 @@ routine public.system_columns_stamp() -> trigger | function | invoker | volatile
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:bec19ca3c11d
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:42bfe405b6a8
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9e1945110fb4
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753

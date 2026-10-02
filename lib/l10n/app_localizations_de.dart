@@ -2144,6 +2144,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Räume ohne Plätze werden so gelesen, wie sie heute sind.';
 
   @override
+  String get permViewAnalytics => 'Kennzahlen des Arbeitsbereichs lesen';
+
+  @override
   String get featureCarnetsTitle => 'Mehrfachkarten';
 
   @override
@@ -10948,6 +10951,71 @@ class AppLocalizationsDe extends AppLocalizations {
   String get portalResetAllConfirm => 'Zurücksetzen';
 
   @override
+  String get privacyNoticeTitle => 'Wer Ihre Daten verarbeitet';
+
+  @override
+  String privacyNoticeController(String name, String contact) {
+    return 'Verantwortlicher: $name — $contact';
+  }
+
+  @override
+  String privacyNoticeRights(String contact) {
+    return 'Ihre Rechte: $contact';
+  }
+
+  @override
+  String privacyNoticeRegion(String region) {
+    return 'Region: $region';
+  }
+
+  @override
+  String privacyNoticeTransfer(String mechanism) {
+    return 'Garantie für die Übermittlung: $mechanism';
+  }
+
+  @override
+  String get privacyNoticeNotRecorded => 'vom Betreiber nicht angegeben';
+
+  @override
+  String get privacyNoticeEssential => 'Für Konto und Bereich erforderlich';
+
+  @override
+  String get privacyNoticeOptional =>
+      'Optional — die App funktioniert auch ohne';
+
+  @override
+  String get privacyNoticeRightsRoute => 'Ihre Rechte und der Kontakt';
+
+  @override
+  String get privacySpaceNotice => 'Die Datenschutzhinweise dieses Bereichs';
+
+  @override
+  String get privacySpaceNoticeRead =>
+      'Sie haben diese Fassung zur Kenntnis genommen.';
+
+  @override
+  String get privacySpaceNoticeUnread =>
+      'Noch nicht zur Kenntnis genommen — hier lesen.';
+
+  @override
+  String get privacySpaceNoticeAcknowledge => 'Ich habe diese Hinweise gelesen';
+
+  @override
+  String get privacySpaceNoticeFailed =>
+      'Die Kenntnisnahme konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get privacyPushOnDevice => 'Push-Benachrichtigungen auf diesem Gerät';
+
+  @override
+  String get privacyPushOnDeviceHint =>
+      'Optional. Ein: Die Adresse dieses Geräts und jede Benachrichtigung gehen an den Push-Dienst; aus: Die App funktioniert weiter und an dieses Gerät wird nichts gesendet.';
+
+  @override
+  String get privacyPushOnDeviceFailed =>
+      'Die Auswahl konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.';
+
+  @override
   String get featuresViewProcesses => 'Prozesse';
 
   @override
@@ -11454,7 +11522,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get privacyIntro =>
-      'Deine Daten bleiben in der EU, werden nie getrackt oder verkauft und sind nur für die Rollen lesbar, die die Regeln unten nennen. Das sind deine Rechte nach der DSGVO — jedes ist ein Knopf.';
+      'Ihre Daten werden nie verfolgt oder verkauft und sind nur für die Rollen lesbar, die die Regeln unten nennen; wo sie gespeichert sind, steht in den Datenschutzhinweisen dieser Installation. Das sind Ihre Rechte nach der DSGVO — jedes ist eine Schaltfläche.';
 
   @override
   String get privacyWhoCanSee => 'Wer meine Daten sehen kann';

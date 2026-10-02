@@ -36,6 +36,7 @@ import 'package:deskilo/features/reservations/providers/default_period_controlle
 
 import 'default_level_store.dart';
 import 'stores.dart';
+import '../../push/push_opt_out.dart';
 
 /// In-memory [LocaleStore] (#147) — the language override a session
 /// picks lasts as long as the session.
@@ -92,6 +93,17 @@ class InMemoryShellFlagStore implements ShellFlagStore {
 
 /// Every per-device preference one Demo session keeps to itself.
 ///
+/// In-memory [PushOptOutStore] (#1914).
+class InMemoryPushOptOutStore implements PushOptOutStore {
+  bool optedOut = false;
+
+  @override
+  Future<bool> read() async => optedOut;
+
+  @override
+  Future<void> write(bool next) async => optedOut = next;
+}
+
 /// The set is not a judgement call: `demo_scope_test` reads the app's
 /// own source for providers built on a `Prefs…Store` and fails until
 /// each one is here and in `demoOverrides`, so a NEW preference cannot
@@ -106,6 +118,9 @@ class DemoDevicePrefs {
   /// is being shown the product should not also be shown a gesture hint.
   final InMemoryShellFlagStore shellBarHidden = InMemoryShellFlagStore();
   final InMemoryShellFlagStore shellSwipeCoach = InMemoryShellFlagStore(true);
+
+  /// #1914 — push opt-out, kept in the demonstration's own memory.
+  final InMemoryPushOptOutStore pushOptOut = InMemoryPushOptOutStore();
 
   final InMemoryFrontCameraStore frontCamera = InMemoryFrontCameraStore();
   final InMemoryActiveWorkspaceStore activeWorkspace =
