@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/help/help_hint.dart';
 import '../../../../core/backend/backend_settings.dart';
 import '../../application/getting_started_hint.dart';
 import '../getting_started_facts.dart';
@@ -766,8 +765,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // #606 hub how-to (gated inside); #611 MotionReveal eases it and the banners below.
-          const MotionReveal(child: HelpHint(HelpHintId.reserve)),
           MotionReveal(
             child: dayOpen
                 ? const SizedBox.shrink(
@@ -790,10 +787,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                   _view == ReserveView.month ||
                   _view == ReserveView.day,
             ),
-          // #1654 — the Get started card: the workspace and ONE next step,
-          // from what this build already resolved; gated inside.
+          // #1853 A — ONE help slot: the Get started next step (#1654), or
+          // else the hub's tip carousel (#606); each gated inside.
           MotionReveal(
-            child: GettingStartedCard(
+            child: ReserveHelpHost(
               facts: facts,
               seenKey: guidanceKey,
               onChooseTime: _pickDate, workspaceId: workspace?.id, // #1636

@@ -47,8 +47,11 @@ Future<void> _pumpApp(
       overrides: [
         ...standardTestOverrides(
           helpHints: store,
+          // #1853 A — the Reserve hub has ONE help slot, and the Get
+          // started next step outranks the tips; these cases are about
+          // the carousel itself, so that card is off here.
           workspace: FakeWorkspaceRepository.withWorkspace(
-            featureFlags: featureFlags,
+            featureFlags: {'memberGettingStarted': false, ...featureFlags},
           ),
         ),
         _helpOverride(),
