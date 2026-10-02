@@ -43,7 +43,7 @@ const Map<String, int> _baseline = {
   // alone is ~90 methods. They are budgeted, so a NEW method still has
   // to be a decision, and they may only shrink.
   'lib/core/demo/data/workspace_repository.dart': 1942, // 2026-09-28 #1652 1889→1942: previewInvitation/joinByInvitation on the fake — the same classification the 0309 functions answer, and the counters the journey tests read to prove a review writes nothing.  2026-09-28 #1791: admission route, comment and expected-account wiring; implementation lives in separate files.  // 2026-09-27 #1658 1865→1885: the fake keeps the request ids a publication used, replays a retry and loses one answer on demand, the same contract the real function keeps; // 2026-09-25 #1655 1840→1865: inspectWorkspaceTemplate on the fake — the seeded map and the default built from the outline, the same shape as templateOutlines; // 2026-09-19 #1281 1827→1830: setLegendProfile, the fake's mirror of the booking-rule write // 2026-09-19 #1373 moved out of test/helpers/mock_providers.dart, which is 2358→408 lines // 2026-09-25 #1650 1830→1840: fetchFailure — the one knob that lets a test say the membership list could not be FETCHED, as opposed to being empty; // 2026-09-19 #1281 1827→1830: setLegendProfile, the fake's mirror of the booking-rule write // 2026-09-19 #1373 moved out of test/helpers/mock_providers.dart, which is 2358→408 lines
-  'lib/core/demo/data/money_repository.dart': 1800, // 2026-09-19 #1373 moved from test/helpers/fake_money_repository.dart
+  'lib/core/demo/data/money_repository.dart': 1801, // 2026-10-01 #2014 B 1800→1801: createPaymentOrder takes the request id. 2026-09-19 #1373 moved from test/helpers/fake_money_repository.dart
   'lib/core/demo/data/reservation_repository.dart': 700, // 2026-09-19 #1562 695→700: convertToSeries takes the chosen window, and says why it is not the stored one // 2026-09-19 #1565 678→695: the signed-in member is READ on every call instead of captured once, so a Demo persona switch re-attributes the bookings that follow it — the constructor seam, the getter and the paragraph saying why // 2026-09-19 #1373 moved from test/helpers/fake_reservation_repository.dart
 
   // 1510→1530 (2026-08-02): #408 presence rule — the sheets moved to
@@ -269,7 +269,7 @@ const Map<String, int> _baseline = {
   // second page would fail on a reused one. Extracting four closures
   // into helpers would move the lines, not remove them, and would put
   // each query a call away from the method that owns it.
-  'lib/features/money/data/supabase_money_repository.dart': 1420, // 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
+  'lib/features/money/data/supabase_money_repository.dart': 1428, // 2026-10-01 #2014 B 1420→1428: the payment request id is sent and an already-paid retry is answered as such. 2026-09-11 #1148/#1150/#1151 review batch: a traced fallback per enum and the feature gates the routes always claimed
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under

@@ -48,7 +48,11 @@ class PaymentOrderStart {
     this.approveUrl,
     this.orderId,
     this.missing = const [],
+    this.alreadyPaid = false,
   });
+
+  /// #2014 B — the retried request had already been paid: nothing to open.
+  final bool alreadyPaid;
 
   /// The provider's hosted approval/checkout page; null when the provider
   /// is not configured on this deployment.
