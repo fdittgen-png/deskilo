@@ -13,6 +13,8 @@
 // Pure Dart: no Flutter, no l10n.
 library;
 
+import 'dart:convert';
+
 /// How a KPI may be combined across a dimension or across time.
 enum KpiAggregation {
   /// sum(numerator) / sum(denominator) over the whole scope.
@@ -20,6 +22,30 @@ enum KpiAggregation {
 
   /// Additive over disjoint intervals and resources.
   sum,
+}
+
+/// #1921 — what a KPI discloses, and so who may read it.
+enum KpiDisclosure {
+  /// Counts and hours over places and time; no person, no money.
+  aggregateOperational,
+
+  /// Amounts: also needs viewFinances.
+  financial,
+
+  /// Figures about identifiable people: also needs viewPersonalData and a
+  /// minimum cohort.
+  personalOperational,
+
+  /// The reader's own figures.
+  own;
+
+  /// The wire name the server registry uses.
+  String get wire => switch (this) {
+    aggregateOperational => 'aggregate_operational',
+    financial => 'financial',
+    personalOperational => 'personal_operational',
+    own => 'own',
+  };
 }
 
 /// One registered KPI definition.
@@ -33,8 +59,10 @@ class KpiDefinition {
     required this.numerator,
     required this.denominator,
     required this.aggregation,
-    required this.permission,
+    required this.permissions,
+    required this.disclosure,
     required this.prerequisites,
+    this.minCohort,
   });
 
   final String id;
@@ -49,8 +77,17 @@ class KpiDefinition {
   final String denominator;
   final KpiAggregation aggregation;
 
-  /// The `WorkspacePermission` wire name the server checks.
-  final String permission;
+  /// The `WorkspacePermission` wire names the server requires, all of
+  /// them (#1921). Finance needs viewFinances, people viewPersonalData;
+  /// exportData alone never reads.
+  final List<String> permissions;
+
+  /// What the figure discloses (#1921).
+  final KpiDisclosure disclosure;
+
+  /// For a figure about people: the smallest group the server may
+  /// report. Required for [KpiDisclosure.personalOperational].
+  final int? minCohort;
   final List<String> prerequisites;
 }
 
@@ -66,7 +103,8 @@ const seatUtilisationKpi = KpiDefinition(
   numerator: 'reserved_seat_hours',
   denominator: 'offered_seat_hours',
   aggregation: KpiAggregation.ratioOfSums,
-  permission: 'manageReservations',
+  permissions: ['viewAnalytics'],
+  disclosure: KpiDisclosure.aggregateOperational,
   prerequisites: [
     'opening weekdays and hours (booking rules)',
     'closure days',
@@ -257,3 +295,16 @@ class UnavailableKpiRepository implements KpiRepository {
     String? levelId,
   }) async => throw const KpiUnavailable('no server in this mode');
 }
+
+/// #1921 — the server's copy of the catalogue: per KPI its version, what
+/// it discloses and the permissions it needs. `kpi_registry()` in the
+/// latest migration must hold exactly this (kpi_registry_sql_test).
+String kpiRegistryJson() => jsonEncode({
+  for (final k in kpiCatalogue)
+    k.id: {
+      'version': k.version,
+      'disclosure': k.disclosure.wire,
+      'permissions': k.permissions,
+      if (k.minCohort != null) 'min_cohort': k.minCohort,
+    },
+});

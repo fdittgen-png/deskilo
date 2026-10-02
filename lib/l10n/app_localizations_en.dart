@@ -2076,6 +2076,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Rooms without seats are read as they are today.';
 
   @override
+  String get permViewAnalytics => 'Read the workspace figures';
+
+  @override
   String get featureCarnetsTitle => 'Carnets';
 
   @override

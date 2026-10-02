@@ -136,5 +136,9 @@
   "capacityKpiRoomsToday": "Le sale senza posti sono lette come sono oggi.",
   "@capacityKpiRoomsToday": {
     "description": "#1920 capacity KPI history"
+  },
+  "permViewAnalytics": "Consultare i dati dello spazio",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
   }
 }

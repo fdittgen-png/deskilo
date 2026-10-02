@@ -29,7 +29,8 @@ void main() {
     expect(seatUtilisationKpi.aggregation, KpiAggregation.ratioOfSums);
     expect(seatUtilisationKpi.numerator, 'reserved_seat_hours');
     expect(seatUtilisationKpi.denominator, 'offered_seat_hours');
-    expect(seatUtilisationKpi.permission, 'manageReservations');
+    expect(seatUtilisationKpi.permissions, ['viewAnalytics']);
+    expect(seatUtilisationKpi.disclosure, KpiDisclosure.aggregateOperational);
   });
 
   test("the server's answer for the issue's fixture: 10 seats x 8 h, two "

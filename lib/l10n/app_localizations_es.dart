@@ -2088,6 +2088,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las salas sin puestos se leen tal como están hoy.';
 
   @override
+  String get permViewAnalytics => 'Consultar las cifras del espacio';
+
+  @override
   String get featureCarnetsTitle => 'Bonos';
 
   @override

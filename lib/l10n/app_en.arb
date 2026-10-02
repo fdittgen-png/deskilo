@@ -2485,6 +2485,10 @@
   "@capacityKpiRoomsToday": {
     "description": "#1920 capacity KPI history"
   },
+  "permViewAnalytics": "Read the workspace figures",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
+  },
   "featureCarnetsTitle": "Carnets",
   "@featureCarnetsTitle": {
     "description": "#1279 carnets: featureCarnetsTitle"
