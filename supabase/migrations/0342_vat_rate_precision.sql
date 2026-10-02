@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0341 (#1870) -- a tax rate is stored exactly.
+-- 0342 (#1870) -- a tax rate is stored exactly.
 --
 -- vat_rates.percent and ledger_entries.vat_percent were numeric(5,2):
 -- two decimals. Quebec's QST is 9.975 % and the combined GST+QST rate

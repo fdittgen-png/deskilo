@@ -73,7 +73,7 @@ Every member has a ledger: subscription charges, extra usage, approved shared ex
 
 A join, an expense, a deletion or a settings change waits for the quorum the workspace configured; the decision trail records who decided and the database enforces the rule it records.
 
-- **Code:** shipped · component `3008f2db81b1`
+- **Code:** shipped · component `bf055a1decd5`
 - **Needs:** Roles assigned; a quorum per decision kind in Settings.
 - **Limits:** Quorums count distinct people by membership, not by device or session.
 - **Feature flags:** `validationScopes`, `validationChain`, `deletionRequests`
