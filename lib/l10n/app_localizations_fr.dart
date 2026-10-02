@@ -196,6 +196,80 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get featureAccountingBookTitle => 'Livre comptable';
+
+  @override
+  String get featureAccountingBookDesc =>
+      'Qui tient les livres officiels de chaque émetteur : Deskilo en pré-comptabilité, un livre local ou un logiciel comptable externe qui fait foi. Chaque émetteur indique sa devise, son exercice et sa base comptable. Désactivé : les soldes des membres et les factures fonctionnent comme avant.';
+
+  @override
+  String get bookSheetTitle => 'Livre comptable';
+
+  @override
+  String get bookTileEmpty =>
+      'Aucun livre : DesKilo tient les soldes des membres et les factures (pré-comptabilité).';
+
+  @override
+  String get bookIssuer => 'Émetteur';
+
+  @override
+  String get bookAuthorityPre => 'Pré-comptabilité';
+
+  @override
+  String get bookAuthorityLocal => 'DesKilo tient le livre';
+
+  @override
+  String get bookAuthorityExternal => 'Logiciel externe';
+
+  @override
+  String get bookExternalSystem => 'Logiciel qui fait foi';
+
+  @override
+  String get bookCurrency => 'Devise de tenue';
+
+  @override
+  String get bookFiscalStart => 'L’exercice commence le';
+
+  @override
+  String get bookBasisAccrual => 'Engagements';
+
+  @override
+  String get bookBasisCash => 'Encaissements';
+
+  @override
+  String bookEffectiveFrom(String date) {
+    return 'En vigueur à partir du $date';
+  }
+
+  @override
+  String bookFiscalPreview(String label, String start, String end) {
+    return 'Exercice $label : $start – $end';
+  }
+
+  @override
+  String get bookProblemExternal =>
+      'Indiquez le logiciel externe qui tient les livres officiels.';
+
+  @override
+  String get bookProblemCurrency =>
+      'Cette devise n’a pas de nombre de décimales vérifié.';
+
+  @override
+  String get bookProblemFiscal =>
+      'Un exercice commence un jour que chaque année possède (jamais le 29 février).';
+
+  @override
+  String get bookSaved => 'Livre enregistré';
+
+  @override
+  String get bookStale =>
+      'Quelqu’un a enregistré ce livre depuis que vous l’avez ouvert. Fermez et rouvrez pour voir sa version.';
+
+  @override
+  String get bookSaveFailed =>
+      'Le livre n’a pas été enregistré. Vérifiez la connexion et réessayez.';
+
+  @override
   String get fecAccountExpenses => 'Achats et charges';
 
   @override
