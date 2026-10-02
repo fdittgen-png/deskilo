@@ -1302,7 +1302,7 @@ routine public.mcp_pre_request() -> void | function | invoker | stable | exec:an
 routine public.mcp_prepare_connection(p_client_id text, p_authorization_id text, p_scopes jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1b1fe1858a7f
 routine public.mcp_project_data(p_operation text, p_value jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:8ad7149f3904
 routine public.mcp_project_data(p_operation text, p_value jsonb, p_optional text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:5cf4a9f851a4
-routine public.mcp_read_v1(p_workspace_id uuid, p_member members, p_operation text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:9060ee43d939
+routine public.mcp_read_v1(p_workspace_id uuid, p_member members, p_operation text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:4ce1fcbb2906
 routine public.mcp_request_outcome(p_result jsonb) -> text | function | invoker | immutable | exec:service_role | body:883fde66b9af
 routine public.mcp_require_native() -> void | function | invoker | stable | exec:service_role | body:75faf6e7d8ed
 routine public.mcp_reservation_digest(p_reservation_id uuid) -> text | function | invoker | stable | exec:service_role | body:c6a60b1858ba
