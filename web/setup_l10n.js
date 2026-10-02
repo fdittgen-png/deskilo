@@ -1059,6 +1059,10 @@ window.SETUP_L10N={
    "holidayImport": [
     "Import public holidays",
     "An owner imports the public holidays of the country, and of one region, from an open-data source, deselects the days the space stays open and imports the rest as closure days. Invoiced months are skipped and named."
+   ],
+   "capacityKpi": [
+    "Seat utilisation",
+    "Shows owners and reservation managers how much of the offered seat time was reserved in a month, with how it is computed and what the figure cannot know."
    ]
   },
   "process": {
@@ -2327,6 +2331,10 @@ window.SETUP_L10N={
    "holidayImport": [
     "Importer les jours fériés",
     "Un propriétaire importe les jours fériés du pays, et d'une région, depuis une source de données ouvertes, désélectionne les jours où l'espace reste ouvert et importe les autres comme jours de fermeture. Les mois déjà facturés sont ignorés et nommés."
+   ],
+   "capacityKpi": [
+    "Occupation des places",
+    "Montre aux propriétaires et aux gestionnaires des réservations quelle part du temps de place offert a été réservée dans le mois, avec la façon dont c'est calculé et ce que le chiffre ne peut pas savoir."
    ]
   },
   "process": {
@@ -3595,6 +3603,10 @@ window.SETUP_L10N={
    "holidayImport": [
     "Feiertage importieren",
     "Ein Eigentümer importiert die Feiertage des Landes und einer Region aus einer Open-Data-Quelle, wählt die Tage ab, an denen der Raum geöffnet bleibt, und importiert die übrigen als Schließtage. Bereits abgerechnete Monate werden übersprungen und genannt."
+   ],
+   "capacityKpi": [
+    "Platzauslastung",
+    "Zeigt Eigentümern und Reservierungsverwaltern, wie viel der angebotenen Platzzeit eines Monats reserviert wurde, wie das berechnet wird und was die Zahl nicht wissen kann."
    ]
   },
   "process": {
@@ -4863,6 +4875,10 @@ window.SETUP_L10N={
    "holidayImport": [
     "Importar días festivos",
     "Un propietario importa los días festivos del país, y de una región, desde una fuente de datos abiertos, desmarca los días en que el espacio sigue abierto e importa el resto como días de cierre. Los meses ya facturados se omiten y se nombran."
+   ],
+   "capacityKpi": [
+    "Ocupación de puestos",
+    "Muestra a los propietarios y a quienes gestionan las reservas qué parte del tiempo de puesto ofrecido se reservó en un mes, cómo se calcula y lo que la cifra no puede saber."
    ]
   },
   "process": {
@@ -6131,6 +6147,10 @@ window.SETUP_L10N={
    "holidayImport": [
     "Importa i giorni festivi",
     "Un proprietario importa i giorni festivi del paese, e di una regione, da una fonte di dati aperti, deseleziona i giorni in cui lo spazio resta aperto e importa gli altri come giorni di chiusura. I mesi già fatturati vengono saltati e indicati."
+   ],
+   "capacityKpi": [
+    "Occupazione dei posti",
+    "Mostra ai proprietari e a chi gestisce le prenotazioni quanta parte del tempo di posto offerto è stata prenotata in un mese, come viene calcolata e cosa la cifra non può sapere."
    ]
   },
   "process": {

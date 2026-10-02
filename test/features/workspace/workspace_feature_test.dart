@@ -86,6 +86,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // #2051 — importing holidays from an open-data source writes closure
   // days, like publicHolidays: asked for, never assumed.
   WorkspaceFeature.holidayImport,
+  // #1918 — a management figure is asked for, never assumed.
+  WorkspaceFeature.capacityKpi,
 };
 
 /// Every other feature ships ON.
@@ -159,6 +161,7 @@ void main() {
       'mcpAccess': true,
       'publicListings': true,
       'holidayImport': true,
+      'capacityKpi': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

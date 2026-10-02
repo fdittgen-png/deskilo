@@ -1922,6 +1922,79 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette réservation ne peut pas être exportée : elle n’est pas la vôtre, ou elle n’existe plus.';
 
   @override
+  String get featureCapacityKpiTitle => 'Occupation des places';
+
+  @override
+  String get featureCapacityKpiDesc =>
+      'Montre aux propriétaires et aux gestionnaires des réservations quelle part du temps de place offert a été réservée dans le mois, avec la façon dont c\'est calculé et ce que le chiffre ne peut pas savoir.';
+
+  @override
+  String get capacityKpiTitle => 'Occupation des places';
+
+  @override
+  String capacityKpiRatio(String reserved, String offered) {
+    return '$reserved sur $offered heures-places réservées';
+  }
+
+  @override
+  String get capacityKpiUndefined =>
+      'Aucun temps de place n\'a été offert sur cette période : il n\'y a pas d\'occupation à montrer.';
+
+  @override
+  String get capacityKpiExplain => 'Comment est-ce calculé ?';
+
+  @override
+  String get capacityKpiDefinition =>
+      'Heures-places réservées pendant les heures d\'ouverture, divisées par les heures-places offertes : chaque place multipliée par les heures d\'ouverture des jours ouverts, moins les jours de fermeture et les blocages de places. Un bureau, une salle ou un niveau entier compte chacune de ses places une fois ; les réservations annulées ne comptent pas.';
+
+  @override
+  String capacityKpiPhysical(String hours) {
+    return 'Capacité physique : $hours heures-places';
+  }
+
+  @override
+  String capacityKpiOutside(String hours) {
+    return 'Réservé hors des heures offertes : $hours heures-places, hors du ratio';
+  }
+
+  @override
+  String capacityKpiOverlap(String hours) {
+    return 'Réservé deux fois en même temps : $hours heures-places, comptées une fois';
+  }
+
+  @override
+  String capacityKpiRooms(String count, String reserved, String offered) {
+    return 'Salles sans place : $count, $reserved sur $offered heures-salles réservées';
+  }
+
+  @override
+  String get capacityKpiPartial =>
+      'Partiel : le plan, les heures d\'ouverture et les blocages de places sont ceux d\'aujourd\'hui ; leur historique n\'est pas encore enregistré.';
+
+  @override
+  String get capacityKpiUnattributed =>
+      'Certaines réservations de la période visent un emplacement qui n\'existe plus ; elles ne sont pas comptées.';
+
+  @override
+  String get capacityKpiKnownZero => 'Mesuré : rien n\'a été réservé.';
+
+  @override
+  String capacityKpiAsOf(String time) {
+    return 'Calculé $time';
+  }
+
+  @override
+  String get capacityKpiForbidden =>
+      'Vous ne pouvez pas consulter les chiffres de capacité de cet espace.';
+
+  @override
+  String get capacityKpiUnavailable =>
+      'L\'occupation des places n\'a pas pu être calculée.';
+
+  @override
+  String get capacityKpiRetry => 'Réessayer';
+
+  @override
   String get featureCarnetsTitle => 'Carnets';
 
   @override

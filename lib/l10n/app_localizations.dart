@@ -3346,6 +3346,114 @@ abstract class AppLocalizations {
   /// **'This booking cannot be exported: it is not yours, or it no longer exists.'**
   String get reservationCalendarFileRefused;
 
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Seat utilisation'**
+  String get featureCapacityKpiTitle;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Shows owners and reservation managers how much of the offered seat time was reserved in a month, with how it is computed and what the figure cannot know.'**
+  String get featureCapacityKpiDesc;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Seat utilisation'**
+  String get capacityKpiTitle;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'{reserved} of {offered} seat-hours reserved'**
+  String capacityKpiRatio(String reserved, String offered);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'No seat time was offered in this period, so there is no utilisation to show.'**
+  String get capacityKpiUndefined;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'How is this computed?'**
+  String get capacityKpiExplain;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved seat-hours inside the opening hours, divided by offered seat-hours: every seat times the opening hours of the open days, minus closure days and seat blocks. A whole desk, room or level counts each of its seats once; cancelled bookings do not count.'**
+  String get capacityKpiDefinition;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Physical capacity: {hours} seat-hours'**
+  String capacityKpiPhysical(String hours);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved outside the offered hours: {hours} seat-hours, not in the ratio'**
+  String capacityKpiOutside(String hours);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Claimed twice at the same time: {hours} seat-hours, counted once'**
+  String capacityKpiOverlap(String hours);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms without seats: {count}, {reserved} of {offered} room-hours reserved'**
+  String capacityKpiRooms(String count, String reserved, String offered);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Partial: the plan, the opening hours and the seat blocks are today’s; their history is not recorded yet.'**
+  String get capacityKpiPartial;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Some reservations in this period point to a place that no longer exists; they are not counted.'**
+  String get capacityKpiUnattributed;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Measured: nothing was reserved.'**
+  String get capacityKpiKnownZero;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Computed {time}'**
+  String capacityKpiAsOf(String time);
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read the capacity figures of this workspace.'**
+  String get capacityKpiForbidden;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'The seat utilisation could not be computed.'**
+  String get capacityKpiUnavailable;
+
+  /// #1918 capacity KPI
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get capacityKpiRetry;
+
   /// #1279 carnets: featureCarnetsTitle
   ///
   /// In en, this message translates to:

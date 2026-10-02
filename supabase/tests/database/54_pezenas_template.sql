@@ -152,6 +152,7 @@ begin
       "calendarTab": true,
       "calendarValidations": true,
       "calendarViews": true,
+      "capacityKpi": false,
       "captureProtection": true,
       "carnets": true,
       "coOwner": false,

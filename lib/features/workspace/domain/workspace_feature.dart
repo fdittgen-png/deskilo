@@ -310,7 +310,13 @@ enum WorkspaceFeature {
   /// open-data source, deselects the days the space stays open, and
   /// imports the rest as closure days. Platform, default OFF, under
   /// publicHolidays: the SQL generator stays the offline fallback.
-  holidayImport;
+  holidayImport,
+
+  /// #1918 — seat utilisation on the Availability screen: reserved over
+  /// offered seat-hours for a month, computed by the server under the
+  /// one KPI contract, with its definition, numerator, denominator and
+  /// data quality on demand. Platform, default OFF.
+  capacityKpi;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1378,6 +1384,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     tier: FeatureTier.platform,
     defaultOn: false,
     requires: WorkspaceFeature.publicHolidays,
+  ),
+  // #1918 — a management figure, asked for: Platform, off.
+  WorkspaceFeature.capacityKpi: FeatureManifestEntry(
+    feature: WorkspaceFeature.capacityKpi,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
   ),
 };
 
