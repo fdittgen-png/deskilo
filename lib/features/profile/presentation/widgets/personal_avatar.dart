@@ -32,7 +32,8 @@ class PersonalAvatar extends ConsumerWidget {
       child: bytes == null
           ? Text(
               plainInitial(profile?.displayName ?? ''),
-              style: Theme.of(context).textTheme.labelLarge?.emphasised,
+              style: Theme.of(context).textTheme.labelLarge?.emphasised
+                  .copyWith(color: AppIdentityColors.foreground),
             )
           : null,
     );
