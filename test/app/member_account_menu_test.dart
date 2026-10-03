@@ -174,7 +174,7 @@ void main() {
       expect(find.text('Governance'), findsNothing);
       // …and the personal controls the issue lists stay reachable — since
       // #1823 in Me, one row away.
-      expect(find.text('Profiles'), findsOneWidget);
+      expect(find.text('Back to Me'), findsOneWidget);
       expect(find.byKey(const ValueKey('settings-open-me')), findsOneWidget);
     });
 

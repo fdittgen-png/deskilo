@@ -35,9 +35,9 @@ void main() {
     expect(router.state.uri.path, '/reserve');
 
     // user-1 moves to ws-2 in this session: the device remembers it.
-    await tester.tap(find.byKey(const ValueKey('space-chip')));
+    await tester.tap(find.byKey(const ValueKey('shell-back-to-me')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('space-switcher-ws-2')));
+    await tester.tap(find.byKey(const ValueKey('me-space-ws-2')));
     await tester.pumpAndSettle();
     final ref = ProviderScope.containerOf(tester.element(find.byType(ShellScreen)));
     expect(ref.read(currentWorkspaceProvider).value?.id, 'ws-2');
