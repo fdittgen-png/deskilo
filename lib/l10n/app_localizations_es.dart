@@ -5774,6 +5774,169 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get guideActionConfirmBooking =>
+      'confirme la reserva y espere la respuesta';
+
+  @override
+  String get guideActionOpenReserve => 'abra Reservar';
+
+  @override
+  String get guideActionSelectDate => 'elija el día';
+
+  @override
+  String get guideActionSelectPeriod => 'elija el periodo';
+
+  @override
+  String get guideActionSelectResource =>
+      'elija un sitio en el plano o en la lista';
+
+  @override
+  String get guideBookingRefusedRecovery =>
+      'Se rechazó la reserva (sitio ocupado o una regla lo impide). Elija otro sitio o periodo y vuelva a confirmar.';
+
+  @override
+  String get guideBuiltinBooking => 'Reservar un sitio';
+
+  @override
+  String get guideBuiltinBookingIntro =>
+      'Esta guía muestra cómo reservar un sitio: elija el día y el periodo, un sitio y confirme. No se reserva nada hasta que confirme.';
+
+  @override
+  String get guideHostBack => 'Atrás';
+
+  @override
+  String get guideHostBlocked =>
+      'Resuelva primero el mensaje en pantalla; la guía espera.';
+
+  @override
+  String get guideHostClose => 'Cerrar';
+
+  @override
+  String get guideHostCommand => 'Confirme y espere el resultado.';
+
+  @override
+  String get guideHostCompleted => 'Guía completada.';
+
+  @override
+  String guideHostDoAction(String action) {
+    return 'A continuación: $action.';
+  }
+
+  @override
+  String get guideHostDone => 'Hecho';
+
+  @override
+  String get guideHostFillField => 'Rellene el campo resaltado y salga de él.';
+
+  @override
+  String guideHostFillLabel(String label) {
+    return 'Rellene «$label» y salga del campo.';
+  }
+
+  @override
+  String get guideHostInstruction => 'Lea esto y márquelo como hecho.';
+
+  @override
+  String get guideHostManual =>
+      'Haga este paso usted mismo y márquelo como hecho.';
+
+  @override
+  String guideHostManualProtected(String category) {
+    return 'Esta parte ocurre en una pantalla protegida ($category). Hágala usted mismo y márquela como hecha.';
+  }
+
+  @override
+  String get guideHostNotOnScreen =>
+      'Este control no está en esta pantalla. Vaya a la pantalla del paso anterior o revise la guía.';
+
+  @override
+  String guideHostOpenLabel(String label) {
+    return 'Abra «$label».';
+  }
+
+  @override
+  String get guideHostOpenScreen => 'Abra la siguiente pantalla.';
+
+  @override
+  String get guideHostPausedFeature =>
+      'En pausa: la grabadora de tareas está desactivada en este espacio.';
+
+  @override
+  String get guideHostPausedScope =>
+      'En pausa: cambió la cuenta o el espacio. La guía solo continúa donde empezó.';
+
+  @override
+  String get guideHostRecovery =>
+      'Se rechazó. Siga estos pasos y vuelva a intentarlo.';
+
+  @override
+  String get guideHostResume => 'Reanudar';
+
+  @override
+  String get guideHostShowMe => 'Muéstramelo';
+
+  @override
+  String get guideHostSkip => 'Omitir';
+
+  @override
+  String get guideHostStatusAcknowledged => 'Confirmado';
+
+  @override
+  String get guideHostStatusDone => 'Hecho';
+
+  @override
+  String get guideHostStatusPending => 'Pendiente';
+
+  @override
+  String get guideHostStatusSkipped => 'Omitido';
+
+  @override
+  String get guideHostStatusWaiting => 'Esperando';
+
+  @override
+  String guideHostStepOf(int current, int total) {
+    return 'Paso $current de $total';
+  }
+
+  @override
+  String get guideHostSteps => 'Todos los pasos';
+
+  @override
+  String get guideHostStop => 'Detener la guía';
+
+  @override
+  String get guideHostStopped => 'Guía detenida. No se deshizo nada.';
+
+  @override
+  String get guideHostTapControl => 'Toque el control resaltado.';
+
+  @override
+  String guideHostTapLabel(String label) {
+    return 'Toque «$label».';
+  }
+
+  @override
+  String get guideHostTitle => 'Tarea guiada';
+
+  @override
+  String get guideHostUncertain =>
+      'No llegó la respuesta. Compruebe si ocurrió antes de volver a intentarlo.';
+
+  @override
+  String get guideHostWaiting => 'Esperando el resultado…';
+
+  @override
+  String get guideStart => 'Iniciar la guía';
+
+  @override
+  String get guideStartNotRunnable =>
+      'Esta guía nombra pasos que esta versión de la aplicación no conoce; puede leerse, no seguirse.';
+
+  @override
+  String get guideStartRefused =>
+      'Esta guía no puede iniciarse aquí: inicie sesión y active la grabadora de tareas en este espacio.';
+
+  @override
   String handoffAmountOutOfRange(String number) {
     return '$number: un total demasiado grande para transmitirse con exactitud';
   }
@@ -5848,6 +6011,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helpDotTooltip => 'Abrir la guía';
+
+  @override
+  String get helpGuidedTasks => 'Tareas guiadas';
 
   @override
   String get helpHintAvailability =>

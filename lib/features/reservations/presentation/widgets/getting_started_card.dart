@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/help_arbiter.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -102,6 +103,10 @@ class GettingStartedCard extends ConsumerWidget {
     final hint = visibleGettingStartedHint(ref,
         facts: facts, seenKey: seenKey, workspaceId: workspaceId);
     if (hint == null) return const SizedBox.shrink();
+    // #1867 — a guide step or a blocker outranks the next-step advice.
+    if (ref.watch(helpSlotProvider) != HelpSlot.tips) {
+      return const SizedBox.shrink();
+    }
 
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;

@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../task_recorder/presentation/route_classification.dart'
     show taskRecorderRoute, taskWorkbenchRoute;
+import '../../../task_recorder/presentation/guide_host/guided_tasks_sheet.dart';
 import '../../../task_recorder/providers/recorder_providers.dart'
     show taskRecorderAvailableProvider;
 import '../../providers/help_providers.dart';
@@ -110,6 +111,9 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
               icon: const Icon(Icons.fiber_manual_record_outlined),
               onPressed: () => context.push(taskRecorderRoute),
             ),
+          // #1867 — guided tasks, followed on the live app.
+          if (ref.watch(taskRecorderAvailableProvider))
+            const GuidedTasksButton(),
           // #1872 — the local workbench needs no account.
           IconButton(
             key: const ValueKey('help-task-workbench'),

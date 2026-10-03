@@ -14,11 +14,16 @@
 // nothing about the command beside it. When the recorder was never
 // opened in this run (`ref.exists` is false) the call does not even
 // create it: no provider, no store, no work on the screen's path.
+//
+// #1867 — the same calls tell a running guide what happened
+// ([GuideEvents.sink]), recording or not: a guide follows the real
+// action and outcome, never a guess. No guide, no work.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/trace/trace_logger.dart';
 import '../application/recorder_controller.dart';
+import '../guide/guide_session.dart';
 import '../providers/recorder_providers.dart';
 
 RecorderController? _live(WidgetRef ref) =>
@@ -38,22 +43,40 @@ void recordTaskStep(
   } catch (e, st) {
     TraceLogger.instance.warn('recorder', 'step not recorded', stackTrace: st);
   }
+  try {
+    GuideEvents.sink?.action(actionId, target: target);
+  } catch (e, st) {
+    TraceLogger.instance.warn('recorder', 'guide not told', stackTrace: st);
+  }
 }
 
 /// A command's attempt, recorded BEFORE the command runs. Resolve it
 /// with what the command actually returned or threw; it needs no
 /// [WidgetRef] then, so a screen that closed meanwhile still answers.
 class TaskAttempt {
-  TaskAttempt._(this._controller, this._token);
+  TaskAttempt._(this._controller, this._token, this._guide);
 
-  final RecorderController _controller;
-  final OperationToken _token;
+  /// Null when only a guide listens (nothing is being recorded).
+  final RecorderController? _controller;
+  final OperationToken? _token;
+
+  /// The guide that saw the attempt, told the outcome too (#1867).
+  final GuideEventSink? _guide;
 
   /// Attaches the outcome. Never throws; a late answer from an older
   /// recording is dropped by the controller.
   void resolve(String outcomeId, {Map<String, Object?> payload = const {}}) {
     try {
-      _controller.outcome(_token, outcomeId, payload: payload);
+      // The guide that saw the attempt, if it is still the running one.
+      final guide = _guide;
+      if (guide != null && identical(GuideEvents.sink, guide)) {
+        guide.outcome(outcomeId);
+      }
+    } catch (e, st) {
+      TraceLogger.instance.warn('recorder', 'guide not told', stackTrace: st);
+    }
+    try {
+      _controller?.outcome(_token, outcomeId, payload: payload);
     } catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
@@ -68,13 +91,21 @@ class TaskAttempt {
       resolve(o.outcome, payload: o.payload);
 }
 
-/// Null when nothing is recording; the command runs regardless.
+/// Null when nothing is recording and no guide runs; the command runs
+/// regardless.
 TaskAttempt? recordTaskAttempt(
   WidgetRef ref,
   String actionId, {
   String? target,
   Map<String, Object?> payload = const {},
 }) {
+  GuideEventSink? guide;
+  try {
+    guide = GuideEvents.sink;
+    guide?.action(actionId, target: target);
+  } catch (e, st) {
+    TraceLogger.instance.warn('recorder', 'guide not told', stackTrace: st);
+  }
   try {
     final controller = _live(ref);
     final token = controller?.attempt(
@@ -82,7 +113,8 @@ TaskAttempt? recordTaskAttempt(
       target: target,
       payload: payload,
     );
-    return token == null ? null : TaskAttempt._(controller!, token);
+    if (token == null && guide == null) return null;
+    return TaskAttempt._(token == null ? null : controller, token, guide);
   } catch (e, st) {
     TraceLogger.instance.warn(
       'recorder',

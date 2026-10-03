@@ -1507,6 +1507,46 @@ Map<String, _Getter> _part3() => {
   'gettingStartedStateCompleted': (l) => l.gettingStartedStateCompleted,
   'gettingStartedStateReleased': (l) => l.gettingStartedStateReleased,
   'gettingStartedStateReserved': (l) => l.gettingStartedStateReserved,
+  'guideActionConfirmBooking': (l) => l.guideActionConfirmBooking,
+  'guideActionOpenReserve': (l) => l.guideActionOpenReserve,
+  'guideActionSelectDate': (l) => l.guideActionSelectDate,
+  'guideActionSelectPeriod': (l) => l.guideActionSelectPeriod,
+  'guideActionSelectResource': (l) => l.guideActionSelectResource,
+  'guideBookingRefusedRecovery': (l) => l.guideBookingRefusedRecovery,
+  'guideBuiltinBooking': (l) => l.guideBuiltinBooking,
+  'guideBuiltinBookingIntro': (l) => l.guideBuiltinBookingIntro,
+  'guideHostBack': (l) => l.guideHostBack,
+  'guideHostBlocked': (l) => l.guideHostBlocked,
+  'guideHostClose': (l) => l.guideHostClose,
+  'guideHostCommand': (l) => l.guideHostCommand,
+  'guideHostCompleted': (l) => l.guideHostCompleted,
+  'guideHostDone': (l) => l.guideHostDone,
+  'guideHostFillField': (l) => l.guideHostFillField,
+  'guideHostInstruction': (l) => l.guideHostInstruction,
+  'guideHostManual': (l) => l.guideHostManual,
+  'guideHostNotOnScreen': (l) => l.guideHostNotOnScreen,
+  'guideHostOpenScreen': (l) => l.guideHostOpenScreen,
+  'guideHostPausedFeature': (l) => l.guideHostPausedFeature,
+  'guideHostPausedScope': (l) => l.guideHostPausedScope,
+  'guideHostRecovery': (l) => l.guideHostRecovery,
+  'guideHostResume': (l) => l.guideHostResume,
+  'guideHostShowMe': (l) => l.guideHostShowMe,
+  'guideHostSkip': (l) => l.guideHostSkip,
+  'guideHostStatusAcknowledged': (l) => l.guideHostStatusAcknowledged,
+  'guideHostStatusDone': (l) => l.guideHostStatusDone,
+  'guideHostStatusPending': (l) => l.guideHostStatusPending,
+  'guideHostStatusSkipped': (l) => l.guideHostStatusSkipped,
+  'guideHostStatusWaiting': (l) => l.guideHostStatusWaiting,
+  'guideHostSteps': (l) => l.guideHostSteps,
+  'guideHostStop': (l) => l.guideHostStop,
+  'guideHostStopped': (l) => l.guideHostStopped,
+  'guideHostTapControl': (l) => l.guideHostTapControl,
+  'guideHostTitle': (l) => l.guideHostTitle,
+  'guideHostUncertain': (l) => l.guideHostUncertain,
+  'guideHostWaiting': (l) => l.guideHostWaiting,
+  'guideStart': (l) => l.guideStart,
+  'guideStartNotRunnable': (l) => l.guideStartNotRunnable,
+  'guideStartRefused': (l) => l.guideStartRefused,
   'handoffBlocked': (l) => l.handoffBlocked,
   'handoffChanged': (l) => l.handoffChanged,
   'handoffIssued': (l) => l.handoffIssued,
@@ -1515,6 +1555,7 @@ Map<String, _Getter> _part3() => {
   'handoffVoided': (l) => l.handoffVoided,
   'helpContents': (l) => l.helpContents,
   'helpDotTooltip': (l) => l.helpDotTooltip,
+  'helpGuidedTasks': (l) => l.helpGuidedTasks,
   'helpHintAvailability': (l) => l.helpHintAvailability,
   'helpHintAvailabilityTip2': (l) => l.helpHintAvailabilityTip2,
   'helpHintAvailabilityTip3': (l) => l.helpHintAvailabilityTip3,
@@ -1593,6 +1634,9 @@ Map<String, _Getter> _part3() => {
   'helpHintMoneyTip2Topic': (l) => l.helpHintMoneyTip2Topic,
   'helpHintMoneyTip3': (l) => l.helpHintMoneyTip3,
   'helpHintMoneyTip4': (l) => l.helpHintMoneyTip4,
+};
+
+Map<String, _Getter> _part4() => {
   'helpHintMoneyTip4Topic': (l) => l.helpHintMoneyTip4Topic,
   'helpHintMoneyTopic': (l) => l.helpHintMoneyTopic,
   'helpHintNextTip': (l) => l.helpHintNextTip,
@@ -1634,9 +1678,6 @@ Map<String, _Getter> _part3() => {
   'helpTitle': (l) => l.helpTitle,
   'helpTopicAccounting': (l) => l.helpTopicAccounting,
   'helpTopicBilling': (l) => l.helpTopicBilling,
-};
-
-Map<String, _Getter> _part4() => {
   'helpTopicBookingLimits': (l) => l.helpTopicBookingLimits,
   'helpTopicBookingPolicies': (l) => l.helpTopicBookingPolicies,
   'helpTopicDeployment': (l) => l.helpTopicDeployment,
@@ -1996,6 +2037,9 @@ Map<String, _Getter> _part4() => {
   'invoicePdfBilledTo': (l) => l.invoicePdfBilledTo,
   'invoicePdfBuyerReference': (l) => l.invoicePdfBuyerReference,
   'invoicePdfCharges': (l) => l.invoicePdfCharges,
+};
+
+Map<String, _Getter> _part5() => {
   'invoicePdfCopy': (l) => l.invoicePdfCopy,
   'invoicePdfCreditNote': (l) => l.invoicePdfCreditNote,
   'invoicePdfDescription': (l) => l.invoicePdfDescription,
@@ -2037,9 +2081,6 @@ Map<String, _Getter> _part4() => {
   'invoiceSendAccepted': (l) => l.invoiceSendAccepted,
   'invoiceSendAction': (l) => l.invoiceSendAction,
   'invoiceSendCustomerAccepted': (l) => l.invoiceSendCustomerAccepted,
-};
-
-Map<String, _Getter> _part5() => {
   'invoiceSendCustomerAction': (l) => l.invoiceSendCustomerAction,
   'invoiceSendRejected': (l) => l.invoiceSendRejected,
   'invoiceSendStatusAccepted': (l) => l.invoiceSendStatusAccepted,
@@ -2399,6 +2440,9 @@ Map<String, _Getter> _part5() => {
   'mcpConnectWsReady': (l) => l.mcpConnectWsReady,
   'mcpConnectWsUnknown': (l) => l.mcpConnectWsUnknown,
   'mcpConnectedNoWorkspace': (l) => l.mcpConnectedNoWorkspace,
+};
+
+Map<String, _Getter> _part6() => {
   'mcpConnectedNone': (l) => l.mcpConnectedNone,
   'mcpConnectedTitle': (l) => l.mcpConnectedTitle,
   'mcpConsentAlready': (l) => l.mcpConsentAlready,
@@ -2440,9 +2484,6 @@ Map<String, _Getter> _part5() => {
   'mcpEligibleRequested': (l) => l.mcpEligibleRequested,
   'mcpEligibleWithdraw': (l) => l.mcpEligibleWithdraw,
   'mcpEligibleYes': (l) => l.mcpEligibleYes,
-};
-
-Map<String, _Getter> _part6() => {
   'mcpFieldName': (l) => l.mcpFieldName,
   'mcpFieldNameSample': (l) => l.mcpFieldNameSample,
   'mcpGroupFinancial': (l) => l.mcpGroupFinancial,
@@ -2802,6 +2843,9 @@ Map<String, _Getter> _part6() => {
   'noteRefAlert': (l) => l.noteRefAlert,
   'noteRefFilterEmpty': (l) => l.noteRefFilterEmpty,
   'noteRefFilterLabel': (l) => l.noteRefFilterLabel,
+};
+
+Map<String, _Getter> _part7() => {
   'noteRefGone': (l) => l.noteRefGone,
   'noteRefInvoice': (l) => l.noteRefInvoice,
   'noteRefNoReservations': (l) => l.noteRefNoReservations,
@@ -2843,9 +2887,6 @@ Map<String, _Getter> _part6() => {
   'numberSequenceJournalPayment': (l) => l.numberSequenceJournalPayment,
   'numberSequenceJournalVatDeclaration': (l) => l.numberSequenceJournalVatDeclaration,
   'numberSequenceNext': (l) => l.numberSequenceNext,
-};
-
-Map<String, _Getter> _part7() => {
   'numberSequencePrefix': (l) => l.numberSequencePrefix,
   'numberSequenceReset': (l) => l.numberSequenceReset,
   'numberSequenceResetLimited': (l) => l.numberSequenceResetLimited,
@@ -3205,6 +3246,9 @@ Map<String, _Getter> _part7() => {
   'processDocumentsInformationDesc': (l) => l.processDocumentsInformationDesc,
   'processFeatureOff': (l) => l.processFeatureOff,
   'processFeatureOn': (l) => l.processFeatureOn,
+};
+
+Map<String, _Getter> _part8() => {
   'processFilterAll': (l) => l.processFilterAll,
   'processFilterEmpty': (l) => l.processFilterEmpty,
   'processIntegrations': (l) => l.processIntegrations,
@@ -3246,9 +3290,6 @@ Map<String, _Getter> _part7() => {
   'profilePhotoSaved': (l) => l.profilePhotoSaved,
   'profilePhotoSet': (l) => l.profilePhotoSet,
   'profilePhotoTitle': (l) => l.profilePhotoTitle,
-};
-
-Map<String, _Getter> _part8() => {
   'profileStatusFieldLabel': (l) => l.profileStatusFieldLabel,
   'profileStatusHelper': (l) => l.profileStatusHelper,
   'profileStatusHint': (l) => l.profileStatusHint,
@@ -3608,6 +3649,9 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningVatRateTotals': (l) => l.reportFieldMeaningVatRateTotals,
   'reportFieldMeaningVatTotal': (l) => l.reportFieldMeaningVatTotal,
   'reportFieldMeaningVoided': (l) => l.reportFieldMeaningVoided,
+};
+
+Map<String, _Getter> _part9() => {
   'reportFieldMeaningWorkspace': (l) => l.reportFieldMeaningWorkspace,
   'reportFieldMeaningWorkspaceAddress': (l) => l.reportFieldMeaningWorkspaceAddress,
   'reportGuideInsertField': (l) => l.reportGuideInsertField,
@@ -3649,9 +3693,6 @@ Map<String, _Getter> _part8() => {
   'reportLineLogic': (l) => l.reportLineLogic,
   'reportLineRow': (l) => l.reportLineRow,
   'reportLineSection': (l) => l.reportLineSection,
-};
-
-Map<String, _Getter> _part9() => {
   'reportLineSmall': (l) => l.reportLineSmall,
   'reportLineSpacer': (l) => l.reportLineSpacer,
   'reportLineText': (l) => l.reportLineText,
@@ -4011,6 +4052,9 @@ Map<String, _Getter> _part9() => {
   'taskExportActionSelectResource': (l) => l.taskExportActionSelectResource,
   'taskExportActionSwitchView': (l) => l.taskExportActionSwitchView,
   'taskExportActionUnknown': (l) => l.taskExportActionUnknown,
+};
+
+Map<String, _Getter> _part10() => {
   'taskExportActionViewDetails': (l) => l.taskExportActionViewDetails,
   'taskExportAuthored': (l) => l.taskExportAuthored,
   'taskExportCompletenessComplete': (l) => l.taskExportCompletenessComplete,
@@ -4052,9 +4096,6 @@ Map<String, _Getter> _part9() => {
   'taskExportOutcomeRequested': (l) => l.taskExportOutcomeRequested,
   'taskExportOutcomeSeriesBooked': (l) => l.taskExportOutcomeSeriesBooked,
   'taskExportOutcomeUnknown': (l) => l.taskExportOutcomeUnknown,
-};
-
-Map<String, _Getter> _part10() => {
   'taskExportOutcomeUnregistered': (l) => l.taskExportOutcomeUnregistered,
   'taskExportPrereqBookablePlace': (l) => l.taskExportPrereqBookablePlace,
   'taskExportPrereqSignedIn': (l) => l.taskExportPrereqSignedIn,
@@ -4414,6 +4455,9 @@ Map<String, _Getter> _part10() => {
   'vatDeclPeriod': (l) => l.vatDeclPeriod,
   'vatDeclRate': (l) => l.vatDeclRate,
   'vatDeclRegimeGate': (l) => l.vatDeclRegimeGate,
+};
+
+Map<String, _Getter> _part11() => {
   'vatDeclRejected': (l) => l.vatDeclRejected,
   'vatDeclSeller': (l) => l.vatDeclSeller,
   'vatDeclSent': (l) => l.vatDeclSent,
@@ -4455,9 +4499,6 @@ Map<String, _Getter> _part10() => {
   'vatRateIncomplete': (l) => l.vatRateIncomplete,
   'vatRateLabelField': (l) => l.vatRateLabelField,
   'vatRatePercentField': (l) => l.vatRatePercentField,
-};
-
-Map<String, _Getter> _part11() => {
   'vatRateRemoveTooltip': (l) => l.vatRateRemoveTooltip,
   'vatRatesTile': (l) => l.vatRatesTile,
   'vatRegimeHint': (l) => l.vatRegimeHint,

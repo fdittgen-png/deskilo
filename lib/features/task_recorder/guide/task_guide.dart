@@ -23,7 +23,10 @@ import '../domain/action_registry.dart';
 const String taskGuideFormat = 'deskilo.task-guide';
 
 /// The guide schema version this build writes and the newest it reads.
-const int taskGuideSchemaVersion = 1;
+/// 2 (#1867 live guide): a perform step may name its control ([GuideStep.
+/// target]) and the app message it shows ([GuideStep.label]). Schema 1
+/// guides read unchanged — they simply carry no target.
+const int taskGuideSchemaVersion = 2;
 
 /// What a guide step asks of the person.
 enum GuideStepKind {
@@ -66,6 +69,8 @@ class GuideStep {
     this.optional = false,
     this.recovery = const [],
     this.manualCategory,
+    this.target,
+    this.label,
   });
 
   /// Unique within the guide: 'g1', 'g2', 'g1r1'.
@@ -92,6 +97,16 @@ class GuideStep {
   /// any ('payment', 'authentication', …), from [ProtectedSurface].
   final ProtectedSurface? manualCategory;
 
+  /// On a perform step: the control or screen it happens on, as the
+  /// recorder names it — a string key from the generated vocabulary, its
+  /// `{}` pattern, a route pattern, or a command's message. The live guide
+  /// finds the mounted control by it; a step without one matches its
+  /// action anywhere.
+  final String? target;
+
+  /// The app message (by key) the control showed, to say what to tap.
+  final String? label;
+
   bool get isCommand => expectedOutcomes.isNotEmpty;
 
   GuideStep copyWith({String? text, bool? optional}) => GuideStep(
@@ -103,6 +118,8 @@ class GuideStep {
     optional: optional ?? this.optional,
     recovery: recovery,
     manualCategory: manualCategory,
+    target: target,
+    label: label,
   );
 }
 

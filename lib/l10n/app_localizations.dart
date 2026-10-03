@@ -9960,6 +9960,282 @@ abstract class AppLocalizations {
   /// **'Get started in {workspace}'**
   String gettingStartedTitle(String workspace);
 
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'confirm the booking and wait for the answer'**
+  String get guideActionConfirmBooking;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'open Reserve'**
+  String get guideActionOpenReserve;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'choose the day'**
+  String get guideActionSelectDate;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'choose the period'**
+  String get guideActionSelectPeriod;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'choose a place on the plan or in the list'**
+  String get guideActionSelectResource;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'The booking was refused (the place is taken or a rule forbids it). Choose another place or period, then confirm again.'**
+  String get guideBookingRefusedRecovery;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Book a place'**
+  String get guideBuiltinBooking;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'This guide shows how to book a place: choose the day and the period, pick a place, then confirm. Nothing is booked until you confirm.'**
+  String get guideBuiltinBookingIntro;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get guideHostBack;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Resolve the message on screen first; the guide waits.'**
+  String get guideHostBlocked;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get guideHostClose;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm, then wait for the result.'**
+  String get guideHostCommand;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Guide completed.'**
+  String get guideHostCompleted;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {action}.'**
+  String guideHostDoAction(String action);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get guideHostDone;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in the highlighted field, then leave it.'**
+  String get guideHostFillField;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in “{label}”, then leave the field.'**
+  String guideHostFillLabel(String label);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Read this, then mark it done.'**
+  String get guideHostInstruction;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Do this step yourself, then mark it done.'**
+  String get guideHostManual;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'This part happens on a protected screen ({category}). Do it yourself, then mark it done.'**
+  String guideHostManualProtected(String category);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'This control is not on this screen. Go to the screen of the previous step, or check the guide.'**
+  String get guideHostNotOnScreen;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Open “{label}”.'**
+  String guideHostOpenLabel(String label);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Open the next screen.'**
+  String get guideHostOpenScreen;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Paused: the task recorder is turned off in this workspace.'**
+  String get guideHostPausedFeature;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Paused: the account or workspace changed. The guide continues only where it started.'**
+  String get guideHostPausedScope;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'That was refused. Follow these steps, then try again.'**
+  String get guideHostRecovery;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get guideHostResume;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Show me'**
+  String get guideHostShowMe;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get guideHostSkip;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Acknowledged'**
+  String get guideHostStatusAcknowledged;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get guideHostStatusDone;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'To do'**
+  String get guideHostStatusPending;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get guideHostStatusSkipped;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get guideHostStatusWaiting;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String guideHostStepOf(int current, int total);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'All steps'**
+  String get guideHostSteps;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Stop the guide'**
+  String get guideHostStop;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Guide stopped. Nothing was undone.'**
+  String get guideHostStopped;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the highlighted control.'**
+  String get guideHostTapControl;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Tap “{label}”.'**
+  String guideHostTapLabel(String label);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Guided task'**
+  String get guideHostTitle;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'The answer did not arrive. Check whether it happened before trying again.'**
+  String get guideHostUncertain;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the result…'**
+  String get guideHostWaiting;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Start the guide'**
+  String get guideStart;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'This guide names steps this version of the app does not know; it can be read, not followed.'**
+  String get guideStartNotRunnable;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'This guide cannot start here: sign in and turn the task recorder on in this workspace.'**
+  String get guideStartRefused;
+
   /// #1870 accountant handoff blocking finding
   ///
   /// In en, this message translates to:
@@ -10067,6 +10343,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open the guide'**
   String get helpDotTooltip;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Guided tasks'**
+  String get helpGuidedTasks;
 
   /// No description provided for @helpHintAvailability.
   ///

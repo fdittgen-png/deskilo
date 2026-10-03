@@ -162,24 +162,27 @@ final class RecorderScopeProvider
 
 String _$recorderScopeHash() => r'66244c1eb6cac2a36c033a0d9de13bd1d9207f17';
 
-/// Whether this workspace lets its people record a task here.
+/// Whether this workspace lets its people record a task here. Kept alive
+/// with the feature set it reads, so a running guide (#1867) can listen.
 
 @ProviderFor(taskRecorderAvailable)
 final taskRecorderAvailableProvider = TaskRecorderAvailableProvider._();
 
-/// Whether this workspace lets its people record a task here.
+/// Whether this workspace lets its people record a task here. Kept alive
+/// with the feature set it reads, so a running guide (#1867) can listen.
 
 final class TaskRecorderAvailableProvider
     extends $FunctionalProvider<bool, bool, bool>
     with $Provider<bool> {
-  /// Whether this workspace lets its people record a task here.
+  /// Whether this workspace lets its people record a task here. Kept alive
+  /// with the feature set it reads, so a running guide (#1867) can listen.
   TaskRecorderAvailableProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'taskRecorderAvailableProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -207,7 +210,7 @@ final class TaskRecorderAvailableProvider
 }
 
 String _$taskRecorderAvailableHash() =>
-    r'd7ddcc2ea059c759c193d9f2ac7309cae8366e8d';
+    r'ff79d7bf5a00a6d7e8ea51759013dfb6d18534af';
 
 /// The one recorder of this run.
 
