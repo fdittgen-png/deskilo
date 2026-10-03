@@ -11880,7 +11880,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get permManageServices => 'Services & Pakete verwalten';
 
   @override
-  String get permManageSites => 'Standorte und Ebenen verwalten';
+  String get permManageSites =>
+      'Standorte verwalten und den Grundriss bearbeiten';
 
   @override
   String get permManageValidation => 'Validierungsregeln konfigurieren';

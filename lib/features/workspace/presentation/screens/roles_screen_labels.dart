@@ -36,7 +36,7 @@ String permissionLabel(AppLocalizations? l10n, WorkspacePermission permission) =
         WorkspacePermission.paymentTermsEdit =>
           l10n?.permPaymentTermsEdit ?? 'Request payment-condition changes',
         WorkspacePermission.manageSites =>
-          l10n?.permManageSites ?? 'Manage sites and levels',
+          l10n?.permManageSites ?? 'Manage sites and edit the floor plan',
         WorkspacePermission.manageBilling =>
           l10n?.permManageBilling ?? 'Manage tariffs and billing rules',
         WorkspacePermission.manageReservations =>

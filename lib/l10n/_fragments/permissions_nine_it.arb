@@ -1,6 +1,6 @@
 {
   "@@locale": "it",
-  "permManageSites": "Gestire sedi e piani",
+  "permManageSites": "Gestire sedi e modificare la planimetria",
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },

@@ -853,11 +853,11 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/editor',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/messages';
-        },
+        // #2137 — the owner, or whoever holds manageSites (0363).
+        redirect: (context, state) =>
+            (ref.read(myMemberProvider).value?.actsAsOwner ?? false)
+                ? null
+                : needs(WorkspacePermission.manageSites)(context, state),
         builder: (context, state) => const EditorScreen(),
         routes: [
           GoRoute(

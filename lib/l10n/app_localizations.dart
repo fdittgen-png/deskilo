@@ -20279,7 +20279,7 @@ abstract class AppLocalizations {
   /// #982 permission catalog: permManageSites
   ///
   /// In en, this message translates to:
-  /// **'Manage sites and levels'**
+  /// **'Manage sites and edit the floor plan'**
   String get permManageSites;
 
   /// Permission label (#513)

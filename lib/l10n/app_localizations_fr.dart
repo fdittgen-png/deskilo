@@ -11889,7 +11889,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permManageServices => 'Gérer les services et forfaits';
 
   @override
-  String get permManageSites => 'Gérer les sites et les étages';
+  String get permManageSites => 'Gérer les sites et modifier le plan';
 
   @override
   String get permManageValidation => 'Configurer les règles de validation';
