@@ -69,6 +69,7 @@ void main() {
       expect(features[1], [
         'kioskMode',
         'kioskMode',
+        '',
         'false',
         'present',
         null,
@@ -209,7 +210,9 @@ void main() {
     final feature = rows(fr, 'Features')[1];
     expect(feature[0], 'kioskMode', reason: 'the key stays technical');
     expect(feature[1], isNot('kioskMode'), reason: 'the label is French');
-    expect(feature.skip(2), rows(en, 'Features')[1].skip(2),
+    // #1851 B — the stage is a word for the reader, like the label.
+    expect(feature[2], isNotEmpty, reason: 'the stage is named in French');
+    expect(feature.skip(3), rows(en, 'Features')[1].skip(3),
         reason: 'values and states are the same in every language');
     expect(rows(fr, 'Settings'), rows(en, 'Settings'));
   });
