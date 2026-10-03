@@ -75,19 +75,23 @@ Future<BiResult> biModuleResult(
 }
 
 /// One finance figure of [k]; a missing amount is unknown, never 0.
-BiMeasure financeMeasure(FinanceSummaryKpi k, String moduleId) {
+BiMeasure financeMeasure(
+  FinanceSummaryKpi k,
+  String moduleId, {
+  bool currencyCompatible = true,
+}) {
   final minor = moduleId == 'finance.invoiced'
       ? k.invoicedMinor
       : k.collectedMinor;
   final quality = {
     ...k.quality,
-    if (minor == null) KpiQuality.unavailable,
+    if (minor == null || !currencyCompatible) KpiQuality.unavailable,
   };
   final unknown = quality.contains(KpiQuality.unavailable);
   return BiMeasure(
     numerator: minor ?? 0,
     quality: {...quality, if (!unknown && minor == 0) KpiQuality.knownZero},
-    reasons: k.reasons,
+    reasons: [...k.reasons, if (!currencyCompatible) 'currency_mix'],
     detail: k,
   );
 }
@@ -110,21 +114,23 @@ Future<BiResult> _finance(
   final current = await now;
   final before = then == null ? null : await then;
   final currencies = {current.currency, ?before?.currency};
+  final currencyCompatible =
+      currencies.length == 1 && current.currency.isNotEmpty;
   return BiResult(
     period: period,
     comparedPeriod: compared,
     total: BiRow(
       key: BiRow.totalKey,
       label: null,
-      current: financeMeasure(current, moduleId),
-      compared: before == null ? null : financeMeasure(before, moduleId),
+      current: financeMeasure(current, moduleId,
+          currencyCompatible: currencyCompatible),
+      compared: before == null ? null : financeMeasure(before, moduleId,
+          currencyCompatible: currencyCompatible),
     ),
     computedAt: current.computedAt,
     // Two periods in two currencies do not compare: no currency, no
     // amount.
-    currency: currencies.length == 1 && current.currency.isNotEmpty
-        ? current.currency
-        : null,
+    currency: currencyCompatible ? current.currency : null,
   );
 }
 

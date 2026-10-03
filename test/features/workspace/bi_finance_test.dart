@@ -54,6 +54,7 @@ Map<String, dynamic> _row({
 /// 1 000,00, collected 0 (measured).
 class _Finance implements FinanceKpiRepository {
   final calls = <(String, String)>[];
+  String comparedCurrency = 'EUR';
   Object? failure;
 
   @override
@@ -71,6 +72,7 @@ class _Finance implements FinanceKpiRepository {
               to: toMonth,
               invoiced: '100000',
               collected: '0',
+              currency: comparedCurrency,
             )
           : _row(from: fromMonth, to: toMonth),
     );
@@ -247,6 +249,17 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.textContaining('Not a profit'), findsOneWidget);
+  });
+
+  testWidgets('different currencies suppress amounts, basis and percentage changes', (tester) async {
+    final finance = await _pump(tester);
+    finance.comparedCurrency = 'USD';
+    await _open(tester, '/bi?cmp=previous');
+    expect(_in(tester, 'finance.invoiced', 'bi-value'), '—');
+    expect(_in(tester, 'finance.invoiced', 'bi-compared'),
+        'February 2026: — (—)');
+    expect(find.textContaining('credit notes €150.00'), findsNothing);
+    expect(find.textContaining('different currencies are not added'), findsWidgets);
   });
 
   testWidgets('a comparison gives the difference in money and in percent; '

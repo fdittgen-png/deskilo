@@ -155,7 +155,7 @@ final biModuleViews = <String, BiModuleView>{
   'finance.invoiced': BiModuleView(
     title: (l10n) => l10n?.biFinanceInvoiced ?? 'Invoiced',
     value: _money,
-    basis: (m, l10n, locale) => switch (_finance(m)) {
+    basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
       final k? =>
         l10n?.biFinanceInvoicedBasis(
               '${k.invoices}',
@@ -172,7 +172,7 @@ final biModuleViews = <String, BiModuleView>{
   'finance.collected': BiModuleView(
     title: (l10n) => l10n?.biFinanceCollected ?? 'Collected',
     value: _money,
-    basis: (m, l10n, locale) => switch (_finance(m)) {
+    basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
       final k? =>
         l10n?.biFinanceCollectedBasis('${k.matches}') ??
             'From ${k.matches} payments matched to invoices',
