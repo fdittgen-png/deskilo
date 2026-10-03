@@ -9781,6 +9781,325 @@
       }
     }
   },
+  "mcpConnectAccessExpiresIn": "Approved — {days, plural, =1{1 day} other{{days} days}} left.",
+  "@mcpConnectAccessExpiresIn": {
+    "description": "#2145 Connect an assistant: mcpConnectAccessExpiresIn",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "mcpConnectAccessExpiresSoon": "Approved — expires in {days, plural, =1{1 day} other{{days} days}}. Ask for approval again once it lapses.",
+  "@mcpConnectAccessExpiresSoon": {
+    "description": "#2145 Connect an assistant: mcpConnectAccessExpiresSoon",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "mcpConnectAddTitle": "Add DesKilo to your assistant",
+  "@mcpConnectAddTitle": {
+    "description": "#2145 Connect an assistant: mcpConnectAddTitle"
+  },
+  "mcpConnectAddressLabel": "Your DesKilo address for assistants",
+  "@mcpConnectAddressLabel": {
+    "description": "#2145 Connect an assistant: mcpConnectAddressLabel"
+  },
+  "mcpConnectAllDone": "Everything is ready. Test the connection below.",
+  "@mcpConnectAllDone": {
+    "description": "#2145 Connect an assistant: mcpConnectAllDone"
+  },
+  "mcpConnectBeforeTitle": "Before you connect",
+  "@mcpConnectBeforeTitle": {
+    "description": "#2145 Connect an assistant: mcpConnectBeforeTitle"
+  },
+  "mcpConnectChatgptNote": "Developer mode needs a paid ChatGPT plan (Plus, Pro, Business, Enterprise or Edu).",
+  "@mcpConnectChatgptNote": {
+    "description": "#2145 Connect an assistant: mcpConnectChatgptNote"
+  },
+  "mcpConnectChatgptStep1": "In ChatGPT, turn on developer mode: Settings → Apps → Advanced settings.",
+  "@mcpConnectChatgptStep1": {
+    "description": "#2145 Connect an assistant: mcpConnectChatgptStep1"
+  },
+  "mcpConnectChatgptStep2": "Create an app named DesKilo, paste the address above and choose OAuth as the authentication.",
+  "@mcpConnectChatgptStep2": {
+    "description": "#2145 Connect an assistant: mcpConnectChatgptStep2"
+  },
+  "mcpConnectChatgptStep3": "Sign in with Google and pick this workspace and what ChatGPT may do there.",
+  "@mcpConnectChatgptStep3": {
+    "description": "#2145 Connect an assistant: mcpConnectChatgptStep3"
+  },
+  "mcpConnectClaudeNote": "Claude on the web, Claude Desktop and the Claude mobile app share the same connectors. On a Team or Enterprise plan, an owner of the Claude organisation adds the connector first.",
+  "@mcpConnectClaudeNote": {
+    "description": "#2145 Connect an assistant: mcpConnectClaudeNote"
+  },
+  "mcpConnectClaudeOpen": "Open Claude connectors",
+  "@mcpConnectClaudeOpen": {
+    "description": "#2145 Connect an assistant: mcpConnectClaudeOpen"
+  },
+  "mcpConnectClaudeStep1": "In Claude, open Settings → Connectors.",
+  "@mcpConnectClaudeStep1": {
+    "description": "#2145 Connect an assistant: mcpConnectClaudeStep1"
+  },
+  "mcpConnectClaudeStep2": "Choose \"Add custom connector\", name it DesKilo and paste the address above.",
+  "@mcpConnectClaudeStep2": {
+    "description": "#2145 Connect an assistant: mcpConnectClaudeStep2"
+  },
+  "mcpConnectClaudeStep3": "Choose Connect, sign in with Google and pick this workspace and what Claude may do there.",
+  "@mcpConnectClaudeStep3": {
+    "description": "#2145 Connect an assistant: mcpConnectClaudeStep3"
+  },
+  "mcpConnectCodeStep1": "Run this in a terminal:",
+  "@mcpConnectCodeStep1": {
+    "description": "#2145 Connect an assistant: mcpConnectCodeStep1"
+  },
+  "mcpConnectCodeStep2": "In Claude Code, type /mcp, choose deskilo and then Authenticate. A browser opens to sign in and pick this workspace.",
+  "@mcpConnectCodeStep2": {
+    "description": "#2145 Connect an assistant: mcpConnectCodeStep2"
+  },
+  "mcpConnectCopied": "Copied.",
+  "@mcpConnectCopied": {
+    "description": "#2145 Connect an assistant: mcpConnectCopied"
+  },
+  "mcpConnectCopyRequest": "Copy a request to send",
+  "@mcpConnectCopyRequest": {
+    "description": "#2145 Connect an assistant: mcpConnectCopyRequest"
+  },
+  "mcpConnectCursorInstall": "Add to Cursor",
+  "@mcpConnectCursorInstall": {
+    "description": "#2145 Connect an assistant: mcpConnectCursorInstall"
+  },
+  "mcpConnectCursorStep": "Cursor asks to install DesKilo, then opens a browser to sign in and pick this workspace. Without the button, add this to ~/.cursor/mcp.json:",
+  "@mcpConnectCursorStep": {
+    "description": "#2145 Connect an assistant: mcpConnectCursorStep"
+  },
+  "mcpConnectDone": "Done",
+  "@mcpConnectDone": {
+    "description": "#2145 Connect an assistant: mcpConnectDone"
+  },
+  "mcpConnectIntro": "Let Claude, ChatGPT or another assistant check and book things for you in DesKilo. It acts as you, only in the workspaces and for the actions you approve.",
+  "@mcpConnectIntro": {
+    "description": "#2145 Connect an assistant: mcpConnectIntro"
+  },
+  "mcpConnectLastCall": "Last call: {client}, {when}.",
+  "@mcpConnectLastCall": {
+    "description": "#2145 Connect an assistant: mcpConnectLastCall",
+    "placeholders": {
+      "client": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConnectManageHint": "To see what an assistant did or to disconnect it, open Assistants.",
+  "@mcpConnectManageHint": {
+    "description": "#2145 Connect an assistant: mcpConnectManageHint"
+  },
+  "mcpConnectOpenFailed": "The app could not be opened from here. Use the steps below instead.",
+  "@mcpConnectOpenFailed": {
+    "description": "#2145 Connect an assistant: mcpConnectOpenFailed"
+  },
+  "mcpConnectOpenGuide": "Open the connection guide",
+  "@mcpConnectOpenGuide": {
+    "description": "#2145 Connect an assistant: mcpConnectOpenGuide"
+  },
+  "mcpConnectOpenInstallation": "Open the installation console",
+  "@mcpConnectOpenInstallation": {
+    "description": "#2145 Connect an assistant: mcpConnectOpenInstallation"
+  },
+  "mcpConnectOpenSetup": "Open assistant setup",
+  "@mcpConnectOpenSetup": {
+    "description": "#2145 Connect an assistant: mcpConnectOpenSetup"
+  },
+  "mcpConnectOperatorRequest": "Hello, could you switch assistants on for our DesKilo server? It is under Settings → Installation: assistants. Thank you.",
+  "@mcpConnectOperatorRequest": {
+    "description": "#2145 Connect an assistant: mcpConnectOperatorRequest"
+  },
+  "mcpConnectOtherStep1": "Most clients read a JSON file of servers. Add this entry; the client opens a browser to sign in the first time.",
+  "@mcpConnectOtherStep1": {
+    "description": "#2145 Connect an assistant: mcpConnectOtherStep1"
+  },
+  "mcpConnectOtherStep2": "A client that only starts local programs can reach DesKilo through mcp-remote (needs Node.js):",
+  "@mcpConnectOtherStep2": {
+    "description": "#2145 Connect an assistant: mcpConnectOtherStep2"
+  },
+  "mcpConnectRoleDenied": "Nothing is offered to your role here. A workspace administrator decides what each role may do.",
+  "@mcpConnectRoleDenied": {
+    "description": "#2145 Connect an assistant: mcpConnectRoleDenied"
+  },
+  "mcpConnectStepAccess": "Your access to assistants",
+  "@mcpConnectStepAccess": {
+    "description": "#2145 Connect an assistant: mcpConnectStepAccess"
+  },
+  "mcpConnectStepConnect": "DesKilo added to your assistant",
+  "@mcpConnectStepConnect": {
+    "description": "#2145 Connect an assistant: mcpConnectStepConnect"
+  },
+  "mcpConnectStepGoogle": "Google sign-in",
+  "@mcpConnectStepGoogle": {
+    "description": "#2145 Connect an assistant: mcpConnectStepGoogle"
+  },
+  "mcpConnectStepIdentity": "Your identity on this server",
+  "@mcpConnectStepIdentity": {
+    "description": "#2145 Connect an assistant: mcpConnectStepIdentity"
+  },
+  "mcpConnectStepServer": "Assistants switched on for this server",
+  "@mcpConnectStepServer": {
+    "description": "#2145 Connect an assistant: mcpConnectStepServer"
+  },
+  "mcpConnectStepWorkspace": "This workspace offers assistants",
+  "@mcpConnectStepWorkspace": {
+    "description": "#2145 Connect an assistant: mcpConnectStepWorkspace"
+  },
+  "mcpConnectSwitchWorkspace": "Switch to this workspace",
+  "@mcpConnectSwitchWorkspace": {
+    "description": "#2145 Connect an assistant: mcpConnectSwitchWorkspace"
+  },
+  "mcpConnectTabChatgpt": "ChatGPT",
+  "@mcpConnectTabChatgpt": {
+    "description": "#2145 Connect an assistant: mcpConnectTabChatgpt"
+  },
+  "mcpConnectTabClaude": "Claude",
+  "@mcpConnectTabClaude": {
+    "description": "#2145 Connect an assistant: mcpConnectTabClaude"
+  },
+  "mcpConnectTabClaudeCode": "Claude Code",
+  "@mcpConnectTabClaudeCode": {
+    "description": "#2145 Connect an assistant: mcpConnectTabClaudeCode"
+  },
+  "mcpConnectTabCursor": "Cursor",
+  "@mcpConnectTabCursor": {
+    "description": "#2145 Connect an assistant: mcpConnectTabCursor"
+  },
+  "mcpConnectTabOther": "Other",
+  "@mcpConnectTabOther": {
+    "description": "#2145 Connect an assistant: mcpConnectTabOther"
+  },
+  "mcpConnectTabVscode": "VS Code",
+  "@mcpConnectTabVscode": {
+    "description": "#2145 Connect an assistant: mcpConnectTabVscode"
+  },
+  "mcpConnectTest": "Test the connection",
+  "@mcpConnectTest": {
+    "description": "#2145 Connect an assistant: mcpConnectTest"
+  },
+  "mcpConnectTestAgain": "Test again",
+  "@mcpConnectTestAgain": {
+    "description": "#2145 Connect an assistant: mcpConnectTestAgain"
+  },
+  "mcpConnectTestPrompt": "Using DesKilo, what are my bookings this week?",
+  "@mcpConnectTestPrompt": {
+    "description": "#2145 Connect an assistant: mcpConnectTestPrompt"
+  },
+  "mcpConnectTestReached": "Connected: {client} reached DesKilo, {when}.",
+  "@mcpConnectTestReached": {
+    "description": "#2145 Connect an assistant: mcpConnectTestReached",
+    "placeholders": {
+      "client": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConnectTestTimeout": "No call arrived yet. Check that the connector is added, that you approved this workspace, and that the steps above are done; then test again.",
+  "@mcpConnectTestTimeout": {
+    "description": "#2145 Connect an assistant: mcpConnectTestTimeout"
+  },
+  "mcpConnectTestTitle": "Check that it works",
+  "@mcpConnectTestTitle": {
+    "description": "#2145 Connect an assistant: mcpConnectTestTitle"
+  },
+  "mcpConnectTestWaiting": "Waiting for your assistant to call DesKilo. Ask it:",
+  "@mcpConnectTestWaiting": {
+    "description": "#2145 Connect an assistant: mcpConnectTestWaiting"
+  },
+  "mcpConnectTitle": "Connect an assistant",
+  "@mcpConnectTitle": {
+    "description": "#2145 Connect an assistant: mcpConnectTitle"
+  },
+  "mcpConnectTodoConnect": "To do — you: follow the steps for your assistant below.",
+  "@mcpConnectTodoConnect": {
+    "description": "#2145 Connect an assistant: mcpConnectTodoConnect"
+  },
+  "mcpConnectTodoYou": "To do — you.",
+  "@mcpConnectTodoYou": {
+    "description": "#2145 Connect an assistant: mcpConnectTodoYou"
+  },
+  "mcpConnectUnavailable": "Could not be checked right now.",
+  "@mcpConnectUnavailable": {
+    "description": "#2145 Connect an assistant: mcpConnectUnavailable"
+  },
+  "mcpConnectVscodeInstall": "Add to VS Code",
+  "@mcpConnectVscodeInstall": {
+    "description": "#2145 Connect an assistant: mcpConnectVscodeInstall"
+  },
+  "mcpConnectVscodeStep": "VS Code asks to install DesKilo. Start it from the MCP servers list; a browser opens to sign in and pick this workspace.",
+  "@mcpConnectVscodeStep": {
+    "description": "#2145 Connect an assistant: mcpConnectVscodeStep"
+  },
+  "mcpConnectWaitingDatabaseAdmin": "Waiting for a database administrator to approve your request.",
+  "@mcpConnectWaitingDatabaseAdmin": {
+    "description": "#2145 Connect an assistant: mcpConnectWaitingDatabaseAdmin"
+  },
+  "mcpConnectWaitingOperator": "Waiting for the server's operator: {names}.",
+  "@mcpConnectWaitingOperator": {
+    "description": "#2145 Connect an assistant: mcpConnectWaitingOperator",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConnectWaitingOperatorUnknown": "Waiting for the server's operator, who is not named yet.",
+  "@mcpConnectWaitingOperatorUnknown": {
+    "description": "#2145 Connect an assistant: mcpConnectWaitingOperatorUnknown"
+  },
+  "mcpConnectWaitingWorkspaceAdmin": "Waiting for a workspace administrator to offer assistants here.",
+  "@mcpConnectWaitingWorkspaceAdmin": {
+    "description": "#2145 Connect an assistant: mcpConnectWaitingWorkspaceAdmin"
+  },
+  "mcpConnectWhich": "Which assistant do you use?",
+  "@mcpConnectWhich": {
+    "description": "#2145 Connect an assistant: mcpConnectWhich"
+  },
+  "mcpConnectWorkspaceSelected": "Selected workspace",
+  "@mcpConnectWorkspaceSelected": {
+    "description": "#2145 Connect an assistant: mcpConnectWorkspaceSelected"
+  },
+  "mcpConnectWorkspacesHint": "Each workspace decides for itself. When your assistant asks, you choose among the ready ones.",
+  "@mcpConnectWorkspacesHint": {
+    "description": "#2145 Connect an assistant: mcpConnectWorkspacesHint"
+  },
+  "mcpConnectWorkspacesTitle": "Your workspaces",
+  "@mcpConnectWorkspacesTitle": {
+    "description": "#2145 Connect an assistant: mcpConnectWorkspacesTitle"
+  },
+  "mcpConnectWsConnected": "Connected — an assistant may act for you here.",
+  "@mcpConnectWsConnected": {
+    "description": "#2145 Connect an assistant: mcpConnectWsConnected"
+  },
+  "mcpConnectWsNotOffered": "Assistants are on, but nothing is offered to your role yet. A workspace administrator decides.",
+  "@mcpConnectWsNotOffered": {
+    "description": "#2145 Connect an assistant: mcpConnectWsNotOffered"
+  },
+  "mcpConnectWsOff": "Assistants are off in this workspace. A workspace administrator turns them on in Assistant setup.",
+  "@mcpConnectWsOff": {
+    "description": "#2145 Connect an assistant: mcpConnectWsOff"
+  },
+  "mcpConnectWsReady": "Ready — choose it when your assistant asks.",
+  "@mcpConnectWsReady": {
+    "description": "#2145 Connect an assistant: mcpConnectWsReady"
+  },
+  "mcpConnectWsUnknown": "Shown once your access to assistants is approved.",
+  "@mcpConnectWsUnknown": {
+    "description": "#2145 Connect an assistant: mcpConnectWsUnknown"
+  },
   "mcpConnectedNoWorkspace": "No workspace: this assistant can do nothing here.",
   "@mcpConnectedNoWorkspace": {
     "description": "#1626 #1627 #1628 mcp_settings"
@@ -10158,6 +10477,26 @@
   "mcpPolicyUnavailable": "The assistant settings could not be loaded. Try again later.",
   "@mcpPolicyUnavailable": {
     "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpRefusalClientNotApproved": "This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.",
+  "@mcpRefusalClientNotApproved": {
+    "description": "#2145 Connect an assistant: mcpRefusalClientNotApproved"
+  },
+  "mcpRefusalNoIdentity": "Confirm your identity in DesKilo under Assistants first, then connect again from the assistant.",
+  "@mcpRefusalNoIdentity": {
+    "description": "#2145 Connect an assistant: mcpRefusalNoIdentity"
+  },
+  "mcpRefusalNotEligible": "Your access to assistants is not approved yet. Ask for it in DesKilo under Assistants, then connect again from the assistant.",
+  "@mcpRefusalNotEligible": {
+    "description": "#2145 Connect an assistant: mcpRefusalNotEligible"
+  },
+  "mcpRefusalOfferChanged": "What this workspace offers changed while you were choosing. Connect again from the assistant to see the current offer.",
+  "@mcpRefusalOfferChanged": {
+    "description": "#2145 Connect an assistant: mcpRefusalOfferChanged"
+  },
+  "mcpRefusalRequestExpired": "This connection request has expired or was already used. Start again from the assistant.",
+  "@mcpRefusalRequestExpired": {
+    "description": "#2145 Connect an assistant: mcpRefusalRequestExpired"
   },
   "mcpRemoveWorkspace": "Remove this workspace",
   "@mcpRemoveWorkspace": {

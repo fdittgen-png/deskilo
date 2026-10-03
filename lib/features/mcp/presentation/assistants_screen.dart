@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
@@ -11,6 +12,9 @@ import '../../auth/domain/database_capabilities.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/mcp_connection.dart';
 import '../providers/mcp_providers.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/providers/workspace_providers.dart';
+import 'connect_assistant_screen.dart';
 import 'mcp_operation_labels.dart';
 import 'widgets/mcp_access_status_card.dart';
 import 'widgets/mcp_usage_cards.dart';
@@ -88,6 +92,18 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
+          // #2145 — the guided way in: steps per assistant and a test.
+          if (ref
+              .watch(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.mcpAccess)) ...[
+            FilledButton.icon(
+              key: const ValueKey('mcp-open-connect'),
+              icon: const Icon(Icons.add_link),
+              label: Text(l10n?.mcpConnectTitle ?? 'Connect an assistant'),
+              onPressed: () => context.push(connectAssistantRoute),
+            ),
+            const SizedBox(height: AppSpacing.md),
+          ],
           // #1625 — the six facts and the next step, then the eligibility
           // actions they explain.
           const McpAccessStatusCard(),
