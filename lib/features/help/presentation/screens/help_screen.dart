@@ -1,11 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../task_recorder/presentation/route_classification.dart'
+    show taskRecorderRoute, taskWorkbenchRoute;
+import '../../../task_recorder/providers/recorder_providers.dart'
+    show taskRecorderAvailableProvider;
 import '../../providers/help_providers.dart';
 import 'support_bundle_screen.dart';
 
@@ -97,6 +102,21 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
       appBar: AppBar(
         title: Text(l10n?.helpTitle ?? 'Help'),
         actions: [
+          // #1865 — "Record this task", where help is asked for.
+          if (ref.watch(taskRecorderAvailableProvider))
+            IconButton(
+              key: const ValueKey('help-record-task'),
+              tooltip: l10n?.taskRecorderRecordThisTask ?? 'Record this task',
+              icon: const Icon(Icons.fiber_manual_record_outlined),
+              onPressed: () => context.push(taskRecorderRoute),
+            ),
+          // #1872 — the local workbench needs no account.
+          IconButton(
+            key: const ValueKey('help-task-workbench'),
+            tooltip: l10n?.taskWorkbenchOpen ?? 'Open a task file',
+            icon: const Icon(Icons.file_open_outlined),
+            onPressed: () => context.push(taskWorkbenchRoute),
+          ),
           IconButton(
             tooltip: l10n?.supportTitle ?? 'Support details',
             icon: const Icon(Icons.support_agent),

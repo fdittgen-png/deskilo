@@ -24,16 +24,25 @@ WorkspaceRolesRepository workspaceRolesRepository(Ref ref) =>
 // #2085 — kept alive: myPermissions (kept alive) reads it.
 @Riverpod(keepAlive: true)
 Future<List<WorkspaceRole>> workspaceRoles(Ref ref) async {
-  if (!ref
+  // #2085 — the built-in Administrator is read whatever customRoles says
+  // (its name shows wherever roles do); the space's own roles only while
+  // the feature is on.
+  final customOn = ref
       .watch(enabledFeaturesSyncProvider)
-      .contains(WorkspaceFeature.customRoles)) {
-    return const [];
-  }
+      .contains(WorkspaceFeature.customRoles);
+  final rolesOn = ref
+      .watch(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.roleAssignment);
+  if (!customOn && !rolesOn) return const [];
   final pending = ref.watch(currentWorkspaceProvider.future);
   final repository = ref.watch(workspaceRolesRepositoryProvider);
   final workspace = await pending;
   if (workspace == null) return const [];
-  return orderedRoles(await repository.fetchRoles(workspace.id));
+  final roles = await repository.fetchRoles(workspace.id);
+  return orderedRoles([
+    for (final role in roles)
+      if (role.builtin || customOn) role,
+  ]);
 }
 
 /// Who holds one role.

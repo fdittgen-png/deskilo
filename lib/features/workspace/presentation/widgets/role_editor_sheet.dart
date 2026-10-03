@@ -43,6 +43,7 @@ class RoleEditorSheet extends StatefulWidget {
 
   static const Key saveKey = Key('role-editor-save');
   static const Key keyFieldKey = Key('role-editor-key');
+  static const Key builtInNoteKey = Key('role-editor-builtin-note');
 
   static Key nameKeyFor(String locale) => ValueKey('role-editor-name-$locale');
   static Key permissionKeyFor(WorkspacePermission p) =>
@@ -92,7 +93,11 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
         permissions: _permissions,
         sortOrder: widget.initial?.sortOrder ?? 0,
         active: _active,
+        builtin: _builtin,
       );
+
+  /// #2085 — the Administrator: only its name is edited here.
+  bool get _builtin => widget.initial?.builtin ?? false;
 
   bool get _canSave =>
       !widget.saving &&
@@ -143,6 +148,19 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
                     onChanged: (_) => setState(() {}),
                   ),
                 ),
+              if (_builtin)
+                Padding(
+                  padding: const EdgeInsets.only(top: AppSpacing.sm),
+                  child: Text(
+                    l10n?.roleBuiltInNote ??
+                        'Built in. What it may do is set in Roles; it is '
+                            "given on each member's page and takes effect "
+                            'once validated.',
+                    key: RoleEditorSheet.builtInNoteKey,
+                    style: theme.textTheme.bodyMedium,
+                  ),
+                ),
+              if (!_builtin) ...[
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(l10n?.roleEditorActive ?? 'In use'),
@@ -175,6 +193,7 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
                             }
                           }),
                 ),
+              ],
               if (widget.holders case final holders?) ...[
                 const Divider(height: AppSpacing.xl),
                 holders,

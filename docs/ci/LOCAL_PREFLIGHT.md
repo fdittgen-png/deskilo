@@ -2,16 +2,19 @@
 # Local preflight
 
 ```
+dart run tool/preflight.dart --list       # decide only, run nothing — the usual call
 dart run tool/preflight.dart              # against origin/master
 dart run tool/preflight.dart --base HEAD~1
-dart run tool/preflight.dart --list       # decide only, run nothing
 ```
+
+In a worktree, prefer `--list` and run only the generators it names: the
+build_runner step of a full run can hang there.
 
 Every generated tree in this repository has a drift gate, and every drift
 gate runs in CI. A generator forgotten locally therefore costs a full
 round trip — twenty minutes and a runner — to learn something the working
-tree already knew: that `docs/testing/TEST_INVENTORY.md` does not list the
-test just added, or that `assets/instance/bundle.json` is one migration
+tree already knew: that `lib/l10n/app_en.arb` lacks the string just added
+to a fragment, or that `assets/instance/bundle.json` is one migration
 behind the folder next to it.
 
 The preflight reads the changed paths, selects the generators that own
@@ -28,7 +31,7 @@ says which generated files it had to rewrite.
 
 | input | generator |
 |---|---|
-| a `.dart` source whose `.g.dart` or `.freezed.dart` sibling is checked in | `build_runner build`, first — the capability page fingerprints the sibling (#1446 C5a) |
+| a `.dart` source whose `.g.dart` or `.freezed.dart` sibling is checked in | `build_runner build`, first — the capability page's standings depend on the sibling (#1446 C5a) |
 | `lib/l10n/_fragments/**` | `build_arb.dart`, then `flutter gen-l10n` |
 | `workspace_feature.dart` | `build_feature_registry_sql.dart`, `build_builtin_templates.dart`, `build_setup_l10n.dart` |
 | `workspace_process.dart` | `build_process_catalogue.dart`, `build_process_labels.dart` |
@@ -37,7 +40,6 @@ says which generated files it had to rewrite.
 | `supabase/migrations/**` | `record_applied_migrations.dart`, then `build_instance.dart` |
 | `supabase/functions/**`, `supabase/restore/**` | `build_instance.dart` |
 | any hand-written `lib/**.dart` | `l10n_audit.dart` |
-| any `test/**.dart` | `test_inventory.dart` |
 
 The order in `tool/preflight/preflight.dart` is the dependency order: the
 ARB aggregate is built before `gen-l10n` reads it, and the applied

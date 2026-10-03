@@ -40,6 +40,7 @@
   "portalNoWorkspaces": "Aucun espace publié trouvé.",
   "portalNoLongerPublished": "Cet espace n’est plus publié.",
   "portalDirectoryIncompatible": "Certains espaces nécessitent une version plus récente de l’application et ne sont pas affichés.",
+  "portalActionNotNegotiated": "Cette action n’est pas disponible entre cette application et ce serveur. Mettre à jour l’application peut aider.",
   "portalMoreDirectories": "Autres annuaires",
   "portalMessenger": "Messagerie du compte",
   "portalThisServer": "Ce serveur",

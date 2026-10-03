@@ -304,8 +304,11 @@ select is(
 -- applying it still had to invent the bureau by hand.
 
 select is(
+  -- #2085 — the built-in Administrator every workspace carries is not
+  -- one the template brought.
   (select string_agg(r.key, ',' order by r.sort_order)
-     from public.workspace_roles r where r.workspace_id = pg_temp.ws()),
+     from public.workspace_roles r where r.workspace_id = pg_temp.ws()
+      and not r.builtin),
   'tresorier,secretaire,referent_salle',
   'the template brings the three roles a French association elects, in '
   'the order the bureau is usually listed');

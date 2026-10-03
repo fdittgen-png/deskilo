@@ -1,0 +1,239 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #1865 — the persistent, unobtrusive sign that a task is being recorded,
+// with pause/resume and stop in reach on every screen.
+//
+// It sits in the MaterialApp builder, above the navigator, so it is on
+// every route. It stays out of the start-up path (#2033/#2043): until the
+// recorder screen was opened in this run it renders its child and reads
+// nothing else; it never awaits; and it renders nothing extra while no
+// recording is live.
+//
+// It also tells the recorder where the person went: an instrumented
+// screen says nothing here (its seams speak), a protected screen leaves
+// one "excluded" marker, any other screen a visible "cannot describe"
+// step (route_classification.dart).
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../application/recorder_controller.dart';
+import '../../providers/recorder_providers.dart';
+import '../route_classification.dart';
+
+class RecordingIndicator extends ConsumerWidget {
+  const RecordingIndicator({
+    super.key,
+    required this.router,
+    required this.child,
+  });
+
+  final GoRouter router;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (!ref.watch(recorderOpenedProvider)) return child;
+    return _LiveIndicator(router: router, child: child);
+  }
+}
+
+class _LiveIndicator extends ConsumerStatefulWidget {
+  const _LiveIndicator({required this.router, required this.child});
+
+  final GoRouter router;
+  final Widget child;
+
+  @override
+  ConsumerState<_LiveIndicator> createState() => _LiveIndicatorState();
+}
+
+class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
+  String? _lastPath;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.router.routerDelegate.addListener(_onRoute);
+  }
+
+  @override
+  void didUpdateWidget(_LiveIndicator old) {
+    super.didUpdateWidget(old);
+    if (!identical(old.router, widget.router)) {
+      old.router.routerDelegate.removeListener(_onRoute);
+      widget.router.routerDelegate.addListener(_onRoute);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.router.routerDelegate.removeListener(_onRoute);
+    super.dispose();
+  }
+
+  void _onRoute() {
+    try {
+      final path = widget.router.routerDelegate.currentConfiguration.uri.path;
+      if (path == _lastPath) return;
+      _lastPath = path;
+      final controller = ref.read(recorderControllerProvider);
+      if (controller.state != RecorderState.recording) return;
+      switch (treatRoute(path)) {
+        case Instrumented():
+          break;
+        case Protected(:final category):
+          controller.excluded(category);
+        case Unrecorded():
+          controller.unrecorded();
+      }
+    } catch (e, st) {
+      TraceLogger.instance.warn(
+        'recorder',
+        'route not classified',
+        stackTrace: st,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final status = ref.watch(recorderStatusProvider).value;
+    final live =
+        status != null &&
+        (status.state == RecorderState.recording ||
+            status.state == RecorderState.paused);
+    if (!live) return widget.child;
+    return Stack(
+      children: [
+        widget.child,
+        PositionedDirectional(
+          top: MediaQuery.paddingOf(context).top + AppSpacing.xs,
+          end: AppSpacing.sm,
+          child: _Pill(
+            status: status,
+            onOpen: () => widget.router.push(taskRecorderRoute),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Pill extends ConsumerWidget {
+  const _Pill({required this.status, required this.onOpen});
+
+  final RecorderStatus status;
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final paused = status.state == RecorderState.paused;
+    final controller = ref.read(recorderControllerProvider);
+    final label = paused
+        ? (l10n?.taskRecorderPaused ?? 'Paused')
+        : (l10n?.taskRecorderIndicator(status.stepCount) ??
+              'Recording a task: ${status.stepCount} steps');
+    return Semantics(
+      container: true,
+      liveRegion: true,
+      label: label,
+      child: Material(
+        key: const ValueKey('recording-indicator'),
+        color: scheme.errorContainer,
+        shape: const StadiumBorder(),
+        elevation: 2,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            InkWell(
+              customBorder: const StadiumBorder(),
+              onTap: onOpen,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: 48),
+                child: Padding(
+                  padding: AppSpacing.mdH,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        paused ? Icons.pause_circle : Icons.fiber_manual_record,
+                        color: scheme.error,
+                        size: 16,
+                      ),
+                      const SizedBox(width: AppSpacing.xs),
+                      ExcludeSemantics(
+                        child: Text(
+                          paused
+                              ? label
+                              : (l10n?.taskRecorderRecording ?? 'Recording'),
+                          style: TextStyle(color: scheme.onErrorContainer),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // Above the navigator there is no Overlay for a Tooltip, so
+            // the two controls carry their names as semantics instead.
+            _PillButton(
+              key: const ValueKey('recording-indicator-pause'),
+              label: paused
+                  ? (l10n?.taskRecorderResume ?? 'Resume')
+                  : (l10n?.taskRecorderPause ?? 'Pause'),
+              icon: paused ? Icons.play_arrow : Icons.pause,
+              onTap: paused ? controller.resume : controller.pause,
+            ),
+            _PillButton(
+              key: const ValueKey('recording-indicator-stop'),
+              label: l10n?.taskRecorderStop ?? 'Stop',
+              icon: Icons.stop,
+              onTap: () async {
+                await controller.stop();
+                ref.invalidate(myRecordingsProvider);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PillButton extends StatelessWidget {
+  const _PillButton({
+    super.key,
+    required this.label,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    label: label,
+    excludeSemantics: true,
+    child: InkWell(
+      customBorder: const CircleBorder(),
+      onTap: onTap,
+      child: SizedBox.square(
+        dimension: 48,
+        child: Icon(
+          icon,
+          color: Theme.of(context).colorScheme.onErrorContainer,
+        ),
+      ),
+    ),
+  );
+}
