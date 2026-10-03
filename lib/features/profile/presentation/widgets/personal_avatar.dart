@@ -29,11 +29,17 @@ class PersonalAvatar extends ConsumerWidget {
               width: (radius * 2 * MediaQuery.devicePixelRatioOf(context))
                   .round(),
             ),
+      // The initial is decoration: wherever the avatar is a control, the
+      // control names itself ("Back to Me"), so a screen reader must not
+      // announce a bare letter, and the text-contrast audit must not read
+      // the letter against the whole 48 dp button it sits in (#2136).
       child: bytes == null
-          ? Text(
-              plainInitial(profile?.displayName ?? ''),
-              style: Theme.of(context).textTheme.labelLarge?.emphasised
-                  .copyWith(color: AppIdentityColors.foreground),
+          ? ExcludeSemantics(
+              child: Text(
+                plainInitial(profile?.displayName ?? ''),
+                style: Theme.of(context).textTheme.labelLarge?.emphasised
+                    .copyWith(color: AppIdentityColors.foreground),
+              ),
             )
           : null,
     );
