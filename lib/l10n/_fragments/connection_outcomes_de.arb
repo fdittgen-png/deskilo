@@ -1,0 +1,19 @@
+{
+  "connectionChecking": "Wird geprüft…",
+  "connectionUsable": "Verbunden",
+  "connectionUnsupported": "Diese Serverversion kann von dieser App nicht verbunden werden. Aktualisieren Sie die App oder bitten Sie den Betreiber, den Server zu aktualisieren.",
+  "connectionExpired": "Ihre Anmeldung bei diesem Server ist abgelaufen. Melden Sie sich bei diesem Server erneut an.",
+  "connectionDenied": "Dieser Server hat das Konto abgelehnt. Prüfen Sie die Anmeldedaten oder trennen Sie ihn.",
+  "connectionUnavailable": "Dieser Server antwortet gerade nicht. Ihre anderen Server sind nicht betroffen.",
+  "connectionChangedIdentity": "Dieser Server ist nicht mehr der, den Sie verbunden haben. Seine Aktionen sind angehalten, bis Sie ihn erneut bestätigen.",
+  "connectionInvalidEndpoint": "Diese Adresse oder dieser Schlüssel gehört zu keinem gültigen Server.",
+  "connectionNotConnected": "Dieser Server ist auf diesem Gerät nicht verbunden.",
+  "connectionCurrentServer": "Das ist der Server, den diese App bereits verwendet.",
+  "connectionCancelled": "Das Konto hat sich inzwischen geändert; diese Antwort wurde verworfen.",
+  "connectionMalformed": "Dieser Server hat etwas geantwortet, das diese App nicht lesen kann.",
+  "connectionUnknownOutcome": "Die Verbindung brach nach dem Senden ab. Die Anfrage wurde womöglich ausgeführt: Prüfen Sie das, bevor Sie es erneut versuchen.",
+  "connectionSessionNotSaved": "Die Aktion wurde ausgeführt, aber dieses Gerät konnte die Anmeldung beim Server nicht speichern. Möglicherweise müssen Sie sich erneut anmelden.",
+  "connectionSignInAgain": "Erneut anmelden",
+  "connectionRetry": "Erneut versuchen",
+  "connectionVerifyAgain": "Erneut bestätigen"
+}

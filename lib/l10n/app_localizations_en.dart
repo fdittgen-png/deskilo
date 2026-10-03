@@ -2554,6 +2554,69 @@ class AppLocalizationsEn extends AppLocalizations {
   String get composerDraftKept => 'Draft kept';
 
   @override
+  String get connectionCancelled =>
+      'The account changed meanwhile, so this answer was discarded.';
+
+  @override
+  String get connectionChangedIdentity =>
+      'This server is no longer the one you connected. Its actions are paused until you verify it again.';
+
+  @override
+  String get connectionChecking => 'Checking…';
+
+  @override
+  String get connectionCurrentServer =>
+      'This is the server this app already uses.';
+
+  @override
+  String get connectionDenied =>
+      'This server refused the account. Check the sign-in details, or disconnect it.';
+
+  @override
+  String get connectionExpired =>
+      'Your sign-in to this server has ended. Sign in to this server again.';
+
+  @override
+  String get connectionInvalidEndpoint =>
+      'This address or key is not a valid server.';
+
+  @override
+  String get connectionMalformed =>
+      'This server answered something this app cannot read.';
+
+  @override
+  String get connectionNotConnected =>
+      'This server is not connected on this device.';
+
+  @override
+  String get connectionRetry => 'Try again';
+
+  @override
+  String get connectionSessionNotSaved =>
+      'The action was done, but this device could not save the server\'s sign-in. You may be asked to sign in again.';
+
+  @override
+  String get connectionSignInAgain => 'Sign in again';
+
+  @override
+  String get connectionUnavailable =>
+      'This server is not answering right now. Your other servers are not affected.';
+
+  @override
+  String get connectionUnknownOutcome =>
+      'The connection dropped after the request was sent. It may have been applied: check before trying again.';
+
+  @override
+  String get connectionUnsupported =>
+      'This server\'s version cannot be connected from this app. Update the app, or ask the server\'s operator to update the server.';
+
+  @override
+  String get connectionUsable => 'Connected';
+
+  @override
+  String get connectionVerifyAgain => 'Verify again';
+
+  @override
   String get consentAccept => 'Accept and continue';
 
   @override
@@ -2886,6 +2949,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get courtesyNone => 'None';
+
+  @override
+  String get customerCapacityBusiness => 'Business';
+
+  @override
+  String get customerCapacityConsumer => 'Consumer';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Whether this customer acts for a trade or business (a company, a sole trader, an association acting as one) or as a private consumer. It decides which payment clauses an invoice prints; a VAT number alone does not decide it. Not stated: the workspace default applies.';
+
+  @override
+  String get customerCapacityLabel => 'Customer capacity';
+
+  @override
+  String get customerCapacityNotStated => 'Not stated';
+
+  @override
+  String get customerCapacitySaveError =>
+      'The customer capacity was not saved.';
 
   @override
   String get datevAccountsIntro =>
@@ -6977,12 +7060,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceKindUsage => 'The month\'s extras';
 
   @override
-  String get invoiceLegalAssociationHint =>
-      'The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.';
-
-  @override
   String get invoiceLegalAssociationReasonHint =>
       'e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members';
+
+  @override
+  String get invoiceLegalCustomerCapacityField => 'Default customer capacity';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Decides which payment clauses an invoice prints. The statutory late-penalty, recovery-indemnity and discount defaults apply only to business customers, and a consumer never receives the recovery indemnity. A member\'s own capacity wins over this default. Every invoice keeps the clauses it was issued with.';
 
   @override
   String get invoiceLegalEscompteDefault => 'No discount for early payment.';

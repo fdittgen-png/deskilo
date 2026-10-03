@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../trace/trace_logger.dart';
 import 'auth_secret_store.dart';
 import 'backend_settings.dart';
+import 'connection_outcome.dart';
+
+export 'connection_outcome.dart';
 
 class ConnectedInstallation {
   const ConnectedInstallation({
@@ -21,6 +26,11 @@ class ConnectedInstallation {
 /// Each connection was separately authorized on its own server. The encrypted
 /// collection belongs to one account AND its home origin, never to the device
 /// globally. Neither email matching nor a canonical bearer joins accounts.
+///
+/// #1832 A — every failure is a typed [ConnectionFailure]; a committed
+/// action is never reported as failed because saving the refreshed session
+/// failed afterwards; a target whose installation (or account) changed is
+/// quarantined until it is connected again.
 class ConnectedInstallations {
   ConnectedInstallations(
     this.active,
@@ -38,13 +48,21 @@ class ConnectedInstallations {
   Future<void> _writes = Future.value();
   final _epochs = <String, int>{};
   final _reads = <String, Future<void>>{};
+
+  /// Targets whose last committed action could not save its refreshed
+  /// session: the result stood, the next use may need a sign-in again.
+  final _unsaved = <String>{};
   String get _key =>
       'deskilo.connections.${sha256.convert(utf8.encode('$origin\n$owner'))}';
-  void _check() {
+  void _check([String source = '']) {
     if (_closed || owner == null || active.auth.currentUser?.id != owner) {
-      throw StateError('account changed');
+      throw ConnectionFailure(source, ConnectionFailureReason.cancelled);
     }
   }
+
+  /// Whether [source]'s last committed action left its refreshed session
+  /// unsaved on this device.
+  bool sessionNotSaved(String source) => _unsaved.contains(source);
 
   void close() {
     _closed = true;
@@ -64,11 +82,11 @@ class ConnectedInstallations {
   }) {
     final next = _writes.then((_) async {
       if (epoch != null && epoch != (_epochs[source] ?? 0)) {
-        throw StateError('connection changed');
+        throw ConnectionFailure(source, ConnectionFailureReason.cancelled);
       }
       final records = await _records();
       if (epoch != null && epoch != (_epochs[source] ?? 0)) {
-        throw StateError('connection changed');
+        throw ConnectionFailure(source, ConnectionFailureReason.cancelled);
       }
       if (record == null) {
         records.remove(source);
@@ -100,7 +118,10 @@ class ConnectedInstallations {
 
   SupabaseClient _client(BackendEndpoint endpoint) {
     if (validateBackendEndpoint(endpoint.url, endpoint.key) != null) {
-      throw StateError('invalid endpoint');
+      throw ConnectionFailure(
+        endpoint.url,
+        ConnectionFailureReason.invalidEndpoint,
+      );
     }
     return SupabaseClient(
       endpoint.url,
@@ -117,6 +138,12 @@ class ConnectedInstallations {
       await client.auth
           .signInWithOtp(email: email.trim(), shouldCreateUser: false)
           .timeout(const Duration(seconds: 20));
+    } catch (e, st) {
+      // trace-exempt: rethrown as the typed outcome, stack kept; the caller traces.
+      Error.throwWithStackTrace(
+        classifyConnectionError(e, source: endpoint.url),
+        st,
+      );
     } finally {
       await client.dispose();
     }
@@ -130,8 +157,16 @@ class ConnectedInstallations {
     bool code = false,
   }) async {
     _check();
-    final source = canonicalBackendUrl(endpoint.url)!;
-    if (source == origin) throw StateError('already the current server');
+    final source = canonicalBackendUrl(endpoint.url);
+    if (source == null) {
+      throw ConnectionFailure(
+        endpoint.url,
+        ConnectionFailureReason.invalidEndpoint,
+      );
+    }
+    if (source == origin) {
+      throw ConnectionFailure(source, ConnectionFailureReason.currentServer);
+    }
     final epoch = (_epochs[source] ?? 0) + 1;
     _epochs[source] = epoch;
     final client = _client(BackendEndpoint(source, endpoint.key.trim()));
@@ -151,23 +186,33 @@ class ConnectedInstallations {
       final user = (await client.auth.getUser()).user;
       final session = client.auth.currentSession;
       if (user == null || session == null || user.id != session.user.id) {
-        throw StateError('target authentication failed');
+        throw ConnectionFailure(source, ConnectionFailureReason.denied);
       }
       final identity = await client
           .from('installation_identity')
           .select('installation_id')
           .single();
-      await client.rpc<Object?>(
-        'my_financial_activity',
-        params: {'p_kind': 'invoices'},
-      );
-      _check();
+      final installation = identity['installation_id'];
+      if (installation is! String || installation.isEmpty) {
+        throw ConnectionFailure(source, ConnectionFailureReason.malformed);
+      }
+      // #1832 — compatibility comes from the target's public descriptor
+      // (#1847), not from reading the account's invoices: connecting reads
+      // no private payload and runs no financial operation.
+      if (!connectableProfile(await describeTarget(client))) {
+        throw ConnectionFailure(source, ConnectionFailureReason.unsupported);
+      }
+      _check(source);
       await _write(source, {
         'key': endpoint.key.trim(),
         'account': user.id,
-        'installation_id': identity['installation_id'],
+        'installation_id': installation,
         'session': session.toJson(),
       }, epoch: epoch);
+      _unsaved.remove(source);
+    } catch (e, st) {
+      // trace-exempt: rethrown as the typed outcome, stack kept; the caller traces.
+      Error.throwWithStackTrace(classifyConnectionError(e, source: source), st);
     } finally {
       await client.dispose();
     }
@@ -186,42 +231,155 @@ class ConnectedInstallations {
     String source,
     Future<T> Function(SupabaseClient) action,
   ) async {
-    _check();
+    _check(source);
     if (source.isEmpty || source == origin) {
       final result = await action(active);
-      _check();
+      _check(source);
       return result;
     }
     final epoch = _epochs[source] ?? 0;
     final record = (await _records())[source] as Map<String, dynamic>?;
-    if (record == null) throw StateError('server is not connected');
+    if (record == null) {
+      throw ConnectionFailure(source, ConnectionFailureReason.notConnected);
+    }
+    // A quarantined target is not called at all until it is connected
+    // again: a retry must not silently trust a replacement backend.
+    if (record['quarantined'] == true) {
+      throw ConnectionFailure(source, ConnectionFailureReason.changedIdentity);
+    }
     final client = _client(BackendEndpoint(source, record['key'] as String));
+    try {
+      await _verify(source, record, epoch, client);
+      _check(source);
+      final T result;
+      try {
+        result = await action(client).timeout(const Duration(seconds: 20));
+      } on TimeoutException catch (_, st) {
+        // trace-exempt: rethrown as the typed outcome, stack kept; the caller traces.
+        Error.throwWithStackTrace(
+          ConnectionFailure(
+            source,
+            ConnectionFailureReason.unavailable,
+            afterSend: true,
+          ),
+          st,
+        );
+      } catch (e, st) {
+        // The action's own refusals are the business answer and pass
+        // through; only a lost transport becomes "outcome unknown".
+        if (!isTransientNetworkFailure(e)) rethrow;
+        TraceLogger.instance.warn('connections', 'transport lost after send',
+            error: e.runtimeType, stackTrace: st);
+        throw ConnectionFailure(
+          source,
+          ConnectionFailureReason.unavailable,
+          afterSend: true,
+        );
+      }
+      _check(source);
+      await _saveSession(source, record, epoch, client);
+      return result;
+    } finally {
+      await client.dispose();
+    }
+  }
+
+  /// The target is still the account and the installation that were
+  /// connected; a change quarantines it.
+  Future<void> _verify(
+    String source,
+    Map<String, dynamic> record,
+    int epoch,
+    SupabaseClient client,
+  ) async {
     try {
       await client.auth.setInitialSession(jsonEncode(record['session']));
       final session = client.auth.currentSession;
-      if (session == null) throw StateError('sign in again');
+      if (session == null) {
+        throw ConnectionFailure(source, ConnectionFailureReason.expired);
+      }
       if (session.isExpired) await client.auth.refreshSession();
       final user = (await client.auth.getUser()).user;
-      if (user?.id != record['account']) {
-        throw StateError('target account changed');
-      }
       final identity = await client
           .from('installation_identity')
           .select('installation_id')
           .single();
-      if (identity['installation_id'] != record['installation_id']) {
-        throw StateError('installation changed');
+      if (user?.id != record['account'] ||
+          identity['installation_id'] != record['installation_id']) {
+        await _quarantine(source, record, epoch);
+        throw ConnectionFailure(source, ConnectionFailureReason.changedIdentity);
       }
-      _check();
-      final result = await action(client).timeout(const Duration(seconds: 20));
-      _check();
+    } catch (e, st) {
+      // trace-exempt: rethrown as the typed outcome, stack kept; the caller traces.
+      Error.throwWithStackTrace(classifyConnectionError(e, source: source), st);
+    }
+  }
+
+  Future<void> _quarantine(
+    String source,
+    Map<String, dynamic> record,
+    int epoch,
+  ) async {
+    try {
+      await _write(source, {...record, 'quarantined': true}, epoch: epoch);
+    } catch (e, st) {
+      // The refusal stands either way; a quarantine that could not be
+      // saved is asked again (and refused again) on the next use.
+      TraceLogger.instance.warn('connections', 'quarantine not saved',
+          error: e.runtimeType, stackTrace: st);
+    }
+  }
+
+  /// Saves the refreshed session after a COMMITTED action. A stale intent
+  /// (account changed, connection removed) still fails; a storage failure
+  /// does not turn the committed result into a failure — it is remembered,
+  /// and the next use asks for a sign-in again if the session is gone.
+  Future<void> _saveSession(
+    String source,
+    Map<String, dynamic> record,
+    int epoch,
+    SupabaseClient client,
+  ) async {
+    try {
       await _write(source, {
         ...record,
         'session': client.auth.currentSession!.toJson(),
       }, epoch: epoch);
-      return result;
-    } finally {
-      await client.dispose();
+      _unsaved.remove(source);
+    } on ConnectionFailure {
+      rethrow;
+    } catch (e, st) {
+      _unsaved.add(source);
+      TraceLogger.instance.warn(
+        'connections',
+        'session not saved after a committed action',
+        error: e.runtimeType,
+        stackTrace: st,
+      );
+    }
+  }
+
+  /// Whether [source] can be used now, and if not, why. Asks the target
+  /// the same questions an action would (session, account, installation)
+  /// plus whether this build can speak to it; runs no business operation.
+  /// Null means usable.
+  Future<ConnectionFailure?> check(String source) async {
+    try {
+      await use(source, (client) async {
+        if (!connectableProfile(await describeTarget(client))) {
+          throw ConnectionFailure(source, ConnectionFailureReason.unsupported);
+        }
+      });
+      return null;
+    } catch (e, st) {
+      final failure = classifyConnectionError(e, source: source);
+      TraceLogger.instance.log(
+        TraceLevel.info,
+        'connections',
+        'check: ${failure.reason.name}',
+        stackTrace: st,
+      );
+      return failure;
     }
   }
 
@@ -229,6 +387,7 @@ class ConnectedInstallations {
     // Delete locally even when the remote server is unavailable. No unrelated
     // installation or main app session is signed out.
     _epochs[source] = (_epochs[source] ?? 0) + 1;
+    _unsaved.remove(source);
     await _write(source, null);
   }
 }

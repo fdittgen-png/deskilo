@@ -310,6 +310,11 @@ abstract class WorkspaceRepository {
   Future<void> setMemberVatTreatment(
       String memberId, String treatment, String reason);
 
+  /// #1916 (RPC `set_member_customer_capacity`, migration 0349): whether
+  /// this member acts as a `business` or a `consumer` customer; null =
+  /// not stated. Whoever may issue invoices.
+  Future<void> setMemberCustomerCapacity(String memberId, String? capacity);
+
   /// Admin/owner (RPC `set_member_level_permission`, migration 0050):
   /// grant or revoke another member's right to reserve a whole level.
   /// The server refuses self-setting.

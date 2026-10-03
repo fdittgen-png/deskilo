@@ -77,9 +77,9 @@
   "client_member_number": "",
   "payment_terms_source": "workspace",
   "payment_terms": "Règlement à réception.",
-  "late_penalty": "Pénalités de retard : trois fois le taux d'intérêt légal.",
-  "recovery_indemnity": "Indemnité forfaitaire pour frais de recouvrement : 40 €.",
-  "escompte": "Aucun escompte pour paiement anticipé.",
+  "late_penalty": "",
+  "recovery_indemnity": "",
+  "escompte": "",
   "insurance": "",
   "special_mentions": ""
 }

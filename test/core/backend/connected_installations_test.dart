@@ -43,6 +43,14 @@ void main() {
             body = [
               {'account': id},
             ];
+          case '/rest/v1/rpc/public_network_descriptor':
+            // #1832 — a server from before negotiation: the baseline.
+            return http.Response(
+              jsonEncode({'code': 'PGRST202', 'message': 'not found'}),
+              404,
+              headers: {'content-type': 'application/json'},
+              request: request,
+            );
           default:
             throw StateError('unexpected endpoint');
         }
@@ -119,6 +127,13 @@ void main() {
           body = user('target');
         } else if (r.url.path == '/rest/v1/installation_identity') {
           body = {'installation_id': 'target-installation'};
+        } else if (r.url.path == '/rest/v1/rpc/public_network_descriptor') {
+          return http.Response(
+            jsonEncode({'code': 'PGRST202', 'message': 'not found'}),
+            404,
+            headers: {'content-type': 'application/json'},
+            request: r,
+          );
         } else {
           if (block) {
             started.complete();

@@ -1527,6 +1527,23 @@
     }
   },
   "composerDraftKept": "Bozza conservata",
+  "connectionCancelled": "Nel frattempo l’account è cambiato, quindi questa risposta è stata scartata.",
+  "connectionChangedIdentity": "Questo server non è più quello che hai connesso. Le sue azioni sono sospese finché non lo verifichi di nuovo.",
+  "connectionChecking": "Verifica in corso…",
+  "connectionCurrentServer": "Questo è il server che l’app usa già.",
+  "connectionDenied": "Questo server ha rifiutato l’account. Controlla le credenziali o scollegalo.",
+  "connectionExpired": "L’accesso a questo server è scaduto. Accedi di nuovo a questo server.",
+  "connectionInvalidEndpoint": "Questo indirizzo o questa chiave non corrisponde a un server valido.",
+  "connectionMalformed": "Questo server ha risposto qualcosa che l’app non sa leggere.",
+  "connectionNotConnected": "Questo server non è connesso su questo dispositivo.",
+  "connectionRetry": "Riprova",
+  "connectionSessionNotSaved": "L’azione è stata eseguita, ma questo dispositivo non ha potuto salvare l’accesso al server. Potrebbe esserti chiesto di accedere di nuovo.",
+  "connectionSignInAgain": "Accedi di nuovo",
+  "connectionUnavailable": "Questo server al momento non risponde. Gli altri server non sono coinvolti.",
+  "connectionUnknownOutcome": "La connessione si è interrotta dopo l’invio della richiesta. Potrebbe essere stata applicata: verifica prima di riprovare.",
+  "connectionUnsupported": "Questa versione del server non può essere connessa da questa app. Aggiorna l’app o chiedi al gestore del server di aggiornarlo.",
+  "connectionUsable": "Connesso",
+  "connectionVerifyAgain": "Verifica di nuovo",
   "consentAccept": "Accetta e continua",
   "consentAcceptedOn": "Accettato il {date} ({version})",
   "consentCheckbox": "Ho letto questo testo e accetto il modo in cui DesKilo tratta i miei dati.",
@@ -1758,6 +1775,30 @@
   "courtesyNone": "Nessuna",
   "@courtesyNone": {
     "description": "#912 courtesy title: courtesyNone"
+  },
+  "customerCapacityBusiness": "Professionista",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Consumatore",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Se questo cliente agisce per un'attività imprenditoriale o professionale (società, ditta individuale, associazione che agisce come tale) o come consumatore. Decide quali clausole di pagamento stampa una fattura; la sola partita IVA non lo decide. Non indicata: si applica il valore predefinito dello spazio.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "customerCapacityLabel": "Qualità del cliente",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Non indicata",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacitySaveError": "La qualità del cliente non è stata salvata.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
   "datevAccountsIntro": "I numeri di consulente e di cliente te li dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.",
   "@datevAccountsIntro": {
@@ -4355,13 +4396,17 @@
   "invoiceKindSettlement": "Fatture raggruppate",
   "invoiceKindSubscription": "Abbonamento, in anticipo",
   "invoiceKindUsage": "Gli extra del mese",
-  "invoiceLegalAssociationHint": "Le clausole di mora, recupero crediti e sconto vengono stampate solo se compilate — sono obbligatorie solo tra professionisti.",
-  "@invoiceLegalAssociationHint": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
   "invoiceLegalAssociationReasonHint": "es. «TVA non applicable, art. 293 B du CGI» — o «Exonération de TVA, art. 261, 7-1° du CGI» per i servizi ai membri",
   "@invoiceLegalAssociationReasonHint": {
     "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalCustomerCapacityField": "Qualità del cliente predefinita",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Decide quali clausole di pagamento stampa una fattura. I testi legali predefiniti su interessi di mora, risarcimento forfettario delle spese di recupero e sconto valgono solo per clienti professionisti, e un consumatore non riceve mai il risarcimento delle spese di recupero. La qualità propria di un membro prevale su questo valore. Ogni fattura conserva le clausole con cui è stata emessa.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
   },
   "invoiceLegalEscompteDefault": "Nessuno sconto per pagamento anticipato.",
   "@invoiceLegalEscompteDefault": {
