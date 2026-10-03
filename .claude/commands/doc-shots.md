@@ -14,6 +14,10 @@ For every image the owner posted (they arrive as file paths):
 - Decide whether it is a **new screen**, a **replacement** of one already
   in `.media-workbench/index.json`, or **one capture of several** of the
   same form (same header, scrolled). Say which, per file, before acting.
+- **Check it is publishable before ingesting**: English, the Demo workspace,
+  no real names, addresses, IBANs, e-mails, phone numbers or join QRs. The
+  originals are tracked, so ingesting real data writes it into history — ask
+  the owner to re-shoot in Demo, or redact first (`deskilo-documentation`).
 
 ## 2. Store the originals
 ```
@@ -23,10 +27,12 @@ Never edit anything under `docs/media/source/`.
 
 ## 3. Merge the captures of one form
 ```
-dart run tool/media.dart merge --screen <id> --trim-top <status bar px> --trim-bottom <nav bar px>
+dart run tool/media.dart merge --screen <id> --trim-top <status bar + dev banner + app bar px> --trim-bottom <nav bar px>
 ```
-The tool prints the overlap it found and its runner-up. If the two are
-close, the match is ambiguous — look at the images and pass `--overlap N`.
+Measure the trims for THIS batch. The tool prints the overlap it found and
+its runner-up; if the two are close, the match is ambiguous — look at the
+images and pass `--overlap N`. Crop each junction and look at it: the score
+does not catch a swallowed page.
 A single capture that already shows the whole form needs no merge; a
 stitched one lands as `<screen>-full.jpg` and belongs inside `<details>`.
 
