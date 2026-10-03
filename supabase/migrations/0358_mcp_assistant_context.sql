@@ -106,7 +106,7 @@ drop policy if exists reservation_origins_select on public.reservation_origins;
 create policy reservation_origins_select on public.reservation_origins
   for select to authenticated using (
     exists (select 1 from public.members m
-             where m.id = reservation_origins.member_id and m.user_id = auth.uid() and m.status = 'active')
+             where m.id = reservation_origins.member_id and m.user_id = (select auth.uid()) and m.status = 'active')
     or public.has_permission(reservation_origins.workspace_id, 'manageReservations'));
 drop policy if exists mcp_delegated_deny on public.reservation_origins;
 create policy mcp_delegated_deny on public.reservation_origins
