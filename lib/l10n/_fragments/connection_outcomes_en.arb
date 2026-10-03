@@ -1,0 +1,19 @@
+{
+  "connectionChecking": "Checking…",
+  "connectionUsable": "Connected",
+  "connectionUnsupported": "This server's version cannot be connected from this app. Update the app, or ask the server's operator to update the server.",
+  "connectionExpired": "Your sign-in to this server has ended. Sign in to this server again.",
+  "connectionDenied": "This server refused the account. Check the sign-in details, or disconnect it.",
+  "connectionUnavailable": "This server is not answering right now. Your other servers are not affected.",
+  "connectionChangedIdentity": "This server is no longer the one you connected. Its actions are paused until you verify it again.",
+  "connectionInvalidEndpoint": "This address or key is not a valid server.",
+  "connectionNotConnected": "This server is not connected on this device.",
+  "connectionCurrentServer": "This is the server this app already uses.",
+  "connectionCancelled": "The account changed meanwhile, so this answer was discarded.",
+  "connectionMalformed": "This server answered something this app cannot read.",
+  "connectionUnknownOutcome": "The connection dropped after the request was sent. It may have been applied: check before trying again.",
+  "connectionSessionNotSaved": "The action was done, but this device could not save the server's sign-in. You may be asked to sign in again.",
+  "connectionSignInAgain": "Sign in again",
+  "connectionRetry": "Try again",
+  "connectionVerifyAgain": "Verify again"
+}

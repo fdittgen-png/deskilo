@@ -2478,6 +2478,69 @@ class AppLocalizationsEs extends AppLocalizations {
   String get composerDraftKept => 'Borrador guardado';
 
   @override
+  String get connectionCancelled =>
+      'La cuenta cambió entretanto, así que se descartó esta respuesta.';
+
+  @override
+  String get connectionChangedIdentity =>
+      'Este servidor ya no es el que conectaste. Sus acciones están en pausa hasta que lo verifiques de nuevo.';
+
+  @override
+  String get connectionChecking => 'Comprobando…';
+
+  @override
+  String get connectionCurrentServer =>
+      'Este es el servidor que esta aplicación ya utiliza.';
+
+  @override
+  String get connectionDenied =>
+      'Este servidor ha rechazado la cuenta. Revisa los datos de acceso o desconéctalo.';
+
+  @override
+  String get connectionExpired =>
+      'Tu sesión en este servidor ha caducado. Vuelve a iniciar sesión en este servidor.';
+
+  @override
+  String get connectionInvalidEndpoint =>
+      'Esta dirección o clave no corresponde a un servidor válido.';
+
+  @override
+  String get connectionMalformed =>
+      'Este servidor ha respondido algo que esta aplicación no puede leer.';
+
+  @override
+  String get connectionNotConnected =>
+      'Este servidor no está conectado en este dispositivo.';
+
+  @override
+  String get connectionRetry => 'Reintentar';
+
+  @override
+  String get connectionSessionNotSaved =>
+      'La acción se realizó, pero este dispositivo no pudo guardar la sesión del servidor. Puede que tengas que volver a iniciar sesión.';
+
+  @override
+  String get connectionSignInAgain => 'Volver a iniciar sesión';
+
+  @override
+  String get connectionUnavailable =>
+      'Este servidor no responde en este momento. Tus otros servidores no se ven afectados.';
+
+  @override
+  String get connectionUnknownOutcome =>
+      'La conexión se cortó después de enviar la solicitud. Puede que se haya aplicado: compruébalo antes de volver a intentarlo.';
+
+  @override
+  String get connectionUnsupported =>
+      'Esta versión del servidor no se puede conectar desde esta aplicación. Actualiza la aplicación o pide al operador del servidor que lo actualice.';
+
+  @override
+  String get connectionUsable => 'Conectado';
+
+  @override
+  String get connectionVerifyAgain => 'Verificar de nuevo';
+
+  @override
   String get consentAccept => 'Aceptar y continuar';
 
   @override

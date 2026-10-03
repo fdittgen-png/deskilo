@@ -2485,6 +2485,69 @@ class AppLocalizationsFr extends AppLocalizations {
   String get composerDraftKept => 'Brouillon conservé';
 
   @override
+  String get connectionCancelled =>
+      'Le compte a changé entre-temps ; cette réponse a été ignorée.';
+
+  @override
+  String get connectionChangedIdentity =>
+      'Ce serveur n’est plus celui que vous avez connecté. Ses actions sont suspendues jusqu’à une nouvelle vérification.';
+
+  @override
+  String get connectionChecking => 'Vérification…';
+
+  @override
+  String get connectionCurrentServer =>
+      'C’est le serveur que cette application utilise déjà.';
+
+  @override
+  String get connectionDenied =>
+      'Ce serveur a refusé le compte. Vérifiez vos identifiants, ou déconnectez-le.';
+
+  @override
+  String get connectionExpired =>
+      'Votre connexion à ce serveur a expiré. Reconnectez-vous à ce serveur.';
+
+  @override
+  String get connectionInvalidEndpoint =>
+      'Cette adresse ou cette clé n’est pas celle d’un serveur valide.';
+
+  @override
+  String get connectionMalformed =>
+      'Ce serveur a répondu quelque chose que cette application ne sait pas lire.';
+
+  @override
+  String get connectionNotConnected =>
+      'Ce serveur n’est pas connecté sur cet appareil.';
+
+  @override
+  String get connectionRetry => 'Réessayer';
+
+  @override
+  String get connectionSessionNotSaved =>
+      'L’action a été effectuée, mais cet appareil n’a pas pu enregistrer la connexion au serveur. Il vous faudra peut-être vous reconnecter.';
+
+  @override
+  String get connectionSignInAgain => 'Se reconnecter';
+
+  @override
+  String get connectionUnavailable =>
+      'Ce serveur ne répond pas pour le moment. Vos autres serveurs ne sont pas concernés.';
+
+  @override
+  String get connectionUnknownOutcome =>
+      'La connexion s’est interrompue après l’envoi de la demande. Elle a peut-être été appliquée : vérifiez avant de réessayer.';
+
+  @override
+  String get connectionUnsupported =>
+      'Cette version du serveur ne peut pas être connectée depuis cette application. Mettez l’application à jour, ou demandez à l’opérateur du serveur de le mettre à jour.';
+
+  @override
+  String get connectionUsable => 'Connecté';
+
+  @override
+  String get connectionVerifyAgain => 'Vérifier à nouveau';
+
+  @override
   String get consentAccept => 'Accepter et continuer';
 
   @override

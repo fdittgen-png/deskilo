@@ -2484,6 +2484,69 @@ class AppLocalizationsDe extends AppLocalizations {
   String get composerDraftKept => 'Entwurf behalten';
 
   @override
+  String get connectionCancelled =>
+      'Das Konto hat sich inzwischen geändert; diese Antwort wurde verworfen.';
+
+  @override
+  String get connectionChangedIdentity =>
+      'Dieser Server ist nicht mehr der, den Sie verbunden haben. Seine Aktionen sind angehalten, bis Sie ihn erneut bestätigen.';
+
+  @override
+  String get connectionChecking => 'Wird geprüft…';
+
+  @override
+  String get connectionCurrentServer =>
+      'Das ist der Server, den diese App bereits verwendet.';
+
+  @override
+  String get connectionDenied =>
+      'Dieser Server hat das Konto abgelehnt. Prüfen Sie die Anmeldedaten oder trennen Sie ihn.';
+
+  @override
+  String get connectionExpired =>
+      'Ihre Anmeldung bei diesem Server ist abgelaufen. Melden Sie sich bei diesem Server erneut an.';
+
+  @override
+  String get connectionInvalidEndpoint =>
+      'Diese Adresse oder dieser Schlüssel gehört zu keinem gültigen Server.';
+
+  @override
+  String get connectionMalformed =>
+      'Dieser Server hat etwas geantwortet, das diese App nicht lesen kann.';
+
+  @override
+  String get connectionNotConnected =>
+      'Dieser Server ist auf diesem Gerät nicht verbunden.';
+
+  @override
+  String get connectionRetry => 'Erneut versuchen';
+
+  @override
+  String get connectionSessionNotSaved =>
+      'Die Aktion wurde ausgeführt, aber dieses Gerät konnte die Anmeldung beim Server nicht speichern. Möglicherweise müssen Sie sich erneut anmelden.';
+
+  @override
+  String get connectionSignInAgain => 'Erneut anmelden';
+
+  @override
+  String get connectionUnavailable =>
+      'Dieser Server antwortet gerade nicht. Ihre anderen Server sind nicht betroffen.';
+
+  @override
+  String get connectionUnknownOutcome =>
+      'Die Verbindung brach nach dem Senden ab. Die Anfrage wurde womöglich ausgeführt: Prüfen Sie das, bevor Sie es erneut versuchen.';
+
+  @override
+  String get connectionUnsupported =>
+      'Diese Serverversion kann von dieser App nicht verbunden werden. Aktualisieren Sie die App oder bitten Sie den Betreiber, den Server zu aktualisieren.';
+
+  @override
+  String get connectionUsable => 'Verbunden';
+
+  @override
+  String get connectionVerifyAgain => 'Erneut bestätigen';
+
+  @override
   String get consentAccept => 'Akzeptieren und weiter';
 
   @override
