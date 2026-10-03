@@ -1437,6 +1437,46 @@ Map<String, _Getter> _part3() => {
   'gettingStartedStateCompleted': (l) => l.gettingStartedStateCompleted,
   'gettingStartedStateReleased': (l) => l.gettingStartedStateReleased,
   'gettingStartedStateReserved': (l) => l.gettingStartedStateReserved,
+  'guideActionConfirmBooking': (l) => l.guideActionConfirmBooking,
+  'guideActionOpenReserve': (l) => l.guideActionOpenReserve,
+  'guideActionSelectDate': (l) => l.guideActionSelectDate,
+  'guideActionSelectPeriod': (l) => l.guideActionSelectPeriod,
+  'guideActionSelectResource': (l) => l.guideActionSelectResource,
+  'guideBookingRefusedRecovery': (l) => l.guideBookingRefusedRecovery,
+  'guideBuiltinBooking': (l) => l.guideBuiltinBooking,
+  'guideBuiltinBookingIntro': (l) => l.guideBuiltinBookingIntro,
+  'guideHostBack': (l) => l.guideHostBack,
+  'guideHostBlocked': (l) => l.guideHostBlocked,
+  'guideHostClose': (l) => l.guideHostClose,
+  'guideHostCommand': (l) => l.guideHostCommand,
+  'guideHostCompleted': (l) => l.guideHostCompleted,
+  'guideHostDone': (l) => l.guideHostDone,
+  'guideHostFillField': (l) => l.guideHostFillField,
+  'guideHostInstruction': (l) => l.guideHostInstruction,
+  'guideHostManual': (l) => l.guideHostManual,
+  'guideHostNotOnScreen': (l) => l.guideHostNotOnScreen,
+  'guideHostOpenScreen': (l) => l.guideHostOpenScreen,
+  'guideHostPausedFeature': (l) => l.guideHostPausedFeature,
+  'guideHostPausedScope': (l) => l.guideHostPausedScope,
+  'guideHostRecovery': (l) => l.guideHostRecovery,
+  'guideHostResume': (l) => l.guideHostResume,
+  'guideHostShowMe': (l) => l.guideHostShowMe,
+  'guideHostSkip': (l) => l.guideHostSkip,
+  'guideHostStatusAcknowledged': (l) => l.guideHostStatusAcknowledged,
+  'guideHostStatusDone': (l) => l.guideHostStatusDone,
+  'guideHostStatusPending': (l) => l.guideHostStatusPending,
+  'guideHostStatusSkipped': (l) => l.guideHostStatusSkipped,
+  'guideHostStatusWaiting': (l) => l.guideHostStatusWaiting,
+  'guideHostSteps': (l) => l.guideHostSteps,
+  'guideHostStop': (l) => l.guideHostStop,
+  'guideHostStopped': (l) => l.guideHostStopped,
+  'guideHostTapControl': (l) => l.guideHostTapControl,
+  'guideHostTitle': (l) => l.guideHostTitle,
+  'guideHostUncertain': (l) => l.guideHostUncertain,
+  'guideHostWaiting': (l) => l.guideHostWaiting,
+  'guideStart': (l) => l.guideStart,
+  'guideStartNotRunnable': (l) => l.guideStartNotRunnable,
+  'guideStartRefused': (l) => l.guideStartRefused,
   'handoffBlocked': (l) => l.handoffBlocked,
   'handoffChanged': (l) => l.handoffChanged,
   'handoffIssued': (l) => l.handoffIssued,
@@ -1445,6 +1485,7 @@ Map<String, _Getter> _part3() => {
   'handoffVoided': (l) => l.handoffVoided,
   'helpContents': (l) => l.helpContents,
   'helpDotTooltip': (l) => l.helpDotTooltip,
+  'helpGuidedTasks': (l) => l.helpGuidedTasks,
   'helpHintAvailability': (l) => l.helpHintAvailability,
   'helpHintAvailabilityTip2': (l) => l.helpHintAvailabilityTip2,
   'helpHintAvailabilityTip3': (l) => l.helpHintAvailabilityTip3,
@@ -1593,6 +1634,9 @@ Map<String, _Getter> _part3() => {
   'holidayEasterMonday': (l) => l.holidayEasterMonday,
   'holidayGermanUnity': (l) => l.holidayGermanUnity,
   'holidayGoodFriday': (l) => l.holidayGoodFriday,
+};
+
+Map<String, _Getter> _part4() => {
   'holidayImportAction': (l) => l.holidayImportAction,
   'holidayImportFailed': (l) => l.holidayImportFailed,
   'holidayImportNationwide': (l) => l.holidayImportNationwide,
@@ -1634,9 +1678,6 @@ Map<String, _Getter> _part3() => {
   'instanceClaimBody': (l) => l.instanceClaimBody,
   'instanceClaimButton': (l) => l.instanceClaimButton,
   'instanceClaimDone': (l) => l.instanceClaimDone,
-};
-
-Map<String, _Getter> _part4() => {
   'instanceClaimFailed': (l) => l.instanceClaimFailed,
   'instanceClaimTitle': (l) => l.instanceClaimTitle,
   'instanceClientApproved': (l) => l.instanceClientApproved,
@@ -1996,6 +2037,9 @@ Map<String, _Getter> _part4() => {
   'journeyTimelineTitle': (l) => l.journeyTimelineTitle,
   'journeyValidatorsMatch': (l) => l.journeyValidatorsMatch,
   'journeyValidatorsWriteoff': (l) => l.journeyValidatorsWriteoff,
+};
+
+Map<String, _Getter> _part5() => {
   'kioskBadgeConfirm': (l) => l.kioskBadgeConfirm,
   'kioskBadgeFieldLabel': (l) => l.kioskBadgeFieldLabel,
   'kioskBadgeHint': (l) => l.kioskBadgeHint,
@@ -2037,9 +2081,6 @@ Map<String, _Getter> _part4() => {
   'languageNameEN': (l) => l.languageNameEN,
   'languageNameES': (l) => l.languageNameES,
   'languageNameFI': (l) => l.languageNameFI,
-};
-
-Map<String, _Getter> _part5() => {
   'languageNameFR': (l) => l.languageNameFR,
   'languageNameHU': (l) => l.languageNameHU,
   'languageNameIT': (l) => l.languageNameIT,
@@ -2399,6 +2440,9 @@ Map<String, _Getter> _part5() => {
   'memberMakeKiosk': (l) => l.memberMakeKiosk,
   'memberMakeMember': (l) => l.memberMakeMember,
   'memberMessagesAction': (l) => l.memberMessagesAction,
+};
+
+Map<String, _Getter> _part6() => {
   'memberMoneySettled': (l) => l.memberMoneySettled,
   'memberMoneyUnavailable': (l) => l.memberMoneyUnavailable,
   'memberMonthInProgress': (l) => l.memberMonthInProgress,
@@ -2440,9 +2484,6 @@ Map<String, _Getter> _part5() => {
   'memberPayments': (l) => l.memberPayments,
   'memberReactivate': (l) => l.memberReactivate,
   'memberRejectJoin': (l) => l.memberRejectJoin,
-};
-
-Map<String, _Getter> _part6() => {
   'memberReservationLimitCustom': (l) => l.memberReservationLimitCustom,
   'memberReservationLimitExplainer': (l) => l.memberReservationLimitExplainer,
   'memberReservationLimitLabel': (l) => l.memberReservationLimitLabel,
@@ -2802,6 +2843,9 @@ Map<String, _Getter> _part6() => {
   'permManageValidation': (l) => l.permManageValidation,
   'permOperateKiosk': (l) => l.permOperateKiosk,
   'permPaymentTermsEdit': (l) => l.permPaymentTermsEdit,
+};
+
+Map<String, _Getter> _part7() => {
   'permViewAnalytics': (l) => l.permViewAnalytics,
   'permViewFinances': (l) => l.permViewFinances,
   'permViewNegotiations': (l) => l.permViewNegotiations,
@@ -2843,9 +2887,6 @@ Map<String, _Getter> _part6() => {
   'planEndBeforeStart': (l) => l.planEndBeforeStart,
   'planFromLabel': (l) => l.planFromLabel,
   'planFullDayChip': (l) => l.planFullDayChip,
-};
-
-Map<String, _Getter> _part7() => {
   'planFullDayError': (l) => l.planFullDayError,
   'planHalfDayError': (l) => l.planHalfDayError,
   'planIncludedHelper': (l) => l.planIncludedHelper,
@@ -3205,6 +3246,9 @@ Map<String, _Getter> _part7() => {
   'reminderPdfDaysOpen': (l) => l.reminderPdfDaysOpen,
   'reminderPdfLevelLabel': (l) => l.reminderPdfLevelLabel,
   'reminderPdfOpeningFirm': (l) => l.reminderPdfOpeningFirm,
+};
+
+Map<String, _Getter> _part8() => {
   'reminderPdfOpeningFriendly': (l) => l.reminderPdfOpeningFriendly,
   'reminderPdfTitleFirm': (l) => l.reminderPdfTitleFirm,
   'reminderPdfTitleFriendly': (l) => l.reminderPdfTitleFriendly,
@@ -3246,9 +3290,6 @@ Map<String, _Getter> _part7() => {
   'repartitionStatusRejected': (l) => l.repartitionStatusRejected,
   'repartitionStepBook': (l) => l.repartitionStepBook,
   'repartitionStepCost': (l) => l.repartitionStepCost,
-};
-
-Map<String, _Getter> _part8() => {
   'repartitionStepExpense': (l) => l.repartitionStepExpense,
   'repartitionStepRule': (l) => l.repartitionStepRule,
   'repartitionSubmit': (l) => l.repartitionSubmit,
@@ -3608,6 +3649,9 @@ Map<String, _Getter> _part8() => {
   'scheduleMissingFields': (l) => l.scheduleMissingFields,
   'scheduleMonthly': (l) => l.scheduleMonthly,
   'scheduleNew': (l) => l.scheduleNew,
+};
+
+Map<String, _Getter> _part9() => {
   'scheduleNoEnd': (l) => l.scheduleNoEnd,
   'schedulePending': (l) => l.schedulePending,
   'scheduleStartsOn': (l) => l.scheduleStartsOn,
@@ -3649,9 +3693,6 @@ Map<String, _Getter> _part8() => {
   'servicesEdit': (l) => l.servicesEdit,
   'servicesEmpty': (l) => l.servicesEmpty,
   'servicesInactive': (l) => l.servicesInactive,
-};
-
-Map<String, _Getter> _part9() => {
   'servicesName': (l) => l.servicesName,
   'servicesNew': (l) => l.servicesNew,
   'servicesPrice': (l) => l.servicesPrice,
@@ -4011,6 +4052,9 @@ Map<String, _Getter> _part9() => {
   'taskRecorderNoOutcome': (l) => l.taskRecorderNoOutcome,
   'taskRecorderNoRecordings': (l) => l.taskRecorderNoRecordings,
   'taskRecorderNoteHint': (l) => l.taskRecorderNoteHint,
+};
+
+Map<String, _Getter> _part10() => {
   'taskRecorderOpenRecorder': (l) => l.taskRecorderOpenRecorder,
   'taskRecorderOutcomeCancelled': (l) => l.taskRecorderOutcomeCancelled,
   'taskRecorderOutcomeCheckedIn': (l) => l.taskRecorderOutcomeCheckedIn,
@@ -4052,9 +4096,6 @@ Map<String, _Getter> _part9() => {
   'taskRecorderTitle': (l) => l.taskRecorderTitle,
   'taskRecorderUnavailable': (l) => l.taskRecorderUnavailable,
   'taskRecorderUnreadable': (l) => l.taskRecorderUnreadable,
-};
-
-Map<String, _Getter> _part10() => {
   'taskRecorderUntitled': (l) => l.taskRecorderUntitled,
   'taskRecorderValueAfternoon': (l) => l.taskRecorderValueAfternoon,
   'taskRecorderValueAllBooked': (l) => l.taskRecorderValueAllBooked,
@@ -4414,6 +4455,9 @@ Map<String, _Getter> _part10() => {
   'workspaceCodeCopy': (l) => l.workspaceCodeCopy,
   'workspaceCodeEdit': (l) => l.workspaceCodeEdit,
   'workspaceCodeExplainer': (l) => l.workspaceCodeExplainer,
+};
+
+Map<String, _Getter> _part11() => {
   'workspaceCodeHint': (l) => l.workspaceCodeHint,
   'workspaceCodeLabel': (l) => l.workspaceCodeLabel,
   'workspaceCodeRejected': (l) => l.workspaceCodeRejected,
@@ -4455,9 +4499,6 @@ Map<String, _Getter> _part10() => {
   'workspaceInviteCodeInvalid': (l) => l.workspaceInviteCodeInvalid,
   'workspaceInviteCodeLabel': (l) => l.workspaceInviteCodeLabel,
   'workspaceInvitePasteHint': (l) => l.workspaceInvitePasteHint,
-};
-
-Map<String, _Getter> _part11() => {
   'workspaceLanguageHelper': (l) => l.workspaceLanguageHelper,
   'workspaceLanguageLabel': (l) => l.workspaceLanguageLabel,
   'workspaceLanguageUnset': (l) => l.workspaceLanguageUnset,

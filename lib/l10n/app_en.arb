@@ -6297,6 +6297,223 @@
       }
     }
   },
+  "guideActionConfirmBooking": "confirm the booking and wait for the answer",
+  "@guideActionConfirmBooking": {
+    "description": "#1867 live guide host"
+  },
+  "guideActionOpenReserve": "open Reserve",
+  "@guideActionOpenReserve": {
+    "description": "#1867 live guide host"
+  },
+  "guideActionSelectDate": "choose the day",
+  "@guideActionSelectDate": {
+    "description": "#1867 live guide host"
+  },
+  "guideActionSelectPeriod": "choose the period",
+  "@guideActionSelectPeriod": {
+    "description": "#1867 live guide host"
+  },
+  "guideActionSelectResource": "choose a place on the plan or in the list",
+  "@guideActionSelectResource": {
+    "description": "#1867 live guide host"
+  },
+  "guideBookingRefusedRecovery": "The booking was refused (the place is taken or a rule forbids it). Choose another place or period, then confirm again.",
+  "@guideBookingRefusedRecovery": {
+    "description": "#1867 live guide host"
+  },
+  "guideBuiltinBooking": "Book a place",
+  "@guideBuiltinBooking": {
+    "description": "#1867 live guide host"
+  },
+  "guideBuiltinBookingIntro": "This guide shows how to book a place: choose the day and the period, pick a place, then confirm. Nothing is booked until you confirm.",
+  "@guideBuiltinBookingIntro": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostBack": "Back",
+  "@guideHostBack": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostBlocked": "Resolve the message on screen first; the guide waits.",
+  "@guideHostBlocked": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostClose": "Close",
+  "@guideHostClose": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostCommand": "Confirm, then wait for the result.",
+  "@guideHostCommand": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostCompleted": "Guide completed.",
+  "@guideHostCompleted": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostDoAction": "Next: {action}.",
+  "@guideHostDoAction": {
+    "description": "#1867 live guide host",
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "guideHostDone": "Done",
+  "@guideHostDone": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostFillField": "Fill in the highlighted field, then leave it.",
+  "@guideHostFillField": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostFillLabel": "Fill in “{label}”, then leave the field.",
+  "@guideHostFillLabel": {
+    "description": "#1867 live guide host",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "guideHostInstruction": "Read this, then mark it done.",
+  "@guideHostInstruction": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostManual": "Do this step yourself, then mark it done.",
+  "@guideHostManual": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostManualProtected": "This part happens on a protected screen ({category}). Do it yourself, then mark it done.",
+  "@guideHostManualProtected": {
+    "description": "#1867 live guide host",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "guideHostNotOnScreen": "This control is not on this screen. Go to the screen of the previous step, or check the guide.",
+  "@guideHostNotOnScreen": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostOpenLabel": "Open “{label}”.",
+  "@guideHostOpenLabel": {
+    "description": "#1867 live guide host",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "guideHostOpenScreen": "Open the next screen.",
+  "@guideHostOpenScreen": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostPausedFeature": "Paused: the task recorder is turned off in this workspace.",
+  "@guideHostPausedFeature": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostPausedScope": "Paused: the account or workspace changed. The guide continues only where it started.",
+  "@guideHostPausedScope": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostRecovery": "That was refused. Follow these steps, then try again.",
+  "@guideHostRecovery": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostResume": "Resume",
+  "@guideHostResume": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostShowMe": "Show me",
+  "@guideHostShowMe": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostSkip": "Skip",
+  "@guideHostSkip": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostStatusAcknowledged": "Acknowledged",
+  "@guideHostStatusAcknowledged": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostStatusDone": "Done",
+  "@guideHostStatusDone": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostStatusPending": "To do",
+  "@guideHostStatusPending": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostStatusSkipped": "Skipped",
+  "@guideHostStatusSkipped": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostStatusWaiting": "Waiting",
+  "@guideHostStatusWaiting": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostStepOf": "Step {current} of {total}",
+  "@guideHostStepOf": {
+    "description": "#1867 live guide host",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guideHostSteps": "All steps",
+  "@guideHostSteps": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostStop": "Stop the guide",
+  "@guideHostStop": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostStopped": "Guide stopped. Nothing was undone.",
+  "@guideHostStopped": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostTapControl": "Tap the highlighted control.",
+  "@guideHostTapControl": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostTapLabel": "Tap “{label}”.",
+  "@guideHostTapLabel": {
+    "description": "#1867 live guide host",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "guideHostTitle": "Guided task",
+  "@guideHostTitle": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostUncertain": "The answer did not arrive. Check whether it happened before trying again.",
+  "@guideHostUncertain": {
+    "description": "#1867 live guide host"
+  },
+  "guideHostWaiting": "Waiting for the result…",
+  "@guideHostWaiting": {
+    "description": "#1867 live guide host"
+  },
+  "guideStart": "Start the guide",
+  "@guideStart": {
+    "description": "#1867 live guide host"
+  },
+  "guideStartNotRunnable": "This guide names steps this version of the app does not know; it can be read, not followed.",
+  "@guideStartNotRunnable": {
+    "description": "#1867 live guide host"
+  },
+  "guideStartRefused": "This guide cannot start here: sign in and turn the task recorder on in this workspace.",
+  "@guideStartRefused": {
+    "description": "#1867 live guide host"
+  },
   "handoffAmountOutOfRange": "{number}: a total too large to carry exactly",
   "@handoffAmountOutOfRange": {
     "description": "#1870 accountant handoff blocking finding",
@@ -6416,6 +6633,10 @@
   },
   "helpContents": "Contents",
   "helpDotTooltip": "Open the guide",
+  "helpGuidedTasks": "Guided tasks",
+  "@helpGuidedTasks": {
+    "description": "#1867 live guide host"
+  },
   "helpHintAvailability": "Set the open weekdays and working hours, and add closure days nobody can book.",
   "helpHintAvailabilityTip2": "The booking granularity decides what a window may look like: half-days, full days, minute grids or free times.",
   "helpHintAvailabilityTip3": "Day start, half-day boundary and day end drive every half-day and full-day slot — booking, check-in and billing follow them.",

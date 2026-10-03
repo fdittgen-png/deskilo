@@ -5438,6 +5438,169 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get guideActionConfirmBooking =>
+      'confirm the booking and wait for the answer';
+
+  @override
+  String get guideActionOpenReserve => 'open Reserve';
+
+  @override
+  String get guideActionSelectDate => 'choose the day';
+
+  @override
+  String get guideActionSelectPeriod => 'choose the period';
+
+  @override
+  String get guideActionSelectResource =>
+      'choose a place on the plan or in the list';
+
+  @override
+  String get guideBookingRefusedRecovery =>
+      'The booking was refused (the place is taken or a rule forbids it). Choose another place or period, then confirm again.';
+
+  @override
+  String get guideBuiltinBooking => 'Book a place';
+
+  @override
+  String get guideBuiltinBookingIntro =>
+      'This guide shows how to book a place: choose the day and the period, pick a place, then confirm. Nothing is booked until you confirm.';
+
+  @override
+  String get guideHostBack => 'Back';
+
+  @override
+  String get guideHostBlocked =>
+      'Resolve the message on screen first; the guide waits.';
+
+  @override
+  String get guideHostClose => 'Close';
+
+  @override
+  String get guideHostCommand => 'Confirm, then wait for the result.';
+
+  @override
+  String get guideHostCompleted => 'Guide completed.';
+
+  @override
+  String guideHostDoAction(String action) {
+    return 'Next: $action.';
+  }
+
+  @override
+  String get guideHostDone => 'Done';
+
+  @override
+  String get guideHostFillField =>
+      'Fill in the highlighted field, then leave it.';
+
+  @override
+  String guideHostFillLabel(String label) {
+    return 'Fill in “$label”, then leave the field.';
+  }
+
+  @override
+  String get guideHostInstruction => 'Read this, then mark it done.';
+
+  @override
+  String get guideHostManual => 'Do this step yourself, then mark it done.';
+
+  @override
+  String guideHostManualProtected(String category) {
+    return 'This part happens on a protected screen ($category). Do it yourself, then mark it done.';
+  }
+
+  @override
+  String get guideHostNotOnScreen =>
+      'This control is not on this screen. Go to the screen of the previous step, or check the guide.';
+
+  @override
+  String guideHostOpenLabel(String label) {
+    return 'Open “$label”.';
+  }
+
+  @override
+  String get guideHostOpenScreen => 'Open the next screen.';
+
+  @override
+  String get guideHostPausedFeature =>
+      'Paused: the task recorder is turned off in this workspace.';
+
+  @override
+  String get guideHostPausedScope =>
+      'Paused: the account or workspace changed. The guide continues only where it started.';
+
+  @override
+  String get guideHostRecovery =>
+      'That was refused. Follow these steps, then try again.';
+
+  @override
+  String get guideHostResume => 'Resume';
+
+  @override
+  String get guideHostShowMe => 'Show me';
+
+  @override
+  String get guideHostSkip => 'Skip';
+
+  @override
+  String get guideHostStatusAcknowledged => 'Acknowledged';
+
+  @override
+  String get guideHostStatusDone => 'Done';
+
+  @override
+  String get guideHostStatusPending => 'To do';
+
+  @override
+  String get guideHostStatusSkipped => 'Skipped';
+
+  @override
+  String get guideHostStatusWaiting => 'Waiting';
+
+  @override
+  String guideHostStepOf(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get guideHostSteps => 'All steps';
+
+  @override
+  String get guideHostStop => 'Stop the guide';
+
+  @override
+  String get guideHostStopped => 'Guide stopped. Nothing was undone.';
+
+  @override
+  String get guideHostTapControl => 'Tap the highlighted control.';
+
+  @override
+  String guideHostTapLabel(String label) {
+    return 'Tap “$label”.';
+  }
+
+  @override
+  String get guideHostTitle => 'Guided task';
+
+  @override
+  String get guideHostUncertain =>
+      'The answer did not arrive. Check whether it happened before trying again.';
+
+  @override
+  String get guideHostWaiting => 'Waiting for the result…';
+
+  @override
+  String get guideStart => 'Start the guide';
+
+  @override
+  String get guideStartNotRunnable =>
+      'This guide names steps this version of the app does not know; it can be read, not followed.';
+
+  @override
+  String get guideStartRefused =>
+      'This guide cannot start here: sign in and turn the task recorder on in this workspace.';
+
+  @override
   String handoffAmountOutOfRange(String number) {
     return '$number: a total too large to carry exactly';
   }
@@ -5512,6 +5675,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpDotTooltip => 'Open the guide';
+
+  @override
+  String get helpGuidedTasks => 'Guided tasks';
 
   @override
   String get helpHintAvailability =>

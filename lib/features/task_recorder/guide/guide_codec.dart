@@ -11,6 +11,13 @@
 // A step naming an action this build does not know keeps the guide
 // readable but not runnable: an older client may show the words, never
 // guide through unknown semantics.
+//
+// Schema 2 (#1867 live guide) adds a perform step's `target` (the control
+// or screen, as the recorder names it) and `label` (the app message it
+// shows). Schema 1 guides read unchanged. A target the action does not
+// list is refused for a strict action; for a soft one (the generic #2142
+// layer, whose vocabulary grows) it is dropped and the step matches its
+// action anywhere. A label that is not an app message key is dropped.
 
 import 'dart:convert';
 
@@ -69,6 +76,8 @@ Map<String, Object?> encodeGuideStep(GuideStep s) => {
   if (s.text != null) 'text': s.text,
   if (s.optional) 'optional': true,
   if (s.manualCategory != null) 'manual_category': s.manualCategory!.wire,
+  if (s.target != null) 'target': s.target,
+  if (s.label != null) 'label': s.label,
   if (s.recovery.isNotEmpty)
     'recovery': [for (final r in s.recovery) encodeGuideStep(r)],
 };
@@ -194,6 +203,8 @@ class _GuideDecoder {
       'optional',
       'manual_category',
       'recovery',
+      'target',
+      'label',
     };
     if (!raw.keys.every(keys.contains)) {
       throw _Refusal(GuideIssueCode.unknownKey, path);
@@ -224,10 +235,18 @@ class _GuideDecoder {
     if (expectedRaw is! List || recoveryRaw is! List) {
       throw _Refusal(GuideIssueCode.badValue, path);
     }
+    final targetRaw = raw['target'];
+    final labelRaw = raw['label'];
+    if ((targetRaw != null && targetRaw is! String) ||
+        (labelRaw != null && labelRaw is! String)) {
+      throw _Refusal(GuideIssueCode.badValue, path);
+    }
     if (kind != GuideStepKind.perform) {
       if (actionRaw != null ||
           expectedRaw.isNotEmpty ||
-          recoveryRaw.isNotEmpty) {
+          recoveryRaw.isNotEmpty ||
+          targetRaw != null ||
+          labelRaw != null) {
         throw _Refusal(GuideIssueCode.inconsistent, path);
       }
       return GuideStep(
@@ -265,6 +284,16 @@ class _GuideDecoder {
     if (recoveryRaw.length > limits.maxRecoverySteps) {
       throw _Refusal(GuideIssueCode.tooMany, '$path.recovery');
     }
+    String? target = targetRaw as String?;
+    if (target != null && !spec.targets.contains(target)) {
+      if (!spec.softTargets) {
+        throw _Refusal(GuideIssueCode.inconsistent, '$path.target');
+      }
+      target = null; // a name this build does not know: match anywhere
+    }
+    final label = labelRaw is String && uiLabelKeys.contains(labelRaw)
+        ? labelRaw
+        : null;
     return GuideStep(
       id: id,
       kind: kind,
@@ -272,6 +301,8 @@ class _GuideDecoder {
       expectedOutcomes: expected,
       text: text,
       optional: optional,
+      target: target,
+      label: label,
       recovery: [
         for (var i = 0; i < recoveryRaw.length; i++)
           _step(recoveryRaw[i], '$path.recovery[$i]', inRecovery: true),

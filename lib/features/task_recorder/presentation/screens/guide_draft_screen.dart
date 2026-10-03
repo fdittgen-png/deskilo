@@ -7,8 +7,9 @@
 // guide as a file. Actions, expected outcomes and recovery come from the
 // compiler and are not editable here: a draft cannot be made to expect
 // an outcome its action does not have, or to skip a command silently.
-// Showing a guide on a live form (the help host, tankstellen#4480) and
-// publishing it (#1859) are not part of this screen.
+// "Start the guide" follows the draft on the live app (guide_host.dart,
+// owner decision 2026-10-03: built in DesKilo now); publishing it (#1859)
+// is not part of this screen.
 
 import 'dart:convert';
 import 'dart:typed_data';
@@ -19,6 +20,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../guide/guide_codec.dart';
+import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
 import '../recorder_labels.dart';
 import '../recording_export.dart';
@@ -63,8 +65,43 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
         optional: step.optional,
         recovery: step.recovery,
         manualCategory: step.manualCategory,
+        target: step.target,
+        label: step.label,
       ),
     );
+  }
+
+  /// Follows this draft on the live app. Only a runnable guide starts:
+  /// one this build fully understands, in a scope that allows it.
+  void _start() {
+    final l10n = AppLocalizations.of(context);
+    final decoded = decodeGuideText(encodeGuideText(_guide));
+    final messenger = ScaffoldMessenger.of(context);
+    if (!decoded.runnable) {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n?.guideStartNotRunnable ??
+                'This guide names steps this version of the app does not '
+                    'know; it can be read, not followed.',
+          ),
+        ),
+      );
+      return;
+    }
+    if (!ref.read(guideSessionProvider.notifier).start(decoded.guide!)) {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n?.guideStartRefused ??
+                'This guide cannot start here: sign in and turn the task '
+                    'recorder on in this workspace.',
+          ),
+        ),
+      );
+      return;
+    }
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   Future<void> _save() async {
@@ -103,6 +140,13 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
             ),
           const SizedBox(height: AppSpacing.md),
           FilledButton.icon(
+            key: const ValueKey('guide-start'),
+            onPressed: _start,
+            icon: const Icon(Icons.assistant_navigation),
+            label: Text(l10n?.guideStart ?? 'Start the guide'),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          OutlinedButton.icon(
             key: const ValueKey('guide-save'),
             onPressed: _save,
             icon: const Icon(Icons.download),
