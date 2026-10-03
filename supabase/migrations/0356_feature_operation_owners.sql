@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0356 (#1851 C) -- the remaining operation owners: switching a feature
+-- 0359 (#1851 C) -- the remaining operation owners: switching a feature
 -- off stops NEW business, and the work it already created can still be
 -- cleaned up by the people who could do it before.
 --
@@ -78,9 +78,9 @@ begin
   else execute v_patched; end if;
 
   if cardinality(v_missing) > 0 then
-    raise exception '0353: anchors missing in %', v_missing;
+    raise exception '0356: anchors missing in %', v_missing;
   end if;
 end
 $patch$;
 
-select public.set_deskilo_schema_version(353);
+select public.set_deskilo_schema_version(356);

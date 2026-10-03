@@ -114,7 +114,7 @@ void main() {
   });
 
   test('feature off and no right to switch it: the screen grants nothing; '
-      'the step waits on whoever manages integrations (#2145, 0357)', () {
+      'the step waits on whoever manages integrations (#2145, 0360)', () {
     final s = _derive(featureOn: false, canConfigure: false);
     final ws = s.item(AssistantSetupStep.workspace);
     expect(ws.state, AssistantSetupState.waiting);

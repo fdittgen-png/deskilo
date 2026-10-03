@@ -61,7 +61,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
 
   /// Turns `mcpAccess` on for the workspace the checklist was read for —
   /// refused when the selection moved since, rather than switching
-  /// another workspace's feature. #2145 — through 0357's
+  /// another workspace's feature. #2145 — through 0360's
   /// `set_workspace_mcp_access`, which whoever manages integrations may
   /// call, against the value read; a change in between is reloaded.
   Future<void> _turnOn(McpContextRef scope) =>

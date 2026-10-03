@@ -64,7 +64,7 @@ featureOperationClasses = {
     'send_inquiry_message': FeatureOperation.serviceExisting,
     'my_inbox': FeatureOperation.serviceExisting,
   },
-  // 0353 (#1851 C)
+  // 0356 (#1851 C)
   WorkspaceFeature.customRoles: {
     'assign_workspace_role#give': FeatureOperation.acceptNew,
     'assign_workspace_role#revoke': FeatureOperation.serviceExisting,
@@ -83,9 +83,9 @@ featureOperationClasses = {
 /// otherwise against it.
 const Map<WorkspaceFeature, int> featureOperationSince = {
   WorkspaceFeature.spaceInquiries: 324,
-  WorkspaceFeature.customRoles: 353,
-  WorkspaceFeature.adminSeatBlocking: 353,
-  WorkspaceFeature.autoCheckInOut: 353,
+  WorkspaceFeature.customRoles: 356,
+  WorkspaceFeature.adminSeatBlocking: 356,
+  WorkspaceFeature.autoCheckInOut: 356,
 };
 
 /// #1851 C — may the app say that switching [feature] off leaves its open

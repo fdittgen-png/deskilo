@@ -131,7 +131,7 @@ create policy mcp_delegated_deny on public.mcp_endpoint_probes as restrictive fo
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
 -- The URL the operator configured, or the one derived from this
--- database's functions URL (0358's rule): what a probe calls.
+-- database's functions URL (0361's rule): what a probe calls.
 create or replace function public.mcp_endpoint_configured()
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
@@ -154,7 +154,7 @@ end;
 $fn$;
 revoke execute on function public.mcp_endpoint_configured() from public, anon, authenticated;
 
--- 0358, restated: a deployed probe's PRM resource is the published one.
+-- 0361, restated: a deployed probe's PRM resource is the published one.
 create or replace function public.mcp_endpoint_resolved()
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
@@ -328,7 +328,7 @@ $fn$;
 revoke execute on function public.instance_set_mcp_runtime(boolean, text) from public, anon;
 grant execute on function public.instance_set_mcp_runtime(boolean, text) to authenticated;
 
--- 0359, restated: plus the grants (marking operator and self grants),
+-- 0362, restated: plus the grants (marking operator and self grants),
 -- whether the operator may grant, and the latest endpoint probe.
 create or replace function public.instance_mcp_overview()
 returns jsonb language plpgsql stable security definer set search_path = public, auth as $fn$
@@ -458,4 +458,4 @@ grant execute on function public.set_workspace_mcp_access(uuid, boolean, boolean
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(357);
+select public.set_deskilo_schema_version(360);

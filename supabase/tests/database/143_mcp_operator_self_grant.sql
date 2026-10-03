@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2145 / 0357 (S3 + S4 + self-service).
+-- #2145 / 0360 (S3 + S4 + self-service).
 -- S3: the instance operator grants assistant access only while no other
 -- database administrator exists, at aal2, on a Google session, for 1 to 30
 -- days with a reason; the grant is audited with self_grant, the other

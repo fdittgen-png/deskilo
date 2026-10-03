@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0358 (#2145, S1 + S5) -- the consent page names the real cause at load,
+-- 0361 (#2145, S1 + S5) -- the consent page names the real cause at load,
 -- and the app shows the endpoint the installation publishes.
 --
 -- S1. Until now `oauth_authorization_context` refused every assistant
@@ -449,4 +449,4 @@ revoke execute on function public.operator_set_mcp_endpoint(text) from public, a
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(354);
+select public.set_deskilo_schema_version(357);

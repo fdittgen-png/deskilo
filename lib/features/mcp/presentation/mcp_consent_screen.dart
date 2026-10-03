@@ -189,7 +189,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
     // #2145 — the client's approval is read first: an assistant the
     // operator has not approved never reaches Auth's authorization API
     // from here, and the person learns why and who decides. A server
-    // before 0354 (or an unreadable answer) keeps the older path, where
+    // before 0357 (or an unreadable answer) keeps the older path, where
     // the database still refuses an unapproved client.
     final gate = ref.watch(mcpConsentStatusProvider(widget.authorizationId));
     final status = gate.value;

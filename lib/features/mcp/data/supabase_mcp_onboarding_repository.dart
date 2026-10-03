@@ -5,7 +5,7 @@ import '../../../core/backend/schema_version.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/mcp_onboarding.dart';
 
-/// #2145 — the 0354 RPCs. The server checks the caller on every call: the
+/// #2145 — the 0357 RPCs. The server checks the caller on every call: the
 /// consent status only for the person's own pending authorization, the
 /// endpoint only for a member of an mcpAccess workspace or the operator,
 /// the notices only for their recipient, the endpoint change only for the
@@ -30,7 +30,7 @@ class SupabaseMcpOnboardingRepository implements McpOnboardingRepository {
         await _client.rpc<Object?>('mcp_endpoint'),
       );
     } on PostgrestException catch (e, st) {
-      // A server before 0354: the app computes the URL as it always did.
+      // A server before 0357: the app computes the URL as it always did.
       if (!isMissingFunction(e)) rethrow;
       TraceLogger.instance.warn(
         'mcp',

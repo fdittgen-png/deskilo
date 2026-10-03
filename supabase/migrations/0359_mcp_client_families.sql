@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0359 (#2145, S2) -- assistant clients are approved per family, by their
+-- 0362 (#2145, S2) -- assistant clients are approved per family, by their
 -- exact redirect.
 --
 -- Supabase Auth registers a new OAuth client for every fresh assistant
@@ -85,7 +85,7 @@ end;
 $fn$;
 revoke execute on function public.mcp_registered_redirects(text) from public, anon, authenticated;
 
--- 0358, restated: a waiting client of an approved family is approved on
+-- 0361, restated: a waiting client of an approved family is approved on
 -- arrival, audited with its family; any other waiting client is audited
 -- and the operators are told, once.
 create or replace function public.mcp_client_arrival(p_client_id text, p_name text, p_redirect_uri text)
@@ -220,7 +220,7 @@ $fn$;
 revoke execute on function public.instance_mcp_overview() from public, anon;
 grant execute on function public.instance_mcp_overview() to authenticated;
 
--- 0358, restated: the client also names its family.
+-- 0361, restated: the client also names its family.
 create or replace function public.mcp_consent_options(p_authorization_id text default null)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
@@ -305,4 +305,4 @@ grant execute on function public.mcp_consent_options(text) to authenticated;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(356);
+select public.set_deskilo_schema_version(359);

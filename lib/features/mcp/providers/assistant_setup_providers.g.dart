@@ -207,13 +207,13 @@ final class MyMcpConsentOptionsProvider
 String _$myMcpConsentOptionsHash() =>
     r'40ceb9f84686299222a619c65e2d945de9df8024';
 
-/// #2145 — the 0354 onboarding RPCs: consent status, published endpoint,
+/// #2145 — the 0357 onboarding RPCs: consent status, published endpoint,
 /// installation notices.
 
 @ProviderFor(mcpOnboardingRepository)
 final mcpOnboardingRepositoryProvider = McpOnboardingRepositoryProvider._();
 
-/// #2145 — the 0354 onboarding RPCs: consent status, published endpoint,
+/// #2145 — the 0357 onboarding RPCs: consent status, published endpoint,
 /// installation notices.
 
 final class McpOnboardingRepositoryProvider
@@ -224,7 +224,7 @@ final class McpOnboardingRepositoryProvider
           McpOnboardingRepository
         >
     with $Provider<McpOnboardingRepository> {
-  /// #2145 — the 0354 onboarding RPCs: consent status, published endpoint,
+  /// #2145 — the 0357 onboarding RPCs: consent status, published endpoint,
   /// installation notices.
   McpOnboardingRepositoryProvider._()
     : super(

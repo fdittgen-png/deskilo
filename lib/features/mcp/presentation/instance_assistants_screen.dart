@@ -312,7 +312,7 @@ class _InstanceAssistantsScreenState
               : FilledButton(
                   key: const ValueKey('instance-turn-on'),
                   // #2145 — Turn on needs a fresh check of the deployed
-                  // endpoint (0357); the check comes first.
+                  // endpoint (0360); the check comes first.
                   onPressed: can && o.ready && endpointReady(o.endpointProbe)
                       ? () => _turnOn(l10n)
                       : null,
@@ -394,7 +394,7 @@ class _InstanceAssistantsScreenState
   }
 
   /// #2145 — the family a client was recognised as, by its exact
-  /// redirects (0356); null for anything else.
+  /// redirects (0359); null for anything else.
   String? _family(AppLocalizations? l10n, String? family) => switch (family) {
     'claude' => l10n?.instanceFamilyClaude ?? 'Claude',
     'chatgpt' => l10n?.instanceFamilyChatgpt ?? 'ChatGPT',

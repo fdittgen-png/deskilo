@@ -2,7 +2,7 @@
 //
 // #1827 — Settings → Assistant setup, driven through its buttons. Opening
 // the screen sends nothing. "Turn on" writes mcpAccess for the workspace the
-// list was read for, through set_workspace_mcp_access (#2145, 0357), and is
+// list was read for, through set_workspace_mcp_access (#2145, 0360), and is
 // offered only to whoever manages integrations.
 // "Use the recommended set" shows exactly what it adds and removes, sends
 // nothing on cancel, and on Apply saves the recommended operations with
@@ -153,7 +153,7 @@ void main() {
   });
 
   testWidgets('Turn on asks the server to switch mcpAccess for this '
-      'workspace, against the value read (#2145, 0357)', (tester) async {
+      'workspace, against the value read (#2145, 0360)', (tester) async {
     final repo = FakeWorkspaceRepository.withWorkspace();
     final onboarding = FakeMcpOnboardingRepository();
     await _pump(

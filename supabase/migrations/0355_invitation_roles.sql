@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0356 (#2085) -- an invitation can carry roles.
+-- 0359 (#2085) -- an invitation can carry roles.
 --
 -- The third place a role is given: at invitation time. Whoever invites
 -- someone can say which of the workspace's own roles the person holds
@@ -173,4 +173,4 @@ create trigger members_invitation_roles
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(352);
+select public.set_deskilo_schema_version(355);

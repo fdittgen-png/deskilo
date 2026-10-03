@@ -4,9 +4,9 @@
 // installation's assistants (0341 `instance_mcp_overview`): readiness and
 // its blockers, the database administrators, who could become one (an
 // active identity binding), and the assistants' OAuth clients.
-// #2145 (0356) — each client's recognised family and redirect hosts, the
+// #2145 (0359) — each client's recognised family and redirect hosts, the
 // loopback switch and the published endpoint.
-// #2145 (0357) — the active grants (marking an operator's and a
+// #2145 (0360) — the active grants (marking an operator's and a
 // self-grant), whether the operator may grant, the Google session and the
 // latest endpoint probe.
 

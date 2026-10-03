@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2145 — the changes a person makes to get assistants working, through
-// the 0354–0357 RPCs: a workspace offers assistants (against the value
+// the 0357–0360 RPCs: a workspace offers assistants (against the value
 // read), the operator checks the deployed endpoint, allows desktop and
 // command-line assistants, approves access for a bounded time, and reads
 // the installation notices. The refusals those RPCs raise are named here

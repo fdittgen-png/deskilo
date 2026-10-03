@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0358 (#2145) -- what an assistant needs to answer a person in their own
+-- 0361 (#2145) -- what an assistant needs to answer a person in their own
 -- words, and what the workspace keeps about what an assistant booked.
 --
 --   * Places are named without naming anybody: every availability item and
@@ -329,21 +329,21 @@ declare
   v_next text;
 begin
   if position('#2145' in v_def) > 0 then
-    raise exception '0355: mcp_execute_v1 already carries #2145';
+    raise exception '0358: mcp_execute_v1 already carries #2145';
   end if;
 
   -- The statement is always the caller's own; a stray other id stays not_found.
   v_next := pg_temp.anchor_replace(v_def,
     $a$if public.mcp_uuid_arg(v_args, 'member_id') <> v_member.id then$a$,
     $b$if v_args ? 'member_id' and public.mcp_uuid_arg(v_args, 'member_id') <> v_member.id then -- #2145$b$);
-  if v_next is null then raise exception '0355: statement member anchor missing'; end if;
+  if v_next is null then raise exception '0358: statement member anchor missing'; end if;
   v_def := v_next;
 
   v_next := pg_temp.anchor_replace(v_def,
     $a$v_data := public.member_statement(v_member.id, v_args->>'period');$a$,
     $b$v_data := public.member_statement(v_member.id, v_args->>'period')
           || jsonb_build_object('currency', (select w.currency_code from public.workspaces w where w.id = p_workspace_id));$b$);
-  if v_next is null then raise exception '0355: statement anchor missing'; end if;
+  if v_next is null then raise exception '0358: statement anchor missing'; end if;
   v_def := v_next;
 
   -- The workspace's zone, currency and hours beside what it exposes.
@@ -351,7 +351,7 @@ begin
     $a$'eligible_until', v_grant.expires_at);$a$,
     $b$'eligible_until', v_grant.expires_at)
                   || public.mcp_workspace_context(p_workspace_id);$b$);
-  if v_next is null then raise exception '0355: capabilities anchor missing'; end if;
+  if v_next is null then raise exception '0358: capabilities anchor missing'; end if;
   v_def := v_next;
 
   -- Provenance, inside the same subtransaction as the booking.
@@ -359,7 +359,7 @@ begin
     $a$v_data := jsonb_build_object('reservation_id', v_id);$a$,
     $b$v_data := jsonb_build_object('reservation_id', v_id);
         perform public.mcp_record_reservation_origin(v_id, p_workspace_id, v_member.id, v_client, p_request_id);$b$);
-  if v_next is null then raise exception '0355: create anchor missing'; end if;
+  if v_next is null then raise exception '0358: create anchor missing'; end if;
 
   execute v_next;
 end
@@ -381,4 +381,4 @@ grant execute on function public.mcp_operation_catalogue() to authenticated;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(355);
+select public.set_deskilo_schema_version(358);

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2145 — what the operator configures in the app beyond #1827 B: each
-// assistant client names its family and where its answers go (0356), and
+// assistant client names its family and where its answers go (0359), and
 // one switch allows desktop and command-line assistants. Without the
 // second factor the switch cannot move.
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
