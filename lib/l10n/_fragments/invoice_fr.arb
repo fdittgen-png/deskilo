@@ -535,10 +535,6 @@
   "@invoiceLegalKindAssociation": {
     "description": "Association invoicing + VAT regime gate (#484)"
   },
-  "invoiceLegalAssociationHint": "Les clauses de pénalités, d'indemnité de recouvrement et d'escompte ne sont imprimées que si renseignées — elles ne sont obligatoires qu'entre professionnels.",
-  "@invoiceLegalAssociationHint": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
   "invoiceLegalFormHintAssociation": "ex. Association loi 1901",
   "@invoiceLegalFormHintAssociation": {
     "description": "Association invoicing + VAT regime gate (#484)"

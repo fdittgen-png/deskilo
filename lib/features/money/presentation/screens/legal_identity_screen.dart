@@ -15,6 +15,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/address_window.dart';
 import '../../domain/invoice_legal.dart';
+import '../../../workspace/presentation/member_customer_capacity.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
@@ -56,6 +57,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   final _special = TextEditingController();
   // #484 — '' = company/business, 'association' = non-profit.
   String _sellerKind = '';
+  String _customerCapacity = '';
   VatRegime _regime = VatRegime.notSubject;
   // #895 — intra-EU B2B supplies are reverse-charged unless a workspace
   // that never invoices businesses abroad turns it off.
@@ -117,6 +119,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               vatAccount: _vatAccount.text,
               invoiceLegal: InvoiceLegal(
                 sellerKind: _sellerKind,
+                customerCapacity: _customerCapacity,
                 legalForm: _legalForm.text,
                 registration: _registration.text,
                 paymentTerms: _paymentTerms.text,
@@ -208,6 +211,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _vatAccount.text = workspace.vatAccount;
       final legal = InvoiceLegal.fromJson(workspace.invoiceLegal);
       _sellerKind = legal.sellerKind;
+      _customerCapacity = legal.customerCapacity;
       _reverseCharge = legal.reverseCharge;
       _exigibility = legal.vatExigibility;
       _legalForm.text = legal.legalForm;
@@ -557,18 +561,33 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               anchor: HelpAnchor.legalSellerKind,
             ),
           ]),
-          if (_sellerKind == 'association') ...[
-            const SizedBox(height: AppSpacing.xs),
-            Text(
-              l10n?.invoiceLegalAssociationHint ??
-                  'The late-penalty, recovery-indemnity and discount '
-                      'clauses are printed only when filled — they are '
-                      'mandatory only between professionals.',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-            ),
-          ],
+          const SizedBox(height: AppSpacing.md),
+          // #1916 — the customers' capacity decides the clauses, not the
+          // seller's legal form; a member's own capacity wins.
+          Text(l10n?.invoiceLegalCustomerCapacityField ??
+              'Default customer capacity'),
+          const SizedBox(height: AppSpacing.xs),
+          SegmentedButton<String>(
+            key: const ValueKey('legal-identity-capacity'),
+            segments: [
+              for (final wire in const ['', 'business', 'consumer'])
+                ButtonSegment(
+                  value: wire,
+                  label: Text(customerCapacityName(l10n, wire)),
+                ),
+            ],
+            selected: {_customerCapacity},
+            onSelectionChanged: (selection) =>
+                setState(() => _customerCapacity = selection.first),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            l10n?.invoiceLegalCustomerCapacityHint ??
+                'Decides which payment clauses an invoice prints.',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+          ),
           const SizedBox(height: AppSpacing.md),
           _mentionField(
             'legal-identity-legal-form',

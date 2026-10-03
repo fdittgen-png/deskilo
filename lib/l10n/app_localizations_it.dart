@@ -5341,6 +5341,30 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quando invitate qualcuno, scegliete se raggiunge anche lo spazio di produzione. Entra comunque nello spazio di prova, e il ruolo deve comunque permettere l\'accesso alla produzione.';
 
   @override
+  String get customerCapacityLabel => 'Qualità del cliente';
+
+  @override
+  String get customerCapacityNotStated => 'Non indicata';
+
+  @override
+  String get customerCapacityBusiness => 'Professionista';
+
+  @override
+  String get customerCapacityConsumer => 'Consumatore';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Se questo cliente agisce per un\'attività imprenditoriale o professionale (società, ditta individuale, associazione che agisce come tale) o come consumatore. Decide quali clausole di pagamento stampa una fattura; la sola partita IVA non lo decide. Non indicata: si applica il valore predefinito dello spazio.';
+
+  @override
+  String get invoiceLegalCustomerCapacityField =>
+      'Qualità del cliente predefinita';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Decide quali clausole di pagamento stampa una fattura. I testi legali predefiniti su interessi di mora, risarcimento forfettario delle spese di recupero e sconto valgono solo per clienti professionisti, e un consumatore non riceve mai il risarcimento delle spese di recupero. La qualità propria di un membro prevale su questo valore. Ogni fattura conserva le clausole con cui è stata emessa.';
+
+  @override
   String get invoicePdfDueOn => 'Scadenza';
 
   @override
@@ -6232,10 +6256,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceLegalKindAssociation => 'Associazione (non profit)';
-
-  @override
-  String get invoiceLegalAssociationHint =>
-      'Le clausole di mora, recupero crediti e sconto vengono stampate solo se compilate — sono obbligatorie solo tra professionisti.';
 
   @override
   String get invoiceLegalFormHintAssociation => 'es. Association loi 1901';

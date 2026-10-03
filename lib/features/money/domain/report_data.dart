@@ -16,6 +16,7 @@ import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
 import 'invoice.dart';
+import 'invoice_clauses.dart';
 import 'invoice_legal.dart';
 import 'invoice_line_text.dart';
 import 'payment_terms.dart';
@@ -26,13 +27,15 @@ import 'vat_rate.dart';
 import 'vat_regime.dart';
 
 /// The LEGAL mention variables (#480) shared by every document's data
-/// model: the seller's statutory lines and the payment-condition
-/// mentions French law requires on a professional invoice. The four
-/// mandatory clauses fall back to localized statutory defaults when the
-/// owner configured nothing, so an untouched workspace still issues a
-/// compliant document. [seller] (the invoice's frozen party) wins over
-/// the live [workspace] for the identity numbers — the snapshot is what
-/// the signature covers.
+/// model: the seller's statutory lines and the payment clauses. Which
+/// clauses print is qualified by `qualifyClauses` (#1916) from the law
+/// of the transaction and the customer's capacity: an issued invoice
+/// passes its [frozen] snapshot (0347), so later settings never rewrite
+/// it; a [legacy] invoice (issued before 0347) keeps the rule it was
+/// printed under; anything else qualifies the live settings, with the
+/// [memberCapacity] over the workspace default. [seller] (the invoice's
+/// frozen party) wins over the live [workspace] for the identity
+/// numbers — the snapshot is what the signature covers.
 Map<String, Object?> legalMentionData(
   ReportStrings strings,
   Workspace? workspace, {
@@ -47,9 +50,29 @@ Map<String, Object?> legalMentionData(
   String counterpartyCategory = '',
   // #881 — the member's own conditions on top of the workspace's.
   PaymentTerms? memberTerms,
+  /// #1916 — the invoice's legal facts as frozen at issue.
+  LegalClauseSnapshot? frozen,
+  /// #1916 — an issued invoice older than the snapshot.
+  bool legacy = false,
+  /// #1916 — the member's own stated capacity (wire), live documents.
+  String? memberCapacity,
 }) {
   final legal = InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {});
   final terms = PaymentTerms.ofLegal(legal).mergedWith(memberTerms);
+  final sellerCountry = seller?.country ?? workspace?.countryCode ?? '';
+  final clauses = frozen != null
+      ? qualifyClauses(frozen, strings)
+      : legacy
+          ? legacyClauses(legal, terms, strings)
+          : qualifyClauses(
+              LegalClauseSnapshot.live(
+                legal: legal,
+                sellerCountry: sellerCountry,
+                buyerCountry: buyer?.country ?? '',
+                memberTerms: memberTerms,
+                memberCapacity: memberCapacity,
+              ),
+              strings);
   // #871 — the bank block. A French (and German) invoice carries the
   // account it is to be paid into, and until now a designed report
   // could not print one: the details were stored but no placeholder
@@ -60,10 +83,6 @@ Map<String, Object?> legalMentionData(
   );
   String orDefault(String value, String fallback) =>
       value.trim().isNotEmpty ? value.trim() : fallback;
-  // #484 — the B2B-only clauses (mandatory between professionals) have
-  // NO default on an association's documents; explicit text still wins.
-  String orB2bDefault(String value, String fallback) =>
-      legal.isAssociation ? value.trim() : orDefault(value, fallback);
   return <String, Object?>{
     'iban': pay.iban,
     'bic': pay.bic,
@@ -74,8 +93,8 @@ Map<String, Object?> legalMentionData(
     // anyone else, so this is not a separate field to get wrong.
     'account_holder': workspace?.name ?? '',
     'payment_reference': pay.reference,
-    'seller_legal_form': legal.legalForm,
-    'seller_registration': legal.registration,
+    'seller_legal_form': frozen?.legalForm ?? legal.legalForm,
+    'seller_registration': frozen?.registration ?? legal.registration,
     'seller_vat_id': seller?.vatId ?? workspace?.vatId ?? '',
     'seller_legal_id': seller?.legalId ?? workspace?.legalId ?? '',
     // #878 — BR-E-10: an exempt (or out-of-scope) seller's document
@@ -86,7 +105,7 @@ Map<String, Object?> legalMentionData(
       regime: vatRegimeFromWire(
           seller?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
       sellerCountry: seller?.country ?? workspace?.countryCode ?? '',
-      onPaymentBasis: legal.onPaymentBasis,
+      onPaymentBasis: frozen?.onPaymentBasis ?? legal.onPaymentBasis,
     ),
     // #895 — a reverse-charged supply states WHY no tax is charged, and
     // that mention is statutory: it wins over the seller's own text.
@@ -118,25 +137,15 @@ Map<String, Object?> legalMentionData(
     'client_legal_id': buyer?.legalId ?? '',
     'client_member_number': buyer?.memberNumber ?? '',
     // #881 — whether anything printed is the member's own condition.
-    'payment_terms_source': memberTerms == null ? 'workspace' : 'member',
-    'payment_terms': orDefault(
-      terms.paymentTerms,
-      strings.paymentTermsDefault,
-    ),
-    'late_penalty': orB2bDefault(
-      terms.latePenalty,
-      strings.latePenaltyDefault,
-    ),
-    'recovery_indemnity': orB2bDefault(
-      terms.recoveryIndemnity,
-      strings.recoveryDefault,
-    ),
-    'escompte': orB2bDefault(
-      terms.escompte,
-      strings.escompteDefault,
-    ),
-    'insurance': legal.insurance,
-    'special_mentions': legal.specialMentions,
+    'payment_terms_source': frozen?.termsSource ??
+        (memberTerms == null ? 'workspace' : 'member'),
+    // #1916 — qualified per transaction, never by the reader's language.
+    'payment_terms': clauses.paymentTerms.text,
+    'late_penalty': clauses.latePenalty.text,
+    'recovery_indemnity': clauses.recoveryIndemnity.text,
+    'escompte': clauses.escompte.text,
+    'insurance': frozen?.insurance ?? legal.insurance,
+    'special_mentions': frozen?.specialMentions ?? legal.specialMentions,
   };
 }
 
@@ -194,6 +203,8 @@ Map<String, Object?> invoiceReportData(
   /// from the reminder delay: two deadlines, neither of them stated on
   /// the paper. Null leaves the placeholder empty.
   DateTime? dueAt,
+  /// #1916 — the member's stated capacity, for an unissued document.
+  String? memberCapacity,
 }) {
   final currency = moneyFormat(invoice.currency);
   final dateFormat = DateFormat.yMMMd(strings.dateLocale);
@@ -289,9 +300,18 @@ Map<String, Object?> invoiceReportData(
       reverseCharged: invoice.isReverseCharged,
       counterpartyCategory: invoice.counterpartyCategory,
       memberTerms: memberTerms,
+      frozen: invoice.legalClauses,
+      legacy: isLegacyInvoice(invoice),
+      memberCapacity: memberCapacity,
     ),
   };
 }
+
+/// #1916 — an ISSUED invoice that carries no legal snapshot: issued
+/// before 0347, its evidence is unknown and it renders as it always did.
+/// An unnumbered document (a preview) is not legacy: it qualifies live.
+bool isLegacyInvoice(Invoice invoice) =>
+    invoice.legalSnapshot == null && invoice.number.isNotEmpty;
 
 /// #946 — the site a document concerns, when it is not the default one.
 String siteNameOf(Invoice invoice) {

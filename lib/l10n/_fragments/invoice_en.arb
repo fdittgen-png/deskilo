@@ -1197,10 +1197,6 @@
   "@invoiceLegalKindAssociation": {
     "description": "Association invoicing + VAT regime gate (#484)"
   },
-  "invoiceLegalAssociationHint": "The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.",
-  "@invoiceLegalAssociationHint": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
   "invoiceLegalFormHintAssociation": "e.g. Association loi 1901",
   "@invoiceLegalFormHintAssociation": {
     "description": "Association invoicing + VAT regime gate (#484)"

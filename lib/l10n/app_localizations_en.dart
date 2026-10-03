@@ -5300,6 +5300,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'When you invite somebody, choose whether they also reach the production space. They join the test space either way, and the role still has to allow production access.';
 
   @override
+  String get customerCapacityLabel => 'Customer capacity';
+
+  @override
+  String get customerCapacityNotStated => 'Not stated';
+
+  @override
+  String get customerCapacityBusiness => 'Business';
+
+  @override
+  String get customerCapacityConsumer => 'Consumer';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Whether this customer acts for a trade or business (a company, a sole trader, an association acting as one) or as a private consumer. It decides which payment clauses an invoice prints; a VAT number alone does not decide it. Not stated: the workspace default applies.';
+
+  @override
+  String get invoiceLegalCustomerCapacityField => 'Default customer capacity';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Decides which payment clauses an invoice prints. The statutory late-penalty, recovery-indemnity and discount defaults apply only to business customers, and a consumer never receives the recovery indemnity. A member\'s own capacity wins over this default. Every invoice keeps the clauses it was issued with.';
+
+  @override
   String get invoicePdfDueOn => 'Due on';
 
   @override
@@ -6182,10 +6205,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceLegalKindAssociation => 'Association (non-profit)';
-
-  @override
-  String get invoiceLegalAssociationHint =>
-      'The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.';
 
   @override
   String get invoiceLegalFormHintAssociation => 'e.g. Association loi 1901';

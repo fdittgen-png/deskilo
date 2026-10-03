@@ -577,5 +577,10 @@
  "loadOk": "File caricato.",
  "loadError": "File illeggibile: {error}",
  "loadMalformed": "XML non valido",
- "loadWrongRoot": "elemento radice inatteso"
+ "loadWrongRoot": "elemento radice inatteso",
+ "legalCustomerCapacity": "I vostri clienti agiscono come",
+ "capacityNotStated": "Non indicato",
+ "capacityBusiness": "Professionisti",
+ "capacityConsumer": "Consumatori",
+ "legalCustomerCapacityHint": "Decide quali clausole di pagamento stampa una fattura: i testi legali su interessi di mora, risarcimento delle spese di recupero e sconto valgono solo per clienti professionisti. Ogni membro può essere indicato a parte nell'app."
 }

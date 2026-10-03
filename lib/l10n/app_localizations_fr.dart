@@ -5351,6 +5351,30 @@ class AppLocalizationsFr extends AppLocalizations {
       'Quand vous invitez quelqu\'un, choisissez s\'il atteint aussi l\'espace de production. Il rejoint l\'espace de test dans tous les cas, et le rôle doit malgré tout autoriser l\'accès à la production.';
 
   @override
+  String get customerCapacityLabel => 'Qualité du client';
+
+  @override
+  String get customerCapacityNotStated => 'Non précisée';
+
+  @override
+  String get customerCapacityBusiness => 'Professionnel';
+
+  @override
+  String get customerCapacityConsumer => 'Consommateur';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Ce client agit-il pour une activité professionnelle (société, entrepreneur individuel, association agissant comme telle) ou comme consommateur ? Cela décide des clauses de paiement imprimées sur la facture ; un numéro de TVA seul ne le décide pas. Non précisée : la valeur par défaut de l\'espace s\'applique.';
+
+  @override
+  String get invoiceLegalCustomerCapacityField =>
+      'Qualité du client par défaut';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Décide des clauses de paiement imprimées sur la facture. Les mentions légales par défaut (pénalités de retard, indemnité forfaitaire de recouvrement, escompte) ne s\'appliquent qu\'aux clients professionnels, et un consommateur ne reçoit jamais l\'indemnité de recouvrement. La qualité propre d\'un membre l\'emporte sur ce défaut. Chaque facture garde les clauses avec lesquelles elle a été émise.';
+
+  @override
   String get invoicePdfDueOn => 'Échéance';
 
   @override
@@ -6244,10 +6268,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceLegalKindAssociation => 'Association (loi 1901)';
-
-  @override
-  String get invoiceLegalAssociationHint =>
-      'Les clauses de pénalités, d\'indemnité de recouvrement et d\'escompte ne sont imprimées que si renseignées — elles ne sont obligatoires qu\'entre professionnels.';
 
   @override
   String get invoiceLegalFormHintAssociation => 'ex. Association loi 1901';

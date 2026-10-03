@@ -5341,6 +5341,29 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wenn Sie jemanden einladen, wählen Sie, ob er auch den Produktionsraum erreicht. Dem Testraum tritt er in jedem Fall bei, und die Rolle muss den Produktionszugang trotzdem erlauben.';
 
   @override
+  String get customerCapacityLabel => 'Kundeneigenschaft';
+
+  @override
+  String get customerCapacityNotStated => 'Nicht angegeben';
+
+  @override
+  String get customerCapacityBusiness => 'Unternehmer';
+
+  @override
+  String get customerCapacityConsumer => 'Verbraucher';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Handelt dieser Kunde gewerblich oder beruflich (Gesellschaft, Einzelunternehmer, ein so handelnder Verein) oder als Verbraucher? Das entscheidet, welche Zahlungsklauseln eine Rechnung druckt; eine USt-IdNr. allein entscheidet es nicht. Nicht angegeben: Es gilt die Vorgabe des Arbeitsbereichs.';
+
+  @override
+  String get invoiceLegalCustomerCapacityField => 'Standard-Kundeneigenschaft';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Entscheidet, welche Zahlungsklauseln eine Rechnung druckt. Die gesetzlichen Vorgaben für Verzugszinsen, Beitreibungspauschale und Skonto gelten nur für Unternehmer als Kunden; ein Verbraucher erhält nie die Beitreibungspauschale. Die eigene Angabe eines Mitglieds hat Vorrang vor dieser Vorgabe. Jede Rechnung behält die Klauseln, mit denen sie ausgestellt wurde.';
+
+  @override
   String get invoicePdfDueOn => 'Fällig am';
 
   @override
@@ -6232,10 +6255,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceLegalKindAssociation => 'Verein (gemeinnützig)';
-
-  @override
-  String get invoiceLegalAssociationHint =>
-      'Verzugszins-, Beitreibungs- und Skonto-Klauseln werden nur gedruckt, wenn ausgefüllt — sie sind nur zwischen Unternehmen Pflicht.';
 
   @override
   String get invoiceLegalFormHintAssociation =>

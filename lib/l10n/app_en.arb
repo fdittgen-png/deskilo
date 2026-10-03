@@ -5776,6 +5776,34 @@
   "inviteAlsoProdSubtitle": "They join the test space either way. The role still has to allow production access.",
   "featureMemberEnvironmentsTitle": "Choose the environments a person is activated on",
   "featureMemberEnvironmentsDesc": "When you invite somebody, choose whether they also reach the production space. They join the test space either way, and the role still has to allow production access.",
+  "customerCapacityLabel": "Customer capacity",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Not stated",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacityBusiness": "Business",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Consumer",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Whether this customer acts for a trade or business (a company, a sole trader, an association acting as one) or as a private consumer. It decides which payment clauses an invoice prints; a VAT number alone does not decide it. Not stated: the workspace default applies.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "invoiceLegalCustomerCapacityField": "Default customer capacity",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Decides which payment clauses an invoice prints. The statutory late-penalty, recovery-indemnity and discount defaults apply only to business customers, and a consumer never receives the recovery indemnity. A member's own capacity wins over this default. Every invoice keeps the clauses it was issued with.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
+  },
   "invoicePdfDueOn": "Due on",
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"
@@ -6975,10 +7003,6 @@
   },
   "invoiceLegalKindAssociation": "Association (non-profit)",
   "@invoiceLegalKindAssociation": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
-  "invoiceLegalAssociationHint": "The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.",
-  "@invoiceLegalAssociationHint": {
     "description": "Association invoicing + VAT regime gate (#484)"
   },
   "invoiceLegalFormHintAssociation": "e.g. Association loi 1901",

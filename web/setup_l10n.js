@@ -582,7 +582,12 @@ window.SETUP_L10N={
    "loadOk": "File loaded.",
    "loadError": "Unreadable file: {error}",
    "loadMalformed": "Malformed XML",
-   "loadWrongRoot": "unexpected root element"
+   "loadWrongRoot": "unexpected root element",
+   "legalCustomerCapacity": "Your customers act as",
+   "capacityNotStated": "Not stated",
+   "capacityBusiness": "Businesses",
+   "capacityConsumer": "Consumers",
+   "legalCustomerCapacityHint": "Decides which payment clauses an invoice prints: the statutory late-penalty, recovery-indemnity and discount wording applies only to business customers. Each member can be set apart in the app."
   },
   "feature": {
    "calendarTab": [
@@ -1863,7 +1868,12 @@ window.SETUP_L10N={
    "loadOk": "Fichier chargé.",
    "loadError": "Fichier illisible : {error}",
    "loadMalformed": "XML mal formé",
-   "loadWrongRoot": "racine inattendue"
+   "loadWrongRoot": "racine inattendue",
+   "legalCustomerCapacity": "Vos clients agissent comme",
+   "capacityNotStated": "Non précisé",
+   "capacityBusiness": "Professionnels",
+   "capacityConsumer": "Consommateurs",
+   "legalCustomerCapacityHint": "Décide des clauses de paiement imprimées sur la facture : les mentions légales de pénalités, d'indemnité de recouvrement et d'escompte ne concernent que les clients professionnels. Chaque membre peut être précisé à part dans l'application."
   },
   "feature": {
    "calendarTab": [
@@ -3144,7 +3154,12 @@ window.SETUP_L10N={
    "loadOk": "Datei geladen.",
    "loadError": "Datei nicht lesbar: {error}",
    "loadMalformed": "Fehlerhaftes XML",
-   "loadWrongRoot": "unerwartetes Wurzelelement"
+   "loadWrongRoot": "unerwartetes Wurzelelement",
+   "legalCustomerCapacity": "Ihre Kunden handeln als",
+   "capacityNotStated": "Nicht angegeben",
+   "capacityBusiness": "Unternehmer",
+   "capacityConsumer": "Verbraucher",
+   "legalCustomerCapacityHint": "Entscheidet, welche Zahlungsklauseln eine Rechnung druckt: die gesetzlichen Texte zu Verzugszinsen, Beitreibungspauschale und Skonto gelten nur für Unternehmer als Kunden. Jedes Mitglied lässt sich in der App einzeln festlegen."
   },
   "feature": {
    "calendarTab": [
@@ -4425,7 +4440,12 @@ window.SETUP_L10N={
    "loadOk": "Archivo cargado.",
    "loadError": "Archivo ilegible: {error}",
    "loadMalformed": "XML mal formado",
-   "loadWrongRoot": "elemento raíz inesperado"
+   "loadWrongRoot": "elemento raíz inesperado",
+   "legalCustomerCapacity": "Sus clientes actúan como",
+   "capacityNotStated": "Sin indicar",
+   "capacityBusiness": "Empresas",
+   "capacityConsumer": "Consumidores",
+   "legalCustomerCapacityHint": "Decide qué cláusulas de pago imprime una factura: los textos legales de intereses de demora, indemnización por costes de cobro y descuento solo se aplican a clientes empresariales. Cada miembro puede indicarse aparte en la aplicación."
   },
   "feature": {
    "calendarTab": [
@@ -5706,7 +5726,12 @@ window.SETUP_L10N={
    "loadOk": "File caricato.",
    "loadError": "File illeggibile: {error}",
    "loadMalformed": "XML non valido",
-   "loadWrongRoot": "elemento radice inatteso"
+   "loadWrongRoot": "elemento radice inatteso",
+   "legalCustomerCapacity": "I vostri clienti agiscono come",
+   "capacityNotStated": "Non indicato",
+   "capacityBusiness": "Professionisti",
+   "capacityConsumer": "Consumatori",
+   "legalCustomerCapacityHint": "Decide quali clausole di pagamento stampa una fattura: i testi legali su interessi di mora, risarcimento delle spese di recupero e sconto valgono solo per clienti professionisti. Ogni membro può essere indicato a parte nell'app."
   },
   "feature": {
    "calendarTab": [

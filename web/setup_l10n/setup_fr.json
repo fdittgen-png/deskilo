@@ -577,5 +577,10 @@
  "loadOk": "Fichier chargé.",
  "loadError": "Fichier illisible : {error}",
  "loadMalformed": "XML mal formé",
- "loadWrongRoot": "racine inattendue"
+ "loadWrongRoot": "racine inattendue",
+ "legalCustomerCapacity": "Vos clients agissent comme",
+ "capacityNotStated": "Non précisé",
+ "capacityBusiness": "Professionnels",
+ "capacityConsumer": "Consommateurs",
+ "legalCustomerCapacityHint": "Décide des clauses de paiement imprimées sur la facture : les mentions légales de pénalités, d'indemnité de recouvrement et d'escompte ne concernent que les clients professionnels. Chaque membre peut être précisé à part dans l'application."
 }

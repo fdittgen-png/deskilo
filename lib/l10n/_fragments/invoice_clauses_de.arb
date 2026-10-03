@@ -1,0 +1,31 @@
+{
+  "@@locale": "de",
+  "customerCapacityLabel": "Kundeneigenschaft",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Nicht angegeben",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacityBusiness": "Unternehmer",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Verbraucher",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Handelt dieser Kunde gewerblich oder beruflich (Gesellschaft, Einzelunternehmer, ein so handelnder Verein) oder als Verbraucher? Das entscheidet, welche Zahlungsklauseln eine Rechnung druckt; eine USt-IdNr. allein entscheidet es nicht. Nicht angegeben: Es gilt die Vorgabe des Arbeitsbereichs.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "invoiceLegalCustomerCapacityField": "Standard-Kundeneigenschaft",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Entscheidet, welche Zahlungsklauseln eine Rechnung druckt. Die gesetzlichen Vorgaben für Verzugszinsen, Beitreibungspauschale und Skonto gelten nur für Unternehmer als Kunden; ein Verbraucher erhält nie die Beitreibungspauschale. Die eigene Angabe eines Mitglieds hat Vorrang vor dieser Vorgabe. Jede Rechnung behält die Klauseln, mit denen sie ausgestellt wurde.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
+  }
+}

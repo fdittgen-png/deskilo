@@ -3234,6 +3234,34 @@
   "inviteAlsoProdSubtitle": "La personne rejoint l'espace de test dans tous les cas. Le rôle doit malgré tout autoriser l'accès à la production.",
   "featureMemberEnvironmentsTitle": "Choisir les environnements sur lesquels une personne est activée",
   "featureMemberEnvironmentsDesc": "Quand vous invitez quelqu'un, choisissez s'il atteint aussi l'espace de production. Il rejoint l'espace de test dans tous les cas, et le rôle doit malgré tout autoriser l'accès à la production.",
+  "customerCapacityLabel": "Qualité du client",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Non précisée",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacityBusiness": "Professionnel",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Consommateur",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Ce client agit-il pour une activité professionnelle (société, entrepreneur individuel, association agissant comme telle) ou comme consommateur ? Cela décide des clauses de paiement imprimées sur la facture ; un numéro de TVA seul ne le décide pas. Non précisée : la valeur par défaut de l'espace s'applique.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "invoiceLegalCustomerCapacityField": "Qualité du client par défaut",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Décide des clauses de paiement imprimées sur la facture. Les mentions légales par défaut (pénalités de retard, indemnité forfaitaire de recouvrement, escompte) ne s'appliquent qu'aux clients professionnels, et un consommateur ne reçoit jamais l'indemnité de recouvrement. La qualité propre d'un membre l'emporte sur ce défaut. Chaque facture garde les clauses avec lesquelles elle a été émise.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
+  },
   "invoicePdfDueOn": "Échéance",
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"
@@ -3771,10 +3799,6 @@
   },
   "invoiceLegalKindAssociation": "Association (loi 1901)",
   "@invoiceLegalKindAssociation": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
-  "invoiceLegalAssociationHint": "Les clauses de pénalités, d'indemnité de recouvrement et d'escompte ne sont imprimées que si renseignées — elles ne sont obligatoires qu'entre professionnels.",
-  "@invoiceLegalAssociationHint": {
     "description": "Association invoicing + VAT regime gate (#484)"
   },
   "invoiceLegalFormHintAssociation": "ex. Association loi 1901",

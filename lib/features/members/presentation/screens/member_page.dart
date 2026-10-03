@@ -29,6 +29,7 @@ import '../../../workspace/domain/overage_policy.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/presentation/member_admin_actions.dart';
+import '../../../workspace/presentation/member_customer_capacity.dart';
 import '../../../workspace/presentation/member_vat_treatment.dart';
 import '../../../workspace/presentation/widgets/member_roles_card.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
@@ -389,6 +390,16 @@ class _MemberPageBody extends ConsumerWidget {
             subtitle: vatTreatmentName(
                 l10n, VatTreatment.fromWire(member.vatTreatment)),
             onTap: () => pickMemberVatTreatment(context, ref, member),
+          ),
+        // #1916 — whether this customer acts as a business or a consumer.
+        if (perms.contains(WorkspacePermission.issueInvoices) &&
+            ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.invoicing))
+          _ManageTile(
+            tileKey: const ValueKey('member-page-customer-capacity'),
+            icon: Icons.storefront_outlined,
+            title: l10n?.customerCapacityLabel ?? 'Customer capacity',
+            subtitle: customerCapacityName(l10n, member.customerCapacity),
+            onTap: () => pickMemberCustomerCapacity(context, ref, member),
           ),
         // #945 — the site whose address this member's documents carry.
         if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.multiSite))

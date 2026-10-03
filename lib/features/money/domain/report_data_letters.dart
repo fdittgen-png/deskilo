@@ -393,6 +393,9 @@ Map<String, Object?> reminderReportData(
       reverseCharged: invoice.isReverseCharged,
       counterpartyCategory: invoice.counterpartyCategory,
       memberTerms: facts.memberTerms,
+      // #1916 — a reminder cites the invoice's FROZEN clauses, once.
+      frozen: invoice.legalClauses,
+      legacy: isLegacyInvoice(invoice),
     ),
   };
 }

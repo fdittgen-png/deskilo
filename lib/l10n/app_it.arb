@@ -3234,6 +3234,34 @@
   "inviteAlsoProdSubtitle": "La persona entra comunque nello spazio di prova. Il ruolo deve comunque permettere l'accesso alla produzione.",
   "featureMemberEnvironmentsTitle": "Scegliere gli ambienti su cui una persona è attivata",
   "featureMemberEnvironmentsDesc": "Quando invitate qualcuno, scegliete se raggiunge anche lo spazio di produzione. Entra comunque nello spazio di prova, e il ruolo deve comunque permettere l'accesso alla produzione.",
+  "customerCapacityLabel": "Qualità del cliente",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Non indicata",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacityBusiness": "Professionista",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Consumatore",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Se questo cliente agisce per un'attività imprenditoriale o professionale (società, ditta individuale, associazione che agisce come tale) o come consumatore. Decide quali clausole di pagamento stampa una fattura; la sola partita IVA non lo decide. Non indicata: si applica il valore predefinito dello spazio.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "invoiceLegalCustomerCapacityField": "Qualità del cliente predefinita",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Decide quali clausole di pagamento stampa una fattura. I testi legali predefiniti su interessi di mora, risarcimento forfettario delle spese di recupero e sconto valgono solo per clienti professionisti, e un consumatore non riceve mai il risarcimento delle spese di recupero. La qualità propria di un membro prevale su questo valore. Ogni fattura conserva le clausole con cui è stata emessa.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
+  },
   "invoicePdfDueOn": "Scadenza",
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"
@@ -3771,10 +3799,6 @@
   },
   "invoiceLegalKindAssociation": "Associazione (non profit)",
   "@invoiceLegalKindAssociation": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
-  "invoiceLegalAssociationHint": "Le clausole di mora, recupero crediti e sconto vengono stampate solo se compilate — sono obbligatorie solo tra professionisti.",
-  "@invoiceLegalAssociationHint": {
     "description": "Association invoicing + VAT regime gate (#484)"
   },
   "invoiceLegalFormHintAssociation": "es. Association loi 1901",
