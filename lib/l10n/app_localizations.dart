@@ -7381,6 +7381,78 @@ abstract class AppLocalizations {
   /// **'Get started: one suggested next step'**
   String get gettingStartedSemantics;
 
+  /// #1835 guest participation: the feature's name
+  ///
+  /// In en, this message translates to:
+  /// **'Guest visits'**
+  String get featureGuestParticipationTitle;
+
+  /// #1835 guest participation: the feature's description
+  ///
+  /// In en, this message translates to:
+  /// **'Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here.'**
+  String get featureGuestParticipationDesc;
+
+  /// #1835 Me › Home: the section listing the account's guest visits
+  ///
+  /// In en, this message translates to:
+  /// **'My visits'**
+  String get myVisitsTitle;
+
+  /// #1835 Me › Home: under the My visits heading
+  ///
+  /// In en, this message translates to:
+  /// **'Visits you asked for or were admitted to, as a guest. A visit is not a membership.'**
+  String get myVisitsHelp;
+
+  /// #1835 a visit row: the one line that keeps visit and membership apart
+  ///
+  /// In en, this message translates to:
+  /// **'Guest visit — not a membership'**
+  String get visitGuestNote;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get visitStatusRequested;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get visitStatusConfirmed;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get visitStatusDeclined;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get visitStatusCancelled;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get visitStatusExpired;
+
+  /// #1835 a visit row: the guest withdraws or cancels
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this visit'**
+  String get visitCancel;
+
+  /// #1835 a visit row: the cancel failed
+  ///
+  /// In en, this message translates to:
+  /// **'Could not cancel the visit. Nothing changed; try again.'**
+  String get visitCancelFailed;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:

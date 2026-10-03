@@ -42,6 +42,9 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.memberPage,
       WorkspaceFeature.memberOrigin,
       WorkspaceFeature.memberEnvironments,
+      // #1835 — people who take part without being members: a visit is
+      // admitted here, beside the people it is not a membership of.
+      WorkspaceFeature.guestParticipation,
     ]),
     WorkspaceSubprocess('physicalAccess', [
       WorkspaceFeature.kioskMode,

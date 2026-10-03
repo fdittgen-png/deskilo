@@ -4982,6 +4982,54 @@
   "@gettingStartedSemantics": {
     "description": "#1654 getting started card: gettingStartedSemantics"
   },
+  "featureGuestParticipationTitle": "Guest visits",
+  "@featureGuestParticipationTitle": {
+    "description": "#1835 guest participation: the feature's name"
+  },
+  "featureGuestParticipationDesc": "Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here.",
+  "@featureGuestParticipationDesc": {
+    "description": "#1835 guest participation: the feature's description"
+  },
+  "myVisitsTitle": "My visits",
+  "@myVisitsTitle": {
+    "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
+  "myVisitsHelp": "Visits you asked for or were admitted to, as a guest. A visit is not a membership.",
+  "@myVisitsHelp": {
+    "description": "#1835 Me › Home: under the My visits heading"
+  },
+  "visitGuestNote": "Guest visit — not a membership",
+  "@visitGuestNote": {
+    "description": "#1835 a visit row: the one line that keeps visit and membership apart"
+  },
+  "visitStatusRequested": "Requested",
+  "@visitStatusRequested": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusConfirmed": "Confirmed",
+  "@visitStatusConfirmed": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusDeclined": "Declined",
+  "@visitStatusDeclined": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusCancelled": "Cancelled",
+  "@visitStatusCancelled": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusExpired": "Expired",
+  "@visitStatusExpired": {
+    "description": "#1835 visit status"
+  },
+  "visitCancel": "Cancel this visit",
+  "@visitCancel": {
+    "description": "#1835 a visit row: the guest withdraws or cancels"
+  },
+  "visitCancelFailed": "Could not cancel the visit. Nothing changed; try again.",
+  "@visitCancelFailed": {
+    "description": "#1835 a visit row: the cancel failed"
+  },
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",

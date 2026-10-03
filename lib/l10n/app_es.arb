@@ -2715,6 +2715,54 @@
   "gettingStartedNotNow": "Ahora no",
   "gettingStartedReopen": "Primeros pasos",
   "gettingStartedSemantics": "Primeros pasos: un siguiente paso sugerido",
+  "featureGuestParticipationTitle": "Visitas de invitados",
+  "@featureGuestParticipationTitle": {
+    "description": "#1835 guest participation: the feature's name"
+  },
+  "featureGuestParticipationDesc": "Permite a una persona que no es miembro pedir visitar este espacio, y a quien gestiona las reservas admitirla o rechazarla. Una visita no crea membresía, suscripción ni rol. Desactivado: nadie pide ni es admitido aquí.",
+  "@featureGuestParticipationDesc": {
+    "description": "#1835 guest participation: the feature's description"
+  },
+  "myVisitsTitle": "Mis visitas",
+  "@myVisitsTitle": {
+    "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
+  "myVisitsHelp": "Visitas que pediste o a las que fuiste admitido como invitado. Una visita no es una membresía.",
+  "@myVisitsHelp": {
+    "description": "#1835 Me › Home: under the My visits heading"
+  },
+  "visitGuestNote": "Visita de invitado — no una membresía",
+  "@visitGuestNote": {
+    "description": "#1835 a visit row: the one line that keeps visit and membership apart"
+  },
+  "visitStatusRequested": "Solicitada",
+  "@visitStatusRequested": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusConfirmed": "Confirmada",
+  "@visitStatusConfirmed": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusDeclined": "Rechazada",
+  "@visitStatusDeclined": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusCancelled": "Cancelada",
+  "@visitStatusCancelled": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusExpired": "Caducada",
+  "@visitStatusExpired": {
+    "description": "#1835 visit status"
+  },
+  "visitCancel": "Cancelar esta visita",
+  "@visitCancel": {
+    "description": "#1835 a visit row: the guest withdraws or cancels"
+  },
+  "visitCancelFailed": "No se pudo cancelar la visita. Nada ha cambiado; inténtalo de nuevo.",
+  "@visitCancelFailed": {
+    "description": "#1835 a visit row: the cancel failed"
+  },
   "helpTitle": "Ayuda",
   "helpContents": "Índice",
   "helpHintMessages": "Todas las conversaciones en una lista, la más reciente arriba. Toque el lápiz para escribir a alguien o crear un grupo.",

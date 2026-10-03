@@ -2715,6 +2715,54 @@
   "gettingStartedNotNow": "Non ora",
   "gettingStartedReopen": "Primi passi",
   "gettingStartedSemantics": "Primi passi: un passo successivo suggerito",
+  "featureGuestParticipationTitle": "Visite degli ospiti",
+  "@featureGuestParticipationTitle": {
+    "description": "#1835 guest participation: the feature's name"
+  },
+  "featureGuestParticipationDesc": "Permette a una persona che non è membro di chiedere di visitare questo spazio, e a chi gestisce le prenotazioni di ammetterla o rifiutarla. Una visita non crea iscrizione, abbonamento né ruolo. Disattivato: nessuno chiede né viene ammesso qui.",
+  "@featureGuestParticipationDesc": {
+    "description": "#1835 guest participation: the feature's description"
+  },
+  "myVisitsTitle": "Le mie visite",
+  "@myVisitsTitle": {
+    "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
+  "myVisitsHelp": "Le visite che hai chiesto o a cui sei stato ammesso come ospite. Una visita non è un'iscrizione.",
+  "@myVisitsHelp": {
+    "description": "#1835 Me › Home: under the My visits heading"
+  },
+  "visitGuestNote": "Visita da ospite — non un'iscrizione",
+  "@visitGuestNote": {
+    "description": "#1835 a visit row: the one line that keeps visit and membership apart"
+  },
+  "visitStatusRequested": "Richiesta",
+  "@visitStatusRequested": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusConfirmed": "Confermata",
+  "@visitStatusConfirmed": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusDeclined": "Rifiutata",
+  "@visitStatusDeclined": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusCancelled": "Annullata",
+  "@visitStatusCancelled": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusExpired": "Scaduta",
+  "@visitStatusExpired": {
+    "description": "#1835 visit status"
+  },
+  "visitCancel": "Annulla questa visita",
+  "@visitCancel": {
+    "description": "#1835 a visit row: the guest withdraws or cancels"
+  },
+  "visitCancelFailed": "Impossibile annullare la visita. Nulla è cambiato; riprova.",
+  "@visitCancelFailed": {
+    "description": "#1835 a visit row: the cancel failed"
+  },
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",

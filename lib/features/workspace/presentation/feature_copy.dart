@@ -503,6 +503,12 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   "workspace's screens, on their own device, review them and "
                   'export a file without any value they typed. Nothing is '
                   'uploaded. Off: nobody records here.',
+        WorkspaceFeature.guestParticipation =>
+          l10n?.featureGuestParticipationDesc ??
+              'Lets a person who is not a member ask to visit this space, '
+                  'and someone who manages reservations admit or decline '
+                  'them. A visit creates no membership, subscription or role. '
+                  'Off: nobody asks or is admitted here.',
       WorkspaceFeature.workspaceBranding =>
           l10n?.featureWorkspaceBrandingDesc ??
               'The workspace chooses a brand colour the app derives its '

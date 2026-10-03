@@ -75,6 +75,12 @@ const Set<String> _knownPairs = {
   // messenger and discovery (directory), my spaces and memberships
   // (workspace), my photo and account rows (profile), and signs out (auth).
   'me -> auth', 'me -> directory', 'me -> profile', 'me -> workspace',
+  // #1835 — Me › Home lists the account's guest visits: a relationship of
+  // the account, read beside its memberships and never confused with one.
+  'me -> visits',
+  // #1835 — a visit is read for the signed-in account only, so the visits
+  // providers ask who that is (auth), as every account read does.
+  'visits -> auth',
   // #1791: account-bound portal, workspace publication/employment and profile entry.
   'workspace -> directory', 'directory -> auth', 'directory -> workspace',
   // #1824 — Me › Messages IS the unified inbox, which lives with the

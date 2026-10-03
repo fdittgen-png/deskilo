@@ -1076,6 +1076,10 @@ window.SETUP_L10N={
    "taskRecorder": [
     "Task recorder",
     "Lets a person record the steps of a task on this workspace's screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here."
+   ],
+   "guestParticipation": [
+    "Guest visits",
+    "Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here."
    ]
   },
   "process": {
@@ -2361,6 +2365,10 @@ window.SETUP_L10N={
    "taskRecorder": [
     "Enregistreur de tâches",
     "Permet d'enregistrer les étapes d'une tâche sur les écrans de cet espace, sur son propre appareil, de les relire et d'exporter un fichier sans aucune valeur saisie. Rien n'est envoyé. Désactivé : personne n'enregistre ici."
+   ],
+   "guestParticipation": [
+    "Visites d'invités",
+    "Permet à une personne qui n'est pas membre de demander à visiter cet espace, et à quelqu'un qui gère les réservations de l'admettre ou de refuser. Une visite ne crée ni adhésion, ni abonnement, ni rôle. Désactivé : personne ne demande ni n'est admis ici."
    ]
   },
   "process": {
@@ -3646,6 +3654,10 @@ window.SETUP_L10N={
    "taskRecorder": [
     "Aufgabenrekorder",
     "Erlaubt, die Schritte einer Aufgabe auf den Bildschirmen dieses Arbeitsbereichs auf dem eigenen Gerät aufzuzeichnen, sie zu prüfen und eine Datei ohne eingegebene Werte zu exportieren. Nichts wird hochgeladen. Aus: Hier zeichnet niemand auf."
+   ],
+   "guestParticipation": [
+    "Gastbesuche",
+    "Erlaubt einer Person, die kein Mitglied ist, um einen Besuch dieses Spaces zu bitten, und jemandem, der Reservierungen verwaltet, sie zuzulassen oder abzulehnen. Ein Besuch erzeugt weder Mitgliedschaft noch Abonnement noch Rolle. Aus: niemand fragt an oder wird hier zugelassen."
    ]
   },
   "process": {
@@ -4931,6 +4943,10 @@ window.SETUP_L10N={
    "taskRecorder": [
     "Grabador de tareas",
     "Permite grabar los pasos de una tarea en las pantallas de este espacio, en el propio dispositivo, revisarlos y exportar un archivo sin ningún valor escrito. No se envía nada. Desactivado: nadie graba aquí."
+   ],
+   "guestParticipation": [
+    "Visitas de invitados",
+    "Permite a una persona que no es miembro pedir visitar este espacio, y a quien gestiona las reservas admitirla o rechazarla. Una visita no crea membresía, suscripción ni rol. Desactivado: nadie pide ni es admitido aquí."
    ]
   },
   "process": {
@@ -6216,6 +6232,10 @@ window.SETUP_L10N={
    "taskRecorder": [
     "Registratore di attività",
     "Consente di registrare i passaggi di un'attività sulle schermate di questo spazio, sul proprio dispositivo, rivederli ed esportare un file senza alcun valore digitato. Nulla viene inviato. Disattivato: qui nessuno registra."
+   ],
+   "guestParticipation": [
+    "Visite degli ospiti",
+    "Permette a una persona che non è membro di chiedere di visitare questo spazio, e a chi gestisce le prenotazioni di ammetterla o rifiutarla. Una visita non crea iscrizione, abbonamento né ruolo. Disattivato: nessuno chiede né viene ammesso qui."
    ]
   },
   "process": {

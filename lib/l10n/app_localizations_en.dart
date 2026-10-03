@@ -4256,6 +4256,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gettingStartedSemantics => 'Get started: one suggested next step';
 
   @override
+  String get featureGuestParticipationTitle => 'Guest visits';
+
+  @override
+  String get featureGuestParticipationDesc =>
+      'Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here.';
+
+  @override
+  String get myVisitsTitle => 'My visits';
+
+  @override
+  String get myVisitsHelp =>
+      'Visits you asked for or were admitted to, as a guest. A visit is not a membership.';
+
+  @override
+  String get visitGuestNote => 'Guest visit — not a membership';
+
+  @override
+  String get visitStatusRequested => 'Requested';
+
+  @override
+  String get visitStatusConfirmed => 'Confirmed';
+
+  @override
+  String get visitStatusDeclined => 'Declined';
+
+  @override
+  String get visitStatusCancelled => 'Cancelled';
+
+  @override
+  String get visitStatusExpired => 'Expired';
+
+  @override
+  String get visitCancel => 'Cancel this visit';
+
+  @override
+  String get visitCancelFailed =>
+      'Could not cancel the visit. Nothing changed; try again.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override

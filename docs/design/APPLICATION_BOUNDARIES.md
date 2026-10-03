@@ -21,8 +21,9 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | — | `auth` | 4 |
 | — | `events` | 1 |
 | — | `kiosk` | 1 |
+| — | `visits` | 1 |
 
-**76 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
+**77 files** across 12 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
 
 ## Cross-feature imports, by direction
 
@@ -89,6 +90,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `help -> workspace` | 1 |
 | `kiosk -> events` | 1 |
 | `kiosk -> members` | 1 |
+| `me -> visits` | 1 |
 | `money -> calendar` | 1 |
 | `plan -> events` | 1 |
 | `plan -> members` | 1 |
@@ -98,8 +100,9 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> calendar` | 1 |
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
+| `visits -> auth` | 1 |
 
-**68 directed relationships, 812 imports.**
+**70 directed relationships, 814 imports.**
 
 Reciprocal (20): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -112,7 +115,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/core/demo/data/workspace_repository.dart` | 1991 |
 | `lib/core/demo/data/money_repository.dart` | 1848 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1598 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1615 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1469 |
 | `lib/features/workspace/data/supabase_workspace_repository.dart` | 1316 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1300 |

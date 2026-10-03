@@ -4291,6 +4291,45 @@ class AppLocalizationsEs extends AppLocalizations {
       'Primeros pasos: un siguiente paso sugerido';
 
   @override
+  String get featureGuestParticipationTitle => 'Visitas de invitados';
+
+  @override
+  String get featureGuestParticipationDesc =>
+      'Permite a una persona que no es miembro pedir visitar este espacio, y a quien gestiona las reservas admitirla o rechazarla. Una visita no crea membresía, suscripción ni rol. Desactivado: nadie pide ni es admitido aquí.';
+
+  @override
+  String get myVisitsTitle => 'Mis visitas';
+
+  @override
+  String get myVisitsHelp =>
+      'Visitas que pediste o a las que fuiste admitido como invitado. Una visita no es una membresía.';
+
+  @override
+  String get visitGuestNote => 'Visita de invitado — no una membresía';
+
+  @override
+  String get visitStatusRequested => 'Solicitada';
+
+  @override
+  String get visitStatusConfirmed => 'Confirmada';
+
+  @override
+  String get visitStatusDeclined => 'Rechazada';
+
+  @override
+  String get visitStatusCancelled => 'Cancelada';
+
+  @override
+  String get visitStatusExpired => 'Caducada';
+
+  @override
+  String get visitCancel => 'Cancelar esta visita';
+
+  @override
+  String get visitCancelFailed =>
+      'No se pudo cancelar la visita. Nada ha cambiado; inténtalo de nuevo.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
