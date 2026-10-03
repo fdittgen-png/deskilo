@@ -741,6 +741,15 @@ constraint reminder_intents.reminder_intents_status_check CHECK ((status = ANY (
 constraint reminder_intents.reminder_intents_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint reminder_intents.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint reminder_intents.system_company_present CHECK ((company_id IS NOT NULL))
+constraint reservation_origins.reservation_origins_channel_check CHECK ((channel = 'assistant'::text))
+constraint reservation_origins.reservation_origins_client_id_check CHECK (((char_length(client_id) >= 1) AND (char_length(client_id) <= 200)))
+constraint reservation_origins.reservation_origins_client_name_check CHECK (((char_length(client_name) >= 1) AND (char_length(client_name) <= 200)))
+constraint reservation_origins.reservation_origins_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
+constraint reservation_origins.reservation_origins_pkey PRIMARY KEY (reservation_id)
+constraint reservation_origins.reservation_origins_reservation_id_fkey FOREIGN KEY (reservation_id) REFERENCES reservations(id) ON DELETE CASCADE
+constraint reservation_origins.reservation_origins_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint reservation_origins.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint reservation_origins.system_company_present CHECK ((company_id IS NOT NULL))
 constraint reservation_requests.reservation_requests_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
 constraint reservation_requests.reservation_requests_member_id_same_workspace FOREIGN KEY (workspace_id, member_id) REFERENCES members(workspace_id, id) ON DELETE CASCADE
 constraint reservation_requests.reservation_requests_pkey PRIMARY KEY (workspace_id, client_request_id)
@@ -1322,7 +1331,7 @@ routine public.mcp_eligibility_revoked_invalidate() -> trigger | function | defi
 routine public.mcp_endpoint() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1e205fee3d64
 routine public.mcp_endpoint_resolved() -> jsonb | function | definer | stable | exec:service_role | body:47fdd3a5dcee
 routine public.mcp_envelope(p_request_id uuid, p_operation text, p_workspace_id uuid, p_status text, p_data jsonb, p_code text, p_fields jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:6ec6a7b31d23
-routine public.mcp_execute_v1(p_installation_id uuid, p_workspace_id uuid, p_operation text, p_arguments jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5dfb479c3ce4
+routine public.mcp_execute_v1(p_installation_id uuid, p_workspace_id uuid, p_operation text, p_arguments jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:427b7b9b7f96
 routine public.mcp_facade_guard_status() -> jsonb | function | definer | stable | exec:service_role | body:748551105071
 routine public.mcp_finalize_connection(p_authorization_id text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1ca1288e8ec8
 routine public.mcp_get_action_confirmation(p_confirmation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:28d6a1c6fb1a
@@ -1339,6 +1348,9 @@ routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutab
 routine public.mcp_operator_decider() -> jsonb | function | definer | stable | exec:service_role | body:711177ce7de3
 routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
 routine public.mcp_person_name(p_user uuid) -> text | function | definer | stable | exec:service_role | body:59b1d5d4237b
+routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:89dfb01307bb
+routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
+routine public.mcp_place_label(p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid) -> text | function | invoker | stable | exec:service_role | body:33fbfa755fb6
 routine public.mcp_policy_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f6bf9cb4f226
 routine public.mcp_pre_request() -> void | function | invoker | stable | exec:anon,authenticated,service_role | body:020fc410aef9
 routine public.mcp_prepare_connection(p_client_id text, p_authorization_id text, p_scopes jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1b1fe1858a7f
@@ -1346,6 +1358,8 @@ routine public.mcp_project_data(p_operation text, p_value jsonb) -> jsonb | func
 routine public.mcp_project_data(p_operation text, p_value jsonb, p_optional text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:5cf4a9f851a4
 routine public.mcp_read_v1(p_workspace_id uuid, p_member members, p_operation text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:4ce1fcbb2906
 routine public.mcp_redirect_host(p_uri text) -> text | function | invoker | immutable | exec:service_role | body:3da3bc0693e9
+routine public.mcp_read_v1(p_workspace_id uuid, p_member members, p_operation text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:3f1296e6a170
+routine public.mcp_record_reservation_origin(p_reservation_id uuid, p_workspace_id uuid, p_member_id uuid, p_client_id text, p_request_id uuid) -> void | function | definer | volatile | exec:service_role | body:45cfd77f07c4
 routine public.mcp_request_outcome(p_result jsonb) -> text | function | invoker | immutable | exec:service_role | body:883fde66b9af
 routine public.mcp_require_native() -> void | function | invoker | stable | exec:service_role | body:75faf6e7d8ed
 routine public.mcp_reservation_digest(p_reservation_id uuid) -> text | function | invoker | stable | exec:service_role | body:c6a60b1858ba
@@ -1360,6 +1374,7 @@ routine public.mcp_usage_note(p_spec jsonb, p_envelope jsonb) -> jsonb | functio
 routine public.mcp_usage_summary_mine(p_installation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:915798d3f88c
 routine public.mcp_usage_summary_workspace(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:333612b2f6ec
 routine public.mcp_uuid_arg(p_args jsonb, p_key text, p_required boolean) -> uuid | function | invoker | immutable | exec:service_role | body:8e8deb6fc5c3
+routine public.mcp_workspace_context(p_workspace_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:5525e95e8f69
 routine public.member_account(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bf3adfa2b319
 routine public.member_credit_balance(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:authenticated,service_role | body:68f020724478
 routine public.member_credit_balance_of(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:2d55cb53d683
@@ -1834,6 +1849,7 @@ trigger readiness_acknowledgements.zz_system_columns_stamp CREATE TRIGGER zz_sys
 trigger reminder_attempts.reminder_attempts_append_only CREATE TRIGGER reminder_attempts_append_only BEFORE DELETE OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION reminder_attempts_append_only()
 trigger reminder_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reminder_intents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_intents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger reservation_origins.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_origins FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reservation_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reservation_target_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_target_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reservations.analytics_reservation_target CREATE TRIGGER analytics_reservation_target AFTER INSERT OR UPDATE OF seat_id, desk_id, office_id, level_id ON public.reservations FOR EACH ROW EXECUTE FUNCTION analytics_reservation_target()
