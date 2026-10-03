@@ -42,6 +42,7 @@ SeatCapacityKpi _kpi({
   List<String> quality = const [],
   List<String> reasons = const [],
 }) => seatCapacityFromJson({
+  ..._capacityFields,
   'history_since': '2026-09-01T00:00:00Z',
   'from': '2026-10-01T00:00:00Z',
   'to': '2026-11-01T00:00:00Z',
@@ -214,3 +215,17 @@ void main() {
     expect(kpis.calls, isEmpty);
   });
 }
+
+const _capacityFields = <String, dynamic>{
+  'seats': 0,
+  'physical_seat_hours': 0,
+  'offered_seat_hours': 0,
+  'reserved_seat_hours': 0,
+  'reserved_outside_offered_seat_hours': 0,
+  'overlapping_seat_hours': 0,
+  'rooms_without_seats': 0,
+  'offered_room_hours': 0,
+  'reserved_room_hours': 0,
+  'quality': <String>[],
+  'reasons': <String>[],
+};

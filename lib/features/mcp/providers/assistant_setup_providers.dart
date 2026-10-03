@@ -8,6 +8,7 @@ import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/assistant_setup.dart';
 import '../domain/mcp_client.dart';
+import '../domain/mcp_connection.dart';
 import '../domain/mcp_context.dart';
 import 'mcp_providers.dart';
 
@@ -56,3 +57,14 @@ Future<AssistantSetup> assistantSetup(Ref ref, McpContextRef context) async {
 @riverpod
 Uri? mcpConnectorUrl(Ref ref) =>
     mcpConnectorUri(ref.watch(bootedBackendUrlProvider));
+
+/// #2145 — what consent would offer this person on this installation:
+/// every workspace whose owner offers assistants, with the operations
+/// this person may use there. Read through the active target's client.
+@riverpod
+Future<ConsentOptions> myMcpConsentOptions(Ref ref) async {
+  final target = ref.watch(activeMcpTargetProvider.future);
+  final commands = ref.watch(mcpCommandsProvider);
+  final scope = (await target).instance;
+  return commands.read(scope, (r) => r.connections.options());
+}

@@ -37,6 +37,7 @@ Future<void> initializeApp() async {
   bootAuthCallbackGuard = guard;
   final dispatch = AuthCallbackDispatcher(guard,
       currentUser: () => Supabase.instance.client.auth.currentUser?.id);
+  bootAuthCallbackDispatcher = dispatch;
   await Supabase.initialize(
     url: stored?.url ?? BackendConfig.supabaseUrl,
     publishableKey: stored?.key ?? BackendConfig.supabaseKey,

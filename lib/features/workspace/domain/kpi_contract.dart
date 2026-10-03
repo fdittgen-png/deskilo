@@ -112,8 +112,50 @@ const seatUtilisationKpi = KpiDefinition(
   ],
 );
 
+/// #1924 — what was invoiced over whole workspace months: invoices of
+/// the months, non-void, settlements left out (they regroup invoices
+/// already counted), positive totals. Credit notes are named beside it,
+/// never netted silently. Not a profit: no cost is in it.
+const invoicedKpi = KpiDefinition(
+  id: 'finance.invoiced',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'the invoice\'s month (YYYY-MM), whole months [from, to] on the '
+      'workspace calendar',
+  dimensions: [],
+  numerator: 'invoiced_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: ['invoicing', 'the workspace currency'],
+);
+
+/// #1924 — what was collected: payments matched to invoices, by the month
+/// of the match on the workspace clock (the money report's "matched").
+const collectedKpi = KpiDefinition(
+  id: 'finance.collected',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'the month a payment was matched to an invoice, on the workspace '
+      'clock, whole months [from, to]',
+  dimensions: [],
+  numerator: 'collected_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: ['invoicing', 'payment matching', 'the workspace currency'],
+);
+
 /// Every KPI the app knows. One list; the server registers the same ids.
-const kpiCatalogue = <KpiDefinition>[seatUtilisationKpi];
+const kpiCatalogue = <KpiDefinition>[
+  seatUtilisationKpi,
+  invoicedKpi,
+  collectedKpi,
+];
 
 /// Why a value is what it is. Several can hold at once.
 enum KpiQuality {
@@ -154,10 +196,14 @@ KpiQuality? _quality(String wire) => switch (wire) {
 double? ratioOfSums(Iterable<({num numerator, num denominator})> parts) {
   num n = 0, d = 0;
   for (final p in parts) {
+    if (!p.numerator.isFinite || !p.denominator.isFinite ||
+        p.denominator < 0) {
+      return null;
+    }
     n += p.numerator;
     d += p.denominator;
   }
-  return d == 0 ? null : n / d;
+  return d <= 0 || !n.isFinite || !d.isFinite ? null : n / d;
 }
 
 /// What `kpi_seat_capacity` returned, typed.
@@ -210,26 +256,46 @@ class SeatCapacityKpi {
   /// it is not counted; null from a server that predates the history.
   final DateTime? historySince;
 
+  /// Unqualified payloads never become numbers, even with positive hours.
+  bool get hasValue => !quality.any((q) =>
+      q == KpiQuality.notRecorded || q == KpiQuality.notApplicable ||
+      q == KpiQuality.unavailable || q == KpiQuality.forbidden);
+
   /// The utilisation, or null when it is undefined (nothing offered).
-  double? get utilisation => ratioOfSums([
+  double? get utilisation => !hasValue ? null : ratioOfSums([
     (numerator: reservedSeatHours, denominator: offeredSeatHours),
   ]);
 }
 
-double _num(Object? v) => switch (v) {
-  final num n => n.toDouble(),
-  final String s => double.tryParse(s) ?? 0,
-  _ => 0,
-};
+double _num(Object? v) {
+  final n = v is num ? v.toDouble() : v is String ? double.tryParse(v) : null;
+  if (n == null || !n.isFinite || n < 0) {
+    throw const FormatException('Invalid or missing capacity number');
+  }
+  return n;
+}
 
-/// Parses the RPC's jsonb. Unknown quality words are ignored, so an
-/// older client survives a newer server.
+int _count(Object? v) {
+  final n = _num(v);
+  if (n != n.truncateToDouble()) {
+    throw const FormatException('Capacity count must be an integer');
+  }
+  return n.toInt();
+}
+
+/// Unknown quality is unavailable: a future suppression flag must not
+/// silently turn into an apparently measured answer on an older client.
 SeatCapacityKpi seatCapacityFromJson(Map<String, dynamic> json) {
   final quality = json['quality'];
   final reasons = json['reasons'];
+  final from = DateTime.parse('${json['from']}');
+  final to = DateTime.parse('${json['to']}');
+  if (!to.isAfter(from) || quality is! List || reasons is! List) {
+    throw const FormatException('Invalid capacity interval or qualification');
+  }
   return SeatCapacityKpi(
-    from: DateTime.parse('${json['from']}'),
-    to: DateTime.parse('${json['to']}'),
+    from: from,
+    to: to,
     physicalSeatHours: _num(json['physical_seat_hours']),
     offeredSeatHours: _num(json['offered_seat_hours']),
     reservedSeatHours: _num(json['reserved_seat_hours']),
@@ -237,18 +303,15 @@ SeatCapacityKpi seatCapacityFromJson(Map<String, dynamic> json) {
       json['reserved_outside_offered_seat_hours'],
     ),
     overlappingSeatHours: _num(json['overlapping_seat_hours']),
-    seats: _num(json['seats']).toInt(),
-    roomsWithoutSeats: _num(json['rooms_without_seats']).toInt(),
+    seats: _count(json['seats']),
+    roomsWithoutSeats: _count(json['rooms_without_seats']),
     offeredRoomHours: _num(json['offered_room_hours']),
     reservedRoomHours: _num(json['reserved_room_hours']),
     quality: {
-      if (quality is List)
-        for (final q in quality)
-          if (_quality('$q') case final KpiQuality k) k,
+      for (final q in quality) _quality('$q') ?? KpiQuality.unavailable,
     },
     reasons: [
-      if (reasons is List)
-        for (final r in reasons) '$r',
+      for (final r in reasons) '$r',
     ],
     computedAt: DateTime.parse('${json['computed_at']}'),
     historySince: DateTime.tryParse('${json['history_since']}'),
@@ -264,6 +327,122 @@ abstract interface class KpiRepository {
     required DateTime to,
     String? levelId,
   });
+}
+
+/// The largest magnitude JSON (an IEEE double, a JS number) carries
+/// exactly: beyond it a minor-unit amount is refused, never rounded.
+const int maxExactMinor = 9007199254740991;
+
+/// What `kpi_finance_summary` returned, typed (#1924). Amounts are minor
+/// units of [currency], read from decimal strings; one beyond
+/// [maxExactMinor] makes the figure unavailable rather than wrong.
+class FinanceSummaryKpi {
+  const FinanceSummaryKpi({
+    required this.fromMonth,
+    required this.toMonth,
+    required this.currency,
+    required this.invoicedMinor,
+    required this.creditNotesMinor,
+    required this.collectedMinor,
+    required this.invoices,
+    required this.matches,
+    required this.quality,
+    required this.reasons,
+    required this.computedAt,
+    this.lastChangeAt,
+  });
+
+  final String fromMonth;
+  final String toMonth;
+  final String currency;
+
+  /// Null when the amount could not travel exactly.
+  final int? invoicedMinor;
+  final int? creditNotesMinor;
+  final int? collectedMinor;
+
+  /// How many invoices and matches the figures are made of.
+  final int invoices;
+  final int matches;
+  final Set<KpiQuality> quality;
+  final List<String> reasons;
+  final DateTime computedAt;
+
+  /// The latest change to a row behind the figures (source as-of).
+  final DateTime? lastChangeAt;
+}
+
+/// An exact minor-unit amount from a decimal string (or an integer),
+/// or null when it is malformed or beyond [maxExactMinor].
+int? exactMinor(Object? v) {
+  final big = switch (v) {
+    final String s when RegExp(r'^-?[0-9]{1,30}$').hasMatch(s) => BigInt.parse(
+      s,
+    ),
+    final int i => BigInt.from(i),
+    _ => null,
+  };
+  if (big == null || big.abs() > BigInt.from(maxExactMinor)) return null;
+  return big.toInt();
+}
+
+/// Parses the RPC's jsonb. A missing amount is NOT zero: it is null and
+/// the figure is unavailable.
+FinanceSummaryKpi financeSummaryFromJson(Map<String, dynamic> json) {
+  final quality = json['quality'];
+  final reasons = json['reasons'];
+  if (quality is! List || reasons is! List) {
+    throw const FormatException('Missing finance evidence');
+  }
+  final invoiced = exactMinor(json['invoiced_minor']);
+  final credit = exactMinor(json['credit_notes_minor']);
+  final collected = exactMinor(json['collected_minor']);
+  final inexact = invoiced == null || credit == null || collected == null;
+  final currency = json['currency'];
+  return FinanceSummaryKpi(
+    fromMonth: '${json['from']}',
+    toMonth: '${json['to']}',
+    currency: currency is String ? currency : '',
+    invoicedMinor: invoiced,
+    creditNotesMinor: credit,
+    collectedMinor: collected,
+    invoices: _count(json['invoices']),
+    matches: _count(json['matches']),
+    quality: {
+      for (final q in quality) _quality('$q') ?? KpiQuality.unavailable,
+      if (inexact || currency is! String || currency.isEmpty)
+        KpiQuality.unavailable,
+    },
+    reasons: [
+      for (final r in reasons) '$r',
+      if (inexact) 'amount_not_exact',
+    ],
+    computedAt: DateTime.parse('${json['computed_at']}'),
+    lastChangeAt: DateTime.tryParse('${json['last_change_at']}'),
+  );
+}
+
+/// Reads the finance KPIs (#1924). Every call is authorized there.
+abstract interface class FinanceKpiRepository {
+  /// Invoiced and collected over the whole months [fromMonth, toMonth]
+  /// (`YYYY-MM`).
+  Future<FinanceSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  });
+}
+
+/// The demonstration has no server to sum invoices on.
+class UnavailableFinanceKpiRepository implements FinanceKpiRepository {
+  const UnavailableFinanceKpiRepository();
+
+  @override
+  Future<FinanceSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async => throw const KpiUnavailable('no server in this mode');
 }
 
 /// The server refused: the reader may not see this KPI here.

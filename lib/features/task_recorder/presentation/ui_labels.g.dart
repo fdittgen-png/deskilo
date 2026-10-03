@@ -348,6 +348,10 @@ Map<String, _Getter> _part0() => {
   'biAreaPlanning': (l) => l.biAreaPlanning,
   'biAreaSaved': (l) => l.biAreaSaved,
   'biAreaTreasury': (l) => l.biAreaTreasury,
+  'biBookingBasis': (l) => l.biBookingBasis,
+  'biCardDown': (l) => l.biCardDown,
+  'biCardUp': (l) => l.biCardUp,
+  'biCards': (l) => l.biCards,
   'biColumnChange': (l) => l.biColumnChange,
   'biColumnValue': (l) => l.biColumnValue,
   'biCompare': (l) => l.biCompare,
@@ -355,9 +359,28 @@ Map<String, _Getter> _part0() => {
   'biCompareNone': (l) => l.biCompareNone,
   'biComparePrevious': (l) => l.biComparePrevious,
   'biComparePreviousYear': (l) => l.biComparePreviousYear,
+  'biComparisonUnqualified': (l) => l.biComparisonUnqualified,
+  'biCurrentBasis': (l) => l.biCurrentBasis,
+  'biDataNotApplicable': (l) => l.biDataNotApplicable,
+  'biDataNotRecorded': (l) => l.biDataNotRecorded,
+  'biDataPartial': (l) => l.biDataPartial,
+  'biDataStale': (l) => l.biDataStale,
+  'biDataUnavailable': (l) => l.biDataUnavailable,
   'biDimensionLevel': (l) => l.biDimensionLevel,
   'biExposureDiffers': (l) => l.biExposureDiffers,
+  'biFinanceCollected': (l) => l.biFinanceCollected,
+  'biFinanceCollectedDefinition': (l) => l.biFinanceCollectedDefinition,
+  'biFinanceCollectedZero': (l) => l.biFinanceCollectedZero,
+  'biFinanceCurrencyMix': (l) => l.biFinanceCurrencyMix,
+  'biFinanceInvoiced': (l) => l.biFinanceInvoiced,
+  'biFinanceInvoicedDefinition': (l) => l.biFinanceInvoicedDefinition,
+  'biFinanceInvoicedZero': (l) => l.biFinanceInvoicedZero,
+  'biFinanceNotExact': (l) => l.biFinanceNotExact,
+  'biFinanceNotProfit': (l) => l.biFinanceNotProfit,
+  'biFinancePartial': (l) => l.biFinancePartial,
+  'biFinanceSameAsReport': (l) => l.biFinanceSameAsReport,
   'biForbidden': (l) => l.biForbidden,
+  'biFutureBasis': (l) => l.biFutureBasis,
   'biGrain': (l) => l.biGrain,
   'biGrainMonth': (l) => l.biGrainMonth,
   'biGrainQuarter': (l) => l.biGrainQuarter,
@@ -367,6 +390,11 @@ Map<String, _Getter> _part0() => {
   'biInvalidAddress': (l) => l.biInvalidAddress,
   'biNotOffered': (l) => l.biNotOffered,
   'biOpenSource': (l) => l.biOpenSource,
+  'biPastBasis': (l) => l.biPastBasis,
+  'biRecordedFuture': (l) => l.biRecordedFuture,
+  'biRecordedPast': (l) => l.biRecordedPast,
+  'biRecordedPresent': (l) => l.biRecordedPresent,
+  'biRefresh': (l) => l.biRefresh,
   'biRefusedComparison': (l) => l.biRefusedComparison,
   'biRefusedGrain': (l) => l.biRefusedGrain,
   'biRefusedGrouping': (l) => l.biRefusedGrouping,
@@ -382,7 +410,33 @@ Map<String, _Getter> _part0() => {
   'biTotal': (l) => l.biTotal,
   'biUnavailable': (l) => l.biUnavailable,
   'biViewChart': (l) => l.biViewChart,
+  'biViewClearMyDefault': (l) => l.biViewClearMyDefault,
+  'biViewClearTeamDefault': (l) => l.biViewClearTeamDefault,
+  'biViewDelete': (l) => l.biViewDelete,
+  'biViewDuplicate': (l) => l.biViewDuplicate,
+  'biViewForbidden': (l) => l.biViewForbidden,
+  'biViewInvalid': (l) => l.biViewInvalid,
+  'biViewMakeMyDefault': (l) => l.biViewMakeMyDefault,
+  'biViewMakeTeamDefault': (l) => l.biViewMakeTeamDefault,
+  'biViewModified': (l) => l.biViewModified,
+  'biViewName': (l) => l.biViewName,
+  'biViewNameTaken': (l) => l.biViewNameTaken,
+  'biViewPeriodMoves': (l) => l.biViewPeriodMoves,
+  'biViewRename': (l) => l.biViewRename,
+  'biViewSave': (l) => l.biViewSave,
+  'biViewSaveAs': (l) => l.biViewSaveAs,
+};
+
+Map<String, _Getter> _part1() => {
+  'biViewScopePrivate': (l) => l.biViewScopePrivate,
+  'biViewScopeTeam': (l) => l.biViewScopeTeam,
+  'biViewStale': (l) => l.biViewStale,
+  'biViewStandard': (l) => l.biViewStandard,
   'biViewTable': (l) => l.biViewTable,
+  'biViewUnreadable': (l) => l.biViewUnreadable,
+  'biViews': (l) => l.biViews,
+  'biViewsMine': (l) => l.biViewsMine,
+  'biViewsTeam': (l) => l.biViewsTeam,
   'billAccessorySupplements': (l) => l.billAccessorySupplements,
   'billBalance': (l) => l.billBalance,
   'billCreditNoteDue': (l) => l.billCreditNoteDue,
@@ -425,9 +479,6 @@ Map<String, _Getter> _part0() => {
   'billingSaved': (l) => l.billingSaved,
   'billingSubscriptionAuto': (l) => l.billingSubscriptionAuto,
   'billingSubscriptionOff': (l) => l.billingSubscriptionOff,
-};
-
-Map<String, _Getter> _part1() => {
   'billingSubscriptionSection': (l) => l.billingSubscriptionSection,
   'billingTitle': (l) => l.billingTitle,
   'billingUsageAuto': (l) => l.billingUsageAuto,
@@ -777,6 +828,9 @@ Map<String, _Getter> _part1() => {
   'demoPersonaOwner': (l) => l.demoPersonaOwner,
   'demoSessionBadge': (l) => l.demoSessionBadge,
   'demoSessionBadgeHint': (l) => l.demoSessionBadgeHint,
+};
+
+Map<String, _Getter> _part2() => {
   'demoSessionLeave': (l) => l.demoSessionLeave,
   'demoSessionReset': (l) => l.demoSessionReset,
   'demoSessionResetDone': (l) => l.demoSessionResetDone,
@@ -828,9 +882,6 @@ Map<String, _Getter> _part1() => {
   'deploymentNoChange': (l) => l.deploymentNoChange,
   'deploymentNoTwin': (l) => l.deploymentNoTwin,
   'deploymentNothingToDo': (l) => l.deploymentNothingToDo,
-};
-
-Map<String, _Getter> _part2() => {
   'deploymentPreviewToDev': (l) => l.deploymentPreviewToDev,
   'deploymentPreviewToProd': (l) => l.deploymentPreviewToProd,
   'deploymentPullFromDev': (l) => l.deploymentPullFromDev,
@@ -1180,6 +1231,9 @@ Map<String, _Getter> _part2() => {
   'featureInvoiceJourneyTitle': (l) => l.featureInvoiceJourneyTitle,
   'featureInvoicePdfTemplate': (l) => l.featureInvoicePdfTemplate,
   'featureInvoicePdfTemplateDesc': (l) => l.featureInvoicePdfTemplateDesc,
+};
+
+Map<String, _Getter> _part3() => {
   'featureInvoiceSettlementDesc': (l) => l.featureInvoiceSettlementDesc,
   'featureInvoiceSettlementTitle': (l) => l.featureInvoiceSettlementTitle,
   'featureInvoicing': (l) => l.featureInvoicing,
@@ -1231,9 +1285,6 @@ Map<String, _Getter> _part2() => {
   'featureMembersDirectory': (l) => l.featureMembersDirectory,
   'featureMembersDirectoryDesc': (l) => l.featureMembersDirectoryDesc,
   'featureMessageForwardingDesc': (l) => l.featureMessageForwardingDesc,
-};
-
-Map<String, _Getter> _part3() => {
   'featureMessageForwardingTitle': (l) => l.featureMessageForwardingTitle,
   'featureMessageGesturesDesc': (l) => l.featureMessageGesturesDesc,
   'featureMessageGesturesTitle': (l) => l.featureMessageGesturesTitle,
@@ -1583,6 +1634,9 @@ Map<String, _Getter> _part3() => {
   'helpHintReserveTip2': (l) => l.helpHintReserveTip2,
   'helpHintReserveTip3': (l) => l.helpHintReserveTip3,
   'helpHintReserveTip3Topic': (l) => l.helpHintReserveTip3Topic,
+};
+
+Map<String, _Getter> _part4() => {
   'helpHintReserveTip4': (l) => l.helpHintReserveTip4,
   'helpHintReserveTip4Topic': (l) => l.helpHintReserveTip4Topic,
   'helpHintReserveTip5': (l) => l.helpHintReserveTip5,
@@ -1634,9 +1688,6 @@ Map<String, _Getter> _part3() => {
   'holidayEasterMonday': (l) => l.holidayEasterMonday,
   'holidayGermanUnity': (l) => l.holidayGermanUnity,
   'holidayGoodFriday': (l) => l.holidayGoodFriday,
-};
-
-Map<String, _Getter> _part4() => {
   'holidayImportAction': (l) => l.holidayImportAction,
   'holidayImportFailed': (l) => l.holidayImportFailed,
   'holidayImportNationwide': (l) => l.holidayImportNationwide,
@@ -1648,6 +1699,24 @@ Map<String, _Getter> _part4() => {
   'holidayNewYear': (l) => l.holidayNewYear,
   'holidayVictory1945': (l) => l.holidayVictory1945,
   'holidayWhitMonday': (l) => l.holidayWhitMonday,
+  'identityConnectBrowser': (l) => l.identityConnectBrowser,
+  'identityConnectConfirmApplyBody': (l) => l.identityConnectConfirmApplyBody,
+  'identityConnectContinue': (l) => l.identityConnectContinue,
+  'identityConnectCurrentServer': (l) => l.identityConnectCurrentServer,
+  'identityConnectDifferentAuthority': (l) => l.identityConnectDifferentAuthority,
+  'identityConnectExistingAccount': (l) => l.identityConnectExistingAccount,
+  'identityConnectExpired': (l) => l.identityConnectExpired,
+  'identityConnectNetwork': (l) => l.identityConnectNetwork,
+  'identityConnectNoDeskiloSignIn': (l) => l.identityConnectNoDeskiloSignIn,
+  'identityConnectNoSharedIdentity': (l) => l.identityConnectNoSharedIdentity,
+  'identityConnectRefused': (l) => l.identityConnectRefused,
+  'identityConnectRetry': (l) => l.identityConnectRetry,
+  'identityConnectSend': (l) => l.identityConnectSend,
+  'identityConnectServerUnsupported': (l) => l.identityConnectServerUnsupported,
+  'identityConnectUnavailable': (l) => l.identityConnectUnavailable,
+  'identityConnectUnlinked': (l) => l.identityConnectUnlinked,
+  'identityConnectWaiting': (l) => l.identityConnectWaiting,
+  'identityConnectWrongAccount': (l) => l.identityConnectWrongAccount,
   'identityConsentCompleting': (l) => l.identityConsentCompleting,
   'identityConsentPurpose': (l) => l.identityConsentPurpose,
   'identityConsentReturnFailed': (l) => l.identityConsentReturnFailed,
@@ -1968,6 +2037,9 @@ Map<String, _Getter> _part4() => {
   'invoiceSendStatusRejected': (l) => l.invoiceSendStatusRejected,
   'invoiceSentTestChip': (l) => l.invoiceSentTestChip,
   'invoiceShare': (l) => l.invoiceShare,
+};
+
+Map<String, _Getter> _part5() => {
   'invoiceShowCancelled': (l) => l.invoiceShowCancelled,
   'invoiceSortByMember': (l) => l.invoiceSortByMember,
   'invoiceSortByMonth': (l) => l.invoiceSortByMonth,
@@ -2037,9 +2109,6 @@ Map<String, _Getter> _part4() => {
   'journeyTimelineTitle': (l) => l.journeyTimelineTitle,
   'journeyValidatorsMatch': (l) => l.journeyValidatorsMatch,
   'journeyValidatorsWriteoff': (l) => l.journeyValidatorsWriteoff,
-};
-
-Map<String, _Getter> _part5() => {
   'kioskBadgeConfirm': (l) => l.kioskBadgeConfirm,
   'kioskBadgeFieldLabel': (l) => l.kioskBadgeFieldLabel,
   'kioskBadgeHint': (l) => l.kioskBadgeHint,
@@ -2255,6 +2324,73 @@ Map<String, _Getter> _part5() => {
   'mcpConfirmStale': (l) => l.mcpConfirmStale,
   'mcpConfirmTitle': (l) => l.mcpConfirmTitle,
   'mcpConfirmUnavailable': (l) => l.mcpConfirmUnavailable,
+  'mcpConnectAddTitle': (l) => l.mcpConnectAddTitle,
+  'mcpConnectAddressLabel': (l) => l.mcpConnectAddressLabel,
+  'mcpConnectAllDone': (l) => l.mcpConnectAllDone,
+  'mcpConnectBeforeTitle': (l) => l.mcpConnectBeforeTitle,
+  'mcpConnectChatgptNote': (l) => l.mcpConnectChatgptNote,
+  'mcpConnectChatgptStep1': (l) => l.mcpConnectChatgptStep1,
+  'mcpConnectChatgptStep2': (l) => l.mcpConnectChatgptStep2,
+  'mcpConnectChatgptStep3': (l) => l.mcpConnectChatgptStep3,
+  'mcpConnectClaudeNote': (l) => l.mcpConnectClaudeNote,
+  'mcpConnectClaudeOpen': (l) => l.mcpConnectClaudeOpen,
+  'mcpConnectClaudeStep1': (l) => l.mcpConnectClaudeStep1,
+  'mcpConnectClaudeStep2': (l) => l.mcpConnectClaudeStep2,
+  'mcpConnectClaudeStep3': (l) => l.mcpConnectClaudeStep3,
+  'mcpConnectCodeStep1': (l) => l.mcpConnectCodeStep1,
+  'mcpConnectCodeStep2': (l) => l.mcpConnectCodeStep2,
+  'mcpConnectCopied': (l) => l.mcpConnectCopied,
+  'mcpConnectCopyRequest': (l) => l.mcpConnectCopyRequest,
+  'mcpConnectCursorInstall': (l) => l.mcpConnectCursorInstall,
+  'mcpConnectCursorStep': (l) => l.mcpConnectCursorStep,
+  'mcpConnectDone': (l) => l.mcpConnectDone,
+  'mcpConnectIntro': (l) => l.mcpConnectIntro,
+  'mcpConnectManageHint': (l) => l.mcpConnectManageHint,
+  'mcpConnectOpenFailed': (l) => l.mcpConnectOpenFailed,
+  'mcpConnectOpenGuide': (l) => l.mcpConnectOpenGuide,
+  'mcpConnectOpenInstallation': (l) => l.mcpConnectOpenInstallation,
+  'mcpConnectOpenSetup': (l) => l.mcpConnectOpenSetup,
+  'mcpConnectOperatorRequest': (l) => l.mcpConnectOperatorRequest,
+  'mcpConnectOtherStep1': (l) => l.mcpConnectOtherStep1,
+  'mcpConnectOtherStep2': (l) => l.mcpConnectOtherStep2,
+  'mcpConnectRoleDenied': (l) => l.mcpConnectRoleDenied,
+  'mcpConnectStepAccess': (l) => l.mcpConnectStepAccess,
+  'mcpConnectStepConnect': (l) => l.mcpConnectStepConnect,
+  'mcpConnectStepGoogle': (l) => l.mcpConnectStepGoogle,
+  'mcpConnectStepIdentity': (l) => l.mcpConnectStepIdentity,
+  'mcpConnectStepServer': (l) => l.mcpConnectStepServer,
+  'mcpConnectStepWorkspace': (l) => l.mcpConnectStepWorkspace,
+  'mcpConnectSwitchWorkspace': (l) => l.mcpConnectSwitchWorkspace,
+  'mcpConnectTabChatgpt': (l) => l.mcpConnectTabChatgpt,
+  'mcpConnectTabClaude': (l) => l.mcpConnectTabClaude,
+  'mcpConnectTabClaudeCode': (l) => l.mcpConnectTabClaudeCode,
+  'mcpConnectTabCursor': (l) => l.mcpConnectTabCursor,
+  'mcpConnectTabOther': (l) => l.mcpConnectTabOther,
+  'mcpConnectTabVscode': (l) => l.mcpConnectTabVscode,
+  'mcpConnectTest': (l) => l.mcpConnectTest,
+  'mcpConnectTestAgain': (l) => l.mcpConnectTestAgain,
+  'mcpConnectTestPrompt': (l) => l.mcpConnectTestPrompt,
+  'mcpConnectTestTimeout': (l) => l.mcpConnectTestTimeout,
+  'mcpConnectTestTitle': (l) => l.mcpConnectTestTitle,
+  'mcpConnectTestWaiting': (l) => l.mcpConnectTestWaiting,
+  'mcpConnectTitle': (l) => l.mcpConnectTitle,
+  'mcpConnectTodoConnect': (l) => l.mcpConnectTodoConnect,
+  'mcpConnectTodoYou': (l) => l.mcpConnectTodoYou,
+  'mcpConnectUnavailable': (l) => l.mcpConnectUnavailable,
+  'mcpConnectVscodeInstall': (l) => l.mcpConnectVscodeInstall,
+  'mcpConnectVscodeStep': (l) => l.mcpConnectVscodeStep,
+  'mcpConnectWaitingDatabaseAdmin': (l) => l.mcpConnectWaitingDatabaseAdmin,
+  'mcpConnectWaitingOperatorUnknown': (l) => l.mcpConnectWaitingOperatorUnknown,
+  'mcpConnectWaitingWorkspaceAdmin': (l) => l.mcpConnectWaitingWorkspaceAdmin,
+  'mcpConnectWhich': (l) => l.mcpConnectWhich,
+  'mcpConnectWorkspaceSelected': (l) => l.mcpConnectWorkspaceSelected,
+  'mcpConnectWorkspacesHint': (l) => l.mcpConnectWorkspacesHint,
+  'mcpConnectWorkspacesTitle': (l) => l.mcpConnectWorkspacesTitle,
+  'mcpConnectWsConnected': (l) => l.mcpConnectWsConnected,
+  'mcpConnectWsNotOffered': (l) => l.mcpConnectWsNotOffered,
+  'mcpConnectWsOff': (l) => l.mcpConnectWsOff,
+  'mcpConnectWsReady': (l) => l.mcpConnectWsReady,
+  'mcpConnectWsUnknown': (l) => l.mcpConnectWsUnknown,
   'mcpConnectedNoWorkspace': (l) => l.mcpConnectedNoWorkspace,
   'mcpConnectedNone': (l) => l.mcpConnectedNone,
   'mcpConnectedTitle': (l) => l.mcpConnectedTitle,
@@ -2304,6 +2440,9 @@ Map<String, _Getter> _part5() => {
   'mcpNextConsent': (l) => l.mcpNextConsent,
   'mcpNextLinkGoogle': (l) => l.mcpNextLinkGoogle,
   'mcpNextLinkIdentity': (l) => l.mcpNextLinkIdentity,
+};
+
+Map<String, _Getter> _part6() => {
   'mcpNextOwnerExposes': (l) => l.mcpNextOwnerExposes,
   'mcpNextReady': (l) => l.mcpNextReady,
   'mcpNextRequestEligibility': (l) => l.mcpNextRequestEligibility,
@@ -2345,6 +2484,11 @@ Map<String, _Getter> _part5() => {
   'mcpPolicySwitched': (l) => l.mcpPolicySwitched,
   'mcpPolicyTitle': (l) => l.mcpPolicyTitle,
   'mcpPolicyUnavailable': (l) => l.mcpPolicyUnavailable,
+  'mcpRefusalClientNotApproved': (l) => l.mcpRefusalClientNotApproved,
+  'mcpRefusalNoIdentity': (l) => l.mcpRefusalNoIdentity,
+  'mcpRefusalNotEligible': (l) => l.mcpRefusalNotEligible,
+  'mcpRefusalOfferChanged': (l) => l.mcpRefusalOfferChanged,
+  'mcpRefusalRequestExpired': (l) => l.mcpRefusalRequestExpired,
   'mcpRemoveWorkspace': (l) => l.mcpRemoveWorkspace,
   'mcpReviewApprove': (l) => l.mcpReviewApprove,
   'mcpReviewChanged': (l) => l.mcpReviewChanged,
@@ -2440,9 +2584,6 @@ Map<String, _Getter> _part5() => {
   'memberMakeKiosk': (l) => l.memberMakeKiosk,
   'memberMakeMember': (l) => l.memberMakeMember,
   'memberMessagesAction': (l) => l.memberMessagesAction,
-};
-
-Map<String, _Getter> _part6() => {
   'memberMoneySettled': (l) => l.memberMoneySettled,
   'memberMoneyUnavailable': (l) => l.memberMoneyUnavailable,
   'memberMonthInProgress': (l) => l.memberMonthInProgress,
@@ -2702,6 +2843,9 @@ Map<String, _Getter> _part6() => {
   'numberSequencesTitle': (l) => l.numberSequencesTitle,
   'occurrenceAdded': (l) => l.occurrenceAdded,
   'occurrenceConfirm': (l) => l.occurrenceConfirm,
+};
+
+Map<String, _Getter> _part7() => {
   'occurrenceReasonLabel': (l) => l.occurrenceReasonLabel,
   'occurrenceReasonMissing': (l) => l.occurrenceReasonMissing,
   'occurrenceRejected': (l) => l.occurrenceRejected,
@@ -2843,9 +2987,6 @@ Map<String, _Getter> _part6() => {
   'permManageValidation': (l) => l.permManageValidation,
   'permOperateKiosk': (l) => l.permOperateKiosk,
   'permPaymentTermsEdit': (l) => l.permPaymentTermsEdit,
-};
-
-Map<String, _Getter> _part7() => {
   'permViewAnalytics': (l) => l.permViewAnalytics,
   'permViewFinances': (l) => l.permViewFinances,
   'permViewNegotiations': (l) => l.permViewNegotiations,
@@ -3105,6 +3246,9 @@ Map<String, _Getter> _part7() => {
   'profilesDefault': (l) => l.profilesDefault,
   'profilesEmailCopied': (l) => l.profilesEmailCopied,
   'profilesMakeDefault': (l) => l.profilesMakeDefault,
+};
+
+Map<String, _Getter> _part8() => {
   'profilesOwnersNone': (l) => l.profilesOwnersNone,
   'profilesPairDev': (l) => l.profilesPairDev,
   'profilesPairProd': (l) => l.profilesPairProd,
@@ -3246,9 +3390,6 @@ Map<String, _Getter> _part7() => {
   'reminderPdfDaysOpen': (l) => l.reminderPdfDaysOpen,
   'reminderPdfLevelLabel': (l) => l.reminderPdfLevelLabel,
   'reminderPdfOpeningFirm': (l) => l.reminderPdfOpeningFirm,
-};
-
-Map<String, _Getter> _part8() => {
   'reminderPdfOpeningFriendly': (l) => l.reminderPdfOpeningFriendly,
   'reminderPdfTitleFirm': (l) => l.reminderPdfTitleFirm,
   'reminderPdfTitleFriendly': (l) => l.reminderPdfTitleFriendly,
@@ -3508,6 +3649,9 @@ Map<String, _Getter> _part8() => {
   'reportMarkupTable': (l) => l.reportMarkupTable,
   'reportPaymentsPeriodTotal': (l) => l.reportPaymentsPeriodTotal,
   'reportPendingExpenses': (l) => l.reportPendingExpenses,
+};
+
+Map<String, _Getter> _part9() => {
   'reportPendingPayments': (l) => l.reportPendingPayments,
   'reportPresetClassic': (l) => l.reportPresetClassic,
   'reportPresetFormalLetter': (l) => l.reportPresetFormalLetter,
@@ -3649,9 +3793,6 @@ Map<String, _Getter> _part8() => {
   'scheduleMissingFields': (l) => l.scheduleMissingFields,
   'scheduleMonthly': (l) => l.scheduleMonthly,
   'scheduleNew': (l) => l.scheduleNew,
-};
-
-Map<String, _Getter> _part9() => {
   'scheduleNoEnd': (l) => l.scheduleNoEnd,
   'schedulePending': (l) => l.schedulePending,
   'scheduleStartsOn': (l) => l.scheduleStartsOn,
@@ -3781,6 +3922,7 @@ Map<String, _Getter> _part9() => {
   'statusInvoiced': (l) => l.statusInvoiced,
   'statusMembers': (l) => l.statusMembers,
   'statusNet': (l) => l.statusNet,
+  'statusNetExplanation': (l) => l.statusNetExplanation,
   'statusPaymentsMatched': (l) => l.statusPaymentsMatched,
   'statusPaymentsReceived': (l) => l.statusPaymentsReceived,
   'statusPrint': (l) => l.statusPrint,
@@ -3910,6 +4052,9 @@ Map<String, _Getter> _part9() => {
   'taskExportProtectedSecrets': (l) => l.taskExportProtectedSecrets,
   'taskExportRefused': (l) => l.taskExportRefused,
   'taskExportSaveFailed': (l) => l.taskExportSaveFailed,
+};
+
+Map<String, _Getter> _part10() => {
   'taskExportSceneBookingTitle': (l) => l.taskExportSceneBookingTitle,
   'taskExportSceneCancel': (l) => l.taskExportSceneCancel,
   'taskExportSceneConfirm': (l) => l.taskExportSceneConfirm,
@@ -4052,9 +4197,6 @@ Map<String, _Getter> _part9() => {
   'taskRecorderNoOutcome': (l) => l.taskRecorderNoOutcome,
   'taskRecorderNoRecordings': (l) => l.taskRecorderNoRecordings,
   'taskRecorderNoteHint': (l) => l.taskRecorderNoteHint,
-};
-
-Map<String, _Getter> _part10() => {
   'taskRecorderOpenRecorder': (l) => l.taskRecorderOpenRecorder,
   'taskRecorderOutcomeCancelled': (l) => l.taskRecorderOutcomeCancelled,
   'taskRecorderOutcomeCheckedIn': (l) => l.taskRecorderOutcomeCheckedIn,
@@ -4313,6 +4455,9 @@ Map<String, _Getter> _part10() => {
   'vatServiceRateDefault': (l) => l.vatServiceRateDefault,
   'vatSince': (l) => l.vatSince,
   'vatTitle': (l) => l.vatTitle,
+};
+
+Map<String, _Getter> _part11() => {
   'vatTreatmentAuto': (l) => l.vatTreatmentAuto,
   'vatTreatmentDomestic': (l) => l.vatTreatmentDomestic,
   'vatTreatmentExempt': (l) => l.vatTreatmentExempt,
@@ -4455,9 +4600,6 @@ Map<String, _Getter> _part10() => {
   'workspaceCodeCopy': (l) => l.workspaceCodeCopy,
   'workspaceCodeEdit': (l) => l.workspaceCodeEdit,
   'workspaceCodeExplainer': (l) => l.workspaceCodeExplainer,
-};
-
-Map<String, _Getter> _part11() => {
   'workspaceCodeHint': (l) => l.workspaceCodeHint,
   'workspaceCodeLabel': (l) => l.workspaceCodeLabel,
   'workspaceCodeRejected': (l) => l.workspaceCodeRejected,

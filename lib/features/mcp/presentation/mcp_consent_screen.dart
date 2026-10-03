@@ -13,6 +13,8 @@ import '../domain/mcp_connection.dart';
 import '../providers/mcp_providers.dart';
 import '../domain/mcp_access_status.dart';
 import '../../auth/domain/identity_binding.dart';
+import '../../workspace/providers/instance_providers.dart';
+import 'mcp_consent_refusal.dart';
 import 'mcp_operation_labels.dart';
 
 /// #1615 — Auth's OAuth server sends the person here with an
@@ -90,6 +92,11 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
   bool _redirected = false;
   String? _outcome;
 
+  /// #2145 — why the last approval was refused, when the server said; a
+  /// refusal it did not explain is `failed`.
+  McpConsentRefusal? _refusal;
+  bool _failed = false;
+
   Future<void> _go(String? url) async {
     if (url == null || _redirected) return;
     _redirected = true;
@@ -100,31 +107,41 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
     if (_busy) return;
     setState(() => _busy = true);
     ConnectResult? result;
+    Object? failure;
     await runGuarded(
       context,
       domain: 'mcp',
       message: 'assistant connection failed',
       action: () async {
-        result = await ref
-            .read(connectAssistantProvider)
-            .connect(
-              request,
-              {
-                for (final e in _chosen.entries)
-                  e.key: e.value.toList()..sort(),
-              },
-              optionalFields: {
-                for (final e in _fields.entries)
-                  if (_chosen.containsKey(e.key))
+        try {
+          result = await ref
+              .read(connectAssistantProvider)
+              .connect(
+                request,
+                {
+                  for (final e in _chosen.entries)
                     e.key: e.value.toList()..sort(),
-              },
-            );
+                },
+                optionalFields: {
+                  for (final e in _fields.entries)
+                    if (_chosen.containsKey(e.key))
+                      e.key: e.value.toList()..sort(),
+                },
+              );
+        } catch (e) { // ignore: catch_no_st
+          // trace-exempt: rethrown to runGuarded, which traces it; kept
+          // here only to say WHY in the screen instead of nothing.
+          failure = e;
+          rethrow;
+        }
       },
     );
     if (!mounted) return;
     setState(() {
       _busy = false;
       _outcome = result?.outcome.name;
+      _refusal = failure == null ? null : mcpConsentRefusal(failure!);
+      _failed = failure != null && _refusal == null;
     });
     if (result?.outcome == ConnectOutcome.connected) {
       await _go(result!.redirectTo);
@@ -173,13 +190,21 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
       ),
       body: consent.when(
         loading: () => const LoadingView(),
-        error: (e, _) => _banner(
-          'mcp-consent-unavailable',
-          l10n?.mcpConsentUnavailable ??
-              'This connection request could not be loaded. Start again from the assistant.',
-          Icons.cloud_off_outlined,
-          InlineBannerSeverity.error,
-        ),
+        error: (e, _) => switch (mcpConsentRefusal(e)) {
+          final r? => _banner(
+            'mcp-consent-refused-${r.name}',
+            mcpConsentRefusalText(l10n, r),
+            Icons.lock_outline,
+            InlineBannerSeverity.error,
+          ),
+          null => _banner(
+            'mcp-consent-unavailable',
+            l10n?.mcpConsentUnavailable ??
+                'This connection request could not be loaded. Start again from the assistant.',
+            Icons.cloud_off_outlined,
+            InlineBannerSeverity.error,
+          ),
+        },
         data: (c) {
           if (c.request.alreadyRedirectTo != null) {
             WidgetsBinding.instance.addPostFrameCallback(
@@ -197,6 +222,15 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
             padding: AppSpacing.gutterAll,
             children: [
               if (_outcome != null) _outcomeBanner(l10n, _outcome!),
+              if (_refusal case final r?) _refusalBanner(l10n, r),
+              if (_failed)
+                _banner(
+                  'mcp-consent-failed',
+                  l10n?.mcpConsentUnavailable ??
+                      'This connection request could not be loaded. Start again from the assistant.',
+                  Icons.sync_problem_outlined,
+                  InlineBannerSeverity.error,
+                ),
               Text(
                 l10n?.mcpConsentAsks(c.request.clientName) ??
                     '${c.request.clientName} asks to act for you in Deskilo.',
@@ -347,6 +381,28 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
           ],
         ],
       ),
+    );
+  }
+
+  /// A refusal the server explained, with who can lift it when that is
+  /// the installation's operator.
+  Widget _refusalBanner(AppLocalizations? l10n, McpConsentRefusal r) {
+    var text = mcpConsentRefusalText(l10n, r);
+    if (r == McpConsentRefusal.clientNotApproved) {
+      final who = ref.watch(instanceResponsiblesProvider).value;
+      final names = [
+        for (final p in [...?who?.owners, ...?who?.delegates])
+          if (p.name.isNotEmpty) p.name,
+      ];
+      if (names.isNotEmpty) {
+        text = '$text ${l10n?.mcpConnectWaitingOperator(names.join(', ')) ?? 'Waiting for the server\'s operator: ${names.join(', ')}.'}';
+      }
+    }
+    return _banner(
+      'mcp-consent-refused-${r.name}',
+      text,
+      Icons.lock_outline,
+      InlineBannerSeverity.error,
     );
   }
 

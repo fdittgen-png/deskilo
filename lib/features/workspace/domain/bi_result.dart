@@ -13,6 +13,7 @@
 // Pure Dart.
 library;
 
+import 'bi_modules.dart';
 import 'bi_query.dart';
 import 'kpi_contract.dart';
 
@@ -45,12 +46,13 @@ class BiMeasure {
   /// Nothing to show: before the history, or no answer.
   bool get unknown =>
       quality.contains(KpiQuality.notRecorded) ||
+      quality.contains(KpiQuality.notApplicable) ||
       quality.contains(KpiQuality.unavailable) ||
       quality.contains(KpiQuality.forbidden);
 
   /// The figure under [aggregation], or null when it is undefined.
   num? value(KpiAggregation aggregation) {
-    if (unknown) return null;
+    if (unknown || !numerator.isFinite) return null;
     return switch (aggregation) {
       KpiAggregation.sum => numerator,
       KpiAggregation.ratioOfSums => ratioOfSums([
@@ -93,6 +95,7 @@ class BiResult {
     this.comparedPeriod,
     this.groups = const [],
     required this.computedAt,
+    this.currency,
   });
 
   final BiPeriod period;
@@ -103,6 +106,10 @@ class BiResult {
   /// remainder row (time no current group explains) comes last.
   final List<BiRow> groups;
   final DateTime computedAt;
+
+  /// The ISO currency of an amount measure (#1924); null otherwise. Never
+  /// assumed: a result in no known currency shows no amount.
+  final String? currency;
 }
 
 /// The change from a compared value to the current one.
@@ -125,7 +132,12 @@ class BiChange {
 /// either side is undefined: a missing base is never read as zero.
 BiChange changeOf(BiRow row, KpiAggregation aggregation) {
   final compared = row.compared;
-  if (compared == null) return const BiChange();
+  if (compared == null ||
+      [...row.current.quality, ...compared.quality].any(
+        (q) => q == KpiQuality.partial || q == KpiQuality.stale,
+      )) {
+    return const BiChange();
+  }
   final now = row.current.value(aggregation);
   final then = compared.value(aggregation);
   if (now == null || then == null) return const BiChange();
@@ -184,4 +196,14 @@ List<BiRow> sortRows(
       return sort == BiSort.valueDescending ? y.compareTo(x) : x.compareTo(y);
     });
   return sorted;
+}
+
+/// The module cannot answer this context (an unsupported grain,
+/// comparison or grouping, or more groups than the budget). Explained,
+/// never answered with an unfiltered figure.
+class BiRefused implements Exception {
+  const BiRefused(this.reasons, {this.groupBudgetExceeded = false});
+
+  final Set<BiUnsupported> reasons;
+  final bool groupBudgetExceeded;
 }
