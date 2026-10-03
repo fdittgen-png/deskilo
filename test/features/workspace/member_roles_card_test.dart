@@ -303,4 +303,28 @@ void main() {
     expect(find.byKey(RoleHoldersSection.holderKeyFor('ben')), findsOneWidget);
     expect(find.byKey(RoleHoldersSection.addKey), findsNothing);
   });
+
+  // #2137 — the member page offers "Add a service" to whoever holds
+  // manageServices through a role, as record_service_charge now accepts.
+  testWidgets('a role holding manageServices finds "Add a service" on '
+      "another member's page; a plain member does not", (tester) async {
+    final s = _seed(viewerOwner: false, flags: const {'customRoles': true});
+    s.roles.roles.add(const WorkspaceRole(
+      id: 'role-c',
+      key: 'catalogue',
+      names: {'en': 'Catalogue'},
+      permissions: {WorkspacePermission.manageServices},
+    ));
+    s.roles.assignments['role-c'] = ['me'];
+    await _pump(tester, const MemberPage(memberId: 'ben'),
+        workspace: s.workspace, roles: s.roles);
+    expect(find.byKey(const ValueKey('member-page-action-service')),
+        findsOneWidget);
+
+    final plain = _seed(viewerOwner: false);
+    await _pump(tester, const MemberPage(memberId: 'ben'),
+        workspace: plain.workspace, roles: plain.roles);
+    expect(find.byKey(const ValueKey('member-page-action-service')),
+        findsNothing);
+  });
 }

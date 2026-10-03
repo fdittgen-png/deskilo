@@ -202,7 +202,16 @@ Deno.serve(async (req) => {
     .eq("workspace_id", workspaceId)
     .eq("user_id", userData.user.id)
     .maybeSingle();
-  if (!me || me.status !== "active" || !(me.is_admin || me.is_owner)) {
+  // #2137 — or whoever holds issueInvoices, through a role.
+  let mayIssue = !!me && (me.is_admin || me.is_owner);
+  if (me && me.status === "active" && !mayIssue) {
+    const { data: held } = await admin.rpc("member_has_permission", {
+      p_member_id: me.id,
+      perm: "issueInvoices",
+    });
+    mayIssue = held === true;
+  }
+  if (!me || me.status !== "active" || !mayIssue) {
     return json({ error: "not an admin of this workspace" }, 403);
   }
 
