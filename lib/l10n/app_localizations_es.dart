@@ -4702,6 +4702,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse.';
 
   @override
+  String get featureIntakeUnconfirmedNote =>
+      'Desactivado: no empieza nada nuevo. Este servidor no pudo confirmar que lo que ya está abierto siga pudiendo atenderse; no cuente con ello.';
+
+  @override
   String get featureInvoiceAddressWindow => 'Ventanilla de dirección';
 
   @override

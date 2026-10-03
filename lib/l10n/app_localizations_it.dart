@@ -4699,6 +4699,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Disattivato: non inizia nulla di nuovo; ciò che è già aperto può ancora essere gestito e chiuso.';
 
   @override
+  String get featureIntakeUnconfirmedNote =>
+      'Disattivato: non inizia nulla di nuovo. Questo server non ha potuto confermare che ciò che è già aperto resti gestibile; non contarci.';
+
+  @override
   String get featureInvoiceAddressWindow => 'Finestra indirizzo';
 
   @override

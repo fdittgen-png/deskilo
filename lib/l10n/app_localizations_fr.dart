@@ -4710,6 +4710,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos.';
 
   @override
+  String get featureIntakeUnconfirmedNote =>
+      'Désactivé : rien de nouveau ne commence. Ce serveur n\'a pas pu confirmer que ce qui est déjà ouvert reste traitable ; n\'y comptez pas.';
+
+  @override
   String get featureInvoiceAddressWindow => 'Fenêtre d\'adresse';
 
   @override

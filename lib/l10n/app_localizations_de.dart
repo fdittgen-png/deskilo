@@ -4705,6 +4705,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Aus: nichts Neues beginnt; was schon offen ist, kann noch beantwortet und geschlossen werden.';
 
   @override
+  String get featureIntakeUnconfirmedNote =>
+      'Aus: nichts Neues beginnt. Dieser Server konnte nicht bestätigen, dass Offenes weiter bearbeitet werden kann; verlassen Sie sich nicht darauf.';
+
+  @override
   String get featureInvoiceAddressWindow => 'Adressfenster';
 
   @override

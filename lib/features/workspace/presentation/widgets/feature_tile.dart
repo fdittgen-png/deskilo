@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/backend/schema_version.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -67,7 +69,7 @@ class FeatureSurfaceHeading extends StatelessWidget {
 
 /// One feature row: children indent under their parent, carry the
 /// "Requires X" note, and grey out while the parent (chain) is off.
-class FeatureTile extends StatelessWidget {
+class FeatureTile extends ConsumerWidget {
   const FeatureTile({
     super.key,
     required this.entry,
@@ -99,20 +101,34 @@ class FeatureTile extends StatelessWidget {
   final FeatureAssessment? assessment;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final child = entry.requires != null;
+    // #1851 C — only a server that runs the classes may be described as
+    // keeping open work answerable; an older, offline or unknown one is
+    // not claimed to.
+    final keepsWork = featureKeepsExistingWork(entry.feature);
+    final confirmed = keepsWork &&
+        serverKeepsExistingWork(
+          entry.feature,
+          ref.watch(schemaCompatibilityProvider).value,
+        );
     final notes = [
       ?requiresLabel,
       if (!value && alsoEnables.isNotEmpty)
         l10n?.featureAlsoEnables(alsoEnables.join(', ')) ??
             'Switching this on also enables ${alsoEnables.join(', ')}',
       // #1851 — what off means for a feature whose open work survives it.
-      if (!value && featureKeepsExistingWork(entry.feature))
+      if (!value && confirmed)
         l10n?.featureIntakeStoppedNote ??
             'Off: nothing new starts; what is already open can still be '
                 'answered and closed.',
+      if (!value && keepsWork && !confirmed)
+        l10n?.featureIntakeUnconfirmedNote ??
+            'Off: nothing new starts. This server could not confirm that '
+                'what is already open stays answerable, so do not count on '
+                'it.',
       if (value && inactive)
         l10n?.featureHeldBack ??
             'Waiting on the feature above — switch that on and this one '
