@@ -262,6 +262,13 @@ constraint instance_delegates.instance_delegates_pkey PRIMARY KEY (user_id)
 constraint instance_delegates.instance_delegates_status_check CHECK ((status = ANY (ARRAY['active'::text, 'withdrawn'::text])))
 constraint instance_delegates.instance_delegates_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 constraint instance_delegates.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint instance_notices.instance_notices_kind_check CHECK ((kind ~ '^[a-z][a-z_]{2,63}$'::text))
+constraint instance_notices.instance_notices_payload_check CHECK ((jsonb_typeof(payload) = 'object'::text))
+constraint instance_notices.instance_notices_pkey PRIMARY KEY (id)
+constraint instance_notices.instance_notices_subject_check CHECK (((length(subject) >= 1) AND (length(subject) <= 200)))
+constraint instance_notices.instance_notices_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+constraint instance_notices.instance_notices_user_id_kind_subject_key UNIQUE (user_id, kind, subject)
+constraint instance_notices.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint instance_owner_claims.instance_owner_claims_email_check CHECK (((email = lower(email)) AND (email ~ '^[^@\s]+@[^@\s]+\.[^@\s]+$'::text)))
 constraint instance_owner_claims.instance_owner_claims_pkey PRIMARY KEY (email)
 constraint instance_owner_claims.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -446,6 +453,10 @@ constraint mcp_idempotency.mcp_idempotency_status_check CHECK ((status = ANY (AR
 constraint mcp_idempotency.mcp_idempotency_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint mcp_idempotency.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint mcp_idempotency.system_company_present CHECK ((company_id IS NOT NULL))
+constraint mcp_installation_settings.mcp_installation_settings_endpoint_url_check CHECK ((endpoint_url ~ '^https://[^/?#@[:space:]]+(/[^?#[:space:]]*)?$'::text))
+constraint mcp_installation_settings.mcp_installation_settings_pkey PRIMARY KEY (singleton)
+constraint mcp_installation_settings.mcp_installation_settings_singleton_check CHECK (singleton)
+constraint mcp_installation_settings.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint mcp_limits.mcp_limits_calls_per_minute_check CHECK ((calls_per_minute > 0))
 constraint mcp_limits.mcp_limits_mutations_per_minute_check CHECK ((mutations_per_minute > 0))
 constraint mcp_limits.mcp_limits_pkey PRIMARY KEY (singleton)
@@ -1213,10 +1224,12 @@ routine public.inspect_workspace_template(p_template_id uuid) -> jsonb | functio
 routine public.installation_id() -> uuid | function | definer | stable | exec:service_role | body:018086b07da5
 routine public.instance_grant_database_admin(p_target uuid, p_can_provision boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:4421fcc6f12a
 routine public.instance_mcp_overview() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:88430fcce489
+routine public.instance_notify_operators(p_kind text, p_subject text, p_payload jsonb, p_except uuid) -> integer | function | definer | volatile | exec:service_role | body:c0b2df148e6b
 routine public.instance_operator_require(p_change boolean) -> void | function | definer | stable | exec:service_role | body:3e1d8bca1f4c
 routine public.instance_responsibles() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:360149335b84
 routine public.instance_revoke_database_admin(p_target uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:39e95453cd3d
 routine public.instance_set_mcp_client(p_client_id text, p_active boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:18b37e646eee
+routine public.instance_set_mcp_endpoint(p_url text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d917d45a5261
 routine public.instance_set_mcp_runtime(p_enabled boolean, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:4246bb02fe85
 routine public.invitation_preview(p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0fc4c09e55ef
 routine public.invitation_state(p_code text) -> jsonb | function | definer | stable | exec:service_role | body:acc7d077ddfe
@@ -1266,6 +1279,7 @@ routine public.mark_account_conversation_read(p_conversation uuid) -> void | fun
 routine public.mark_conversation_read(p_conversation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:a053c8dac5e4
 routine public.mark_conversation_unread(p_conversation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c327e7a30b44
 routine public.mark_inquiry_read(p_inquiry uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:fe0ea26cdb49
+routine public.mark_instance_notice_read(p_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6f6a75025f9d
 routine public.mark_member_notes_read(p_workspace_id uuid, p_from_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4d0a83c717a6
 routine public.mark_payment_failed(p_provider text, p_order_id text) -> void | function | definer | volatile | exec:service_role | body:75d9d37905a1
 routine public.mark_vat_declaration_submitted(p_declaration_id uuid, p_channel text, p_receipt text) -> void | function | definer | volatile | exec:authenticated,service_role | body:7c361ab46af4
@@ -1276,9 +1290,11 @@ routine public.may_view_invoice(p_invoice_id uuid) -> boolean | function | defin
 routine public.may_view_member_finances(p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:642867c71724
 routine public.may_view_member_negotiations(p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:b55728ee95bd
 routine public.mcp_clean_optional_fields(p_fields text[]) -> text[] | function | invoker | immutable | exec:service_role | body:35d1c041733f
+routine public.mcp_client_arrival(p_client_id text, p_name text, p_redirect_uri text) -> text | function | definer | volatile | exec:service_role | body:f5cd46a2187f
 routine public.mcp_client_revoked_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:92da466c0c69
+routine public.mcp_client_status(p_client_id text) -> text | function | definer | stable | exec:service_role | body:944995134ecd
 routine public.mcp_confirm_action(p_confirmation_id uuid, p_accept boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2149d8cadb49
-routine public.mcp_consent_options() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4e0ff6d13206
+routine public.mcp_consent_options(p_authorization_id text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a1de71cc88c6
 routine public.mcp_cursor(p_operation text, p_workspace_id uuid, p_at timestamp with time zone, p_id uuid) -> text | function | invoker | immutable | exec:service_role | body:e6596d42e119
 routine public.mcp_cursor_position(p_cursor text, p_operation text, p_workspace_id uuid) -> TABLE(at timestamp with time zone, id uuid) | function | invoker | immutable | exec:service_role | body:02f48a2ed6ca
 routine public.mcp_disclosed_fields(p_operation text, p_workspace_id uuid) -> text[] | function | definer | stable | exec:service_role | body:5ef926e32509
@@ -1286,6 +1302,8 @@ routine public.mcp_disclosure_ceiling() -> text[] | function | invoker | stable 
 routine public.mcp_disclosure_status() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b40f771dddc3
 routine public.mcp_eligibility_revoked_cascade() -> trigger | function | definer | volatile | exec:service_role | body:1cb49f240708
 routine public.mcp_eligibility_revoked_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:93a291f73107
+routine public.mcp_endpoint() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1e205fee3d64
+routine public.mcp_endpoint_resolved() -> jsonb | function | definer | stable | exec:service_role | body:47fdd3a5dcee
 routine public.mcp_envelope(p_request_id uuid, p_operation text, p_workspace_id uuid, p_status text, p_data jsonb, p_code text, p_fields jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:6ec6a7b31d23
 routine public.mcp_execute_v1(p_installation_id uuid, p_workspace_id uuid, p_operation text, p_arguments jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5dfb479c3ce4
 routine public.mcp_facade_guard_status() -> jsonb | function | definer | stable | exec:service_role | body:748551105071
@@ -1301,19 +1319,23 @@ routine public.mcp_limit_retry_after(p_workspace_id uuid, p_client text, p_mutat
 routine public.mcp_member_view(p_member_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:8d9cb5a3eddd
 routine public.mcp_my_operations(p_installation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e17d1e163398
 routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:4338f0abd8f5
+routine public.mcp_operator_decider() -> jsonb | function | definer | stable | exec:service_role | body:711177ce7de3
 routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
+routine public.mcp_person_name(p_user uuid) -> text | function | definer | stable | exec:service_role | body:59b1d5d4237b
 routine public.mcp_policy_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f6bf9cb4f226
 routine public.mcp_pre_request() -> void | function | invoker | stable | exec:anon,authenticated,service_role | body:020fc410aef9
 routine public.mcp_prepare_connection(p_client_id text, p_authorization_id text, p_scopes jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1b1fe1858a7f
 routine public.mcp_project_data(p_operation text, p_value jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:8ad7149f3904
 routine public.mcp_project_data(p_operation text, p_value jsonb, p_optional text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:5cf4a9f851a4
 routine public.mcp_read_v1(p_workspace_id uuid, p_member members, p_operation text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:4ce1fcbb2906
+routine public.mcp_redirect_host(p_uri text) -> text | function | invoker | immutable | exec:service_role | body:3da3bc0693e9
 routine public.mcp_request_outcome(p_result jsonb) -> text | function | invoker | immutable | exec:service_role | body:883fde66b9af
 routine public.mcp_require_native() -> void | function | invoker | stable | exec:service_role | body:75faf6e7d8ed
 routine public.mcp_reservation_digest(p_reservation_id uuid) -> text | function | invoker | stable | exec:service_role | body:c6a60b1858ba
 routine public.mcp_reservation_view(p_reservation_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:57557dcc51c6
 routine public.mcp_runtime_epoch_mismatch() -> boolean | function | definer | stable | exec:authenticated,service_role | body:882f15e26ec8
 routine public.mcp_seat_bookable(p_workspace_id uuid, p_seat_id uuid, p_from timestamp with time zone, p_to timestamp with time zone) -> text | function | invoker | volatile | exec:service_role | body:4d8030814a4f
+routine public.mcp_set_endpoint_internal(p_url text, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:2ba4c6d41a5a
 routine public.mcp_target(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:0ae374a4bff6
 routine public.mcp_time_arg(p_args jsonb, p_key text) -> timestamp with time zone | function | invoker | immutable | exec:service_role | body:3fcf56ea5f3e
 routine public.mcp_usage_cleanup(p_keep_days integer) -> integer | function | invoker | volatile | exec:service_role | body:c9dd4854acb4
@@ -1362,6 +1384,7 @@ routine public.my_financial_activity(p_kind text, p_before_at timestamp with tim
 routine public.my_identity_status() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5834f2bc6bd0
 routine public.my_inbox() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a673230dd1c4
 routine public.my_inquiries() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:91cf56b4d10b
+routine public.my_instance_notices() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:da5e446e7c43
 routine public.my_mcp_connections() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f9722c099712
 routine public.my_personal_preferences(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:213deec91380
 routine public.my_rights_requests() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:12aed4f107e0
@@ -1379,7 +1402,7 @@ routine public.number_sequence_format(p_workspace_id uuid, p_seq number_sequence
 routine public.number_sequence_pair_valid(p_date_part text, p_reset text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:38936e7559ec
 routine public.number_sequence_period_key(p_workspace_id uuid, p_reset text, p_at timestamp with time zone) -> text | function | invoker | stable | exec:authenticated,service_role | body:888b4e7bfd8a
 routine public.number_sequence_restarts(p_stored text, p_current text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:31eb5248e9ec
-routine public.oauth_authorization_context(p_authorization_id text) -> jsonb | function | definer | stable | exec:authenticated | body:72d2dfa1d588
+routine public.oauth_authorization_context(p_authorization_id text) -> jsonb | function | definer | volatile | exec:authenticated | body:b707d0584069
 routine public.open_payment_intent(p_workspace_id uuid, p_member_id uuid, p_provider text, p_period text, p_amount_cents integer, p_currency text, p_request_id uuid) -> TABLE(id uuid, reference text, status text, order_id text, created_at timestamp with time zone, reused boolean) | function | definer | volatile | exec:authenticated,service_role | body:e32ff1d3be2f
 routine public.operator_activate_mcp_runtime(p_installation_id uuid, p_epoch integer, p_fingerprint text) -> jsonb | function | definer | volatile | exec:service_role | body:8d021c2c8498
 routine public.operator_approve_mcp_client(p_client_id text, p_name text, p_active boolean) -> jsonb | function | definer | volatile | exec:service_role | body:7edcf1c6a5bc
@@ -1392,6 +1415,7 @@ routine public.operator_register_identity_federation_client(p_client_id uuid, p_
 routine public.operator_reset_mcp_authority(p_installation_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:service_role | body:22d43b34dfd3
 routine public.operator_revoke_database_admin(p_target uuid) -> jsonb | function | definer | volatile | exec:service_role | body:e0e61a0c3fc6
 routine public.operator_set_identity_federation_client(p_client_id uuid, p_enabled boolean) -> void | function | definer | volatile | exec: | body:484cb66063dc
+routine public.operator_set_mcp_endpoint(p_url text) -> jsonb | function | definer | volatile | exec:service_role | body:c659b2933f84
 routine public.operator_set_mcp_runtime(p_enabled boolean) -> jsonb | function | definer | volatile | exec:service_role | body:46902c960cbd
 routine public.owns_workspace_template(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f91919c37225
 routine public.payment_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:39efd058a90d
@@ -1703,6 +1727,7 @@ trigger identity_federation_clients.protect_identity_federation_client CREATE TR
 trigger identity_federation_clients.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.identity_federation_clients FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger installation_identity.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.installation_identity FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger instance_delegates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.instance_delegates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger instance_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.instance_notices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger instance_owner_claims.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.instance_owner_claims FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invitations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invitations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_dunning_holds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_dunning_holds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -1732,6 +1757,7 @@ trigger mcp_eligibility_grants.mcp_eligibility_revoked_invalidate CREATE TRIGGER
 trigger mcp_eligibility_grants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_eligibility_grants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_eligibility_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_eligibility_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_idempotency.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_idempotency FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger mcp_installation_settings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_installation_settings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_limits.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_limits FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_runtime.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_runtime FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_usage.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_usage FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

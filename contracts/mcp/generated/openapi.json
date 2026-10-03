@@ -680,19 +680,24 @@
     "/rest/v1/rpc/mcp_consent_options": {
       "post": {
         "operationId": "mcp_consent_options",
-        "summary": "What an assistant connection may be granted.",
+        "summary": "What an assistant connection may be granted; with the pending authorization, the client's approval status, its redirect host and who decides the first open step.",
         "security": [
           {
             "nativeSession": []
           }
         ],
         "requestBody": {
-          "required": false,
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                  "p_authorization_id": {
+                    "type": "string",
+                    "x-sql-type": "text"
+                  }
+                }
               }
             }
           }
