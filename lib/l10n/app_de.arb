@@ -1583,6 +1583,23 @@
     }
   },
   "composerDraftKept": "Entwurf behalten",
+  "connectionCancelled": "Das Konto hat sich inzwischen geändert; diese Antwort wurde verworfen.",
+  "connectionChangedIdentity": "Dieser Server ist nicht mehr der, den Sie verbunden haben. Seine Aktionen sind angehalten, bis Sie ihn erneut bestätigen.",
+  "connectionChecking": "Wird geprüft…",
+  "connectionCurrentServer": "Das ist der Server, den diese App bereits verwendet.",
+  "connectionDenied": "Dieser Server hat das Konto abgelehnt. Prüfen Sie die Anmeldedaten oder trennen Sie ihn.",
+  "connectionExpired": "Ihre Anmeldung bei diesem Server ist abgelaufen. Melden Sie sich bei diesem Server erneut an.",
+  "connectionInvalidEndpoint": "Diese Adresse oder dieser Schlüssel gehört zu keinem gültigen Server.",
+  "connectionMalformed": "Dieser Server hat etwas geantwortet, das diese App nicht lesen kann.",
+  "connectionNotConnected": "Dieser Server ist auf diesem Gerät nicht verbunden.",
+  "connectionRetry": "Erneut versuchen",
+  "connectionSessionNotSaved": "Die Aktion wurde ausgeführt, aber dieses Gerät konnte die Anmeldung beim Server nicht speichern. Möglicherweise müssen Sie sich erneut anmelden.",
+  "connectionSignInAgain": "Erneut anmelden",
+  "connectionUnavailable": "Dieser Server antwortet gerade nicht. Ihre anderen Server sind nicht betroffen.",
+  "connectionUnknownOutcome": "Die Verbindung brach nach dem Senden ab. Die Anfrage wurde womöglich ausgeführt: Prüfen Sie das, bevor Sie es erneut versuchen.",
+  "connectionUnsupported": "Diese Serverversion kann von dieser App nicht verbunden werden. Aktualisieren Sie die App oder bitten Sie den Betreiber, den Server zu aktualisieren.",
+  "connectionUsable": "Verbunden",
+  "connectionVerifyAgain": "Erneut bestätigen",
   "consentAccept": "Akzeptieren und weiter",
   "consentAcceptedOn": "Akzeptiert am {date} ({version})",
   "consentCheckbox": "Ich habe das gelesen und akzeptiere, wie DesKilo meine Daten behandelt.",
@@ -1814,6 +1831,30 @@
   "courtesyNone": "Keine",
   "@courtesyNone": {
     "description": "#912 courtesy title: courtesyNone"
+  },
+  "customerCapacityBusiness": "Unternehmer",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Verbraucher",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Handelt dieser Kunde gewerblich oder beruflich (Gesellschaft, Einzelunternehmer, ein so handelnder Verein) oder als Verbraucher? Das entscheidet, welche Zahlungsklauseln eine Rechnung druckt; eine USt-IdNr. allein entscheidet es nicht. Nicht angegeben: Es gilt die Vorgabe des Arbeitsbereichs.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "customerCapacityLabel": "Kundeneigenschaft",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Nicht angegeben",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacitySaveError": "Die Kundeneigenschaft wurde nicht gespeichert.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
   "datevAccountsIntro": "Berater- und Mandantennummer bekommen Sie von Ihrer Steuerberatung. DATEV lehnt eine Datei mit abweichenden Nummern ab — genau das hält sie aus den Büchern der falschen Firma heraus.",
   "@datevAccountsIntro": {
@@ -2819,6 +2860,8 @@
   },
   "featureCarnetsDesc": "Mehrfachkarten mit Halbtagen verkaufen, die über Monate verbraucht werden, wenn ein Mitglied über sein Abo hinaus bucht — einmal beim Verkauf berechnet.",
   "featureCarnetsTitle": "Mehrfachkarten",
+  "featureChangeUnconfirmed": "Die Änderung wurde gesendet, aber die Funktionen konnten zur Bestätigung nicht neu geladen werden. Öffnen Sie den Bildschirm erneut, um den Stand zu sehen.",
+  "featureChangedMeanwhile": "Die Funktionen haben sich inzwischen geändert, daher wurde nichts gespeichert. Prüfen Sie die Liste und schalten Sie erneut.",
   "featureCoOwner": "Mit-Inhaberinnen",
   "featureCoOwnerDesc": "Mit-Inhaber ernennen: Inhaber-Rechte sofort (aktiv) oder wartende Nachfolge (passiv).",
   "featureConfigurationTransfer": "Konfiguration in der Raumdatei",
@@ -3135,8 +3178,10 @@
   },
   "featureOnlinePayments": "Online-Zahlungen",
   "featureOnlinePaymentsDesc": "Mitglieder zahlen ihre Rechnung online (PayPal). Erfordert die Einrichtung des Zahlungsanbieters auf dem Server.",
+  "featureOptInAlsoOn": "{count, plural, =1{Wird ebenfalls eingeschaltet, weil benötigt: {features}} other{Werden ebenfalls eingeschaltet, weil benötigt ({count}): {features}}}",
   "featureOptInBody": "Noch nicht als stabil bewertet: {features}. Sie kann sich ändern und hat bekannte Grenzen. Nur einschalten, wenn dieser Space das akzeptiert.",
   "featureOptInConfirm": "Einschalten",
+  "featureOptInStage": "{feature}: {stage}",
   "featureOptInTitle": "Experimentelle Funktion einschalten?",
   "featurePaymentRemindersDesc": "Offene Rechnungen nach Ablauf der eingestellten Frist erhalten ihre Mahnstufen automatisch — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht, einmal täglich. Aus: Mahnen bleibt ein manueller Schritt.",
   "featurePaymentRemindersTitle": "Automatische Zahlungserinnerungen",
@@ -4411,13 +4456,17 @@
   "invoiceKindSettlement": "Zusammengefasste Rechnungen",
   "invoiceKindSubscription": "Abo, im Voraus",
   "invoiceKindUsage": "Zusätze des Monats",
-  "invoiceLegalAssociationHint": "Verzugszins-, Beitreibungs- und Skonto-Klauseln werden nur gedruckt, wenn ausgefüllt — sie sind nur zwischen Unternehmen Pflicht.",
-  "@invoiceLegalAssociationHint": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
   "invoiceLegalAssociationReasonHint": "z. B. „TVA non applicable, art. 293 B du CGI“ — oder „Exonération de TVA, art. 261, 7-1° du CGI“ für Leistungen an Mitglieder",
   "@invoiceLegalAssociationReasonHint": {
     "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalCustomerCapacityField": "Standard-Kundeneigenschaft",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Entscheidet, welche Zahlungsklauseln eine Rechnung druckt. Die gesetzlichen Vorgaben für Verzugszinsen, Beitreibungspauschale und Skonto gelten nur für Unternehmer als Kunden; ein Verbraucher erhält nie die Beitreibungspauschale. Die eigene Angabe eines Mitglieds hat Vorrang vor dieser Vorgabe. Jede Rechnung behält die Klauseln, mit denen sie ausgestellt wurde.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
   },
   "invoiceLegalEscompteDefault": "Kein Skonto bei vorzeitiger Zahlung.",
   "@invoiceLegalEscompteDefault": {

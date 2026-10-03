@@ -708,6 +708,16 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
+  Future<void> setMemberCustomerCapacity(
+      String memberId, String? capacity) async {
+    // #1916 — stated by whoever may issue invoices; null = not stated.
+    await _client.rpc<dynamic>('set_member_customer_capacity', params: {
+      'p_member_id': memberId,
+      'p_capacity': capacity,
+    });
+  }
+
+  @override
   Future<void> setMemberLevelPermission(
     String memberId, {
     required bool allowed,
@@ -1311,6 +1321,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         canReserveLevel: row['can_reserve_level'] as bool? ?? false,
         vatTreatment: row['vat_treatment'] as String? ?? 'auto',
         vatExemptionReason: row['vat_exemption_reason'] as String? ?? '',
+        customerCapacity: row['customer_capacity'] as String?,
       );
 
 }

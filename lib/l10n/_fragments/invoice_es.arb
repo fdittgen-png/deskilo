@@ -536,10 +536,6 @@
   "@invoiceLegalKindAssociation": {
     "description": "Association invoicing + VAT regime gate (#484)"
   },
-  "invoiceLegalAssociationHint": "Las cláusulas de penalización, indemnización de cobro y descuento solo se imprimen si se rellenan — solo son obligatorias entre profesionales.",
-  "@invoiceLegalAssociationHint": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
   "invoiceLegalFormHintAssociation": "p. ej. Association loi 1901",
   "@invoiceLegalFormHintAssociation": {
     "description": "Association invoicing + VAT regime gate (#484)"

@@ -2700,6 +2700,68 @@ class AppLocalizationsIt extends AppLocalizations {
   String get composerDraftKept => 'Bozza conservata';
 
   @override
+  String get connectionCancelled =>
+      'Nel frattempo l’account è cambiato, quindi questa risposta è stata scartata.';
+
+  @override
+  String get connectionChangedIdentity =>
+      'Questo server non è più quello che hai connesso. Le sue azioni sono sospese finché non lo verifichi di nuovo.';
+
+  @override
+  String get connectionChecking => 'Verifica in corso…';
+
+  @override
+  String get connectionCurrentServer => 'Questo è il server che l’app usa già.';
+
+  @override
+  String get connectionDenied =>
+      'Questo server ha rifiutato l’account. Controlla le credenziali o scollegalo.';
+
+  @override
+  String get connectionExpired =>
+      'L’accesso a questo server è scaduto. Accedi di nuovo a questo server.';
+
+  @override
+  String get connectionInvalidEndpoint =>
+      'Questo indirizzo o questa chiave non corrisponde a un server valido.';
+
+  @override
+  String get connectionMalformed =>
+      'Questo server ha risposto qualcosa che l’app non sa leggere.';
+
+  @override
+  String get connectionNotConnected =>
+      'Questo server non è connesso su questo dispositivo.';
+
+  @override
+  String get connectionRetry => 'Riprova';
+
+  @override
+  String get connectionSessionNotSaved =>
+      'L’azione è stata eseguita, ma questo dispositivo non ha potuto salvare l’accesso al server. Potrebbe esserti chiesto di accedere di nuovo.';
+
+  @override
+  String get connectionSignInAgain => 'Accedi di nuovo';
+
+  @override
+  String get connectionUnavailable =>
+      'Questo server al momento non risponde. Gli altri server non sono coinvolti.';
+
+  @override
+  String get connectionUnknownOutcome =>
+      'La connessione si è interrotta dopo l’invio della richiesta. Potrebbe essere stata applicata: verifica prima di riprovare.';
+
+  @override
+  String get connectionUnsupported =>
+      'Questa versione del server non può essere connessa da questa app. Aggiorna l’app o chiedi al gestore del server di aggiornarlo.';
+
+  @override
+  String get connectionUsable => 'Connesso';
+
+  @override
+  String get connectionVerifyAgain => 'Verifica di nuovo';
+
+  @override
   String get consentAccept => 'Accetta e continua';
 
   @override
@@ -3032,6 +3094,26 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get courtesyNone => 'Nessuna';
+
+  @override
+  String get customerCapacityBusiness => 'Professionista';
+
+  @override
+  String get customerCapacityConsumer => 'Consumatore';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Se questo cliente agisce per un\'attività imprenditoriale o professionale (società, ditta individuale, associazione che agisce come tale) o come consumatore. Decide quali clausole di pagamento stampa una fattura; la sola partita IVA non lo decide. Non indicata: si applica il valore predefinito dello spazio.';
+
+  @override
+  String get customerCapacityLabel => 'Qualità del cliente';
+
+  @override
+  String get customerCapacityNotStated => 'Non indicata';
+
+  @override
+  String get customerCapacitySaveError =>
+      'La qualità del cliente non è stata salvata.';
 
   @override
   String get datevAccountsIntro =>
@@ -4409,6 +4491,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureCarnetsTitle => 'Carnet';
 
   @override
+  String get featureChangeUnconfirmed =>
+      'La modifica è stata inviata, ma non è stato possibile ricaricare le funzionalità per confermarla. Riapri la schermata per vedere lo stato.';
+
+  @override
+  String get featureChangedMeanwhile =>
+      'Le funzionalità sono cambiate nel frattempo, quindi non è stato salvato nulla. Controlla l\'elenco e riprova.';
+
+  @override
   String get featureCoOwner => 'Comproprietari';
 
   @override
@@ -4886,12 +4976,28 @@ class AppLocalizationsIt extends AppLocalizations {
       'Consenti ai membri di pagare la fattura online (PayPal). Richiede la configurazione del fornitore di pagamento sul server.';
 
   @override
+  String featureOptInAlsoOn(int count, String features) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Vengono attivati anche, perché necessari ($count): $features',
+      one: 'Viene attivato anche, perché necessario: $features',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String featureOptInBody(String features) {
     return 'Non ancora valutata come stabile: $features. Può cambiare e ha limiti noti. Attivala solo se questo spazio lo accetta.';
   }
 
   @override
   String get featureOptInConfirm => 'Attiva';
+
+  @override
+  String featureOptInStage(String feature, String stage) {
+    return '$feature: $stage';
+  }
 
   @override
   String get featureOptInTitle => 'Attivare una funzione sperimentale?';
@@ -7161,12 +7267,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceKindUsage => 'Gli extra del mese';
 
   @override
-  String get invoiceLegalAssociationHint =>
-      'Le clausole di mora, recupero crediti e sconto vengono stampate solo se compilate — sono obbligatorie solo tra professionisti.';
-
-  @override
   String get invoiceLegalAssociationReasonHint =>
       'es. «TVA non applicable, art. 293 B du CGI» — o «Exonération de TVA, art. 261, 7-1° du CGI» per i servizi ai membri';
+
+  @override
+  String get invoiceLegalCustomerCapacityField =>
+      'Qualità del cliente predefinita';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Decide quali clausole di pagamento stampa una fattura. I testi legali predefiniti su interessi di mora, risarcimento forfettario delle spese di recupero e sconto valgono solo per clienti professionisti, e un consumatore non riceve mai il risarcimento delle spese di recupero. La qualità propria di un membro prevale su questo valore. Ogni fattura conserva le clausole con cui è stata emessa.';
 
   @override
   String get invoiceLegalEscompteDefault =>

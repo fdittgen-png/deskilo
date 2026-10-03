@@ -1583,6 +1583,23 @@
     }
   },
   "composerDraftKept": "Brouillon conservé",
+  "connectionCancelled": "Le compte a changé entre-temps ; cette réponse a été ignorée.",
+  "connectionChangedIdentity": "Ce serveur n’est plus celui que vous avez connecté. Ses actions sont suspendues jusqu’à une nouvelle vérification.",
+  "connectionChecking": "Vérification…",
+  "connectionCurrentServer": "C’est le serveur que cette application utilise déjà.",
+  "connectionDenied": "Ce serveur a refusé le compte. Vérifiez vos identifiants, ou déconnectez-le.",
+  "connectionExpired": "Votre connexion à ce serveur a expiré. Reconnectez-vous à ce serveur.",
+  "connectionInvalidEndpoint": "Cette adresse ou cette clé n’est pas celle d’un serveur valide.",
+  "connectionMalformed": "Ce serveur a répondu quelque chose que cette application ne sait pas lire.",
+  "connectionNotConnected": "Ce serveur n’est pas connecté sur cet appareil.",
+  "connectionRetry": "Réessayer",
+  "connectionSessionNotSaved": "L’action a été effectuée, mais cet appareil n’a pas pu enregistrer la connexion au serveur. Il vous faudra peut-être vous reconnecter.",
+  "connectionSignInAgain": "Se reconnecter",
+  "connectionUnavailable": "Ce serveur ne répond pas pour le moment. Vos autres serveurs ne sont pas concernés.",
+  "connectionUnknownOutcome": "La connexion s’est interrompue après l’envoi de la demande. Elle a peut-être été appliquée : vérifiez avant de réessayer.",
+  "connectionUnsupported": "Cette version du serveur ne peut pas être connectée depuis cette application. Mettez l’application à jour, ou demandez à l’opérateur du serveur de le mettre à jour.",
+  "connectionUsable": "Connecté",
+  "connectionVerifyAgain": "Vérifier à nouveau",
   "consentAccept": "Accepter et continuer",
   "consentAcceptedOn": "Accepté le {date} ({version})",
   "consentCheckbox": "J'ai lu ce texte et j'accepte la façon dont DesKilo traite mes données.",
@@ -1814,6 +1831,30 @@
   "courtesyNone": "Aucune",
   "@courtesyNone": {
     "description": "#912 courtesy title: courtesyNone"
+  },
+  "customerCapacityBusiness": "Professionnel",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Consommateur",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Ce client agit-il pour une activité professionnelle (société, entrepreneur individuel, association agissant comme telle) ou comme consommateur ? Cela décide des clauses de paiement imprimées sur la facture ; un numéro de TVA seul ne le décide pas. Non précisée : la valeur par défaut de l'espace s'applique.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "customerCapacityLabel": "Qualité du client",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Non précisée",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacitySaveError": "La qualité du client n'a pas été enregistrée.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
   "datevAccountsIntro": "Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.",
   "@datevAccountsIntro": {
@@ -2819,6 +2860,8 @@
   },
   "featureCarnetsDesc": "Vendre des carnets de demi-journées, dépensés sur plusieurs mois quand un membre réserve au-delà de son abonnement, facturés une seule fois à la vente.",
   "featureCarnetsTitle": "Carnets",
+  "featureChangeUnconfirmed": "La modification a été envoyée, mais les fonctionnalités n'ont pas pu être rechargées pour la confirmer. Rouvrez l'écran pour voir l'état actuel.",
+  "featureChangedMeanwhile": "Les fonctionnalités ont changé entre-temps, rien n'a donc été enregistré. Vérifiez la liste et recommencez.",
   "featureCoOwner": "Copropriétaires",
   "featureCoOwnerDesc": "Nommer des copropriétaires : permissions de propriétaire immédiates (actif) ou succession en attente (passif).",
   "featureConfigurationTransfer": "Configuration dans le fichier de l'espace",
@@ -3135,8 +3178,10 @@
   },
   "featureOnlinePayments": "Paiements en ligne",
   "featureOnlinePaymentsDesc": "Permettre aux membres de payer leur facture en ligne (PayPal). Nécessite la configuration du prestataire de paiement sur le serveur.",
+  "featureOptInAlsoOn": "{count, plural, =1{Activé aussi, car nécessaire : {features}} other{Activés aussi, car nécessaires ({count}) : {features}}}",
   "featureOptInBody": "Pas encore évaluée comme stable : {features}. Elle peut changer et a des limites connues. N’activez que si cet espace l’accepte.",
   "featureOptInConfirm": "Activer",
+  "featureOptInStage": "{feature} : {stage}",
   "featureOptInTitle": "Activer une fonctionnalité expérimentale ?",
   "featurePaymentRemindersDesc": "Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Désactivé : la relance reste un geste manuel.",
   "featurePaymentRemindersTitle": "Relances de paiement automatiques",
@@ -4411,13 +4456,17 @@
   "invoiceKindSettlement": "Factures regroupées",
   "invoiceKindSubscription": "Abonnement, à l’avance",
   "invoiceKindUsage": "Les extras du mois",
-  "invoiceLegalAssociationHint": "Les clauses de pénalités, d'indemnité de recouvrement et d'escompte ne sont imprimées que si renseignées — elles ne sont obligatoires qu'entre professionnels.",
-  "@invoiceLegalAssociationHint": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
   "invoiceLegalAssociationReasonHint": "ex. « TVA non applicable, art. 293 B du CGI » — ou « Exonération de TVA, art. 261, 7-1° du CGI » pour les services rendus aux membres",
   "@invoiceLegalAssociationReasonHint": {
     "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalCustomerCapacityField": "Qualité du client par défaut",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Décide des clauses de paiement imprimées sur la facture. Les mentions légales par défaut (pénalités de retard, indemnité forfaitaire de recouvrement, escompte) ne s'appliquent qu'aux clients professionnels, et un consommateur ne reçoit jamais l'indemnité de recouvrement. La qualité propre d'un membre l'emporte sur ce défaut. Chaque facture garde les clauses avec lesquelles elle a été émise.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
   },
   "invoiceLegalEscompteDefault": "Aucun escompte pour paiement anticipé.",
   "@invoiceLegalEscompteDefault": {

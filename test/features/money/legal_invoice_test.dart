@@ -220,9 +220,10 @@ Client SARL
   });
 
   group('association invoicing (#484)', () {
-    test('a company workspace gets the four statutory clause defaults',
-        () {
-      final data = legalMentionData(const ReportStrings(), _workspace(const {}));
+    test('a French workspace whose customers are businesses gets the four '
+        'statutory clause defaults (#1916: capacity, not seller kind)', () {
+      final data = legalMentionData(const ReportStrings(),
+          _workspace(const {'customer_capacity': 'business'}));
       expect(data['payment_terms'], 'Payment on receipt.');
       expect(data['late_penalty'], isNot(''));
       expect(data['recovery_indemnity'], isNot(''));

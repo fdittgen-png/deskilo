@@ -391,6 +391,9 @@ int? exactMinor(Object? v) {
 FinanceSummaryKpi financeSummaryFromJson(Map<String, dynamic> json) {
   final quality = json['quality'];
   final reasons = json['reasons'];
+  if (quality is! List || reasons is! List) {
+    throw const FormatException('Missing finance evidence');
+  }
   final invoiced = exactMinor(json['invoiced_minor']);
   final credit = exactMinor(json['credit_notes_minor']);
   final collected = exactMinor(json['collected_minor']);
@@ -403,18 +406,15 @@ FinanceSummaryKpi financeSummaryFromJson(Map<String, dynamic> json) {
     invoicedMinor: invoiced,
     creditNotesMinor: credit,
     collectedMinor: collected,
-    invoices: _num(json['invoices']).toInt(),
-    matches: _num(json['matches']).toInt(),
+    invoices: _count(json['invoices']),
+    matches: _count(json['matches']),
     quality: {
-      if (quality is List)
-        for (final q in quality)
-          if (_quality('$q') case final KpiQuality k) k,
+      for (final q in quality) _quality('$q') ?? KpiQuality.unavailable,
       if (inexact || currency is! String || currency.isEmpty)
         KpiQuality.unavailable,
     },
     reasons: [
-      if (reasons is List)
-        for (final r in reasons) '$r',
+      for (final r in reasons) '$r',
       if (inexact) 'amount_not_exact',
     ],
     computedAt: DateTime.parse('${json['computed_at']}'),

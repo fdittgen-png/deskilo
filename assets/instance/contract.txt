@@ -523,6 +523,7 @@ constraint member_public_contact.member_public_contact_member_id_fkey FOREIGN KE
 constraint member_public_contact.member_public_contact_pkey PRIMARY KEY (member_id)
 constraint member_public_contact.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint members.members_co_owner_check CHECK ((co_owner = ANY (ARRAY['none'::text, 'active'::text, 'passive'::text])))
+constraint members.members_customer_capacity_check CHECK (((customer_capacity IS NULL) OR (customer_capacity = ANY (ARRAY['business'::text, 'consumer'::text]))))
 constraint members.members_home_site_id_fkey FOREIGN KEY (home_site_id) REFERENCES sites(id) ON DELETE SET NULL
 constraint members.members_managed_by_fkey FOREIGN KEY (managed_by) REFERENCES auth.users(id) ON DELETE SET NULL
 constraint members.members_max_active_reservations_check CHECK (((max_active_reservations >= 1) AND (max_active_reservations <= 100)))
@@ -1237,6 +1238,8 @@ routine public.invitation_preview(p_code text) -> jsonb | function | definer | s
 routine public.invitation_state(p_code text) -> jsonb | function | definer | stable | exec:service_role | body:acc7d077ddfe
 routine public.invoice_dunning_state(p_invoice_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8eea512e46f5
 routine public.invoice_dunning_state_core(p_invoice_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:service_role | body:4ee14bd0651f
+routine public.invoice_legal_freeze() -> trigger | function | definer | volatile | exec:service_role | body:52daa15cf036
+routine public.invoice_legal_snapshot(p_workspace_id uuid, p_member_id uuid, p_parties jsonb) -> jsonb | function | definer | stable | exec:service_role | body:568481ba5d8f
 routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:64a802ca3339
 routine public.invoice_lines_for(p_member_id uuid, p_period text, p_kind text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4ab86eeb0aaa
 routine public.invoice_maturity_freeze() -> trigger | function | definer | volatile | exec:service_role | body:2a182a18ce04
@@ -1547,6 +1550,7 @@ routine public.set_level_site(p_level_id uuid, p_site_id uuid) -> void | functio
 routine public.set_managed_access(p_member_id uuid, p_access jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f73d20426e36
 routine public.set_mcp_disclosure_maximum(p_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:24f3bd3414d5
 routine public.set_mcp_limits(p_calls_per_minute integer, p_mutations_per_minute integer, p_workspace_calls_per_day integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9158656887ea
+routine public.set_member_customer_capacity(p_member_id uuid, p_capacity text) -> void | function | definer | volatile | exec:authenticated,service_role | body:e9944c5510bf
 routine public.set_member_field_values(p_member_id uuid, p_context text, p_answers jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:5ded60bff456
 routine public.set_member_home_site(p_member_id uuid, p_site_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:026f44f7c8bd
 routine public.set_member_kiosk(p_member_id uuid, p_is_kiosk boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:c67a43bc3830
@@ -1725,6 +1729,7 @@ trigger invoice_matches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns
 trigger invoice_maturities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_maturities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_reminders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_reminders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_transmissions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_transmissions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger invoices.invoice_legal_freeze CREATE TRIGGER invoice_legal_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_legal_freeze()
 trigger invoices.invoice_maturity_freeze CREATE TRIGGER invoice_maturity_freeze AFTER INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_maturity_freeze()
 trigger invoices.invoices_no_mutation CREATE TRIGGER invoices_no_mutation BEFORE DELETE OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_immutable()
 trigger invoices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

@@ -138,6 +138,22 @@ String _in(WidgetTester tester, String module, String key) => tester
 
 void main() {
   group('the contract', () {
+    test('unknown finance quality never becomes a qualified amount', () {
+      final k = financeSummaryFromJson(_row(quality: ['future_quality']));
+      expect(k.quality, contains(KpiQuality.unavailable));
+    });
+
+    test('missing finance evidence and fractional counts are refused', () {
+      expect(
+        () => financeSummaryFromJson(_row()..remove('quality')),
+        throwsFormatException,
+      );
+      expect(
+        () => financeSummaryFromJson(_row()..['matches'] = 1.5),
+        throwsFormatException,
+      );
+    });
+
     test('amounts are exact to 2^53 − 1 and refused beyond, never rounded', () {
       expect(exactMinor('9007199254740991'), 9007199254740991);
       expect(exactMinor('-9007199254740991'), -9007199254740991);

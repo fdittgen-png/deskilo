@@ -327,6 +327,26 @@ void main() {
     expect(_subtitle(tester, 'member-page-vat-treatment'), 'Exempt buyer');
   });
 
+  testWidgets('#1916 — the customer capacity is stated per member, by '
+      'whoever issues invoices, and lands on the member at once',
+      (tester) async {
+    await _pumpPage(tester, 'member-3', flags: const {'invoicing': true});
+    final tile = find.byKey(const ValueKey('member-page-customer-capacity'));
+    await tester.ensureVisible(tile);
+    expect(_subtitle(tester, 'member-page-customer-capacity'), 'Not stated');
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('customer-capacity-consumer')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('customer-capacity-save')));
+    await tester.pumpAndSettle();
+    expect(_subtitle(tester, 'member-page-customer-capacity'), 'Consumer');
+
+    await _pumpPage(tester, 'member-3',
+        viewerOwner: false, flags: const {'invoicing': true});
+    expect(tile, findsNothing, reason: 'a plain member states nothing');
+  });
+
   // #1187 — the quick actions were a Wrap of buttons each sized to its
   // own label: three rows, three widths, a ragged right edge. Two equal
   // columns read as a group; a lone last button spans both rather than

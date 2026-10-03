@@ -127,10 +127,10 @@ List<String> _financeDetails(
         'The same rules as the workspace status report, computed once on '
             'the server.',
     if (k.lastChangeAt case final last?)
-      l10n?.biFinanceLastChange(date.format(last.toLocal())) ??
-          'Last change to the source: ${date.format(last.toLocal())}',
-    l10n?.biFinanceComputed(date.format(k.computedAt.toLocal())) ??
-        'Computed ${date.format(k.computedAt.toLocal())}',
+      l10n?.biFinanceLastChange(date.format(WorkspaceTime.wall(last))) ??
+          'Last change to the source: ${date.format(WorkspaceTime.wall(last))}',
+    l10n?.biFinanceComputed(date.format(WorkspaceTime.wall(k.computedAt))) ??
+        'Computed ${date.format(WorkspaceTime.wall(k.computedAt))}',
   ];
 }
 

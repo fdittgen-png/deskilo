@@ -2224,6 +2224,8 @@ The feature is off until you ask for it, and it sits **beside** the alerts bell 
 
 The workspace financial status explains its subtotal: invoiced amounts less credit notes, reimbursements and credits. This is neither profit nor a bank balance. Matched and received payments overlap; do not add them together.
 
+In web BI, **Analyses** selects capacity, invoiced amounts and collected amounts according to your permissions and the enabled features. Invoiced amounts follow invoice months; collected amounts follow the month payments were matched to invoices, not a bank statement date. Credit notes are shown separately. **Save view** keeps your selection privately or, with the necessary rights, for the team. A default view opens with fresh data and current permissions; it never saves a copy of the figures.
+
 # Admin guide — configuring the space
 
 For the owner who sets the space up: what every parameter decides, in the

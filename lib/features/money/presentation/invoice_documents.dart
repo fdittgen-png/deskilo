@@ -272,6 +272,9 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   // #910 — the settlement date the document must state; callers
   // holding a ref pass invoiceDueAt(ref, invoice).
   DateTime? dueAt,
+  // #1916 — an unissued document's customer capacity; callers holding a
+  // ref pass memberCapacityFor(ref, invoice.memberId).
+  String? memberCapacity,
 }) async {
   final l10n = AppLocalizations.of(context);
   final currency = moneyFormat(invoice.currency);
@@ -308,6 +311,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     copy: copy,
     workspace: workspace,
     dueAt: dueAt,
+    memberCapacity: memberCapacity,
   );
   // #476: a proforma renders its OWN bands when the owner set them —
   // else the invoice's, as it always did.
@@ -471,7 +475,10 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
         association: association, period: invoice.period),
     // #941 — the same due date and terms the PDF prints.
     dueDate: invoiceDueAt(ref, invoice),
-    paymentTerms: memberTermsFor(ref, invoice.memberId)?.paymentTerms ?? '',
+    // #1916 — an issued invoice states the terms frozen with it.
+    paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
+        memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
+        '',
   );
   // PDF/A-3 cannot exist without an embedded output intent.
   final icc = await rootBundle.load('assets/pdf/sRGB2014.icc');
@@ -606,6 +613,15 @@ List<Invoice> regroupedSourcesOf(WidgetRef ref, Invoice invoice) {
 
 /// #881 — the member's own payment conditions, from the members list
 /// already loaded; null when they inherit the workspace's.
+/// #1916 — the member's stated customer capacity (wire), null when not
+/// stated or unknown here.
+String? memberCapacityFor(WidgetRef ref, String memberId) => ref
+    .read(workspaceMembersProvider)
+    .value
+    ?.where((m) => m.id == memberId)
+    .firstOrNull
+    ?.customerCapacity;
+
 PaymentTerms? memberTermsFor(WidgetRef ref, String memberId) => ref
     .read(workspaceMembersProvider)
     .value

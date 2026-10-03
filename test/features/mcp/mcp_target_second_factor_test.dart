@@ -146,6 +146,14 @@ class _Wire {
         body = {'installation_id': installations[host]};
       case '/rest/v1/rpc/my_financial_activity':
         body = <Object>[];
+      case '/rest/v1/rpc/public_network_descriptor':
+        // #1832 — a server from before negotiation: the baseline.
+        return http.Response(
+          jsonEncode({'code': 'PGRST202', 'message': 'not found'}),
+          404,
+          headers: {'content-type': 'application/json'},
+          request: request,
+        );
       case final p when p.endsWith('/challenge'):
         body = {'id': 'ch-$host', 'type': 'totp', 'expires_at': 4102444800};
       case final p when p.endsWith('/verify'):
