@@ -511,5 +511,37 @@
   "featureIntakeStoppedNote": "Off: nothing new starts; what is already open can still be answered and closed.",
   "@featureIntakeStoppedNote": {
     "description": "#1851 note on a switched-off feature whose existing work stays serviceable"
+  },
+  "featureOptInAlsoOn": "{count, plural, =1{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}",
+  "@featureOptInAlsoOn": {
+    "description": "#1851 B feature switch consent: featureOptInAlsoOn",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "featureOptInStage": "{feature}: {stage}",
+  "@featureOptInStage": {
+    "description": "#1851 B feature switch consent: featureOptInStage",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      },
+      "stage": {
+        "type": "String"
+      }
+    }
+  },
+  "featureChangedMeanwhile": "The features changed meanwhile, so nothing was written. Check the list and switch again.",
+  "@featureChangedMeanwhile": {
+    "description": "#1851 B feature switch consent: featureChangedMeanwhile"
+  },
+  "featureChangeUnconfirmed": "The change was sent, but the features could not be reloaded to confirm it. Reopen the screen to see what is set.",
+  "@featureChangeUnconfirmed": {
+    "description": "#1851 B feature switch consent: featureChangeUnconfirmed"
   }
 }

@@ -1119,6 +1119,8 @@ Map<String, _Getter> _part2() => {
   'featureCaptureProtectionTitle': (l) => l.featureCaptureProtectionTitle,
   'featureCarnetsDesc': (l) => l.featureCarnetsDesc,
   'featureCarnetsTitle': (l) => l.featureCarnetsTitle,
+  'featureChangeUnconfirmed': (l) => l.featureChangeUnconfirmed,
+  'featureChangedMeanwhile': (l) => l.featureChangedMeanwhile,
   'featureCoOwner': (l) => l.featureCoOwner,
   'featureCoOwnerDesc': (l) => l.featureCoOwnerDesc,
   'featureConfigurationTransfer': (l) => l.featureConfigurationTransfer,
@@ -1229,11 +1231,11 @@ Map<String, _Getter> _part2() => {
   'featureMembersDirectory': (l) => l.featureMembersDirectory,
   'featureMembersDirectoryDesc': (l) => l.featureMembersDirectoryDesc,
   'featureMessageForwardingDesc': (l) => l.featureMessageForwardingDesc,
-  'featureMessageForwardingTitle': (l) => l.featureMessageForwardingTitle,
-  'featureMessageGesturesDesc': (l) => l.featureMessageGesturesDesc,
 };
 
 Map<String, _Getter> _part3() => {
+  'featureMessageForwardingTitle': (l) => l.featureMessageForwardingTitle,
+  'featureMessageGesturesDesc': (l) => l.featureMessageGesturesDesc,
   'featureMessageGesturesTitle': (l) => l.featureMessageGesturesTitle,
   'featureMessagesHubDesc': (l) => l.featureMessagesHubDesc,
   'featureMessagesHubTitle': (l) => l.featureMessagesHubTitle,
@@ -1632,11 +1634,11 @@ Map<String, _Getter> _part3() => {
   'instanceClaimBody': (l) => l.instanceClaimBody,
   'instanceClaimButton': (l) => l.instanceClaimButton,
   'instanceClaimDone': (l) => l.instanceClaimDone,
-  'instanceClaimFailed': (l) => l.instanceClaimFailed,
-  'instanceClaimTitle': (l) => l.instanceClaimTitle,
 };
 
 Map<String, _Getter> _part4() => {
+  'instanceClaimFailed': (l) => l.instanceClaimFailed,
+  'instanceClaimTitle': (l) => l.instanceClaimTitle,
   'instanceClientApproved': (l) => l.instanceClientApproved,
   'instanceClientBlocked': (l) => l.instanceClientBlocked,
   'instanceClientWaiting': (l) => l.instanceClientWaiting,
@@ -2035,11 +2037,11 @@ Map<String, _Getter> _part4() => {
   'languageNameEN': (l) => l.languageNameEN,
   'languageNameES': (l) => l.languageNameES,
   'languageNameFI': (l) => l.languageNameFI,
-  'languageNameFR': (l) => l.languageNameFR,
-  'languageNameHU': (l) => l.languageNameHU,
 };
 
 Map<String, _Getter> _part5() => {
+  'languageNameFR': (l) => l.languageNameFR,
+  'languageNameHU': (l) => l.languageNameHU,
   'languageNameIT': (l) => l.languageNameIT,
   'languageNameJA': (l) => l.languageNameJA,
   'languageNameNB': (l) => l.languageNameNB,
@@ -2438,11 +2440,11 @@ Map<String, _Getter> _part5() => {
   'memberPayments': (l) => l.memberPayments,
   'memberReactivate': (l) => l.memberReactivate,
   'memberRejectJoin': (l) => l.memberRejectJoin,
-  'memberReservationLimitCustom': (l) => l.memberReservationLimitCustom,
-  'memberReservationLimitExplainer': (l) => l.memberReservationLimitExplainer,
 };
 
 Map<String, _Getter> _part6() => {
+  'memberReservationLimitCustom': (l) => l.memberReservationLimitCustom,
+  'memberReservationLimitExplainer': (l) => l.memberReservationLimitExplainer,
   'memberReservationLimitLabel': (l) => l.memberReservationLimitLabel,
   'memberReservationLimitNone': (l) => l.memberReservationLimitNone,
   'memberReservationLimitTooltip': (l) => l.memberReservationLimitTooltip,
@@ -2841,11 +2843,11 @@ Map<String, _Getter> _part6() => {
   'planEndBeforeStart': (l) => l.planEndBeforeStart,
   'planFromLabel': (l) => l.planFromLabel,
   'planFullDayChip': (l) => l.planFullDayChip,
-  'planFullDayError': (l) => l.planFullDayError,
-  'planHalfDayError': (l) => l.planHalfDayError,
 };
 
 Map<String, _Getter> _part7() => {
+  'planFullDayError': (l) => l.planFullDayError,
+  'planHalfDayError': (l) => l.planHalfDayError,
   'planIncludedHelper': (l) => l.planIncludedHelper,
   'planIncludedLabel': (l) => l.planIncludedLabel,
   'planLevelLabel': (l) => l.planLevelLabel,
@@ -3244,11 +3246,11 @@ Map<String, _Getter> _part7() => {
   'repartitionStatusRejected': (l) => l.repartitionStatusRejected,
   'repartitionStepBook': (l) => l.repartitionStepBook,
   'repartitionStepCost': (l) => l.repartitionStepCost,
-  'repartitionStepExpense': (l) => l.repartitionStepExpense,
-  'repartitionStepRule': (l) => l.repartitionStepRule,
 };
 
 Map<String, _Getter> _part8() => {
+  'repartitionStepExpense': (l) => l.repartitionStepExpense,
+  'repartitionStepRule': (l) => l.repartitionStepRule,
   'repartitionSubmit': (l) => l.repartitionSubmit,
   'repartitionTitle': (l) => l.repartitionTitle,
   'repartitionTitleField': (l) => l.repartitionTitleField,
@@ -3647,11 +3649,11 @@ Map<String, _Getter> _part8() => {
   'servicesEdit': (l) => l.servicesEdit,
   'servicesEmpty': (l) => l.servicesEmpty,
   'servicesInactive': (l) => l.servicesInactive,
-  'servicesName': (l) => l.servicesName,
-  'servicesNew': (l) => l.servicesNew,
 };
 
 Map<String, _Getter> _part9() => {
+  'servicesName': (l) => l.servicesName,
+  'servicesNew': (l) => l.servicesNew,
   'servicesPrice': (l) => l.servicesPrice,
   'servicesTitle': (l) => l.servicesTitle,
   'settingsBillingReports': (l) => l.settingsBillingReports,
@@ -4050,11 +4052,11 @@ Map<String, _Getter> _part9() => {
   'taskRecorderTitle': (l) => l.taskRecorderTitle,
   'taskRecorderUnavailable': (l) => l.taskRecorderUnavailable,
   'taskRecorderUnreadable': (l) => l.taskRecorderUnreadable,
-  'taskRecorderUntitled': (l) => l.taskRecorderUntitled,
-  'taskRecorderValueAfternoon': (l) => l.taskRecorderValueAfternoon,
 };
 
 Map<String, _Getter> _part10() => {
+  'taskRecorderUntitled': (l) => l.taskRecorderUntitled,
+  'taskRecorderValueAfternoon': (l) => l.taskRecorderValueAfternoon,
   'taskRecorderValueAllBooked': (l) => l.taskRecorderValueAllBooked,
   'taskRecorderValueCheckIn': (l) => l.taskRecorderValueCheckIn,
   'taskRecorderValueClosed': (l) => l.taskRecorderValueClosed,
@@ -4453,11 +4455,11 @@ Map<String, _Getter> _part10() => {
   'workspaceInviteCodeInvalid': (l) => l.workspaceInviteCodeInvalid,
   'workspaceInviteCodeLabel': (l) => l.workspaceInviteCodeLabel,
   'workspaceInvitePasteHint': (l) => l.workspaceInvitePasteHint,
-  'workspaceLanguageHelper': (l) => l.workspaceLanguageHelper,
-  'workspaceLanguageLabel': (l) => l.workspaceLanguageLabel,
 };
 
 Map<String, _Getter> _part11() => {
+  'workspaceLanguageHelper': (l) => l.workspaceLanguageHelper,
+  'workspaceLanguageLabel': (l) => l.workspaceLanguageLabel,
   'workspaceLanguageUnset': (l) => l.workspaceLanguageUnset,
   'workspaceNameLabel': (l) => l.workspaceNameLabel,
   'workspacePaymentsBillingTitle': (l) => l.workspacePaymentsBillingTitle,

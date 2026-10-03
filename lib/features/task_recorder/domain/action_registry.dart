@@ -348,6 +348,9 @@ abstract final class RecorderOutcomes {
   // #1884 A — a setting's save.
   static const settingSaved = 'setting.saved';
   static const settingNotSaved = 'setting.not_saved';
+
+  /// Sent, but no answer anybody can vouch for (a reload that failed).
+  static const settingUnknown = 'setting.unknown';
 }
 
 const Set<String> _bookingOutcomes = {
@@ -478,6 +481,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       outcomes: {
         RecorderOutcomes.settingSaved,
         RecorderOutcomes.settingNotSaved,
+        RecorderOutcomes.settingUnknown,
       },
     ),
     ActionSpec(
@@ -535,6 +539,11 @@ const ActionRegistry recorderRegistry = ActionRegistry(
     OutcomeSpec(
       RecorderOutcomes.settingNotSaved,
       state: ObservationState.refused,
+      payloadFields: {'refusal'},
+    ),
+    OutcomeSpec(
+      RecorderOutcomes.settingUnknown,
+      state: ObservationState.outcomeUnknown,
     ),
     ..._uiOutcomes,
   ],

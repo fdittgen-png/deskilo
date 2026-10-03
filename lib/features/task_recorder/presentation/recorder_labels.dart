@@ -80,6 +80,8 @@ String? outcomeLabel(AppLocalizations? l10n, String? outcome) =>
         l10n?.taskRecorderOutcomeSettingSaved ?? 'Saved',
       RecorderOutcomes.settingNotSaved =>
         l10n?.taskRecorderOutcomeSettingNotSaved ?? 'Not saved',
+      RecorderOutcomes.settingUnknown =>
+        l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
       RecorderOutcomes.checkedIn =>
         l10n?.taskRecorderOutcomeCheckedIn ?? 'Checked in',
       RecorderOutcomes.checkedOut =>
