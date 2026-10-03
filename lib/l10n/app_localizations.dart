@@ -7452,6 +7452,18 @@ abstract class AppLocalizations {
   /// **'Carnets'**
   String get featureCarnetsTitle;
 
+  /// #1851 B feature switch consent: featureChangeUnconfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'The change was sent, but the features could not be reloaded to confirm it. Reopen the screen to see what is set.'**
+  String get featureChangeUnconfirmed;
+
+  /// #1851 B feature switch consent: featureChangedMeanwhile
+  ///
+  /// In en, this message translates to:
+  /// **'The features changed meanwhile, so nothing was written. Check the list and switch again.'**
+  String get featureChangedMeanwhile;
+
   /// Feature toggle: co-ownership (0058)
   ///
   /// In en, this message translates to:
@@ -8268,6 +8280,12 @@ abstract class AppLocalizations {
   /// **'Let members pay their bill online (PayPal). Needs the payment provider configured on the server.'**
   String get featureOnlinePaymentsDesc;
 
+  /// #1851 B feature switch consent: featureOptInAlsoOn
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}'**
+  String featureOptInAlsoOn(int count, String features);
+
   /// #1851 consent dialog body; features = the experimental feature names
   ///
   /// In en, this message translates to:
@@ -8279,6 +8297,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch on'**
   String get featureOptInConfirm;
+
+  /// #1851 B feature switch consent: featureOptInStage
+  ///
+  /// In en, this message translates to:
+  /// **'{feature}: {stage}'**
+  String featureOptInStage(String feature, String stage);
 
   /// #1851 consent dialog title before switching on an alpha/beta feature
   ///

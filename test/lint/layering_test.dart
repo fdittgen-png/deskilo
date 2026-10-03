@@ -195,7 +195,7 @@ const Map<String, int> _pairBudget = {
   'reservations -> task_recorder': 8,
   'task_recorder -> reservations': 1,
   'task_recorder -> workspace': 4,
-  'workspace -> task_recorder': 2,
+  'workspace -> task_recorder': 3, // 2026-10-03 #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation)
   // 2026-09-16 #1306 S2 — the calendar carries the pending decisions when
   // the events bell is off: one import of the events feature's widget.
   'calendar -> events': 4,

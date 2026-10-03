@@ -5040,6 +5040,14 @@
   "@featureCarnetsTitle": {
     "description": "#1279 carnets: featureCarnetsTitle"
   },
+  "featureChangeUnconfirmed": "The change was sent, but the features could not be reloaded to confirm it. Reopen the screen to see what is set.",
+  "@featureChangeUnconfirmed": {
+    "description": "#1851 B feature switch consent: featureChangeUnconfirmed"
+  },
+  "featureChangedMeanwhile": "The features changed meanwhile, so nothing was written. Check the list and switch again.",
+  "@featureChangedMeanwhile": {
+    "description": "#1851 B feature switch consent: featureChangedMeanwhile"
+  },
   "featureCoOwner": "Co-owners",
   "@featureCoOwner": {
     "description": "Feature toggle: co-ownership (0058)"
@@ -5511,6 +5519,18 @@
   "@featureOnlinePaymentsDesc": {
     "description": "One-line description under the online-payments switch (0043)"
   },
+  "featureOptInAlsoOn": "{count, plural, =1{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}",
+  "@featureOptInAlsoOn": {
+    "description": "#1851 B feature switch consent: featureOptInAlsoOn",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
+  },
   "featureOptInBody": "Not yet reviewed as stable: {features}. It may change and has known limits. Switch on only if this space accepts that.",
   "@featureOptInBody": {
     "description": "#1851 consent dialog body; features = the experimental feature names",
@@ -5523,6 +5543,18 @@
   "featureOptInConfirm": "Switch on",
   "@featureOptInConfirm": {
     "description": "#1851 consent dialog confirm button"
+  },
+  "featureOptInStage": "{feature}: {stage}",
+  "@featureOptInStage": {
+    "description": "#1851 B feature switch consent: featureOptInStage",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      },
+      "stage": {
+        "type": "String"
+      }
+    }
   },
   "featureOptInTitle": "Switch on an experimental feature?",
   "@featureOptInTitle": {
