@@ -14,43 +14,32 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/dependency_map.dart' show mapOfTree, output;
+
 import '../../tool/layering/analysis.dart';
 
 void main() {
   test('docs/design/APPLICATION_BOUNDARIES.md is what the tool produces '
       'today (run: dart run tool/dependency_map.dart)', () {
-    final committed = File('docs/design/APPLICATION_BOUNDARIES.md');
+    final committed = File(output);
     expect(committed.existsSync(), isTrue);
+    // #2121 — compared, not rewritten: the committed map must BE the
+    // tool's output for this tree, byte for byte.
+    expect(committed.readAsStringSync(), mapOfTree().text,
+        reason: 'run `dart run tool/dependency_map.dart` and commit');
+  });
 
-    final result = Process.runSync(
-      'dart',
-      ['run', 'tool/dependency_map.dart'],
-      workingDirectory: Directory.current.path,
-    );
-    expect(result.exitCode, 0, reason: '${result.stderr}');
-
-    // The tool rewrites the file in place, so a drift shows up as a
-    // dirty tree; comparing the content it just wrote to what git has
-    // would need git. Instead: the file now matches the tree by
-    // construction, and the numbers below are the ones a reader acts on.
-    final text = committed.readAsStringSync();
-    expect(text, startsWith('<!-- GENERATED'));
-
-    final features = handWrittenDartFiles('lib/features').toList();
-    final reads = repositoryReadsByFeature(features);
-    final total = reads.values.fold<int>(0, (n, l) => n + l.length);
-    expect(
-      text,
-      contains('**$total files** across ${reads.length} features.'),
-      reason: 'the headline count in the map is the count in the tree',
-    );
-
-    final pairs = crossFeatureImports(features);
-    final volume = pairs.values.fold<int>(0, (n, v) => n + v);
-    expect(
-      text,
-      contains('**${pairs.length} directed relationships, $volume imports.**'),
-    );
+  test('the map carries no volume that moves with an unrelated edit '
+      '(#2121)', () {
+    final text = mapOfTree().text;
+    expect(text, isNot(contains('imports.**')),
+        reason: 'a total moves with every pull request');
+    expect(RegExp(r'^\| `[a-z_]+ -> [a-z_]+` \| \d+ \|$', multiLine: true)
+        .hasMatch(text), isFalse,
+        reason: 'per-pair counts move with every import');
+    expect(RegExp(r'^\| `lib/[^`]+\.dart` \| \d+ \|$', multiLine: true)
+        .hasMatch(text), isFalse,
+        reason: 'line counts move with every edit');
   });
 
   test('every feature the map names in a context exists in the tree', () {

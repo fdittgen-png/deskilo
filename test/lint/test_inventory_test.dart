@@ -2,10 +2,12 @@
 //
 // #1334 — the test inventory lists exactly the tests that exist.
 //
-// docs/testing/TEST_INVENTORY.md classifies every test file. A file added
-// or removed without regenerating it would leave a test nobody triaged,
-// or a row describing a test that is gone. The file SET is what is
-// pinned, not every cell: rewording a header should not fail a build.
+// docs/testing/TEST_INVENTORY.md classifies every test file. Since #2121
+// it is generated, never committed (`dart run tool/test_inventory.dart`,
+// and CI publishes it with the quality report): a committed copy was
+// rewritten by almost every pull request and put every other open one in
+// conflict. So what is pinned is that the rendered inventory lists every
+// test file and nothing else, and that no stale copy is tracked.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -17,6 +19,9 @@ Set<String> _rowsIn(String markdown) => {
           .allMatches(markdown))
         m.group(1)!,
     };
+
+String _relative(String path) =>
+    path.startsWith('./') ? path.substring(2) : path;
 
 void main() {
   test('the header paragraph is the stated invariant', () {
@@ -36,18 +41,27 @@ void main() {
   });
 
   test('every test file is in the inventory, and nothing else is', () {
-    final file = File(inventoryPath);
-    expect(file.existsSync(), isTrue,
-        reason: 'run `dart run tool/test_inventory.dart`');
-    final listed = _rowsIn(file.readAsStringSync());
-    final actual = {for (final e in classify()) e.path};
+    final entries = classify();
+    final listed = _rowsIn(render(entries));
+    final actual = {for (final e in testFiles()) _relative(e.path)};
 
     expect(actual.difference(listed), isEmpty,
-        reason: 'new test files are not classified — run '
-            '`dart run tool/test_inventory.dart` and commit the inventory');
+        reason: 'test files the rendered inventory leaves out');
     expect(listed.difference(actual), isEmpty,
-        reason: 'the inventory lists test files that no longer exist — run '
-            '`dart run tool/test_inventory.dart` and commit the inventory');
+        reason: 'the rendered inventory lists files that are not tests');
+  });
+
+  test('the inventory is generated, never tracked (#2121)', () {
+    final tracked = Process.runSync('git', ['ls-files', '--', inventoryPath]);
+    expect(tracked.exitCode, 0, reason: '${tracked.stderr}');
+    expect((tracked.stdout as String).trim(), isEmpty,
+        reason: '$inventoryPath is generated output: a committed copy '
+            'conflicts with every open pull request that adds a test');
+    final ignored =
+        Process.runSync('git', ['check-ignore', '--no-index', inventoryPath]);
+    expect(ignored.exitCode, 0,
+        reason: '$inventoryPath must be in .gitignore so a local run of '
+            'the tool is never committed by accident');
   });
 
   test('every action is one the triage allows', () {
