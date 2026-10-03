@@ -61,19 +61,25 @@ class _Gated implements EncoderSession {
   Future<void> cancel() => inner.cancel();
 }
 
-Widget _panel(TaskRecording r, Storyboard sb, TaskVideoExporter exporter) =>
-    ProviderScope(
-      overrides: [taskVideoExporterProvider.overrideWithValue(exporter)],
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(
-          body: SingleChildScrollView(
-            child: VideoGenerationPanel(recording: r, storyboard: sb),
-          ),
+/// The panel under a root container that answers with [exporter].
+Widget _panel(TaskRecording r, Storyboard sb, TaskVideoExporter exporter) {
+  final container = ProviderContainer(
+    overrides: [taskVideoExporterProvider.overrideWithValue(exporter)],
+  );
+  addTearDown(container.dispose);
+  return UncontrolledProviderScope(
+    container: container,
+    child: MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(
+        body: SingleChildScrollView(
+          child: VideoGenerationPanel(recording: r, storyboard: sb),
         ),
       ),
-    );
+    ),
+  );
+}
 
 void main() {
   testWidgets('saves the MP4 first, then captions and transcript', (
