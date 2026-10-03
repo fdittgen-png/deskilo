@@ -68,6 +68,12 @@ Future<void> showInvoiceIssueSheet(
         memberId: memberId,
         period: period,
       ),
+      readiness: (memberId, period) => repo.invoiceIssueReadiness(
+        workspaceId: workspace.id,
+        memberId: memberId,
+        period: period,
+        replacesId: replaces?.id,
+      ),
       // Only preselect a member the dropdown actually offers — the wrong
       // invoice may target a member who has left since.
       initialMemberId:
@@ -101,8 +107,11 @@ Future<void> showInvoiceIssueSheet(
       e.toString().contains('already invoiced')
           ? (l10n?.invoiceAlreadyInvoiced ??
               'This month is already invoiced for this member.')
-          : (l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.'),
+          : e.toString().contains('invoice_essentials_missing')
+              ? (l10n?.invoiceEssentialsRefused ??
+                  'The invoice was not issued: required details are missing.')
+              : (l10n?.workspaceGenericError ??
+                  'Something went wrong. Please try again.'),
     );
     return;
   }
@@ -121,6 +130,7 @@ class _InvoiceForm extends StatefulWidget {
     required this.members,
     required this.currency,
     required this.preview,
+    required this.readiness,
     required this.initialPeriod,
     required this.now,
     this.initialMemberId,
@@ -136,6 +146,10 @@ class _InvoiceForm extends StatefulWidget {
   final MoneyFormat currency;
   final Future<({List<InvoiceLine> lines, int totalCents})> Function(
       String memberId, String period) preview;
+
+  /// #1916 — what the server would refuse to issue for, as stable keys.
+  final Future<List<String>> Function(String memberId, String period)
+      readiness;
   final String? initialMemberId;
   final String initialPeriod;
 
@@ -162,6 +176,8 @@ class _InvoiceFormState extends State<_InvoiceForm> {
   final _buyerReference = TextEditingController();
   final _purchaseOrder = TextEditingController();
   ({List<InvoiceLine> lines, int totalCents})? _preview;
+  // #1916 — the essentials the server would refuse to issue without.
+  List<String> _missing = const [];
   bool _loading = false;
 
   @override
@@ -182,9 +198,18 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     setState(() => _loading = true);
     try {
       final result = await widget.preview(memberId, period);
+      var missing = const <String>[];
+      try {
+        missing = await widget.readiness(memberId, period);
+      } catch (e, st) {
+        // Advisory: the server still refuses an incomplete issue.
+        TraceLogger.instance.error('money', 'invoice readiness failed',
+            error: e, stackTrace: st);
+      }
       if (!mounted || _memberId != memberId || _period != period) return;
       setState(() {
         _preview = result;
+        _missing = missing;
         _loading = false;
       });
     } catch (e, st) {
@@ -195,6 +220,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
       if (!mounted) return;
       setState(() {
         _preview = (lines: const <InvoiceLine>[], totalCents: 0);
+        _missing = const [];
         _loading = false;
       });
     }
@@ -210,6 +236,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     setState(() {
       _period = '${next.year}-${next.month.toString().padLeft(2, '0')}';
       _preview = null;
+      _missing = const [];
     });
     _load();
   }
@@ -256,6 +283,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             setState(() {
               _memberId = value;
               _preview = null;
+              _missing = const [];
             });
             _load();
           },
@@ -437,10 +465,18 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             helperMaxLines: 2,
           ),
         ),
+        if (_missing.isNotEmpty && lines.isNotEmpty)
+          InlineBanner(
+            key: const ValueKey('invoice-missing-essentials'),
+            icon: Icons.rule_folder_outlined,
+            text: '${l10n?.invoiceMissingTitle ?? 'Complete these details before issuing'}:\n'
+                '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
+            severity: InlineBannerSeverity.error,
+          ),
         const SizedBox(height: 4),
         FilledButton(
           key: const ValueKey('invoice-submit'),
-          onPressed: _memberId == null || lines.isEmpty
+          onPressed: _memberId == null || lines.isEmpty || _missing.isNotEmpty
               ? null
               : () => Navigator.of(context).pop((
                     memberId: _memberId!,
@@ -457,3 +493,20 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     );
   }
 }
+
+/// #1916 — the words for one missing essential (stable server keys, 0365).
+String invoiceMissingLabel(AppLocalizations? l10n, String key) => switch (key) {
+      'seller_address' => l10n?.invoiceMissingSellerAddress ??
+          "The workspace's postal address (street or city)",
+      'seller_vat_id' => l10n?.invoiceMissingSellerVatId ??
+          "The workspace's VAT identification number",
+      'exemption_reason' => l10n?.invoiceMissingExemptionReason ??
+          'The legal basis for the VAT exemption',
+      'buyer_name' =>
+        l10n?.invoiceMissingBuyerName ?? "The member's name or company",
+      'buyer_address' => l10n?.invoiceMissingBuyerAddress ??
+          "The member's postal address (a business customer needs one)",
+      'buyer_vat_id' => l10n?.invoiceMissingBuyerVatId ??
+          "The member's VAT number (needed for reverse charge)",
+      _ => key,
+    };

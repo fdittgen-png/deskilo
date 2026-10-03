@@ -473,6 +473,18 @@ class FakeMoneyRepository implements MoneyRepository {
     ];
   }
 
+  /// Tests seed what the server would report missing.
+  List<String> invoiceMissing = const [];
+
+  @override
+  Future<List<String>> invoiceIssueReadiness({
+    required String workspaceId,
+    required String memberId,
+    required String period,
+    InvoiceKind kind = InvoiceKind.full,
+    String? replacesId,
+  }) async => invoiceMissing;
+
   @override
   Future<({List<InvoiceLine> lines, int totalCents})> previewInvoice({
     required String workspaceId,

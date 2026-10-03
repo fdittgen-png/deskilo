@@ -1,0 +1,35 @@
+{
+  "@@locale": "de",
+  "invoiceMissingTitle": "Vor der Ausstellung bitte ergänzen",
+  "@invoiceMissingTitle": {
+    "description": "#1916 invoice essentials: invoiceMissingTitle"
+  },
+  "invoiceMissingSellerAddress": "Die Postanschrift des Arbeitsbereichs (Straße oder Ort)",
+  "@invoiceMissingSellerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
+  },
+  "invoiceMissingSellerVatId": "Die Umsatzsteuer-Identifikationsnummer des Arbeitsbereichs",
+  "@invoiceMissingSellerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
+  },
+  "invoiceMissingExemptionReason": "Die Rechtsgrundlage der Umsatzsteuerbefreiung",
+  "@invoiceMissingExemptionReason": {
+    "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
+  },
+  "invoiceMissingBuyerName": "Der Name oder die Firma des Mitglieds",
+  "@invoiceMissingBuyerName": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerName"
+  },
+  "invoiceMissingBuyerAddress": "Die Postanschrift des Mitglieds (bei Unternehmen erforderlich)",
+  "@invoiceMissingBuyerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
+  },
+  "invoiceMissingBuyerVatId": "Die USt-IdNr. des Mitglieds (für das Reverse-Charge-Verfahren erforderlich)",
+  "@invoiceMissingBuyerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
+  },
+  "invoiceEssentialsRefused": "Die Rechnung wurde nicht ausgestellt: Pflichtangaben fehlen.",
+  "@invoiceEssentialsRefused": {
+    "description": "#1916 invoice essentials: invoiceEssentialsRefused"
+  }
+}
