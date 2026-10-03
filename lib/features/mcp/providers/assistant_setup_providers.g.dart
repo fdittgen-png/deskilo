@@ -155,3 +155,54 @@ final class McpConnectorUrlProvider
 }
 
 String _$mcpConnectorUrlHash() => r'2ae8328373a088582ecf4159bc2e5ba1af91cd82';
+
+/// #2145 — what consent would offer this person on this installation:
+/// every workspace whose owner offers assistants, with the operations
+/// this person may use there. Read through the active target's client.
+
+@ProviderFor(myMcpConsentOptions)
+final myMcpConsentOptionsProvider = MyMcpConsentOptionsProvider._();
+
+/// #2145 — what consent would offer this person on this installation:
+/// every workspace whose owner offers assistants, with the operations
+/// this person may use there. Read through the active target's client.
+
+final class MyMcpConsentOptionsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<ConsentOptions>,
+          ConsentOptions,
+          FutureOr<ConsentOptions>
+        >
+    with $FutureModifier<ConsentOptions>, $FutureProvider<ConsentOptions> {
+  /// #2145 — what consent would offer this person on this installation:
+  /// every workspace whose owner offers assistants, with the operations
+  /// this person may use there. Read through the active target's client.
+  MyMcpConsentOptionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myMcpConsentOptionsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myMcpConsentOptionsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<ConsentOptions> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<ConsentOptions> create(Ref ref) {
+    return myMcpConsentOptions(ref);
+  }
+}
+
+String _$myMcpConsentOptionsHash() =>
+    r'40ceb9f84686299222a619c65e2d945de9df8024';

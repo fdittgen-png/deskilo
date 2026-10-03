@@ -1213,6 +1213,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biAreaTreasury => 'Treasury';
 
   @override
+  String get biBookingBasis =>
+      'Reserved capacity measures bookings, not actual attendance.';
+
+  @override
   String biChangePoints(String value) {
     return '$value pp';
   }
@@ -1254,6 +1258,34 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get biComparisonUnqualified =>
+      'Change unavailable: one period has partial or out-of-date data.';
+
+  @override
+  String biComputedWorkspaceTime(String date) {
+    return 'Computed $date · workspace time';
+  }
+
+  @override
+  String get biCurrentBasis =>
+      'The whole period is included. Comparison with a completed period is not like-for-like.';
+
+  @override
+  String get biDataNotApplicable => 'No applicable capacity';
+
+  @override
+  String get biDataNotRecorded => 'Not recorded';
+
+  @override
+  String get biDataPartial => 'Partial data';
+
+  @override
+  String get biDataStale => 'Out of date';
+
+  @override
+  String get biDataUnavailable => 'Unavailable';
+
+  @override
   String get biDimensionLevel => 'Level';
 
   @override
@@ -1262,6 +1294,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biForbidden => 'You may not read this analysis in this workspace.';
+
+  @override
+  String get biFutureBasis =>
+      'Existing bookings and current opening rules; not a demand forecast or guaranteed usage.';
 
   @override
   String get biGrain => 'Period length';
@@ -1292,9 +1328,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biOpenSource => 'Open the source';
 
   @override
+  String get biPastBasis =>
+      'Recomputed from records available now, not a snapshot of what was known then.';
+
+  @override
   String biQuarter(String quarter, String year) {
     return 'Q$quarter $year';
   }
+
+  @override
+  String get biRecordedFuture => 'Future period · bookings on record';
+
+  @override
+  String get biRecordedPast => 'Past period · current records';
+
+  @override
+  String get biRecordedPresent => 'Current period · includes future dates';
+
+  @override
+  String get biRefresh => 'Refresh data';
 
   @override
   String biRefusedBudget(String count) {
@@ -1317,6 +1369,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biReset => 'Show the standard view';
+
+  @override
+  String biSeatHoursBlocked(String hours) {
+    return '$hours blocked seat-hours';
+  }
+
+  @override
+  String biSeatHoursFree(String hours) {
+    return '$hours unreserved seat-hours';
+  }
 
   @override
   String get biSort => 'Order';
@@ -6076,6 +6138,97 @@ class AppLocalizationsEn extends AppLocalizations {
   String get holidayWhitMonday => 'Whit Monday';
 
   @override
+  String get identityConnectBrowser => 'The browser could not be opened.';
+
+  @override
+  String identityConnectConfirmApply(String name) {
+    return 'Send your membership request to $name?';
+  }
+
+  @override
+  String get identityConnectConfirmApplyBody =>
+      'You are connected now. The space reviews your request; nothing else is shared.';
+
+  @override
+  String get identityConnectContinue => 'Continue with Deskilo';
+
+  @override
+  String get identityConnectCurrentServer =>
+      'This is the server you are already signed in to.';
+
+  @override
+  String get identityConnectDifferentAuthority =>
+      'This server accepts a different identity provider.';
+
+  @override
+  String identityConnectDone(String host) {
+    return 'Connected to $host.';
+  }
+
+  @override
+  String get identityConnectExistingAccount =>
+      'Use an account I already have on this server';
+
+  @override
+  String get identityConnectExpired =>
+      'The sign-in took too long. Start again.';
+
+  @override
+  String identityConnectExplain(String host) {
+    return '$host will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the space still decides any request.';
+  }
+
+  @override
+  String get identityConnectNetwork => 'The server did not answer. Try again.';
+
+  @override
+  String get identityConnectNoDeskiloSignIn =>
+      'This server does not offer sign-in with Deskilo.';
+
+  @override
+  String get identityConnectNoSharedIdentity =>
+      'Your account here has no Deskilo identity another server could accept.';
+
+  @override
+  String identityConnectNotSaved(String host) {
+    return '$host accepted you, but this device could not keep the connection. Nothing was sent. Try again.';
+  }
+
+  @override
+  String get identityConnectRefused =>
+      'The connection was not completed. Nothing was sent.';
+
+  @override
+  String get identityConnectRetry => 'Try again';
+
+  @override
+  String get identityConnectSend => 'Send request';
+
+  @override
+  String get identityConnectServerUnsupported =>
+      'This server cannot be connected from this version of the app.';
+
+  @override
+  String identityConnectTitle(String host) {
+    return 'Connect to $host';
+  }
+
+  @override
+  String get identityConnectUnavailable => 'This server did not answer.';
+
+  @override
+  String get identityConnectUnlinked =>
+      'An account on that server already uses this identity or e-mail without being linked to it. Use that account instead.';
+
+  @override
+  String get identityConnectWaiting =>
+      'Finish signing in in your browser, then come back here.';
+
+  @override
+  String get identityConnectWrongAccount =>
+      'The browser signed in as someone else. Nothing was connected.';
+
+  @override
   String identityConsentAsks(String host) {
     return 'Use your Deskilo identity to sign in to $host.';
   }
@@ -8548,6 +8701,274 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String mcpConnectAccessExpiresIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days',
+      one: '1 day',
+    );
+    return 'Approved — $_temp0 left.';
+  }
+
+  @override
+  String mcpConnectAccessExpiresSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days',
+      one: '1 day',
+    );
+    return 'Approved — expires in $_temp0. Ask for approval again once it lapses.';
+  }
+
+  @override
+  String get mcpConnectAddTitle => 'Add DesKilo to your assistant';
+
+  @override
+  String get mcpConnectAddressLabel => 'Your DesKilo address for assistants';
+
+  @override
+  String get mcpConnectAllDone =>
+      'Everything is ready. Test the connection below.';
+
+  @override
+  String get mcpConnectBeforeTitle => 'Before you connect';
+
+  @override
+  String get mcpConnectChatgptNote =>
+      'Developer mode needs a paid ChatGPT plan (Plus, Pro, Business, Enterprise or Edu).';
+
+  @override
+  String get mcpConnectChatgptStep1 =>
+      'In ChatGPT, turn on developer mode: Settings → Apps → Advanced settings.';
+
+  @override
+  String get mcpConnectChatgptStep2 =>
+      'Create an app named DesKilo, paste the address above and choose OAuth as the authentication.';
+
+  @override
+  String get mcpConnectChatgptStep3 =>
+      'Sign in with Google and pick this workspace and what ChatGPT may do there.';
+
+  @override
+  String get mcpConnectClaudeNote =>
+      'Claude on the web, Claude Desktop and the Claude mobile app share the same connectors. On a Team or Enterprise plan, an owner of the Claude organisation adds the connector first.';
+
+  @override
+  String get mcpConnectClaudeOpen => 'Open Claude connectors';
+
+  @override
+  String get mcpConnectClaudeStep1 => 'In Claude, open Settings → Connectors.';
+
+  @override
+  String get mcpConnectClaudeStep2 =>
+      'Choose \"Add custom connector\", name it DesKilo and paste the address above.';
+
+  @override
+  String get mcpConnectClaudeStep3 =>
+      'Choose Connect, sign in with Google and pick this workspace and what Claude may do there.';
+
+  @override
+  String get mcpConnectCodeStep1 => 'Run this in a terminal:';
+
+  @override
+  String get mcpConnectCodeStep2 =>
+      'In Claude Code, type /mcp, choose deskilo and then Authenticate. A browser opens to sign in and pick this workspace.';
+
+  @override
+  String get mcpConnectCopied => 'Copied.';
+
+  @override
+  String get mcpConnectCopyRequest => 'Copy a request to send';
+
+  @override
+  String get mcpConnectCursorInstall => 'Add to Cursor';
+
+  @override
+  String get mcpConnectCursorStep =>
+      'Cursor asks to install DesKilo, then opens a browser to sign in and pick this workspace. Without the button, add this to ~/.cursor/mcp.json:';
+
+  @override
+  String get mcpConnectDone => 'Done';
+
+  @override
+  String get mcpConnectIntro =>
+      'Let Claude, ChatGPT or another assistant check and book things for you in DesKilo. It acts as you, only in the workspaces and for the actions you approve.';
+
+  @override
+  String mcpConnectLastCall(String client, String when) {
+    return 'Last call: $client, $when.';
+  }
+
+  @override
+  String get mcpConnectManageHint =>
+      'To see what an assistant did or to disconnect it, open Assistants.';
+
+  @override
+  String get mcpConnectOpenFailed =>
+      'The app could not be opened from here. Use the steps below instead.';
+
+  @override
+  String get mcpConnectOpenGuide => 'Open the connection guide';
+
+  @override
+  String get mcpConnectOpenInstallation => 'Open the installation console';
+
+  @override
+  String get mcpConnectOpenSetup => 'Open assistant setup';
+
+  @override
+  String get mcpConnectOperatorRequest =>
+      'Hello, could you switch assistants on for our DesKilo server? It is under Settings → Installation: assistants. Thank you.';
+
+  @override
+  String get mcpConnectOtherStep1 =>
+      'Most clients read a JSON file of servers. Add this entry; the client opens a browser to sign in the first time.';
+
+  @override
+  String get mcpConnectOtherStep2 =>
+      'A client that only starts local programs can reach DesKilo through mcp-remote (needs Node.js):';
+
+  @override
+  String get mcpConnectRoleDenied =>
+      'Nothing is offered to your role here. A workspace administrator decides what each role may do.';
+
+  @override
+  String get mcpConnectStepAccess => 'Your access to assistants';
+
+  @override
+  String get mcpConnectStepConnect => 'DesKilo added to your assistant';
+
+  @override
+  String get mcpConnectStepGoogle => 'Google sign-in';
+
+  @override
+  String get mcpConnectStepIdentity => 'Your identity on this server';
+
+  @override
+  String get mcpConnectStepServer => 'Assistants switched on for this server';
+
+  @override
+  String get mcpConnectStepWorkspace => 'This workspace offers assistants';
+
+  @override
+  String get mcpConnectSwitchWorkspace => 'Switch to this workspace';
+
+  @override
+  String get mcpConnectTabChatgpt => 'ChatGPT';
+
+  @override
+  String get mcpConnectTabClaude => 'Claude';
+
+  @override
+  String get mcpConnectTabClaudeCode => 'Claude Code';
+
+  @override
+  String get mcpConnectTabCursor => 'Cursor';
+
+  @override
+  String get mcpConnectTabOther => 'Other';
+
+  @override
+  String get mcpConnectTabVscode => 'VS Code';
+
+  @override
+  String get mcpConnectTest => 'Test the connection';
+
+  @override
+  String get mcpConnectTestAgain => 'Test again';
+
+  @override
+  String get mcpConnectTestPrompt =>
+      'Using DesKilo, what are my bookings this week?';
+
+  @override
+  String mcpConnectTestReached(String client, String when) {
+    return 'Connected: $client reached DesKilo, $when.';
+  }
+
+  @override
+  String get mcpConnectTestTimeout =>
+      'No call arrived yet. Check that the connector is added, that you approved this workspace, and that the steps above are done; then test again.';
+
+  @override
+  String get mcpConnectTestTitle => 'Check that it works';
+
+  @override
+  String get mcpConnectTestWaiting =>
+      'Waiting for your assistant to call DesKilo. Ask it:';
+
+  @override
+  String get mcpConnectTitle => 'Connect an assistant';
+
+  @override
+  String get mcpConnectTodoConnect =>
+      'To do — you: follow the steps for your assistant below.';
+
+  @override
+  String get mcpConnectTodoYou => 'To do — you.';
+
+  @override
+  String get mcpConnectUnavailable => 'Could not be checked right now.';
+
+  @override
+  String get mcpConnectVscodeInstall => 'Add to VS Code';
+
+  @override
+  String get mcpConnectVscodeStep =>
+      'VS Code asks to install DesKilo. Start it from the MCP servers list; a browser opens to sign in and pick this workspace.';
+
+  @override
+  String get mcpConnectWaitingDatabaseAdmin =>
+      'Waiting for a database administrator to approve your request.';
+
+  @override
+  String mcpConnectWaitingOperator(String names) {
+    return 'Waiting for the server\'s operator: $names.';
+  }
+
+  @override
+  String get mcpConnectWaitingOperatorUnknown =>
+      'Waiting for the server\'s operator, who is not named yet.';
+
+  @override
+  String get mcpConnectWaitingWorkspaceAdmin =>
+      'Waiting for a workspace administrator to offer assistants here.';
+
+  @override
+  String get mcpConnectWhich => 'Which assistant do you use?';
+
+  @override
+  String get mcpConnectWorkspaceSelected => 'Selected workspace';
+
+  @override
+  String get mcpConnectWorkspacesHint =>
+      'Each workspace decides for itself. When your assistant asks, you choose among the ready ones.';
+
+  @override
+  String get mcpConnectWorkspacesTitle => 'Your workspaces';
+
+  @override
+  String get mcpConnectWsConnected =>
+      'Connected — an assistant may act for you here.';
+
+  @override
+  String get mcpConnectWsNotOffered =>
+      'Assistants are on, but nothing is offered to your role yet. A workspace administrator decides.';
+
+  @override
+  String get mcpConnectWsOff =>
+      'Assistants are off in this workspace. A workspace administrator turns them on in Assistant setup.';
+
+  @override
+  String get mcpConnectWsReady => 'Ready — choose it when your assistant asks.';
+
+  @override
+  String get mcpConnectWsUnknown =>
+      'Shown once your access to assistants is approved.';
+
+  @override
   String get mcpConnectedNoWorkspace =>
       'No workspace: this assistant can do nothing here.';
 
@@ -8866,6 +9287,26 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mcpPolicyUnavailable =>
       'The assistant settings could not be loaded. Try again later.';
+
+  @override
+  String get mcpRefusalClientNotApproved =>
+      'This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.';
+
+  @override
+  String get mcpRefusalNoIdentity =>
+      'Confirm your identity in DesKilo under Assistants first, then connect again from the assistant.';
+
+  @override
+  String get mcpRefusalNotEligible =>
+      'Your access to assistants is not approved yet. Ask for it in DesKilo under Assistants, then connect again from the assistant.';
+
+  @override
+  String get mcpRefusalOfferChanged =>
+      'What this workspace offers changed while you were choosing. Connect again from the assistant to see the current offer.';
+
+  @override
+  String get mcpRefusalRequestExpired =>
+      'This connection request has expired or was already used. Start again from the assistant.';
 
   @override
   String get mcpRemoveWorkspace => 'Remove this workspace';
@@ -14227,6 +14668,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusNet => 'Net';
 
   @override
+  String get statusNetExplanation =>
+      'This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together.';
+
+  @override
   String get statusPaymentsMatched => 'Payments matched';
 
   @override
@@ -15088,6 +15533,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderActionBack => 'Went back';
 
   @override
+  String get taskRecorderActionCancelReservation => 'Cancelled the reservation';
+
+  @override
   String get taskRecorderActionCancelReview =>
       'Closed the booking without booking';
 
@@ -15095,7 +15543,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderActionChangeField => 'Changed a booking detail';
 
   @override
+  String get taskRecorderActionCheckIn => 'Checked in';
+
+  @override
+  String get taskRecorderActionCheckOut => 'Checked out';
+
+  @override
+  String get taskRecorderActionCloseMyReservation =>
+      'Closed my reservation without changing it';
+
+  @override
   String get taskRecorderActionConfirmBooking => 'Confirmed the booking';
+
+  @override
+  String get taskRecorderActionDeclineOptIn =>
+      'Did not switch on a test feature';
 
   @override
   String get taskRecorderActionOpenReserve => 'Opened Reserve';
@@ -15104,10 +15566,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderActionSelectDate => 'Chose the day';
 
   @override
+  String get taskRecorderActionSelectLevel => 'Chose a level';
+
+  @override
   String get taskRecorderActionSelectPeriod => 'Chose the period';
 
   @override
   String get taskRecorderActionSelectResource => 'Chose a place';
+
+  @override
+  String get taskRecorderActionSwitchFeature => 'Switched a feature';
 
   @override
   String get taskRecorderActionSwitchView => 'Switched the view';
@@ -15220,6 +15688,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderOpenRecorder => 'Open the task recorder';
 
   @override
+  String get taskRecorderOutcomeCancelled => 'Cancelled';
+
+  @override
+  String get taskRecorderOutcomeCheckedIn => 'Checked in';
+
+  @override
+  String get taskRecorderOutcomeCheckedOut => 'Checked out';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Booked';
 
   @override
@@ -15230,6 +15707,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskRecorderOutcomeSeries => 'Series booked';
+
+  @override
+  String get taskRecorderOutcomeSettingNotSaved => 'Not saved';
+
+  @override
+  String get taskRecorderOutcomeSettingSaved => 'Saved';
 
   @override
   String get taskRecorderOutcomeUnknown => 'No answer came';
@@ -15354,6 +15837,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderValueCustom => 'custom times';
 
   @override
+  String get taskRecorderValueDay => 'day';
+
+  @override
   String get taskRecorderValueDesk => 'a desk';
 
   @override
@@ -15372,13 +15858,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderValueList => 'list';
 
   @override
+  String get taskRecorderValueMonth => 'month';
+
+  @override
   String get taskRecorderValueMorning => 'morning';
 
   @override
   String get taskRecorderValueNoCheckIn => 'without check-in';
 
   @override
+  String get taskRecorderValueOff => 'off';
+
+  @override
   String get taskRecorderValueOffline => 'offline';
+
+  @override
+  String get taskRecorderValueOn => 'on';
 
   @override
   String get taskRecorderValueOnce => 'once';
@@ -15421,6 +15916,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskRecorderValueTomorrow => 'tomorrow';
+
+  @override
+  String get taskRecorderValueWeek => 'week';
 
   @override
   String get taskRecorderValueWithheld => 'not recorded';

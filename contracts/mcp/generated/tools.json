@@ -4,7 +4,8 @@
   "tools": [
     {
       "name": "deskilo_list_workspaces",
-      "description": "The workspaces the caller is an approved member of.",
+      "title": "List my workspaces",
+      "description": "Start here. Lists the DesKilo workspaces this person may use through this assistant, each with its workspace_id, name and the operations allowed there. Every other tool needs one of these workspace_id values; when the person has several workspaces, ask which one unless the request makes it obvious.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -12,66 +13,186 @@
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "How many items to return (1-100, default 25).",
+            "examples": [
+              25
+            ]
           }
         },
         "required": []
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "workspaces",
+          "has_more"
+        ],
+        "properties": {
+          "workspaces": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "workspace_id"
+              ],
+              "properties": {
+                "workspace_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "operations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "has_more": {
+            "type": "boolean"
+          }
+        }
+      },
       "annotations": {
+        "title": "List my workspaces",
         "readOnlyHint": true,
-        "idempotentHint": false
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_get_capabilities",
-      "description": "What this workspace exposes to the caller, and why an operation is unavailable.",
+      "title": "What can I do here?",
+      "description": "What this assistant may do in one workspace right now, and until when access is approved. Call it when a tool is missing or a call was refused, to explain to the person what is allowed and what is not.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           }
         },
         "required": [
           "workspace_id"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "get_capabilities"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "What can I do here?",
         "readOnlyHint": true,
-        "idempotentHint": false
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_get_availability",
-      "description": "Free and taken places for a bounded window.",
+      "title": "Find free places",
+      "description": "Which places can be booked for a time window in a workspace. \"free\" is the booking engine's own verdict for this person (opening hours, booking granularity, limits, blocks and existing bookings), so a free seat_id can be passed to deskilo_create_reservation. Paged: pass next_cursor to see more.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "starts_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Start of the time you want to book, ISO 8601 with an explicit offset in the workspace's time zone, e.g. 2026-10-05T09:00:00+02:00.",
+            "examples": [
+              "2026-10-05T09:00:00+02:00"
+            ]
           },
           "ends_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "End of the time you want to book, ISO 8601 with an explicit offset; at most 31 days after starts_at.",
+            "examples": [
+              "2026-10-05T13:00:00+02:00"
+            ]
           },
           "cursor": {
             "type": "string",
-            "maxLength": 400
+            "maxLength": 400,
+            "description": "The next_cursor of the previous page, to read the next one. Omit for the first page."
           },
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "How many items to return (1-100, default 25).",
+            "examples": [
+              25
+            ]
           }
         },
         "required": [
@@ -80,40 +201,114 @@
           "ends_at"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "get_availability"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Find free places",
         "readOnlyHint": true,
-        "idempotentHint": false
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_list_my_reservations",
-      "description": "The caller's own reservations in a bounded window.",
+      "title": "List my bookings",
+      "description": "The person's own bookings that overlap a window (at most 31 days), oldest first, with reservation_id, place, times, status and state_digest. Use it before moving, checking in, checking out or cancelling a booking.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "from": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Window start, ISO 8601 with an explicit offset. The window is at most 31 days.",
+            "examples": [
+              "2026-10-01T00:00:00+02:00"
+            ]
           },
           "to": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Window end, ISO 8601 with an explicit offset, after from.",
+            "examples": [
+              "2026-10-31T23:59:59+01:00"
+            ]
           },
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "How many items to return (1-100, default 25).",
+            "examples": [
+              25
+            ]
           },
           "cursor": {
             "type": "string",
-            "maxLength": 400
+            "maxLength": 400,
+            "description": "The next_cursor of the previous page, to read the next one. Omit for the first page."
           }
         },
         "required": [
@@ -122,29 +317,95 @@
           "to"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "list_my_reservations"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "List my bookings",
         "readOnlyHint": true,
-        "idempotentHint": false
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_get_my_statement",
-      "description": "The caller's own monthly statement.",
+      "title": "My monthly statement",
+      "description": "The person's own statement for one month: subscription fee, included and used half-days, overage, supplements, credits, balance and VAT. Amounts are integer minor units (cents) of the workspace currency.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "member_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The member this request is about."
           },
           "period": {
             "type": "string",
-            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "description": "The month, as YYYY-MM.",
+            "examples": [
+              "2026-09"
+            ]
           }
         },
         "required": [
@@ -153,84 +414,231 @@
           "period"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "get_my_statement"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "My monthly statement",
         "readOnlyHint": true,
-        "idempotentHint": false
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_list_my_invoices",
-      "description": "The caller's own invoices.",
+      "title": "List my invoices",
+      "description": "The person's own invoices, newest first: number, period, kind, total in minor units (cents) with its currency, issue time and whether it was voided. Paged.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "How many items to return (1-100, default 25).",
+            "examples": [
+              25
+            ]
           },
           "cursor": {
             "type": "string",
-            "maxLength": 400
+            "maxLength": 400,
+            "description": "The next_cursor of the previous page, to read the next one. Omit for the first page."
           }
         },
         "required": [
           "workspace_id"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "list_my_invoices"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "List my invoices",
         "readOnlyHint": true,
-        "idempotentHint": false
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_create_reservation",
-      "description": "Book a place for the caller, optionally checked in at once; one request id is one reservation however often it is sent.",
+      "title": "Book a place",
+      "description": "Book a place for the person: a seat (usually a seat_id from deskilo_get_availability), or a whole desk, office or level where the workspace allows it. The workspace's own rules apply exactly as in the app; a refusal says why in plain words. Generate a new request_id per booking; resending the same request_id never books twice.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "seat_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The seat to book: a seat_id from deskilo_get_availability with free = true."
           },
           "desk_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "Book a whole desk instead of one seat (only where the workspace books desks as a whole)."
           },
           "office_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "Book a whole office instead of one seat (only where the workspace books offices as a whole)."
           },
           "level_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "Book a whole level instead of one seat (only where the workspace books levels as a whole)."
           },
           "starts_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Start, ISO 8601 with an explicit offset in the workspace's time zone, e.g. 2026-10-05T09:00:00+02:00.",
+            "examples": [
+              "2026-10-05T09:00:00+02:00"
+            ]
           },
           "ends_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "End, ISO 8601 with an explicit offset, after starts_at.",
+            "examples": [
+              "2026-10-05T13:00:00+02:00"
+            ]
           },
           "check_in": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "True to check the person in at once (only when the booking starts now). Default false.",
+            "examples": [
+              false
+            ]
           }
         },
         "required": [
@@ -240,43 +648,120 @@
           "ends_at"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "create_reservation"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Book a place",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_update_reservation",
-      "description": "Move the caller's own reservation.",
+      "title": "Move my booking",
+      "description": "Change the start and end of one of the person's own bookings. The workspace's rules apply as in the app.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "reservation_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
           },
           "starts_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "The new start, ISO 8601 with an explicit offset.",
+            "examples": [
+              "2026-10-05T09:00:00+02:00"
+            ]
           },
           "ends_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "The new end, ISO 8601 with an explicit offset.",
+            "examples": [
+              "2026-10-05T13:00:00+02:00"
+            ]
           },
           "expected_state": {
             "type": "string",
-            "maxLength": 64
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
           }
         },
         "required": [
@@ -287,33 +772,102 @@
           "ends_at"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "update_reservation"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Move my booking",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_check_in",
-      "description": "Check the caller in on their own reservation.",
+      "title": "Check in",
+      "description": "Check the person in on one of their own bookings (usually today's, from deskilo_list_my_reservations).",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "reservation_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
           },
           "expected_state": {
             "type": "string",
-            "maxLength": 64
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
           }
         },
         "required": [
@@ -322,33 +876,102 @@
           "reservation_id"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "check_in"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Check in",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_check_out",
-      "description": "Check the caller out of their own running reservation.",
+      "title": "Check out",
+      "description": "Check the person out of their running booking.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "reservation_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
           },
           "expected_state": {
             "type": "string",
-            "maxLength": 64
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
           }
         },
         "required": [
@@ -357,37 +980,107 @@
           "reservation_id"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "check_out"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Check out",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_request_reservation_deletion",
-      "description": "Ask for the caller's reservation to be deleted; the workspace's validation rules decide.",
+      "title": "Cancel my booking",
+      "description": "Cancel one of the person's own bookings. Depending on the workspace's validation rules it is cancelled at once (status completed) or a validator must approve it first (status pending_validation: tell the person it is not cancelled yet).",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "reservation_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
           },
           "reason": {
             "type": "string",
-            "maxLength": 500
+            "maxLength": 500,
+            "description": "Optional: why the booking is cancelled, shown to whoever validates it."
           },
           "expected_state": {
             "type": "string",
-            "maxLength": 64
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
           }
         },
         "required": [
@@ -396,33 +1089,105 @@
           "reservation_id"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "request_reservation_deletion"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Cancel my booking",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_request_invoice_issue",
-      "description": "Ask for a member's invoice to be issued.",
+      "title": "Request an invoice",
+      "description": "Staff only: ask for a member's invoice for one month to be issued. Needs the person's confirmation in the DesKilo app first (status requires_confirmation), then the workspace's validation rules.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "member_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The member this request is about."
           },
           "period": {
             "type": "string",
-            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "description": "The month, as YYYY-MM.",
+            "examples": [
+              "2026-09"
+            ]
           },
           "kind": {
             "type": "string",
@@ -430,6 +1195,10 @@
               "full",
               "subscription",
               "usage"
+            ],
+            "description": "Which invoice: full (subscription and usage), subscription only, or usage only.",
+            "examples": [
+              "full"
             ]
           }
         },
@@ -440,33 +1209,102 @@
           "period"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "request_invoice_issue"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Request an invoice",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_request_invoice_void",
-      "description": "Ask for an invoice to be voided.",
+      "title": "Request an invoice void",
+      "description": "Staff only: ask for an invoice to be voided. Needs the person's confirmation in the DesKilo app first, then the workspace's validation rules.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "invoice_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The invoice this request is about."
           },
           "reason": {
             "type": "string",
-            "maxLength": 500
+            "maxLength": 500,
+            "description": "Why the invoice should be voided, shown to whoever validates it."
           }
         },
         "required": [
@@ -475,33 +1313,102 @@
           "invoice_id"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "request_invoice_void"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Request an invoice void",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_request_refund",
-      "description": "Ask for an invoice to be refunded.",
+      "title": "Request a refund",
+      "description": "Staff only: ask for an invoice to be refunded. Needs the person's confirmation in the DesKilo app first, then the workspace's validation rules.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "invoice_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The invoice this request is about."
           },
           "note": {
             "type": "string",
-            "maxLength": 500
+            "maxLength": 500,
+            "description": "Optional: a note for whoever validates the refund."
           }
         },
         "required": [
@@ -510,29 +1417,97 @@
           "invoice_id"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "request_refund"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Request a refund",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_request_member_status_change",
-      "description": "Ask for a member's status to change.",
+      "title": "Request a member status change",
+      "description": "Staff only: ask for a member to become active, paused or exited. Needs the person's confirmation in the DesKilo app first, then the workspace's validation rules.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "member_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The member this request is about."
           },
           "status": {
             "type": "string",
@@ -540,6 +1515,10 @@
               "active",
               "paused",
               "exited"
+            ],
+            "description": "The member status to request.",
+            "examples": [
+              "paused"
             ]
           }
         },
@@ -550,34 +1529,106 @@
           "status"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "request_member_status_change"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Request a member status change",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_request_subscription_change",
-      "description": "Ask for a member's subscription share to change.",
+      "title": "Request a subscription change",
+      "description": "Staff only: ask for a member's subscription share (percent) to change. Needs the person's confirmation in the DesKilo app first, then the workspace's validation rules.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "member_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The member this request is about."
           },
           "pct": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 100
+            "maximum": 100,
+            "description": "The subscription share to request, in percent (0-100).",
+            "examples": [
+              50
+            ]
           }
         },
         "required": [
@@ -587,55 +1638,185 @@
           "pct"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "request_subscription_change"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Request a subscription change",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_list_pending_validations",
-      "description": "Requests awaiting the caller's decision.",
+      "title": "List requests awaiting a decision",
+      "description": "Requests in this workspace that are waiting for a decision and that the person made, is the subject of, or may decide. Paged.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "How many items to return (1-100, default 25).",
+            "examples": [
+              25
+            ]
           },
           "cursor": {
             "type": "string",
-            "maxLength": 400
+            "maxLength": 400,
+            "description": "The next_cursor of the previous page, to read the next one. Omit for the first page."
           }
         },
         "required": [
           "workspace_id"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "list_pending_validations"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "List requests awaiting a decision",
         "readOnlyHint": true,
-        "idempotentHint": false
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_get_validation",
-      "description": "One request awaiting a decision, with what the decision is about.",
+      "title": "Read one request awaiting a decision",
+      "description": "One request awaiting a decision: its type, who decided so far, whether this person can respond, and if not, why.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "event_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "An event_id from deskilo_list_pending_validations."
           }
         },
         "required": [
@@ -643,32 +1824,102 @@
           "event_id"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "get_validation"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Read one request awaiting a decision",
         "readOnlyHint": true,
-        "idempotentHint": false
+        "openWorldHint": false
       }
     },
     {
       "name": "deskilo_respond_to_validation",
-      "description": "Accept or refuse a request awaiting the caller's decision; the distinct-person quorum stays the server's. Who may decide is the validation policy's own answer (validator scope, pool, owner and sequential rules), not a separate permission.",
+      "title": "Accept or refuse a request",
+      "description": "Accept or refuse a request awaiting this person's decision. Needs the person's confirmation in the DesKilo app first (status requires_confirmation). The workspace's quorum still decides whether the request is settled.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "event_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "An event_id from deskilo_list_pending_validations."
           },
           "accept": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "True to accept, false to refuse.",
+            "examples": [
+              true
+            ]
           }
         },
         "required": [
@@ -678,9 +1929,67 @@
           "accept"
         ]
       },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "respond_to_validation"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "annotations": {
+        "title": "Accept or refuse a request",
         "readOnlyHint": false,
-        "idempotentHint": true
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
       }
     }
   ]

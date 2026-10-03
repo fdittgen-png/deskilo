@@ -1225,6 +1225,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biAreaTreasury => 'Liquidität';
 
   @override
+  String get biBookingBasis =>
+      'Reservierte Kapazität misst Buchungen, nicht die tatsächliche Anwesenheit.';
+
+  @override
   String biChangePoints(String value) {
     return '$value Pp.';
   }
@@ -1266,6 +1270,34 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get biComparisonUnqualified =>
+      'Änderung nicht verfügbar: Ein Zeitraum enthält unvollständige oder veraltete Daten.';
+
+  @override
+  String biComputedWorkspaceTime(String date) {
+    return 'Berechnet am $date · Ortszeit des Workspace';
+  }
+
+  @override
+  String get biCurrentBasis =>
+      'Der gesamte Zeitraum ist enthalten. Der Vergleich mit einem abgeschlossenen Zeitraum hat keine gleichwertige Basis.';
+
+  @override
+  String get biDataNotApplicable => 'Keine passende Kapazität';
+
+  @override
+  String get biDataNotRecorded => 'Nicht erfasst';
+
+  @override
+  String get biDataPartial => 'Unvollständige Daten';
+
+  @override
+  String get biDataStale => 'Veraltete Daten';
+
+  @override
+  String get biDataUnavailable => 'Nicht verfügbar';
+
+  @override
   String get biDimensionLevel => 'Ebene';
 
   @override
@@ -1275,6 +1307,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get biForbidden =>
       'Sie dürfen diese Analyse in diesem Arbeitsbereich nicht lesen.';
+
+  @override
+  String get biFutureBasis =>
+      'Vorhandene Buchungen und aktuelle Öffnungszeiten; keine Nachfrageprognose oder garantierte Nutzung.';
 
   @override
   String get biGrain => 'Zeitraumlänge';
@@ -1305,9 +1341,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biOpenSource => 'Quelle öffnen';
 
   @override
+  String get biPastBasis =>
+      'Aus den heute verfügbaren Daten neu berechnet, kein damaliger Wissensstand.';
+
+  @override
   String biQuarter(String quarter, String year) {
     return 'Q$quarter $year';
   }
+
+  @override
+  String get biRecordedFuture => 'Zukünftiger Zeitraum · erfasste Buchungen';
+
+  @override
+  String get biRecordedPast => 'Vergangener Zeitraum · heutiger Datenstand';
+
+  @override
+  String get biRecordedPresent =>
+      'Laufender Zeitraum · zukünftige Tage enthalten';
+
+  @override
+  String get biRefresh => 'Daten aktualisieren';
 
   @override
   String biRefusedBudget(String count) {
@@ -1331,6 +1384,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biReset => 'Standardansicht zeigen';
+
+  @override
+  String biSeatHoursBlocked(String hours) {
+    return '$hours gesperrte Sitzstunden';
+  }
+
+  @override
+  String biSeatHoursFree(String hours) {
+    return '$hours nicht reservierte Sitzstunden';
+  }
 
   @override
   String get biSort => 'Reihenfolge';
@@ -6119,6 +6182,100 @@ class AppLocalizationsDe extends AppLocalizations {
   String get holidayWhitMonday => 'Pfingstmontag';
 
   @override
+  String get identityConnectBrowser =>
+      'Der Browser konnte nicht geöffnet werden.';
+
+  @override
+  String identityConnectConfirmApply(String name) {
+    return 'Ihre Mitgliedsanfrage an $name senden?';
+  }
+
+  @override
+  String get identityConnectConfirmApplyBody =>
+      'Sie sind jetzt verbunden. Der Space prüft Ihre Anfrage; sonst wird nichts geteilt.';
+
+  @override
+  String get identityConnectContinue => 'Mit Deskilo fortfahren';
+
+  @override
+  String get identityConnectCurrentServer =>
+      'Mit diesem Server sind Sie bereits angemeldet.';
+
+  @override
+  String get identityConnectDifferentAuthority =>
+      'Dieser Server akzeptiert einen anderen Identitätsanbieter.';
+
+  @override
+  String identityConnectDone(String host) {
+    return 'Mit $host verbunden.';
+  }
+
+  @override
+  String get identityConnectExistingAccount =>
+      'Ein Konto verwenden, das ich auf diesem Server bereits habe';
+
+  @override
+  String get identityConnectExpired =>
+      'Die Anmeldung hat zu lange gedauert. Beginnen Sie erneut.';
+
+  @override
+  String identityConnectExplain(String host) {
+    return '$host erfährt über Ihre Deskilo-Identität, dass Sie es sind. Das Verbinden macht Sie weder zum Mitglied, noch gibt es Ihnen eine Rolle oder verbindet einen Assistenten: Über jede Anfrage entscheidet weiterhin der Space.';
+  }
+
+  @override
+  String get identityConnectNetwork =>
+      'Der Server hat nicht geantwortet. Versuchen Sie es erneut.';
+
+  @override
+  String get identityConnectNoDeskiloSignIn =>
+      'Dieser Server bietet keine Anmeldung mit Deskilo an.';
+
+  @override
+  String get identityConnectNoSharedIdentity =>
+      'Ihr Konto hier hat keine Deskilo-Identität, die ein anderer Server akzeptieren könnte.';
+
+  @override
+  String identityConnectNotSaved(String host) {
+    return '$host hat Sie akzeptiert, aber dieses Gerät konnte die Verbindung nicht speichern. Es wurde nichts gesendet. Versuchen Sie es erneut.';
+  }
+
+  @override
+  String get identityConnectRefused =>
+      'Die Verbindung wurde nicht abgeschlossen. Es wurde nichts gesendet.';
+
+  @override
+  String get identityConnectRetry => 'Erneut versuchen';
+
+  @override
+  String get identityConnectSend => 'Anfrage senden';
+
+  @override
+  String get identityConnectServerUnsupported =>
+      'Dieser Server kann mit dieser App-Version nicht verbunden werden.';
+
+  @override
+  String identityConnectTitle(String host) {
+    return 'Mit $host verbinden';
+  }
+
+  @override
+  String get identityConnectUnavailable =>
+      'Dieser Server hat nicht geantwortet.';
+
+  @override
+  String get identityConnectUnlinked =>
+      'Ein Konto auf diesem Server verwendet diese Identität oder E-Mail-Adresse bereits, ohne damit verknüpft zu sein. Verwenden Sie stattdessen dieses Konto.';
+
+  @override
+  String get identityConnectWaiting =>
+      'Schließen Sie die Anmeldung im Browser ab und kehren Sie dann hierher zurück.';
+
+  @override
+  String get identityConnectWrongAccount =>
+      'Der Browser hat sich als jemand anderes angemeldet. Es wurde nichts verbunden.';
+
+  @override
   String identityConsentAsks(String host) {
     return 'Melden Sie sich mit Ihrer Deskilo-Identität bei $host an.';
   }
@@ -8617,6 +8774,279 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String mcpConnectAccessExpiresIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days Tage',
+      one: '1 Tag',
+    );
+    return 'Freigegeben — noch $_temp0.';
+  }
+
+  @override
+  String mcpConnectAccessExpiresSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days Tagen',
+      one: '1 Tag',
+    );
+    return 'Freigegeben — läuft in $_temp0 ab. Fragen Sie danach erneut nach Freigabe.';
+  }
+
+  @override
+  String get mcpConnectAddTitle => 'DesKilo zu Ihrem Assistenten hinzufügen';
+
+  @override
+  String get mcpConnectAddressLabel => 'Ihre DesKilo-Adresse für Assistenten';
+
+  @override
+  String get mcpConnectAllDone =>
+      'Alles ist bereit. Testen Sie die Verbindung unten.';
+
+  @override
+  String get mcpConnectBeforeTitle => 'Bevor Sie verbinden';
+
+  @override
+  String get mcpConnectChatgptNote =>
+      'Der Entwicklermodus erfordert einen kostenpflichtigen ChatGPT-Tarif (Plus, Pro, Business, Enterprise oder Edu).';
+
+  @override
+  String get mcpConnectChatgptStep1 =>
+      'Schalten Sie in ChatGPT den Entwicklermodus ein: Einstellungen → Apps → Erweiterte Einstellungen.';
+
+  @override
+  String get mcpConnectChatgptStep2 =>
+      'Erstellen Sie eine App namens DesKilo, fügen Sie die Adresse oben ein und wählen Sie OAuth als Authentifizierung.';
+
+  @override
+  String get mcpConnectChatgptStep3 =>
+      'Melden Sie sich mit Google an und wählen Sie diesen Arbeitsbereich und was ChatGPT dort darf.';
+
+  @override
+  String get mcpConnectClaudeNote =>
+      'Claude im Web, Claude Desktop und die Claude-App teilen dieselben Konnektoren. Bei einem Team- oder Enterprise-Tarif fügt zuerst ein Inhaber der Claude-Organisation den Konnektor hinzu.';
+
+  @override
+  String get mcpConnectClaudeOpen => 'Claude-Konnektoren öffnen';
+
+  @override
+  String get mcpConnectClaudeStep1 =>
+      'Öffnen Sie in Claude Einstellungen → Konnektoren.';
+
+  @override
+  String get mcpConnectClaudeStep2 =>
+      'Wählen Sie „Benutzerdefinierten Konnektor hinzufügen“, nennen Sie ihn DesKilo und fügen Sie die Adresse oben ein.';
+
+  @override
+  String get mcpConnectClaudeStep3 =>
+      'Wählen Sie Verbinden, melden Sie sich mit Google an und wählen Sie diesen Arbeitsbereich und was Claude dort darf.';
+
+  @override
+  String get mcpConnectCodeStep1 => 'Führen Sie dies in einem Terminal aus:';
+
+  @override
+  String get mcpConnectCodeStep2 =>
+      'Geben Sie in Claude Code /mcp ein, wählen Sie deskilo und dann Authenticate. Ein Browser öffnet sich zur Anmeldung und zur Wahl dieses Arbeitsbereichs.';
+
+  @override
+  String get mcpConnectCopied => 'Kopiert.';
+
+  @override
+  String get mcpConnectCopyRequest => 'Anfrage zum Senden kopieren';
+
+  @override
+  String get mcpConnectCursorInstall => 'Zu Cursor hinzufügen';
+
+  @override
+  String get mcpConnectCursorStep =>
+      'Cursor bietet an, DesKilo zu installieren, und öffnet dann einen Browser zur Anmeldung und zur Wahl dieses Arbeitsbereichs. Ohne die Schaltfläche fügen Sie dies zu ~/.cursor/mcp.json hinzu:';
+
+  @override
+  String get mcpConnectDone => 'Erledigt';
+
+  @override
+  String get mcpConnectIntro =>
+      'Lassen Sie Claude, ChatGPT oder einen anderen Assistenten in DesKilo für Sie nachsehen und buchen. Er handelt in Ihrem Namen, nur in den Arbeitsbereichen und für die Aktionen, die Sie freigeben.';
+
+  @override
+  String mcpConnectLastCall(String client, String when) {
+    return 'Letzter Aufruf: $client, $when.';
+  }
+
+  @override
+  String get mcpConnectManageHint =>
+      'Um zu sehen, was ein Assistent getan hat, oder um ihn zu trennen, öffnen Sie Assistenten.';
+
+  @override
+  String get mcpConnectOpenFailed =>
+      'Die App konnte von hier aus nicht geöffnet werden. Folgen Sie stattdessen den Schritten unten.';
+
+  @override
+  String get mcpConnectOpenGuide => 'Verbindungsanleitung öffnen';
+
+  @override
+  String get mcpConnectOpenInstallation => 'Installationskonsole öffnen';
+
+  @override
+  String get mcpConnectOpenSetup => 'Assistenten-Einrichtung öffnen';
+
+  @override
+  String get mcpConnectOperatorRequest =>
+      'Hallo, könnten Sie die Assistenten auf unserem DesKilo-Server einschalten? Das geht unter Einstellungen → Installation: Assistenten. Danke.';
+
+  @override
+  String get mcpConnectOtherStep1 =>
+      'Die meisten Clients lesen eine JSON-Datei mit Servern. Fügen Sie diesen Eintrag hinzu; der Client öffnet beim ersten Mal einen Browser zur Anmeldung.';
+
+  @override
+  String get mcpConnectOtherStep2 =>
+      'Ein Client, der nur lokale Programme startet, erreicht DesKilo über mcp-remote (benötigt Node.js):';
+
+  @override
+  String get mcpConnectRoleDenied =>
+      'Ihrer Rolle wird hier nichts angeboten. Ein Administrator des Arbeitsbereichs entscheidet, was jede Rolle darf.';
+
+  @override
+  String get mcpConnectStepAccess => 'Ihr Zugang zu Assistenten';
+
+  @override
+  String get mcpConnectStepConnect =>
+      'DesKilo zu Ihrem Assistenten hinzugefügt';
+
+  @override
+  String get mcpConnectStepGoogle => 'Anmeldung mit Google';
+
+  @override
+  String get mcpConnectStepIdentity => 'Ihre Identität auf diesem Server';
+
+  @override
+  String get mcpConnectStepServer =>
+      'Assistenten auf diesem Server eingeschaltet';
+
+  @override
+  String get mcpConnectStepWorkspace =>
+      'Dieser Arbeitsbereich bietet Assistenten an';
+
+  @override
+  String get mcpConnectSwitchWorkspace => 'Zu diesem Arbeitsbereich wechseln';
+
+  @override
+  String get mcpConnectTabChatgpt => 'ChatGPT';
+
+  @override
+  String get mcpConnectTabClaude => 'Claude';
+
+  @override
+  String get mcpConnectTabClaudeCode => 'Claude Code';
+
+  @override
+  String get mcpConnectTabCursor => 'Cursor';
+
+  @override
+  String get mcpConnectTabOther => 'Andere';
+
+  @override
+  String get mcpConnectTabVscode => 'VS Code';
+
+  @override
+  String get mcpConnectTest => 'Verbindung testen';
+
+  @override
+  String get mcpConnectTestAgain => 'Erneut testen';
+
+  @override
+  String get mcpConnectTestPrompt =>
+      'Welche Buchungen habe ich diese Woche in DesKilo?';
+
+  @override
+  String mcpConnectTestReached(String client, String when) {
+    return 'Verbunden: $client hat DesKilo erreicht, $when.';
+  }
+
+  @override
+  String get mcpConnectTestTimeout =>
+      'Noch kein Aufruf eingegangen. Prüfen Sie, ob der Konnektor hinzugefügt ist, ob Sie diesen Arbeitsbereich freigegeben haben und ob die Schritte oben erledigt sind; testen Sie dann erneut.';
+
+  @override
+  String get mcpConnectTestTitle => 'Prüfen, ob es funktioniert';
+
+  @override
+  String get mcpConnectTestWaiting =>
+      'Wartet darauf, dass Ihr Assistent DesKilo aufruft. Fragen Sie ihn:';
+
+  @override
+  String get mcpConnectTitle => 'Assistenten verbinden';
+
+  @override
+  String get mcpConnectTodoConnect =>
+      'Zu tun — Sie: Folgen Sie unten den Schritten für Ihren Assistenten.';
+
+  @override
+  String get mcpConnectTodoYou => 'Zu tun — Sie.';
+
+  @override
+  String get mcpConnectUnavailable => 'Konnte gerade nicht geprüft werden.';
+
+  @override
+  String get mcpConnectVscodeInstall => 'Zu VS Code hinzufügen';
+
+  @override
+  String get mcpConnectVscodeStep =>
+      'VS Code bietet an, DesKilo zu installieren. Starten Sie es aus der Liste der MCP-Server; ein Browser öffnet sich zur Anmeldung und zur Wahl dieses Arbeitsbereichs.';
+
+  @override
+  String get mcpConnectWaitingDatabaseAdmin =>
+      'Wartet auf einen Datenbank-Administrator, der Ihre Anfrage freigibt.';
+
+  @override
+  String mcpConnectWaitingOperator(String names) {
+    return 'Wartet auf den Betreiber des Servers: $names.';
+  }
+
+  @override
+  String get mcpConnectWaitingOperatorUnknown =>
+      'Wartet auf den Betreiber des Servers, der noch nicht benannt ist.';
+
+  @override
+  String get mcpConnectWaitingWorkspaceAdmin =>
+      'Wartet auf einen Administrator des Arbeitsbereichs, der hier Assistenten anbietet.';
+
+  @override
+  String get mcpConnectWhich => 'Welchen Assistenten verwenden Sie?';
+
+  @override
+  String get mcpConnectWorkspaceSelected => 'Ausgewählter Arbeitsbereich';
+
+  @override
+  String get mcpConnectWorkspacesHint =>
+      'Jeder Arbeitsbereich entscheidet selbst. Wenn Ihr Assistent fragt, wählen Sie unter den bereiten aus.';
+
+  @override
+  String get mcpConnectWorkspacesTitle => 'Ihre Arbeitsbereiche';
+
+  @override
+  String get mcpConnectWsConnected =>
+      'Verbunden — ein Assistent darf hier für Sie handeln.';
+
+  @override
+  String get mcpConnectWsNotOffered =>
+      'Assistenten sind eingeschaltet, aber Ihrer Rolle wird noch nichts angeboten. Ein Administrator des Arbeitsbereichs entscheidet.';
+
+  @override
+  String get mcpConnectWsOff =>
+      'Assistenten sind in diesem Arbeitsbereich ausgeschaltet. Ein Administrator des Arbeitsbereichs schaltet sie in der Assistenten-Einrichtung ein.';
+
+  @override
+  String get mcpConnectWsReady =>
+      'Bereit — wählen Sie ihn, wenn Ihr Assistent fragt.';
+
+  @override
+  String get mcpConnectWsUnknown =>
+      'Wird angezeigt, sobald Ihr Zugang zu Assistenten freigegeben ist.';
+
+  @override
   String get mcpConnectedNoWorkspace =>
       'Kein Arbeitsbereich: Dieser Assistent kann hier nichts tun.';
 
@@ -8939,6 +9369,26 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get mcpPolicyUnavailable =>
       'Die Assistenten-Einstellungen konnten nicht geladen werden. Versuchen Sie es später erneut.';
+
+  @override
+  String get mcpRefusalClientNotApproved =>
+      'Dieser Assistent ist auf diesem Server noch nicht freigegeben. Der Betreiber gibt jeden Assistenten einmal frei; fragen Sie ihn und verbinden Sie dann erneut aus dem Assistenten.';
+
+  @override
+  String get mcpRefusalNoIdentity =>
+      'Bestätigen Sie zuerst Ihre Identität in DesKilo unter Assistenten und verbinden Sie dann erneut aus dem Assistenten.';
+
+  @override
+  String get mcpRefusalNotEligible =>
+      'Ihr Zugang zu Assistenten ist noch nicht freigegeben. Beantragen Sie ihn in DesKilo unter Assistenten und verbinden Sie dann erneut aus dem Assistenten.';
+
+  @override
+  String get mcpRefusalOfferChanged =>
+      'Das Angebot dieses Arbeitsbereichs hat sich während Ihrer Auswahl geändert. Verbinden Sie erneut aus dem Assistenten, um das aktuelle Angebot zu sehen.';
+
+  @override
+  String get mcpRefusalRequestExpired =>
+      'Diese Verbindungsanfrage ist abgelaufen oder wurde bereits verwendet. Beginnen Sie erneut im Assistenten.';
 
   @override
   String get mcpRemoveWorkspace => 'Diesen Arbeitsbereich entfernen';
@@ -14362,6 +14812,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get statusNet => 'Netto';
 
   @override
+  String get statusNetExplanation =>
+      'Diese Zwischensumme entspricht Rechnungsbeträgen abzüglich Gutschriften, Erstattungen und Guthaben. Sie ist weder Gewinn noch Bankguthaben. Zugeordnete und eingegangene Zahlungen überschneiden sich und dürfen nicht addiert werden.';
+
+  @override
   String get statusPaymentsMatched => 'Zugeordnete Zahlungen';
 
   @override
@@ -15236,6 +15690,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderActionBack => 'Zurückgegangen';
 
   @override
+  String get taskRecorderActionCancelReservation =>
+      'Die Reservierung storniert';
+
+  @override
   String get taskRecorderActionCancelReview =>
       'Die Buchung ohne Buchen geschlossen';
 
@@ -15243,7 +15701,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderActionChangeField => 'Ein Buchungsdetail geändert';
 
   @override
+  String get taskRecorderActionCheckIn => 'Eingecheckt';
+
+  @override
+  String get taskRecorderActionCheckOut => 'Ausgecheckt';
+
+  @override
+  String get taskRecorderActionCloseMyReservation =>
+      'Meine Reservierung ohne Änderung geschlossen';
+
+  @override
   String get taskRecorderActionConfirmBooking => 'Die Buchung bestätigt';
+
+  @override
+  String get taskRecorderActionDeclineOptIn =>
+      'Eine Testfunktion nicht eingeschaltet';
 
   @override
   String get taskRecorderActionOpenReserve => 'Reservieren geöffnet';
@@ -15252,10 +15724,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderActionSelectDate => 'Den Tag gewählt';
 
   @override
+  String get taskRecorderActionSelectLevel => 'Eine Ebene gewählt';
+
+  @override
   String get taskRecorderActionSelectPeriod => 'Den Zeitraum gewählt';
 
   @override
   String get taskRecorderActionSelectResource => 'Einen Platz gewählt';
+
+  @override
+  String get taskRecorderActionSwitchFeature => 'Eine Funktion umgeschaltet';
 
   @override
   String get taskRecorderActionSwitchView => 'Die Ansicht gewechselt';
@@ -15372,6 +15850,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderOpenRecorder => 'Aufgabenrekorder öffnen';
 
   @override
+  String get taskRecorderOutcomeCancelled => 'Storniert';
+
+  @override
+  String get taskRecorderOutcomeCheckedIn => 'Eingecheckt';
+
+  @override
+  String get taskRecorderOutcomeCheckedOut => 'Ausgecheckt';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Gebucht';
 
   @override
@@ -15382,6 +15869,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskRecorderOutcomeSeries => 'Serie gebucht';
+
+  @override
+  String get taskRecorderOutcomeSettingNotSaved => 'Nicht gespeichert';
+
+  @override
+  String get taskRecorderOutcomeSettingSaved => 'Gespeichert';
 
   @override
   String get taskRecorderOutcomeUnknown => 'Keine Antwort erhalten';
@@ -15509,6 +16002,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderValueCustom => 'eigene Zeiten';
 
   @override
+  String get taskRecorderValueDay => 'Tag';
+
+  @override
   String get taskRecorderValueDesk => 'ein Schreibtisch';
 
   @override
@@ -15527,13 +16023,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderValueList => 'Liste';
 
   @override
+  String get taskRecorderValueMonth => 'Monat';
+
+  @override
   String get taskRecorderValueMorning => 'Vormittag';
 
   @override
   String get taskRecorderValueNoCheckIn => 'ohne Check-in';
 
   @override
+  String get taskRecorderValueOff => 'aus';
+
+  @override
   String get taskRecorderValueOffline => 'offline';
+
+  @override
+  String get taskRecorderValueOn => 'ein';
 
   @override
   String get taskRecorderValueOnce => 'einmalig';
@@ -15576,6 +16081,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskRecorderValueTomorrow => 'morgen';
+
+  @override
+  String get taskRecorderValueWeek => 'Woche';
 
   @override
   String get taskRecorderValueWithheld => 'nicht aufgezeichnet';

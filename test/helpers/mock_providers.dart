@@ -11,6 +11,8 @@ export 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/backend/secondary_federation.dart';
+import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
@@ -140,6 +142,7 @@ List<Override> standardTestOverrides({
   FakeAccountActivityRepository? accountActivity,
   FakeDirectoryRepository? directory,
   List<ConnectedInstallation> connectedSources = const [],
+  IdentityConnector? identityConnector,
   FakeAccountContactRepository? contacts,
   // #1824 — the messenger per server: '' is this one.
   FakeMessengerRepository? messenger,
@@ -250,6 +253,9 @@ List<Override> standardTestOverrides({
     workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
     connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>connectedSources),
+      // #1834 — no test reaches a real server's sign-in.
+      identityConnectorProvider.overrideWithValue(
+          identityConnector ?? const OfflineIdentityConnector()),
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directoryFake),
       publicationRepositoryProvider.overrideWith((ref)=>directoryFake),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directoryFake),

@@ -53,6 +53,7 @@ import 'oauth_consent_route.dart';
 import '../features/mcp/presentation/assistants_screen.dart';
 import '../features/mcp/presentation/eligibility_review_screen.dart';
 import '../features/mcp/presentation/assistant_setup_screen.dart';
+import '../features/mcp/presentation/connect_assistant_screen.dart';
 import '../features/mcp/presentation/mcp_policy_screen.dart';
 import '../features/profile/presentation/screens/new_instance_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
@@ -893,6 +894,11 @@ GoRouter router(Ref ref) {
       // #1872 — the local task workbench: no account, no workspace.
       GoRoute(path: taskWorkbenchRoute,
           builder: (context, state) => const TaskWorkbenchScreen()),
+      // #2145 — Connect an assistant, for every member where mcpAccess is on.
+      GoRoute(path: connectAssistantRoute,
+          redirect: (context, state) =>
+              featureEnabled(WorkspaceFeature.mcpAccess) ? null : '/assistants',
+          builder: (context, state) => const ConnectAssistantScreen()),
     ],
   );
   ref.onDispose(router.dispose);
