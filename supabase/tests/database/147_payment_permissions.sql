@@ -15,7 +15,7 @@ declare
   u_role  uuid := '00000000-0000-4000-8000-0000000006e2';
   u_plain uuid := '00000000-0000-4000-8000-0000000006e3';
   u_admin uuid := '00000000-0000-4000-8000-0000000006e4';
-  ws uuid; r uuid; m_role uuid; m_plain uuid; svc uuid; rec uuid;
+  ws uuid; r uuid; m_role uuid; m_plain uuid; svc uuid; rec uuid; rec2 uuid;
 begin
   insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                           email_confirmed_at, created_at, updated_at)
@@ -47,10 +47,18 @@ begin
   values (ws, m_plain, '2031-01', '2031-01-06 09:00+01', '2031-01-06 12:00+01',
           180, 180)
   returning id into rec;
+  -- A second record for the refusal: the first is gone once the role
+  -- holder's request is settled (no validation policy deletes it at once).
+  insert into public.usage_records (workspace_id, member_id, period,
+    reserved_from, reserved_to, counted_minutes, reserved_minutes)
+  values (ws, m_plain, '2031-01', '2031-01-07 09:00+01', '2031-01-07 12:00+01',
+          180, 180)
+  returning id into rec2;
 
   perform set_config('deskilo.pay.ws', ws::text, false);
   perform set_config('deskilo.pay.svc', svc::text, false);
   perform set_config('deskilo.pay.rec', rec::text, false);
+  perform set_config('deskilo.pay.rec2', rec2::text, false);
   perform set_config('deskilo.pay.m_role', m_role::text, false);
   perform set_config('deskilo.pay.m_plain', m_plain::text, false);
   perform set_config('deskilo.pay.owner', u_owner::text, false);
@@ -87,7 +95,7 @@ select throws_matching(format($$ select public.record_payment(%L, %L, 1000) $$, 
   'only admins record payments for others', 'a plain member records no payment for another');
 select throws_matching(format($$ select public.record_service_charge(%L, %L, %L, 1) $$, pg_temp.s('ws'), pg_temp.s('m_role'), pg_temp.s('svc')),
   'only admins may add services', 'nor adds a service to another');
-select throws_matching(format($$ select public.request_usage_record_delete(%L) $$, pg_temp.s('rec')),
+select throws_matching(format($$ select public.request_usage_record_delete(%L) $$, pg_temp.s('rec2')),
   'not allowed', 'nor asks to delete a usage record');
 select lives_ok(format($$ select public.record_payment(%L, %L, 1000) $$, pg_temp.s('ws'), pg_temp.s('m_plain')),
   'but still records their own payment');
