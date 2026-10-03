@@ -12,6 +12,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/features/workspace/domain/feature_assessment_evidence.dart';
 import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';

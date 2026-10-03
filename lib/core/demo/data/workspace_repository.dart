@@ -628,6 +628,15 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setMemberCustomerCapacity(
+      String memberId, String? capacity) async {
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) {
+      otherMembers[i] = otherMembers[i].copyWith(customerCapacity: capacity);
+    }
+  }
+
+  @override
   Future<void> setMemberVatTreatment(
       String memberId, String treatment, String reason) async {
     final i = otherMembers.indexWhere((m) => m.id == memberId);

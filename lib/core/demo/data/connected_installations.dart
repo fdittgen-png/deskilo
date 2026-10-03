@@ -44,6 +44,12 @@ class FakeConnectedInstallations extends ConnectedInstallations {
   @override
   Future<T> use<T>(String source, Future<T> Function(SupabaseClient) action) =>
       Future.error(StateError('Demo has no external server'));
+
+  /// #1832 — a test scripts each target's health; Demo's are usable.
+  final health = <String, ConnectionFailure?>{};
+
+  @override
+  Future<ConnectionFailure?> check(String source) async => health[source];
 }
 
 class _MemorySecrets implements AuthSecretStore {

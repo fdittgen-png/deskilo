@@ -97,3 +97,99 @@ final class ConnectedSourcesProvider
 }
 
 String _$connectedSourcesHash() => r'0bae75747ba3a36a393ef4ffe496c133483df4e9';
+
+/// #1832 A — whether one connected target can be used now, and if not,
+/// the typed reason; null means usable. Each target is asked on its own,
+/// so one that is down leaves the others' rows usable.
+
+@ProviderFor(connectionHealth)
+final connectionHealthProvider = ConnectionHealthFamily._();
+
+/// #1832 A — whether one connected target can be used now, and if not,
+/// the typed reason; null means usable. Each target is asked on its own,
+/// so one that is down leaves the others' rows usable.
+
+final class ConnectionHealthProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<ConnectionFailure?>,
+          ConnectionFailure?,
+          FutureOr<ConnectionFailure?>
+        >
+    with
+        $FutureModifier<ConnectionFailure?>,
+        $FutureProvider<ConnectionFailure?> {
+  /// #1832 A — whether one connected target can be used now, and if not,
+  /// the typed reason; null means usable. Each target is asked on its own,
+  /// so one that is down leaves the others' rows usable.
+  ConnectionHealthProvider._({
+    required ConnectionHealthFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'connectionHealthProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$connectionHealthHash();
+
+  @override
+  String toString() {
+    return r'connectionHealthProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<ConnectionFailure?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<ConnectionFailure?> create(Ref ref) {
+    final argument = this.argument as String;
+    return connectionHealth(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ConnectionHealthProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$connectionHealthHash() => r'1321207baf93dba078b6ca14d250475cd1773702';
+
+/// #1832 A — whether one connected target can be used now, and if not,
+/// the typed reason; null means usable. Each target is asked on its own,
+/// so one that is down leaves the others' rows usable.
+
+final class ConnectionHealthFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<ConnectionFailure?>, String> {
+  ConnectionHealthFamily._()
+    : super(
+        retry: null,
+        name: r'connectionHealthProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #1832 A — whether one connected target can be used now, and if not,
+  /// the typed reason; null means usable. Each target is asked on its own,
+  /// so one that is down leaves the others' rows usable.
+
+  ConnectionHealthProvider call(String source) =>
+      ConnectionHealthProvider._(argument: source, from: this);
+
+  @override
+  String toString() => r'connectionHealthProvider';
+}

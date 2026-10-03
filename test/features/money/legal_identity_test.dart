@@ -176,11 +176,14 @@ void main() {
     await tester.tap(find.text('Association (non-profit)'));
     await tester.pumpAndSettle();
 
-    // The hints now speak association: RNA instead of a trade register,
-    // and the B2B-clause note is shown.
+    // The hints now speak association: RNA instead of a trade register.
+    // #1916 — the clauses follow the CUSTOMERS' capacity, stated apart.
     expect(find.textContaining('RNA W123456789'), findsOneWidget);
-    expect(find.textContaining('mandatory only between professionals'),
-        findsOneWidget);
+    await reveal(tester, const ValueKey('legal-identity-capacity'));
+    await tester.tap(find.descendant(
+        of: find.byKey(const ValueKey('legal-identity-capacity')),
+        matching: find.text('Business')));
+    await tester.pumpAndSettle();
 
     await reveal(tester, const ValueKey('legal-identity-save'));
     await tester.tap(find.byKey(const ValueKey('legal-identity-save')));
@@ -190,6 +193,7 @@ void main() {
         workspace.workspaces.single.invoiceLegal);
     expect(legal.sellerKind, 'association');
     expect(legal.isAssociation, isTrue);
+    expect(legal.customerCapacity, 'business');
   });
 
   testWidgets(
@@ -243,6 +247,8 @@ void main() {
         findsNothing,
         reason: 'out of scope is the default and is correct');
 
+    await tester.ensureVisible(find.byKey(const ValueKey('legal-identity-regime')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('legal-identity-regime')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('VAT-exempt (small-business scheme)').last);
