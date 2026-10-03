@@ -7,6 +7,8 @@
 // no path, or fails, is said so truthfully; delete removes only the
 // private recording. The indicator stays out of the way until the
 // recorder was opened, then marks protected and unknown screens.
+import 'dart:async';
+
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -280,8 +282,12 @@ void main() {
     await tester.pumpAndSettle();
     router.go('/calendar');
     await tester.pumpAndSettle();
+    // #1884 B — a PUSHED protected screen is marked too: the top route
+    // decides, not the one the push was made from.
+    unawaited(router.push('/auth'));
+    await tester.pumpAndSettle();
     expect(h.controller.snapshot!.steps.map((s) => s.kind),
-        [StepKind.excluded, StepKind.unrecorded]);
+        [StepKind.excluded, StepKind.unrecorded, StepKind.excluded]);
     expect(h.controller.snapshot!.steps.first.protectedCategory,
         ProtectedSurface.authentication);
 

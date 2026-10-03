@@ -78,7 +78,11 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
 
   void _onRoute() {
     try {
-      final path = widget.router.routerDelegate.currentConfiguration.uri.path;
+      // #1884 B — the TOP route, pushed ones included: the delegate's
+      // configuration uri stays on the route a push was made from, so a
+      // pushed protected screen went unmarked.
+      if (widget.router.routerDelegate.currentConfiguration.isEmpty) return;
+      final path = widget.router.state.uri.path;
       if (path == _lastPath) return;
       _lastPath = path;
       final controller = ref.read(recorderControllerProvider);
