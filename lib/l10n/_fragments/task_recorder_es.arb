@@ -170,5 +170,15 @@
   "taskRecorderOutcomeSettingSaved": "Guardado",
   "taskRecorderOutcomeSettingNotSaved": "No guardado",
   "taskRecorderValueOn": "activada",
-  "taskRecorderValueOff": "desactivada"
+  "taskRecorderValueOff": "desactivada",
+  "taskRecorderActionUiOpenScreen": "Abrió una pantalla",
+  "taskRecorderActionUiTap": "Tocó",
+  "taskRecorderActionUiCommitField": "Rellenó un campo",
+  "taskRecorderActionUiCommand": "Ejecutó una orden",
+  "taskRecorderActionUiOpenWindow": "Abrió una ventana",
+  "taskRecorderActionUiCloseWindow": "Cerró una ventana",
+  "taskRecorderOutcomeCommandDone": "Hecho",
+  "taskRecorderOutcomeCommandPending": "Enviado para validación",
+  "taskRecorderTargetUnkeyed": "un control sin nombre",
+  "taskRecorderRecordATask": "Grabar una tarea"
 }

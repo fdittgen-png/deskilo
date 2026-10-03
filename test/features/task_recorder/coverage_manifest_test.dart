@@ -64,8 +64,9 @@ void main() {
         case CoverageStatus.planned:
           expect(t, isA<Unrecorded>(), reason: row.route);
         case CoverageStatus.recorded:
-        case CoverageStatus.recorder:
           expect(t, isA<Instrumented>(), reason: row.route);
+        case CoverageStatus.recorder:
+          expect(t, isA<RecorderScreen>(), reason: row.route);
       }
     }
   });
@@ -97,7 +98,9 @@ void main() {
               // The forms, and the adapters they call (an adapter maps a
               // form's own choice to the action it is).
               (!f.path.contains('/features/task_recorder/') ||
-                  f.path.contains('/features/task_recorder/application/')),
+                  f.path.contains('/features/task_recorder/application/') ||
+                  // #2142 — the generic layer's capture.
+                  f.path.endsWith('/presentation/ui_capture.dart')),
         )
         .map((f) => f.readAsStringSync())
         .join('\n');

@@ -460,11 +460,17 @@ class _Decoder {
       _fatal(RecordingIssueCode.inconsistent, '$path.surface');
       return null;
     }
-    final target = raw['target'];
+    var target = raw['target'];
     if (target != null &&
         (target is! String || !spec.targets.contains(target))) {
-      _fatal(RecordingIssueCode.badValue, '$path.target');
-      return null;
+      // #2142 — a generic name this build does not know is dropped, not
+      // refused; any other unknown target still refuses the file.
+      if (spec.softTargets && target is String && target.length <= 128) {
+        target = null;
+      } else {
+        _fatal(RecordingIssueCode.badValue, '$path.target');
+        return null;
+      }
     }
     final payload = SafePayload.parse(spec.payloadFields, raw['payload']);
     if (payload == null) {

@@ -11,6 +11,7 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/presentation/feature_names.dart';
 import '../domain/action_registry.dart';
 import '../domain/task_recording.dart';
+import 'ui_labels.g.dart';
 
 /// The sentence for a registered action; null for one this build does
 /// not describe.
@@ -48,6 +49,17 @@ String? actionLabel(AppLocalizations? l10n, String? action) => switch (action) {
   RecorderActions.closeMyReservation =>
     l10n?.taskRecorderActionCloseMyReservation ??
         'Closed my reservation without changing it',
+  RecorderActions.uiOpenScreen =>
+    l10n?.taskRecorderActionUiOpenScreen ?? 'Opened a screen',
+  RecorderActions.uiTap => l10n?.taskRecorderActionUiTap ?? 'Tapped',
+  RecorderActions.uiCommitField =>
+    l10n?.taskRecorderActionUiCommitField ?? 'Filled in a field',
+  RecorderActions.uiCommand =>
+    l10n?.taskRecorderActionUiCommand ?? 'Ran a command',
+  RecorderActions.uiOpenWindow =>
+    l10n?.taskRecorderActionUiOpenWindow ?? 'Opened a window',
+  RecorderActions.uiCloseWindow =>
+    l10n?.taskRecorderActionUiCloseWindow ?? 'Closed a window',
   _ => null,
 };
 
@@ -79,6 +91,14 @@ String? outcomeLabel(AppLocalizations? l10n, String? outcome) =>
       RecorderOutcomes.reservationRefused =>
         l10n?.taskRecorderOutcomeRefused ?? 'Refused',
       RecorderOutcomes.reservationUnknown =>
+        l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
+      RecorderOutcomes.commandDone =>
+        l10n?.taskRecorderOutcomeCommandDone ?? 'Done',
+      RecorderOutcomes.commandPending =>
+        l10n?.taskRecorderOutcomeCommandPending ?? 'Sent for validation',
+      RecorderOutcomes.commandRefused =>
+        l10n?.taskRecorderOutcomeRefused ?? 'Refused',
+      RecorderOutcomes.commandUnknown =>
         l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
       _ => null,
     };
@@ -183,9 +203,18 @@ String endReasonLabel(AppLocalizations? l10n, RecordingEndReason? r) =>
   AppLocalizations? l10n,
   RecordedStep step,
 ) {
+  // #2142 — a generic step reads in the app's own words when it has
+  // them (its label, shown in the reader's language), else by its name.
+  final label = step.payload.values['label'];
+  final words = label == null || l10n == null ? null : uiLabel(l10n, label);
   final details = [
-    if (step.target != null) targetLabel(l10n, step.target!),
-    for (final v in step.payload.toJson().values) valueLabel(l10n, v),
+    if (words != null)
+      words
+    else if (step.target != null)
+      uiTargetText(l10n, step.action, step.target!) ??
+          targetLabel(l10n, step.target!),
+    for (final e in step.payload.toJson().entries)
+      if (e.key != 'label') valueLabel(l10n, e.value),
   ];
   final detail = details.isEmpty ? null : details.join(' · ');
   return switch (step.kind) {
@@ -255,3 +284,20 @@ String targetLabel(AppLocalizations? l10n, String target) {
   if (feature.isNotEmpty) return featureName(l10n, feature.first);
   return fieldLabel(l10n, target);
 }
+
+/// #2142 — a generic step's name, as a reader sees it; null when the
+/// step is not a generic one.
+String? uiTargetText(AppLocalizations? l10n, String? action, String target) =>
+    switch (action) {
+      RecorderActions.uiTap || RecorderActions.uiCommitField
+          when target == uiUnkeyed =>
+        l10n?.taskRecorderTargetUnkeyed ?? 'an unnamed control',
+      RecorderActions.uiCommand => target.replaceFirst(
+        RegExp(r'\s+failed$'),
+        '',
+      ),
+      RecorderActions.uiTap ||
+      RecorderActions.uiCommitField ||
+      RecorderActions.uiOpenScreen => target,
+      _ => null,
+    };

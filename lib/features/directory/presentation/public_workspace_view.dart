@@ -80,6 +80,7 @@ class PublicWorkspaceView extends ConsumerWidget {
             ),
             actions: [
               TextButton(
+                key: const ValueKey('identity-connect-cancel-send'),
                 onPressed: () => Navigator.of(context).pop(false),
                 child: Text(
                   MaterialLocalizations.of(context).cancelButtonLabel,

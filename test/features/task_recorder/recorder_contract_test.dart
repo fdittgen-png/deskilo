@@ -92,8 +92,13 @@ void main() {
       for (final field in safeFields.values) {
         expect(field.values, isNotEmpty, reason: field.key);
         expect(field.values.contains(withheldValue), isFalse, reason: field.key);
+        // #2142 — a label is an ARB message key: the app's own words,
+        // by name; every other field is a snake_case category.
+        final shape = field.key == 'label'
+            ? RegExp(r'^[a-z][A-Za-z0-9]*$')
+            : RegExp(r'^[a-z_]+$');
         for (final v in field.values) {
-          expect(RegExp(r'^[a-z_]+$').hasMatch(v), isTrue, reason: v);
+          expect(shape.hasMatch(v), isTrue, reason: v);
         }
       }
     });

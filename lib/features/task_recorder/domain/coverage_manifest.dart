@@ -8,10 +8,12 @@
 //   excluded  — a protected screen: one marker, its category, nothing of
 //               its contents (sign-in, payment, messages, providers,
 //               secrets, identity, the installation operator);
-//   planned   — an ordinary or administrative form not instrumented YET;
-//               shown as a visible "cannot describe" step, never passed
-//               off as covered, and owned by the rollout named in
-//               [RouteCoverage.owner] (#1881 A/B/C, #1884).
+//   planned   — an ordinary or administrative form with no seams of its
+//               own YET: since #2142 the generic layer notes it (the
+//               screen, keyed taps, fields left, guarded commands), and
+//               its precise steps are owned by the rollout named in
+//               [RouteCoverage.owner] (#1881 A/B/C, #1884). A path no
+//               row names is a visible "cannot describe" step.
 //
 // test/features/task_recorder/coverage_manifest_test.dart keeps this list
 // and lib/app/route_classes.dart (itself kept in step with the router) in
@@ -24,7 +26,13 @@ import 'action_registry.dart';
 enum CoverageStatus { recorded, recorder, excluded, planned }
 
 class RouteCoverage {
-  const RouteCoverage(this.route, this.status, {this.category, this.owner});
+  const RouteCoverage(
+    this.route,
+    this.status, {
+    this.category,
+    this.owner,
+    this.selfOpening = false,
+  });
 
   /// The route pattern as the router registers it (`:name` = a segment).
   final String route;
@@ -35,6 +43,9 @@ class RouteCoverage {
 
   /// On a planned route: the rollout that instruments it.
   final String? owner;
+
+  /// #2142 — on a recorded route: its screen notes its own opening.
+  final bool selfOpening;
 
   bool matches(String path) {
     final want = route.split('/');
@@ -53,11 +64,7 @@ class RouteCoverage {
 
 /// The manifest, in route_classes.dart's order.
 const List<RouteCoverage> routeCoverage = [
-  RouteCoverage(
-    '/me',
-    CoverageStatus.excluded,
-    category: ProtectedSurface.identity,
-  ),
+  RouteCoverage('/me', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage('/discover', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
     '/connections',
@@ -105,11 +112,7 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.authentication,
   ),
-  RouteCoverage(
-    '/profiles',
-    CoverageStatus.excluded,
-    category: ProtectedSurface.identity,
-  ),
+  RouteCoverage('/profiles', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
     '/applications',
     CoverageStatus.excluded,
@@ -141,6 +144,18 @@ const List<RouteCoverage> routeCoverage = [
   ),
   RouteCoverage(
     '/assistants',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.provider,
+  ),
+  // #2150 — the Connect an assistant page: an assistant surface like its
+  // siblings, excluded with the same category.
+  RouteCoverage(
+    '/assistants/connect',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.provider,
+  ),
+  RouteCoverage(
+    '/assistants/connect',
     CoverageStatus.excluded,
     category: ProtectedSurface.provider,
   ),
@@ -181,17 +196,13 @@ const List<RouteCoverage> routeCoverage = [
     category: ProtectedSurface.messenger,
   ),
   RouteCoverage('/calendar', CoverageStatus.planned, owner: '#1881 A'),
-  RouteCoverage(
-    '/directory',
-    CoverageStatus.excluded,
-    category: ProtectedSurface.identity,
-  ),
+  RouteCoverage('/directory', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
     '/money',
     CoverageStatus.excluded,
     category: ProtectedSurface.payment,
   ),
-  RouteCoverage('/reserve', CoverageStatus.recorded),
+  RouteCoverage('/reserve', CoverageStatus.recorded, selfOpening: true),
   RouteCoverage('/settings', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/developer',
@@ -246,11 +257,7 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.payment,
   ),
-  RouteCoverage(
-    '/member/:memberId',
-    CoverageStatus.excluded,
-    category: ProtectedSurface.identity,
-  ),
+  RouteCoverage('/member/:memberId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/report-editor', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/roles', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
@@ -293,11 +300,7 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.planned,
     owner: '#1884',
   ),
-  RouteCoverage(
-    '/members/managed',
-    CoverageStatus.excluded,
-    category: ProtectedSurface.identity,
-  ),
+  RouteCoverage('/members/managed', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/payment-methods',
     CoverageStatus.excluded,
@@ -330,11 +333,7 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/validation', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/availability', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/bi', CoverageStatus.planned, owner: '#1884'),
-  RouteCoverage(
-    '/members',
-    CoverageStatus.excluded,
-    category: ProtectedSurface.identity,
-  ),
+  RouteCoverage('/members', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/editor', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/editor/level/:levelId',
