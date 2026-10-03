@@ -14583,6 +14583,97 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get taskWorkbenchTitle => 'Aufgaben-Werkbank';
+
+  @override
+  String get taskWorkbenchOpen => 'Aufgabendatei öffnen';
+
+  @override
+  String get taskWorkbenchIntro =>
+      'Öffnen Sie eine gespeicherte Aufgabendatei. Sie wird nur auf diesem Gerät gelesen; nichts wird hochgeladen und keine Anmeldung ist nötig.';
+
+  @override
+  String taskWorkbenchAccepted(int megabytes) {
+    return 'Akzeptiert: .json und .deskilo-task.zip, bis $megabytes MB.';
+  }
+
+  @override
+  String get taskWorkbenchChoose => 'Aufgabendatei wählen';
+
+  @override
+  String get taskWorkbenchFileType => 'Aufgabendatei';
+
+  @override
+  String get taskWorkbenchEdited =>
+      'Eine bearbeitete Kopie einer Aufzeichnung.';
+
+  @override
+  String get taskWorkbenchTranscriptOnly =>
+      'Einige Schritte stammen aus einer neueren Version: nur als Mitschrift angezeigt.';
+
+  @override
+  String get taskWorkbenchUntrusted =>
+      'Ein privater Entwurf aus einer Datei: nichts darin gilt als vertrauenswürdig oder wird gesendet.';
+
+  @override
+  String taskWorkbenchClaim(String key, String value) {
+    return 'Die Datei gibt an $key: $value';
+  }
+
+  @override
+  String get taskWorkbenchRefusedTooLarge =>
+      'Diese Datei ist größer, als die Werkbank liest.';
+
+  @override
+  String get taskWorkbenchRefusedUnsupported => 'Das ist keine Aufgabendatei.';
+
+  @override
+  String get taskWorkbenchRefusedUnsafe =>
+      'Diese Datei ist so aufgebaut, dass das Öffnen nicht sicher ist.';
+
+  @override
+  String get taskWorkbenchRefusedDamaged =>
+      'Diese Datei ist beschädigt oder wurde nach dem Erstellen verändert.';
+
+  @override
+  String get taskWorkbenchRefusedNewer =>
+      'Diese Datei wurde mit einer neueren App-Version erstellt.';
+
+  @override
+  String get taskWorkbenchRefusedInvalid =>
+      'Diese Datei enthält keine gültige Aufgabe.';
+
+  @override
+  String get taskOutputMake => 'Erstellen';
+
+  @override
+  String get taskOutputDocument => 'Word-Dokument';
+
+  @override
+  String get taskOutputStoryboard => 'Storyboard';
+
+  @override
+  String get taskOutputVideo => 'Video';
+
+  @override
+  String get taskOutputCaptions => 'Untertitel';
+
+  @override
+  String get taskOutputUnsupportedPlatform =>
+      'Auf diesem Gerät nicht verfügbar.';
+
+  @override
+  String get taskOutputMissingMedia =>
+      'Diese Aufgabe hat keine Bilder oder Videos.';
+
+  @override
+  String get taskOutputTooLong =>
+      'Diese Aufgabe ist für diese Ausgabe zu lang.';
+
+  @override
+  String get taskOutputFailed => 'Die Ausgabe konnte nicht erstellt werden.';
+
+  @override
   String get capabilityMultiApproval => 'Zwei oder mehr Freigaben';
 
   @override

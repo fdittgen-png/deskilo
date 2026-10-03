@@ -36,7 +36,16 @@ final class Unrecorded extends RouteTreatment {
 /// The recorder's own screen.
 const String taskRecorderRoute = '/task-recorder';
 
-const _instrumented = ['/reserve', '/plan', '/res/', taskRecorderRoute];
+/// #1872 — the local task workbench.
+const String taskWorkbenchRoute = '/task-workbench';
+
+const _instrumented = [
+  '/reserve',
+  '/plan',
+  '/res/',
+  taskRecorderRoute,
+  taskWorkbenchRoute,
+];
 
 const Map<String, ProtectedSurface> _protected = {
   '/auth': ProtectedSurface.authentication,

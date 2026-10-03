@@ -10,25 +10,22 @@
 // say where the file went, the screen says exactly that and never claims
 // a confirmed file. Nothing is sent anywhere.
 
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/files/file_saver.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/stored_recording.dart';
-import '../../domain/action_registry.dart';
 import '../../domain/recording_edit.dart';
 import '../../domain/task_recording.dart';
 import '../../domain/task_recording_codec.dart';
 import '../../package/task_package.dart';
 import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
+import '../recording_export.dart';
+import '../widgets/recording_steps_view.dart';
+import '../widgets/task_outputs_section.dart';
 
 class RecordingReviewScreen extends ConsumerStatefulWidget {
   const RecordingReviewScreen({super.key, required this.stored});
@@ -62,67 +59,19 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
   });
 
   Future<void> _save({bool package = false}) async {
-    final l10n = AppLocalizations.of(context);
     final export = _export;
     if (export == null) return;
-    final text = encodeRecordingText(export);
-    // The file offered is the file the validator accepts, or none.
-    if (!decodeRecordingText(text).accepted) {
-      AppSnack.error(
-        context,
-        l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.',
-      );
-      return;
-    }
     final stem = 'deskilo-task-${widget.stored.id.substring(0, 8)}';
-    final bytes = package
-        ? writeTaskPackage(
-            export,
-            transcript: recordingTranscript(l10n, export),
-          )
-        : Uint8List.fromList(utf8.encode(text));
-    final SaveOutcome outcome;
-    try {
-      outcome = await ref.read(typedFileSaverProvider)(
-        bytes: bytes,
-        fileName: package ? '$stem$taskPackageExtension' : '$stem.json',
-      );
-    } catch (e, st) {
-      TraceLogger.instance.warn('recorder', 'export not saved', stackTrace: st);
-      if (mounted) {
-        AppSnack.error(
-          context,
-          l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.',
-        );
-      }
-      return;
-    }
-    if (!mounted) return;
-    switch (outcome) {
-      case SavedFile(:final path):
-        AppSnack.success(
-          context,
-          l10n?.taskRecorderSaved(path) ?? 'Saved: $path',
-        );
-      case SavedPrivately(:final path):
-        AppSnack.info(
-          context,
-          l10n?.taskRecorderSavedPrivately(path) ??
-              'Kept only inside the app: $path',
-        );
-      case DownloadRequested():
-        AppSnack.info(
-          context,
-          l10n?.taskRecorderSaveNoPath ??
-              'The file was handed to your browser or device; it did not '
-                  'say where it went.',
-        );
-      case SaveFailed():
-        AppSnack.error(
-          context,
-          l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.',
-        );
-    }
+    await saveAndTell(
+      context,
+      ref,
+      bytes: recordingExportBytes(
+        AppLocalizations.of(context),
+        export,
+        package: package,
+      ),
+      fileName: package ? '$stem$taskPackageExtension' : '$stem.json',
+    );
   }
 
   Future<void> _delete() async {
@@ -198,30 +147,11 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                for (final step in source.steps) ...[
-                  if (step.seq > 1 &&
-                      source.steps[step.seq - 2].segment != step.segment)
-                    _Gap(label: l10n?.taskRecorderSegmentGap ?? 'Paused here'),
-                  _StepTile(
-                    step: step,
-                    answered:
-                        !step.isAttempt ||
-                        source.steps.any(
-                          (s) =>
-                              s.kind == StepKind.observation && s.op == step.op,
-                        ),
-                    leftOut: _leftOut.contains(step.seq),
-                    onToggle: () => _toggle(step.seq),
-                  ),
-                ],
-                if (_leftOut.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.sm),
-                  Text(
-                    l10n?.taskRecorderEditedNote(_leftOut.length) ??
-                        'Edited copy: ${_leftOut.length} steps left out.',
-                    key: const ValueKey('task-recording-edited-note'),
-                  ),
-                ],
+                RecordingStepsView(
+                  recording: source,
+                  leftOut: _leftOut,
+                  onToggle: _toggle,
+                ),
                 const SizedBox(height: AppSpacing.lg),
                 ExpansionTile(
                   key: const ValueKey('task-recording-preview'),
@@ -255,84 +185,10 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
                     l10n?.taskRecorderExportPackage ?? 'Export a task package',
                   ),
                 ),
+                const SizedBox(height: AppSpacing.md),
+                TaskOutputsSection(recording: () => _export!),
               ],
             ),
-    );
-  }
-}
-
-class _Gap extends StatelessWidget {
-  const _Gap({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-    child: Row(
-      children: [
-        const Expanded(child: Divider()),
-        Padding(padding: AppSpacing.smH, child: Text(label)),
-        const Expanded(child: Divider()),
-      ],
-    ),
-  );
-}
-
-class _StepTile extends StatelessWidget {
-  const _StepTile({
-    required this.step,
-    required this.answered,
-    required this.leftOut,
-    required this.onToggle,
-  });
-
-  final RecordedStep step;
-  final bool answered;
-  final bool leftOut;
-  final VoidCallback onToggle;
-
-  IconData get _icon => switch (step.kind) {
-    StepKind.action => step.isAttempt ? Icons.send : Icons.touch_app,
-    StepKind.observation => switch (step.state) {
-      ObservationState.confirmed => Icons.check_circle_outline,
-      ObservationState.refused => Icons.block,
-      ObservationState.pending => Icons.hourglass_empty,
-      _ => Icons.help_outline,
-    },
-    StepKind.annotation => Icons.edit_note,
-    StepKind.excluded => Icons.lock_outline,
-    StepKind.unrecorded => Icons.more_horiz,
-  };
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final text = stepText(l10n, step);
-    final unanswered = answered
-        ? null
-        : (l10n?.taskRecorderNoOutcome ?? 'No answer recorded');
-    final detail = [?text.detail, ?unanswered].join(' · ');
-    final style = leftOut
-        ? TextStyle(
-            decoration: TextDecoration.lineThrough,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          )
-        : null;
-    return ListTile(
-      key: ValueKey('task-step-${step.seq}'),
-      contentPadding: EdgeInsets.zero,
-      leading: Icon(_icon),
-      title: Text(text.title, style: style),
-      subtitle: detail.isEmpty ? null : Text(detail, style: style),
-      trailing: IconButton(
-        key: ValueKey('task-step-toggle-${step.seq}'),
-        tooltip: leftOut
-            ? (l10n?.taskRecorderPutBack ?? 'Put back')
-            : (l10n?.taskRecorderLeaveOut ?? 'Leave out of the export'),
-        icon: Icon(leftOut ? Icons.undo : Icons.remove_circle_outline),
-        onPressed: onToggle,
-      ),
     );
   }
 }

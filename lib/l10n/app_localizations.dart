@@ -25044,6 +25044,156 @@ abstract class AppLocalizations {
   /// **'Kept only inside the app: {path}'**
   String taskRecorderSavedPrivately(String path);
 
+  /// #1872 task workbench: taskWorkbenchTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Task workbench'**
+  String get taskWorkbenchTitle;
+
+  /// #1872 task workbench: taskWorkbenchOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Open a task file'**
+  String get taskWorkbenchOpen;
+
+  /// #1872 task workbench: taskWorkbenchIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Open a saved task file. It is read on this device only; nothing is uploaded and no sign-in is needed.'**
+  String get taskWorkbenchIntro;
+
+  /// #1872 task workbench: taskWorkbenchAccepted
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.'**
+  String taskWorkbenchAccepted(int megabytes);
+
+  /// #1872 task workbench: taskWorkbenchChoose
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a task file'**
+  String get taskWorkbenchChoose;
+
+  /// #1872 task workbench: taskWorkbenchFileType
+  ///
+  /// In en, this message translates to:
+  /// **'Task file'**
+  String get taskWorkbenchFileType;
+
+  /// #1872 task workbench: taskWorkbenchEdited
+  ///
+  /// In en, this message translates to:
+  /// **'An edited copy of a recording.'**
+  String get taskWorkbenchEdited;
+
+  /// #1872 task workbench: taskWorkbenchTranscriptOnly
+  ///
+  /// In en, this message translates to:
+  /// **'Some steps come from a newer version: shown as a transcript only.'**
+  String get taskWorkbenchTranscriptOnly;
+
+  /// #1872 task workbench: taskWorkbenchUntrusted
+  ///
+  /// In en, this message translates to:
+  /// **'A private draft from a file: nothing in it is trusted or sent.'**
+  String get taskWorkbenchUntrusted;
+
+  /// #1872 task workbench: taskWorkbenchClaim
+  ///
+  /// In en, this message translates to:
+  /// **'The file says {key}: {value}'**
+  String taskWorkbenchClaim(String key, String value);
+
+  /// #1872 task workbench: taskWorkbenchRefusedTooLarge
+  ///
+  /// In en, this message translates to:
+  /// **'This file is larger than the workbench reads.'**
+  String get taskWorkbenchRefusedTooLarge;
+
+  /// #1872 task workbench: taskWorkbenchRefusedUnsupported
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a task file.'**
+  String get taskWorkbenchRefusedUnsupported;
+
+  /// #1872 task workbench: taskWorkbenchRefusedUnsafe
+  ///
+  /// In en, this message translates to:
+  /// **'This file is built in a way that is not safe to open.'**
+  String get taskWorkbenchRefusedUnsafe;
+
+  /// #1872 task workbench: taskWorkbenchRefusedDamaged
+  ///
+  /// In en, this message translates to:
+  /// **'This file is damaged or was changed after it was made.'**
+  String get taskWorkbenchRefusedDamaged;
+
+  /// #1872 task workbench: taskWorkbenchRefusedNewer
+  ///
+  /// In en, this message translates to:
+  /// **'This file was made by a newer version of the app.'**
+  String get taskWorkbenchRefusedNewer;
+
+  /// #1872 task workbench: taskWorkbenchRefusedInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'This file does not hold a valid task.'**
+  String get taskWorkbenchRefusedInvalid;
+
+  /// #1872 task workbench: taskOutputMake
+  ///
+  /// In en, this message translates to:
+  /// **'Make'**
+  String get taskOutputMake;
+
+  /// #1872 task workbench: taskOutputDocument
+  ///
+  /// In en, this message translates to:
+  /// **'Word document'**
+  String get taskOutputDocument;
+
+  /// #1872 task workbench: taskOutputStoryboard
+  ///
+  /// In en, this message translates to:
+  /// **'Storyboard'**
+  String get taskOutputStoryboard;
+
+  /// #1872 task workbench: taskOutputVideo
+  ///
+  /// In en, this message translates to:
+  /// **'Video'**
+  String get taskOutputVideo;
+
+  /// #1872 task workbench: taskOutputCaptions
+  ///
+  /// In en, this message translates to:
+  /// **'Captions'**
+  String get taskOutputCaptions;
+
+  /// #1872 task workbench: taskOutputUnsupportedPlatform
+  ///
+  /// In en, this message translates to:
+  /// **'Not available on this device.'**
+  String get taskOutputUnsupportedPlatform;
+
+  /// #1872 task workbench: taskOutputMissingMedia
+  ///
+  /// In en, this message translates to:
+  /// **'This task has no images or video to use.'**
+  String get taskOutputMissingMedia;
+
+  /// #1872 task workbench: taskOutputTooLong
+  ///
+  /// In en, this message translates to:
+  /// **'This task is too long for this output.'**
+  String get taskOutputTooLong;
+
+  /// #1872 task workbench: taskOutputFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The output could not be made.'**
+  String get taskOutputFailed;
+
   /// #1659 template_capabilities
   ///
   /// In en, this message translates to:

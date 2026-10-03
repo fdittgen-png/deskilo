@@ -467,5 +467,118 @@
         "type": "String"
       }
     }
+  },
+  "taskWorkbenchTitle": "Task workbench",
+  "@taskWorkbenchTitle": {
+    "description": "#1872 task workbench: taskWorkbenchTitle"
+  },
+  "taskWorkbenchOpen": "Open a task file",
+  "@taskWorkbenchOpen": {
+    "description": "#1872 task workbench: taskWorkbenchOpen"
+  },
+  "taskWorkbenchIntro": "Open a saved task file. It is read on this device only; nothing is uploaded and no sign-in is needed.",
+  "@taskWorkbenchIntro": {
+    "description": "#1872 task workbench: taskWorkbenchIntro"
+  },
+  "taskWorkbenchAccepted": "Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.",
+  "@taskWorkbenchAccepted": {
+    "description": "#1872 task workbench: taskWorkbenchAccepted",
+    "placeholders": {
+      "megabytes": {
+        "type": "int"
+      }
+    }
+  },
+  "taskWorkbenchChoose": "Choose a task file",
+  "@taskWorkbenchChoose": {
+    "description": "#1872 task workbench: taskWorkbenchChoose"
+  },
+  "taskWorkbenchFileType": "Task file",
+  "@taskWorkbenchFileType": {
+    "description": "#1872 task workbench: taskWorkbenchFileType"
+  },
+  "taskWorkbenchEdited": "An edited copy of a recording.",
+  "@taskWorkbenchEdited": {
+    "description": "#1872 task workbench: taskWorkbenchEdited"
+  },
+  "taskWorkbenchTranscriptOnly": "Some steps come from a newer version: shown as a transcript only.",
+  "@taskWorkbenchTranscriptOnly": {
+    "description": "#1872 task workbench: taskWorkbenchTranscriptOnly"
+  },
+  "taskWorkbenchUntrusted": "A private draft from a file: nothing in it is trusted or sent.",
+  "@taskWorkbenchUntrusted": {
+    "description": "#1872 task workbench: taskWorkbenchUntrusted"
+  },
+  "taskWorkbenchClaim": "The file says {key}: {value}",
+  "@taskWorkbenchClaim": {
+    "description": "#1872 task workbench: taskWorkbenchClaim",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "taskWorkbenchRefusedTooLarge": "This file is larger than the workbench reads.",
+  "@taskWorkbenchRefusedTooLarge": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedTooLarge"
+  },
+  "taskWorkbenchRefusedUnsupported": "This is not a task file.",
+  "@taskWorkbenchRefusedUnsupported": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedUnsupported"
+  },
+  "taskWorkbenchRefusedUnsafe": "This file is built in a way that is not safe to open.",
+  "@taskWorkbenchRefusedUnsafe": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedUnsafe"
+  },
+  "taskWorkbenchRefusedDamaged": "This file is damaged or was changed after it was made.",
+  "@taskWorkbenchRefusedDamaged": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedDamaged"
+  },
+  "taskWorkbenchRefusedNewer": "This file was made by a newer version of the app.",
+  "@taskWorkbenchRefusedNewer": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedNewer"
+  },
+  "taskWorkbenchRefusedInvalid": "This file does not hold a valid task.",
+  "@taskWorkbenchRefusedInvalid": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedInvalid"
+  },
+  "taskOutputMake": "Make",
+  "@taskOutputMake": {
+    "description": "#1872 task workbench: taskOutputMake"
+  },
+  "taskOutputDocument": "Word document",
+  "@taskOutputDocument": {
+    "description": "#1872 task workbench: taskOutputDocument"
+  },
+  "taskOutputStoryboard": "Storyboard",
+  "@taskOutputStoryboard": {
+    "description": "#1872 task workbench: taskOutputStoryboard"
+  },
+  "taskOutputVideo": "Video",
+  "@taskOutputVideo": {
+    "description": "#1872 task workbench: taskOutputVideo"
+  },
+  "taskOutputCaptions": "Captions",
+  "@taskOutputCaptions": {
+    "description": "#1872 task workbench: taskOutputCaptions"
+  },
+  "taskOutputUnsupportedPlatform": "Not available on this device.",
+  "@taskOutputUnsupportedPlatform": {
+    "description": "#1872 task workbench: taskOutputUnsupportedPlatform"
+  },
+  "taskOutputMissingMedia": "This task has no images or video to use.",
+  "@taskOutputMissingMedia": {
+    "description": "#1872 task workbench: taskOutputMissingMedia"
+  },
+  "taskOutputTooLong": "This task is too long for this output.",
+  "@taskOutputTooLong": {
+    "description": "#1872 task workbench: taskOutputTooLong"
+  },
+  "taskOutputFailed": "The output could not be made.",
+  "@taskOutputFailed": {
+    "description": "#1872 task workbench: taskOutputFailed"
   }
 }
