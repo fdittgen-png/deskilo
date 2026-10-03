@@ -11176,6 +11176,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalActionFailed => 'Impossibile salvare la modifica. Riprova.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Questa azione non è disponibile tra questa app e quel server. Aggiornare l’app può aiutare.';
+
+  @override
   String get portalAddress => 'Indirizzo pubblico';
 
   @override
@@ -13536,6 +13540,14 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get roleBuiltInNote =>
+      'Integrato. Cosa consente si imposta in Ruoli; si assegna nella pagina di ogni membro e ha effetto una volta convalidato.';
+
+  @override
+  String get roleBuiltInSubtitle =>
+      'Integrato. Cosa consente si imposta in Ruoli.';
+
+  @override
   String get roleEditorActive => 'In uso';
 
   @override
@@ -13598,6 +13610,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get roleRefusalOwnerOnly =>
       'Solo il proprietario dà un ruolo che gestisce i ruoli.';
+
+  @override
+  String get roleRenameAdministrator => 'Rinomina';
 
   @override
   String get roleTakeBackFailed => 'Il ruolo non è stato revocato.';

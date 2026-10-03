@@ -20,6 +20,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
 
 import 'evidence.dart';
 
@@ -95,7 +96,38 @@ Map<String, Object?> project(Map<String, Object?> manifest, Context ctx) {
     'manifest_version': manifest['version'],
     'scopes': scopes,
     'capabilities': out,
+    'features': featureLifecycleProjection(),
   };
+}
+
+/// #1850 B — the public-safe projection of the feature assessments: the
+/// registry key, the two axes, the capability ids the claim rests on and
+/// the replacement chain. Nothing else: no rationale, no private flag
+/// state, no workspace, person or rollout. Retired keys stay listed so a
+/// reader never mistakes a gone key for a new one.
+List<Map<String, Object?>> featureLifecycleProjection({
+  Map<String, FeatureAssessment>? assessments,
+}) {
+  final all = assessments ??
+      {
+        for (final e in featureAssessments.entries) e.key.name: e.value,
+        ...retiredFeatureAssessments,
+      };
+  return [
+    for (final key in all.keys.toList()..sort())
+      {
+        'key': key,
+        'maturity': all[key]!.maturity.name,
+        'lifecycle': all[key]!.lifecycle.name,
+        'capabilities': all[key]!.evidence,
+        if (all[key]!.replacedBy.isNotEmpty)
+          'replaced_by': all[key]!.replacedBy,
+        if (all[key]!.introducedIn != null)
+          'introduced_in': all[key]!.introducedIn,
+        if (all[key]!.deprecatedIn != null)
+          'deprecated_in': all[key]!.deprecatedIn,
+      },
+  ];
 }
 
 /// #2121 — the current component fingerprint of every capability that

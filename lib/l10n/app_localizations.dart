@@ -19202,6 +19202,12 @@ abstract class AppLocalizations {
   /// **'Could not save this change. Please try again.'**
   String get portalActionFailed;
 
+  /// No description provided for @portalActionNotNegotiated.
+  ///
+  /// In en, this message translates to:
+  /// **'This action is not available between this app and that server. Updating the app may help.'**
+  String get portalActionNotNegotiated;
+
   /// No description provided for @portalAddress.
   ///
   /// In en, this message translates to:
@@ -23360,6 +23366,18 @@ abstract class AppLocalizations {
   /// **'Give a role to {name}'**
   String roleAssignSheetTitle(String name);
 
+  /// #2085 giving roles: roleBuiltInNote
+  ///
+  /// In en, this message translates to:
+  /// **'Built in. What it may do is set in Roles; it is given on each member\'s page and takes effect once validated.'**
+  String get roleBuiltInNote;
+
+  /// #2085 giving roles: roleBuiltInSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Built in. What it may do is set in Roles.'**
+  String get roleBuiltInSubtitle;
+
   /// #1528 the roles of a space: roleEditorActive
   ///
   /// In en, this message translates to:
@@ -23473,6 +23491,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only the owner gives a role that manages roles.'**
   String get roleRefusalOwnerOnly;
+
+  /// #2085 giving roles: roleRenameAdministrator
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get roleRenameAdministrator;
 
   /// #2085 giving roles: roleTakeBackFailed
   ///

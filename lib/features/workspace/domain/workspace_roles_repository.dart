@@ -21,6 +21,9 @@ abstract class WorkspaceRolesRepository {
   /// Defines or redefines a role; returns its id.
   Future<String> setRole(String workspaceId, WorkspaceRole role);
 
+  /// #2085 — renames the built-in Administrator (owner only).
+  Future<void> renameAdministrator(String workspaceId, Map<String, String> names);
+
   /// Gives [roleId] to [memberId], or takes it back.
   Future<void> assignRole({
     required String memberId,

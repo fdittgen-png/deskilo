@@ -7,12 +7,17 @@
 // operations.json` is the only hand-written source. It shares its field
 // primitives with the MCP contract (#1609) and nothing else: this is not
 // the MCP management catalogue.
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
+
 import '../contract_common/primitives.dart';
 
 const publicNetworkGeneratedPaths = (
   external: 'contracts/public_network/generated/external.openapi.json',
   internal: 'contracts/public_network/generated/internal.openapi.json',
   dart: 'lib/core/public_network/public_network_operations.dart',
+  supportMatrix: 'contracts/public_network/generated/support-matrix.json',
 );
 
 const _header =
@@ -53,6 +58,14 @@ Map<String, Object?> publicFieldSchema(Map<String, dynamic> f) =>
         'type': 'array',
         'items': {r'$ref': '#/components/schemas/${f['items']}'},
         if (f['maxItems'] != null) 'maxItems': f['maxItems'],
+      },
+      'integer_list' => {
+        'type': 'array',
+        'items': {'type': 'integer'},
+      },
+      'string_list' => {
+        'type': 'array',
+        'items': {'type': 'string', 'maxLength': 200},
       },
       _ => fieldSchema(f),
     };
@@ -378,6 +391,8 @@ String _dartField(Map<String, dynamic> f) {
     'enum' => 'enum_',
     'https_url' => 'httpsUrl',
     'https_origin' => 'httpsOrigin',
+    'integer_list' => 'integerList',
+    'string_list' => 'stringList',
     final t => t,
   };
   final args = [
@@ -485,8 +500,21 @@ String _renderDart(Map<String, dynamic> contract) {
     if (output['schema'] != null) {
       out.writeln("    output: '${output['schema']}',");
     }
+    out.writeln('    cardinality: PublicCardinality.$cardinality,');
+    out.writeln(
+      '    versions: [${(op['versions'] as List? ?? const []).join(', ')}],',
+    );
+    out.writeln(
+      '    requires: ${_dartList(op['requires'] as List? ?? const [])},',
+    );
+    if (op['baseline'] == true) out.writeln('    baseline: true,');
+    if (op['unlabelled'] != null) {
+      out.writeln('    unlabelled: ${op['unlabelled']},');
+    }
+    if (op['revalidation'] == 'operation_header') {
+      out.writeln('    revalidated: true,');
+    }
     out
-      ..writeln('    cardinality: PublicCardinality.$cardinality,')
       ..writeln('  );')
       ..writeln();
   }
@@ -502,9 +530,52 @@ String _renderDart(Map<String, dynamic> contract) {
       "  '${op['id']}': PublicNetworkOperations.${camelCase(op['id'] as String)},",
     );
   }
-  out.writeln('};');
+  out
+    ..writeln('};')
+    ..writeln()
+    ..writeln('/// #1847 B — the protocol versions this client speaks.')
+    ..writeln(
+      'const List<int> publicNetworkProtocolVersions = [${(contract['protocol_versions'] as List).join(', ')}];',
+    )
+    ..writeln()
+    ..writeln('/// #1847 B — the capabilities this client understands.')
+    ..writeln(
+      'const Set<String> publicNetworkCapabilities = {${[for (final k in (contract['capabilities'] as Map).keys.toList()..sort()) "'$k'"].join(', ')}};',
+    );
   return out.toString();
 }
+
+/// #1847 B — what an installation publishes about its external interface:
+/// the protocol, its capabilities and every non-management operation with
+/// the versions it accepts. No lifecycle (#1850 has not produced any), no
+/// configuration, build, schema level or flag.
+Map<String, Object?> publicNetworkDescriptor(Map<String, dynamic> contract) => {
+  'protocol': contract['protocol'],
+  'protocol_versions': contract['protocol_versions'],
+  'capabilities': (contract['capabilities'] as Map).keys.toList()..sort(),
+  'operations': [
+    for (final op in _ops(contract))
+      if (op['surface'] != 'management')
+        {
+          'id': op['id'],
+          'versions': op['versions'],
+          'requires': op['requires'],
+          if (op['unlabelled'] != null) 'unlabelled': op['unlabelled'],
+        },
+  ],
+};
+
+/// The descriptor as the database answers it; the latest migration that
+/// defines `public_network_descriptor()` carries this verbatim.
+String renderPublicNetworkDescriptorSql(Map<String, dynamic> contract) =>
+    '''create or replace function public.public_network_descriptor()
+returns jsonb
+language sql
+immutable
+set search_path = public
+as \$descriptor\$
+  select \$json\$${jsonEncode(publicNetworkDescriptor(contract))}\$json\$::jsonb
+\$descriptor\$;''';
 
 /// Every generated file, by path.
 Map<String, String> renderPublicNetworkContract(Map<String, dynamic> contract) {
@@ -545,4 +616,62 @@ Map<String, String> renderPublicNetworkContract(Map<String, dynamic> contract) {
     ),
     publicNetworkGeneratedPaths.dart: _renderDart(contract),
   };
+}
+
+String _sha256(String text) => sha256.convert(utf8.encode(text)).toString();
+
+/// #1847 B — the machine-readable support matrix: the hand-written
+/// [support] input, the protocol and per-operation versions from the
+/// catalogue, and the sha256 of every source, generated artifact and
+/// evidence file it names ([read] returns a file's text). A changed test or
+/// fixture changes its hash, so the matrix is regenerated with it.
+String renderSupportMatrix(
+  Map<String, dynamic> contract,
+  Map<String, dynamic> support,
+  String Function(String path) read,
+) {
+  final evidence = <String>{
+    for (final key in ['server_profiles', 'client_profiles', 'pairs'])
+      for (final row in support[key] as List)
+        ...((row as Map)['evidence'] as List).cast<String>(),
+  }.toList()..sort();
+  return prettyJson({
+    'x-generated': _header,
+    'protocol': {
+      'name': contract['protocol'],
+      'versions': contract['protocol_versions'],
+      'capabilities': (contract['capabilities'] as Map).keys.toList()..sort(),
+    },
+    'operations': {
+      for (final op in _ops(contract))
+        op['id']: {
+          'surface': op['surface'],
+          'versions': op['versions'],
+          'requires': op['requires'],
+          'baseline': op['baseline'] == true,
+          if (op['unlabelled'] != null) 'unlabelled': op['unlabelled'],
+        },
+    },
+    'axes': support['axes'],
+    'server_profiles': support['server_profiles'],
+    'client_profiles': support['client_profiles'],
+    'platforms': support['platforms'],
+    'pairs': support['pairs'],
+    'hashes': {
+      'sources': {
+        for (final p in [
+          'contracts/public_network/operations.json',
+          'contracts/public_network/support.json',
+        ])
+          p: _sha256(read(p)),
+      },
+      'artifacts': {
+        publicNetworkGeneratedPaths.dart: _sha256(_renderDart(contract)),
+        'public_network_descriptor()': _sha256(
+          renderPublicNetworkDescriptorSql(contract),
+        ),
+      },
+      'evidence': {for (final p in evidence) p: _sha256(read(p))},
+    },
+  });
 }

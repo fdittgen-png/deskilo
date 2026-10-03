@@ -11197,6 +11197,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d’enregistrer cette modification. Réessayez.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Cette action n’est pas disponible entre cette application et ce serveur. Mettre à jour l’application peut aider.';
+
+  @override
   String get portalAddress => 'Adresse publique';
 
   @override
@@ -13564,6 +13568,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get roleBuiltInNote =>
+      'Intégré. Ce qu\'il permet se règle dans Rôles ; il s\'attribue sur la page de chaque membre et prend effet une fois validé.';
+
+  @override
+  String get roleBuiltInSubtitle =>
+      'Intégré. Ce qu\'il permet se règle dans Rôles.';
+
+  @override
   String get roleEditorActive => 'En usage';
 
   @override
@@ -13626,6 +13638,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get roleRefusalOwnerOnly =>
       'Seul le propriétaire attribue un rôle qui gère les rôles.';
+
+  @override
+  String get roleRenameAdministrator => 'Renommer';
 
   @override
   String get roleTakeBackFailed => 'Le rôle n\'a pas été retiré.';

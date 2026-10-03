@@ -303,7 +303,7 @@ void main() {
       // The restart on the other server, signed in there.
       await tester.pumpWidget(const SizedBox.shrink());
       final there = _Repo();
-      await _pump(tester, there, active: _there, kept: kept);
+      final thereRouter = await _pump(tester, there, active: _there, kept: kept);
       expect(
         find.byKey(const ValueKey('invitation-input')),
         findsOneWidget,
@@ -322,6 +322,10 @@ void main() {
         find.text('Named “Le Bocal” by whoever shared it'),
         findsOneWidget,
       );
+      thereRouter.go('/me');
+      await tester.pumpAndSettle();
+      expect(thereRouter.state.uri.path, '/me',
+          reason: 'the kept invitation does not trap the person in Join');
     },
   );
 

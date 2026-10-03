@@ -1,0 +1,66 @@
+{
+  "x-purpose": "#1847 B. Hand-written input of the public network support matrix; `dart run tool/build_public_network_contract.dart` renders contracts/public_network/generated/support-matrix.json from it, the catalogue and the sha256 of every source, artifact and evidence file named. A row states what was EXECUTED, never what is assumed: fixture conformance on the Dart VM is not a device run.",
+  "axes": {
+    "app_build": "The Deskilo client build. Its version and SHA are release metadata; a build label grants nothing and proves no compatibility.",
+    "protocol": "deskilo.public-network protocol versions and per-operation versions, from the catalogue.",
+    "internal_schema": "deskilo_schema_version() of the server. Private: never part of the descriptor; a compatible internal change needs no client release.",
+    "business_revision": "Not applicable yet: no published operation carries a price, offer or policy revision.",
+    "authorization": "SQL grants, RLS and RPC checks on the target. A negotiated version or capability grants nothing."
+  },
+  "server_profiles": [
+    {
+      "id": "baseline",
+      "summary": "A server from before negotiation: no descriptor (PGRST202), version 1 of every baseline operation, no revalidation.",
+      "internal_schema": "below 347",
+      "evidence": [
+        "test/fixtures/public_network/legacy_server_no_descriptor.json",
+        "test/core/public_network/public_network_negotiation_test.dart",
+        "test/features/directory/participant_negotiation_test.dart"
+      ]
+    },
+    {
+      "id": "negotiating",
+      "summary": "The descriptor is published; participant mutations revalidate x-deskilo-operation; an unlabelled request is the operation's unlabelled version.",
+      "internal_schema": "347 and above",
+      "evidence": [
+        "test/fixtures/public_network/descriptor_current.json",
+        "supabase/tests/database/130_public_network_negotiation.sql",
+        "test/features/directory/participant_negotiation_test.dart"
+      ]
+    }
+  ],
+  "client_profiles": [
+    {
+      "id": "pre-negotiation",
+      "summary": "The released client before negotiation: reads cards with the checkpoint A adapter (or none), sends no operation header.",
+      "evidence": [
+        "test/fixtures/public_network/released_client_requests.json",
+        "supabase/tests/database/130_public_network_negotiation.sql"
+      ]
+    },
+    {
+      "id": "negotiating",
+      "summary": "This client: negotiates before each participant mutation and names the version.",
+      "evidence": [
+        "test/core/public_network/public_network_negotiation_test.dart",
+        "test/features/directory/participant_negotiation_test.dart",
+        "test/core/public_network/public_network_codec_test.dart"
+      ]
+    }
+  ],
+  "platforms": [
+    {"id": "android-play", "flavor": "Google-enabled Android", "public_network": "Pure Dart and HTTP; no push, camera or payment dependency.", "status": "fixture conformance on the Dart VM; no device run recorded"},
+    {"id": "android-foss", "flavor": "FOSS / F-Droid Android", "public_network": "Same code path; the missing proprietary push affects only push.", "status": "fixture conformance on the Dart VM; no device run recorded"},
+    {"id": "ios", "flavor": "iOS", "public_network": "Same code path.", "status": "fixture conformance on the Dart VM; no device run recorded"},
+    {"id": "web", "flavor": "Web, including a stale cached build", "public_network": "A stale cached build is a pre-negotiation or older negotiating client: the server's revalidation, not the build label, decides.", "status": "fixture conformance on the Dart VM; no browser run recorded"},
+    {"id": "desktop", "flavor": "macOS, Windows, Linux", "public_network": "Same code path.", "status": "fixture conformance on the Dart VM; no device run recorded"}
+  ],
+  "pairs": [
+    {"client": "negotiating", "server": "negotiating", "outcome": "negotiated version 1, header revalidated", "evidence": ["test/features/directory/participant_negotiation_test.dart", "supabase/tests/database/130_public_network_negotiation.sql"]},
+    {"client": "negotiating", "server": "baseline", "outcome": "baseline version 1; the request is accepted", "evidence": ["test/features/directory/participant_negotiation_test.dart"]},
+    {"client": "pre-negotiation", "server": "negotiating", "outcome": "unlabelled request accepted as version 1; refused by name once version 1 is retired", "evidence": ["supabase/tests/database/130_public_network_negotiation.sql"]},
+    {"client": "pre-negotiation", "server": "baseline", "outcome": "unchanged behaviour (both predate negotiation)", "evidence": ["test/fixtures/public_network/released_client_requests.json"]},
+    {"client": "negotiating", "server": "synthetic newer", "outcome": "common version taken; an unknown required capability refuses only its operation", "evidence": ["test/fixtures/public_network/synthetic_newer_server.json", "test/core/public_network/public_network_negotiation_test.dart"]},
+    {"client": "negotiating", "server": "synthetic retired v1", "outcome": "the retired operation is refused before sending; unrelated operations work", "evidence": ["test/fixtures/public_network/synthetic_retired_v1.json", "test/features/directory/participant_negotiation_test.dart"]}
+  ]
+}

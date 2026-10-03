@@ -319,4 +319,61 @@ void main() {
       expect(accessSources(member: null, workspace: on), isEmpty);
     });
   });
+
+  group('the built-in Administrator (#2085 PR3)', () {
+    const admin = WorkspaceRole(
+      id: 'r-a',
+      key: 'admin',
+      names: {'en': 'Board member', 'fr': 'Membre du bureau'},
+      builtin: true,
+    );
+
+    test('is never one of the chips of the roles a member holds: who holds '
+        'it is is_admin', () {
+      expect(
+        rolesHeldBy('lea', const [admin, _treasurer], const {
+          'lea': {'r-a', 'r-t'},
+        }).map((r) => r.key),
+        ['tresorier'],
+      );
+    });
+
+    test('its name is the one the owner gave, in the reader\'s language, '
+        'or the product\'s word', () {
+      expect(administratorName(const [admin], 'fr', 'Administrateur·rice'),
+          'Membre du bureau');
+      expect(administratorName(const [admin], 'de', 'Administrator:in'),
+          'Board member');
+      expect(administratorName(const [_treasurer], 'en', 'Administrator'),
+          'Administrator');
+    });
+
+    test('only its name is checked: it keeps the key the other doors refuse',
+        () {
+      expect(roleProblem(admin, 'fr'), isNull);
+      expect(
+        roleProblem(
+            const WorkspaceRole(id: 'r-a', key: 'admin', names: {}, builtin: true),
+            'fr'),
+        RoleProblem.name,
+      );
+      expect(
+        roleProblem(
+            const WorkspaceRole(id: 'x', key: 'admin', names: {'fr': 'X'}),
+            'fr'),
+        RoleProblem.builtIn,
+      );
+    });
+
+    test('grants nothing as a role row: its permissions are the matrix base',
+        () {
+      final sources = accessSources(
+        member: lea,
+        workspace: _ws(const {'customRoles': true}),
+        roles: const [admin],
+        heldRoleIds: const {'r-a'},
+      );
+      expect(sources.map((s) => s.kind), [AccessSourceKind.everyMember]);
+    });
+  });
 }

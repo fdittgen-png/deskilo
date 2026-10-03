@@ -23,9 +23,17 @@ import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
 
 class RoleHoldersSection extends ConsumerWidget {
-  const RoleHoldersSection({super.key, required this.role});
+  const RoleHoldersSection({
+    super.key,
+    required this.role,
+    this.readOnly = false,
+  });
 
   final WorkspaceRole role;
+
+  /// #2085 — the Administrator lists its holders here, but is given and
+  /// taken back on the member's page, through the validation quorum.
+  final bool readOnly;
 
   static const Key addKey = Key('role-holders-add');
   static Key holderKeyFor(String memberId) =>
@@ -134,7 +142,7 @@ class RoleHoldersSection extends ConsumerWidget {
             contentPadding: EdgeInsets.zero,
             dense: true,
             title: Text(names[m.id] ?? ''),
-            trailing: refusal(m, granting: false) == null
+            trailing: !readOnly && refusal(m, granting: false) == null
                 ? IconButton(
                     icon: const Icon(Icons.remove_circle_outline),
                     tooltip: MaterialLocalizations.of(context)
@@ -143,7 +151,7 @@ class RoleHoldersSection extends ConsumerWidget {
                   )
                 : null,
           ),
-        if (candidates.isNotEmpty && role.active)
+        if (!readOnly && candidates.isNotEmpty && role.active)
           TextButton.icon(
             key: addKey,
             icon: const Icon(Icons.person_add_alt_1_outlined),

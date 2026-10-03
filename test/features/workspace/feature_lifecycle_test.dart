@@ -62,14 +62,21 @@ void main() {
       );
     });
 
-    test('claims nothing above unreviewed until an assessment lands', () {
-      // The baseline of #1850: no capability is certified by code landing,
-      // an issue closing or a test count. Moving this number is a review
-      // with evidence ids, never a side effect.
-      final reviewed = featureAssessments.values
-          .where((a) => a.maturity != FeatureMaturity.unreviewed)
-          .length;
-      expect(reviewed, 0);
+    test('claims nothing that the evidence ledger does not carry', () {
+      // #1850 B: a feature leaves unreviewed only through a shipped,
+      // evidenced capability that names it (feature_assessment_evidence_
+      // test.dart checks each claim), and nothing is stable yet — no
+      // provider, hardware or operator evidence is recorded (#1850 C).
+      expect(
+        featureAssessments.values.where(
+          (a) => a.maturity == FeatureMaturity.stable,
+        ),
+        isEmpty,
+      );
+      for (final a in featureAssessments.values) {
+        if (a.maturity == FeatureMaturity.unreviewed) continue;
+        expect(a.evidence, isNotEmpty);
+      }
     });
   });
 
