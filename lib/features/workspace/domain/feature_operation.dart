@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import '../../../core/instance/schema_compatibility.dart';
 import 'feature_lifecycle.dart';
 import 'workspace_feature.dart';
 
@@ -45,19 +46,60 @@ bool featureOperationAllowed({
   FeatureOperation.suspended => false,
 };
 
-/// The server operations each feature classifies, by function name. A
-/// feature listed here keeps its existing work serviceable when it is
-/// switched off; the Features screen says so on its row. The migration
-/// that gates these functions must use the same class (lint in
-/// feature_operation_test.dart).
+/// The server operations each feature classifies, by function name; a
+/// function whose class depends on what it is asked to do names each
+/// branch after a `#` (`assign_workspace_role#revoke`). A feature listed
+/// here with a service-existing operation keeps its existing work
+/// serviceable when it is switched off; the Features screen says so on
+/// its row. The newest migration that gates each function must use
+/// exactly these classes (lint in feature_operation_test.dart).
+///
+/// Settlement callbacks (payment webhooks, refunds) carry no feature
+/// gate at all: money already committed is always settled.
 const Map<WorkspaceFeature, Map<String, FeatureOperation>>
 featureOperationClasses = {
+  // 0324
   WorkspaceFeature.spaceInquiries: {
     'start_space_inquiry': FeatureOperation.acceptNew,
     'send_inquiry_message': FeatureOperation.serviceExisting,
     'my_inbox': FeatureOperation.serviceExisting,
   },
+  // 0356 (#1851 C)
+  WorkspaceFeature.customRoles: {
+    'assign_workspace_role#give': FeatureOperation.acceptNew,
+    'assign_workspace_role#revoke': FeatureOperation.serviceExisting,
+  },
+  WorkspaceFeature.adminSeatBlocking: {
+    'set_seat_block#place': FeatureOperation.acceptNew,
+    'set_seat_block#lift': FeatureOperation.serviceExisting,
+  },
+  WorkspaceFeature.autoCheckInOut: {
+    'sweep_day_end': FeatureOperation.acceptNew,
+  },
 };
+
+/// The server schema from which [feature]'s classes hold: an older server
+/// still stops existing work with the switch, so nothing may claim
+/// otherwise against it.
+const Map<WorkspaceFeature, int> featureOperationSince = {
+  WorkspaceFeature.spaceInquiries: 324,
+  WorkspaceFeature.customRoles: 356,
+  WorkspaceFeature.adminSeatBlocking: 356,
+  WorkspaceFeature.autoCheckInOut: 356,
+};
+
+/// #1851 C — may the app say that switching [feature] off leaves its open
+/// work serviceable, given how the server compares with this build? Only
+/// a server at least as new as this build (which needs every class's
+/// migration) runs the classes; an older one, or one that could not be
+/// asked, still stops existing work with the switch.
+bool serverKeepsExistingWork(
+  WorkspaceFeature feature,
+  SchemaCompatibility? compatibility,
+) =>
+    (compatibility == SchemaCompatibility.current ||
+        compatibility == SchemaCompatibility.ahead) &&
+    requiredSchemaVersion >= (featureOperationSince[feature] ?? 1 << 30);
 
 /// Does switching [feature] off leave existing work serviceable?
 bool featureKeepsExistingWork(WorkspaceFeature feature) =>

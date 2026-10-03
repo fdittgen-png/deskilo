@@ -543,5 +543,9 @@
   "featureChangeUnconfirmed": "The change was sent, but the features could not be reloaded to confirm it. Reopen the screen to see what is set.",
   "@featureChangeUnconfirmed": {
     "description": "#1851 B feature switch consent: featureChangeUnconfirmed"
+  },
+  "featureIntakeUnconfirmedNote": "Off: nothing new starts. This server could not confirm that what is already open stays answerable, so do not count on it.",
+  "@featureIntakeUnconfirmedNote": {
+    "description": "#1851 C off-note when the server cannot confirm it keeps existing work serviceable"
   }
 }

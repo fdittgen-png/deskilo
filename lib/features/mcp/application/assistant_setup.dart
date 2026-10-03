@@ -24,7 +24,8 @@ enum AssistantSetupStep {
   /// The person links their account to this database's identity.
   identity,
 
-  /// Someone with manageConfiguration turns `mcpAccess` on.
+  /// Someone with manageIntegrations turns `mcpAccess` on (0360
+  /// `set_workspace_mcp_access`): each workspace for itself.
   workspace,
 
   /// Someone with manageIntegrations chooses what assistants may do.
@@ -183,7 +184,7 @@ class AssistantSetup {
       AssistantSetupItem(
         AssistantSetupStep.workspace,
         workspace,
-        AssistantSetupActor.configurer,
+        AssistantSetupActor.integrations,
         canAct: workspace == todo,
       ),
       AssistantSetupItem(

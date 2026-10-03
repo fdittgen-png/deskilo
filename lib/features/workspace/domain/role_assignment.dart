@@ -89,6 +89,28 @@ RoleRefusal? customRoleRefusal({
   return null;
 }
 
+/// Why [caller] cannot send [role] with a new member's invitation, or
+/// null: the rules of [customRoleRefusal], without a member yet (the
+/// server asks them again on the day the invitation is used).
+RoleRefusal? inviteRoleRefusal({
+  required Member caller,
+  required Set<WorkspacePermission> callerPermissions,
+  required WorkspaceRole role,
+}) {
+  if (role.builtin || !role.active) return RoleRefusal.notAssignable;
+  if (!callerPermissions.contains(WorkspacePermission.manageRoles)) {
+    return RoleRefusal.notPermitted;
+  }
+  if (caller.actsAsOwner) return null;
+  if (role.permissions.contains(WorkspacePermission.manageRoles)) {
+    return RoleRefusal.ownerOnly;
+  }
+  if (!callerPermissions.containsAll(role.permissions)) {
+    return RoleRefusal.exceedsYours;
+  }
+  return null;
+}
+
 /// Whether [member] holds the built-in Administrator role, as opposed to
 /// the owner permissions that an owner or an active co-owner hold anyway.
 bool holdsAdministrator(Member member) =>

@@ -52,6 +52,8 @@ import 'package:deskilo/core/demo/data/instance_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
 import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
 import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
+import 'package:deskilo/core/demo/data/mcp_onboarding_repository.dart';
+import 'package:deskilo/features/mcp/providers/assistant_setup_providers.dart';
 import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
 export 'package:deskilo/core/demo/data/stores.dart';
 export 'package:deskilo/core/demo/data/workspace_repository.dart';
@@ -176,6 +178,7 @@ List<Override> standardTestOverrides({
   FakeMcpConnectionRepository? mcpConnections,
   OAuthConsentRepository? oauthConsent,
   FakeMcpAdminRepository? mcpAdmin,
+  FakeMcpOnboardingRepository? mcpOnboarding,
   FakeInstanceRepository? instance,
   FakeLocalSetupRepository? localSetup,
   FakeTemplateSearchRepository? templateSearch,
@@ -298,6 +301,8 @@ List<Override> standardTestOverrides({
         .overrideWithValue(mcpConnections ??
             FakeMcpConnectionRepository(installationId: kTestInstallationId)),
     mcpAdminRepositoryProvider.overrideWithValue(mcpAdmin ?? FakeMcpAdminRepository()),
+    mcpOnboardingRepositoryProvider
+        .overrideWithValue(mcpOnboarding ?? FakeMcpOnboardingRepository()),
     instanceRepositoryProvider.overrideWithValue(instance ?? FakeInstanceRepository()),
     activeMcpTargetProvider
         .overrideWith((ref) => fixedMcpTarget(ref, kTestInstallationId)),

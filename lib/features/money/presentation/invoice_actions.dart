@@ -18,6 +18,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../../workspace/domain/workspace_permission.dart';
 import '../domain/e_invoice_routing.dart';
 import '../domain/invoice.dart';
 import '../domain/einvoice_gateway.dart';
@@ -637,7 +638,10 @@ Future<void> exportEInvoice(
     gateway = EInvoiceGatewayConfig.notConfigured;
   }
   if (!context.mounted) return;
-  final isIssuer = me?.actsAsOwner == true || me?.canAdminister == true;
+  // #2137 — send-e-invoice accepts whoever holds issueInvoices.
+  final isIssuer = me?.actsAsOwner == true ||
+      me?.canAdminister == true ||
+      ref.read(myPermissionsProvider).contains(WorkspacePermission.issueInvoices);
   final export = await showEInvoiceSheet(
     context,
     route: route,

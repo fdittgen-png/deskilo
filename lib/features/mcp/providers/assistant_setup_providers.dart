@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/mcp/mcp_endpoint.dart';
@@ -7,8 +8,11 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/assistant_setup.dart';
+import '../application/mcp_onboarding_commands.dart';
 import '../domain/mcp_client.dart';
+import '../data/supabase_mcp_onboarding_repository.dart';
 import '../domain/mcp_connection.dart';
+import '../domain/mcp_onboarding.dart';
 import '../domain/mcp_context.dart';
 import 'mcp_providers.dart';
 
@@ -45,7 +49,8 @@ Future<AssistantSetup> assistantSetup(Ref ref, McpContextRef context) async {
     policy: results.$3,
     connections: results.$4,
     featureOn: features.contains(WorkspaceFeature.mcpAccess),
-    canConfigure: permissions.contains(WorkspacePermission.manageConfiguration),
+    // #2145 — 0360: whoever manages integrations switches mcpAccess here.
+    canConfigure: permissions.contains(WorkspacePermission.manageIntegrations),
     canManageIntegrations: permissions.contains(
       WorkspacePermission.manageIntegrations,
     ),
@@ -68,3 +73,30 @@ Future<ConsentOptions> myMcpConsentOptions(Ref ref) async {
   final scope = (await target).instance;
   return commands.read(scope, (r) => r.connections.options());
 }
+
+/// #2145 — the 0357 onboarding RPCs: consent status, published endpoint,
+/// installation notices.
+@Riverpod(keepAlive: true)
+McpOnboardingRepository mcpOnboardingRepository(Ref ref) =>
+    SupabaseMcpOnboardingRepository(Supabase.instance.client);
+
+/// #2145 — the client, its approval and who decides, for one pending
+/// authorization; read BEFORE Auth is asked for the authorization itself.
+@riverpod
+Future<ConsentStatus> mcpConsentStatus(Ref ref, String authorizationId) =>
+    ref.watch(mcpOnboardingRepositoryProvider).consentStatus(authorizationId);
+
+/// #2145 — the endpoint this installation publishes for assistants.
+@riverpod
+Future<McpEndpointInfo> mcpPublishedEndpoint(Ref ref) =>
+    ref.watch(mcpOnboardingRepositoryProvider).endpoint();
+
+/// #2145 — the installation notices addressed to the caller.
+@riverpod
+Future<InstanceNotices> myInstanceNotices(Ref ref) =>
+    ref.watch(mcpOnboardingRepositoryProvider).notices();
+
+/// #2145 — the onboarding changes, behind one class.
+@riverpod
+McpOnboardingCommands mcpOnboardingCommands(Ref ref) =>
+    McpOnboardingCommands(ref.watch(mcpOnboardingRepositoryProvider));

@@ -23,6 +23,10 @@ import 'package:deskilo/features/workspace/presentation/screens/roles_of_space_s
 import 'package:deskilo/features/workspace/presentation/screens/roles_screen.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/role_editor_sheet.dart';
 import 'package:deskilo/features/workspace/presentation/screens/what_you_can_do_screen.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/features/workspace/domain/invite_uri.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/invite_roles_picker.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/invite_sheet.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/member_roles_card.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/role_holders_section.dart';
 import 'package:flutter/material.dart';
@@ -302,5 +306,88 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(RoleHoldersSection.holderKeyFor('ben')), findsOneWidget);
     expect(find.byKey(RoleHoldersSection.addKey), findsNothing);
+  });
+
+  testWidgets('an invitation carries the roles chosen for the new member, '
+      'and a delegate cannot send one holding more than they hold',
+      (tester) async {
+    final s = _seed(
+      viewerOwner: false,
+      // An Administrator (who invites) the owner let manage roles.
+      rolePermissions: const {
+        'admin': ['manageRoles', 'viewFinances', 'manageMembers'],
+      },
+    );
+    s.workspace.myMember = _member('me', admin: true);
+    s.roles.roles.add(const WorkspaceRole(
+      id: 'role-l',
+      key: 'lecteur',
+      names: {'en': 'Reader'},
+      permissions: {WorkspacePermission.viewFinances},
+      sortOrder: 2,
+    ));
+    tester.view.physicalSize = const Size(800, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(workspace: s.workspace, roles: s.roles),
+          linkLauncherProvider.overrideWithValue((uri) async => true),
+        ],
+        child: MaterialApp(
+          home: Builder(
+            builder: (context) => TextButton(
+              onPressed: () => showInviteSheet(
+                context,
+                workspace: s.workspace.workspaces.first,
+                role: InviteRole.user,
+              ),
+              child: const Text('open'),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+
+    final treasurer = tester.widget<FilterChip>(
+        find.byKey(InviteRolesPicker.chipKeyFor('tresorier')));
+    expect(treasurer.onSelected, isNull,
+        reason: 'the treasurer issues invoices, the delegate does not');
+    await tester.tap(find.byKey(InviteRolesPicker.chipKeyFor('lecteur')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('invite-whatsapp')));
+    await tester.tap(find.byKey(const ValueKey('invite-whatsapp')));
+    await tester.pumpAndSettle();
+
+    final code = s.workspace.mintedInvitations.single.code;
+    expect(s.roles.invitationRoles[code], ['lecteur']);
+  });
+
+  // #2137 — the member page offers "Add a service" to whoever holds
+  // manageServices through a role, as record_service_charge now accepts.
+  testWidgets('a role holding manageServices finds "Add a service" on '
+      "another member's page; a plain member does not", (tester) async {
+    final s = _seed(viewerOwner: false, flags: const {'customRoles': true});
+    s.roles.roles.add(const WorkspaceRole(
+      id: 'role-c',
+      key: 'catalogue',
+      names: {'en': 'Catalogue'},
+      permissions: {WorkspacePermission.manageServices},
+    ));
+    s.roles.assignments['role-c'] = ['me'];
+    await _pump(tester, const MemberPage(memberId: 'ben'),
+        workspace: s.workspace, roles: s.roles);
+    expect(find.byKey(const ValueKey('member-page-action-service')),
+        findsOneWidget);
+
+    final plain = _seed(viewerOwner: false);
+    await _pump(tester, const MemberPage(memberId: 'ben'),
+        workspace: plain.workspace, roles: plain.roles);
+    expect(find.byKey(const ValueKey('member-page-action-service')),
+        findsNothing);
   });
 }

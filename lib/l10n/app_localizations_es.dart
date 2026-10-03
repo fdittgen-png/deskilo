@@ -4771,6 +4771,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse.';
 
   @override
+  String get featureIntakeUnconfirmedNote =>
+      'Desactivado: no empieza nada nuevo. Este servidor no pudo confirmar que lo que ya está abierto siga pudiendo atenderse; no cuente con ello.';
+
+  @override
   String get featureInvoiceAddressWindow => 'Ventanilla de dirección';
 
   @override
@@ -6717,6 +6721,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get inboxRetry => 'Reintentar';
 
   @override
+  String get instanceAccessTitle => 'Acceso a los asistentes';
+
+  @override
+  String instanceAccessUntil(String date) {
+    return 'Hasta el $date';
+  }
+
+  @override
   String get instanceAccountIntro =>
       'Cree una cuenta gratuita en supabase.com, luego un token de acceso personal (Account → Access Tokens) y péguelo aquí. El asistente lo usa para crear y configurar el proyecto; nunca se guarda.';
 
@@ -6900,6 +6912,64 @@ class AppLocalizationsEs extends AppLocalizations {
       'La instancia está lista. Úsela en este dispositivo y comparta luego el QR del servidor desde la pantalla Servidor para que los miembros se unan a la misma.';
 
   @override
+  String get instanceEndpointTitle => 'Punto de acceso de los asistentes';
+
+  @override
+  String get instanceFamilyChatgpt => 'ChatGPT';
+
+  @override
+  String get instanceFamilyClaude => 'Claude';
+
+  @override
+  String get instanceFamilyLoopback =>
+      'Asistente de escritorio o de línea de comandos';
+
+  @override
+  String get instanceGrant => 'Aprobar el acceso';
+
+  @override
+  String get instanceGrantDays => 'Elija entre 1 y 30 días.';
+
+  @override
+  String instanceGrantDaysLabel(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days días',
+      one: '1 día',
+    );
+    return 'Durante $_temp0';
+  }
+
+  @override
+  String get instanceGrantHelp =>
+      'Mientras no exista otro administrador de la base de datos, usted aprueba los accesos — incluido el suyo — por hasta 30 días, con un motivo. Cada aprobación queda registrada.';
+
+  @override
+  String get instanceGrantNeedsGoogle =>
+      'Para aprobar el acceso, esta sesión debe haberse iniciado con Google.';
+
+  @override
+  String get instanceGrantNoIdentity =>
+      'Esa persona aún no ha confirmado su identidad.';
+
+  @override
+  String get instanceGrantOtherAdmin =>
+      'Aquí decide el acceso un administrador de la base de datos; pídaselo.';
+
+  @override
+  String get instanceGrantReason => 'Motivo';
+
+  @override
+  String get instanceGrantReasonNeeded =>
+      'Escriba por qué se aprueba este acceso (hasta 500 caracteres).';
+
+  @override
+  String instanceGrantTitle(String name) {
+    return 'Aprobar el acceso a los asistentes para $name';
+  }
+
+  @override
   String instanceInstallSchema(int count) {
     return 'Instalar el esquema: cada migración de la app, en orden ($count).';
   }
@@ -6907,6 +6977,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get instanceIntro =>
       'Ajustes para todos los espacios de trabajo de esta instalación. Solo el operador de la instancia ve esta página; cada cambio requiere su segundo factor y queda registrado.';
+
+  @override
+  String get instanceLoopbackHelp =>
+      'Claude Code, Cursor, VS Code y otros asistentes que se ejecutan en el propio equipo de una persona. Cada persona sigue aprobando su propia conexión.';
+
+  @override
+  String get instanceLoopbackTitle =>
+      'Permitir asistentes de escritorio y de línea de comandos';
 
   @override
   String get instanceMakeAdmin => 'Nombrar administrador';
@@ -6918,6 +6996,27 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get instanceNotOperator =>
       'Solo el operador de la instancia gestiona los asistentes de la instalación.';
+
+  @override
+  String instanceNoticeClientWaiting(String name) {
+    return '$name espera su aprobación.';
+  }
+
+  @override
+  String instanceNoticeOperatorGrant(String name) {
+    return 'El operador aprobó el acceso a los asistentes para $name.';
+  }
+
+  @override
+  String instanceNoticeSelfGrant(String name) {
+    return '$name aprobó su propio acceso a los asistentes.';
+  }
+
+  @override
+  String get instanceNoticesMarkRead => 'Marcar como leído';
+
+  @override
+  String get instanceOperatorApproved => 'Aprobado por el operador';
 
   @override
   String get instanceOrganisationLabel => 'Organización';
@@ -6944,6 +7043,35 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get instanceOwnerTitle => 'Propietario de la instancia';
+
+  @override
+  String get instanceProbeCheck => 'Comprobar el servidor';
+
+  @override
+  String get instanceProbeDeployed =>
+      'El punto de acceso de los asistentes responde como debe.';
+
+  @override
+  String get instanceProbeMismatch =>
+      'El punto de acceso responde con otra dirección distinta de la que reciben los asistentes.';
+
+  @override
+  String get instanceProbeMissing => 'El servidor aún no se ha comprobado.';
+
+  @override
+  String get instanceProbeNotDeployed =>
+      'El punto de acceso de los asistentes aún no está desplegado en este servidor.';
+
+  @override
+  String get instanceProbePending => 'Comprobando el servidor…';
+
+  @override
+  String get instanceProbeStale =>
+      'La última comprobación tiene más de 15 minutos. Compruebe de nuevo antes de activar los asistentes.';
+
+  @override
+  String get instanceProbeUnavailable =>
+      'No se pudo contactar con el servidor. Inténtelo de nuevo en un momento.';
 
   @override
   String instanceProgress(int done, int total, String current) {
@@ -7013,6 +7141,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los cambios aquí requieren su segundo factor en esta sesión.';
 
   @override
+  String get instanceSelfApproved => 'Autoaprobado por el operador';
+
+  @override
   String get instanceSignInExplain =>
       'Ajustes de inicio de sesión: confirmación por correo activada (un registro debe pulsar el enlace del correo), y los enlaces de la app permitidos para restablecer contraseñas y enlaces mágicos.';
 
@@ -7062,6 +7193,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get instanceTurnOnConfirm =>
       'Los asistentes pasan a poder usarse en cada espacio que los ofrece. Puede desactivarlos en cualquier momento.';
+
+  @override
+  String get instanceTurnOnNeedsProbe =>
+      'El punto de acceso de los asistentes no está confirmado. Compruebe primero el servidor.';
 
   @override
   String get instanceUseExisting => 'O usar un proyecto existente:';
@@ -7265,6 +7400,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get inviteRoleMember => 'Invitación de miembro';
+
+  @override
+  String get inviteRolesHint =>
+      'Se dan al unirse, una vez activa la membresía.';
+
+  @override
+  String get inviteRolesTitle => 'Roles al llegar';
 
   @override
   String get inviteSectionTitle => 'Invitar a alguien';
@@ -9455,13 +9597,48 @@ class AppLocalizationsEs extends AppLocalizations {
       'Elija cada espacio y lo que el asistente puede hacer allí. No se elige nada por usted.';
 
   @override
+  String mcpConsentClientBlocked(String name) {
+    return 'El operador ha bloqueado $name en este servidor. No se puede conectar.';
+  }
+
+  @override
+  String mcpConsentClientWaiting(String name) {
+    return '$name aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; después vuelva a conectar desde el asistente.';
+  }
+
+  @override
   String get mcpConsentConnected => 'Conectado. Volviendo al asistente.';
+
+  @override
+  String mcpConsentDeciderAsk(String name) {
+    return 'Pida a $name que decida.';
+  }
+
+  @override
+  String get mcpConsentDeciderMe =>
+      'Lo decide usted mismo, en la consola de la instalación.';
+
+  @override
+  String get mcpConsentDeciderNobody =>
+      'Nadie responde todavía de este servidor.';
 
   @override
   String get mcpConsentDenied => 'Rechazado. El asistente no obtiene nada.';
 
   @override
   String get mcpConsentDeny => 'Rechazar';
+
+  @override
+  String get mcpConsentFamilyChatgpt =>
+      'Aprobado para todas las conexiones de ChatGPT.';
+
+  @override
+  String get mcpConsentFamilyClaude =>
+      'Aprobado para todas las conexiones de Claude.';
+
+  @override
+  String get mcpConsentFamilyLoopback =>
+      'Aprobado para asistentes de escritorio y de línea de comandos en este equipo.';
 
   @override
   String get mcpConsentFieldsExplain =>
@@ -9478,6 +9655,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get mcpConsentPartial =>
       'El asistente fue aprobado pero la conexión aún no se puede usar. Vuelva a conectar desde el asistente.';
+
+  @override
+  String mcpConsentRedirectHost(String host) {
+    return 'La respuesta se envía a $host.';
+  }
 
   @override
   String get mcpConsentRequestEligibility => 'Solicitar aprobación';

@@ -75,6 +75,10 @@ class ShellDrawer extends ConsumerWidget {
     final isOwner = me?.actsAsOwner ?? false;
     final canAdminister = me?.canAdminister ?? false;
     final showAdminSection = isOwner || canAdminister;
+    // #2137 — each entry asks the permission its route asks, so a member
+    // given it through a role finds the way there.
+    final perms = ref.watch(myPermissionsProvider);
+    bool may(WorkspacePermission p) => perms.contains(p);
     // #1598 — the effective permission set, watched, decides the account
     // entry's name in the drawer exactly as it does in the app bar.
     final accountMenu = showsMemberAccountMenu(
@@ -107,14 +111,14 @@ class ShellDrawer extends ConsumerWidget {
             lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events'), () => go('/events', push: false)),
     ];
     final administration = <_Entry>[
-      if (isOwner)
+      if (may(WorkspacePermission.workspaceSettings))
         _Entry('drawer-workspace-settings', Icons.business_outlined,
             l10n?.workspaceSettingsTitle ?? 'Workspace',
             () => go('/workspace-settings')),
-      if (showAdminSection)
+      if (canAdminister || may(WorkspacePermission.manageMembers))
         _Entry('drawer-members', Icons.group_outlined,
             l10n?.membersTitle ?? 'Members & plans', () => go('/members')),
-      if (isOwner)
+      if (may(WorkspacePermission.workspaceSettings))
         _Entry('drawer-availability', Icons.event_busy_outlined,
             l10n?.availabilityTitle ?? 'Availability',
             () => go('/availability')),
@@ -125,36 +129,42 @@ class ShellDrawer extends ConsumerWidget {
           permissions: ref.watch(myPermissionsProvider)))
         _Entry('drawer-bi', Icons.insights_outlined,
             l10n?.biTitle ?? 'Business analytics', () => go('/bi')),
-      if (showAdminSection &&
+      if ((showAdminSection || perms.isNotEmpty) &&
           features.contains(WorkspaceFeature.roleManagement))
         _Entry('drawer-roles', Icons.admin_panel_settings_outlined,
             l10n?.rolesTitle ?? 'Roles', () => go('/roles')),
-      if (showAdminSection && features.contains(WorkspaceFeature.invoicing))
+      if ((showAdminSection ||
+              may(WorkspacePermission.viewFinances) ||
+              may(WorkspacePermission.issueInvoices)) &&
+          features.contains(WorkspaceFeature.invoicing))
         _Entry('drawer-invoices', Icons.receipt_long_outlined,
             l10n?.settingsBillingReports ?? 'Billing & reports',
             () => go('/invoices')),
-      if (isOwner)
+      if (may(WorkspacePermission.manageIntegrations))
         _Entry('drawer-payment-methods', Icons.account_balance_wallet_outlined,
             l10n?.paymentInstructionsTitle ?? 'Payment instructions',
             () => go('/payment-methods')),
-      if (isOwner && features.contains(WorkspaceFeature.onlinePayments))
+      if (may(WorkspacePermission.manageIntegrations) &&
+          features.contains(WorkspaceFeature.onlinePayments))
         _Entry('drawer-payment-config', Icons.credit_card_outlined,
             l10n?.payConfigTitle ?? 'Online payments',
             () => go('/payment-config')),
-      if (isOwner && features.contains(WorkspaceFeature.nfcBadges))
+      if (may(WorkspacePermission.operateKiosk) &&
+          features.contains(WorkspaceFeature.nfcBadges))
         _Entry('drawer-nfc-config', Icons.nfc_outlined,
             l10n?.nfcConfigTitle ?? 'RFID / NFC badges', () => go('/nfc-config')),
-      if (isOwner && features.contains(WorkspaceFeature.services))
+      if (may(WorkspacePermission.manageServices) &&
+          features.contains(WorkspaceFeature.services))
         _Entry('drawer-services', Icons.room_service_outlined,
             l10n?.servicesTitle ?? 'Services', () => go('/services')),
-      if (canAdminister &&
+      if ((canAdminister || may(WorkspacePermission.manageServices)) &&
           features.contains(WorkspaceFeature.accessorySupplements))
         _Entry('drawer-accessories', Icons.chair_outlined,
             l10n?.accessoriesTitle ?? 'Accessories', () => go('/accessories')),
-      if (isOwner)
+      if (may(WorkspacePermission.manageBilling))
         _Entry('drawer-billing', Icons.tune, l10n?.billingTitle ?? 'Billing',
             () => go('/billing')),
-      if (isOwner)
+      if (may(WorkspacePermission.manageConfiguration))
         _Entry('drawer-features', Icons.toggle_on_outlined,
             l10n?.featuresTitle ?? 'Features', () => go('/features')),
       if (isOwner)

@@ -118,6 +118,8 @@ void main() {
       // #1791: bounded account RPC projections, not direct table rows;
       // operator/system-user stamps intentionally stay outside the API.
       'WorkspaceApplication', 'ApplicationMessage', 'AccountActivity',
+      // #2145: my_instance_notices() projects a notice without its stamp.
+      'InstanceNotice',
     };
     final missing = <String>{};
     for (final file in _dartFiles('lib')) {

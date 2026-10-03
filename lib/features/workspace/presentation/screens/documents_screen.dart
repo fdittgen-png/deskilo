@@ -12,6 +12,7 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_document.dart';
+import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
 
 /// The workspace DOCUMENT LIBRARY (#500): statutes, guides, financial
@@ -281,8 +282,10 @@ class DocumentsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final documentsAsync = ref.watch(workspaceDocumentsProvider);
-    final canCurate =
-        ref.watch(myMemberProvider).value?.canAdminister ?? false;
+    // #2137 — whoever manages the library curates it, through a role too.
+    final canCurate = ref
+        .watch(myPermissionsProvider)
+        .contains(WorkspacePermission.manageDocuments);
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.documentsTitle ?? 'Documents'),

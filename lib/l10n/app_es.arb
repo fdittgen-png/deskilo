@@ -3095,6 +3095,7 @@
     "description": "#977 instance wizard: featureInstanceWizardDesc"
   },
   "featureIntakeStoppedNote": "Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse.",
+  "featureIntakeUnconfirmedNote": "Desactivado: no empieza nada nuevo. Este servidor no pudo confirmar que lo que ya está abierto siga pudiendo atenderse; no cuente con ello.",
   "featureInvoiceAddressWindow": "Ventanilla de dirección",
   "@featureInvoiceAddressWindow": {
     "description": "Features screen name for the #869 window-envelope address placement flag"
@@ -4081,6 +4082,8 @@
   "inboxNoArchived": "Ninguna conversación archivada.",
   "inboxNoUnread": "Nada sin leer — estás al día.",
   "inboxRetry": "Reintentar",
+  "instanceAccessTitle": "Acceso a los asistentes",
+  "instanceAccessUntil": "Hasta el {date}",
   "instanceAccountIntro": "Cree una cuenta gratuita en supabase.com, luego un token de acceso personal (Account → Access Tokens) y péguelo aquí. El asistente lo usa para crear y configurar el proyecto; nunca se guarda.",
   "@instanceAccountIntro": {
     "description": "#977 instance wizard: instanceAccountIntro"
@@ -4163,6 +4166,20 @@
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
   },
+  "instanceEndpointTitle": "Punto de acceso de los asistentes",
+  "instanceFamilyChatgpt": "ChatGPT",
+  "instanceFamilyClaude": "Claude",
+  "instanceFamilyLoopback": "Asistente de escritorio o de línea de comandos",
+  "instanceGrant": "Aprobar el acceso",
+  "instanceGrantDays": "Elija entre 1 y 30 días.",
+  "instanceGrantDaysLabel": "Durante {days, plural, =1{1 día} other{{days} días}}",
+  "instanceGrantHelp": "Mientras no exista otro administrador de la base de datos, usted aprueba los accesos — incluido el suyo — por hasta 30 días, con un motivo. Cada aprobación queda registrada.",
+  "instanceGrantNeedsGoogle": "Para aprobar el acceso, esta sesión debe haberse iniciado con Google.",
+  "instanceGrantNoIdentity": "Esa persona aún no ha confirmado su identidad.",
+  "instanceGrantOtherAdmin": "Aquí decide el acceso un administrador de la base de datos; pídaselo.",
+  "instanceGrantReason": "Motivo",
+  "instanceGrantReasonNeeded": "Escriba por qué se aprueba este acceso (hasta 500 caracteres).",
+  "instanceGrantTitle": "Aprobar el acceso a los asistentes para {name}",
   "instanceInstallSchema": "Instalar el esquema: cada migración de la app, en orden ({count}).",
   "@instanceInstallSchema": {
     "description": "#977 instance wizard: instanceInstallSchema",
@@ -4173,9 +4190,16 @@
     }
   },
   "instanceIntro": "Ajustes para todos los espacios de trabajo de esta instalación. Solo el operador de la instancia ve esta página; cada cambio requiere su segundo factor y queda registrado.",
+  "instanceLoopbackHelp": "Claude Code, Cursor, VS Code y otros asistentes que se ejecutan en el propio equipo de una persona. Cada persona sigue aprobando su propia conexión.",
+  "instanceLoopbackTitle": "Permitir asistentes de escritorio y de línea de comandos",
   "instanceMakeAdmin": "Nombrar administrador",
   "instanceNoCandidates": "Nadie más ha confirmado aún su identidad.",
   "instanceNotOperator": "Solo el operador de la instancia gestiona los asistentes de la instalación.",
+  "instanceNoticeClientWaiting": "{name} espera su aprobación.",
+  "instanceNoticeOperatorGrant": "El operador aprobó el acceso a los asistentes para {name}.",
+  "instanceNoticeSelfGrant": "{name} aprobó su propio acceso a los asistentes.",
+  "instanceNoticesMarkRead": "Marcar como leído",
+  "instanceOperatorApproved": "Aprobado por el operador",
   "instanceOrganisationLabel": "Organización",
   "@instanceOrganisationLabel": {
     "description": "#977 instance wizard: instanceOrganisationLabel"
@@ -4187,6 +4211,14 @@
   "instanceOwnerHelp": "Esta instalación la comparten todos sus espacios. El propietario de la instancia responde de ella: contáctelo para todo lo que afecte a toda la instalación, como los asistentes.",
   "instanceOwnerNone": "Todavía no hay propietario de la instancia.",
   "instanceOwnerTitle": "Propietario de la instancia",
+  "instanceProbeCheck": "Comprobar el servidor",
+  "instanceProbeDeployed": "El punto de acceso de los asistentes responde como debe.",
+  "instanceProbeMismatch": "El punto de acceso responde con otra dirección distinta de la que reciben los asistentes.",
+  "instanceProbeMissing": "El servidor aún no se ha comprobado.",
+  "instanceProbeNotDeployed": "El punto de acceso de los asistentes aún no está desplegado en este servidor.",
+  "instanceProbePending": "Comprobando el servidor…",
+  "instanceProbeStale": "La última comprobación tiene más de 15 minutos. Compruebe de nuevo antes de activar los asistentes.",
+  "instanceProbeUnavailable": "No se pudo contactar con el servidor. Inténtelo de nuevo en un momento.",
   "instanceProgress": "{done} / {total} · {current}",
   "@instanceProgress": {
     "description": "#977 instance wizard: instanceProgress",
@@ -4243,6 +4275,7 @@
   "instanceRuntimeOn": "Activados",
   "instanceRuntimeTitle": "Asistentes en esta instalación",
   "instanceSecondFactorNeeded": "Los cambios aquí requieren su segundo factor en esta sesión.",
+  "instanceSelfApproved": "Autoaprobado por el operador",
   "instanceSignInExplain": "Ajustes de inicio de sesión: confirmación por correo activada (un registro debe pulsar el enlace del correo), y los enlaces de la app permitidos para restablecer contraseñas y enlaces mágicos.",
   "@instanceSignInExplain": {
     "description": "#977 instance wizard: instanceSignInExplain"
@@ -4296,6 +4329,7 @@
   "instanceTurnOff": "Desactivar",
   "instanceTurnOn": "Activar para todos los espacios",
   "instanceTurnOnConfirm": "Los asistentes pasan a poder usarse en cada espacio que los ofrece. Puede desactivarlos en cualquier momento.",
+  "instanceTurnOnNeedsProbe": "El punto de acceso de los asistentes no está confirmado. Compruebe primero el servidor.",
   "instanceUseExisting": "O usar un proyecto existente:",
   "@instanceUseExisting": {
     "description": "#977 instance wizard: instanceUseExisting"
@@ -4359,6 +4393,14 @@
   "invitePhoneLabel": "Teléfono (opcional, con prefijo)",
   "inviteRoleAdmin": "Invitación de administrador/a",
   "inviteRoleMember": "Invitación de miembro",
+  "inviteRolesHint": "Se dan al unirse, una vez activa la membresía.",
+  "@inviteRolesHint": {
+    "description": "#2085 giving roles: inviteRolesHint"
+  },
+  "inviteRolesTitle": "Roles al llegar",
+  "@inviteRolesTitle": {
+    "description": "#2085 giving roles: inviteRolesTitle"
+  },
   "inviteSectionTitle": "Invitar a alguien",
   "inviteSendFailed": "No se pudo abrir la aplicación de envío. El mensaje se copió en su lugar.",
   "inviteViaShare": "Compartir…",
@@ -5790,13 +5832,22 @@
   "mcpConsentApprove": "Conectar",
   "mcpConsentAsks": "{client} pide actuar por usted en Deskilo.",
   "mcpConsentChoose": "Elija cada espacio y lo que el asistente puede hacer allí. No se elige nada por usted.",
+  "mcpConsentClientBlocked": "El operador ha bloqueado {name} en este servidor. No se puede conectar.",
+  "mcpConsentClientWaiting": "{name} aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; después vuelva a conectar desde el asistente.",
   "mcpConsentConnected": "Conectado. Volviendo al asistente.",
+  "mcpConsentDeciderAsk": "Pida a {name} que decida.",
+  "mcpConsentDeciderMe": "Lo decide usted mismo, en la consola de la instalación.",
+  "mcpConsentDeciderNobody": "Nadie responde todavía de este servidor.",
   "mcpConsentDenied": "Rechazado. El asistente no obtiene nada.",
   "mcpConsentDeny": "Rechazar",
+  "mcpConsentFamilyChatgpt": "Aprobado para todas las conexiones de ChatGPT.",
+  "mcpConsentFamilyClaude": "Aprobado para todas las conexiones de Claude.",
+  "mcpConsentFamilyLoopback": "Aprobado para asistentes de escritorio y de línea de comandos en este equipo.",
   "mcpConsentFieldsExplain": "Detalles que también puede ver aquí. Déjelos sin marcar para mantener sus respuestas minimizadas.",
   "mcpConsentNoWorkspace": "Ninguno de sus espacios admite asistentes. No se puede conectar nada.",
   "mcpConsentNotEligible": "Esta base de datos aún no ha aprobado asistentes para usted. Solicite la aprobación y vuelva a conectar.",
   "mcpConsentPartial": "El asistente fue aprobado pero la conexión aún no se puede usar. Vuelva a conectar desde el asistente.",
+  "mcpConsentRedirectHost": "La respuesta se envía a {host}.",
   "mcpConsentRequestEligibility": "Solicitar aprobación",
   "mcpConsentRequested": "Aprobación solicitada. Un administrador de la base de datos la revisará.",
   "mcpConsentTitle": "Conectar un asistente",

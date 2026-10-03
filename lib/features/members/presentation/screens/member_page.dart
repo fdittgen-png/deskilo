@@ -194,7 +194,11 @@ class _MemberPageBody extends ConsumerWidget {
           onPressed: () =>
               _launch(context, ref, Uri(scheme: 'mailto', path: email)),
         ),
-      if (servicesOn && canAdmin && !member.isKiosk && active)
+      // #2137 — record_service_charge accepts manageServices too.
+      if (servicesOn &&
+          (canAdmin || perms.contains(WorkspacePermission.manageServices)) &&
+          !member.isKiosk &&
+          active)
         FilledButton.tonalIcon(
           key: const ValueKey('member-page-action-service'),
           icon: const Icon(Icons.room_service_outlined),
