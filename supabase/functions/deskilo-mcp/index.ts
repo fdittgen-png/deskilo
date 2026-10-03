@@ -44,6 +44,7 @@ import {
   MCP_OUTPUT_ALLOWED,
   MCP_OUTPUT_OPTIONAL,
   MCP_TOOL_PREFIX,
+  MCP_TOOLS,
   McpOperationId,
 } from "../_shared/mcp_contract.ts";
 
@@ -163,24 +164,124 @@ function boundedResult(envelope: Record<string, unknown>, summary: string, isErr
   return result;
 }
 
+/**
+ * The server's instructions: how a model is expected to chain the tools,
+ * once, instead of in every description.
+ */
+export const INSTRUCTIONS = [
+  "DesKilo is a coworking app: bookings of seats, desks, offices and levels, statements and invoices, and requests that the workspace's validators decide.",
+  "Start with deskilo_list_workspaces: every other tool needs one of its workspace_id values. If the person has several workspaces, ask which one unless the request makes it obvious.",
+  "Times are ISO 8601 with an explicit offset (e.g. 2026-10-05T09:00:00+02:00); interpret 'tomorrow morning' in the workspace's time zone.",
+  "Amounts are integer minor units (cents) with a separate currency; divide by 100 to show them.",
+  "For every write, generate a new random UUID as request_id. Reuse the same request_id with the same arguments only to retry that same intent: it never acts twice.",
+  "Read the status of every answer: completed = done; pending_validation = submitted, NOT done yet, a validator decides; requires_confirmation = nothing happened yet, the person must confirm in the DesKilo app, then call the same tool again with the same request_id and arguments; anything else = not done, and the first text says why and what to do next.",
+  "When a tool is missing or refused, deskilo_get_capabilities says what this assistant may do in that workspace.",
+].join("\n");
+
+/** The text of a workspace list: names and ids, so the person can be asked which one. */
+export function workspacesSummary(list: { workspace_id?: unknown; name?: unknown }[], more: boolean): string {
+  if (list.length === 0) {
+    return "No workspace is available to this assistant. In the DesKilo app, Settings → Assistants shows why (approval, the workspace owner's settings, or this connection's workspaces).";
+  }
+  const names = list.map((w) => `${typeof w.name === "string" ? w.name : "workspace"} (${w.workspace_id})`);
+  return `${list.length} workspace(s) available: ${names.join("; ")}.${more ? " More exist: raise limit." : ""}`;
+}
+
+/** #2145 — what each refusal means for the person, and what they can do. */
+export const REFUSAL_TEXT: Record<string, string> = {
+  not_eligible:
+    "This person is not approved to use an assistant on this DesKilo database (or the approval expired). They can ask for approval in the DesKilo app: Settings → Assistants → Ask for approval.",
+  no_identity:
+    "This person's account is not linked to a verified identity on this DesKilo database. They should sign in to the DesKilo app once with the same account, then try again.",
+  no_google_identity:
+    "This assistant connection was made with a Google account that is not linked to this person's DesKilo account. Reconnect the assistant with the account used in the DesKilo app.",
+  no_connection:
+    "This assistant is not connected for this person any more (it was disconnected or the approval changed). Reconnect it from the assistant, then try again.",
+  no_consent:
+    "This person has not allowed this assistant in that workspace. They can allow it by reconnecting the assistant and ticking the workspace.",
+  not_exposed:
+    "That workspace's owner has not made this action available to assistants. Use the DesKilo app for it, or ask the workspace owner.",
+  not_a_member:
+    "This person is not an active member of that workspace. Use deskilo_list_workspaces to pick one of their workspaces.",
+  forbidden:
+    "This person's role in that workspace does not allow this action. Ask a workspace administrator, or use the DesKilo app.",
+  target_ceiling:
+    "In that workspace this assistant may only act on the person's own items, not on the whole workspace.",
+  runtime_disabled:
+    "Assistants are switched off on this DesKilo database right now. Use the DesKilo app; the administrator can switch them back on.",
+  wrong_installation:
+    "This assistant is connected to a different DesKilo database than this endpoint serves. Reconnect it to the right one.",
+  no_client:
+    "This assistant is not registered or not allowed on this DesKilo database. Ask the database administrator.",
+  unknown_operation: "This action does not exist in DesKilo. Use one of the listed tools.",
+  invalid_arguments:
+    "Some arguments are invalid (see error.fields). Fix them and call again with a new request_id.",
+  window: "The time window is invalid: the end must be after the start, and at most 31 days later.",
+  not_found:
+    "Nothing found with that id for this person in that workspace. List the items first (e.g. deskilo_list_my_reservations) and use an id from the answer.",
+  stale:
+    "The item changed since it was read; nothing was done. Read data.state_digest and the current state, confirm with the person, then try again.",
+  request_id_reused:
+    "This request_id was already used for a different action. Generate a new request_id for a new intent.",
+  confirmation_stale:
+    "The confirmation no longer matches (it expired, was declined, or the item changed). Nothing was done. Call the tool again with a NEW request_id to ask for a new confirmation.",
+};
+
+function appLink(confirmationId: unknown): string | null {
+  const base = env("DESKILO_APP_URL").replace(/\/+$/, "");
+  if (!base || typeof confirmationId !== "string" || !/^[0-9a-f-]{36}$/i.test(confirmationId)) return null;
+  // The web app routes by fragment; the native app shows the same screen.
+  return `${base}/#/mcp/confirm/${confirmationId}`;
+}
+
+/** The first text of every answer: the outcome in plain words, and the next step. */
+export function summarize(envelope: Record<string, unknown>): string {
+  const status = String(envelope.status ?? "");
+  const data = (envelope.data ?? {}) as Record<string, unknown>;
+  const code = (envelope.error as { code?: string } | undefined)?.code;
+  switch (status) {
+    case "completed":
+      return "Done.";
+    case "pending_validation":
+      return "Submitted, NOT completed yet: the workspace's validators must approve it first. Tell the person; the result appears in the DesKilo app once decided (deskilo_list_pending_validations shows it meanwhile).";
+    case "requires_confirmation": {
+      const link = appLink(data.confirmation_id);
+      const until = typeof data.expires_at === "string" ? ` before ${data.expires_at}` : "";
+      return `Nothing happened yet: the person must confirm this exact action in the DesKilo app${until}` +
+        (link ? ` (open ${link})` : " (signed in as themselves)") +
+        ". Once they confirmed, call this same tool again with the same request_id and the same arguments to carry it out.";
+    }
+    case "rate_limited": {
+      const wait = typeof data.retry_after === "number" ? ` Wait ${data.retry_after} seconds, then retry.` : " Wait a minute, then retry.";
+      return `Not done: too many requests from this assistant right now.${wait}`;
+    }
+    case "conflict":
+      if (code === "refused") {
+        const reason = typeof data.reason === "string" && data.reason ? data.reason : "the workspace's rules refused it";
+        return `Not done: ${reason}. Tell the person; the same rules apply in the DesKilo app.`;
+      }
+      return `Not done: ${REFUSAL_TEXT[code ?? ""] ?? "it conflicts with the current state. Read it again and retry."}`;
+    default:
+      return `Not done: ${REFUSAL_TEXT[code ?? ""] ?? `the request was refused (${code ?? status}).`}`;
+  }
+}
+
 function toolResult(op: McpOperationId, raw: Record<string, unknown>) {
-  const envelope = raw.data === undefined ? raw : { ...raw, data: projectData(op, raw.data) };
+  const projected = raw.data === undefined ? raw : { ...raw, data: projectData(op, raw.data) };
+  // #2145 — a rate limit's wait is the one answer a refusal must carry.
+  const retry = (raw.data as { retry_after?: unknown } | undefined)?.retry_after;
+  const envelope = raw.status === "rate_limited" && typeof retry === "number"
+    ? { ...projected, data: { ...(projected.data as Record<string, unknown> ?? {}), retry_after: retry } }
+    : projected;
   const status = String(envelope.status ?? "");
   const isError = ["denied", "validation_error", "not_found", "conflict", "rate_limited"].includes(status);
-  const summary = status === "pending_validation"
-    ? "Submitted: waiting for the workspace's validators. Not completed yet."
-    : status === "requires_confirmation"
-    ? "Needs confirmation in the Deskilo app before anything happens."
-    : status === "completed"
-    ? "Done."
-    : `Not done: ${(envelope.error as { code?: string } | undefined)?.code ?? status}.`;
-  return boundedResult(envelope, summary, isError);
+  return boundedResult(envelope, summarize(envelope), isError);
 }
 
 function buildServer(db: SupabaseClient, installation: string, signal: AbortSignal) {
   const server = new Server(
     { name: "deskilo", version: "1" },
-    { capabilities: { tools: { listChanged: false } } },
+    { capabilities: { tools: { listChanged: false } }, instructions: INSTRUCTIONS },
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => {
@@ -193,12 +294,8 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
       if (!op.handler) continue;
       if (id !== "list_workspaces" && !allowed.has(id)) continue;
       if (id === "list_workspaces" && allowed.size === 0) continue;
-      tools.push({
-        name: `${MCP_TOOL_PREFIX}${id}`,
-        description: `Deskilo: ${id.replaceAll("_", " ")}`,
-        inputSchema: MCP_INPUT_SCHEMAS[id as McpOperationId],
-        annotations: { readOnlyHint: op.mutation === "read", idempotentHint: op.idempotency === "request_id" },
-      });
+      // #2145 — the contract's own title, description, schemas and annotations.
+      tools.push(MCP_TOOLS[id as McpOperationId]);
     }
     return { tools };
   });
@@ -206,24 +303,28 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
   server.setRequestHandler(CallToolRequestSchema, async (request: { params: { name: string; arguments?: Record<string, unknown> } }) => {
     const op = operationOf(request.params.name);
     if (!op) {
-      return { isError: true, content: [{ type: "text", text: "unknown tool" }] };
+      return { isError: true, content: [{ type: "text", text: "Not done: unknown tool. Use one of the tools tools/list returns." }] };
     }
     const args = (request.params.arguments ?? {}) as Record<string, unknown>;
     const refused = refusedInput(op, args);
-    if (refused) return { isError: true, content: [{ type: "text", text: refused }] };
+    if (refused) {
+      return { isError: true, content: [{ type: "text", text: `Not done: ${refused}. Use only the fields this tool's inputSchema lists.` }] };
+    }
     if (op === "list_workspaces") {
       const limit = args.limit ?? 100;
       if (typeof limit !== "number" || !Number.isInteger(limit) || limit < 1 || limit > 100) {
-        return { isError: true, content: [{ type: "text", text: "invalid limit" }] };
+        return { isError: true, content: [{ type: "text", text: "Not done: limit must be an integer from 1 to 100." }] };
       }
       const { data, error } = await db.rpc("mcp_my_operations", { p_installation_id: installation })
         .abortSignal(signal);
-      if (error) return { isError: true, content: [{ type: "text", text: "unavailable" }] };
-      const workspaces = (data?.workspaces ?? []) as unknown[];
+      if (error) {
+        return { isError: true, content: [{ type: "text", text: "DesKilo could not list the workspaces just now. Try again in a moment." }] };
+      }
+      const workspaces = (data?.workspaces ?? []) as { workspace_id?: unknown; name?: unknown }[];
       const visible = workspaces.slice(0, limit);
       return boundedResult(
         { workspaces: visible, has_more: workspaces.length > limit },
-        `${visible.length} workspace(s) available.`,
+        workspacesSummary(visible, workspaces.length > limit),
       );
     }
     const { workspace_id, request_id, ...rest } = args as { workspace_id?: string; request_id?: string };
@@ -236,7 +337,7 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
     }).abortSignal(signal);
     if (error || !sameProvenance(data, { operation: op, workspace_id, request_id })) {
       // Never the database's own words: they can name tables and values.
-      return { isError: true, content: [{ type: "text", text: "the request could not be processed" }] };
+      return { isError: true, content: [{ type: "text", text: "DesKilo could not deliver an answer to this request just now. Call again with the same request_id and arguments to learn the outcome: it never acts twice." }] };
     }
     return toolResult(op, data as Record<string, unknown>);
   });

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/backend/secondary_federation.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/public_network/public_network_negotiator.dart';
@@ -13,7 +15,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
-import 'connection_dialog.dart';
+import 'connect_with_identity_sheet.dart';
 import 'space_offers.dart';
 import 'messenger/inquiry_sheet.dart';
 
@@ -25,21 +27,71 @@ class PublicWorkspaceView extends ConsumerWidget {
   });
   final PublicWorkspace workspace;
   final bool preview;
-  Future<bool> _connected(BuildContext context, WidgetRef ref) async {
+  /// Whether [workspace]'s server can be used for [action] now. A server
+  /// this account is not connected to opens the identity sheet (#1834);
+  /// [_Connection.now] tells the caller it was connected just now.
+  Future<_Connection> _connected(
+    BuildContext context,
+    WidgetRef ref,
+    SecondaryConnectAction action,
+  ) async {
     if (ref.read(authStateProvider).value == null) {
       await context.push('/auth');
-      return false;
+      return _Connection.none;
     }
     final registry = ref.read(connectedInstallationsProvider);
-    if (workspace.source == registry.origin) return true;
+    if (workspace.source == registry.origin) return _Connection.already;
     final sources = await ref.read(connectedSourcesProvider.future);
-    if (!context.mounted) return false;
-    if (sources.any((s) => s.endpoint.url == workspace.source)) return true;
+    if (!context.mounted) return _Connection.none;
+    if (sources.any((s) => s.endpoint.url == workspace.source)) {
+      return _Connection.already;
+    }
+    final connected = await ConnectWithIdentitySheet.show(
+      context,
+      SecondaryConnectIntent(
+        target: BackendEndpoint(workspace.source, workspace.key),
+        workspaceId: workspace.id,
+        action: action,
+      ),
+    );
+    if (connected) {
+      ref.invalidate(connectedSourcesProvider);
+      ref.invalidate(publicDirectoryProvider);
+    }
+    return connected ? _Connection.now : _Connection.none;
+  }
+
+  /// #1834 — connecting is not asking to join: a request made right after
+  /// connecting is confirmed once more, with the space's name.
+  Future<bool> _confirmApply(BuildContext context) async {
+    final l = AppLocalizations.of(context);
     return await showDialog<bool>(
           context: context,
-          builder: (_) => ConnectionDialog(
-            origin: workspace.source,
-            publicKey: workspace.key,
+          builder: (context) => AlertDialog(
+            key: const ValueKey('identity-connect-confirm-apply'),
+            title: Text(
+              l?.identityConnectConfirmApply(workspace.name) ??
+                  'Send your membership request to ${workspace.name}?',
+            ),
+            content: Text(
+              l?.identityConnectConfirmApplyBody ??
+                  'You are connected now. The space reviews your request; '
+                      'nothing else is shared.',
+            ),
+            actions: [
+              TextButton(
+                key: const ValueKey('identity-connect-cancel-send'),
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(
+                  MaterialLocalizations.of(context).cancelButtonLabel,
+                ),
+              ),
+              FilledButton(
+                key: const ValueKey('identity-connect-send'),
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(l?.identityConnectSend ?? 'Send request'),
+              ),
+            ],
           ),
         ) ==
         true;
@@ -146,7 +198,12 @@ class PublicWorkspaceView extends ConsumerWidget {
                       onPressed: preview
                           ? null
                           : () async {
-                              if (!await _connected(context, ref) ||
+                              if (await _connected(
+                                        context,
+                                        ref,
+                                        SecondaryConnectAction.contact,
+                                      ) ==
+                                      _Connection.none ||
                                   !context.mounted) {
                                 return;
                               }
@@ -174,7 +231,15 @@ class PublicWorkspaceView extends ConsumerWidget {
               icon: const Icon(Icons.contact_support_outlined),
               label: Text(l?.messengerWriteToHosts ?? 'Write to the hosts'),
               onPressed: () async {
-                if (!await _connected(context, ref) || !context.mounted) return;
+                if (await _connected(
+                          context,
+                          ref,
+                          SecondaryConnectAction.inquiry,
+                        ) ==
+                        _Connection.none ||
+                    !context.mounted) {
+                  return;
+                }
                 await showInquirySheet(context, workspace);
               },
             ),
@@ -183,7 +248,17 @@ class PublicWorkspaceView extends ConsumerWidget {
             SpaceOffers(
               workspace: workspace,
               onRequest: () async {
-                if (!await _connected(context, ref) || !context.mounted) return;
+                final connection = await _connected(
+                  context,
+                  ref,
+                  SecondaryConnectAction.apply,
+                );
+                if (connection == _Connection.none || !context.mounted) return;
+                if (connection == _Connection.now &&
+                    !await _confirmApply(context)) {
+                  return;
+                }
+                if (!context.mounted) return;
                 // #1847 B — an action this app could not negotiate with that
                 // server is refused before anything is sent; say so once.
                 PublicActionRefusal? refusal;
@@ -238,3 +313,6 @@ class PublicWorkspaceView extends ConsumerWidget {
     );
   }
 }
+
+/// Whether a server can be used: not at all, already, or connected now.
+enum _Connection { none, already, now }

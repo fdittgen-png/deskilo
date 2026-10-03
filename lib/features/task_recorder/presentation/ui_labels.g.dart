@@ -1618,6 +1618,27 @@ Map<String, _Getter> _part3() => {
   'holidayNewYear': (l) => l.holidayNewYear,
   'holidayVictory1945': (l) => l.holidayVictory1945,
   'holidayWhitMonday': (l) => l.holidayWhitMonday,
+  'identityConnectBrowser': (l) => l.identityConnectBrowser,
+  'identityConnectConfirmApplyBody': (l) => l.identityConnectConfirmApplyBody,
+  'identityConnectContinue': (l) => l.identityConnectContinue,
+  'identityConnectCurrentServer': (l) => l.identityConnectCurrentServer,
+  'identityConnectDifferentAuthority': (l) => l.identityConnectDifferentAuthority,
+  'identityConnectExistingAccount': (l) => l.identityConnectExistingAccount,
+  'identityConnectExpired': (l) => l.identityConnectExpired,
+  'identityConnectNetwork': (l) => l.identityConnectNetwork,
+  'identityConnectNoDeskiloSignIn': (l) => l.identityConnectNoDeskiloSignIn,
+  'identityConnectNoSharedIdentity': (l) => l.identityConnectNoSharedIdentity,
+  'identityConnectRefused': (l) => l.identityConnectRefused,
+  'identityConnectRetry': (l) => l.identityConnectRetry,
+  'identityConnectSend': (l) => l.identityConnectSend,
+  'identityConnectServerUnsupported': (l) => l.identityConnectServerUnsupported,
+  'identityConnectUnavailable': (l) => l.identityConnectUnavailable,
+  'identityConnectUnlinked': (l) => l.identityConnectUnlinked,
+};
+
+Map<String, _Getter> _part4() => {
+  'identityConnectWaiting': (l) => l.identityConnectWaiting,
+  'identityConnectWrongAccount': (l) => l.identityConnectWrongAccount,
   'identityConsentCompleting': (l) => l.identityConsentCompleting,
   'identityConsentPurpose': (l) => l.identityConsentPurpose,
   'identityConsentReturnFailed': (l) => l.identityConsentReturnFailed,
@@ -1634,9 +1655,6 @@ Map<String, _Getter> _part3() => {
   'inboxRetry': (l) => l.inboxRetry,
   'instanceAccountIntro': (l) => l.instanceAccountIntro,
   'instanceAdminsHelp': (l) => l.instanceAdminsHelp,
-};
-
-Map<String, _Getter> _part4() => {
   'instanceAdminsTitle': (l) => l.instanceAdminsTitle,
   'instanceApplySignIn': (l) => l.instanceApplySignIn,
   'instanceApprove': (l) => l.instanceApprove,
@@ -2019,6 +2037,9 @@ Map<String, _Getter> _part4() => {
   'kioskCheckInRightAway': (l) => l.kioskCheckInRightAway,
   'kioskCheckInRightAwayHint': (l) => l.kioskCheckInRightAwayHint,
   'kioskCheckOut': (l) => l.kioskCheckOut,
+};
+
+Map<String, _Getter> _part5() => {
   'kioskClosedToday': (l) => l.kioskClosedToday,
   'kioskConfirmAction': (l) => l.kioskConfirmAction,
   'kioskDone': (l) => l.kioskDone,
@@ -2037,9 +2058,6 @@ Map<String, _Getter> _part4() => {
   'kioskPresentBadgeNext': (l) => l.kioskPresentBadgeNext,
   'kioskRejectAction': (l) => l.kioskRejectAction,
   'kioskReserve': (l) => l.kioskReserve,
-};
-
-Map<String, _Getter> _part5() => {
   'kioskReserveAndCheckIn': (l) => l.kioskReserveAndCheckIn,
   'kioskRestOfDay': (l) => l.kioskRestOfDay,
   'kioskRevertDesc': (l) => l.kioskRevertDesc,
@@ -2422,6 +2440,9 @@ Map<String, _Getter> _part5() => {
   'memberNoteDelete': (l) => l.memberNoteDelete,
   'memberNoteDeleteConfirm': (l) => l.memberNoteDeleteConfirm,
   'memberNoteDeleteNotMine': (l) => l.memberNoteDeleteNotMine,
+};
+
+Map<String, _Getter> _part6() => {
   'memberNoteDeleteRead': (l) => l.memberNoteDeleteRead,
   'memberNoteDeleted': (l) => l.memberNoteDeleted,
   'memberNoteHint': (l) => l.memberNoteHint,
@@ -2440,9 +2461,6 @@ Map<String, _Getter> _part5() => {
   'memberOveragePolicyTooltip': (l) => l.memberOveragePolicyTooltip,
   'memberPageAddService': (l) => l.memberPageAddService,
   'memberPageEmailAction': (l) => l.memberPageEmailAction,
-};
-
-Map<String, _Getter> _part6() => {
   'memberPageGroupAccess': (l) => l.memberPageGroupAccess,
   'memberPageGroupBilling': (l) => l.memberPageGroupBilling,
   'memberPageGroupBooking': (l) => l.memberPageGroupBooking,
@@ -2825,6 +2843,9 @@ Map<String, _Getter> _part6() => {
   'personalInfoCompany': (l) => l.personalInfoCompany,
   'personalInfoCountry': (l) => l.personalInfoCountry,
   'personalInfoEmail': (l) => l.personalInfoEmail,
+};
+
+Map<String, _Getter> _part7() => {
   'personalInfoFirstName': (l) => l.personalInfoFirstName,
   'personalInfoLastName': (l) => l.personalInfoLastName,
   'personalInfoLegalId': (l) => l.personalInfoLegalId,
@@ -2843,9 +2864,6 @@ Map<String, _Getter> _part6() => {
   'planAfternoonChip': (l) => l.planAfternoonChip,
   'planAvailabilityLoading': (l) => l.planAvailabilityLoading,
   'planBaseFeeLabel': (l) => l.planBaseFeeLabel,
-};
-
-Map<String, _Getter> _part7() => {
   'planBookForLabel': (l) => l.planBookForLabel,
   'planCancelReservationButton': (l) => l.planCancelReservationButton,
   'planCheckInButton': (l) => l.planCheckInButton,
@@ -3228,6 +3246,9 @@ Map<String, _Getter> _part7() => {
   'reminderStatusLegacy': (l) => l.reminderStatusLegacy,
   'reminderStatusPrepared': (l) => l.reminderStatusPrepared,
   'reminderStatusQueued': (l) => l.reminderStatusQueued,
+};
+
+Map<String, _Getter> _part8() => {
   'reminderStatusUnknown': (l) => l.reminderStatusUnknown,
   'reminderTitle': (l) => l.reminderTitle,
   'repartitionAction': (l) => l.repartitionAction,
@@ -3246,9 +3267,6 @@ Map<String, _Getter> _part7() => {
   'repartitionMethodSubscription': (l) => l.repartitionMethodSubscription,
   'repartitionMethodUsage': (l) => l.repartitionMethodUsage,
   'repartitionNoShares': (l) => l.repartitionNoShares,
-};
-
-Map<String, _Getter> _part8() => {
   'repartitionPeriod': (l) => l.repartitionPeriod,
   'repartitionPeriodLabel': (l) => l.repartitionPeriodLabel,
   'repartitionPreview': (l) => l.repartitionPreview,
@@ -3631,6 +3649,9 @@ Map<String, _Getter> _part8() => {
   'scheduleStatusRejected': (l) => l.scheduleStatusRejected,
   'scheduleSubmit': (l) => l.scheduleSubmit,
   'scheduleTimesLabel': (l) => l.scheduleTimesLabel,
+};
+
+Map<String, _Getter> _part9() => {
   'scheduleTitleLabel': (l) => l.scheduleTitleLabel,
   'scheduleUnitDays': (l) => l.scheduleUnitDays,
   'scheduleUnitLabel': (l) => l.scheduleUnitLabel,
@@ -3649,9 +3670,6 @@ Map<String, _Getter> _part8() => {
   'schemaUpdateRetry': (l) => l.schemaUpdateRetry,
   'schemaUpdateServer': (l) => l.schemaUpdateServer,
   'schemaUpdateTitle': (l) => l.schemaUpdateTitle,
-};
-
-Map<String, _Getter> _part9() => {
   'seatDayAhead': (l) => l.seatDayAhead,
   'seatDayFree': (l) => l.seatDayFree,
   'seatDayMine': (l) => l.seatDayMine,
@@ -4034,6 +4052,9 @@ Map<String, _Getter> _part9() => {
   'taskRecorderOutcomeCommandPending': (l) => l.taskRecorderOutcomeCommandPending,
   'taskRecorderOutcomeConfirmed': (l) => l.taskRecorderOutcomeConfirmed,
   'taskRecorderOutcomeRefused': (l) => l.taskRecorderOutcomeRefused,
+};
+
+Map<String, _Getter> _part10() => {
   'taskRecorderOutcomeRequested': (l) => l.taskRecorderOutcomeRequested,
   'taskRecorderOutcomeSeries': (l) => l.taskRecorderOutcomeSeries,
   'taskRecorderOutcomeSettingNotSaved': (l) => l.taskRecorderOutcomeSettingNotSaved,
@@ -4052,9 +4073,6 @@ Map<String, _Getter> _part9() => {
   'taskRecorderRecordATask': (l) => l.taskRecorderRecordATask,
   'taskRecorderRecordThisTask': (l) => l.taskRecorderRecordThisTask,
   'taskRecorderRecording': (l) => l.taskRecorderRecording,
-};
-
-Map<String, _Getter> _part10() => {
   'taskRecorderResume': (l) => l.taskRecorderResume,
   'taskRecorderSaveFailed': (l) => l.taskRecorderSaveFailed,
   'taskRecorderSaveNoPath': (l) => l.taskRecorderSaveNoPath,
@@ -4437,6 +4455,9 @@ Map<String, _Getter> _part10() => {
   'workspaceConfigAvailability': (l) => l.workspaceConfigAvailability,
   'workspaceConfigBookableWhole': (l) => l.workspaceConfigBookableWhole,
   'workspaceConfigClosures': (l) => l.workspaceConfigClosures,
+};
+
+Map<String, _Getter> _part11() => {
   'workspaceConfigColName': (l) => l.workspaceConfigColName,
   'workspaceConfigColRole': (l) => l.workspaceConfigColRole,
   'workspaceConfigColStatus': (l) => l.workspaceConfigColStatus,
@@ -4455,9 +4476,6 @@ Map<String, _Getter> _part10() => {
   'workspaceConfigPdfExport': (l) => l.workspaceConfigPdfExport,
   'workspaceConfigPdfExportSubtitle': (l) => l.workspaceConfigPdfExportSubtitle,
   'workspaceConfigPdfTitle': (l) => l.workspaceConfigPdfTitle,
-};
-
-Map<String, _Getter> _part11() => {
   'workspaceConfigSeats': (l) => l.workspaceConfigSeats,
   'workspaceCountryLabel': (l) => l.workspaceCountryLabel,
   'workspaceCurrencyLabel': (l) => l.workspaceCurrencyLabel,
