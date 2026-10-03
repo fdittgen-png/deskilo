@@ -89,7 +89,7 @@ void main() {
       (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces());
     await goTo(tester, router, '/me');
-    await tester.tap(find.text('Second Space'));
+    await tester.tap(find.byKey(const ValueKey('me-space-ws-2')));
     await tester.pump(const Duration(milliseconds: 120));
     expect(find.byKey(const ValueKey('space-entry-curtain')), findsOneWidget);
     await tester.pumpAndSettle();
@@ -106,7 +106,7 @@ void main() {
     addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
     final router = await pumpMeApp(tester, workspace: twoSpaces());
     await goTo(tester, router, '/me');
-    await tester.tap(find.text('Second Space'));
+    await tester.tap(find.byKey(const ValueKey('me-space-ws-2')));
     await tester.pump();
     expect(find.byKey(const ValueKey('space-entry-curtain')), findsNothing);
     await tester.pumpAndSettle();

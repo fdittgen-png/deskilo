@@ -19,6 +19,7 @@ import '../../../core/ui/inline_banner.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/my_spaces.dart';
 import '../providers/me_providers.dart';
+import 'me_workspace_row.dart';
 
 class LinkedSpacesSection extends ConsumerWidget {
   const LinkedSpacesSection({super.key});
@@ -93,34 +94,34 @@ class LinkedSpacesSection extends ConsumerWidget {
               onAction: () => ref.invalidate(linkedServerSpacesProvider),
             ),
           for (final group in _groups(server.spaces))
-            Card(
-              child: Column(
-                children: [
-                  if (group.length > 1) ListTile(title: Text(group.first.name)),
-                  for (final space in group)
-                    ListTile(
-                      key: ValueKey('linked-space-${server.host}-${space.id}'),
-                      leading: const CircleAvatar(
-                        child: Icon(Icons.dns_outlined),
+            MeWorkspaceRow(
+              avatar: const CircleAvatar(child: Icon(Icons.dns_outlined)),
+              name: group.first.name,
+              detail: group.any((s) => s.standing == MySpaceStanding.pending)
+                  ? (l10n?.meLinkedPendingOn(server.host) ??
+                      'Waiting for approval · ${server.host}')
+                  : server.host,
+              actions: [
+                for (final space in group)
+                  Tooltip(
+                    message: space.standing == MySpaceStanding.pending
+                        ? (l10n?.meLinkedPendingOn(server.host) ??
+                            'Waiting for approval · ${server.host}')
+                        : space.name,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: AppSpacing.sm),
+                      child: OutlinedButton(
+                        key: ValueKey('linked-space-${server.host}-${space.id}'),
+                        onPressed: () => _open(context, server, space),
+                        child: Text(space.environment.isEmpty
+                            ? (l10n?.meSpaceOpen ?? 'Open')
+                            : space.environment == 'prod'
+                            ? (l10n?.profilesPairProd ?? 'PROD')
+                            : (l10n?.profilesPairDev ?? 'DEV')),
                       ),
-                      title: Text(
-                        group.length == 1
-                            ? space.name
-                            : (space.environment == 'prod'
-                                  ? (l10n?.profilesPairProd ?? 'PROD')
-                                  : (l10n?.profilesPairDev ?? 'DEV')),
-                      ),
-                      subtitle: Text(
-                        space.standing == MySpaceStanding.pending
-                            ? (l10n?.meLinkedPendingOn(server.host) ??
-                                  'Waiting for approval · ${server.host}')
-                            : server.host,
-                      ),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => _open(context, server, space),
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
         ],
       ],

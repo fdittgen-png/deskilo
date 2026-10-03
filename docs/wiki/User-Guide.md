@@ -6,6 +6,8 @@ Everything a member, admin, or owner needs to use DesKilo. *Autres langues : [Fr
 >
 > <img src="images/settings-language.jpg" width="200">
 
+**My spaces and the map (#2155).** In Me → Home, each workspace has one compact identity row. PROD and DEV are adjacent entry buttons; the history symbol marks the last environment used. Each environment keeps its own menu. On narrow screens the identity sits above the buttons. In Discover, **Locate on map** centers a workspace; the recenter button restores that view after panning. Published coordinates take priority. When absent, opening the map for one result or locating a result searches its public address through Photon (OpenStreetMap). The returned location is explicitly approximate, may identify only the street, and never changes the published page. If lookup fails, retry or ask the owner to publish latitude and longitude. No device location is requested.
+
 ## 1. Getting started
 
 ### Create an account

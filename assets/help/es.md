@@ -6,6 +6,8 @@ Todo lo que un miembro, admin o propietario necesita para usar DesKilo.
 
 ![](assets/help/images/settings-language.jpg)
 
+**Mis espacios y el mapa (#2155).** En Yo → Inicio, cada espacio tiene una fila compacta. PROD y DEV aparecen juntos; el símbolo de historial indica el último entorno usado. Cada entorno conserva su menú. En pantallas pequeñas, la identidad aparece encima de los botones. En Descubrir, **Localizar en el mapa** centra el espacio; el botón de centrado restaura esa vista. Las coordenadas publicadas tienen prioridad. Si faltan, abrir el mapa para un único resultado o localizar un resultado busca su dirección pública mediante Photon (OpenStreetMap). La ubicación se indica como aproximada, puede corresponder solo a la calle y nunca modifica la página publicada. Si falla, reintente o pida al propietario que publique las coordenadas. No se solicita la ubicación del dispositivo.
+
 ## 1. Primeros pasos
 
 ### Crear una cuenta

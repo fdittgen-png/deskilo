@@ -46,7 +46,13 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
       child: ListTile(
         selected: _selected?.id == w.id && _selected?.source == w.source,
         title: Text(w.name),
-        subtitle: Text([w.text('address'), w.source].join('\n')),
+        subtitle: Text(w.text('address')),
+        trailing: IconButton(
+          key: ValueKey('directory-locate-${w.source}/${w.id}'),
+          tooltip: l?.directoryLocate ?? 'Locate on map',
+          icon: const Icon(Icons.location_on_outlined),
+          onPressed: () => setState(() { _selected = w; _map = true; }),
+        ),
         onTap: () {
           select(w);
           Navigator.of(context).push(
@@ -109,7 +115,21 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
           ),
           Expanded(
             child: switch (rows) {
-              AsyncData(value: final result) => ListView(
+              AsyncData(value: final result) => LayoutBuilder(
+                builder: (context, constraints) => Column(children: [
+                  if (_map)
+                    SizedBox(
+                      height: (constraints.maxHeight / 2).clamp(0.0, 300.0),
+                      child: DirectoryMap(
+                        key: ValueKey('$_query:$_sources:$_page'),
+                        workspaces: result.workspaces,
+                        selected: _selected == null
+                            ? null
+                            : '${_selected!.source}/${_selected!.id}',
+                        onSelect: select,
+                      ),
+                    ),
+                  Expanded(child: ListView(
                 padding: AppSpacing.mdAll,
                 children: [
                   if (result.unavailable.isNotEmpty)
@@ -126,19 +146,6 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                       key: const ValueKey('directory-incompatible'),
                       '${l?.portalDirectoryIncompatible ?? 'Some workspaces need a newer version of the app and are not shown.'}\n${result.incompatible.join('\n')}',
                     ),
-                  if (_map)
-                    SizedBox(
-                      height: 300,
-                      child: DirectoryMap(
-                        key: ValueKey('$_query:$_sources:$_page'),
-                        workspaces: result.workspaces,
-                        selected: _selected == null
-                            ? null
-                            : '${_selected!.source}/${_selected!.id}',
-                        onSelect: select,
-                      ),
-                    ),
-                  if (_map && _selected != null) card(_selected!),
                   if (result.workspaces.isEmpty)
                     Text(
                       l?.portalNoWorkspaces ?? 'No published workspaces found.',
@@ -199,6 +206,8 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                     ],
                   ),
                 ],
+                  )),
+                ]),
               ),
               AsyncError() => Center(
                 child: TextButton(

@@ -77,6 +77,16 @@ void main() {
         find.descendant(of: group, matching: find.text('PROD')),
         findsOneWidget,
       );
+      expect(tester.getCenter(find.text('DEV')).dy,
+          tester.getCenter(find.text('PROD')).dy);
+      expect(tester.getSize(group).height, lessThan(120));
+      for (final width in [320.0, 1200.0]) {
+        tester.view.physicalSize = Size(width, 844);
+        await tester.pumpAndSettle();
+        expect(tester.getCenter(find.text('DEV')).dy,
+            tester.getCenter(find.text('PROD')).dy);
+        expect(tester.takeException(), isNull);
+      }
       expect(tester.takeException(), isNull);
       await tester.tap(find.byKey(const ValueKey('me-space-ws-2')));
       await tester.pumpAndSettle();

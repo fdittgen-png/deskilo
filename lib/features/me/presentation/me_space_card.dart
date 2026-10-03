@@ -15,7 +15,6 @@ import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../providers/me_providers.dart';
-import '../../workspace/presentation/widgets/workspace_avatar.dart';
 import '../../../app/shell/space_entry.dart';
 
 class MeSpaceCard extends ConsumerWidget {
@@ -24,13 +23,11 @@ class MeSpaceCard extends ConsumerWidget {
     required this.space,
     required this.member,
     this.lastUsed = false,
-    this.grouped = false,
   });
 
   final Workspace space;
   final Member? member;
   final bool lastUsed;
-  final bool grouped;
 
   bool get _pending => member?.status == MemberStatus.pending;
 
@@ -86,78 +83,65 @@ class MeSpaceCard extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final role = member == null ? null : memberRoleLabel(l10n, member!);
     final owner = member?.isOwner ?? false;
-    final row = Builder(
-      key: ValueKey('me-space-${space.id}'),
-      builder: (cardContext) => ListTile(
-        leading: grouped
-            ? const Icon(Icons.meeting_room_outlined)
-            : WorkspaceAvatar(workspace: space),
-        title: Text(
-          grouped
-              ? (space.environment == 'prod'
-                    ? (l10n?.profilesPairProd ?? 'PROD')
-                    : (l10n?.profilesPairDev ?? 'DEV'))
-              : space.name,
-        ),
-        subtitle: Text(
-          _pending
-              ? (l10n?.meSpacePending ?? 'Waiting for approval')
-              : [
-                  ?role,
-                  if (!grouped)
-                    space.environment == 'prod'
-                        ? (l10n?.profilesPairProd ?? 'PROD')
-                        : (l10n?.profilesPairDev ?? 'DEV'),
-                ].join(' · '),
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (lastUsed)
-              Padding(
-                padding: const EdgeInsets.only(right: AppSpacing.xs),
-                child: Chip(
-                  key: ValueKey('me-space-last-${space.id}'),
-                  label: Text(l10n?.meSpaceLastUsed ?? 'Last used'),
-                  visualDensity: VisualDensity.compact,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-              ),
-            const Icon(Icons.chevron_right, size: 20),
-            PopupMenuButton<String>(
-              key: ValueKey('me-space-menu-${space.id}'),
-              tooltip: MaterialLocalizations.of(context).showMenuTooltip,
-              onSelected: (_) => _leave(context, ref),
-              itemBuilder: (_) => [
-                PopupMenuItem(
-                  key: const ValueKey('me-space-leave'),
-                  value: 'leave',
-                  enabled: !owner,
-                  child: Text(
-                    owner
-                        ? (l10n?.meLeaveOwner ??
-                              'Owners hand the space over before leaving')
-                        : (l10n?.meLeaveAction ?? 'Leave this space'),
-                  ),
-                ),
+    final environment = space.environment == 'prod'
+        ? (l10n?.profilesPairProd ?? 'PROD')
+        : (l10n?.profilesPairDev ?? 'DEV');
+    final status = _pending
+        ? (l10n?.meSpacePending ?? 'Waiting for approval')
+        : role;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Builder(builder: (buttonContext) => Tooltip(
+          message: [space.name, environment, ?status,
+            if (lastUsed) l10n?.meSpaceLastUsed ?? 'Last used'].join(' · '),
+          child: OutlinedButton(
+            key: ValueKey('me-space-${space.id}'),
+            style: OutlinedButton.styleFrom(
+              padding: AppSpacing.smH,
+              foregroundColor: lastUsed
+                  ? Theme.of(context).colorScheme.onSecondaryContainer
+                  : null,
+              backgroundColor: lastUsed
+                  ? Theme.of(context).colorScheme.secondaryContainer
+                  : null,
+            ),
+            onPressed: () {
+              final box = buttonContext.findRenderObject() as RenderBox?;
+              final from = box == null
+                  ? null
+                  : box.localToGlobal(Offset.zero) & box.size;
+              enterSpace(context, ref, space, from: from);
+            },
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              if (lastUsed) ...[
+                Icon(Icons.history, size: 16,
+                  key: ValueKey('me-space-last-${space.id}')),
+                const SizedBox(width: AppSpacing.xs),
               ],
+              Text(environment),
+            ]),
+          ),
+        )),
+        PopupMenuButton<String>(
+          key: ValueKey('me-space-menu-${space.id}'),
+          tooltip: '$environment · ${MaterialLocalizations.of(context).showMenuTooltip}',
+          onSelected: (_) => _leave(context, ref),
+          itemBuilder: (_) => [
+            PopupMenuItem(
+              key: const ValueKey('me-space-leave'),
+              value: 'leave',
+              enabled: !owner,
+              child: Text(
+                owner
+                    ? (l10n?.meLeaveOwner ??
+                          'Owners hand the space over before leaving')
+                    : (l10n?.meLeaveAction ?? 'Leave this space'),
+              ),
             ),
           ],
         ),
-        onTap: () {
-          final box = cardContext.findRenderObject() as RenderBox?;
-          final from = box == null
-              ? null
-              : box.localToGlobal(Offset.zero) & box.size;
-          enterSpace(context, ref, space, from: from);
-        },
-      ),
+      ],
     );
-    return grouped
-        ? row
-        : Card(
-            margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-            child: row,
-          );
   }
 }
