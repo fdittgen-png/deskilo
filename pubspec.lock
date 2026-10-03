@@ -384,6 +384,13 @@ packages:
       relative: true
     source: path
     version: "1.0.0"
+  deskilo_video_encoder:
+    dependency: "direct main"
+    description:
+      path: "packages/deskilo_video_encoder"
+      relative: true
+    source: path
+    version: "1.0.0"
   dio:
     dependency: "direct main"
     description:

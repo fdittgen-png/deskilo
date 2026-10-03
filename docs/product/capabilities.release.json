@@ -21,7 +21,6 @@
       ],
       "prerequisites": "A workspace with a published plan and opening hours; booking rules in Settings.",
       "limitations": "Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.",
-      "fingerprint": "d1eb59704070",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -67,7 +66,6 @@
       ],
       "prerequisites": "Membership plans configured; an allowance per plan.",
       "limitations": "Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.",
-      "fingerprint": "5568ce1ae949",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -119,7 +117,6 @@
       ],
       "prerequisites": "The money module enabled; a repartition key per shared expense.",
       "limitations": "Statements are a view of the ledger, not an accounting ledger of the association; see accounting.export for the books.",
-      "fingerprint": "d55f71e061d8",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -171,7 +168,6 @@
       ],
       "prerequisites": "Roles assigned; a quorum per decision kind in Settings.",
       "limitations": "Quorums count distinct people by membership, not by device or session.",
-      "fingerprint": "bf055a1decd5",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -207,7 +203,6 @@
       "prerequisites": "Stripe credentials in Settings; the webhook endpoint reachable from Stripe.",
       "limitations": "CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.",
       "provider": "stripe",
-      "fingerprint": "4bee329bbfce",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -261,7 +256,6 @@
       "prerequisites": "PayPal credentials in Settings; the webhook endpoint reachable from PayPal.",
       "limitations": "No CI check reaches the PayPal handler; the Stripe stub says nothing about PayPal.",
       "provider": "paypal",
-      "fingerprint": "aa62ab891c68",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -292,7 +286,6 @@
       "prerequisites": "Mollie credentials in Settings; the webhook endpoint reachable from Mollie.",
       "limitations": "The reconciliation is proved in a replayed database; no Mollie sandbox has been exercised from this repository.",
       "provider": "mollie",
-      "fingerprint": "e22646d72292",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -323,7 +316,6 @@
       "prerequisites": "Mollie credentials with Wero enabled on the Mollie account.",
       "limitations": "Wero rides Mollie's checkout; nothing beyond the client's method handling cites Wero, so the Mollie reconciliation does not count here.",
       "provider": "wero",
-      "fingerprint": "e22646d72292",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -359,7 +351,6 @@
       ],
       "prerequisites": "A chart of accounts mapping; a VAT regime.",
       "limitations": "Format conformance is proved against the published specifications, not against any accounting software's import; no certification is claimed.",
-      "fingerprint": "f77184023b8c",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -400,7 +391,6 @@
       ],
       "prerequisites": "A complete legal identity for the workspace; VAT configured.",
       "limitations": "Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.",
-      "fingerprint": "d12a32e9b77a",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -440,7 +430,6 @@
       ],
       "prerequisites": "Platform credentials configured by the operator.",
       "limitations": "The client's hand-off is unit-tested against a fake function; no transmission to a real or sandbox platform has been recorded.",
-      "fingerprint": "d8dc1c00f7ee",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -463,7 +452,6 @@
       "features": [],
       "prerequisites": "Someone responsible for taking and keeping the dumps, per the operations guide.",
       "limitations": "The drill restores the database only: Storage objects and the Auth service's own configuration are outside it.",
-      "fingerprint": "94d21485722a",
       "scopes": {
         "unit": "unverified",
         "local_integration": "gated",
@@ -512,7 +500,6 @@
       ],
       "prerequisites": "None: the Demo is built into every client.",
       "limitations": "The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.",
-      "fingerprint": "4c7eaefadd30",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",

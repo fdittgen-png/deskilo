@@ -21,3 +21,7 @@ part 'file_saver.g.dart';
 /// a handle the UI can name in a snackbar.
 @Riverpod(keepAlive: true)
 FileSaver fileSaver(Ref ref) => impl.saveToDownloads;
+
+/// #1872 — the same local save, answering with what it achieved.
+@Riverpod(keepAlive: true)
+TypedFileSaver typedFileSaver(Ref ref) => impl.saveToDownloadsTyped;

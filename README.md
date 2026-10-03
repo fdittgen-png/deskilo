@@ -99,7 +99,7 @@ The [quality workflow](.github/workflows/quality.yml) is configured to exercise:
 - competing booking requests, financial reconciliation and webhook idempotency;
 - a database backup/restore drill.
 
-The [test inventory](docs/testing/TEST_INVENTORY.md), [domain invariants](docs/domain/INVARIANTS.md) and [architecture decisions](docs/decisions/) make that work inspectable. Check the latest CI run for actual results on the current commit.
+The test inventory (`dart run tool/test_inventory.dart`, published with every CI run), [domain invariants](docs/domain/INVARIANTS.md) and [architecture decisions](docs/decisions/) make that work inspectable. Check the latest CI run for actual results on the current commit.
 
 ## Documentation
 

@@ -48,6 +48,9 @@ import 'dart:convert';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/recording_sink.dart';
+import '../domain/stored_recording.dart';
+
+export '../domain/stored_recording.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
 
@@ -88,40 +91,6 @@ const int recorderLogVersion = 1;
 
 /// Store keys only ever contain these characters.
 final RegExp recorderKeyPattern = RegExp(r'^tr1\.[0-9a-f]{32}\.[0-9a-f]{32}$');
-
-/// How a stored recording reads back.
-enum StoredStatus {
-  /// It has an end line.
-  ended,
-
-  /// The app stopped while recording; it ends as interrupted.
-  interrupted,
-
-  /// The header is from another version, or the content did not pass
-  /// the validator. Listed so it can be deleted; never shown as steps.
-  unreadable,
-}
-
-/// One recording read back from the store.
-class StoredRecording {
-  const StoredRecording({
-    required this.id,
-    required this.status,
-    this.createdAt,
-    this.recording,
-    this.truncatedTail = false,
-    this.issues = const [],
-  });
-
-  final String id;
-  final StoredStatus status;
-  final DateTime? createdAt;
-  final TaskRecording? recording;
-
-  /// A partial last line was dropped, or a bad checkpoint rolled back.
-  final bool truncatedTail;
-  final List<RecordingIssue> issues;
-}
 
 /// Thrown by a writer whose recording outgrew the store's bound.
 class RecorderStoreFull implements Exception {

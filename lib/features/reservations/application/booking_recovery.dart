@@ -143,8 +143,10 @@ class BookingRecovery {
       scope: _scope,
       workspaceId: request.workspaceId,
       seatId: request.seatId,
-      startsAt: request.start.toUtc(),
-      endsAt: request.end.toUtc(),
+      // The confirmed instants as given (a workspace-zoned time stays one);
+      // the ledger writes them as UTC, the server compares epochs.
+      startsAt: request.start,
+      endsAt: request.end,
       checkIn: request.checkIn,
       schemaVersion: _schemaVersion,
       createdAt: _clock.now().toUtc(),

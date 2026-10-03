@@ -22,133 +22,151 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | — | `events` | 1 |
 | — | `kiosk` | 1 |
 
-**76 files** across 11 features. `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
+`test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
 
 ## Cross-feature imports, by direction
 
-The direction is the dependency: `a -> b` means files in `a` import `b`. A pair that appears in both directions is a cycle between two features, and is called out below.
+The direction is the dependency: `a -> b` means files in `a` import `b`. A pair that appears in both directions is a cycle between two features, and is called out below. How many imports a pair carries is not written down: `dart run tool/dependency_map.dart` prints it.
 
-| pair | imports |
-|---|---|
-| `money -> workspace` | 122 |
-| `reservations -> plan` | 73 |
-| `reservations -> workspace` | 60 |
-| `profile -> workspace` | 40 |
-| `members -> workspace` | 35 |
-| `workspace -> money` | 35 |
-| `money -> events` | 30 |
-| `workspace -> plan` | 26 |
-| `editor -> plan` | 20 |
-| `events -> workspace` | 20 |
-| `mcp -> auth` | 20 |
-| `workspace -> reservations` | 19 |
-| `calendar -> workspace` | 15 |
-| `workspace -> events` | 15 |
-| `members -> reservations` | 14 |
-| `money -> plan` | 14 |
-| `money -> reservations` | 13 |
-| `mcp -> workspace` | 12 |
-| `plan -> workspace` | 11 |
-| `workspace -> directory` | 11 |
-| `workspace -> profile` | 11 |
-| `kiosk -> reservations` | 10 |
-| `workspace -> auth` | 10 |
-| `directory -> workspace` | 9 |
-| `me -> workspace` | 9 |
-| `members -> money` | 9 |
-| `members -> profile` | 9 |
-| `plan -> reservations` | 9 |
-| `calendar -> reservations` | 8 |
-| `directory -> auth` | 8 |
-| `money -> profile` | 8 |
-| `kiosk -> plan` | 7 |
-| `kiosk -> workspace` | 7 |
-| `calendar -> money` | 6 |
-| `calendar -> plan` | 6 |
-| `editor -> workspace` | 6 |
-| `profile -> auth` | 6 |
-| `events -> money` | 5 |
-| `profile -> reservations` | 5 |
-| `reservations -> events` | 5 |
-| `calendar -> events` | 4 |
-| `events -> reservations` | 4 |
-| `me -> profile` | 4 |
-| `plan -> money` | 4 |
-| `workspace -> members` | 4 |
-| `members -> plan` | 3 |
-| `events -> plan` | 2 |
-| `kiosk -> profile` | 2 |
-| `me -> auth` | 2 |
-| `me -> directory` | 2 |
-| `money -> auth` | 2 |
-| `money -> members` | 2 |
-| `plan -> profile` | 2 |
-| `profile -> calendar` | 2 |
-| `reservations -> members` | 2 |
-| `help -> auth` | 1 |
-| `help -> workspace` | 1 |
-| `kiosk -> events` | 1 |
-| `kiosk -> members` | 1 |
-| `money -> calendar` | 1 |
-| `plan -> events` | 1 |
-| `plan -> members` | 1 |
-| `profile -> directory` | 1 |
-| `profile -> mcp` | 1 |
-| `profile -> members` | 1 |
-| `reservations -> calendar` | 1 |
-| `reservations -> money` | 1 |
-| `reservations -> profile` | 1 |
+- `calendar -> events`
+- `calendar -> money`
+- `calendar -> plan`
+- `calendar -> reservations`
+- `calendar -> workspace`
+- `directory -> auth`
+- `directory -> workspace`
+- `editor -> plan`
+- `editor -> workspace`
+- `events -> money`
+- `events -> plan`
+- `events -> reservations`
+- `events -> workspace`
+- `help -> auth`
+- `help -> task_recorder`
+- `help -> workspace`
+- `kiosk -> events`
+- `kiosk -> members`
+- `kiosk -> plan`
+- `kiosk -> profile`
+- `kiosk -> reservations`
+- `kiosk -> workspace`
+- `mcp -> auth`
+- `mcp -> workspace`
+- `me -> auth`
+- `me -> directory`
+- `me -> profile`
+- `me -> workspace`
+- `members -> money`
+- `members -> plan`
+- `members -> profile`
+- `members -> reservations`
+- `members -> workspace`
+- `money -> auth`
+- `money -> calendar`
+- `money -> events`
+- `money -> members`
+- `money -> plan`
+- `money -> profile`
+- `money -> reservations`
+- `money -> workspace`
+- `plan -> events`
+- `plan -> members`
+- `plan -> money`
+- `plan -> profile`
+- `plan -> reservations`
+- `plan -> workspace`
+- `profile -> auth`
+- `profile -> calendar`
+- `profile -> directory`
+- `profile -> mcp`
+- `profile -> members`
+- `profile -> reservations`
+- `profile -> workspace`
+- `reservations -> calendar`
+- `reservations -> events`
+- `reservations -> members`
+- `reservations -> money`
+- `reservations -> plan`
+- `reservations -> profile`
+- `reservations -> task_recorder`
+- `reservations -> workspace`
+- `task_recorder -> reservations`
+- `task_recorder -> workspace`
+- `workspace -> auth`
+- `workspace -> directory`
+- `workspace -> events`
+- `workspace -> members`
+- `workspace -> money`
+- `workspace -> plan`
+- `workspace -> profile`
+- `workspace -> reservations`
 
-**68 directed relationships, 812 imports.**
+Reciprocal:
 
-Reciprocal (20): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
+- `calendar <-> money`
+- `calendar <-> reservations`
+- `directory <-> workspace`
+- `events <-> money`
+- `events <-> plan`
+- `events <-> reservations`
+- `events <-> workspace`
+- `members <-> money`
+- `members <-> plan`
+- `members <-> profile`
+- `members <-> reservations`
+- `members <-> workspace`
+- `money <-> plan`
+- `money <-> reservations`
+- `money <-> workspace`
+- `plan <-> reservations`
+- `plan <-> workspace`
+- `profile <-> reservations`
+- `profile <-> workspace`
+- `reservations <-> task_recorder`
+- `reservations <-> workspace`
 
 ## Hand-written files over 600 lines
 
-The budget line of `test/lint/file_length_test.dart`. A file here is not necessarily wrong; it is where a decomposition would pay, and the budgets say what each one costs today.
+The budget line of `test/lint/file_length_test.dart`. A file here is not necessarily wrong; it is where a decomposition would pay, and the budgets there say what each one costs today.
 
-| file | lines |
-|---|---|
-| `lib/core/demo/data/workspace_repository.dart` | 1991 |
-| `lib/core/demo/data/money_repository.dart` | 1848 |
-| `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1598 |
-| `lib/features/money/data/supabase_money_repository.dart` | 1469 |
-| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1316 |
-| `lib/features/money/presentation/screens/money_screen.dart` | 1300 |
-| `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1144 |
-| `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
-| `lib/features/money/domain/invoice_pdf.dart` | 1050 |
-| `lib/features/editor/presentation/screens/level_canvas_screen.dart` | 1044 |
-| `lib/features/money/presentation/invoice_actions.dart` | 1035 |
-| `lib/features/money/presentation/widgets/report_visual_editor.dart` | 981 |
-| `lib/features/workspace/domain/workspace_xml.dart` | 964 |
-| `lib/features/members/presentation/screens/member_page.dart` | 955 |
-| `lib/features/members/presentation/screens/directory_screen.dart` | 946 |
-| `lib/app/router.dart` | 892 |
-| `lib/features/money/presentation/widgets/bill_view.dart` | 892 |
-| `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 871 |
-| `lib/features/reservations/presentation/widgets/space_scan.dart` | 864 |
-| `lib/features/workspace/presentation/screens/availability_screen.dart` | 860 |
-| `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 851 |
-| `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
-| `lib/features/reservations/presentation/reserve_seat_actions.dart` | 786 |
-| `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
-| `lib/features/workspace/domain/workspace_repository.dart` | 781 |
-| `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
-| `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
-| `lib/core/demo/data/reservation_repository.dart` | 755 |
-| `lib/features/workspace/presentation/member_admin_actions.dart` | 713 |
-| `lib/features/plan/data/supabase_floor_plan_repository.dart` | 711 |
-| `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
-| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 656 |
-| `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
-| `lib/core/help/help_anchors.dart` | 649 |
-| `lib/features/workspace/presentation/screens/onboarding_screen.dart` | 633 |
-| `lib/features/workspace/providers/workspace_providers.dart` | 632 |
-| `lib/features/reservations/presentation/widgets/booking_sheet.dart` | 629 |
-| `lib/features/money/presentation/report_defaults.dart` | 628 |
-| `lib/features/money/presentation/invoice_documents.dart` | 614 |
-
-**40 files.**
+- `lib/app/router.dart`
+- `lib/core/demo/data/money_repository.dart`
+- `lib/core/demo/data/reservation_repository.dart`
+- `lib/core/demo/data/workspace_repository.dart`
+- `lib/core/help/help_anchors.dart`
+- `lib/features/calendar/presentation/screens/calendar_screen.dart`
+- `lib/features/calendar/presentation/widgets/day_timeline.dart`
+- `lib/features/editor/presentation/screens/level_canvas_screen.dart`
+- `lib/features/kiosk/presentation/screens/kiosk_screen.dart`
+- `lib/features/members/presentation/screens/directory_screen.dart`
+- `lib/features/members/presentation/screens/member_page.dart`
+- `lib/features/money/data/supabase_money_repository.dart`
+- `lib/features/money/domain/invoice_pdf.dart`
+- `lib/features/money/presentation/invoice_actions.dart`
+- `lib/features/money/presentation/invoice_documents.dart`
+- `lib/features/money/presentation/report_defaults.dart`
+- `lib/features/money/presentation/screens/billing_screen.dart`
+- `lib/features/money/presentation/screens/legal_identity_screen.dart`
+- `lib/features/money/presentation/screens/money_screen.dart`
+- `lib/features/money/presentation/widgets/bill_view.dart`
+- `lib/features/money/presentation/widgets/invoice_template_sheet.dart`
+- `lib/features/money/presentation/widgets/invoicing_dashboard.dart`
+- `lib/features/money/presentation/widgets/report_visual_editor.dart`
+- `lib/features/plan/data/supabase_floor_plan_repository.dart`
+- `lib/features/plan/presentation/widgets/floor_plan_painter.dart`
+- `lib/features/reservations/presentation/reserve_seat_actions.dart`
+- `lib/features/reservations/presentation/screens/reserve_screen.dart`
+- `lib/features/reservations/presentation/widgets/booking_sheet.dart`
+- `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart`
+- `lib/features/reservations/presentation/widgets/space_scan.dart`
+- `lib/features/reservations/presentation/widgets/week_grid.dart`
+- `lib/features/workspace/data/supabase_workspace_repository.dart`
+- `lib/features/workspace/domain/workspace_feature.dart`
+- `lib/features/workspace/domain/workspace_repository.dart`
+- `lib/features/workspace/domain/workspace_xml.dart`
+- `lib/features/workspace/presentation/member_admin_actions.dart`
+- `lib/features/workspace/presentation/screens/availability_screen.dart`
+- `lib/features/workspace/presentation/screens/onboarding_screen.dart`
+- `lib/features/workspace/presentation/screens/workspace_settings_screen.dart`
+- `lib/features/workspace/providers/workspace_providers.dart`
 

@@ -60,6 +60,11 @@ import '../../../../core/time/work_hours.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../workspace/domain/next_open_day.dart';
 import '../../providers/browsed_level.dart';
+import '../../../task_recorder/application/booking_observation.dart'
+    show dateRelation, periodOf;
+import '../../../task_recorder/domain/action_registry.dart'
+    show RecorderActions;
+import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../widgets/pending_booking_banner.dart';
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
@@ -182,6 +187,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     // #490 — "today" is the WORKSPACE's date, not the device's.
     _today = WorkspaceTime.dateOf(now);
     _selectedDay = _today;
+    // #1865 — the task recorder notes that the form was entered.
+    Future.microtask(() {
+      if (mounted) recordTaskStep(ref, RecorderActions.openReserve);
+    });
     // A focus request may already be pending when this screen is first
     // built — the ref.listen in build only catches later ones. Post-frame
     // so applying it never mutates a provider during build.
@@ -290,6 +299,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   void _selectDay(DateTime day) {
     final dayOnly = DateTime(day.year, day.month, day.day);
     if (DateUtils.isSameDay(dayOnly, _selectedDay)) return;
+    recordTaskStep(ref, RecorderActions.selectDate, // #1865
+        payload: {'date_relation': dateRelation(dayOnly, _today)});
     final granularity = _granularity;
     final window = _effectiveWindow(granularity);
     DateTime? from;
@@ -369,6 +380,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       _windowStart = from;
       _windowEnd = end;
     });
+    recordTaskStep(ref, RecorderActions.selectPeriod, // #1865
+        payload: const {'period': 'custom'});
   }
 
   Future<void> _pickTo() async {
@@ -681,9 +694,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 icon: Icon(
                   _seatList ? Icons.map_outlined : Icons.view_list_outlined,
                 ),
-                onPressed: () => setState(() => _view = _seatList
-                    ? ReserveView.plan
-                    : ReserveView.list),
+                onPressed: () {
+                  setState(() => _view =
+                      _seatList ? ReserveView.plan : ReserveView.list);
+                  recordTaskStep(ref, RecorderActions.switchView, // #1865
+                      payload: {'view_mode': _seatList ? 'list' : 'plan'});
+                },
               ),
             // #2016 — 'Back to now': today AND the live window (a
             // hand-picked window left on today reads as live while past).
@@ -752,10 +768,18 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                   day: _selectedDay,
                   isSelected: (w) =>
                       window.start == w.start && window.end == w.end,
-                  onPickWindow: (w) => setState(() {
-                    _windowStart = w.start;
-                    _windowEnd = w.end;
-                  }),
+                  onPickWindow: (w) {
+                    setState(() {
+                      _windowStart = w.start;
+                      _windowEnd = w.end;
+                    });
+                    recordTaskStep(ref, RecorderActions.selectPeriod, // #1865
+                        payload: {
+                          'period': periodOf(
+                              startHour: WorkspaceTime.wall(w.start).hour,
+                              length: w.end.difference(w.start)),
+                        });
+                  },
                   from: window.start,
                   to: window.end,
                   onPickFrom: _pickFrom,
@@ -919,8 +943,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 // — the same split the canvas and the tap handler use.
                 windowEndOrNull: _isLive ? null : window.end,
                 dayOpen: dayOpen,
-                  onSeatTap: (seat) =>
-                      onSeatTap(plan, seat, reservations, window),
+                  onSeatTap: (seat) {
+                    recordTaskStep(ref, RecorderActions.selectResource, // #1865
+                        payload: const {'view_mode': 'list', 'resource_kind': 'desk'});
+                    onSeatTap(plan, seat, reservations, window);
+                  },
                   onSpaceTap: listSpaceTap(context, ref,
                       level: level, plan: plan, window: window),
                 ),
@@ -939,8 +966,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                   officeId: _focusOfficeId,
                   level: _focusLevel,
                 ),
-                onSeatTap: (seat) =>
-                    onSeatTap(plan, seat, reservations, window),
+                onSeatTap: (seat) {
+                  recordTaskStep(ref, RecorderActions.selectResource, // #1865
+                      payload: const {'view_mode': 'plan', 'resource_kind': 'desk'});
+                  onSeatTap(plan, seat, reservations, window);
+                },
               ),
             AsyncError() => Center(
                 child: Text(

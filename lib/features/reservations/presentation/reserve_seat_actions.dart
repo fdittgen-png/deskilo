@@ -42,6 +42,10 @@ import 'widgets/series_result_dialog.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/trace/guarded.dart';
 import 'widgets/reference_open.dart';
+import '../../task_recorder/application/booking_observation.dart';
+import '../../task_recorder/domain/action_registry.dart'
+    show RecorderActions;
+import '../../task_recorder/presentation/recorder_seam.dart';
 
 part 'others_booking_tap.dart';
 
@@ -584,8 +588,14 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
                   policies: gate.policies,
                   stepMinutes: granularity.stepMinutes,
                 ),
+        // #1865 — which field was committed, for the task recorder.
+        onFieldCommitted: (field) => recordTaskStep(
+            ref, RecorderActions.changeBookingField, target: field),
       ),
     );
+    if (choice == null && mounted) {
+      recordTaskStep(ref, RecorderActions.cancelReview); // #1865
+    }
     if (choice == null || !mounted) return;
     // #2016 T08 — the choice belongs to the workspace the sheet opened for:
     // after a switch it is dropped, never booked in either workspace.
@@ -608,6 +618,15 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       return;
     }
 
+    // #1865 — the task recorder notes the attempt BEFORE the command and
+    // what the command actually answered; it never changes either.
+    final recorded = recordTaskAttempt(ref, RecorderActions.confirmBooking,
+        payload: bookingAttemptPayload(
+          forSomeoneElse:
+              choice.forMemberId != null && choice.forMemberId != myMemberId,
+          series: choice.pattern != null,
+          checkIn: choice.walkUp || choice.checkInNow,
+        ));
     try {
       // #1234 — the decision of WHICH write a booking is now lives in
       // `application/book_seat.dart`, where a test can reach it without
@@ -645,6 +664,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         // #1855 — the plain booking keeps its intent until the answer is in.
         recovery: ref.read(bookingRecoveryProvider),
       );
+      recorded?.resolveWith(bookingOutcomeObservation(outcome));
       if (!mounted) return;
 
       switch (outcome) {
@@ -670,6 +690,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       }
     } on BookingIntentNotSaved catch (e, st) {
       // Nothing was sent: an unprotected mutation is worse than none.
+      recorded?.resolveWith(bookingErrorObservation(e));
       traceBookingFailed(error: e, stackTrace: st, seat: seat,
           start: choice.start, end: choice.end, checkIn: choice.checkInNow,
           series: false, member: myMemberId);
@@ -681,10 +702,12 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       // intent is kept; the member checks or resumes it, never re-books.
       TraceLogger.instance.warn('reservations', 'booking answer lost; intent kept',
           error: e, stackTrace: st);
+      recorded?.resolveWith(bookingErrorObservation(e.cause)); // still "no answer"
       if (!mounted) return;
       await showBookingRecoverySheet(context, ref, e.intent, spaceName: seat.name);
       return;
     } catch (e, st) {
+      recorded?.resolveWith(bookingErrorObservation(e));
       debugPrint('reserve hub booking failed: $e\n$st');
       // #1030 — the seat, the window and the SERVER'S OWN answer, so a
       // refusal the app renders generically is still diagnosable.

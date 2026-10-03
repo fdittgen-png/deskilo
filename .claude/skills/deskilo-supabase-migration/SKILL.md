@@ -1,329 +1,112 @@
 ---
 name: deskilo-supabase-migration
-description: Writing and applying a Supabase migration or RPC change for DesKilo — the rolled-back live harness with impersonated JWT claims, patching long function bodies at asserted anchors, dropping an overload before adding a defaulted parameter, the permission catalog in set_role_permissions, system columns on every new table, backfills with triggers disabled, transaction-local settings as capability tokens, copy jobs for storage objects, SPDX header, apply_migration, live verification. Trigger whenever a task touches supabase/migrations or an RPC.
+description: Writing, numbering, proving and applying a DesKilo Supabase migration, RPC, policy or pgTAP file — the number taken at push time, the file shape (SPDX, risk line, system columns, revokes, version marker), the rolled-back harness/pgTAP probe on the dev project before apply_migration, APPLIED.sha256, the predicted contract digest, the instance bundle, the SQL-side registries (event types, permission catalog, feature registry), anchored patches with pg_temp.anchor_replace. Trigger whenever a change adds or edits anything under supabase/migrations or supabase/tests/database, or changes an RPC, policy, trigger or table.
 ---
 # Supabase migrations in DesKilo
 
-Project `zwzbynivewivvjmripeb`; migrations numbered `NNNN_name.sql` in
-`supabase/migrations/` (next number: see memory "migrations through").
-Every file starts with `-- SPDX-License-Identifier: AGPL-3.0-or-later` (lint), then
-`-- risk: additive|transforming|destructive`, and ENDS with
-`select public.set_deskilo_schema_version(NNNN);` — its own number (#1312,
-lint `migration_version_marker_test`). Rebuild the bundle after:
-`dart run tool/build_instance.dart`.
+Binding rules: AGENT_RULES "Every migration ends with its version", "System
+columns on every table", "A grant row never proves access", and the pgTAP traps
+under "Testing rules". The generic harness shape (one transaction, impersonation,
+per-case subtransactions, results in the aborting RAISE) is the user-level
+`supabase-live-rpc-testing` skill; this one is DesKilo's ritual.
 
-## 1. Harness BEFORE apply — always
-Run the DDL + a `do $harness$ … raise exception 'HARNESS_RESULTS …' $harness$`
-block through `execute_sql`: the exception rolls everything back and the
-message carries the assertions. Impersonate users with
-`perform set_config('request.jwt.claims', json_build_object('sub', uid, 'role','authenticated')::text, true);`
-Pick fixtures by name (`workspaces.name ilike 'COWORKONTI%'`), never by id.
-Test the negative paths in nested `begin … exception when others then v_err := sqlerrm; end;`.
-Only then `apply_migration` with the SAME SQL (plus the header comment),
-then a `select` that proves columns/functions/triggers exist.
-Then `dart run tool/record_applied_migrations.dart` and commit
-`supabase/APPLIED.sha256` in the same PR (#1455): an applied
-file may never change again, and the lint enforces it.
+**Essentials**
+1. Number = master's latest + 1 **at push time**; never push into a gap; first merge keeps it.
+2. Prove on the dev project first (rolled-back harness or pgTAP probe, red first), then
+   `apply_migration` with the exact file text — all BEFORE the first push.
+3. `dart run tool/record_applied_migrations.dart` → commit `supabase/APPLIED.sha256`; an applied file never changes again.
+4. Predict `assets/instance/contract.txt` with `tool/contract_predict.dart`; only exit 2 waits for CI's artifact.
+5. `dart run tool/build_instance.dart`; check `bundle.json` names every migration.
 
-## 2. Patching a long function you do not own
-```
-select pg_get_functiondef(p.oid) into v_def … where proname = 'create_invoice';
-v_anchor := E'exact text\n'; if position(v_anchor in v_def) = 0 then raise exception 'NNNN: anchor missing'; end if;
-execute replace(v_def, v_anchor, new_text);
-```
-A silent no-op ships a broken document — always assert the anchor.
-An anchor that ends in `))` closes MORE than the expression you mean:
-0169 appended `, 'site', …` behind the parenthesis that also closed
-`jsonb_build_object(` and every detailed invoice failed for a day
-(#960, fixed by 0175). plpgsql compiles a statement when it is first
-REACHED, so the harness must execute every branch the patch touches —
-for create_invoice that means a DETAILED invoice (`p_detailed => true`)
-in the rolled-back transaction, not only the plain one.
+Idioms, pgTAP probe mechanics and incidents: [reference.md](reference.md).
 
-## 3. Overloads
-Adding a parameter WITH a default to an existing function creates a
-second overload; 4-arg calls become ambiguous. `drop function if exists
-public.f(uuid, boolean, text, text);` first, then `create function`.
+## 1. The number
+- Dev project `zwzbynivewivvjmripeb` (never the tankstellen project). Files are
+  `supabase/migrations/NNNN_name.sql`; pgTAP files `supabase/tests/database/NN_name.sql`.
+- Claim the number you intend in `AGENT_HANDOFF.md` / `.agent-work/<issue>.json`
+  before writing the file — a courtesy, never a reason to leave a gap. pgTAP
+  files take the next free number the same way.
+- At PUSH time take master's latest + 1. A gap fails the upgrade check ("pending N,
+  want N+1") and costs a merge plus another full run. If another open PR holds the
+  same number, push anyway: whoever merges first keeps it; the other renames inside
+  the merge-master commit it needs anyway — file name, `set_deskilo_schema_version(N)`,
+  `requiredSchemaVersion` (`lib/core/instance/schema_compatibility.dart`), then
+  `record_applied_migrations` and `build_instance`.
+- `set_deskilo_schema_version` is monotonic (`greatest`): after renumbering a file
+  already applied to dev DOWN, set `public.deskilo_schema_version` directly on dev
+  and say so in the handoff.
 
-## 4. Registries on the SQL side
-- `events_type_check` + `validation_policies_event_type_check`: both
-  constraints list every event type — extend both, seed the policy row
-  per workspace, and the client's FOUR places (AGENT_RULES).
-- `set_role_permissions` has a literal `v_catalog text[]` — a new
-  `WorkspacePermission` MUST be added there (0155) or the roles screen
-  cannot save; `roles_screen_test` reads the LATEST migration carrying
-  that array. `has_permission` admin defaults are a literal list too.
-- `invoices_no_mutation` trigger: lift only for test data, re-arm.
-- Decisions apply through an AFTER UPDATE trigger on `events`, never a
-  branch in `respond_to_event` (0151 idiom).
+## 2. The file
+- Line 1 `-- SPDX-License-Identifier: AGPL-3.0-or-later`; line 2
+  `-- risk: additive|transforming|destructive` (a destructive one names the backup).
+- Every `create table` is followed by `select public.ensure_system_columns('<table>');`
+  (lint `system_columns_test`). Every RLS table gets its `mcp_delegated_deny`-style
+  policy and a line in `assets/instance/policies.txt` (pgTAP 61/79 and
+  `policy_manifest_test`), and a decision in the export-coverage lints
+  (`workspace_export_coverage_test`, `gdpr_export_coverage_test`).
+- `revoke execute … from public, anon` in the SAME file that first creates a
+  function: `CREATE OR REPLACE` keeps the existing ACL, so a later file cannot fix it.
+- Adding a defaulted parameter: `drop function if exists public.f(<old signature>);`
+  first, or calls become ambiguous between two overloads.
+- A long function you do not own is patched at an asserted anchor with
+  `pg_temp.anchor_replace(def, old, new)` (0227/0230; returns NULL on a miss —
+  raise then). The harness must EXECUTE every branch the patch touches (reference.md).
+- An applied file is never rewritten: a later fix is a new migration.
+- LAST statement: `select public.set_deskilo_schema_version(NNNN);` (lint
+  `migration_version_marker_test`).
 
-## 5. Client mirror
-Wire keys shared with the client are pinned by tests (`personal_info_test`
-pins Dart renderings equal to the SQL harness output). When a rendering
-exists twice (SQL + Dart), change both and keep the pin.
+## 3. Prove, apply, record — on dev, before the first push
+1. **Red first.** Run the migration + its assertions as ONE rolled-back
+   `execute_sql`: either a `do $harness$ … raise exception 'HARNESS_RESULTS %' …`
+   block (impersonate with `perform set_config('request.jwt.claims',
+   json_build_object('sub', uid, 'role','authenticated')::text, true)`; pick
+   fixtures by name (`workspaces.name ilike 'COWORKONTI%'`), never by id; negative paths in nested
+   `begin … exception when others then v_err := sqlerrm; end;`), or the pgTAP
+   file itself through the probe loop (reference.md "pgTAP probe"). Before the
+   migration the new behaviour's rows fail; after it, `failed=0`.
+2. `apply_migration` with the SAME text (pre-authorised on the dev project). A
+   migration stacked on an unmerged one: apply the earlier one to dev first, so
+   the probe stays small (an app requiring N accepts a server at N+1).
+3. Verify: a `select` proving columns/functions/triggers exist, and
+   `md5(prosrc)` against the file's `$fn$` bodies (a chunked md5 finds WHERE they
+   differ; comment drift is harmless, logic drift is not).
+4. `dart run tool/record_applied_migrations.dart` → commit `supabase/APPLIED.sha256`.
+5. After an RPC change, run the rolled-back live harness against the applied
+   function too — the fake answers what the test says, the database what the text means.
 
-## 6. Lessons of 2026-09-07 (0180–0190)
-- **Every `create table` is followed by `select public.ensure_system_columns('<table>');`**
-  in the same migration (#992, lint `system_columns_test`). The six
-  columns are the server's: the `zz_system_columns_stamp` trigger
-  overwrites whatever a client sends. A guard that compares whole rows
-  (`invoices_immutable`) must subtract `public.system_column_names()`.
-- **Backfills and triggers.** The hosted database refuses
-  `set_config('session_replication_role', …)`. Wrap a backfill in
-  `alter table … disable trigger user` / `enable trigger user` — and do
-  it BEFORE the update: an AFTER trigger that fired queues events and
-  `ALTER TABLE … enable trigger` then fails with "pending trigger
-  events". Creating a trigger after the backfill avoids the dance.
-- **Trigger order is alphabetical.** A stamp that must see the final row
-  is named `zz_…`; a guard that must judge first keeps its name.
-- **Reserved words.** `returns table (key text, row jsonb)` is a syntax
-  error — `row` is reserved; name it `data`. In an `update … set x = …`,
-  `array_agg(x)` over an aliased `x` collides with the column → "aggregate
-  functions are not allowed in UPDATE"; put the aggregate in a helper
-  (`public.jsonb_text_array(jsonb)`).
-- **Harness expressions.** `jsonb_array_elements(x) t` → read `t.value->>`,
-  never `t->>` (that is the row, "text ->> unknown"). `members` has no
-  `created_at`; pick the owner with `status = 'active' … limit 1`.
-  `foreach … in array array[[a,b],[c,d]]` cannot assign to two scalars —
-  use two parallel arrays and an index.
-- **A capability token between functions:** `perform set_config('deskilo.deploying',
-  from || ':' || to, true)` (transaction-local) and a guard
-  `public.deploying_touches(ws)` — lets `deploy_entities` pass the
-  transfer's own `has_permission` checks without granting anything.
-- **Storage objects are not the database's to move.** A function returns
-  `copy_jobs` `[{from, to}]` and the client copies with
-  `storage.from(bucket).copy(from, to)`; paths keep their structure under
-  the target prefix (`regexp_replace(path, '^[^/]+', target)`); the diff
-  compares by file name, never by prefix. `storage.objects` is readable
-  for a preview (`report_image_names`).
-- **Copying rows across workspaces:** `insert into t select (jsonb_populate_record(null::t,
-  (to_jsonb(row) - 'id' - 'workspace_id' - <system columns>) || jsonb_build_object('id', gen_random_uuid(), 'workspace_id', target))).*`.
-- **Anchored catalog extensions and test pins:** a test that extracts
-  `v_catalog text[] := array[…]` by regex from "the latest catalog
-  migration" breaks when the extension is an anchored patch (0185) —
-  concatenate the base file's array with the patch file's text.
-- **Restating vs patching:** an applied migration's file is never
-  rewritten; if a later fix needs a whole-function text (0184's
-  `ensure_system_columns`), it is a new migration.
-
-## 7. Lessons of 2026-09-09 (0191, and the workspace delete)
-
-- **`CREATE OR REPLACE FUNCTION` preserves the existing ACL.** So a
-  missing `revoke execute … from public, anon` is decided by the
-  migration that FIRST creates a function, and never corrects itself: a
-  later version inherits whatever the first one had. This is how 99 of
-  260 functions ended up executable by `anon` (#1048) while the rule had
-  been written since 0004. Put the revoke in the same file as the
-  `create`, every time — the reviewer of migration 0250 cannot see 0110.
-- **`anon` having execute is usually harmless and never acceptable.**
-  Those bodies re-check `auth.uid()` / `has_permission()` / `is_member_of()`
-  and `anon` has no uid, so they refuse. That is the SECOND line of
-  defence; the grant is the first. It takes one function that forgets
-  its internal check — `export_floor_plan` was that function.
-- **Deleting a workspace: three guards refuse, in this order.**
-  `protect_last_owner` on the members cascade, then `invoices are
-  immutable`, then a RESTRICT foreign key from `event_decisions` →
-  `members`. RESTRICT is checked immediately, so the workspace's own
-  `on delete cascade` can never reach through it. The order that works:
-
-  ```sql
-  alter table members  disable trigger user;   -- and invoices,
-  alter table invoices disable trigger user;   -- reservations,
-  -- … ledger_entries, events
-  delete from event_decisions where event_id in (select id from events where workspace_id = any(ids));
-  -- then the workspace-scoped children that reference events with
-  -- NO ACTION or SET NULL: invoice_match_payments, invoice_matches,
-  -- invoice_reminders, invoice_transmissions, expense_repartitions,
-  -- expense_occurrences, expense_schedules, price_negotiations,
-  -- quota_extensions, usage_records, ledger_entries, events
-  delete from reservations where workspace_id = any(ids);
-  update invoices set replaces_invoice_id = null, settled_by_invoice_id = null
-    where workspace_id = any(ids);        -- the self-referencing chain
-  delete from invoices where workspace_id = any(ids);
-  delete from members  where workspace_id = any(ids);
-  delete from workspaces where id = any(ids);   -- the rest cascades
-  ```
-
-  The guards protect a row inside a LIVE workspace; they have no opinion
-  about one being removed entirely. Stand them down for the delete and
-  bring them straight back.
-- **Read the FK graph before writing the delete**, not after the third
-  failure: `select conrelid::regclass, confdeltype from pg_constraint
-  where contype='f' and confrelid='members'::regclass` — `c` cascades,
-  `r` RESTRICTs immediately, `a` defers to end of statement, `n` nulls.
-- **`profiles.default_workspace_id` is SET NULL**, so someone whose
-  default was deleted lands on the profiles switcher rather than
-  nowhere. Count them in the harness and say so in the report.
-
-## 8. Lessons of 2026-09-28 (0288–0304, two agents at once)
-
-- **Migration and pgTAP numbers are first-come, recorded before work
-  starts.** Write the claim ("takes 0301 / pgTAP 88 … next free 0302 /
-  89") into `AGENT_HANDOFF.md` and `.agent-work/<issue>.json` BEFORE
-  writing the file. Never renumber into a number another agent reserved,
-  and never wait on them: if your number lands before theirs, theirs
-  moves.
-- **A gap is expected, not fixed.** When your 0301 is pushed before
-  someone else's 0300 lands, `project_scale_test` and the migration
-  marker fail on the gap alone. Push anyway, and after 0300 merges run
-  `git merge origin/master` ONCE (never a rebase), regenerate, push.
-- **Apply-before-harness on the dev project, then verify the body.**
-  Probe the migration plus its assertions as ONE rolled-back
-  `execute_sql` (`insert into r select is(...)` … `raise exception 'PGTAP
-  %'`). Then `apply_migration`, and compare `md5(prosrc)` with the file's
-  `$fn$` body. A chunked md5 finds WHERE they differ; comment drift is
-  harmless, logic drift is not.
-- **A long function is patched on dev in place**, not pasted: `do $$ …
-  v := pg_get_functiondef(...); v := replace(v, anchor, new); if
-  position(marker in v) = 0 then raise …; execute v; $$`. Guard on a
-  unique marker, then check the md5 against the file.
-- **The contract digest comes from CI's replay, every time.**
-  `quality · database` is REQUIRED on master since 2026-09-26, so a stale
-  `assets/instance/contract.txt` holds the PR open. Download it with
-  `gh run download <run> -n quality-database`, copy `contract.txt`
-  (sometimes `policies.txt` too), commit and push. The reusable loop is
-  `.agent-work`-style: poll the PR, and on "contract.txt is not what the
-  migrations build" copy the artifact once per failing run.
-- **Every RLS table needs the `mcp_delegated_deny`-style policy and a
-  `policies.txt` line**; pgTAP 61/79 and the policy manifest lint fail
-  without them. New tables also go into the export-coverage lint
-  (exported or explicitly not).
-- **After merging master into a migration branch**, preflight did NOT
-  rebuild the instance bundle. Run `dart run tool/build_instance.dart`
-  yourself, and check that `bundle.json` names every migration.
-- **An MCP catalogue change needs a catalogue migration.** The latest
-  migration defining `mcp_operation_catalogue()` must carry
-  `renderMcpCatalogueSql` verbatim (`mcp_contract_test`). Render it with
-  a throwaway Dart script, write the migration, delete the script.
-
-## 9. Lessons of 2026-09-29 (0310, the pgTAP file as its own harness)
-
-- **Run the pgTAP file itself on dev, rolled back.** pgTAP is available
-  but not installed on the dev project; `create extension if not exists
-  pgtap with schema extensions` INSIDE the probe's `do` block works and
-  rolls back with it. Put every statement of the file into
-  `foreach s in array array[$s$…$s$, …] loop begin execute s [into v];
-  exception when others then log; end; end loop;`, collect `not ok`
-  lines, and end with `raise exception 'PROBE failed=% log=%',
-  num_failed(), v_log`. `__tresults__` does not exist in this pgTAP —
-  `num_failed()` does. Per-statement subtransactions keep `set local
-  role` (a released subtransaction keeps its SET LOCAL).
-- **Red first, in the database.** Run that same probe BEFORE
-  `apply_migration`: the rows that fail are the behaviour the migration
-  adds (0310: 15 failures + 1 missing function), the rows that pass are
-  the positive controls. Apply, rerun, expect `failed=0` and no ERR.
-- **A multi-scene pgTAP file accumulates state.** When a revocation
-  scene ends every connection of a person, a later scene that needs the
-  second assistant must consent to it again; the probe found that one,
-  not the reasoning.
-
-## 10. Lessons of 2026-09-29 (#1632, a pgTAP file that proves it can fail)
-
-- **Inject a fault inside the test, never in a deployed function.** A
-  pgTAP file runs as postgres in one rolled-back transaction, so it may
-  `create or replace` a definer function: save `pg_get_functiondef(fn)`,
-  replace ONE anchor, execute, probe, then `execute` the saved text back.
-  Refuse unless the anchor occurs exactly once (count with
-  `(length(def) - length(replace(def, anchor, ''))) / length(anchor)`):
-  a moved check must fail the test, not turn the fault into a no-op.
-  `97_mcp_conformance_journey.sql` (`pg_temp.inject` / `pg_temp.restore`)
-  is the worked example. A dropped unique index is recreated only after
-  deleting the rows the fault let in.
-- **One dollar tag carries the whole probe.** When the file's bodies only
-  use `$$` and `$q$`, every statement of the probe array can be quoted
-  `$x$…$x$` — no per-statement numbering to keep in sync.
-- **Read the state words before asserting them.** `my_database_capabilities`
-  says `requested` (not `pending`) while an eligibility request waits;
-  consent scopes take `target_ceiling = workspace` from their operations,
-  so a reads-only workspace whose policy ceiling is `own` answers
-  `target_ceiling` to `get_availability`. The first probe run found both.
-- **A second installation cannot live in one database.**
-  `installation_identity` is a singleton referenced by foreign keys: model
-  D2 as a foreign id and epoch that D1 refuses, with D1's own UUIDs, and
-  say in the file header that SQL claim injection proves no OIDC/OAuth.
-
-## 11. Lessons of 2026-09-29 (0312, operator functions and renumbering)
-
-- **The per-statement probe needs two EXECUTE forms.** `execute s into v`
-  on an `insert`/`update`/`delete` fails with "INTO used with a command
-  that cannot return data", and the seed silently never happens. Use
-  `if s ilike 'select%' then execute s into v; else execute s; end if;`.
-- **`set_deskilo_schema_version` is monotonic** (`greatest`). Renumbering a
-  migration you already applied to dev (0313 → 0312 because the reserved
-  0312 had not landed) cannot lower the marker through it; update
-  `public.deskilo_schema_version` directly on dev, and say so in the
-  handoff. The dev history row keeps its old name; that is cosmetic.
-- **An operator function takes no verdict.** An activation that accepts
-  "checks passed" can be forged by whoever calls it. Take the identifiers
-  of what was inspected (installation, epoch) and a fingerprint the
-  database recomputes; refuse on any difference (0312
-  `operator_activate_mcp_runtime`).
-- **Run the tool's own SQL strings against dev in a rolled-back block**
-  before trusting fakes: the fake answers what the test says, the database
-  answers what the text means.
-
-## 12. Lessons of 2026-09-29 (0313–0316, a confidentiality fix and three contexts)
-
-- **Put a reading rule in ONE definer function and make the policy call
-  it.** `can_read_member_note(workspace, from, to, conversation, at)`
-  answers only for `auth.uid()`, so it may be granted to `authenticated`;
-  the select policy, the delete policy and every definer reader
-  (`calendar_items` via an anchored patch) ask the same question. A
-  policy that queries `conversation_participants` inline recurses into
-  that table's own policy; the definer function is what breaks the cycle.
-- **Red first can reveal a second defect.** The old `member_notes_select`
-  let every admin read every group AND let a non-admin participant read
-  only their own group messages through the table. The pgTAP positive
-  controls ("a participant reads the whole group") failed on the old
-  policy too; keep both directions in the file.
-- **A column on `profiles` can never be private.** Every space mate
-  `select *`s a profile (0002), and a column revoke would break those
-  selects. A field whose audience may be "nobody" lives in its own
-  no-access table, projected by a definer RPC.
-- **A long generated migration (registry + template field registry +
-  builtin, ~95 KB) is applied by a subagent told to paste it verbatim,
-  then verified by `md5(prosrc)` against the file's `$registry$` bodies.**
-  When the file changes after the apply (a manifest parent removed), patch
-  dev in place with an anchored `replace` of the one changed line and
-  re-check both md5s; do not re-apply the whole file.
-- **The probe runner is a script, not a hand edit.** Split the pgTAP file
-  into statements (track `$$` parity), wrap each in `$s$…$s$` inside the
-  §9 loop, and optionally prefix the migration with comment lines
-  stripped. Fixture traps it caught: `profiles.whatsapp` must match
-  `^\+[0-9]{6,19}$` (a failed fixture update silently leaves display
-  names empty and fails four unrelated assertions); rows inserted in one
-  transaction share `now()`, so `->0`/`->1` over `order by created_at, id`
-  is random — select the row by a property instead.
-- **An anchored patch of an OLD function guarantees the contract-digest
-  second run.** Dev's bodies of long-patched functions (`calendar_items`,
-  `export_my_data`, `create_invoice`) differ from the replay's, so their
-  new digest cannot be computed from dev; plan the one allowed copy of
-  `contract.txt` from the CI artifact.
-
-## 13. Lessons of 2026-10-02 (the two rounds every migration PR paid)
-
-Measured over 14 PRs: a PR without a migration merged in ~35 min, one
-with a migration in ~88 min (49–160). The difference was two avoidable
-rounds, each a doomed CI run plus a full rerun.
-
-- **Predict the contract digest; do not wait for CI to fail.** After
-  `apply_migration` on dev, before the FIRST push:
-  `dart run tool/contract_predict.dart sql supabase/migrations/NNNN_x.sql`,
-  run the printed query on dev with `execute_sql`, save the result row as
-  JSON (`[{"lines": [...]}]`), then
+## 4. Contract digest and generated files
+- `quality · database` is a REQUIRED check: a stale `assets/instance/contract.txt`
+  holds the PR open. Before the first push:
+  `dart run tool/contract_predict.dart sql supabase/migrations/NNNN_x.sql` → run the
+  printed query on dev → save the row as JSON (`[{"lines": [...]}]`) →
   `dart run tool/contract_predict.dart apply supabase/migrations/NNNN_x.sql result.json`.
-  It owns only what the file defines WHOLE: a function created or dropped
-  there, the constraints and triggers of a table created there. Their dev
-  lines equal the replay's (0330 and 0332 reproduced CI's contract byte
-  for byte). Exit 2 names what it could not predict: an anchored patch,
-  or a constraint/trigger change on an existing table. Only then is the
-  CI-artifact copy still needed, and it is the ONLY reason left.
-- **Never push with a migration-number gap.** A gap fails the upgrade
-  check ("pending N, want N+1") until the lower number lands, then costs
-  a merge and another full run. Take the number at PUSH time: master's
-  latest + 1. If another open PR holds the same number, push anyway.
-  Whoever merges first keeps it; the other renames its file to the next
-  free number inside the merge-master commit it needs anyway. That means
-  the file name, `set_deskilo_schema_version(N)`, `requiredSchemaVersion`,
-  then `record_applied_migrations` and `build_instance`. Claims in
-  AGENT_HANDOFF.md are a courtesy, not a reason to leave a gap.
+  It owns what the file defines WHOLE (a function created or dropped there, the
+  constraints and triggers of a table created there).
+- **Exit 2** names what it cannot predict — an anchored patch (dev's long-patched
+  bodies drift from the replay) or a constraint/trigger change on an existing
+  table. Only then copy CI's artifact ONCE: `gh run download <run> -n quality-database`,
+  take its `contract.txt` (and `policies.txt` if it changed) — the + side of the
+  replay, never the hosted project's text.
+- `docs/database/dictionary.json` drift only WARNS on a PR (#2089);
+  `CI · Dictionary refresh` regenerates it after the merge. Do not chase it.
+- After merging master into a migration branch, run `dart run tool/build_instance.dart`
+  yourself (preflight did not) and check `bundle.json` names every migration.
+- An MCP catalogue change: the latest migration defining `mcp_operation_catalogue()`
+  carries `renderMcpCatalogueSql` verbatim (`mcp_contract_test`).
+
+## 5. Registries on the SQL side
+- **Event types**: `events_type_check` + `validation_policies_event_type_check` both
+  list every type — extend both, seed the policy row per workspace, and the client's
+  FOUR places (AGENT_RULES "Validation domains").
+- **Permissions**: a new `WorkspacePermission` = a migration restating
+  `public.role_permission_catalog()` whole (0195 moved the array there; 0340 is the
+  latest); `roles_screen_test` reads the LATEST definer of that function.
+  `has_permission` admin defaults are a literal list too.
+- **Features**: `public.feature_registry()` carries `build_feature_registry_sql.dart`'s
+  output (`feature_registry_sql_test`); gates call `public.feature_effective(ws, 'key')`.
+- `invoices_no_mutation` (→ `invoices_immutable()`): lift only for test data, re-arm.
+  A guard comparing whole rows subtracts `public.system_column_names()`.
+- Decisions apply through an AFTER UPDATE trigger on `events`, never a branch in
+  `respond_to_event` (0151 idiom).
+- A rendering that exists in SQL and Dart (`profile_full_name` / `fullName`, …) changes
+  in both; `personal_info_test` pins Dart to the SQL harness output.
