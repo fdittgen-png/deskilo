@@ -11160,6 +11160,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo guardar el cambio. Inténtalo de nuevo.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Esta acción no está disponible entre esta aplicación y ese servidor. Actualizar la aplicación puede ayudar.';
+
+  @override
   String get portalAddress => 'Dirección pública';
 
   @override

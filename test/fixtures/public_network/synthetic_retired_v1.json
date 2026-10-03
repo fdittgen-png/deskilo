@@ -1,0 +1,42 @@
+{
+  "provenance": {
+    "kind": "synthetic",
+    "why": "No version has ever been retired. A hypothetical server that retired version 1 of workspace.profile.request (sunset: only 2 accepted, and an unlabelled request now means 2) while keeping directory.sources.register at 1."
+  },
+  "descriptor": {
+    "protocol": "deskilo.public-network",
+    "protocol_versions": [
+      1,
+      2
+    ],
+    "capabilities": [
+      "operation_header"
+    ],
+    "operations": [
+      {
+        "id": "network.descriptor.read",
+        "versions": [
+          1,
+          2
+        ],
+        "requires": []
+      },
+      {
+        "id": "directory.sources.register",
+        "versions": [
+          1
+        ],
+        "requires": [],
+        "unlabelled": 1
+      },
+      {
+        "id": "workspace.profile.request",
+        "versions": [
+          2
+        ],
+        "requires": [],
+        "unlabelled": 2
+      }
+    ]
+  }
+}

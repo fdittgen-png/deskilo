@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/directory/domain/public_workspace.dart';
+import '../../public_network/public_network_negotiator.dart';
 
 /// #1847 — one in-memory directory behind all three interfaces: what the
 /// public reads, what the owner manages and what a participant asks.
@@ -12,6 +13,10 @@ class FakeDirectoryRepository
   final pages = <String, Map<String, dynamic>>{};
   final requests = <String>[];
   bool fail = false;
+
+  /// #1847 B — when set, apply is refused before anything is sent, as the
+  /// real repository refuses an action it could not negotiate.
+  PublicActionRefusal? refuseApply;
   @override
   Future<DirectoryPage> search(
     String query, {
@@ -94,6 +99,8 @@ class FakeDirectoryRepository
   Future<void> register(String origin, String key) async {}
   @override
   Future<void> apply(PublicWorkspace workspace) async {
+    final refusal = refuseApply;
+    if (refusal != null) throw refusal;
     requests.add(workspace.id);
   }
 }

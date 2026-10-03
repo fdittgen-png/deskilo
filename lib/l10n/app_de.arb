@@ -6803,6 +6803,7 @@
   "policySimultaneousDesc": "Wie viele sich überschneidende Buchungen ein Mitglied halten darf. 1 bedeutet ein Platz zur selben Zeit.",
   "policySimultaneousTitle": "Gleichzeitige Reservierungen pro Mitglied",
   "portalActionFailed": "Die Änderung konnte nicht gespeichert werden. Bitte erneut versuchen.",
+  "portalActionNotNegotiated": "Diese Aktion ist zwischen dieser App und diesem Server nicht verfügbar. Ein App-Update kann helfen.",
   "portalAddress": "Öffentliche Adresse",
   "portalAdmin": "Administrator",
   "portalAdminVisible": "Mich als öffentlichen Administrator anzeigen",

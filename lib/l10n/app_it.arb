@@ -6803,6 +6803,7 @@
   "policySimultaneousDesc": "Quante prenotazioni sovrapposte può avere un membro. 1 mantiene un solo posto alla volta.",
   "policySimultaneousTitle": "Prenotazioni simultanee per membro",
   "portalActionFailed": "Impossibile salvare la modifica. Riprova.",
+  "portalActionNotNegotiated": "Questa azione non è disponibile tra questa app e quel server. Aggiornare l’app può aiutare.",
   "portalAddress": "Indirizzo pubblico",
   "portalAdmin": "Amministratore",
   "portalAdminVisible": "Mostrami come amministratore pubblico",

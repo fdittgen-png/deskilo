@@ -19202,6 +19202,12 @@ abstract class AppLocalizations {
   /// **'Could not save this change. Please try again.'**
   String get portalActionFailed;
 
+  /// No description provided for @portalActionNotNegotiated.
+  ///
+  /// In en, this message translates to:
+  /// **'This action is not available between this app and that server. Updating the app may help.'**
+  String get portalActionNotNegotiated;
+
   /// No description provided for @portalAddress.
   ///
   /// In en, this message translates to:

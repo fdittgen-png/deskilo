@@ -12781,6 +12781,7 @@
     "description": "#628 - title of the workspace-wide simultaneous-reservations stepper"
   },
   "portalActionFailed": "Could not save this change. Please try again.",
+  "portalActionNotNegotiated": "This action is not available between this app and that server. Updating the app may help.",
   "portalAddress": "Public address",
   "portalAdmin": "Administrator",
   "portalAdminVisible": "Show me as a public administrator",

@@ -11176,6 +11176,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalActionFailed => 'Impossibile salvare la modifica. Riprova.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Questa azione non è disponibile tra questa app e quel server. Aggiornare l’app può aiutare.';
+
+  @override
   String get portalAddress => 'Indirizzo pubblico';
 
   @override

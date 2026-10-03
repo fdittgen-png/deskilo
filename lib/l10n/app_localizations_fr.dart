@@ -11197,6 +11197,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d’enregistrer cette modification. Réessayez.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Cette action n’est pas disponible entre cette application et ce serveur. Mettre à jour l’application peut aider.';
+
+  @override
   String get portalAddress => 'Adresse publique';
 
   @override

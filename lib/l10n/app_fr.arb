@@ -6803,6 +6803,7 @@
   "policySimultaneousDesc": "Combien de réservations qui se chevauchent un membre peut détenir. 1 garde une seule place à la fois.",
   "policySimultaneousTitle": "Réservations simultanées par membre",
   "portalActionFailed": "Impossible d’enregistrer cette modification. Réessayez.",
+  "portalActionNotNegotiated": "Cette action n’est pas disponible entre cette application et ce serveur. Mettre à jour l’application peut aider.",
   "portalAddress": "Adresse publique",
   "portalAdmin": "Administrateur",
   "portalAdminVisible": "Afficher mon rôle d’administrateur publiquement",

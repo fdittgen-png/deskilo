@@ -6803,6 +6803,7 @@
   "policySimultaneousDesc": "Cuántas reservas superpuestas puede tener un miembro. 1 mantiene un solo sitio a la vez.",
   "policySimultaneousTitle": "Reservas simultáneas por miembro",
   "portalActionFailed": "No se pudo guardar el cambio. Inténtalo de nuevo.",
+  "portalActionNotNegotiated": "Esta acción no está disponible entre esta aplicación y ese servidor. Actualizar la aplicación puede ayudar.",
   "portalAddress": "Dirección pública",
   "portalAdmin": "Administrador",
   "portalAdminVisible": "Mostrarme como administrador público",
