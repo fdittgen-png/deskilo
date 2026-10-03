@@ -115,7 +115,21 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
           ),
           Expanded(
             child: switch (rows) {
-              AsyncData(value: final result) => ListView(
+              AsyncData(value: final result) => LayoutBuilder(
+                builder: (context, constraints) => Column(children: [
+                  if (_map)
+                    SizedBox(
+                      height: (constraints.maxHeight / 2).clamp(0.0, 300.0),
+                      child: DirectoryMap(
+                        key: ValueKey('$_query:$_sources:$_page'),
+                        workspaces: result.workspaces,
+                        selected: _selected == null
+                            ? null
+                            : '${_selected!.source}/${_selected!.id}',
+                        onSelect: select,
+                      ),
+                    ),
+                  Expanded(child: ListView(
                 padding: AppSpacing.mdAll,
                 children: [
                   if (result.unavailable.isNotEmpty)
@@ -131,18 +145,6 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                     Text(
                       key: const ValueKey('directory-incompatible'),
                       '${l?.portalDirectoryIncompatible ?? 'Some workspaces need a newer version of the app and are not shown.'}\n${result.incompatible.join('\n')}',
-                    ),
-                  if (_map)
-                    SizedBox(
-                      height: 300,
-                      child: DirectoryMap(
-                        key: ValueKey('$_query:$_sources:$_page'),
-                        workspaces: result.workspaces,
-                        selected: _selected == null
-                            ? null
-                            : '${_selected!.source}/${_selected!.id}',
-                        onSelect: select,
-                      ),
                     ),
                   if (result.workspaces.isEmpty)
                     Text(
@@ -204,6 +206,8 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                     ],
                   ),
                 ],
+                  )),
+                ]),
               ),
               AsyncError() => Center(
                 child: TextButton(

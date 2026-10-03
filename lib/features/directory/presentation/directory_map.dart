@@ -106,6 +106,9 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap> {
       Expanded(child: Stack(children: [FlutterMap(
       mapController: _controller,
       options: MapOptions(
+        interactionOptions: const InteractionOptions(
+          keyboardOptions: KeyboardOptions(autofocus: false),
+        ),
         initialCenter: located.isEmpty
             ? const LatLng(48.86, 2.35)
             : LatLng(located.first.location.latitude, located.first.location.longitude),

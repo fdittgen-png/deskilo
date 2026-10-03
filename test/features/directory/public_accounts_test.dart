@@ -215,11 +215,21 @@ void main() {
     const workspace = PublicWorkspace('unlocated', 'https://host.example', '', {
       'name': 'No address yet',
     });
-    final repository = FakeDirectoryRepository()..cards.add(workspace);
+    final repository = FakeDirectoryRepository()
+      ..cards.addAll([
+        for (var i = 0; i < 20; i++)
+          PublicWorkspace('row-$i', 'https://host.example', '', {'name': 'Office $i'}),
+        workspace,
+      ]);
     await showPortal(tester, const DirectoryScreen(), directory: repository);
-    await tester.tap(find.byKey(const ValueKey('directory-locate-https://host.example/unlocated')));
+    final locate = find.byKey(const ValueKey('directory-locate-https://host.example/unlocated'));
+    await tester.scrollUntilVisible(locate, 400, scrollable: find.descendant(
+      of: find.byType(ListView), matching: find.byType(Scrollable)).first);
+    await tester.pumpAndSettle();
+    await tester.tap(locate);
     await tester.pumpAndSettle();
     expect(find.byType(DirectoryMap), findsOneWidget);
+    expect(tester.getTopLeft(find.byType(DirectoryMap)).dy, greaterThanOrEqualTo(0));
     expect(find.textContaining('Location unavailable'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
