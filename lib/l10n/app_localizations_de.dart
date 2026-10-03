@@ -15575,6 +15575,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskWorkbenchReviewIllustrations => 'Illustrationen prüfen';
 
   @override
+  String get taskWorkbenchStoryboardRestored =>
+      'Die geprüften Illustrationen wurden aus der Datei wiederhergestellt.';
+
+  @override
   String get taskWorkbenchTitle => 'Aufgaben-Werkbank';
 
   @override

@@ -17523,6 +17523,10 @@
   "@taskWorkbenchReviewIllustrations": {
     "description": "#1872 workbench: taskWorkbenchReviewIllustrations"
   },
+  "taskWorkbenchStoryboardRestored": "The reviewed illustrations were restored from the file.",
+  "@taskWorkbenchStoryboardRestored": {
+    "description": "#1876 workbench: taskWorkbenchStoryboardRestored"
+  },
   "taskWorkbenchTitle": "Task workbench",
   "@taskWorkbenchTitle": {
     "description": "#1872 task workbench: taskWorkbenchTitle"

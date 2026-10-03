@@ -26828,6 +26828,12 @@ abstract class AppLocalizations {
   /// **'Review the illustrations'**
   String get taskWorkbenchReviewIllustrations;
 
+  /// #1876 workbench: taskWorkbenchStoryboardRestored
+  ///
+  /// In en, this message translates to:
+  /// **'The reviewed illustrations were restored from the file.'**
+  String get taskWorkbenchStoryboardRestored;
+
   /// #1872 task workbench: taskWorkbenchTitle
   ///
   /// In en, this message translates to:

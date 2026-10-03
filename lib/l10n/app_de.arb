@@ -9628,6 +9628,7 @@
   "taskWorkbenchRefusedUnsafe": "Diese Datei ist so aufgebaut, dass das Öffnen nicht sicher ist.",
   "taskWorkbenchRefusedUnsupported": "Das ist keine Aufgabendatei.",
   "taskWorkbenchReviewIllustrations": "Illustrationen prüfen",
+  "taskWorkbenchStoryboardRestored": "Die geprüften Illustrationen wurden aus der Datei wiederhergestellt.",
   "taskWorkbenchTitle": "Aufgaben-Werkbank",
   "taskWorkbenchTranscriptOnly": "Einige Schritte stammen aus einer neueren Version: nur als Mitschrift angezeigt.",
   "taskWorkbenchUntrusted": "Ein privater Entwurf aus einer Datei: nichts darin gilt als vertrauenswürdig oder wird gesendet.",

@@ -9628,6 +9628,7 @@
   "taskWorkbenchRefusedUnsafe": "Este archivo está construido de una forma que no es seguro abrir.",
   "taskWorkbenchRefusedUnsupported": "Esto no es un archivo de tarea.",
   "taskWorkbenchReviewIllustrations": "Revisar las ilustraciones",
+  "taskWorkbenchStoryboardRestored": "Las ilustraciones revisadas se restauraron desde el archivo.",
   "taskWorkbenchTitle": "Taller de tareas",
   "taskWorkbenchTranscriptOnly": "Algunos pasos vienen de una versión más reciente: se muestran solo como transcripción.",
   "taskWorkbenchUntrusted": "Un borrador privado de un archivo: nada de él se considera fiable ni se envía.",
