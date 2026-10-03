@@ -69,6 +69,7 @@ public.identity_federation_clients.mcp_delegated_deny
 public.installation_identity.identity_public_installation
 public.installation_identity.mcp_delegated_deny
 public.instance_delegates.mcp_delegated_deny
+public.instance_notices.mcp_delegated_deny
 public.instance_owner_claims.mcp_delegated_deny
 public.invitations.invitations_select
 public.invitations.mcp_delegated_deny
@@ -102,6 +103,7 @@ public.mcp_disclosure_maximum.mcp_delegated_deny
 public.mcp_eligibility_grants.mcp_delegated_deny
 public.mcp_eligibility_requests.mcp_delegated_deny
 public.mcp_idempotency.mcp_delegated_deny
+public.mcp_installation_settings.mcp_delegated_deny
 public.mcp_limits.mcp_delegated_deny
 public.mcp_runtime.mcp_delegated_deny
 public.mcp_usage.mcp_delegated_deny

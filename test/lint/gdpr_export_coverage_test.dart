@@ -67,6 +67,11 @@ const Map<String, String> _notExported = {
       '#1829 — who the instance owner named to run installation-wide setup: '
           'an authority row, shown by name to everyone as the people '
           'responsible, never the subject\'s own data',
+  'instance_notices':
+      '#2145 — what the installation told an instance operator (an '
+          'assistant waiting for approval, an operator grant): an authority '
+          'inbox that names OTHER people and clients, never the subject\'s '
+          'own data; read notices are deleted after 90 days',
   'platform_access_log':
       'the platform owner\'s audit of their own access; the subject\'s '
           'equivalent is data_access_log, which IS exported',

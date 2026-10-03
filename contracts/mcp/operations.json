@@ -1632,9 +1632,11 @@
   },
   {
    "rpc": "mcp_consent_options",
-   "params": {},
+   "params": {
+    "p_authorization_id": "text"
+   },
    "security": "nativeSession",
-   "purpose": "What an assistant connection may be granted."
+   "purpose": "What an assistant connection may be granted; with the pending authorization, the client's approval status, its redirect host and who decides the first open step."
   },
   {
    "rpc": "mcp_disclosure_status",
