@@ -3403,6 +3403,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get developmentWatermark => 'DEVELOPMENT';
 
   @override
+  String get directoryApproximate => 'Approximate address location';
+
+  @override
   String get directoryCheckedIn => 'Checked in';
 
   @override
@@ -3442,6 +3445,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String directoryLastSeenMinutes(int minutes) {
     return 'Seen $minutes min ago';
   }
+
+  @override
+  String get directoryLocate => 'Locate on map';
+
+  @override
+  String get directoryLocating => 'Locating the public address…';
+
+  @override
+  String get directoryLocationMissing =>
+      'Location unavailable. The owner can publish precise map coordinates.';
 
   @override
   String get directoryNoUpcoming => 'No upcoming reservations';
@@ -9730,6 +9743,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meSpaceLastUsed => 'Last used';
+
+  @override
+  String get meSpaceOpen => 'Open';
 
   @override
   String get meSpacePending => 'Waiting for approval';

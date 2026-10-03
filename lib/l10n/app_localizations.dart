@@ -6019,6 +6019,12 @@ abstract class AppLocalizations {
   /// **'DEVELOPMENT'**
   String get developmentWatermark;
 
+  /// No description provided for @directoryApproximate.
+  ///
+  /// In en, this message translates to:
+  /// **'Approximate address location'**
+  String get directoryApproximate;
+
   /// Directory status chip: member is checked in right now (seat name unknown)
   ///
   /// In en, this message translates to:
@@ -6060,6 +6066,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Seen {minutes} min ago'**
   String directoryLastSeenMinutes(int minutes);
+
+  /// No description provided for @directoryLocate.
+  ///
+  /// In en, this message translates to:
+  /// **'Locate on map'**
+  String get directoryLocate;
+
+  /// No description provided for @directoryLocating.
+  ///
+  /// In en, this message translates to:
+  /// **'Locating the public address…'**
+  String get directoryLocating;
+
+  /// No description provided for @directoryLocationMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Location unavailable. The owner can publish precise map coordinates.'**
+  String get directoryLocationMissing;
 
   /// Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead
   ///
@@ -16739,6 +16763,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last used'**
   String get meSpaceLastUsed;
+
+  /// No description provided for @meSpaceOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get meSpaceOpen;
 
   /// Subtitle of a space card whose membership awaits approval.
   ///

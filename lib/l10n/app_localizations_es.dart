@@ -3419,6 +3419,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get developmentWatermark => 'DESARROLLO';
 
   @override
+  String get directoryApproximate => 'Ubicación aproximada de la dirección';
+
+  @override
   String get directoryCheckedIn => 'Presente';
 
   @override
@@ -3458,6 +3461,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String directoryLastSeenMinutes(int minutes) {
     return 'Visto hace $minutes min';
   }
+
+  @override
+  String get directoryLocate => 'Localizar en el mapa';
+
+  @override
+  String get directoryLocating => 'Localizando la dirección pública…';
+
+  @override
+  String get directoryLocationMissing =>
+      'Ubicación no disponible. El propietario puede publicar coordenadas precisas.';
 
   @override
   String get directoryNoUpcoming => 'Sin reservas próximas';
@@ -9800,6 +9813,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get meSpaceLastUsed => 'Último usado';
+
+  @override
+  String get meSpaceOpen => 'Abrir';
 
   @override
   String get meSpacePending => 'Pendiente de aprobación';

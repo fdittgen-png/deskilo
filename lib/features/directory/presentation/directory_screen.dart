@@ -46,7 +46,13 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
       child: ListTile(
         selected: _selected?.id == w.id && _selected?.source == w.source,
         title: Text(w.name),
-        subtitle: Text([w.text('address'), w.source].join('\n')),
+        subtitle: Text(w.text('address')),
+        trailing: IconButton(
+          key: ValueKey('directory-locate-${w.source}/${w.id}'),
+          tooltip: l?.directoryLocate ?? 'Locate on map',
+          icon: const Icon(Icons.location_on_outlined),
+          onPressed: () => setState(() { _selected = w; _map = true; }),
+        ),
         onTap: () {
           select(w);
           Navigator.of(context).push(
@@ -138,7 +144,6 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                         onSelect: select,
                       ),
                     ),
-                  if (_map && _selected != null) card(_selected!),
                   if (result.workspaces.isEmpty)
                     Text(
                       l?.portalNoWorkspaces ?? 'No published workspaces found.',

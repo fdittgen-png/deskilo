@@ -3905,6 +3905,7 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
+  "directoryApproximate": "Approximate address location",
   "directoryCheckedIn": "Checked in",
   "@directoryCheckedIn": {
     "description": "Directory status chip: member is checked in right now (seat name unknown)"
@@ -3953,6 +3954,9 @@
       }
     }
   },
+  "directoryLocate": "Locate on map",
+  "directoryLocating": "Locating the public address…",
+  "directoryLocationMissing": "Location unavailable. The owner can publish precise map coordinates.",
   "directoryNoUpcoming": "No upcoming reservations",
   "@directoryNoUpcoming": {
     "description": "Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead"
@@ -11076,6 +11080,7 @@
   "@meSpaceLastUsed": {
     "description": "Chip on the space the person used last."
   },
+  "meSpaceOpen": "Open",
   "meSpacePending": "Waiting for approval",
   "@meSpacePending": {
     "description": "Subtitle of a space card whose membership awaits approval."

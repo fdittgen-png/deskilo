@@ -6,6 +6,8 @@ Alles, was Mitglieder, Admins und Inhaber brauchen, um DesKilo zu nutzen.
 
 ![](assets/help/images/settings-language.jpg)
 
+**Meine Räume und die Karte (#2155).** Unter Ich → Start hat jeder Raum eine kompakte Zeile. PROD und DEV stehen nebeneinander; das Verlaufssymbol markiert die zuletzt genutzte Umgebung. Jede Umgebung behält ihr Menü. Auf kleinen Bildschirmen steht die Identität über den Schaltflächen. In Entdecken zentriert **Auf der Karte anzeigen** den Raum; die Zentrierschaltfläche stellt diese Ansicht wieder her. Veröffentlichte Koordinaten haben Vorrang. Fehlen sie, sucht das Öffnen der Karte für ein einzelnes Ergebnis oder dessen Auswahl die öffentliche Adresse über Photon (OpenStreetMap). Der ausdrücklich ungefähre Standort kann nur die Straße bezeichnen und ändert die Veröffentlichung nicht. Bei Fehlern erneut versuchen oder den Eigentümer um genaue Koordinaten bitten. Der Gerätestandort wird nicht abgefragt.
+
 ## 1. Erste Schritte
 
 ### Konto anlegen
