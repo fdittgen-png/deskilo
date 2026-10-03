@@ -214,7 +214,7 @@ final class UnresolvedBookingIntentsProvider
 }
 
 String _$unresolvedBookingIntentsHash() =>
-    r'e167ba927b3e9dff05acd587494408eecba5f645';
+    r'abd0df3f661a79d4a93d004537bb4ec4d553234a';
 
 /// Reservations of the active workspace intersecting the given LOCAL day
 /// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock
