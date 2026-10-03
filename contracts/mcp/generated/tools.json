@@ -67,7 +67,7 @@
     {
       "name": "deskilo_get_capabilities",
       "title": "What can I do here?",
-      "description": "What this assistant may do in one workspace right now, and until when access is approved. Call it when a tool is missing or a call was refused, to explain to the person what is allowed and what is not.",
+      "description": "What this assistant may do in one workspace right now and until when access is approved, plus the workspace's time zone, currency and opening hours. Call it before booking to read \"tomorrow morning\" in the workspace's zone, and when a tool is missing or a call was refused, to explain what is allowed.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -149,7 +149,7 @@
     {
       "name": "deskilo_get_availability",
       "title": "Find free places",
-      "description": "Which places can be booked for a time window in a workspace. \"free\" is the booking engine's own verdict for this person (opening hours, booking granularity, limits, blocks and existing bookings), so a free seat_id can be passed to deskilo_create_reservation. Paged: pass next_cursor to see more.",
+      "description": "Which seats can be booked for a time window in a workspace, each with a label naming its level, office, desk and seat (e.g. \"Level 2 · Open space · Desk 4 · Seat B\") and its level_id/office_id, so a follow-up can filter by level_id or office_id. \"free\" is the booking engine's own verdict for this person (opening hours, booking granularity, limits, blocks and existing bookings), so a free seat_id can be passed to deskilo_create_reservation. Paged: pass next_cursor to see more.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -179,6 +179,16 @@
             "examples": [
               "2026-10-05T13:00:00+02:00"
             ]
+          },
+          "level_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Optional: only places on this level (a level_id from an earlier answer)."
+          },
+          "office_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Optional: only places in this office (an office_id from an earlier answer)."
           },
           "cursor": {
             "type": "string",
@@ -265,7 +275,7 @@
     {
       "name": "deskilo_list_my_reservations",
       "title": "List my bookings",
-      "description": "The person's own bookings that overlap a window (at most 31 days), oldest first, with reservation_id, place, times, status and state_digest. Use it before moving, checking in, checking out or cancelling a booking.",
+      "description": "The person's own bookings that overlap a window (at most 31 days), oldest first, with reservation_id, a label naming the place, times, status and state_digest. Use it before moving, checking in, checking out or cancelling a booking.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -381,7 +391,7 @@
     {
       "name": "deskilo_get_my_statement",
       "title": "My monthly statement",
-      "description": "The person's own statement for one month: subscription fee, included and used half-days, overage, supplements, credits, balance and VAT. Amounts are integer minor units (cents) of the workspace currency.",
+      "description": "The person's own statement for one month: subscription fee, included and used half-days, overage, supplements, credits, balance and VAT. Amounts are integer minor units (cents) of `currency`.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -394,11 +404,6 @@
               "00000000-0000-4000-8000-0000000000a1"
             ]
           },
-          "member_id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "The member this request is about."
-          },
           "period": {
             "type": "string",
             "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
@@ -410,7 +415,6 @@
         },
         "required": [
           "workspace_id",
-          "member_id",
           "period"
         ]
       },

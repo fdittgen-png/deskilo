@@ -2,7 +2,7 @@
  "contract": "deskilo.mcp.coverage",
  "version": 1,
  "_comment": "#1632 — every implemented MCP tool mapped to the executable tests that prove it; checked by tool/mcp_coverage.dart and test/tool/mcp_coverage_test.dart. A change to contracts/mcp/operations.json changes contract_sha256: review this map, then record the new fingerprint.",
- "contract_sha256": "9e66e2898f5edf8a25c0cef1320fd92df011a98f1a57cadbe60819c9d5fb8163",
+ "contract_sha256": "aacd582023bfdde150ab5c8ed51a81a87f3a6eeb0d6a3a4bfdbd39d839d500b5",
  "catalogue_tests": [
   "test/tool/mcp_contract_test.dart",
   "test/features/mcp/mcp_native_contract_parity_test.dart",

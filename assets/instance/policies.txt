@@ -168,6 +168,8 @@ public.reminder_attempts.mcp_delegated_deny
 public.reminder_attempts.reminder_attempts_select
 public.reminder_intents.mcp_delegated_deny
 public.reminder_intents.reminder_intents_select
+public.reservation_origins.mcp_delegated_deny
+public.reservation_origins.reservation_origins_select
 public.reservation_requests.mcp_delegated_deny
 public.reservation_target_history.mcp_delegated_deny
 public.reservations.mcp_delegated_deny
