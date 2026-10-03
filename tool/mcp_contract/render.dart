@@ -336,7 +336,11 @@ Map<String, Object?> inputSchema(Map<String, dynamic> op) {
     'additionalProperties': false,
     'properties': {
       for (final e in input.entries)
-        e.key: fieldSchema(Map<String, dynamic>.from(e.value as Map)),
+        e.key: {
+          ...fieldSchema(Map<String, dynamic>.from(e.value as Map)),
+          if ((e.value as Map)['description'] != null) 'description': (e.value as Map)['description'],
+          if ((e.value as Map)['examples'] != null) 'examples': (e.value as Map)['examples'],
+        },
     },
     'required': [
       for (final e in input.entries)
@@ -369,6 +373,77 @@ Map<String, Object?> envelopeSchema(Map<String, dynamic> contract) => {
       },
     };
 
+/// The MCP tool annotations (spec 2025-11-25) an operation is published
+/// with: reads are read-only; a mutation states whether it may destroy or
+/// overwrite (a reviewed `destructive` in the contract, never derived), and
+/// every operation acts on DesKilo alone, never the open world.
+Map<String, Object?> mcpToolAnnotations(Map<String, dynamic> op) {
+  final read = op['mutation'] == 'read';
+  return {
+    'title': op['title'],
+    'readOnlyHint': read,
+    if (!read) 'destructiveHint': op['destructive'] == true,
+    if (!read) 'idempotentHint': op['idempotency'] == 'request_id',
+    'openWorldHint': false,
+  };
+}
+
+/// What `structuredContent` carries for an operation: the facade's
+/// envelope, except workspace discovery, which the endpoint answers itself.
+Map<String, Object?> mcpToolOutputSchema(Map<String, dynamic> contract, Map<String, dynamic> op) {
+  if (op['dispatch'] != true) {
+    return {
+      'type': 'object',
+      'required': ['workspaces', 'has_more'],
+      'properties': {
+        'workspaces': {
+          'type': 'array',
+          'items': {
+            'type': 'object',
+            'required': ['workspace_id'],
+            'properties': {
+              'workspace_id': {'type': 'string', 'format': 'uuid'},
+              'name': {'type': 'string'},
+              'operations': {'type': 'array', 'items': {'type': 'string'}},
+            },
+          },
+        },
+        'has_more': {'type': 'boolean'},
+      },
+    };
+  }
+  return {
+    'type': 'object',
+    'required': ['status'],
+    'properties': {
+      'schema_version': {'const': contract['version']},
+      'request_id': {'type': 'string', 'format': 'uuid'},
+      'operation': {'const': op['id']},
+      'workspace_id': {'type': 'string', 'format': 'uuid'},
+      'status': {'enum': contract['statuses']},
+      'data': {'type': 'object'},
+      'event_id': {'type': 'string', 'format': 'uuid'},
+      'error': {
+        'type': 'object',
+        'properties': {
+          'code': {'type': 'string'},
+          'fields': {'type': 'object', 'additionalProperties': {'type': 'string'}},
+        },
+      },
+    },
+  };
+}
+
+/// One tools/list entry, exactly as the endpoint publishes it.
+Map<String, Object?> mcpTool(Map<String, dynamic> contract, Map<String, dynamic> op) => {
+  'name': '${contract['tool_prefix']}${op['id']}',
+  'title': op['title'],
+  'description': op['description'],
+  'inputSchema': inputSchema(op),
+  'outputSchema': mcpToolOutputSchema(contract, op),
+  'annotations': mcpToolAnnotations(op),
+};
+
 /// Every generated file, by path.
 Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
   final ops = [
@@ -381,16 +456,7 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     'version': contract['version'],
     'tools': [
       for (final op in ops)
-        if (op['handler'] == true)
-          {
-            'name': '$prefix${op['id']}',
-            'description': op['description'],
-            'inputSchema': inputSchema(op),
-            'annotations': {
-              'readOnlyHint': op['mutation'] == 'read',
-              'idempotentHint': op['idempotency'] == 'request_id',
-            },
-          },
+        if (op['handler'] == true) mcpTool(contract, op),
     ],
   };
 
@@ -481,7 +547,14 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
   ts
     ..writeln('};')
     ..writeln()
-    ..writeln('export const MCP_FORBIDDEN_INPUTS: readonly string[] = ${jsonEncode(contract['forbidden_inputs'])};');
+    ..writeln('export const MCP_FORBIDDEN_INPUTS: readonly string[] = ${jsonEncode(contract['forbidden_inputs'])};')
+    ..writeln()
+    ..writeln('/** What tools/list publishes per operation: title, description, schemas, annotations. */')
+    ..writeln('export const MCP_TOOLS: Record<McpOperationId, Record<string, unknown>> = {');
+  for (final op in ops) {
+    ts.writeln('  ${op['id']}: ${jsonEncode(mcpTool(contract, op))},');
+  }
+  ts.writeln('};');
 
   final dart = StringBuffer()
     ..writeln('// SPDX-License-Identifier: AGPL-3.0-or-later')

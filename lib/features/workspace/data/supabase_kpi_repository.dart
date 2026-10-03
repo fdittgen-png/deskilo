@@ -39,3 +39,36 @@ class SupabaseKpiRepository implements KpiRepository {
     return seatCapacityFromJson(Map<String, dynamic>.from(row as Map));
   }
 }
+
+/// #1924 — the finance KPIs, one definer RPC for both figures.
+class SupabaseFinanceKpiRepository implements FinanceKpiRepository {
+  SupabaseFinanceKpiRepository(this._client);
+
+  final SupabaseClient _client;
+
+  @override
+  Future<FinanceSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async {
+    final Object? row;
+    try {
+      row = await _client.rpc<dynamic>(
+        'kpi_finance_summary',
+        params: {
+          'p_workspace_id': workspaceId,
+          'p_from': fromMonth,
+          'p_to': toMonth,
+        },
+      );
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: rethrown typed; the card shows it.
+      if (e.code == '42501') {
+        Error.throwWithStackTrace(const KpiForbidden(), st);
+      }
+      rethrow;
+    }
+    return financeSummaryFromJson(Map<String, dynamic>.from(row as Map));
+  }
+}

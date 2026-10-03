@@ -1224,6 +1224,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biAreaTreasury => 'Tesorería';
 
   @override
+  String get biBookingBasis =>
+      'La capacidad reservada mide reservas, no la asistencia real.';
+
+  @override
+  String get biCardDown => 'Bajar';
+
+  @override
+  String get biCardUp => 'Subir';
+
+  @override
+  String get biCards => 'Análisis mostrados';
+
+  @override
+  String biCardsUnavailable(String count) {
+    return '$count análisis de esta vista no están disponibles para usted y se omiten.';
+  }
+
+  @override
   String biChangePoints(String value) {
     return '$value p. p.';
   }
@@ -1265,6 +1283,34 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get biComparisonUnqualified =>
+      'Cambio no disponible: un periodo contiene datos parciales o desactualizados.';
+
+  @override
+  String biComputedWorkspaceTime(String date) {
+    return 'Calculado el $date · hora del espacio';
+  }
+
+  @override
+  String get biCurrentBasis =>
+      'Se incluye el periodo completo. La comparación con un periodo terminado no tiene una base equivalente.';
+
+  @override
+  String get biDataNotApplicable => 'Sin capacidad aplicable';
+
+  @override
+  String get biDataNotRecorded => 'No registrado';
+
+  @override
+  String get biDataPartial => 'Datos parciales';
+
+  @override
+  String get biDataStale => 'Datos desactualizados';
+
+  @override
+  String get biDataUnavailable => 'No disponible';
+
+  @override
   String get biDimensionLevel => 'Planta';
 
   @override
@@ -1272,7 +1318,71 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los dos periodos no ofrecen la misma base; la tasa lo tiene en cuenta, las cifras brutas no se comparan directamente.';
 
   @override
+  String get biFinanceCollected => 'Cobrado';
+
+  @override
+  String biFinanceCollectedBasis(String count) {
+    return 'De $count pagos conciliados con facturas';
+  }
+
+  @override
+  String get biFinanceCollectedDefinition =>
+      'Pagos conciliados con facturas, según el mes de la conciliación en la hora del espacio.';
+
+  @override
+  String get biFinanceCollectedZero => 'Medido: no se cobró nada.';
+
+  @override
+  String biFinanceComputed(String date) {
+    return 'Calculado el $date';
+  }
+
+  @override
+  String get biFinanceCurrencyMix =>
+      'Este periodo contiene importes en otra moneda; monedas distintas no se suman, así que no se muestra ninguno.';
+
+  @override
+  String get biFinanceInvoiced => 'Facturado';
+
+  @override
+  String biFinanceInvoicedBasis(String count, String credit) {
+    return 'De $count facturas; abonos $credit, mostrados aparte';
+  }
+
+  @override
+  String get biFinanceInvoicedDefinition =>
+      'Facturas de estos meses, sin las anuladas ni las liquidaciones (una liquidación agrupa facturas ya contadas); solo totales positivos.';
+
+  @override
+  String get biFinanceInvoicedZero => 'Medido: no se facturó nada.';
+
+  @override
+  String biFinanceLastChange(String date) {
+    return 'Último cambio en la fuente: $date';
+  }
+
+  @override
+  String get biFinanceNotExact =>
+      'Un importe es demasiado grande para mostrarlo con exactitud, así que no se muestra.';
+
+  @override
+  String get biFinanceNotProfit =>
+      'No es un beneficio: esta cifra no incluye costes y las dos cifras no se restan entre sí.';
+
+  @override
+  String get biFinancePartial =>
+      'El periodo no ha terminado: estas cifras aún cambiarán.';
+
+  @override
+  String get biFinanceSameAsReport =>
+      'Las mismas reglas que el informe de estado del espacio, calculadas una vez en el servidor.';
+
+  @override
   String get biForbidden => 'No puede leer este análisis en este espacio.';
+
+  @override
+  String get biFutureBasis =>
+      'Reservas existentes y horarios actuales; no es una previsión de demanda ni un uso garantizado.';
 
   @override
   String get biGrain => 'Duración del periodo';
@@ -1303,9 +1413,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biOpenSource => 'Abrir la fuente';
 
   @override
+  String get biPastBasis =>
+      'Recalculado con los datos disponibles hoy, no con los conocidos entonces.';
+
+  @override
   String biQuarter(String quarter, String year) {
     return 'T$quarter $year';
   }
+
+  @override
+  String get biRecordedFuture => 'Periodo futuro · reservas registradas';
+
+  @override
+  String get biRecordedPast => 'Periodo pasado · datos actuales';
+
+  @override
+  String get biRecordedPresent => 'Periodo en curso · incluye fechas futuras';
+
+  @override
+  String get biRefresh => 'Actualizar datos';
 
   @override
   String biRefusedBudget(String count) {
@@ -1328,6 +1454,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biReset => 'Mostrar la vista estándar';
+
+  @override
+  String biSeatHoursBlocked(String hours) {
+    return '$hours horas-asiento bloqueadas';
+  }
+
+  @override
+  String biSeatHoursFree(String hours) {
+    return '$hours horas-asiento sin reservar';
+  }
 
   @override
   String get biSort => 'Orden';
@@ -1361,7 +1497,94 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biViewChart => 'Gráfico';
 
   @override
+  String get biViewClearMyDefault => 'Dejar de abrir mi vista por defecto';
+
+  @override
+  String get biViewClearTeamDefault => 'Quitar la vista por defecto del equipo';
+
+  @override
+  String biViewCopyName(String name) {
+    return '$name (copia)';
+  }
+
+  @override
+  String get biViewDelete => 'Eliminar';
+
+  @override
+  String biViewDeleteConfirm(String name) {
+    return '¿Eliminar la vista «$name»?';
+  }
+
+  @override
+  String get biViewDuplicate => 'Duplicar como mi vista';
+
+  @override
+  String get biViewForbidden => 'No puede cambiar esta vista.';
+
+  @override
+  String get biViewInvalid => 'Este nombre o vista no se puede guardar.';
+
+  @override
+  String get biViewMakeMyDefault => 'Abrir esta vista por defecto';
+
+  @override
+  String get biViewMakeTeamDefault =>
+      'Convertirla en la vista por defecto del equipo';
+
+  @override
+  String get biViewModified => 'modificada desde que se abrió';
+
+  @override
+  String get biViewName => 'Nombre';
+
+  @override
+  String get biViewNameTaken => 'Ya existe una vista con este nombre.';
+
+  @override
+  String biViewPeriodFixed(String period) {
+    return 'Siempre $period';
+  }
+
+  @override
+  String get biViewPeriodMoves => 'El periodo sigue al día en que se abre';
+
+  @override
+  String get biViewRename => 'Cambiar nombre…';
+
+  @override
+  String get biViewSave => 'Guardar';
+
+  @override
+  String get biViewSaveAs => 'Guardar como vista nueva…';
+
+  @override
+  String get biViewScopePrivate => 'Solo yo';
+
+  @override
+  String get biViewScopeTeam => 'El equipo';
+
+  @override
+  String get biViewStale =>
+      'Alguien guardó esta vista desde que la abrió. La lista se ha vuelto a leer; inténtelo de nuevo.';
+
+  @override
+  String get biViewStandard => 'Vista estándar';
+
+  @override
   String get biViewTable => 'Tabla';
+
+  @override
+  String get biViewUnreadable =>
+      'Esta vista no se puede abrir aquí: se guardó en una forma que esta versión no lee, o ninguno de sus análisis está disponible para usted.';
+
+  @override
+  String get biViews => 'Vistas';
+
+  @override
+  String get biViewsMine => 'Mis vistas';
+
+  @override
+  String get biViewsTeam => 'Vistas del equipo';
 
   @override
   String get billAccessorySupplements => 'Suplementos de accesorios';
@@ -2478,6 +2701,69 @@ class AppLocalizationsEs extends AppLocalizations {
   String get composerDraftKept => 'Borrador guardado';
 
   @override
+  String get connectionCancelled =>
+      'La cuenta cambió entretanto, así que se descartó esta respuesta.';
+
+  @override
+  String get connectionChangedIdentity =>
+      'Este servidor ya no es el que conectaste. Sus acciones están en pausa hasta que lo verifiques de nuevo.';
+
+  @override
+  String get connectionChecking => 'Comprobando…';
+
+  @override
+  String get connectionCurrentServer =>
+      'Este es el servidor que esta aplicación ya utiliza.';
+
+  @override
+  String get connectionDenied =>
+      'Este servidor ha rechazado la cuenta. Revisa los datos de acceso o desconéctalo.';
+
+  @override
+  String get connectionExpired =>
+      'Tu sesión en este servidor ha caducado. Vuelve a iniciar sesión en este servidor.';
+
+  @override
+  String get connectionInvalidEndpoint =>
+      'Esta dirección o clave no corresponde a un servidor válido.';
+
+  @override
+  String get connectionMalformed =>
+      'Este servidor ha respondido algo que esta aplicación no puede leer.';
+
+  @override
+  String get connectionNotConnected =>
+      'Este servidor no está conectado en este dispositivo.';
+
+  @override
+  String get connectionRetry => 'Reintentar';
+
+  @override
+  String get connectionSessionNotSaved =>
+      'La acción se realizó, pero este dispositivo no pudo guardar la sesión del servidor. Puede que tengas que volver a iniciar sesión.';
+
+  @override
+  String get connectionSignInAgain => 'Volver a iniciar sesión';
+
+  @override
+  String get connectionUnavailable =>
+      'Este servidor no responde en este momento. Tus otros servidores no se ven afectados.';
+
+  @override
+  String get connectionUnknownOutcome =>
+      'La conexión se cortó después de enviar la solicitud. Puede que se haya aplicado: compruébalo antes de volver a intentarlo.';
+
+  @override
+  String get connectionUnsupported =>
+      'Esta versión del servidor no se puede conectar desde esta aplicación. Actualiza la aplicación o pide al operador del servidor que lo actualice.';
+
+  @override
+  String get connectionUsable => 'Conectado';
+
+  @override
+  String get connectionVerifyAgain => 'Verificar de nuevo';
+
+  @override
   String get consentAccept => 'Aceptar y continuar';
 
   @override
@@ -2810,6 +3096,26 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get courtesyNone => 'Ninguno';
+
+  @override
+  String get customerCapacityBusiness => 'Empresa';
+
+  @override
+  String get customerCapacityConsumer => 'Consumidor';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Si este cliente actúa en el marco de una actividad empresarial o profesional (sociedad, autónomo, asociación que actúa como tal) o como consumidor. Decide qué cláusulas de pago imprime una factura; un número de IVA por sí solo no lo decide. Sin indicar: se aplica el valor por defecto del espacio.';
+
+  @override
+  String get customerCapacityLabel => 'Condición del cliente';
+
+  @override
+  String get customerCapacityNotStated => 'Sin indicar';
+
+  @override
+  String get customerCapacitySaveError =>
+      'La condición del cliente no se ha guardado.';
 
   @override
   String get datevAccountsIntro =>
@@ -4189,6 +4495,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureCarnetsTitle => 'Bonos';
 
   @override
+  String get featureChangeUnconfirmed =>
+      'El cambio se envió, pero no se pudieron recargar las funciones para confirmarlo. Vuelva a abrir la pantalla para ver el estado.';
+
+  @override
+  String get featureChangedMeanwhile =>
+      'Las funciones cambiaron mientras tanto, así que no se guardó nada. Revise la lista y vuelva a intentarlo.';
+
+  @override
   String get featureCoOwner => 'Copropietarios';
 
   @override
@@ -4665,12 +4979,28 @@ class AppLocalizationsEs extends AppLocalizations {
       'Permite a los miembros pagar su factura en línea (PayPal). Requiere configurar el proveedor de pago en el servidor.';
 
   @override
+  String featureOptInAlsoOn(int count, String features) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'También se activan, porque son necesarios ($count): $features',
+      one: 'También se activa, porque es necesario: $features',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String featureOptInBody(String features) {
     return 'Aún no evaluada como estable: $features. Puede cambiar y tiene límites conocidos. Actívela solo si este espacio lo acepta.';
   }
 
   @override
   String get featureOptInConfirm => 'Activar';
+
+  @override
+  String featureOptInStage(String feature, String stage) {
+    return '$feature: $stage';
+  }
 
   @override
   String get featureOptInTitle => '¿Activar una función experimental?';
@@ -6011,6 +6341,98 @@ class AppLocalizationsEs extends AppLocalizations {
   String get holidayWhitMonday => 'Lunes de Pentecostés';
 
   @override
+  String get identityConnectBrowser => 'No se pudo abrir el navegador.';
+
+  @override
+  String identityConnectConfirmApply(String name) {
+    return '¿Enviar su solicitud de membresía a $name?';
+  }
+
+  @override
+  String get identityConnectConfirmApplyBody =>
+      'Ya está conectado. El espacio revisa su solicitud; no se comparte nada más.';
+
+  @override
+  String get identityConnectContinue => 'Continuar con Deskilo';
+
+  @override
+  String get identityConnectCurrentServer =>
+      'Es el servidor en el que ya ha iniciado sesión.';
+
+  @override
+  String get identityConnectDifferentAuthority =>
+      'Este servidor acepta otro proveedor de identidad.';
+
+  @override
+  String identityConnectDone(String host) {
+    return 'Conectado a $host.';
+  }
+
+  @override
+  String get identityConnectExistingAccount =>
+      'Usar una cuenta que ya tengo en este servidor';
+
+  @override
+  String get identityConnectExpired =>
+      'El inicio de sesión tardó demasiado. Empiece de nuevo.';
+
+  @override
+  String identityConnectExplain(String host) {
+    return '$host sabrá que es usted, gracias a su identidad Deskilo. Conectarse no le convierte en miembro, no le da ningún rol ni conecta ningún asistente: el espacio sigue decidiendo cada solicitud.';
+  }
+
+  @override
+  String get identityConnectNetwork =>
+      'El servidor no respondió. Inténtelo de nuevo.';
+
+  @override
+  String get identityConnectNoDeskiloSignIn =>
+      'Este servidor no ofrece el inicio de sesión con Deskilo.';
+
+  @override
+  String get identityConnectNoSharedIdentity =>
+      'Su cuenta aquí no tiene una identidad Deskilo que otro servidor pueda aceptar.';
+
+  @override
+  String identityConnectNotSaved(String host) {
+    return '$host le ha aceptado, pero este dispositivo no pudo guardar la conexión. No se ha enviado nada. Inténtelo de nuevo.';
+  }
+
+  @override
+  String get identityConnectRefused =>
+      'La conexión no se completó. No se ha enviado nada.';
+
+  @override
+  String get identityConnectRetry => 'Intentar de nuevo';
+
+  @override
+  String get identityConnectSend => 'Enviar solicitud';
+
+  @override
+  String get identityConnectServerUnsupported =>
+      'Este servidor no se puede conectar desde esta versión de la aplicación.';
+
+  @override
+  String identityConnectTitle(String host) {
+    return 'Conectarse a $host';
+  }
+
+  @override
+  String get identityConnectUnavailable => 'Este servidor no respondió.';
+
+  @override
+  String get identityConnectUnlinked =>
+      'Una cuenta de ese servidor ya usa esta identidad o este correo sin estar vinculada a ella. Use esa cuenta.';
+
+  @override
+  String get identityConnectWaiting =>
+      'Termine de iniciar sesión en su navegador y vuelva aquí.';
+
+  @override
+  String get identityConnectWrongAccount =>
+      'El navegador inició sesión con otra persona. No se ha conectado nada.';
+
+  @override
   String identityConsentAsks(String host) {
     return 'Usa tu identidad de Deskilo para iniciar sesión en $host.';
   }
@@ -6934,12 +7356,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceKindUsage => 'Los extras del mes';
 
   @override
-  String get invoiceLegalAssociationHint =>
-      'Las cláusulas de penalización, indemnización de cobro y descuento solo se imprimen si se rellenan — solo son obligatorias entre profesionales.';
-
-  @override
   String get invoiceLegalAssociationReasonHint =>
       'p. ej. «TVA non applicable, art. 293 B du CGI» — o «Exonération de TVA, art. 261, 7-1° du CGI» para servicios a los miembros';
+
+  @override
+  String get invoiceLegalCustomerCapacityField =>
+      'Condición del cliente por defecto';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Decide qué cláusulas de pago imprime una factura. Los textos legales por defecto de intereses de demora, indemnización por costes de cobro y descuento solo se aplican a clientes empresariales, y un consumidor nunca recibe la indemnización por costes de cobro. La condición propia de un miembro prevalece sobre este valor. Cada factura conserva las cláusulas con las que se emitió.';
 
   @override
   String get invoiceLegalEscompteDefault => 'Sin descuento por pronto pago.';
@@ -8496,6 +8922,277 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String mcpConnectAccessExpiresIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days días',
+      one: '1 día',
+    );
+    return 'Aprobado — quedan $_temp0.';
+  }
+
+  @override
+  String mcpConnectAccessExpiresSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days días',
+      one: '1 día',
+    );
+    return 'Aprobado — caduca en $_temp0. Vuelva a pedir la aprobación cuando caduque.';
+  }
+
+  @override
+  String get mcpConnectAddTitle => 'Añadir DesKilo a su asistente';
+
+  @override
+  String get mcpConnectAddressLabel =>
+      'Su dirección de DesKilo para asistentes';
+
+  @override
+  String get mcpConnectAllDone =>
+      'Todo está listo. Pruebe la conexión más abajo.';
+
+  @override
+  String get mcpConnectBeforeTitle => 'Antes de conectar';
+
+  @override
+  String get mcpConnectChatgptNote =>
+      'El modo desarrollador requiere un plan de pago de ChatGPT (Plus, Pro, Business, Enterprise o Edu).';
+
+  @override
+  String get mcpConnectChatgptStep1 =>
+      'En ChatGPT, active el modo desarrollador: Ajustes → Apps → Ajustes avanzados.';
+
+  @override
+  String get mcpConnectChatgptStep2 =>
+      'Cree una app llamada DesKilo, pegue la dirección de arriba y elija OAuth como autenticación.';
+
+  @override
+  String get mcpConnectChatgptStep3 =>
+      'Inicie sesión con Google y elija este espacio de trabajo y lo que ChatGPT puede hacer en él.';
+
+  @override
+  String get mcpConnectClaudeNote =>
+      'Claude en la web, Claude Desktop y la app móvil de Claude comparten los mismos conectores. En un plan Team o Enterprise, un propietario de la organización de Claude añade primero el conector.';
+
+  @override
+  String get mcpConnectClaudeOpen => 'Abrir los conectores de Claude';
+
+  @override
+  String get mcpConnectClaudeStep1 => 'En Claude, abra Ajustes → Conectores.';
+
+  @override
+  String get mcpConnectClaudeStep2 =>
+      'Elija «Añadir conector personalizado», llámelo DesKilo y pegue la dirección de arriba.';
+
+  @override
+  String get mcpConnectClaudeStep3 =>
+      'Elija Conectar, inicie sesión con Google y elija este espacio de trabajo y lo que Claude puede hacer en él.';
+
+  @override
+  String get mcpConnectCodeStep1 => 'Ejecute esto en un terminal:';
+
+  @override
+  String get mcpConnectCodeStep2 =>
+      'En Claude Code, escriba /mcp, elija deskilo y luego Authenticate. Se abre un navegador para iniciar sesión y elegir este espacio de trabajo.';
+
+  @override
+  String get mcpConnectCopied => 'Copiado.';
+
+  @override
+  String get mcpConnectCopyRequest => 'Copiar una solicitud para enviar';
+
+  @override
+  String get mcpConnectCursorInstall => 'Añadir a Cursor';
+
+  @override
+  String get mcpConnectCursorStep =>
+      'Cursor propone instalar DesKilo y luego abre un navegador para iniciar sesión y elegir este espacio de trabajo. Sin el botón, añada esto a ~/.cursor/mcp.json:';
+
+  @override
+  String get mcpConnectDone => 'Hecho';
+
+  @override
+  String get mcpConnectIntro =>
+      'Deje que Claude, ChatGPT u otro asistente consulte y reserve por usted en DesKilo. Actúa en su nombre, solo en los espacios de trabajo y para las acciones que usted apruebe.';
+
+  @override
+  String mcpConnectLastCall(String client, String when) {
+    return 'Última llamada: $client, $when.';
+  }
+
+  @override
+  String get mcpConnectManageHint =>
+      'Para ver lo que hizo un asistente o desconectarlo, abra Asistentes.';
+
+  @override
+  String get mcpConnectOpenFailed =>
+      'No se pudo abrir la aplicación desde aquí. Siga los pasos de abajo.';
+
+  @override
+  String get mcpConnectOpenGuide => 'Abrir la guía de conexión';
+
+  @override
+  String get mcpConnectOpenInstallation => 'Abrir la consola de la instalación';
+
+  @override
+  String get mcpConnectOpenSetup => 'Abrir la configuración de asistentes';
+
+  @override
+  String get mcpConnectOperatorRequest =>
+      'Hola, ¿podría activar los asistentes en nuestro servidor DesKilo? Está en Ajustes → Instalación: asistentes. Gracias.';
+
+  @override
+  String get mcpConnectOtherStep1 =>
+      'La mayoría de los clientes leen un archivo JSON de servidores. Añada esta entrada; el cliente abre un navegador para iniciar sesión la primera vez.';
+
+  @override
+  String get mcpConnectOtherStep2 =>
+      'Un cliente que solo inicia programas locales puede llegar a DesKilo mediante mcp-remote (requiere Node.js):';
+
+  @override
+  String get mcpConnectRoleDenied =>
+      'Aquí no se ofrece nada a su rol. Un administrador del espacio de trabajo decide qué puede hacer cada rol.';
+
+  @override
+  String get mcpConnectStepAccess => 'Su acceso a los asistentes';
+
+  @override
+  String get mcpConnectStepConnect => 'DesKilo añadido a su asistente';
+
+  @override
+  String get mcpConnectStepGoogle => 'Inicio de sesión con Google';
+
+  @override
+  String get mcpConnectStepIdentity => 'Su identidad en este servidor';
+
+  @override
+  String get mcpConnectStepServer => 'Asistentes activados en este servidor';
+
+  @override
+  String get mcpConnectStepWorkspace =>
+      'Este espacio de trabajo ofrece asistentes';
+
+  @override
+  String get mcpConnectSwitchWorkspace => 'Cambiar a este espacio de trabajo';
+
+  @override
+  String get mcpConnectTabChatgpt => 'ChatGPT';
+
+  @override
+  String get mcpConnectTabClaude => 'Claude';
+
+  @override
+  String get mcpConnectTabClaudeCode => 'Claude Code';
+
+  @override
+  String get mcpConnectTabCursor => 'Cursor';
+
+  @override
+  String get mcpConnectTabOther => 'Otro';
+
+  @override
+  String get mcpConnectTabVscode => 'VS Code';
+
+  @override
+  String get mcpConnectTest => 'Probar la conexión';
+
+  @override
+  String get mcpConnectTestAgain => 'Probar de nuevo';
+
+  @override
+  String get mcpConnectTestPrompt =>
+      'Con DesKilo, ¿cuáles son mis reservas de esta semana?';
+
+  @override
+  String mcpConnectTestReached(String client, String when) {
+    return 'Conectado: $client llegó a DesKilo, $when.';
+  }
+
+  @override
+  String get mcpConnectTestTimeout =>
+      'Aún no ha llegado ninguna llamada. Compruebe que el conector está añadido, que aprobó este espacio de trabajo y que los pasos de arriba están hechos; luego pruebe de nuevo.';
+
+  @override
+  String get mcpConnectTestTitle => 'Comprobar que funciona';
+
+  @override
+  String get mcpConnectTestWaiting =>
+      'Esperando a que su asistente llame a DesKilo. Pregúntele:';
+
+  @override
+  String get mcpConnectTitle => 'Conectar un asistente';
+
+  @override
+  String get mcpConnectTodoConnect =>
+      'Pendiente — usted: siga los pasos para su asistente más abajo.';
+
+  @override
+  String get mcpConnectTodoYou => 'Pendiente — usted.';
+
+  @override
+  String get mcpConnectUnavailable => 'No se pudo comprobar ahora.';
+
+  @override
+  String get mcpConnectVscodeInstall => 'Añadir a VS Code';
+
+  @override
+  String get mcpConnectVscodeStep =>
+      'VS Code propone instalar DesKilo. Inícielo desde la lista de servidores MCP; se abre un navegador para iniciar sesión y elegir este espacio de trabajo.';
+
+  @override
+  String get mcpConnectWaitingDatabaseAdmin =>
+      'Esperando a que un administrador de la base de datos apruebe su solicitud.';
+
+  @override
+  String mcpConnectWaitingOperator(String names) {
+    return 'Esperando al operador del servidor: $names.';
+  }
+
+  @override
+  String get mcpConnectWaitingOperatorUnknown =>
+      'Esperando al operador del servidor, que aún no está designado.';
+
+  @override
+  String get mcpConnectWaitingWorkspaceAdmin =>
+      'Esperando a que un administrador del espacio de trabajo ofrezca asistentes aquí.';
+
+  @override
+  String get mcpConnectWhich => '¿Qué asistente usa?';
+
+  @override
+  String get mcpConnectWorkspaceSelected => 'Espacio de trabajo seleccionado';
+
+  @override
+  String get mcpConnectWorkspacesHint =>
+      'Cada espacio de trabajo decide por sí mismo. Cuando su asistente lo pida, usted elige entre los que están listos.';
+
+  @override
+  String get mcpConnectWorkspacesTitle => 'Sus espacios de trabajo';
+
+  @override
+  String get mcpConnectWsConnected =>
+      'Conectado — un asistente puede actuar por usted aquí.';
+
+  @override
+  String get mcpConnectWsNotOffered =>
+      'Los asistentes están activados, pero aún no se ofrece nada a su rol. Decide un administrador del espacio de trabajo.';
+
+  @override
+  String get mcpConnectWsOff =>
+      'Los asistentes están desactivados en este espacio de trabajo. Un administrador del espacio de trabajo los activa en la configuración de asistentes.';
+
+  @override
+  String get mcpConnectWsReady =>
+      'Listo — elíjalo cuando su asistente lo pida.';
+
+  @override
+  String get mcpConnectWsUnknown =>
+      'Se muestra cuando se apruebe su acceso a los asistentes.';
+
+  @override
   String get mcpConnectedNoWorkspace =>
       'Ningún espacio: este asistente no puede hacer nada aquí.';
 
@@ -8818,6 +9515,26 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get mcpPolicyUnavailable =>
       'No se pudieron cargar los ajustes de asistentes. Inténtelo más tarde.';
+
+  @override
+  String get mcpRefusalClientNotApproved =>
+      'Este asistente aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; pídaselo y vuelva a conectar desde el asistente.';
+
+  @override
+  String get mcpRefusalNoIdentity =>
+      'Confirme primero su identidad en DesKilo en Asistentes y vuelva a conectar desde el asistente.';
+
+  @override
+  String get mcpRefusalNotEligible =>
+      'Su acceso a los asistentes aún no está aprobado. Solicítelo en DesKilo en Asistentes y vuelva a conectar desde el asistente.';
+
+  @override
+  String get mcpRefusalOfferChanged =>
+      'Lo que ofrece este espacio de trabajo cambió mientras elegía. Vuelva a conectar desde el asistente para ver la oferta actual.';
+
+  @override
+  String get mcpRefusalRequestExpired =>
+      'Esta solicitud de conexión ha caducado o ya se usó. Empiece de nuevo desde el asistente.';
 
   @override
   String get mcpRemoveWorkspace => 'Quitar este espacio';
@@ -14230,6 +14947,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get statusNet => 'Neto';
 
   @override
+  String get statusNetExplanation =>
+      'Este subtotal son importes facturados menos abonos, reembolsos y créditos. No es un beneficio ni un saldo bancario. Los pagos conciliados y recibidos se solapan y no deben sumarse.';
+
+  @override
   String get statusPaymentsMatched => 'Pagos conciliados';
 
   @override
@@ -15099,13 +15820,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderActionBack => 'Volvió atrás';
 
   @override
+  String get taskRecorderActionCancelReservation => 'Canceló la reserva';
+
+  @override
   String get taskRecorderActionCancelReview => 'Cerró la reserva sin reservar';
 
   @override
   String get taskRecorderActionChangeField => 'Cambió un detalle de la reserva';
 
   @override
+  String get taskRecorderActionCheckIn => 'Registró su llegada';
+
+  @override
+  String get taskRecorderActionCheckOut => 'Registró su salida';
+
+  @override
+  String get taskRecorderActionCloseMyReservation =>
+      'Cerró su reserva sin cambiarla';
+
+  @override
   String get taskRecorderActionConfirmBooking => 'Confirmó la reserva';
+
+  @override
+  String get taskRecorderActionDeclineOptIn =>
+      'No activó una función en prueba';
 
   @override
   String get taskRecorderActionOpenReserve => 'Abrió Reservar';
@@ -15114,10 +15852,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderActionSelectDate => 'Eligió el día';
 
   @override
+  String get taskRecorderActionSelectLevel => 'Eligió un nivel';
+
+  @override
   String get taskRecorderActionSelectPeriod => 'Eligió el periodo';
 
   @override
   String get taskRecorderActionSelectResource => 'Eligió un sitio';
+
+  @override
+  String get taskRecorderActionSwitchFeature => 'Cambió una función';
 
   @override
   String get taskRecorderActionSwitchView => 'Cambió la vista';
@@ -15232,6 +15976,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderOpenRecorder => 'Abrir el grabador de tareas';
 
   @override
+  String get taskRecorderOutcomeCancelled => 'Cancelada';
+
+  @override
+  String get taskRecorderOutcomeCheckedIn => 'Llegada registrada';
+
+  @override
+  String get taskRecorderOutcomeCheckedOut => 'Salida registrada';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Reservado';
 
   @override
@@ -15242,6 +15995,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskRecorderOutcomeSeries => 'Serie reservada';
+
+  @override
+  String get taskRecorderOutcomeSettingNotSaved => 'No guardado';
+
+  @override
+  String get taskRecorderOutcomeSettingSaved => 'Guardado';
 
   @override
   String get taskRecorderOutcomeUnknown => 'No llegó ninguna respuesta';
@@ -15366,6 +16125,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderValueCustom => 'horario propio';
 
   @override
+  String get taskRecorderValueDay => 'día';
+
+  @override
   String get taskRecorderValueDesk => 'un escritorio';
 
   @override
@@ -15384,13 +16146,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderValueList => 'lista';
 
   @override
+  String get taskRecorderValueMonth => 'mes';
+
+  @override
   String get taskRecorderValueMorning => 'mañana (franja)';
 
   @override
   String get taskRecorderValueNoCheckIn => 'sin registro de llegada';
 
   @override
+  String get taskRecorderValueOff => 'desactivada';
+
+  @override
   String get taskRecorderValueOffline => 'sin conexión';
+
+  @override
+  String get taskRecorderValueOn => 'activada';
 
   @override
   String get taskRecorderValueOnce => 'una vez';
@@ -15433,6 +16204,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskRecorderValueTomorrow => 'mañana';
+
+  @override
+  String get taskRecorderValueWeek => 'semana';
 
   @override
   String get taskRecorderValueWithheld => 'no grabado';

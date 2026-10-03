@@ -41,7 +41,7 @@ import '../../../core/trace/guarded.dart';
 import 'widgets/reference_open.dart';
 import '../../task_recorder/application/booking_observation.dart';
 import '../../task_recorder/domain/action_registry.dart'
-    show RecorderActions;
+    show RecorderActions, RecorderOutcomes;
 import '../../task_recorder/presentation/recorder_seam.dart';
 
 part 'others_booking_tap.dart';
@@ -345,15 +345,26 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       granularity: granularity,
     );
     traceMySeatAction(mine: mine, action: action, windowOpen: windowOpen);
+    if (action == null && mounted) {
+      recordTaskStep(ref, RecorderActions.closeMyReservation); // #1881
+    }
     if (action == null || !mounted) return;
     final repo = ref.read(reservationRepositoryProvider);
+    // #1881 — the attempt before the command, its real answer after.
+    final command = myReservationCommand(action);
+    final recorded =
+        command == null ? null : recordTaskAttempt(ref, command.action);
     try {
       await switch (action) {
         'checkout' => repo.checkOut(mine.id),
         'checkin' => repo.checkIn(mine.id),
         _ => repo.cancel(mine.id),
       };
+      if (command != null) recorded?.resolve(command.done);
     } catch (e, st) {
+      recorded?.resolveWith(errorObservation(e,
+          refused: RecorderOutcomes.reservationRefused,
+          unknown: RecorderOutcomes.reservationUnknown));
       // #1030 — the server's own code/message/details/hint, so an
       // action that renders a generic sentence still names its cause.
       ActTrace.booking.failed('reservation-action', e, st, {

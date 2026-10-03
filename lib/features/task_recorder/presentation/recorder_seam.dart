@@ -72,11 +72,16 @@ class TaskAttempt {
 TaskAttempt? recordTaskAttempt(
   WidgetRef ref,
   String actionId, {
+  String? target,
   Map<String, Object?> payload = const {},
 }) {
   try {
     final controller = _live(ref);
-    final token = controller?.attempt(actionId, payload: payload);
+    final token = controller?.attempt(
+      actionId,
+      target: target,
+      payload: payload,
+    );
     return token == null ? null : TaskAttempt._(controller!, token);
   } catch (e, st) {
     TraceLogger.instance.warn(

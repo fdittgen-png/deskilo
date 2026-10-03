@@ -2209,6 +2209,36 @@ abstract class AppLocalizations {
   /// **'Treasury'**
   String get biAreaTreasury;
 
+  /// No description provided for @biBookingBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved capacity measures bookings, not actual attendance.'**
+  String get biBookingBasis;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get biCardDown;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get biCardUp;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Analyses shown'**
+  String get biCards;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'{count} analyses of this view are not available to you and are left out.'**
+  String biCardsUnavailable(String count);
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -2275,6 +2305,54 @@ abstract class AppLocalizations {
   /// **'{period} is only partly recorded.'**
   String biComparedPartial(String period);
 
+  /// No description provided for @biComparisonUnqualified.
+  ///
+  /// In en, this message translates to:
+  /// **'Change unavailable: one period has partial or out-of-date data.'**
+  String get biComparisonUnqualified;
+
+  /// No description provided for @biComputedWorkspaceTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Computed {date} · workspace time'**
+  String biComputedWorkspaceTime(String date);
+
+  /// No description provided for @biCurrentBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'The whole period is included. Comparison with a completed period is not like-for-like.'**
+  String get biCurrentBasis;
+
+  /// No description provided for @biDataNotApplicable.
+  ///
+  /// In en, this message translates to:
+  /// **'No applicable capacity'**
+  String get biDataNotApplicable;
+
+  /// No description provided for @biDataNotRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Not recorded'**
+  String get biDataNotRecorded;
+
+  /// No description provided for @biDataPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial data'**
+  String get biDataPartial;
+
+  /// No description provided for @biDataStale.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of date'**
+  String get biDataStale;
+
+  /// No description provided for @biDataUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable'**
+  String get biDataUnavailable;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -2287,11 +2365,107 @@ abstract class AppLocalizations {
   /// **'The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.'**
   String get biExposureDiffers;
 
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Collected'**
+  String get biFinanceCollected;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'From {count} payments matched to invoices'**
+  String biFinanceCollectedBasis(String count);
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Payments matched to invoices, by the month of the match on the workspace clock.'**
+  String get biFinanceCollectedDefinition;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Measured: nothing was collected.'**
+  String get biFinanceCollectedZero;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Computed {date}'**
+  String biFinanceComputed(String date);
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'This period holds amounts in another currency; amounts in different currencies are not added, so none is shown.'**
+  String get biFinanceCurrencyMix;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced'**
+  String get biFinanceInvoiced;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'From {count} invoices; credit notes {credit}, shown apart'**
+  String biFinanceInvoicedBasis(String count, String credit);
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices of these months, voided ones and settlements left out (a settlement regroups invoices already counted); positive totals only.'**
+  String get biFinanceInvoicedDefinition;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Measured: nothing was invoiced.'**
+  String get biFinanceInvoicedZero;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Last change to the source: {date}'**
+  String biFinanceLastChange(String date);
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'An amount is too large to show exactly, so it is not shown.'**
+  String get biFinanceNotExact;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Not a profit: no cost is in this figure, and the two figures are not subtracted from each other.'**
+  String get biFinanceNotProfit;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'The period is not over: these figures will still change.'**
+  String get biFinancePartial;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'The same rules as the workspace status report, computed once on the server.'**
+  String get biFinanceSameAsReport;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
   /// **'You may not read this analysis in this workspace.'**
   String get biForbidden;
+
+  /// No description provided for @biFutureBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Existing bookings and current opening rules; not a demand forecast or guaranteed usage.'**
+  String get biFutureBasis;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2347,11 +2521,41 @@ abstract class AppLocalizations {
   /// **'Open the source'**
   String get biOpenSource;
 
+  /// No description provided for @biPastBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Recomputed from records available now, not a snapshot of what was known then.'**
+  String get biPastBasis;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
   /// **'Q{quarter} {year}'**
   String biQuarter(String quarter, String year);
+
+  /// No description provided for @biRecordedFuture.
+  ///
+  /// In en, this message translates to:
+  /// **'Future period · bookings on record'**
+  String get biRecordedFuture;
+
+  /// No description provided for @biRecordedPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past period · current records'**
+  String get biRecordedPast;
+
+  /// No description provided for @biRecordedPresent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current period · includes future dates'**
+  String get biRecordedPresent;
+
+  /// No description provided for @biRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh data'**
+  String get biRefresh;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2388,6 +2592,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show the standard view'**
   String get biReset;
+
+  /// No description provided for @biSeatHoursBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} blocked seat-hours'**
+  String biSeatHoursBlocked(String hours);
+
+  /// No description provided for @biSeatHoursFree.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} unreserved seat-hours'**
+  String biSeatHoursFree(String hours);
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2449,11 +2665,167 @@ abstract class AppLocalizations {
   /// **'Chart'**
   String get biViewChart;
 
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Stop opening my default view'**
+  String get biViewClearMyDefault;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the team’s default'**
+  String get biViewClearTeamDefault;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (copy)'**
+  String biViewCopyName(String name);
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get biViewDelete;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the view “{name}”?'**
+  String biViewDeleteConfirm(String name);
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate as my view'**
+  String get biViewDuplicate;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'You may not change this view.'**
+  String get biViewForbidden;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'This name or view cannot be saved.'**
+  String get biViewInvalid;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Open this view by default'**
+  String get biViewMakeMyDefault;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Make it the team’s default'**
+  String get biViewMakeTeamDefault;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'changed since it was opened'**
+  String get biViewModified;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get biViewName;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'A view with this name already exists.'**
+  String get biViewNameTaken;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Always {period}'**
+  String biViewPeriodFixed(String period);
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'The period moves with the day it is opened'**
+  String get biViewPeriodMoves;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Rename…'**
+  String get biViewRename;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get biViewSave;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Save as a new view…'**
+  String get biViewSaveAs;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Only me'**
+  String get biViewScopePrivate;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'The team'**
+  String get biViewScopeTeam;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Someone saved this view since you opened it. The list was read again; try once more.'**
+  String get biViewStale;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Standard view'**
+  String get biViewStandard;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
   /// **'Table'**
   String get biViewTable;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'This view cannot be opened here: it was saved in a form this version does not read, or none of its analyses is available to you.'**
+  String get biViewUnreadable;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Views'**
+  String get biViews;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'My views'**
+  String get biViewsMine;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Team views'**
+  String get biViewsTeam;
 
   /// Bill line for priced seat accessories charged per booked half-day (#170), shown only when the amount is non-zero; the amount renders trailing
   ///
@@ -4333,6 +4705,108 @@ abstract class AppLocalizations {
   /// **'Draft kept'**
   String get composerDraftKept;
 
+  /// No description provided for @connectionCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'The account changed meanwhile, so this answer was discarded.'**
+  String get connectionCancelled;
+
+  /// No description provided for @connectionChangedIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'This server is no longer the one you connected. Its actions are paused until you verify it again.'**
+  String get connectionChangedIdentity;
+
+  /// No description provided for @connectionChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking…'**
+  String get connectionChecking;
+
+  /// No description provided for @connectionCurrentServer.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the server this app already uses.'**
+  String get connectionCurrentServer;
+
+  /// No description provided for @connectionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'This server refused the account. Check the sign-in details, or disconnect it.'**
+  String get connectionDenied;
+
+  /// No description provided for @connectionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Your sign-in to this server has ended. Sign in to this server again.'**
+  String get connectionExpired;
+
+  /// No description provided for @connectionInvalidEndpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'This address or key is not a valid server.'**
+  String get connectionInvalidEndpoint;
+
+  /// No description provided for @connectionMalformed.
+  ///
+  /// In en, this message translates to:
+  /// **'This server answered something this app cannot read.'**
+  String get connectionMalformed;
+
+  /// No description provided for @connectionNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'This server is not connected on this device.'**
+  String get connectionNotConnected;
+
+  /// No description provided for @connectionRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get connectionRetry;
+
+  /// No description provided for @connectionSessionNotSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'The action was done, but this device could not save the server\'s sign-in. You may be asked to sign in again.'**
+  String get connectionSessionNotSaved;
+
+  /// No description provided for @connectionSignInAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in again'**
+  String get connectionSignInAgain;
+
+  /// No description provided for @connectionUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This server is not answering right now. Your other servers are not affected.'**
+  String get connectionUnavailable;
+
+  /// No description provided for @connectionUnknownOutcome.
+  ///
+  /// In en, this message translates to:
+  /// **'The connection dropped after the request was sent. It may have been applied: check before trying again.'**
+  String get connectionUnknownOutcome;
+
+  /// No description provided for @connectionUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'This server\'s version cannot be connected from this app. Update the app, or ask the server\'s operator to update the server.'**
+  String get connectionUnsupported;
+
+  /// No description provided for @connectionUsable.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get connectionUsable;
+
+  /// No description provided for @connectionVerifyAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify again'**
+  String get connectionVerifyAgain;
+
   /// No description provided for @consentAccept.
   ///
   /// In en, this message translates to:
@@ -4938,6 +5412,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'None'**
   String get courtesyNone;
+
+  /// #1916 invoice clauses: customerCapacityBusiness
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get customerCapacityBusiness;
+
+  /// #1916 invoice clauses: customerCapacityConsumer
+  ///
+  /// In en, this message translates to:
+  /// **'Consumer'**
+  String get customerCapacityConsumer;
+
+  /// #1916 invoice clauses: customerCapacityExplainer
+  ///
+  /// In en, this message translates to:
+  /// **'Whether this customer acts for a trade or business (a company, a sole trader, an association acting as one) or as a private consumer. It decides which payment clauses an invoice prints; a VAT number alone does not decide it. Not stated: the workspace default applies.'**
+  String get customerCapacityExplainer;
+
+  /// #1916 invoice clauses: customerCapacityLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Customer capacity'**
+  String get customerCapacityLabel;
+
+  /// #1916 invoice clauses: customerCapacityNotStated
+  ///
+  /// In en, this message translates to:
+  /// **'Not stated'**
+  String get customerCapacityNotStated;
+
+  /// #1916 invoice clauses: customerCapacitySaveError
+  ///
+  /// In en, this message translates to:
+  /// **'The customer capacity was not saved.'**
+  String get customerCapacitySaveError;
 
   /// #669 - accounting export formats
   ///
@@ -7314,6 +7824,18 @@ abstract class AppLocalizations {
   /// **'Carnets'**
   String get featureCarnetsTitle;
 
+  /// #1851 B feature switch consent: featureChangeUnconfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'The change was sent, but the features could not be reloaded to confirm it. Reopen the screen to see what is set.'**
+  String get featureChangeUnconfirmed;
+
+  /// #1851 B feature switch consent: featureChangedMeanwhile
+  ///
+  /// In en, this message translates to:
+  /// **'The features changed meanwhile, so nothing was written. Check the list and switch again.'**
+  String get featureChangedMeanwhile;
+
   /// Feature toggle: co-ownership (0058)
   ///
   /// In en, this message translates to:
@@ -8130,6 +8652,12 @@ abstract class AppLocalizations {
   /// **'Let members pay their bill online (PayPal). Needs the payment provider configured on the server.'**
   String get featureOnlinePaymentsDesc;
 
+  /// #1851 B feature switch consent: featureOptInAlsoOn
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}'**
+  String featureOptInAlsoOn(int count, String features);
+
   /// #1851 consent dialog body; features = the experimental feature names
   ///
   /// In en, this message translates to:
@@ -8141,6 +8669,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch on'**
   String get featureOptInConfirm;
+
+  /// #1851 B feature switch consent: featureOptInStage
+  ///
+  /// In en, this message translates to:
+  /// **'{feature}: {stage}'**
+  String featureOptInStage(String feature, String stage);
 
   /// #1851 consent dialog title before switching on an alpha/beta feature
   ///
@@ -10380,6 +10914,144 @@ abstract class AppLocalizations {
   /// **'Whit Monday'**
   String get holidayWhitMonday;
 
+  /// #1834 Connecting another server with the person's Deskilo identity: The system browser could not be launched.
+  ///
+  /// In en, this message translates to:
+  /// **'The browser could not be opened.'**
+  String get identityConnectBrowser;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Confirmation after connecting, before the membership request is sent. {name} is the space's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Send your membership request to {name}?'**
+  String identityConnectConfirmApply(String name);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Body of the confirmation before sending the membership request.
+  ///
+  /// In en, this message translates to:
+  /// **'You are connected now. The space reviews your request; nothing else is shared.'**
+  String get identityConnectConfirmApplyBody;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Button that opens the other server's own sign-in in the browser. Deskilo is the brand.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Deskilo'**
+  String get identityConnectContinue;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The target is the app's own server.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the server you are already signed in to.'**
+  String get identityConnectCurrentServer;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server trusts another identity authority.
+  ///
+  /// In en, this message translates to:
+  /// **'This server accepts a different identity provider.'**
+  String get identityConnectDifferentAuthority;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Snackbar after a successful connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {host}.'**
+  String identityConnectDone(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Secondary choice: connect with a separate local account (e-mail and password or code) on that server.
+  ///
+  /// In en, this message translates to:
+  /// **'Use an account I already have on this server'**
+  String get identityConnectExistingAccount;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The pending sign-in expired.
+  ///
+  /// In en, this message translates to:
+  /// **'The sign-in took too long. Start again.'**
+  String get identityConnectExpired;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: What connecting shares and what it never grants. Deskilo is the brand; do not translate it.
+  ///
+  /// In en, this message translates to:
+  /// **'{host} will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the space still decides any request.'**
+  String identityConnectExplain(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Network or server unavailable during the connection.
+  ///
+  /// In en, this message translates to:
+  /// **'The server did not answer. Try again.'**
+  String get identityConnectNetwork;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server has no Deskilo identity provider.
+  ///
+  /// In en, this message translates to:
+  /// **'This server does not offer sign-in with Deskilo.'**
+  String get identityConnectNoDeskiloSignIn;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The person's own server exposes no identity authority another server can trust.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account here has no Deskilo identity another server could accept.'**
+  String get identityConnectNoSharedIdentity;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server accepted the person but saving the connection on the device failed.
+  ///
+  /// In en, this message translates to:
+  /// **'{host} accepted you, but this device could not keep the connection. Nothing was sent. Try again.'**
+  String identityConnectNotSaved(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Generic refusal (provider said no, flow superseded, incompatible server).
+  ///
+  /// In en, this message translates to:
+  /// **'The connection was not completed. Nothing was sent.'**
+  String get identityConnectRefused;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Retry button after a failed connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get identityConnectRetry;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Confirm button that sends the membership request.
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get identityConnectSend;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server speaks no protocol this build speaks.
+  ///
+  /// In en, this message translates to:
+  /// **'This server cannot be connected from this version of the app.'**
+  String get identityConnectServerUnsupported;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Title of the sheet that connects another server. {host} is that server's host name.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to {host}'**
+  String identityConnectTitle(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server could not be checked.
+  ///
+  /// In en, this message translates to:
+  /// **'This server did not answer.'**
+  String get identityConnectUnavailable;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Collision with an existing unlinked account on the other server.
+  ///
+  /// In en, this message translates to:
+  /// **'An account on that server already uses this identity or e-mail without being linked to it. Use that account instead.'**
+  String get identityConnectUnlinked;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Shown while the browser sign-in is open.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish signing in in your browser, then come back here.'**
+  String get identityConnectWaiting;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The browser returned a different identity than the person signed in here.
+  ///
+  /// In en, this message translates to:
+  /// **'The browser signed in as someone else. Nothing was connected.'**
+  String get identityConnectWrongAccount;
+
   /// Identity-only consent names the exact destination host.
   ///
   /// In en, this message translates to:
@@ -11937,14 +12609,20 @@ abstract class AppLocalizations {
   /// Association invoicing + VAT regime gate (#484)
   ///
   /// In en, this message translates to:
-  /// **'The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.'**
-  String get invoiceLegalAssociationHint;
-
-  /// Association invoicing + VAT regime gate (#484)
-  ///
-  /// In en, this message translates to:
   /// **'e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members'**
   String get invoiceLegalAssociationReasonHint;
+
+  /// #1916 invoice clauses: invoiceLegalCustomerCapacityField
+  ///
+  /// In en, this message translates to:
+  /// **'Default customer capacity'**
+  String get invoiceLegalCustomerCapacityField;
+
+  /// #1916 invoice clauses: invoiceLegalCustomerCapacityHint
+  ///
+  /// In en, this message translates to:
+  /// **'Decides which payment clauses an invoice prints. The statutory late-penalty, recovery-indemnity and discount defaults apply only to business customers, and a consumer never receives the recovery indemnity. A member\'s own capacity wins over this default. Every invoice keeps the clauses it was issued with.'**
+  String get invoiceLegalCustomerCapacityHint;
 
   /// Legal invoice mentions (#480)
   ///
@@ -14568,6 +15246,438 @@ abstract class AppLocalizations {
   /// **'Workspace: {workspace}'**
   String mcpConfirmWorkspace(String workspace);
 
+  /// #2145 Connect an assistant: mcpConnectAccessExpiresIn
+  ///
+  /// In en, this message translates to:
+  /// **'Approved — {days, plural, =1{1 day} other{{days} days}} left.'**
+  String mcpConnectAccessExpiresIn(int days);
+
+  /// #2145 Connect an assistant: mcpConnectAccessExpiresSoon
+  ///
+  /// In en, this message translates to:
+  /// **'Approved — expires in {days, plural, =1{1 day} other{{days} days}}. Ask for approval again once it lapses.'**
+  String mcpConnectAccessExpiresSoon(int days);
+
+  /// #2145 Connect an assistant: mcpConnectAddTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Add DesKilo to your assistant'**
+  String get mcpConnectAddTitle;
+
+  /// #2145 Connect an assistant: mcpConnectAddressLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Your DesKilo address for assistants'**
+  String get mcpConnectAddressLabel;
+
+  /// #2145 Connect an assistant: mcpConnectAllDone
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is ready. Test the connection below.'**
+  String get mcpConnectAllDone;
+
+  /// #2145 Connect an assistant: mcpConnectBeforeTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Before you connect'**
+  String get mcpConnectBeforeTitle;
+
+  /// #2145 Connect an assistant: mcpConnectChatgptNote
+  ///
+  /// In en, this message translates to:
+  /// **'Developer mode needs a paid ChatGPT plan (Plus, Pro, Business, Enterprise or Edu).'**
+  String get mcpConnectChatgptNote;
+
+  /// #2145 Connect an assistant: mcpConnectChatgptStep1
+  ///
+  /// In en, this message translates to:
+  /// **'In ChatGPT, turn on developer mode: Settings → Apps → Advanced settings.'**
+  String get mcpConnectChatgptStep1;
+
+  /// #2145 Connect an assistant: mcpConnectChatgptStep2
+  ///
+  /// In en, this message translates to:
+  /// **'Create an app named DesKilo, paste the address above and choose OAuth as the authentication.'**
+  String get mcpConnectChatgptStep2;
+
+  /// #2145 Connect an assistant: mcpConnectChatgptStep3
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google and pick this workspace and what ChatGPT may do there.'**
+  String get mcpConnectChatgptStep3;
+
+  /// #2145 Connect an assistant: mcpConnectClaudeNote
+  ///
+  /// In en, this message translates to:
+  /// **'Claude on the web, Claude Desktop and the Claude mobile app share the same connectors. On a Team or Enterprise plan, an owner of the Claude organisation adds the connector first.'**
+  String get mcpConnectClaudeNote;
+
+  /// #2145 Connect an assistant: mcpConnectClaudeOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Open Claude connectors'**
+  String get mcpConnectClaudeOpen;
+
+  /// #2145 Connect an assistant: mcpConnectClaudeStep1
+  ///
+  /// In en, this message translates to:
+  /// **'In Claude, open Settings → Connectors.'**
+  String get mcpConnectClaudeStep1;
+
+  /// #2145 Connect an assistant: mcpConnectClaudeStep2
+  ///
+  /// In en, this message translates to:
+  /// **'Choose \"Add custom connector\", name it DesKilo and paste the address above.'**
+  String get mcpConnectClaudeStep2;
+
+  /// #2145 Connect an assistant: mcpConnectClaudeStep3
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Connect, sign in with Google and pick this workspace and what Claude may do there.'**
+  String get mcpConnectClaudeStep3;
+
+  /// #2145 Connect an assistant: mcpConnectCodeStep1
+  ///
+  /// In en, this message translates to:
+  /// **'Run this in a terminal:'**
+  String get mcpConnectCodeStep1;
+
+  /// #2145 Connect an assistant: mcpConnectCodeStep2
+  ///
+  /// In en, this message translates to:
+  /// **'In Claude Code, type /mcp, choose deskilo and then Authenticate. A browser opens to sign in and pick this workspace.'**
+  String get mcpConnectCodeStep2;
+
+  /// #2145 Connect an assistant: mcpConnectCopied
+  ///
+  /// In en, this message translates to:
+  /// **'Copied.'**
+  String get mcpConnectCopied;
+
+  /// #2145 Connect an assistant: mcpConnectCopyRequest
+  ///
+  /// In en, this message translates to:
+  /// **'Copy a request to send'**
+  String get mcpConnectCopyRequest;
+
+  /// #2145 Connect an assistant: mcpConnectCursorInstall
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Cursor'**
+  String get mcpConnectCursorInstall;
+
+  /// #2145 Connect an assistant: mcpConnectCursorStep
+  ///
+  /// In en, this message translates to:
+  /// **'Cursor asks to install DesKilo, then opens a browser to sign in and pick this workspace. Without the button, add this to ~/.cursor/mcp.json:'**
+  String get mcpConnectCursorStep;
+
+  /// #2145 Connect an assistant: mcpConnectDone
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get mcpConnectDone;
+
+  /// #2145 Connect an assistant: mcpConnectIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Let Claude, ChatGPT or another assistant check and book things for you in DesKilo. It acts as you, only in the workspaces and for the actions you approve.'**
+  String get mcpConnectIntro;
+
+  /// #2145 Connect an assistant: mcpConnectLastCall
+  ///
+  /// In en, this message translates to:
+  /// **'Last call: {client}, {when}.'**
+  String mcpConnectLastCall(String client, String when);
+
+  /// #2145 Connect an assistant: mcpConnectManageHint
+  ///
+  /// In en, this message translates to:
+  /// **'To see what an assistant did or to disconnect it, open Assistants.'**
+  String get mcpConnectManageHint;
+
+  /// #2145 Connect an assistant: mcpConnectOpenFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The app could not be opened from here. Use the steps below instead.'**
+  String get mcpConnectOpenFailed;
+
+  /// #2145 Connect an assistant: mcpConnectOpenGuide
+  ///
+  /// In en, this message translates to:
+  /// **'Open the connection guide'**
+  String get mcpConnectOpenGuide;
+
+  /// #2145 Connect an assistant: mcpConnectOpenInstallation
+  ///
+  /// In en, this message translates to:
+  /// **'Open the installation console'**
+  String get mcpConnectOpenInstallation;
+
+  /// #2145 Connect an assistant: mcpConnectOpenSetup
+  ///
+  /// In en, this message translates to:
+  /// **'Open assistant setup'**
+  String get mcpConnectOpenSetup;
+
+  /// #2145 Connect an assistant: mcpConnectOperatorRequest
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, could you switch assistants on for our DesKilo server? It is under Settings → Installation: assistants. Thank you.'**
+  String get mcpConnectOperatorRequest;
+
+  /// #2145 Connect an assistant: mcpConnectOtherStep1
+  ///
+  /// In en, this message translates to:
+  /// **'Most clients read a JSON file of servers. Add this entry; the client opens a browser to sign in the first time.'**
+  String get mcpConnectOtherStep1;
+
+  /// #2145 Connect an assistant: mcpConnectOtherStep2
+  ///
+  /// In en, this message translates to:
+  /// **'A client that only starts local programs can reach DesKilo through mcp-remote (needs Node.js):'**
+  String get mcpConnectOtherStep2;
+
+  /// #2145 Connect an assistant: mcpConnectRoleDenied
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is offered to your role here. A workspace administrator decides what each role may do.'**
+  String get mcpConnectRoleDenied;
+
+  /// #2145 Connect an assistant: mcpConnectStepAccess
+  ///
+  /// In en, this message translates to:
+  /// **'Your access to assistants'**
+  String get mcpConnectStepAccess;
+
+  /// #2145 Connect an assistant: mcpConnectStepConnect
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo added to your assistant'**
+  String get mcpConnectStepConnect;
+
+  /// #2145 Connect an assistant: mcpConnectStepGoogle
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in'**
+  String get mcpConnectStepGoogle;
+
+  /// #2145 Connect an assistant: mcpConnectStepIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Your identity on this server'**
+  String get mcpConnectStepIdentity;
+
+  /// #2145 Connect an assistant: mcpConnectStepServer
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants switched on for this server'**
+  String get mcpConnectStepServer;
+
+  /// #2145 Connect an assistant: mcpConnectStepWorkspace
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace offers assistants'**
+  String get mcpConnectStepWorkspace;
+
+  /// #2145 Connect an assistant: mcpConnectSwitchWorkspace
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to this workspace'**
+  String get mcpConnectSwitchWorkspace;
+
+  /// #2145 Connect an assistant: mcpConnectTabChatgpt
+  ///
+  /// In en, this message translates to:
+  /// **'ChatGPT'**
+  String get mcpConnectTabChatgpt;
+
+  /// #2145 Connect an assistant: mcpConnectTabClaude
+  ///
+  /// In en, this message translates to:
+  /// **'Claude'**
+  String get mcpConnectTabClaude;
+
+  /// #2145 Connect an assistant: mcpConnectTabClaudeCode
+  ///
+  /// In en, this message translates to:
+  /// **'Claude Code'**
+  String get mcpConnectTabClaudeCode;
+
+  /// #2145 Connect an assistant: mcpConnectTabCursor
+  ///
+  /// In en, this message translates to:
+  /// **'Cursor'**
+  String get mcpConnectTabCursor;
+
+  /// #2145 Connect an assistant: mcpConnectTabOther
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get mcpConnectTabOther;
+
+  /// #2145 Connect an assistant: mcpConnectTabVscode
+  ///
+  /// In en, this message translates to:
+  /// **'VS Code'**
+  String get mcpConnectTabVscode;
+
+  /// #2145 Connect an assistant: mcpConnectTest
+  ///
+  /// In en, this message translates to:
+  /// **'Test the connection'**
+  String get mcpConnectTest;
+
+  /// #2145 Connect an assistant: mcpConnectTestAgain
+  ///
+  /// In en, this message translates to:
+  /// **'Test again'**
+  String get mcpConnectTestAgain;
+
+  /// #2145 Connect an assistant: mcpConnectTestPrompt
+  ///
+  /// In en, this message translates to:
+  /// **'Using DesKilo, what are my bookings this week?'**
+  String get mcpConnectTestPrompt;
+
+  /// #2145 Connect an assistant: mcpConnectTestReached
+  ///
+  /// In en, this message translates to:
+  /// **'Connected: {client} reached DesKilo, {when}.'**
+  String mcpConnectTestReached(String client, String when);
+
+  /// #2145 Connect an assistant: mcpConnectTestTimeout
+  ///
+  /// In en, this message translates to:
+  /// **'No call arrived yet. Check that the connector is added, that you approved this workspace, and that the steps above are done; then test again.'**
+  String get mcpConnectTestTimeout;
+
+  /// #2145 Connect an assistant: mcpConnectTestTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Check that it works'**
+  String get mcpConnectTestTitle;
+
+  /// #2145 Connect an assistant: mcpConnectTestWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your assistant to call DesKilo. Ask it:'**
+  String get mcpConnectTestWaiting;
+
+  /// #2145 Connect an assistant: mcpConnectTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Connect an assistant'**
+  String get mcpConnectTitle;
+
+  /// #2145 Connect an assistant: mcpConnectTodoConnect
+  ///
+  /// In en, this message translates to:
+  /// **'To do — you: follow the steps for your assistant below.'**
+  String get mcpConnectTodoConnect;
+
+  /// #2145 Connect an assistant: mcpConnectTodoYou
+  ///
+  /// In en, this message translates to:
+  /// **'To do — you.'**
+  String get mcpConnectTodoYou;
+
+  /// #2145 Connect an assistant: mcpConnectUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be checked right now.'**
+  String get mcpConnectUnavailable;
+
+  /// #2145 Connect an assistant: mcpConnectVscodeInstall
+  ///
+  /// In en, this message translates to:
+  /// **'Add to VS Code'**
+  String get mcpConnectVscodeInstall;
+
+  /// #2145 Connect an assistant: mcpConnectVscodeStep
+  ///
+  /// In en, this message translates to:
+  /// **'VS Code asks to install DesKilo. Start it from the MCP servers list; a browser opens to sign in and pick this workspace.'**
+  String get mcpConnectVscodeStep;
+
+  /// #2145 Connect an assistant: mcpConnectWaitingDatabaseAdmin
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a database administrator to approve your request.'**
+  String get mcpConnectWaitingDatabaseAdmin;
+
+  /// #2145 Connect an assistant: mcpConnectWaitingOperator
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the server\'s operator: {names}.'**
+  String mcpConnectWaitingOperator(String names);
+
+  /// #2145 Connect an assistant: mcpConnectWaitingOperatorUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the server\'s operator, who is not named yet.'**
+  String get mcpConnectWaitingOperatorUnknown;
+
+  /// #2145 Connect an assistant: mcpConnectWaitingWorkspaceAdmin
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a workspace administrator to offer assistants here.'**
+  String get mcpConnectWaitingWorkspaceAdmin;
+
+  /// #2145 Connect an assistant: mcpConnectWhich
+  ///
+  /// In en, this message translates to:
+  /// **'Which assistant do you use?'**
+  String get mcpConnectWhich;
+
+  /// #2145 Connect an assistant: mcpConnectWorkspaceSelected
+  ///
+  /// In en, this message translates to:
+  /// **'Selected workspace'**
+  String get mcpConnectWorkspaceSelected;
+
+  /// #2145 Connect an assistant: mcpConnectWorkspacesHint
+  ///
+  /// In en, this message translates to:
+  /// **'Each workspace decides for itself. When your assistant asks, you choose among the ready ones.'**
+  String get mcpConnectWorkspacesHint;
+
+  /// #2145 Connect an assistant: mcpConnectWorkspacesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Your workspaces'**
+  String get mcpConnectWorkspacesTitle;
+
+  /// #2145 Connect an assistant: mcpConnectWsConnected
+  ///
+  /// In en, this message translates to:
+  /// **'Connected — an assistant may act for you here.'**
+  String get mcpConnectWsConnected;
+
+  /// #2145 Connect an assistant: mcpConnectWsNotOffered
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants are on, but nothing is offered to your role yet. A workspace administrator decides.'**
+  String get mcpConnectWsNotOffered;
+
+  /// #2145 Connect an assistant: mcpConnectWsOff
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants are off in this workspace. A workspace administrator turns them on in Assistant setup.'**
+  String get mcpConnectWsOff;
+
+  /// #2145 Connect an assistant: mcpConnectWsReady
+  ///
+  /// In en, this message translates to:
+  /// **'Ready — choose it when your assistant asks.'**
+  String get mcpConnectWsReady;
+
+  /// #2145 Connect an assistant: mcpConnectWsUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Shown once your access to assistants is approved.'**
+  String get mcpConnectWsUnknown;
+
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:
@@ -15119,6 +16229,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The assistant settings could not be loaded. Try again later.'**
   String get mcpPolicyUnavailable;
+
+  /// #2145 Connect an assistant: mcpRefusalClientNotApproved
+  ///
+  /// In en, this message translates to:
+  /// **'This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.'**
+  String get mcpRefusalClientNotApproved;
+
+  /// #2145 Connect an assistant: mcpRefusalNoIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your identity in DesKilo under Assistants first, then connect again from the assistant.'**
+  String get mcpRefusalNoIdentity;
+
+  /// #2145 Connect an assistant: mcpRefusalNotEligible
+  ///
+  /// In en, this message translates to:
+  /// **'Your access to assistants is not approved yet. Ask for it in DesKilo under Assistants, then connect again from the assistant.'**
+  String get mcpRefusalNotEligible;
+
+  /// #2145 Connect an assistant: mcpRefusalOfferChanged
+  ///
+  /// In en, this message translates to:
+  /// **'What this workspace offers changed while you were choosing. Connect again from the assistant to see the current offer.'**
+  String get mcpRefusalOfferChanged;
+
+  /// #2145 Connect an assistant: mcpRefusalRequestExpired
+  ///
+  /// In en, this message translates to:
+  /// **'This connection request has expired or was already used. Start again from the assistant.'**
+  String get mcpRefusalRequestExpired;
 
   /// #1626 #1627 #1628 mcp_settings
   ///
@@ -24566,6 +25706,12 @@ abstract class AppLocalizations {
   /// **'Net'**
   String get statusNet;
 
+  /// No description provided for @statusNetExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together.'**
+  String get statusNetExplanation;
+
   /// #934 workspace status / repartition wizard: statusPaymentsMatched
   ///
   /// In en, this message translates to:
@@ -26030,6 +27176,12 @@ abstract class AppLocalizations {
   /// **'Went back'**
   String get taskRecorderActionBack;
 
+  /// #1881 recorder: taskRecorderActionCancelReservation
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled the reservation'**
+  String get taskRecorderActionCancelReservation;
+
   /// #1865 task recorder: taskRecorderActionCancelReview
   ///
   /// In en, this message translates to:
@@ -26042,11 +27194,35 @@ abstract class AppLocalizations {
   /// **'Changed a booking detail'**
   String get taskRecorderActionChangeField;
 
+  /// #1881 recorder: taskRecorderActionCheckIn
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get taskRecorderActionCheckIn;
+
+  /// #1881 recorder: taskRecorderActionCheckOut
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out'**
+  String get taskRecorderActionCheckOut;
+
+  /// #1881 recorder: taskRecorderActionCloseMyReservation
+  ///
+  /// In en, this message translates to:
+  /// **'Closed my reservation without changing it'**
+  String get taskRecorderActionCloseMyReservation;
+
   /// #1865 task recorder: taskRecorderActionConfirmBooking
   ///
   /// In en, this message translates to:
   /// **'Confirmed the booking'**
   String get taskRecorderActionConfirmBooking;
+
+  /// #1884 recorder: taskRecorderActionDeclineOptIn
+  ///
+  /// In en, this message translates to:
+  /// **'Did not switch on a test feature'**
+  String get taskRecorderActionDeclineOptIn;
 
   /// #1865 task recorder: taskRecorderActionOpenReserve
   ///
@@ -26060,6 +27236,12 @@ abstract class AppLocalizations {
   /// **'Chose the day'**
   String get taskRecorderActionSelectDate;
 
+  /// #1881 recorder: taskRecorderActionSelectLevel
+  ///
+  /// In en, this message translates to:
+  /// **'Chose a level'**
+  String get taskRecorderActionSelectLevel;
+
   /// #1865 task recorder: taskRecorderActionSelectPeriod
   ///
   /// In en, this message translates to:
@@ -26071,6 +27253,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chose a place'**
   String get taskRecorderActionSelectResource;
+
+  /// #1884 recorder: taskRecorderActionSwitchFeature
+  ///
+  /// In en, this message translates to:
+  /// **'Switched a feature'**
+  String get taskRecorderActionSwitchFeature;
 
   /// #1865 task recorder: taskRecorderActionSwitchView
   ///
@@ -26270,6 +27458,24 @@ abstract class AppLocalizations {
   /// **'Open the task recorder'**
   String get taskRecorderOpenRecorder;
 
+  /// #1881 recorder: taskRecorderOutcomeCancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get taskRecorderOutcomeCancelled;
+
+  /// #1881 recorder: taskRecorderOutcomeCheckedIn
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get taskRecorderOutcomeCheckedIn;
+
+  /// #1881 recorder: taskRecorderOutcomeCheckedOut
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out'**
+  String get taskRecorderOutcomeCheckedOut;
+
   /// #1865 task recorder: taskRecorderOutcomeConfirmed
   ///
   /// In en, this message translates to:
@@ -26293,6 +27499,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Series booked'**
   String get taskRecorderOutcomeSeries;
+
+  /// #1884 recorder: taskRecorderOutcomeSettingNotSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Not saved'**
+  String get taskRecorderOutcomeSettingNotSaved;
+
+  /// #1884 recorder: taskRecorderOutcomeSettingSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get taskRecorderOutcomeSettingSaved;
 
   /// #1865 task recorder: taskRecorderOutcomeUnknown
   ///
@@ -26516,6 +27734,12 @@ abstract class AppLocalizations {
   /// **'custom times'**
   String get taskRecorderValueCustom;
 
+  /// #1881 recorder: taskRecorderValueDay
+  ///
+  /// In en, this message translates to:
+  /// **'day'**
+  String get taskRecorderValueDay;
+
   /// #1865 task recorder: taskRecorderValueDesk
   ///
   /// In en, this message translates to:
@@ -26552,6 +27776,12 @@ abstract class AppLocalizations {
   /// **'list'**
   String get taskRecorderValueList;
 
+  /// #1881 recorder: taskRecorderValueMonth
+  ///
+  /// In en, this message translates to:
+  /// **'month'**
+  String get taskRecorderValueMonth;
+
   /// #1865 task recorder: taskRecorderValueMorning
   ///
   /// In en, this message translates to:
@@ -26564,11 +27794,23 @@ abstract class AppLocalizations {
   /// **'without check-in'**
   String get taskRecorderValueNoCheckIn;
 
+  /// #1884 recorder: taskRecorderValueOff
+  ///
+  /// In en, this message translates to:
+  /// **'off'**
+  String get taskRecorderValueOff;
+
   /// #1865 task recorder: taskRecorderValueOffline
   ///
   /// In en, this message translates to:
   /// **'offline'**
   String get taskRecorderValueOffline;
+
+  /// #1884 recorder: taskRecorderValueOn
+  ///
+  /// In en, this message translates to:
+  /// **'on'**
+  String get taskRecorderValueOn;
 
   /// #1865 task recorder: taskRecorderValueOnce
   ///
@@ -26653,6 +27895,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'tomorrow'**
   String get taskRecorderValueTomorrow;
+
+  /// #1881 recorder: taskRecorderValueWeek
+  ///
+  /// In en, this message translates to:
+  /// **'week'**
+  String get taskRecorderValueWeek;
 
   /// #1865 task recorder: taskRecorderValueWithheld
   ///

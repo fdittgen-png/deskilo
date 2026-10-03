@@ -10,7 +10,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_modules.dart';
@@ -22,6 +24,7 @@ import '../../providers/workspace_providers.dart';
 import 'bi_result_views.dart';
 import 'bi_toolbar.dart';
 import 'capacity_kpi_card.dart';
+import 'capacity_evidence.dart';
 
 /// How a module's figures read. One per registered module.
 class BiModuleView {
@@ -36,7 +39,7 @@ class BiModuleView {
   final String Function(AppLocalizations? l10n) title;
 
   /// The figure, or a dash when it is undefined.
-  final String Function(num? value, String locale) value;
+  final String Function(num? value, String locale, String? currency) value;
 
   /// The figure's two sides ("25 of 100 seat-hours reserved").
   final String Function(BiMeasure m, AppLocalizations? l10n, String locale)
@@ -59,7 +62,7 @@ class BiModuleView {
   details;
 }
 
-String _percent(num? v, String locale) => v == null
+String _percent(num? v, String locale, String? currency) => v == null
     ? '—'
     : NumberFormat.decimalPercentPattern(
         locale: locale,
@@ -67,6 +70,69 @@ String _percent(num? v, String locale) => v == null
       ).format(v);
 
 SeatCapacityKpi? _seat(BiMeasure m) => m.detail as SeatCapacityKpi?;
+
+FinanceSummaryKpi? _finance(BiMeasure m) => m.detail as FinanceSummaryKpi?;
+
+/// An amount in [currency]; a dash when it is unknown or has no
+/// currency — never a default euro (#1924).
+String _money(num? v, String locale, String? currency) =>
+    v == null || currency == null || currency.isEmpty
+    ? '—'
+    : MoneyFormat(currency, locale: locale).formatMinor(v.toInt());
+
+List<String> _financeNotes(
+  BiMeasure m,
+  AppLocalizations? l10n,
+  bool invoiced,
+) => [
+  if (m.reasons.contains('currency_mix'))
+    l10n?.biFinanceCurrencyMix ??
+        'This period holds amounts in another currency; amounts in '
+            'different currencies are not added, so none is shown.',
+  if (m.reasons.contains('amount_not_exact'))
+    l10n?.biFinanceNotExact ??
+        'An amount is too large to show exactly, so it is not shown.',
+  if (m.reasons.contains('period_not_over'))
+    l10n?.biFinancePartial ??
+        'The period is not over: these figures will still change.',
+  if (m.quality.contains(KpiQuality.knownZero))
+    invoiced
+        ? l10n?.biFinanceInvoicedZero ?? 'Measured: nothing was invoiced.'
+        : l10n?.biFinanceCollectedZero ?? 'Measured: nothing was collected.',
+];
+
+List<String> _financeDetails(
+  BiMeasure m,
+  AppLocalizations? l10n,
+  String locale,
+  bool invoiced,
+) {
+  final k = _finance(m);
+  if (k == null) return const [];
+  final date = DateFormat.yMd(locale);
+  return [
+    if (invoiced)
+      l10n?.biFinanceInvoicedDefinition ??
+          'Invoices of these months, voided ones and settlements left out '
+              '(a settlement regroups invoices already counted); positive '
+              'totals only.'
+    else
+      l10n?.biFinanceCollectedDefinition ??
+          'Payments matched to invoices, by the month of the match on the '
+              'workspace clock.',
+    l10n?.biFinanceNotProfit ??
+        'Not a profit: no cost is in this figure, and the two figures are '
+            'not subtracted from each other.',
+    l10n?.biFinanceSameAsReport ??
+        'The same rules as the workspace status report, computed once on '
+            'the server.',
+    if (k.lastChangeAt case final last?)
+      l10n?.biFinanceLastChange(date.format(WorkspaceTime.wall(last))) ??
+          'Last change to the source: ${date.format(WorkspaceTime.wall(last))}',
+    l10n?.biFinanceComputed(date.format(WorkspaceTime.wall(k.computedAt))) ??
+        'Computed ${date.format(WorkspaceTime.wall(k.computedAt))}',
+  ];
+}
 
 /// The views of the registered modules (conformance-tested).
 final biModuleViews = <String, BiModuleView>{
@@ -86,27 +152,67 @@ final biModuleViews = <String, BiModuleView>{
       null => const [],
     },
   ),
+  'finance.invoiced': BiModuleView(
+    title: (l10n) => l10n?.biFinanceInvoiced ?? 'Invoiced',
+    value: _money,
+    basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
+      final k? =>
+        l10n?.biFinanceInvoicedBasis(
+              '${k.invoices}',
+              _money(k.creditNotesMinor, locale, k.currency),
+            ) ??
+            'From ${k.invoices} invoices; credit notes '
+                '${_money(k.creditNotesMinor, locale, k.currency)}, shown '
+                'apart',
+      null => '',
+    },
+    notes: (m, l10n, locale) => _financeNotes(m, l10n, true),
+    details: (m, l10n, locale) => _financeDetails(m, l10n, locale, true),
+  ),
+  'finance.collected': BiModuleView(
+    title: (l10n) => l10n?.biFinanceCollected ?? 'Collected',
+    value: _money,
+    basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
+      final k? =>
+        l10n?.biFinanceCollectedBasis('${k.matches}') ??
+            'From ${k.matches} payments matched to invoices',
+      null => '',
+    },
+    notes: (m, l10n, locale) => _financeNotes(m, l10n, false),
+    details: (m, l10n, locale) => _financeDetails(m, l10n, locale, false),
+  ),
 };
 
-/// The change, worded: "+3.2 percentage points", "+12.5 %", or "—".
-String biChangeLabel(BiChange c, AppLocalizations? l10n, String locale) {
-  String signed(num v, NumberFormat f) => '${v > 0 ? '+' : ''}${f.format(v)}';
+/// The change, worded: "+3.2 pp" for a ratio; for an amount the
+/// difference in its unit ([format]) and the relative change beside it,
+/// "+150,00 € (+12.5 %)"; "—" when it is undefined.
+String biChangeLabel(
+  BiChange c,
+  AppLocalizations? l10n,
+  String locale, {
+  String Function(num value)? format,
+}) {
+  String sign(num v) => v > 0 ? '+' : '';
   final one = NumberFormat.decimalPatternDigits(
     locale: locale,
     decimalDigits: 1,
   );
+  final percent = NumberFormat.decimalPercentPattern(
+    locale: locale,
+    decimalDigits: 1,
+  );
   if (c.points case final p?) {
-    final s = signed(p, one);
+    final s = '${sign(p)}${one.format(p)}';
     return l10n?.biChangePoints(s) ?? '$s pp';
   }
-  if (c.relative case final r?) {
-    return signed(
-      r,
-      NumberFormat.decimalPercentPattern(locale: locale, decimalDigits: 1),
-    );
+  final relative = c.relative == null
+      ? null
+      : '${sign(c.relative!)}${percent.format(c.relative)}';
+  if (c.absolute case final a?) {
+    final absolute = '${sign(a)}${format == null ? one.format(a) : format(a)}';
+    return relative == null ? absolute : '$absolute ($relative)';
   }
-  if (c.absolute case final a?) return signed(a, one);
-  return '—';
+  return relative ?? '—';
 }
 
 class BiModuleSection extends ConsumerWidget {
@@ -134,7 +240,16 @@ class BiModuleSection extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(view.title(l10n), style: theme.textTheme.titleMedium),
+            Row(children: [
+              Expanded(child: Text(view.title(l10n), style: theme.textTheme.titleMedium)),
+              if (unsupported.isEmpty)
+                IconButton(
+                  key: const ValueKey('bi-refresh'),
+                  tooltip: l10n?.biRefresh ?? 'Refresh data',
+                  onPressed: result is AsyncLoading ? null : () => ref.invalidate(provider),
+                  icon: const Icon(Icons.refresh),
+                ),
+            ]),
             switch (result) {
               null => _refusal(l10n, unsupported, false),
               AsyncData(:final value) => _Result(
@@ -220,9 +335,10 @@ class _Result extends ConsumerWidget {
     final comparedPeriod = result.comparedPeriod;
     final compared = total.compared;
     final small = theme.textTheme.bodySmall;
+    String amount(num v) => view.value(v, locale, result.currency);
     String since(BiMeasure m) => m.historySince == null
         ? ''
-        : DateFormat.yMMMd(locale).format(m.historySince!.toLocal());
+        : DateFormat.yMMMd(locale).format(WorkspaceTime.wall(m.historySince!));
     final comparedLabel = comparedPeriod == null
         ? ''
         : biPeriodLabel(comparedPeriod, l10n, locale);
@@ -237,6 +353,10 @@ class _Result extends ConsumerWidget {
           compared.quality.contains(KpiQuality.partial))
         l10n?.biComparedPartial(comparedLabel) ??
             '$comparedLabel is only partly recorded.',
+      if (compared != null && [...total.current.quality, ...compared.quality]
+          .any((q) => q == KpiQuality.partial || q == KpiQuality.stale))
+        l10n?.biComparisonUnqualified ??
+            'Change unavailable: one period has partial or out-of-date data.',
       if (exposureDiffers(total))
         l10n?.biExposureDiffers ??
             'The two periods do not offer the same base; the ratio accounts '
@@ -255,20 +375,27 @@ class _Result extends ConsumerWidget {
           style: small,
         ),
         Text(
-          view.value(total.current.value(agg), locale),
+          view.value(total.current.value(agg), locale, result.currency),
           key: const ValueKey('bi-value'),
           style: theme.textTheme.headlineMedium,
         ),
+        if (total.current.detail case final SeatCapacityKpi k)
+          CapacityEvidence(kpi: k),
         Text(view.basis(total.current, l10n, locale)),
         if (comparedPeriod != null && compared != null)
           Text(
             l10n?.biComparedLine(
                   comparedLabel,
-                  view.value(compared.value(agg), locale),
-                  biChangeLabel(changeOf(total, agg), l10n, locale),
+                  view.value(compared.value(agg), locale, result.currency),
+                  biChangeLabel(
+                    changeOf(total, agg),
+                    l10n,
+                    locale,
+                    format: amount,
+                  ),
                 ) ??
-                '$comparedLabel: ${view.value(compared.value(agg), locale)} '
-                    '(${biChangeLabel(changeOf(total, agg), l10n, locale)})',
+                '$comparedLabel: ${view.value(compared.value(agg), locale, result.currency)} '
+                    '(${biChangeLabel(changeOf(total, agg), l10n, locale, format: amount)})',
             key: const ValueKey('bi-compared'),
           ),
         for (final note in notes)
@@ -281,8 +408,9 @@ class _Result extends ConsumerWidget {
           rows: [...result.groups, total],
           view: query.view,
           aggregation: agg,
-          format: (v) => view.value(v, locale),
-          change: (row) => biChangeLabel(changeOf(row, agg), l10n, locale),
+          format: (v) => view.value(v, locale, result.currency),
+          change: (row) =>
+              biChangeLabel(changeOf(row, agg), l10n, locale, format: amount),
           comparedLabel: comparedPeriod == null ? null : comparedLabel,
           groupHeader: query.groupBy == null
               ? null

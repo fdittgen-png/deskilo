@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
+import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
+import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
+import 'package:deskilo/features/workspace/providers/bi_providers.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
@@ -11,6 +15,8 @@ export 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/backend/secondary_federation.dart';
+import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
@@ -140,6 +146,7 @@ List<Override> standardTestOverrides({
   FakeAccountActivityRepository? accountActivity,
   FakeDirectoryRepository? directory,
   List<ConnectedInstallation> connectedSources = const [],
+  IdentityConnector? identityConnector,
   FakeAccountContactRepository? contacts,
   // #1824 — the messenger per server: '' is this one.
   FakeMessengerRepository? messenger,
@@ -170,6 +177,8 @@ List<Override> standardTestOverrides({
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
+  BiViewRepository? biViews,
+  FinanceKpiRepository? financeKpis,
   AccessoryRepository? accessories,
   ReservationRepository? reservations,
   EventRepository? events,
@@ -250,6 +259,9 @@ List<Override> standardTestOverrides({
     workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
     connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>connectedSources),
+      // #1834 — no test reaches a real server's sign-in.
+      identityConnectorProvider.overrideWithValue(
+          identityConnector ?? const OfflineIdentityConnector()),
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directoryFake),
       publicationRepositoryProvider.overrideWith((ref)=>directoryFake),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directoryFake),
@@ -287,6 +299,12 @@ List<Override> standardTestOverrides({
     workspaceRepositoryProvider.overrideWithValue(workspaceRepo),
     floorPlanRepositoryProvider
         .overrideWithValue(floorPlan ?? FakeFloorPlanRepository()),
+    // #1923 C — saved Web-BI views, in memory.
+    biViewRepositoryProvider
+        .overrideWithValue(biViews ?? InMemoryBiViewRepository()),
+    // #1924 — no server to sum invoices on unless a test brings one.
+    financeKpiRepositoryProvider.overrideWithValue(
+        financeKpis ?? const UnavailableFinanceKpiRepository()),
     // #988 — the deployment engine, in memory.
     deploymentRepositoryProvider
         .overrideWithValue(deployment ?? FakeDeploymentRepository()),
