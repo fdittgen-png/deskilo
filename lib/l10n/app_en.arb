@@ -17008,6 +17008,10 @@
   "@taskRecorderActionConfirmBooking": {
     "description": "#1865 task recorder: taskRecorderActionConfirmBooking"
   },
+  "taskRecorderActionDeclineOptIn": "Did not switch on a test feature",
+  "@taskRecorderActionDeclineOptIn": {
+    "description": "#1884 recorder: taskRecorderActionDeclineOptIn"
+  },
   "taskRecorderActionOpenReserve": "Opened Reserve",
   "@taskRecorderActionOpenReserve": {
     "description": "#1865 task recorder: taskRecorderActionOpenReserve"
@@ -17027,6 +17031,10 @@
   "taskRecorderActionSelectResource": "Chose a place",
   "@taskRecorderActionSelectResource": {
     "description": "#1865 task recorder: taskRecorderActionSelectResource"
+  },
+  "taskRecorderActionSwitchFeature": "Switched a feature",
+  "@taskRecorderActionSwitchFeature": {
+    "description": "#1884 recorder: taskRecorderActionSwitchFeature"
   },
   "taskRecorderActionSwitchView": "Switched the view",
   "@taskRecorderActionSwitchView": {
@@ -17208,6 +17216,14 @@
   "taskRecorderOutcomeSeries": "Series booked",
   "@taskRecorderOutcomeSeries": {
     "description": "#1865 task recorder: taskRecorderOutcomeSeries"
+  },
+  "taskRecorderOutcomeSettingNotSaved": "Not saved",
+  "@taskRecorderOutcomeSettingNotSaved": {
+    "description": "#1884 recorder: taskRecorderOutcomeSettingNotSaved"
+  },
+  "taskRecorderOutcomeSettingSaved": "Saved",
+  "@taskRecorderOutcomeSettingSaved": {
+    "description": "#1884 recorder: taskRecorderOutcomeSettingSaved"
   },
   "taskRecorderOutcomeUnknown": "No answer came",
   "@taskRecorderOutcomeUnknown": {
@@ -17412,9 +17428,17 @@
   "@taskRecorderValueNoCheckIn": {
     "description": "#1865 task recorder: taskRecorderValueNoCheckIn"
   },
+  "taskRecorderValueOff": "off",
+  "@taskRecorderValueOff": {
+    "description": "#1884 recorder: taskRecorderValueOff"
+  },
   "taskRecorderValueOffline": "offline",
   "@taskRecorderValueOffline": {
     "description": "#1865 task recorder: taskRecorderValueOffline"
+  },
+  "taskRecorderValueOn": "on",
+  "@taskRecorderValueOn": {
+    "description": "#1884 recorder: taskRecorderValueOn"
   },
   "taskRecorderValueOnce": "once",
   "@taskRecorderValueOnce": {

@@ -26048,6 +26048,12 @@ abstract class AppLocalizations {
   /// **'Confirmed the booking'**
   String get taskRecorderActionConfirmBooking;
 
+  /// #1884 recorder: taskRecorderActionDeclineOptIn
+  ///
+  /// In en, this message translates to:
+  /// **'Did not switch on a test feature'**
+  String get taskRecorderActionDeclineOptIn;
+
   /// #1865 task recorder: taskRecorderActionOpenReserve
   ///
   /// In en, this message translates to:
@@ -26077,6 +26083,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chose a place'**
   String get taskRecorderActionSelectResource;
+
+  /// #1884 recorder: taskRecorderActionSwitchFeature
+  ///
+  /// In en, this message translates to:
+  /// **'Switched a feature'**
+  String get taskRecorderActionSwitchFeature;
 
   /// #1865 task recorder: taskRecorderActionSwitchView
   ///
@@ -26317,6 +26329,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Series booked'**
   String get taskRecorderOutcomeSeries;
+
+  /// #1884 recorder: taskRecorderOutcomeSettingNotSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Not saved'**
+  String get taskRecorderOutcomeSettingNotSaved;
+
+  /// #1884 recorder: taskRecorderOutcomeSettingSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get taskRecorderOutcomeSettingSaved;
 
   /// #1865 task recorder: taskRecorderOutcomeUnknown
   ///
@@ -26600,11 +26624,23 @@ abstract class AppLocalizations {
   /// **'without check-in'**
   String get taskRecorderValueNoCheckIn;
 
+  /// #1884 recorder: taskRecorderValueOff
+  ///
+  /// In en, this message translates to:
+  /// **'off'**
+  String get taskRecorderValueOff;
+
   /// #1865 task recorder: taskRecorderValueOffline
   ///
   /// In en, this message translates to:
   /// **'offline'**
   String get taskRecorderValueOffline;
+
+  /// #1884 recorder: taskRecorderValueOn
+  ///
+  /// In en, this message translates to:
+  /// **'on'**
+  String get taskRecorderValueOn;
 
   /// #1865 task recorder: taskRecorderValueOnce
   ///

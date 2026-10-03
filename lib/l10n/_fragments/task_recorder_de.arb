@@ -164,5 +164,11 @@
   "taskRecorderOutcomeCancelled": "Storniert",
   "taskRecorderValueDay": "Tag",
   "taskRecorderValueWeek": "Woche",
-  "taskRecorderValueMonth": "Monat"
+  "taskRecorderValueMonth": "Monat",
+  "taskRecorderActionSwitchFeature": "Eine Funktion umgeschaltet",
+  "taskRecorderActionDeclineOptIn": "Eine Testfunktion nicht eingeschaltet",
+  "taskRecorderOutcomeSettingSaved": "Gespeichert",
+  "taskRecorderOutcomeSettingNotSaved": "Nicht gespeichert",
+  "taskRecorderValueOn": "ein",
+  "taskRecorderValueOff": "aus"
 }

@@ -20,6 +20,9 @@ import '../widgets/features_view_switch.dart';
 import '../widgets/process_overview.dart';
 import '../feature_copy.dart';
 import '../feature_names.dart';
+import '../../../task_recorder/domain/action_registry.dart'
+    show RecorderActions, RecorderOutcomes;
+import '../../../task_recorder/presentation/recorder_seam.dart';
 
 /// Owner-only feature management (#146). #1327 — it opens on the process
 /// overview; one switch per registry feature is the second view, kept
@@ -92,12 +95,18 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
         .toList();
     if (experimental.isNotEmpty &&
         !await confirmExperimentalOptIn(context, experimental)) {
+      if (context.mounted) {
+        recordTaskStep(ref, RecorderActions.declineOptIn); // #1884
+      }
       return;
     }
     if (!context.mounted) return;
     // #1327 — the write itself (the #963 delta, then the forced
     // refetch) is application/toggle_workspace_feature.dart's decision.
-    if (!await runGuarded(
+    // #1884 — the task recorder notes the attempt and the real result.
+    final recorded = recordTaskAttempt(ref, RecorderActions.switchFeature,
+        target: feature.name, payload: {'switch_to': value ? 'on' : 'off'});
+    final saved = await runGuarded(
       context,
       domain: 'workspace',
       message: 'set feature flags failed',
@@ -105,9 +114,11 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
           'Something went wrong. Please try again.',
       action: () => toggleWorkspaceFeature(ref,
           workspace: workspace, feature: feature, value: value),
-    )) {
-      return;
-    }
+    );
+    recorded?.resolve(saved
+        ? RecorderOutcomes.settingSaved
+        : RecorderOutcomes.settingNotSaved);
+    if (!saved) return;
     // Naming what else came on: a cascade nobody sees is a surprise the
     // next time they read the list.
     if (value && alsoOn.isNotEmpty && context.mounted) {

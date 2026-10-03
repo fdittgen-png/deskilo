@@ -7,6 +7,8 @@
 // as if the recorder had observed it.
 
 import '../../../l10n/app_localizations.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/presentation/feature_names.dart';
 import '../domain/action_registry.dart';
 import '../domain/task_recording.dart';
 
@@ -33,6 +35,10 @@ String? actionLabel(AppLocalizations? l10n, String? action) => switch (action) {
   RecorderActions.viewDetails =>
     l10n?.taskRecorderActionViewDetails ?? 'Opened the reservation',
   RecorderActions.back => l10n?.taskRecorderActionBack ?? 'Went back',
+  RecorderActions.switchFeature =>
+    l10n?.taskRecorderActionSwitchFeature ?? 'Switched a feature',
+  RecorderActions.declineOptIn =>
+    l10n?.taskRecorderActionDeclineOptIn ?? 'Did not switch on a test feature',
   RecorderActions.selectLevel =>
     l10n?.taskRecorderActionSelectLevel ?? 'Chose a level',
   RecorderActions.checkIn => l10n?.taskRecorderActionCheckIn ?? 'Checked in',
@@ -58,6 +64,10 @@ String? outcomeLabel(AppLocalizations? l10n, String? outcome) =>
         l10n?.taskRecorderOutcomeRefused ?? 'Refused',
       RecorderOutcomes.bookingUnknown =>
         l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
+      RecorderOutcomes.settingSaved =>
+        l10n?.taskRecorderOutcomeSettingSaved ?? 'Saved',
+      RecorderOutcomes.settingNotSaved =>
+        l10n?.taskRecorderOutcomeSettingNotSaved ?? 'Not saved',
       RecorderOutcomes.checkedIn =>
         l10n?.taskRecorderOutcomeCheckedIn ?? 'Checked in',
       RecorderOutcomes.checkedOut =>
@@ -87,6 +97,8 @@ String valueLabel(AppLocalizations? l10n, String value) => switch (value) {
   'plan' => l10n?.taskRecorderValuePlan ?? 'plan',
   'list' => l10n?.taskRecorderValueList ?? 'list',
   'day' => l10n?.taskRecorderValueDay ?? 'day',
+  'on' => l10n?.taskRecorderValueOn ?? 'on',
+  'off' => l10n?.taskRecorderValueOff ?? 'off',
   'week' => l10n?.taskRecorderValueWeek ?? 'week',
   'month' => l10n?.taskRecorderValueMonth ?? 'month',
   'desk' => l10n?.taskRecorderValueDesk ?? 'a desk',
@@ -170,7 +182,7 @@ String endReasonLabel(AppLocalizations? l10n, RecordingEndReason? r) =>
   RecordedStep step,
 ) {
   final details = [
-    if (step.target != null) fieldLabel(l10n, step.target!),
+    if (step.target != null) targetLabel(l10n, step.target!),
     for (final v in step.payload.toJson().values) valueLabel(l10n, v),
   ];
   final detail = details.isEmpty ? null : details.join(' · ');
@@ -232,4 +244,12 @@ String recordingTranscript(AppLocalizations? l10n, TaskRecording recording) {
     '${endReasonLabel(l10n, recording.endReason)}',
   );
   return out.toString();
+}
+
+/// The words for a step's target: a booking field, or a workspace
+/// feature by its own name (#1884).
+String targetLabel(AppLocalizations? l10n, String target) {
+  final feature = WorkspaceFeature.values.where((f) => f.name == target);
+  if (feature.isNotEmpty) return featureName(l10n, feature.first);
+  return fieldLabel(l10n, target);
 }

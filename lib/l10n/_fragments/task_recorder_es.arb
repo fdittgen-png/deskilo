@@ -164,5 +164,11 @@
   "taskRecorderOutcomeCancelled": "Cancelada",
   "taskRecorderValueDay": "día",
   "taskRecorderValueWeek": "semana",
-  "taskRecorderValueMonth": "mes"
+  "taskRecorderValueMonth": "mes",
+  "taskRecorderActionSwitchFeature": "Cambió una función",
+  "taskRecorderActionDeclineOptIn": "No activó una función en prueba",
+  "taskRecorderOutcomeSettingSaved": "Guardado",
+  "taskRecorderOutcomeSettingNotSaved": "No guardado",
+  "taskRecorderValueOn": "activada",
+  "taskRecorderValueOff": "desactivada"
 }

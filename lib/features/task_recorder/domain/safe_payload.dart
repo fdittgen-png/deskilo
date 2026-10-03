@@ -49,6 +49,7 @@ const Map<String, SafeField> safeFields = {
   'for_whom': SafeField('for_whom', {'self', 'other_member'}),
   'repeat': SafeField('repeat', {'once', 'series'}),
   'check_in': SafeField('check_in', {'yes', 'no'}),
+  'switch_to': SafeField('switch_to', {'on', 'off'}),
   'series_result': SafeField('series_result', {
     'all_booked',
     'partially_booked',

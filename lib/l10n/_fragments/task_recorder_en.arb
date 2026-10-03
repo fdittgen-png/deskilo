@@ -694,5 +694,29 @@
   "taskRecorderValueMonth": "month",
   "@taskRecorderValueMonth": {
     "description": "#1881 recorder: taskRecorderValueMonth"
+  },
+  "taskRecorderActionSwitchFeature": "Switched a feature",
+  "@taskRecorderActionSwitchFeature": {
+    "description": "#1884 recorder: taskRecorderActionSwitchFeature"
+  },
+  "taskRecorderActionDeclineOptIn": "Did not switch on a test feature",
+  "@taskRecorderActionDeclineOptIn": {
+    "description": "#1884 recorder: taskRecorderActionDeclineOptIn"
+  },
+  "taskRecorderOutcomeSettingSaved": "Saved",
+  "@taskRecorderOutcomeSettingSaved": {
+    "description": "#1884 recorder: taskRecorderOutcomeSettingSaved"
+  },
+  "taskRecorderOutcomeSettingNotSaved": "Not saved",
+  "@taskRecorderOutcomeSettingNotSaved": {
+    "description": "#1884 recorder: taskRecorderOutcomeSettingNotSaved"
+  },
+  "taskRecorderValueOn": "on",
+  "@taskRecorderValueOn": {
+    "description": "#1884 recorder: taskRecorderValueOn"
+  },
+  "taskRecorderValueOff": "off",
+  "@taskRecorderValueOff": {
+    "description": "#1884 recorder: taskRecorderValueOff"
   }
 }

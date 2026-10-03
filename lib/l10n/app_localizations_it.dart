@@ -15126,6 +15126,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ha confermato la prenotazione';
 
   @override
+  String get taskRecorderActionDeclineOptIn =>
+      'Non ha attivato una funzionalità in prova';
+
+  @override
   String get taskRecorderActionOpenReserve => 'Ha aperto Prenota';
 
   @override
@@ -15139,6 +15143,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderActionSelectResource => 'Ha scelto un posto';
+
+  @override
+  String get taskRecorderActionSwitchFeature => 'Ha cambiato una funzionalità';
 
   @override
   String get taskRecorderActionSwitchView => 'Ha cambiato vista';
@@ -15273,6 +15280,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderOutcomeSeries => 'Serie prenotata';
+
+  @override
+  String get taskRecorderOutcomeSettingNotSaved => 'Non salvato';
+
+  @override
+  String get taskRecorderOutcomeSettingSaved => 'Salvato';
 
   @override
   String get taskRecorderOutcomeUnknown => 'Nessuna risposta ricevuta';
@@ -15428,7 +15441,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderValueNoCheckIn => 'senza check-in';
 
   @override
+  String get taskRecorderValueOff => 'disattiva';
+
+  @override
   String get taskRecorderValueOffline => 'offline';
+
+  @override
+  String get taskRecorderValueOn => 'attiva';
 
   @override
   String get taskRecorderValueOnce => 'una volta';

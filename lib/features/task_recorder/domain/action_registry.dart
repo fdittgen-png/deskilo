@@ -21,6 +21,10 @@
 // #1867 (guided tasks) and #1872 (packages) read them from this file
 // rather than copying them.
 
+import 'workspace_feature_keys.dart';
+
+export 'workspace_feature_keys.dart';
+
 /// The version of the action/outcome contract below. Bumped when an
 /// identifier is removed or changes meaning; adding one does not bump it.
 const int actionContractVersion = 1;
@@ -268,6 +272,9 @@ abstract final class RecorderSurfaces {
 
   /// #1881 A — my own reservation's sheet: check in, check out, cancel.
   static const myReservation = 'reservations.my_reservation';
+
+  /// #1884 A — the workspace's feature switches.
+  static const workspaceFeatures = 'workspace.features';
   static const recorderControls = 'recorder.controls';
 }
 
@@ -291,6 +298,10 @@ abstract final class RecorderActions {
   static const checkOut = 'reservations.check_out';
   static const cancelReservation = 'reservations.cancel_reservation';
   static const closeMyReservation = 'reservations.close_my_reservation';
+
+  // #1884 A — management forms.
+  static const switchFeature = 'workspace.switch_feature';
+  static const declineOptIn = 'workspace.decline_opt_in';
 }
 
 /// Outcome identifiers.
@@ -307,6 +318,10 @@ abstract final class RecorderOutcomes {
   static const cancelled = 'reservation.cancelled';
   static const reservationRefused = 'reservation.refused';
   static const reservationUnknown = 'reservation.unknown';
+
+  // #1884 A — a setting's save.
+  static const settingSaved = 'setting.saved';
+  static const settingNotSaved = 'setting.not_saved';
 }
 
 const Set<String> _bookingOutcomes = {
@@ -325,6 +340,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
     RecorderSurface(RecorderSurfaces.bookingSheet),
     RecorderSurface(RecorderSurfaces.reservationDetail),
     RecorderSurface(RecorderSurfaces.myReservation),
+    RecorderSurface(RecorderSurfaces.workspaceFeatures),
     RecorderSurface(RecorderSurfaces.recorderControls, recorderControl: true),
     RecorderSurface('navigation.any'),
   ],
@@ -427,6 +443,22 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       kind: ActionKind.cancel,
     ),
     ActionSpec(
+      RecorderActions.switchFeature,
+      surface: RecorderSurfaces.workspaceFeatures,
+      kind: ActionKind.submit,
+      targets: workspaceFeatureKeys,
+      payloadFields: {'switch_to'},
+      outcomes: {
+        RecorderOutcomes.settingSaved,
+        RecorderOutcomes.settingNotSaved,
+      },
+    ),
+    ActionSpec(
+      RecorderActions.declineOptIn,
+      surface: RecorderSurfaces.workspaceFeatures,
+      kind: ActionKind.cancel,
+    ),
+    ActionSpec(
       RecorderActions.recorderControl,
       surface: RecorderSurfaces.recorderControls,
       kind: ActionKind.select,
@@ -468,6 +500,14 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       RecorderOutcomes.reservationUnknown,
       state: ObservationState.outcomeUnknown,
     ),
+    OutcomeSpec(
+      RecorderOutcomes.settingSaved,
+      state: ObservationState.confirmed,
+    ),
+    OutcomeSpec(
+      RecorderOutcomes.settingNotSaved,
+      state: ObservationState.refused,
+    ),
   ],
   prerequisites: [
     PrerequisiteSpec('signed_in'),
@@ -479,6 +519,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
         RecorderSurfaces.bookingSheet,
         RecorderSurfaces.reservationDetail,
         RecorderSurfaces.myReservation,
+        RecorderSurfaces.workspaceFeatures,
       },
     ),
     PrerequisiteSpec('bookable_place'),

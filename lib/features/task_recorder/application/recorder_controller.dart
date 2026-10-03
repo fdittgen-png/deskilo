@@ -288,6 +288,7 @@ class RecorderController {
   /// nothing is being recorded; the caller runs its command regardless.
   OperationToken? attempt(
     String actionId, {
+    String? target,
     Map<String, Object?> payload = const {},
   }) {
     OperationToken? token;
@@ -305,6 +306,9 @@ class RecorderController {
           surface: spec.surface,
           action: spec.id,
           actionVersion: spec.version,
+          target: target != null && spec.targets.contains(target)
+              ? target
+              : null,
           payload: SafePayload.minimize(spec.payloadFields, payload),
           op: op,
           state: ObservationState.attempted,
