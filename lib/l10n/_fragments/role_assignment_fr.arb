@@ -160,5 +160,17 @@
         "type": "String"
       }
     }
+  },
+  "roleBuiltInSubtitle": "Intégré. Ce qu'il permet se règle dans Rôles.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
+  "roleBuiltInNote": "Intégré. Ce qu'il permet se règle dans Rôles ; il s'attribue sur la page de chaque membre et prend effet une fois validé.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleRenameAdministrator": "Renommer",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   }
 }

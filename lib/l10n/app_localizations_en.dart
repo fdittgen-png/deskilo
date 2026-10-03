@@ -13420,6 +13420,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get roleBuiltInNote =>
+      'Built in. What it may do is set in Roles; it is given on each member\'s page and takes effect once validated.';
+
+  @override
+  String get roleBuiltInSubtitle => 'Built in. What it may do is set in Roles.';
+
+  @override
   String get roleEditorActive => 'In use';
 
   @override
@@ -13481,6 +13488,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get roleRefusalOwnerOnly =>
       'Only the owner gives a role that manages roles.';
+
+  @override
+  String get roleRenameAdministrator => 'Rename';
 
   @override
   String get roleTakeBackFailed => 'The role was not taken back.';

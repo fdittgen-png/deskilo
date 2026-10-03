@@ -20,6 +20,8 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_role.dart';
 import 'package:deskilo/features/workspace/presentation/screens/roles_of_space_screen.dart';
+import 'package:deskilo/features/workspace/presentation/screens/roles_screen.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/role_editor_sheet.dart';
 import 'package:deskilo/features/workspace/presentation/screens/what_you_can_do_screen.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/member_roles_card.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/role_holders_section.dart';
@@ -49,6 +51,14 @@ const _treasurer = WorkspaceRole(
   sortOrder: 1,
 );
 
+// #2085 PR3 — the built-in Administrator row every workspace carries.
+const _administrator = WorkspaceRole(
+  id: 'role-a',
+  key: 'admin',
+  names: {'en': 'Administrator'},
+  builtin: true,
+);
+
 ({FakeWorkspaceRepository workspace, FakeWorkspaceRoles roles}) _seed({
   bool viewerOwner = true,
   Map<String, dynamic> flags = const {'customRoles': true},
@@ -64,7 +74,7 @@ const _treasurer = WorkspaceRole(
   }
   final roles = FakeWorkspaceRoles()
     ..callerMemberId = 'me'
-    ..roles.add(_treasurer);
+    ..roles.addAll([_administrator, _treasurer]);
   return (workspace: workspace, roles: roles);
 }
 
@@ -238,5 +248,59 @@ void main() {
     await _pump(tester, const WhatYouCanDoScreen(),
         workspace: s.workspace, roles: s.roles);
     expect(find.text('Nothing more than a member.'), findsOneWidget);
+  });
+
+  testWidgets('the owner renames the Administrator, and every page reads the '
+      'new name', (tester) async {
+    final s = _seed();
+    s.workspace.otherMembers
+      ..removeWhere((m) => m.id == 'ben')
+      ..add(_member('ben', admin: true));
+    await _pump(tester, const RolesScreen(),
+        workspace: s.workspace, roles: s.roles);
+    // The matrix is long: the Administrator card is built once reached.
+    await tester.scrollUntilVisible(
+        find.byKey(RolesScreen.renameAdministratorKey), 400);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(RolesScreen.renameAdministratorKey));
+    await tester.pumpAndSettle();
+    expect(find.byKey(RoleEditorSheet.builtInNoteKey), findsOneWidget);
+    // Only the name: no key, no permission switch.
+    expect(find.byKey(RoleEditorSheet.keyFieldKey), findsNothing);
+    expect(
+        find.byKey(RoleEditorSheet.permissionKeyFor(
+            WorkspacePermission.manageMembers)),
+        findsNothing);
+    await tester.enterText(
+        find.byKey(RoleEditorSheet.nameKeyFor('en')), 'Board member');
+    await tester.pump();
+    await tester.tap(find.byKey(RoleEditorSheet.saveKey));
+    await tester.pumpAndSettle();
+    expect(s.roles.roles.firstWhere((r) => r.builtin).names['en'],
+        'Board member');
+    expect(find.text('Board member'), findsOneWidget);
+
+    await _pump(tester, const MemberPage(memberId: 'ben'),
+        workspace: s.workspace, roles: s.roles);
+    expect(
+      find.descendant(
+          of: find.byKey(MemberRolesCard.administratorKey),
+          matching: find.text('Board member')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets("the space's own roles list the Administrator, whose holders "
+      'are shown but given on the member page', (tester) async {
+    final s = _seed();
+    s.roles.assignments['role-a'] = ['ben'];
+    await _pump(tester, const RolesOfSpaceScreen(),
+        workspace: s.workspace, roles: s.roles);
+    expect(find.text('Built in. What it may do is set in Roles.'),
+        findsOneWidget);
+    await tester.tap(find.byKey(RolesOfSpaceScreen.rowKeyFor('admin')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(RoleHoldersSection.holderKeyFor('ben')), findsOneWidget);
+    expect(find.byKey(RoleHoldersSection.addKey), findsNothing);
   });
 }

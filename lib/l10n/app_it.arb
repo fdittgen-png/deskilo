@@ -8733,6 +8733,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Integrato. Cosa consente si imposta in Ruoli; si assegna nella pagina di ogni membro e ha effetto una volta convalidato.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Integrato. Cosa consente si imposta in Ruoli.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "In uso",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -8813,6 +8821,10 @@
   "roleRefusalOwnerOnly": "Solo il proprietario dà un ruolo che gestisce i ruoli.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Rinomina",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "Il ruolo non è stato revocato.",
   "@roleTakeBackFailed": {
