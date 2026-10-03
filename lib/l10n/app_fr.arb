@@ -8812,6 +8812,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Intégré. Ce qu'il permet se règle dans Rôles ; il s'attribue sur la page de chaque membre et prend effet une fois validé.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Intégré. Ce qu'il permet se règle dans Rôles.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "En usage",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -8892,6 +8900,10 @@
   "roleRefusalOwnerOnly": "Seul le propriétaire attribue un rôle qui gère les rôles.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Renommer",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "Le rôle n'a pas été retiré.",
   "@roleTakeBackFailed": {
@@ -9690,6 +9702,7 @@
   "taskWorkbenchRefusedUnsafe": "Ce fichier est construit d'une manière qu'il n'est pas sûr d'ouvrir.",
   "taskWorkbenchRefusedUnsupported": "Ce n'est pas un fichier de tâche.",
   "taskWorkbenchReviewIllustrations": "Revoir les illustrations",
+  "taskWorkbenchStoryboardRestored": "Les illustrations revues ont été restaurées depuis le fichier.",
   "taskWorkbenchTitle": "Atelier de tâches",
   "taskWorkbenchTranscriptOnly": "Certaines étapes viennent d'une version plus récente : affichées comme simple transcription.",
   "taskWorkbenchUntrusted": "Un brouillon privé issu d'un fichier : rien n'y est considéré comme fiable ni envoyé.",

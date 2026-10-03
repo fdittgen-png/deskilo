@@ -8812,6 +8812,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Integrato. Cosa consente si imposta in Ruoli; si assegna nella pagina di ogni membro e ha effetto una volta convalidato.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Integrato. Cosa consente si imposta in Ruoli.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "In uso",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -8892,6 +8900,10 @@
   "roleRefusalOwnerOnly": "Solo il proprietario dà un ruolo che gestisce i ruoli.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Rinomina",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "Il ruolo non è stato revocato.",
   "@roleTakeBackFailed": {
@@ -9690,6 +9702,7 @@
   "taskWorkbenchRefusedUnsafe": "Questo file è costruito in modo non sicuro da aprire.",
   "taskWorkbenchRefusedUnsupported": "Questo non è un file di attività.",
   "taskWorkbenchReviewIllustrations": "Rivedi le illustrazioni",
+  "taskWorkbenchStoryboardRestored": "Le illustrazioni riviste sono state ripristinate dal file.",
   "taskWorkbenchTitle": "Laboratorio delle attività",
   "taskWorkbenchTranscriptOnly": "Alcuni passaggi provengono da una versione più recente: mostrati solo come trascrizione.",
   "taskWorkbenchUntrusted": "Una bozza privata da un file: nulla al suo interno è considerato affidabile né inviato.",

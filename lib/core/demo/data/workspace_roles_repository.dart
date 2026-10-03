@@ -53,6 +53,7 @@ class FakeWorkspaceRoles implements WorkspaceRolesRepository {
       permissions: role.permissions,
       sortOrder: role.sortOrder,
       active: role.active,
+      builtin: at >= 0 && roles[at].builtin,
     );
     if (at >= 0) {
       roles[at] = stored;
@@ -60,6 +61,25 @@ class FakeWorkspaceRoles implements WorkspaceRolesRepository {
       roles.add(stored);
     }
     return id;
+  }
+
+  @override
+  Future<void> renameAdministrator(
+    String workspaceId,
+    Map<String, String> names,
+  ) async {
+    final at = roles.indexWhere((r) => r.builtin);
+    if (at < 0) throw StateError('no built-in Administrator');
+    final r = roles[at];
+    roles[at] = WorkspaceRole(
+      id: r.id,
+      key: r.key,
+      names: names,
+      permissions: r.permissions,
+      sortOrder: r.sortOrder,
+      active: r.active,
+      builtin: true,
+    );
   }
 
   @override

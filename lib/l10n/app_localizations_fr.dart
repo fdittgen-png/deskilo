@@ -13630,6 +13630,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get roleBuiltInNote =>
+      'Intégré. Ce qu\'il permet se règle dans Rôles ; il s\'attribue sur la page de chaque membre et prend effet une fois validé.';
+
+  @override
+  String get roleBuiltInSubtitle =>
+      'Intégré. Ce qu\'il permet se règle dans Rôles.';
+
+  @override
   String get roleEditorActive => 'En usage';
 
   @override
@@ -13692,6 +13700,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get roleRefusalOwnerOnly =>
       'Seul le propriétaire attribue un rôle qui gère les rôles.';
+
+  @override
+  String get roleRenameAdministrator => 'Renommer';
 
   @override
   String get roleTakeBackFailed => 'Le rôle n\'a pas été retiré.';
@@ -15591,6 +15602,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskWorkbenchReviewIllustrations => 'Revoir les illustrations';
+
+  @override
+  String get taskWorkbenchStoryboardRestored =>
+      'Les illustrations revues ont été restaurées depuis le fichier.';
 
   @override
   String get taskWorkbenchTitle => 'Atelier de tâches';

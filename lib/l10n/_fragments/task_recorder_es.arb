@@ -152,5 +152,6 @@
   "taskGuideRecovery": "Si se rechaza: elija otro sitio, día o periodo y confirme de nuevo.",
   "taskGuideNoText": "Una instrucción aún por escribir",
   "taskGuideManual": "Haga este paso usted mismo",
-  "taskGuideManualProtected": "Haga este paso usted mismo, en una pantalla protegida: {category}"
+  "taskGuideManualProtected": "Haga este paso usted mismo, en una pantalla protegida: {category}",
+  "taskWorkbenchStoryboardRestored": "Las ilustraciones revisadas se restauraron desde el archivo."
 }

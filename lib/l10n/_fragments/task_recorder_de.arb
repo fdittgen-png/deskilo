@@ -152,5 +152,6 @@
   "taskGuideRecovery": "Bei Ablehnung: einen anderen Platz, Tag oder Zeitraum wählen und erneut bestätigen.",
   "taskGuideNoText": "Eine noch zu schreibende Anweisung",
   "taskGuideManual": "Diesen Schritt selbst ausführen",
-  "taskGuideManualProtected": "Diesen Schritt selbst ausführen, auf einem geschützten Bildschirm: {category}"
+  "taskGuideManualProtected": "Diesen Schritt selbst ausführen, auf einem geschützten Bildschirm: {category}",
+  "taskWorkbenchStoryboardRestored": "Die geprüften Illustrationen wurden aus der Datei wiederhergestellt."
 }

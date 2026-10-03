@@ -8812,6 +8812,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Eingebaut. Was sie darf, wird unter Rollen festgelegt; sie wird auf der Seite jedes Mitglieds vergeben und wirkt nach der Freigabe.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Eingebaut. Was sie darf, wird unter Rollen festgelegt.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "In Gebrauch",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -8892,6 +8900,10 @@
   "roleRefusalOwnerOnly": "Nur die Inhaberin vergibt eine Rolle, die Rollen verwaltet.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Umbenennen",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "Die Rolle wurde nicht entzogen.",
   "@roleTakeBackFailed": {
@@ -9690,6 +9702,7 @@
   "taskWorkbenchRefusedUnsafe": "Diese Datei ist so aufgebaut, dass das Öffnen nicht sicher ist.",
   "taskWorkbenchRefusedUnsupported": "Das ist keine Aufgabendatei.",
   "taskWorkbenchReviewIllustrations": "Illustrationen prüfen",
+  "taskWorkbenchStoryboardRestored": "Die geprüften Illustrationen wurden aus der Datei wiederhergestellt.",
   "taskWorkbenchTitle": "Aufgaben-Werkbank",
   "taskWorkbenchTranscriptOnly": "Einige Schritte stammen aus einer neueren Version: nur als Mitschrift angezeigt.",
   "taskWorkbenchUntrusted": "Ein privater Entwurf aus einer Datei: nichts darin gilt als vertrauenswürdig oder wird gesendet.",

@@ -46,7 +46,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(router.state.uri.path, '/reserve');
     expect(find.byType(ShellScreen), findsOneWidget);
-    expect(find.text('Second Space'), findsWidgets);
+    expect(find.text('DesKilo · Second Space'), findsWidgets);
   });
 
   testWidgets('anyone else requests a membership', (tester) async {

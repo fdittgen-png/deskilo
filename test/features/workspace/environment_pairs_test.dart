@@ -69,7 +69,7 @@ void main() {
     expect(container.read(defaultWorkspaceIdProvider).value, 'ws-prod');
   });
 
-  testWidgets('with the flag off the two sides are two ordinary entries',
+  testWidgets('existing pairs stay together when pair creation is disabled',
       (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace(
         featureFlags: const {'environmentPairs': false});
@@ -80,9 +80,9 @@ void main() {
       ..clear()
       ..addAll([dev, prod]);
     await _pump(tester, workspace: workspace);
-    expect(find.byKey(const ValueKey('profile-pair-pair-1')), findsNothing);
-    expect(find.byKey(ValueKey('profile-env-${dev.id}')), findsOneWidget);
-    expect(find.byKey(const ValueKey('profile-env-ws-prod')), findsOneWidget);
+    expect(find.byKey(const ValueKey('profile-pair-pair-1')), findsOneWidget);
+    expect(find.byKey(ValueKey('profile-env-${dev.id}')), findsNothing);
+    expect(find.byKey(const ValueKey('profile-env-ws-prod')), findsNothing);
   });
 
   // ── #1550 — the pair a person asked for is shown as a pair ──────

@@ -23468,6 +23468,18 @@ abstract class AppLocalizations {
   /// **'Give a role to {name}'**
   String roleAssignSheetTitle(String name);
 
+  /// #2085 giving roles: roleBuiltInNote
+  ///
+  /// In en, this message translates to:
+  /// **'Built in. What it may do is set in Roles; it is given on each member\'s page and takes effect once validated.'**
+  String get roleBuiltInNote;
+
+  /// #2085 giving roles: roleBuiltInSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Built in. What it may do is set in Roles.'**
+  String get roleBuiltInSubtitle;
+
   /// #1528 the roles of a space: roleEditorActive
   ///
   /// In en, this message translates to:
@@ -23581,6 +23593,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only the owner gives a role that manages roles.'**
   String get roleRefusalOwnerOnly;
+
+  /// #2085 giving roles: roleRenameAdministrator
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get roleRenameAdministrator;
 
   /// #2085 giving roles: roleTakeBackFailed
   ///
@@ -26827,6 +26845,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Review the illustrations'**
   String get taskWorkbenchReviewIllustrations;
+
+  /// #1876 workbench: taskWorkbenchStoryboardRestored
+  ///
+  /// In en, this message translates to:
+  /// **'The reviewed illustrations were restored from the file.'**
+  String get taskWorkbenchStoryboardRestored;
 
   /// #1872 task workbench: taskWorkbenchTitle
   ///
