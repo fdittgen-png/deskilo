@@ -193,3 +193,61 @@ final class ConnectionHealthFamily extends $Family
   @override
   String toString() => r'connectionHealthProvider';
 }
+
+/// #1834 — connecting another installation with the person's identity:
+/// that server's own sign-in, its verified binding, the session kept in
+/// the registry above. The one callback owner routes the browser return.
+
+@ProviderFor(identityConnector)
+final identityConnectorProvider = IdentityConnectorProvider._();
+
+/// #1834 — connecting another installation with the person's identity:
+/// that server's own sign-in, its verified binding, the session kept in
+/// the registry above. The one callback owner routes the browser return.
+
+final class IdentityConnectorProvider
+    extends
+        $FunctionalProvider<
+          IdentityConnector,
+          IdentityConnector,
+          IdentityConnector
+        >
+    with $Provider<IdentityConnector> {
+  /// #1834 — connecting another installation with the person's identity:
+  /// that server's own sign-in, its verified binding, the session kept in
+  /// the registry above. The one callback owner routes the browser return.
+  IdentityConnectorProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'identityConnectorProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$identityConnectorHash();
+
+  @$internal
+  @override
+  $ProviderElement<IdentityConnector> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  IdentityConnector create(Ref ref) {
+    return identityConnector(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(IdentityConnector value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<IdentityConnector>(value),
+    );
+  }
+}
+
+String _$identityConnectorHash() => r'5164465c021db49e8d8098c78f931db0679a0605';

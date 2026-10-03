@@ -10644,6 +10644,144 @@ abstract class AppLocalizations {
   /// **'Whit Monday'**
   String get holidayWhitMonday;
 
+  /// #1834 Connecting another server with the person's Deskilo identity: The system browser could not be launched.
+  ///
+  /// In en, this message translates to:
+  /// **'The browser could not be opened.'**
+  String get identityConnectBrowser;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Confirmation after connecting, before the membership request is sent. {name} is the space's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Send your membership request to {name}?'**
+  String identityConnectConfirmApply(String name);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Body of the confirmation before sending the membership request.
+  ///
+  /// In en, this message translates to:
+  /// **'You are connected now. The space reviews your request; nothing else is shared.'**
+  String get identityConnectConfirmApplyBody;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Button that opens the other server's own sign-in in the browser. Deskilo is the brand.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Deskilo'**
+  String get identityConnectContinue;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The target is the app's own server.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the server you are already signed in to.'**
+  String get identityConnectCurrentServer;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server trusts another identity authority.
+  ///
+  /// In en, this message translates to:
+  /// **'This server accepts a different identity provider.'**
+  String get identityConnectDifferentAuthority;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Snackbar after a successful connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {host}.'**
+  String identityConnectDone(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Secondary choice: connect with a separate local account (e-mail and password or code) on that server.
+  ///
+  /// In en, this message translates to:
+  /// **'Use an account I already have on this server'**
+  String get identityConnectExistingAccount;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The pending sign-in expired.
+  ///
+  /// In en, this message translates to:
+  /// **'The sign-in took too long. Start again.'**
+  String get identityConnectExpired;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: What connecting shares and what it never grants. Deskilo is the brand; do not translate it.
+  ///
+  /// In en, this message translates to:
+  /// **'{host} will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the space still decides any request.'**
+  String identityConnectExplain(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Network or server unavailable during the connection.
+  ///
+  /// In en, this message translates to:
+  /// **'The server did not answer. Try again.'**
+  String get identityConnectNetwork;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server has no Deskilo identity provider.
+  ///
+  /// In en, this message translates to:
+  /// **'This server does not offer sign-in with Deskilo.'**
+  String get identityConnectNoDeskiloSignIn;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The person's own server exposes no identity authority another server can trust.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account here has no Deskilo identity another server could accept.'**
+  String get identityConnectNoSharedIdentity;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server accepted the person but saving the connection on the device failed.
+  ///
+  /// In en, this message translates to:
+  /// **'{host} accepted you, but this device could not keep the connection. Nothing was sent. Try again.'**
+  String identityConnectNotSaved(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Generic refusal (provider said no, flow superseded, incompatible server).
+  ///
+  /// In en, this message translates to:
+  /// **'The connection was not completed. Nothing was sent.'**
+  String get identityConnectRefused;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Retry button after a failed connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get identityConnectRetry;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Confirm button that sends the membership request.
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get identityConnectSend;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server speaks no protocol this build speaks.
+  ///
+  /// In en, this message translates to:
+  /// **'This server cannot be connected from this version of the app.'**
+  String get identityConnectServerUnsupported;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Title of the sheet that connects another server. {host} is that server's host name.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to {host}'**
+  String identityConnectTitle(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server could not be checked.
+  ///
+  /// In en, this message translates to:
+  /// **'This server did not answer.'**
+  String get identityConnectUnavailable;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Collision with an existing unlinked account on the other server.
+  ///
+  /// In en, this message translates to:
+  /// **'An account on that server already uses this identity or e-mail without being linked to it. Use that account instead.'**
+  String get identityConnectUnlinked;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Shown while the browser sign-in is open.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish signing in in your browser, then come back here.'**
+  String get identityConnectWaiting;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The browser returned a different identity than the person signed in here.
+  ///
+  /// In en, this message translates to:
+  /// **'The browser signed in as someone else. Nothing was connected.'**
+  String get identityConnectWrongAccount;
+
   /// Identity-only consent names the exact destination host.
   ///
   /// In en, this message translates to:

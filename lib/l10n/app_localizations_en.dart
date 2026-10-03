@@ -6138,6 +6138,97 @@ class AppLocalizationsEn extends AppLocalizations {
   String get holidayWhitMonday => 'Whit Monday';
 
   @override
+  String get identityConnectBrowser => 'The browser could not be opened.';
+
+  @override
+  String identityConnectConfirmApply(String name) {
+    return 'Send your membership request to $name?';
+  }
+
+  @override
+  String get identityConnectConfirmApplyBody =>
+      'You are connected now. The space reviews your request; nothing else is shared.';
+
+  @override
+  String get identityConnectContinue => 'Continue with Deskilo';
+
+  @override
+  String get identityConnectCurrentServer =>
+      'This is the server you are already signed in to.';
+
+  @override
+  String get identityConnectDifferentAuthority =>
+      'This server accepts a different identity provider.';
+
+  @override
+  String identityConnectDone(String host) {
+    return 'Connected to $host.';
+  }
+
+  @override
+  String get identityConnectExistingAccount =>
+      'Use an account I already have on this server';
+
+  @override
+  String get identityConnectExpired =>
+      'The sign-in took too long. Start again.';
+
+  @override
+  String identityConnectExplain(String host) {
+    return '$host will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the space still decides any request.';
+  }
+
+  @override
+  String get identityConnectNetwork => 'The server did not answer. Try again.';
+
+  @override
+  String get identityConnectNoDeskiloSignIn =>
+      'This server does not offer sign-in with Deskilo.';
+
+  @override
+  String get identityConnectNoSharedIdentity =>
+      'Your account here has no Deskilo identity another server could accept.';
+
+  @override
+  String identityConnectNotSaved(String host) {
+    return '$host accepted you, but this device could not keep the connection. Nothing was sent. Try again.';
+  }
+
+  @override
+  String get identityConnectRefused =>
+      'The connection was not completed. Nothing was sent.';
+
+  @override
+  String get identityConnectRetry => 'Try again';
+
+  @override
+  String get identityConnectSend => 'Send request';
+
+  @override
+  String get identityConnectServerUnsupported =>
+      'This server cannot be connected from this version of the app.';
+
+  @override
+  String identityConnectTitle(String host) {
+    return 'Connect to $host';
+  }
+
+  @override
+  String get identityConnectUnavailable => 'This server did not answer.';
+
+  @override
+  String get identityConnectUnlinked =>
+      'An account on that server already uses this identity or e-mail without being linked to it. Use that account instead.';
+
+  @override
+  String get identityConnectWaiting =>
+      'Finish signing in in your browser, then come back here.';
+
+  @override
+  String get identityConnectWrongAccount =>
+      'The browser signed in as someone else. Nothing was connected.';
+
+  @override
   String identityConsentAsks(String host) {
     return 'Use your Deskilo identity to sign in to $host.';
   }
