@@ -35,6 +35,7 @@ class BiToolbar extends StatelessWidget {
     required this.modules,
     required this.today,
     required this.onChanged,
+    this.cardTitle,
   });
 
   final BiQueryContext query;
@@ -46,6 +47,9 @@ class BiToolbar extends StatelessWidget {
   /// The workspace date relative periods resolve against.
   final DateTime today;
   final ValueChanged<BiQueryContext> onChanged;
+
+  /// A module's display name, for the analyses dialog.
+  final String Function(String moduleId)? cardTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -226,6 +230,35 @@ class BiToolbar extends StatelessWidget {
             ],
             onSelected: (s) => onChanged(query.copyWith(sort: s)),
           ),
+          if (modules.length > 1)
+            OutlinedButton.icon(
+              key: const ValueKey('bi-cards'),
+              icon: const Icon(Icons.view_agenda_outlined),
+              label: Text(l10n?.biCards ?? 'Analyses shown'),
+              onPressed: () async {
+                final chosen = await showDialog<List<String>>(
+                  context: context,
+                  builder: (_) => _CardsDialog(
+                    modules: modules,
+                    shown: query.cards.isEmpty
+                        ? [for (final m in modules) m.id]
+                        : [
+                            for (final c in query.cards)
+                              if (modules.any((m) => m.id == c)) c,
+                          ],
+                    title: cardTitle,
+                  ),
+                );
+                if (chosen == null || chosen.isEmpty) return;
+                final all = [for (final m in modules) m.id];
+                // Every analysis in the standard order is the standard.
+                final standard =
+                    chosen.length == all.length &&
+                    [for (var i = 0; i < all.length; i++) all[i] == chosen[i]]
+                        .every((same) => same);
+                onChanged(query.copyWith(cards: standard ? const [] : chosen));
+              },
+            ),
           SegmentedButton<BiView>(
             key: const ValueKey('bi-view'),
             segments: [
@@ -245,6 +278,100 @@ class BiToolbar extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Which analyses the page shows, and in which order (#1923 C, #1924).
+class _CardsDialog extends StatefulWidget {
+  const _CardsDialog({
+    required this.modules,
+    required this.shown,
+    required this.title,
+  });
+
+  final List<BiModule> modules;
+  final List<String> shown;
+  final String Function(String moduleId)? title;
+
+  @override
+  State<_CardsDialog> createState() => _CardsDialogState();
+}
+
+class _CardsDialogState extends State<_CardsDialog> {
+  late final List<String> _order = [
+    ...widget.shown,
+    for (final m in widget.modules)
+      if (!widget.shown.contains(m.id)) m.id,
+  ];
+  late final Set<String> _on = {...widget.shown};
+
+  void _move(int i, int by) => setState(() {
+    final id = _order.removeAt(i);
+    _order.insert(i + by, id);
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final material = MaterialLocalizations.of(context);
+    return AlertDialog(
+      title: Text(l10n?.biCards ?? 'Analyses shown'),
+      content: SizedBox(
+        width: 360,
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            for (final (i, id) in _order.indexed)
+              CheckboxListTile(
+                key: ValueKey('bi-card-$id'),
+                value: _on.contains(id),
+                controlAffinity: ListTileControlAffinity.leading,
+                contentPadding: EdgeInsets.zero,
+                title: Text(widget.title?.call(id) ?? id),
+                onChanged: (v) =>
+                    setState(() => v == true ? _on.add(id) : _on.remove(id)),
+                secondary: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      key: ValueKey('bi-card-up-$id'),
+                      tooltip: l10n?.biCardUp ?? 'Move up',
+                      icon: const Icon(Icons.arrow_upward),
+                      onPressed: i == 0 ? null : () => _move(i, -1),
+                    ),
+                    IconButton(
+                      key: ValueKey('bi-card-down-$id'),
+                      tooltip: l10n?.biCardDown ?? 'Move down',
+                      icon: const Icon(Icons.arrow_downward),
+                      onPressed: i == _order.length - 1
+                          ? null
+                          : () => _move(i, 1),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          key: const ValueKey('bi-toolbar-dialog-cancel'),
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(material.cancelButtonLabel),
+        ),
+        TextButton(
+          key: const ValueKey('bi-cards-ok'),
+          // At least one analysis: an empty page is not a view.
+          onPressed: _on.isEmpty
+              ? null
+              : () => Navigator.of(context).pop([
+                  for (final id in _order)
+                    if (_on.contains(id)) id,
+                ]),
+          child: Text(material.okButtonLabel),
+        ),
+      ],
     );
   }
 }

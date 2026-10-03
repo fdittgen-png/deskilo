@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../l10n/app_localizations.dart';
 import '../application/template_workbook.dart';
+import '../domain/feature_lifecycle.dart';
 import '../domain/workspace_feature.dart';
 import 'feature_names.dart';
+import 'widgets/feature_maturity_badge.dart';
 
 /// #1661 — the workbook's explanations and feature names in the reader's
 /// language; keys, states and values stay technical English.
@@ -25,5 +27,9 @@ WorkbookLabels workbookLabels(AppLocalizations? l10n) {
       null => key,
     },
     wide: l10n.workbookWide,
+    stage: (key) => switch (byKey[key]) {
+      final f? => featureMaturityLabel(l10n, featureAssessmentOf(f).maturity),
+      null => '',
+    },
   );
 }

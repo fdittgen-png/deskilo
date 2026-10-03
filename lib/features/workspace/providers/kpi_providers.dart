@@ -14,6 +14,22 @@ part 'kpi_providers.g.dart';
 KpiRepository kpiRepository(Ref ref) =>
     SupabaseKpiRepository(Supabase.instance.client);
 
+/// #1924 — the finance KPIs.
+@Riverpod(keepAlive: true)
+FinanceKpiRepository financeKpiRepository(Ref ref) =>
+    SupabaseFinanceKpiRepository(Supabase.instance.client);
+
+/// One read per workspace and months, shared by every finance card.
+@riverpod
+Future<FinanceSummaryKpi> financeSummary(
+  Ref ref,
+  String workspaceId,
+  String fromMonth,
+  String toMonth,
+) => ref
+    .watch(financeKpiRepositoryProvider)
+    .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
 @riverpod

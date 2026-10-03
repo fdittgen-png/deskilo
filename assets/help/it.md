@@ -2253,6 +2253,12 @@ Ciò che **non** c'è è altrettanto voluto. Occupazione, saldi e messaggi non l
 
 La funzionalità resta spenta finché non la chiedete, e si colloca **accanto** alla campanella degli avvisi, senza sostituirla.
 
+**Leggere le analisi (#1982).** L’utilizzo è il tempo dei posti prenotati diviso per quello offerto, non la presenza misurata. I periodi passati, attuali e futuri spiegano il significato dei valori; l’ora di calcolo è quella dello spazio. I periodi attuali includono date future. Le prenotazioni future non sono previsioni della domanda; tornare al passato ricalcola i dati attuali senza ricostruire quelli conosciuti allora. I periodi parziali o non aggiornati non producono una variazione delle prestazioni. Aggiorna i dati mantiene la selezione. Le ore-posto non prenotate e bloccate sono distinte. I dati assenti o invalidi non sono disponibili, mai zero.
+
+Lo stato finanziario spiega il subtotale: importi fatturati meno note di credito, rimborsi e crediti. Non è un utile né un saldo bancario. I pagamenti abbinati e ricevuti si sovrappongono; non vanno sommati.
+
+Nel BI web, **Analisi** seleziona capacità, importi fatturati e incassati in base ai permessi e alle funzionalità attive. Gli importi fatturati seguono i mesi di fatturazione; quelli incassati seguono il mese di abbinamento del pagamento alla fattura, non la data dell’estratto conto. Le note di credito sono mostrate separatamente. **Salva vista** conserva la selezione privatamente o, con i permessi necessari, per il team. Una vista predefinita carica dati aggiornati con i permessi attuali; non salva una copia delle cifre.
+
 # Guida dell'amministratore — configurare lo spazio
 
 Per chi mette in piedi lo spazio: che cosa decide ogni parametro,

@@ -148,6 +148,11 @@ const List<RouteCoverage> routeCoverage = [
     category: ProtectedSurface.provider,
   ),
   RouteCoverage(
+    '/assistants/connect',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.provider,
+  ),
+  RouteCoverage(
     '/database/assistant-approvals',
     CoverageStatus.excluded,
     category: ProtectedSurface.provider,

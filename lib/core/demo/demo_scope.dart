@@ -8,6 +8,7 @@ import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
+import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
@@ -98,6 +99,8 @@ import '../theme/theme_controller.dart';
 import '../time/clock.dart';
 import '../../features/workspace/domain/kpi_contract.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
+import '../../features/workspace/domain/bi_saved_view.dart';
+import '../../features/workspace/providers/bi_providers.dart';
 import 'demo_fixture.dart';
 import '../push/push_opt_out.dart';
 
@@ -159,6 +162,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       profileRepositoryProvider.overrideWithValue(fixture.profiles),
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>[]),
+      // #1834 — Demo never opens another server's sign-in.
+      identityConnectorProvider.overrideWithValue(const OfflineIdentityConnector()),
       // #1847 — public discovery, publication management and participant
       // requests: three interfaces, one in-memory directory.
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
@@ -178,6 +183,12 @@ List<Override> demoOverrides(DemoFixture fixture) {
       workspaceRolesRepositoryProvider.overrideWithValue(fixture.roles),
       // #1918 — no server to compute capacity on: the tile says so.
       kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
+      // #1923 C — saved views live in memory for the demonstration.
+      biViewRepositoryProvider.overrideWithValue(InMemoryBiViewRepository()),
+      // #1924 — no server to sum invoices on: the cards say so.
+      financeKpiRepositoryProvider.overrideWithValue(
+        const UnavailableFinanceKpiRepository(),
+      ),
 
       // #1377 — the ways an effect could leave the app, each pointed at
       // something inert. A payment, an invitation, an e-invoice and a
@@ -282,6 +293,7 @@ const Set<String> demoOverriddenProviders = {
   'workspaceApplicationRepositoryProvider',
   'accountActivityRepositoryProvider',
   'connectedInstallationsProvider', 'connectedSourcesProvider',
+  'identityConnectorProvider', // #1834
   'publicDiscoveryRepositoryProvider', 'publicationRepositoryProvider',
   'directoryParticipantRepositoryProvider', 'accountContactRepositoryProvider',
   'meRepositoryProvider', // #1823
@@ -292,6 +304,8 @@ const Set<String> demoOverriddenProviders = {
   'workspaceFieldsRepositoryProvider',
   'workspaceRolesRepositoryProvider',
   'kpiRepositoryProvider',
+  'biViewRepositoryProvider', // #1923 C
+  'financeKpiRepositoryProvider', // #1924
   'realtimeSyncProvider',
   'notificationServiceProvider',
   'appBadgeProvider',

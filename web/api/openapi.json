@@ -1235,7 +1235,11 @@
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "How many items to return (1-100, default 25).",
+            "examples": [
+              25
+            ]
           }
         },
         "required": [],
@@ -1249,7 +1253,11 @@
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           }
         },
         "required": [
@@ -1265,26 +1273,43 @@
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "starts_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Start of the time you want to book, ISO 8601 with an explicit offset in the workspace's time zone, e.g. 2026-10-05T09:00:00+02:00.",
+            "examples": [
+              "2026-10-05T09:00:00+02:00"
+            ]
           },
           "ends_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "End of the time you want to book, ISO 8601 with an explicit offset; at most 31 days after starts_at.",
+            "examples": [
+              "2026-10-05T13:00:00+02:00"
+            ]
           },
           "cursor": {
             "type": "string",
-            "maxLength": 400
+            "maxLength": 400,
+            "description": "The next_cursor of the previous page, to read the next one. Omit for the first page."
           },
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "How many items to return (1-100, default 25).",
+            "examples": [
+              25
+            ]
           }
         },
         "required": [
@@ -1302,26 +1327,43 @@
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "from": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Window start, ISO 8601 with an explicit offset. The window is at most 31 days.",
+            "examples": [
+              "2026-10-01T00:00:00+02:00"
+            ]
           },
           "to": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Window end, ISO 8601 with an explicit offset, after from.",
+            "examples": [
+              "2026-10-31T23:59:59+01:00"
+            ]
           },
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "How many items to return (1-100, default 25).",
+            "examples": [
+              25
+            ]
           },
           "cursor": {
             "type": "string",
-            "maxLength": 400
+            "maxLength": 400,
+            "description": "The next_cursor of the previous page, to read the next one. Omit for the first page."
           }
         },
         "required": [
@@ -1339,15 +1381,24 @@
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "member_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The member this request is about."
           },
           "period": {
             "type": "string",
-            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "description": "The month, as YYYY-MM.",
+            "examples": [
+              "2026-09"
+            ]
           }
         },
         "required": [
@@ -1365,16 +1416,25 @@
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "How many items to return (1-100, default 25).",
+            "examples": [
+              25
+            ]
           },
           "cursor": {
             "type": "string",
-            "maxLength": 400
+            "maxLength": 400,
+            "description": "The next_cursor of the previous page, to read the next one. Omit for the first page."
           }
         },
         "required": [
@@ -1390,40 +1450,64 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "seat_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The seat to book: a seat_id from deskilo_get_availability with free = true."
           },
           "desk_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "Book a whole desk instead of one seat (only where the workspace books desks as a whole)."
           },
           "office_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "Book a whole office instead of one seat (only where the workspace books offices as a whole)."
           },
           "level_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "Book a whole level instead of one seat (only where the workspace books levels as a whole)."
           },
           "starts_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Start, ISO 8601 with an explicit offset in the workspace's time zone, e.g. 2026-10-05T09:00:00+02:00.",
+            "examples": [
+              "2026-10-05T09:00:00+02:00"
+            ]
           },
           "ends_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "End, ISO 8601 with an explicit offset, after starts_at.",
+            "examples": [
+              "2026-10-05T13:00:00+02:00"
+            ]
           },
           "check_in": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "True to check the person in at once (only when the booking starts now). Default false.",
+            "examples": [
+              false
+            ]
           }
         },
         "required": [
@@ -1442,29 +1526,47 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "reservation_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
           },
           "starts_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "The new start, ISO 8601 with an explicit offset.",
+            "examples": [
+              "2026-10-05T09:00:00+02:00"
+            ]
           },
           "ends_at": {
             "type": "string",
             "format": "date-time",
-            "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
+            "description": "The new end, ISO 8601 with an explicit offset.",
+            "examples": [
+              "2026-10-05T13:00:00+02:00"
+            ]
           },
           "expected_state": {
             "type": "string",
-            "maxLength": 64
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
           }
         },
         "required": [
@@ -1484,19 +1586,29 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "reservation_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
           },
           "expected_state": {
             "type": "string",
-            "maxLength": 64
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
           }
         },
         "required": [
@@ -1514,19 +1626,29 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "reservation_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
           },
           "expected_state": {
             "type": "string",
-            "maxLength": 64
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
           }
         },
         "required": [
@@ -1544,23 +1666,34 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "reservation_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
           },
           "reason": {
             "type": "string",
-            "maxLength": 500
+            "maxLength": 500,
+            "description": "Optional: why the booking is cancelled, shown to whoever validates it."
           },
           "expected_state": {
             "type": "string",
-            "maxLength": 64
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
           }
         },
         "required": [
@@ -1578,19 +1711,32 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "member_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The member this request is about."
           },
           "period": {
             "type": "string",
-            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "description": "The month, as YYYY-MM.",
+            "examples": [
+              "2026-09"
+            ]
           },
           "kind": {
             "type": "string",
@@ -1598,6 +1744,10 @@
               "full",
               "subscription",
               "usage"
+            ],
+            "description": "Which invoice: full (subscription and usage), subscription only, or usage only.",
+            "examples": [
+              "full"
             ]
           }
         },
@@ -1617,19 +1767,29 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "invoice_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The invoice this request is about."
           },
           "reason": {
             "type": "string",
-            "maxLength": 500
+            "maxLength": 500,
+            "description": "Why the invoice should be voided, shown to whoever validates it."
           }
         },
         "required": [
@@ -1647,19 +1807,29 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "invoice_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The invoice this request is about."
           },
           "note": {
             "type": "string",
-            "maxLength": 500
+            "maxLength": 500,
+            "description": "Optional: a note for whoever validates the refund."
           }
         },
         "required": [
@@ -1677,15 +1847,24 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "member_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The member this request is about."
           },
           "status": {
             "type": "string",
@@ -1693,6 +1872,10 @@
               "active",
               "paused",
               "exited"
+            ],
+            "description": "The member status to request.",
+            "examples": [
+              "paused"
             ]
           }
         },
@@ -1712,20 +1895,33 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "member_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The member this request is about."
           },
           "pct": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 100
+            "maximum": 100,
+            "description": "The subscription share to request, in percent (0-100).",
+            "examples": [
+              50
+            ]
           }
         },
         "required": [
@@ -1744,16 +1940,25 @@
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "How many items to return (1-100, default 25).",
+            "examples": [
+              25
+            ]
           },
           "cursor": {
             "type": "string",
-            "maxLength": 400
+            "maxLength": 400,
+            "description": "The next_cursor of the previous page, to read the next one. Omit for the first page."
           }
         },
         "required": [
@@ -1769,11 +1974,16 @@
         "properties": {
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "event_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "An event_id from deskilo_list_pending_validations."
           }
         },
         "required": [
@@ -1790,18 +2000,31 @@
         "properties": {
           "request_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
           },
           "workspace_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
           },
           "event_id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "An event_id from deskilo_list_pending_validations."
           },
           "accept": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "True to accept, false to refuse.",
+            "examples": [
+              true
+            ]
           }
         },
         "required": [

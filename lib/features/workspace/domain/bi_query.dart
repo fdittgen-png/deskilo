@@ -148,6 +148,7 @@ enum BiContextIssue {
   unknownDimension,
   unknownSort,
   unknownView,
+  malformedCards,
   unknownParameter,
 }
 
@@ -171,6 +172,7 @@ class BiQueryContext {
     this.groupBy,
     this.sort = BiSort.natural,
     this.view = BiView.table,
+    this.cards = const [],
   });
 
   final BiGrain grain;
@@ -184,6 +186,9 @@ class BiQueryContext {
   final String? groupBy;
   final BiSort sort;
   final BiView view;
+
+  /// #1923 C — the modules shown, in order; empty means every module.
+  final List<String> cards;
 
   /// The product default: this month, nothing compared, not grouped.
   static const standard = BiQueryContext();
@@ -211,6 +216,7 @@ class BiQueryContext {
     bool clearGroupBy = false,
     BiSort? sort,
     BiView? view,
+    List<String>? cards,
   }) {
     final g = grain ?? this.grain;
     final c = comparison ?? this.comparison;
@@ -231,6 +237,7 @@ class BiQueryContext {
       groupBy: clearGroupBy ? null : groupBy ?? this.groupBy,
       sort: sort ?? this.sort,
       view: view ?? this.view,
+      cards: cards ?? this.cards,
     );
   }
 
@@ -248,6 +255,7 @@ class BiQueryContext {
     'by': ?groupBy,
     if (sort != BiSort.natural) 'sort': _sortWire[sort]!,
     if (view != BiView.table) 'view': view.name,
+    if (cards.isNotEmpty) 'cards': cards.join(','),
   };
 
   /// Parses address parameters (or a saved definition's). Throws
@@ -313,6 +321,13 @@ class BiQueryContext {
         view = named;
       }
     }
+    var cards = const <String>[];
+    if (query['cards'] case final c?) {
+      cards = c.split(',');
+      if (cards.length > 20 || !cards.every(_cardId.hasMatch)) {
+        issues.add(BiContextIssue.malformedCards);
+      }
+    }
     if (issues.isNotEmpty) throw BiContextRefused(issues);
     return BiQueryContext(
       grain: grain,
@@ -322,6 +337,7 @@ class BiQueryContext {
       groupBy: by,
       sort: sort,
       view: view,
+      cards: cards,
     );
   }
 
@@ -343,17 +359,36 @@ class BiQueryContext {
       other.comparedWith == comparedWith &&
       other.groupBy == groupBy &&
       other.sort == sort &&
-      other.view == view;
+      other.view == view &&
+      _sameList(other.cards, cards);
 
   @override
-  int get hashCode =>
-      Object.hash(grain, period, comparison, comparedWith, groupBy, sort, view);
+  int get hashCode => Object.hash(
+    grain,
+    period,
+    comparison,
+    comparedWith,
+    groupBy,
+    sort,
+    view,
+    Object.hashAll(cards),
+  );
 
   @override
   String toString() => 'BiQueryContext(${toQuery()})';
 }
 
-const _keys = {'grain', 'at', 'cmp', 'by', 'sort', 'view'};
+const _keys = {'grain', 'at', 'cmp', 'by', 'sort', 'view', 'cards'};
+
+final _cardId = RegExp(r'^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*$');
+
+bool _sameList(List<String> a, List<String> b) {
+  if (a.length != b.length) return false;
+  for (var i = 0; i < a.length; i++) {
+    if (a[i] != b[i]) return false;
+  }
+  return true;
+}
 
 const _comparisonWire = {
   BiComparison.previousPeriod: 'previous',

@@ -50,7 +50,10 @@ class WorkbookLabels {
     required this.states,
     required this.feature,
     required this.wide,
+    this.stage = _noStage,
   });
+
+  static String _noStage(String featureKey) => '';
 
   /// English, for callers without a reader's language.
   static WorkbookLabels english() => WorkbookLabels(
@@ -85,6 +88,11 @@ class WorkbookLabels {
 
   /// How the wide sheets read.
   final String wide;
+
+  /// #1851 B — a feature's review stage for the reader (alpha, beta, …),
+  /// so a template that switches on an experimental feature says so
+  /// before anyone applies it. Empty where the caller has no ledger.
+  final String Function(String featureKey) stage;
 }
 
 /// The workbook's sheets for [inspections], captured at [capturedAt].
@@ -175,6 +183,7 @@ List<XlsxSheet> templateWorkbook(
         [
           'feature',
           'label',
+          'stage',
           for (final k in keys) ...['$k value', '$k state'],
         ],
         for (final r in rows)
@@ -182,6 +191,7 @@ List<XlsxSheet> templateWorkbook(
             [
               r.id.substring('workspace.feature_flags.'.length),
               words.feature(r.id.substring('workspace.feature_flags.'.length)),
+              words.stage(r.id.substring('workspace.feature_flags.'.length)),
               for (final c in r.cells) ...[
                 _value(c.value),
                 _state(c.disposition, c.absent),

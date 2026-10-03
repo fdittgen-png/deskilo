@@ -10,6 +10,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/mcp_providers.dart';
+import '../connect_assistant_screen.dart';
 
 /// #1626/#1627/#1628 — the settings entries for assistants, in one
 /// place so the settings screen grows by one line. Each shows only to
@@ -43,6 +44,14 @@ class McpSettingsTiles extends ConsumerWidget {
             leading: const Icon(Icons.smart_toy_outlined),
             title: Text(l10n?.mcpAssistantsTitle ?? 'Assistants'),
             onTap: () => context.push('/assistants'),
+          ),
+        // #2145 — the journey to a first call, for every member here.
+        if (on)
+          ListTile(
+            key: const ValueKey('settings-connect-assistant'),
+            leading: const Icon(Icons.add_link),
+            title: Text(l10n?.mcpConnectTitle ?? 'Connect an assistant'),
+            onTap: () => context.push(connectAssistantRoute),
           ),
         // #1827 — offered before mcpAccess is on: that is its second step.
         if (manages)

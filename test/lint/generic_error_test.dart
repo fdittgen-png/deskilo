@@ -87,7 +87,6 @@ const Map<String, int> _baseline = {
   'lib/features/workspace/presentation/screens/availability_screen.dart': 2,
   'lib/features/workspace/presentation/screens/deployment_screen.dart': 3,
   'lib/features/workspace/presentation/screens/documents_screen.dart': 3,
-  'lib/features/workspace/presentation/screens/features_screen.dart': 1,
   'lib/features/workspace/presentation/screens/members_screen.dart': 1,
   'lib/features/workspace/presentation/screens/messages_screen.dart': 2,
   'lib/features/workspace/presentation/screens/nfc_config_screen.dart': 1,

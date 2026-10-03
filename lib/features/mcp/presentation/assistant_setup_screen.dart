@@ -23,6 +23,7 @@ import '../domain/mcp_context.dart';
 import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_providers.dart';
 import 'assistant_setup_labels.dart';
+import 'connect_assistant_screen.dart';
 import 'mcp_operation_labels.dart';
 
 /// #1827 — Settings → Assistant setup: the steps that make assistants
@@ -386,6 +387,20 @@ class _ConnectorInstructions extends ConsumerWidget {
                   '2. Sign in with your DesKilo account when asked.\n'
                   '3. Approve this workspace and the operations you allow.',
         ),
+        // #2145 — the steps per assistant, one-click links and a test.
+        if (ref
+            .watch(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.mcpAccess))
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              key: const ValueKey('assistant-setup-open-guide'),
+              onPressed: () => context.push(connectAssistantRoute),
+              child: Text(
+                l10n?.mcpConnectOpenGuide ?? 'Open the connection guide',
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -403,11 +418,28 @@ class _InstanceContact extends ConsumerWidget {
     final who = ref.watch(instanceResponsiblesProvider).value;
     if (who == null) return const SizedBox.shrink();
     if (who.isOperator) {
-      return Text(
-        key: const ValueKey('assistant-setup-instance-you'),
-        l10n?.assistantSetupInstanceYou ??
-            'You answer for this database: switch assistants on from the '
-                'instance tools.',
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            key: const ValueKey('assistant-setup-instance-you'),
+            l10n?.assistantSetupInstanceYou ??
+                'You answer for this database: switch assistants on from the '
+                    'instance tools.',
+          ),
+          // #2145 — the place where that is done, one tap away.
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              key: const ValueKey('assistant-setup-open-installation'),
+              onPressed: () => context.push('/installation/assistants'),
+              child: Text(
+                l10n?.mcpConnectOpenInstallation ??
+                    'Open the installation console',
+              ),
+            ),
+          ),
+        ],
       );
     }
     final names = [

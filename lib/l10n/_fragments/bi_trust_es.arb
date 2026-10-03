@@ -1,0 +1,41 @@
+{
+  "biRefresh": "Actualizar datos",
+  "biRecordedPast": "Periodo pasado · datos actuales",
+  "biRecordedPresent": "Periodo en curso · incluye fechas futuras",
+  "biRecordedFuture": "Periodo futuro · reservas registradas",
+  "biBookingBasis": "La capacidad reservada mide reservas, no la asistencia real.",
+  "biPastBasis": "Recalculado con los datos disponibles hoy, no con los conocidos entonces.",
+  "biCurrentBasis": "Se incluye el periodo completo. La comparación con un periodo terminado no tiene una base equivalente.",
+  "biFutureBasis": "Reservas existentes y horarios actuales; no es una previsión de demanda ni un uso garantizado.",
+  "biDataPartial": "Datos parciales",
+  "biDataStale": "Datos desactualizados",
+  "biDataUnavailable": "No disponible",
+  "biDataNotRecorded": "No registrado",
+  "biDataNotApplicable": "Sin capacidad aplicable",
+  "biComparisonUnqualified": "Cambio no disponible: un periodo contiene datos parciales o desactualizados.",
+  "biSeatHoursFree": "{hours} horas-asiento sin reservar",
+  "@biSeatHoursFree": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biSeatHoursBlocked": "{hours} horas-asiento bloqueadas",
+  "@biSeatHoursBlocked": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biComputedWorkspaceTime": "Calculado el {date} · hora del espacio",
+  "@biComputedWorkspaceTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "statusNetExplanation": "Este subtotal son importes facturados menos abonos, reembolsos y créditos. No es un beneficio ni un saldo bancario. Los pagos conciliados y recibidos se solapan y no deben sumarse."
+}
