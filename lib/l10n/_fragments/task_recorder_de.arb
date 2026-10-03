@@ -111,5 +111,7 @@
   "taskRecorderProtectedSecrets": "Schlüssel und Geheimnisse",
   "taskRecorderProtectedMessenger": "Nachrichten",
   "taskRecorderProtectedIdentity": "Identität",
-  "taskRecorderProtectedOperator": "Betreiber der Installation"
+  "taskRecorderProtectedOperator": "Betreiber der Installation",
+  "taskRecorderExportPackage": "Aufgabenpaket exportieren",
+  "taskRecorderSavedPrivately": "Nur in der App gespeichert: {path}"
 }

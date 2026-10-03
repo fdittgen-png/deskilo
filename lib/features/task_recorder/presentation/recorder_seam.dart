@@ -23,12 +23,16 @@ import '../providers/recorder_providers.dart';
 
 RecorderController? _live(WidgetRef ref) =>
     ref.exists(recorderControllerProvider)
-        ? ref.read(recorderControllerProvider)
-        : null;
+    ? ref.read(recorderControllerProvider)
+    : null;
 
 /// A non-command step: a navigation, a selection, a committed field.
-void recordTaskStep(WidgetRef ref, String actionId,
-    {String? target, Map<String, Object?> payload = const {}}) {
+void recordTaskStep(
+  WidgetRef ref,
+  String actionId, {
+  String? target,
+  Map<String, Object?> payload = const {},
+}) {
   try {
     _live(ref)?.record(actionId, target: target, payload: payload);
   } catch (e, st) {
@@ -51,8 +55,11 @@ class TaskAttempt {
     try {
       _controller.outcome(_token, outcomeId, payload: payload);
     } catch (e, st) {
-      TraceLogger.instance
-          .warn('recorder', 'outcome not recorded', stackTrace: st);
+      TraceLogger.instance.warn(
+        'recorder',
+        'outcome not recorded',
+        stackTrace: st,
+      );
     }
   }
 
@@ -62,15 +69,21 @@ class TaskAttempt {
 }
 
 /// Null when nothing is recording; the command runs regardless.
-TaskAttempt? recordTaskAttempt(WidgetRef ref, String actionId,
-    {Map<String, Object?> payload = const {}}) {
+TaskAttempt? recordTaskAttempt(
+  WidgetRef ref,
+  String actionId, {
+  Map<String, Object?> payload = const {},
+}) {
   try {
     final controller = _live(ref);
     final token = controller?.attempt(actionId, payload: payload);
     return token == null ? null : TaskAttempt._(controller!, token);
   } catch (e, st) {
-    TraceLogger.instance
-        .warn('recorder', 'attempt not recorded', stackTrace: st);
+    TraceLogger.instance.warn(
+      'recorder',
+      'attempt not recorded',
+      stackTrace: st,
+    );
     return null;
   }
 }

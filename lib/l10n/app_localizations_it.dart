@@ -14569,6 +14569,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderProtectedOperator => 'operatore dell\'installazione';
 
   @override
+  String get taskRecorderExportPackage => 'Esporta un pacchetto dell\'attività';
+
+  @override
+  String taskRecorderSavedPrivately(String path) {
+    return 'Conservato solo nell\'app: $path';
+  }
+
+  @override
   String get capabilityMultiApproval => 'Due o più approvazioni';
 
   @override

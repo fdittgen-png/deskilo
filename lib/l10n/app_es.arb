@@ -8910,6 +8910,8 @@
   "taskRecorderProtectedMessenger": "mensajes",
   "taskRecorderProtectedIdentity": "identidad",
   "taskRecorderProtectedOperator": "operador de la instalación",
+  "taskRecorderExportPackage": "Exportar un paquete de tarea",
+  "taskRecorderSavedPrivately": "Guardado solo dentro de la aplicación: {path}",
   "capabilityMultiApproval": "Dos o más aprobaciones",
   "capabilityRefundApprovals": "Dos aprobaciones para reembolsos",
   "capabilityPayAsYouGo": "Pago por uso",

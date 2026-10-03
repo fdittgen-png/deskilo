@@ -27,15 +27,22 @@ Set<int> dependentsOf(TaskRecording source, int seq) {
 
 /// [source] without the steps in [leftOut] (and their dependents).
 /// Returns [source] itself when nothing is left out.
-TaskRecording editedCopy(TaskRecording source, Set<int> leftOut,
-    {String? title}) {
+TaskRecording editedCopy(
+  TaskRecording source,
+  Set<int> leftOut, {
+  String? title,
+}) {
   final drop = {for (final seq in leftOut) ...dependentsOf(source, seq)};
   if (drop.isEmpty && title == null) return source;
   final kept = <RecordedStep>[];
   for (final step in source.steps) {
     if (drop.contains(step.seq)) continue;
-    kept.add(step.renumbered(kept.length + 1,
-        keepSourceSeq: step.sourceSeq ?? step.seq));
+    kept.add(
+      step.renumbered(
+        kept.length + 1,
+        keepSourceSeq: step.sourceSeq ?? step.seq,
+      ),
+    );
   }
   return TaskRecording(
     actionContractVersion: source.actionContractVersion,

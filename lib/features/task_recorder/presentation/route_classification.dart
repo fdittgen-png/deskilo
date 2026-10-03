@@ -91,7 +91,8 @@ RouteTreatment treatRoute(String path) {
   if (_instrumented.any((p) => _matches(path, p))) return const Instrumented();
   String? best;
   for (final prefix in _protected.keys) {
-    if (_matches(path, prefix) && (best == null || prefix.length > best.length)) {
+    if (_matches(path, prefix) &&
+        (best == null || prefix.length > best.length)) {
       best = prefix;
     }
   }

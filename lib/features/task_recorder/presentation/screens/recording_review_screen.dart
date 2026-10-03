@@ -11,6 +11,7 @@
 // a confirmed file. Nothing is sent anywhere.
 
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,6 +26,7 @@ import '../../domain/action_registry.dart';
 import '../../domain/recording_edit.dart';
 import '../../domain/task_recording.dart';
 import '../../domain/task_recording_codec.dart';
+import '../../package/task_package.dart';
 import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
 
@@ -49,17 +51,17 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
   }
 
   void _toggle(int seq) => setState(() {
-        final source = _source;
-        if (source == null) return;
-        final group = dependentsOf(source, seq);
-        if (_leftOut.contains(seq)) {
-          _leftOut.removeAll(group);
-        } else {
-          _leftOut.addAll(group);
-        }
-      });
+    final source = _source;
+    if (source == null) return;
+    final group = dependentsOf(source, seq);
+    if (_leftOut.contains(seq)) {
+      _leftOut.removeAll(group);
+    } else {
+      _leftOut.addAll(group);
+    }
+  });
 
-  Future<void> _save() async {
+  Future<void> _save({bool package = false}) async {
     final l10n = AppLocalizations.of(context);
     final export = _export;
     if (export == null) return;
@@ -67,29 +69,59 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
     // The file offered is the file the validator accepts, or none.
     if (!decodeRecordingText(text).accepted) {
       AppSnack.error(
-          context, l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.');
+        context,
+        l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.',
+      );
       return;
     }
+    final stem = 'deskilo-task-${widget.stored.id.substring(0, 8)}';
+    final bytes = package
+        ? writeTaskPackage(
+            export,
+            transcript: recordingTranscript(l10n, export),
+          )
+        : Uint8List.fromList(utf8.encode(text));
+    final SaveOutcome outcome;
     try {
-      final path = await ref.read(fileSaverProvider)(
-        bytes: utf8.encode(text),
-        fileName: 'deskilo-task-${widget.stored.id.substring(0, 8)}.json',
+      outcome = await ref.read(typedFileSaverProvider)(
+        bytes: bytes,
+        fileName: package ? '$stem$taskPackageExtension' : '$stem.json',
       );
-      if (!mounted) return;
-      if (path == null || path.isEmpty) {
-        AppSnack.info(
-            context,
-            l10n?.taskRecorderSaveNoPath ??
-                'The file was handed to your browser or device; it did not '
-                    'say where it went.');
-      } else {
-        AppSnack.success(context, l10n?.taskRecorderSaved(path) ?? 'Saved: $path');
-      }
     } catch (e, st) {
       TraceLogger.instance.warn('recorder', 'export not saved', stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-          context, l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.');
+      if (mounted) {
+        AppSnack.error(
+          context,
+          l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.',
+        );
+      }
+      return;
+    }
+    if (!mounted) return;
+    switch (outcome) {
+      case SavedFile(:final path):
+        AppSnack.success(
+          context,
+          l10n?.taskRecorderSaved(path) ?? 'Saved: $path',
+        );
+      case SavedPrivately(:final path):
+        AppSnack.info(
+          context,
+          l10n?.taskRecorderSavedPrivately(path) ??
+              'Kept only inside the app: $path',
+        );
+      case DownloadRequested():
+        AppSnack.info(
+          context,
+          l10n?.taskRecorderSaveNoPath ??
+              'The file was handed to your browser or device; it did not '
+                  'say where it went.',
+        );
+      case SaveFailed():
+        AppSnack.error(
+          context,
+          l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.',
+        );
     }
   }
 
@@ -98,9 +130,11 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        content: Text(l10n?.taskRecorderDeleteConfirm ??
-            'Delete this recording from this device? Files you exported are '
-                'not affected, and nothing in the workspace changes.'),
+        content: Text(
+          l10n?.taskRecorderDeleteConfirm ??
+              'Delete this recording from this device? Files you exported are '
+                  'not affected, and nothing in the workspace changes.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
@@ -118,8 +152,11 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
     try {
       await ref.read(recorderStoreProvider)?.delete(widget.stored.id);
     } catch (e, st) {
-      TraceLogger.instance
-          .warn('recorder', 'recording not deleted', stackTrace: st);
+      TraceLogger.instance.warn(
+        'recorder',
+        'recording not deleted',
+        stackTrace: st,
+      );
     }
     ref.invalidate(myRecordingsProvider);
     if (mounted) Navigator.of(context).pop();
@@ -130,7 +167,8 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
     final l10n = AppLocalizations.of(context);
     final source = _source;
     final export = _export;
-    final title = source?.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task');
+    final title =
+        source?.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task');
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -146,8 +184,10 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
       body: source == null || export == null
           ? Padding(
               padding: AppSpacing.gutterAll,
-              child: Text(l10n?.taskRecorderUnreadable ??
-                  'This recording cannot be read. You can delete it.'),
+              child: Text(
+                l10n?.taskRecorderUnreadable ??
+                    'This recording cannot be read. You can delete it.',
+              ),
             )
           : ListView(
               padding: AppSpacing.gutterAll,
@@ -164,9 +204,12 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
                     _Gap(label: l10n?.taskRecorderSegmentGap ?? 'Paused here'),
                   _StepTile(
                     step: step,
-                    answered: !step.isAttempt ||
-                        source.steps.any((s) =>
-                            s.kind == StepKind.observation && s.op == step.op),
+                    answered:
+                        !step.isAttempt ||
+                        source.steps.any(
+                          (s) =>
+                              s.kind == StepKind.observation && s.op == step.op,
+                        ),
                     leftOut: _leftOut.contains(step.seq),
                     onToggle: () => _toggle(step.seq),
                   ),
@@ -183,15 +226,15 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
                 ExpansionTile(
                   key: const ValueKey('task-recording-preview'),
                   tilePadding: EdgeInsets.zero,
-                  title: Text(l10n?.taskRecorderExportPreview ??
-                      'What the file will contain'),
+                  title: Text(
+                    l10n?.taskRecorderExportPreview ??
+                        'What the file will contain',
+                  ),
                   children: [
                     SelectableText(
                       encodeRecordingText(export),
                       key: const ValueKey('task-recording-preview-text'),
-style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
+                      style: Theme.of(context).textTheme.bodySmall
                           ?.copyWith(fontFamily: 'monospace'),
                     ),
                   ],
@@ -202,6 +245,15 @@ style: Theme.of(context)
                   onPressed: _save,
                   icon: const Icon(Icons.download),
                   label: Text(l10n?.taskRecorderExport ?? 'Export a file'),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  key: const ValueKey('task-recording-export-package'),
+                  onPressed: () => _save(package: true),
+                  icon: const Icon(Icons.inventory_2_outlined),
+                  label: Text(
+                    l10n?.taskRecorderExportPackage ?? 'Export a task package',
+                  ),
                 ),
               ],
             ),
@@ -216,13 +268,15 @@ class _Gap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-        child: Row(children: [
-          const Expanded(child: Divider()),
-          Padding(padding: AppSpacing.smH, child: Text(label)),
-          const Expanded(child: Divider()),
-        ]),
-      );
+    padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+    child: Row(
+      children: [
+        const Expanded(child: Divider()),
+        Padding(padding: AppSpacing.smH, child: Text(label)),
+        const Expanded(child: Divider()),
+      ],
+    ),
+  );
 }
 
 class _StepTile extends StatelessWidget {
@@ -239,17 +293,17 @@ class _StepTile extends StatelessWidget {
   final VoidCallback onToggle;
 
   IconData get _icon => switch (step.kind) {
-        StepKind.action => step.isAttempt ? Icons.send : Icons.touch_app,
-        StepKind.observation => switch (step.state) {
-            ObservationState.confirmed => Icons.check_circle_outline,
-            ObservationState.refused => Icons.block,
-            ObservationState.pending => Icons.hourglass_empty,
-            _ => Icons.help_outline,
-          },
-        StepKind.annotation => Icons.edit_note,
-        StepKind.excluded => Icons.lock_outline,
-        StepKind.unrecorded => Icons.more_horiz,
-      };
+    StepKind.action => step.isAttempt ? Icons.send : Icons.touch_app,
+    StepKind.observation => switch (step.state) {
+      ObservationState.confirmed => Icons.check_circle_outline,
+      ObservationState.refused => Icons.block,
+      ObservationState.pending => Icons.hourglass_empty,
+      _ => Icons.help_outline,
+    },
+    StepKind.annotation => Icons.edit_note,
+    StepKind.excluded => Icons.lock_outline,
+    StepKind.unrecorded => Icons.more_horiz,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +316,8 @@ class _StepTile extends StatelessWidget {
     final style = leftOut
         ? TextStyle(
             decoration: TextDecoration.lineThrough,
-            color: Theme.of(context).colorScheme.onSurfaceVariant)
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          )
         : null;
     return ListTile(
       key: ValueKey('task-step-${step.seq}'),

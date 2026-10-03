@@ -43,15 +43,20 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
   Future<void> _start() async {
     final l10n = AppLocalizations.of(context);
     final scope = ref.read(recorderScopeProvider);
-    final started = scope != null &&
-        await ref.read(recorderControllerProvider).start(
-          scope: scope,
-          prerequisites: const [Prerequisite('signed_in')],
-        );
+    final started =
+        scope != null &&
+        await ref
+            .read(recorderControllerProvider)
+            .start(
+              scope: scope,
+              prerequisites: const [Prerequisite('signed_in')],
+            );
     if (!mounted || started) return;
-    AppSnack.error(context,
-        l10n?.taskRecorderStartFailed ??
-            'The recording could not start on this device.');
+    AppSnack.error(
+      context,
+      l10n?.taskRecorderStartFailed ??
+          'The recording could not start on this device.',
+    );
   }
 
   Future<void> _stop() async {
@@ -103,9 +108,9 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
               reason: !signedIn
                   ? (l10n?.taskRecorderSignedOut ?? 'Sign in to record a task.')
                   : !available
-                      ? (l10n?.taskRecorderUnavailable ??
-                          'Recording is not switched on in this workspace.')
-                      : null,
+                  ? (l10n?.taskRecorderUnavailable ??
+                        'Recording is not switched on in this workspace.')
+                  : null,
               onStart: _start,
             ),
           const SizedBox(height: AppSpacing.xl),
@@ -136,10 +141,12 @@ class _Disclosure extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     const limits = RecordingLimits();
     final title = l10n?.taskRecorderDisclosureTitle ?? 'Before you record';
-    final body = l10n?.taskRecorderDisclosureBody ??
+    final body =
+        l10n?.taskRecorderDisclosureBody ??
         'The recorder notes the steps you take on this workspace\'s '
             'screens on this device only. Nothing is uploaded.';
-    final limitText = l10n?.taskRecorderLimits(
+    final limitText =
+        l10n?.taskRecorderLimits(
           limits.maxSteps,
           limits.maxDuration.inMinutes,
           limits.retention.inDays,
@@ -219,9 +226,11 @@ class _LiveControls extends StatelessWidget {
                   key: const ValueKey('task-recorder-pause'),
                   onPressed: paused ? onResume : onPause,
                   icon: Icon(paused ? Icons.play_arrow : Icons.pause),
-                  label: Text(paused
-                      ? (l10n?.taskRecorderResume ?? 'Resume')
-                      : (l10n?.taskRecorderPause ?? 'Pause')),
+                  label: Text(
+                    paused
+                        ? (l10n?.taskRecorderResume ?? 'Resume')
+                        : (l10n?.taskRecorderPause ?? 'Pause'),
+                  ),
                 ),
                 FilledButton.icon(
                   key: const ValueKey('task-recorder-stop'),
@@ -261,7 +270,8 @@ class _RecordingsList extends ConsumerWidget {
     if (recordings.isEmpty) {
       return EmptyState(
         icon: Icons.history,
-        title: l10n?.taskRecorderNoRecordings ?? 'No recordings on this device.',
+        title:
+            l10n?.taskRecorderNoRecordings ?? 'No recordings on this device.',
       );
     }
     return Column(
@@ -281,12 +291,13 @@ class _RecordingTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final recording = stored.recording;
-    final title = recording?.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task');
+    final title =
+        recording?.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task');
     final subtitle = recording == null
         ? (l10n?.taskRecorderUnreadable ??
-            'This recording cannot be read. You can delete it.')
+              'This recording cannot be read. You can delete it.')
         : '${l10n?.taskRecorderStepCount(recording.steps.length) ?? '${recording.steps.length} steps'}'
-            ' · ${completenessLabel(l10n, recording.completeness)}';
+              ' · ${completenessLabel(l10n, recording.completeness)}';
     return ListTile(
       key: ValueKey('task-recording-${stored.id}'),
       contentPadding: EdgeInsets.zero,
@@ -295,9 +306,11 @@ class _RecordingTile extends ConsumerWidget {
       subtitle: Text(subtitle),
       trailing: const Icon(Icons.chevron_right),
       onTap: () async {
-        await Navigator.of(context).push(MaterialPageRoute<void>(
-          builder: (_) => RecordingReviewScreen(stored: stored),
-        ));
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => RecordingReviewScreen(stored: stored),
+          ),
+        );
         ref.invalidate(myRecordingsProvider);
       },
     );
@@ -335,7 +348,8 @@ class _NoteDialogState extends State<_NoteDialog> {
         maxLines: 4,
         maxLength: const RecordingLimits().maxNoteLength,
         decoration: InputDecoration(
-          hintText: l10n?.taskRecorderNoteHint ??
+          hintText:
+              l10n?.taskRecorderNoteHint ??
               'Your own words, kept as you write them',
         ),
       ),

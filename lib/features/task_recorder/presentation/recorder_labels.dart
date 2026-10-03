@@ -185,3 +185,29 @@ String endReasonLabel(AppLocalizations? l10n, RecordingEndReason? r) =>
     ),
   };
 }
+
+/// #1872 — the steps as readable Markdown, for a package's transcript.
+/// Words come from the labels above; nothing the recording does not
+/// hold is added, and a note stays marked as the person's own.
+String recordingTranscript(AppLocalizations? l10n, TaskRecording recording) {
+  final out = StringBuffer(
+    '# ${recording.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task')}\n\n',
+  );
+  var segment = 0;
+  for (final step in recording.steps) {
+    if (step.segment != segment) {
+      segment = step.segment;
+      out.writeln('— ${l10n?.taskRecorderSegmentGap ?? 'Paused here'} —');
+    }
+    final text = stepText(l10n, step);
+    out.write('${step.seq}. ${text.title}');
+    if (text.detail != null) out.write(' — ${text.detail}');
+    out.writeln();
+  }
+  out.writeln();
+  out.writeln(
+    '${completenessLabel(l10n, recording.completeness)} · '
+    '${endReasonLabel(l10n, recording.endReason)}',
+  );
+  return out.toString();
+}

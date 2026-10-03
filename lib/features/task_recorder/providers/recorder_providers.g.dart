@@ -413,3 +413,59 @@ abstract class _$RecorderOpened extends $Notifier<bool> {
     return element.handleCreate(ref, build);
   }
 }
+
+/// #1872 — the outputs the workbench offers. Capability-detected by each
+/// generator, never workspace-gated.
+
+@ProviderFor(taskOutputGenerators)
+final taskOutputGeneratorsProvider = TaskOutputGeneratorsProvider._();
+
+/// #1872 — the outputs the workbench offers. Capability-detected by each
+/// generator, never workspace-gated.
+
+final class TaskOutputGeneratorsProvider
+    extends
+        $FunctionalProvider<
+          List<TaskOutputGenerator>,
+          List<TaskOutputGenerator>,
+          List<TaskOutputGenerator>
+        >
+    with $Provider<List<TaskOutputGenerator>> {
+  /// #1872 — the outputs the workbench offers. Capability-detected by each
+  /// generator, never workspace-gated.
+  TaskOutputGeneratorsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'taskOutputGeneratorsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$taskOutputGeneratorsHash();
+
+  @$internal
+  @override
+  $ProviderElement<List<TaskOutputGenerator>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  List<TaskOutputGenerator> create(Ref ref) {
+    return taskOutputGenerators(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<TaskOutputGenerator> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<TaskOutputGenerator>>(value),
+    );
+  }
+}
+
+String _$taskOutputGeneratorsHash() =>
+    r'7380072620b89e9ef56307ef6b60f9939adc63bb';
