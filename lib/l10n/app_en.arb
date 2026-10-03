@@ -17707,6 +17707,134 @@
   "@biReset": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
+  "biViews": "Views",
+  "@biViews": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewStandard": "Standard view",
+  "@biViewStandard": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewsMine": "My views",
+  "@biViewsMine": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewsTeam": "Team views",
+  "@biViewsTeam": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewSave": "Save",
+  "@biViewSave": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewSaveAs": "Save as a new view…",
+  "@biViewSaveAs": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewRename": "Rename…",
+  "@biViewRename": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewDuplicate": "Duplicate as my view",
+  "@biViewDuplicate": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewDelete": "Delete",
+  "@biViewDelete": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewDeleteConfirm": "Delete the view “{name}”?",
+  "@biViewDeleteConfirm": {
+    "description": "#1923 C Web-BI saved views",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "biViewMakeMyDefault": "Open this view by default",
+  "@biViewMakeMyDefault": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewClearMyDefault": "Stop opening my default view",
+  "@biViewClearMyDefault": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewMakeTeamDefault": "Make it the team’s default",
+  "@biViewMakeTeamDefault": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewClearTeamDefault": "Clear the team’s default",
+  "@biViewClearTeamDefault": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewName": "Name",
+  "@biViewName": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewScopePrivate": "Only me",
+  "@biViewScopePrivate": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewScopeTeam": "The team",
+  "@biViewScopeTeam": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewPeriodMoves": "The period moves with the day it is opened",
+  "@biViewPeriodMoves": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewPeriodFixed": "Always {period}",
+  "@biViewPeriodFixed": {
+    "description": "#1923 C Web-BI saved views",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "biViewCopyName": "{name} (copy)",
+  "@biViewCopyName": {
+    "description": "#1923 C Web-BI saved views",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "biViewModified": "changed since it was opened",
+  "@biViewModified": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewStale": "Someone saved this view since you opened it. The list was read again; try once more.",
+  "@biViewStale": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewNameTaken": "A view with this name already exists.",
+  "@biViewNameTaken": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewForbidden": "You may not change this view.",
+  "@biViewForbidden": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewInvalid": "This name or view cannot be saved.",
+  "@biViewInvalid": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biViewUnreadable": "This view cannot be opened here: it was saved in a form this version does not read, or none of its analyses is available to you.",
+  "@biViewUnreadable": {
+    "description": "#1923 C Web-BI saved views"
+  },
+  "biCardsUnavailable": "{count} analyses of this view are not available to you and are left out.",
+  "@biCardsUnavailable": {
+    "description": "#1923 C Web-BI saved views",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
   "assistantPrefix": "Assistant",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"

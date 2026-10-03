@@ -13,6 +13,7 @@
 // Pure Dart.
 library;
 
+import 'bi_modules.dart';
 import 'bi_query.dart';
 import 'kpi_contract.dart';
 
@@ -184,4 +185,14 @@ List<BiRow> sortRows(
       return sort == BiSort.valueDescending ? y.compareTo(x) : x.compareTo(y);
     });
   return sorted;
+}
+
+/// The module cannot answer this context (an unsupported grain,
+/// comparison or grouping, or more groups than the budget). Explained,
+/// never answered with an unfiltered figure.
+class BiRefused implements Exception {
+  const BiRefused(this.reasons, {this.groupBudgetExceeded = false});
+
+  final Set<BiUnsupported> reasons;
+  final bool groupBudgetExceeded;
 }

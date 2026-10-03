@@ -15796,6 +15796,99 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biReset => 'Standardansicht zeigen';
 
   @override
+  String get biViews => 'Ansichten';
+
+  @override
+  String get biViewStandard => 'Standardansicht';
+
+  @override
+  String get biViewsMine => 'Meine Ansichten';
+
+  @override
+  String get biViewsTeam => 'Team-Ansichten';
+
+  @override
+  String get biViewSave => 'Speichern';
+
+  @override
+  String get biViewSaveAs => 'Als neue Ansicht speichern…';
+
+  @override
+  String get biViewRename => 'Umbenennen…';
+
+  @override
+  String get biViewDuplicate => 'Als meine Ansicht duplizieren';
+
+  @override
+  String get biViewDelete => 'Löschen';
+
+  @override
+  String biViewDeleteConfirm(String name) {
+    return 'Ansicht „$name“ löschen?';
+  }
+
+  @override
+  String get biViewMakeMyDefault => 'Diese Ansicht standardmäßig öffnen';
+
+  @override
+  String get biViewClearMyDefault => 'Meine Standardansicht nicht mehr öffnen';
+
+  @override
+  String get biViewMakeTeamDefault => 'Zur Standardansicht des Teams machen';
+
+  @override
+  String get biViewClearTeamDefault => 'Standardansicht des Teams entfernen';
+
+  @override
+  String get biViewName => 'Name';
+
+  @override
+  String get biViewScopePrivate => 'Nur ich';
+
+  @override
+  String get biViewScopeTeam => 'Das Team';
+
+  @override
+  String get biViewPeriodMoves =>
+      'Der Zeitraum richtet sich nach dem Tag des Öffnens';
+
+  @override
+  String biViewPeriodFixed(String period) {
+    return 'Immer $period';
+  }
+
+  @override
+  String biViewCopyName(String name) {
+    return '$name (Kopie)';
+  }
+
+  @override
+  String get biViewModified => 'seit dem Öffnen geändert';
+
+  @override
+  String get biViewStale =>
+      'Jemand hat diese Ansicht gespeichert, seit Sie sie geöffnet haben. Die Liste wurde neu gelesen; versuchen Sie es noch einmal.';
+
+  @override
+  String get biViewNameTaken => 'Eine Ansicht mit diesem Namen gibt es schon.';
+
+  @override
+  String get biViewForbidden => 'Sie dürfen diese Ansicht nicht ändern.';
+
+  @override
+  String get biViewInvalid =>
+      'Dieser Name oder diese Ansicht kann nicht gespeichert werden.';
+
+  @override
+  String get biViewUnreadable =>
+      'Diese Ansicht lässt sich hier nicht öffnen: Sie wurde in einer Form gespeichert, die diese Version nicht liest, oder keine ihrer Analysen ist für Sie verfügbar.';
+
+  @override
+  String biCardsUnavailable(String count) {
+    return '$count Analysen dieser Ansicht sind für Sie nicht verfügbar und werden ausgelassen.';
+  }
+
+  @override
   String get assistantPrefix => 'Assistent';
 
   @override

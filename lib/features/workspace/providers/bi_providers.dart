@@ -7,13 +7,16 @@
 // shown under the new one. Groups are bounded; past the budget the
 // grouping is refused with its reason rather than fanned out.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../domain/bi_modules.dart';
 import '../domain/bi_query.dart';
+import '../data/supabase_bi_view_repository.dart';
 import '../domain/bi_result.dart';
+import '../domain/bi_saved_view.dart';
 import '../domain/kpi_contract.dart';
 import 'kpi_providers.dart';
 
@@ -21,16 +24,6 @@ part 'bi_providers.g.dart';
 
 /// The most groups one module asks the server for at once.
 const biGroupBudget = 12;
-
-/// The module cannot answer this context (an unsupported grain,
-/// comparison or grouping, or more groups than the budget). Explained,
-/// never answered with an unfiltered figure.
-class BiRefused implements Exception {
-  const BiRefused(this.reasons, {this.groupBudgetExceeded = false});
-
-  final Set<BiUnsupported> reasons;
-  final bool groupBudgetExceeded;
-}
 
 /// The workspace date the relative periods resolve against.
 DateTime biToday(Ref ref) =>
@@ -149,3 +142,67 @@ Future<BiResult> _capacity(
     computedAt: (total.current.detail! as SeatCapacityKpi).computedAt,
   );
 }
+
+/// #1923 C — the saved views, through their definer RPCs.
+@Riverpod(keepAlive: true)
+BiViewRepository biViewRepository(Ref ref) =>
+    SupabaseBiViewRepository(Supabase.instance.client);
+
+/// The reader's private views and the workspace's team views.
+@riverpod
+Future<List<BiSavedView>> biViews(Ref ref, String workspaceId) =>
+    ref.watch(biViewRepositoryProvider).list(workspaceId);
+
+/// The writes a views bar makes; each re-reads the list afterwards, so
+/// what is shown is what the server holds.
+class BiViewActions {
+  BiViewActions(this._ref);
+
+  final Ref _ref;
+
+  BiViewRepository get _repo => _ref.read(biViewRepositoryProvider);
+
+  Future<BiSavedView> save(
+    String workspaceId, {
+    BiSavedView? over,
+    required BiViewScope scope,
+    required String name,
+    required BiViewDefinition definition,
+  }) async {
+    try {
+      return await _repo.save(
+        workspaceId,
+        id: over?.id,
+        scope: scope,
+        name: name,
+        definition: definition,
+        expectedRevision: over?.revision ?? 0,
+      );
+    } finally {
+      _ref.invalidate(biViewsProvider(workspaceId));
+    }
+  }
+
+  Future<void> delete(String workspaceId, BiSavedView view) async {
+    try {
+      await _repo.delete(workspaceId, view.id, view.revision);
+    } finally {
+      _ref.invalidate(biViewsProvider(workspaceId));
+    }
+  }
+
+  Future<void> setDefault(
+    String workspaceId,
+    BiViewScope scope,
+    String? id,
+  ) async {
+    try {
+      await _repo.setDefault(workspaceId, scope, id);
+    } finally {
+      _ref.invalidate(biViewsProvider(workspaceId));
+    }
+  }
+}
+
+@Riverpod(keepAlive: true)
+BiViewActions biViewActions(Ref ref) => BiViewActions(ref);

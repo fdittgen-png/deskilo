@@ -88,3 +88,181 @@ final class BiModuleResultFamily extends $Family
   @override
   String toString() => r'biModuleResultProvider';
 }
+
+/// #1923 C — the saved views, through their definer RPCs.
+
+@ProviderFor(biViewRepository)
+final biViewRepositoryProvider = BiViewRepositoryProvider._();
+
+/// #1923 C — the saved views, through their definer RPCs.
+
+final class BiViewRepositoryProvider
+    extends
+        $FunctionalProvider<
+          BiViewRepository,
+          BiViewRepository,
+          BiViewRepository
+        >
+    with $Provider<BiViewRepository> {
+  /// #1923 C — the saved views, through their definer RPCs.
+  BiViewRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'biViewRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$biViewRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<BiViewRepository> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  BiViewRepository create(Ref ref) {
+    return biViewRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BiViewRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BiViewRepository>(value),
+    );
+  }
+}
+
+String _$biViewRepositoryHash() => r'46d52fab7110f761a6c7a74dd836ee34a9e01d78';
+
+/// The reader's private views and the workspace's team views.
+
+@ProviderFor(biViews)
+final biViewsProvider = BiViewsFamily._();
+
+/// The reader's private views and the workspace's team views.
+
+final class BiViewsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<BiSavedView>>,
+          List<BiSavedView>,
+          FutureOr<List<BiSavedView>>
+        >
+    with
+        $FutureModifier<List<BiSavedView>>,
+        $FutureProvider<List<BiSavedView>> {
+  /// The reader's private views and the workspace's team views.
+  BiViewsProvider._({
+    required BiViewsFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'biViewsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$biViewsHash();
+
+  @override
+  String toString() {
+    return r'biViewsProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<BiSavedView>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<BiSavedView>> create(Ref ref) {
+    final argument = this.argument as String;
+    return biViews(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is BiViewsProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$biViewsHash() => r'37c4bb9e21f3db8620426b39f745a948f36bf6a3';
+
+/// The reader's private views and the workspace's team views.
+
+final class BiViewsFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<BiSavedView>>, String> {
+  BiViewsFamily._()
+    : super(
+        retry: null,
+        name: r'biViewsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The reader's private views and the workspace's team views.
+
+  BiViewsProvider call(String workspaceId) =>
+      BiViewsProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'biViewsProvider';
+}
+
+@ProviderFor(biViewActions)
+final biViewActionsProvider = BiViewActionsProvider._();
+
+final class BiViewActionsProvider
+    extends $FunctionalProvider<BiViewActions, BiViewActions, BiViewActions>
+    with $Provider<BiViewActions> {
+  BiViewActionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'biViewActionsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$biViewActionsHash();
+
+  @$internal
+  @override
+  $ProviderElement<BiViewActions> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  BiViewActions create(Ref ref) {
+    return biViewActions(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BiViewActions value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BiViewActions>(value),
+    );
+  }
+}
+
+String _$biViewActionsHash() => r'0e4e30edaf09fa66627b7a9fe222efa294b713eb';

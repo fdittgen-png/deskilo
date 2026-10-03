@@ -15639,6 +15639,97 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biReset => 'Show the standard view';
 
   @override
+  String get biViews => 'Views';
+
+  @override
+  String get biViewStandard => 'Standard view';
+
+  @override
+  String get biViewsMine => 'My views';
+
+  @override
+  String get biViewsTeam => 'Team views';
+
+  @override
+  String get biViewSave => 'Save';
+
+  @override
+  String get biViewSaveAs => 'Save as a new view…';
+
+  @override
+  String get biViewRename => 'Rename…';
+
+  @override
+  String get biViewDuplicate => 'Duplicate as my view';
+
+  @override
+  String get biViewDelete => 'Delete';
+
+  @override
+  String biViewDeleteConfirm(String name) {
+    return 'Delete the view “$name”?';
+  }
+
+  @override
+  String get biViewMakeMyDefault => 'Open this view by default';
+
+  @override
+  String get biViewClearMyDefault => 'Stop opening my default view';
+
+  @override
+  String get biViewMakeTeamDefault => 'Make it the team’s default';
+
+  @override
+  String get biViewClearTeamDefault => 'Clear the team’s default';
+
+  @override
+  String get biViewName => 'Name';
+
+  @override
+  String get biViewScopePrivate => 'Only me';
+
+  @override
+  String get biViewScopeTeam => 'The team';
+
+  @override
+  String get biViewPeriodMoves => 'The period moves with the day it is opened';
+
+  @override
+  String biViewPeriodFixed(String period) {
+    return 'Always $period';
+  }
+
+  @override
+  String biViewCopyName(String name) {
+    return '$name (copy)';
+  }
+
+  @override
+  String get biViewModified => 'changed since it was opened';
+
+  @override
+  String get biViewStale =>
+      'Someone saved this view since you opened it. The list was read again; try once more.';
+
+  @override
+  String get biViewNameTaken => 'A view with this name already exists.';
+
+  @override
+  String get biViewForbidden => 'You may not change this view.';
+
+  @override
+  String get biViewInvalid => 'This name or view cannot be saved.';
+
+  @override
+  String get biViewUnreadable =>
+      'This view cannot be opened here: it was saved in a form this version does not read, or none of its analyses is available to you.';
+
+  @override
+  String biCardsUnavailable(String count) {
+    return '$count analyses of this view are not available to you and are left out.';
+  }
+
+  @override
   String get assistantPrefix => 'Assistant';
 
   @override

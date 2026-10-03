@@ -17,10 +17,14 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../domain/bi_modules.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../domain/bi_query.dart';
+import '../../domain/bi_saved_view.dart';
+import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/bi_module_section.dart';
 import '../widgets/bi_toolbar.dart';
+import '../widgets/bi_views_bar.dart';
 
 String biAreaName(AppLocalizations? l10n, BiArea area) => switch (area) {
   BiArea.overview => l10n?.biAreaOverview ?? 'Overview',
@@ -47,17 +51,50 @@ class BiScreen extends ConsumerWidget {
           )
         : const <BiModule>[];
     final params = GoRouterState.of(context).uri.queryParameters;
-    final query = BiQueryContext.tryParse(params);
+    // #1923 C — `saved` names the open view (or `standard`); the rest is
+    // the analysis itself.
+    final saved = params['saved'];
+    final query = saved != null && !_savedId.hasMatch(saved)
+        ? null
+        : BiQueryContext.tryParse(Map.of(params)..remove('saved'));
+    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     // go: the address IS the analysis — Reload and a shared link restore
     // it, and the browser's Back and Forward step through what was asked.
-    void ask(BiQueryContext next) {
-      final q = next.toQuery();
+    void go(BiQueryContext next, String? savedId) {
+      final q = {...next.toQuery(), 'saved': ?savedId};
       context.go(
         Uri(path: '/bi', queryParameters: q.isEmpty ? null : q).toString(),
       );
     }
 
+    void ask(BiQueryContext next) => go(next, saved);
     final today = WorkspaceTime.dateOf(ref.watch(clockProvider).now());
+    final visibleIds = {for (final m in modules) m.id};
+
+    // A bare /bi opens the reader's default view (theirs, else the
+    // team's); until the list is known nothing is read.
+    if (params.isEmpty && workspaceId != null) {
+      final views = ref.watch(biViewsProvider(workspaceId));
+      if (views.isLoading) return const Scaffold(body: LoadingView());
+      final chosen = defaultView(views.value ?? const []);
+      final check = chosen == null
+          ? null
+          : checkView(chosen.definition, visibleIds).query;
+      if (chosen != null && check != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (context.mounted) go(check, chosen.id);
+        });
+        return const Scaffold(body: LoadingView());
+      }
+    }
+    final cards = query?.cards ?? const <String>[];
+    final shown = cards.isEmpty
+        ? [
+            for (final area in BiArea.values)
+              ...modules.where((m) => m.area == area),
+          ]
+        : [for (final c in cards) ...modules.where((m) => m.id == c)];
+    final unavailable = cards.where((c) => !visibleIds.contains(c)).length;
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.biTitle ?? 'Business analytics'),
@@ -91,7 +128,7 @@ class BiScreen extends ConsumerWidget {
                     ),
                     TextButton(
                       key: const ValueKey('bi-reset'),
-                      onPressed: () => ask(BiQueryContext.standard),
+                      onPressed: () => go(BiQueryContext.standard, 'standard'),
                       child: Text(l10n?.biReset ?? 'Show the standard view'),
                     ),
                   ],
@@ -99,14 +136,33 @@ class BiScreen extends ConsumerWidget {
               ),
             )
           else ...[
+            if (workspaceId != null)
+              BiViewsBar(
+                workspaceId: workspaceId,
+                query: query,
+                openId: saved,
+                visibleModules: visibleIds,
+                today: today,
+                onOpen: (view, q) => go(q, view?.id ?? 'standard'),
+              ),
             BiToolbar(
               query: query,
               modules: modules,
               today: today,
               onChanged: ask,
             ),
-            for (final area in BiArea.values)
-              if (modules.any((m) => m.area == area)) ...[
+            if (unavailable > 0)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                child: Text(
+                  l10n?.biCardsUnavailable('$unavailable') ??
+                      '$unavailable analyses of this view are not available '
+                          'to you and are left out.',
+                  key: const ValueKey('bi-cards-unavailable'),
+                ),
+              ),
+            for (final (i, m) in shown.indexed) ...[
+              if (i == 0 || shown[i - 1].area != m.area)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(
                     AppSpacing.md,
@@ -115,17 +171,20 @@ class BiScreen extends ConsumerWidget {
                     0,
                   ),
                   child: Text(
-                    biAreaName(l10n, area),
-                    key: ValueKey('bi-area-${area.name}'),
+                    biAreaName(l10n, m.area),
+                    key: ValueKey('bi-area-${m.area.name}'),
                     style: theme.textTheme.titleMedium,
                   ),
                 ),
-                for (final m in modules.where((m) => m.area == area))
-                  BiModuleSection(module: m, query: query),
-              ],
+              BiModuleSection(module: m, query: query),
+            ],
           ],
         ],
       ),
     );
   }
 }
+
+/// A view id (uuid) or `standard`; anything else is a manipulated
+/// address.
+final _savedId = RegExp(r'^[A-Za-z0-9-]{1,64}$');

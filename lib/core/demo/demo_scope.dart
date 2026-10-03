@@ -98,6 +98,8 @@ import '../theme/theme_controller.dart';
 import '../time/clock.dart';
 import '../../features/workspace/domain/kpi_contract.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
+import '../../features/workspace/domain/bi_saved_view.dart';
+import '../../features/workspace/providers/bi_providers.dart';
 import 'demo_fixture.dart';
 import '../push/push_opt_out.dart';
 
@@ -178,6 +180,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       workspaceRolesRepositoryProvider.overrideWithValue(fixture.roles),
       // #1918 — no server to compute capacity on: the tile says so.
       kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
+      // #1923 C — saved views live in memory for the demonstration.
+      biViewRepositoryProvider.overrideWithValue(InMemoryBiViewRepository()),
 
       // #1377 — the ways an effect could leave the app, each pointed at
       // something inert. A payment, an invitation, an e-invoice and a
@@ -292,6 +296,7 @@ const Set<String> demoOverriddenProviders = {
   'workspaceFieldsRepositoryProvider',
   'workspaceRolesRepositoryProvider',
   'kpiRepositoryProvider',
+  'biViewRepositoryProvider', // #1923 C
   'realtimeSyncProvider',
   'notificationServiceProvider',
   'appBadgeProvider',

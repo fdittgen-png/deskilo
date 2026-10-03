@@ -27114,6 +27114,168 @@ abstract class AppLocalizations {
   /// **'Show the standard view'**
   String get biReset;
 
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Views'**
+  String get biViews;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Standard view'**
+  String get biViewStandard;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'My views'**
+  String get biViewsMine;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Team views'**
+  String get biViewsTeam;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get biViewSave;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Save as a new view…'**
+  String get biViewSaveAs;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Rename…'**
+  String get biViewRename;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate as my view'**
+  String get biViewDuplicate;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get biViewDelete;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the view “{name}”?'**
+  String biViewDeleteConfirm(String name);
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Open this view by default'**
+  String get biViewMakeMyDefault;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Stop opening my default view'**
+  String get biViewClearMyDefault;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Make it the team’s default'**
+  String get biViewMakeTeamDefault;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the team’s default'**
+  String get biViewClearTeamDefault;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get biViewName;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Only me'**
+  String get biViewScopePrivate;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'The team'**
+  String get biViewScopeTeam;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'The period moves with the day it is opened'**
+  String get biViewPeriodMoves;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Always {period}'**
+  String biViewPeriodFixed(String period);
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (copy)'**
+  String biViewCopyName(String name);
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'changed since it was opened'**
+  String get biViewModified;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'Someone saved this view since you opened it. The list was read again; try once more.'**
+  String get biViewStale;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'A view with this name already exists.'**
+  String get biViewNameTaken;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'You may not change this view.'**
+  String get biViewForbidden;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'This name or view cannot be saved.'**
+  String get biViewInvalid;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'This view cannot be opened here: it was saved in a form this version does not read, or none of its analyses is available to you.'**
+  String get biViewUnreadable;
+
+  /// #1923 C Web-BI saved views
+  ///
+  /// In en, this message translates to:
+  /// **'{count} analyses of this view are not available to you and are left out.'**
+  String biCardsUnavailable(String count);
+
   /// #872 one wizard idiom: assistantPrefix
   ///
   /// In en, this message translates to:

@@ -15817,6 +15817,98 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biReset => 'Afficher la vue standard';
 
   @override
+  String get biViews => 'Vues';
+
+  @override
+  String get biViewStandard => 'Vue standard';
+
+  @override
+  String get biViewsMine => 'Mes vues';
+
+  @override
+  String get biViewsTeam => 'Vues de l’équipe';
+
+  @override
+  String get biViewSave => 'Enregistrer';
+
+  @override
+  String get biViewSaveAs => 'Enregistrer comme nouvelle vue…';
+
+  @override
+  String get biViewRename => 'Renommer…';
+
+  @override
+  String get biViewDuplicate => 'Dupliquer comme ma vue';
+
+  @override
+  String get biViewDelete => 'Supprimer';
+
+  @override
+  String biViewDeleteConfirm(String name) {
+    return 'Supprimer la vue « $name » ?';
+  }
+
+  @override
+  String get biViewMakeMyDefault => 'Ouvrir cette vue par défaut';
+
+  @override
+  String get biViewClearMyDefault => 'Ne plus ouvrir ma vue par défaut';
+
+  @override
+  String get biViewMakeTeamDefault => 'En faire la vue par défaut de l’équipe';
+
+  @override
+  String get biViewClearTeamDefault => 'Retirer la vue par défaut de l’équipe';
+
+  @override
+  String get biViewName => 'Nom';
+
+  @override
+  String get biViewScopePrivate => 'Moi seulement';
+
+  @override
+  String get biViewScopeTeam => 'L’équipe';
+
+  @override
+  String get biViewPeriodMoves => 'La période suit le jour de l’ouverture';
+
+  @override
+  String biViewPeriodFixed(String period) {
+    return 'Toujours $period';
+  }
+
+  @override
+  String biViewCopyName(String name) {
+    return '$name (copie)';
+  }
+
+  @override
+  String get biViewModified => 'modifiée depuis l’ouverture';
+
+  @override
+  String get biViewStale =>
+      'Quelqu’un a enregistré cette vue depuis que vous l’avez ouverte. La liste a été relue ; réessayez.';
+
+  @override
+  String get biViewNameTaken => 'Une vue de ce nom existe déjà.';
+
+  @override
+  String get biViewForbidden => 'Vous ne pouvez pas modifier cette vue.';
+
+  @override
+  String get biViewInvalid =>
+      'Ce nom ou cette vue ne peut pas être enregistré.';
+
+  @override
+  String get biViewUnreadable =>
+      'Cette vue ne peut pas être ouverte ici : elle a été enregistrée sous une forme que cette version ne lit pas, ou aucune de ses analyses ne vous est accessible.';
+
+  @override
+  String biCardsUnavailable(String count) {
+    return '$count analyses de cette vue ne vous sont pas accessibles et sont omises.';
+  }
+
+  @override
   String get assistantPrefix => 'Assistant';
 
   @override
