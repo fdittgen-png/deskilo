@@ -2245,6 +2245,10 @@ Lo que **no** está es igual de deliberado. La ocupación, los saldos y los mens
 
 La funcionalidad está apagada hasta que usted la pida, y se sitúa **junto** a la campana de alertas, sin reemplazarla.
 
+**Leer los análisis (#1982).** La utilización es el tiempo de asiento reservado dividido por el ofrecido, no la asistencia medida. Los periodos pasados, actuales y futuros explican el significado de sus cifras; la hora de cálculo es la del espacio. Los periodos actuales incluyen fechas futuras. Las reservas futuras no son previsiones de demanda; volver al pasado recalcula los datos actuales, sin reconstruir lo conocido entonces. Los periodos parciales o desactualizados no producen una cifra de evolución. Actualizar datos conserva la selección. Las horas-asiento sin reservar y bloqueadas son distintas. Los datos ausentes o inválidos no están disponibles, nunca son cero.
+
+El estado financiero explica su subtotal: importes facturados menos abonos, reembolsos y créditos. No es beneficio ni saldo bancario. Los pagos conciliados y recibidos se solapan; no deben sumarse.
+
 # Guía del administrador — configurar el espacio
 
 Para quien pone el espacio en marcha: qué decide cada parámetro, en el

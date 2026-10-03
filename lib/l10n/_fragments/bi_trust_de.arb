@@ -1,0 +1,41 @@
+{
+  "biRefresh": "Daten aktualisieren",
+  "biRecordedPast": "Vergangener Zeitraum · heutiger Datenstand",
+  "biRecordedPresent": "Laufender Zeitraum · zukünftige Tage enthalten",
+  "biRecordedFuture": "Zukünftiger Zeitraum · erfasste Buchungen",
+  "biBookingBasis": "Reservierte Kapazität misst Buchungen, nicht die tatsächliche Anwesenheit.",
+  "biPastBasis": "Aus den heute verfügbaren Daten neu berechnet, kein damaliger Wissensstand.",
+  "biCurrentBasis": "Der gesamte Zeitraum ist enthalten. Der Vergleich mit einem abgeschlossenen Zeitraum hat keine gleichwertige Basis.",
+  "biFutureBasis": "Vorhandene Buchungen und aktuelle Öffnungszeiten; keine Nachfrageprognose oder garantierte Nutzung.",
+  "biDataPartial": "Unvollständige Daten",
+  "biDataStale": "Veraltete Daten",
+  "biDataUnavailable": "Nicht verfügbar",
+  "biDataNotRecorded": "Nicht erfasst",
+  "biDataNotApplicable": "Keine passende Kapazität",
+  "biComparisonUnqualified": "Änderung nicht verfügbar: Ein Zeitraum enthält unvollständige oder veraltete Daten.",
+  "biSeatHoursFree": "{hours} nicht reservierte Sitzstunden",
+  "@biSeatHoursFree": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biSeatHoursBlocked": "{hours} gesperrte Sitzstunden",
+  "@biSeatHoursBlocked": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biComputedWorkspaceTime": "Berechnet am {date} · Ortszeit des Workspace",
+  "@biComputedWorkspaceTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "statusNetExplanation": "Diese Zwischensumme entspricht Rechnungsbeträgen abzüglich Gutschriften, Erstattungen und Guthaben. Sie ist weder Gewinn noch Bankguthaben. Zugeordnete und eingegangene Zahlungen überschneiden sich und dürfen nicht addiert werden."
+}
