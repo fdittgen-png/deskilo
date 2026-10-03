@@ -31,7 +31,8 @@ class _Kpis implements KpiRepository {
     String? levelId,
   }) async {
     calls++;
-    return seatCapacityFromJson(const {
+    return seatCapacityFromJson({
+      ..._capacityFields,
       'from': '2026-10-01T00:00:00Z',
       'to': '2026-11-01T00:00:00Z',
       'offered_seat_hours': 100,
@@ -155,3 +156,17 @@ void main() {
     expect(kpis.calls, 0);
   });
 }
+
+const _capacityFields = <String, dynamic>{
+  'seats': 0,
+  'physical_seat_hours': 0,
+  'offered_seat_hours': 0,
+  'reserved_seat_hours': 0,
+  'reserved_outside_offered_seat_hours': 0,
+  'overlapping_seat_hours': 0,
+  'rooms_without_seats': 0,
+  'offered_room_hours': 0,
+  'reserved_room_hours': 0,
+  'quality': <String>[],
+  'reasons': <String>[],
+};

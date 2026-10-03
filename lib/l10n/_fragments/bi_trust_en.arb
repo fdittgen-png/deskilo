@@ -1,0 +1,41 @@
+{
+  "biRefresh": "Refresh data",
+  "biRecordedPast": "Past period · current records",
+  "biRecordedPresent": "Current period · includes future dates",
+  "biRecordedFuture": "Future period · bookings on record",
+  "biBookingBasis": "Reserved capacity measures bookings, not actual attendance.",
+  "biPastBasis": "Recomputed from records available now, not a snapshot of what was known then.",
+  "biCurrentBasis": "The whole period is included. Comparison with a completed period is not like-for-like.",
+  "biFutureBasis": "Existing bookings and current opening rules; not a demand forecast or guaranteed usage.",
+  "biDataPartial": "Partial data",
+  "biDataStale": "Out of date",
+  "biDataUnavailable": "Unavailable",
+  "biDataNotRecorded": "Not recorded",
+  "biDataNotApplicable": "No applicable capacity",
+  "biComparisonUnqualified": "Change unavailable: one period has partial or out-of-date data.",
+  "biSeatHoursFree": "{hours} unreserved seat-hours",
+  "@biSeatHoursFree": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biSeatHoursBlocked": "{hours} blocked seat-hours",
+  "@biSeatHoursBlocked": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biComputedWorkspaceTime": "Computed {date} · workspace time",
+  "@biComputedWorkspaceTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "statusNetExplanation": "This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together."
+}

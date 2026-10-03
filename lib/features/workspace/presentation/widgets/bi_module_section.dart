@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_modules.dart';
@@ -22,6 +23,7 @@ import '../../providers/workspace_providers.dart';
 import 'bi_result_views.dart';
 import 'bi_toolbar.dart';
 import 'capacity_kpi_card.dart';
+import 'capacity_evidence.dart';
 
 /// How a module's figures read. One per registered module.
 class BiModuleView {
@@ -134,7 +136,16 @@ class BiModuleSection extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(view.title(l10n), style: theme.textTheme.titleMedium),
+            Row(children: [
+              Expanded(child: Text(view.title(l10n), style: theme.textTheme.titleMedium)),
+              if (unsupported.isEmpty)
+                IconButton(
+                  key: const ValueKey('bi-refresh'),
+                  tooltip: l10n?.biRefresh ?? 'Refresh data',
+                  onPressed: result is AsyncLoading ? null : () => ref.invalidate(provider),
+                  icon: const Icon(Icons.refresh),
+                ),
+            ]),
             switch (result) {
               null => _refusal(l10n, unsupported, false),
               AsyncData(:final value) => _Result(
@@ -222,7 +233,7 @@ class _Result extends ConsumerWidget {
     final small = theme.textTheme.bodySmall;
     String since(BiMeasure m) => m.historySince == null
         ? ''
-        : DateFormat.yMMMd(locale).format(m.historySince!.toLocal());
+        : DateFormat.yMMMd(locale).format(WorkspaceTime.wall(m.historySince!));
     final comparedLabel = comparedPeriod == null
         ? ''
         : biPeriodLabel(comparedPeriod, l10n, locale);
@@ -237,6 +248,10 @@ class _Result extends ConsumerWidget {
           compared.quality.contains(KpiQuality.partial))
         l10n?.biComparedPartial(comparedLabel) ??
             '$comparedLabel is only partly recorded.',
+      if (compared != null && [...total.current.quality, ...compared.quality]
+          .any((q) => q == KpiQuality.partial || q == KpiQuality.stale))
+        l10n?.biComparisonUnqualified ??
+            'Change unavailable: one period has partial or out-of-date data.',
       if (exposureDiffers(total))
         l10n?.biExposureDiffers ??
             'The two periods do not offer the same base; the ratio accounts '
@@ -259,6 +274,8 @@ class _Result extends ConsumerWidget {
           key: const ValueKey('bi-value'),
           style: theme.textTheme.headlineMedium,
         ),
+        if (total.current.detail case final SeatCapacityKpi k)
+          CapacityEvidence(kpi: k),
         Text(view.basis(total.current, l10n, locale)),
         if (comparedPeriod != null && compared != null)
           Text(
