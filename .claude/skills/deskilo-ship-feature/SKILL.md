@@ -83,6 +83,8 @@ needs the deployment entity registry (reference.md "Flags").
   `.g.dart`: `dart run build_runner build --delete-conflicting-outputs`, commit the
   output. If a full run hangs in a worktree, use `--build-filter 'lib/<path>/<file>.g.dart'`
   (macOS has no `timeout`); a stale `build.dart.aot` holds the lock (reference.md "Tooling").
+  A filtered run with `--delete-conflicting-outputs` DELETES every other `.g.dart`;
+  restore them with `git ls-files -d -z | xargs -0 git checkout --` before committing.
 - **Never `dart format` an existing file** — the repo is not format-clean and one
   file yields hundreds of churn lines. Format only files you created; hand-place
   edits elsewhere at the surrounding indentation. Never format whole directories.

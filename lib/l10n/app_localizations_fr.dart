@@ -8606,6 +8606,279 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String mcpConnectAccessExpiresIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days jours',
+      one: '1 jour',
+    );
+    return 'Approuvé — encore $_temp0.';
+  }
+
+  @override
+  String mcpConnectAccessExpiresSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days jours',
+      one: '1 jour',
+    );
+    return 'Approuvé — expire dans $_temp0. Redemandez l’approbation une fois expiré.';
+  }
+
+  @override
+  String get mcpConnectAddTitle => 'Ajouter DesKilo à votre assistant';
+
+  @override
+  String get mcpConnectAddressLabel =>
+      'Votre adresse DesKilo pour les assistants';
+
+  @override
+  String get mcpConnectAllDone =>
+      'Tout est prêt. Testez la connexion ci-dessous.';
+
+  @override
+  String get mcpConnectBeforeTitle => 'Avant de connecter';
+
+  @override
+  String get mcpConnectChatgptNote =>
+      'Le mode développeur nécessite une offre ChatGPT payante (Plus, Pro, Business, Enterprise ou Edu).';
+
+  @override
+  String get mcpConnectChatgptStep1 =>
+      'Dans ChatGPT, activez le mode développeur : Paramètres → Apps → Paramètres avancés.';
+
+  @override
+  String get mcpConnectChatgptStep2 =>
+      'Créez une app nommée DesKilo, collez l’adresse ci-dessus et choisissez OAuth comme authentification.';
+
+  @override
+  String get mcpConnectChatgptStep3 =>
+      'Connectez-vous avec Google et choisissez cet espace de travail et ce que ChatGPT peut y faire.';
+
+  @override
+  String get mcpConnectClaudeNote =>
+      'Claude sur le web, Claude Desktop et l’application mobile Claude partagent les mêmes connecteurs. Avec une offre Team ou Enterprise, un propriétaire de l’organisation Claude ajoute d’abord le connecteur.';
+
+  @override
+  String get mcpConnectClaudeOpen => 'Ouvrir les connecteurs Claude';
+
+  @override
+  String get mcpConnectClaudeStep1 =>
+      'Dans Claude, ouvrez Paramètres → Connecteurs.';
+
+  @override
+  String get mcpConnectClaudeStep2 =>
+      'Choisissez « Ajouter un connecteur personnalisé », nommez-le DesKilo et collez l’adresse ci-dessus.';
+
+  @override
+  String get mcpConnectClaudeStep3 =>
+      'Choisissez Connecter, connectez-vous avec Google et choisissez cet espace de travail et ce que Claude peut y faire.';
+
+  @override
+  String get mcpConnectCodeStep1 => 'Exécutez ceci dans un terminal :';
+
+  @override
+  String get mcpConnectCodeStep2 =>
+      'Dans Claude Code, tapez /mcp, choisissez deskilo puis Authenticate. Un navigateur s’ouvre pour vous connecter et choisir cet espace de travail.';
+
+  @override
+  String get mcpConnectCopied => 'Copié.';
+
+  @override
+  String get mcpConnectCopyRequest => 'Copier une demande à envoyer';
+
+  @override
+  String get mcpConnectCursorInstall => 'Ajouter à Cursor';
+
+  @override
+  String get mcpConnectCursorStep =>
+      'Cursor propose d’installer DesKilo, puis ouvre un navigateur pour vous connecter et choisir cet espace de travail. Sans le bouton, ajoutez ceci à ~/.cursor/mcp.json :';
+
+  @override
+  String get mcpConnectDone => 'Fait';
+
+  @override
+  String get mcpConnectIntro =>
+      'Laissez Claude, ChatGPT ou un autre assistant consulter et réserver pour vous dans DesKilo. Il agit en votre nom, uniquement dans les espaces de travail et pour les actions que vous approuvez.';
+
+  @override
+  String mcpConnectLastCall(String client, String when) {
+    return 'Dernier appel : $client, $when.';
+  }
+
+  @override
+  String get mcpConnectManageHint =>
+      'Pour voir ce qu\'un assistant a fait ou pour le déconnecter, ouvrez Assistants.';
+
+  @override
+  String get mcpConnectOpenFailed =>
+      'L’application n’a pas pu être ouverte d’ici. Suivez plutôt les étapes ci-dessous.';
+
+  @override
+  String get mcpConnectOpenGuide => 'Ouvrir le guide de connexion';
+
+  @override
+  String get mcpConnectOpenInstallation =>
+      'Ouvrir la console de l\'installation';
+
+  @override
+  String get mcpConnectOpenSetup => 'Ouvrir la configuration des assistants';
+
+  @override
+  String get mcpConnectOperatorRequest =>
+      'Bonjour, pourriez-vous activer les assistants sur notre serveur DesKilo ? C\'est dans Paramètres → Installation : assistants. Merci.';
+
+  @override
+  String get mcpConnectOtherStep1 =>
+      'La plupart des clients lisent un fichier JSON de serveurs. Ajoutez cette entrée ; le client ouvre un navigateur pour vous connecter la première fois.';
+
+  @override
+  String get mcpConnectOtherStep2 =>
+      'Un client qui ne lance que des programmes locaux peut joindre DesKilo via mcp-remote (nécessite Node.js) :';
+
+  @override
+  String get mcpConnectRoleDenied =>
+      'Rien n\'est proposé à votre rôle ici. Un administrateur de l\'espace de travail décide de ce que chaque rôle peut faire.';
+
+  @override
+  String get mcpConnectStepAccess => 'Votre accès aux assistants';
+
+  @override
+  String get mcpConnectStepConnect => 'DesKilo ajouté à votre assistant';
+
+  @override
+  String get mcpConnectStepGoogle => 'Connexion avec Google';
+
+  @override
+  String get mcpConnectStepIdentity => 'Votre identité sur ce serveur';
+
+  @override
+  String get mcpConnectStepServer => 'Assistants activés sur ce serveur';
+
+  @override
+  String get mcpConnectStepWorkspace =>
+      'Cet espace de travail propose les assistants';
+
+  @override
+  String get mcpConnectSwitchWorkspace => 'Passer à cet espace de travail';
+
+  @override
+  String get mcpConnectTabChatgpt => 'ChatGPT';
+
+  @override
+  String get mcpConnectTabClaude => 'Claude';
+
+  @override
+  String get mcpConnectTabClaudeCode => 'Claude Code';
+
+  @override
+  String get mcpConnectTabCursor => 'Cursor';
+
+  @override
+  String get mcpConnectTabOther => 'Autre';
+
+  @override
+  String get mcpConnectTabVscode => 'VS Code';
+
+  @override
+  String get mcpConnectTest => 'Tester la connexion';
+
+  @override
+  String get mcpConnectTestAgain => 'Tester à nouveau';
+
+  @override
+  String get mcpConnectTestPrompt =>
+      'Avec DesKilo, quelles sont mes réservations cette semaine ?';
+
+  @override
+  String mcpConnectTestReached(String client, String when) {
+    return 'Connecté : $client a joint DesKilo, $when.';
+  }
+
+  @override
+  String get mcpConnectTestTimeout =>
+      'Aucun appel reçu pour l’instant. Vérifiez que le connecteur est ajouté, que vous avez approuvé cet espace de travail et que les étapes ci-dessus sont faites, puis testez à nouveau.';
+
+  @override
+  String get mcpConnectTestTitle => 'Vérifier que cela fonctionne';
+
+  @override
+  String get mcpConnectTestWaiting =>
+      'En attente d’un appel de votre assistant à DesKilo. Demandez-lui :';
+
+  @override
+  String get mcpConnectTitle => 'Connecter un assistant';
+
+  @override
+  String get mcpConnectTodoConnect =>
+      'À faire — vous : suivez les étapes pour votre assistant ci-dessous.';
+
+  @override
+  String get mcpConnectTodoYou => 'À faire — vous.';
+
+  @override
+  String get mcpConnectUnavailable => 'Impossible à vérifier pour l\'instant.';
+
+  @override
+  String get mcpConnectVscodeInstall => 'Ajouter à VS Code';
+
+  @override
+  String get mcpConnectVscodeStep =>
+      'VS Code propose d’installer DesKilo. Démarrez-le depuis la liste des serveurs MCP ; un navigateur s’ouvre pour vous connecter et choisir cet espace de travail.';
+
+  @override
+  String get mcpConnectWaitingDatabaseAdmin =>
+      'En attente d\'un administrateur de la base de données qui approuve votre demande.';
+
+  @override
+  String mcpConnectWaitingOperator(String names) {
+    return 'En attente de l\'opérateur du serveur : $names.';
+  }
+
+  @override
+  String get mcpConnectWaitingOperatorUnknown =>
+      'En attente de l\'opérateur du serveur, qui n\'est pas encore désigné.';
+
+  @override
+  String get mcpConnectWaitingWorkspaceAdmin =>
+      'En attente d\'un administrateur de l\'espace de travail qui propose les assistants ici.';
+
+  @override
+  String get mcpConnectWhich => 'Quel assistant utilisez-vous ?';
+
+  @override
+  String get mcpConnectWorkspaceSelected => 'Espace de travail sélectionné';
+
+  @override
+  String get mcpConnectWorkspacesHint =>
+      'Chaque espace de travail décide pour lui-même. Quand votre assistant le demande, vous choisissez parmi ceux qui sont prêts.';
+
+  @override
+  String get mcpConnectWorkspacesTitle => 'Vos espaces de travail';
+
+  @override
+  String get mcpConnectWsConnected =>
+      'Connecté — un assistant peut agir pour vous ici.';
+
+  @override
+  String get mcpConnectWsNotOffered =>
+      'Les assistants sont activés, mais rien n\'est encore proposé à votre rôle. Un administrateur de l\'espace de travail décide.';
+
+  @override
+  String get mcpConnectWsOff =>
+      'Les assistants sont désactivés dans cet espace de travail. Un administrateur de l\'espace de travail les active dans la configuration des assistants.';
+
+  @override
+  String get mcpConnectWsReady =>
+      'Prêt — choisissez-le quand votre assistant le demande.';
+
+  @override
+  String get mcpConnectWsUnknown =>
+      'Affiché une fois votre accès aux assistants approuvé.';
+
+  @override
   String get mcpConnectedNoWorkspace =>
       'Aucun espace : cet assistant ne peut rien faire ici.';
 
@@ -8930,6 +9203,26 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get mcpPolicyUnavailable =>
       'Les réglages des assistants n\'ont pas pu être chargés. Réessayez plus tard.';
+
+  @override
+  String get mcpRefusalClientNotApproved =>
+      'Cet assistant n’est pas encore approuvé sur ce serveur. L’opérateur approuve chaque assistant une fois ; demandez-le-lui, puis reconnectez-vous depuis l’assistant.';
+
+  @override
+  String get mcpRefusalNoIdentity =>
+      'Confirmez d’abord votre identité dans DesKilo sous Assistants, puis reconnectez-vous depuis l’assistant.';
+
+  @override
+  String get mcpRefusalNotEligible =>
+      'Votre accès aux assistants n’est pas encore approuvé. Demandez-le dans DesKilo sous Assistants, puis reconnectez-vous depuis l’assistant.';
+
+  @override
+  String get mcpRefusalOfferChanged =>
+      'Ce que propose cet espace de travail a changé pendant votre choix. Reconnectez-vous depuis l’assistant pour voir l’offre actuelle.';
+
+  @override
+  String get mcpRefusalRequestExpired =>
+      'Cette demande de connexion a expiré ou a déjà été utilisée. Recommencez depuis l’assistant.';
 
   @override
   String get mcpRemoveWorkspace => 'Retirer cet espace';

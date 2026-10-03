@@ -90,6 +90,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/mcp/confirm/:id', RouteClass.nativeAccount),
   RouteRule('/oauth/consent', RouteClass.nativeAccount),
   RouteRule('/assistants', RouteClass.nativeAccount),
+  RouteRule('/assistants/connect', RouteClass.workspace),
   RouteRule('/database/assistant-approvals', RouteClass.nativeAccount),
   RouteRule('/installation/assistants', RouteClass.nativeAccount),
   RouteRule('/settings/assistants', RouteClass.workspace),
