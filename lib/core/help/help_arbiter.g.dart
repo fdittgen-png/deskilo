@@ -41,7 +41,7 @@ final class HelpArbiterProvider
   }
 }
 
-String _$helpArbiterHash() => r'f0c2c034bdb6e1137998993baac64c83c1866481';
+String _$helpArbiterHash() => r'0c8e8aaf3fb79cf377bfe11e84091e94433c8845';
 
 abstract class _$HelpArbiter extends $Notifier<HelpArbiterState> {
   HelpArbiterState build();
