@@ -97,8 +97,158 @@ class FeatureAssessment {
 }
 
 const _legacy = FeatureAssessment.unreviewed(
-  'Registered before #1850; awaiting an assessment against the '
-  'capability evidence ledger.',
+  'No shipped capability in the evidence ledger '
+  '(docs/product/capabilities.json) covers it yet; it stays unreviewed '
+  'until one does, whatever its age, issue state or test count.',
+);
+
+// #1850 B — one assessment per shipped capability of the evidence ledger
+// that names the feature. Beta means: assessed, and the capability's
+// evidence runs on every change; the ledger's limitations travel with it.
+// Stable needs the provider, hardware or operator evidence #1850 C checks.
+const _booking = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  rationale:
+      '#1850 B: assessed against the evidence ledger (booking): shipped, '
+      'with local_integration, unit evidence that runs on every change. '
+      'Beta, not stable: no provider, hardware or operator qualification is '
+      'recorded.',
+  evidence: ['booking'],
+  limitations:
+      'Single-workspace timezone per booking; recovery of a booking made '
+      'against a stale plan is manual.',
+);
+
+const _allowances = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  rationale:
+      '#1850 B: assessed against the evidence ledger '
+      '(membership.allowances): shipped, with local_integration, unit '
+      'evidence that runs on every change. Beta, not stable: no provider, '
+      'hardware or operator qualification is recorded.',
+  evidence: ['membership.allowances'],
+  limitations:
+      'Allowances are counted per calendar month in the workspace clock; no '
+      'pro-rata on a mid-month join.',
+);
+
+const _sharedExpenses = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  rationale:
+      '#1850 B: assessed against the evidence ledger '
+      '(statements.shared_expenses): shipped, with local_integration, unit '
+      'evidence that runs on every change. Beta, not stable: no provider, '
+      'hardware or operator qualification is recorded.',
+  evidence: ['statements.shared_expenses'],
+  limitations:
+      'Statements are a view of the ledger, not an accounting ledger of the '
+      'association; see accounting.export for the books.',
+);
+
+const _approvals = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  rationale:
+      '#1850 B: assessed against the evidence ledger (approvals): shipped, '
+      'with local_integration, unit evidence that runs on every change. '
+      'Beta, not stable: no provider, hardware or operator qualification is '
+      'recorded.',
+  evidence: ['approvals'],
+  limitations:
+      'Quorums count distinct people by membership, not by device or '
+      'session.',
+);
+
+const _onlinePayments = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  rationale:
+      '#1850 B: assessed against the evidence ledger (payments.stripe, '
+      'payments.mollie, payments.paypal, payments.wero): shipped, with '
+      'local_integration, provider_sandbox, unit evidence that runs on '
+      'every change. Beta, not stable: no provider, hardware or operator '
+      'qualification is recorded.',
+  evidence: [
+    'payments.stripe',
+    'payments.mollie',
+    'payments.paypal',
+    'payments.wero',
+  ],
+  limitations:
+      'payments.stripe: CI runs the real order and webhook handlers against '
+      'a stateful local stub through ten settlement scenarios; no Stripe '
+      'sandbox has been exercised from this repository: '
+      'scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and '
+      'without test keys it records not_run, never a pass. Refunds are '
+      'recorded by hand. payments.mollie: The reconciliation is proved in a '
+      'replayed database; no Mollie sandbox has been exercised from this '
+      'repository. payments.paypal: No CI check reaches the PayPal handler; '
+      'the Stripe stub says nothing about PayPal. payments.wero: Wero rides '
+      'Mollie\'s checkout; nothing beyond the client\'s method handling cites '
+      'Wero, so the Mollie reconciliation does not count here.',
+);
+
+const _accountingExport = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  rationale:
+      '#1850 B: assessed against the evidence ledger (accounting.export): '
+      'shipped, with unit evidence that runs on every change. Beta, not '
+      'stable: no provider, hardware or operator qualification is recorded.',
+  evidence: ['accounting.export'],
+  limitations:
+      'Format conformance is proved against the published specifications, '
+      'not against any accounting software\'s import; no certification is '
+      'claimed.',
+);
+
+const _invoicing = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  rationale:
+      '#1850 B: assessed against the evidence ledger (einvoice.generate): '
+      'shipped, with unit evidence that runs on every change. Beta, not '
+      'stable: no provider, hardware or operator qualification is recorded.',
+  evidence: ['einvoice.generate'],
+  limitations:
+      'Validated against the norm\'s arithmetic and structure here; '
+      'acceptance by a given platform\'s validator is not claimed.',
+);
+
+const _vat = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  rationale:
+      '#1850 B: assessed against the evidence ledger (accounting.export, '
+      'einvoice.generate): shipped, with unit evidence that runs on every '
+      'change. Beta, not stable: no provider, hardware or operator '
+      'qualification is recorded.',
+  evidence: ['accounting.export', 'einvoice.generate'],
+  limitations:
+      'accounting.export: Format conformance is proved against the '
+      'published specifications, not against any accounting software\'s '
+      'import; no certification is claimed. einvoice.generate: Validated '
+      'against the norm\'s arithmetic and structure here; acceptance by a '
+      'given platform\'s validator is not claimed.',
+);
+
+const _einvoiceTransmit = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  rationale:
+      '#1850 B: assessed against the evidence ledger (einvoice.transmit): '
+      'shipped, with unit evidence that runs on every change. Beta, not '
+      'stable: no provider, hardware or operator qualification is recorded.',
+  evidence: ['einvoice.transmit'],
+  limitations:
+      'The client\'s hand-off is unit-tested against a fake function; no '
+      'transmission to a real or sandbox platform has been recorded.',
+);
+
+const _demo = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  rationale:
+      '#1850 B: assessed against the evidence ledger (demo): shipped, with '
+      'unit evidence that runs on every change. Beta, not stable: no '
+      'provider, hardware or operator qualification is recorded.',
+  evidence: ['demo'],
+  limitations:
+      'The Demo\'s reach over the screens is pinned by a lint, not by an '
+      'end-to-end run of every journey.',
 );
 
 /// Every registered feature's assessment — one explicit line each, so a
@@ -110,9 +260,9 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.moneyTab: _legacy,
   WorkspaceFeature.services: _legacy,
   WorkspaceFeature.accessorySupplements: _legacy,
-  WorkspaceFeature.onlinePayments: _legacy,
+  WorkspaceFeature.onlinePayments: _onlinePayments,
   WorkspaceFeature.pdfExport: _legacy,
-  WorkspaceFeature.seriesBooking: _legacy,
+  WorkspaceFeature.seriesBooking: _booking,
   WorkspaceFeature.bookForOthers: _legacy,
   WorkspaceFeature.pushNotifications: _legacy,
   WorkspaceFeature.adminSeatBlocking: _legacy,
@@ -124,10 +274,10 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.whatsappIntegration: _legacy,
   WorkspaceFeature.spaceQrCodes: _legacy,
   WorkspaceFeature.coOwner: _legacy,
-  WorkspaceFeature.invoicing: _legacy,
+  WorkspaceFeature.invoicing: _invoicing,
   WorkspaceFeature.adminInvoicing: _legacy,
-  WorkspaceFeature.autoCheckInOut: _legacy,
-  WorkspaceFeature.dataExport: _legacy,
+  WorkspaceFeature.autoCheckInOut: _booking,
+  WorkspaceFeature.dataExport: _accountingExport,
   WorkspaceFeature.workingHours: _legacy,
   WorkspaceFeature.invoicePdfTemplate: _legacy,
   WorkspaceFeature.invoiceAddressWindow: _legacy,
@@ -135,14 +285,14 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.documents: _legacy,
   WorkspaceFeature.dunning: _legacy,
   WorkspaceFeature.memberReports: _legacy,
-  WorkspaceFeature.deletionRequests: _legacy,
+  WorkspaceFeature.deletionRequests: _approvals,
   WorkspaceFeature.roleManagement: _legacy,
-  WorkspaceFeature.vatManagement: _legacy,
+  WorkspaceFeature.vatManagement: _vat,
   WorkspaceFeature.vatDeclarations: _legacy,
-  WorkspaceFeature.einvoiceCustomerDelivery: _legacy,
+  WorkspaceFeature.einvoiceCustomerDelivery: _einvoiceTransmit,
   WorkspaceFeature.planObjectDelete: _legacy,
   WorkspaceFeature.notificationGrouping: _legacy,
-  WorkspaceFeature.bookingPolicies: _legacy,
+  WorkspaceFeature.bookingPolicies: _booking,
   WorkspaceFeature.nfcSeatTags: _legacy,
   WorkspaceFeature.qrBadges: _legacy,
   WorkspaceFeature.kioskMemberPhotos: _legacy,
@@ -154,14 +304,14 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.calendarHub: _legacy,
   WorkspaceFeature.dataAccessLog: _legacy,
   WorkspaceFeature.memberDataExport: _legacy,
-  WorkspaceFeature.financeFaces: _legacy,
+  WorkspaceFeature.financeFaces: _sharedExpenses,
   WorkspaceFeature.paymentReminders: _legacy,
-  WorkspaceFeature.supplyExpenses: _legacy,
-  WorkspaceFeature.validationScopes: _legacy,
-  WorkspaceFeature.validationChain: _legacy,
+  WorkspaceFeature.supplyExpenses: _sharedExpenses,
+  WorkspaceFeature.validationScopes: _approvals,
+  WorkspaceFeature.validationChain: _approvals,
   WorkspaceFeature.richMessageRefs: _legacy,
   WorkspaceFeature.calendarValidations: _legacy,
-  WorkspaceFeature.usageRecords: _legacy,
+  WorkspaceFeature.usageRecords: _allowances,
   WorkspaceFeature.reportDesignExchange: _legacy,
   WorkspaceFeature.reportLayouts: _legacy,
   WorkspaceFeature.personalInfo: _legacy,
@@ -191,17 +341,17 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.usageInvoices: _legacy,
   WorkspaceFeature.invoiceSettlement: _legacy,
   WorkspaceFeature.invoiceJourney: _legacy,
-  WorkspaceFeature.bookingGate: _legacy,
+  WorkspaceFeature.bookingGate: _booking,
   WorkspaceFeature.calendarViews: _legacy,
   WorkspaceFeature.messagesHub: _legacy,
   WorkspaceFeature.reportDesigner: _legacy,
   WorkspaceFeature.memberPage: _legacy,
   WorkspaceFeature.invoicingWizard: _legacy,
-  WorkspaceFeature.expenseRepartition: _legacy,
+  WorkspaceFeature.expenseRepartition: _sharedExpenses,
   WorkspaceFeature.settlementFold: _legacy,
   WorkspaceFeature.configurationTransfer: _legacy,
   WorkspaceFeature.navigationStyle: _legacy,
-  WorkspaceFeature.demoMode: _legacy,
+  WorkspaceFeature.demoMode: _demo,
   WorkspaceFeature.instanceWizard: _legacy,
   WorkspaceFeature.memberOrigin: _legacy,
   WorkspaceFeature.memberEnvironments: _legacy,
@@ -209,7 +359,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.singleRoomLevelNames: _legacy,
   WorkspaceFeature.publicHolidays: _legacy,
   WorkspaceFeature.workspaceVocabulary: _legacy,
-  WorkspaceFeature.carnets: _legacy,
+  WorkspaceFeature.carnets: _allowances,
   WorkspaceFeature.workspaceBranding: _legacy,
   WorkspaceFeature.customRoles: _legacy,
   WorkspaceFeature.customFields: _legacy,
@@ -317,6 +467,100 @@ List<String> validateFeatureAssessments({
         break;
       }
       if (seen.add(r)) stack.addAll(all[r]?.replacedBy ?? const []);
+    }
+  }
+  return problems;
+}
+
+/// #1850 B — one capability of the evidence ledger
+/// (docs/product/capabilities.json, #1634), as far as an assessment reads
+/// it.
+class LedgerCapability {
+  const LedgerCapability({
+    required this.id,
+    required this.shipped,
+    required this.features,
+    required this.scopes,
+    this.limitations = '',
+  });
+
+  /// Reads one manifest entry; anything missing reads as "not shipped,
+  /// no evidence", which can support no claim.
+  factory LedgerCapability.fromManifest(Map<String, Object?> entry) {
+    // A manifest entry, not a table row: it has no system columns.
+    final id = entry['id'];
+    final limitations = entry['limitations'];
+    return LedgerCapability(
+      id: id is String ? id : '',
+      shipped: entry['status'] == 'shipped',
+      features: {...(entry['features'] as List? ?? const []).cast<String>()},
+      scopes: {
+        for (final e in (entry['evidence'] as List? ?? const []))
+          if (e is Map && e['scope'] is String) e['scope'] as String,
+      },
+      limitations: limitations is String ? limitations : '',
+    );
+  }
+
+  final String id;
+  final bool shipped;
+  final Set<String> features;
+
+  /// The evidence scopes the capability declares (unit, local_integration,
+  /// provider_sandbox, …).
+  final Set<String> scopes;
+  final String limitations;
+}
+
+/// #1850 B — what is wrong with [assessments] against the evidence
+/// [ledger], one sentence per problem:
+///
+/// * a claim above unreviewed cites only capabilities that are shipped,
+///   hold evidence and name the feature, and repeats their limitations —
+///   an assessment cannot lend itself a capability it is not part of, or
+///   drop the limits that capability states;
+/// * a feature that a shipped, evidenced capability names is assessed —
+///   the ledger and the registry cannot drift apart silently.
+List<String> validateAssessmentsAgainstLedger({
+  required Map<WorkspaceFeature, FeatureAssessment> assessments,
+  required List<LedgerCapability> ledger,
+}) {
+  final problems = <String>[];
+  final byId = {for (final c in ledger) c.id: c};
+  for (final e in assessments.entries) {
+    final key = e.key.name;
+    final a = e.value;
+    if (a.maturity == FeatureMaturity.unreviewed) continue;
+    for (final id in a.evidence) {
+      final c = byId[id];
+      if (c == null) continue; // validateFeatureAssessments names it
+      if (!c.shipped) problems.add('$key: cites "$id", which is not shipped');
+      if (c.scopes.isEmpty) {
+        problems.add('$key: cites "$id", which holds no evidence');
+      }
+      if (!c.features.contains(key)) {
+        problems.add('$key: cites "$id", which does not name it');
+      }
+      if (c.limitations.isNotEmpty && !a.limitations.contains(c.limitations)) {
+        problems.add('$key: drops the limitations of "$id"');
+      }
+    }
+  }
+  final live = {for (final f in WorkspaceFeature.values) f.name: f};
+  for (final c in ledger) {
+    if (!c.shipped || c.scopes.isEmpty) continue;
+    for (final name in c.features) {
+      final f = live[name];
+      if (f == null) continue;
+      final a = assessments[f];
+      if (a == null ||
+          a.maturity == FeatureMaturity.unreviewed ||
+          !a.evidence.contains(c.id)) {
+        problems.add(
+          '$name: named by shipped "${c.id}" but not assessed '
+          'against it',
+        );
+      }
     }
   }
   return problems;

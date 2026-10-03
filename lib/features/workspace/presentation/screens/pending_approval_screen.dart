@@ -152,9 +152,9 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                   children: [
                     TextButton.icon(
                       key: const ValueKey('pending-switch'),
-                      onPressed: () => context.push('/profiles'),
+                      onPressed: () => context.go('/me'),
                       icon: const Icon(Icons.switch_account_outlined),
-                      label: Text(l10n?.pendingSwitchWorkspace ?? 'Switch workspace'),
+                      label: Text(l10n?.spaceBackToMe ?? 'Back to Me'),
                     ),
                     TextButton.icon(
                       key: const ValueKey('pending-help'),

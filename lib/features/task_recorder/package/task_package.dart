@@ -41,14 +41,20 @@ import 'package:crypto/crypto.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
+import 'storyboard_review.dart';
 
 const String taskPackageFormat = 'deskilo.task-package';
-const int taskPackageVersion = 1;
+
+/// The newest package version this build writes and reads. Version 2
+/// (#1876) adds the optional reviewed storyboard; a package without one
+/// is still written as version 1, so older readers keep reading it.
+const int taskPackageVersion = 2;
 const String taskPackageExtension = '.deskilo-task.zip';
 
 const String _manifestPath = 'manifest.json';
 const String _recordingPath = 'recording.json';
 const String _transcriptPath = 'transcript.md';
+const String _storyboardPath = 'storyboard.json';
 
 /// The media a package may carry, by extension.
 const Map<String, String> taskPackageMediaTypes = {
@@ -112,9 +118,14 @@ class TaskPackage {
     this.transcript,
     this.assets = const [],
     this.claims = const {},
+    this.storyboard,
   });
 
   final TaskRecording recording;
+
+  /// #1876 — what the maker decided about the storyboard, if they kept
+  /// one: replayed on a storyboard derived again (storyboard_review.dart).
+  final StoryboardReview? storyboard;
 
   /// False when a step names an action this build does not know: a
   /// transcript may be shown, a guide may not run.
@@ -176,7 +187,11 @@ Uint8List writeTaskPackage(
   String? transcript,
   List<TaskPackageAsset> assets = const [],
   Map<String, String> claims = const {},
+  StoryboardReview? storyboard,
 }) {
+  final storyboardBytes = storyboard == null
+      ? null
+      : utf8.encode(storyboard.toText());
   final recordingBytes = utf8.encode('${encodeRecordingText(recording)}\n');
   final transcriptBytes = transcript == null ? null : utf8.encode(transcript);
   for (final a in assets) {
@@ -191,7 +206,7 @@ Uint8List writeTaskPackage(
   };
   final manifest = {
     'format': taskPackageFormat,
-    'package_version': taskPackageVersion,
+    'package_version': storyboardBytes == null ? 1 : taskPackageVersion,
     'product': 'deskilo',
     'recording': {
       ...entry(_recordingPath, recordingBytes),
@@ -202,6 +217,8 @@ Uint8List writeTaskPackage(
     },
     if (transcriptBytes != null)
       'transcript': entry(_transcriptPath, transcriptBytes),
+    if (storyboardBytes != null)
+      'storyboard': entry(_storyboardPath, storyboardBytes),
     'assets': [
       for (final a in assets)
         {...entry(a.path, a.bytes), 'media_type': a.mediaType},
@@ -222,6 +239,7 @@ Uint8List writeTaskPackage(
   );
   add(_recordingPath, recordingBytes);
   if (transcriptBytes != null) add(_transcriptPath, transcriptBytes);
+  if (storyboardBytes != null) add(_storyboardPath, storyboardBytes);
   for (final a in assets) {
     add(a.path, a.bytes);
   }
@@ -328,6 +346,7 @@ TaskPackageIssueCode? _pathIssue(String name) {
   if (name == _manifestPath ||
       name == _recordingPath ||
       name == _transcriptPath ||
+      name == _storyboardPath ||
       _mediaPath.hasMatch(name)) {
     return null;
   }
@@ -365,6 +384,7 @@ TaskPackageReadResult _readManifest(
     'product',
     'recording',
     'transcript',
+    'storyboard',
     'assets',
     'claims',
   };
@@ -426,6 +446,22 @@ TaskPackageReadResult _readManifest(
     } on FormatException {
       return refuse(TaskPackageIssueCode.badText);
     }
+  }
+
+  StoryboardReview? storyboard;
+  if (json['storyboard'] != null) {
+    // A storyboard needs version 2; a version-1 package never has one.
+    if (version < 2) return refuse(TaskPackageIssueCode.badManifest);
+    final issue = check(json['storyboard'], const {}, path: _storyboardPath);
+    if (issue != null) return refuse(issue);
+    final String text;
+    try {
+      text = utf8.decode(files[_storyboardPath]!);
+    } on FormatException {
+      return refuse(TaskPackageIssueCode.badText);
+    }
+    storyboard = StoryboardReview.parse(text);
+    if (storyboard == null) return refuse(TaskPackageIssueCode.badManifest);
   }
 
   final assets = <TaskPackageAsset>[];
@@ -494,6 +530,7 @@ TaskPackageReadResult _readManifest(
       transcript: transcript,
       assets: assets,
       claims: claims,
+      storyboard: storyboard,
     ),
     const [],
     recordingIssues: decoded.issues,

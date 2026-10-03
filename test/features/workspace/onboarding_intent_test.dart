@@ -33,6 +33,8 @@ Future<FakeWorkspaceRepository> pump(
     child: const DeskiloApp(),
   ));
   await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('me-home-create')));
+  await tester.pumpAndSettle();
   return repo;
 }
 

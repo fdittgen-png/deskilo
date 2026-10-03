@@ -300,10 +300,9 @@ RouteDecision resolveDestination(RouteRequest request, RouteFacts facts) {
     case WorkspacesFact.loading:
       return const RouteDecision.stay();
     case WorkspacesFact.none:
-      // The first run: creating or joining a space. #1823 — Me is one
-      // tap away from there, and every tab of it opens with no space.
+      // First run opens the personal home with discovery and invitation entry.
       return const RouteDecision.go(
-          '/onboarding?first=1', RouteReason.noWorkspace);
+          kMeHome, RouteReason.noWorkspace);
     case WorkspacesFact.unavailable:
       // Not "none": the chooser shows the failure and offers the retry;
       // onboarding would demand a creation over an unknown state.

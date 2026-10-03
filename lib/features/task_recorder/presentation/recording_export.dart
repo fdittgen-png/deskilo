@@ -17,6 +17,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
+import '../package/storyboard_review.dart';
 import '../package/task_package.dart';
 import 'recorder_labels.dart';
 
@@ -27,6 +28,7 @@ Uint8List? recordingExportBytes(
   TaskRecording recording, {
   required bool package,
   List<TaskPackageAsset> assets = const [],
+  StoryboardReview? storyboard,
 }) {
   final text = encodeRecordingText(recording);
   if (!decodeRecordingText(text).accepted) return null;
@@ -35,6 +37,7 @@ Uint8List? recordingExportBytes(
           recording,
           transcript: recordingTranscript(l10n, recording),
           assets: assets,
+          storyboard: storyboard,
         )
       : Uint8List.fromList(utf8.encode(text));
 }

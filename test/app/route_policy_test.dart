@@ -55,7 +55,7 @@ final rows = <Row>[
   stay('member: a workspace route opens', '/reserve', member),
   stay("member: a permission route is the guard's business", '/settings', member),
   go('unknown route is refused home', '/nowhere', member, '/reserve', RouteReason.unknownRoute),
-  go('unknown route with no workspace settles on onboarding', '/nowhere', zero, '/reserve', RouteReason.unknownRoute, settled: '/onboarding?first=1'),
+  go('unknown route with no workspace settles on Me', '/nowhere', zero, '/reserve', RouteReason.unknownRoute, settled: '/me'),
   // consent
   go('not accepted: a workspace route asks for consent', '/reserve', unconsented, '/consent', RouteReason.consentRequired),
   go('not accepted: an account page asks for consent', '/profiles', unconsented, '/consent', RouteReason.consentRequired),
@@ -68,7 +68,7 @@ final rows = <Row>[
   stay('accepted: reviewing the consent stays', '/consent?review=1', member),
   stay('profile loading: nothing moves', '/reserve', const RouteFacts(auth: AuthFact.signedIn, privacy: PrivacyFact.loading)),
   // zero workspaces
-  go('no workspace: a workspace route goes to onboarding', '/reserve', zero, '/onboarding?first=1', RouteReason.noWorkspace),
+  go('no workspace: a workspace route goes to Me', '/reserve', zero, '/me', RouteReason.noWorkspace),
   stay('no workspace: Me opens', '/me', zero),
   stay('no workspace: the account pages open', '/profiles', zero),
   stay('no workspace: linked accounts open', '/linked-accounts', zero),
