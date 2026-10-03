@@ -22,6 +22,9 @@ import '../../../calendar/providers/calendar_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/privacy_choice_tiles.dart';
+import '../widgets/rights_requests_tile.dart';
+import '../widgets/erasure_preview_view.dart';
+import '../../application/rights_requests.dart';
 
 /// The policy the store listings, the README and the help all point at.
 const kPrivacyPolicyUrl = 'https://fdittgen-png.github.io/deskilo/privacy.html';
@@ -110,6 +113,10 @@ class PrivacyScreen extends ConsumerWidget {
             enabled: !isOwner,
             onTap: isOwner ? null : () => _erase(context, ref),
           ),
+        // #1915 — rights requests: filed, dated, answered or refused.
+        RightsRequestsTile(
+          workspaceId: ref.watch(currentWorkspaceProvider).value?.id,
+        ),
         // #1914 — this space's own notice, and acknowledging it.
         const SpaceNoticeTile(),
         // #1914 — optional push delivery, off or on for this device.
@@ -171,6 +178,9 @@ class PrivacyScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
+    // #1915 — say what goes and what stays before anything is asked.
+    final preview = await previewErasureOrNull(ref, workspace.id);
+    if (!context.mounted) return;
     // Irreversible — typed confirmation, like the workspace reset.
     final controller = TextEditingController();
     final phrase = l10n?.privacyEraseConfirmPhrase ?? 'ERASE';
@@ -178,7 +188,12 @@ class PrivacyScreen extends ConsumerWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(l10n?.privacyErase ?? 'Leave this workspace and erase my data'),
-        content: Column(mainAxisSize: MainAxisSize.min, children: [
+        content: SingleChildScrollView(
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+          if (preview != null) ...[
+            ErasurePreviewView(preview: preview),
+            const SizedBox(height: AppSpacing.md),
+          ],
           Text(l10n?.privacyEraseConfirmHint(phrase) ??
               'This cannot be undone. Type $phrase to confirm.'),
           const SizedBox(height: AppSpacing.md),
@@ -188,7 +203,7 @@ class PrivacyScreen extends ConsumerWidget {
             autofocus: true,
             decoration: InputDecoration(hintText: phrase),
           ),
-        ]),
+        ])),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),

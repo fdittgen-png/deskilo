@@ -330,7 +330,15 @@ enum WorkspaceFeature {
   /// quorum, the workspace's own roles at once), the members holding each
   /// role in its editor, and "What you can do here" for every member.
   /// Under roleManagement; Core, default ON.
-  roleAssignment;
+  roleAssignment,
+
+  /// #1865 — "Record this task": a person records, on this device and
+  /// for themselves, the semantic steps of a task on the workspace's
+  /// screens, reviews them and exports a minimized file. Nothing is
+  /// uploaded. Gates recording on workspace screens only; the local
+  /// workbench and its outputs are not workspace features. Platform,
+  /// default OFF.
+  taskRecorder;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1422,6 +1430,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.members,
     tier: FeatureTier.core,
     requires: WorkspaceFeature.roleManagement,
+  ),
+  // #1865 — recording a task is something a space offers its people
+  // deliberately: asked for, Platform, off.
+  WorkspaceFeature.taskRecorder: FeatureManifestEntry(
+    feature: WorkspaceFeature.taskRecorder,
+    surface: FeatureSurface.everywhere,
+    tier: FeatureTier.platform,
+    defaultOn: false,
   ),
 };
 

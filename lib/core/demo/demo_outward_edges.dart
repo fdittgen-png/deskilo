@@ -24,6 +24,7 @@ import '../backend/schema_version.dart';
 import '../instance/schema_compatibility.dart';
 import '../push/push_connector.dart';
 import '../push/push_endpoint_repository.dart';
+import '../files/file_types.dart';
 import '../share/file_sharer.dart';
 
 /// Everything a session was asked to send outwards, in order.
@@ -64,6 +65,16 @@ class DemoOutwardEdges {
   }) async {
     savedFiles.add(fileName);
     return 'demo://$fileName';
+  }
+
+  /// #1872 — the typed save: Demo keeps nothing anywhere a person could
+  /// find it, and says so.
+  Future<SaveOutcome> saveFileTyped({
+    required Uint8List bytes,
+    required String fileName,
+  }) async {
+    savedFiles.add(fileName);
+    return SavedPrivately('demo://$fileName');
   }
 
   Future<FileShareOutcome> shareFile({

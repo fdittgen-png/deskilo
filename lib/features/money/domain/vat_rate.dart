@@ -1,4 +1,5 @@
 import '../../../core/data/system_columns.dart';
+import 'accounting_amount.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// One VAT rate a workspace charges (0072). A "reduced" rate is not a
@@ -244,10 +245,28 @@ DateTime vatTaxPoint(String period, DateTime today) {
 /// Every total is then a plain sum of lines, so the breakdown, the net
 /// total and the payable amount all tie back to the ledger with nothing to
 /// reconcile.
+///
+/// #1870 — in exact decimal arithmetic, rounding a half away from zero as
+/// the server's `round(numeric)` does: a binary double could land a cent
+/// apart at a rate such as 9.975 %.
 ({int netCents, int vatCents}) vatSplit(int grossCents, double percent) {
   if (percent <= 0) return (netCents: grossCents, vatCents: 0);
-  final net = (grossCents * 100 / (100 + percent)).round();
+  final rate = ExactDecimal.parse(_plainDecimal(percent));
+  // net = gross × 100 / (100 + rate) = gross × 100 × 10^s / (100 × 10^s + units)
+  final scale = rate.denominator;
+  final numerator = BigInt.from(grossCents) * BigInt.from(100) * scale;
+  final denominator = BigInt.from(100) * scale + rate.units;
+  final net = AccountingAmount('EUR', 1)
+      .roundedQuotient(numerator, denominator, RoundingPolicy.halfUp);
   return (netCents: net, vatCents: grossCents - net);
+}
+
+/// A double rate as the plain decimal the owner typed: 9.975 → '9.975',
+/// 20 → '20', never '2e1'.
+String _plainDecimal(double v) {
+  final text = v.toString();
+  if (!text.contains('e')) return text;
+  return v.toStringAsFixed(6).replaceFirst(RegExp(r'\.?0+$'), '');
 }
 
 /// One line of an invoice's VAT breakdown — a rate, and what it applies

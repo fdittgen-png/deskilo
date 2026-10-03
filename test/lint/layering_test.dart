@@ -71,6 +71,15 @@ const Map<String, int> _repositoryInWidgets = {
 };
 
 const Set<String> _knownPairs = {
+  // #1865 — the task recorder: the help screen offers "Record this
+  // task"; the Reserve hub, the booking sheet flow and the reservation
+  // sheet call the recorder's seam; the booking adapter reads the
+  // booking command's outcome type; the recorder reads the workspace's
+  // flag and active workspace for its scope.
+  'help -> task_recorder',
+  'reservations -> task_recorder',
+  'task_recorder -> reservations',
+  'task_recorder -> workspace',
   // #1823 — the Me layer is the account's home: it shows the account
   // messenger and discovery (directory), my spaces and memberships
   // (workspace), my photo and account rows (profile), and signs out (auth).
@@ -178,6 +187,12 @@ const Set<String> _knownPairs = {
 /// lowers its line, and a change that adds an import to an existing pair
 /// has to say so here.
 const Map<String, int> _pairBudget = {
+  // 2026-10-02 #1865 — the task recorder's seam and adapter (see the
+  // pairs above).
+  'help -> task_recorder': 2,
+  'reservations -> task_recorder': 8,
+  'task_recorder -> reservations': 1,
+  'task_recorder -> workspace': 2,
   // 2026-09-16 #1306 S2 — the calendar carries the pending decisions when
   // the events bell is off: one import of the events feature's widget.
   'calendar -> events': 4,
@@ -271,7 +286,7 @@ const Map<String, int> _pairBudget = {
   // the plan's `targetNamesProvider` so the calendar-file command can name
   // the booked space — the widget that asks for the file imports no plan
   // provider of its own, which is the point of the command.
-  'reservations -> plan': 72, // #1825 +3: list_space_tap (floor plan, level, half-day window)
+  'reservations -> plan': 73, // #1825 +1: whole_space_blocking (FloorPlan) — the whole-space rule now has ONE home shared by the plan sheet and the list. #1825 +3: list_space_tap (floor plan, level, half-day window)
   'reservations -> profile': 1,
   // 48→50 (2026-09-16): #1234 — `application/act_on_space.dart` and
   // `domain/space_act.dart` both need `BookingGranularity`: the
@@ -301,7 +316,7 @@ const Map<String, int> _pairBudget = {
   'workspace -> events': 15, // 2026-09-27 #1657 13→15: widgets/local_setup_views.dart names a validation policy by its event-type label (the domain enum and its label), for the named-validators slot and the apply sheet's note
   'workspace -> members': 4,
   'workspace -> money': 35,
-  'workspace -> plan': 25,
+  'workspace -> plan': 26, // 2026-10-02 #1923 B 25→26: the Web-BI query groups capacity by the workspace's levels (levelsProvider), the one level seam.
   'workspace -> profile': 11, // 2026-09-28 #1652 10→11: the invitation review names who is joining (my profile's e-mail).
   'workspace -> reservations': 19, // 2026-10-02 #2085 17→19: the role's holders and "What they can do here" print member names through memberNamesProvider, the one name seam (recording privacy, #1514).
 };

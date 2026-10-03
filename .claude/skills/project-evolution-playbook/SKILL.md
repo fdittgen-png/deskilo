@@ -1,6 +1,6 @@
 ---
 name: project-evolution-playbook
-description: Project-agnostic method for evolving a codebase with an agent, distilled from DesKilo — issue first, one registry-touching branch at a time, harness before apply, pins and budgets as ratchets, docs in the same PR, a memory file for the non-obvious, background suites and watchers, and how to recover from the rebase cascade. Trigger when setting up an agent workflow in a new repository or when asked to "apply the same method" elsewhere.
+description: The project-agnostic method distilled from DesKilo, for carrying to ANOTHER repository — issue first, one registry-touching branch at a time, harness before apply, identity contracts and ratchets instead of count pins, docs in the same PR, a memory file for the non-obvious, background suites and watchers, reviewing with measured findings, designing lints that hold, handing work to another agent. Trigger only when setting up an agent workflow in a new repository or when asked to "apply the same method" elsewhere; for DesKilo work itself use the deskilo-* skills.
 ---
 # Project evolution playbook (copy to any repo)
 
@@ -12,9 +12,12 @@ description: Project-agnostic method for evolving a codebase with an agent, dist
 2. **Prove before you apply.** Anything irreversible (a migration, a
    deploy) runs first as a rolled-back harness whose assertions are the
    error message. Then apply the same text. Then read back what exists.
-3. **Ratchets, not opinions.** Lint tests pin counts (features, routes,
-   placeholders, file lengths, hard-coded strings, wall clocks). A bump
-   is fine; a bump WITHOUT a dated reason is not.
+3. **Contracts and ratchets, not opinions.** A registry is checked by
+   identity — every key live or retired, every route resolved against a
+   reviewed set — not by a count, which stays green while the wrong thing
+   changes (DesKilo #2058 replaced its feature and route count pins). Debt
+   (file lengths, hard-coded strings, wall clocks) is a ratchet that only
+   goes down; a bump WITHOUT a dated reason is not allowed.
 4. **Producer and consumer ship together**, and docs ship with them:
    wiki (every locale), the setup questionnaire, the ADR, the agent rules.
 5. **Tests tap what they add.** A new affordance without a tapping test
@@ -132,6 +135,19 @@ actually hold, learned writing three of them on 2026-09-10.
   explain their own deployment target. The fix was not a clearer comment:
   it was making the input BE the track, so there is no mapping left to
   get wrong.
+
+- **A ratchet that reaches zero becomes an invariant.** When the
+  uncovered-symbol count hit 0 of 155, the test switched from "did it go
+  down" to `isEmpty`; a ratchet at zero that still only compares is a gate
+  nothing can trip.
+- **When a lint refuses a legitimate new idiom, widen the lint, never
+  exempt the file.** `no_silent_catch` demanded the literal word
+  `TraceLogger`, which pushed extracted trace helpers back inline; it now
+  accepts `ActTrace.` and `traceX(…)`, with the reason in the test.
+- **Positional pins punish insertion.** A test asserting "route 5 is
+  /loyalty-settings" fails ten correct assertions when one route is
+  inserted earlier. Append if you must keep such a pin; better, replace it
+  with an identity check.
 
 ## Handing work to another agent
 

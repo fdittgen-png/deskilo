@@ -1,0 +1,78 @@
+{
+  "biTitle": "Analyse d’activité",
+  "@biTitle": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaOverview": "Vue d’ensemble",
+  "@biAreaOverview": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaCapacity": "Espaces et capacité",
+  "@biAreaCapacity": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaPeople": "Personnes et activité",
+  "@biAreaPeople": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaFinance": "Finances",
+  "@biAreaFinance": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaTreasury": "Trésorerie",
+  "@biAreaTreasury": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaOperations": "Exploitation",
+  "@biAreaOperations": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaPlanning": "Planification",
+  "@biAreaPlanning": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaSaved": "Analyses enregistrées",
+  "@biAreaSaved": {
+    "description": "#1923 Web-BI area"
+  },
+  "biQuarter": "T{quarter} {year}",
+  "biDimensionLevel": "Niveau",
+  "biNotOffered": "non proposé par les analyses affichées",
+  "biGrain": "Durée de la période",
+  "biGrainMonth": "Mois",
+  "biGrainQuarter": "Trimestre",
+  "biGrainYear": "Année",
+  "biCompare": "Comparer avec",
+  "biCompareNone": "Rien",
+  "biComparePrevious": "La période précédente",
+  "biComparePreviousYear": "La même période un an avant",
+  "biCompareCustom": "Une période que je choisis",
+  "biGroupBy": "Regrouper par",
+  "biGroupNone": "Sans regroupement",
+  "biSort": "Ordre",
+  "biSortUngrouped": "Ordre (groupes seulement)",
+  "biSortNatural": "Comme listé",
+  "biSortDescending": "Le plus élevé d’abord",
+  "biSortAscending": "Le plus bas d’abord",
+  "biViewTable": "Tableau",
+  "biViewChart": "Graphique",
+  "biChangePoints": "{value} pts",
+  "biForbidden": "Vous ne pouvez pas lire cette analyse dans cet espace.",
+  "biUnavailable": "Cette analyse n’a pas pu être calculée.",
+  "biRefusedGrain": "Cette analyse n’est pas proposée pour cette durée de période.",
+  "biRefusedComparison": "Cette analyse ne peut pas faire cette comparaison.",
+  "biRefusedGrouping": "Cette analyse ne peut pas être regroupée ainsi.",
+  "biRefusedBudget": "Il y a plus de {count} groupes ; choisissez « Sans regroupement ».",
+  "biComparedNotRecorded": "{period} n’a pas été enregistré (l’historique commence le {since}) ; pas de comparaison.",
+  "biComparedPartial": "{period} n’est enregistré qu’en partie.",
+  "biExposureDiffers": "Les deux périodes n’offrent pas la même base ; le taux en tient compte, les chiffres bruts ne se comparent pas directement.",
+  "biComparedLine": "{period} : {value} ({change})",
+  "biOpenSource": "Ouvrir la source",
+  "biSourceRestricted": "Les données sources ne sont montrées qu’à ceux qui les gèrent.",
+  "biTotal": "Total",
+  "biRemainder": "Hors des groupes actuels",
+  "biColumnValue": "Valeur",
+  "biColumnChange": "Écart",
+  "biInvalidAddress": "Cette adresse demande une analyse qui n’existe pas ; rien n’a été lu.",
+  "biReset": "Afficher la vue standard"
+}

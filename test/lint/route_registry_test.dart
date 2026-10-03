@@ -43,6 +43,9 @@ const Set<String> _openWithEveryFeatureOff = {
   '/mcp/confirm/:id',
   '/assistants',
   '/database/assistant-approvals',
+  // #1827 B — installation-wide, for the instance operator: no workspace
+  // flag owns it; the server (0341) refuses everyone else.
+  '/installation/assistants',
   '/settings/assistants',
   '/settings/assistant-setup',
   '/oauth/consent',
@@ -61,6 +64,12 @@ const Set<String> _openWithEveryFeatureOff = {
   '/account-messages',
   '/settings/public-page',
   '/applications',
+  // #1865 — the account's own recordings on this device: reading,
+  // exporting and deleting them never needs a workspace flag; starting a
+  // recording is gated by taskRecorder inside the screen.
+  '/task-recorder',
+  // #1872 — the local workbench: no account, no workspace, no flag.
+  '/task-workbench',
 };
 
 void main() {
