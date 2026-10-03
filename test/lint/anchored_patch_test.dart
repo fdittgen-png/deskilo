@@ -36,6 +36,11 @@ const _reviewed = {
   // filters and an id-true cursor. pgTAP 144 drives availability paging,
   // the filters and the engine verdict.
   'mcp_read_v1@0358',
+  // #2137/0361 restates create_invitation from the LIVE dev definition
+  // (pg_get_functiondef), so every earlier anchored patch (environments,
+  // handover, prod access) is carried; the one change is that a member
+  // invitation also accepts manageMembers. pgTAP 146 drives it.
+  'create_invitation@0361',
   // #1922/0334 restates sweep_payment_reminders and record_invoice_reminder
   // once more, from 0331's bodies (the live dev definitions): the row
   // lock, the feature gate and the shared invoice_dunning_state_core are

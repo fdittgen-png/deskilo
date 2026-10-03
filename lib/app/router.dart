@@ -569,13 +569,9 @@ GoRouter router(Ref ref) {
       // Where invoices are POSTED (0073) — owner-only.
       GoRoute(
         path: '/einvoice-config',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner && featureEnabled(WorkspaceFeature.invoicing)
-              ? null
-              : '/money';
-        },
+        // #2137 — the credentials RPCs ask manageIntegrations.
+        redirect: needs(WorkspacePermission.manageIntegrations,
+            feature: WorkspaceFeature.invoicing, to: '/money'),
         builder: (context, state) => const EInvoiceConfigScreen(),
       ),
       // The workspace document library (#500) — every member, gated by
@@ -769,13 +765,9 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/vat',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner && featureEnabled(WorkspaceFeature.vatManagement)
-              ? null
-              : '/money';
-        },
+        // #2137 — set_vat_rates asks manageBilling.
+        redirect: needs(WorkspacePermission.manageBilling,
+            feature: WorkspaceFeature.vatManagement, to: '/money'),
         builder: (context, state) => const VatScreen(),
       ),
       GoRoute(
@@ -790,7 +782,10 @@ GoRouter router(Ref ref) {
         path: '/accessories',
         redirect: (context, state) {
           final canAdminister =
-              ref.read(myMemberProvider).value?.canAdminister ?? false;
+              (ref.read(myMemberProvider).value?.canAdminister ?? false) ||
+                  ref
+                      .read(myPermissionsProvider)
+                      .contains(WorkspacePermission.manageServices);
           return canAdminister &&
                   featureEnabled(WorkspaceFeature.accessorySupplements)
               ? null
@@ -843,7 +838,10 @@ GoRouter router(Ref ref) {
         // limits and issue badges); owner-only controls gate inside.
         redirect: (context, state) {
           final canAdminister =
-              ref.read(myMemberProvider).value?.canAdminister ?? false;
+              (ref.read(myMemberProvider).value?.canAdminister ?? false) ||
+                  ref
+                      .read(myPermissionsProvider)
+                      .contains(WorkspacePermission.manageMembers);
           return canAdminister ? null : '/messages';
         },
         builder: (context, state) => const MembersScreen(),
