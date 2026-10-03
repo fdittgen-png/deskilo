@@ -260,7 +260,10 @@ const List<RouteCoverage> routeCoverage = [
   ),
   RouteCoverage('/member/:memberId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/report-editor', CoverageStatus.planned, owner: '#1884'),
-  RouteCoverage('/roles', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage(
+    '/roles',
+    CoverageStatus.recorded,
+  ),
   RouteCoverage(
     '/settings/personal-info',
     CoverageStatus.excluded,
@@ -286,13 +289,11 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/settings/colours', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/settings/roles-of-this-space',
-    CoverageStatus.planned,
-    owner: '#1884',
+    CoverageStatus.recorded,
   ),
   RouteCoverage(
     '/settings/what-you-can-do',
-    CoverageStatus.planned,
-    owner: '#1884',
+    CoverageStatus.recorded,
   ),
   RouteCoverage('/settings/questions', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/attention', CoverageStatus.planned, owner: '#1884'),
@@ -331,7 +332,10 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/accessories', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/features', CoverageStatus.recorded),
   RouteCoverage('/workspace-settings', CoverageStatus.planned, owner: '#1884'),
-  RouteCoverage('/validation', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage(
+    '/validation',
+    CoverageStatus.recorded,
+  ),
   RouteCoverage('/availability', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/bi', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/members', CoverageStatus.planned, owner: '#1884'),

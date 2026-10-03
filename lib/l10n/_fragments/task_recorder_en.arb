@@ -890,5 +890,81 @@
   "taskRecorderValueRange": "a date range",
   "@taskRecorderValueRange": {
     "description": "#1881 recorder: taskRecorderValueRange"
+  },
+  "taskRecorderActionOpenRoleMatrix": "Opened the role matrix",
+  "@taskRecorderActionOpenRoleMatrix": {
+    "description": "#1884 recorder: taskRecorderActionOpenRoleMatrix"
+  },
+  "taskRecorderActionOpenSpaceRoles": "Opened the roles this space defines",
+  "@taskRecorderActionOpenSpaceRoles": {
+    "description": "#1884 recorder: taskRecorderActionOpenSpaceRoles"
+  },
+  "taskRecorderActionOpenWhatYouCanDo": "Opened what you can do",
+  "@taskRecorderActionOpenWhatYouCanDo": {
+    "description": "#1884 recorder: taskRecorderActionOpenWhatYouCanDo"
+  },
+  "taskRecorderActionTogglePermission": "Switched a permission",
+  "@taskRecorderActionTogglePermission": {
+    "description": "#1884 recorder: taskRecorderActionTogglePermission"
+  },
+  "taskRecorderActionSaveRole": "Saved a role",
+  "@taskRecorderActionSaveRole": {
+    "description": "#1884 recorder: taskRecorderActionSaveRole"
+  },
+  "taskRecorderActionGiveRole": "Gave or took back a role",
+  "@taskRecorderActionGiveRole": {
+    "description": "#1884 recorder: taskRecorderActionGiveRole"
+  },
+  "taskRecorderActionCancelRoleEdit": "Closed the role without saving",
+  "@taskRecorderActionCancelRoleEdit": {
+    "description": "#1884 recorder: taskRecorderActionCancelRoleEdit"
+  },
+  "taskRecorderActionOpenValidationRules": "Opened the validation rules",
+  "@taskRecorderActionOpenValidationRules": {
+    "description": "#1884 recorder: taskRecorderActionOpenValidationRules"
+  },
+  "taskRecorderActionSaveValidationRule": "Saved a validation rule",
+  "@taskRecorderActionSaveValidationRule": {
+    "description": "#1884 recorder: taskRecorderActionSaveValidationRule"
+  },
+  "taskRecorderActionCancelValidationRule": "Closed the rule without saving",
+  "@taskRecorderActionCancelValidationRule": {
+    "description": "#1884 recorder: taskRecorderActionCancelValidationRule"
+  },
+  "taskRecorderOutcomeSettingPending": "Sent for validation",
+  "@taskRecorderOutcomeSettingPending": {
+    "description": "#1884 recorder: taskRecorderOutcomeSettingPending"
+  },
+  "taskRecorderValueRoleOwner": "the owner",
+  "@taskRecorderValueRoleOwner": {
+    "description": "#1884 recorder: taskRecorderValueRoleOwner"
+  },
+  "taskRecorderValueRoleCoOwner": "a co-owner",
+  "@taskRecorderValueRoleCoOwner": {
+    "description": "#1884 recorder: taskRecorderValueRoleCoOwner"
+  },
+  "taskRecorderValueRoleAdmin": "administrators",
+  "@taskRecorderValueRoleAdmin": {
+    "description": "#1884 recorder: taskRecorderValueRoleAdmin"
+  },
+  "taskRecorderValueRoleMember": "every member",
+  "@taskRecorderValueRoleMember": {
+    "description": "#1884 recorder: taskRecorderValueRoleMember"
+  },
+  "taskRecorderValueCreated": "created",
+  "@taskRecorderValueCreated": {
+    "description": "#1884 recorder: taskRecorderValueCreated"
+  },
+  "taskRecorderValueEdited": "edited",
+  "@taskRecorderValueEdited": {
+    "description": "#1884 recorder: taskRecorderValueEdited"
+  },
+  "taskRecorderValueRenamed": "renamed",
+  "@taskRecorderValueRenamed": {
+    "description": "#1884 recorder: taskRecorderValueRenamed"
+  },
+  "taskRecorderTargetDefaultRule": "the default rule",
+  "@taskRecorderTargetDefaultRule": {
+    "description": "#1884 recorder: taskRecorderTargetDefaultRule"
   }
 }

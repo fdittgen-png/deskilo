@@ -19,6 +19,8 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import '../../providers/event_providers.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 
 /// Card order: the workspace default first, then the money-ish types the
 /// quorum protocol was built for, then the rest.
@@ -136,10 +138,14 @@ class ValidationSettingsScreen extends ConsumerWidget {
         chainOn: chainOn,
       ),
     );
+    if (result == null) recordTaskStep(ref, RecorderActions.cancelValidationRule);
     if (result == null || !context.mounted) return;
-
+    // #1884 B — which type's rule (never its approvers), then the result.
+    final attempt = recordTaskAttempt(ref, RecorderActions.saveValidationRule,
+        target: eventType ?? validationDefaultRule);
     try {
-      await ref.read(eventRepositoryProvider).upsertValidationPolicy(result);
+      await observeTaskSetting(attempt,
+          () => ref.read(eventRepositoryProvider).upsertValidationPolicy(result));
     } catch (e, st) {
       debugPrint('upsert validation policy failed: $e\n$st');
       TraceLogger.instance.error('events', 'upsert validation policy failed',
