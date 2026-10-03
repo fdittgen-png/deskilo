@@ -222,6 +222,16 @@ jobs:
             "$(cat report/coverage-line.txt 2>/dev/null || echo 'not measured')" > report/code.psv
           cat report/tests.psv report/code.psv
 
+      # #2121 — the test inventory is generated, never committed (a
+      # committed copy put every open pull request that adds a test in
+      # conflict). It is published here, beside the rows, for the commit
+      # this run tested. Informational: test/lint/test_inventory_test.dart
+      # is what fails a build.
+      - name: Test inventory (published, not committed)
+        if: always()
+        continue-on-error: true
+        run: dart run tool/test_inventory.dart
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -229,6 +239,7 @@ jobs:
           path: |
             report/*.psv
             report/tests-exit.txt
+            docs/testing/TEST_INVENTORY.md
 
       # #1446 — the required context carries the WHOLE result of this job.
       # Until now the coverage gate ran continue-on-error and only the
