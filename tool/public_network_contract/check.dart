@@ -34,9 +34,8 @@ List<String> publicNetworkBindingProblems(
     if ((surface == 'public') != anonymous) {
       problems.add('$id: only the public surface is anonymous');
     }
-    if (surface == 'public' &&
-        (op['mutation'] != 'read' || b['kind'] != 'table')) {
-      problems.add('$id: a public operation is a table read');
+    if (surface == 'public' && op['mutation'] != 'read') {
+      problems.add('$id: a public operation is a read');
     }
     if (surface == 'management' && op['authority'] != 'owner') {
       problems.add('$id: management requires the owner');
@@ -59,7 +58,10 @@ List<String> publicNetworkBindingProblems(
       if (!exec.contains('authenticated')) {
         problems.add('$id: $rpc is not executable by authenticated');
       }
-      if (exec.contains('anon')) {
+      if (anonymous && !exec.contains('anon')) {
+        problems.add('$id: $rpc is not executable by anon');
+      }
+      if (!anonymous && exec.contains('anon')) {
         problems.add('$id: $rpc is executable by anon');
       }
       for (final e in Map<String, dynamic>.from(b['params'] as Map).entries) {

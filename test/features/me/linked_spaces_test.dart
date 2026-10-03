@@ -24,18 +24,57 @@ const _other = 'https://coworkonti.example';
 const _down = 'https://down.example';
 
 ConnectedInstallation _linked(String url) => ConnectedInstallation(
-      endpoint: BackendEndpoint(url, 'sb_publishable_other'),
-      account: 'remote-user',
-      installationId: 'inst-$url',
-    );
+  endpoint: BackendEndpoint(url, 'sb_publishable_other'),
+  account: 'remote-user',
+  installationId: 'inst-$url',
+);
 
 void main() {
-  testWidgets('spaces on a linked server join the list, named by host',
-      (tester) async {
+  testWidgets('linked environments share one workspace heading', (
+    tester,
+  ) async {
+    final me = FakeMeRepository()
+      ..linkedSpaces[_other] = const [
+        LinkedSpace(
+          id: 'dev',
+          name: 'COWORKONTI',
+          pairId: 'pair',
+          environment: 'dev',
+        ),
+        LinkedSpace(
+          id: 'prod',
+          name: 'COWORKONTI',
+          pairId: 'pair',
+          environment: 'prod',
+        ),
+      ];
+    final router = await pumpMeApp(
+      tester,
+      me: me,
+      connectedSources: [_linked(_other)],
+    );
+    await goTo(tester, router, '/me');
+    expect(find.text('COWORKONTI'), findsOneWidget);
+    expect(find.text('DEV'), findsOneWidget);
+    expect(find.text('PROD'), findsOneWidget);
+    await tester.tap(
+      find.byKey(const ValueKey('linked-space-coworkonti.example-prod')),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('linked-space-open')), findsOneWidget);
+  });
+
+  testWidgets('spaces on a linked server join the list, named by host', (
+    tester,
+  ) async {
     final me = FakeMeRepository()
       ..linkedSpaces[_other] = const [
         LinkedSpace(id: 'remote-1', name: 'COWORKONTI'),
-        LinkedSpace(id: 'remote-2', name: 'Atelier', standing: MySpaceStanding.pending),
+        LinkedSpace(
+          id: 'remote-2',
+          name: 'Atelier',
+          standing: MySpaceStanding.pending,
+        ),
       ]
       ..unavailable.add(_down);
     final router = await pumpMeApp(
@@ -48,19 +87,35 @@ void main() {
     expect(find.text('Test Space'), findsOneWidget, reason: 'this server');
     expect(find.text('COWORKONTI'), findsOneWidget);
     expect(find.text('coworkonti.example'), findsOneWidget);
-    expect(find.text('Waiting for approval · coworkonti.example'), findsOneWidget);
-    expect(find.byKey(const ValueKey('linked-unavailable-down.example')), findsOneWidget);
+    expect(
+      find.text('Waiting for approval · coworkonti.example'),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('linked-unavailable-down.example')),
+      findsOneWidget,
+    );
   });
 
-  testWidgets('opening one offers the switch to its server, prefilled',
-      (tester) async {
+  testWidgets('opening one offers the switch to its server, prefilled', (
+    tester,
+  ) async {
     final me = FakeMeRepository()
-      ..linkedSpaces[_other] = const [LinkedSpace(id: 'remote-1', name: 'COWORKONTI')];
-    final router = await pumpMeApp(tester, me: me, connectedSources: [_linked(_other)]);
+      ..linkedSpaces[_other] = const [
+        LinkedSpace(id: 'remote-1', name: 'COWORKONTI'),
+      ];
+    final router = await pumpMeApp(
+      tester,
+      me: me,
+      connectedSources: [_linked(_other)],
+    );
     await goTo(tester, router, '/me');
 
-    await tapIn(tester, 'me-home-list',
-        find.byKey(const ValueKey('linked-space-coworkonti.example-remote-1')));
+    await tapIn(
+      tester,
+      'me-home-list',
+      find.byKey(const ValueKey('linked-space-coworkonti.example-remote-1')),
+    );
     expect(find.text('Open on coworkonti.example'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('linked-space-open')));
     await tester.pumpAndSettle();

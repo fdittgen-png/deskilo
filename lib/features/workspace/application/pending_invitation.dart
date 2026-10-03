@@ -116,6 +116,12 @@ PendingInvitations pendingInvitations(Ref ref) => PendingInvitations(
 /// Taking it fills the field; it never joins.
 class ArrivedInvitations {
   String? _link;
+  final Set<String> _offeredOrigins = {};
+
+  /// Offer a kept invitation once per installation in this app session.
+  /// Returning to Me must not reopen the join form indefinitely.
+  bool wasOfferedOn(String origin) => _offeredOrigins.contains(origin);
+  void markOfferedOn(String origin) => _offeredOrigins.add(origin);
 
   void hold(String link) => _link = link;
 

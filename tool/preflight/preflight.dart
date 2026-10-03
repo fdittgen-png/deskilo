@@ -5,8 +5,8 @@
 // Every generated tree in this repository has a drift gate, and the gate
 // runs in CI. A generator forgotten locally therefore costs a full CI
 // round trip to learn something the working tree already knew: that
-// `docs/testing/TEST_INVENTORY.md` no longer lists the test just added,
-// or that `assets/instance/bundle.json` is a migration behind. This maps
+// `lib/l10n/app_en.arb` lacks the string just added to a fragment, or
+// that `assets/instance/bundle.json` is a migration behind. This maps
 // an authoritative input to the generator that owns its output, so the
 // round trip happens on the laptop instead.
 //
@@ -18,7 +18,7 @@
 //
 // Bump [preflightVersion] whenever a rule changes.
 
-const String preflightVersion = '3';
+const String preflightVersion = '4';
 
 /// One generator, and why this change reached it.
 class Step {
@@ -85,10 +85,6 @@ const List<({String command, String owns})> _order = [
   ),
   (command: 'dart run tool/l10n_audit.dart', owns: 'docs/testing/L10N_AUDIT.md'),
   (
-    command: 'dart run tool/test_inventory.dart',
-    owns: 'docs/testing/TEST_INVENTORY.md',
-  ),
-  (
     command: 'dart run tool/dependency_map.dart',
     owns: 'docs/design/APPLICATION_BOUNDARIES.md',
   ),
@@ -108,7 +104,9 @@ bool _isFeatureRegistry(String p) =>
     p == 'lib/features/workspace/domain/workspace_feature.dart';
 
 bool _isProcessRegistry(String p) =>
-    p == 'lib/features/workspace/domain/workspace_process.dart';
+    p == 'lib/features/workspace/domain/workspace_process.dart' ||
+    // #1850 B — the catalogue prints each feature's assessment.
+    p == 'lib/features/workspace/domain/feature_lifecycle.dart';
 
 /// The generators [paths] implicate, in the order they must run.
 ///
@@ -167,8 +165,15 @@ List<Step> preflightSteps(
     // #1847 — the public network contract renders into the external and
     // internal OpenAPI documents and the Dart adapter catalogue. The
     // shared field primitives feed both contracts.
+    // #1847 B — the support matrix hashes its inputs and its evidence
+    // (fixtures and the negotiation tests), so those select it too.
     if (p == 'contracts/public_network/operations.json' ||
-        p.startsWith('tool/public_network_contract/')) {
+        p == 'contracts/public_network/support.json' ||
+        p.startsWith('tool/public_network_contract/') ||
+        p.startsWith('test/fixtures/public_network/') ||
+        p.startsWith('test/core/public_network/') ||
+        p.contains('public_network_') && p.startsWith('supabase/tests/') ||
+        p == 'test/features/directory/participant_negotiation_test.dart') {
       select('dart run tool/build_public_network_contract.dart', p);
     }
     if (p.startsWith('tool/contract_common/')) {
@@ -195,9 +200,9 @@ List<Step> preflightSteps(
         !p.endsWith('.freezed.dart')) {
       select('dart run tool/l10n_audit.dart', p);
     }
-    if (p.startsWith('test/') && p.endsWith('.dart')) {
-      select('dart run tool/test_inventory.dart', p);
-    }
+    // #2121 — a test file selects nothing: the test inventory is printed
+    // (`dart run tool/test_inventory.dart`) and published by CI, never
+    // committed, so there is no output for a new test to put out of date.
     // #1449 — the map counts imports and repository reads across
     // features, so any feature source can move it.
     if (p.startsWith('lib/features/') &&

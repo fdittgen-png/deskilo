@@ -8,10 +8,19 @@
 // fingerprint still matches, `stale` when the component moved on, and
 // `unverified` for a record that did not pass. Only allow-listed fields
 // are projected; a record's `private` block never leaves the manifest.
+//
+// The current fingerprint itself is NOT projected: it moves with every
+// edit to a component, so committing it made almost every pull request
+// rewrite these files and conflict with every other open one. What the
+// outputs carry is what the fingerprint DECIDES — each record's standing,
+// which changes only when a record goes stale — and
+// `dart run tool/capability_evidence.dart --fingerprints` prints the
+// current values for whoever records new evidence.
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
 
 import 'evidence.dart';
 
@@ -78,7 +87,6 @@ Map<String, Object?> project(Map<String, Object?> manifest, Context ctx) {
         k: c[k],
       'provider': ?c['provider'],
       'issues': ?c['issues'],
-      'fingerprint': ?current,
       'scopes': best,
       'evidence': records,
     });
@@ -88,8 +96,50 @@ Map<String, Object?> project(Map<String, Object?> manifest, Context ctx) {
     'manifest_version': manifest['version'],
     'scopes': scopes,
     'capabilities': out,
+    'features': featureLifecycleProjection(),
   };
 }
+
+/// #1850 B — the public-safe projection of the feature assessments: the
+/// registry key, the two axes, the capability ids the claim rests on and
+/// the replacement chain. Nothing else: no rationale, no private flag
+/// state, no workspace, person or rollout. Retired keys stay listed so a
+/// reader never mistakes a gone key for a new one.
+List<Map<String, Object?>> featureLifecycleProjection({
+  Map<String, FeatureAssessment>? assessments,
+}) {
+  final all = assessments ??
+      {
+        for (final e in featureAssessments.entries) e.key.name: e.value,
+        ...retiredFeatureAssessments,
+      };
+  return [
+    for (final key in all.keys.toList()..sort())
+      {
+        'key': key,
+        'maturity': all[key]!.maturity.name,
+        'lifecycle': all[key]!.lifecycle.name,
+        'capabilities': all[key]!.evidence,
+        if (all[key]!.replacedBy.isNotEmpty)
+          'replaced_by': all[key]!.replacedBy,
+        if (all[key]!.introducedIn != null)
+          'introduced_in': all[key]!.introducedIn,
+        if (all[key]!.deprecatedIn != null)
+          'deprecated_in': all[key]!.deprecatedIn,
+      },
+  ];
+}
+
+/// #2121 — the current component fingerprint of every capability that
+/// names a component, for the person recording new evidence. Printed,
+/// never committed.
+Map<String, String> currentFingerprints(
+    Map<String, Object?> manifest, Context ctx) => {
+  for (final raw in manifest['capabilities'] as List)
+    if ((stringList((raw as Map)['component']) ?? const []).isNotEmpty)
+      raw['id'] as String:
+          fingerprint(stringList(raw['component'])!, ctx),
+};
 
 String renderRelease(Map<String, Object?> projection) =>
     '${const JsonEncoder.withIndent('  ').convert(projection)}\n';
@@ -165,7 +215,6 @@ String renderPage(Map<String, Object?> projection) {
       ..writeln(c['outcome'])
       ..writeln()
       ..writeln('- **Code:** ${c['status']}'
-          '${c['fingerprint'] != null ? ' · component `${c['fingerprint']}`' : ''}'
           '${c['provider'] != null ? ' · provider `${c['provider']}`' : ''}')
       ..writeln('- **Needs:** ${c['prerequisites']}')
       ..writeln('- **Limits:** ${c['limitations']}');

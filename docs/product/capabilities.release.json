@@ -21,7 +21,6 @@
       ],
       "prerequisites": "A workspace with a published plan and opening hours; booking rules in Settings.",
       "limitations": "Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.",
-      "fingerprint": "9becbe278074",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -67,7 +66,6 @@
       ],
       "prerequisites": "Membership plans configured; an allowance per plan.",
       "limitations": "Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.",
-      "fingerprint": "907db16d4431",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -119,7 +117,6 @@
       ],
       "prerequisites": "The money module enabled; a repartition key per shared expense.",
       "limitations": "Statements are a view of the ledger, not an accounting ledger of the association; see accounting.export for the books.",
-      "fingerprint": "d55f71e061d8",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -171,7 +168,6 @@
       ],
       "prerequisites": "Roles assigned; a quorum per decision kind in Settings.",
       "limitations": "Quorums count distinct people by membership, not by device or session.",
-      "fingerprint": "bf055a1decd5",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -207,7 +203,6 @@
       "prerequisites": "Stripe credentials in Settings; the webhook endpoint reachable from Stripe.",
       "limitations": "CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.",
       "provider": "stripe",
-      "fingerprint": "4bee329bbfce",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -261,7 +256,6 @@
       "prerequisites": "PayPal credentials in Settings; the webhook endpoint reachable from PayPal.",
       "limitations": "No CI check reaches the PayPal handler; the Stripe stub says nothing about PayPal.",
       "provider": "paypal",
-      "fingerprint": "aa62ab891c68",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -292,7 +286,6 @@
       "prerequisites": "Mollie credentials in Settings; the webhook endpoint reachable from Mollie.",
       "limitations": "The reconciliation is proved in a replayed database; no Mollie sandbox has been exercised from this repository.",
       "provider": "mollie",
-      "fingerprint": "e22646d72292",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -323,7 +316,6 @@
       "prerequisites": "Mollie credentials with Wero enabled on the Mollie account.",
       "limitations": "Wero rides Mollie's checkout; nothing beyond the client's method handling cites Wero, so the Mollie reconciliation does not count here.",
       "provider": "wero",
-      "fingerprint": "e22646d72292",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -359,7 +351,6 @@
       ],
       "prerequisites": "A chart of accounts mapping; a VAT regime.",
       "limitations": "Format conformance is proved against the published specifications, not against any accounting software's import; no certification is claimed.",
-      "fingerprint": "f77184023b8c",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -400,7 +391,6 @@
       ],
       "prerequisites": "A complete legal identity for the workspace; VAT configured.",
       "limitations": "Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.",
-      "fingerprint": "d12a32e9b77a",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -440,7 +430,6 @@
       ],
       "prerequisites": "Platform credentials configured by the operator.",
       "limitations": "The client's hand-off is unit-tested against a fake function; no transmission to a real or sandbox platform has been recorded.",
-      "fingerprint": "d8dc1c00f7ee",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -463,7 +452,6 @@
       "features": [],
       "prerequisites": "Someone responsible for taking and keeping the dumps, per the operations guide.",
       "limitations": "The drill restores the database only: Storage objects and the Auth service's own configuration are outside it.",
-      "fingerprint": "94d21485722a",
       "scopes": {
         "unit": "unverified",
         "local_integration": "gated",
@@ -512,7 +500,6 @@
       ],
       "prerequisites": "None: the Demo is built into every client.",
       "limitations": "The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.",
-      "fingerprint": "09c2f86b3648",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -621,6 +608,786 @@
         "operator_pilot": "unverified"
       },
       "evidence": []
+    }
+  ],
+  "features": [
+    {
+      "key": "accessorySupplements",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "accountingBook",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "adminInvoicing",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "adminLevelAssign",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "adminSeatBlocking",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "autoCheckInOut",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "booking"
+      ]
+    },
+    {
+      "key": "badgeSignIn",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "bookForOthers",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "bookingGate",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "booking"
+      ]
+    },
+    {
+      "key": "bookingPolicies",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "booking"
+      ]
+    },
+    {
+      "key": "calendarFileExport",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "calendarHub",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "calendarTab",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "calendarValidations",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "calendarViews",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "capacityKpi",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "captureProtection",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "carnets",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "membership.allowances"
+      ]
+    },
+    {
+      "key": "coOwner",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "configurationTransfer",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "customFields",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "customRoles",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "dataAccessLog",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "dataExport",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "accounting.export"
+      ]
+    },
+    {
+      "key": "decisionSurface",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "deletionRequests",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "approvals"
+      ]
+    },
+    {
+      "key": "demoMode",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "demo"
+      ]
+    },
+    {
+      "key": "deployments",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "documents",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "dunning",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "einvoiceCustomerDelivery",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "einvoice.transmit"
+      ]
+    },
+    {
+      "key": "environmentPairs",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "eventsTab",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "expenseRepartition",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "statements.shared_expenses"
+      ]
+    },
+    {
+      "key": "expenseRepartitionWizard",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "financeFaces",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "statements.shared_expenses"
+      ]
+    },
+    {
+      "key": "formHelpHints",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "holidayImport",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "instanceWizard",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "invoiceAddressWindow",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "invoiceJourney",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "invoicePdfTemplate",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "invoiceSettlement",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "invoicing",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "einvoice.generate"
+      ]
+    },
+    {
+      "key": "invoicingWizard",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "kioskMemberPhotos",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "kioskMode",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "letterStandard",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "levelBooking",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "managedProfileAccess",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "managedProfiles",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "mcpAccess",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "memberAccountMenu",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "memberDataExport",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "memberEnvironments",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "memberGettingStarted",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "memberNotifications",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "memberOrigin",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "memberPage",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "memberPaymentTerms",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "memberReports",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "membersDirectory",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "messageForwarding",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "messageGestures",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "messagesHub",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "moneyTab",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "multiSite",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "navigationStyle",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "nfcBadges",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "nfcSeatTags",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "notificationGrouping",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "numberSequences",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "onlinePayments",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "payments.stripe",
+        "payments.mollie",
+        "payments.paypal",
+        "payments.wero"
+      ]
+    },
+    {
+      "key": "paymentReminders",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "pdfExport",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "personalInfo",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "planMemberPhotos",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "planObjectDelete",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "priceNegotiations",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "publicHolidays",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "publicListings",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "pushNotifications",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "qrBadges",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "recordingPrivacy",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "regionalFormats",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "reportDesignExchange",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "reportDesigner",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "reportLayouts",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "reportTexts",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "richMessageRefs",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "roleAssignment",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "roleManagement",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "scheduledExpenses",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "seatDayTimeline",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "seriesBooking",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "booking"
+      ]
+    },
+    {
+      "key": "services",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "settlementFold",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "singleRoomLevelNames",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "siteDocuments",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "spaceInquiries",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "spaceQrCodes",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "subscriptionInvoices",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "supplyExpenses",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "statements.shared_expenses"
+      ]
+    },
+    {
+      "key": "taskRecorder",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "uiAnimations",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "uniqueMonograms",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "usageInvoices",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "usageRecords",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "membership.allowances"
+      ]
+    },
+    {
+      "key": "usageReport",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "validationChain",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "approvals"
+      ]
+    },
+    {
+      "key": "validationScopes",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "approvals"
+      ]
+    },
+    {
+      "key": "vatCounterparty",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "vatDeclarations",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "vatGroups",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "vatManagement",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": [
+        "accounting.export",
+        "einvoice.generate"
+      ]
+    },
+    {
+      "key": "vatRateHistory",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "vatReport",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "whatsappIntegration",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "workingHours",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "workspaceBranding",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "workspaceLibrary",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "workspaceStatus",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "workspaceVocabulary",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
     }
   ]
 }

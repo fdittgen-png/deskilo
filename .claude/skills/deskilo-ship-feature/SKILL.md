@@ -11,7 +11,7 @@ Migrations: `deskilo-supabase-migration`. After the push: `deskilo-ci-release`.
 1. Issue first; claim it; one registry-touching branch at a time, in your own worktree.
 2. Every functionality behind a `WorkspaceFeature` — the §1 checklist in ONE commit.
 3. Strings only in `lib/l10n/_fragments/*_{en,fr,de,es,it}.arb`; `web/setup.html` in the same PR.
-4. Gates before push: `dart analyze --fatal-infos`, `flutter test test/lint` + yours, the full suite under the lock (§3).
+4. Gates before push: `dart analyze --fatal-infos`, `flutter test test/lint` + the affected test folders (§3); the full suite runs in CI only.
 5. `Refs #N` unless the whole acceptance is met; no tool/AI mention anywhere; master moved → merge it ONCE (§5).
 
 Lessons by topic, with their incidents: [reference.md](reference.md).
@@ -95,18 +95,17 @@ dart run tool/preflight.dart --list   # which generators this change implicates 
 ```
 Never run `tool/preflight.dart` in full on this machine: its build_runner step can hang.
 
-**The full suite on this shared machine: one at a time, behind the lock.**
+**The full suite runs in CI only** — never `flutter test` without a path before a
+push (the quality job runs it on every PR; local full suites on a shared machine
+starve each other). Run the affected folders, never piped (a pipe masks the exit
+code), and read the verdict line:
 ```
-until mkdir /private/tmp/deskilo-suite-lock 2>/dev/null; do sleep 60; done
-flutter test --concurrency=3 > scratchpad/suite-<pr>.log 2>&1; echo EXIT=$?
-rmdir /private/tmp/deskilo-suite-lock
-grep -q "All tests passed!" scratchpad/suite-<pr>.log   # the verdict line; never count [E] lines
+flutter test test/lint test/features/<yours> > scratchpad/<pr>.log 2>&1; echo EXIT=$?
+grep -q "All tests passed!" scratchpad/<pr>.log   # never count [E] lines
 ```
-Run it in the background, never piped (a pipe masks the exit code). On "Some tests
-failed", list the `[E]` lines. Never `pkill -f flutter` / `flutter_tester` — it kills
-other agents' suites. A file that fails only under load: rerun it alone, and name
-the flake in the PR rather than skip the gate. Docs-only changes need only the
-lint/doc tests.
+Never `pkill -f flutter` / `flutter_tester` — it kills other agents' runs. A file
+that fails only under load: rerun it alone, and name the flake in the PR rather
+than skip the gate. Docs-only changes need only the lint/doc tests.
 
 ## 4. Docs in the same PR
 The functionality's guide section in all five languages, citing the issue number, +
@@ -120,11 +119,10 @@ grep the whole repo (skills, commands, workflow comments) for its old wording.
   and closure"); a partial landing gets an issue comment — what landed, what
   remains, the files, the next step. `Closes #a and #b` closes only `#a`.
 - No tool or AI mention in commits, PR bodies, issues or code; no co-author trailer.
-- Push only on a green verdict (analyze clean AND "All tests passed!"), then
-  `deskilo-ci-release`.
+- Push only on a green verdict (analyze clean AND "All tests passed!" for lint +
+  the affected folders), then `deskilo-ci-release`.
 - **Master moved under your PR: merge it in ONCE — never rebase, never chase.**
-  Conflicts in generated files (bundle, APPLIED, TEST_INVENTORY, capability docs,
-  l10n output): `git diff --name-only --diff-filter=U -z | xargs -0 git checkout origin/master --`,
+  Conflicts in generated files (bundle, APPLIED, l10n output, the dependency map): `git diff --name-only --diff-filter=U -z | xargs -0 git checkout origin/master --`,
   then regenerate. In hand-written files keep BOTH sides in order (plain
   concatenation, never a line-dedupe — it drops shared closers like `),`).
   Never `for f in $files` in zsh: it passes all paths as one

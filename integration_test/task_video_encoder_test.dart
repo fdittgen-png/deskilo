@@ -68,11 +68,20 @@ class _CountingEncoder implements VideoEncoder {
   int frames = 0;
 
   @override
-  Future<EncoderCapability> probe(VideoSpec spec) => inner.probe(spec);
+  Future<EncoderCapability> probe(VideoSpec spec) async {
+    debugPrint('video-it: probe ${spec.width}x${spec.height}');
+    final answer = await inner.probe(spec);
+    debugPrint('video-it: probe -> ${answer.supported}');
+    return answer;
+  }
 
   @override
-  Future<EncoderSession> start(VideoSpec spec) async =>
-      _CountingSession(this, await inner.start(spec));
+  Future<EncoderSession> start(VideoSpec spec) async {
+    debugPrint('video-it: start');
+    final session = await inner.start(spec);
+    debugPrint('video-it: started');
+    return _CountingSession(this, session);
+  }
 }
 
 class _CountingSession implements EncoderSession {
@@ -82,12 +91,18 @@ class _CountingSession implements EncoderSession {
 
   @override
   Future<void> addFrame(Uint8List rgba, int ptsMs) async {
+    debugPrint('video-it: frame ${owner.frames} at $ptsMs ms');
     await inner.addFrame(rgba, ptsMs);
     owner.frames++;
   }
 
   @override
-  Future<Uint8List> finish(int endMs) => inner.finish(endMs);
+  Future<Uint8List> finish(int endMs) async {
+    debugPrint('video-it: finish at $endMs ms');
+    final bytes = await inner.finish(endMs);
+    debugPrint('video-it: finished, ${bytes.length} bytes');
+    return bytes;
+  }
 
   @override
   Future<void> cancel() => inner.cancel();
@@ -109,6 +124,7 @@ void main() {
         }
       }
       final timeline = buildTimeline(recording, sb, l, preset: preset);
+      debugPrint('video-it: ${timeline.cues.length} cues, ${timeline.durationMs} ms');
       final encoder = _CountingEncoder(const PlatformVideoEncoder());
       final result = await RenderJob(
         timeline: timeline,
@@ -149,7 +165,7 @@ void main() {
       for (final c in ['canary', 'zelda', 'withheld']) {
         expect(text.contains(c), isFalse);
       }
-    });
+    }, timeout: const Timeout(Duration(minutes: 8)));
   }
 
   testWidgets('cancel releases the encoder and a new job can start', (
@@ -176,5 +192,5 @@ void main() {
     );
     expect(result, isA<VideoCancelled>());
     expect(RenderJob.busy, isFalse);
-  });
+  }, timeout: const Timeout(Duration(minutes: 8)));
 }

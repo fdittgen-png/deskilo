@@ -18,7 +18,8 @@
     "time": "Instants are RFC 3339 strings with an explicit offset (PostgREST answers UTC with +00:00). These operations publish no site-local time, so no site time zone is part of the projection.",
     "money": "These operations publish no amount. A currency is an ISO 4217 code. A future amount is integer minor units with its currency, never a float and never divided by 100 by convention.",
     "pagination": "Offset pages over a total order (the listed `order`, column.direction, ending in a unique key; nulls last). A full page means there may be more. Query-bound opaque cursors are not implemented yet.",
-    "input": "A management input key the contract does not list is refused before sending, never silently discarded; the server refuses it again."
+    "input": "A management input key the contract does not list is refused before sending, never silently discarded; the server refuses it again.",
+    "negotiation": "Before a participant mutation the client reads the target's descriptor (anonymous) and takes the highest version both support, provided it understands every capability the operation `requires`. A server without a descriptor is the pre-negotiation baseline: it implements version 1 of every `baseline` operation. The server revalidates the header; a capability or version claim grants nothing."
   },
   "servers": [
     {
@@ -31,6 +32,53 @@
     }
   ],
   "paths": {
+    "/rest/v1/rpc/public_network_descriptor": {
+      "post": {
+        "operationId": "networkDescriptorRead",
+        "summary": "Read the installation's public network descriptor: protocol, capabilities and the version of each external operation.",
+        "x-deskilo-operation": "network.descriptor.read",
+        "x-deskilo-surface": "public",
+        "x-deskilo-principal": "anonymous",
+        "x-deskilo-mutation": "read",
+        "x-deskilo-cardinality": "one",
+        "security": [
+          {
+            "publishableKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The allow-listed answer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicNetworkDescriptor"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No or an invalid publishable key"
+          },
+          "400": {
+            "description": "A refusal: PostgREST error body with the SQL message"
+          }
+        }
+      }
+    },
     "/rest/v1/public_directory_sources": {
       "get": {
         "operationId": "directorySourcesList",
@@ -530,6 +578,111 @@
             "$ref": "#/components/schemas/PublicWorkspaceDocument"
           }
         }
+      },
+      "PublicNetworkDescriptor": {
+        "description": "What an installation publishes about its public network interface: protocol, capabilities and the version of each external operation. Never configuration, build, schema level, flags or people.",
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "protocol",
+          "protocol_versions",
+          "operations"
+        ],
+        "properties": {
+          "protocol": {
+            "type": "string",
+            "enum": [
+              "deskilo.public-network"
+            ]
+          },
+          "protocol_versions": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 200
+            }
+          },
+          "operations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DescriptorOperation"
+            },
+            "maxItems": 200
+          },
+          "must_understand": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Terms the reader must understand; an unknown one refuses the record."
+          }
+        },
+        "x-must-understand": "must_understand"
+      },
+      "DescriptorOperation": {
+        "description": "One external operation the installation implements, and the versions it accepts.",
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "versions"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "requires": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 200
+            }
+          },
+          "unlabelled": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "lifecycle": {
+            "$ref": "#/components/schemas/OperationLifecycle"
+          },
+          "must_understand": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Terms the reader must understand; an unknown one refuses the record."
+          }
+        },
+        "x-must-understand": "must_understand"
+      },
+      "OperationLifecycle": {
+        "description": "The #1850 seam: maturity and lifecycle of one operation. No term is defined yet; a server listing one in must_understand makes the operation unavailable to this client.",
+        "type": "object",
+        "additionalProperties": true,
+        "required": [],
+        "properties": {
+          "must_understand": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Terms the reader must understand; an unknown one refuses the record."
+          }
+        },
+        "x-must-understand": "must_understand"
       }
     }
   }

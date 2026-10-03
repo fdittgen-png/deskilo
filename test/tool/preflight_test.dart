@@ -17,11 +17,9 @@ List<String> _commands(List<String> paths) =>
     preflightSteps(paths).map((s) => s.command).toList();
 
 void main() {
-  test('a new test file selects the inventory, and only that', () {
-    expect(
-      _commands(['test/features/money/refund_test.dart']),
-      ['dart run tool/test_inventory.dart'],
-    );
+  test('a new test file selects nothing — the inventory is generated, '
+      'never committed (#2121)', () {
+    expect(_commands(['test/features/money/refund_test.dart']), isEmpty);
   });
 
   test('a migration selects the applied baseline and the instance bundle, '
@@ -135,6 +133,11 @@ void main() {
       'dart run tool/build_public_network_contract.dart',
     ]);
     expect(
+      _commands(['test/fixtures/public_network/descriptor_current.json']),
+      ['dart run tool/build_public_network_contract.dart'],
+      reason: 'a fixture is hashed into the support matrix',
+    );
+    expect(
       _commands(['tool/contract_common/primitives.dart']),
       containsAll([
         'dart run tool/build_mcp_contract.dart',
@@ -166,10 +169,10 @@ void main() {
 
   test('a step is selected once however many paths reach it', () {
     final commands = _commands([
-      'test/a_test.dart',
-      'test/b_test.dart',
-      'test/c_test.dart',
+      'lib/l10n/_fragments/a_en.arb',
+      'lib/l10n/_fragments/a_fr.arb',
+      'lib/l10n/_fragments/b_de.arb',
     ]);
-    expect(commands, ['dart run tool/test_inventory.dart']);
+    expect(commands, ['dart run tool/build_arb.dart', 'flutter gen-l10n']);
   });
 }

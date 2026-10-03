@@ -96,6 +96,27 @@ bool holdsAdministrator(Member member) =>
     !member.isOwner &&
     member.coOwner != CoOwnerStatus.active;
 
+/// The built-in Administrator among [roles], if the server sent it.
+WorkspaceRole? administratorRole(Iterable<WorkspaceRole> roles) {
+  for (final role in roles) {
+    if (role.builtin) return role;
+  }
+  return null;
+}
+
+/// What the Administrator is called here, in [locale]: the owner may
+/// rename it; [fallback] is the product's word.
+String administratorName(
+  Iterable<WorkspaceRole> roles,
+  String locale,
+  String fallback,
+) {
+  final role = administratorRole(roles);
+  if (role == null) return fallback;
+  final own = role.names[locale] ?? role.names['en'];
+  return (own == null || own.trim().isEmpty) ? fallback : own;
+}
+
 /// The workspace's own roles [member] holds, in display order.
 List<WorkspaceRole> rolesHeldBy(
   String memberId,
@@ -105,6 +126,8 @@ List<WorkspaceRole> rolesHeldBy(
   final held = assignments[memberId] ?? const <String>{};
   return [
     for (final role in orderedRoles(roles))
-      if (held.contains(role.id)) role,
+      // The Administrator shows as its own chip: who holds it is
+      // `is_admin`, and it is given through the quorum.
+      if (held.contains(role.id) && !role.builtin) role,
   ];
 }

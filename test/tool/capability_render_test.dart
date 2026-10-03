@@ -70,4 +70,33 @@ void main() {
     expect(renderRelease(p), isNot(contains('dashboard.example')));
     expect(renderPage(p), isNot(contains('dashboard.example')));
   });
+
+  test('an edit to a component leaves the committed outputs alone unless a '
+      'standing flips (#2121)', () {
+    String outputs(Map<String, Object?> cap) {
+      final projection = project(manifest([cap]), fixtureContext);
+      return renderPage(projection) + renderRelease(projection);
+    }
+
+    final fp = fingerprint(['lib/features/x/'], fixtureContext);
+    final gatedOnly = entry();
+    final recorded =
+        entry(evidence: [record(fp)], extra: {'provider': 'stripe'});
+    final gatedBefore = outputs(gatedOnly);
+    final recordedBefore = outputs(recorded);
+    expect(gatedBefore, isNot(contains(fp)),
+        reason: 'the fingerprint moves with every edit; committed, it put '
+            'every open pull request in conflict');
+
+    fixtureFile('lib/features/x/a.dart', 'class A { int v = 3; }');
+    expect(fingerprint(['lib/features/x/'], fixtureContext), isNot(fp));
+    expect(outputs(gatedOnly), gatedBefore,
+        reason: 'nothing the page says depends on the component bytes');
+    // The negative control: the guarantee the fingerprint exists for still
+    // fires — a recorded record goes stale and the page says so.
+    expect(outputs(recorded), isNot(recordedBefore));
+    expect(outputs(recorded), contains('| stale |'));
+    expect(currentFingerprints(manifest([recorded]), fixtureContext),
+        {'pay.stripe': fingerprint(['lib/features/x/'], fixtureContext)});
+  });
 }

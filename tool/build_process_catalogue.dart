@@ -2,6 +2,7 @@
 // Generates the business catalogue without importing Flutter.
 import 'dart:convert';
 import 'dart:io';
+import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 
@@ -18,8 +19,8 @@ unsupported flags are internal until an implemented workflow consumes them.
 Subscriptions, prepaid products and basic floor-plan editing do not have their
 own flags: this catalogue does not invent switches for those workflows.
 
-| Process | Subprocess | Feature | User outcome | Tier | Surface | Requires | Default | Classification |
-|---|---|---|---|---|---|---|---|---|
+| Process | Subprocess | Feature | User outcome | Tier | Surface | Requires | Default | Maturity | Classification |
+|---|---|---|---|---|---|---|---|---|---|
 ''');
   void row(String process, String subprocess, WorkspaceFeature feature,
       String classification) {
@@ -28,9 +29,15 @@ own flags: this catalogue does not invent switches for those workflows.
     final outcome = messages['${key}Desc'] ?? messages[key] ??
         messages['${key}Title'] ?? feature.name;
     final text = outcome.toString().replaceAll('|', '/').replaceAll('\n', ' ');
+    // #1850 B — the assessment, from the one ledger the Features screen
+    // reads; the lifecycle only when it is not active.
+    final a = featureAssessmentOf(feature);
+    final maturity = a.lifecycle == FeatureLifecycle.active
+        ? a.maturity.name
+        : '${a.maturity.name}, ${a.lifecycle.name}';
     out.writeln('| $process | $subprocess | ${feature.name} | $text | '
         '${m.tier.name} | ${m.surface.name} | ${m.requires?.name ?? "—"} | '
-        '${m.defaultOn} | $classification |');
+        '${m.defaultOn} | $maturity | $classification |');
   }
   for (final process in workspaceProcesses) {
     for (final subprocess in process.subprocesses) {
