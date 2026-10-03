@@ -15615,6 +15615,93 @@
   "@taskExportStale": {
     "description": "#1866 task export (Word document): Stale"
   },
+  "taskExportVideoIntro": "A tutorial recreated from a recorded task. It shows the steps, not proof that the task succeeded.",
+  "@taskExportVideoIntro": {
+    "description": "#1879 captioned video: VideoIntro"
+  },
+  "taskExportVideoStepHeading": "Step {number}: {title}",
+  "@taskExportVideoStepHeading": {
+    "description": "#1879 captioned video: VideoStepHeading",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportVideoSummary": "Summary",
+  "@taskExportVideoSummary": {
+    "description": "#1879 captioned video: VideoSummary"
+  },
+  "taskExportVideoLeftOut": "{count, plural, =1{One step was left out by the reviewer.} other{{count} steps were left out by the reviewer.}}",
+  "@taskExportVideoLeftOut": {
+    "description": "#1879 captioned video: VideoLeftOut",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportVideoEmpty": "Every step was left out: there is nothing to show in a video.",
+  "@taskExportVideoEmpty": {
+    "description": "#1879 captioned video: VideoEmpty"
+  },
+  "taskExportVideoTooLong": "The video would be longer than allowed. Shorten durations or leave steps out.",
+  "@taskExportVideoTooLong": {
+    "description": "#1879 captioned video: VideoTooLong"
+  },
+  "taskExportVideoBusy": "Another video is still being generated.",
+  "@taskExportVideoBusy": {
+    "description": "#1879 captioned video: VideoBusy"
+  },
+  "taskExportVideoUnsupported": "This device cannot generate a video. Export the recording file and open it on a supported device: macOS, iOS, Android, or a current browser that can encode H.264 video.",
+  "@taskExportVideoUnsupported": {
+    "description": "#1879 captioned video: VideoUnsupported"
+  },
+  "taskExportVideoFailed": "The video could not be generated. Nothing was saved.",
+  "@taskExportVideoFailed": {
+    "description": "#1879 captioned video: VideoFailed"
+  },
+  "taskExportVideoCancelled": "Video generation cancelled. Nothing was saved.",
+  "@taskExportVideoCancelled": {
+    "description": "#1879 captioned video: VideoCancelled"
+  },
+  "taskExportVideoGenerating": "Generating the video: {percent} %",
+  "@taskExportVideoGenerating": {
+    "description": "#1879 captioned video: VideoGenerating",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportVideoCancel": "Cancel video",
+  "@taskExportVideoCancel": {
+    "description": "#1879 captioned video: VideoCancel"
+  },
+  "taskExportVideoGenerate": "Generate video",
+  "@taskExportVideoGenerate": {
+    "description": "#1879 captioned video: VideoGenerate"
+  },
+  "taskExportVideoLandscape": "Landscape",
+  "@taskExportVideoLandscape": {
+    "description": "#1879 captioned video: VideoLandscape"
+  },
+  "taskExportVideoPortrait": "Portrait",
+  "@taskExportVideoPortrait": {
+    "description": "#1879 captioned video: VideoPortrait"
+  },
+  "taskExportVideoSaved": "Video saved with its captions and transcript: {file}",
+  "@taskExportVideoSaved": {
+    "description": "#1879 captioned video: VideoSaved",
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
   "taskExportWordButton": "Export as Word document",
   "@taskExportWordButton": {
     "description": "#1866 task export (Word document): the review screen button"

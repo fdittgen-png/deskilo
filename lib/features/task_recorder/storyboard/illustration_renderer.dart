@@ -44,7 +44,40 @@ class IllustrationRenderer {
     required String provenance,
     List<NormalizedRect> redactions = const [],
     IllustrationPreset preset = IllustrationPreset.landscape,
-  }) => _render(preset, redactions, (canvas, size) {
+  }) => _render(
+    preset,
+    (canvas, size) => paintScene(
+      canvas,
+      size,
+      scene,
+      provenance: provenance,
+      redactions: redactions,
+    ),
+  );
+
+  /// A slide of safe text: a title and a few lines.
+  Future<Uint8List> renderTextSlide(
+    String title,
+    List<String> lines, {
+    IllustrationPreset preset = IllustrationPreset.landscape,
+  }) => _render(
+    preset,
+    (canvas, size) => paintTextSlide(canvas, size, title, lines),
+  );
+
+  /// Paints [scene] into a [size] box at the canvas origin. Redactions
+  /// are painted last, opaque, so nothing under them reaches a raster.
+  /// The video composer paints frames through this same method.
+  void paintScene(
+    Canvas canvas,
+    Size size,
+    SafeScene scene, {
+    required String provenance,
+    List<NormalizedRect> redactions = const [],
+  }) {
+    canvas.save();
+    canvas.clipRect(Offset.zero & size);
+    canvas.drawRect(Offset.zero & size, Paint()..color = colors.surface);
     _paintScene(canvas, size, scene);
     _text(
       canvas,
@@ -55,15 +88,24 @@ class IllustrationRenderer {
       colors.onSurfaceVariant,
       align: TextAlign.right,
     );
-  });
+    final cover = Paint()
+      ..color = colors.onSurface
+      ..isAntiAlias = false;
+    for (final r in redactions) {
+      canvas.drawRect(_rect(r, size), cover);
+    }
+    canvas.restore();
+  }
 
-  /// A slide of safe text: a title and a few lines.
-  Future<Uint8List> renderTextSlide(
+  /// Paints a text slide into a [size] box at the canvas origin.
+  void paintTextSlide(
+    Canvas canvas,
+    Size size,
     String title,
-    List<String> lines, {
-    List<NormalizedRect> redactions = const [],
-    IllustrationPreset preset = IllustrationPreset.landscape,
-  }) => _render(preset, redactions, (canvas, size) {
+    List<String> lines,
+  ) {
+    canvas.save();
+    canvas.clipRect(Offset.zero & size);
     canvas.drawRect(
       Offset.zero & size,
       Paint()..color = colors.surfaceContainerHighest,
@@ -91,25 +133,17 @@ class IllustrationRenderer {
       );
       y += size.height * 0.02;
     }
-  });
+    canvas.restore();
+  }
 
   Future<Uint8List> _render(
     IllustrationPreset preset,
-    List<NormalizedRect> redactions,
     void Function(Canvas, Size) paint,
   ) async {
     final size = Size(preset.width.toDouble(), preset.height.toDouble());
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder, Offset.zero & size);
-    canvas.drawRect(Offset.zero & size, Paint()..color = colors.surface);
     paint(canvas, size);
-    // Destructive redaction: opaque, last, on the same raster.
-    final cover = Paint()
-      ..color = colors.onSurface
-      ..isAntiAlias = false;
-    for (final r in redactions) {
-      canvas.drawRect(_rect(r, size), cover);
-    }
     final picture = recorder.endRecording();
     ui.Image? image;
     try {
