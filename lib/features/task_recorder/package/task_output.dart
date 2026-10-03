@@ -9,12 +9,20 @@
 // and never with a dummy workspace. What it produces is bytes and a
 // suggested name; saving them is the workbench's job, through the typed
 // file saver, so every output tells a saved file from a browser request
-// from a failure the same way. Reasons are ARB keys, never prose or raw
-// errors, and no private canary may survive into the bytes.
+// from a failure the same way. Reasons are a finite enum the workbench
+// words, never prose or raw errors, and no private canary may survive
+// into the bytes.
 
 import 'dart:typed_data';
 
 import '../domain/task_recording.dart';
+
+/// What an output is, so the workbench can name it in five languages.
+enum TaskOutputKind { document, storyboard, video, captions }
+
+/// Why an output is not available or was not made. A finite set the
+/// workbench words itself; never prose or a raw error from a generator.
+enum TaskOutputReason { unsupportedPlatform, missingMedia, tooLong, failed }
 
 /// Whether a generator can run on this platform and build.
 sealed class TaskOutputAvailability {
@@ -25,10 +33,10 @@ final class TaskOutputAvailable extends TaskOutputAvailability {
   const TaskOutputAvailable();
 }
 
-/// Not here: [reasonKey] is an ARB key the workbench shows.
+/// Not here, for [reason].
 final class TaskOutputUnsupported extends TaskOutputAvailability {
-  const TaskOutputUnsupported(this.reasonKey);
-  final String reasonKey;
+  const TaskOutputUnsupported(this.reason);
+  final TaskOutputReason reason;
 }
 
 /// What a generator is given.
@@ -67,13 +75,13 @@ final class TaskOutputProduced extends TaskOutputResult {
 }
 
 final class TaskOutputNotProduced extends TaskOutputResult {
-  const TaskOutputNotProduced(this.reasonKey);
-  final String reasonKey;
+  const TaskOutputNotProduced(this.reason);
+  final TaskOutputReason reason;
 }
 
 final class TaskOutputFailed extends TaskOutputResult {
-  const TaskOutputFailed(this.reasonKey);
-  final String reasonKey;
+  const TaskOutputFailed(this.reason);
+  final TaskOutputReason reason;
 }
 
 final class TaskOutputCancelled extends TaskOutputResult {
@@ -84,6 +92,8 @@ final class TaskOutputCancelled extends TaskOutputResult {
 abstract interface class TaskOutputGenerator {
   /// 'docx', 'storyboard', 'mp4', 'webm', 'vtt'.
   String get id;
+
+  TaskOutputKind get kind;
 
   /// Without a dot; its MIME type is in core/files/file_types.dart.
   String get fileExtension;

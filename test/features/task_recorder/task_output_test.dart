@@ -17,6 +17,8 @@ class _Echo implements TaskOutputGenerator {
   @override
   String get id => 'echo';
   @override
+  TaskOutputKind get kind => TaskOutputKind.captions;
+  @override
   String get fileExtension => 'txt';
   @override
   Future<TaskOutputAvailability> availability() async =>
