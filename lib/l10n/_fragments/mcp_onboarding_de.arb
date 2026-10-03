@@ -1,0 +1,12 @@
+{
+  "@@locale": "de",
+  "mcpConsentClientWaiting": "{name} ist auf diesem Server noch nicht freigegeben. Der Betreiber gibt jeden Assistenten einmal frei; verbinden Sie danach erneut aus dem Assistenten.",
+  "mcpConsentClientBlocked": "Der Betreiber hat {name} auf diesem Server gesperrt. Er kann nicht verbunden werden.",
+  "mcpConsentDeciderMe": "Das entscheiden Sie selbst, in der Installationskonsole.",
+  "mcpConsentDeciderAsk": "Bitten Sie {name} um eine Entscheidung.",
+  "mcpConsentDeciderNobody": "Für diesen Server ist noch niemand zuständig.",
+  "mcpConsentRedirectHost": "Die Antwort wird an {host} gesendet.",
+  "mcpConsentFamilyClaude": "Für alle Claude-Verbindungen freigegeben.",
+  "mcpConsentFamilyChatgpt": "Für alle ChatGPT-Verbindungen freigegeben.",
+  "mcpConsentFamilyLoopback": "Für Desktop- und Kommandozeilen-Assistenten auf diesem Computer freigegeben."
+}

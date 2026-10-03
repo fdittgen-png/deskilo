@@ -8996,13 +8996,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'Choose each workspace and what it may do there. Nothing is chosen for you.';
 
   @override
+  String mcpConsentClientBlocked(String name) {
+    return 'The operator has blocked $name on this server. It cannot be connected.';
+  }
+
+  @override
+  String mcpConsentClientWaiting(String name) {
+    return '$name is not approved on this server yet. The operator approves each assistant once; then connect again from the assistant.';
+  }
+
+  @override
   String get mcpConsentConnected => 'Connected. Returning to the assistant.';
+
+  @override
+  String mcpConsentDeciderAsk(String name) {
+    return 'Ask $name to decide.';
+  }
+
+  @override
+  String get mcpConsentDeciderMe =>
+      'You decide this yourself, in the installation console.';
+
+  @override
+  String get mcpConsentDeciderNobody => 'Nobody answers for this server yet.';
 
   @override
   String get mcpConsentDenied => 'Refused. The assistant gets nothing.';
 
   @override
   String get mcpConsentDeny => 'Deny';
+
+  @override
+  String get mcpConsentFamilyChatgpt =>
+      'Approved for every ChatGPT connection.';
+
+  @override
+  String get mcpConsentFamilyClaude => 'Approved for every Claude connection.';
+
+  @override
+  String get mcpConsentFamilyLoopback =>
+      'Approved for desktop and command-line assistants on this computer.';
 
   @override
   String get mcpConsentFieldsExplain =>
@@ -9019,6 +9052,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mcpConsentPartial =>
       'The assistant was approved but the connection is not usable yet. Connect again from the assistant.';
+
+  @override
+  String mcpConsentRedirectHost(String host) {
+    return 'The answer is sent to $host.';
+  }
 
   @override
   String get mcpConsentRequestEligibility => 'Ask for approval';

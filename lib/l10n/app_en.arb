@@ -10133,9 +10133,44 @@
   "@mcpConsentChoose": {
     "description": "#1615 mcp_consent"
   },
+  "mcpConsentClientBlocked": "The operator has blocked {name} on this server. It cannot be connected.",
+  "@mcpConsentClientBlocked": {
+    "description": "#2145 assistant onboarding: mcpConsentClientBlocked",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConsentClientWaiting": "{name} is not approved on this server yet. The operator approves each assistant once; then connect again from the assistant.",
+  "@mcpConsentClientWaiting": {
+    "description": "#2145 assistant onboarding: mcpConsentClientWaiting",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "mcpConsentConnected": "Connected. Returning to the assistant.",
   "@mcpConsentConnected": {
     "description": "#1615 mcp_consent"
+  },
+  "mcpConsentDeciderAsk": "Ask {name} to decide.",
+  "@mcpConsentDeciderAsk": {
+    "description": "#2145 assistant onboarding: mcpConsentDeciderAsk",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConsentDeciderMe": "You decide this yourself, in the installation console.",
+  "@mcpConsentDeciderMe": {
+    "description": "#2145 assistant onboarding: mcpConsentDeciderMe"
+  },
+  "mcpConsentDeciderNobody": "Nobody answers for this server yet.",
+  "@mcpConsentDeciderNobody": {
+    "description": "#2145 assistant onboarding: mcpConsentDeciderNobody"
   },
   "mcpConsentDenied": "Refused. The assistant gets nothing.",
   "@mcpConsentDenied": {
@@ -10144,6 +10179,18 @@
   "mcpConsentDeny": "Deny",
   "@mcpConsentDeny": {
     "description": "#1615 mcp_consent"
+  },
+  "mcpConsentFamilyChatgpt": "Approved for every ChatGPT connection.",
+  "@mcpConsentFamilyChatgpt": {
+    "description": "#2145 assistant onboarding: mcpConsentFamilyChatgpt"
+  },
+  "mcpConsentFamilyClaude": "Approved for every Claude connection.",
+  "@mcpConsentFamilyClaude": {
+    "description": "#2145 assistant onboarding: mcpConsentFamilyClaude"
+  },
+  "mcpConsentFamilyLoopback": "Approved for desktop and command-line assistants on this computer.",
+  "@mcpConsentFamilyLoopback": {
+    "description": "#2145 assistant onboarding: mcpConsentFamilyLoopback"
   },
   "mcpConsentFieldsExplain": "Details it may also see here. Leave them off to keep its answers minimised.",
   "@mcpConsentFieldsExplain": {
@@ -10160,6 +10207,15 @@
   "mcpConsentPartial": "The assistant was approved but the connection is not usable yet. Connect again from the assistant.",
   "@mcpConsentPartial": {
     "description": "#1615 mcp_consent"
+  },
+  "mcpConsentRedirectHost": "The answer is sent to {host}.",
+  "@mcpConsentRedirectHost": {
+    "description": "#2145 assistant onboarding: mcpConsentRedirectHost",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   },
   "mcpConsentRequestEligibility": "Ask for approval",
   "@mcpConsentRequestEligibility": {

@@ -1,0 +1,59 @@
+{
+  "@@locale": "en",
+  "mcpConsentClientWaiting": "{name} is not approved on this server yet. The operator approves each assistant once; then connect again from the assistant.",
+  "@mcpConsentClientWaiting": {
+    "description": "#2145 assistant onboarding: mcpConsentClientWaiting",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConsentClientBlocked": "The operator has blocked {name} on this server. It cannot be connected.",
+  "@mcpConsentClientBlocked": {
+    "description": "#2145 assistant onboarding: mcpConsentClientBlocked",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConsentDeciderMe": "You decide this yourself, in the installation console.",
+  "@mcpConsentDeciderMe": {
+    "description": "#2145 assistant onboarding: mcpConsentDeciderMe"
+  },
+  "mcpConsentDeciderAsk": "Ask {name} to decide.",
+  "@mcpConsentDeciderAsk": {
+    "description": "#2145 assistant onboarding: mcpConsentDeciderAsk",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConsentDeciderNobody": "Nobody answers for this server yet.",
+  "@mcpConsentDeciderNobody": {
+    "description": "#2145 assistant onboarding: mcpConsentDeciderNobody"
+  },
+  "mcpConsentRedirectHost": "The answer is sent to {host}.",
+  "@mcpConsentRedirectHost": {
+    "description": "#2145 assistant onboarding: mcpConsentRedirectHost",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConsentFamilyClaude": "Approved for every Claude connection.",
+  "@mcpConsentFamilyClaude": {
+    "description": "#2145 assistant onboarding: mcpConsentFamilyClaude"
+  },
+  "mcpConsentFamilyChatgpt": "Approved for every ChatGPT connection.",
+  "@mcpConsentFamilyChatgpt": {
+    "description": "#2145 assistant onboarding: mcpConsentFamilyChatgpt"
+  },
+  "mcpConsentFamilyLoopback": "Approved for desktop and command-line assistants on this computer.",
+  "@mcpConsentFamilyLoopback": {
+    "description": "#2145 assistant onboarding: mcpConsentFamilyLoopback"
+  }
+}

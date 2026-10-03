@@ -15450,11 +15450,41 @@ abstract class AppLocalizations {
   /// **'Choose each workspace and what it may do there. Nothing is chosen for you.'**
   String get mcpConsentChoose;
 
+  /// #2145 assistant onboarding: mcpConsentClientBlocked
+  ///
+  /// In en, this message translates to:
+  /// **'The operator has blocked {name} on this server. It cannot be connected.'**
+  String mcpConsentClientBlocked(String name);
+
+  /// #2145 assistant onboarding: mcpConsentClientWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is not approved on this server yet. The operator approves each assistant once; then connect again from the assistant.'**
+  String mcpConsentClientWaiting(String name);
+
   /// #1615 mcp_consent
   ///
   /// In en, this message translates to:
   /// **'Connected. Returning to the assistant.'**
   String get mcpConsentConnected;
+
+  /// #2145 assistant onboarding: mcpConsentDeciderAsk
+  ///
+  /// In en, this message translates to:
+  /// **'Ask {name} to decide.'**
+  String mcpConsentDeciderAsk(String name);
+
+  /// #2145 assistant onboarding: mcpConsentDeciderMe
+  ///
+  /// In en, this message translates to:
+  /// **'You decide this yourself, in the installation console.'**
+  String get mcpConsentDeciderMe;
+
+  /// #2145 assistant onboarding: mcpConsentDeciderNobody
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody answers for this server yet.'**
+  String get mcpConsentDeciderNobody;
 
   /// #1615 mcp_consent
   ///
@@ -15467,6 +15497,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deny'**
   String get mcpConsentDeny;
+
+  /// #2145 assistant onboarding: mcpConsentFamilyChatgpt
+  ///
+  /// In en, this message translates to:
+  /// **'Approved for every ChatGPT connection.'**
+  String get mcpConsentFamilyChatgpt;
+
+  /// #2145 assistant onboarding: mcpConsentFamilyClaude
+  ///
+  /// In en, this message translates to:
+  /// **'Approved for every Claude connection.'**
+  String get mcpConsentFamilyClaude;
+
+  /// #2145 assistant onboarding: mcpConsentFamilyLoopback
+  ///
+  /// In en, this message translates to:
+  /// **'Approved for desktop and command-line assistants on this computer.'**
+  String get mcpConsentFamilyLoopback;
 
   /// #1809 mcp_disclosure
   ///
@@ -15491,6 +15539,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The assistant was approved but the connection is not usable yet. Connect again from the assistant.'**
   String get mcpConsentPartial;
+
+  /// #2145 assistant onboarding: mcpConsentRedirectHost
+  ///
+  /// In en, this message translates to:
+  /// **'The answer is sent to {host}.'**
+  String mcpConsentRedirectHost(String host);
 
   /// #1615 mcp_consent
   ///

@@ -9074,13 +9074,48 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wählen Sie jeden Arbeitsbereich und was der Assistent dort tun darf. Nichts ist vorausgewählt.';
 
   @override
+  String mcpConsentClientBlocked(String name) {
+    return 'Der Betreiber hat $name auf diesem Server gesperrt. Er kann nicht verbunden werden.';
+  }
+
+  @override
+  String mcpConsentClientWaiting(String name) {
+    return '$name ist auf diesem Server noch nicht freigegeben. Der Betreiber gibt jeden Assistenten einmal frei; verbinden Sie danach erneut aus dem Assistenten.';
+  }
+
+  @override
   String get mcpConsentConnected => 'Verbunden. Zurück zum Assistenten.';
+
+  @override
+  String mcpConsentDeciderAsk(String name) {
+    return 'Bitten Sie $name um eine Entscheidung.';
+  }
+
+  @override
+  String get mcpConsentDeciderMe =>
+      'Das entscheiden Sie selbst, in der Installationskonsole.';
+
+  @override
+  String get mcpConsentDeciderNobody =>
+      'Für diesen Server ist noch niemand zuständig.';
 
   @override
   String get mcpConsentDenied => 'Abgelehnt. Der Assistent erhält nichts.';
 
   @override
   String get mcpConsentDeny => 'Ablehnen';
+
+  @override
+  String get mcpConsentFamilyChatgpt =>
+      'Für alle ChatGPT-Verbindungen freigegeben.';
+
+  @override
+  String get mcpConsentFamilyClaude =>
+      'Für alle Claude-Verbindungen freigegeben.';
+
+  @override
+  String get mcpConsentFamilyLoopback =>
+      'Für Desktop- und Kommandozeilen-Assistenten auf diesem Computer freigegeben.';
 
   @override
   String get mcpConsentFieldsExplain =>
@@ -9097,6 +9132,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get mcpConsentPartial =>
       'Der Assistent wurde genehmigt, aber die Verbindung ist noch nicht nutzbar. Verbinden Sie sich erneut im Assistenten.';
+
+  @override
+  String mcpConsentRedirectHost(String host) {
+    return 'Die Antwort wird an $host gesendet.';
+  }
 
   @override
   String get mcpConsentRequestEligibility => 'Freigabe anfragen';

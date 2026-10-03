@@ -9084,13 +9084,48 @@ class AppLocalizationsFr extends AppLocalizations {
       'Choisissez chaque espace et ce que l\'assistant peut y faire. Rien n\'est choisi à votre place.';
 
   @override
+  String mcpConsentClientBlocked(String name) {
+    return 'L\'opérateur a bloqué $name sur ce serveur. Il ne peut pas être connecté.';
+  }
+
+  @override
+  String mcpConsentClientWaiting(String name) {
+    return '$name n\'est pas encore approuvé sur ce serveur. L\'opérateur approuve chaque assistant une fois ; reconnectez-vous ensuite depuis l\'assistant.';
+  }
+
+  @override
   String get mcpConsentConnected => 'Connecté. Retour vers l\'assistant.';
+
+  @override
+  String mcpConsentDeciderAsk(String name) {
+    return 'Demandez à $name de décider.';
+  }
+
+  @override
+  String get mcpConsentDeciderMe =>
+      'C\'est vous qui décidez, dans la console de l\'installation.';
+
+  @override
+  String get mcpConsentDeciderNobody =>
+      'Personne ne répond encore de ce serveur.';
 
   @override
   String get mcpConsentDenied => 'Refusé. L\'assistant n\'obtient rien.';
 
   @override
   String get mcpConsentDeny => 'Refuser';
+
+  @override
+  String get mcpConsentFamilyChatgpt =>
+      'Approuvé pour toutes les connexions ChatGPT.';
+
+  @override
+  String get mcpConsentFamilyClaude =>
+      'Approuvé pour toutes les connexions Claude.';
+
+  @override
+  String get mcpConsentFamilyLoopback =>
+      'Approuvé pour les assistants de bureau et en ligne de commande sur cet ordinateur.';
 
   @override
   String get mcpConsentFieldsExplain =>
@@ -9107,6 +9142,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get mcpConsentPartial =>
       'L\'assistant a été approuvé mais la connexion n\'est pas encore utilisable. Reconnectez-vous depuis l\'assistant.';
+
+  @override
+  String mcpConsentRedirectHost(String host) {
+    return 'La réponse est envoyée à $host.';
+  }
 
   @override
   String get mcpConsentRequestEligibility => 'Demander l\'autorisation';

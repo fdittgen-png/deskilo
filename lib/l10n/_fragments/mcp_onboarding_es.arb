@@ -1,0 +1,12 @@
+{
+  "@@locale": "es",
+  "mcpConsentClientWaiting": "{name} aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; después vuelva a conectar desde el asistente.",
+  "mcpConsentClientBlocked": "El operador ha bloqueado {name} en este servidor. No se puede conectar.",
+  "mcpConsentDeciderMe": "Lo decide usted mismo, en la consola de la instalación.",
+  "mcpConsentDeciderAsk": "Pida a {name} que decida.",
+  "mcpConsentDeciderNobody": "Nadie responde todavía de este servidor.",
+  "mcpConsentRedirectHost": "La respuesta se envía a {host}.",
+  "mcpConsentFamilyClaude": "Aprobado para todas las conexiones de Claude.",
+  "mcpConsentFamilyChatgpt": "Aprobado para todas las conexiones de ChatGPT.",
+  "mcpConsentFamilyLoopback": "Aprobado para asistentes de escritorio y de línea de comandos en este equipo."
+}

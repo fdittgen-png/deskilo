@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/mcp/mcp_endpoint.dart';
@@ -8,7 +9,9 @@ import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/assistant_setup.dart';
 import '../domain/mcp_client.dart';
+import '../data/supabase_mcp_onboarding_repository.dart';
 import '../domain/mcp_connection.dart';
+import '../domain/mcp_onboarding.dart';
 import '../domain/mcp_context.dart';
 import 'mcp_providers.dart';
 
@@ -68,3 +71,25 @@ Future<ConsentOptions> myMcpConsentOptions(Ref ref) async {
   final scope = (await target).instance;
   return commands.read(scope, (r) => r.connections.options());
 }
+
+/// #2145 — the 0358 onboarding RPCs: consent status, published endpoint,
+/// installation notices.
+@Riverpod(keepAlive: true)
+McpOnboardingRepository mcpOnboardingRepository(Ref ref) =>
+    SupabaseMcpOnboardingRepository(Supabase.instance.client);
+
+/// #2145 — the client, its approval and who decides, for one pending
+/// authorization; read BEFORE Auth is asked for the authorization itself.
+@riverpod
+Future<ConsentStatus> mcpConsentStatus(Ref ref, String authorizationId) =>
+    ref.watch(mcpOnboardingRepositoryProvider).consentStatus(authorizationId);
+
+/// #2145 — the endpoint this installation publishes for assistants.
+@riverpod
+Future<McpEndpointInfo> mcpPublishedEndpoint(Ref ref) =>
+    ref.watch(mcpOnboardingRepositoryProvider).endpoint();
+
+/// #2145 — the installation notices addressed to the caller.
+@riverpod
+Future<InstanceNotices> myInstanceNotices(Ref ref) =>
+    ref.watch(mcpOnboardingRepositoryProvider).notices();
