@@ -8,7 +8,7 @@ a token, a request id or a value somebody typed.
 | File | Format id | Version | Reader |
 |---|---|---|---|
 | `*.json` (a recording) | `deskilo.task-recording` | `schema_version` 1 | `lib/features/task_recorder/domain/task_recording_codec.dart` (`decodeRecording`) |
-| `*.deskilo-task.zip` (a task package) | `deskilo.task-package` | `package_version` 1 | `lib/features/task_recorder/package/task_package.dart` (`readTaskPackage`) |
+| `*.deskilo-task.zip` (a task package) | `deskilo.task-package` | `package_version` 1, or 2 with a storyboard | `lib/features/task_recorder/package/task_package.dart` (`readTaskPackage`) |
 | `deskilo-guide.json` (a guide draft) | `deskilo.task-guide` | `schema_version` 1 | `lib/features/task_recorder/guide/guide_codec.dart` (`decodeGuideText`) |
 
 ## The recording
@@ -44,6 +44,7 @@ segments, 8 prerequisites, title 120 and note 500 characters.
 | `manifest.json` | yes | format, `package_version`, product, the recording's summary (`schema_version`, `action_contract_version`, `kind`, `completeness`) and the size and SHA-256 of every other file, plus the maker's `claims` |
 | `recording.json` | yes | the recording above, byte for byte the plain export |
 | `transcript.md` | no | the steps as readable text in the maker's language |
+| `storyboard.json` | no (version 2) | the reviewed storyboard's decisions (`deskilo.task-storyboard-review` version 1): per recorded step, its order, omitted, caption, duration, redactions and approval, and the recording revision they were made for |
 | `media/<name>.(png\|jpg\|jpeg\|webp\|mp4\|webm\|vtt)` | no | approved images, video and captions, each listed in the manifest |
 
 A checksum says a file is the one the manifest listed — not who made it,
@@ -65,6 +66,13 @@ recording the recording validator refuses. Errors are fixed codes; a
 file name from the package is never echoed or used as a path.
 
 The same recording always packs to the same bytes (fixed timestamps).
+
+The storyboard itself is not copied: reopening a package derives it again
+from the recording and replays the decisions through the storyboard's own
+edit rules (a redaction still withdraws an approval, an approval only
+lands on a drawn illustration). A review made for another recording
+revision is set aside, not applied. The approved illustrations travel as
+`media/frame-<step>.png`, listed in the manifest like any media.
 
 ## The guide draft
 

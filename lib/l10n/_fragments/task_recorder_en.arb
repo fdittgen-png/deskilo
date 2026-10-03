@@ -646,5 +646,9 @@
         "type": "String"
       }
     }
+  },
+  "taskWorkbenchStoryboardRestored": "The reviewed illustrations were restored from the file.",
+  "@taskWorkbenchStoryboardRestored": {
+    "description": "#1876 workbench: taskWorkbenchStoryboardRestored"
   }
 }

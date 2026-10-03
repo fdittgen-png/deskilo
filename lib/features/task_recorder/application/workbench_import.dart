@@ -14,6 +14,7 @@ import 'dart:typed_data';
 
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
+import '../package/storyboard_review.dart';
 import '../package/task_package.dart';
 
 /// The largest file the workbench reads at all; checked before reading.
@@ -58,9 +59,13 @@ final class WorkbenchOpened extends WorkbenchImport {
     this.transcript,
     this.assets = const [],
     this.claims = const {},
+    this.storyboard,
   });
 
   final TaskRecording recording;
+
+  /// #1876 — the reviewed storyboard's decisions the package kept.
+  final StoryboardReview? storyboard;
 
   /// False: a transcript only, with steps this build does not know.
   final bool runnable;
@@ -106,6 +111,7 @@ WorkbenchImport openTaskFile(Uint8List bytes) {
       transcript: package.transcript,
       assets: package.assets,
       claims: package.claims,
+      storyboard: package.storyboard,
     );
   }
   final first = bytes.firstWhere((b) => b > 0x20, orElse: () => 0);
