@@ -1356,19 +1356,19 @@ routine public.mcp_is_delegated() -> boolean | function | invoker | stable | exe
 routine public.mcp_limit_retry_after(p_workspace_id uuid, p_client text, p_mutation boolean) -> integer | function | invoker | volatile | exec:service_role | body:1ed13d447619
 routine public.mcp_member_view(p_member_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:8d9cb5a3eddd
 routine public.mcp_my_operations(p_installation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e17d1e163398
+routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:89dfb01307bb
 routine public.mcp_operator_decider() -> jsonb | function | definer | stable | exec:service_role | body:711177ce7de3
 routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
 routine public.mcp_person_name(p_user uuid) -> text | function | definer | stable | exec:service_role | body:59b1d5d4237b
-routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:89dfb01307bb
 routine public.mcp_place_label(p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid) -> text | function | invoker | stable | exec:service_role | body:33fbfa755fb6
 routine public.mcp_policy_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f6bf9cb4f226
 routine public.mcp_pre_request() -> void | function | invoker | stable | exec:anon,authenticated,service_role | body:020fc410aef9
 routine public.mcp_prepare_connection(p_client_id text, p_authorization_id text, p_scopes jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1b1fe1858a7f
 routine public.mcp_project_data(p_operation text, p_value jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:8ad7149f3904
 routine public.mcp_project_data(p_operation text, p_value jsonb, p_optional text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:5cf4a9f851a4
-routine public.mcp_redirect_host(p_uri text) -> text | function | invoker | immutable | exec:service_role | body:3da3bc0693e9
 routine public.mcp_read_v1(p_workspace_id uuid, p_member members, p_operation text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:3f1296e6a170
 routine public.mcp_record_reservation_origin(p_reservation_id uuid, p_workspace_id uuid, p_member_id uuid, p_client_id text, p_request_id uuid) -> void | function | definer | volatile | exec:service_role | body:45cfd77f07c4
+routine public.mcp_redirect_host(p_uri text) -> text | function | invoker | immutable | exec:service_role | body:3da3bc0693e9
 routine public.mcp_registered_redirects(p_client_id text) -> text | function | definer | stable | exec:service_role | body:206024ad6b6a
 routine public.mcp_request_outcome(p_result jsonb) -> text | function | invoker | immutable | exec:service_role | body:883fde66b9af
 routine public.mcp_require_native() -> void | function | invoker | stable | exec:service_role | body:75faf6e7d8ed
