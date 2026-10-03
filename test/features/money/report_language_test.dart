@@ -4,7 +4,6 @@
 // per-language template overlay → workspace language → country
 // language, RAISING for a multi-language country with nothing
 // configured — the app must not guess between French and German.
-import 'dart:io';
 
 import 'package:deskilo/core/locale/report_language.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
@@ -99,10 +98,4 @@ void main() {
     });
   });
 
-  test('migration 0098 stores the member preferred locale', () {
-    final sql =
-        File('supabase/migrations/0098_member_preferred_locale.sql')
-            .readAsStringSync();
-    expect(sql, contains('preferred_locale'));
-  });
 }

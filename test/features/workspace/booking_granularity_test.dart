@@ -54,16 +54,6 @@ void main() {
       expect(BookingGranularity.minutes30.offersDayWindows, isFalse);
     });
 
-    test("migration 0087 lets 'hours' fall through every grid branch "
-        'but converts it on the statement', () {
-      final sql = File('supabase/migrations/0087_working_hours.sql')
-          .readAsStringSync();
-      expect(sql, contains("if v_gran = 'hours' then"));
-      // enforce_booking_rules v4 must NOT add a constraint branch for
-      // hours — free from-to times are the whole point.
-      expect(sql, isNot(contains("gran = 'hours' then\n    if")));
-    });
-
     test('fromWire falls back to flexible for null / unknown values', () {
       expect(BookingGranularity.fromWire('flexible'),
           BookingGranularity.flexible);

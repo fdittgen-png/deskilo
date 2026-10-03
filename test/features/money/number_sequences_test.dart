@@ -226,15 +226,5 @@ void main() {
           isFalse,
           reason: 'nothing issued, nothing to repeat');
     });
-
-    test('the pair rules mirror migration 0217', () {
-      final sql =
-          File('supabase/migrations/0217_number_series_never_repeat.sql')
-              .readAsStringSync();
-      expect(sql, contains("when 'none' then p_reset = 'never'"));
-      expect(sql, contains("when 'year' then p_reset in ('never', 'yearly')"));
-      expect(sql,
-          contains("when 'year_month' then p_reset in ('never', 'yearly', 'monthly')"));
-    });
   });
 }

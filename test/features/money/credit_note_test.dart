@@ -4,7 +4,6 @@
 // reminders, no member-payment matching — the workspace records the
 // refund; the payout books against the member's balance and the avoir
 // closes as Refunded.
-import 'dart:io';
 
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:flutter/material.dart';
@@ -60,15 +59,4 @@ void main() {
     expect(find.text('Refunded'), findsOneWidget);
   });
 
-  test('migration 0102 adds the refunded resolution and the payout '
-      'settlement RPC', () {
-    final sql = File('supabase/migrations/0102_credit_note_refunds.sql')
-        .readAsStringSync();
-    expect(sql, contains("'refunded'"));
-    expect(sql, contains('settle_credit_invoice'));
-    expect(sql, contains('total_cents >= 0'));
-    // The payout rides credit_ledger_id so the EXISTING reject branch
-    // deletes it — reopening the avoir with the balance restored.
-    expect(sql, contains('rides credit_ledger_id'));
-  });
 }

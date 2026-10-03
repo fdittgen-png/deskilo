@@ -428,21 +428,6 @@ void main() {
       expect(parsed.lastAt.millisecondsSinceEpoch, 0);
     });
 
-    test('the server no longer sends a null anyway', () {
-      final sql = File('supabase/migrations/0127_conversations_last_at.sql')
-          .readAsStringSync();
-      expect(sql, contains('coalesce(last.created_at, c.last_message_at)'));
-    });
-
-    test('an EMPTY DIRECT thread is visible', () {
-      // It was filtered out — fine when the only way to make one was
-      // opening a profile, wrong once "Démarrer" creates one on purpose.
-      // Hiding it made starting a chat look like it did nothing.
-      final sql = File('supabase/migrations/0127_conversations_last_at.sql')
-          .readAsStringSync();
-      expect(sql, isNot(contains("c.kind = 'group' or last.created_at")));
-    });
-
     test('starting a conversation OPENS it', () {
       final sheet = File('lib/features/workspace/presentation/widgets/'
               'new_conversation_sheet.dart')

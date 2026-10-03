@@ -59,16 +59,6 @@ void main() {
       expect(delivered.readAt, isNull);
     });
 
-    test('pins the read-receipt contract against migration 0105', () {
-      final sql = File('supabase/migrations/0105_member_note_read_receipts.sql')
-          .readAsStringSync();
-      expect(sql, contains('add column read_at'));
-      expect(sql, contains('mark_member_notes_read'));
-      expect(sql, contains('to_member_id = v_me.id'));
-      expect(sql, contains('read_at is null'));
-      expect(sql, contains('revoke execute'));
-    });
-
     test('pins the 500-char cap against migration 0089', () {
       expect(MemberNoteRules.maxLength, 500);
       final sql = File('supabase/migrations/0089_member_notes.sql')

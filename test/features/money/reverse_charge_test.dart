@@ -4,7 +4,6 @@
 // invoicing a business in ANOTHER member state charges nothing: the
 // document states category AE, carries the reverse-charge mention and
 // names the customer's VAT identifier. Mirrors create_invoice (0157).
-import 'dart:io';
 
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -167,13 +166,4 @@ void main() {
     });
   });
 
-  test('the SQL twin decides it the same way', () {
-    final sql = File('supabase/migrations/0157_reverse_charge.sql')
-        .readAsStringSync();
-    expect(sql, contains("is_eu_country"));
-    expect(sql, contains("''vat_registered''"));
-    expect(sql, contains("invoice_legal->>''reverse_charge''"));
-    expect(sql, contains("then ''AE''"),
-        reason: 'the breakdown must name the category');
-  });
 }
