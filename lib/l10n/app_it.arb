@@ -657,6 +657,7 @@
   "@biAreaTreasury": {
     "description": "#1923 Web-BI area"
   },
+  "biBookingBasis": "La capacità prenotata misura le prenotazioni, non la presenza effettiva.",
   "biCardsUnavailable": "{count} analisi di questa vista non sono disponibili per te e vengono omesse.",
   "biChangePoints": "{value} p.p.",
   "biColumnChange": "Variazione",
@@ -669,9 +670,25 @@
   "biComparedLine": "{period}: {value} ({change})",
   "biComparedNotRecorded": "{period} non è stato registrato (lo storico inizia il {since}); nessun confronto.",
   "biComparedPartial": "{period} è registrato solo in parte.",
+  "biComparisonUnqualified": "Variazione non disponibile: un periodo contiene dati parziali o non aggiornati.",
+  "biComputedWorkspaceTime": "Calcolato il {date} · ora dello spazio",
+  "@biComputedWorkspaceTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biCurrentBasis": "È incluso l’intero periodo. Il confronto con un periodo concluso non ha una base equivalente.",
+  "biDataNotApplicable": "Nessuna capacità applicabile",
+  "biDataNotRecorded": "Non registrato",
+  "biDataPartial": "Dati parziali",
+  "biDataStale": "Dati non aggiornati",
+  "biDataUnavailable": "Non disponibile",
   "biDimensionLevel": "Piano",
   "biExposureDiffers": "I due periodi non hanno la stessa base; il tasso ne tiene conto, i valori grezzi non si confrontano direttamente.",
   "biForbidden": "Non puoi leggere questa analisi in questo spazio.",
+  "biFutureBasis": "Prenotazioni esistenti e orari attuali; non è una previsione della domanda né un utilizzo garantito.",
   "biGrain": "Durata del periodo",
   "biGrainMonth": "Mese",
   "biGrainQuarter": "Trimestre",
@@ -681,13 +698,34 @@
   "biInvalidAddress": "Questo indirizzo chiede un’analisi che non esiste; non è stato letto nulla.",
   "biNotOffered": "non offerto dalle analisi mostrate",
   "biOpenSource": "Apri la fonte",
+  "biPastBasis": "Ricalcolato dai dati disponibili oggi, non da quelli conosciuti allora.",
   "biQuarter": "T{quarter} {year}",
+  "biRecordedFuture": "Periodo futuro · prenotazioni registrate",
+  "biRecordedPast": "Periodo passato · dati attuali",
+  "biRecordedPresent": "Periodo in corso · include date future",
+  "biRefresh": "Aggiorna i dati",
   "biRefusedBudget": "Ci sono più di {count} gruppi; scegli «Nessun raggruppamento».",
   "biRefusedComparison": "Questa analisi non può fare questo confronto.",
   "biRefusedGrain": "Questa analisi non è offerta per questa durata del periodo.",
   "biRefusedGrouping": "Questa analisi non può essere raggruppata così.",
   "biRemainder": "Fuori dai gruppi attuali",
   "biReset": "Mostra la vista standard",
+  "biSeatHoursBlocked": "{hours} ore-posto bloccate",
+  "@biSeatHoursBlocked": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biSeatHoursFree": "{hours} ore-posto non prenotate",
+  "@biSeatHoursFree": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
   "biSort": "Ordine",
   "biSortAscending": "Prima il più basso",
   "biSortDescending": "Prima il più alto",
@@ -9255,6 +9293,7 @@
   "@statusNet": {
     "description": "#934 workspace status / repartition wizard: statusNet"
   },
+  "statusNetExplanation": "Questo subtotale è costituito dagli importi fatturati meno note di credito, rimborsi e crediti. Non è un utile né un saldo bancario. I pagamenti abbinati e ricevuti si sovrappongono e non devono essere sommati.",
   "statusPaymentsMatched": "Pagamenti abbinati",
   "@statusPaymentsMatched": {
     "description": "#934 workspace status / repartition wizard: statusPaymentsMatched"

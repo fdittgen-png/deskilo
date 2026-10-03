@@ -154,10 +154,14 @@ KpiQuality? _quality(String wire) => switch (wire) {
 double? ratioOfSums(Iterable<({num numerator, num denominator})> parts) {
   num n = 0, d = 0;
   for (final p in parts) {
+    if (!p.numerator.isFinite || !p.denominator.isFinite ||
+        p.denominator < 0) {
+      return null;
+    }
     n += p.numerator;
     d += p.denominator;
   }
-  return d == 0 ? null : n / d;
+  return d <= 0 || !n.isFinite || !d.isFinite ? null : n / d;
 }
 
 /// What `kpi_seat_capacity` returned, typed.
@@ -210,26 +214,46 @@ class SeatCapacityKpi {
   /// it is not counted; null from a server that predates the history.
   final DateTime? historySince;
 
+  /// Unqualified payloads never become numbers, even with positive hours.
+  bool get hasValue => !quality.any((q) =>
+      q == KpiQuality.notRecorded || q == KpiQuality.notApplicable ||
+      q == KpiQuality.unavailable || q == KpiQuality.forbidden);
+
   /// The utilisation, or null when it is undefined (nothing offered).
-  double? get utilisation => ratioOfSums([
+  double? get utilisation => !hasValue ? null : ratioOfSums([
     (numerator: reservedSeatHours, denominator: offeredSeatHours),
   ]);
 }
 
-double _num(Object? v) => switch (v) {
-  final num n => n.toDouble(),
-  final String s => double.tryParse(s) ?? 0,
-  _ => 0,
-};
+double _num(Object? v) {
+  final n = v is num ? v.toDouble() : v is String ? double.tryParse(v) : null;
+  if (n == null || !n.isFinite || n < 0) {
+    throw const FormatException('Invalid or missing capacity number');
+  }
+  return n;
+}
 
-/// Parses the RPC's jsonb. Unknown quality words are ignored, so an
-/// older client survives a newer server.
+int _count(Object? v) {
+  final n = _num(v);
+  if (n != n.truncateToDouble()) {
+    throw const FormatException('Capacity count must be an integer');
+  }
+  return n.toInt();
+}
+
+/// Unknown quality is unavailable: a future suppression flag must not
+/// silently turn into an apparently measured answer on an older client.
 SeatCapacityKpi seatCapacityFromJson(Map<String, dynamic> json) {
   final quality = json['quality'];
   final reasons = json['reasons'];
+  final from = DateTime.parse('${json['from']}');
+  final to = DateTime.parse('${json['to']}');
+  if (!to.isAfter(from) || quality is! List || reasons is! List) {
+    throw const FormatException('Invalid capacity interval or qualification');
+  }
   return SeatCapacityKpi(
-    from: DateTime.parse('${json['from']}'),
-    to: DateTime.parse('${json['to']}'),
+    from: from,
+    to: to,
     physicalSeatHours: _num(json['physical_seat_hours']),
     offeredSeatHours: _num(json['offered_seat_hours']),
     reservedSeatHours: _num(json['reserved_seat_hours']),
@@ -237,18 +261,15 @@ SeatCapacityKpi seatCapacityFromJson(Map<String, dynamic> json) {
       json['reserved_outside_offered_seat_hours'],
     ),
     overlappingSeatHours: _num(json['overlapping_seat_hours']),
-    seats: _num(json['seats']).toInt(),
-    roomsWithoutSeats: _num(json['rooms_without_seats']).toInt(),
+    seats: _count(json['seats']),
+    roomsWithoutSeats: _count(json['rooms_without_seats']),
     offeredRoomHours: _num(json['offered_room_hours']),
     reservedRoomHours: _num(json['reserved_room_hours']),
     quality: {
-      if (quality is List)
-        for (final q in quality)
-          if (_quality('$q') case final KpiQuality k) k,
+      for (final q in quality) _quality('$q') ?? KpiQuality.unavailable,
     },
     reasons: [
-      if (reasons is List)
-        for (final r in reasons) '$r',
+      for (final r in reasons) '$r',
     ],
     computedAt: DateTime.parse('${json['computed_at']}'),
     historySince: DateTime.tryParse('${json['history_since']}'),

@@ -11,6 +11,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/bi_result.dart';
 import '../../domain/kpi_contract.dart';
+import 'capacity_evidence.dart';
 
 String biRowLabel(BiRow row, AppLocalizations? l10n) => row.isTotal
     ? l10n?.biTotal ?? 'Total'
@@ -77,7 +78,10 @@ class BiRows extends StatelessWidget {
           for (final row in rows)
             TableRow(
               children: [
-                cell(biRowLabel(row, l10n), style: row.isTotal ? bold : null),
+                cell([biRowLabel(row, l10n),
+                  biQualityLabel(row.current.quality, l10n)]
+                  .where((s) => s.isNotEmpty).join(' · '),
+                  style: row.isTotal ? bold : null),
                 cell(
                   format(row.current.value(aggregation)),
                   key: ValueKey('bi-table-${row.key}'),
@@ -123,6 +127,7 @@ class BiRows extends StatelessWidget {
             container: true,
             label: [
               biRowLabel(row, l10n),
+              biQualityLabel(row.current.quality, l10n),
               format(row.current.value(aggregation)),
               if (comparedLabel != null) ...[
                 '$comparedLabel ${format(row.compared?.value(aggregation))}',
@@ -144,6 +149,8 @@ class BiRows extends StatelessWidget {
                               '(${change(row)})'}',
                     key: ValueKey('bi-chart-${row.key}'),
                   ),
+                  if (biQualityLabel(row.current.quality, l10n).isNotEmpty)
+                    Text(biQualityLabel(row.current.quality, l10n)),
                   bar(row.current.value(aggregation), scheme.primary, 12),
                   if (comparedLabel != null)
                     bar(row.compared?.value(aggregation), scheme.outline, 6),

@@ -53,6 +53,7 @@ class _Kpis implements KpiRepository {
     };
     final recorded = !from.isBefore(DateTime.utc(2026, 1, 15));
     return seatCapacityFromJson({
+  ..._capacityFields,
       'from': from.toUtc().toIso8601String(),
       'to': to.toUtc().toIso8601String(),
       'offered_seat_hours': recorded ? o : 0,
@@ -126,6 +127,19 @@ String _text(WidgetTester tester, String key) =>
     tester.widget<Text>(find.byKey(ValueKey(key))).data!;
 
 void main() {
+  testWidgets('freshness is visible and refresh reads the current context', (tester) async {
+    final kpis = await _pump(tester);
+    await _open(tester, '/bi');
+    expect(find.text('Current period · includes future dates'), findsOneWidget);
+    expect(find.textContaining('not actual attendance'), findsOneWidget);
+    expect(find.byKey(const ValueKey('capacity-computed-at')), findsOneWidget);
+    final calls = kpis.calls.length;
+    await tester.tap(find.byKey(const ValueKey('bi-refresh')));
+    await tester.pumpAndSettle();
+    expect(kpis.calls.length, calls + 1);
+    expect(_uri(tester).queryParameters, isEmpty);
+  });
+
   testWidgets('the toolbar puts its context in the address and the module '
       'reads exactly those intervals', (tester) async {
     final kpis = await _pump(tester);
@@ -190,7 +204,7 @@ void main() {
     expect(_text(tester, 'bi-table-level-b'), '16.7%');
     expect(_text(tester, 'bi-table-remainder'), '50.0%');
     expect(_text(tester, 'bi-table-total'), '30.0%');
-    expect(find.text('Not in a current group'), findsOneWidget);
+    expect(find.textContaining('Not in a current group'), findsOneWidget);
 
     await _choose(tester, 'sort', 'Lowest first');
     final b = tester.getTopLeft(find.byKey(const ValueKey('bi-table-level-b')));
@@ -234,3 +248,17 @@ void main() {
     expect(find.byKey(const ValueKey('bi-drill-restricted')), findsOneWidget);
   });
 }
+
+const _capacityFields = <String, dynamic>{
+  'seats': 0,
+  'physical_seat_hours': 0,
+  'offered_seat_hours': 0,
+  'reserved_seat_hours': 0,
+  'reserved_outside_offered_seat_hours': 0,
+  'overlapping_seat_hours': 0,
+  'rooms_without_seats': 0,
+  'offered_room_hours': 0,
+  'reserved_room_hours': 0,
+  'quality': <String>[],
+  'reasons': <String>[],
+};
