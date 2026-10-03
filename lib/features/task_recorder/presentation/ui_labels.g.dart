@@ -1246,6 +1246,7 @@ Map<String, _Getter> _part3() => {
   'featureInstanceWizard': (l) => l.featureInstanceWizard,
   'featureInstanceWizardDesc': (l) => l.featureInstanceWizardDesc,
   'featureIntakeStoppedNote': (l) => l.featureIntakeStoppedNote,
+  'featureIntakeUnconfirmedNote': (l) => l.featureIntakeUnconfirmedNote,
   'featureInvoiceAddressWindow': (l) => l.featureInvoiceAddressWindow,
   'featureInvoiceAddressWindowDesc': (l) => l.featureInvoiceAddressWindowDesc,
   'featureInvoiceJourneyDesc': (l) => l.featureInvoiceJourneyDesc,
@@ -1633,10 +1634,10 @@ Map<String, _Getter> _part3() => {
   'helpTitle': (l) => l.helpTitle,
   'helpTopicAccounting': (l) => l.helpTopicAccounting,
   'helpTopicBilling': (l) => l.helpTopicBilling,
-  'helpTopicBookingLimits': (l) => l.helpTopicBookingLimits,
 };
 
 Map<String, _Getter> _part4() => {
+  'helpTopicBookingLimits': (l) => l.helpTopicBookingLimits,
   'helpTopicBookingPolicies': (l) => l.helpTopicBookingPolicies,
   'helpTopicDeployment': (l) => l.helpTopicDeployment,
   'helpTopicDocumentLibrary': (l) => l.helpTopicDocumentLibrary,
@@ -1708,6 +1709,7 @@ Map<String, _Getter> _part4() => {
   'inboxNoArchived': (l) => l.inboxNoArchived,
   'inboxNoUnread': (l) => l.inboxNoUnread,
   'inboxRetry': (l) => l.inboxRetry,
+  'instanceAccessTitle': (l) => l.instanceAccessTitle,
   'instanceAccountIntro': (l) => l.instanceAccountIntro,
   'instanceAdminsHelp': (l) => l.instanceAdminsHelp,
   'instanceAdminsTitle': (l) => l.instanceAdminsTitle,
@@ -1757,10 +1759,26 @@ Map<String, _Getter> _part4() => {
   'instanceDoctorRun': (l) => l.instanceDoctorRun,
   'instanceDoctorRunAgain': (l) => l.instanceDoctorRunAgain,
   'instanceDoneIntro': (l) => l.instanceDoneIntro,
+  'instanceEndpointTitle': (l) => l.instanceEndpointTitle,
+  'instanceFamilyChatgpt': (l) => l.instanceFamilyChatgpt,
+  'instanceFamilyClaude': (l) => l.instanceFamilyClaude,
+  'instanceFamilyLoopback': (l) => l.instanceFamilyLoopback,
+  'instanceGrant': (l) => l.instanceGrant,
+  'instanceGrantDays': (l) => l.instanceGrantDays,
+  'instanceGrantHelp': (l) => l.instanceGrantHelp,
+  'instanceGrantNeedsGoogle': (l) => l.instanceGrantNeedsGoogle,
+  'instanceGrantNoIdentity': (l) => l.instanceGrantNoIdentity,
+  'instanceGrantOtherAdmin': (l) => l.instanceGrantOtherAdmin,
+  'instanceGrantReason': (l) => l.instanceGrantReason,
+  'instanceGrantReasonNeeded': (l) => l.instanceGrantReasonNeeded,
   'instanceIntro': (l) => l.instanceIntro,
+  'instanceLoopbackHelp': (l) => l.instanceLoopbackHelp,
+  'instanceLoopbackTitle': (l) => l.instanceLoopbackTitle,
   'instanceMakeAdmin': (l) => l.instanceMakeAdmin,
   'instanceNoCandidates': (l) => l.instanceNoCandidates,
   'instanceNotOperator': (l) => l.instanceNotOperator,
+  'instanceNoticesMarkRead': (l) => l.instanceNoticesMarkRead,
+  'instanceOperatorApproved': (l) => l.instanceOperatorApproved,
   'instanceOrganisationLabel': (l) => l.instanceOrganisationLabel,
   'instanceOwnerClaimIntro': (l) => l.instanceOwnerClaimIntro,
   'instanceOwnerClaimLabel': (l) => l.instanceOwnerClaimLabel,
@@ -1769,6 +1787,14 @@ Map<String, _Getter> _part4() => {
   'instanceOwnerHelp': (l) => l.instanceOwnerHelp,
   'instanceOwnerNone': (l) => l.instanceOwnerNone,
   'instanceOwnerTitle': (l) => l.instanceOwnerTitle,
+  'instanceProbeCheck': (l) => l.instanceProbeCheck,
+  'instanceProbeDeployed': (l) => l.instanceProbeDeployed,
+  'instanceProbeMismatch': (l) => l.instanceProbeMismatch,
+  'instanceProbeMissing': (l) => l.instanceProbeMissing,
+  'instanceProbeNotDeployed': (l) => l.instanceProbeNotDeployed,
+  'instanceProbePending': (l) => l.instanceProbePending,
+  'instanceProbeStale': (l) => l.instanceProbeStale,
+  'instanceProbeUnavailable': (l) => l.instanceProbeUnavailable,
   'instanceProjectName': (l) => l.instanceProjectName,
   'instanceReadyAttention': (l) => l.instanceReadyAttention,
   'instanceReadyInstall': (l) => l.instanceReadyInstall,
@@ -1780,6 +1806,7 @@ Map<String, _Getter> _part4() => {
   'instanceRuntimeOn': (l) => l.instanceRuntimeOn,
   'instanceRuntimeTitle': (l) => l.instanceRuntimeTitle,
   'instanceSecondFactorNeeded': (l) => l.instanceSecondFactorNeeded,
+  'instanceSelfApproved': (l) => l.instanceSelfApproved,
   'instanceSignInExplain': (l) => l.instanceSignInExplain,
   'instanceStepAccount': (l) => l.instanceStepAccount,
   'instanceStepDone': (l) => l.instanceStepDone,
@@ -1794,6 +1821,7 @@ Map<String, _Getter> _part4() => {
   'instanceTurnOff': (l) => l.instanceTurnOff,
   'instanceTurnOn': (l) => l.instanceTurnOn,
   'instanceTurnOnConfirm': (l) => l.instanceTurnOnConfirm,
+  'instanceTurnOnNeedsProbe': (l) => l.instanceTurnOnNeedsProbe,
   'instanceUseExisting': (l) => l.instanceUseExisting,
   'instanceUseHere': (l) => l.instanceUseHere,
   'instanceWizardTitle': (l) => l.instanceWizardTitle,
@@ -1839,6 +1867,8 @@ Map<String, _Getter> _part4() => {
   'invitePhoneLabel': (l) => l.invitePhoneLabel,
   'inviteRoleAdmin': (l) => l.inviteRoleAdmin,
   'inviteRoleMember': (l) => l.inviteRoleMember,
+  'inviteRolesHint': (l) => l.inviteRolesHint,
+  'inviteRolesTitle': (l) => l.inviteRolesTitle,
   'inviteSectionTitle': (l) => l.inviteSectionTitle,
   'inviteSendFailed': (l) => l.inviteSendFailed,
   'inviteViaShare': (l) => l.inviteViaShare,
@@ -2007,6 +2037,9 @@ Map<String, _Getter> _part4() => {
   'invoiceSendAccepted': (l) => l.invoiceSendAccepted,
   'invoiceSendAction': (l) => l.invoiceSendAction,
   'invoiceSendCustomerAccepted': (l) => l.invoiceSendCustomerAccepted,
+};
+
+Map<String, _Getter> _part5() => {
   'invoiceSendCustomerAction': (l) => l.invoiceSendCustomerAction,
   'invoiceSendRejected': (l) => l.invoiceSendRejected,
   'invoiceSendStatusAccepted': (l) => l.invoiceSendStatusAccepted,
@@ -2037,9 +2070,6 @@ Map<String, _Getter> _part4() => {
   'invoiceTemplateNoPreview': (l) => l.invoiceTemplateNoPreview,
   'invoiceTemplatePresets': (l) => l.invoiceTemplatePresets,
   'invoiceTemplatePreview': (l) => l.invoiceTemplatePreview,
-};
-
-Map<String, _Getter> _part5() => {
   'invoiceTemplateQuickPreview': (l) => l.invoiceTemplateQuickPreview,
   'invoiceTemplateReset': (l) => l.invoiceTemplateReset,
   'invoiceTemplateSaved': (l) => l.invoiceTemplateSaved,
@@ -2375,8 +2405,13 @@ Map<String, _Getter> _part5() => {
   'mcpConsentApprove': (l) => l.mcpConsentApprove,
   'mcpConsentChoose': (l) => l.mcpConsentChoose,
   'mcpConsentConnected': (l) => l.mcpConsentConnected,
+  'mcpConsentDeciderMe': (l) => l.mcpConsentDeciderMe,
+  'mcpConsentDeciderNobody': (l) => l.mcpConsentDeciderNobody,
   'mcpConsentDenied': (l) => l.mcpConsentDenied,
   'mcpConsentDeny': (l) => l.mcpConsentDeny,
+  'mcpConsentFamilyChatgpt': (l) => l.mcpConsentFamilyChatgpt,
+  'mcpConsentFamilyClaude': (l) => l.mcpConsentFamilyClaude,
+  'mcpConsentFamilyLoopback': (l) => l.mcpConsentFamilyLoopback,
   'mcpConsentFieldsExplain': (l) => l.mcpConsentFieldsExplain,
   'mcpConsentNoWorkspace': (l) => l.mcpConsentNoWorkspace,
   'mcpConsentNotEligible': (l) => l.mcpConsentNotEligible,
@@ -2405,6 +2440,9 @@ Map<String, _Getter> _part5() => {
   'mcpEligibleRequested': (l) => l.mcpEligibleRequested,
   'mcpEligibleWithdraw': (l) => l.mcpEligibleWithdraw,
   'mcpEligibleYes': (l) => l.mcpEligibleYes,
+};
+
+Map<String, _Getter> _part6() => {
   'mcpFieldName': (l) => l.mcpFieldName,
   'mcpFieldNameSample': (l) => l.mcpFieldNameSample,
   'mcpGroupFinancial': (l) => l.mcpGroupFinancial,
@@ -2440,9 +2478,6 @@ Map<String, _Getter> _part5() => {
   'mcpOpRefund': (l) => l.mcpOpRefund,
   'mcpOpReservationDeletion': (l) => l.mcpOpReservationDeletion,
   'mcpOpRespond': (l) => l.mcpOpRespond,
-};
-
-Map<String, _Getter> _part6() => {
   'mcpOpSubscription': (l) => l.mcpOpSubscription,
   'mcpOpUpdateReservation': (l) => l.mcpOpUpdateReservation,
   'mcpOverviewTitle': (l) => l.mcpOverviewTitle,
@@ -2808,6 +2843,9 @@ Map<String, _Getter> _part6() => {
   'numberSequenceJournalPayment': (l) => l.numberSequenceJournalPayment,
   'numberSequenceJournalVatDeclaration': (l) => l.numberSequenceJournalVatDeclaration,
   'numberSequenceNext': (l) => l.numberSequenceNext,
+};
+
+Map<String, _Getter> _part7() => {
   'numberSequencePrefix': (l) => l.numberSequencePrefix,
   'numberSequenceReset': (l) => l.numberSequenceReset,
   'numberSequenceResetLimited': (l) => l.numberSequenceResetLimited,
@@ -2843,9 +2881,6 @@ Map<String, _Getter> _part6() => {
   'onboardingShapeLabel': (l) => l.onboardingShapeLabel,
   'onboardingShapePair': (l) => l.onboardingShapePair,
   'onboardingShapeReal': (l) => l.onboardingShapeReal,
-};
-
-Map<String, _Getter> _part7() => {
   'onboardingShapeRealHint': (l) => l.onboardingShapeRealHint,
   'onboardingShapeTest': (l) => l.onboardingShapeTest,
   'onboardingShapeTestHint': (l) => l.onboardingShapeTestHint,
@@ -3211,6 +3246,9 @@ Map<String, _Getter> _part7() => {
   'profilePhotoSaved': (l) => l.profilePhotoSaved,
   'profilePhotoSet': (l) => l.profilePhotoSet,
   'profilePhotoTitle': (l) => l.profilePhotoTitle,
+};
+
+Map<String, _Getter> _part8() => {
   'profileStatusFieldLabel': (l) => l.profileStatusFieldLabel,
   'profileStatusHelper': (l) => l.profileStatusHelper,
   'profileStatusHint': (l) => l.profileStatusHint,
@@ -3246,9 +3284,6 @@ Map<String, _Getter> _part7() => {
   'pushCancelledBody': (l) => l.pushCancelledBody,
   'pushCancelledTitle': (l) => l.pushCancelledTitle,
   'pushPendingBody': (l) => l.pushPendingBody,
-};
-
-Map<String, _Getter> _part8() => {
   'pushPendingTitle': (l) => l.pushPendingTitle,
   'pushStatusNoTransport': (l) => l.pushStatusNoTransport,
   'pushStatusNoTransportHint': (l) => l.pushStatusNoTransportHint,
@@ -3614,6 +3649,9 @@ Map<String, _Getter> _part8() => {
   'reportLineLogic': (l) => l.reportLineLogic,
   'reportLineRow': (l) => l.reportLineRow,
   'reportLineSection': (l) => l.reportLineSection,
+};
+
+Map<String, _Getter> _part9() => {
   'reportLineSmall': (l) => l.reportLineSmall,
   'reportLineSpacer': (l) => l.reportLineSpacer,
   'reportLineText': (l) => l.reportLineText,
@@ -3649,9 +3687,6 @@ Map<String, _Getter> _part8() => {
   'reportTemplateClearOverlay': (l) => l.reportTemplateClearOverlay,
   'reportTemplateLangDefault': (l) => l.reportTemplateLangDefault,
   'reportTemplateLangInherits': (l) => l.reportTemplateLangInherits,
-};
-
-Map<String, _Getter> _part9() => {
   'reportTemplateLangOverridden': (l) => l.reportTemplateLangOverridden,
   'reportTextsAdd': (l) => l.reportTextsAdd,
   'reportTextsHint': (l) => l.reportTextsHint,
@@ -4017,6 +4052,9 @@ Map<String, _Getter> _part9() => {
   'taskExportOutcomeRequested': (l) => l.taskExportOutcomeRequested,
   'taskExportOutcomeSeriesBooked': (l) => l.taskExportOutcomeSeriesBooked,
   'taskExportOutcomeUnknown': (l) => l.taskExportOutcomeUnknown,
+};
+
+Map<String, _Getter> _part10() => {
   'taskExportOutcomeUnregistered': (l) => l.taskExportOutcomeUnregistered,
   'taskExportPrereqBookablePlace': (l) => l.taskExportPrereqBookablePlace,
   'taskExportPrereqSignedIn': (l) => l.taskExportPrereqSignedIn,
@@ -4052,9 +4090,6 @@ Map<String, _Getter> _part9() => {
   'taskExportStoryboardRenderFailed': (l) => l.taskExportStoryboardRenderFailed,
   'taskExportStoryboardSourceExcluded': (l) => l.taskExportStoryboardSourceExcluded,
   'taskExportStoryboardSourceScene': (l) => l.taskExportStoryboardSourceScene,
-};
-
-Map<String, _Getter> _part10() => {
   'taskExportStoryboardSourceText': (l) => l.taskExportStoryboardSourceText,
   'taskExportSurfaceAny': (l) => l.taskExportSurfaceAny,
   'taskExportSurfaceBookingSheet': (l) => l.taskExportSurfaceBookingSheet,
@@ -4420,6 +4455,9 @@ Map<String, _Getter> _part10() => {
   'vatRateIncomplete': (l) => l.vatRateIncomplete,
   'vatRateLabelField': (l) => l.vatRateLabelField,
   'vatRatePercentField': (l) => l.vatRatePercentField,
+};
+
+Map<String, _Getter> _part11() => {
   'vatRateRemoveTooltip': (l) => l.vatRateRemoveTooltip,
   'vatRatesTile': (l) => l.vatRatesTile,
   'vatRegimeHint': (l) => l.vatRegimeHint,
@@ -4455,9 +4493,6 @@ Map<String, _Getter> _part10() => {
   'visibilityPresence': (l) => l.visibilityPresence,
   'visibilityPreviewCanWrite': (l) => l.visibilityPreviewCanWrite,
   'visibilityPreviewCannotWrite': (l) => l.visibilityPreviewCannotWrite,
-};
-
-Map<String, _Getter> _part11() => {
   'visibilityPreviewFailed': (l) => l.visibilityPreviewFailed,
   'visibilityPreviewMySpaces': (l) => l.visibilityPreviewMySpaces,
   'visibilityPreviewNobody': (l) => l.visibilityPreviewNobody,

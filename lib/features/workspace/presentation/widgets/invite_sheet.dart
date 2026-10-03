@@ -359,6 +359,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
         ],
         if (_offersRoles)
           InviteRolesPicker(
+            key: const ValueKey('invite-roles-picker'),
             selected: _roleKeys,
             onChanged: (keys) => setState(() => _roleKeys = keys),
           ),
