@@ -1,0 +1,21 @@
+{
+  "provenance": {
+    "kind": "captured",
+    "source": "SupabaseDirectoryParticipantRepository.apply at 56bed9d8 (the client before negotiation), recorded by an http MockClient; transport headers (apikey, Authorization, X-Client-Info, platform) removed",
+    "note": "No x-deskilo-operation header: the server must treat it as the operation's unlabelled version."
+  },
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/rest/v1/rpc/request_public_workspace_profile",
+      "query": "",
+      "headers": {
+        "Content-Profile": "public",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "p_workspace": "00000000-0000-4000-8000-0000001847b1"
+      }
+    }
+  ]
+}

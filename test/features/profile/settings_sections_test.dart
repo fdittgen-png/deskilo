@@ -61,12 +61,12 @@ double dy(WidgetTester tester, String text) =>
 
 void main() {
   testWidgets(
-      'owner sees Profiles first, then every section in order, with Sign out '
+      'owner sees Back to Me first, then every section in order, with Sign out '
       'at the bottom', (tester) async {
     await pumpSettingsAs(tester, isAdmin: true, isOwner: true);
 
     const order = [
-      'Profiles',
+      'Back to Me',
       'My account',
       'My membership',
       'This workspace',
@@ -124,7 +124,7 @@ void main() {
     // second door to it.
     expect(find.text('Members'), findsNothing);
     // The member's own sections stay.
-    for (final header in ['Profiles', 'My account', 'My membership', 'Help & about']) {
+    for (final header in ['Back to Me', 'My account', 'My membership', 'Help & about']) {
       expect(find.text(header), findsOneWidget, reason: 'missing "$header"');
     }
     // The four essentials, pinned by what they are.

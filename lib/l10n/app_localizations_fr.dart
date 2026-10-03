@@ -11289,6 +11289,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d’enregistrer cette modification. Réessayez.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Cette action n’est pas disponible entre cette application et ce serveur. Mettre à jour l’application peut aider.';
+
+  @override
   String get portalAddress => 'Adresse publique';
 
   @override
@@ -13656,6 +13660,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get roleBuiltInNote =>
+      'Intégré. Ce qu\'il permet se règle dans Rôles ; il s\'attribue sur la page de chaque membre et prend effet une fois validé.';
+
+  @override
+  String get roleBuiltInSubtitle =>
+      'Intégré. Ce qu\'il permet se règle dans Rôles.';
+
+  @override
   String get roleEditorActive => 'En usage';
 
   @override
@@ -13718,6 +13730,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get roleRefusalOwnerOnly =>
       'Seul le propriétaire attribue un rôle qui gère les rôles.';
+
+  @override
+  String get roleRenameAdministrator => 'Renommer';
 
   @override
   String get roleTakeBackFailed => 'Le rôle n\'a pas été retiré.';
@@ -15145,6 +15160,45 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taskExportWordButton => 'Exporter en document Word';
 
   @override
+  String get taskGuideCreate => 'Créer un brouillon de guide';
+
+  @override
+  String get taskGuideEditText => 'Écrire le texte';
+
+  @override
+  String get taskGuideIntro =>
+      'Chaque étape telle qu\'un lecteur la suivra. Une étape qui réserve attend la vraie réponse ; rien n\'est fait à la place du lecteur.';
+
+  @override
+  String get taskGuideManual => 'Faites cette étape vous-même';
+
+  @override
+  String taskGuideManualProtected(String category) {
+    return 'Faites cette étape vous-même, sur un écran protégé : $category';
+  }
+
+  @override
+  String get taskGuideNoText => 'Une instruction encore à écrire';
+
+  @override
+  String get taskGuideOptional => 'Le lecteur peut la passer';
+
+  @override
+  String get taskGuideRecovery =>
+      'En cas de refus : choisissez une autre place, un autre jour ou une autre période, puis confirmez à nouveau.';
+
+  @override
+  String get taskGuideSave => 'Enregistrer le guide';
+
+  @override
+  String get taskGuideTitle => 'Brouillon de guide';
+
+  @override
+  String taskGuideWaitsFor(String outcomes) {
+    return 'Attend : $outcomes';
+  }
+
+  @override
   String get taskOutputBusy => 'Ce fichier est déjà en cours de création.';
 
   @override
@@ -15578,6 +15632,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskWorkbenchReviewIllustrations => 'Revoir les illustrations';
+
+  @override
+  String get taskWorkbenchStoryboardRestored =>
+      'Les illustrations revues ont été restaurées depuis le fichier.';
 
   @override
   String get taskWorkbenchTitle => 'Atelier de tâches';

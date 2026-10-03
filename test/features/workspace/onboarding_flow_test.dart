@@ -23,6 +23,8 @@ Future<FakeWorkspaceRepository> pumpWithoutWorkspace(
     ),
   );
   await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('me-home-create')));
+  await tester.pumpAndSettle();
   return repo;
 }
 
@@ -44,7 +46,7 @@ Future<void> useSuggested(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('signed-in user without workspace lands on onboarding',
+  testWidgets('signed-in user without workspace opens onboarding from Me',
       (tester) async {
     await pumpWithoutWorkspace(tester);
 
@@ -125,6 +127,8 @@ void main() {
           workspace: repo, deviceLocale: const Locale('fr', 'FR')),
       child: const DeskiloApp(),
     ));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('me-home-create')));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextFormField).first, 'Pézenas');
     await useSuggested(tester);
@@ -216,7 +220,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Join a workspace'));
+    await tester.tap(find.byKey(const ValueKey('me-home-join')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Scan QR code'));
     await tester.pumpAndSettle();
@@ -252,7 +256,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Join a workspace'));
+    await tester.tap(find.byKey(const ValueKey('me-home-join')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Scan QR code'));
     await tester.pumpAndSettle();

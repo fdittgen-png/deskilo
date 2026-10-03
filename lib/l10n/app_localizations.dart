@@ -19364,6 +19364,12 @@ abstract class AppLocalizations {
   /// **'Could not save this change. Please try again.'**
   String get portalActionFailed;
 
+  /// No description provided for @portalActionNotNegotiated.
+  ///
+  /// In en, this message translates to:
+  /// **'This action is not available between this app and that server. Updating the app may help.'**
+  String get portalActionNotNegotiated;
+
   /// No description provided for @portalAddress.
   ///
   /// In en, this message translates to:
@@ -23522,6 +23528,18 @@ abstract class AppLocalizations {
   /// **'Give a role to {name}'**
   String roleAssignSheetTitle(String name);
 
+  /// #2085 giving roles: roleBuiltInNote
+  ///
+  /// In en, this message translates to:
+  /// **'Built in. What it may do is set in Roles; it is given on each member\'s page and takes effect once validated.'**
+  String get roleBuiltInNote;
+
+  /// #2085 giving roles: roleBuiltInSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Built in. What it may do is set in Roles.'**
+  String get roleBuiltInSubtitle;
+
   /// #1528 the roles of a space: roleEditorActive
   ///
   /// In en, this message translates to:
@@ -23635,6 +23653,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only the owner gives a role that manages roles.'**
   String get roleRefusalOwnerOnly;
+
+  /// #2085 giving roles: roleRenameAdministrator
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get roleRenameAdministrator;
 
   /// #2085 giving roles: roleTakeBackFailed
   ///
@@ -26030,6 +26054,72 @@ abstract class AppLocalizations {
   /// **'Export as Word document'**
   String get taskExportWordButton;
 
+  /// #1867 guide draft: taskGuideCreate
+  ///
+  /// In en, this message translates to:
+  /// **'Create a guide draft'**
+  String get taskGuideCreate;
+
+  /// #1867 guide draft: taskGuideEditText
+  ///
+  /// In en, this message translates to:
+  /// **'Write the words'**
+  String get taskGuideEditText;
+
+  /// #1867 guide draft: taskGuideIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Each step as a reader will follow it. A step that books waits for the real answer; nothing here is done for the reader.'**
+  String get taskGuideIntro;
+
+  /// #1867 guide draft: taskGuideManual
+  ///
+  /// In en, this message translates to:
+  /// **'Do this step yourself'**
+  String get taskGuideManual;
+
+  /// #1867 guide draft: taskGuideManualProtected
+  ///
+  /// In en, this message translates to:
+  /// **'Do this step yourself, on a protected screen: {category}'**
+  String taskGuideManualProtected(String category);
+
+  /// #1867 guide draft: taskGuideNoText
+  ///
+  /// In en, this message translates to:
+  /// **'An instruction still to be written'**
+  String get taskGuideNoText;
+
+  /// #1867 guide draft: taskGuideOptional
+  ///
+  /// In en, this message translates to:
+  /// **'The reader may skip it'**
+  String get taskGuideOptional;
+
+  /// #1867 guide draft: taskGuideRecovery
+  ///
+  /// In en, this message translates to:
+  /// **'If it is refused: choose another place, day or period, then confirm again.'**
+  String get taskGuideRecovery;
+
+  /// #1867 guide draft: taskGuideSave
+  ///
+  /// In en, this message translates to:
+  /// **'Save the guide'**
+  String get taskGuideSave;
+
+  /// #1867 guide draft: taskGuideTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Guide draft'**
+  String get taskGuideTitle;
+
+  /// #1867 guide draft: taskGuideWaitsFor
+  ///
+  /// In en, this message translates to:
+  /// **'Waits for: {outcomes}'**
+  String taskGuideWaitsFor(String outcomes);
+
   /// #1872 workbench: taskOutputBusy
   ///
   /// In en, this message translates to:
@@ -26815,6 +26905,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Review the illustrations'**
   String get taskWorkbenchReviewIllustrations;
+
+  /// #1876 workbench: taskWorkbenchStoryboardRestored
+  ///
+  /// In en, this message translates to:
+  /// **'The reviewed illustrations were restored from the file.'**
+  String get taskWorkbenchStoryboardRestored;
 
   /// #1872 task workbench: taskWorkbenchTitle
   ///

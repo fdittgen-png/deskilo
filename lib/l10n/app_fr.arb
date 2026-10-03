@@ -6830,6 +6830,7 @@
   "policySimultaneousDesc": "Combien de réservations qui se chevauchent un membre peut détenir. 1 garde une seule place à la fois.",
   "policySimultaneousTitle": "Réservations simultanées par membre",
   "portalActionFailed": "Impossible d’enregistrer cette modification. Réessayez.",
+  "portalActionNotNegotiated": "Cette action n’est pas disponible entre cette application et ce serveur. Mettre à jour l’application peut aider.",
   "portalAddress": "Adresse publique",
   "portalAdmin": "Administrateur",
   "portalAdminVisible": "Afficher mon rôle d’administrateur publiquement",
@@ -8759,6 +8760,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Intégré. Ce qu'il permet se règle dans Rôles ; il s'attribue sur la page de chaque membre et prend effet une fois validé.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Intégré. Ce qu'il permet se règle dans Rôles.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "En usage",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -8839,6 +8848,10 @@
   "roleRefusalOwnerOnly": "Seul le propriétaire attribue un rôle qui gère les rôles.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Renommer",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "Le rôle n'a pas été retiré.",
   "@roleTakeBackFailed": {
@@ -9495,6 +9508,17 @@
   "taskExportVideoTooLong": "La vidéo dépasserait la durée autorisée. Raccourcissez les durées ou écartez des étapes.",
   "taskExportVideoUnsupported": "Cet appareil ne peut pas créer de vidéo. Exportez le fichier d'enregistrement et ouvrez-le sur un appareil pris en charge : macOS, iOS, Android ou un navigateur récent capable d'encoder la vidéo H.264.",
   "taskExportWordButton": "Exporter en document Word",
+  "taskGuideCreate": "Créer un brouillon de guide",
+  "taskGuideEditText": "Écrire le texte",
+  "taskGuideIntro": "Chaque étape telle qu'un lecteur la suivra. Une étape qui réserve attend la vraie réponse ; rien n'est fait à la place du lecteur.",
+  "taskGuideManual": "Faites cette étape vous-même",
+  "taskGuideManualProtected": "Faites cette étape vous-même, sur un écran protégé : {category}",
+  "taskGuideNoText": "Une instruction encore à écrire",
+  "taskGuideOptional": "Le lecteur peut la passer",
+  "taskGuideRecovery": "En cas de refus : choisissez une autre place, un autre jour ou une autre période, puis confirmez à nouveau.",
+  "taskGuideSave": "Enregistrer le guide",
+  "taskGuideTitle": "Brouillon de guide",
+  "taskGuideWaitsFor": "Attend : {outcomes}",
   "taskOutputBusy": "Ce fichier est déjà en cours de création.",
   "taskOutputCaptions": "Sous-titres",
   "taskOutputDocument": "Document Word",
@@ -9626,6 +9650,7 @@
   "taskWorkbenchRefusedUnsafe": "Ce fichier est construit d'une manière qu'il n'est pas sûr d'ouvrir.",
   "taskWorkbenchRefusedUnsupported": "Ce n'est pas un fichier de tâche.",
   "taskWorkbenchReviewIllustrations": "Revoir les illustrations",
+  "taskWorkbenchStoryboardRestored": "Les illustrations revues ont été restaurées depuis le fichier.",
   "taskWorkbenchTitle": "Atelier de tâches",
   "taskWorkbenchTranscriptOnly": "Certaines étapes viennent d'une version plus récente : affichées comme simple transcription.",
   "taskWorkbenchUntrusted": "Un brouillon privé issu d'un fichier : rien n'y est considéré comme fiable ni envoyé.",

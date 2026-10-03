@@ -11176,6 +11176,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not save this change. Please try again.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'This action is not available between this app and that server. Updating the app may help.';
+
+  @override
   String get portalAddress => 'Public address';
 
   @override
@@ -13507,6 +13511,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get roleBuiltInNote =>
+      'Built in. What it may do is set in Roles; it is given on each member\'s page and takes effect once validated.';
+
+  @override
+  String get roleBuiltInSubtitle => 'Built in. What it may do is set in Roles.';
+
+  @override
   String get roleEditorActive => 'In use';
 
   @override
@@ -13568,6 +13579,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get roleRefusalOwnerOnly =>
       'Only the owner gives a role that manages roles.';
+
+  @override
+  String get roleRenameAdministrator => 'Rename';
 
   @override
   String get roleTakeBackFailed => 'The role was not taken back.';
@@ -14978,6 +14992,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskExportWordButton => 'Export as Word document';
 
   @override
+  String get taskGuideCreate => 'Create a guide draft';
+
+  @override
+  String get taskGuideEditText => 'Write the words';
+
+  @override
+  String get taskGuideIntro =>
+      'Each step as a reader will follow it. A step that books waits for the real answer; nothing here is done for the reader.';
+
+  @override
+  String get taskGuideManual => 'Do this step yourself';
+
+  @override
+  String taskGuideManualProtected(String category) {
+    return 'Do this step yourself, on a protected screen: $category';
+  }
+
+  @override
+  String get taskGuideNoText => 'An instruction still to be written';
+
+  @override
+  String get taskGuideOptional => 'The reader may skip it';
+
+  @override
+  String get taskGuideRecovery =>
+      'If it is refused: choose another place, day or period, then confirm again.';
+
+  @override
+  String get taskGuideSave => 'Save the guide';
+
+  @override
+  String get taskGuideTitle => 'Guide draft';
+
+  @override
+  String taskGuideWaitsFor(String outcomes) {
+    return 'Waits for: $outcomes';
+  }
+
+  @override
   String get taskOutputBusy => 'This output is already being made.';
 
   @override
@@ -15404,6 +15457,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskWorkbenchReviewIllustrations => 'Review the illustrations';
+
+  @override
+  String get taskWorkbenchStoryboardRestored =>
+      'The reviewed illustrations were restored from the file.';
 
   @override
   String get taskWorkbenchTitle => 'Task workbench';

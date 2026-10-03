@@ -29,7 +29,9 @@ Future<FakeWorkspaceRepository> _pump(WidgetTester tester,
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Profiles'));
+  await tester.tap(find.text('Back to Me'));
+  await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('me-home-manage')));
   await tester.pumpAndSettle();
   return workspace;
 }

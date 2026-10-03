@@ -17,6 +17,9 @@ class PublicContractRefusal implements Exception {
   String toString() => 'PublicContractRefusal($schema.$field: $reason)';
 }
 
+/// The refusal reason of a must-understand term this version does not know.
+const publicUnknownRequiredTerm = 'unknown required term';
+
 final _uuid = RegExp(
   r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$',
 );
@@ -43,7 +46,11 @@ Map<String, Object?> decodePublicRecord(String schemaName, Object? raw) {
     }
     for (final term in terms.cast<String>()) {
       if (!schema.fields.containsKey(term)) {
-        throw PublicContractRefusal(schemaName, term, 'unknown required term');
+        throw PublicContractRefusal(
+          schemaName,
+          term,
+          publicUnknownRequiredTerm,
+        );
       }
     }
   }
@@ -61,8 +68,11 @@ Map<String, Object?> decodePublicRecord(String schemaName, Object? raw) {
     final Object? kept;
     try {
       kept = _decodeValue(schemaName, name, field, value);
-    } on PublicContractRefusal {
-      if (field.required) rethrow;
+    // ignore: catch_no_st — rethrows, or drops one optional descriptive field.
+    } on PublicContractRefusal catch (r) {
+      // A must-understand term is never dropped, even inside an optional
+      // object: the record it belongs to cannot be honoured.
+      if (field.required || r.reason == publicUnknownRequiredTerm) rethrow;
       continue;
     }
     if (kept != null) out[name] = kept;
@@ -99,6 +109,23 @@ Object? _decodeValue(
       return v;
     case PublicFieldType.text:
       return text();
+    case PublicFieldType.integer:
+      if (value is! int ||
+          (field.min != null && value < field.min!) ||
+          (field.max != null && value > field.max!)) {
+        throw refuse('not an integer in range');
+      }
+      return value;
+    case PublicFieldType.integerList:
+      if (value is! List || value.any((v) => v is! int)) {
+        throw refuse('not a list of integers');
+      }
+      return List<int>.unmodifiable(value.cast<int>());
+    case PublicFieldType.stringList:
+      if (value is! List || value.any((v) => v is! String || v.length > 200)) {
+        throw refuse('not a list of strings');
+      }
+      return List<String>.unmodifiable(value.cast<String>());
     case PublicFieldType.boolean:
       if (value is! bool) throw refuse('not a boolean');
       return value;
@@ -151,7 +178,8 @@ Object? _decodeValue(
         try {
           items.add(decodePublicRecord(field.schema!, item));
         } on PublicContractRefusal {
-          // One malformed element is dropped; the list stays usable.
+          // Each element is a record of its own: one this version cannot
+          // honour is dropped, and the list stays usable.
         }
       }
       return items;

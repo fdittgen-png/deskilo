@@ -12909,6 +12909,7 @@
     "description": "#628 - title of the workspace-wide simultaneous-reservations stepper"
   },
   "portalActionFailed": "Could not save this change. Please try again.",
+  "portalActionNotNegotiated": "This action is not available between this app and that server. Updating the app may help.",
   "portalAddress": "Public address",
   "portalAdmin": "Administrator",
   "portalAdminVisible": "Show me as a public administrator",
@@ -15482,6 +15483,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Built in. What it may do is set in Roles; it is given on each member's page and takes effect once validated.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Built in. What it may do is set in Roles.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "In use",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -15562,6 +15571,10 @@
   "roleRefusalOwnerOnly": "Only the owner gives a role that manages roles.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Rename",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "The role was not taken back.",
   "@roleTakeBackFailed": {
@@ -17006,6 +17019,60 @@
   "@taskExportWordButton": {
     "description": "#1866 task export (Word document): the review screen button"
   },
+  "taskGuideCreate": "Create a guide draft",
+  "@taskGuideCreate": {
+    "description": "#1867 guide draft: taskGuideCreate"
+  },
+  "taskGuideEditText": "Write the words",
+  "@taskGuideEditText": {
+    "description": "#1867 guide draft: taskGuideEditText"
+  },
+  "taskGuideIntro": "Each step as a reader will follow it. A step that books waits for the real answer; nothing here is done for the reader.",
+  "@taskGuideIntro": {
+    "description": "#1867 guide draft: taskGuideIntro"
+  },
+  "taskGuideManual": "Do this step yourself",
+  "@taskGuideManual": {
+    "description": "#1867 guide draft: taskGuideManual"
+  },
+  "taskGuideManualProtected": "Do this step yourself, on a protected screen: {category}",
+  "@taskGuideManualProtected": {
+    "description": "#1867 guide draft: taskGuideManualProtected",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "taskGuideNoText": "An instruction still to be written",
+  "@taskGuideNoText": {
+    "description": "#1867 guide draft: taskGuideNoText"
+  },
+  "taskGuideOptional": "The reader may skip it",
+  "@taskGuideOptional": {
+    "description": "#1867 guide draft: taskGuideOptional"
+  },
+  "taskGuideRecovery": "If it is refused: choose another place, day or period, then confirm again.",
+  "@taskGuideRecovery": {
+    "description": "#1867 guide draft: taskGuideRecovery"
+  },
+  "taskGuideSave": "Save the guide",
+  "@taskGuideSave": {
+    "description": "#1867 guide draft: taskGuideSave"
+  },
+  "taskGuideTitle": "Guide draft",
+  "@taskGuideTitle": {
+    "description": "#1867 guide draft: taskGuideTitle"
+  },
+  "taskGuideWaitsFor": "Waits for: {outcomes}",
+  "@taskGuideWaitsFor": {
+    "description": "#1867 guide draft: taskGuideWaitsFor",
+    "placeholders": {
+      "outcomes": {
+        "type": "String"
+      }
+    }
+  },
   "taskOutputBusy": "This output is already being made.",
   "@taskOutputBusy": {
     "description": "#1872 workbench: taskOutputBusy"
@@ -17578,6 +17645,10 @@
   "taskWorkbenchReviewIllustrations": "Review the illustrations",
   "@taskWorkbenchReviewIllustrations": {
     "description": "#1872 workbench: taskWorkbenchReviewIllustrations"
+  },
+  "taskWorkbenchStoryboardRestored": "The reviewed illustrations were restored from the file.",
+  "@taskWorkbenchStoryboardRestored": {
+    "description": "#1876 workbench: taskWorkbenchStoryboardRestored"
   },
   "taskWorkbenchTitle": "Task workbench",
   "@taskWorkbenchTitle": {

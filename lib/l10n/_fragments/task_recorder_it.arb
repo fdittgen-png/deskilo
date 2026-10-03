@@ -141,5 +141,17 @@
   "taskOutputFailed": "Non è stato possibile creare il risultato.",
   "taskOutputStale": "Le illustrazioni sono state riviste per una versione precedente.",
   "taskOutputBusy": "Questo risultato è già in creazione.",
-  "taskWorkbenchReviewIllustrations": "Rivedi le illustrazioni"
+  "taskWorkbenchReviewIllustrations": "Rivedi le illustrazioni",
+  "taskGuideCreate": "Crea una bozza di guida",
+  "taskGuideTitle": "Bozza di guida",
+  "taskGuideIntro": "Ogni passaggio come lo seguirà un lettore. Un passaggio che prenota attende la risposta reale; nulla viene fatto al posto del lettore.",
+  "taskGuideSave": "Salva la guida",
+  "taskGuideEditText": "Scrivi il testo",
+  "taskGuideOptional": "Il lettore può saltarlo",
+  "taskGuideWaitsFor": "Attende: {outcomes}",
+  "taskGuideRecovery": "Se viene rifiutato: scelga un altro posto, giorno o periodo, poi confermi di nuovo.",
+  "taskGuideNoText": "Un'istruzione ancora da scrivere",
+  "taskGuideManual": "Esegua questo passaggio da sé",
+  "taskGuideManualProtected": "Esegua questo passaggio da sé, su una schermata protetta: {category}",
+  "taskWorkbenchStoryboardRestored": "Le illustrazioni riviste sono state ripristinate dal file."
 }

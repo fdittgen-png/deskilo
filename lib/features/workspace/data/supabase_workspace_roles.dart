@@ -17,7 +17,7 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
   Future<List<WorkspaceRole>> fetchRoles(String workspaceId) async {
     final rows = await _client
         .from('workspace_roles')
-        .select('id, key, permissions, names, sort_order, active')
+        .select('id, key, permissions, names, sort_order, active, builtin')
         .eq('workspace_id', workspaceId);
     return [
       for (final row in rows as List)
@@ -39,6 +39,7 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
             },
             sortOrder: (map['sort_order'] as num?)?.toInt() ?? 0,
             active: map['active'] as bool? ?? true,
+            builtin: map['builtin'] as bool? ?? false,
           );
         }(),
     ];
@@ -82,6 +83,16 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
     });
     return '$id';
   }
+
+  @override
+  Future<void> renameAdministrator(
+    String workspaceId,
+    Map<String, String> names,
+  ) =>
+      _client.rpc<void>('rename_administrator_role', params: {
+        'p_workspace_id': workspaceId,
+        'p_names': names,
+      });
 
   @override
   Future<void> assignRole({

@@ -3,7 +3,7 @@
 // #1823 — two design languages, one app. A space wears its brand colour
 // and, when it is a development space, the #917 strip; Me wears
 // DesKilo's ink-blue and neither — also on the pages pushed from it. In
-// the space, the chip names it and switches, and the avatar goes back to
+// the space, the title names it, and the avatar goes back to
 // Me; entering a space is a visible curtain unless motion is off.
 import 'package:deskilo/app/shell/shell_screen.dart';
 import 'package:deskilo/app/theme.dart';
@@ -59,27 +59,28 @@ void main() {
     expect(_primaryAt(tester, find.byType(ShellScreen)), brand);
   });
 
-  testWidgets('the chip names the space and switches; its first row goes '
-      'back to Me', (tester) async {
+  testWidgets('workspace identity does not switch spaces; Me is the entry point', (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces());
     expect(find.descendant(
         of: find.byKey(const ValueKey('space-chip')),
-        matching: find.text('Test Space')), findsOneWidget);
+        matching: find.text('DesKilo · Test Space')), findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('space-chip')));
+    await tester.tap(find.byKey(const ValueKey('space-chip')), warnIfMissed: false);
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('space-switcher-ws-1')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('space-switcher-ws-2')));
+    expect(find.byKey(const ValueKey('space-switcher-ws-1')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('shell-back-to-me')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('me-space-ws-2')));
     await tester.pumpAndSettle();
     final container = ProviderScope.containerOf(tester.element(find.byType(ShellScreen)));
     expect(container.read(currentWorkspaceProvider).value?.id, 'ws-2');
     expect(find.descendant(
         of: find.byKey(const ValueKey('space-chip')),
-        matching: find.text('Second Space')), findsOneWidget);
+        matching: find.text('DesKilo · Second Space')), findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('space-chip')));
+    await tester.tap(find.byKey(const ValueKey('space-chip')), warnIfMissed: false);
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('space-switcher-back-to-me')));
+    await tester.tap(find.byKey(const ValueKey('shell-back-to-me')));
     await tester.pumpAndSettle();
     expect(router.state.uri.path, '/me');
   });
