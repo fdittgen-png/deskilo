@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0353 (#1924) -- the first finance KPIs on the shared contract (#1918):
+-- 0355 (#1924) -- the first finance KPIs on the shared contract (#1918):
 -- what was invoiced and what was collected over whole workspace months.
 --
 -- They are the treasurer's figures that workspace_status (0167) already
@@ -120,4 +120,4 @@ grant execute on function public.kpi_finance_summary(uuid, text, text) to authen
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(353);
+select public.set_deskilo_schema_version(355);
