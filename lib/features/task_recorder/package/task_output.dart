@@ -14,15 +14,32 @@
 // into the bytes.
 
 import 'dart:typed_data';
+import 'dart:ui' show Brightness;
 
 import '../domain/task_recording.dart';
+import '../storyboard/storyboard.dart';
 
 /// What an output is, so the workbench can name it in five languages.
 enum TaskOutputKind { document, storyboard, video, captions }
 
 /// Why an output is not available or was not made. A finite set the
 /// workbench words itself; never prose or a raw error from a generator.
-enum TaskOutputReason { unsupportedPlatform, missingMedia, tooLong, failed }
+enum TaskOutputReason {
+  /// The recording cannot be made into this output.
+  refused,
+
+  /// The storyboard given was reviewed for another revision.
+  stale,
+
+  /// Nothing to show (no step a video can illustrate).
+  empty,
+  tooLong,
+
+  /// Another job of this output is running.
+  busy,
+  unsupportedPlatform,
+  failed,
+}
 
 /// Whether a generator can run on this platform and build.
 sealed class TaskOutputAvailability {
@@ -45,6 +62,8 @@ class TaskOutputRequest {
     required this.recording,
     required this.languageCode,
     this.assets = const {},
+    this.storyboard,
+    this.brightness = Brightness.light,
   });
 
   /// Already accepted by the canonical validator; source or edited.
@@ -54,6 +73,13 @@ class TaskOutputRequest {
   /// Package-relative media path → bytes, already bounded and checked by
   /// the package reader.
   final Map<String, Uint8List> assets;
+
+  /// The reviewed storyboard (#1876), when the person reviewed one. A
+  /// generator refuses one reviewed for another revision ([TaskOutputReason.stale]).
+  final Storyboard? storyboard;
+
+  /// The theme the illustrations are drawn in.
+  final Brightness brightness;
 }
 
 /// Cooperative cancellation.
