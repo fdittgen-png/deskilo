@@ -2463,6 +2463,69 @@ class AppLocalizationsEn extends AppLocalizations {
   String get composerDraftKept => 'Draft kept';
 
   @override
+  String get connectionCancelled =>
+      'The account changed meanwhile, so this answer was discarded.';
+
+  @override
+  String get connectionChangedIdentity =>
+      'This server is no longer the one you connected. Its actions are paused until you verify it again.';
+
+  @override
+  String get connectionChecking => 'Checking…';
+
+  @override
+  String get connectionCurrentServer =>
+      'This is the server this app already uses.';
+
+  @override
+  String get connectionDenied =>
+      'This server refused the account. Check the sign-in details, or disconnect it.';
+
+  @override
+  String get connectionExpired =>
+      'Your sign-in to this server has ended. Sign in to this server again.';
+
+  @override
+  String get connectionInvalidEndpoint =>
+      'This address or key is not a valid server.';
+
+  @override
+  String get connectionMalformed =>
+      'This server answered something this app cannot read.';
+
+  @override
+  String get connectionNotConnected =>
+      'This server is not connected on this device.';
+
+  @override
+  String get connectionRetry => 'Try again';
+
+  @override
+  String get connectionSessionNotSaved =>
+      'The action was done, but this device could not save the server\'s sign-in. You may be asked to sign in again.';
+
+  @override
+  String get connectionSignInAgain => 'Sign in again';
+
+  @override
+  String get connectionUnavailable =>
+      'This server is not answering right now. Your other servers are not affected.';
+
+  @override
+  String get connectionUnknownOutcome =>
+      'The connection dropped after the request was sent. It may have been applied: check before trying again.';
+
+  @override
+  String get connectionUnsupported =>
+      'This server\'s version cannot be connected from this app. Update the app, or ask the server\'s operator to update the server.';
+
+  @override
+  String get connectionUsable => 'Connected';
+
+  @override
+  String get connectionVerifyAgain => 'Verify again';
+
+  @override
   String get consentAccept => 'Accept and continue';
 
   @override
