@@ -2398,6 +2398,7 @@ const Set<String> uiRoutes = {
   '/mcp/confirm/:id',
   '/oauth/consent',
   '/assistants',
+  '/assistants/connect',
   '/database/assistant-approvals',
   '/installation/assistants',
   '/settings/assistants',
