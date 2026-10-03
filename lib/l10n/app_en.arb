@@ -16791,6 +16791,50 @@
   "@taskExportWordButton": {
     "description": "#1866 task export (Word document): the review screen button"
   },
+  "taskOutputBusy": "This output is already being made.",
+  "@taskOutputBusy": {
+    "description": "#1872 workbench: taskOutputBusy"
+  },
+  "taskOutputCaptions": "Captions",
+  "@taskOutputCaptions": {
+    "description": "#1872 task workbench: taskOutputCaptions"
+  },
+  "taskOutputDocument": "Word document",
+  "@taskOutputDocument": {
+    "description": "#1872 task workbench: taskOutputDocument"
+  },
+  "taskOutputFailed": "The output could not be made.",
+  "@taskOutputFailed": {
+    "description": "#1872 task workbench: taskOutputFailed"
+  },
+  "taskOutputMake": "Make",
+  "@taskOutputMake": {
+    "description": "#1872 task workbench: taskOutputMake"
+  },
+  "taskOutputMissingMedia": "This task has no images or video to use.",
+  "@taskOutputMissingMedia": {
+    "description": "#1872 task workbench: taskOutputMissingMedia"
+  },
+  "taskOutputStale": "The illustrations were reviewed for an earlier version.",
+  "@taskOutputStale": {
+    "description": "#1872 workbench: taskOutputStale"
+  },
+  "taskOutputStoryboard": "Storyboard",
+  "@taskOutputStoryboard": {
+    "description": "#1872 task workbench: taskOutputStoryboard"
+  },
+  "taskOutputTooLong": "This task is too long for this output.",
+  "@taskOutputTooLong": {
+    "description": "#1872 task workbench: taskOutputTooLong"
+  },
+  "taskOutputUnsupportedPlatform": "Not available on this device.",
+  "@taskOutputUnsupportedPlatform": {
+    "description": "#1872 task workbench: taskOutputUnsupportedPlatform"
+  },
+  "taskOutputVideo": "Video",
+  "@taskOutputVideo": {
+    "description": "#1872 task workbench: taskOutputVideo"
+  },
   "taskRecorderActionBack": "Went back",
   "@taskRecorderActionBack": {
     "description": "#1865 task recorder: taskRecorderActionBack"
@@ -17250,6 +17294,87 @@
   "taskRecorderValueWithheld": "not recorded",
   "@taskRecorderValueWithheld": {
     "description": "#1865 task recorder: taskRecorderValueWithheld"
+  },
+  "taskWorkbenchAccepted": "Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.",
+  "@taskWorkbenchAccepted": {
+    "description": "#1872 task workbench: taskWorkbenchAccepted",
+    "placeholders": {
+      "megabytes": {
+        "type": "int"
+      }
+    }
+  },
+  "taskWorkbenchChoose": "Choose a task file",
+  "@taskWorkbenchChoose": {
+    "description": "#1872 task workbench: taskWorkbenchChoose"
+  },
+  "taskWorkbenchClaim": "The file says {key}: {value}",
+  "@taskWorkbenchClaim": {
+    "description": "#1872 task workbench: taskWorkbenchClaim",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "taskWorkbenchEdited": "An edited copy of a recording.",
+  "@taskWorkbenchEdited": {
+    "description": "#1872 task workbench: taskWorkbenchEdited"
+  },
+  "taskWorkbenchFileType": "Task file",
+  "@taskWorkbenchFileType": {
+    "description": "#1872 task workbench: taskWorkbenchFileType"
+  },
+  "taskWorkbenchIntro": "Open a saved task file. It is read on this device only; nothing is uploaded and no sign-in is needed.",
+  "@taskWorkbenchIntro": {
+    "description": "#1872 task workbench: taskWorkbenchIntro"
+  },
+  "taskWorkbenchOpen": "Open a task file",
+  "@taskWorkbenchOpen": {
+    "description": "#1872 task workbench: taskWorkbenchOpen"
+  },
+  "taskWorkbenchRefusedDamaged": "This file is damaged or was changed after it was made.",
+  "@taskWorkbenchRefusedDamaged": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedDamaged"
+  },
+  "taskWorkbenchRefusedInvalid": "This file does not hold a valid task.",
+  "@taskWorkbenchRefusedInvalid": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedInvalid"
+  },
+  "taskWorkbenchRefusedNewer": "This file was made by a newer version of the app.",
+  "@taskWorkbenchRefusedNewer": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedNewer"
+  },
+  "taskWorkbenchRefusedTooLarge": "This file is larger than the workbench reads.",
+  "@taskWorkbenchRefusedTooLarge": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedTooLarge"
+  },
+  "taskWorkbenchRefusedUnsafe": "This file is built in a way that is not safe to open.",
+  "@taskWorkbenchRefusedUnsafe": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedUnsafe"
+  },
+  "taskWorkbenchRefusedUnsupported": "This is not a task file.",
+  "@taskWorkbenchRefusedUnsupported": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedUnsupported"
+  },
+  "taskWorkbenchReviewIllustrations": "Review the illustrations",
+  "@taskWorkbenchReviewIllustrations": {
+    "description": "#1872 workbench: taskWorkbenchReviewIllustrations"
+  },
+  "taskWorkbenchTitle": "Task workbench",
+  "@taskWorkbenchTitle": {
+    "description": "#1872 task workbench: taskWorkbenchTitle"
+  },
+  "taskWorkbenchTranscriptOnly": "Some steps come from a newer version: shown as a transcript only.",
+  "@taskWorkbenchTranscriptOnly": {
+    "description": "#1872 task workbench: taskWorkbenchTranscriptOnly"
+  },
+  "taskWorkbenchUntrusted": "A private draft from a file: nothing in it is trusted or sent.",
+  "@taskWorkbenchUntrusted": {
+    "description": "#1872 task workbench: taskWorkbenchUntrusted"
   },
   "templateApplyConflict": "This request was already used for something else. Nothing was applied.",
   "@templateApplyConflict": {
