@@ -95,6 +95,7 @@ class BiResult {
     this.comparedPeriod,
     this.groups = const [],
     required this.computedAt,
+    this.currency,
   });
 
   final BiPeriod period;
@@ -105,6 +106,10 @@ class BiResult {
   /// remainder row (time no current group explains) comes last.
   final List<BiRow> groups;
   final DateTime computedAt;
+
+  /// The ISO currency of an amount measure (#1924); null otherwise. Never
+  /// assumed: a result in no known currency shows no amount.
+  final String? currency;
 }
 
 /// The change from a compared value to the current one.

@@ -1217,6 +1217,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Reserved capacity measures bookings, not actual attendance.';
 
   @override
+  String get biCardDown => 'Move down';
+
+  @override
+  String get biCardUp => 'Move up';
+
+  @override
+  String get biCards => 'Analyses shown';
+
+  @override
   String biCardsUnavailable(String count) {
     return '$count analyses of this view are not available to you and are left out.';
   }
@@ -1296,6 +1305,66 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get biExposureDiffers =>
       'The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.';
+
+  @override
+  String get biFinanceCollected => 'Collected';
+
+  @override
+  String biFinanceCollectedBasis(String count) {
+    return 'From $count payments matched to invoices';
+  }
+
+  @override
+  String get biFinanceCollectedDefinition =>
+      'Payments matched to invoices, by the month of the match on the workspace clock.';
+
+  @override
+  String get biFinanceCollectedZero => 'Measured: nothing was collected.';
+
+  @override
+  String biFinanceComputed(String date) {
+    return 'Computed $date';
+  }
+
+  @override
+  String get biFinanceCurrencyMix =>
+      'This period holds amounts in another currency; amounts in different currencies are not added, so none is shown.';
+
+  @override
+  String get biFinanceInvoiced => 'Invoiced';
+
+  @override
+  String biFinanceInvoicedBasis(String count, String credit) {
+    return 'From $count invoices; credit notes $credit, shown apart';
+  }
+
+  @override
+  String get biFinanceInvoicedDefinition =>
+      'Invoices of these months, voided ones and settlements left out (a settlement regroups invoices already counted); positive totals only.';
+
+  @override
+  String get biFinanceInvoicedZero => 'Measured: nothing was invoiced.';
+
+  @override
+  String biFinanceLastChange(String date) {
+    return 'Last change to the source: $date';
+  }
+
+  @override
+  String get biFinanceNotExact =>
+      'An amount is too large to show exactly, so it is not shown.';
+
+  @override
+  String get biFinanceNotProfit =>
+      'Not a profit: no cost is in this figure, and the two figures are not subtracted from each other.';
+
+  @override
+  String get biFinancePartial =>
+      'The period is not over: these figures will still change.';
+
+  @override
+  String get biFinanceSameAsReport =>
+      'The same rules as the workspace status report, computed once on the server.';
 
   @override
   String get biForbidden => 'You may not read this analysis in this workspace.';

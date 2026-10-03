@@ -1228,6 +1228,15 @@ class AppLocalizationsEs extends AppLocalizations {
       'La capacidad reservada mide reservas, no la asistencia real.';
 
   @override
+  String get biCardDown => 'Bajar';
+
+  @override
+  String get biCardUp => 'Subir';
+
+  @override
+  String get biCards => 'Análisis mostrados';
+
+  @override
   String biCardsUnavailable(String count) {
     return '$count análisis de esta vista no están disponibles para usted y se omiten.';
   }
@@ -1307,6 +1316,66 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get biExposureDiffers =>
       'Los dos periodos no ofrecen la misma base; la tasa lo tiene en cuenta, las cifras brutas no se comparan directamente.';
+
+  @override
+  String get biFinanceCollected => 'Cobrado';
+
+  @override
+  String biFinanceCollectedBasis(String count) {
+    return 'De $count pagos conciliados con facturas';
+  }
+
+  @override
+  String get biFinanceCollectedDefinition =>
+      'Pagos conciliados con facturas, según el mes de la conciliación en la hora del espacio.';
+
+  @override
+  String get biFinanceCollectedZero => 'Medido: no se cobró nada.';
+
+  @override
+  String biFinanceComputed(String date) {
+    return 'Calculado el $date';
+  }
+
+  @override
+  String get biFinanceCurrencyMix =>
+      'Este periodo contiene importes en otra moneda; monedas distintas no se suman, así que no se muestra ninguno.';
+
+  @override
+  String get biFinanceInvoiced => 'Facturado';
+
+  @override
+  String biFinanceInvoicedBasis(String count, String credit) {
+    return 'De $count facturas; abonos $credit, mostrados aparte';
+  }
+
+  @override
+  String get biFinanceInvoicedDefinition =>
+      'Facturas de estos meses, sin las anuladas ni las liquidaciones (una liquidación agrupa facturas ya contadas); solo totales positivos.';
+
+  @override
+  String get biFinanceInvoicedZero => 'Medido: no se facturó nada.';
+
+  @override
+  String biFinanceLastChange(String date) {
+    return 'Último cambio en la fuente: $date';
+  }
+
+  @override
+  String get biFinanceNotExact =>
+      'Un importe es demasiado grande para mostrarlo con exactitud, así que no se muestra.';
+
+  @override
+  String get biFinanceNotProfit =>
+      'No es un beneficio: esta cifra no incluye costes y las dos cifras no se restan entre sí.';
+
+  @override
+  String get biFinancePartial =>
+      'El periodo no ha terminado: estas cifras aún cambiarán.';
+
+  @override
+  String get biFinanceSameAsReport =>
+      'Las mismas reglas que el informe de estado del espacio, calculadas una vez en el servidor.';
 
   @override
   String get biForbidden => 'No puede leer este análisis en este espacio.';

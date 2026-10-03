@@ -150,6 +150,7 @@ class BiScreen extends ConsumerWidget {
               modules: modules,
               today: today,
               onChanged: ask,
+              cardTitle: (id) => biModuleViews[id]?.title(l10n) ?? id,
             ),
             if (unavailable > 0)
               Padding(

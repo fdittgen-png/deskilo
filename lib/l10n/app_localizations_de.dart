@@ -1229,6 +1229,15 @@ class AppLocalizationsDe extends AppLocalizations {
       'Reservierte Kapazität misst Buchungen, nicht die tatsächliche Anwesenheit.';
 
   @override
+  String get biCardDown => 'Nach unten';
+
+  @override
+  String get biCardUp => 'Nach oben';
+
+  @override
+  String get biCards => 'Angezeigte Analysen';
+
+  @override
   String biCardsUnavailable(String count) {
     return '$count Analysen dieser Ansicht sind für Sie nicht verfügbar und werden ausgelassen.';
   }
@@ -1308,6 +1317,66 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get biExposureDiffers =>
       'Die beiden Zeiträume haben nicht dieselbe Basis; die Quote berücksichtigt das, die Rohwerte sind nicht direkt vergleichbar.';
+
+  @override
+  String get biFinanceCollected => 'Eingenommen';
+
+  @override
+  String biFinanceCollectedBasis(String count) {
+    return 'Aus $count Zahlungen, die Rechnungen zugeordnet sind';
+  }
+
+  @override
+  String get biFinanceCollectedDefinition =>
+      'Rechnungen zugeordnete Zahlungen, nach dem Monat der Zuordnung in der Zeit des Arbeitsbereichs.';
+
+  @override
+  String get biFinanceCollectedZero => 'Gemessen: Es wurde nichts eingenommen.';
+
+  @override
+  String biFinanceComputed(String date) {
+    return 'Berechnet am $date';
+  }
+
+  @override
+  String get biFinanceCurrencyMix =>
+      'Dieser Zeitraum enthält Beträge in einer anderen Währung; verschiedene Währungen werden nicht addiert, daher wird kein Betrag gezeigt.';
+
+  @override
+  String get biFinanceInvoiced => 'Fakturiert';
+
+  @override
+  String biFinanceInvoicedBasis(String count, String credit) {
+    return 'Aus $count Rechnungen; Gutschriften $credit, gesondert ausgewiesen';
+  }
+
+  @override
+  String get biFinanceInvoicedDefinition =>
+      'Rechnungen dieser Monate, ohne stornierte und Sammelabrechnungen (eine Sammelabrechnung fasst bereits gezählte Rechnungen zusammen); nur positive Summen.';
+
+  @override
+  String get biFinanceInvoicedZero => 'Gemessen: Es wurde nichts fakturiert.';
+
+  @override
+  String biFinanceLastChange(String date) {
+    return 'Letzte Änderung der Quelle: $date';
+  }
+
+  @override
+  String get biFinanceNotExact =>
+      'Ein Betrag ist zu groß, um exakt angezeigt zu werden, und wird daher nicht gezeigt.';
+
+  @override
+  String get biFinanceNotProfit =>
+      'Kein Gewinn: Diese Zahl enthält keine Kosten, und die beiden Zahlen werden nicht voneinander abgezogen.';
+
+  @override
+  String get biFinancePartial =>
+      'Der Zeitraum ist nicht abgeschlossen: Diese Zahlen ändern sich noch.';
+
+  @override
+  String get biFinanceSameAsReport =>
+      'Dieselben Regeln wie der Statusbericht des Arbeitsbereichs, einmal auf dem Server berechnet.';
 
   @override
   String get biForbidden =>

@@ -2215,6 +2215,24 @@ abstract class AppLocalizations {
   /// **'Reserved capacity measures bookings, not actual attendance.'**
   String get biBookingBasis;
 
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get biCardDown;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get biCardUp;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Analyses shown'**
+  String get biCards;
+
   /// #1923 C Web-BI saved views
   ///
   /// In en, this message translates to:
@@ -2346,6 +2364,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.'**
   String get biExposureDiffers;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Collected'**
+  String get biFinanceCollected;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'From {count} payments matched to invoices'**
+  String biFinanceCollectedBasis(String count);
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Payments matched to invoices, by the month of the match on the workspace clock.'**
+  String get biFinanceCollectedDefinition;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Measured: nothing was collected.'**
+  String get biFinanceCollectedZero;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Computed {date}'**
+  String biFinanceComputed(String date);
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'This period holds amounts in another currency; amounts in different currencies are not added, so none is shown.'**
+  String get biFinanceCurrencyMix;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced'**
+  String get biFinanceInvoiced;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'From {count} invoices; credit notes {credit}, shown apart'**
+  String biFinanceInvoicedBasis(String count, String credit);
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices of these months, voided ones and settlements left out (a settlement regroups invoices already counted); positive totals only.'**
+  String get biFinanceInvoicedDefinition;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Measured: nothing was invoiced.'**
+  String get biFinanceInvoicedZero;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Last change to the source: {date}'**
+  String biFinanceLastChange(String date);
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'An amount is too large to show exactly, so it is not shown.'**
+  String get biFinanceNotExact;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'Not a profit: no cost is in this figure, and the two figures are not subtracted from each other.'**
+  String get biFinanceNotProfit;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'The period is not over: these figures will still change.'**
+  String get biFinancePartial;
+
+  /// #1924 finance KPI / #1923 analyses picker
+  ///
+  /// In en, this message translates to:
+  /// **'The same rules as the workspace status report, computed once on the server.'**
+  String get biFinanceSameAsReport;
 
   /// #1923 B Web-BI toolbar and module section
   ///

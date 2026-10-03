@@ -364,5 +364,100 @@
         "type": "String"
       }
     }
+  },
+  "biCards": "Analyses shown",
+  "@biCards": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biCardUp": "Move up",
+  "@biCardUp": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biCardDown": "Move down",
+  "@biCardDown": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceInvoiced": "Invoiced",
+  "@biFinanceInvoiced": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceCollected": "Collected",
+  "@biFinanceCollected": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceInvoicedBasis": "From {count} invoices; credit notes {credit}, shown apart",
+  "@biFinanceInvoicedBasis": {
+    "description": "#1924 finance KPI / #1923 analyses picker",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "credit": {
+        "type": "String"
+      }
+    }
+  },
+  "biFinanceCollectedBasis": "From {count} payments matched to invoices",
+  "@biFinanceCollectedBasis": {
+    "description": "#1924 finance KPI / #1923 analyses picker",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biFinanceCurrencyMix": "This period holds amounts in another currency; amounts in different currencies are not added, so none is shown.",
+  "@biFinanceCurrencyMix": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceNotExact": "An amount is too large to show exactly, so it is not shown.",
+  "@biFinanceNotExact": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinancePartial": "The period is not over: these figures will still change.",
+  "@biFinancePartial": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceInvoicedZero": "Measured: nothing was invoiced.",
+  "@biFinanceInvoicedZero": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceCollectedZero": "Measured: nothing was collected.",
+  "@biFinanceCollectedZero": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceInvoicedDefinition": "Invoices of these months, voided ones and settlements left out (a settlement regroups invoices already counted); positive totals only.",
+  "@biFinanceInvoicedDefinition": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceCollectedDefinition": "Payments matched to invoices, by the month of the match on the workspace clock.",
+  "@biFinanceCollectedDefinition": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceNotProfit": "Not a profit: no cost is in this figure, and the two figures are not subtracted from each other.",
+  "@biFinanceNotProfit": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceSameAsReport": "The same rules as the workspace status report, computed once on the server.",
+  "@biFinanceSameAsReport": {
+    "description": "#1924 finance KPI / #1923 analyses picker"
+  },
+  "biFinanceLastChange": "Last change to the source: {date}",
+  "@biFinanceLastChange": {
+    "description": "#1924 finance KPI / #1923 analyses picker",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biFinanceComputed": "Computed {date}",
+  "@biFinanceComputed": {
+    "description": "#1924 finance KPI / #1923 analyses picker",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }

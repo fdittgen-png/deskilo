@@ -182,6 +182,10 @@ List<Override> demoOverrides(DemoFixture fixture) {
       kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(InMemoryBiViewRepository()),
+      // #1924 — no server to sum invoices on: the cards say so.
+      financeKpiRepositoryProvider.overrideWithValue(
+        const UnavailableFinanceKpiRepository(),
+      ),
 
       // #1377 — the ways an effect could leave the app, each pointed at
       // something inert. A payment, an invitation, an e-invoice and a
@@ -297,6 +301,7 @@ const Set<String> demoOverriddenProviders = {
   'workspaceRolesRepositoryProvider',
   'kpiRepositoryProvider',
   'biViewRepositoryProvider', // #1923 C
+  'financeKpiRepositoryProvider', // #1924
   'realtimeSyncProvider',
   'notificationServiceProvider',
   'appBadgeProvider',

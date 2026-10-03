@@ -1230,6 +1230,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'La capacité réservée mesure les réservations, pas la présence réelle.';
 
   @override
+  String get biCardDown => 'Descendre';
+
+  @override
+  String get biCardUp => 'Monter';
+
+  @override
+  String get biCards => 'Analyses affichées';
+
+  @override
   String biCardsUnavailable(String count) {
     return '$count analyses de cette vue ne vous sont pas accessibles et sont omises.';
   }
@@ -1309,6 +1318,66 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get biExposureDiffers =>
       'Les deux périodes n’offrent pas la même base ; le taux en tient compte, les chiffres bruts ne se comparent pas directement.';
+
+  @override
+  String get biFinanceCollected => 'Encaissé';
+
+  @override
+  String biFinanceCollectedBasis(String count) {
+    return 'Sur $count paiements rapprochés de factures';
+  }
+
+  @override
+  String get biFinanceCollectedDefinition =>
+      'Paiements rapprochés de factures, selon le mois du rapprochement à l’heure de l’espace.';
+
+  @override
+  String get biFinanceCollectedZero => 'Mesuré : rien n’a été encaissé.';
+
+  @override
+  String biFinanceComputed(String date) {
+    return 'Calculé le $date';
+  }
+
+  @override
+  String get biFinanceCurrencyMix =>
+      'Cette période contient des montants dans une autre devise ; des devises différentes ne s’additionnent pas, aucun montant n’est donc affiché.';
+
+  @override
+  String get biFinanceInvoiced => 'Facturé';
+
+  @override
+  String biFinanceInvoicedBasis(String count, String credit) {
+    return 'Sur $count factures ; avoirs $credit, montrés à part';
+  }
+
+  @override
+  String get biFinanceInvoicedDefinition =>
+      'Factures de ces mois, hors factures annulées et règlements groupés (un règlement regroupe des factures déjà comptées) ; totaux positifs seulement.';
+
+  @override
+  String get biFinanceInvoicedZero => 'Mesuré : rien n’a été facturé.';
+
+  @override
+  String biFinanceLastChange(String date) {
+    return 'Dernière modification de la source : $date';
+  }
+
+  @override
+  String get biFinanceNotExact =>
+      'Un montant est trop grand pour être affiché exactement ; il n’est donc pas affiché.';
+
+  @override
+  String get biFinanceNotProfit =>
+      'Pas un bénéfice : aucun coût n’entre dans ce chiffre, et les deux chiffres ne se soustraient pas.';
+
+  @override
+  String get biFinancePartial =>
+      'La période n’est pas terminée : ces chiffres vont encore changer.';
+
+  @override
+  String get biFinanceSameAsReport =>
+      'Les mêmes règles que le rapport d’état de l’espace, calculées une fois sur le serveur.';
 
   @override
   String get biForbidden =>

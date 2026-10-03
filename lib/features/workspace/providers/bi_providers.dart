@@ -57,8 +57,75 @@ Future<BiResult> biModuleResult(
       period,
       compared,
     ),
+    'finance.invoiced' || 'finance.collected' => _finance(
+      ref,
+      workspaceId,
+      moduleId,
+      period,
+      compared,
+    ),
     _ => throw KpiUnavailable('no reader for $moduleId'),
   };
+}
+
+/// The whole months of [p], `YYYY-MM` first and last (#1924).
+({String from, String to}) biMonths(BiPeriod p) {
+  String m(int month) => '${p.year}-${month.toString().padLeft(2, '0')}';
+  return (from: m(p.startMonth), to: m(p.startMonth + p.grain.months - 1));
+}
+
+/// One finance figure of [k]; a missing amount is unknown, never 0.
+BiMeasure financeMeasure(FinanceSummaryKpi k, String moduleId) {
+  final minor = moduleId == 'finance.invoiced'
+      ? k.invoicedMinor
+      : k.collectedMinor;
+  final quality = {
+    ...k.quality,
+    if (minor == null) KpiQuality.unavailable,
+  };
+  final unknown = quality.contains(KpiQuality.unavailable);
+  return BiMeasure(
+    numerator: minor ?? 0,
+    quality: {...quality, if (!unknown && minor == 0) KpiQuality.knownZero},
+    reasons: k.reasons,
+    detail: k,
+  );
+}
+
+Future<BiResult> _finance(
+  Ref ref,
+  String workspaceId,
+  String moduleId,
+  BiPeriod period,
+  BiPeriod? compared,
+) async {
+  Future<FinanceSummaryKpi> watch(BiPeriod p) {
+    final m = biMonths(p);
+    return ref.watch(financeSummaryProvider(workspaceId, m.from, m.to).future);
+  }
+
+  // Both watched before the first await (provider_watch_before_await).
+  final now = watch(period);
+  final then = compared == null ? null : watch(compared);
+  final current = await now;
+  final before = then == null ? null : await then;
+  final currencies = {current.currency, ?before?.currency};
+  return BiResult(
+    period: period,
+    comparedPeriod: compared,
+    total: BiRow(
+      key: BiRow.totalKey,
+      label: null,
+      current: financeMeasure(current, moduleId),
+      compared: before == null ? null : financeMeasure(before, moduleId),
+    ),
+    computedAt: current.computedAt,
+    // Two periods in two currencies do not compare: no currency, no
+    // amount.
+    currency: currencies.length == 1 && current.currency.isNotEmpty
+        ? current.currency
+        : null,
+  );
 }
 
 BiMeasure _seatMeasure(SeatCapacityKpi k) => BiMeasure(
