@@ -13625,6 +13625,416 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportDemo => 'Demo: simulated local context';
 
   @override
+  String get taskExportDocFallbackTitle => 'Task procedure';
+
+  @override
+  String get taskExportIntro =>
+      'This document describes, step by step, a task recorded in DesKilo. It is documentation: it does not replay the task and it does not prove that the task succeeded. Only what the recording observed is stated as observed.';
+
+  @override
+  String get taskExportSectionAbout => 'About this recording';
+
+  @override
+  String get taskExportSectionBefore => 'Before you start';
+
+  @override
+  String get taskExportSectionSteps => 'Steps';
+
+  @override
+  String get taskExportSectionLimits => 'Limitations';
+
+  @override
+  String get taskExportKindSource =>
+      'Original capture: the steps were observed by the recorder.';
+
+  @override
+  String get taskExportKindEdited =>
+      'Edited procedure: derived from a recording and changed by a person.';
+
+  @override
+  String get taskExportCompletenessComplete =>
+      'Complete: the recording was stopped by the person and every command received an answer.';
+
+  @override
+  String get taskExportCompletenessPartial =>
+      'Partial: the recording ended early or a command received no answer.';
+
+  @override
+  String get taskExportCompletenessInterrupted =>
+      'Interrupted: the app stopped while recording.';
+
+  @override
+  String get taskExportEndStopped => 'Ended by the person who recorded it.';
+
+  @override
+  String get taskExportEndScopeChanged =>
+      'Ended because the account, workspace or installation changed.';
+
+  @override
+  String get taskExportEndLimitReached =>
+      'Ended because a step, size or duration limit was reached.';
+
+  @override
+  String get taskExportEndStorageFailed =>
+      'Ended because writing the recording failed.';
+
+  @override
+  String get taskExportEndInterrupted => 'Ended because the app stopped.';
+
+  @override
+  String taskExportPlatform(String platform) {
+    return 'Recorded on: $platform';
+  }
+
+  @override
+  String taskExportDuration(int minutes, int seconds) {
+    return 'Duration: $minutes min $seconds s';
+  }
+
+  @override
+  String taskExportPauses(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Paused $count times',
+      one: 'Paused once',
+      zero: 'No pause',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String taskExportVersion(int schema, int contract) {
+    return 'Recording format $schema, action contract $contract';
+  }
+
+  @override
+  String taskExportRevision(String revision) {
+    return 'Content revision: $revision';
+  }
+
+  @override
+  String get taskExportPrereqSignedIn => 'You are signed in.';
+
+  @override
+  String get taskExportPrereqWorkspaceMember =>
+      'You are a member of the workspace.';
+
+  @override
+  String taskExportPrereqStartsOn(String screen) {
+    return 'Start on $screen.';
+  }
+
+  @override
+  String get taskExportPrereqBookablePlace =>
+      'At least one place can be booked.';
+
+  @override
+  String get taskExportPrereqUnknown =>
+      'A condition this version cannot describe.';
+
+  @override
+  String get taskExportSurfaceReserve => 'the Reserve screen';
+
+  @override
+  String get taskExportSurfaceBookingSheet => 'the booking sheet';
+
+  @override
+  String get taskExportSurfaceReservationDetail => 'the reservation details';
+
+  @override
+  String get taskExportSurfaceAny => 'any screen';
+
+  @override
+  String get taskExportSurfaceUnknown =>
+      'a screen this version cannot describe';
+
+  @override
+  String taskExportOnScreen(String screen) {
+    return 'Screen: $screen';
+  }
+
+  @override
+  String get taskExportActionOpenReserve => 'Open the Reserve screen.';
+
+  @override
+  String get taskExportActionSelectDate => 'Choose the date.';
+
+  @override
+  String get taskExportActionSelectPeriod => 'Choose the period.';
+
+  @override
+  String get taskExportActionSwitchView => 'Switch the view.';
+
+  @override
+  String get taskExportActionSelectResource => 'Choose a place.';
+
+  @override
+  String taskExportActionChangeField(String field) {
+    return 'Change the field: $field.';
+  }
+
+  @override
+  String get taskExportActionConfirmBooking => 'Confirm the booking.';
+
+  @override
+  String get taskExportActionCancelReview =>
+      'Cancel the review without booking.';
+
+  @override
+  String get taskExportActionViewDetails => 'Open the reservation details.';
+
+  @override
+  String get taskExportActionBack => 'Go back.';
+
+  @override
+  String get taskExportActionUnknown =>
+      'An action this version cannot describe.';
+
+  @override
+  String get taskExportFieldDateRelation => 'Date';
+
+  @override
+  String get taskExportFieldPeriod => 'Period';
+
+  @override
+  String get taskExportFieldViewMode => 'View';
+
+  @override
+  String get taskExportFieldResourceKind => 'Kind of place';
+
+  @override
+  String get taskExportFieldForWhom => 'For whom';
+
+  @override
+  String get taskExportFieldRepeat => 'Repeat';
+
+  @override
+  String get taskExportFieldCheckIn => 'Check in';
+
+  @override
+  String get taskExportFieldSeriesResult => 'Series';
+
+  @override
+  String get taskExportFieldRefusal => 'Reason';
+
+  @override
+  String get taskExportFieldTime => 'Time';
+
+  @override
+  String get taskExportFieldAccessories => 'Accessories';
+
+  @override
+  String get taskExportFieldUnknown => 'a field this version cannot describe';
+
+  @override
+  String taskExportDetail(String field, String value) {
+    return '$field: $value';
+  }
+
+  @override
+  String get taskExportValueToday => 'today';
+
+  @override
+  String get taskExportValueTomorrow => 'tomorrow';
+
+  @override
+  String get taskExportValueLaterThisWeek => 'later this week';
+
+  @override
+  String get taskExportValueLater => 'later';
+
+  @override
+  String get taskExportValuePast => 'a past day';
+
+  @override
+  String get taskExportValueFullDay => 'full day';
+
+  @override
+  String get taskExportValueMorning => 'morning';
+
+  @override
+  String get taskExportValueAfternoon => 'afternoon';
+
+  @override
+  String get taskExportValueHours => 'by the hour';
+
+  @override
+  String get taskExportValueCustom => 'custom';
+
+  @override
+  String get taskExportValuePlan => 'floor plan';
+
+  @override
+  String get taskExportValueList => 'list';
+
+  @override
+  String get taskExportValueDesk => 'a desk';
+
+  @override
+  String get taskExportValueRoom => 'a room';
+
+  @override
+  String get taskExportValueOtherPlace => 'another kind of place';
+
+  @override
+  String get taskExportValueSelf => 'myself';
+
+  @override
+  String get taskExportValueOtherMember => 'another member';
+
+  @override
+  String get taskExportValueOnce => 'once';
+
+  @override
+  String get taskExportValueSeries => 'as a series';
+
+  @override
+  String get taskExportValueYes => 'yes';
+
+  @override
+  String get taskExportValueNo => 'no';
+
+  @override
+  String get taskExportValueAllBooked => 'all booked';
+
+  @override
+  String get taskExportValuePartiallyBooked => 'partly booked';
+
+  @override
+  String get taskExportValueConflict => 'the place was already taken';
+
+  @override
+  String get taskExportValuePolicy => 'a booking rule';
+
+  @override
+  String get taskExportValueQuota => 'a quota';
+
+  @override
+  String get taskExportValuePermission => 'a missing permission';
+
+  @override
+  String get taskExportValueClosed => 'the workspace was closed';
+
+  @override
+  String get taskExportValueOffline => 'no connection';
+
+  @override
+  String get taskExportValueOtherReason => 'another reason';
+
+  @override
+  String get taskExportValueWithheld => 'not recorded';
+
+  @override
+  String taskExportResult(String outcome) {
+    return 'Result: $outcome';
+  }
+
+  @override
+  String get taskExportOutcomeConfirmed => 'the booking was confirmed';
+
+  @override
+  String get taskExportOutcomeRequested =>
+      'the booking was requested and waits for a decision';
+
+  @override
+  String get taskExportOutcomeSeriesBooked => 'the series was booked';
+
+  @override
+  String get taskExportOutcomeRefused => 'the booking was refused';
+
+  @override
+  String get taskExportOutcomeUnknown =>
+      'no answer could be confirmed; the outcome is unknown';
+
+  @override
+  String get taskExportOutcomeUnregistered =>
+      'an outcome this version cannot describe';
+
+  @override
+  String get taskExportNoResult => 'No result was recorded for this command.';
+
+  @override
+  String get taskExportAuthored =>
+      'Added while editing: not observed by the recorder.';
+
+  @override
+  String taskExportNote(String note) {
+    return 'Note written by the person who recorded (their own words): $note';
+  }
+
+  @override
+  String get taskExportNoteOmitted =>
+      'A personal note was left out of this document.';
+
+  @override
+  String taskExportExcluded(String category) {
+    return 'A protected screen was visited ($category); nothing on it was recorded.';
+  }
+
+  @override
+  String get taskExportProtectedAuthentication => 'sign-in';
+
+  @override
+  String get taskExportProtectedPayment => 'payment';
+
+  @override
+  String get taskExportProtectedProvider => 'provider';
+
+  @override
+  String get taskExportProtectedSecrets => 'secrets';
+
+  @override
+  String get taskExportProtectedMessenger => 'messages';
+
+  @override
+  String get taskExportProtectedIdentity => 'identity';
+
+  @override
+  String get taskExportProtectedOperator => 'operator';
+
+  @override
+  String get taskExportUnrecorded => 'A step this version cannot describe.';
+
+  @override
+  String get taskExportLimitValues =>
+      'Values that were typed or chosen are never recorded: only their kind appears, and \"not recorded\" stands in for anything else.';
+
+  @override
+  String get taskExportLimitNoIllustrations =>
+      'This document has no illustrations.';
+
+  @override
+  String get taskExportLimitNotRunnable =>
+      'Some steps come from a newer version and cannot be described here.';
+
+  @override
+  String get taskExportLimitIncomplete =>
+      'The recording is incomplete: what happened after the last step shown is not known.';
+
+  @override
+  String get taskExportLimitEdited =>
+      'Steps marked as added while editing were written by a person, not observed.';
+
+  @override
+  String taskExportFooter(String page, String pages) {
+    return 'Page $page of $pages';
+  }
+
+  @override
+  String taskExportSaved(String file) {
+    return 'Word document saved: $file';
+  }
+
+  @override
+  String get taskExportSaveFailed =>
+      'The Word document could not be saved. The recording is unchanged.';
+
+  @override
+  String get taskExportRefused =>
+      'This recording cannot be exported as a Word document.';
+
+  @override
   String get featureTaskRecorderTitle => 'Task recorder';
 
   @override
