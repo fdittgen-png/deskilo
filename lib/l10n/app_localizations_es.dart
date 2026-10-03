@@ -6504,6 +6504,16 @@ class AppLocalizationsEs extends AppLocalizations {
       'La instancia está lista. Úsela en este dispositivo y comparta luego el QR del servidor desde la pantalla Servidor para que los miembros se unan a la misma.';
 
   @override
+  String get instanceFamilyChatgpt => 'ChatGPT';
+
+  @override
+  String get instanceFamilyClaude => 'Claude';
+
+  @override
+  String get instanceFamilyLoopback =>
+      'Asistente de escritorio o de línea de comandos';
+
+  @override
   String instanceInstallSchema(int count) {
     return 'Instalar el esquema: cada migración de la app, en orden ($count).';
   }
@@ -6511,6 +6521,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get instanceIntro =>
       'Ajustes para todos los espacios de trabajo de esta instalación. Solo el operador de la instancia ve esta página; cada cambio requiere su segundo factor y queda registrado.';
+
+  @override
+  String get instanceLoopbackHelp =>
+      'Claude Code, Cursor, VS Code y otros asistentes que se ejecutan en el propio equipo de una persona. Cada persona sigue aprobando su propia conexión.';
+
+  @override
+  String get instanceLoopbackTitle =>
+      'Permitir asistentes de escritorio y de línea de comandos';
 
   @override
   String get instanceMakeAdmin => 'Nombrar administrador';

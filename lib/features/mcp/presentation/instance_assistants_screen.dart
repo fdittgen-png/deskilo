@@ -14,6 +14,7 @@ import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/instance_operator.dart';
+import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_providers.dart';
 import 'eligibility_review_screen.dart' show SecondFactorSheet;
 
@@ -155,6 +156,7 @@ class _InstanceAssistantsScreenState
                 _administrators(l10n, o),
                 const Divider(height: AppSpacing.xl),
                 _clients(l10n, o),
+                _loopback(l10n, o),
               ],
             ),
     );
@@ -286,6 +288,45 @@ class _InstanceAssistantsScreenState
     );
   }
 
+  /// #2145 — the family a client was recognised as, by its exact
+  /// redirects (0359); null for anything else.
+  String? _family(AppLocalizations? l10n, String? family) => switch (family) {
+    'claude' => l10n?.instanceFamilyClaude ?? 'Claude',
+    'chatgpt' => l10n?.instanceFamilyChatgpt ?? 'ChatGPT',
+    'loopback' =>
+      l10n?.instanceFamilyLoopback ?? 'Desktop or command-line assistant',
+    _ => null,
+  };
+
+  /// #2145 — one audited switch for assistants that answer on the
+  /// person's own computer (Claude Code, Cursor, VS Code).
+  Widget _loopback(AppLocalizations? l10n, InstanceMcpOverview o) =>
+      SwitchListTile(
+        key: ValueKey(
+          'instance-loopback-${o.allowLoopbackClients ? 'on' : 'off'}',
+        ),
+        contentPadding: EdgeInsets.zero,
+        title: Text(
+          l10n?.instanceLoopbackTitle ??
+              'Allow desktop and command-line assistants',
+        ),
+        subtitle: Text(
+          l10n?.instanceLoopbackHelp ??
+              'Claude Code, Cursor, VS Code and other assistants that run on '
+                  'a person\'s own computer. Each person still approves '
+                  'their own connection.',
+        ),
+        value: o.allowLoopbackClients,
+        onChanged: o.secondFactor && !_busy
+            ? (on) => _change(
+                'loopback switch failed',
+                () => ref
+                    .read(mcpOnboardingRepositoryProvider)
+                    .setLoopbackClients(allowed: on),
+              )
+            : null,
+      );
+
   Widget _clients(AppLocalizations? l10n, InstanceMcpOverview o) {
     final can = o.secondFactor && !_busy;
     String status(InstanceClient c) => switch (c.status) {
@@ -306,7 +347,13 @@ class _InstanceAssistantsScreenState
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.smart_toy_outlined),
             title: Text(c.name),
-            subtitle: Text(status(c)),
+            subtitle: Text(
+              [
+                status(c),
+                ?_family(l10n, c.family),
+                if (c.redirectHosts.isNotEmpty) c.redirectHosts.join(', '),
+              ].join(' · '),
+            ),
             trailing: c.approved
                 ? TextButton(
                     key: ValueKey('instance-block-${c.clientId}'),

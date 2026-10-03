@@ -55,5 +55,25 @@
   "mcpConsentFamilyLoopback": "Approved for desktop and command-line assistants on this computer.",
   "@mcpConsentFamilyLoopback": {
     "description": "#2145 assistant onboarding: mcpConsentFamilyLoopback"
+  },
+  "instanceFamilyClaude": "Claude",
+  "@instanceFamilyClaude": {
+    "description": "#2145 assistant onboarding: instanceFamilyClaude"
+  },
+  "instanceFamilyChatgpt": "ChatGPT",
+  "@instanceFamilyChatgpt": {
+    "description": "#2145 assistant onboarding: instanceFamilyChatgpt"
+  },
+  "instanceFamilyLoopback": "Desktop or command-line assistant",
+  "@instanceFamilyLoopback": {
+    "description": "#2145 assistant onboarding: instanceFamilyLoopback"
+  },
+  "instanceLoopbackTitle": "Allow desktop and command-line assistants",
+  "@instanceLoopbackTitle": {
+    "description": "#2145 assistant onboarding: instanceLoopbackTitle"
+  },
+  "instanceLoopbackHelp": "Claude Code, Cursor, VS Code and other assistants that run on a person's own computer. Each person still approves their own connection.",
+  "@instanceLoopbackHelp": {
+    "description": "#2145 assistant onboarding: instanceLoopbackHelp"
   }
 }

@@ -3984,6 +3984,9 @@
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
   },
+  "instanceFamilyChatgpt": "ChatGPT",
+  "instanceFamilyClaude": "Claude",
+  "instanceFamilyLoopback": "Assistente desktop o da riga di comando",
   "instanceInstallSchema": "Installa lo schema: ogni migrazione dell'app, in ordine ({count}).",
   "@instanceInstallSchema": {
     "description": "#977 instance wizard: instanceInstallSchema",
@@ -3994,6 +3997,8 @@
     }
   },
   "instanceIntro": "Impostazioni valide per tutti gli spazi di lavoro di questa installazione. Solo l'operatore dell'istanza vede questa pagina; ogni modifica richiede il secondo fattore e viene registrata.",
+  "instanceLoopbackHelp": "Claude Code, Cursor, VS Code e gli altri assistenti che girano sul computer di una persona. Ognuno approva comunque il proprio collegamento.",
+  "instanceLoopbackTitle": "Consenti gli assistenti desktop e da riga di comando",
   "instanceMakeAdmin": "Nomina amministratore",
   "instanceNoCandidates": "Nessun altro ha ancora confermato la propria identità.",
   "instanceNotOperator": "Solo l'operatore dell'istanza gestisce gli assistenti dell'installazione.",

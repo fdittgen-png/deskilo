@@ -3984,6 +3984,9 @@
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
   },
+  "instanceFamilyChatgpt": "ChatGPT",
+  "instanceFamilyClaude": "Claude",
+  "instanceFamilyLoopback": "Desktop- oder Kommandozeilen-Assistent",
   "instanceInstallSchema": "Schema installieren: jede Migration der App, in Reihenfolge ({count}).",
   "@instanceInstallSchema": {
     "description": "#977 instance wizard: instanceInstallSchema",
@@ -3994,6 +3997,8 @@
     }
   },
   "instanceIntro": "Einstellungen für alle Arbeitsbereiche dieser Installation. Nur der Instanzbetreiber sieht diese Seite; jede Änderung erfordert Ihren zweiten Faktor und wird protokolliert.",
+  "instanceLoopbackHelp": "Claude Code, Cursor, VS Code und andere Assistenten, die auf dem eigenen Computer einer Person laufen. Jede Person gibt ihre eigene Verbindung weiterhin selbst frei.",
+  "instanceLoopbackTitle": "Desktop- und Kommandozeilen-Assistenten erlauben",
   "instanceMakeAdmin": "Zum Administrator machen",
   "instanceNoCandidates": "Noch niemand sonst hat seine Identität bestätigt.",
   "instanceNotOperator": "Nur der Instanzbetreiber verwaltet die Assistenten der Installation.",

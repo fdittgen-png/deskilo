@@ -11190,6 +11190,24 @@ abstract class AppLocalizations {
   /// **'The instance is ready. Use it on this device, then share the server QR from the Server screen so members join the same one.'**
   String get instanceDoneIntro;
 
+  /// #2145 assistant onboarding: instanceFamilyChatgpt
+  ///
+  /// In en, this message translates to:
+  /// **'ChatGPT'**
+  String get instanceFamilyChatgpt;
+
+  /// #2145 assistant onboarding: instanceFamilyClaude
+  ///
+  /// In en, this message translates to:
+  /// **'Claude'**
+  String get instanceFamilyClaude;
+
+  /// #2145 assistant onboarding: instanceFamilyLoopback
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop or command-line assistant'**
+  String get instanceFamilyLoopback;
+
   /// #977 instance wizard: instanceInstallSchema
   ///
   /// In en, this message translates to:
@@ -11201,6 +11219,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.'**
   String get instanceIntro;
+
+  /// #2145 assistant onboarding: instanceLoopbackHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Claude Code, Cursor, VS Code and other assistants that run on a person\'s own computer. Each person still approves their own connection.'**
+  String get instanceLoopbackHelp;
+
+  /// #2145 assistant onboarding: instanceLoopbackTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Allow desktop and command-line assistants'**
+  String get instanceLoopbackTitle;
 
   /// #1827 B — instance operator console for the installation's assistants
   ///

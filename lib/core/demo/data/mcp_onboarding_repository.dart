@@ -13,6 +13,7 @@ class FakeMcpOnboardingRepository implements McpOnboardingRepository {
   ConsentStatus status;
   McpEndpointInfo published;
   InstanceNotices inbox;
+  bool loopbackAllowed = false;
   final calls = <String>[];
 
   @override
@@ -48,5 +49,11 @@ class FakeMcpOnboardingRepository implements McpOnboardingRepository {
           : McpEndpointSource.configured,
     );
     return published;
+  }
+
+  @override
+  Future<bool> setLoopbackClients({required bool allowed}) async {
+    calls.add('setLoopbackClients:$allowed');
+    return loopbackAllowed = allowed;
   }
 }

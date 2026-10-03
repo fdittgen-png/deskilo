@@ -8,5 +8,10 @@
   "mcpConsentRedirectHost": "Die Antwort wird an {host} gesendet.",
   "mcpConsentFamilyClaude": "Für alle Claude-Verbindungen freigegeben.",
   "mcpConsentFamilyChatgpt": "Für alle ChatGPT-Verbindungen freigegeben.",
-  "mcpConsentFamilyLoopback": "Für Desktop- und Kommandozeilen-Assistenten auf diesem Computer freigegeben."
+  "mcpConsentFamilyLoopback": "Für Desktop- und Kommandozeilen-Assistenten auf diesem Computer freigegeben.",
+  "instanceFamilyClaude": "Claude",
+  "instanceFamilyChatgpt": "ChatGPT",
+  "instanceFamilyLoopback": "Desktop- oder Kommandozeilen-Assistent",
+  "instanceLoopbackTitle": "Desktop- und Kommandozeilen-Assistenten erlauben",
+  "instanceLoopbackHelp": "Claude Code, Cursor, VS Code und andere Assistenten, die auf dem eigenen Computer einer Person laufen. Jede Person gibt ihre eigene Verbindung weiterhin selbst frei."
 }

@@ -8,5 +8,10 @@
   "mcpConsentRedirectHost": "La réponse est envoyée à {host}.",
   "mcpConsentFamilyClaude": "Approuvé pour toutes les connexions Claude.",
   "mcpConsentFamilyChatgpt": "Approuvé pour toutes les connexions ChatGPT.",
-  "mcpConsentFamilyLoopback": "Approuvé pour les assistants de bureau et en ligne de commande sur cet ordinateur."
+  "mcpConsentFamilyLoopback": "Approuvé pour les assistants de bureau et en ligne de commande sur cet ordinateur.",
+  "instanceFamilyClaude": "Claude",
+  "instanceFamilyChatgpt": "ChatGPT",
+  "instanceFamilyLoopback": "Assistant de bureau ou en ligne de commande",
+  "instanceLoopbackTitle": "Autoriser les assistants de bureau et en ligne de commande",
+  "instanceLoopbackHelp": "Claude Code, Cursor, VS Code et les autres assistants qui tournent sur l'ordinateur d'une personne. Chacun approuve toujours sa propre connexion."
 }

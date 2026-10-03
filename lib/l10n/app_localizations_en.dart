@@ -6460,6 +6460,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'The instance is ready. Use it on this device, then share the server QR from the Server screen so members join the same one.';
 
   @override
+  String get instanceFamilyChatgpt => 'ChatGPT';
+
+  @override
+  String get instanceFamilyClaude => 'Claude';
+
+  @override
+  String get instanceFamilyLoopback => 'Desktop or command-line assistant';
+
+  @override
   String instanceInstallSchema(int count) {
     return 'Install the schema: every migration of the app, in order ($count).';
   }
@@ -6467,6 +6476,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get instanceIntro =>
       'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.';
+
+  @override
+  String get instanceLoopbackHelp =>
+      'Claude Code, Cursor, VS Code and other assistants that run on a person\'s own computer. Each person still approves their own connection.';
+
+  @override
+  String get instanceLoopbackTitle =>
+      'Allow desktop and command-line assistants';
 
   @override
   String get instanceMakeAdmin => 'Make administrator';

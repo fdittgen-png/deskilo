@@ -7123,6 +7123,18 @@
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
   },
+  "instanceFamilyChatgpt": "ChatGPT",
+  "@instanceFamilyChatgpt": {
+    "description": "#2145 assistant onboarding: instanceFamilyChatgpt"
+  },
+  "instanceFamilyClaude": "Claude",
+  "@instanceFamilyClaude": {
+    "description": "#2145 assistant onboarding: instanceFamilyClaude"
+  },
+  "instanceFamilyLoopback": "Desktop or command-line assistant",
+  "@instanceFamilyLoopback": {
+    "description": "#2145 assistant onboarding: instanceFamilyLoopback"
+  },
   "instanceInstallSchema": "Install the schema: every migration of the app, in order ({count}).",
   "@instanceInstallSchema": {
     "description": "#977 instance wizard: instanceInstallSchema",
@@ -7135,6 +7147,14 @@
   "instanceIntro": "Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.",
   "@instanceIntro": {
     "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceLoopbackHelp": "Claude Code, Cursor, VS Code and other assistants that run on a person's own computer. Each person still approves their own connection.",
+  "@instanceLoopbackHelp": {
+    "description": "#2145 assistant onboarding: instanceLoopbackHelp"
+  },
+  "instanceLoopbackTitle": "Allow desktop and command-line assistants",
+  "@instanceLoopbackTitle": {
+    "description": "#2145 assistant onboarding: instanceLoopbackTitle"
   },
   "instanceMakeAdmin": "Make administrator",
   "@instanceMakeAdmin": {
