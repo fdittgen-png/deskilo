@@ -17,6 +17,7 @@ import 'boot_splash.dart';
 import 'router.dart';
 import 'theme.dart';
 import 'shell/layer_chrome.dart';
+import '../features/task_recorder/presentation/widgets/recording_indicator.dart';
 
 /// The composition root: the real app, or the demonstration space
 /// wrapped around it (#1379).
@@ -96,12 +97,19 @@ class DeskiloApp extends ConsumerWidget {
         // ink-blue and no strip; a space wears its brand and, when it is
         // one, the #917 development strip.
         child: DemoControls(
-          child: RecordingBanner(
+          // #1865 — the task-recording indicator. Out of the start-up
+          // path: it renders its child alone until the recorder screen
+          // was opened in this run, awaits nothing, and adds nothing
+          // while no recording is live.
+          child: RecordingIndicator(
+            router: router,
+            child: RecordingBanner(
             child: LayerChrome(
               router: router,
               animations: animations,
               child: BootSplash(child: SystemInsetsGuard(child: child)),
             ),
+          ),
           ),
         ),
       ),
