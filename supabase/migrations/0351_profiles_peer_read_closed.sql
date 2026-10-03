@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0320 (#1833, checkpoint B) -- a space mate no longer reads another
+-- 0351 (#1833, checkpoint B) -- a space mate no longer reads another
 -- person's `profiles` row; they read the 0319 projection.
 --
 -- 0002's profiles_select let every member of a space select every
@@ -58,4 +58,4 @@ drop policy if exists profiles_select on public.profiles;
 create policy profiles_select on public.profiles for select
   using (id = auth.uid() or public.profile_row_readable(id));
 
-select public.set_deskilo_schema_version(320);
+select public.set_deskilo_schema_version(351);
