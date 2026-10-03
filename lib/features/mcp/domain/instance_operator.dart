@@ -4,6 +4,10 @@
 // installation's assistants (0341 `instance_mcp_overview`): readiness and
 // its blockers, the database administrators, who could become one (an
 // active identity binding), and the assistants' OAuth clients.
+// #2145 (0359) — each client's recognised family and redirect hosts, the
+// loopback switch and the published endpoint.
+
+import 'mcp_onboarding.dart';
 
 class InstanceMember {
   const InstanceMember({
@@ -34,12 +38,21 @@ class InstanceClient {
     required this.name,
     required this.status,
     this.registeredAt,
+    this.family,
+    this.redirectHosts = const [],
   });
 
   final String clientId;
   final String name;
   final String status;
   final DateTime? registeredAt;
+
+  /// `claude`, `chatgpt` or `loopback` when every registered redirect is
+  /// exactly that family's; null for anything else.
+  final String? family;
+
+  /// Where the client's answers go, as hosts (with ports).
+  final List<String> redirectHosts;
 
   bool get approved => status == 'active';
 
@@ -48,6 +61,13 @@ class InstanceClient {
     name: j['name'] as String? ?? '',
     status: j['status'] as String? ?? 'waiting',
     registeredAt: DateTime.tryParse(j['registered_at'] as String? ?? ''),
+    family: j['family'] is String ? j['family'] as String : null,
+    redirectHosts: [
+      for (final h in j['redirect_hosts'] is List
+          ? j['redirect_hosts'] as List
+          : const [])
+        '$h',
+    ],
   );
 }
 
@@ -59,6 +79,8 @@ class InstanceMcpOverview {
     required this.administrators,
     required this.candidates,
     required this.clients,
+    this.allowLoopbackClients = false,
+    this.endpoint = const McpEndpointInfo(source: McpEndpointSource.unknown),
   });
 
   final bool enabled;
@@ -69,6 +91,12 @@ class InstanceMcpOverview {
   final List<InstanceMember> administrators;
   final List<InstanceMember> candidates;
   final List<InstanceClient> clients;
+
+  /// "Allow desktop and command-line assistants" (loopback redirects).
+  final bool allowLoopbackClients;
+
+  /// The endpoint assistants are given.
+  final McpEndpointInfo endpoint;
 
   bool get ready => blockers.isEmpty;
 
@@ -86,6 +114,8 @@ class InstanceMcpOverview {
           .toList(),
       candidates: rows('candidates').map(InstanceMember.fromJson).toList(),
       clients: rows('clients').map(InstanceClient.fromJson).toList(),
+      allowLoopbackClients: j['allow_loopback_clients'] == true,
+      endpoint: McpEndpointInfo.fromJson(j['endpoint']),
     );
   }
 }

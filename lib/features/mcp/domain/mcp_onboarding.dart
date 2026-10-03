@@ -220,4 +220,8 @@ abstract interface class McpOnboardingRepository {
 
   /// The operator sets (or with null clears) the published endpoint; aal2.
   Future<McpEndpointInfo> setEndpoint(String? url);
+
+  /// The operator's one switch for loopback (desktop and command-line)
+  /// assistants; aal2, audited. Answers the switch as saved.
+  Future<bool> setLoopbackClients({required bool allowed});
 }
