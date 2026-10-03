@@ -224,13 +224,23 @@ jobs:
 
       # #2121 — the test inventory is generated, never committed (a
       # committed copy put every open pull request that adds a test in
-      # conflict). It is published here, beside the rows, for the commit
-      # this run tested. Informational: test/lint/test_inventory_test.dart
-      # is what fails a build.
+      # conflict). It is published as its own artifact for the commit this
+      # run tested — never inside quality-code, whose flat layout the
+      # report job reads (a second root there moves every row file into a
+      # subfolder and the report loses them). Informational:
+      # test/lint/test_inventory_test.dart is what fails a build.
       - name: Test inventory (published, not committed)
         if: always()
         continue-on-error: true
         run: dart run tool/test_inventory.dart
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: test-inventory
+          path: docs/testing/TEST_INVENTORY.md
+          if-no-files-found: ignore
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -239,7 +249,6 @@ jobs:
           path: |
             report/*.psv
             report/tests-exit.txt
-            docs/testing/TEST_INVENTORY.md
 
       # #1446 — the required context carries the WHOLE result of this job.
       # Until now the coverage gate ran continue-on-error and only the
