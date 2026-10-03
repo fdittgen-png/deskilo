@@ -112,7 +112,7 @@ jumps, loops, expressions or scripts. Limits (`GuideLimits`): 100 steps,
   `domain/action_registry.dart`, call `recordTaskStep` /
   `recordTaskAttempt` (`presentation/recorder_seam.dart`) at the
   callbacks that already exist, classify its route in
-  `coverage/coverage_manifest.dart` (recorded, excluded with its
+  `domain/coverage_manifest.dart` (recorded, excluded with its
   protected category, or planned with its owner), and add words for the
   new identifiers in `presentation/recorder_labels.dart`.
 * Offline: in a browser, the workbench's *Keep it on this device* card
