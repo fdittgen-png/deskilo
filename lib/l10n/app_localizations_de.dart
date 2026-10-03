@@ -5450,6 +5450,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Entscheidet, welche Zahlungsklauseln eine Rechnung druckt. Die gesetzlichen Vorgaben für Verzugszinsen, Beitreibungspauschale und Skonto gelten nur für Unternehmer als Kunden; ein Verbraucher erhält nie die Beitreibungspauschale. Die eigene Angabe eines Mitglieds hat Vorrang vor dieser Vorgabe. Jede Rechnung behält die Klauseln, mit denen sie ausgestellt wurde.';
 
   @override
+  String get customerCapacitySaveError =>
+      'Die Kundeneigenschaft wurde nicht gespeichert.';
+
+  @override
   String get invoicePdfDueOn => 'Fällig am';
 
   @override

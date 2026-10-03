@@ -310,7 +310,7 @@ abstract class WorkspaceRepository {
   Future<void> setMemberVatTreatment(
       String memberId, String treatment, String reason);
 
-  /// #1916 (RPC `set_member_customer_capacity`, migration 0347): whether
+  /// #1916 (RPC `set_member_customer_capacity`, migration 0349): whether
   /// this member acts as a `business` or a `consumer` customer; null =
   /// not stated. Whoever may issue invoices.
   Future<void> setMemberCustomerCapacity(String memberId, String? capacity);

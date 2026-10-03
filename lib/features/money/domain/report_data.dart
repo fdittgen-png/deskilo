@@ -30,8 +30,8 @@ import 'vat_regime.dart';
 /// model: the seller's statutory lines and the payment clauses. Which
 /// clauses print is qualified by `qualifyClauses` (#1916) from the law
 /// of the transaction and the customer's capacity: an issued invoice
-/// passes its [frozen] snapshot (0347), so later settings never rewrite
-/// it; a [legacy] invoice (issued before 0347) keeps the rule it was
+/// passes its [frozen] snapshot (0349), so later settings never rewrite
+/// it; a [legacy] invoice (issued before 0349) keeps the rule it was
 /// printed under; anything else qualifies the live settings, with the
 /// [memberCapacity] over the workspace default. [seller] (the invoice's
 /// frozen party) wins over the live [workspace] for the identity
@@ -308,7 +308,7 @@ Map<String, Object?> invoiceReportData(
 }
 
 /// #1916 — an ISSUED invoice that carries no legal snapshot: issued
-/// before 0347, its evidence is unknown and it renders as it always did.
+/// before 0349, its evidence is unknown and it renders as it always did.
 /// An unnumbered document (a preview) is not legacy: it qualifies live.
 bool isLegacyInvoice(Invoice invoice) =>
     invoice.legalSnapshot == null && invoice.number.isNotEmpty;

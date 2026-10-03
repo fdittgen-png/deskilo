@@ -5461,6 +5461,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Décide des clauses de paiement imprimées sur la facture. Les mentions légales par défaut (pénalités de retard, indemnité forfaitaire de recouvrement, escompte) ne s\'appliquent qu\'aux clients professionnels, et un consommateur ne reçoit jamais l\'indemnité de recouvrement. La qualité propre d\'un membre l\'emporte sur ce défaut. Chaque facture garde les clauses avec lesquelles elle a été émise.';
 
   @override
+  String get customerCapacitySaveError =>
+      'La qualité du client n\'a pas été enregistrée.';
+
+  @override
   String get invoicePdfDueOn => 'Échéance';
 
   @override

@@ -3288,6 +3288,10 @@
   "@invoiceLegalCustomerCapacityHint": {
     "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
   },
+  "customerCapacitySaveError": "La condición del cliente no se ha guardado.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
+  },
   "invoicePdfDueOn": "Vencimiento",
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"

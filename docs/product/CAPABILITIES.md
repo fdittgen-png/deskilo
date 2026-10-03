@@ -43,7 +43,7 @@ A member finds a free place on the plan and holds it for a period; the database 
 
 A membership plan grants an allowance per month; a booking beyond it spends a carnet or is refused, and a member without a subscription never books for free.
 
-- **Code:** shipped · component `5568ce1ae949`
+- **Code:** shipped · component `907db16d4431`
 - **Needs:** Membership plans configured; an allowance per plan.
 - **Limits:** Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.
 - **Feature flags:** `carnets`, `usageRecords`
@@ -189,7 +189,7 @@ Storage objects, Auth configuration and the running application recover to a kno
 
 A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.
 
-- **Code:** shipped · component `a89ff86ea7f9`
+- **Code:** shipped · component `09c2f86b3648`
 - **Needs:** None: the Demo is built into every client.
 - **Limits:** The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.
 - **Feature flags:** `demoMode`

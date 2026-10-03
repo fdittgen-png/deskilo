@@ -3288,6 +3288,10 @@
   "@invoiceLegalCustomerCapacityHint": {
     "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
   },
+  "customerCapacitySaveError": "Die Kundeneigenschaft wurde nicht gespeichert.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
+  },
   "invoicesTitle": "Rechnungen",
   "invoicesEmpty": "Noch keine Rechnungen.",
   "invoiceCreate": "Neue Rechnung",

@@ -5908,6 +5908,10 @@
   "@invoiceLegalCustomerCapacityHint": {
     "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
   },
+  "customerCapacitySaveError": "The customer capacity was not saved.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
+  },
   "invoicePdfDueOn": "Due on",
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"

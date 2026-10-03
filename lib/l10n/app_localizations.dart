@@ -9325,6 +9325,12 @@ abstract class AppLocalizations {
   /// **'Decides which payment clauses an invoice prints. The statutory late-penalty, recovery-indemnity and discount defaults apply only to business customers, and a consumer never receives the recovery indemnity. A member\'s own capacity wins over this default. Every invoice keeps the clauses it was issued with.'**
   String get invoiceLegalCustomerCapacityHint;
 
+  /// #1916 invoice clauses: customerCapacitySaveError
+  ///
+  /// In en, this message translates to:
+  /// **'The customer capacity was not saved.'**
+  String get customerCapacitySaveError;
+
   /// #910 invoice due date: invoicePdfDueOn
   ///
   /// In en, this message translates to:

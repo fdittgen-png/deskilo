@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/trace/guarded.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/set_member_customer_capacity.dart';
 import '../domain/member.dart';
 import '../providers/workspace_providers.dart';
 
@@ -15,7 +16,7 @@ String customerCapacityName(AppLocalizations? l10n, String? wire) =>
       _ => l10n?.customerCapacityNotStated ?? 'Not stated',
     };
 
-/// #1916 (migration 0347) — whether [member] acts as a business or a
+/// #1916 (migration 0349) — whether [member] acts as a business or a
 /// consumer customer. Whoever may issue invoices; the server checks.
 Future<void> pickMemberCustomerCapacity(
   BuildContext context,
@@ -45,7 +46,7 @@ Future<void> pickMemberCustomerCapacity(
               spacing: 8,
               runSpacing: 4,
               children: [
-                for (final wire in const ['', 'business', 'consumer'])
+                for (final wire in customerCapacityWires)
                   ChoiceChip(
                     key: Key(
                       'customer-capacity-${wire.isEmpty ? 'none' : wire}',
@@ -73,19 +74,19 @@ Future<void> pickMemberCustomerCapacity(
     ),
   );
   if (ok != true || !context.mounted) return;
-  if (chosen == (member.customerCapacity ?? '')) return;
+  var changed = false;
   if (!await runGuarded(
     context,
     domain: 'workspace',
     message: 'customer capacity update failed',
     errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
-    action: () => ref
-        .read(workspaceRepositoryProvider)
-        .setMemberCustomerCapacity(member.id, chosen.isEmpty ? null : chosen),
+        l10n?.customerCapacitySaveError ??
+        'The customer capacity was not saved.',
+    action: () async => changed = await ref
+        .read(memberCustomerCapacitiesProvider)
+        .set(member, chosen),
   )) {
     return;
   }
-  ref.invalidate(workspaceMembersProvider);
+  if (changed) ref.invalidate(workspaceMembersProvider);
 }

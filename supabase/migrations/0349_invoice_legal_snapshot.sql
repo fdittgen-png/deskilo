@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0347 (#1916) — an invoice keeps the legal clauses it was issued with,
+-- 0349 (#1916) — an invoice keeps the legal clauses it was issued with,
 -- and the customer's capacity is a stated fact, not a guess.
 --
 -- Until now the payment clauses an invoice printed (payment terms, late
@@ -49,7 +49,7 @@ alter table public.invoices add column if not exists legal_snapshot jsonb;
 
 comment on column public.invoices.legal_snapshot is
   '#1916 — the legal clauses and facts frozen at issue (schema 1); null '
-  'on invoices issued before 0347 (legacy, evidence unknown).';
+  'on invoices issued before 0349 (legacy, evidence unknown).';
 
 -- ── the setter ─────────────────────────────────────────────────────────
 create or replace function public.set_member_customer_capacity(
@@ -153,4 +153,4 @@ create trigger invoice_legal_freeze
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(347);
+select public.set_deskilo_schema_version(349);

@@ -30,11 +30,11 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 
 | pair | imports |
 |---|---|
-| `money -> workspace` | 122 |
+| `money -> workspace` | 123 |
 | `reservations -> plan` | 73 |
 | `reservations -> workspace` | 60 |
 | `profile -> workspace` | 40 |
-| `members -> workspace` | 35 |
+| `members -> workspace` | 36 |
 | `workspace -> money` | 35 |
 | `money -> events` | 30 |
 | `workspace -> plan` | 26 |
@@ -103,7 +103,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> profile` | 1 |
 | `task_recorder -> reservations` | 1 |
 
-**72 directed relationships, 825 imports.**
+**72 directed relationships, 827 imports.**
 
 Reciprocal (21): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> task_recorder`, `reservations <-> workspace`.
 
@@ -113,12 +113,12 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 
 | file | lines |
 |---|---|
-| `lib/core/demo/data/workspace_repository.dart` | 1991 |
+| `lib/core/demo/data/workspace_repository.dart` | 2000 |
 | `lib/core/demo/data/money_repository.dart` | 1848 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
 | `lib/features/workspace/domain/workspace_feature.dart` | 1598 |
 | `lib/features/money/data/supabase_money_repository.dart` | 1469 |
-| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1316 |
+| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1327 |
 | `lib/features/money/presentation/screens/money_screen.dart` | 1300 |
 | `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1172 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
@@ -126,8 +126,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/editor/presentation/screens/level_canvas_screen.dart` | 1044 |
 | `lib/features/money/presentation/invoice_actions.dart` | 1035 |
 | `lib/features/money/presentation/widgets/report_visual_editor.dart` | 981 |
+| `lib/features/members/presentation/screens/member_page.dart` | 966 |
 | `lib/features/workspace/domain/workspace_xml.dart` | 964 |
-| `lib/features/members/presentation/screens/member_page.dart` | 955 |
 | `lib/features/members/presentation/screens/directory_screen.dart` | 946 |
 | `lib/app/router.dart` | 904 |
 | `lib/features/money/presentation/widgets/bill_view.dart` | 892 |
@@ -137,22 +137,22 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 | `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 851 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
 | `lib/features/reservations/presentation/reserve_seat_actions.dart` | 786 |
+| `lib/features/workspace/domain/workspace_repository.dart` | 786 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
-| `lib/features/workspace/domain/workspace_repository.dart` | 781 |
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 713 |
 | `lib/features/plan/data/supabase_floor_plan_repository.dart` | 711 |
 | `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
-| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 656 |
+| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 675 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
 | `lib/features/reservations/presentation/widgets/booking_sheet.dart` | 650 |
 | `lib/core/help/help_anchors.dart` | 649 |
 | `lib/features/workspace/presentation/screens/onboarding_screen.dart` | 633 |
 | `lib/features/workspace/providers/workspace_providers.dart` | 632 |
+| `lib/features/money/presentation/invoice_documents.dart` | 630 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
-| `lib/features/money/presentation/invoice_documents.dart` | 614 |
 
 **40 files.**
 

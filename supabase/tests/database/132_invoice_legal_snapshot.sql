@@ -34,7 +34,8 @@ create or replace function pg_temp.inv(p_id text, p_ws text, p_member text) retu
   insert into public.invoices (id, workspace_id, member_id, issuer_member_id, number, title, lines, total_cents,
                                currency, member_name, workspace_name, issuer_name, signature, parties)
   values (('00000000-0000-4000-8000-0000001916' || p_id)::uuid, ('00000000-0000-4000-8000-0000001916' || p_ws)::uuid,
-          ('00000000-0000-4000-8000-0000001916' || p_member)::uuid, '00000000-0000-4000-8000-0000001916c1',
+          ('00000000-0000-4000-8000-0000001916' || p_member)::uuid,
+          ('00000000-0000-4000-8000-0000001916' || case p_ws when 'b3' then 'c5' else 'c1' end)::uuid,
           'L-' || p_id, 'T', '[]'::jsonb, 12000, 'EUR', 'A', 'Clauses', 'Owner', 'sig',
           '{"seller":{"country":"fr"},"buyer":{"country":"DE","vat_id":"DE123456789"}}');
 $$;

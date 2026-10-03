@@ -301,8 +301,8 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     /// `default_term` (the unagreed default; needs review) or `unknown`.
     String? maturityBasis,
 
-    /// #1916 (0347) — the legal clauses and facts frozen at issue, raw.
-    /// Null on an invoice issued before 0347: legacy, evidence unknown.
+    /// #1916 (0349) — the legal clauses and facts frozen at issue, raw.
+    /// Null on an invoice issued before 0349: legacy, evidence unknown.
     /// Read it through [legalClauses].
     Map<String, Object?>? legalSnapshot,
     /// #992 — the server's stamp on this row.

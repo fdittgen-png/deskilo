@@ -5450,6 +5450,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Decide quali clausole di pagamento stampa una fattura. I testi legali predefiniti su interessi di mora, risarcimento forfettario delle spese di recupero e sconto valgono solo per clienti professionisti, e un consumatore non riceve mai il risarcimento delle spese di recupero. La qualità propria di un membro prevale su questo valore. Ogni fattura conserva le clausole con cui è stata emessa.';
 
   @override
+  String get customerCapacitySaveError =>
+      'La qualità del cliente non è stata salvata.';
+
+  @override
   String get invoicePdfDueOn => 'Scadenza';
 
   @override

@@ -3288,6 +3288,10 @@
   "@invoiceLegalCustomerCapacityHint": {
     "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
   },
+  "customerCapacitySaveError": "La qualité du client n'a pas été enregistrée.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
+  },
   "invoicePdfDueOn": "Échéance",
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"

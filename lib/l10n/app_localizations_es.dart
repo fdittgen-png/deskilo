@@ -5447,6 +5447,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Decide qué cláusulas de pago imprime una factura. Los textos legales por defecto de intereses de demora, indemnización por costes de cobro y descuento solo se aplican a clientes empresariales, y un consumidor nunca recibe la indemnización por costes de cobro. La condición propia de un miembro prevalece sobre este valor. Cada factura conserva las cláusulas con las que se emitió.';
 
   @override
+  String get customerCapacitySaveError =>
+      'La condición del cliente no se ha guardado.';
+
+  @override
   String get invoicePdfDueOn => 'Vencimiento';
 
   @override

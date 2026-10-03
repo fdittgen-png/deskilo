@@ -36,7 +36,7 @@ mixin _$Member {
  int? get maxSimultaneousReservations;/// #985 — who this member is for VAT (`members.vat_treatment`,
 /// 0182): the wire of `VatTreatment`. 'auto' is today's rule.
  String get vatTreatment;/// #985 — the reason printed when the buyer is exempt.
- String get vatExemptionReason;/// #1916 (0347) — whether this customer acts as a `business` or a
+ String get vatExemptionReason;/// #1916 (0349) — whether this customer acts as a `business` or a
 /// `consumer`; null = not stated (the workspace default applies).
  String? get customerCapacity;/// Whether this member may reserve/check into a WHOLE level (0050);
 /// granted by the owner or an admin, never self-set.
@@ -330,7 +330,7 @@ class _Member extends Member {
 @override@JsonKey() final  String vatTreatment;
 /// #985 — the reason printed when the buyer is exempt.
 @override@JsonKey() final  String vatExemptionReason;
-/// #1916 (0347) — whether this customer acts as a `business` or a
+/// #1916 (0349) — whether this customer acts as a `business` or a
 /// `consumer`; null = not stated (the workspace default applies).
 @override final  String? customerCapacity;
 /// Whether this member may reserve/check into a WHOLE level (0050);

@@ -122,7 +122,7 @@ sealed class Member with _$Member implements SystemStamped {
     /// #985 — the reason printed when the buyer is exempt.
     @Default('') String vatExemptionReason,
 
-    /// #1916 (0347) — whether this customer acts as a `business` or a
+    /// #1916 (0349) — whether this customer acts as a `business` or a
     /// `consumer`; null = not stated (the workspace default applies).
     String? customerCapacity,
 

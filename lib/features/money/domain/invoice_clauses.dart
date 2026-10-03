@@ -4,7 +4,7 @@
 // of the transaction and the customer's capacity, from facts frozen at
 // issue; never by the reader's language or the seller's legal form.
 //
-// The facts are [LegalClauseSnapshot] (`invoices.legal_snapshot`, 0347):
+// The facts are [LegalClauseSnapshot] (`invoices.legal_snapshot`, 0349):
 // the owner's own clause texts plus the seller country and the buyer's
 // capacity. [qualifyClauses] applies a small, bounded rule set:
 //
@@ -140,7 +140,7 @@ class QualifiedClauses {
   ];
 }
 
-/// The legal facts of one invoice as frozen at issue (0347, schema 1).
+/// The legal facts of one invoice as frozen at issue (0349, schema 1).
 class LegalClauseSnapshot {
   const LegalClauseSnapshot({
     this.schema = 1,
@@ -331,7 +331,7 @@ QualifiedClauses qualifyClauses(
   };
 }
 
-/// #1916 — the clauses a LEGACY document (issued before 0347, no
+/// #1916 — the clauses a LEGACY document (issued before 0349, no
 /// snapshot) prints: exactly the pre-0344 rule — the workspace defaults
 /// unless the seller is an association. Kept so an old invoice renders
 /// as it always did; its evidence is unknown and nothing is reissued.
