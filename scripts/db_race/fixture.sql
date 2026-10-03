@@ -73,6 +73,9 @@ select set_config('race.ws', public.create_workspace('Race ' || :'run', 'FR', 'E
 select public.apply_workspace_template(current_setting('race.ws')::uuid, (select id from public.workspace_templates where key = 'tiny'));
 select pg_temp.act_as(:'b');
 select public.finalize_identity_binding();
+-- #1631 — d binds too: the revoke races act for d's assistant.
+select pg_temp.act_as(:'d');
+select public.finalize_identity_binding();
 reset role;
 
 update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb)
