@@ -190,6 +190,11 @@ class _StatusBody extends StatelessWidget {
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                   title: Text(l10n?.statusNet ?? 'Net', style: theme.textTheme.titleMedium),
+                  subtitle: Text(l10n?.statusNetExplanation ??
+                      'This subtotal is invoiced amounts less credit notes, '
+                      'reimbursements and credits. It is neither profit nor a '
+                      'bank balance. Matched and received payments overlap '
+                      'and must not be added together.'),
                   trailing: Text(
                     money(status.netCents),
                     style: theme.textTheme.titleMedium?.copyWith(

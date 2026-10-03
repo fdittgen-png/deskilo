@@ -2209,6 +2209,12 @@ abstract class AppLocalizations {
   /// **'Treasury'**
   String get biAreaTreasury;
 
+  /// No description provided for @biBookingBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved capacity measures bookings, not actual attendance.'**
+  String get biBookingBasis;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -2275,6 +2281,54 @@ abstract class AppLocalizations {
   /// **'{period} is only partly recorded.'**
   String biComparedPartial(String period);
 
+  /// No description provided for @biComparisonUnqualified.
+  ///
+  /// In en, this message translates to:
+  /// **'Change unavailable: one period has partial or out-of-date data.'**
+  String get biComparisonUnqualified;
+
+  /// No description provided for @biComputedWorkspaceTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Computed {date} · workspace time'**
+  String biComputedWorkspaceTime(String date);
+
+  /// No description provided for @biCurrentBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'The whole period is included. Comparison with a completed period is not like-for-like.'**
+  String get biCurrentBasis;
+
+  /// No description provided for @biDataNotApplicable.
+  ///
+  /// In en, this message translates to:
+  /// **'No applicable capacity'**
+  String get biDataNotApplicable;
+
+  /// No description provided for @biDataNotRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Not recorded'**
+  String get biDataNotRecorded;
+
+  /// No description provided for @biDataPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial data'**
+  String get biDataPartial;
+
+  /// No description provided for @biDataStale.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of date'**
+  String get biDataStale;
+
+  /// No description provided for @biDataUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable'**
+  String get biDataUnavailable;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -2292,6 +2346,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You may not read this analysis in this workspace.'**
   String get biForbidden;
+
+  /// No description provided for @biFutureBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Existing bookings and current opening rules; not a demand forecast or guaranteed usage.'**
+  String get biFutureBasis;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2347,11 +2407,41 @@ abstract class AppLocalizations {
   /// **'Open the source'**
   String get biOpenSource;
 
+  /// No description provided for @biPastBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Recomputed from records available now, not a snapshot of what was known then.'**
+  String get biPastBasis;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
   /// **'Q{quarter} {year}'**
   String biQuarter(String quarter, String year);
+
+  /// No description provided for @biRecordedFuture.
+  ///
+  /// In en, this message translates to:
+  /// **'Future period · bookings on record'**
+  String get biRecordedFuture;
+
+  /// No description provided for @biRecordedPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past period · current records'**
+  String get biRecordedPast;
+
+  /// No description provided for @biRecordedPresent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current period · includes future dates'**
+  String get biRecordedPresent;
+
+  /// No description provided for @biRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh data'**
+  String get biRefresh;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2388,6 +2478,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show the standard view'**
   String get biReset;
+
+  /// No description provided for @biSeatHoursBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} blocked seat-hours'**
+  String biSeatHoursBlocked(String hours);
+
+  /// No description provided for @biSeatHoursFree.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} unreserved seat-hours'**
+  String biSeatHoursFree(String hours);
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -24733,6 +24835,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Net'**
   String get statusNet;
+
+  /// No description provided for @statusNetExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together.'**
+  String get statusNetExplanation;
 
   /// #934 workspace status / repartition wizard: statusPaymentsMatched
   ///

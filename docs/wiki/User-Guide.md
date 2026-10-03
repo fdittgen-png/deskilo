@@ -2298,3 +2298,7 @@ The order is not the order things happened: it is **what the delay costs**. Mone
 What is **not** there is as deliberate. Occupancy, balances and unread counts are numbers, not decisions: nobody can act on a number, and each of them belongs to the screen that owns it. A surface that ranked everything would rank nothing. When nothing is waiting the screen says so — *Nothing needs you* — rather than showing an empty list you have to interpret.
 
 The feature is off until you ask for it, and it sits **beside** the alerts bell rather than replacing it.
+
+**Reading analytics (#1982).** Seat utilisation is reserved seat time divided by offered seat time, not measured attendance. Past, current and future periods now say what their figures mean; the computation time uses the workspace clock. Current periods include future dates. Future bookings are not a demand forecast, and revisiting a past period recalculates today’s records rather than recreating what was known then. Partial or stale periods do not produce a performance-change figure. Refresh data keeps your selection. Unreserved and blocked seat-hours remain distinct. Missing or invalid source data is unavailable, never zero.
+
+The workspace financial status explains its subtotal: invoiced amounts less credit notes, reimbursements and credits. This is neither profit nor a bank balance. Matched and received payments overlap; do not add them together.

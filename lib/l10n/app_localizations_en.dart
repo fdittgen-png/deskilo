@@ -1213,6 +1213,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biAreaTreasury => 'Treasury';
 
   @override
+  String get biBookingBasis =>
+      'Reserved capacity measures bookings, not actual attendance.';
+
+  @override
   String biChangePoints(String value) {
     return '$value pp';
   }
@@ -1254,6 +1258,34 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get biComparisonUnqualified =>
+      'Change unavailable: one period has partial or out-of-date data.';
+
+  @override
+  String biComputedWorkspaceTime(String date) {
+    return 'Computed $date · workspace time';
+  }
+
+  @override
+  String get biCurrentBasis =>
+      'The whole period is included. Comparison with a completed period is not like-for-like.';
+
+  @override
+  String get biDataNotApplicable => 'No applicable capacity';
+
+  @override
+  String get biDataNotRecorded => 'Not recorded';
+
+  @override
+  String get biDataPartial => 'Partial data';
+
+  @override
+  String get biDataStale => 'Out of date';
+
+  @override
+  String get biDataUnavailable => 'Unavailable';
+
+  @override
   String get biDimensionLevel => 'Level';
 
   @override
@@ -1262,6 +1294,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biForbidden => 'You may not read this analysis in this workspace.';
+
+  @override
+  String get biFutureBasis =>
+      'Existing bookings and current opening rules; not a demand forecast or guaranteed usage.';
 
   @override
   String get biGrain => 'Period length';
@@ -1292,9 +1328,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biOpenSource => 'Open the source';
 
   @override
+  String get biPastBasis =>
+      'Recomputed from records available now, not a snapshot of what was known then.';
+
+  @override
   String biQuarter(String quarter, String year) {
     return 'Q$quarter $year';
   }
+
+  @override
+  String get biRecordedFuture => 'Future period · bookings on record';
+
+  @override
+  String get biRecordedPast => 'Past period · current records';
+
+  @override
+  String get biRecordedPresent => 'Current period · includes future dates';
+
+  @override
+  String get biRefresh => 'Refresh data';
 
   @override
   String biRefusedBudget(String count) {
@@ -1317,6 +1369,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biReset => 'Show the standard view';
+
+  @override
+  String biSeatHoursBlocked(String hours) {
+    return '$hours blocked seat-hours';
+  }
+
+  @override
+  String biSeatHoursFree(String hours) {
+    return '$hours unreserved seat-hours';
+  }
 
   @override
   String get biSort => 'Order';
@@ -14225,6 +14287,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusNet => 'Net';
+
+  @override
+  String get statusNetExplanation =>
+      'This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together.';
 
   @override
   String get statusPaymentsMatched => 'Payments matched';
