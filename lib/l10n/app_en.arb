@@ -15519,6 +15519,82 @@
   "@taskExportRefused": {
     "description": "#1866 task export (Word document): Refused"
   },
+  "taskExportSceneLater": "Later",
+  "@taskExportSceneLater": {
+    "description": "#1876 storyboard and illustrations: SceneLater"
+  },
+  "taskExportSceneBookingTitle": "Book a place",
+  "@taskExportSceneBookingTitle": {
+    "description": "#1876 storyboard and illustrations: SceneBookingTitle"
+  },
+  "taskExportSceneDetailTitle": "Reservation",
+  "@taskExportSceneDetailTitle": {
+    "description": "#1876 storyboard and illustrations: SceneDetailTitle"
+  },
+  "taskExportSceneConfirm": "Confirm",
+  "@taskExportSceneConfirm": {
+    "description": "#1876 storyboard and illustrations: SceneConfirm"
+  },
+  "taskExportSceneCancel": "Cancel",
+  "@taskExportSceneCancel": {
+    "description": "#1876 storyboard and illustrations: SceneCancel"
+  },
+  "taskExportSceneProvenance": "Illustration recreated from the recording, not a screenshot",
+  "@taskExportSceneProvenance": {
+    "description": "#1876 storyboard and illustrations: SceneProvenance"
+  },
+  "taskExportSceneAlt": "Illustration: {screen} – {step}",
+  "@taskExportSceneAlt": {
+    "description": "#1876 storyboard and illustrations: SceneAlt",
+    "placeholders": {
+      "screen": {
+        "type": "String"
+      },
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportStoryboardInclude": "Include",
+  "@taskExportStoryboardInclude": {
+    "description": "#1876 storyboard and illustrations: StoryboardInclude"
+  },
+  "taskExportStoryboardApprove": "Approve illustration",
+  "@taskExportStoryboardApprove": {
+    "description": "#1876 storyboard and illustrations: StoryboardApprove"
+  },
+  "taskExportStoryboardMoveUp": "Move up",
+  "@taskExportStoryboardMoveUp": {
+    "description": "#1876 storyboard and illustrations: StoryboardMoveUp"
+  },
+  "taskExportStoryboardMoveDown": "Move down",
+  "@taskExportStoryboardMoveDown": {
+    "description": "#1876 storyboard and illustrations: StoryboardMoveDown"
+  },
+  "taskExportStoryboardSourceScene": "Recreated illustration (not a screenshot)",
+  "@taskExportStoryboardSourceScene": {
+    "description": "#1876 storyboard and illustrations: StoryboardSourceScene"
+  },
+  "taskExportStoryboardSourceText": "Text slide",
+  "@taskExportStoryboardSourceText": {
+    "description": "#1876 storyboard and illustrations: StoryboardSourceText"
+  },
+  "taskExportStoryboardSourceExcluded": "Protected screen: not illustrated",
+  "@taskExportStoryboardSourceExcluded": {
+    "description": "#1876 storyboard and illustrations: StoryboardSourceExcluded"
+  },
+  "taskExportStoryboardGap": "Gap: nothing was recorded here",
+  "@taskExportStoryboardGap": {
+    "description": "#1876 storyboard and illustrations: StoryboardGap"
+  },
+  "taskExportStoryboardRenderFailed": "The illustration could not be drawn; this step stays as text.",
+  "@taskExportStoryboardRenderFailed": {
+    "description": "#1876 storyboard and illustrations: StoryboardRenderFailed"
+  },
+  "taskExportStoryboardOrderRefused": "A result cannot come before the command it answers.",
+  "@taskExportStoryboardOrderRefused": {
+    "description": "#1876 storyboard and illustrations: StoryboardOrderRefused"
+  },
   "featureTaskRecorderTitle": "Task recorder",
   "@featureTaskRecorderTitle": {
     "description": "#1865 task recorder: the feature's name"

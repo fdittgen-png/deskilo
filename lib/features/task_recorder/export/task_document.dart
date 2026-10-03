@@ -20,6 +20,7 @@ import '../domain/action_registry.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
 import 'docx/docx_writer.dart';
+import 'step_narrative.dart';
 import 'task_export_labels.dart';
 
 /// Choices made when an export starts.
@@ -112,18 +113,10 @@ DocxDocument buildTaskDocument(
     }
   }
   blocks.add(DocxParagraph.text(DocxStyle.heading1, l.taskExportSectionSteps));
-  final unanswered = {for (final s in r.unansweredAttempts) s.seq};
-  String? lastSurface;
-  for (final s in r.steps) {
-    final (main, details) = _step(s, labels, l, options);
-    if (s.surface != null &&
-        s.surface != lastSurface &&
-        s.kind == StepKind.action) {
-      details.insert(0, l.taskExportOnScreen(labels.surface(s.surface)));
-    }
-    if (s.surface != null) lastSurface = s.surface;
-    if (unanswered.contains(s.seq)) details.add(l.taskExportNoResult);
-    if (s.origin == StepOrigin.authored) details.add(l.taskExportAuthored);
+  for (final n in narrate(r, l, includeNotes: options.includeNotes)) {
+    final details = n.details;
+    final main = n.title;
+    final s = n.step;
     blocks.add(
       DocxParagraph(
         DocxStyle.listNumber,
@@ -177,37 +170,6 @@ List<String> _about(
     l.taskExportVersion(taskRecordingSchemaVersion, r.actionContractVersion),
     l.taskExportRevision(recordingRevision(r)),
   ];
-}
-
-/// The numbered line and its detail lines.
-(String, List<String>) _step(
-  RecordedStep s,
-  TaskExportLabels labels,
-  AppLocalizations l,
-  TaskDocumentOptions options,
-) {
-  switch (s.kind) {
-    case StepKind.action:
-      return (labels.action(s), labels.details(s.payload));
-    case StepKind.observation:
-      return (
-        l.taskExportResult(labels.outcome(s.outcome)),
-        labels.details(s.payload),
-      );
-    case StepKind.annotation:
-      final note = s.note;
-      if (options.includeNotes && note != null && note.trim().isNotEmpty) {
-        return (l.taskExportNote(note.trim()), <String>[]);
-      }
-      return (l.taskExportNoteOmitted, <String>[]);
-    case StepKind.excluded:
-      return (
-        l.taskExportExcluded(labels.protectedSurface(s.protectedCategory)),
-        <String>[],
-      );
-    case StepKind.unrecorded:
-      return (l.taskExportUnrecorded, <String>[]);
-  }
 }
 
 List<String> _limitations(TaskRecording r, AppLocalizations l) => [

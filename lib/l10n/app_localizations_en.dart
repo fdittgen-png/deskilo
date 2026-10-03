@@ -14035,6 +14035,64 @@ class AppLocalizationsEn extends AppLocalizations {
       'This recording cannot be exported as a Word document.';
 
   @override
+  String get taskExportSceneLater => 'Later';
+
+  @override
+  String get taskExportSceneBookingTitle => 'Book a place';
+
+  @override
+  String get taskExportSceneDetailTitle => 'Reservation';
+
+  @override
+  String get taskExportSceneConfirm => 'Confirm';
+
+  @override
+  String get taskExportSceneCancel => 'Cancel';
+
+  @override
+  String get taskExportSceneProvenance =>
+      'Illustration recreated from the recording, not a screenshot';
+
+  @override
+  String taskExportSceneAlt(String screen, String step) {
+    return 'Illustration: $screen – $step';
+  }
+
+  @override
+  String get taskExportStoryboardInclude => 'Include';
+
+  @override
+  String get taskExportStoryboardApprove => 'Approve illustration';
+
+  @override
+  String get taskExportStoryboardMoveUp => 'Move up';
+
+  @override
+  String get taskExportStoryboardMoveDown => 'Move down';
+
+  @override
+  String get taskExportStoryboardSourceScene =>
+      'Recreated illustration (not a screenshot)';
+
+  @override
+  String get taskExportStoryboardSourceText => 'Text slide';
+
+  @override
+  String get taskExportStoryboardSourceExcluded =>
+      'Protected screen: not illustrated';
+
+  @override
+  String get taskExportStoryboardGap => 'Gap: nothing was recorded here';
+
+  @override
+  String get taskExportStoryboardRenderFailed =>
+      'The illustration could not be drawn; this step stays as text.';
+
+  @override
+  String get taskExportStoryboardOrderRefused =>
+      'A result cannot come before the command it answers.';
+
+  @override
   String get featureTaskRecorderTitle => 'Task recorder';
 
   @override
