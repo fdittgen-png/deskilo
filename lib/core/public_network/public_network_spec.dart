@@ -23,6 +23,9 @@ enum PublicCardinality { many, zeroOrOne, one, none }
 enum PublicFieldType {
   uuid,
   datetime,
+  integer,
+  integerList,
+  stringList,
   text,
   boolean,
   enum_,
@@ -85,6 +88,11 @@ class PublicOperationSpec {
     this.input = const {},
     this.output,
     required this.cardinality,
+    this.versions = const [],
+    this.requires = const [],
+    this.baseline = false,
+    this.unlabelled,
+    this.revalidated = false,
   });
 
   /// The stable operation identifier.
@@ -112,6 +120,26 @@ class PublicOperationSpec {
   /// The schema of each returned record.
   final String? output;
   final PublicCardinality cardinality;
+
+  /// #1847 B — the versions of this operation this client implements.
+  final List<int> versions;
+
+  /// Capabilities a client must understand to perform it.
+  final List<String> requires;
+
+  /// Whether a server from before negotiation (no descriptor) implements
+  /// version 1 of it.
+  final bool baseline;
+
+  /// The version an unlabelled request means: what a client from before
+  /// negotiation, which sends no operation header, is taken to speak.
+  final int? unlabelled;
+
+  /// Whether the server revalidates the negotiated version.
+  final bool revalidated;
+
+  /// The `x-deskilo-operation` header value for [version].
+  String operationHeader(int version) => '$id@$version';
 
   /// The PostgREST column list.
   String get selectClause => select.join(',');

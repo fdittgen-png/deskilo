@@ -40,6 +40,7 @@
   "portalNoWorkspaces": "No published workspaces found.",
   "portalNoLongerPublished": "This workspace is no longer published.",
   "portalDirectoryIncompatible": "Some workspaces need a newer version of the app and are not shown.",
+  "portalActionNotNegotiated": "This action is not available between this app and that server. Updating the app may help.",
   "portalMoreDirectories": "More directories",
   "portalMessenger": "Account messenger",
   "portalThisServer": "This server",

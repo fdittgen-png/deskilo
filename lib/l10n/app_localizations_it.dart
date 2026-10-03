@@ -11176,6 +11176,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalActionFailed => 'Impossibile salvare la modifica. Riprova.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Questa azione non è disponibile tra questa app e quel server. Aggiornare l’app può aiutare.';
+
+  @override
   String get portalAddress => 'Indirizzo pubblico';
 
   @override
@@ -15030,6 +15034,45 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskExportWordButton => 'Esporta come documento Word';
+
+  @override
+  String get taskGuideCreate => 'Crea una bozza di guida';
+
+  @override
+  String get taskGuideEditText => 'Scrivi il testo';
+
+  @override
+  String get taskGuideIntro =>
+      'Ogni passaggio come lo seguirà un lettore. Un passaggio che prenota attende la risposta reale; nulla viene fatto al posto del lettore.';
+
+  @override
+  String get taskGuideManual => 'Esegua questo passaggio da sé';
+
+  @override
+  String taskGuideManualProtected(String category) {
+    return 'Esegua questo passaggio da sé, su una schermata protetta: $category';
+  }
+
+  @override
+  String get taskGuideNoText => 'Un\'istruzione ancora da scrivere';
+
+  @override
+  String get taskGuideOptional => 'Il lettore può saltarlo';
+
+  @override
+  String get taskGuideRecovery =>
+      'Se viene rifiutato: scelga un altro posto, giorno o periodo, poi confermi di nuovo.';
+
+  @override
+  String get taskGuideSave => 'Salva la guida';
+
+  @override
+  String get taskGuideTitle => 'Bozza di guida';
+
+  @override
+  String taskGuideWaitsFor(String outcomes) {
+    return 'Attende: $outcomes';
+  }
 
   @override
   String get taskOutputBusy => 'Questo risultato è già in creazione.';

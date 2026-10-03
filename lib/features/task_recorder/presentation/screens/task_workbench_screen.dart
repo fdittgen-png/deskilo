@@ -23,6 +23,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/workbench_import.dart';
 import '../../domain/recording_edit.dart';
 import '../../domain/task_recording.dart';
+import '../../guide/guide_compiler.dart';
+import 'guide_draft_screen.dart';
 import '../../package/task_package.dart';
 import '../recorder_labels.dart';
 import '../recording_export.dart';
@@ -227,6 +229,17 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
                 l10n?.taskWorkbenchReviewIllustrations ??
                     'Review the illustrations',
               ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            OutlinedButton.icon(
+              key: const ValueKey('workbench-create-guide'),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => GuideDraftScreen(guide: compileGuide(copy)),
+                ),
+              ),
+              icon: const Icon(Icons.route_outlined),
+              label: Text(l10n?.taskGuideCreate ?? 'Create a guide draft'),
             ),
             const SizedBox(height: AppSpacing.md),
             TaskOutputsSection(

@@ -141,5 +141,16 @@
   "taskOutputFailed": "No se pudo crear el resultado.",
   "taskOutputStale": "Las ilustraciones se revisaron para una versión anterior.",
   "taskOutputBusy": "Este resultado ya se está creando.",
-  "taskWorkbenchReviewIllustrations": "Revisar las ilustraciones"
+  "taskWorkbenchReviewIllustrations": "Revisar las ilustraciones",
+  "taskGuideCreate": "Crear un borrador de guía",
+  "taskGuideTitle": "Borrador de guía",
+  "taskGuideIntro": "Cada paso tal como lo seguirá un lector. Un paso que reserva espera la respuesta real; nada se hace por el lector.",
+  "taskGuideSave": "Guardar la guía",
+  "taskGuideEditText": "Escribir el texto",
+  "taskGuideOptional": "El lector puede omitirlo",
+  "taskGuideWaitsFor": "Espera: {outcomes}",
+  "taskGuideRecovery": "Si se rechaza: elija otro sitio, día o periodo y confirme de nuevo.",
+  "taskGuideNoText": "Una instrucción aún por escribir",
+  "taskGuideManual": "Haga este paso usted mismo",
+  "taskGuideManualProtected": "Haga este paso usted mismo, en una pantalla protegida: {category}"
 }
