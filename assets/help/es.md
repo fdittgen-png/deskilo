@@ -2249,6 +2249,8 @@ La funcionalidad está apagada hasta que usted la pida, y se sitúa **junto** a 
 
 El estado financiero explica su subtotal: importes facturados menos abonos, reembolsos y créditos. No es beneficio ni saldo bancario. Los pagos conciliados y recibidos se solapan; no deben sumarse.
 
+En el BI web, **Análisis** permite seleccionar capacidad, importes facturados y cobrados según los permisos y las funciones activadas. Los importes facturados siguen los meses de facturación; los cobrados siguen el mes de asignación del pago a la factura, no la fecha del extracto bancario. Los abonos se muestran por separado. **Guardar vista** conserva la selección de forma privada o, con los permisos necesarios, para el equipo. Una vista predeterminada carga datos nuevos con los permisos actuales; no guarda una copia de las cifras.
+
 # Guía del administrador — configurar el espacio
 
 Para quien pone el espacio en marcha: qué decide cada parámetro, en el

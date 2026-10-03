@@ -1217,6 +1217,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Reserved capacity measures bookings, not actual attendance.';
 
   @override
+  String get biCardDown => 'Move down';
+
+  @override
+  String get biCardUp => 'Move up';
+
+  @override
+  String get biCards => 'Analyses shown';
+
+  @override
+  String biCardsUnavailable(String count) {
+    return '$count analyses of this view are not available to you and are left out.';
+  }
+
+  @override
   String biChangePoints(String value) {
     return '$value pp';
   }
@@ -1291,6 +1305,66 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get biExposureDiffers =>
       'The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.';
+
+  @override
+  String get biFinanceCollected => 'Collected';
+
+  @override
+  String biFinanceCollectedBasis(String count) {
+    return 'From $count payments matched to invoices';
+  }
+
+  @override
+  String get biFinanceCollectedDefinition =>
+      'Payments matched to invoices, by the month of the match on the workspace clock.';
+
+  @override
+  String get biFinanceCollectedZero => 'Measured: nothing was collected.';
+
+  @override
+  String biFinanceComputed(String date) {
+    return 'Computed $date';
+  }
+
+  @override
+  String get biFinanceCurrencyMix =>
+      'This period holds amounts in another currency; amounts in different currencies are not added, so none is shown.';
+
+  @override
+  String get biFinanceInvoiced => 'Invoiced';
+
+  @override
+  String biFinanceInvoicedBasis(String count, String credit) {
+    return 'From $count invoices; credit notes $credit, shown apart';
+  }
+
+  @override
+  String get biFinanceInvoicedDefinition =>
+      'Invoices of these months, voided ones and settlements left out (a settlement regroups invoices already counted); positive totals only.';
+
+  @override
+  String get biFinanceInvoicedZero => 'Measured: nothing was invoiced.';
+
+  @override
+  String biFinanceLastChange(String date) {
+    return 'Last change to the source: $date';
+  }
+
+  @override
+  String get biFinanceNotExact =>
+      'An amount is too large to show exactly, so it is not shown.';
+
+  @override
+  String get biFinanceNotProfit =>
+      'Not a profit: no cost is in this figure, and the two figures are not subtracted from each other.';
+
+  @override
+  String get biFinancePartial =>
+      'The period is not over: these figures will still change.';
+
+  @override
+  String get biFinanceSameAsReport =>
+      'The same rules as the workspace status report, computed once on the server.';
 
   @override
   String get biForbidden => 'You may not read this analysis in this workspace.';
@@ -1412,7 +1486,93 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biViewChart => 'Chart';
 
   @override
+  String get biViewClearMyDefault => 'Stop opening my default view';
+
+  @override
+  String get biViewClearTeamDefault => 'Clear the team’s default';
+
+  @override
+  String biViewCopyName(String name) {
+    return '$name (copy)';
+  }
+
+  @override
+  String get biViewDelete => 'Delete';
+
+  @override
+  String biViewDeleteConfirm(String name) {
+    return 'Delete the view “$name”?';
+  }
+
+  @override
+  String get biViewDuplicate => 'Duplicate as my view';
+
+  @override
+  String get biViewForbidden => 'You may not change this view.';
+
+  @override
+  String get biViewInvalid => 'This name or view cannot be saved.';
+
+  @override
+  String get biViewMakeMyDefault => 'Open this view by default';
+
+  @override
+  String get biViewMakeTeamDefault => 'Make it the team’s default';
+
+  @override
+  String get biViewModified => 'changed since it was opened';
+
+  @override
+  String get biViewName => 'Name';
+
+  @override
+  String get biViewNameTaken => 'A view with this name already exists.';
+
+  @override
+  String biViewPeriodFixed(String period) {
+    return 'Always $period';
+  }
+
+  @override
+  String get biViewPeriodMoves => 'The period moves with the day it is opened';
+
+  @override
+  String get biViewRename => 'Rename…';
+
+  @override
+  String get biViewSave => 'Save';
+
+  @override
+  String get biViewSaveAs => 'Save as a new view…';
+
+  @override
+  String get biViewScopePrivate => 'Only me';
+
+  @override
+  String get biViewScopeTeam => 'The team';
+
+  @override
+  String get biViewStale =>
+      'Someone saved this view since you opened it. The list was read again; try once more.';
+
+  @override
+  String get biViewStandard => 'Standard view';
+
+  @override
   String get biViewTable => 'Table';
+
+  @override
+  String get biViewUnreadable =>
+      'This view cannot be opened here: it was saved in a form this version does not read, or none of its analyses is available to you.';
+
+  @override
+  String get biViews => 'Views';
+
+  @override
+  String get biViewsMine => 'My views';
+
+  @override
+  String get biViewsTeam => 'Team views';
 
   @override
   String get billAccessorySupplements => 'Accessory supplements';

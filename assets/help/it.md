@@ -2257,6 +2257,8 @@ La funzionalità resta spenta finché non la chiedete, e si colloca **accanto** 
 
 Lo stato finanziario spiega il subtotale: importi fatturati meno note di credito, rimborsi e crediti. Non è un utile né un saldo bancario. I pagamenti abbinati e ricevuti si sovrappongono; non vanno sommati.
 
+Nel BI web, **Analisi** seleziona capacità, importi fatturati e incassati in base ai permessi e alle funzionalità attive. Gli importi fatturati seguono i mesi di fatturazione; quelli incassati seguono il mese di abbinamento del pagamento alla fattura, non la data dell’estratto conto. Le note di credito sono mostrate separatamente. **Salva vista** conserva la selezione privatamente o, con i permessi necessari, per il team. Una vista predefinita carica dati aggiornati con i permessi attuali; non salva una copia delle cifre.
+
 # Guida dell'amministratore — configurare lo spazio
 
 Per chi mette in piedi lo spazio: che cosa decide ogni parametro,

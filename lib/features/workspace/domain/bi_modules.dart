@@ -106,6 +106,36 @@ const biModules = <BiModule>[
       permission: WorkspacePermission.workspaceSettings,
     ),
   ),
+  // #1924 — the treasurer's two figures, from the money report's own
+  // predicates; the drill-through opens that report.
+  BiModule(
+    id: 'finance.invoiced',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.sum,
+    drill: BiDrill(
+      route: '/money/status',
+      permission: WorkspacePermission.viewFinances,
+    ),
+  ),
+  BiModule(
+    id: 'finance.collected',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.sum,
+    drill: BiDrill(
+      route: '/money/status',
+      permission: WorkspacePermission.viewFinances,
+    ),
+  ),
 ];
 
 /// The modules [features] and [permissions] allow, in registry order.

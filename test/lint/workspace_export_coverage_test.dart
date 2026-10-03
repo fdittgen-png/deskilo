@@ -104,6 +104,7 @@ const Map<String, String> _notExported = {
   'mcp_idempotency': 'replay records of MCP calls, operational state only (#1612)',
   'mcp_action_confirmations': 'a person\'s pending confirmation of an assistant request, never portable (#1619)',
   'mcp_usage': 'the audit of MCP calls and the count the limits read, operational state only (#1630)',
+  'bi_views': 'saved Web-BI views (#1923 C) are questions a reader asked of this installation\'s analytics, kept under its rights; a private one travels in its author\'s access export, and none is portable configuration',
   'book_accounts': 'an issuer\'s chart of accounts is reviewed on this installation by someone who manages billing, never copied with the data (#1869)',
   'book_mappings': 'which account each posting role books to is a reviewed finance decision of this installation, never copied with the data (#1869)',
   'book_profiles': 'who keeps the official books of each issuer is a finance decision taken on this installation, never copied with the data (#1869)',

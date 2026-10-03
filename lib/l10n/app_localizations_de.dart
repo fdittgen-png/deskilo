@@ -1229,6 +1229,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Reservierte Kapazität misst Buchungen, nicht die tatsächliche Anwesenheit.';
 
   @override
+  String get biCardDown => 'Nach unten';
+
+  @override
+  String get biCardUp => 'Nach oben';
+
+  @override
+  String get biCards => 'Angezeigte Analysen';
+
+  @override
+  String biCardsUnavailable(String count) {
+    return '$count Analysen dieser Ansicht sind für Sie nicht verfügbar und werden ausgelassen.';
+  }
+
+  @override
   String biChangePoints(String value) {
     return '$value Pp.';
   }
@@ -1303,6 +1317,66 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get biExposureDiffers =>
       'Die beiden Zeiträume haben nicht dieselbe Basis; die Quote berücksichtigt das, die Rohwerte sind nicht direkt vergleichbar.';
+
+  @override
+  String get biFinanceCollected => 'Eingenommen';
+
+  @override
+  String biFinanceCollectedBasis(String count) {
+    return 'Aus $count Zahlungen, die Rechnungen zugeordnet sind';
+  }
+
+  @override
+  String get biFinanceCollectedDefinition =>
+      'Rechnungen zugeordnete Zahlungen, nach dem Monat der Zuordnung in der Zeit des Arbeitsbereichs.';
+
+  @override
+  String get biFinanceCollectedZero => 'Gemessen: Es wurde nichts eingenommen.';
+
+  @override
+  String biFinanceComputed(String date) {
+    return 'Berechnet am $date';
+  }
+
+  @override
+  String get biFinanceCurrencyMix =>
+      'Dieser Zeitraum enthält Beträge in einer anderen Währung; verschiedene Währungen werden nicht addiert, daher wird kein Betrag gezeigt.';
+
+  @override
+  String get biFinanceInvoiced => 'Fakturiert';
+
+  @override
+  String biFinanceInvoicedBasis(String count, String credit) {
+    return 'Aus $count Rechnungen; Gutschriften $credit, gesondert ausgewiesen';
+  }
+
+  @override
+  String get biFinanceInvoicedDefinition =>
+      'Rechnungen dieser Monate, ohne stornierte und Sammelabrechnungen (eine Sammelabrechnung fasst bereits gezählte Rechnungen zusammen); nur positive Summen.';
+
+  @override
+  String get biFinanceInvoicedZero => 'Gemessen: Es wurde nichts fakturiert.';
+
+  @override
+  String biFinanceLastChange(String date) {
+    return 'Letzte Änderung der Quelle: $date';
+  }
+
+  @override
+  String get biFinanceNotExact =>
+      'Ein Betrag ist zu groß, um exakt angezeigt zu werden, und wird daher nicht gezeigt.';
+
+  @override
+  String get biFinanceNotProfit =>
+      'Kein Gewinn: Diese Zahl enthält keine Kosten, und die beiden Zahlen werden nicht voneinander abgezogen.';
+
+  @override
+  String get biFinancePartial =>
+      'Der Zeitraum ist nicht abgeschlossen: Diese Zahlen ändern sich noch.';
+
+  @override
+  String get biFinanceSameAsReport =>
+      'Dieselben Regeln wie der Statusbericht des Arbeitsbereichs, einmal auf dem Server berechnet.';
 
   @override
   String get biForbidden =>
@@ -1427,7 +1501,95 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biViewChart => 'Diagramm';
 
   @override
+  String get biViewClearMyDefault => 'Meine Standardansicht nicht mehr öffnen';
+
+  @override
+  String get biViewClearTeamDefault => 'Standardansicht des Teams entfernen';
+
+  @override
+  String biViewCopyName(String name) {
+    return '$name (Kopie)';
+  }
+
+  @override
+  String get biViewDelete => 'Löschen';
+
+  @override
+  String biViewDeleteConfirm(String name) {
+    return 'Ansicht „$name“ löschen?';
+  }
+
+  @override
+  String get biViewDuplicate => 'Als meine Ansicht duplizieren';
+
+  @override
+  String get biViewForbidden => 'Sie dürfen diese Ansicht nicht ändern.';
+
+  @override
+  String get biViewInvalid =>
+      'Dieser Name oder diese Ansicht kann nicht gespeichert werden.';
+
+  @override
+  String get biViewMakeMyDefault => 'Diese Ansicht standardmäßig öffnen';
+
+  @override
+  String get biViewMakeTeamDefault => 'Zur Standardansicht des Teams machen';
+
+  @override
+  String get biViewModified => 'seit dem Öffnen geändert';
+
+  @override
+  String get biViewName => 'Name';
+
+  @override
+  String get biViewNameTaken => 'Eine Ansicht mit diesem Namen gibt es schon.';
+
+  @override
+  String biViewPeriodFixed(String period) {
+    return 'Immer $period';
+  }
+
+  @override
+  String get biViewPeriodMoves =>
+      'Der Zeitraum richtet sich nach dem Tag des Öffnens';
+
+  @override
+  String get biViewRename => 'Umbenennen…';
+
+  @override
+  String get biViewSave => 'Speichern';
+
+  @override
+  String get biViewSaveAs => 'Als neue Ansicht speichern…';
+
+  @override
+  String get biViewScopePrivate => 'Nur ich';
+
+  @override
+  String get biViewScopeTeam => 'Das Team';
+
+  @override
+  String get biViewStale =>
+      'Jemand hat diese Ansicht gespeichert, seit Sie sie geöffnet haben. Die Liste wurde neu gelesen; versuchen Sie es noch einmal.';
+
+  @override
+  String get biViewStandard => 'Standardansicht';
+
+  @override
   String get biViewTable => 'Tabelle';
+
+  @override
+  String get biViewUnreadable =>
+      'Diese Ansicht lässt sich hier nicht öffnen: Sie wurde in einer Form gespeichert, die diese Version nicht liest, oder keine ihrer Analysen ist für Sie verfügbar.';
+
+  @override
+  String get biViews => 'Ansichten';
+
+  @override
+  String get biViewsMine => 'Meine Ansichten';
+
+  @override
+  String get biViewsTeam => 'Team-Ansichten';
 
   @override
   String get billAccessorySupplements => 'Zubehör-Aufpreise';
