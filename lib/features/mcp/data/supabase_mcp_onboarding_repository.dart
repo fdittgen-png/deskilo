@@ -86,4 +86,46 @@ class SupabaseMcpOnboardingRepository implements McpOnboardingRepository {
     );
     return r is Map && r['allow_loopback_clients'] == true;
   }
+
+  @override
+  Future<EndpointProbe> probeEndpoint() async => EndpointProbe.fromJson(
+    await _client.rpc<Object?>('instance_probe_mcp_endpoint'),
+  );
+
+  @override
+  Future<EndpointProbe> checkEndpoint() async => EndpointProbe.fromJson(
+    await _client.rpc<Object?>('instance_mcp_endpoint_check'),
+  );
+
+  @override
+  Future<DateTime?> grantEligibility({
+    required String subjectId,
+    required String reason,
+    required int days,
+  }) async {
+    final r = await _client.rpc<Object?>(
+      'instance_grant_mcp_eligibility',
+      params: {'p_subject': subjectId, 'p_reason': reason, 'p_days': days},
+    );
+    return r is Map && r['status'] == 'granted'
+        ? DateTime.tryParse('${r['expires_at']}')
+        : null;
+  }
+
+  @override
+  Future<bool> setWorkspaceMcpAccess(
+    String workspaceId, {
+    required bool enabled,
+    bool? expected,
+  }) async {
+    final r = await _client.rpc<Object?>(
+      'set_workspace_mcp_access',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_enabled': enabled,
+        'p_expected': expected,
+      },
+    );
+    return r is Map && r['mcp_access'] == true;
+  }
 }

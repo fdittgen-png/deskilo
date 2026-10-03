@@ -102,6 +102,7 @@ public.mcp_connections.mcp_delegated_deny
 public.mcp_disclosure_maximum.mcp_delegated_deny
 public.mcp_eligibility_grants.mcp_delegated_deny
 public.mcp_eligibility_requests.mcp_delegated_deny
+public.mcp_endpoint_probes.mcp_delegated_deny
 public.mcp_idempotency.mcp_delegated_deny
 public.mcp_installation_settings.mcp_delegated_deny
 public.mcp_limits.mcp_delegated_deny

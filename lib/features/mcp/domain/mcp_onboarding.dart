@@ -143,6 +143,67 @@ class McpEndpointInfo {
   }
 }
 
+enum EndpointProbeState {
+  missing,
+  pending,
+  deployed,
+  endpointNotDeployed,
+  resourceMismatch,
+  unavailable,
+  unknown;
+
+  static EndpointProbeState parse(Object? raw) => switch (raw) {
+    'missing' => missing,
+    'pending' => pending,
+    'deployed' => deployed,
+    'endpoint_not_deployed' => endpointNotDeployed,
+    'resource_mismatch' => resourceMismatch,
+    'unavailable' => unavailable,
+    _ => unknown,
+  };
+}
+
+/// What the database saw when it called the deployed endpoint (0360):
+/// `deployed` only for 401 + `resource_metadata` and a metadata document
+/// naming the resource. Turn on needs a deployed probe under 15 minutes old.
+class EndpointProbe {
+  const EndpointProbe({
+    required this.state,
+    this.reason,
+    this.endpointUrl,
+    this.publishedResource,
+    this.requestedAt,
+    this.fresh = false,
+  });
+
+  final EndpointProbeState state;
+
+  /// `challenge_404`, `metadata_200`, `no_answer`, `no_pg_net`, …
+  final String? reason;
+  final String? endpointUrl;
+  final String? publishedResource;
+  final DateTime? requestedAt;
+
+  /// Taken within the 15 minutes Turn on accepts (overview only).
+  final bool fresh;
+
+  static const missing = EndpointProbe(state: EndpointProbeState.missing);
+
+  factory EndpointProbe.fromJson(Object? json) {
+    if (json is! Map) {
+      return const EndpointProbe(state: EndpointProbeState.unknown);
+    }
+    return EndpointProbe(
+      state: EndpointProbeState.parse(json['state']),
+      reason: json['reason'] as String?,
+      endpointUrl: json['endpoint_url'] as String?,
+      publishedResource: json['published_resource'] as String?,
+      requestedAt: DateTime.tryParse('${json['requested_at'] ?? ''}'),
+      fresh: json['fresh'] == true,
+    );
+  }
+}
+
 /// One installation notice addressed to the caller.
 class InstanceNotice {
   const InstanceNotice({
@@ -220,6 +281,30 @@ abstract interface class McpOnboardingRepository {
 
   /// The operator sets (or with null clears) the published endpoint; aal2.
   Future<McpEndpointInfo> setEndpoint(String? url);
+
+  /// The operator asks the deployed endpoint what an assistant would get;
+  /// answers `pending` (pg_net is asynchronous: check a moment later).
+  Future<EndpointProbe> probeEndpoint();
+
+  /// The latest probe, settled once pg_net answered.
+  Future<EndpointProbe> checkEndpoint();
+
+  /// The instance operator grants assistant access while no other database
+  /// administrator exists: 1 to 30 days, a reason, aal2 and a Google
+  /// session. Answers the expiry.
+  Future<DateTime?> grantEligibility({
+    required String subjectId,
+    required String reason,
+    required int days,
+  });
+
+  /// Whoever manages this workspace's integrations switches its mcpAccess,
+  /// against the value they read ([expected]); a stale read is refused.
+  Future<bool> setWorkspaceMcpAccess(
+    String workspaceId, {
+    required bool enabled,
+    bool? expected,
+  });
 
   /// The operator's one switch for loopback (desktop and command-line)
   /// assistants; aal2, audited. Answers the switch as saved.
