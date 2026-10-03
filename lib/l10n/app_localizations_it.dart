@@ -2873,6 +2873,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get courtesyNone => 'Nessuna';
 
   @override
+  String get customerCapacityBusiness => 'Professionista';
+
+  @override
+  String get customerCapacityConsumer => 'Consumatore';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Se questo cliente agisce per un\'attività imprenditoriale o professionale (società, ditta individuale, associazione che agisce come tale) o come consumatore. Decide quali clausole di pagamento stampa una fattura; la sola partita IVA non lo decide. Non indicata: si applica il valore predefinito dello spazio.';
+
+  @override
+  String get customerCapacityLabel => 'Qualità del cliente';
+
+  @override
+  String get customerCapacityNotStated => 'Non indicata';
+
+  @override
+  String get customerCapacitySaveError =>
+      'La qualità del cliente non è stata salvata.';
+
+  @override
   String get datevAccountsIntro =>
       'I numeri di consulente e di cliente te li dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.';
 
@@ -7000,12 +7020,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceKindUsage => 'Gli extra del mese';
 
   @override
-  String get invoiceLegalAssociationHint =>
-      'Le clausole di mora, recupero crediti e sconto vengono stampate solo se compilate — sono obbligatorie solo tra professionisti.';
-
-  @override
   String get invoiceLegalAssociationReasonHint =>
       'es. «TVA non applicable, art. 293 B du CGI» — o «Exonération de TVA, art. 261, 7-1° du CGI» per i servizi ai membri';
+
+  @override
+  String get invoiceLegalCustomerCapacityField =>
+      'Qualità del cliente predefinita';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Decide quali clausole di pagamento stampa una fattura. I testi legali predefiniti su interessi di mora, risarcimento forfettario delle spese di recupero e sconto valgono solo per clienti professionisti, e un consumatore non riceve mai il risarcimento delle spese di recupero. La qualità propria di un membro prevale su questo valore. Ogni fattura conserva le clausole con cui è stata emessa.';
 
   @override
   String get invoiceLegalEscompteDefault =>

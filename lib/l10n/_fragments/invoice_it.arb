@@ -536,10 +536,6 @@
   "@invoiceLegalKindAssociation": {
     "description": "Association invoicing + VAT regime gate (#484)"
   },
-  "invoiceLegalAssociationHint": "Le clausole di mora, recupero crediti e sconto vengono stampate solo se compilate — sono obbligatorie solo tra professionisti.",
-  "@invoiceLegalAssociationHint": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
   "invoiceLegalFormHintAssociation": "es. Association loi 1901",
   "@invoiceLegalFormHintAssociation": {
     "description": "Association invoicing + VAT regime gate (#484)"

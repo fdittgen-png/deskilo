@@ -1749,6 +1749,30 @@
   "@courtesyNone": {
     "description": "#912 courtesy title: courtesyNone"
   },
+  "customerCapacityBusiness": "Professionnel",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Consommateur",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Ce client agit-il pour une activité professionnelle (société, entrepreneur individuel, association agissant comme telle) ou comme consommateur ? Cela décide des clauses de paiement imprimées sur la facture ; un numéro de TVA seul ne le décide pas. Non précisée : la valeur par défaut de l'espace s'applique.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "customerCapacityLabel": "Qualité du client",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Non précisée",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacitySaveError": "La qualité du client n'a pas été enregistrée.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
+  },
   "datevAccountsIntro": "Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"
@@ -4345,13 +4369,17 @@
   "invoiceKindSettlement": "Factures regroupées",
   "invoiceKindSubscription": "Abonnement, à l’avance",
   "invoiceKindUsage": "Les extras du mois",
-  "invoiceLegalAssociationHint": "Les clauses de pénalités, d'indemnité de recouvrement et d'escompte ne sont imprimées que si renseignées — elles ne sont obligatoires qu'entre professionnels.",
-  "@invoiceLegalAssociationHint": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
   "invoiceLegalAssociationReasonHint": "ex. « TVA non applicable, art. 293 B du CGI » — ou « Exonération de TVA, art. 261, 7-1° du CGI » pour les services rendus aux membres",
   "@invoiceLegalAssociationReasonHint": {
     "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalCustomerCapacityField": "Qualité du client par défaut",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Décide des clauses de paiement imprimées sur la facture. Les mentions légales par défaut (pénalités de retard, indemnité forfaitaire de recouvrement, escompte) ne s'appliquent qu'aux clients professionnels, et un consommateur ne reçoit jamais l'indemnité de recouvrement. La qualité propre d'un membre l'emporte sur ce défaut. Chaque facture garde les clauses avec lesquelles elle a été émise.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
   },
   "invoiceLegalEscompteDefault": "Aucun escompte pour paiement anticipé.",
   "@invoiceLegalEscompteDefault": {

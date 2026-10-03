@@ -388,7 +388,7 @@ const DEFAULTS={
  sites:[],levels:[{name:T('defaultFirstLevel'),offices:[newOffice(1)]}],
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
  pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:''},
- org:'association',vatRegime:'not_subject',vatExigibility:'invoice',numbering:{prefix:'INV-',datePart:'year',digits:'4',reset:'yearly'},memberNumbering:{prefix:'M-',digits:'4'},regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
+ org:'association',customerCapacity:'',vatRegime:'not_subject',vatExigibility:'invoice',numbering:{prefix:'INV-',datePart:'year',digits:'4',reset:'yearly'},memberNumbering:{prefix:'M-',digits:'4'},regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
  mentions:{legalForm:'',register:'',terms:'',penalty:'',recovery:'',escompte:'',insurance:'',special:''},
  reminders:{levels:2,firstDays:14,betweenDays:14,automatic:false},
  perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),
@@ -700,6 +700,7 @@ const STEPS=[
 
 {id:'legal',get title(){return T('legalTitle')},get why(){return T('legalWhy')},applies(){return on('invoicing')},
  build(){const k=[help('legal'),selectEl(T('legalOrg'),'org',[['association',T('legalOrgAssociation')],['company',T('legalOrgCompany')]],'',null,'legal'),
+  selectEl(T('legalCustomerCapacity'),'customerCapacity',[['',T('capacityNotStated')],['business',T('capacityBusiness')],['consumer',T('capacityConsumer')]],T('legalCustomerCapacityHint'),null,'legal'),
   selectEl(T('legalVatRegime'),'vatRegime',[['not_subject',T('regimeNotSubject')],['exempt',T('regimeExempt')],['registered',T('regimeRegistered')]],T('legalVatRegimeHint'),null,'vat'),
   h('div',{class:'row'},input(T('legalRegNumber'),'regNumber',T(S.org==='association'?'legalRegNumberHintAssociation':'legalRegNumberHintCompany'),'text','','legal'),S.vatRegime!=='not_subject'?input(T('legalVatId'),'vatId','','text','','vat'):null),
   !registered()?input(T('legalExemption'),'exemption',T('legalExemptionHint'),'text','','vat'):null];
@@ -1022,7 +1023,7 @@ function configurationTree(){
   subscription_levels:{enabled_presets:(S.subLevels||[]).map(x=>int(x,0)).filter(x=>x>0),extra_levels:[],allow_custom:false},
   invoice_legal:{legal_form:S.mentions.legalForm||'',registration:S.mentions.register||'',payment_terms:S.mentions.terms||'',late_penalty:S.mentions.penalty||'',
    recovery_indemnity:S.mentions.recovery||'',escompte:S.mentions.escompte||'',insurance:S.mentions.insurance||'',special_mentions:S.mentions.special||'',
-   seller_kind:S.org||'association',vat_exigibility:S.vatExigibility||'invoice'},
+   seller_kind:S.org||'association',customer_capacity:S.customerCapacity||'',vat_exigibility:S.vatExigibility||'invoice'},
  };
  if(on('dunning'))ws.dunning_rules={levels:int(S.reminders.levels,1),first_after_days:int(S.reminders.firstDays,14),between_days:int(S.reminders.betweenDays,14)};
  const t={

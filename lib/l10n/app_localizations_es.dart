@@ -2875,6 +2875,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get courtesyNone => 'Ninguno';
 
   @override
+  String get customerCapacityBusiness => 'Empresa';
+
+  @override
+  String get customerCapacityConsumer => 'Consumidor';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Si este cliente actúa en el marco de una actividad empresarial o profesional (sociedad, autónomo, asociación que actúa como tal) o como consumidor. Decide qué cláusulas de pago imprime una factura; un número de IVA por sí solo no lo decide. Sin indicar: se aplica el valor por defecto del espacio.';
+
+  @override
+  String get customerCapacityLabel => 'Condición del cliente';
+
+  @override
+  String get customerCapacityNotStated => 'Sin indicar';
+
+  @override
+  String get customerCapacitySaveError =>
+      'La condición del cliente no se ha guardado.';
+
+  @override
   String get datevAccountsIntro =>
       'Su asesor le da los números de asesor y de cliente. DATEV rechaza un archivo cuyos números no coincidan — que es lo que evita que acabe en los libros de otra empresa.';
 
@@ -6997,12 +7017,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceKindUsage => 'Los extras del mes';
 
   @override
-  String get invoiceLegalAssociationHint =>
-      'Las cláusulas de penalización, indemnización de cobro y descuento solo se imprimen si se rellenan — solo son obligatorias entre profesionales.';
-
-  @override
   String get invoiceLegalAssociationReasonHint =>
       'p. ej. «TVA non applicable, art. 293 B du CGI» — o «Exonération de TVA, art. 261, 7-1° du CGI» para servicios a los miembros';
+
+  @override
+  String get invoiceLegalCustomerCapacityField =>
+      'Condición del cliente por defecto';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Decide qué cláusulas de pago imprime una factura. Los textos legales por defecto de intereses de demora, indemnización por costes de cobro y descuento solo se aplican a clientes empresariales, y un consumidor nunca recibe la indemnización por costes de cobro. La condición propia de un miembro prevalece sobre este valor. Cada factura conserva las cláusulas con las que se emitió.';
 
   @override
   String get invoiceLegalEscompteDefault => 'Sin descuento por pronto pago.';

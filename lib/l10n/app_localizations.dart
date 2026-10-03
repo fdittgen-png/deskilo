@@ -5041,6 +5041,42 @@ abstract class AppLocalizations {
   /// **'None'**
   String get courtesyNone;
 
+  /// #1916 invoice clauses: customerCapacityBusiness
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get customerCapacityBusiness;
+
+  /// #1916 invoice clauses: customerCapacityConsumer
+  ///
+  /// In en, this message translates to:
+  /// **'Consumer'**
+  String get customerCapacityConsumer;
+
+  /// #1916 invoice clauses: customerCapacityExplainer
+  ///
+  /// In en, this message translates to:
+  /// **'Whether this customer acts for a trade or business (a company, a sole trader, an association acting as one) or as a private consumer. It decides which payment clauses an invoice prints; a VAT number alone does not decide it. Not stated: the workspace default applies.'**
+  String get customerCapacityExplainer;
+
+  /// #1916 invoice clauses: customerCapacityLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Customer capacity'**
+  String get customerCapacityLabel;
+
+  /// #1916 invoice clauses: customerCapacityNotStated
+  ///
+  /// In en, this message translates to:
+  /// **'Not stated'**
+  String get customerCapacityNotStated;
+
+  /// #1916 invoice clauses: customerCapacitySaveError
+  ///
+  /// In en, this message translates to:
+  /// **'The customer capacity was not saved.'**
+  String get customerCapacitySaveError;
+
   /// #669 - accounting export formats
   ///
   /// In en, this message translates to:
@@ -12039,14 +12075,20 @@ abstract class AppLocalizations {
   /// Association invoicing + VAT regime gate (#484)
   ///
   /// In en, this message translates to:
-  /// **'The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.'**
-  String get invoiceLegalAssociationHint;
-
-  /// Association invoicing + VAT regime gate (#484)
-  ///
-  /// In en, this message translates to:
   /// **'e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members'**
   String get invoiceLegalAssociationReasonHint;
+
+  /// #1916 invoice clauses: invoiceLegalCustomerCapacityField
+  ///
+  /// In en, this message translates to:
+  /// **'Default customer capacity'**
+  String get invoiceLegalCustomerCapacityField;
+
+  /// #1916 invoice clauses: invoiceLegalCustomerCapacityHint
+  ///
+  /// In en, this message translates to:
+  /// **'Decides which payment clauses an invoice prints. The statutory late-penalty, recovery-indemnity and discount defaults apply only to business customers, and a consumer never receives the recovery indemnity. A member\'s own capacity wins over this default. Every invoice keeps the clauses it was issued with.'**
+  String get invoiceLegalCustomerCapacityHint;
 
   /// Legal invoice mentions (#480)
   ///

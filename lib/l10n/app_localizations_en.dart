@@ -2860,6 +2860,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get courtesyNone => 'None';
 
   @override
+  String get customerCapacityBusiness => 'Business';
+
+  @override
+  String get customerCapacityConsumer => 'Consumer';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Whether this customer acts for a trade or business (a company, a sole trader, an association acting as one) or as a private consumer. It decides which payment clauses an invoice prints; a VAT number alone does not decide it. Not stated: the workspace default applies.';
+
+  @override
+  String get customerCapacityLabel => 'Customer capacity';
+
+  @override
+  String get customerCapacityNotStated => 'Not stated';
+
+  @override
+  String get customerCapacitySaveError =>
+      'The customer capacity was not saved.';
+
+  @override
   String get datevAccountsIntro =>
       'Your accountant gives you the consultant and client numbers. DATEV refuses a file whose numbers do not match — which is what keeps it out of the wrong company’s books.';
 
@@ -6949,12 +6969,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceKindUsage => 'The month\'s extras';
 
   @override
-  String get invoiceLegalAssociationHint =>
-      'The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.';
-
-  @override
   String get invoiceLegalAssociationReasonHint =>
       'e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members';
+
+  @override
+  String get invoiceLegalCustomerCapacityField => 'Default customer capacity';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Decides which payment clauses an invoice prints. The statutory late-penalty, recovery-indemnity and discount defaults apply only to business customers, and a consumer never receives the recovery indemnity. A member\'s own capacity wins over this default. Every invoice keeps the clauses it was issued with.';
 
   @override
   String get invoiceLegalEscompteDefault => 'No discount for early payment.';

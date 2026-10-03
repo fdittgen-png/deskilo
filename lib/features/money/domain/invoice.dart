@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'billing_rules.dart';
+import 'invoice_clauses.dart';
 import 'vat_rate.dart';
 import '../../../core/data/system_columns.dart';
 
@@ -299,6 +300,11 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     /// #1913 — on what basis [dueOn] was frozen: `document_term`,
     /// `default_term` (the unagreed default; needs review) or `unknown`.
     String? maturityBasis,
+
+    /// #1916 (0349) — the legal clauses and facts frozen at issue, raw.
+    /// Null on an invoice issued before 0349: legacy, evidence unknown.
+    /// Read it through [legalClauses].
+    Map<String, Object?>? legalSnapshot,
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _Invoice;
@@ -357,6 +363,12 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     return party?.company.trim() ?? '';
   }
 
+  /// #1916 — the frozen legal facts, or null on a legacy invoice.
+  LegalClauseSnapshot? get legalClauses => switch (legalSnapshot) {
+        final Map<String, Object?> json => LegalClauseSnapshot.fromJson(json),
+        _ => null,
+      };
+
   /// #831 — regrouped into a settlement and not voided: documentation
   /// only, every operation happens on the settlement.
   bool get isFolded => settledByInvoiceId != null && !isVoided;
@@ -403,6 +415,10 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     ],
     dueOn: _maturityDueOn(row['invoice_maturities']),
     maturityBasis: _maturityOf(row['invoice_maturities'])?['basis'] as String?,
+    legalSnapshot: switch (row['legal_snapshot']) {
+      final Map<dynamic, dynamic> json => json.cast<String, Object?>(),
+      _ => null,
+    },
     totalCents: (row['total_cents'] as num).toInt(),
     currency: row['currency'] as String,
     memberName: row['member_name'] as String? ?? '',

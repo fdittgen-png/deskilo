@@ -2882,6 +2882,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get courtesyNone => 'Aucune';
 
   @override
+  String get customerCapacityBusiness => 'Professionnel';
+
+  @override
+  String get customerCapacityConsumer => 'Consommateur';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Ce client agit-il pour une activité professionnelle (société, entrepreneur individuel, association agissant comme telle) ou comme consommateur ? Cela décide des clauses de paiement imprimées sur la facture ; un numéro de TVA seul ne le décide pas. Non précisée : la valeur par défaut de l\'espace s\'applique.';
+
+  @override
+  String get customerCapacityLabel => 'Qualité du client';
+
+  @override
+  String get customerCapacityNotStated => 'Non précisée';
+
+  @override
+  String get customerCapacitySaveError =>
+      'La qualité du client n\'a pas été enregistrée.';
+
+  @override
   String get datevAccountsIntro =>
       'Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.';
 
@@ -7016,12 +7036,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceKindUsage => 'Les extras du mois';
 
   @override
-  String get invoiceLegalAssociationHint =>
-      'Les clauses de pénalités, d\'indemnité de recouvrement et d\'escompte ne sont imprimées que si renseignées — elles ne sont obligatoires qu\'entre professionnels.';
-
-  @override
   String get invoiceLegalAssociationReasonHint =>
       'ex. « TVA non applicable, art. 293 B du CGI » — ou « Exonération de TVA, art. 261, 7-1° du CGI » pour les services rendus aux membres';
+
+  @override
+  String get invoiceLegalCustomerCapacityField =>
+      'Qualité du client par défaut';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Décide des clauses de paiement imprimées sur la facture. Les mentions légales par défaut (pénalités de retard, indemnité forfaitaire de recouvrement, escompte) ne s\'appliquent qu\'aux clients professionnels, et un consommateur ne reçoit jamais l\'indemnité de recouvrement. La qualité propre d\'un membre l\'emporte sur ce défaut. Chaque facture garde les clauses avec lesquelles elle a été émise.';
 
   @override
   String get invoiceLegalEscompteDefault =>

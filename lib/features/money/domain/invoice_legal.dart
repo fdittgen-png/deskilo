@@ -3,13 +3,15 @@
 /// The workspace's LEGAL INVOICE MENTIONS (#480) — the free-text lines a
 /// compliant professional invoice must (or may) print beyond the 0069
 /// identity. Stored as `workspaces.invoice_legal` jsonb; every field is
-/// optional, and the four the law requires on every French invoice
-/// ([paymentTerms], [latePenalty], [recoveryIndemnity], [escompte])
-/// fall back to localized statutory defaults at render time — an owner
-/// who configures nothing still issues a valid document.
+/// optional. Which of the four payment clauses ([paymentTerms],
+/// [latePenalty], [recoveryIndemnity], [escompte]) print, and whether a
+/// default wording fills an empty one, is decided per transaction by
+/// `qualifyClauses` (#1916) from the seller's country and the customer's
+/// stated capacity — frozen on each invoice at issue.
 class InvoiceLegal {
   const InvoiceLegal({
     this.sellerKind = '',
+    this.customerCapacity = '',
     this.reverseChargeOptIn = true,
     this.vatExigibility = 'invoice',
     this.legalForm = '',
@@ -23,11 +25,15 @@ class InvoiceLegal {
   });
 
   /// '' (company/business, the default) or 'association' (#484) — a
-  /// non-profit under the French loi 1901 model. An association's
-  /// documents suppress the B2B-only statutory clause DEFAULTS (late
-  /// penalty, €40 recovery indemnity, escompte — mandatory only between
-  /// professionals); whatever the owner types still prints.
+  /// non-profit under the French loi 1901 model. It names the seller's
+  /// legal form and the wording of its positions; since #1916 it no
+  /// longer decides which payment clauses apply (a non-profit can act as
+  /// an undertaking) — the customer's capacity does.
   final String sellerKind;
+
+  /// #1916 — the workspace's DEFAULT customer capacity: '' (not stated),
+  /// 'business' or 'consumer'. A member's own `customer_capacity` wins.
+  final String customerCapacity;
 
   /// #895 — the stored switch; read it through [reverseCharge].
   final bool reverseChargeOptIn;
@@ -78,6 +84,10 @@ class InvoiceLegal {
 
   factory InvoiceLegal.fromJson(Map<dynamic, dynamic> json) => InvoiceLegal(
         sellerKind: json['seller_kind'] as String? ?? '',
+        customerCapacity: switch (json['customer_capacity']) {
+          final String c when c == 'business' || c == 'consumer' => c,
+          _ => '',
+        },
         reverseChargeOptIn: json['reverse_charge'] as bool? ?? true,
         vatExigibility: json['vat_exigibility'] as String? ?? 'invoice',
         legalForm: json['legal_form'] as String? ?? '',
@@ -92,6 +102,7 @@ class InvoiceLegal {
 
   Map<String, Object?> toJson() => {
         'seller_kind': sellerKind,
+        'customer_capacity': customerCapacity,
         'reverse_charge': reverseChargeOptIn,
         'vat_exigibility': vatExigibility,
         'legal_form': legalForm.trim(),
@@ -108,6 +119,7 @@ class InvoiceLegal {
   bool operator ==(Object other) =>
       other is InvoiceLegal &&
       other.sellerKind == sellerKind &&
+      other.customerCapacity == customerCapacity &&
       other.reverseChargeOptIn == reverseChargeOptIn &&
       other.vatExigibility == vatExigibility &&
       other.legalForm == legalForm &&
@@ -120,7 +132,7 @@ class InvoiceLegal {
       other.specialMentions == specialMentions;
 
   @override
-  int get hashCode => Object.hash(vatExigibility, reverseChargeOptIn, sellerKind, legalForm, registration,
+  int get hashCode => Object.hash(vatExigibility, reverseChargeOptIn, sellerKind, customerCapacity, legalForm, registration,
       paymentTerms, latePenalty, recoveryIndemnity, escompte, insurance,
       specialMentions);
 }

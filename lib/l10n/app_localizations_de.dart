@@ -2881,6 +2881,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get courtesyNone => 'Keine';
 
   @override
+  String get customerCapacityBusiness => 'Unternehmer';
+
+  @override
+  String get customerCapacityConsumer => 'Verbraucher';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Handelt dieser Kunde gewerblich oder beruflich (Gesellschaft, Einzelunternehmer, ein so handelnder Verein) oder als Verbraucher? Das entscheidet, welche Zahlungsklauseln eine Rechnung druckt; eine USt-IdNr. allein entscheidet es nicht. Nicht angegeben: Es gilt die Vorgabe des Arbeitsbereichs.';
+
+  @override
+  String get customerCapacityLabel => 'Kundeneigenschaft';
+
+  @override
+  String get customerCapacityNotStated => 'Nicht angegeben';
+
+  @override
+  String get customerCapacitySaveError =>
+      'Die Kundeneigenschaft wurde nicht gespeichert.';
+
+  @override
   String get datevAccountsIntro =>
       'Berater- und Mandantennummer bekommen Sie von Ihrer Steuerberatung. DATEV lehnt eine Datei mit abweichenden Nummern ab — genau das hält sie aus den Büchern der falschen Firma heraus.';
 
@@ -7001,12 +7021,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceKindUsage => 'Zusätze des Monats';
 
   @override
-  String get invoiceLegalAssociationHint =>
-      'Verzugszins-, Beitreibungs- und Skonto-Klauseln werden nur gedruckt, wenn ausgefüllt — sie sind nur zwischen Unternehmen Pflicht.';
-
-  @override
   String get invoiceLegalAssociationReasonHint =>
       'z. B. „TVA non applicable, art. 293 B du CGI“ — oder „Exonération de TVA, art. 261, 7-1° du CGI“ für Leistungen an Mitglieder';
+
+  @override
+  String get invoiceLegalCustomerCapacityField => 'Standard-Kundeneigenschaft';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Entscheidet, welche Zahlungsklauseln eine Rechnung druckt. Die gesetzlichen Vorgaben für Verzugszinsen, Beitreibungspauschale und Skonto gelten nur für Unternehmer als Kunden; ein Verbraucher erhält nie die Beitreibungspauschale. Die eigene Angabe eines Mitglieds hat Vorrang vor dieser Vorgabe. Jede Rechnung behält die Klauseln, mit denen sie ausgestellt wurde.';
 
   @override
   String get invoiceLegalEscompteDefault =>
