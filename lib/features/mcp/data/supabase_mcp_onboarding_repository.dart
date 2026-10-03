@@ -77,4 +77,13 @@ class SupabaseMcpOnboardingRepository implements McpOnboardingRepository {
           params: {'p_url': url},
         ),
       );
+
+  @override
+  Future<bool> setLoopbackClients({required bool allowed}) async {
+    final r = await _client.rpc<Object?>(
+      'instance_set_mcp_loopback_clients',
+      params: {'p_enabled': allowed},
+    );
+    return r is Map && r['allow_loopback_clients'] == true;
+  }
 }
