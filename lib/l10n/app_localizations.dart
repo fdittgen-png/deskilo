@@ -24426,6 +24426,102 @@ abstract class AppLocalizations {
   /// **'The storyboard belongs to another version of this recording. Review it again before exporting.'**
   String get taskExportStale;
 
+  /// #1879 captioned video: VideoIntro
+  ///
+  /// In en, this message translates to:
+  /// **'A tutorial recreated from a recorded task. It shows the steps, not proof that the task succeeded.'**
+  String get taskExportVideoIntro;
+
+  /// #1879 captioned video: VideoStepHeading
+  ///
+  /// In en, this message translates to:
+  /// **'Step {number}: {title}'**
+  String taskExportVideoStepHeading(int number, String title);
+
+  /// #1879 captioned video: VideoSummary
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get taskExportVideoSummary;
+
+  /// #1879 captioned video: VideoLeftOut
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One step was left out by the reviewer.} other{{count} steps were left out by the reviewer.}}'**
+  String taskExportVideoLeftOut(int count);
+
+  /// #1879 captioned video: VideoEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'Every step was left out: there is nothing to show in a video.'**
+  String get taskExportVideoEmpty;
+
+  /// #1879 captioned video: VideoTooLong
+  ///
+  /// In en, this message translates to:
+  /// **'The video would be longer than allowed. Shorten durations or leave steps out.'**
+  String get taskExportVideoTooLong;
+
+  /// #1879 captioned video: VideoBusy
+  ///
+  /// In en, this message translates to:
+  /// **'Another video is still being generated.'**
+  String get taskExportVideoBusy;
+
+  /// #1879 captioned video: VideoUnsupported
+  ///
+  /// In en, this message translates to:
+  /// **'This device cannot generate a video. Export the recording file and open it on a supported device: macOS, iOS, Android, or a current browser that can encode H.264 video.'**
+  String get taskExportVideoUnsupported;
+
+  /// #1879 captioned video: VideoFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The video could not be generated. Nothing was saved.'**
+  String get taskExportVideoFailed;
+
+  /// #1879 captioned video: VideoCancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Video generation cancelled. Nothing was saved.'**
+  String get taskExportVideoCancelled;
+
+  /// #1879 captioned video: VideoGenerating
+  ///
+  /// In en, this message translates to:
+  /// **'Generating the video: {percent} %'**
+  String taskExportVideoGenerating(int percent);
+
+  /// #1879 captioned video: VideoCancel
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel video'**
+  String get taskExportVideoCancel;
+
+  /// #1879 captioned video: VideoGenerate
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video'**
+  String get taskExportVideoGenerate;
+
+  /// #1879 captioned video: VideoLandscape
+  ///
+  /// In en, this message translates to:
+  /// **'Landscape'**
+  String get taskExportVideoLandscape;
+
+  /// #1879 captioned video: VideoPortrait
+  ///
+  /// In en, this message translates to:
+  /// **'Portrait'**
+  String get taskExportVideoPortrait;
+
+  /// #1879 captioned video: VideoSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Video saved with its captions and transcript: {file}'**
+  String taskExportVideoSaved(String file);
+
   /// #1866 task export (Word document): the review screen button
   ///
   /// In en, this message translates to:

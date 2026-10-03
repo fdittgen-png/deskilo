@@ -7,6 +7,7 @@ import Foundation
 
 import app_badge_plus
 import app_links
+import deskilo_video_encoder
 import file_selector_macos
 import firebase_core
 import firebase_messaging
@@ -20,6 +21,7 @@ import url_launcher_macos
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   AppBadgePlusPlugin.register(with: registry.registrar(forPlugin: "AppBadgePlusPlugin"))
   AppLinksMacosPlugin.register(with: registry.registrar(forPlugin: "AppLinksMacosPlugin"))
+  DeskiloVideoEncoderPlugin.register(with: registry.registrar(forPlugin: "DeskiloVideoEncoderPlugin"))
   FileSelectorPlugin.register(with: registry.registrar(forPlugin: "FileSelectorPlugin"))
   FLTFirebaseCorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseCorePlugin"))
   FLTFirebaseMessagingPlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseMessagingPlugin"))
