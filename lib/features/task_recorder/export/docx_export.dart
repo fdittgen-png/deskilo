@@ -36,8 +36,12 @@ Uint8List exportDocx(
   try {
     return buildDocx(doc);
   } on DocxException catch (e, st) {
-    TraceLogger.instance.warn('recorder', 'task export refused',
-        error: e, stackTrace: st);
+    TraceLogger.instance.warn(
+      'recorder',
+      'task export refused',
+      error: e,
+      stackTrace: st,
+    );
     throw const TaskExportException(TaskExportRefusal.tooLarge);
   }
 }
@@ -92,8 +96,12 @@ class TaskDocxExporter {
     try {
       bytes = exportDocx(recording, l, options: options);
     } on TaskExportException catch (e, st) {
-      TraceLogger.instance.warn('recorder', 'task export refused',
-          error: e, stackTrace: st);
+      TraceLogger.instance.warn(
+        'recorder',
+        'task export refused',
+        error: e,
+        stackTrace: st,
+      );
       return TaskDocxRefused(e.refusal);
     }
     final name = docxFileName(recording);
@@ -103,8 +111,12 @@ class TaskDocxExporter {
           ? const TaskDocxSaveFailed()
           : TaskDocxSaved(handle, name);
     } catch (e, st) {
-      TraceLogger.instance.warn('recorder', 'task export save failed',
-          error: e, stackTrace: st);
+      TraceLogger.instance.warn(
+        'recorder',
+        'task export save failed',
+        error: e,
+        stackTrace: st,
+      );
       return const TaskDocxSaveFailed();
     }
   }

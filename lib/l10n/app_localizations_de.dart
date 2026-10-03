@@ -14674,6 +14674,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskOutputFailed => 'Die Ausgabe konnte nicht erstellt werden.';
 
   @override
+  String get taskOutputStale =>
+      'Die Illustrationen wurden für eine frühere Fassung geprüft.';
+
+  @override
+  String get taskOutputBusy => 'Diese Ausgabe wird bereits erstellt.';
+
+  @override
+  String get taskWorkbenchReviewIllustrations => 'Illustrationen prüfen';
+
+  @override
   String get capabilityMultiApproval => 'Zwei oder mehr Freigaben';
 
   @override

@@ -25194,6 +25194,24 @@ abstract class AppLocalizations {
   /// **'The output could not be made.'**
   String get taskOutputFailed;
 
+  /// #1872 workbench: taskOutputStale
+  ///
+  /// In en, this message translates to:
+  /// **'The illustrations were reviewed for an earlier version.'**
+  String get taskOutputStale;
+
+  /// #1872 workbench: taskOutputBusy
+  ///
+  /// In en, this message translates to:
+  /// **'This output is already being made.'**
+  String get taskOutputBusy;
+
+  /// #1872 workbench: taskWorkbenchReviewIllustrations
+  ///
+  /// In en, this message translates to:
+  /// **'Review the illustrations'**
+  String get taskWorkbenchReviewIllustrations;
+
   /// #1659 template_capabilities
   ///
   /// In en, this message translates to:

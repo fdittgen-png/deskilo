@@ -138,5 +138,8 @@
   "taskOutputUnsupportedPlatform": "No disponible en este dispositivo.",
   "taskOutputMissingMedia": "Esta tarea no tiene imágenes ni vídeo que usar.",
   "taskOutputTooLong": "Esta tarea es demasiado larga para este formato.",
-  "taskOutputFailed": "No se pudo crear el resultado."
+  "taskOutputFailed": "No se pudo crear el resultado.",
+  "taskOutputStale": "Las ilustraciones se revisaron para una versión anterior.",
+  "taskOutputBusy": "Este resultado ya se está creando.",
+  "taskWorkbenchReviewIllustrations": "Revisar las ilustraciones"
 }

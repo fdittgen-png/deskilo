@@ -16,6 +16,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/task_recording.dart';
 import '../../package/task_output.dart';
 import '../../providers/recorder_providers.dart';
+import '../../storyboard/storyboard.dart';
 import '../recording_export.dart';
 
 class TaskOutputsSection extends ConsumerStatefulWidget {
@@ -23,12 +24,16 @@ class TaskOutputsSection extends ConsumerStatefulWidget {
     super.key,
     required this.recording,
     this.assets = const {},
+    this.storyboard,
   });
 
   /// The recording as it is when an output is asked for: the job keeps
   /// that copy, later edits do not change what it makes.
   final TaskRecording Function() recording;
   final Map<String, Uint8List> assets;
+
+  /// The reviewed storyboard, when there is one, as it is when asked.
+  final Storyboard? Function()? storyboard;
 
   @override
   ConsumerState<TaskOutputsSection> createState() => _TaskOutputsSectionState();
@@ -44,6 +49,8 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
       recording: widget.recording(),
       languageCode: Localizations.localeOf(context).languageCode,
       assets: widget.assets,
+      storyboard: widget.storyboard?.call(),
+      brightness: Theme.of(context).brightness,
     );
     setState(() => _busy.add(generator.id));
     TaskOutputResult result;
@@ -120,13 +127,21 @@ String outputKindLabel(AppLocalizations? l10n, TaskOutputKind kind) =>
 /// The words for why an output was not made.
 String outputReasonText(AppLocalizations? l10n, TaskOutputReason reason) =>
     switch (reason) {
-      TaskOutputReason.unsupportedPlatform =>
-        l10n?.taskOutputUnsupportedPlatform ?? 'Not available on this device.',
-      TaskOutputReason.missingMedia =>
+      TaskOutputReason.refused =>
+        l10n?.taskExportRefused ??
+            'This recording cannot be exported as a Word document.',
+      TaskOutputReason.stale =>
+        l10n?.taskOutputStale ??
+            'The illustrations were reviewed for an earlier version.',
+      TaskOutputReason.empty =>
         l10n?.taskOutputMissingMedia ??
             'This task has no images or video to use.',
       TaskOutputReason.tooLong =>
         l10n?.taskOutputTooLong ?? 'This task is too long for this output.',
+      TaskOutputReason.busy =>
+        l10n?.taskOutputBusy ?? 'This output is already being made.',
+      TaskOutputReason.unsupportedPlatform =>
+        l10n?.taskOutputUnsupportedPlatform ?? 'Not available on this device.',
       TaskOutputReason.failed =>
         l10n?.taskOutputFailed ?? 'The output could not be made.',
     };

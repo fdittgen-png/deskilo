@@ -580,5 +580,17 @@
   "taskOutputFailed": "The output could not be made.",
   "@taskOutputFailed": {
     "description": "#1872 task workbench: taskOutputFailed"
+  },
+  "taskOutputStale": "The illustrations were reviewed for an earlier version.",
+  "@taskOutputStale": {
+    "description": "#1872 workbench: taskOutputStale"
+  },
+  "taskOutputBusy": "This output is already being made.",
+  "@taskOutputBusy": {
+    "description": "#1872 workbench: taskOutputBusy"
+  },
+  "taskWorkbenchReviewIllustrations": "Review the illustrations",
+  "@taskWorkbenchReviewIllustrations": {
+    "description": "#1872 workbench: taskWorkbenchReviewIllustrations"
   }
 }

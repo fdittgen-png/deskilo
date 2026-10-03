@@ -138,5 +138,8 @@
   "taskOutputUnsupportedPlatform": "Indisponible sur cet appareil.",
   "taskOutputMissingMedia": "Cette tâche n'a ni images ni vidéo à utiliser.",
   "taskOutputTooLong": "Cette tâche est trop longue pour ce format.",
-  "taskOutputFailed": "Le fichier n'a pas pu être créé."
+  "taskOutputFailed": "Le fichier n'a pas pu être créé.",
+  "taskOutputStale": "Les illustrations ont été revues pour une version précédente.",
+  "taskOutputBusy": "Ce fichier est déjà en cours de création.",
+  "taskWorkbenchReviewIllustrations": "Revoir les illustrations"
 }

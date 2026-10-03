@@ -28,6 +28,10 @@ import '../recorder_labels.dart';
 import '../recording_export.dart';
 import '../widgets/recording_steps_view.dart';
 import '../widgets/task_outputs_section.dart';
+import '../../package/task_output.dart';
+import '../../storyboard/storyboard.dart';
+import '../../storyboard/storyboard_builder.dart';
+import '../../storyboard/storyboard_preview.dart';
 
 class TaskWorkbenchScreen extends ConsumerStatefulWidget {
   const TaskWorkbenchScreen({super.key});
@@ -39,6 +43,10 @@ class TaskWorkbenchScreen extends ConsumerStatefulWidget {
 
 class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
   WorkbenchOpened? _opened;
+
+  /// The reviewed storyboard (#1876) of the current copy; null until the
+  /// person reviews it, and again whenever the copy changes.
+  Storyboard? _storyboard;
   final Set<int> _leftOut = {};
 
   TaskRecording? get _copy {
@@ -83,6 +91,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
         setState(() {
           _opened = opened;
           _leftOut.clear();
+          _storyboard = null;
         });
       case WorkbenchRefused(:final reason):
         AppSnack.error(context, refusalText(l10n, reason));
@@ -93,12 +102,42 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
     final opened = _opened;
     if (opened == null) return;
     final group = dependentsOf(opened.recording, seq);
+    _storyboard = null;
     if (_leftOut.contains(seq)) {
       _leftOut.removeAll(group);
     } else {
       _leftOut.addAll(group);
     }
   });
+
+  Future<void> _reviewIllustrations() async {
+    final copy = _copy;
+    final l10n = AppLocalizations.of(context);
+    if (copy == null || l10n == null) return;
+    Storyboard board;
+    try {
+      board = _storyboard ?? buildStoryboard(copy, l10n);
+    } catch (e, st) {
+      TraceLogger.instance.warn(
+        'recorder',
+        'storyboard not built (${e.runtimeType})',
+        stackTrace: st,
+      );
+      AppSnack.error(context, outputReasonText(l10n, TaskOutputReason.refused));
+      return;
+    }
+    setState(() => _storyboard = board);
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => _StoryboardPage(
+          initial: board,
+          onChanged: (next) {
+            if (mounted) setState(() => _storyboard = next);
+          },
+        ),
+      ),
+    );
+  }
 
   Future<void> _saveTask({required bool package}) async {
     final copy = _copy;
@@ -180,9 +219,20 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
               ],
             ),
             const SizedBox(height: AppSpacing.md),
+            OutlinedButton.icon(
+              key: const ValueKey('workbench-review-illustrations'),
+              onPressed: _reviewIllustrations,
+              icon: const Icon(Icons.photo_library_outlined),
+              label: Text(
+                l10n?.taskWorkbenchReviewIllustrations ??
+                    'Review the illustrations',
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
             TaskOutputsSection(
               recording: () => _copy!,
               assets: {for (final a in opened.assets) a.path: a.bytes},
+              storyboard: () => _storyboard,
             ),
           ],
         ],
@@ -248,3 +298,37 @@ String refusalText(AppLocalizations? l10n, WorkbenchRefusal reason) =>
         l10n?.taskWorkbenchRefusedInvalid ??
             'This file does not hold a valid task.',
     };
+
+/// The storyboard review on its own page: it scrolls by itself.
+class _StoryboardPage extends StatefulWidget {
+  const _StoryboardPage({required this.initial, required this.onChanged});
+
+  final Storyboard initial;
+  final ValueChanged<Storyboard> onChanged;
+
+  @override
+  State<_StoryboardPage> createState() => _StoryboardPageState();
+}
+
+class _StoryboardPageState extends State<_StoryboardPage> {
+  late Storyboard _board = widget.initial;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          l10n?.taskWorkbenchReviewIllustrations ?? 'Review the illustrations',
+        ),
+      ),
+      body: StoryboardPreview(
+        storyboard: _board,
+        onChanged: (next) {
+          setState(() => _board = next);
+          widget.onChanged(next);
+        },
+      ),
+    );
+  }
+}

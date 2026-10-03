@@ -14691,6 +14691,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taskOutputFailed => 'Le fichier n\'a pas pu être créé.';
 
   @override
+  String get taskOutputStale =>
+      'Les illustrations ont été revues pour une version précédente.';
+
+  @override
+  String get taskOutputBusy => 'Ce fichier est déjà en cours de création.';
+
+  @override
+  String get taskWorkbenchReviewIllustrations => 'Revoir les illustrations';
+
+  @override
   String get capabilityMultiApproval => 'Deux validations ou plus';
 
   @override

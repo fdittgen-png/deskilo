@@ -138,5 +138,8 @@
   "taskOutputUnsupportedPlatform": "Non disponibile su questo dispositivo.",
   "taskOutputMissingMedia": "Questa attività non ha immagini o video da usare.",
   "taskOutputTooLong": "Questa attività è troppo lunga per questo formato.",
-  "taskOutputFailed": "Non è stato possibile creare il risultato."
+  "taskOutputFailed": "Non è stato possibile creare il risultato.",
+  "taskOutputStale": "Le illustrazioni sono state riviste per una versione precedente.",
+  "taskOutputBusy": "Questo risultato è già in creazione.",
+  "taskWorkbenchReviewIllustrations": "Rivedi le illustrazioni"
 }

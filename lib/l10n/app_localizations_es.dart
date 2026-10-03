@@ -14643,6 +14643,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskOutputFailed => 'No se pudo crear el resultado.';
 
   @override
+  String get taskOutputStale =>
+      'Las ilustraciones se revisaron para una versión anterior.';
+
+  @override
+  String get taskOutputBusy => 'Este resultado ya se está creando.';
+
+  @override
+  String get taskWorkbenchReviewIllustrations => 'Revisar las ilustraciones';
+
+  @override
   String get capabilityMultiApproval => 'Dos o más aprobaciones';
 
   @override

@@ -22,6 +22,8 @@ import 'package:deskilo/features/task_recorder/package/task_output.dart';
 import 'package:deskilo/features/task_recorder/package/task_package.dart';
 import 'package:deskilo/features/task_recorder/presentation/screens/task_workbench_screen.dart';
 import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart';
+import 'package:deskilo/features/task_recorder/storyboard/storyboard.dart';
+import 'package:deskilo/features/task_recorder/storyboard/storyboard_preview.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,7 @@ class _Doc implements TaskOutputGenerator {
   _Doc({this.available = true});
   final bool available;
   TaskRecording? got;
+  Storyboard? story;
   @override
   String get id => 'docx';
   @override
@@ -51,6 +54,7 @@ class _Doc implements TaskOutputGenerator {
     TaskOutputCancel? cancel,
   }) async {
     got = request.recording;
+    story = request.storyboard;
     return TaskOutputProduced(Uint8List.fromList([1, 2, 3]), 'task.docx');
   }
 }
@@ -219,6 +223,25 @@ void main() {
         findsOneWidget,
       );
 
+      final review = find.byKey(
+        const ValueKey('workbench-review-illustrations'),
+      );
+      await tester.scrollUntilVisible(
+        review,
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(review);
+      // The illustrations draw for real and keep a progress indicator
+      // turning: pump a route transition, not until settled.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      expect(find.byType(StoryboardPreview), findsOneWidget);
+      await tester.pageBack();
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+
       final make = find.byKey(const ValueKey('task-output-make-docx'));
       await tester.scrollUntilVisible(
         make,
@@ -236,6 +259,11 @@ void main() {
         doc.got!.kind,
         RecordingKind.edited,
         reason: 'the output is made from the private copy',
+      );
+      expect(
+        doc.story,
+        isNotNull,
+        reason: 'the reviewed storyboard travels with the request',
       );
       expect(find.textContaining('did not say where it went'), findsOneWidget);
     });

@@ -14529,6 +14529,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskOutputFailed => 'The output could not be made.';
 
   @override
+  String get taskOutputStale =>
+      'The illustrations were reviewed for an earlier version.';
+
+  @override
+  String get taskOutputBusy => 'This output is already being made.';
+
+  @override
+  String get taskWorkbenchReviewIllustrations => 'Review the illustrations';
+
+  @override
   String get capabilityMultiApproval => 'Two or more approvals';
 
   @override
