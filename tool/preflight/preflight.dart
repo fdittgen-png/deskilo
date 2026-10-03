@@ -104,7 +104,9 @@ bool _isFeatureRegistry(String p) =>
     p == 'lib/features/workspace/domain/workspace_feature.dart';
 
 bool _isProcessRegistry(String p) =>
-    p == 'lib/features/workspace/domain/workspace_process.dart';
+    p == 'lib/features/workspace/domain/workspace_process.dart' ||
+    // #1850 B — the catalogue prints each feature's assessment.
+    p == 'lib/features/workspace/domain/feature_lifecycle.dart';
 
 /// The generators [paths] implicate, in the order they must run.
 ///

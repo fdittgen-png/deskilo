@@ -64,3 +64,9 @@ abstract final class AppEnvironmentColors {
   static Color productionOf(Brightness brightness) =>
       AppStatusColors.successOf(brightness);
 }
+
+/// Account identity remains stable across workspace branding.
+abstract final class AppIdentityColors {
+  static const background = Color(0xffdce2f1);
+  static const foreground = Color(0xff29334f);
+}

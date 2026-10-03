@@ -13588,6 +13588,14 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get roleBuiltInNote =>
+      'Integrado. Lo que permite se define en Roles; se da en la página de cada miembro y surte efecto una vez validado.';
+
+  @override
+  String get roleBuiltInSubtitle =>
+      'Integrado. Lo que permite se define en Roles.';
+
+  @override
   String get roleEditorActive => 'En uso';
 
   @override
@@ -13650,6 +13658,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get roleRefusalOwnerOnly =>
       'Solo el propietario da un rol que gestiona los roles.';
+
+  @override
+  String get roleRenameAdministrator => 'Cambiar el nombre';
 
   @override
   String get roleTakeBackFailed => 'El rol no se retiró.';

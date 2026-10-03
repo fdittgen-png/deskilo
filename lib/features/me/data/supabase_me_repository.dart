@@ -79,6 +79,8 @@ class SupabaseMeRepository implements MeRepository {
           LinkedSpace(
             id: row['id'] as String,
             name: row['name'] as String? ?? '',
+            pairId: row['pair_id'] as String? ?? '',
+            environment: row['environment'] as String? ?? '',
             standing: standingOf(byWorkspace[row['id']]?['status'] as String?),
             isOwner: byWorkspace[row['id']]?['is_owner'] == true,
             isAdmin: byWorkspace[row['id']]?['is_admin'] == true,

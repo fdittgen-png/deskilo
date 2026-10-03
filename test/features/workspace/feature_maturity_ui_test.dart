@@ -88,11 +88,23 @@ Future<void> _pumpBadge(
 );
 
 void main() {
-  testWidgets('every row of the real registry reads Unreviewed', (t) async {
+  testWidgets('every row of the real registry reads its assessment', (
+    t,
+  ) async {
     await _pumpScreen(t);
     final rows = find.byType(FeatureMaturityBadge);
     expect(rows, findsNWidgets(featureManifest.length));
-    expect(find.text('Unreviewed'), findsNWidgets(featureManifest.length));
+    // #1850 B — the ledger-backed betas read Beta, every other row
+    // Unreviewed; nothing is stable and nothing is past active.
+    final beta = featureAssessments.values
+        .where((a) => a.maturity == FeatureMaturity.beta)
+        .length;
+    expect(beta, greaterThan(0));
+    expect(find.text('Beta'), findsNWidgets(beta));
+    expect(
+      find.text('Unreviewed'),
+      findsNWidgets(featureManifest.length - beta),
+    );
     expect(find.byKey(const ValueKey('feature-lifecycle')), findsNothing);
   });
 

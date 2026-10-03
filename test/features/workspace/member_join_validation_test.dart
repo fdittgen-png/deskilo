@@ -28,7 +28,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Fresh user: onboarding → join.
-    await tester.tap(find.text('Join a workspace'));
+    await tester.tap(find.byKey(const ValueKey('me-home-join')));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextFormField).first, 'GOODCODE22');
     await tester.tap(find.byKey(const ValueKey('invitation-review-button')));
