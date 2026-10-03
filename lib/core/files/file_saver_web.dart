@@ -35,6 +35,15 @@ Future<String?> saveToDownloads({
   return fileName;
 }
 
+/// #1872 — the browser's answer is a request, never a confirmed file.
+Future<SaveOutcome> saveToDownloadsTyped({
+  required Uint8List bytes,
+  required String fileName,
+}) async {
+  await saveToDownloads(bytes: bytes, fileName: fileName);
+  return DownloadRequested(fileName);
+}
+
 /// Nothing to migrate: no build of this app ever wrote a file into a
 /// browser's storage, so there is no hidden directory to rescue exports
 /// from (see the device implementation for what this repairs there).

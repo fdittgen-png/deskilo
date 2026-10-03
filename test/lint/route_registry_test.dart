@@ -64,6 +64,12 @@ const Set<String> _openWithEveryFeatureOff = {
   '/account-messages',
   '/settings/public-page',
   '/applications',
+  // #1865 — the account's own recordings on this device: reading,
+  // exporting and deleting them never needs a workspace flag; starting a
+  // recording is gated by taskRecorder inside the screen.
+  '/task-recorder',
+  // #1872 — the local workbench: no account, no workspace, no flag.
+  '/task-workbench',
 };
 
 void main() {

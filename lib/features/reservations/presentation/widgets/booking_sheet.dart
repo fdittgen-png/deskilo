@@ -94,7 +94,12 @@ class BookingSheet extends StatefulWidget {
     this.walkUpOption,
     this.now,
     this.overlaps,
+    this.onFieldCommitted,
   });
+
+  /// #1865 — told WHICH field a person committed ('time', 'for_whom',
+  /// 'repeat', 'check_in'), never its value; the task recorder's seam.
+  final void Function(String field)? onFieldCommitted;
 
   /// Null for a WHOLE-SPACE booking (0065): the sheet then shows no
   /// accessory row; [seatName] carries the space's name either way.
@@ -240,11 +245,13 @@ class _BookingSheetState extends State<BookingSheet> {
   bool _isWindow(HalfDayWindow w) =>
       _start.isAtSameMomentAs(w.start) && _end.isAtSameMomentAs(w.end);
 
-  void _selectWindow(HalfDayWindow w) =>
-      setState(() {
-        _start = w.start;
-        _end = w.end;
-      });
+  void _selectWindow(HalfDayWindow w) {
+    setState(() {
+      _start = w.start;
+      _end = w.end;
+    });
+    widget.onFieldCommitted?.call('time');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -352,6 +359,7 @@ class _BookingSheetState extends State<BookingSheet> {
                     _start = start;
                     _end = end;
                   });
+                  widget.onFieldCommitted?.call('time');
                 },
               ),
               BookingTimeTile(
@@ -366,6 +374,7 @@ class _BookingSheetState extends State<BookingSheet> {
                   final cap = _cap;
                   if (cap != null && end.isAfter(cap)) end = cap;
                   setState(() => _end = end);
+                  widget.onFieldCommitted?.call('time');
                 },
               ),
             ],
@@ -395,6 +404,7 @@ class _BookingSheetState extends State<BookingSheet> {
                   final minutes = (v / gridStep).round() * gridStep;
                   setState(() =>
                       _end = _start.add(Duration(minutes: minutes)));
+                  widget.onFieldCommitted?.call('time');
                 },
               ),
             ],
@@ -414,6 +424,7 @@ class _BookingSheetState extends State<BookingSheet> {
                   final cap = _cap;
                   if (cap != null && end.isAfter(cap)) end = cap;
                   setState(() => _end = end);
+                  widget.onFieldCommitted?.call('time');
                 },
               ),
 
@@ -438,6 +449,7 @@ class _BookingSheetState extends State<BookingSheet> {
                   // for someone else is a reservation.
                   if (id != widget.myMemberId) _setMode(false);
                   setState(() => _forMemberId = id);
+                  widget.onFieldCommitted?.call('for_whom');
                 },
               ),
 
@@ -500,14 +512,20 @@ class _BookingSheetState extends State<BookingSheet> {
                             child: Text(_patternLabel(l10n, p)),
                           ),
                       ],
-                      onChanged: (p) => setState(() => _pattern = p),
+                      onChanged: (p) {
+                        setState(() => _pattern = p);
+                        widget.onFieldCommitted?.call('repeat');
+                      },
                     ),
                     if (_pattern != null)
                       BookingDateTile(
                         label: l10n?.planUntilDateLabel ?? 'Repeat until',
                         value: _until,
                         first: widget.start,
-                        onPicked: (d) => setState(() => _until = d),
+                        onPicked: (d) {
+                          setState(() => _until = d);
+                          widget.onFieldCommitted?.call('repeat');
+                        },
                       ),
                   ],
                   if (widget.allowBlocking) ...[
@@ -556,7 +574,10 @@ class _BookingSheetState extends State<BookingSheet> {
                 title: Text(
                     l10n?.kioskCheckInRightAway ?? 'Check in right away'),
                 value: _checkInNow,
-                onChanged: (v) => setState(() => _checkInNow = v),
+                onChanged: (v) {
+                  setState(() => _checkInNow = v);
+                  widget.onFieldCommitted?.call('check_in');
+                },
               ),
           ],
         ),

@@ -74,3 +74,49 @@ final class FileSaverProvider
 }
 
 String _$fileSaverHash() => r'607a5d2bab40420d0f9ff46a41cc2ef4eed2c382';
+
+/// #1872 — the same local save, answering with what it achieved.
+
+@ProviderFor(typedFileSaver)
+final typedFileSaverProvider = TypedFileSaverProvider._();
+
+/// #1872 — the same local save, answering with what it achieved.
+
+final class TypedFileSaverProvider
+    extends $FunctionalProvider<TypedFileSaver, TypedFileSaver, TypedFileSaver>
+    with $Provider<TypedFileSaver> {
+  /// #1872 — the same local save, answering with what it achieved.
+  TypedFileSaverProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'typedFileSaverProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$typedFileSaverHash();
+
+  @$internal
+  @override
+  $ProviderElement<TypedFileSaver> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  TypedFileSaver create(Ref ref) {
+    return typedFileSaver(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(TypedFileSaver value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<TypedFileSaver>(value),
+    );
+  }
+}
+
+String _$typedFileSaverHash() => r'a55ade7563d9d229dcb2192cbc2301a32fc8ec84';
