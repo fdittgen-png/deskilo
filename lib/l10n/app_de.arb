@@ -3902,6 +3902,8 @@
   "inboxNoArchived": "Keine archivierten Unterhaltungen.",
   "inboxNoUnread": "Nichts Ungelesenes — du bist auf dem Laufenden.",
   "inboxRetry": "Erneut versuchen",
+  "instanceAccessTitle": "Assistenten-Zugang",
+  "instanceAccessUntil": "Bis {date}",
   "instanceAccountIntro": "Legen Sie ein kostenloses Konto auf supabase.com an, erstellen Sie dann ein persönliches Zugriffstoken (Account → Access Tokens) und fügen Sie es hier ein. Der Assistent nutzt es, um das Projekt anzulegen und einzurichten; es wird nie gespeichert.",
   "@instanceAccountIntro": {
     "description": "#977 instance wizard: instanceAccountIntro"
@@ -3984,9 +3986,20 @@
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
   },
+  "instanceEndpointTitle": "Assistenten-Endpunkt",
   "instanceFamilyChatgpt": "ChatGPT",
   "instanceFamilyClaude": "Claude",
   "instanceFamilyLoopback": "Desktop- oder Kommandozeilen-Assistent",
+  "instanceGrant": "Zugang freigeben",
+  "instanceGrantDays": "Wählen Sie zwischen 1 und 30 Tagen.",
+  "instanceGrantDaysLabel": "Für {days, plural, =1{1 Tag} other{{days} Tage}}",
+  "instanceGrantHelp": "Solange kein anderer Datenbank-Administrator existiert, geben Sie Zugänge selbst frei — Ihren eigenen eingeschlossen — für höchstens 30 Tage und mit Begründung. Jede Freigabe wird protokolliert.",
+  "instanceGrantNeedsGoogle": "Zum Freigeben muss diese Sitzung mit Google angemeldet sein.",
+  "instanceGrantNoIdentity": "Diese Person hat ihre Identität noch nicht bestätigt.",
+  "instanceGrantOtherAdmin": "Hier entscheidet ein Datenbank-Administrator über den Zugang; fragen Sie ihn.",
+  "instanceGrantReason": "Begründung",
+  "instanceGrantReasonNeeded": "Schreiben Sie, warum dieser Zugang freigegeben wird (bis zu 500 Zeichen).",
+  "instanceGrantTitle": "Assistenten-Zugang für {name} freigeben",
   "instanceInstallSchema": "Schema installieren: jede Migration der App, in Reihenfolge ({count}).",
   "@instanceInstallSchema": {
     "description": "#977 instance wizard: instanceInstallSchema",
@@ -4002,6 +4015,11 @@
   "instanceMakeAdmin": "Zum Administrator machen",
   "instanceNoCandidates": "Noch niemand sonst hat seine Identität bestätigt.",
   "instanceNotOperator": "Nur der Instanzbetreiber verwaltet die Assistenten der Installation.",
+  "instanceNoticeClientWaiting": "{name} wartet auf Ihre Freigabe.",
+  "instanceNoticeOperatorGrant": "Der Betreiber hat den Assistenten-Zugang für {name} freigegeben.",
+  "instanceNoticeSelfGrant": "{name} hat den eigenen Assistenten-Zugang freigegeben.",
+  "instanceNoticesMarkRead": "Als gelesen markieren",
+  "instanceOperatorApproved": "Vom Betreiber freigegeben",
   "instanceOrganisationLabel": "Organisation",
   "@instanceOrganisationLabel": {
     "description": "#977 instance wizard: instanceOrganisationLabel"
@@ -4013,6 +4031,14 @@
   "instanceOwnerHelp": "Diese Installation wird von allen ihren Arbeitsbereichen gemeinsam genutzt. Der Instanzeigentümer ist dafür verantwortlich: Wenden Sie sich an ihn bei allem, was die ganze Installation betrifft, etwa Assistenten.",
   "instanceOwnerNone": "Es ist noch kein Instanzeigentümer festgelegt.",
   "instanceOwnerTitle": "Instanzeigentümer",
+  "instanceProbeCheck": "Server prüfen",
+  "instanceProbeDeployed": "Der Assistenten-Endpunkt antwortet wie erwartet.",
+  "instanceProbeMismatch": "Der Endpunkt antwortet mit einer anderen Adresse als der, die Assistenten erhalten.",
+  "instanceProbeMissing": "Der Server wurde noch nicht geprüft.",
+  "instanceProbeNotDeployed": "Der Assistenten-Endpunkt ist auf diesem Server noch nicht bereitgestellt.",
+  "instanceProbePending": "Server wird geprüft…",
+  "instanceProbeStale": "Die letzte Prüfung ist älter als 15 Minuten. Prüfen Sie erneut, bevor Sie die Assistenten einschalten.",
+  "instanceProbeUnavailable": "Der Server war nicht erreichbar. Versuchen Sie es gleich noch einmal.",
   "instanceProgress": "{done} / {total} · {current}",
   "@instanceProgress": {
     "description": "#977 instance wizard: instanceProgress",
@@ -4069,6 +4095,7 @@
   "instanceRuntimeOn": "Eingeschaltet",
   "instanceRuntimeTitle": "Assistenten auf dieser Installation",
   "instanceSecondFactorNeeded": "Änderungen hier erfordern Ihren zweiten Faktor in dieser Sitzung.",
+  "instanceSelfApproved": "Vom Betreiber selbst freigegeben",
   "instanceSignInExplain": "Anmeldeeinstellungen: E-Mail-Bestätigung an (eine Registrierung muss den Link in der Mail anklicken), und die Links der App für Passwort-Resets und Magic Links erlaubt.",
   "@instanceSignInExplain": {
     "description": "#977 instance wizard: instanceSignInExplain"
@@ -4122,6 +4149,7 @@
   "instanceTurnOff": "Ausschalten",
   "instanceTurnOn": "Für alle Arbeitsbereiche einschalten",
   "instanceTurnOnConfirm": "Assistenten werden in jedem Arbeitsbereich nutzbar, der sie anbietet. Sie können sie jederzeit wieder ausschalten.",
+  "instanceTurnOnNeedsProbe": "Der Assistenten-Endpunkt ist nicht bestätigt. Prüfen Sie zuerst den Server.",
   "instanceUseExisting": "Oder ein bestehendes Projekt verwenden:",
   "@instanceUseExisting": {
     "description": "#977 instance wizard: instanceUseExisting"

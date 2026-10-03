@@ -13,10 +13,14 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_snack.dart';
 import '../domain/instance_operator.dart';
+import '../domain/mcp_onboarding.dart';
 import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_providers.dart';
 import 'eligibility_review_screen.dart' show SecondFactorSheet;
+import 'widgets/instance_console_sections.dart';
 
 class InstanceAssistantsScreen extends ConsumerStatefulWidget {
   const InstanceAssistantsScreen({super.key});
@@ -29,6 +33,7 @@ class InstanceAssistantsScreen extends ConsumerStatefulWidget {
 class _InstanceAssistantsScreenState
     extends ConsumerState<InstanceAssistantsScreen> {
   InstanceMcpOverview? _overview;
+  InstanceNotices _notices = InstanceNotices.empty;
   bool _loading = true;
   bool _busy = false;
 
@@ -47,11 +52,79 @@ class _InstanceAssistantsScreenState
       action: () async =>
           overview = await ref.read(assistantAccessProvider).instanceOverview(),
     );
+    // #2145 — the installation notices, beside the overview; a server
+    // without them reads none.
+    var notices = InstanceNotices.empty;
+    if (overview != null && mounted) {
+      await runGuarded(
+        context,
+        domain: 'mcp',
+        message: 'instance notices failed',
+        action: () async {
+          ref.invalidate(myInstanceNoticesProvider);
+          notices = await ref.read(myInstanceNoticesProvider.future);
+        },
+      );
+    }
     if (!mounted) return;
     setState(() {
       _overview = overview;
+      _notices = notices;
       _loading = false;
     });
+  }
+
+  /// #2145 — a change whose refusal the console can explain.
+  Future<void> _explained(
+    String message,
+    Future<void> Function() action,
+  ) async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    try {
+      await action();
+    } catch (e, st) {
+      TraceLogger.instance.error('mcp', message, error: e, stackTrace: st);
+      if (mounted) {
+        final l10n = AppLocalizations.of(context);
+        AppSnack.error(
+          context,
+          instanceRefusalText(l10n, e) ??
+              l10n?.mcpNextUnavailable ??
+              'The server could not answer. Nothing is assumed; try again '
+                  'later.',
+        );
+      }
+    }
+    if (!mounted) return;
+    setState(() => _busy = false);
+    ref.invalidate(myInstanceNoticesProvider);
+    await _load();
+  }
+
+  /// #2145 — asks the deployed endpoint (pg_net answers asynchronously),
+  /// then reads the settled probe.
+  Future<void> _checkServer() => _explained(
+    'endpoint probe failed',
+    () => ref.read(mcpOnboardingCommandsProvider).checkServer(),
+  );
+
+  Future<void> _grant(InstanceMember person) async {
+    final answer = await showDialog<({String reason, int days})>(
+      context: context,
+      builder: (_) => InstanceGrantDialog(name: person.name),
+    );
+    if (answer == null || !mounted) return;
+    await _explained(
+      'operator grant failed',
+      () => ref
+          .read(mcpOnboardingCommandsProvider)
+          .grant(
+            subjectId: person.userId,
+            reason: answer.reason,
+            days: answer.days,
+          ),
+    );
   }
 
   Future<void> _change(String message, Future<void> Function() action) async {
@@ -97,7 +170,7 @@ class _InstanceAssistantsScreenState
       ),
     );
     if (confirmed != true) return;
-    await _change(
+    await _explained(
       'runtime on failed',
       () => ref.read(assistantAccessProvider).setRuntime(enabled: true),
     );
@@ -151,9 +224,30 @@ class _InstanceAssistantsScreenState
                     ),
                   ),
                 ],
+                InstanceNoticesBanner(
+                  notices: _notices,
+                  onMarkAllRead: _busy
+                      ? null
+                      : () => _explained(
+                          'notices read failed',
+                          () => ref
+                              .read(mcpOnboardingCommandsProvider)
+                              .markNoticesRead(),
+                        ),
+                ),
+                InstanceEndpointSection(
+                  overview: o,
+                  onCheck: o.secondFactor && !_busy ? _checkServer : null,
+                ),
+                const Divider(height: AppSpacing.xl),
                 _runtime(l10n, o),
                 const Divider(height: AppSpacing.xl),
                 _administrators(l10n, o),
+                const Divider(height: AppSpacing.xl),
+                InstanceAccessSection(
+                  overview: o,
+                  onGrant: o.secondFactor && !_busy ? _grant : null,
+                ),
                 const Divider(height: AppSpacing.xl),
                 _clients(l10n, o),
                 _loopback(l10n, o),
@@ -187,6 +281,13 @@ class _InstanceAssistantsScreenState
                 : (l10n?.instanceRuntimeOff ?? 'Off'),
           ),
         ),
+        if (!o.enabled && !endpointReady(o.endpointProbe))
+          Text(
+            key: const ValueKey('instance-turn-on-needs-probe'),
+            l10n?.instanceTurnOnNeedsProbe ??
+                'The assistant endpoint is not confirmed. Check the server '
+                    'first.',
+          ),
         if (!o.enabled && o.blockers.isNotEmpty)
           Text(
             key: const ValueKey('instance-blockers'),
@@ -210,7 +311,11 @@ class _InstanceAssistantsScreenState
                 )
               : FilledButton(
                   key: const ValueKey('instance-turn-on'),
-                  onPressed: can && o.ready ? () => _turnOn(l10n) : null,
+                  // #2145 — Turn on needs a fresh check of the deployed
+                  // endpoint (0360); the check comes first.
+                  onPressed: can && o.ready && endpointReady(o.endpointProbe)
+                      ? () => _turnOn(l10n)
+                      : null,
                   child: Text(
                     l10n?.instanceTurnOn ?? 'Turn on for every workspace',
                   ),
@@ -321,8 +426,8 @@ class _InstanceAssistantsScreenState
             ? (on) => _change(
                 'loopback switch failed',
                 () => ref
-                    .read(mcpOnboardingRepositoryProvider)
-                    .setLoopbackClients(allowed: on),
+                    .read(mcpOnboardingCommandsProvider)
+                    .allowLoopbackClients(on),
               )
             : null,
       );

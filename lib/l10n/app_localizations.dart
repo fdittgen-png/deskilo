@@ -10872,6 +10872,18 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get inboxRetry;
 
+  /// #2145 assistant onboarding: instanceAccessTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant access'**
+  String get instanceAccessTitle;
+
+  /// #2145 assistant onboarding: instanceAccessUntil
+  ///
+  /// In en, this message translates to:
+  /// **'Until {date}'**
+  String instanceAccessUntil(String date);
+
   /// #977 instance wizard: instanceAccountIntro
   ///
   /// In en, this message translates to:
@@ -11190,6 +11202,12 @@ abstract class AppLocalizations {
   /// **'The instance is ready. Use it on this device, then share the server QR from the Server screen so members join the same one.'**
   String get instanceDoneIntro;
 
+  /// #2145 assistant onboarding: instanceEndpointTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant endpoint'**
+  String get instanceEndpointTitle;
+
   /// #2145 assistant onboarding: instanceFamilyChatgpt
   ///
   /// In en, this message translates to:
@@ -11207,6 +11225,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Desktop or command-line assistant'**
   String get instanceFamilyLoopback;
+
+  /// #2145 assistant onboarding: instanceGrant
+  ///
+  /// In en, this message translates to:
+  /// **'Approve access'**
+  String get instanceGrant;
+
+  /// #2145 assistant onboarding: instanceGrantDays
+  ///
+  /// In en, this message translates to:
+  /// **'Choose between 1 and 30 days.'**
+  String get instanceGrantDays;
+
+  /// #2145 assistant onboarding: instanceGrantDaysLabel
+  ///
+  /// In en, this message translates to:
+  /// **'For {days, plural, =1{1 day} other{{days} days}}'**
+  String instanceGrantDaysLabel(int days);
+
+  /// #2145 assistant onboarding: instanceGrantHelp
+  ///
+  /// In en, this message translates to:
+  /// **'While no other database administrator exists, you approve access yourself — yours included — for up to 30 days, with a reason. Each approval is recorded.'**
+  String get instanceGrantHelp;
+
+  /// #2145 assistant onboarding: instanceGrantNeedsGoogle
+  ///
+  /// In en, this message translates to:
+  /// **'Approving access needs this session to be signed in with Google.'**
+  String get instanceGrantNeedsGoogle;
+
+  /// #2145 assistant onboarding: instanceGrantNoIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'That person has not confirmed their identity yet.'**
+  String get instanceGrantNoIdentity;
+
+  /// #2145 assistant onboarding: instanceGrantOtherAdmin
+  ///
+  /// In en, this message translates to:
+  /// **'A database administrator decides access here; ask them.'**
+  String get instanceGrantOtherAdmin;
+
+  /// #2145 assistant onboarding: instanceGrantReason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get instanceGrantReason;
+
+  /// #2145 assistant onboarding: instanceGrantReasonNeeded
+  ///
+  /// In en, this message translates to:
+  /// **'Write why this access is approved (up to 500 characters).'**
+  String get instanceGrantReasonNeeded;
+
+  /// #2145 assistant onboarding: instanceGrantTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Approve assistant access for {name}'**
+  String instanceGrantTitle(String name);
 
   /// #977 instance wizard: instanceInstallSchema
   ///
@@ -11249,6 +11327,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only the instance operator manages the installation\'s assistants.'**
   String get instanceNotOperator;
+
+  /// #2145 assistant onboarding: instanceNoticeClientWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is waiting for your approval.'**
+  String instanceNoticeClientWaiting(String name);
+
+  /// #2145 assistant onboarding: instanceNoticeOperatorGrant
+  ///
+  /// In en, this message translates to:
+  /// **'The operator approved assistant access for {name}.'**
+  String instanceNoticeOperatorGrant(String name);
+
+  /// #2145 assistant onboarding: instanceNoticeSelfGrant
+  ///
+  /// In en, this message translates to:
+  /// **'{name} approved their own assistant access.'**
+  String instanceNoticeSelfGrant(String name);
+
+  /// #2145 assistant onboarding: instanceNoticesMarkRead
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as read'**
+  String get instanceNoticesMarkRead;
+
+  /// #2145 assistant onboarding: instanceOperatorApproved
+  ///
+  /// In en, this message translates to:
+  /// **'Approved by the operator'**
+  String get instanceOperatorApproved;
 
   /// #977 instance wizard: instanceOrganisationLabel
   ///
@@ -11297,6 +11405,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Instance owner'**
   String get instanceOwnerTitle;
+
+  /// #2145 assistant onboarding: instanceProbeCheck
+  ///
+  /// In en, this message translates to:
+  /// **'Check the server'**
+  String get instanceProbeCheck;
+
+  /// #2145 assistant onboarding: instanceProbeDeployed
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant endpoint answers as it should.'**
+  String get instanceProbeDeployed;
+
+  /// #2145 assistant onboarding: instanceProbeMismatch
+  ///
+  /// In en, this message translates to:
+  /// **'The endpoint answers with another address than the one assistants are given.'**
+  String get instanceProbeMismatch;
+
+  /// #2145 assistant onboarding: instanceProbeMissing
+  ///
+  /// In en, this message translates to:
+  /// **'The server has not been checked yet.'**
+  String get instanceProbeMissing;
+
+  /// #2145 assistant onboarding: instanceProbeNotDeployed
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant endpoint is not deployed on this server yet.'**
+  String get instanceProbeNotDeployed;
+
+  /// #2145 assistant onboarding: instanceProbePending
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the server…'**
+  String get instanceProbePending;
+
+  /// #2145 assistant onboarding: instanceProbeStale
+  ///
+  /// In en, this message translates to:
+  /// **'The last check is more than 15 minutes old. Check again before turning assistants on.'**
+  String get instanceProbeStale;
+
+  /// #2145 assistant onboarding: instanceProbeUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'The server could not be reached. Try again in a moment.'**
+  String get instanceProbeUnavailable;
 
   /// #977 instance wizard: instanceProgress
   ///
@@ -11400,6 +11556,12 @@ abstract class AppLocalizations {
   /// **'Changes here need your second factor on this session.'**
   String get instanceSecondFactorNeeded;
 
+  /// #2145 assistant onboarding: instanceSelfApproved
+  ///
+  /// In en, this message translates to:
+  /// **'Self-approved by operator'**
+  String get instanceSelfApproved;
+
   /// #977 instance wizard: instanceSignInExplain
   ///
   /// In en, this message translates to:
@@ -11489,6 +11651,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Assistants become usable in every workspace that offers them. You can turn them off again at any time.'**
   String get instanceTurnOnConfirm;
+
+  /// #2145 assistant onboarding: instanceTurnOnNeedsProbe
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant endpoint is not confirmed. Check the server first.'**
+  String get instanceTurnOnNeedsProbe;
 
   /// #977 instance wizard: instanceUseExisting
   ///

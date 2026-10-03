@@ -6321,6 +6321,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get inboxRetry => 'Riprova';
 
   @override
+  String get instanceAccessTitle => 'Accesso agli assistenti';
+
+  @override
+  String instanceAccessUntil(String date) {
+    return 'Fino al $date';
+  }
+
+  @override
   String get instanceAccountIntro =>
       'Create un account gratuito su supabase.com, poi un token di accesso personale (Account → Access Tokens) e incollatelo qui. L\'assistente lo usa per creare e configurare il progetto; non viene mai salvato.';
 
@@ -6505,6 +6513,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'istanza è pronta. Usatela su questo dispositivo, poi condividete il QR del server dalla schermata Server perché i membri si uniscano alla stessa.';
 
   @override
+  String get instanceEndpointTitle => 'Endpoint degli assistenti';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override
@@ -6513,6 +6524,51 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get instanceFamilyLoopback =>
       'Assistente desktop o da riga di comando';
+
+  @override
+  String get instanceGrant => 'Approva l\'accesso';
+
+  @override
+  String get instanceGrantDays => 'Scegli tra 1 e 30 giorni.';
+
+  @override
+  String instanceGrantDaysLabel(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days giorni',
+      one: '1 giorno',
+    );
+    return 'Per $_temp0';
+  }
+
+  @override
+  String get instanceGrantHelp =>
+      'Finché non esiste un altro amministratore del database, approvi tu gli accessi — compreso il tuo — per al massimo 30 giorni, con un motivo. Ogni approvazione viene registrata.';
+
+  @override
+  String get instanceGrantNeedsGoogle =>
+      'Per approvare l\'accesso questa sessione deve essere connessa con Google.';
+
+  @override
+  String get instanceGrantNoIdentity =>
+      'Questa persona non ha ancora confermato la propria identità.';
+
+  @override
+  String get instanceGrantOtherAdmin =>
+      'Qui decide l\'accesso un amministratore del database; chiediglielo.';
+
+  @override
+  String get instanceGrantReason => 'Motivo';
+
+  @override
+  String get instanceGrantReasonNeeded =>
+      'Scrivi perché questo accesso viene approvato (fino a 500 caratteri).';
+
+  @override
+  String instanceGrantTitle(String name) {
+    return 'Approva l\'accesso agli assistenti per $name';
+  }
 
   @override
   String instanceInstallSchema(int count) {
@@ -6543,6 +6599,27 @@ class AppLocalizationsIt extends AppLocalizations {
       'Solo l\'operatore dell\'istanza gestisce gli assistenti dell\'installazione.';
 
   @override
+  String instanceNoticeClientWaiting(String name) {
+    return '$name attende la tua approvazione.';
+  }
+
+  @override
+  String instanceNoticeOperatorGrant(String name) {
+    return 'L\'operatore ha approvato l\'accesso agli assistenti per $name.';
+  }
+
+  @override
+  String instanceNoticeSelfGrant(String name) {
+    return '$name ha approvato il proprio accesso agli assistenti.';
+  }
+
+  @override
+  String get instanceNoticesMarkRead => 'Segna come letto';
+
+  @override
+  String get instanceOperatorApproved => 'Approvato dall\'operatore';
+
+  @override
   String get instanceOrganisationLabel => 'Organizzazione';
 
   @override
@@ -6568,6 +6645,35 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceOwnerTitle => 'Proprietario dell\'istanza';
+
+  @override
+  String get instanceProbeCheck => 'Verifica il server';
+
+  @override
+  String get instanceProbeDeployed =>
+      'L\'endpoint degli assistenti risponde come previsto.';
+
+  @override
+  String get instanceProbeMismatch =>
+      'L\'endpoint risponde con un indirizzo diverso da quello dato agli assistenti.';
+
+  @override
+  String get instanceProbeMissing => 'Il server non è ancora stato verificato.';
+
+  @override
+  String get instanceProbeNotDeployed =>
+      'L\'endpoint degli assistenti non è ancora distribuito su questo server.';
+
+  @override
+  String get instanceProbePending => 'Verifica del server…';
+
+  @override
+  String get instanceProbeStale =>
+      'L\'ultima verifica risale a più di 15 minuti fa. Verifica di nuovo prima di attivare gli assistenti.';
+
+  @override
+  String get instanceProbeUnavailable =>
+      'Il server non è raggiungibile. Riprova tra un momento.';
 
   @override
   String instanceProgress(int done, int total, String current) {
@@ -6637,6 +6743,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le modifiche qui richiedono il secondo fattore in questa sessione.';
 
   @override
+  String get instanceSelfApproved => 'Auto-approvato dall\'operatore';
+
+  @override
   String get instanceSignInExplain =>
       'Impostazioni di accesso: conferma via e-mail attiva (una registrazione deve cliccare il link ricevuto), e i link dell\'app consentiti per reimpostare la password e i magic link.';
 
@@ -6686,6 +6795,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get instanceTurnOnConfirm =>
       'Gli assistenti diventano utilizzabili in ogni spazio che li offre. Puoi disattivarli in qualsiasi momento.';
+
+  @override
+  String get instanceTurnOnNeedsProbe =>
+      'L\'endpoint degli assistenti non è confermato. Verifica prima il server.';
 
   @override
   String get instanceUseExisting => 'Oppure usa un progetto esistente:';

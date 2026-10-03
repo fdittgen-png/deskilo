@@ -77,7 +77,7 @@ final class AssistantSetupProvider
   }
 }
 
-String _$assistantSetupHash() => r'a8fa5090870033a7b6132b3367c82e316e40e288';
+String _$assistantSetupHash() => r'cc2a7d454bb1cdba8425d2291a54692f40a1de40';
 
 /// #1827 — the setup checklist for one person on one workspace. The four
 /// server answers are asked in parallel; one that fails is `unavailable`
@@ -440,3 +440,56 @@ final class MyInstanceNoticesProvider
 }
 
 String _$myInstanceNoticesHash() => r'4c265493c570e19570f1812247dedf347f7056c7';
+
+/// #2145 — the onboarding changes, behind one class.
+
+@ProviderFor(mcpOnboardingCommands)
+final mcpOnboardingCommandsProvider = McpOnboardingCommandsProvider._();
+
+/// #2145 — the onboarding changes, behind one class.
+
+final class McpOnboardingCommandsProvider
+    extends
+        $FunctionalProvider<
+          McpOnboardingCommands,
+          McpOnboardingCommands,
+          McpOnboardingCommands
+        >
+    with $Provider<McpOnboardingCommands> {
+  /// #2145 — the onboarding changes, behind one class.
+  McpOnboardingCommandsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mcpOnboardingCommandsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpOnboardingCommandsHash();
+
+  @$internal
+  @override
+  $ProviderElement<McpOnboardingCommands> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  McpOnboardingCommands create(Ref ref) {
+    return mcpOnboardingCommands(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(McpOnboardingCommands value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<McpOnboardingCommands>(value),
+    );
+  }
+}
+
+String _$mcpOnboardingCommandsHash() =>
+    r'4285fc4f497e2a612644251e4ba8c4457e34db45';

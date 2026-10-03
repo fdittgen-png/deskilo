@@ -9,6 +9,7 @@ import '../../../auth/providers/auth_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../providers/assistant_setup_providers.dart';
 import '../../providers/mcp_providers.dart';
 import '../connect_assistant_screen.dart';
 
@@ -117,10 +118,27 @@ class _InstanceConsoleTileState extends ConsumerState<_InstanceConsoleTile> {
               key: const ValueKey('settings-instance-assistants'),
               leading: const Icon(Icons.settings_input_antenna),
               title: Text(l10n?.instanceTitle ?? 'Installation: assistants'),
-              trailing: const Icon(Icons.chevron_right),
+              // #2145 — unread installation notices (a waiting assistant,
+              // a grant) on the tile that opens them.
+              trailing: _NoticeBadge(
+                count: ref.watch(myInstanceNoticesProvider).value?.unread ?? 0,
+              ),
               onTap: () => context.push('/installation/assistants'),
             )
           : const SizedBox.shrink(),
     );
   }
+}
+
+class _NoticeBadge extends StatelessWidget {
+  const _NoticeBadge({required this.count});
+  final int count;
+
+  @override
+  Widget build(BuildContext context) => Badge(
+    key: ValueKey('settings-instance-notices-$count'),
+    isLabelVisible: count > 0,
+    label: Text('$count'),
+    child: const Icon(Icons.chevron_right),
+  );
 }

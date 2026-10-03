@@ -8,6 +8,7 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/assistant_setup.dart';
+import '../application/mcp_onboarding_commands.dart';
 import '../domain/mcp_client.dart';
 import '../data/supabase_mcp_onboarding_repository.dart';
 import '../domain/mcp_connection.dart';
@@ -48,7 +49,8 @@ Future<AssistantSetup> assistantSetup(Ref ref, McpContextRef context) async {
     policy: results.$3,
     connections: results.$4,
     featureOn: features.contains(WorkspaceFeature.mcpAccess),
-    canConfigure: permissions.contains(WorkspacePermission.manageConfiguration),
+    // #2145 — 0360: whoever manages integrations switches mcpAccess here.
+    canConfigure: permissions.contains(WorkspacePermission.manageIntegrations),
     canManageIntegrations: permissions.contains(
       WorkspacePermission.manageIntegrations,
     ),
@@ -93,3 +95,8 @@ Future<McpEndpointInfo> mcpPublishedEndpoint(Ref ref) =>
 @riverpod
 Future<InstanceNotices> myInstanceNotices(Ref ref) =>
     ref.watch(mcpOnboardingRepositoryProvider).notices();
+
+/// #2145 — the onboarding changes, behind one class.
+@riverpod
+McpOnboardingCommands mcpOnboardingCommands(Ref ref) =>
+    McpOnboardingCommands(ref.watch(mcpOnboardingRepositoryProvider));

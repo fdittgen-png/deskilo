@@ -14,6 +14,11 @@ class FakeMcpOnboardingRepository implements McpOnboardingRepository {
   McpEndpointInfo published;
   InstanceNotices inbox;
   bool loopbackAllowed = false;
+
+  /// The next workspace switch is refused as stale (DK409).
+  Object? workspaceSwitchError;
+  EndpointProbe probe = EndpointProbe.missing;
+  Object? grantError;
   final calls = <String>[];
 
   @override
@@ -55,5 +60,39 @@ class FakeMcpOnboardingRepository implements McpOnboardingRepository {
   Future<bool> setLoopbackClients({required bool allowed}) async {
     calls.add('setLoopbackClients:$allowed');
     return loopbackAllowed = allowed;
+  }
+
+  @override
+  Future<EndpointProbe> probeEndpoint() async {
+    calls.add('probeEndpoint');
+    return const EndpointProbe(state: EndpointProbeState.pending);
+  }
+
+  @override
+  Future<EndpointProbe> checkEndpoint() async {
+    calls.add('checkEndpoint');
+    return probe;
+  }
+
+  @override
+  Future<DateTime?> grantEligibility({
+    required String subjectId,
+    required String reason,
+    required int days,
+  }) async {
+    calls.add('grantEligibility:$subjectId:$days:$reason');
+    if (grantError case final e?) throw e;
+    return DateTime.utc(2026, 11, 2);
+  }
+
+  @override
+  Future<bool> setWorkspaceMcpAccess(
+    String workspaceId, {
+    required bool enabled,
+    bool? expected,
+  }) async {
+    calls.add('setWorkspaceMcpAccess:$workspaceId:$enabled:$expected');
+    if (workspaceSwitchError case final e?) throw e;
+    return enabled;
   }
 }

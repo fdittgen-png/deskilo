@@ -3902,6 +3902,8 @@
   "inboxNoArchived": "Aucune conversation archivée.",
   "inboxNoUnread": "Rien de non lu — vous êtes à jour.",
   "inboxRetry": "Réessayer",
+  "instanceAccessTitle": "Accès aux assistants",
+  "instanceAccessUntil": "Jusqu'au {date}",
   "instanceAccountIntro": "Créez un compte gratuit sur supabase.com, puis un jeton d'accès personnel (Account → Access Tokens) et collez-le ici. L'assistant s'en sert pour créer et configurer le projet ; il n'est jamais enregistré.",
   "@instanceAccountIntro": {
     "description": "#977 instance wizard: instanceAccountIntro"
@@ -3984,9 +3986,20 @@
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
   },
+  "instanceEndpointTitle": "Point d'accès des assistants",
   "instanceFamilyChatgpt": "ChatGPT",
   "instanceFamilyClaude": "Claude",
   "instanceFamilyLoopback": "Assistant de bureau ou en ligne de commande",
+  "instanceGrant": "Approuver l'accès",
+  "instanceGrantDays": "Choisissez entre 1 et 30 jours.",
+  "instanceGrantDaysLabel": "Pour {days, plural, =1{1 jour} other{{days} jours}}",
+  "instanceGrantHelp": "Tant qu'aucun autre administrateur de la base de données n'existe, vous approuvez vous-même les accès — le vôtre compris — pour 30 jours au plus, avec une raison. Chaque approbation est enregistrée.",
+  "instanceGrantNeedsGoogle": "Approuver un accès nécessite que cette session soit connectée avec Google.",
+  "instanceGrantNoIdentity": "Cette personne n'a pas encore confirmé son identité.",
+  "instanceGrantOtherAdmin": "Un administrateur de la base de données décide de l'accès ici ; demandez-le-lui.",
+  "instanceGrantReason": "Raison",
+  "instanceGrantReasonNeeded": "Indiquez pourquoi cet accès est approuvé (500 caractères maximum).",
+  "instanceGrantTitle": "Approuver l'accès aux assistants pour {name}",
   "instanceInstallSchema": "Installer le schéma : chaque migration de l'app, dans l'ordre ({count}).",
   "@instanceInstallSchema": {
     "description": "#977 instance wizard: instanceInstallSchema",
@@ -4002,6 +4015,11 @@
   "instanceMakeAdmin": "Nommer administrateur",
   "instanceNoCandidates": "Personne d'autre n'a encore confirmé son identité.",
   "instanceNotOperator": "Seul l'opérateur de l'instance gère les assistants de l'installation.",
+  "instanceNoticeClientWaiting": "{name} attend votre approbation.",
+  "instanceNoticeOperatorGrant": "L'opérateur a approuvé l'accès aux assistants pour {name}.",
+  "instanceNoticeSelfGrant": "{name} a approuvé son propre accès aux assistants.",
+  "instanceNoticesMarkRead": "Marquer comme lu",
+  "instanceOperatorApproved": "Approuvé par l'opérateur",
   "instanceOrganisationLabel": "Organisation",
   "@instanceOrganisationLabel": {
     "description": "#977 instance wizard: instanceOrganisationLabel"
@@ -4013,6 +4031,14 @@
   "instanceOwnerHelp": "Cette installation est partagée par tous ses espaces. Le propriétaire de l'instance en est responsable : contactez-le pour tout ce qui concerne l'ensemble de l'installation, comme les assistants.",
   "instanceOwnerNone": "Aucun propriétaire d'instance n'est encore défini.",
   "instanceOwnerTitle": "Propriétaire de l'instance",
+  "instanceProbeCheck": "Vérifier le serveur",
+  "instanceProbeDeployed": "Le point d'accès des assistants répond comme prévu.",
+  "instanceProbeMismatch": "Le point d'accès répond avec une autre adresse que celle donnée aux assistants.",
+  "instanceProbeMissing": "Le serveur n'a pas encore été vérifié.",
+  "instanceProbeNotDeployed": "Le point d'accès des assistants n'est pas encore déployé sur ce serveur.",
+  "instanceProbePending": "Vérification du serveur…",
+  "instanceProbeStale": "La dernière vérification date de plus de 15 minutes. Vérifiez à nouveau avant d’activer les assistants.",
+  "instanceProbeUnavailable": "Le serveur n'a pas pu être joint. Réessayez dans un instant.",
   "instanceProgress": "{done} / {total} · {current}",
   "@instanceProgress": {
     "description": "#977 instance wizard: instanceProgress",
@@ -4069,6 +4095,7 @@
   "instanceRuntimeOn": "Activés",
   "instanceRuntimeTitle": "Assistants sur cette installation",
   "instanceSecondFactorNeeded": "Les changements ici exigent votre second facteur sur cette session.",
+  "instanceSelfApproved": "Auto-approuvé par l'opérateur",
   "instanceSignInExplain": "Réglages de connexion : confirmation par courriel activée (une inscription doit cliquer le lien reçu), et les liens de l'app autorisés pour les réinitialisations de mot de passe et les liens magiques.",
   "@instanceSignInExplain": {
     "description": "#977 instance wizard: instanceSignInExplain"
@@ -4122,6 +4149,7 @@
   "instanceTurnOff": "Désactiver",
   "instanceTurnOn": "Activer pour tous les espaces",
   "instanceTurnOnConfirm": "Les assistants deviennent utilisables dans chaque espace qui les propose. Vous pouvez les désactiver à tout moment.",
+  "instanceTurnOnNeedsProbe": "Le point d'accès des assistants n'est pas confirmé. Vérifiez d'abord le serveur.",
   "instanceUseExisting": "Ou utiliser un projet existant :",
   "@instanceUseExisting": {
     "description": "#977 instance wizard: instanceUseExisting"
