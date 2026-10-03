@@ -8,6 +8,7 @@
 import 'dart:convert';
 
 import 'package:deskilo/features/mcp/data/supabase_mcp_onboarding_repository.dart';
+import 'package:deskilo/features/mcp/domain/instance_operator.dart';
 import 'package:deskilo/features/mcp/domain/mcp_onboarding.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -152,5 +153,49 @@ void main() {
         .setEndpoint('https://mcp.example/x');
     expect(w.calls.single.$1, 'instance_set_mcp_endpoint');
     expect(w.calls.single.$2, {'p_url': 'https://mcp.example/x'});
+  });
+
+  test('the loopback switch answers what was saved', () async {
+    final w = _wire(
+      (_) => {'allow_loopback_clients': true, 'unchanged': false},
+    );
+    expect(
+      await SupabaseMcpOnboardingRepository(w.client)
+          .setLoopbackClients(allowed: true),
+      isTrue,
+    );
+    expect(w.calls.single.$1, 'instance_set_mcp_loopback_clients');
+    expect(w.calls.single.$2, {'p_enabled': true});
+  });
+
+  test('the console overview reads families, the switch and the endpoint', () {
+    final o = InstanceMcpOverview.fromJson({
+      'enabled': false,
+      'blockers': <Object>[],
+      'second_factor': true,
+      'allow_loopback_clients': true,
+      'endpoint': {
+        'resource': 'https://x.example/functions/v1/deskilo-mcp',
+        'source': 'derived',
+      },
+      'administrators': <Object>[],
+      'candidates': <Object>[],
+      'clients': [
+        {
+          'client_id': 'c-1',
+          'name': 'Claude Code',
+          'status': 'waiting',
+          'family': 'loopback',
+          'redirect_hosts': ['localhost:53126'],
+        },
+      ],
+    });
+    expect(o.allowLoopbackClients, isTrue);
+    expect(o.endpoint.source, McpEndpointSource.derived);
+    expect(o.clients.single.family, 'loopback');
+    expect(o.clients.single.redirectHosts, ['localhost:53126']);
+    final older = InstanceMcpOverview.fromJson({'enabled': true});
+    expect(older.allowLoopbackClients, isFalse);
+    expect(older.endpoint.resource, isNull);
   });
 }

@@ -54,7 +54,7 @@ begin
          (ws2, public.installation_id(), 1, true, array['get_capabilities'], 'own');
   insert into auth.oauth_clients (id, client_name, registration_type, redirect_uris, grant_types, token_endpoint_auth_method)
   values ('00000000-0000-4000-8000-0000002145c1', 'Fresh assistant', 'dynamic',
-          'https://claude.ai/api/mcp/auth_callback', 'authorization_code', 'none'),
+          'https://assistant.example/callback', 'authorization_code', 'none'),
          ('00000000-0000-4000-8000-0000002145c2', 'Blocked assistant', 'dynamic',
           'https://blocked.example/callback', 'authorization_code', 'none'),
          ('00000000-0000-4000-8000-0000002145c3', 'Approved assistant', 'dynamic',
@@ -70,12 +70,12 @@ begin
                                          code_challenge, code_challenge_method)
   select gen_random_uuid(), repeat(l, 32), ('00000000-0000-4000-8000-0000002145' || c)::uuid,
          r, 'openid', repeat('a', 43), 's256'
-    from (values ('a', 'c1', 'https://claude.ai/api/mcp/auth_callback'),
+    from (values ('a', 'c1', 'https://assistant.example/callback'),
                  ('b', 'c2', 'https://blocked.example/callback'),
                  ('c', 'c3', 'https://approved.example/callback'),
                  ('d', 'c4', 'https://manual.example/callback'),
                  ('e', 'c5', 'https://outsider.example/callback'),
-                 ('f', 'c1', 'https://claude.ai/api/mcp/auth_callback')) v(l, c, r);
+                 ('f', 'c1', 'https://assistant.example/callback')) v(l, c, r);
   update auth.oauth_authorizations set user_id = m2 where authorization_id = repeat('f', 32);
   perform set_config('deskilo.op', op::text, false);
   perform set_config('deskilo.m1', m1::text, false);
@@ -112,7 +112,7 @@ select is((select count(*)::int from public.database_authority_audit
 select is(pg_temp.notices('op', 'mcp_client_waiting'), 1, 'the operator is notified');
 select is((select payload->>'redirect_host' from public.instance_notices
             where user_id = current_setting('deskilo.op')::uuid and kind = 'mcp_client_waiting'),
-  'claude.ai', 'the notice names the redirect host');
+  'assistant.example', 'the notice names the redirect host');
 select is((select payload->>'requested_by' from public.instance_notices
             where user_id = current_setting('deskilo.op')::uuid and kind = 'mcp_client_waiting'),
   'Mia Member', 'and who arrived with it');
@@ -135,9 +135,9 @@ select is((select count(*)::int from public.instance_notices
 
 -- ── consent options: the client and who decides ──────────────────────
 select pg_temp.as('m1');
-select is(public.mcp_consent_options(repeat('a', 32))->'client',
+select is((public.mcp_consent_options(repeat('a', 32))->'client') - 'family',
   jsonb_build_object('client_id', '00000000-0000-4000-8000-0000002145c1', 'name', 'Fresh assistant',
-                     'status', 'waiting', 'redirect_host', 'claude.ai'),
+                     'status', 'waiting', 'redirect_host', 'assistant.example'),
   'the options name the client, its status and redirect host');
 select is(public.mcp_consent_options(repeat('a', 32))->'decider',
   '{"kind": "operator", "display_name": "Olga Operator", "me": false}'::jsonb,
