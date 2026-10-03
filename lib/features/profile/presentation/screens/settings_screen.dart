@@ -144,8 +144,8 @@ class SettingsScreen extends ConsumerWidget {
         children: [
           ListTile(
             leading: const Icon(Icons.switch_account_outlined),
-            title: Text(l10n?.profilesTitle ?? 'Profiles'),
-            onTap: () => context.push('/profiles'),
+            title: Text(l10n?.spaceBackToMe ?? 'Back to Me'),
+            onTap: () => context.go('/me'),
           ),
           const Divider(),
           SettingsSectionHeader(l10n?.settingsSectionAccount ?? 'My account'),

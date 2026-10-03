@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/status_colors.dart';
+import '../../../workspace/presentation/widgets/workspace_avatar.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace.dart';
 
@@ -30,21 +30,12 @@ class WorkspacePairCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final brightness = Theme.of(context).brightness;
     final devActive = activeId == dev.id;
     final prodActive = activeId == prod.id;
     return Card(
       key: ValueKey('profile-pair-${dev.pairId}'),
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: prodActive
-              ? AppEnvironmentColors.productionOf(brightness)
-              : AppEnvironmentColors.developmentOf(brightness),
-          foregroundColor: Colors.white,
-          child: Text(dev.name.isEmpty
-              ? '?'
-              : dev.name.substring(0, 1).toUpperCase()),
-        ),
+        leading: WorkspaceAvatar(workspace: prodActive ? prod : dev),
         title: Text(dev.name),
         subtitle: Wrap(
           spacing: 8,

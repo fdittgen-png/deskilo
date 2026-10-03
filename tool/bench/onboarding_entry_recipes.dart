@@ -99,7 +99,7 @@ Future<RecipeRun> returningEntry(
 
 /// A new person creates an account, the server answers with an e-mail,
 /// the link in it confirms the address, consent is given once, and the
-/// first usable screen is onboarding. [answer] scripts the auth
+/// first usable screen is Me. [answer] scripts the auth
 /// provider's answer; [holdFrames] holds it back for that many frames
 /// after the tap, the way a slow provider would.
 Future<RecipeRun> firstSignup(
@@ -110,7 +110,7 @@ Future<RecipeRun> firstSignup(
   final gate = holdFrames > 0 ? Completer<void>() : null;
   final meter = BackendMeter();
   final run = RecipeRun('first_signup', meter)
-    ..stops.addAll(['/auth', '/consent', '/onboarding']);
+    ..stops.addAll(['/auth', '/consent', '/me']);
   sizeView(tester, const Size(800, 1600));
   final auth = MeteredAuth(meter)
     ..signUpResult = answer
@@ -175,11 +175,11 @@ Future<RecipeRun> firstSignup(
     );
     await probe.arrive(
       'first_usable',
-      () => probe.shows(find.byKey(const ValueKey('onboarding-name'))),
+      () => probe.shows(find.byKey(const ValueKey('me-home-list'))),
     );
     probe.authorize(
-      'onboarding, the native first screen of a new account',
-      probe.location?.startsWith('/onboarding') ?? false,
+      'Me, the personal home of a new account',
+      probe.location == '/me',
     );
     probe.authorize(
       'exactly one sign-up for one press',
@@ -368,7 +368,7 @@ Future<RecipeRun> byoSignIn(
 Future<RecipeRun> invitationJoin(WidgetTester tester) async {
   final meter = BackendMeter();
   final run = RecipeRun('invitation_join', meter)
-    ..stops.addAll(['/reserve', '/onboarding', '/pending']);
+    ..stops.addAll(['/me', '/reserve', '/onboarding', '/pending']);
   sizeView(tester, const Size(800, 1400));
   final ws = MeteredWorkspace(meter)..joinsArePending = true;
   final probe = RecipeProbe(tester, run);
@@ -382,7 +382,7 @@ Future<RecipeRun> invitationJoin(WidgetTester tester) async {
             ..value = kRecipeServer,
         ),
       ),
-      () => probe.shows(find.byKey(const ValueKey('onboarding-name'))),
+      () => probe.shows(find.byKey(const ValueKey('me-home-list'))),
     );
     // The link, opened from a message outside the app.
     await probe.router.routeInformationProvider.didPushRouteInformation(

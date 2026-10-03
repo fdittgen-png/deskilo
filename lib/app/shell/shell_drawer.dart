@@ -21,6 +21,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../features/workspace/domain/bi_modules.dart';
 import 'shell_destinations.dart';
+import '../../features/profile/presentation/widgets/personal_avatar.dart';
 
 part 'shell_drawer.g.dart';
 
@@ -217,6 +218,14 @@ class ShellDrawer extends ConsumerWidget {
                 ],
               ),
             ),
+            ListTile(
+              key: const ValueKey('drawer-back-to-me'),
+              leading: const PersonalAvatar(),
+              title: Text(l10n?.spaceBackToMe ?? 'Back to Me'),
+              subtitle: Text(l10n?.meMySpaces ?? 'My spaces'),
+              onTap: () => go('/me', push: false),
+            ),
+            const Divider(),
             for (final e in navigation) tile(e),
             if (administration.isNotEmpty) ...[
               const Divider(),

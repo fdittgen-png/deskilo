@@ -12,6 +12,8 @@ class LinkedSpace implements SystemStamped {
     required this.id,
     required this.name,
     this.standing = MySpaceStanding.member,
+    this.pairId = '',
+    this.environment = '',
     this.isOwner = false,
     this.isAdmin = false,
     this.system = SystemColumns.none,
@@ -22,6 +24,8 @@ class LinkedSpace implements SystemStamped {
 
   final String id;
   final String name;
+  final String pairId;
+  final String environment;
   final MySpaceStanding standing;
   final bool isOwner;
   final bool isAdmin;

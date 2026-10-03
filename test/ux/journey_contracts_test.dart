@@ -27,6 +27,7 @@ import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -168,12 +169,12 @@ void main() {
     expect(find.text('Governance'), findsOneWidget);
     expect(find.text('This workspace'), findsOneWidget);
 
-    // The member switches profile, the way the product offers it.
-    await tester.tap(find.text('Profiles'));
+    // Workspace changes start on Me, then reopen the new space's settings.
+    await tester.tap(find.text('Back to Me'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Pezenas'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byType(BackButton).first);
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/settings');
     await tester.pumpAndSettle();
 
     // Back on Settings, and it is the NEW workspace's settings. Being a
@@ -189,7 +190,7 @@ void main() {
     // And the essentials a member always keeps are still there, so the
     // assertions above are about permissions and not about a screen
     // that failed to build.
-    expect(find.text('Sign out'), findsOneWidget);
+    expect(find.text('Back to Me'), findsOneWidget);
     expect(find.byKey(const ValueKey('settings-open-me')), findsOneWidget); // #1823
   });
 }
