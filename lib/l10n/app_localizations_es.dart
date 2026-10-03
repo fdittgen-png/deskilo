@@ -14574,6 +14574,107 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get taskWorkbenchTitle => 'Taller de tareas';
+
+  @override
+  String get taskWorkbenchOpen => 'Abrir un archivo de tarea';
+
+  @override
+  String get taskWorkbenchIntro =>
+      'Abra un archivo de tarea guardado. Se lee solo en este dispositivo; no se envía nada y no hace falta iniciar sesión.';
+
+  @override
+  String taskWorkbenchAccepted(int megabytes) {
+    return 'Se aceptan: .json y .deskilo-task.zip, hasta $megabytes MB.';
+  }
+
+  @override
+  String get taskWorkbenchChoose => 'Elegir un archivo de tarea';
+
+  @override
+  String get taskWorkbenchFileType => 'Archivo de tarea';
+
+  @override
+  String get taskWorkbenchEdited => 'Una copia editada de una grabación.';
+
+  @override
+  String get taskWorkbenchTranscriptOnly =>
+      'Algunos pasos vienen de una versión más reciente: se muestran solo como transcripción.';
+
+  @override
+  String get taskWorkbenchUntrusted =>
+      'Un borrador privado de un archivo: nada de él se considera fiable ni se envía.';
+
+  @override
+  String taskWorkbenchClaim(String key, String value) {
+    return 'El archivo indica $key: $value';
+  }
+
+  @override
+  String get taskWorkbenchRefusedTooLarge =>
+      'Este archivo es más grande de lo que lee el taller.';
+
+  @override
+  String get taskWorkbenchRefusedUnsupported =>
+      'Esto no es un archivo de tarea.';
+
+  @override
+  String get taskWorkbenchRefusedUnsafe =>
+      'Este archivo está construido de una forma que no es seguro abrir.';
+
+  @override
+  String get taskWorkbenchRefusedDamaged =>
+      'Este archivo está dañado o se cambió después de crearse.';
+
+  @override
+  String get taskWorkbenchRefusedNewer =>
+      'Este archivo se creó con una versión más reciente de la aplicación.';
+
+  @override
+  String get taskWorkbenchRefusedInvalid =>
+      'Este archivo no contiene una tarea válida.';
+
+  @override
+  String get taskOutputMake => 'Crear';
+
+  @override
+  String get taskOutputDocument => 'Documento de Word';
+
+  @override
+  String get taskOutputStoryboard => 'Guion gráfico';
+
+  @override
+  String get taskOutputVideo => 'Vídeo';
+
+  @override
+  String get taskOutputCaptions => 'Subtítulos';
+
+  @override
+  String get taskOutputUnsupportedPlatform =>
+      'No disponible en este dispositivo.';
+
+  @override
+  String get taskOutputMissingMedia =>
+      'Esta tarea no tiene imágenes ni vídeo que usar.';
+
+  @override
+  String get taskOutputTooLong =>
+      'Esta tarea es demasiado larga para este formato.';
+
+  @override
+  String get taskOutputFailed => 'No se pudo crear el resultado.';
+
+  @override
+  String get taskOutputStale =>
+      'Las ilustraciones se revisaron para una versión anterior.';
+
+  @override
+  String get taskOutputBusy => 'Este resultado ya se está creando.';
+
+  @override
+  String get taskWorkbenchReviewIllustrations => 'Revisar las ilustraciones';
+
+  @override
   String get capabilityMultiApproval => 'Dos o más aprobaciones';
 
   @override

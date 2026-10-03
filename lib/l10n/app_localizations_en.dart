@@ -14462,6 +14462,104 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get taskWorkbenchTitle => 'Task workbench';
+
+  @override
+  String get taskWorkbenchOpen => 'Open a task file';
+
+  @override
+  String get taskWorkbenchIntro =>
+      'Open a saved task file. It is read on this device only; nothing is uploaded and no sign-in is needed.';
+
+  @override
+  String taskWorkbenchAccepted(int megabytes) {
+    return 'Accepted: .json and .deskilo-task.zip, up to $megabytes MB.';
+  }
+
+  @override
+  String get taskWorkbenchChoose => 'Choose a task file';
+
+  @override
+  String get taskWorkbenchFileType => 'Task file';
+
+  @override
+  String get taskWorkbenchEdited => 'An edited copy of a recording.';
+
+  @override
+  String get taskWorkbenchTranscriptOnly =>
+      'Some steps come from a newer version: shown as a transcript only.';
+
+  @override
+  String get taskWorkbenchUntrusted =>
+      'A private draft from a file: nothing in it is trusted or sent.';
+
+  @override
+  String taskWorkbenchClaim(String key, String value) {
+    return 'The file says $key: $value';
+  }
+
+  @override
+  String get taskWorkbenchRefusedTooLarge =>
+      'This file is larger than the workbench reads.';
+
+  @override
+  String get taskWorkbenchRefusedUnsupported => 'This is not a task file.';
+
+  @override
+  String get taskWorkbenchRefusedUnsafe =>
+      'This file is built in a way that is not safe to open.';
+
+  @override
+  String get taskWorkbenchRefusedDamaged =>
+      'This file is damaged or was changed after it was made.';
+
+  @override
+  String get taskWorkbenchRefusedNewer =>
+      'This file was made by a newer version of the app.';
+
+  @override
+  String get taskWorkbenchRefusedInvalid =>
+      'This file does not hold a valid task.';
+
+  @override
+  String get taskOutputMake => 'Make';
+
+  @override
+  String get taskOutputDocument => 'Word document';
+
+  @override
+  String get taskOutputStoryboard => 'Storyboard';
+
+  @override
+  String get taskOutputVideo => 'Video';
+
+  @override
+  String get taskOutputCaptions => 'Captions';
+
+  @override
+  String get taskOutputUnsupportedPlatform => 'Not available on this device.';
+
+  @override
+  String get taskOutputMissingMedia =>
+      'This task has no images or video to use.';
+
+  @override
+  String get taskOutputTooLong => 'This task is too long for this output.';
+
+  @override
+  String get taskOutputFailed => 'The output could not be made.';
+
+  @override
+  String get taskOutputStale =>
+      'The illustrations were reviewed for an earlier version.';
+
+  @override
+  String get taskOutputBusy => 'This output is already being made.';
+
+  @override
+  String get taskWorkbenchReviewIllustrations => 'Review the illustrations';
+
+  @override
   String get capabilityMultiApproval => 'Two or more approvals';
 
   @override

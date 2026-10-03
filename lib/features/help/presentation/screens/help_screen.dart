@@ -8,7 +8,7 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../task_recorder/presentation/route_classification.dart'
-    show taskRecorderRoute;
+    show taskRecorderRoute, taskWorkbenchRoute;
 import '../../../task_recorder/providers/recorder_providers.dart'
     show taskRecorderAvailableProvider;
 import '../../providers/help_providers.dart';
@@ -110,6 +110,13 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
               icon: const Icon(Icons.fiber_manual_record_outlined),
               onPressed: () => context.push(taskRecorderRoute),
             ),
+          // #1872 — the local workbench needs no account.
+          IconButton(
+            key: const ValueKey('help-task-workbench'),
+            tooltip: l10n?.taskWorkbenchOpen ?? 'Open a task file',
+            icon: const Icon(Icons.file_open_outlined),
+            onPressed: () => context.push(taskWorkbenchRoute),
+          ),
           IconButton(
             tooltip: l10n?.supportTitle ?? 'Support details',
             icon: const Icon(Icons.support_agent),

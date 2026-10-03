@@ -14600,6 +14600,108 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get taskWorkbenchTitle => 'Laboratorio delle attività';
+
+  @override
+  String get taskWorkbenchOpen => 'Apri un file di attività';
+
+  @override
+  String get taskWorkbenchIntro =>
+      'Apra un file di attività salvato. Viene letto solo su questo dispositivo; nulla viene inviato e non serve accedere.';
+
+  @override
+  String taskWorkbenchAccepted(int megabytes) {
+    return 'Accettati: .json e .deskilo-task.zip, fino a $megabytes MB.';
+  }
+
+  @override
+  String get taskWorkbenchChoose => 'Scegli un file di attività';
+
+  @override
+  String get taskWorkbenchFileType => 'File di attività';
+
+  @override
+  String get taskWorkbenchEdited =>
+      'Una copia modificata di una registrazione.';
+
+  @override
+  String get taskWorkbenchTranscriptOnly =>
+      'Alcuni passaggi provengono da una versione più recente: mostrati solo come trascrizione.';
+
+  @override
+  String get taskWorkbenchUntrusted =>
+      'Una bozza privata da un file: nulla al suo interno è considerato affidabile né inviato.';
+
+  @override
+  String taskWorkbenchClaim(String key, String value) {
+    return 'Il file indica $key: $value';
+  }
+
+  @override
+  String get taskWorkbenchRefusedTooLarge =>
+      'Questo file è più grande di quanto il laboratorio legga.';
+
+  @override
+  String get taskWorkbenchRefusedUnsupported =>
+      'Questo non è un file di attività.';
+
+  @override
+  String get taskWorkbenchRefusedUnsafe =>
+      'Questo file è costruito in modo non sicuro da aprire.';
+
+  @override
+  String get taskWorkbenchRefusedDamaged =>
+      'Questo file è danneggiato o è stato modificato dopo la creazione.';
+
+  @override
+  String get taskWorkbenchRefusedNewer =>
+      'Questo file è stato creato da una versione più recente dell\'app.';
+
+  @override
+  String get taskWorkbenchRefusedInvalid =>
+      'Questo file non contiene un\'attività valida.';
+
+  @override
+  String get taskOutputMake => 'Crea';
+
+  @override
+  String get taskOutputDocument => 'Documento Word';
+
+  @override
+  String get taskOutputStoryboard => 'Storyboard';
+
+  @override
+  String get taskOutputVideo => 'Video';
+
+  @override
+  String get taskOutputCaptions => 'Sottotitoli';
+
+  @override
+  String get taskOutputUnsupportedPlatform =>
+      'Non disponibile su questo dispositivo.';
+
+  @override
+  String get taskOutputMissingMedia =>
+      'Questa attività non ha immagini o video da usare.';
+
+  @override
+  String get taskOutputTooLong =>
+      'Questa attività è troppo lunga per questo formato.';
+
+  @override
+  String get taskOutputFailed => 'Non è stato possibile creare il risultato.';
+
+  @override
+  String get taskOutputStale =>
+      'Le illustrazioni sono state riviste per una versione precedente.';
+
+  @override
+  String get taskOutputBusy => 'Questo risultato è già in creazione.';
+
+  @override
+  String get taskWorkbenchReviewIllustrations => 'Rivedi le illustrazioni';
+
+  @override
   String get capabilityMultiApproval => 'Due o più approvazioni';
 
   @override

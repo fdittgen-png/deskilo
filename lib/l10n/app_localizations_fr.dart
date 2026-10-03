@@ -14625,6 +14625,105 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get taskWorkbenchTitle => 'Atelier de tâches';
+
+  @override
+  String get taskWorkbenchOpen => 'Ouvrir un fichier de tâche';
+
+  @override
+  String get taskWorkbenchIntro =>
+      'Ouvrez un fichier de tâche enregistré. Il est lu sur cet appareil uniquement ; rien n\'est envoyé et aucune connexion n\'est nécessaire.';
+
+  @override
+  String taskWorkbenchAccepted(int megabytes) {
+    return 'Acceptés : .json et .deskilo-task.zip, jusqu\'à $megabytes Mo.';
+  }
+
+  @override
+  String get taskWorkbenchChoose => 'Choisir un fichier de tâche';
+
+  @override
+  String get taskWorkbenchFileType => 'Fichier de tâche';
+
+  @override
+  String get taskWorkbenchEdited => 'Une copie modifiée d\'un enregistrement.';
+
+  @override
+  String get taskWorkbenchTranscriptOnly =>
+      'Certaines étapes viennent d\'une version plus récente : affichées comme simple transcription.';
+
+  @override
+  String get taskWorkbenchUntrusted =>
+      'Un brouillon privé issu d\'un fichier : rien n\'y est considéré comme fiable ni envoyé.';
+
+  @override
+  String taskWorkbenchClaim(String key, String value) {
+    return 'Le fichier indique $key : $value';
+  }
+
+  @override
+  String get taskWorkbenchRefusedTooLarge =>
+      'Ce fichier est plus grand que ce que l\'atelier lit.';
+
+  @override
+  String get taskWorkbenchRefusedUnsupported =>
+      'Ce n\'est pas un fichier de tâche.';
+
+  @override
+  String get taskWorkbenchRefusedUnsafe =>
+      'Ce fichier est construit d\'une manière qu\'il n\'est pas sûr d\'ouvrir.';
+
+  @override
+  String get taskWorkbenchRefusedDamaged =>
+      'Ce fichier est endommagé ou a été modifié après sa création.';
+
+  @override
+  String get taskWorkbenchRefusedNewer =>
+      'Ce fichier a été créé par une version plus récente de l\'application.';
+
+  @override
+  String get taskWorkbenchRefusedInvalid =>
+      'Ce fichier ne contient pas de tâche valide.';
+
+  @override
+  String get taskOutputMake => 'Créer';
+
+  @override
+  String get taskOutputDocument => 'Document Word';
+
+  @override
+  String get taskOutputStoryboard => 'Storyboard';
+
+  @override
+  String get taskOutputVideo => 'Vidéo';
+
+  @override
+  String get taskOutputCaptions => 'Sous-titres';
+
+  @override
+  String get taskOutputUnsupportedPlatform => 'Indisponible sur cet appareil.';
+
+  @override
+  String get taskOutputMissingMedia =>
+      'Cette tâche n\'a ni images ni vidéo à utiliser.';
+
+  @override
+  String get taskOutputTooLong => 'Cette tâche est trop longue pour ce format.';
+
+  @override
+  String get taskOutputFailed => 'Le fichier n\'a pas pu être créé.';
+
+  @override
+  String get taskOutputStale =>
+      'Les illustrations ont été revues pour une version précédente.';
+
+  @override
+  String get taskOutputBusy => 'Ce fichier est déjà en cours de création.';
+
+  @override
+  String get taskWorkbenchReviewIllustrations => 'Revoir les illustrations';
+
+  @override
   String get capabilityMultiApproval => 'Deux validations ou plus';
 
   @override
