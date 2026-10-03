@@ -17,6 +17,7 @@ class SpaceChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final space = ref.watch(currentWorkspaceProvider).value;
     final text = Theme.of(context).textTheme;
     return Row(
@@ -31,7 +32,7 @@ class SpaceChip extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'DesKilo · ${space?.name ?? ''}',
+                '${l10n?.appTitle ?? 'DesKilo'} · ${space?.name ?? ''}',
                 key: const ValueKey('space-chip-name'),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

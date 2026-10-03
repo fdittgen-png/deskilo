@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/status_colors.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../../domain/member_monogram.dart';
 import '../../providers/profile_providers.dart';
 
@@ -18,8 +20,8 @@ class PersonalAvatar extends ConsumerWidget {
         : null;
     return CircleAvatar(
       radius: radius,
-      backgroundColor: const Color(0xffdce2f1),
-      foregroundColor: const Color(0xff29334f),
+      backgroundColor: AppIdentityColors.background,
+      foregroundColor: AppIdentityColors.foreground,
       backgroundImage: bytes == null
           ? null
           : ResizeImage(
@@ -30,10 +32,7 @@ class PersonalAvatar extends ConsumerWidget {
       child: bytes == null
           ? Text(
               plainInitial(profile?.displayName ?? ''),
-              style: TextStyle(
-                fontSize: radius * .8,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.labelLarge?.emphasised,
             )
           : null,
     );

@@ -60,16 +60,15 @@ class _MeShellState extends ConsumerState<MeShell> {
 
   Future<void> _offerKeptInvitation() async {
     if (widget.tab != MeTab.home) return;
-    final offered = ref.read(_offeredInvitationsProvider);
     final invitations = ref.read(pendingInvitationsProvider);
     final arrived = ref.read(arrivedInvitationsProvider);
     try {
       final active = await ref.read(activeBackendProvider.future);
-      if (!mounted || offered.contains(active.url)) return;
+      if (!mounted || arrived.wasOfferedOn(active.url)) return;
       final text = await invitations.offeredOn(active);
       if (!mounted || text == null || _tab != MeTab.home) return;
       if (GoRouter.of(context).state.uri.path != '/me') return;
-      offered.add(active.url);
+      arrived.markOfferedOn(active.url);
       arrived.hold(text);
       context.go('/onboarding?join=1');
     } catch (e, st) {
@@ -127,7 +126,7 @@ class _MeShellState extends ConsumerState<MeShell> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'DesKilo · ${l10n?.meTabMe ?? 'Me'}',
+              '${l10n?.appTitle ?? 'DesKilo'} · ${l10n?.meTabMe ?? 'Me'}',
               style: Theme.of(context).textTheme.labelLarge,
             ),
             Text(
@@ -153,7 +152,7 @@ class _MeShellState extends ConsumerState<MeShell> {
                   children: [
                     ListTile(
                       leading: const PersonalAvatar(radius: 20),
-                      title: Text('DesKilo · ${l10n?.meTabMe ?? 'Me'}'),
+                      title: Text('${l10n?.appTitle ?? 'DesKilo'} · ${l10n?.meTabMe ?? 'Me'}'),
                     ),
                     const Divider(),
                     for (final tab in MeTab.values)
@@ -216,7 +215,3 @@ class _MeShellState extends ConsumerState<MeShell> {
     );
   }
 }
-
-// A kept invitation is offered once per installation during this app session.
-// Back to Me must remain possible without reopening the invitation.
-final _offeredInvitationsProvider = Provider<Set<String>>((ref) => <String>{});
