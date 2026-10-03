@@ -25,6 +25,6 @@ Ready, Done, closure (`Refs` vs `Closes`) and the glossary: `docs/AGENT_RULES.md
 
 One registry-touching branch at a time. Harness a migration before you apply it.
 Every user-facing string in ARB ×5. Every functionality behind a `WorkspaceFeature`.
-`web/setup.html` in the same PR as any parameter. `dart analyze --fatal-infos` (what CI runs)
-and the full suite (one at a time on a shared machine) before a push. Never format whole directories. Never use the `alpha1`
+`web/setup.html` in the same PR as any parameter. Before a push: `dart analyze --fatal-infos`,
+`flutter test test/lint` and the affected test folders — the full suite runs in CI only. Never format whole directories. Never use the `alpha1`
 track — `alpha` is the closed test the testers are enrolled in, and the train ships to it.
