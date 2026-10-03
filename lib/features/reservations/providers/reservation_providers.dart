@@ -10,10 +10,14 @@ import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/privacy/recording_providers.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/booking_recovery.dart';
 import '../application/save_calendar_file.dart';
 import '../data/supabase_reservation_repository.dart';
+import '../domain/booking_intent.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
+import '../../../core/instance/schema_compatibility.dart';
+import '../../../core/storage/booking_intent_store.dart';
 import '../../../core/time/clock.dart';
 
 part 'reservation_providers.g.dart';
@@ -24,6 +28,41 @@ ReservationRepository reservationRepository(Ref ref) =>
       Supabase.instance.client,
       ref.watch(cacheStoreProvider),
     );
+
+/// #1855 — where a booking intent is valid: this account on this server.
+/// Read at use, never captured: a later login or server switch reads its
+/// own ledger. Tests and Demo override it with a fixed scope.
+@riverpod
+BookingIntentScope bookingIntentScope(Ref ref) {
+  final client = Supabase.instance.client;
+  return BookingIntentScope(
+    account: client.auth.currentUser?.id ?? '',
+    origin: client.rest.url,
+  );
+}
+
+/// #1855 — the interrupted-booking command: durable intent, own-result
+/// lookup, resume with the original request.
+@riverpod
+BookingRecovery bookingRecovery(Ref ref) => BookingRecovery(
+  reservations: ref.watch(reservationRepositoryProvider),
+  store: ref.watch(bookingIntentStoreProvider),
+  scope: ref.watch(bookingIntentScopeProvider),
+  clock: ref.watch(clockProvider),
+  schemaVersion: requiredSchemaVersion,
+);
+
+/// #1855 — the bookings this device confirmed in the active workspace
+/// whose answer it never read, oldest first. Empty is the normal state.
+@riverpod
+Future<List<BookingIntent>> unresolvedBookingIntents(Ref ref) async {
+  // Watched before the await: a dependency registered on the far side of
+  // the gap meets a disposed Ref (provider_watch_before_await lint).
+  final recovery = ref.watch(bookingRecoveryProvider);
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return recovery.unresolved(workspaceId: workspace.id);
+}
 
 /// Reservations of the active workspace intersecting the given LOCAL day
 /// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock

@@ -4,6 +4,8 @@ import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
+import 'package:deskilo/core/demo/data/guest_participation_repository.dart';
+import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
@@ -91,7 +93,9 @@ import '../storage/active_workspace_store.dart';
 import '../storage/help_hint_store.dart';
 import '../storage/note_seen_store.dart';
 import '../storage/entry_intent_store.dart';
+import '../storage/booking_intent_store.dart';
 import '../storage/notification_filter_store.dart';
+import '../../features/reservations/domain/booking_intent.dart';
 import '../links/link_launcher.dart';
 import '../share/file_sharer.dart';
 import '../share/text_sharer.dart';
@@ -170,6 +174,9 @@ List<Override> demoOverrides(DemoFixture fixture) {
       publicationRepositoryProvider.overrideWith((ref)=>directory),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
       meRepositoryProvider.overrideWith((ref) => FakeMeRepository()), // #1823
+      // #1835 — the visitor's own visits, in memory; Demo holds none.
+      guestParticipationRepositoryProvider
+          .overrideWithValue(FakeGuestParticipationRepository()),
       accountContactRepositoryProvider.overrideWith((ref,source)=>FakeAccountContactRepository()),
       // #1824 — the messenger of every server, one in-memory one each.
       messengerRepositoryProvider.overrideWith((ref, source) => FakeMessengerRepository()),
@@ -251,6 +258,12 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // #1650 — the resumable errand is device state too.
       entryIntentStoreProvider.overrideWithValue(fixture.prefs.entryIntent),
       creationDraftStoreProvider.overrideWithValue(fixture.prefs.creationDraft),
+      // #1855 — a visitor's interrupted booking stays inside the
+      // demonstration, scoped to its own synthetic account and server.
+      bookingIntentStoreProvider.overrideWithValue(fixture.prefs.bookingIntents),
+      bookingIntentScopeProvider.overrideWithValue(
+        const BookingIntentScope(account: 'demo-visitor', origin: 'demo://'),
+      ),
       // The file cache is device state too: the real one writes the
       // demonstration's synthetic rows to the device filesystem.
       cacheStoreProvider.overrideWithValue(fixture.prefs.cache),
@@ -297,6 +310,7 @@ const Set<String> demoOverriddenProviders = {
   'publicDiscoveryRepositoryProvider', 'publicationRepositoryProvider',
   'directoryParticipantRepositoryProvider', 'accountContactRepositoryProvider',
   'meRepositoryProvider', // #1823
+  'guestParticipationRepositoryProvider', // #1835
   'messengerRepositoryProvider',
   'deploymentRepositoryProvider',
   'workspaceFilesRepositoryProvider',
@@ -332,6 +346,7 @@ const Set<String> demoOverriddenProviders = {
   'defaultPeriodStoreProvider',
   'entryIntentStoreProvider',
   'creationDraftStoreProvider',
+  'bookingIntentStoreProvider',
   'notificationFilterStoreProvider',
   'helpHintStoreProvider',
   'noteSeenStoreProvider',

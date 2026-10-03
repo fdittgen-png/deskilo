@@ -49,13 +49,45 @@ editing a profile never rewrites them.
 | Excel export | `fetchProfiles` → `member_profiles` | **projection (checkpoint A)**; address/VAT columns only with the permissions |
 | "How others see me" | `preview_my_member_profile('space_mate' \| 'personal_data')` | server ready; the Me screen (#1823) wires it |
 | Own profile | `fetchMyProfile` → `profiles` row, `id = auth.uid()` | self |
-| Member names on maps and lists | `fetchMemberNames` → `profiles(first_name, last_name)` | checkpoint B |
-| Raw table for released clients | `profiles_select` (`shares_workspace_with`) | checkpoint B — closed once released clients read the projection |
-| Realtime `profiles` changes | whole row to every space mate | checkpoint B |
-| Avatar bytes | `avatars` bucket, `shares_workspace_with` | checkpoint B |
-| External/network schema | #1847 | checkpoint B |
+| Member names on maps and lists | `fetchMemberNames` → `member_profiles`: display name for a space mate, "First LAST" only from the `operational` group | **projection (checkpoint B)** |
+| Raw table | `profiles_select` = `id = auth.uid() or profile_row_readable(id)` (0351) | **closed (checkpoint B)**: readable by the person and by the operational audience only |
+| Realtime `profiles` changes | rows the subscriber's policy admits | **closed (checkpoint B)**: a space mate receives nobody else's row |
+| Avatar bytes | `avatars` bucket, `shares_workspace_with` | community audience: space mates read the photo object, strangers and exited members do not |
+| External/network schema | #1847 | checkpoint B of #1847 |
+
+### The direct read by a released client (0351)
+
+No server-side client-version gate exists: an older app on a newer schema
+is "supported" (`schema_compatibility.dart`, OPERATIONS.md). A released
+client still reads space mates with `select * from profiles`; filtering it
+silently would empty its directory and names. So a **direct** PostgREST
+read (`GET`/`HEAD /profiles`) of a space mate's row is refused with
+SQLSTATE `PT426`, which PostgREST answers as **HTTP 426 Upgrade Required**
+with a message naming the fix. The refusal fires only on that route: a
+self read, a self update, a stranger's absent row, Realtime (no request
+path) and definer functions (table owner) never see it. Current clients
+read other people only through `member_profiles`.
+
+**Residual.** A reader holding `viewPersonalData` or `issueInvoices` in a
+shared space still reads the whole row directly (released invoice
+preview, Excel, letters depend on it). That audience may read those
+fields through `member_profiles` anyway; closing the direct route for it
+too waits for the last released reader to move.
+
+### Indirect readers (audited, checkpoint B)
+
+Definer functions that return `profiles` fields to a caller other than
+the subject: `member_profiles` (the projection itself, per group),
+`create_invoice` (the buyer snapshot, `issueInvoices`), `workspace_owners`
+(platform owner, audited). Everything else is self-only. Avatars use the
+community audience (`shares_workspace_with`).
 
 Proof: `supabase/tests/database/104_member_profile_projection.sql`
-(authenticated-role pgTAP, one canary per private field) and
+(authenticated-role pgTAP, one canary per private field),
+`supabase/tests/database/134_profiles_peer_read_closed.sql` (peer, admin
+without the permissions, billing clerk, owner, stranger, exited member,
+role revocation, PT426 on the direct route and nowhere else, avatars),
 `test/features/profile/identity_purpose_projection_test.dart` (the app
-asks for the projection and reads each field only from its group).
+asks for the projection and reads each field only from its group) and
+`test/features/workspace/member_names_projection_test.dart` (names come
+from the projection; legal names only from the operational group).

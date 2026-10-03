@@ -1999,6 +1999,68 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette réservation est entièrement dans le passé.';
 
   @override
+  String get bookingRecoveryBanner =>
+      'Une de vos demandes de réservation est restée sans réponse.';
+
+  @override
+  String get bookingRecoveryBannerAction => 'Vérifier';
+
+  @override
+  String get bookingRecoveryCheck => 'Vérifier le résultat';
+
+  @override
+  String get bookingRecoveryCommitted =>
+      'La réservation existe — une seule, issue de votre demande d\'origine.';
+
+  @override
+  String get bookingRecoveryDiscard => 'Abandonner';
+
+  @override
+  String get bookingRecoveryInProgress =>
+      'Le serveur traite encore cette demande. Vérifiez à nouveau dans un instant.';
+
+  @override
+  String get bookingRecoveryNotCommitted =>
+      'Rien n\'a été réservé pour cette demande. Vous pouvez la reprendre telle quelle, ou l\'abandonner.';
+
+  @override
+  String get bookingRecoveryNotSaved =>
+      'Cet appareil n\'a pas pu enregistrer votre demande de réservation ; rien n\'a été envoyé. Libérez de l\'espace ou réessayez.';
+
+  @override
+  String get bookingRecoveryResume => 'Reprendre la même demande';
+
+  @override
+  String get bookingRecoveryResumed =>
+      'Reprise : votre demande d\'origine a été réservée une seule fois.';
+
+  @override
+  String get bookingRecoverySpaceFallback => 'L\'espace choisi';
+
+  @override
+  String get bookingRecoveryTitle => 'Votre demande de réservation';
+
+  @override
+  String get bookingRecoveryUnavailable =>
+      'Le serveur n\'a pas pu être interrogé. Rien n\'a changé ; réessayez.';
+
+  @override
+  String get bookingRecoveryUnknown =>
+      'La connexion a été coupée après l\'envoi de votre demande. La réservation existe peut-être, peut-être pas : vérifiez avant de réserver à nouveau.';
+
+  @override
+  String get bookingRecoveryUnresolved =>
+      'Le serveur ne conserve plus de trace de cette demande et ne peut rien dire. Vérifiez vos réservations avant de réserver à nouveau.';
+
+  @override
+  String get bookingRecoveryView => 'Voir la réservation';
+
+  @override
+  String bookingRecoveryWindow(String space, String from, String to) {
+    return '$space · $from – $to';
+  }
+
+  @override
   String bookingReservedSpaceWhen(String space, String when) {
     return '$space réservé : $when.';
   }
@@ -4686,6 +4748,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureFormHelpHintsTitle => 'Astuces d\'aide';
+
+  @override
+  String get featureGuestParticipationDesc =>
+      'Permet à une personne qui n\'est pas membre de demander à visiter cet espace, et à quelqu\'un qui gère les réservations de l\'admettre ou de refuser. Une visite ne crée ni adhésion, ni abonnement, ni rôle. Désactivé : personne ne demande ni n\'est admis ici.';
+
+  @override
+  String get featureGuestParticipationTitle => 'Visites d\'invités';
 
   @override
   String get featureHeldBack =>
@@ -10751,6 +10820,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'Mon badge';
+
+  @override
+  String get myVisitsHelp =>
+      'Les visites que vous avez demandées ou auxquelles vous avez été admis, en tant qu\'invité. Une visite n\'est pas une adhésion.';
+
+  @override
+  String get myVisitsTitle => 'Mes visites';
 
   @override
   String get navigationClassic =>
@@ -17283,6 +17359,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get visibilityTitle => 'Qui me voit';
+
+  @override
+  String get visitCancel => 'Annuler cette visite';
+
+  @override
+  String get visitCancelFailed =>
+      'Impossible d\'annuler la visite. Rien n\'a changé ; réessayez.';
+
+  @override
+  String get visitGuestNote => 'Visite d\'invité — pas une adhésion';
+
+  @override
+  String get visitStatusCancelled => 'Annulée';
+
+  @override
+  String get visitStatusConfirmed => 'Confirmée';
+
+  @override
+  String get visitStatusDeclined => 'Refusée';
+
+  @override
+  String get visitStatusExpired => 'Expirée';
+
+  @override
+  String get visitStatusRequested => 'Demandée';
 
   @override
   String whatTheyCanDoTitle(String name) {

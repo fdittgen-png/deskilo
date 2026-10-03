@@ -1982,6 +1982,68 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingPastError => 'This booking lies entirely in the past.';
 
   @override
+  String get bookingRecoveryBanner =>
+      'A booking request of yours is still unanswered.';
+
+  @override
+  String get bookingRecoveryBannerAction => 'Check';
+
+  @override
+  String get bookingRecoveryCheck => 'Check outcome';
+
+  @override
+  String get bookingRecoveryCommitted =>
+      'The booking exists — exactly one, from your original request.';
+
+  @override
+  String get bookingRecoveryDiscard => 'Let it go';
+
+  @override
+  String get bookingRecoveryInProgress =>
+      'The server is still working on this request. Check again in a moment.';
+
+  @override
+  String get bookingRecoveryNotCommitted =>
+      'Nothing was booked for this request. You can resume it as it was, or let it go.';
+
+  @override
+  String get bookingRecoveryNotSaved =>
+      'This device could not save your booking request, so nothing was sent. Free some space or try again.';
+
+  @override
+  String get bookingRecoveryResume => 'Resume the same request';
+
+  @override
+  String get bookingRecoveryResumed =>
+      'Resumed: your original request was booked once.';
+
+  @override
+  String get bookingRecoverySpaceFallback => 'The space you chose';
+
+  @override
+  String get bookingRecoveryTitle => 'Your booking request';
+
+  @override
+  String get bookingRecoveryUnavailable =>
+      'The server could not be asked. Nothing was changed; try again.';
+
+  @override
+  String get bookingRecoveryUnknown =>
+      'The connection dropped after your request was sent. The booking may or may not exist — check before booking again.';
+
+  @override
+  String get bookingRecoveryUnresolved =>
+      'The server no longer keeps a record of this request, so it cannot say. Check your bookings before booking again.';
+
+  @override
+  String get bookingRecoveryView => 'View the booking';
+
+  @override
+  String bookingRecoveryWindow(String space, String from, String to) {
+    return '$space · $from – $to';
+  }
+
+  @override
   String bookingReservedSpaceWhen(String space, String when) {
     return 'Reserved $space: $when.';
   }
@@ -4642,6 +4704,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureFormHelpHintsTitle => 'Help hints';
+
+  @override
+  String get featureGuestParticipationDesc =>
+      'Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here.';
+
+  @override
+  String get featureGuestParticipationTitle => 'Guest visits';
 
   @override
   String get featureHeldBack =>
@@ -10644,6 +10713,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'My badge';
+
+  @override
+  String get myVisitsHelp =>
+      'Visits you asked for or were admitted to, as a guest. A visit is not a membership.';
+
+  @override
+  String get myVisitsTitle => 'My visits';
 
   @override
   String get navigationClassic =>
@@ -17092,6 +17168,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get visibilityTitle => 'Who sees me';
+
+  @override
+  String get visitCancel => 'Cancel this visit';
+
+  @override
+  String get visitCancelFailed =>
+      'Could not cancel the visit. Nothing changed; try again.';
+
+  @override
+  String get visitGuestNote => 'Guest visit — not a membership';
+
+  @override
+  String get visitStatusCancelled => 'Cancelled';
+
+  @override
+  String get visitStatusConfirmed => 'Confirmed';
+
+  @override
+  String get visitStatusDeclined => 'Declined';
+
+  @override
+  String get visitStatusExpired => 'Expired';
+
+  @override
+  String get visitStatusRequested => 'Requested';
 
   @override
   String whatTheyCanDoTitle(String name) {

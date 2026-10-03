@@ -64,7 +64,9 @@ void main() {
     // #1869 — accountingBook is the thirty-fourth: a finance decision.
     // #1865 — taskRecorder is the thirty-fifth: recording is offered
     // deliberately.
-    expect(onCount, featureManifest.length - 35);
+    // #1835 — guestParticipation is the thirty-sixth: a space admits
+    // guests deliberately.
+    expect(onCount, featureManifest.length - 36);
   });
 
   testWidgets(

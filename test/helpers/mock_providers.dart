@@ -7,6 +7,9 @@ import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 export 'package:deskilo/core/demo/data/me_repository.dart';
+import 'package:deskilo/core/demo/data/guest_participation_repository.dart';
+import 'package:deskilo/features/visits/providers/visits_providers.dart';
+export 'package:deskilo/core/demo/data/guest_participation_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/core/capture/capture_protection.dart';
@@ -103,6 +106,8 @@ import 'package:deskilo/features/reservations/providers/default_period_controlle
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/profile/domain/profile_repository.dart';
 import 'package:deskilo/features/profile/providers/profile_providers.dart';
+import 'package:deskilo/core/storage/booking_intent_store.dart';
+import 'package:deskilo/features/reservations/domain/booking_intent.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/providers/instance_providers.dart';
@@ -142,6 +147,8 @@ const kTestInstallationId = '00000000-0000-4000-8000-0000000071e5';
 
 List<Override> standardTestOverrides({
   FakeMeRepository? me,
+  // #1835 — the account's guest visits; none unless a test seeds them.
+  FakeGuestParticipationRepository? guestVisits,
   FakeWorkspaceApplicationRepository? applications,
   FakeAccountActivityRepository? accountActivity,
   FakeDirectoryRepository? directory,
@@ -181,6 +188,7 @@ List<Override> standardTestOverrides({
   FinanceKpiRepository? financeKpis,
   AccessoryRepository? accessories,
   ReservationRepository? reservations,
+  BookingIntentStore? bookingIntents,
   EventRepository? events,
   CalendarRepository? calendar,
   MoneyRepository? money,
@@ -267,6 +275,8 @@ List<Override> standardTestOverrides({
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directoryFake),
       // #1823 — the account layer, in memory; the account is the session's.
       meRepositoryProvider.overrideWith((ref) => me ?? FakeMeRepository()),
+      guestParticipationRepositoryProvider
+          .overrideWithValue(guestVisits ?? FakeGuestParticipationRepository()),
       accountContactRepositoryProvider.overrideWith((ref,source)=>contacts??FakeAccountContactRepository()),
       messengerRepositoryProvider.overrideWith(
           (ref, source) => messengers[source] ?? homeMessenger),
@@ -312,6 +322,13 @@ List<Override> standardTestOverrides({
         .overrideWithValue(accessories ?? FakeAccessoryRepository()),
     reservationRepositoryProvider
         .overrideWithValue(reservations ?? FakeReservationRepository()),
+    // #1855 — the booking-intent ledger and its scope: one fixed account
+    // on one fixed server, so a test's intents never meet the device's.
+    bookingIntentStoreProvider
+        .overrideWithValue(bookingIntents ?? InMemoryBookingIntentStore()),
+    bookingIntentScopeProvider.overrideWithValue(
+      const BookingIntentScope(account: 'user-1', origin: 'https://test.local'),
+    ),
     eventRepositoryProvider
         .overrideWithValue(events ?? FakeEventRepository()),
     calendarRepositoryProvider

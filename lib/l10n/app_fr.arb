@@ -1015,6 +1015,85 @@
   "bookingOutsideWalkUpError": "En dehors des heures d'ouverture, seul un check-in spontané est possible — pas une réservation à l'avance.",
   "bookingOverlapsAnother": "La place est déjà réservée pendant une partie de ce créneau.",
   "bookingPastError": "Cette réservation est entièrement dans le passé.",
+  "bookingRecoveryBanner": "Une de vos demandes de réservation est restée sans réponse.",
+  "@bookingRecoveryBanner": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryBannerAction": "Vérifier",
+  "@bookingRecoveryBannerAction": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryCheck": "Vérifier le résultat",
+  "@bookingRecoveryCheck": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryCommitted": "La réservation existe — une seule, issue de votre demande d'origine.",
+  "@bookingRecoveryCommitted": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryDiscard": "Abandonner",
+  "@bookingRecoveryDiscard": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryInProgress": "Le serveur traite encore cette demande. Vérifiez à nouveau dans un instant.",
+  "@bookingRecoveryInProgress": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryNotCommitted": "Rien n'a été réservé pour cette demande. Vous pouvez la reprendre telle quelle, ou l'abandonner.",
+  "@bookingRecoveryNotCommitted": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryNotSaved": "Cet appareil n'a pas pu enregistrer votre demande de réservation ; rien n'a été envoyé. Libérez de l'espace ou réessayez.",
+  "@bookingRecoveryNotSaved": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryResume": "Reprendre la même demande",
+  "@bookingRecoveryResume": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryResumed": "Reprise : votre demande d'origine a été réservée une seule fois.",
+  "@bookingRecoveryResumed": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoverySpaceFallback": "L'espace choisi",
+  "@bookingRecoverySpaceFallback": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryTitle": "Votre demande de réservation",
+  "@bookingRecoveryTitle": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnavailable": "Le serveur n'a pas pu être interrogé. Rien n'a changé ; réessayez.",
+  "@bookingRecoveryUnavailable": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnknown": "La connexion a été coupée après l'envoi de votre demande. La réservation existe peut-être, peut-être pas : vérifiez avant de réserver à nouveau.",
+  "@bookingRecoveryUnknown": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnresolved": "Le serveur ne conserve plus de trace de cette demande et ne peut rien dire. Vérifiez vos réservations avant de réserver à nouveau.",
+  "@bookingRecoveryUnresolved": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryView": "Voir la réservation",
+  "@bookingRecoveryView": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryWindow": "{space} · {from} – {to}",
+  "@bookingRecoveryWindow": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "bookingReservedSpaceWhen": "{space} réservé : {when}.",
   "@bookingReservedSpaceWhen": {
     "description": "#663 - reservation confirmation naming the space",
@@ -2990,6 +3069,14 @@
   "featureFinanceFacesTitle": "Finances en quatre volets",
   "featureFormHelpHintsDesc": "Un carrousel d'astuces masquable sur chaque écran principal, et un petit ? à côté de chaque paramètre et champ de saisie — un geste ouvre le guide à la bonne section. Réactivable dans les réglages.",
   "featureFormHelpHintsTitle": "Astuces d'aide",
+  "featureGuestParticipationDesc": "Permet à une personne qui n'est pas membre de demander à visiter cet espace, et à quelqu'un qui gère les réservations de l'admettre ou de refuser. Une visite ne crée ni adhésion, ni abonnement, ni rôle. Désactivé : personne ne demande ni n'est admis ici.",
+  "@featureGuestParticipationDesc": {
+    "description": "#1835 guest participation: the feature's description"
+  },
+  "featureGuestParticipationTitle": "Visites d'invités",
+  "@featureGuestParticipationTitle": {
+    "description": "#1835 guest participation: the feature's name"
+  },
   "featureHeldBack": "En attente de la fonction au-dessus — activez-la et celle-ci fonctionne de nouveau.",
   "featureHolidayImportDesc": "Un propriétaire importe les jours fériés du pays, et d'une région, depuis une source de données ouvertes, désélectionne les jours où l'espace reste ouvert et importe les autres comme jours de fermeture. Les mois déjà facturés sont ignorés et nommés.",
   "@featureHolidayImportDesc": {
@@ -6263,6 +6350,14 @@
   "moneyUsageUnlimited": "{used} demi-journées utilisées",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mon badge",
+  "myVisitsHelp": "Les visites que vous avez demandées ou auxquelles vous avez été admis, en tant qu'invité. Une visite n'est pas une adhésion.",
+  "@myVisitsHelp": {
+    "description": "#1835 Me › Home: under the My visits heading"
+  },
+  "myVisitsTitle": "Mes visites",
+  "@myVisitsTitle": {
+    "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
   "navigationClassic": "Classique : la barre du bas et le bouton rond",
   "@navigationClassic": {
     "description": "#969 navigation style: navigationClassic"
@@ -10381,6 +10476,38 @@
   "visibilitySaveFailed": "Impossible d'enregistrer qui le voit. Veuillez réessayer.",
   "visibilitySignedIn": "Toute personne connectée",
   "visibilityTitle": "Qui me voit",
+  "visitCancel": "Annuler cette visite",
+  "@visitCancel": {
+    "description": "#1835 a visit row: the guest withdraws or cancels"
+  },
+  "visitCancelFailed": "Impossible d'annuler la visite. Rien n'a changé ; réessayez.",
+  "@visitCancelFailed": {
+    "description": "#1835 a visit row: the cancel failed"
+  },
+  "visitGuestNote": "Visite d'invité — pas une adhésion",
+  "@visitGuestNote": {
+    "description": "#1835 a visit row: the one line that keeps visit and membership apart"
+  },
+  "visitStatusCancelled": "Annulée",
+  "@visitStatusCancelled": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusConfirmed": "Confirmée",
+  "@visitStatusConfirmed": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusDeclined": "Refusée",
+  "@visitStatusDeclined": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusExpired": "Expirée",
+  "@visitStatusExpired": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusRequested": "Demandée",
+  "@visitStatusRequested": {
+    "description": "#1835 visit status"
+  },
   "whatTheyCanDoTitle": "Ce que {name} peut faire ici",
   "@whatTheyCanDoTitle": {
     "description": "#2085 giving roles: whatTheyCanDoTitle",
