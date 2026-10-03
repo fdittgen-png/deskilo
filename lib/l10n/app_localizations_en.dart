@@ -6987,6 +6987,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inviteRoleMember => 'Member invite';
 
   @override
+  String get inviteRolesHint =>
+      'Given when they join, once their membership is active.';
+
+  @override
+  String get inviteRolesTitle => 'Roles on arrival';
+
+  @override
   String get inviteSectionTitle => 'Invite someone';
 
   @override

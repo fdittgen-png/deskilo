@@ -12060,6 +12060,18 @@ abstract class AppLocalizations {
   /// **'Member invite'**
   String get inviteRoleMember;
 
+  /// #2085 giving roles: inviteRolesHint
+  ///
+  /// In en, this message translates to:
+  /// **'Given when they join, once their membership is active.'**
+  String get inviteRolesHint;
+
+  /// #2085 giving roles: inviteRolesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Roles on arrival'**
+  String get inviteRolesTitle;
+
   /// No description provided for @inviteSectionTitle.
   ///
   /// In en, this message translates to:
