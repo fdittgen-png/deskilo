@@ -1,0 +1,74 @@
+{
+  "provenance": {
+    "kind": "synthetic",
+    "why": "No released server newer than protocol 1 exists. This is a hypothetical newer server, labelled as such: it adds version 2 of two operations, a capability this client does not know, an operation this client does not implement, and optional fields."
+  },
+  "descriptor": {
+    "protocol": "deskilo.public-network",
+    "protocol_versions": [
+      1,
+      2
+    ],
+    "capabilities": [
+      "operation_header",
+      "price_terms"
+    ],
+    "must_understand": [],
+    "operations": [
+      {
+        "id": "network.descriptor.read",
+        "versions": [
+          1
+        ],
+        "requires": []
+      },
+      {
+        "id": "directory.workspaces.search",
+        "versions": [
+          1,
+          2
+        ],
+        "requires": []
+      },
+      {
+        "id": "directory.workspaces.detail",
+        "versions": [
+          1
+        ],
+        "requires": []
+      },
+      {
+        "id": "directory.sources.register",
+        "versions": [
+          1
+        ],
+        "requires": [
+          "price_terms"
+        ],
+        "unlabelled": 1
+      },
+      {
+        "id": "workspace.profile.request",
+        "versions": [
+          1,
+          2
+        ],
+        "requires": [],
+        "unlabelled": 1,
+        "lifecycle": {
+          "note": "an optional term this client may ignore"
+        }
+      },
+      {
+        "id": "visit.quote.accept",
+        "versions": [
+          1
+        ],
+        "requires": [
+          "price_terms"
+        ]
+      }
+    ],
+    "extension": "an optional top-level field a newer server may add"
+  }
+}

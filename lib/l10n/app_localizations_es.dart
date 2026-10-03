@@ -11222,6 +11222,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo guardar el cambio. Inténtalo de nuevo.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Esta acción no está disponible entre esta aplicación y ese servidor. Actualizar la aplicación puede ayudar.';
+
+  @override
   String get portalAddress => 'Dirección pública';
 
   @override
@@ -15065,6 +15069,45 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskExportWordButton => 'Exportar como documento de Word';
+
+  @override
+  String get taskGuideCreate => 'Crear un borrador de guía';
+
+  @override
+  String get taskGuideEditText => 'Escribir el texto';
+
+  @override
+  String get taskGuideIntro =>
+      'Cada paso tal como lo seguirá un lector. Un paso que reserva espera la respuesta real; nada se hace por el lector.';
+
+  @override
+  String get taskGuideManual => 'Haga este paso usted mismo';
+
+  @override
+  String taskGuideManualProtected(String category) {
+    return 'Haga este paso usted mismo, en una pantalla protegida: $category';
+  }
+
+  @override
+  String get taskGuideNoText => 'Una instrucción aún por escribir';
+
+  @override
+  String get taskGuideOptional => 'El lector puede omitirlo';
+
+  @override
+  String get taskGuideRecovery =>
+      'Si se rechaza: elija otro sitio, día o periodo y confirme de nuevo.';
+
+  @override
+  String get taskGuideSave => 'Guardar la guía';
+
+  @override
+  String get taskGuideTitle => 'Borrador de guía';
+
+  @override
+  String taskGuideWaitsFor(String outcomes) {
+    return 'Espera: $outcomes';
+  }
 
   @override
   String get taskOutputBusy => 'Este resultado ya se está creando.';
