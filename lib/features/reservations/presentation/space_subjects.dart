@@ -24,7 +24,7 @@ List<({String id, String name})> spaceAssignmentCandidates(WidgetRef ref) {
   if (me == null) return const [];
   final features = ref.read(enabledFeaturesSyncProvider);
   final allowed = me.actsAsOwner ||
-      (me.canAdminister &&
+      (ref.read(actsForReservationsProvider) &&
           features.contains(WorkspaceFeature.adminLevelAssign));
   if (!allowed) return const [];
   final names = ref.read(memberNamesProvider).value ?? const {};

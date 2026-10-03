@@ -361,7 +361,8 @@ class _MemberPageBody extends ConsumerWidget {
         ),
     ];
     final booking = <Widget>[
-      if (canAdmin && !isSelf && !member.isKiosk && active) ...[
+      // #2137 — the booking allowances are also manageReservations'.
+      if ((canAdmin || perms.contains(WorkspacePermission.manageReservations)) && !isSelf && !member.isKiosk && active) ...[
         _ManageTile(
           tileKey: const ValueKey('member-page-reservation-limit'),
           icon: Icons.stacked_bar_chart_outlined,
@@ -384,9 +385,7 @@ class _MemberPageBody extends ConsumerWidget {
           onTap: () => pickMemberSimultaneousLimit(context, ref, member),
         ),
         // #985 — who this member is for VAT.
-        if (ref
-            .watch(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.vatCounterparty))
+        if (canAdmin && ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.vatCounterparty))
           _ManageTile(
             tileKey: const ValueKey('member-page-vat-treatment'),
             icon: Icons.account_balance_outlined,
@@ -406,7 +405,7 @@ class _MemberPageBody extends ConsumerWidget {
             onTap: () => pickMemberCustomerCapacity(context, ref, member),
           ),
         // #945 — the site whose address this member's documents carry.
-        if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.multiSite))
+        if (canAdmin && ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.multiSite))
           _ManageTile(
             tileKey: const ValueKey('member-page-home-site'),
             icon: Icons.location_city_outlined,
