@@ -6,7 +6,7 @@ description: Refresh the technical reference from the repository and mirror ever
 ## 1. The technical reference
 Regenerate `docs/wiki/Technical-Reference.md` from what the repo actually
 says, never from memory:
-- Flutter and Dart versions (`.fvmrc` / the workflow pins), every
+- Flutter and Dart versions (`.flutter-version` / the workflow pins), every
   dependency in `pubspec.yaml` with one line on why it is there.
 - Architecture: feature-first layout, domain purity (no Flutter, no l10n
   in `domain/`), Riverpod 3 with codegen, freezed, go_router, the

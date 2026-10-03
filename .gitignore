@@ -53,3 +53,8 @@ key.properties
 
 # where the suite logs go (deskilo-ship-feature step 3)
 scratchpad/
+
+# #2121 — generated, never committed: `dart run tool/test_inventory.dart`
+# writes it and CI publishes it with the quality report. A committed copy
+# put every open pull request that adds a test in conflict.
+/docs/testing/TEST_INVENTORY.md

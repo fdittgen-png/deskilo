@@ -6,6 +6,8 @@
 //
 //   dart run tool/capability_evidence.dart          # rewrite the outputs
 //   dart run tool/capability_evidence.dart --check  # exit 1 on drift
+//   dart run tool/capability_evidence.dart --fingerprints  # print each
+//       component's current fingerprint (never written to the outputs)
 //
 // An invalid manifest exits 2 and writes nothing: there is no partial
 // publication. Two runs on the same tree are byte-identical.
@@ -32,6 +34,12 @@ void main(List<String> args) {
     }
     stderr.writeln('${problems.length} problem(s); nothing written');
     exit(2);
+  }
+  if (args.contains('--fingerprints')) {
+    for (final e in currentFingerprints(manifest, ctx).entries) {
+      stdout.writeln('${e.key}\t${e.value}');
+    }
+    return;
   }
   final projection = project(manifest, ctx);
   var drift = false;

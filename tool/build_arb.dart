@@ -8,6 +8,13 @@
 // fragment. The merge fails on duplicate keys across fragments of the same
 // locale so two features can never silently shadow each other's strings.
 //
+// The aggregate is sorted by key (a key's `@key` metadata right after it),
+// never in fragment order: two pull requests that each add strings to the
+// same feature then insert at different places of the aggregate instead of
+// both appending at the end of that feature's block, so git merges them
+// without a conflict and the merged file is still exactly what this tool
+// writes (test/tool/generated_merge_test.dart).
+//
 // Usage:
 //   dart run tool/build_arb.dart
 //   flutter gen-l10n   (always run afterwards)
@@ -67,10 +74,29 @@ void main() {
     }
 
     final out = File('$outputDir/app_$locale.arb');
-    const encoder = JsonEncoder.withIndent('  ');
-    out.writeAsStringSync('${encoder.convert(merged)}\n');
+    out.writeAsStringSync(encodeArb(merged));
     stdout.writeln(
       'Wrote ${out.path} (${merged.keys.where((k) => !k.startsWith('@')).length} keys)',
     );
   }
+}
+
+/// The aggregate's text: `@@locale` first, then every key in code-unit
+/// order with its `@key` metadata immediately after it. The order is a
+/// function of the keys alone, so it does not depend on which fragment or
+/// which pull request contributed a key.
+String encodeArb(Map<String, dynamic> merged) {
+  String bare(String k) => k.startsWith('@') ? k.substring(1) : k;
+  final keys = merged.keys.where((k) => !k.startsWith('@@')).toList()
+    ..sort((a, b) {
+      final byKey = bare(a).compareTo(bare(b));
+      if (byKey != 0) return byKey;
+      return a.startsWith('@') ? 1 : -1;
+    });
+  final sorted = <String, dynamic>{
+    for (final k in merged.keys.where((k) => k.startsWith('@@'))) k: merged[k],
+    for (final k in keys) k: merged[k],
+  };
+  const encoder = JsonEncoder.withIndent('  ');
+  return '${encoder.convert(sorted)}\n';
 }

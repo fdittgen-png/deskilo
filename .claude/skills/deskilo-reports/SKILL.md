@@ -1,8 +1,18 @@
 ---
 name: deskilo-reports
-description: Everything printed in DesKilo — report kinds, the placeholder registry and its pins, banded defaults vs positioned layouts, owner texts, the letter standard, the report CLI (check/render/sample/describe/default), data-map builders and their call sites. Trigger for any change to invoices, letters, reports, templates, placeholders or the designer.
+description: Everything DesKilo prints — report kinds, the placeholder registry and its order pin, data-map builders and ReportStrings, banded defaults vs positioned layouts and the letter standard, the report CLI (check/render/sample/describe/default), the byte-identical goldens, where each document concern lives after the #1061 split, the designer. Trigger for any change to invoices, letters, statements, reports, templates, placeholders, the report designer or tool/report.dart. The window-envelope millimetres themselves are in AGENT_RULES.
 ---
 # Reports in DesKilo
+
+Binding rules: AGENT_RULES "Printed reports: the window-envelope contract",
+"Positioned report layouts" (the CLI workflow) and "The identity form is ONE form".
+
+**Essentials**
+1. Kind, label, default bands and the kind lint move together; a placeholder moves registry → order pin → sample data → field picker.
+2. Builders are pure `domain/` functions taking `ReportStrings` and `*Facts` — never a `BuildContext` or `AppLocalizations`.
+3. A positioned layout wins over bands; `tryLayoutPdf` never throws (falls back to bands, traced).
+4. Prove geometry on the PDF (`textPositions`, `invoice_geometry_test`), never on the widget tree.
+5. Goldens are byte-identical; regenerate only when a document is MEANT to change, and say so.
 
 ## Registries (all move together)
 - Kind: `domain/report_kind.dart` (`ReportKind(id, slot)`), label in
@@ -33,15 +43,14 @@ description: Everything printed in DesKilo — report kinds, the placeholder reg
   Dart with `LetterStrings`; the app adapter `resolveLayoutXmlFor`
   counts customised BANDS as a design). `tryLayoutPdf` must never throw:
   any failure logs and falls back to bands.
-- Window-envelope contract (AGENT_RULES): sender 20/20, recipient
-  110/45 in 85×40, body from 90 mm, footer every page, continuation p2+.
+- Window-envelope contract: the millimetres live in AGENT_RULES and once in
+  code (`domain/report_conformance.dart`, `domain/address_window.dart`).
   Prove on the PDF with `textPositions(bytes)` (InkAt xMm/yMm/page).
 
 ## CLI (pure Dart — never import Flutter/l10n from what it uses)
-```
-dart run tool/report.dart check <layout.xml> [--data d.json]
-dart run tool/report.dart render|sample --kind usage|describe|default --kind r1
-```
+`dart run tool/report.dart check|render <layout.xml> [--data d.json] [--out x.pdf]`,
+`sample [--kind k] [--out d.json]`, `describe`, `default --kind k` — the check
+workflow is in AGENT_RULES "Positioned report layouts".
 `test/tool/report_cli_test.dart` breaks the moment a domain file pulls
 `AppLocalizations`.
 
