@@ -1,0 +1,7 @@
+{
+  "directoryLocate": "Locate on map",
+  "directoryLocating": "Locating the public address…",
+  "directoryApproximate": "Approximate address location",
+  "directoryLocationMissing": "Location unavailable. The owner can publish precise map coordinates.",
+  "meSpaceOpen": "Open"
+}

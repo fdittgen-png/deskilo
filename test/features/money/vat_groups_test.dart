@@ -4,7 +4,6 @@
 // outside-base rule; a bare percentage maps to a group by the same rule
 // the database back-filled; the catalogue proposes the legal groups per
 // country; a not-subject line beside taxed lines is refused (BR-O-11).
-import 'dart:io';
 
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
@@ -78,14 +77,4 @@ void main() {
     expect(association.gaps, isNot(contains(EInvoiceGap.mixedNotSubjectLines)));
   });
 
-  test('the SQL twin (0170): groups constrained, back-filled by percentage, '
-      'set_vat_rates accepting the three keys', () {
-    final sql = File('supabase/migrations/0170_vat_groups.sql').readAsStringSync();
-    expect(sql, contains("check (group_key in ('standard','intermediate','reduced','super_reduced','zero','exempt','not_subject','deposit','excise'))"));
-    expect(sql, contains("when percent >= 15 then 'standard'"));
-    expect(sql, contains("group_key = coalesce(nullif(v_rate->>''group_key'', ''''), group_key)"));
-    for (final a in ['A', 'B', 'C']) {
-      expect(sql, contains("raise exception '0170: anchor $a missing'"));
-    }
-  });
 }

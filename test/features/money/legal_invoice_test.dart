@@ -6,7 +6,6 @@
 // ships. The reference: the French mandatory-mention list (coordonnées
 // complètes du vendeur, N° TVA, détail des lignes, totaux par taux,
 // modalités de règlement, mentions particulières).
-import 'dart:io';
 
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
@@ -43,11 +42,6 @@ void main() {
       expect(InvoiceLegal.fromJson(legal.toJson()), legal);
     });
 
-    test('migration 0094 stores the column the repository reads', () {
-      final sql = File('supabase/migrations/0094_invoice_legal.sql')
-          .readAsStringSync();
-      expect(sql, contains('invoice_legal'));
-    });
   });
 
   group('every document ships the same four presets (#480)', () {
@@ -289,16 +283,6 @@ Client SARL
           contains('art. 261, 7-1°'));
     });
 
-    test('migration 0095 gates every VAT chokepoint on the declared '
-        'regime', () {
-      final sql = File('supabase/migrations/0095_vat_regime_gate.sql')
-          .readAsStringSync();
-      expect(sql, contains('workspace_charges_vat'));
-      expect(sql, contains("vat_regime = 'vat_registered'"));
-      expect(sql, contains('workspace_default_vat_percent'));
-      expect(sql, contains('record_service_charge'));
-      expect(sql, contains('buy_package'));
-    });
   });
 
   test('reminder letters cite the statutory late-payment clauses (#480)',

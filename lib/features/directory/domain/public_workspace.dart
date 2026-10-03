@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'directory_location.dart';
+
 /// The deliberately public projection, separate from the private workspace.
 ///
 /// [document] is the allow-listed projection the public network adapter
@@ -10,8 +12,10 @@ class PublicWorkspace {
   String text(String field) =>
       document[field] is String ? document[field] as String : '';
   String get name => text('name');
-  double? get latitude => double.tryParse(text('latitude'));
-  double? get longitude => double.tryParse(text('longitude'));
+  DirectoryLocation? get location =>
+      DirectoryLocation.parse(document['latitude'], document['longitude']);
+  double? get latitude => location?.latitude;
+  double? get longitude => location?.longitude;
   List<Map<String, dynamic>> get contacts =>
       (document['contacts'] as List<dynamic>? ?? [])
           .map((e) => Map<String, dynamic>.from(e as Map))

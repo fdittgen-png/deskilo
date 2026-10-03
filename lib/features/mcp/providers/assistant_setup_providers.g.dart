@@ -77,7 +77,7 @@ final class AssistantSetupProvider
   }
 }
 
-String _$assistantSetupHash() => r'a8fa5090870033a7b6132b3367c82e316e40e288';
+String _$assistantSetupHash() => r'cc2a7d454bb1cdba8425d2291a54692f40a1de40';
 
 /// #1827 — the setup checklist for one person on one workspace. The four
 /// server answers are asked in parallel; one that fails is `unavailable`
@@ -206,3 +206,290 @@ final class MyMcpConsentOptionsProvider
 
 String _$myMcpConsentOptionsHash() =>
     r'40ceb9f84686299222a619c65e2d945de9df8024';
+
+/// #2145 — the 0357 onboarding RPCs: consent status, published endpoint,
+/// installation notices.
+
+@ProviderFor(mcpOnboardingRepository)
+final mcpOnboardingRepositoryProvider = McpOnboardingRepositoryProvider._();
+
+/// #2145 — the 0357 onboarding RPCs: consent status, published endpoint,
+/// installation notices.
+
+final class McpOnboardingRepositoryProvider
+    extends
+        $FunctionalProvider<
+          McpOnboardingRepository,
+          McpOnboardingRepository,
+          McpOnboardingRepository
+        >
+    with $Provider<McpOnboardingRepository> {
+  /// #2145 — the 0357 onboarding RPCs: consent status, published endpoint,
+  /// installation notices.
+  McpOnboardingRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mcpOnboardingRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpOnboardingRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<McpOnboardingRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  McpOnboardingRepository create(Ref ref) {
+    return mcpOnboardingRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(McpOnboardingRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<McpOnboardingRepository>(value),
+    );
+  }
+}
+
+String _$mcpOnboardingRepositoryHash() =>
+    r'c277d66fd443dfda333a208bdd3c7deafaddd917';
+
+/// #2145 — the client, its approval and who decides, for one pending
+/// authorization; read BEFORE Auth is asked for the authorization itself.
+
+@ProviderFor(mcpConsentStatus)
+final mcpConsentStatusProvider = McpConsentStatusFamily._();
+
+/// #2145 — the client, its approval and who decides, for one pending
+/// authorization; read BEFORE Auth is asked for the authorization itself.
+
+final class McpConsentStatusProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<ConsentStatus>,
+          ConsentStatus,
+          FutureOr<ConsentStatus>
+        >
+    with $FutureModifier<ConsentStatus>, $FutureProvider<ConsentStatus> {
+  /// #2145 — the client, its approval and who decides, for one pending
+  /// authorization; read BEFORE Auth is asked for the authorization itself.
+  McpConsentStatusProvider._({
+    required McpConsentStatusFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'mcpConsentStatusProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpConsentStatusHash();
+
+  @override
+  String toString() {
+    return r'mcpConsentStatusProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<ConsentStatus> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<ConsentStatus> create(Ref ref) {
+    final argument = this.argument as String;
+    return mcpConsentStatus(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is McpConsentStatusProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$mcpConsentStatusHash() => r'a40bcb921a0f0ab362684b6271e0f480d16d92ed';
+
+/// #2145 — the client, its approval and who decides, for one pending
+/// authorization; read BEFORE Auth is asked for the authorization itself.
+
+final class McpConsentStatusFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<ConsentStatus>, String> {
+  McpConsentStatusFamily._()
+    : super(
+        retry: null,
+        name: r'mcpConsentStatusProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #2145 — the client, its approval and who decides, for one pending
+  /// authorization; read BEFORE Auth is asked for the authorization itself.
+
+  McpConsentStatusProvider call(String authorizationId) =>
+      McpConsentStatusProvider._(argument: authorizationId, from: this);
+
+  @override
+  String toString() => r'mcpConsentStatusProvider';
+}
+
+/// #2145 — the endpoint this installation publishes for assistants.
+
+@ProviderFor(mcpPublishedEndpoint)
+final mcpPublishedEndpointProvider = McpPublishedEndpointProvider._();
+
+/// #2145 — the endpoint this installation publishes for assistants.
+
+final class McpPublishedEndpointProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<McpEndpointInfo>,
+          McpEndpointInfo,
+          FutureOr<McpEndpointInfo>
+        >
+    with $FutureModifier<McpEndpointInfo>, $FutureProvider<McpEndpointInfo> {
+  /// #2145 — the endpoint this installation publishes for assistants.
+  McpPublishedEndpointProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mcpPublishedEndpointProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpPublishedEndpointHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<McpEndpointInfo> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<McpEndpointInfo> create(Ref ref) {
+    return mcpPublishedEndpoint(ref);
+  }
+}
+
+String _$mcpPublishedEndpointHash() =>
+    r'f4ddd7443df412684248e7800a689ee018710f4e';
+
+/// #2145 — the installation notices addressed to the caller.
+
+@ProviderFor(myInstanceNotices)
+final myInstanceNoticesProvider = MyInstanceNoticesProvider._();
+
+/// #2145 — the installation notices addressed to the caller.
+
+final class MyInstanceNoticesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<InstanceNotices>,
+          InstanceNotices,
+          FutureOr<InstanceNotices>
+        >
+    with $FutureModifier<InstanceNotices>, $FutureProvider<InstanceNotices> {
+  /// #2145 — the installation notices addressed to the caller.
+  MyInstanceNoticesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myInstanceNoticesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myInstanceNoticesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<InstanceNotices> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<InstanceNotices> create(Ref ref) {
+    return myInstanceNotices(ref);
+  }
+}
+
+String _$myInstanceNoticesHash() => r'4c265493c570e19570f1812247dedf347f7056c7';
+
+/// #2145 — the onboarding changes, behind one class.
+
+@ProviderFor(mcpOnboardingCommands)
+final mcpOnboardingCommandsProvider = McpOnboardingCommandsProvider._();
+
+/// #2145 — the onboarding changes, behind one class.
+
+final class McpOnboardingCommandsProvider
+    extends
+        $FunctionalProvider<
+          McpOnboardingCommands,
+          McpOnboardingCommands,
+          McpOnboardingCommands
+        >
+    with $Provider<McpOnboardingCommands> {
+  /// #2145 — the onboarding changes, behind one class.
+  McpOnboardingCommandsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mcpOnboardingCommandsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mcpOnboardingCommandsHash();
+
+  @$internal
+  @override
+  $ProviderElement<McpOnboardingCommands> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  McpOnboardingCommands create(Ref ref) {
+    return mcpOnboardingCommands(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(McpOnboardingCommands value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<McpOnboardingCommands>(value),
+    );
+  }
+}
+
+String _$mcpOnboardingCommandsHash() =>
+    r'4285fc4f497e2a612644251e4ba8c4457e34db45';

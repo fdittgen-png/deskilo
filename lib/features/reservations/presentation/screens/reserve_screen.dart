@@ -1058,7 +1058,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     if (!level.bookableAsWhole) return false;
     final me = ref.watch(myMemberProvider).value;
     if (me == null || me.status != MemberStatus.active) return false;
-    return me.canReserveLevel || me.canAdminister;
+    return me.canReserveLevel || ref.watch(actsForReservationsProvider);
   }
 
   /// Day view: the selected day's per-seat timeline in everyone mode —

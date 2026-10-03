@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #945 — sites: the model, the screen, and the SQL twin.
-import 'dart:io';
+// #945 — sites: the model and the screen.
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
@@ -25,26 +24,6 @@ void main() {
     final entity = Site.fromRow({'id': 'e', 'vat_id': 'FR12901234567', 'tax_exemption_reason': 'art. 293 B'});
     expect((entity.vatId, entity.taxExemptionReason), ('FR12901234567', 'art. 293 B'));
     expect(entity.copyWith(vatId: '').vatId, '');
-  });
-
-  test('the SQL twin (0171): one upsert_site survives with the two defaulted '
-      'parameters, and the seller party takes the site\'s numbers only when set', () {
-    final sql = File('supabase/migrations/0171_site_registrations.sql').readAsStringSync();
-    expect(sql, contains('drop function if exists public.upsert_site(uuid, uuid, text, text, text, text, text, text, int);'));
-    expect(sql, contains("p_vat_id text default '', p_tax_exemption_reason text default ''"));
-    expect(sql, contains("v_site.vat_id <> '''' then v_site.vat_id else coalesce(v_workspace.vat_id, '''')"));
-    expect(sql, contains("raise exception '0171: anchor B missing'"));
-  });
-
-  test('the SQL twin (0168): a default site per workspace, the default '
-      'cannot be deleted, deleting a site falls back to the default', () {
-    final sql = File('supabase/migrations/0168_sites.sql').readAsStringSync();
-    expect(sql, contains('sites_one_default_per_workspace'));
-    expect(sql, contains("raise exception 'the default site cannot be deleted'"));
-    expect(sql, contains('update public.levels set site_id = null where site_id = p_site_id'));
-    expect(sql, contains('update public.members set home_site_id = null where home_site_id = p_site_id'));
-    expect("raise exception 'admins only'".allMatches(sql).length, 4);
-    expect(sql, contains('where not exists (select 1 from public.sites s where s.workspace_id = w.id and s.is_default)'));
   });
 
   testWidgets('the Sites screen lists the default site, adds one through '

@@ -518,6 +518,16 @@ Set<WorkspacePermission> myPermissions(Ref ref) => effectivePermissions(
       custom: ref.watch(myRolePermissionsProvider),
     );
 
+/// #2137 — I act on reservations as staff (book for others, check them
+/// in, overrule, a whole level without the grant, their allowances): an
+/// active admin or owner, or manageReservations through a role (0364).
+@riverpod
+bool actsForReservations(Ref ref) {
+  final me = ref.watch(myMemberProvider).value;
+  return me != null && me.status == MemberStatus.active && (me.canAdminister ||
+      ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageReservations));
+}
+
 /// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies
 /// to EVERY member — gates the e-invoice test environments and the
 /// Developer screen. Realtime (0080) pushes a flip to all devices live.

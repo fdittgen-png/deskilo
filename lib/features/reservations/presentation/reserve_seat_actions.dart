@@ -108,9 +108,8 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   /// feature on. Empty = no "Book for" picker at all.
   List<({String id, String name})> get _bookingCandidates {
     final features = ref.read(enabledFeaturesSyncProvider);
-    final myMember = ref.read(myMemberProvider).value;
     if (!features.contains(WorkspaceFeature.bookForOthers) ||
-        !(myMember?.canAdminister ?? false)) {
+        !ref.read(actsForReservationsProvider)) {
       return const [];
     }
     final names = ref.read(memberNamesProvider).value ?? const {};
@@ -129,13 +128,13 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       ref
           .read(enabledFeaturesSyncProvider)
           .contains(WorkspaceFeature.bookForOthers) &&
-      (ref.read(myMemberProvider).value?.canAdminister ?? false);
+      ref.read(actsForReservationsProvider);
 
   /// Whether I may toggle seat maintenance blocks (#161): owner always,
   /// admins with the adminSeatBlocking feature.
   bool get _canManageSeatBlocks => canManageSeatBlocks(
         member: ref.read(myMemberProvider).value,
-        features: ref.read(enabledFeaturesSyncProvider),
+        features: ref.read(enabledFeaturesSyncProvider), staff: ref.read(actsForReservationsProvider),
       );
 
   /// THE tap. Everything above is what it dispatches to.

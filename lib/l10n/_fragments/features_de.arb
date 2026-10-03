@@ -235,5 +235,6 @@
   "featureOptInAlsoOn": "{count, plural, =1{Wird ebenfalls eingeschaltet, weil benötigt: {features}} other{Werden ebenfalls eingeschaltet, weil benötigt ({count}): {features}}}",
   "featureOptInStage": "{feature}: {stage}",
   "featureChangedMeanwhile": "Die Funktionen haben sich inzwischen geändert, daher wurde nichts gespeichert. Prüfen Sie die Liste und schalten Sie erneut.",
-  "featureChangeUnconfirmed": "Die Änderung wurde gesendet, aber die Funktionen konnten zur Bestätigung nicht neu geladen werden. Öffnen Sie den Bildschirm erneut, um den Stand zu sehen."
+  "featureChangeUnconfirmed": "Die Änderung wurde gesendet, aber die Funktionen konnten zur Bestätigung nicht neu geladen werden. Öffnen Sie den Bildschirm erneut, um den Stand zu sehen.",
+  "featureIntakeUnconfirmedNote": "Aus: nichts Neues beginnt. Dieser Server konnte nicht bestätigen, dass Offenes weiter bearbeitet werden kann; verlassen Sie sich nicht darauf."
 }

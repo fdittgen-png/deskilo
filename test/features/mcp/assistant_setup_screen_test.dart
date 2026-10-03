@@ -2,7 +2,8 @@
 //
 // #1827 — Settings → Assistant setup, driven through its buttons. Opening
 // the screen sends nothing. "Turn on" writes mcpAccess for the workspace the
-// list was read for, and is offered only to a holder of manageConfiguration.
+// list was read for, through set_workspace_mcp_access (#2145, 0360), and is
+// offered only to whoever manages integrations.
 // "Use the recommended set" shows exactly what it adds and removes, sends
 // nothing on cancel, and on Apply saves the recommended operations with
 // the own-records ceiling; a concurrent change is reported, not overwritten.
@@ -13,6 +14,7 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/instance_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
+import 'package:deskilo/core/demo/data/mcp_onboarding_repository.dart';
 import 'package:deskilo/core/mcp/mcp_operations.dart';
 import 'package:deskilo/features/auth/domain/identity_binding.dart';
 import 'package:deskilo/features/mcp/application/assistant_setup.dart';
@@ -27,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../helpers/mock_providers.dart';
 
@@ -69,6 +72,7 @@ Future<void> _pump(
   required FakeMcpAdminRepository admin,
   FakeInstanceRepository? instance,
   FakeWorkspaceRepository? workspace,
+  FakeMcpOnboardingRepository? onboarding,
   Set<WorkspacePermission> permissions = _all,
   bool featureOn = true,
   String backendUrl = '',
@@ -98,6 +102,7 @@ Future<void> _pump(
           mcpAdmin: admin,
           workspace: workspace ?? FakeWorkspaceRepository.withWorkspace(),
           instance: instance,
+          mcpOnboarding: onboarding,
         ),
         myPermissionsProvider.overrideWithValue(permissions),
         enabledFeaturesSyncProvider.overrideWithValue(
@@ -147,36 +152,59 @@ void main() {
     expect(repo.flagWrites, isEmpty);
   });
 
-  testWidgets('Turn on writes mcpAccess for this workspace', (tester) async {
+  testWidgets('Turn on asks the server to switch mcpAccess for this '
+      'workspace, against the value read (#2145, 0360)', (tester) async {
     final repo = FakeWorkspaceRepository.withWorkspace();
+    final onboarding = FakeMcpOnboardingRepository();
     await _pump(
       tester,
       identity: _identity(),
       admin: FakeMcpAdminRepository(policy: _policy(feature: false)),
       workspace: repo,
+      onboarding: onboarding,
       featureOn: false,
     );
     expect(_key('assistant-setup-workspace-todo'), findsOneWidget);
     expect(_key('assistant-setup-policy-blocked'), findsOneWidget);
     expect(_key('assistant-setup-recommended'), findsNothing);
     await _tap(tester, 'assistant-setup-turn-on');
-    expect(repo.flagWrites, hasLength(1));
-    expect(repo.flagWrites.single[WorkspaceFeature.mcpAccess.dbKey], isTrue);
+    expect(onboarding.calls, ['setWorkspaceMcpAccess:$_ws:true:false']);
+    // The flag is the server's to write now, not a generic feature write.
+    expect(repo.flagWrites, isEmpty);
   });
 
-  testWidgets('without manageConfiguration the step waits on a configurer '
-      'and offers no button', (tester) async {
+  testWidgets('a switch changed meanwhile is reloaded, not overwritten', (
+    tester,
+  ) async {
+    final onboarding = FakeMcpOnboardingRepository()
+      ..workspaceSwitchError = const PostgrestException(
+        message: 'the features changed since they were read: mcpAccess',
+        code: 'DK409',
+      );
     await _pump(
       tester,
       identity: _identity(),
       admin: FakeMcpAdminRepository(policy: _policy(feature: false)),
-      permissions: const {WorkspacePermission.manageIntegrations},
+      onboarding: onboarding,
+      featureOn: false,
+    );
+    await _tap(tester, 'assistant-setup-turn-on');
+    expect(find.textContaining('changed the offer meanwhile'), findsOneWidget);
+  });
+
+  testWidgets('without manageIntegrations the step waits on whoever '
+      'manages integrations and offers no button', (tester) async {
+    await _pump(
+      tester,
+      identity: _identity(),
+      admin: FakeMcpAdminRepository(policy: _policy(feature: false)),
+      permissions: const {WorkspacePermission.manageConfiguration},
       featureOn: false,
     );
     expect(_key('assistant-setup-workspace-waiting'), findsOneWidget);
     expect(_key('assistant-setup-turn-on'), findsNothing);
     expect(
-      find.textContaining('manages this workspace\'s configuration'),
+      find.textContaining('manages this workspace\'s integrations'),
       findsWidgets,
     );
   });

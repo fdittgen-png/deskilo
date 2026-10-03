@@ -9,16 +9,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:deskilo/core/demo/data/workspace_roles_repository.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/domain/workspace_role.dart';
+
 import '../../helpers/mock_providers.dart';
 
-Future<void> _pump(WidgetTester tester, {required bool web}) async {
+Future<void> _pump(
+  WidgetTester tester, {
+  required bool web,
+  FakeWorkspaceRepository? workspace,
+  FakeWorkspaceRoles? roles,
+}) async {
   tester.view.physicalSize = const Size(1200, 900);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...standardTestOverrides(),
+        ...standardTestOverrides(workspace: workspace, roles: roles),
         webShellProvider.overrideWithValue(web),
       ],
       child: const DeskiloApp(),
@@ -78,5 +88,57 @@ void main() {
     await _pump(tester, web: false);
     expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.byTooltip('Open navigation menu'), findsNothing);
+  });
+
+  // #2137 — every administration entry asks the permission its route
+  // asks, so a member given it through one of the space's own roles finds
+  // the way there, and a member without it does not.
+  testWidgets('a member holding permissions through a role finds their '
+      'entries; a plain member finds none', (tester) async {
+    FakeWorkspaceRepository workspaceAs() =>
+        FakeWorkspaceRepository.withWorkspace(
+          featureFlags: const {'customRoles': true},
+        )..myMember = const Member(
+            id: 'member-1',
+            workspaceId: 'ws-1',
+            userId: 'user-1',
+            isAdmin: false,
+            isOwner: false,
+            status: MemberStatus.active,
+          );
+    const entries = [
+      'drawer-workspace-settings', 'drawer-members', 'drawer-availability',
+      'drawer-services', 'drawer-billing', 'drawer-payment-methods',
+    ];
+    final roles = FakeWorkspaceRoles()
+      ..callerMemberId = 'member-1'
+      ..roles.add(const WorkspaceRole(
+        id: 'role-o',
+        key: 'office',
+        names: {'en': 'Office'},
+        permissions: {
+          WorkspacePermission.workspaceSettings,
+          WorkspacePermission.manageMembers,
+          WorkspacePermission.manageServices,
+          WorkspacePermission.manageBilling,
+          WorkspacePermission.manageIntegrations,
+        },
+      ))
+      ..assignments['role-o'] = ['member-1'];
+    await _pump(tester, web: true, workspace: workspaceAs(), roles: roles);
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    for (final key in entries) {
+      await _reveal(tester, key);
+      expect(find.byKey(ValueKey(key)), findsOneWidget, reason: key);
+    }
+
+    await _pump(tester, web: true, workspace: workspaceAs(),
+        roles: FakeWorkspaceRoles());
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    for (final key in entries) {
+      expect(find.byKey(ValueKey(key)), findsNothing, reason: key);
+    }
   });
 }

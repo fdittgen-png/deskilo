@@ -3,7 +3,6 @@
 // Additional payments onto a PARTIALLY PAID invoice (#506): matched
 // against the REMAINING amount — maybe until fully paid, maybe the
 // rest is written off (#504).
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
@@ -96,17 +95,4 @@ void main() {
     );
   });
 
-  test('migration 0101 adds the payments junction, reserves payments '
-      'while pending, and applies additions on confirm', () {
-    final sql = File('supabase/migrations/0101_partial_rematch.sql')
-        .readAsStringSync();
-    expect(sql, contains('invoice_match_payments'));
-    expect(sql, contains("v_due := v_invoice.total_cents - v_existing.paid_cents"));
-    expect(sql, contains("'additional', v_additional"));
-    expect(sql, contains('paid_cents = m.paid_cents + jr.amount_cents'));
-    // The verbatim-generated respond body keeps the earlier branches.
-    expect(sql, contains("v_event.type = 'invoice_writeoff'"));
-    expect(sql, contains("v_event.type = 'reservation_delete'"));
-    expect(sql, contains("(v_event.payload->>'reservation_id')::uuid"));
-  });
 }

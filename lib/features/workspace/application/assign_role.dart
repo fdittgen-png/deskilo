@@ -13,6 +13,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/workspace_roles_providers.dart';
 
+/// #2085 — the roles an invitation carries, written right after it is
+/// created; nothing to write when none was chosen.
+Future<void> setInvitationRoles(
+  WidgetRef ref, {
+  required String workspaceId,
+  required String code,
+  required Set<String> roleKeys,
+}) async {
+  if (roleKeys.isEmpty) return;
+  await ref
+      .read(workspaceRolesRepositoryProvider)
+      .setInvitationRoles(workspaceId, code, roleKeys.toList()..sort());
+}
+
 /// Gives [roleId] to [memberId] when [assign] is true, takes it back
 /// otherwise, then re-reads who holds what.
 ///

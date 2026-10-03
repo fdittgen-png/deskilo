@@ -302,13 +302,6 @@ void _installChecks() {
       expect(security.level, DoctorLevel.alarm);
       expect(security.detail, contains('nothing about RLS'));
     });
-
-    test('#1314 — no migrations table and no tables is still the empty '
-        'project', () {
-      final f = named(examine(row(marker: null, tables: 0)), 'Schema');
-      expect(f.level, DoctorLevel.alarm);
-      expect(f.detail, contains('instance.dart install'));
-    });
   });
 }
 

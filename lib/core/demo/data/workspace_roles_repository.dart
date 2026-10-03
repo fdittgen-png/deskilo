@@ -82,6 +82,18 @@ class FakeWorkspaceRoles implements WorkspaceRolesRepository {
     );
   }
 
+  /// Invitation code → the role keys it carries (#2085).
+  final invitationRoles = <String, List<String>>{};
+
+  @override
+  Future<void> setInvitationRoles(
+    String workspaceId,
+    String code,
+    List<String> roleKeys,
+  ) async {
+    invitationRoles[code] = List.of(roleKeys);
+  }
+
   @override
   Future<void> assignRole({
     required String memberId,

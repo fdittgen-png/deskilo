@@ -59,7 +59,8 @@ List<Widget> workspaceSettingsTiles(
     // Accessory catalog (#167): owner AND admins, per the epic #163
     // decision. The screen still gates its actions on canAdminister, so
     // the tile asks the same until the screen adopts the matrix.
-    if (canAdminister &&
+    if ((canAdminister ||
+            perms.contains(WorkspacePermission.manageServices)) &&
         features.contains(WorkspaceFeature.accessorySupplements))
       ListTile(
         leading: const Icon(Icons.devices_other_outlined),
@@ -118,7 +119,8 @@ List<Widget> workspaceSettingsTiles(
   final administration = <Widget>[
     // Admins reach member management too (0044); owner-only controls gate
     // inside the screen, which still decides on canAdminister.
-    if (canAdminister)
+    // #2137 — or whoever holds manageMembers, through a role.
+    if (canAdminister || perms.contains(WorkspacePermission.manageMembers))
       ListTile(
         leading: const Icon(Icons.group_outlined),
         title: Text(l10n?.membersTitle ?? 'Members & plans'),

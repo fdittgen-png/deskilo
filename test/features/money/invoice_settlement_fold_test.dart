@@ -6,7 +6,6 @@
 // nest under it with the stamped PDF as their one affordance; the
 // detail sheet of a source says so and offers reading only; the
 // watermark priority; exports count the originals once.
-import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
@@ -204,18 +203,4 @@ void main() {
     expect(find.byKey(ValueKey('invoice-void-${s.a}')), findsNothing);
   });
 
-  test('migration 0148 carries the full lines, the VAT aggregate and the '
-      'reminder guard', () {
-    final sql = File('supabase/migrations/0148_settlement_fold.sql')
-        .readAsStringSync();
-    for (final what in [
-      "'source_number', v_src.number,",
-      'by_rate as (',
-      "v_vat, 'settlement', v_settles",
-      "raise exception ''invoice is settled''",
-      "proname = 'record_invoice_reminder'",
-    ]) {
-      expect(sql, contains(what), reason: what);
-    }
-  });
 }

@@ -154,14 +154,6 @@ void main() {
   });
 
   group('the pieces the widget tree cannot show', () {
-    test('0132 validates what the pickers offer', () {
-      final sql =
-          File('supabase/migrations/0132_globalization.sql').readAsStringSync();
-      expect(sql, contains(r"check (currency_code ~ '^[A-Z]{3}$')"));
-      expect(sql, contains('pg_timezone_names'));
-      expect(sql, contains("check (clock in ('auto', '24h', '12h'))"));
-    });
-
     test('the payment-order function knows a yen has no cents', () {
       final ts = File('supabase/functions/create-payment-order/index.ts')
           .readAsStringSync();

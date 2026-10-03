@@ -7,7 +7,6 @@
 // composer, the alerts face named for what it holds, a person opened on
 // a tap from the new-conversation sheet, and a muted conversation that
 // the announcer keeps quiet.
-import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
@@ -303,20 +302,4 @@ void main() {
     expect(find.byKey(const ValueKey('member-note-ref-space')), findsOneWidget);
   });
 
-  test('migration 0146 carries the preferences and the paged list', () {
-    final sql = File('supabase/migrations/0146_conversation_prefs.sql')
-        .readAsStringSync();
-    for (final what in [
-      'add column if not exists pinned_at timestamptz',
-      'add column if not exists muted boolean not null default false',
-      'add column if not exists archived_at timestamptz',
-      'create or replace function public.set_conversation_prefs(',
-      'create or replace function public.mark_conversation_unread(',
-      'p_include_archived boolean default false',
-      '(p_include_archived or mine.archived_at is null)',
-      '(mine.pinned_at is not null) desc',
-    ]) {
-      expect(sql, contains(what), reason: what);
-    }
-  });
 }

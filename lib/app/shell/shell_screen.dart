@@ -379,7 +379,12 @@ class ShellScreen extends ConsumerWidget {
               tooltip: l10n?.spaceScanTitle ?? 'Scan a space code',
               onPressed: () => scanSpace(context, ref),
             ),
-          if (isOwner && navigationShell.currentIndex == ShellBranch.reserve)
+          // #2137 — the owner, and whoever holds manageSites.
+          if ((isOwner ||
+                  ref
+                      .watch(myPermissionsProvider)
+                      .contains(WorkspacePermission.manageSites)) &&
+              navigationShell.currentIndex == ShellBranch.reserve)
             IconButton(
               key: const ValueKey('shell-editor-button'),
               icon: const Icon(Icons.design_services_outlined),

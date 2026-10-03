@@ -37,13 +37,15 @@ void main() {
           reason: 'there is no Plan tab to gate on any more');
     });
 
-    test('it stays OWNER-only', () {
+    test('it stays with the plan\'s editors: the owner or manageSites', () {
       // The editor rewrites the workspace's geometry. Widening the
       // surface must not widen who may use it — /editor's own route
-      // guard and workspaces_update RLS both still apply, and this is
-      // the affordance agreeing with them.
+      // guard and the plan tables' RLS (0363: owner or manageSites) both
+      // still apply, and this is the affordance agreeing with them.
       final block = shell.substring(shell.indexOf('shell-editor-button') - 600);
-      expect(block.substring(0, 700), contains('isOwner &&'));
+      expect(block.substring(0, 700), contains('isOwner ||'));
+      expect(block.substring(0, 700),
+          contains('WorkspacePermission.manageSites'));
     });
   });
 

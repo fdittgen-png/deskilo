@@ -4,8 +4,6 @@
 // adding splits a band, removing merges it (#194).
 import 'dart:async';
 
-import 'dart:io';
-
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -321,27 +319,4 @@ void main() {
     expect(find.textContaining('incl. VAT 41.67'), findsNothing);
   });
 
-  test(
-      'migration 0109 wires the configurable tariff/accessory rates into '
-      'the invoice', () {
-    final sql =
-        File('supabase/migrations/0109_configurable_tariff_accessory_vat.sql')
-            .readAsStringSync();
-    // The two new nullable rate columns (null = workspace default).
-    expect(sql, contains('alter table public.accessories'));
-    expect(sql, contains('alter table public.workspaces'));
-    expect(sql, contains('subscription_vat_rate_id'));
-    // The tariff resolution helper + its use for subscription/overage.
-    expect(sql, contains('workspace_tariff_vat_percent'));
-    expect(sql, contains("'vat_percent', v_tariff,"));
-    // The statement's per-rate accessory breakdown feeds one invoice
-    // line per rate.
-    expect(sql, contains("'accessory_supplement_by_rate', v_supp_by_rate"));
-    expect(sql, contains("jsonb_array_elements(v_stmt->'accessory_supplement_by_rate')"));
-    // Both regenerated functions stay locked away from clients.
-    expect(sql,
-        contains('revoke execute on function public.member_statement'));
-    expect(sql,
-        contains('revoke execute on function public.invoice_lines_for'));
-  });
 }

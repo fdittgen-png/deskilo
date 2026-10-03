@@ -67,6 +67,11 @@ const Map<String, String> _notExported = {
       '#1829 — who the instance owner named to run installation-wide setup: '
           'an authority row, shown by name to everyone as the people '
           'responsible, never the subject\'s own data',
+  'instance_notices':
+      '#2145 — what the installation told an instance operator (an '
+          'assistant waiting for approval, an operator grant): an authority '
+          'inbox that names OTHER people and clients, never the subject\'s '
+          'own data; read notices are deleted after 90 days',
   'platform_access_log':
       'the platform owner\'s audit of their own access; the subject\'s '
           'equivalent is data_access_log, which IS exported',
@@ -87,6 +92,9 @@ const Map<String, String> _notExported = {
       'a workspace cost, which names a member only as whoever entered it',
   'expense_occurrences':
       'as above — an instance of a workspace cost, not personal data',
+  'reservation_origins':
+      'the channel a booking came through (#2145: which assistant, which '
+          'request), kept as the MCP audit; the RESERVATION is exported',
   'reservation_requests':
       '#1241 — the dedup key an offline replay is matched on. It holds a '
           'member id, a client-generated uuid and a pointer to the '

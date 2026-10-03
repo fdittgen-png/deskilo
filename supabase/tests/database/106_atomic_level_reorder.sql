@@ -1,8 +1,10 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #2010 / 0320: a level reorder is one command. The owner saves a whole
 -- permutation or changes nothing: a stale expected order is a conflict, a
--- duplicate / foreign / missing id is refused, a member and an admin are
--- refused, and a failure half-way through leaves every original value.
+-- duplicate / foreign / missing id is refused, a member and an admin
+-- without manageSites are refused (0363 gave the arrangement to that
+-- permission; 148 proves the holders), and a failure half-way through
+-- leaves every original value.
 -- Callers run as `authenticated`; seeds run as postgres.
 begin;
 select plan(14);
@@ -37,6 +39,9 @@ reset role;
 insert into public.members (workspace_id, user_id, status, is_admin) values
  (current_setting('t.ws')::uuid, '00000000-0000-4000-8000-0000002010a2', 'active', true),
  (current_setting('t.ws')::uuid, '00000000-0000-4000-8000-0000002010a3', 'active', false);
+-- The Administrator's row of the matrix without manageSites (#2137/0363).
+update public.workspaces set role_permissions = '{"admin": ["manageMembers"]}'::jsonb
+ where id = current_setting('t.ws')::uuid;
 delete from public.levels where workspace_id in (current_setting('t.ws')::uuid, current_setting('t.other')::uuid);
 insert into public.levels (workspace_id, name, sort_order) values
  (current_setting('t.ws')::uuid, 'A', 0), (current_setting('t.ws')::uuid, 'B', 1), (current_setting('t.ws')::uuid, 'C', 2),
@@ -71,7 +76,7 @@ select is(pg_temp.order_of(current_setting('t.ws')::uuid), 'C,A,B', 'no refusal 
 -- ── nobody but the owner arranges the levels ────────────────────────
 select pg_temp.act_as('00000000-0000-4000-8000-0000002010a2');
 select throws_ok($$select public.reorder_levels(current_setting('t.ws')::uuid, pg_temp.ids('{A,B,C}'), pg_temp.ids('{C,A,B}'))$$,
-  'P0001', 'only the owner arranges the levels', 'an admin is refused, like levels_write');
+  'P0001', 'only the owner arranges the levels', 'an admin without manageSites is refused, like levels_write');
 select pg_temp.act_as('00000000-0000-4000-8000-0000002010a3');
 select throws_ok($$select public.reorder_levels(current_setting('t.ws')::uuid, pg_temp.ids('{A,B,C}'), pg_temp.ids('{C,A,B}'))$$,
   'P0001', 'only the owner arranges the levels', 'a member is refused');

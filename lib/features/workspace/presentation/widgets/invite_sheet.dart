@@ -17,6 +17,8 @@ import '../../domain/invite_uri.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../../application/assign_role.dart';
+import 'invite_roles_picker.dart';
 
 /// The five help/app languages, by endonym — the invitee reads the
 /// message, so the sender picks THEIR language, defaulting to the app's.
@@ -139,6 +141,9 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
   /// two answers.
   bool _alsoProd = false;
 
+  /// #2085 — the workspace's own roles the person holds on arrival.
+  Set<String> _roleKeys = const {};
+
   /// #486 — the WORKSPACE's configured language is the default; the
   /// sender still overrides per send. Null = not yet touched → resolved
   /// at build (workspace language, else the app's).
@@ -194,6 +199,10 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
               memberId: widget.memberId,
               alsoProd: _alsoProd,
             );
+        await setInvitationRoles(ref,
+            workspaceId: widget.workspace.id,
+            code: code!,
+            roleKeys: _offersRoles ? _roleKeys : const {});
       },
     )) {
       return null;
@@ -211,6 +220,16 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
       monospaceCode: monospace,
       target: ref.read(activeBackendProvider).value,
     );
+  }
+
+  /// #2085 — a new member's invitation can carry roles; an Administrator
+  /// invitation is the Administrator, and a handover carries the profile.
+  bool get _offersRoles {
+    final features = ref.read(enabledFeaturesSyncProvider);
+    return widget.role != InviteRole.admin &&
+        widget.memberId == null &&
+        features.contains(WorkspaceFeature.roleAssignment) &&
+        features.contains(WorkspaceFeature.customRoles);
   }
 
   /// The phone as wa.me digits ('' when none given).
@@ -338,6 +357,12 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
             ),
           ),
         ],
+        if (_offersRoles)
+          InviteRolesPicker(
+            key: const ValueKey('invite-roles-picker'),
+            selected: _roleKeys,
+            onChanged: (keys) => setState(() => _roleKeys = keys),
+          ),
         const SizedBox(height: AppSpacing.md),
         Text(
           l10n?.inviteLanguageLabel ?? 'Message language',

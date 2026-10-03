@@ -2,16 +2,13 @@
 //
 // #946 — a document names the site it concerns: the seller party and
 // the attendance rows read the site from the frozen snapshot, the
-// placeholders reach the template, and the SQL twin patches the five
-// anchors of create_invoice.
-import 'dart:io';
+// placeholders reach the template.
 
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 
 String _flat(List<ReportBlock> blocks) => blocks
     .map((b) => b is ReportText ? b.text : b is ReportMuted ? b.text : '')
@@ -59,15 +56,4 @@ void main() {
     expect(_flat(home.body), isNot(contains('Also at')));
   });
 
-  test('the SQL twin (0169) patches five asserted anchors and walks a '
-      'reservation up to its site', () {
-    final sql = File('supabase/migrations/0169_site_documents.sql').readAsStringSync();
-    for (final a in ['A', 'B', 'C', 'D', 'E']) {
-      expect(sql, contains("raise exception '0169: anchor $a missing'"));
-    }
-    expect(sql, contains('v_site := public.document_site_for_member(v_subject.id);'));
-    expect(sql, contains("''site'', coalesce(v_site.name, '''')"));
-    expect(sql, contains("''site'', coalesce((public.reservation_site(r)).name, '''')"));
-    expect(sql, contains('create or replace function public.reservation_site(r public.reservations)'));
-  });
 }

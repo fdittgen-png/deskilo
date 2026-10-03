@@ -235,5 +235,6 @@
   "featureOptInAlsoOn": "{count, plural, =1{También se activa, porque es necesario: {features}} other{También se activan, porque son necesarios ({count}): {features}}}",
   "featureOptInStage": "{feature}: {stage}",
   "featureChangedMeanwhile": "Las funciones cambiaron mientras tanto, así que no se guardó nada. Revise la lista y vuelva a intentarlo.",
-  "featureChangeUnconfirmed": "El cambio se envió, pero no se pudieron recargar las funciones para confirmarlo. Vuelva a abrir la pantalla para ver el estado."
+  "featureChangeUnconfirmed": "El cambio se envió, pero no se pudieron recargar las funciones para confirmarlo. Vuelva a abrir la pantalla para ver el estado.",
+  "featureIntakeUnconfirmedNote": "Desactivado: no empieza nada nuevo. Este servidor no pudo confirmar que lo que ya está abierto siga pudiendo atenderse; no cuente con ello."
 }

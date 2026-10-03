@@ -2276,6 +2276,7 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
+  "directoryApproximate": "Position approximative de l’adresse",
   "directoryCheckedIn": "Sur place",
   "directoryCheckedInSeat": "Sur place · {seat}",
   "directoryClose": "Fermer",
@@ -2283,6 +2284,9 @@
   "directoryLastSeenDays": "{days, plural, =1{Vu il y a 1 jour} other{Vu il y a {days} jours}}",
   "directoryLastSeenHours": "{hours, plural, =1{Vu il y a 1 heure} other{Vu il y a {hours} heures}}",
   "directoryLastSeenMinutes": "Vu il y a {minutes} min",
+  "directoryLocate": "Localiser sur la carte",
+  "directoryLocating": "Localisation de l’adresse publique…",
+  "directoryLocationMissing": "Position indisponible. Le propriétaire peut publier des coordonnées précises.",
   "directoryNoUpcoming": "Aucune réservation à venir",
   "directoryOnline": "En ligne",
   "directoryOpenGroup": "Ouvrir le groupe WhatsApp",
@@ -3095,6 +3099,7 @@
     "description": "#977 instance wizard: featureInstanceWizardDesc"
   },
   "featureIntakeStoppedNote": "Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos.",
+  "featureIntakeUnconfirmedNote": "Désactivé : rien de nouveau ne commence. Ce serveur n'a pas pu confirmer que ce qui est déjà ouvert reste traitable ; n'y comptez pas.",
   "featureInvoiceAddressWindow": "Fenêtre d'adresse",
   "@featureInvoiceAddressWindow": {
     "description": "Features screen name for the #869 window-envelope address placement flag"
@@ -4081,6 +4086,8 @@
   "inboxNoArchived": "Aucune conversation archivée.",
   "inboxNoUnread": "Rien de non lu — vous êtes à jour.",
   "inboxRetry": "Réessayer",
+  "instanceAccessTitle": "Accès aux assistants",
+  "instanceAccessUntil": "Jusqu'au {date}",
   "instanceAccountIntro": "Créez un compte gratuit sur supabase.com, puis un jeton d'accès personnel (Account → Access Tokens) et collez-le ici. L'assistant s'en sert pour créer et configurer le projet ; il n'est jamais enregistré.",
   "@instanceAccountIntro": {
     "description": "#977 instance wizard: instanceAccountIntro"
@@ -4163,6 +4170,20 @@
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
   },
+  "instanceEndpointTitle": "Point d'accès des assistants",
+  "instanceFamilyChatgpt": "ChatGPT",
+  "instanceFamilyClaude": "Claude",
+  "instanceFamilyLoopback": "Assistant de bureau ou en ligne de commande",
+  "instanceGrant": "Approuver l'accès",
+  "instanceGrantDays": "Choisissez entre 1 et 30 jours.",
+  "instanceGrantDaysLabel": "Pour {days, plural, =1{1 jour} other{{days} jours}}",
+  "instanceGrantHelp": "Tant qu'aucun autre administrateur de la base de données n'existe, vous approuvez vous-même les accès — le vôtre compris — pour 30 jours au plus, avec une raison. Chaque approbation est enregistrée.",
+  "instanceGrantNeedsGoogle": "Approuver un accès nécessite que cette session soit connectée avec Google.",
+  "instanceGrantNoIdentity": "Cette personne n'a pas encore confirmé son identité.",
+  "instanceGrantOtherAdmin": "Un administrateur de la base de données décide de l'accès ici ; demandez-le-lui.",
+  "instanceGrantReason": "Raison",
+  "instanceGrantReasonNeeded": "Indiquez pourquoi cet accès est approuvé (500 caractères maximum).",
+  "instanceGrantTitle": "Approuver l'accès aux assistants pour {name}",
   "instanceInstallSchema": "Installer le schéma : chaque migration de l'app, dans l'ordre ({count}).",
   "@instanceInstallSchema": {
     "description": "#977 instance wizard: instanceInstallSchema",
@@ -4173,9 +4194,16 @@
     }
   },
   "instanceIntro": "Réglages valables pour tous les espaces de travail de cette installation. Seul l'opérateur de l'instance voit cette page ; chaque changement exige votre second facteur et est journalisé.",
+  "instanceLoopbackHelp": "Claude Code, Cursor, VS Code et les autres assistants qui tournent sur l'ordinateur d'une personne. Chacun approuve toujours sa propre connexion.",
+  "instanceLoopbackTitle": "Autoriser les assistants de bureau et en ligne de commande",
   "instanceMakeAdmin": "Nommer administrateur",
   "instanceNoCandidates": "Personne d'autre n'a encore confirmé son identité.",
   "instanceNotOperator": "Seul l'opérateur de l'instance gère les assistants de l'installation.",
+  "instanceNoticeClientWaiting": "{name} attend votre approbation.",
+  "instanceNoticeOperatorGrant": "L'opérateur a approuvé l'accès aux assistants pour {name}.",
+  "instanceNoticeSelfGrant": "{name} a approuvé son propre accès aux assistants.",
+  "instanceNoticesMarkRead": "Marquer comme lu",
+  "instanceOperatorApproved": "Approuvé par l'opérateur",
   "instanceOrganisationLabel": "Organisation",
   "@instanceOrganisationLabel": {
     "description": "#977 instance wizard: instanceOrganisationLabel"
@@ -4187,6 +4215,14 @@
   "instanceOwnerHelp": "Cette installation est partagée par tous ses espaces. Le propriétaire de l'instance en est responsable : contactez-le pour tout ce qui concerne l'ensemble de l'installation, comme les assistants.",
   "instanceOwnerNone": "Aucun propriétaire d'instance n'est encore défini.",
   "instanceOwnerTitle": "Propriétaire de l'instance",
+  "instanceProbeCheck": "Vérifier le serveur",
+  "instanceProbeDeployed": "Le point d'accès des assistants répond comme prévu.",
+  "instanceProbeMismatch": "Le point d'accès répond avec une autre adresse que celle donnée aux assistants.",
+  "instanceProbeMissing": "Le serveur n'a pas encore été vérifié.",
+  "instanceProbeNotDeployed": "Le point d'accès des assistants n'est pas encore déployé sur ce serveur.",
+  "instanceProbePending": "Vérification du serveur…",
+  "instanceProbeStale": "La dernière vérification date de plus de 15 minutes. Vérifiez à nouveau avant d’activer les assistants.",
+  "instanceProbeUnavailable": "Le serveur n'a pas pu être joint. Réessayez dans un instant.",
   "instanceProgress": "{done} / {total} · {current}",
   "@instanceProgress": {
     "description": "#977 instance wizard: instanceProgress",
@@ -4243,6 +4279,7 @@
   "instanceRuntimeOn": "Activés",
   "instanceRuntimeTitle": "Assistants sur cette installation",
   "instanceSecondFactorNeeded": "Les changements ici exigent votre second facteur sur cette session.",
+  "instanceSelfApproved": "Auto-approuvé par l'opérateur",
   "instanceSignInExplain": "Réglages de connexion : confirmation par courriel activée (une inscription doit cliquer le lien reçu), et les liens de l'app autorisés pour les réinitialisations de mot de passe et les liens magiques.",
   "@instanceSignInExplain": {
     "description": "#977 instance wizard: instanceSignInExplain"
@@ -4296,6 +4333,7 @@
   "instanceTurnOff": "Désactiver",
   "instanceTurnOn": "Activer pour tous les espaces",
   "instanceTurnOnConfirm": "Les assistants deviennent utilisables dans chaque espace qui les propose. Vous pouvez les désactiver à tout moment.",
+  "instanceTurnOnNeedsProbe": "Le point d'accès des assistants n'est pas confirmé. Vérifiez d'abord le serveur.",
   "instanceUseExisting": "Ou utiliser un projet existant :",
   "@instanceUseExisting": {
     "description": "#977 instance wizard: instanceUseExisting"
@@ -4359,6 +4397,14 @@
   "invitePhoneLabel": "Téléphone (facultatif, avec indicatif)",
   "inviteRoleAdmin": "Invitation administrateur·rice",
   "inviteRoleMember": "Invitation membre",
+  "inviteRolesHint": "Attribués à l'arrivée, une fois l'adhésion active.",
+  "@inviteRolesHint": {
+    "description": "#2085 giving roles: inviteRolesHint"
+  },
+  "inviteRolesTitle": "Rôles à l'arrivée",
+  "@inviteRolesTitle": {
+    "description": "#2085 giving roles: inviteRolesTitle"
+  },
   "inviteSectionTitle": "Inviter quelqu'un",
   "inviteSendFailed": "Impossible d'ouvrir l'application d'envoi. Le message a été copié à la place.",
   "inviteViaShare": "Partager…",
@@ -5790,13 +5836,22 @@
   "mcpConsentApprove": "Connecter",
   "mcpConsentAsks": "{client} demande à agir pour vous dans Deskilo.",
   "mcpConsentChoose": "Choisissez chaque espace et ce que l'assistant peut y faire. Rien n'est choisi à votre place.",
+  "mcpConsentClientBlocked": "L'opérateur a bloqué {name} sur ce serveur. Il ne peut pas être connecté.",
+  "mcpConsentClientWaiting": "{name} n'est pas encore approuvé sur ce serveur. L'opérateur approuve chaque assistant une fois ; reconnectez-vous ensuite depuis l'assistant.",
   "mcpConsentConnected": "Connecté. Retour vers l'assistant.",
+  "mcpConsentDeciderAsk": "Demandez à {name} de décider.",
+  "mcpConsentDeciderMe": "C'est vous qui décidez, dans la console de l'installation.",
+  "mcpConsentDeciderNobody": "Personne ne répond encore de ce serveur.",
   "mcpConsentDenied": "Refusé. L'assistant n'obtient rien.",
   "mcpConsentDeny": "Refuser",
+  "mcpConsentFamilyChatgpt": "Approuvé pour toutes les connexions ChatGPT.",
+  "mcpConsentFamilyClaude": "Approuvé pour toutes les connexions Claude.",
+  "mcpConsentFamilyLoopback": "Approuvé pour les assistants de bureau et en ligne de commande sur cet ordinateur.",
   "mcpConsentFieldsExplain": "Détails qu'il peut aussi voir ici. Laissez-les décochés pour garder ses réponses minimisées.",
   "mcpConsentNoWorkspace": "Aucun de vos espaces n'accepte les assistants. Rien ne peut être connecté.",
   "mcpConsentNotEligible": "Cette base de données n'a pas encore autorisé les assistants pour vous. Demandez l'autorisation, puis reconnectez-vous.",
   "mcpConsentPartial": "L'assistant a été approuvé mais la connexion n'est pas encore utilisable. Reconnectez-vous depuis l'assistant.",
+  "mcpConsentRedirectHost": "La réponse est envoyée à {host}.",
   "mcpConsentRequestEligibility": "Demander l'autorisation",
   "mcpConsentRequested": "Autorisation demandée. Un administrateur de la base l'examinera.",
   "mcpConsentTitle": "Connecter un assistant",
@@ -5960,6 +6015,7 @@
   "meSectionMine": "Mon historique et mes données",
   "meSpaceException": "Dans cet espace",
   "meSpaceLastUsed": "Dernier utilisé",
+  "meSpaceOpen": "Ouvrir",
   "meSpacePending": "En attente de validation",
   "meTabDiscover": "Découvrir",
   "meTabHome": "Accueil",
@@ -6910,7 +6966,7 @@
   "@permManageServices": {
     "description": "Permission label (#513)"
   },
-  "permManageSites": "Gérer les sites et les étages",
+  "permManageSites": "Gérer les sites et modifier le plan",
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },

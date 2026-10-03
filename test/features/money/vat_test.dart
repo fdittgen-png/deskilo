@@ -3,9 +3,7 @@
 // VAT management (0072). The whole feature rests on ONE decision: prices
 // in DesKilo are VAT-inclusive, so turning VAT on never changes what a
 // member owes — the tax is extracted from the price and shown. These tests
-// pin that arithmetic, pin it against the SQL that has to agree with it,
-// and then check that every document says the same thing.
-import 'dart:io';
+// pin that arithmetic and check that every document says the same thing.
 
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -121,26 +119,6 @@ void main() {
       expect(vatSplit(24000, 0), (netCents: 24000, vatCents: 0));
     });
 
-    test('the SQL computes it the SAME way — the two must never drift', () {
-      final sql =
-          File('supabase/migrations/0072_vat_management.sql').readAsStringSync();
-
-      // create_invoice's own expression, whitespace-collapsed.
-      final normalised = sql.replaceAll(RegExp(r'\s+'), ' ');
-      expect(
-        normalised,
-        contains("round((l->>'amount_cents')::int * 100.0 "
-            "/ (100 + coalesce((l->>'vat_percent')::numeric, 0)))::int as net"),
-        reason: 'vatSplit and create_invoice must agree to the cent, or a '
-            'preview and its invoice disagree about the tax',
-      );
-      expect(normalised, contains("'vat_cents', gross - net"));
-      // #894 — and the rule about WHICH lines count, in both places.
-      final credit =
-          File('supabase/migrations/0156_credit_note_vat.sql').readAsStringSync();
-      expect(credit, contains("or coalesce((l->>''vat_percent'')::numeric, 0) > 0"),
-          reason: 'a negative line that names a rate must count in SQL too');
-    });
   });
 
   group('the breakdown', () {

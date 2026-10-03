@@ -95,6 +95,18 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
       });
 
   @override
+  Future<void> setInvitationRoles(
+    String workspaceId,
+    String code,
+    List<String> roleKeys,
+  ) =>
+      _client.rpc<void>('set_invitation_roles', params: {
+        'p_workspace_id': workspaceId,
+        'p_code': code,
+        'p_role_keys': roleKeys,
+      });
+
+  @override
   Future<void> assignRole({
     required String memberId,
     required String roleId,

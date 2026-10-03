@@ -24,6 +24,14 @@ abstract class WorkspaceRolesRepository {
   /// #2085 — renames the built-in Administrator (owner only).
   Future<void> renameAdministrator(String workspaceId, Map<String, String> names);
 
+  /// #2085 — the roles an unused member invitation carries; they are
+  /// given when the person becomes an active member.
+  Future<void> setInvitationRoles(
+    String workspaceId,
+    String code,
+    List<String> roleKeys,
+  );
+
   /// Gives [roleId] to [memberId], or takes it back.
   Future<void> assignRole({
     required String memberId,
