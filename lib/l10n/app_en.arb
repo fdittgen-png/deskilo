@@ -16212,6 +16212,60 @@
   "@taskWorkbenchReviewIllustrations": {
     "description": "#1872 workbench: taskWorkbenchReviewIllustrations"
   },
+  "taskGuideCreate": "Create a guide draft",
+  "@taskGuideCreate": {
+    "description": "#1867 guide draft: taskGuideCreate"
+  },
+  "taskGuideTitle": "Guide draft",
+  "@taskGuideTitle": {
+    "description": "#1867 guide draft: taskGuideTitle"
+  },
+  "taskGuideIntro": "Each step as a reader will follow it. A step that books waits for the real answer; nothing here is done for the reader.",
+  "@taskGuideIntro": {
+    "description": "#1867 guide draft: taskGuideIntro"
+  },
+  "taskGuideSave": "Save the guide",
+  "@taskGuideSave": {
+    "description": "#1867 guide draft: taskGuideSave"
+  },
+  "taskGuideEditText": "Write the words",
+  "@taskGuideEditText": {
+    "description": "#1867 guide draft: taskGuideEditText"
+  },
+  "taskGuideOptional": "The reader may skip it",
+  "@taskGuideOptional": {
+    "description": "#1867 guide draft: taskGuideOptional"
+  },
+  "taskGuideWaitsFor": "Waits for: {outcomes}",
+  "@taskGuideWaitsFor": {
+    "description": "#1867 guide draft: taskGuideWaitsFor",
+    "placeholders": {
+      "outcomes": {
+        "type": "String"
+      }
+    }
+  },
+  "taskGuideRecovery": "If it is refused: choose another place, day or period, then confirm again.",
+  "@taskGuideRecovery": {
+    "description": "#1867 guide draft: taskGuideRecovery"
+  },
+  "taskGuideNoText": "An instruction still to be written",
+  "@taskGuideNoText": {
+    "description": "#1867 guide draft: taskGuideNoText"
+  },
+  "taskGuideManual": "Do this step yourself",
+  "@taskGuideManual": {
+    "description": "#1867 guide draft: taskGuideManual"
+  },
+  "taskGuideManualProtected": "Do this step yourself, on a protected screen: {category}",
+  "@taskGuideManualProtected": {
+    "description": "#1867 guide draft: taskGuideManualProtected",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
   "capabilityMultiApproval": "Two or more approvals",
   "@capabilityMultiApproval": {
     "description": "#1659 template_capabilities"

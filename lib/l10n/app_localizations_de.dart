@@ -14707,6 +14707,45 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskWorkbenchReviewIllustrations => 'Illustrationen prüfen';
 
   @override
+  String get taskGuideCreate => 'Leitfaden-Entwurf erstellen';
+
+  @override
+  String get taskGuideTitle => 'Leitfaden-Entwurf';
+
+  @override
+  String get taskGuideIntro =>
+      'Jeder Schritt so, wie ihn eine Person befolgen wird. Ein buchender Schritt wartet auf die echte Antwort; nichts wird für die Person erledigt.';
+
+  @override
+  String get taskGuideSave => 'Leitfaden speichern';
+
+  @override
+  String get taskGuideEditText => 'Text schreiben';
+
+  @override
+  String get taskGuideOptional => 'Darf übersprungen werden';
+
+  @override
+  String taskGuideWaitsFor(String outcomes) {
+    return 'Wartet auf: $outcomes';
+  }
+
+  @override
+  String get taskGuideRecovery =>
+      'Bei Ablehnung: einen anderen Platz, Tag oder Zeitraum wählen und erneut bestätigen.';
+
+  @override
+  String get taskGuideNoText => 'Eine noch zu schreibende Anweisung';
+
+  @override
+  String get taskGuideManual => 'Diesen Schritt selbst ausführen';
+
+  @override
+  String taskGuideManualProtected(String category) {
+    return 'Diesen Schritt selbst ausführen, auf einem geschützten Bildschirm: $category';
+  }
+
+  @override
   String get capabilityMultiApproval => 'Zwei oder mehr Freigaben';
 
   @override
