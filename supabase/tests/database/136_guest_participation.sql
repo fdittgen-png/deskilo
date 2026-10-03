@@ -10,7 +10,7 @@
 -- too; only the guest cancels, once; the audit is append-only; the flag
 -- off again hides nothing the person already holds.
 begin;
-select plan(30);
+select plan(31);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
