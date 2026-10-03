@@ -22,6 +22,7 @@ public.account_field_audience_spaces.mcp_delegated_deny
 public.account_messages.mcp_delegated_deny
 public.analytics_history.mcp_delegated_deny
 public.badge_auth_attempts.mcp_delegated_deny
+public.bi_views.mcp_delegated_deny
 public.book_accounts.mcp_delegated_deny
 public.book_mappings.mcp_delegated_deny
 public.book_profiles.mcp_delegated_deny

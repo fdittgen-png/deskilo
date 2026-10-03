@@ -2289,6 +2289,8 @@ La fonctionnalité reste éteinte tant que vous ne la demandez pas, et elle se p
 
 L’état financier de l’espace explique son sous-total : montants facturés moins avoirs, remboursements et crédits. Ce n’est ni un bénéfice ni un solde bancaire. Les paiements rapprochés et reçus se recoupent ; ne les additionnez pas.
 
+Dans le BI web, **Analyses** sélectionne la capacité, les montants facturés et encaissés selon vos droits et les fonctionnalités activées. Les montants facturés suivent les mois de facturation ; les montants encaissés suivent le mois d’affectation des paiements aux factures, et non la date d’un relevé bancaire. Les avoirs sont présentés séparément. **Enregistrer la vue** conserve votre sélection en privé ou, avec les droits nécessaires, pour l’équipe. Une vue par défaut recharge les données avec les droits actuels ; elle ne conserve aucune copie des chiffres.
+
 # Guide administrateur — configurer l'espace
 
 Pour la personne qui installe l'espace : ce que décide chaque paramètre,

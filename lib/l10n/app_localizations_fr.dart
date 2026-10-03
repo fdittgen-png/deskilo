@@ -1230,6 +1230,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'La capacité réservée mesure les réservations, pas la présence réelle.';
 
   @override
+  String get biCardDown => 'Descendre';
+
+  @override
+  String get biCardUp => 'Monter';
+
+  @override
+  String get biCards => 'Analyses affichées';
+
+  @override
+  String biCardsUnavailable(String count) {
+    return '$count analyses de cette vue ne vous sont pas accessibles et sont omises.';
+  }
+
+  @override
   String biChangePoints(String value) {
     return '$value pts';
   }
@@ -1304,6 +1318,66 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get biExposureDiffers =>
       'Les deux périodes n’offrent pas la même base ; le taux en tient compte, les chiffres bruts ne se comparent pas directement.';
+
+  @override
+  String get biFinanceCollected => 'Encaissé';
+
+  @override
+  String biFinanceCollectedBasis(String count) {
+    return 'Sur $count paiements rapprochés de factures';
+  }
+
+  @override
+  String get biFinanceCollectedDefinition =>
+      'Paiements rapprochés de factures, selon le mois du rapprochement à l’heure de l’espace.';
+
+  @override
+  String get biFinanceCollectedZero => 'Mesuré : rien n’a été encaissé.';
+
+  @override
+  String biFinanceComputed(String date) {
+    return 'Calculé le $date';
+  }
+
+  @override
+  String get biFinanceCurrencyMix =>
+      'Cette période contient des montants dans une autre devise ; des devises différentes ne s’additionnent pas, aucun montant n’est donc affiché.';
+
+  @override
+  String get biFinanceInvoiced => 'Facturé';
+
+  @override
+  String biFinanceInvoicedBasis(String count, String credit) {
+    return 'Sur $count factures ; avoirs $credit, montrés à part';
+  }
+
+  @override
+  String get biFinanceInvoicedDefinition =>
+      'Factures de ces mois, hors factures annulées et règlements groupés (un règlement regroupe des factures déjà comptées) ; totaux positifs seulement.';
+
+  @override
+  String get biFinanceInvoicedZero => 'Mesuré : rien n’a été facturé.';
+
+  @override
+  String biFinanceLastChange(String date) {
+    return 'Dernière modification de la source : $date';
+  }
+
+  @override
+  String get biFinanceNotExact =>
+      'Un montant est trop grand pour être affiché exactement ; il n’est donc pas affiché.';
+
+  @override
+  String get biFinanceNotProfit =>
+      'Pas un bénéfice : aucun coût n’entre dans ce chiffre, et les deux chiffres ne se soustraient pas.';
+
+  @override
+  String get biFinancePartial =>
+      'La période n’est pas terminée : ces chiffres vont encore changer.';
+
+  @override
+  String get biFinanceSameAsReport =>
+      'Les mêmes règles que le rapport d’état de l’espace, calculées une fois sur le serveur.';
 
   @override
   String get biForbidden =>
@@ -1427,7 +1501,94 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biViewChart => 'Graphique';
 
   @override
+  String get biViewClearMyDefault => 'Ne plus ouvrir ma vue par défaut';
+
+  @override
+  String get biViewClearTeamDefault => 'Retirer la vue par défaut de l’équipe';
+
+  @override
+  String biViewCopyName(String name) {
+    return '$name (copie)';
+  }
+
+  @override
+  String get biViewDelete => 'Supprimer';
+
+  @override
+  String biViewDeleteConfirm(String name) {
+    return 'Supprimer la vue « $name » ?';
+  }
+
+  @override
+  String get biViewDuplicate => 'Dupliquer comme ma vue';
+
+  @override
+  String get biViewForbidden => 'Vous ne pouvez pas modifier cette vue.';
+
+  @override
+  String get biViewInvalid =>
+      'Ce nom ou cette vue ne peut pas être enregistré.';
+
+  @override
+  String get biViewMakeMyDefault => 'Ouvrir cette vue par défaut';
+
+  @override
+  String get biViewMakeTeamDefault => 'En faire la vue par défaut de l’équipe';
+
+  @override
+  String get biViewModified => 'modifiée depuis l’ouverture';
+
+  @override
+  String get biViewName => 'Nom';
+
+  @override
+  String get biViewNameTaken => 'Une vue de ce nom existe déjà.';
+
+  @override
+  String biViewPeriodFixed(String period) {
+    return 'Toujours $period';
+  }
+
+  @override
+  String get biViewPeriodMoves => 'La période suit le jour de l’ouverture';
+
+  @override
+  String get biViewRename => 'Renommer…';
+
+  @override
+  String get biViewSave => 'Enregistrer';
+
+  @override
+  String get biViewSaveAs => 'Enregistrer comme nouvelle vue…';
+
+  @override
+  String get biViewScopePrivate => 'Moi seulement';
+
+  @override
+  String get biViewScopeTeam => 'L’équipe';
+
+  @override
+  String get biViewStale =>
+      'Quelqu’un a enregistré cette vue depuis que vous l’avez ouverte. La liste a été relue ; réessayez.';
+
+  @override
+  String get biViewStandard => 'Vue standard';
+
+  @override
   String get biViewTable => 'Tableau';
+
+  @override
+  String get biViewUnreadable =>
+      'Cette vue ne peut pas être ouverte ici : elle a été enregistrée sous une forme que cette version ne lit pas, ou aucune de ses analyses ne vous est accessible.';
+
+  @override
+  String get biViews => 'Vues';
+
+  @override
+  String get biViewsMine => 'Mes vues';
+
+  @override
+  String get biViewsTeam => 'Vues de l’équipe';
 
   @override
   String get billAccessorySupplements => 'Suppléments d\'accessoires';

@@ -2242,6 +2242,8 @@ Die Funktion bleibt aus, bis Sie sie verlangen, und sie steht **neben** der Gloc
 
 Der Finanzstatus erklärt seine Zwischensumme: Rechnungsbeträge abzüglich Gutschriften, Erstattungen und Guthaben. Sie ist weder Gewinn noch Bankguthaben. Zugeordnete und eingegangene Zahlungen überschneiden sich; sie dürfen nicht addiert werden.
 
+Im Web-BI wählt **Analysen** je nach Berechtigung und aktivierten Funktionen Kapazität, fakturierte und vereinnahmte Beträge. Fakturierte Beträge folgen den Rechnungsmonaten; vereinnahmte Beträge dem Monat der Zahlungszuordnung zur Rechnung, nicht dem Datum eines Kontoauszugs. Gutschriften erscheinen gesondert. **Ansicht speichern** behält die Auswahl privat oder mit entsprechenden Rechten für das Team. Eine Standardansicht lädt aktuelle Daten mit den aktuellen Berechtigungen; sie speichert keine Kopie der Zahlen.
+
 # Administratorhandbuch — den Bereich einrichten
 
 Für die Person, die den Bereich aufsetzt: was jeder Parameter

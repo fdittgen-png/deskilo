@@ -195,7 +195,11 @@ than adding another headline metric.
 
 ## Implementation order and proof
 
-Retain the existing owners of #1923 saved views and #1924 finance modules.
+Integration follow-up (2026-10-03): the existing #1923 saved-view implementation
+and #1924 invoiced/matched-payment modules are being integrated together with
+the evidence corrections above. Both use the existing BI host and controls.
+Matched-payment month remains distinct from bank receipt date; these modules
+do not implement bank statements, reconciliation or cash forecasting.
 Integrate their shared query/result contracts rather than fork them.
 
 1. **Trust corrections:** strict decoding, qualification, period meaning,

@@ -222,7 +222,7 @@ void main() {
     expect(kpis.calls, isEmpty);
     await tester.tap(find.byKey(const ValueKey('bi-reset')));
     await tester.pumpAndSettle();
-    expect(_uri(tester).query, isEmpty);
+    expect(_uri(tester).queryParameters, {'saved': 'standard'});
     expect(kpis.calls, hasLength(1));
   });
 

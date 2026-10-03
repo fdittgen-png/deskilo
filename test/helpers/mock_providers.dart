@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
+import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
+import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
+import 'package:deskilo/features/workspace/providers/bi_providers.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
@@ -173,6 +177,8 @@ List<Override> standardTestOverrides({
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
+  BiViewRepository? biViews,
+  FinanceKpiRepository? financeKpis,
   AccessoryRepository? accessories,
   ReservationRepository? reservations,
   EventRepository? events,
@@ -293,6 +299,12 @@ List<Override> standardTestOverrides({
     workspaceRepositoryProvider.overrideWithValue(workspaceRepo),
     floorPlanRepositoryProvider
         .overrideWithValue(floorPlan ?? FakeFloorPlanRepository()),
+    // #1923 C — saved Web-BI views, in memory.
+    biViewRepositoryProvider
+        .overrideWithValue(biViews ?? InMemoryBiViewRepository()),
+    // #1924 — no server to sum invoices on unless a test brings one.
+    financeKpiRepositoryProvider.overrideWithValue(
+        financeKpis ?? const UnavailableFinanceKpiRepository()),
     // #988 — the deployment engine, in memory.
     deploymentRepositoryProvider
         .overrideWithValue(deployment ?? FakeDeploymentRepository()),

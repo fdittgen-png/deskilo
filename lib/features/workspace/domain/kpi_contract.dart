@@ -112,8 +112,50 @@ const seatUtilisationKpi = KpiDefinition(
   ],
 );
 
+/// #1924 — what was invoiced over whole workspace months: invoices of
+/// the months, non-void, settlements left out (they regroup invoices
+/// already counted), positive totals. Credit notes are named beside it,
+/// never netted silently. Not a profit: no cost is in it.
+const invoicedKpi = KpiDefinition(
+  id: 'finance.invoiced',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'the invoice\'s month (YYYY-MM), whole months [from, to] on the '
+      'workspace calendar',
+  dimensions: [],
+  numerator: 'invoiced_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: ['invoicing', 'the workspace currency'],
+);
+
+/// #1924 — what was collected: payments matched to invoices, by the month
+/// of the match on the workspace clock (the money report's "matched").
+const collectedKpi = KpiDefinition(
+  id: 'finance.collected',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'the month a payment was matched to an invoice, on the workspace '
+      'clock, whole months [from, to]',
+  dimensions: [],
+  numerator: 'collected_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: ['invoicing', 'payment matching', 'the workspace currency'],
+);
+
 /// Every KPI the app knows. One list; the server registers the same ids.
-const kpiCatalogue = <KpiDefinition>[seatUtilisationKpi];
+const kpiCatalogue = <KpiDefinition>[
+  seatUtilisationKpi,
+  invoicedKpi,
+  collectedKpi,
+];
 
 /// Why a value is what it is. Several can hold at once.
 enum KpiQuality {
@@ -285,6 +327,122 @@ abstract interface class KpiRepository {
     required DateTime to,
     String? levelId,
   });
+}
+
+/// The largest magnitude JSON (an IEEE double, a JS number) carries
+/// exactly: beyond it a minor-unit amount is refused, never rounded.
+const int maxExactMinor = 9007199254740991;
+
+/// What `kpi_finance_summary` returned, typed (#1924). Amounts are minor
+/// units of [currency], read from decimal strings; one beyond
+/// [maxExactMinor] makes the figure unavailable rather than wrong.
+class FinanceSummaryKpi {
+  const FinanceSummaryKpi({
+    required this.fromMonth,
+    required this.toMonth,
+    required this.currency,
+    required this.invoicedMinor,
+    required this.creditNotesMinor,
+    required this.collectedMinor,
+    required this.invoices,
+    required this.matches,
+    required this.quality,
+    required this.reasons,
+    required this.computedAt,
+    this.lastChangeAt,
+  });
+
+  final String fromMonth;
+  final String toMonth;
+  final String currency;
+
+  /// Null when the amount could not travel exactly.
+  final int? invoicedMinor;
+  final int? creditNotesMinor;
+  final int? collectedMinor;
+
+  /// How many invoices and matches the figures are made of.
+  final int invoices;
+  final int matches;
+  final Set<KpiQuality> quality;
+  final List<String> reasons;
+  final DateTime computedAt;
+
+  /// The latest change to a row behind the figures (source as-of).
+  final DateTime? lastChangeAt;
+}
+
+/// An exact minor-unit amount from a decimal string (or an integer),
+/// or null when it is malformed or beyond [maxExactMinor].
+int? exactMinor(Object? v) {
+  final big = switch (v) {
+    final String s when RegExp(r'^-?[0-9]{1,30}$').hasMatch(s) => BigInt.parse(
+      s,
+    ),
+    final int i => BigInt.from(i),
+    _ => null,
+  };
+  if (big == null || big.abs() > BigInt.from(maxExactMinor)) return null;
+  return big.toInt();
+}
+
+/// Parses the RPC's jsonb. A missing amount is NOT zero: it is null and
+/// the figure is unavailable.
+FinanceSummaryKpi financeSummaryFromJson(Map<String, dynamic> json) {
+  final quality = json['quality'];
+  final reasons = json['reasons'];
+  if (quality is! List || reasons is! List) {
+    throw const FormatException('Missing finance evidence');
+  }
+  final invoiced = exactMinor(json['invoiced_minor']);
+  final credit = exactMinor(json['credit_notes_minor']);
+  final collected = exactMinor(json['collected_minor']);
+  final inexact = invoiced == null || credit == null || collected == null;
+  final currency = json['currency'];
+  return FinanceSummaryKpi(
+    fromMonth: '${json['from']}',
+    toMonth: '${json['to']}',
+    currency: currency is String ? currency : '',
+    invoicedMinor: invoiced,
+    creditNotesMinor: credit,
+    collectedMinor: collected,
+    invoices: _count(json['invoices']),
+    matches: _count(json['matches']),
+    quality: {
+      for (final q in quality) _quality('$q') ?? KpiQuality.unavailable,
+      if (inexact || currency is! String || currency.isEmpty)
+        KpiQuality.unavailable,
+    },
+    reasons: [
+      for (final r in reasons) '$r',
+      if (inexact) 'amount_not_exact',
+    ],
+    computedAt: DateTime.parse('${json['computed_at']}'),
+    lastChangeAt: DateTime.tryParse('${json['last_change_at']}'),
+  );
+}
+
+/// Reads the finance KPIs (#1924). Every call is authorized there.
+abstract interface class FinanceKpiRepository {
+  /// Invoiced and collected over the whole months [fromMonth, toMonth]
+  /// (`YYYY-MM`).
+  Future<FinanceSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  });
+}
+
+/// The demonstration has no server to sum invoices on.
+class UnavailableFinanceKpiRepository implements FinanceKpiRepository {
+  const UnavailableFinanceKpiRepository();
+
+  @override
+  Future<FinanceSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async => throw const KpiUnavailable('no server in this mode');
 }
 
 /// The server refused: the reader may not see this KPI here.
