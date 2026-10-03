@@ -35,7 +35,8 @@ RecorderLogBackend recorderLogBackend(Ref ref) =>
     kIsWeb ? PrefsRecorderLogBackend() : FileRecorderLogBackend();
 
 /// The signed-in account's private recordings; null when signed out.
-@riverpod
+/// Kept alive with the recorder that reads it.
+@Riverpod(keepAlive: true)
 RecorderStore? recorderStore(Ref ref) {
   final account = ref.watch(currentAccountIdProvider);
   if (account == null || account.isEmpty) return null;
@@ -48,7 +49,8 @@ RecorderStore? recorderStore(Ref ref) {
 }
 
 /// The scope a new recording would belong to; null when signed out.
-@riverpod
+/// Kept alive with the recorder that listens to it.
+@Riverpod(keepAlive: true)
 RecorderScope? recorderScope(Ref ref) {
   final account = ref.watch(currentAccountIdProvider);
   if (account == null || account.isEmpty) return null;

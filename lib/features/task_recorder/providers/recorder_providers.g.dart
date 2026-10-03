@@ -65,23 +65,26 @@ String _$recorderLogBackendHash() =>
     r'e012bf02aa3eced22fe5feeded27a962a546834b';
 
 /// The signed-in account's private recordings; null when signed out.
+/// Kept alive with the recorder that reads it.
 
 @ProviderFor(recorderStore)
 final recorderStoreProvider = RecorderStoreProvider._();
 
 /// The signed-in account's private recordings; null when signed out.
+/// Kept alive with the recorder that reads it.
 
 final class RecorderStoreProvider
     extends $FunctionalProvider<RecorderStore?, RecorderStore?, RecorderStore?>
     with $Provider<RecorderStore?> {
   /// The signed-in account's private recordings; null when signed out.
+  /// Kept alive with the recorder that reads it.
   RecorderStoreProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'recorderStoreProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -108,26 +111,29 @@ final class RecorderStoreProvider
   }
 }
 
-String _$recorderStoreHash() => r'4373bd4d491419aa3e0fc89ee4e0b90659be6b3c';
+String _$recorderStoreHash() => r'b913b1445aae08404b45c19c041ebe5ed0cd99c3';
 
 /// The scope a new recording would belong to; null when signed out.
+/// Kept alive with the recorder that listens to it.
 
 @ProviderFor(recorderScope)
 final recorderScopeProvider = RecorderScopeProvider._();
 
 /// The scope a new recording would belong to; null when signed out.
+/// Kept alive with the recorder that listens to it.
 
 final class RecorderScopeProvider
     extends $FunctionalProvider<RecorderScope?, RecorderScope?, RecorderScope?>
     with $Provider<RecorderScope?> {
   /// The scope a new recording would belong to; null when signed out.
+  /// Kept alive with the recorder that listens to it.
   RecorderScopeProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'recorderScopeProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -154,7 +160,7 @@ final class RecorderScopeProvider
   }
 }
 
-String _$recorderScopeHash() => r'1db9e6070aae58ff8e3e9281516a6ed13c71b081';
+String _$recorderScopeHash() => r'66244c1eb6cac2a36c033a0d9de13bd1d9207f17';
 
 /// Whether this workspace lets its people record a task here.
 
