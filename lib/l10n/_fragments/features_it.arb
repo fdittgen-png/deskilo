@@ -231,5 +231,6 @@
   "featureOptInTitle": "Attivare una funzione sperimentale?",
   "featureOptInBody": "Non ancora valutata come stabile: {features}. Può cambiare e ha limiti noti. Attivala solo se questo spazio lo accetta.",
   "featureOptInConfirm": "Attiva",
-  "featureIntakeStoppedNote": "Disattivato: non inizia nulla di nuovo; ciò che è già aperto può ancora essere gestito e chiuso."
+  "featureIntakeStoppedNote": "Disattivato: non inizia nulla di nuovo; ciò che è già aperto può ancora essere gestito e chiuso.",
+  "featureIntakeUnconfirmedNote": "Disattivato: non inizia nulla di nuovo. Questo server non ha potuto confermare che ciò che è già aperto resti gestibile; non contarci."
 }

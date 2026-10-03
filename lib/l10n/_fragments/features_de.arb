@@ -231,5 +231,6 @@
   "featureOptInTitle": "Experimentelle Funktion einschalten?",
   "featureOptInBody": "Noch nicht als stabil bewertet: {features}. Sie kann sich ändern und hat bekannte Grenzen. Nur einschalten, wenn dieser Space das akzeptiert.",
   "featureOptInConfirm": "Einschalten",
-  "featureIntakeStoppedNote": "Aus: nichts Neues beginnt; was schon offen ist, kann noch beantwortet und geschlossen werden."
+  "featureIntakeStoppedNote": "Aus: nichts Neues beginnt; was schon offen ist, kann noch beantwortet und geschlossen werden.",
+  "featureIntakeUnconfirmedNote": "Aus: nichts Neues beginnt. Dieser Server konnte nicht bestätigen, dass Offenes weiter bearbeitet werden kann; verlassen Sie sich nicht darauf."
 }

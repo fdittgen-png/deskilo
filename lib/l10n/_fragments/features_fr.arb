@@ -231,5 +231,6 @@
   "featureOptInTitle": "Activer une fonctionnalité expérimentale ?",
   "featureOptInBody": "Pas encore évaluée comme stable : {features}. Elle peut changer et a des limites connues. N’activez que si cet espace l’accepte.",
   "featureOptInConfirm": "Activer",
-  "featureIntakeStoppedNote": "Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos."
+  "featureIntakeStoppedNote": "Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos.",
+  "featureIntakeUnconfirmedNote": "Désactivé : rien de nouveau ne commence. Ce serveur n'a pas pu confirmer que ce qui est déjà ouvert reste traitable ; n'y comptez pas."
 }

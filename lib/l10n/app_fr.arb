@@ -2882,6 +2882,7 @@
     "description": "#977 instance wizard: featureInstanceWizardDesc"
   },
   "featureIntakeStoppedNote": "Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos.",
+  "featureIntakeUnconfirmedNote": "Désactivé : rien de nouveau ne commence. Ce serveur n'a pas pu confirmer que ce qui est déjà ouvert reste traitable ; n'y comptez pas.",
   "featureInvoiceAddressWindow": "Fenêtre d'adresse",
   "@featureInvoiceAddressWindow": {
     "description": "Features screen name for the #869 window-envelope address placement flag"

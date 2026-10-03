@@ -2882,6 +2882,7 @@
     "description": "#977 instance wizard: featureInstanceWizardDesc"
   },
   "featureIntakeStoppedNote": "Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse.",
+  "featureIntakeUnconfirmedNote": "Desactivado: no empieza nada nuevo. Este servidor no pudo confirmar que lo que ya está abierto siga pudiendo atenderse; no cuente con ello.",
   "featureInvoiceAddressWindow": "Ventanilla de dirección",
   "@featureInvoiceAddressWindow": {
     "description": "Features screen name for the #869 window-envelope address placement flag"

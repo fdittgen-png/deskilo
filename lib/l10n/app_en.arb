@@ -5220,6 +5220,10 @@
   "@featureIntakeStoppedNote": {
     "description": "#1851 note on a switched-off feature whose existing work stays serviceable"
   },
+  "featureIntakeUnconfirmedNote": "Off: nothing new starts. This server could not confirm that what is already open stays answerable, so do not count on it.",
+  "@featureIntakeUnconfirmedNote": {
+    "description": "#1851 C off-note when the server cannot confirm it keeps existing work serviceable"
+  },
   "featureInvoiceAddressWindow": "Envelope address window",
   "@featureInvoiceAddressWindow": {
     "description": "Features screen name for the #869 window-envelope address placement flag"

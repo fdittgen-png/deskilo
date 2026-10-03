@@ -4353,6 +4353,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Off: nothing new starts; what is already open can still be answered and closed.';
 
   @override
+  String get featureIntakeUnconfirmedNote =>
+      'Off: nothing new starts. This server could not confirm that what is already open stays answerable, so do not count on it.';
+
+  @override
   String get featureInvoiceAddressWindow => 'Envelope address window';
 
   @override

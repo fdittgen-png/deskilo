@@ -7650,6 +7650,12 @@ abstract class AppLocalizations {
   /// **'Off: nothing new starts; what is already open can still be answered and closed.'**
   String get featureIntakeStoppedNote;
 
+  /// #1851 C off-note when the server cannot confirm it keeps existing work serviceable
+  ///
+  /// In en, this message translates to:
+  /// **'Off: nothing new starts. This server could not confirm that what is already open stays answerable, so do not count on it.'**
+  String get featureIntakeUnconfirmedNote;
+
   /// Features screen name for the #869 window-envelope address placement flag
   ///
   /// In en, this message translates to:

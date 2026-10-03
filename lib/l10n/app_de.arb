@@ -2882,6 +2882,7 @@
     "description": "#977 instance wizard: featureInstanceWizardDesc"
   },
   "featureIntakeStoppedNote": "Aus: nichts Neues beginnt; was schon offen ist, kann noch beantwortet und geschlossen werden.",
+  "featureIntakeUnconfirmedNote": "Aus: nichts Neues beginnt. Dieser Server konnte nicht bestätigen, dass Offenes weiter bearbeitet werden kann; verlassen Sie sich nicht darauf.",
   "featureInvoiceAddressWindow": "Adressfenster",
   "@featureInvoiceAddressWindow": {
     "description": "Features screen name for the #869 window-envelope address placement flag"
