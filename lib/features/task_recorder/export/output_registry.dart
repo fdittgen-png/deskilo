@@ -6,8 +6,11 @@
 // `taskOutputGeneratorsProvider`, so a test can replace it.
 
 import '../package/task_output.dart';
+import '../video/video_output_generators.dart';
 import 'docx_output_generator.dart';
 
 List<TaskOutputGenerator> taskOutputGeneratorList() => const [
   DocxOutputGenerator(),
+  Mp4OutputGenerator(),
+  VttOutputGenerator(),
 ];

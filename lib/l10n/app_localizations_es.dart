@@ -14222,6 +14222,74 @@ class AppLocalizationsEs extends AppLocalizations {
       'El guion gráfico corresponde a otra versión de esta grabación. Revíselo antes de exportar.';
 
   @override
+  String get taskExportVideoIntro =>
+      'Un tutorial recreado a partir de una tarea grabada. Muestra los pasos, no prueba que la tarea saliera bien.';
+
+  @override
+  String taskExportVideoStepHeading(int number, String title) {
+    return 'Paso $number: $title';
+  }
+
+  @override
+  String get taskExportVideoSummary => 'Resumen';
+
+  @override
+  String taskExportVideoLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Se omitieron $count pasos en la revisión.',
+      one: 'Se omitió un paso en la revisión.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get taskExportVideoEmpty =>
+      'Se omitieron todos los pasos: no hay nada que mostrar en un vídeo.';
+
+  @override
+  String get taskExportVideoTooLong =>
+      'El vídeo superaría la duración permitida. Acorte las duraciones u omita pasos.';
+
+  @override
+  String get taskExportVideoBusy => 'Todavía se está generando otro vídeo.';
+
+  @override
+  String get taskExportVideoUnsupported =>
+      'Este dispositivo no puede generar un vídeo. Exporte el archivo de grabación y ábralo en un dispositivo compatible: macOS, iOS, Android o un navegador actual capaz de codificar vídeo H.264.';
+
+  @override
+  String get taskExportVideoFailed =>
+      'No se pudo generar el vídeo. No se guardó nada.';
+
+  @override
+  String get taskExportVideoCancelled =>
+      'Generación del vídeo cancelada. No se guardó nada.';
+
+  @override
+  String taskExportVideoGenerating(int percent) {
+    return 'Generando el vídeo: $percent %';
+  }
+
+  @override
+  String get taskExportVideoCancel => 'Cancelar el vídeo';
+
+  @override
+  String get taskExportVideoGenerate => 'Generar el vídeo';
+
+  @override
+  String get taskExportVideoLandscape => 'Horizontal';
+
+  @override
+  String get taskExportVideoPortrait => 'Vertical';
+
+  @override
+  String taskExportVideoSaved(String file) {
+    return 'Vídeo guardado con sus subtítulos y su transcripción: $file';
+  }
+
+  @override
   String get taskExportWordButton => 'Exportar como documento de Word';
 
   @override
