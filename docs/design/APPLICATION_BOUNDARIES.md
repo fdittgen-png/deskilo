@@ -32,6 +32,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `calendar -> money`
 - `calendar -> plan`
 - `calendar -> reservations`
+- `calendar -> task_recorder`
 - `calendar -> workspace`
 - `directory -> auth`
 - `directory -> workspace`
@@ -40,6 +41,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `events -> money`
 - `events -> plan`
 - `events -> reservations`
+- `events -> task_recorder`
 - `events -> workspace`
 - `help -> auth`
 - `help -> task_recorder`
@@ -92,6 +94,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `reservations -> profile`
 - `reservations -> task_recorder`
 - `reservations -> workspace`
+- `task_recorder -> calendar`
 - `task_recorder -> reservations`
 - `task_recorder -> workspace`
 - `visits -> auth`
@@ -109,6 +112,7 @@ Reciprocal:
 
 - `calendar <-> money`
 - `calendar <-> reservations`
+- `calendar <-> task_recorder`
 - `directory <-> workspace`
 - `events <-> money`
 - `events <-> plan`
@@ -139,6 +143,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/core/demo/data/reservation_repository.dart`
 - `lib/core/demo/data/workspace_repository.dart`
 - `lib/core/help/help_anchors.dart`
+- `lib/features/calendar/presentation/screens/calendar_hub_screen.dart`
 - `lib/features/calendar/presentation/screens/calendar_screen.dart`
 - `lib/features/calendar/presentation/widgets/day_timeline.dart`
 - `lib/features/editor/presentation/screens/level_canvas_screen.dart`

@@ -786,5 +786,109 @@
   "taskRecorderRecordATask": "Record a task",
   "@taskRecorderRecordATask": {
     "description": "#2142 recorder: taskRecorderRecordATask — the labelled entry in the drawer and Me → Account"
+  },
+  "taskRecorderActionCalendarView": "Switched the calendar view",
+  "@taskRecorderActionCalendarView": {
+    "description": "#1881 recorder: taskRecorderActionCalendarView"
+  },
+  "taskRecorderActionCalendarMove": "Moved through the dates",
+  "@taskRecorderActionCalendarMove": {
+    "description": "#1881 recorder: taskRecorderActionCalendarMove"
+  },
+  "taskRecorderActionCalendarSelectDay": "Chose a day in the calendar",
+  "@taskRecorderActionCalendarSelectDay": {
+    "description": "#1881 recorder: taskRecorderActionCalendarSelectDay"
+  },
+  "taskRecorderActionCalendarFilterKind": "Changed what the calendar shows",
+  "@taskRecorderActionCalendarFilterKind": {
+    "description": "#1881 recorder: taskRecorderActionCalendarFilterKind"
+  },
+  "taskRecorderActionCalendarWhose": "Chose whose calendar to see",
+  "@taskRecorderActionCalendarWhose": {
+    "description": "#1881 recorder: taskRecorderActionCalendarWhose"
+  },
+  "taskRecorderActionCalendarOpenItem": "Opened an entry from the calendar",
+  "@taskRecorderActionCalendarOpenItem": {
+    "description": "#1881 recorder: taskRecorderActionCalendarOpenItem"
+  },
+  "taskRecorderActionCalendarCancel": "Cancelled a reservation from the calendar",
+  "@taskRecorderActionCalendarCancel": {
+    "description": "#1881 recorder: taskRecorderActionCalendarCancel"
+  },
+  "taskRecorderActionDecideEvent": "Answered a request for a decision",
+  "@taskRecorderActionDecideEvent": {
+    "description": "#1881 recorder: taskRecorderActionDecideEvent"
+  },
+  "taskRecorderOutcomeEventDecided": "Answer recorded",
+  "@taskRecorderOutcomeEventDecided": {
+    "description": "#1881 recorder: taskRecorderOutcomeEventDecided"
+  },
+  "taskRecorderOutcomeEventNotConfirmed": "The answer was not confirmed",
+  "@taskRecorderOutcomeEventNotConfirmed": {
+    "description": "#1881 recorder: taskRecorderOutcomeEventNotConfirmed"
+  },
+  "taskRecorderValueAgenda": "agenda",
+  "@taskRecorderValueAgenda": {
+    "description": "#1881 recorder: taskRecorderValueAgenda"
+  },
+  "taskRecorderValueTimeline": "timeline",
+  "@taskRecorderValueTimeline": {
+    "description": "#1881 recorder: taskRecorderValueTimeline"
+  },
+  "taskRecorderValuePrevious": "back",
+  "@taskRecorderValuePrevious": {
+    "description": "#1881 recorder: taskRecorderValuePrevious"
+  },
+  "taskRecorderValueNext": "forward",
+  "@taskRecorderValueNext": {
+    "description": "#1881 recorder: taskRecorderValueNext"
+  },
+  "taskRecorderValueMine": "mine",
+  "@taskRecorderValueMine": {
+    "description": "#1881 recorder: taskRecorderValueMine"
+  },
+  "taskRecorderValueSomeoneElse": "another member's",
+  "@taskRecorderValueSomeoneElse": {
+    "description": "#1881 recorder: taskRecorderValueSomeoneElse"
+  },
+  "taskRecorderValueEveryone": "everyone's",
+  "@taskRecorderValueEveryone": {
+    "description": "#1881 recorder: taskRecorderValueEveryone"
+  },
+  "taskRecorderValueConversation": "a conversation",
+  "@taskRecorderValueConversation": {
+    "description": "#1881 recorder: taskRecorderValueConversation"
+  },
+  "taskRecorderValueAlert": "an alert",
+  "@taskRecorderValueAlert": {
+    "description": "#1881 recorder: taskRecorderValueAlert"
+  },
+  "taskRecorderValueDecision": "a decision",
+  "@taskRecorderValueDecision": {
+    "description": "#1881 recorder: taskRecorderValueDecision"
+  },
+  "taskRecorderValuePayment": "a payment",
+  "@taskRecorderValuePayment": {
+    "description": "#1881 recorder: taskRecorderValuePayment"
+  },
+  "taskRecorderValueInvoice": "an invoice",
+  "@taskRecorderValueInvoice": {
+    "description": "#1881 recorder: taskRecorderValueInvoice"
+  },
+  "taskRecorderValueAccept": "accepted",
+  "@taskRecorderValueAccept": {
+    "description": "#1881 recorder: taskRecorderValueAccept"
+  },
+  "taskRecorderValueDecline": "declined",
+  "@taskRecorderValueDecline": {
+    "description": "#1881 recorder: taskRecorderValueDecline"
+  },
+  "taskRecorderTargetAllKinds": "every kind",
+  "@taskRecorderTargetAllKinds": {
+    "description": "#1881 recorder: taskRecorderTargetAllKinds"
+  },
+  "taskRecorderValueRange": "a date range",
+  "@taskRecorderValueRange": {
+    "description": "#1881 recorder: taskRecorderValueRange"
   }
 }

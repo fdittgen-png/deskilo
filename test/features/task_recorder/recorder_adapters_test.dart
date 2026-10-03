@@ -153,7 +153,8 @@ void main() {
       expect(treatRoute('/member/7'), isA<Unrecorded>());
       expect(treatRoute('/task-recorder'), isA<RecorderScreen>());
       expect(treatRoute('/settings'), isA<Unrecorded>());
-      expect(treatRoute('/calendar'), isA<Unrecorded>());
+      expect(treatRoute('/discover'), isA<Unrecorded>());
+      expect(treatRoute('/calendar'), isA<Instrumented>());
       expect(treatRoute('/messagesX'), isA<Unrecorded>(),
           reason: 'a prefix is a path segment, not a string prefix');
     });

@@ -423,7 +423,9 @@ const Map<String, int> _baseline = {
   // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
   // — a dozen lines of dot layout, no new concern worth a split.
   // 640→690 (2026-08-23): #611 directional month-slide switcher.
-  'lib/features/calendar/presentation/screens/calendar_screen.dart': 676,
+  'lib/features/calendar/presentation/screens/calendar_screen.dart': 710, // 2026-10-03 #1881 B 676→710: the task recorder's seams — month steps, whose calendar, list/timeline, the chosen day, and the cancel's attempt and real result.
+
+  'lib/features/calendar/presentation/screens/calendar_hub_screen.dart': 613, // 2026-10-03 #1881 B 600→613: the task recorder's seams — view, step, day, kind filter, whose calendar and the opened row's kind.
   // 2026-09-28 #1791: one import for the separately implemented account requests entry.
   'lib/features/workspace/presentation/screens/onboarding_screen.dart': 633, // 2026-09-28 #1652 602→633: Join is selected by an invitation errand, a link the app was opened with, or an invitation kept for this server; the join journey itself moved to widgets/invitation_join_panel.dart.
 };

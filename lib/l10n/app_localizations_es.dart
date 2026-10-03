@@ -16290,6 +16290,32 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderActionBack => 'Volvió atrás';
 
   @override
+  String get taskRecorderActionCalendarCancel =>
+      'Canceló una reserva desde el calendario';
+
+  @override
+  String get taskRecorderActionCalendarFilterKind =>
+      'Cambió lo que muestra el calendario';
+
+  @override
+  String get taskRecorderActionCalendarMove => 'Se movió por las fechas';
+
+  @override
+  String get taskRecorderActionCalendarOpenItem =>
+      'Abrió una entrada del calendario';
+
+  @override
+  String get taskRecorderActionCalendarSelectDay =>
+      'Eligió un día en el calendario';
+
+  @override
+  String get taskRecorderActionCalendarView => 'Cambió la vista del calendario';
+
+  @override
+  String get taskRecorderActionCalendarWhose =>
+      'Eligió de quién ver el calendario';
+
+  @override
   String get taskRecorderActionCancelReservation => 'Canceló la reserva';
 
   @override
@@ -16310,6 +16336,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskRecorderActionConfirmBooking => 'Confirmó la reserva';
+
+  @override
+  String get taskRecorderActionDecideEvent =>
+      'Respondió a una solicitud de decisión';
 
   @override
   String get taskRecorderActionDeclineOptIn =>
@@ -16482,6 +16512,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderOutcomeConfirmed => 'Reservado';
 
   @override
+  String get taskRecorderOutcomeEventDecided => 'Respuesta registrada';
+
+  @override
+  String get taskRecorderOutcomeEventNotConfirmed =>
+      'La respuesta no se confirmó';
+
+  @override
   String get taskRecorderOutcomeRefused => 'Rechazado';
 
   @override
@@ -16590,6 +16627,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderStop => 'Detener';
 
   @override
+  String get taskRecorderTargetAllKinds => 'todos los tipos';
+
+  @override
   String get taskRecorderTargetUnkeyed => 'un control sin nombre';
 
   @override
@@ -16607,7 +16647,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderUntitled => 'Tarea sin título';
 
   @override
+  String get taskRecorderValueAccept => 'aceptada';
+
+  @override
   String get taskRecorderValueAfternoon => 'tarde';
+
+  @override
+  String get taskRecorderValueAgenda => 'agenda';
+
+  @override
+  String get taskRecorderValueAlert => 'un aviso';
 
   @override
   String get taskRecorderValueAllBooked => 'todas las fechas reservadas';
@@ -16622,19 +16671,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderValueConflict => 'ya ocupado';
 
   @override
+  String get taskRecorderValueConversation => 'una conversación';
+
+  @override
   String get taskRecorderValueCustom => 'horario propio';
 
   @override
   String get taskRecorderValueDay => 'día';
 
   @override
+  String get taskRecorderValueDecision => 'una decisión';
+
+  @override
+  String get taskRecorderValueDecline => 'rechazada';
+
+  @override
   String get taskRecorderValueDesk => 'un escritorio';
+
+  @override
+  String get taskRecorderValueEveryone => 'el de todos';
 
   @override
   String get taskRecorderValueFullDay => 'día completo';
 
   @override
   String get taskRecorderValueHours => 'por horas';
+
+  @override
+  String get taskRecorderValueInvoice => 'una factura';
 
   @override
   String get taskRecorderValueLater => 'un día posterior';
@@ -16646,10 +16710,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderValueList => 'lista';
 
   @override
+  String get taskRecorderValueMine => 'el mío';
+
+  @override
   String get taskRecorderValueMonth => 'mes';
 
   @override
   String get taskRecorderValueMorning => 'mañana (franja)';
+
+  @override
+  String get taskRecorderValueNext => 'adelante';
 
   @override
   String get taskRecorderValueNoCheckIn => 'sin registro de llegada';
@@ -16679,6 +16749,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderValuePast => 'un día pasado';
 
   @override
+  String get taskRecorderValuePayment => 'un pago';
+
+  @override
   String get taskRecorderValuePermission => 'un permiso';
 
   @override
@@ -16688,7 +16761,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderValuePolicy => 'una regla de reserva';
 
   @override
+  String get taskRecorderValuePrevious => 'atrás';
+
+  @override
   String get taskRecorderValueQuota => 'un cupo';
+
+  @override
+  String get taskRecorderValueRange => 'un intervalo de fechas';
 
   @override
   String get taskRecorderValueRoom => 'una sala';
@@ -16698,6 +16777,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskRecorderValueSeries => 'repetida';
+
+  @override
+  String get taskRecorderValueSomeoneElse => 'el de otro miembro';
+
+  @override
+  String get taskRecorderValueTimeline => 'línea de tiempo';
 
   @override
   String get taskRecorderValueToday => 'hoy';

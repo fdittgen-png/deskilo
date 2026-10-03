@@ -22,6 +22,10 @@ import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/day_timeline.dart';
+import '../../../task_recorder/application/booking_observation.dart';
+import '../../../task_recorder/application/calendar_observation.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/i18n/format_controller.dart';
 
@@ -50,7 +54,13 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   /// previous): the month grid slides in from that side.
   int _monthDelta = 1;
 
-  void _goToMonth(int delta) => setState(() {
+  void _goToMonth(int delta) {
+    recordTaskStep(ref, RecorderActions.calendarMove,
+        payload: {'direction': calendarDirection(delta)}); // #1881 B
+    _changeMonth(delta);
+  }
+
+  void _changeMonth(int delta) => setState(() {
         _monthDelta = delta;
         _month = DateTime(_month.year, _month.month + delta);
       });
@@ -117,6 +127,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     );
     if (choice == null) return;
     final repo = ref.read(reservationRepositoryProvider);
+    // #1881 B — the task recorder: the attempt before, its result after.
+    final attempt = recordTaskAttempt(
+        ref, RecorderActions.calendarCancelReservation,
+        payload: {'repeat': choice == 'single' ? 'once' : 'series'});
     try {
       if (choice == 'single') {
         await repo.cancel(reservation.id);
@@ -127,6 +141,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         );
       }
     } catch (e, st) {
+      attempt?.resolveWith(errorObservation(e,
+          refused: RecorderOutcomes.reservationRefused,
+          unknown: RecorderOutcomes.reservationUnknown));
       debugPrint('cancel failed: $e\n$st');
       TraceLogger.instance.error('calendar', 'reservation cancel failed',
           error: e, stackTrace: st);
@@ -138,6 +155,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       );
       return;
     }
+    attempt?.resolve(RecorderOutcomes.cancelled);
     invalidateBookingData(ref);
   }
 
@@ -208,8 +226,14 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                     ),
                   ],
                   selected: {_everyone},
-                  onSelectionChanged: (selection) =>
-                      setState(() => _everyone = selection.first),
+                  onSelectionChanged: (selection) {
+                    recordTaskStep(ref, RecorderActions.calendarChooseWhose,
+                        payload: {
+                          'calendar_of':
+                              selection.first ? 'everyone' : 'mine',
+                        }); // #1881 B
+                    setState(() => _everyone = selection.first);
+                  },
                 ),
               ),
               // #187: list vs. timeline for the selected-day area — the
@@ -229,7 +253,11 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   ),
                 ],
                 selected: _timeline,
-                onChanged: (timeline) => setState(() => _timeline = timeline),
+                onChanged: (timeline) {
+                  recordTaskStep(ref, RecorderActions.calendarSwitchView,
+                      payload: {'view_mode': timeline ? 'timeline' : 'list'});
+                  setState(() => _timeline = timeline);
+                },
               ),
             ],
           ),
@@ -295,7 +323,13 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                 if (r.memberId != myMember?.id)
                   WorkspaceTime.dateOf(r.startsAt),
             },
-            onSelect: (day) => setState(() => _selectedDay = day),
+            onSelect: (day) {
+              recordTaskStep(ref, RecorderActions.calendarSelectDay, payload: {
+                'date_relation': dateRelation(
+                    day, WorkspaceTime.dateOf(ref.read(clockProvider).now())),
+              }); // #1881 B
+              setState(() => _selectedDay = day);
+            },
               ),
             ),
           ),
