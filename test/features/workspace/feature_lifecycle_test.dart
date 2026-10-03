@@ -271,6 +271,9 @@ void main() {
         .where(
           (p) =>
               !p.endsWith('domain/feature_lifecycle.dart') &&
+              // #1850 B/C — the ledger's own evidence checks; they read
+              // claims to refuse unsupported ones, and grant nothing.
+              !p.endsWith('domain/feature_assessment_evidence.dart') &&
               !p.contains('features/workspace/presentation/') &&
               // #1851 — the opt-in gate reads maturity to ASK for
               // consent before a switch is written; it opens nothing.
