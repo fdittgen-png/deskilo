@@ -153,5 +153,22 @@
   "taskGuideNoText": "Una instrucción aún por escribir",
   "taskGuideManual": "Haga este paso usted mismo",
   "taskGuideManualProtected": "Haga este paso usted mismo, en una pantalla protegida: {category}",
-  "taskWorkbenchStoryboardRestored": "Las ilustraciones revisadas se restauraron desde el archivo."
+  "taskWorkbenchStoryboardRestored": "Las ilustraciones revisadas se restauraron desde el archivo.",
+  "taskRecorderActionSelectLevel": "Eligió un nivel",
+  "taskRecorderActionCheckIn": "Registró su llegada",
+  "taskRecorderActionCheckOut": "Registró su salida",
+  "taskRecorderActionCancelReservation": "Canceló la reserva",
+  "taskRecorderActionCloseMyReservation": "Cerró su reserva sin cambiarla",
+  "taskRecorderOutcomeCheckedIn": "Llegada registrada",
+  "taskRecorderOutcomeCheckedOut": "Salida registrada",
+  "taskRecorderOutcomeCancelled": "Cancelada",
+  "taskRecorderValueDay": "día",
+  "taskRecorderValueWeek": "semana",
+  "taskRecorderValueMonth": "mes",
+  "taskRecorderActionSwitchFeature": "Cambió una función",
+  "taskRecorderActionDeclineOptIn": "No activó una función en prueba",
+  "taskRecorderOutcomeSettingSaved": "Guardado",
+  "taskRecorderOutcomeSettingNotSaved": "No guardado",
+  "taskRecorderValueOn": "activada",
+  "taskRecorderValueOff": "desactivada"
 }
