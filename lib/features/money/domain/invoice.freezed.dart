@@ -1789,8 +1789,8 @@ mixin _$Invoice {
 /// workspace's current term, the way such documents always printed.
  DateTime? get dueOn;/// #1913 — on what basis [dueOn] was frozen: `document_term`,
 /// `default_term` (the unagreed default; needs review) or `unknown`.
- String? get maturityBasis;/// #1916 (0347) — the legal clauses and facts frozen at issue, raw.
-/// Null on an invoice issued before 0347: legacy, evidence unknown.
+ String? get maturityBasis;/// #1916 (0349) — the legal clauses and facts frozen at issue, raw.
+/// Null on an invoice issued before 0349: legacy, evidence unknown.
 /// Read it through [legalClauses].
  Map<String, Object?>? get legalSnapshot;/// #992 — the server's stamp on this row.
  SystemColumns get system;
@@ -2119,12 +2119,12 @@ class _Invoice extends Invoice {
 /// #1913 — on what basis [dueOn] was frozen: `document_term`,
 /// `default_term` (the unagreed default; needs review) or `unknown`.
 @override final  String? maturityBasis;
-/// #1916 (0347) — the legal clauses and facts frozen at issue, raw.
-/// Null on an invoice issued before 0347: legacy, evidence unknown.
+/// #1916 (0349) — the legal clauses and facts frozen at issue, raw.
+/// Null on an invoice issued before 0349: legacy, evidence unknown.
 /// Read it through [legalClauses].
  final  Map<String, Object?>? _legalSnapshot;
-/// #1916 (0347) — the legal clauses and facts frozen at issue, raw.
-/// Null on an invoice issued before 0347: legacy, evidence unknown.
+/// #1916 (0349) — the legal clauses and facts frozen at issue, raw.
+/// Null on an invoice issued before 0349: legacy, evidence unknown.
 /// Read it through [legalClauses].
 @override Map<String, Object?>? get legalSnapshot {
   final value = _legalSnapshot;
