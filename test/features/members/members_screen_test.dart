@@ -530,7 +530,8 @@ void main() {
     expect(find.text('Reservation limit'), findsOneWidget);
     expect(find.text('Badges'), findsOneWidget);
     expect(find.text('Subscription'), findsNothing);
-    expect(find.text('Make admin'), findsNothing);
+    expect(find.text('Give the Administrator role'), findsNothing);
+    expect(find.text('Add a role'), findsNothing);
     // #982 — the admin row holds operateKiosk by default: the kiosk
     // action is theirs now; the owner-only ones below stay hidden.
     expect(find.text('Make kiosk device'), findsOneWidget);
@@ -599,10 +600,12 @@ void main() {
 
   testWidgets('the owner promotes a regular member — routed through '
       'validation, not applied immediately (0035)', (tester) async {
-    final workspace = await pumpMembers(tester);
+    // #2085 — the flag-off shape: one Administrator row on the sheet.
+    final workspace = await pumpMembers(tester,
+        featureFlags: const {'roleAssignment': false});
 
     await openSheet(tester, 'Ana');
-    await tester.tap(find.text('Make admin'));
+    await tester.tap(find.text('Give the Administrator role'));
     await tester.pumpAndSettle();
 
     expect(workspace.lastRoleChange, ('ws-1', 'member-2', true));
@@ -616,7 +619,7 @@ void main() {
       (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace(
       // #825 — these tests drive the legacy sheets; the page has its own.
-      featureFlags: const {'memberPage': false})
+      featureFlags: const {'memberPage': false, 'roleAssignment': false})
       ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
       ..otherMembers.add(
         const Member(
@@ -645,14 +648,14 @@ void main() {
 
     // The owner's OWN sheet offers no role toggle…
     await openSheet(tester, 'Flo');
-    expect(find.text('Make admin'), findsNothing);
-    expect(find.text('Make regular member'), findsNothing);
+    expect(find.text('Give the Administrator role'), findsNothing);
+    expect(find.text('Take back the Administrator role'), findsNothing);
     await tester.tapAt(const Offset(10, 10)); // dismiss
     await tester.pumpAndSettle();
 
     // …the admin's sheet offers demotion.
     await openSheet(tester, 'Ana');
-    await tester.tap(find.text('Make regular member'));
+    await tester.tap(find.text('Take back the Administrator role'));
     await tester.pumpAndSettle();
     expect(workspace.lastRoleChange, ('ws-1', 'member-2', false));
   });

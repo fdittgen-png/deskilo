@@ -12,8 +12,8 @@
 /// The answer types a question can have.
 enum WorkspaceFieldType {
   text,
-  // The named argument is not decoration: `no_hardcoded_strings` greps
-  // for `Text('`, and `longText('long_text')` contains it.
+  // The named argument is not decoration: the l10n audit reads
+  // `Text('` as displayed text, and `longText('long_text')` contains it.
   longText(wire: 'long_text'),
   integer,
   decimal,

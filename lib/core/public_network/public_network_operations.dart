@@ -218,6 +218,22 @@ abstract final class PublicNetworkOperations {
     baseline: true,
   );
 
+  /// The owner returns inherited public fields to the workspace's own information: the named ones, or all of them when p_fields is null; answers the page as publication.page.read does.
+  static const publicationPageReset = PublicOperationSpec(
+    id: 'publication.page.reset',
+    surface: PublicSurface.management,
+    principal: PublicPrincipal.authenticated,
+    authority: PublicAuthority.owner,
+    mutation: PublicMutation.write,
+    features: ['publicListings'],
+    rpc: 'reset_workspace_public_page',
+    params: {'p_workspace': 'uuid', 'p_fields': 'text[]'},
+    output: 'PublicationPage',
+    cardinality: PublicCardinality.one,
+    versions: [],
+    requires: [],
+  );
+
   /// The owner saves the public page and publishes or withdraws it; answers the public projection it produced.
   static const publicationPageSave = PublicOperationSpec(
     id: 'publication.page.save',
@@ -281,6 +297,7 @@ const Map<String, PublicOperationSpec> publicNetworkOperations = {
   'directory.workspaces.search': PublicNetworkOperations.directoryWorkspacesSearch,
   'directory.workspaces.detail': PublicNetworkOperations.directoryWorkspacesDetail,
   'publication.page.read': PublicNetworkOperations.publicationPageRead,
+  'publication.page.reset': PublicNetworkOperations.publicationPageReset,
   'publication.page.save': PublicNetworkOperations.publicationPageSave,
   'directory.sources.register': PublicNetworkOperations.directorySourcesRegister,
   'workspace.profile.request': PublicNetworkOperations.workspaceProfileRequest,

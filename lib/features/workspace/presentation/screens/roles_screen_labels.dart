@@ -59,4 +59,6 @@ String permissionLabel(AppLocalizations? l10n, WorkspacePermission permission) =
           l10n?.permDeployToDev ?? 'Deploy to development',
         WorkspacePermission.accessProd =>
           l10n?.permAccessProd ?? 'Enter the production workspace',
+        WorkspacePermission.viewAnalytics =>
+          l10n?.permViewAnalytics ?? 'Read the workspace figures',
       };

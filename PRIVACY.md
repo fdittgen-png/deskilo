@@ -12,7 +12,7 @@ describes what the app processes and why. DesKilo is open source
 
 | Data | Purpose | Where |
 |---|---|---|
-| E-mail address, display name, password (hashed) | Your account (sign-in, password reset) | Supabase (EU region, eu-central-1) |
+| E-mail address, display name, password (hashed) | Your account (sign-in, password reset) | the database host named in the installation's privacy notice |
 | Social sign-in identity (Google, Microsoft, Apple, or Facebook user id + e-mail), if you choose it | Alternative sign-in; linked to the same account | Supabase Auth |
 | Workspace membership, role, subscription percentage | Running your coworking community | Supabase |
 | Reservations and check-ins (seat/level, time) | Desk booking — the app's core function | Supabase |
@@ -25,10 +25,14 @@ describes what the app processes and why. DesKilo is open source
 ## What we do NOT do
 
 - **No tracking, no analytics, no advertising.** The app contains no
-  third-party tracking or analytics SDK, no ad SDK, and (in every
-  flavor) no Firebase.
-- **No sale or sharing of data.** Data never leaves the service except
-  to a payment provider you explicitly pay through.
+  third-party tracking or analytics SDK and no ad SDK. Firebase is used
+  only to deliver push notifications, and only where the operator of the
+  installation configures it (see below); it is a delivery channel, not
+  analytics.
+- **No sale of data.** Data reaches only the recipients named in the
+  installation's and your space's privacy notice — for example the
+  database host, push delivery, a payment provider you pay through, or
+  an e-invoicing destination a space enables.
 - **No payment card data.** Card/wallet details are entered on the
   payment provider's own pages (PayPal, Stripe, Mollie, Wero); DesKilo
   only records that a payment happened and its amount.
@@ -45,8 +49,15 @@ payloads carry no personal data (a generic kind only).
 ## Data controller & processors
 
 Each coworking workspace is operated by its **owner** (your community),
-who determines members, prices, and payment providers. The backend is
-hosted on Supabase (Postgres, EU `eu-central-1`). If a workspace enables
+who determines members, prices, and payment providers. DesKilo can be
+installed by anyone on their own Supabase project, in a region they
+choose, so the region and any transfer outside the EU depend on the
+installation: the app shows the installation's privacy notice, and the
+space's own notice where it has one, with each recipient's role,
+purpose, legal basis, region and transfer mechanism. Where the operator
+has not recorded one of these, the notice says `unknown` rather than
+guessing. Acknowledging a notice is not consent: each acknowledgment is
+kept with the version it named, and a new version opts nobody in. If a workspace enables
 online payments, the corresponding provider (PayPal, Stripe, or Mollie)
 processes that payment under its own privacy policy.
 
@@ -81,15 +92,20 @@ processes that payment under its own privacy policy.
 | Audit and decision trail | proving who approved what | the statutory period | kept |
 | Badge hashes | opening the door | until revoked | revoked immediately |
 | Diagnostic trace | fixing a fault you report | on your device only, 512 KiB, oldest discarded | delete the app, or clear it in Settings |
-| Answers to the space's own questions, marked personal | a committee role, a joining date, an emergency contact the space asked for | while you are a member of that space | deleted |
-| Answers marked NOT personal | the space's own operational data, such as a size for a group order | for the life of the space | kept |
+| Answers to the space's own questions | a committee role, an emergency contact, a size for a group order — whatever the space asked | while you are a member of that space | deleted |
+| Answers kept under a retention hold | only a question the owner documented a legal obligation for, such as a statutory member register | the period the hold states, readable only by whoever manages personal data in that space | kept until the hold expires, then deleted |
 
-A space can ask questions of its own beyond the fields above, and the
-owner marks each one as personal or not when they define it. That single
-mark decides everything: whether the answer travels in your data export,
-whether it is deleted when you erase, and which row of this table it
-falls under. The safe answer is the default — a new question is personal
-until somebody deliberately says it is not.
+A space can ask questions of its own beyond the fields above. Every
+answer is stored against your membership, so every answer is personal
+data about you, whatever the owner ticked when they defined the
+question: it travels in your data export and it is deleted when you
+erase. The owner's "personal data" switch no longer exempts anything.
+The only exception is a retention hold the owner documents for one
+question — the legal basis in words and a period in days. An answer
+under a hold survives your erasure stamped with that basis and its
+expiry, only someone who manages personal data in that space can read
+it, and it is deleted when the hold expires. A switch set to "not
+personal" never creates a hold.
 
 A refusal from the server names the question and the rule it broke, never
 the answer, so an answer cannot reach a log through an error message.
@@ -109,6 +125,26 @@ data, and to object to processing. Most of it is directly visible and
 editable in the app (Settings, Profile). For anything else, contact
 **fdittgen@gmail.com**. You may also lodge a complaint with your
 supervisory authority.
+
+Each space is the controller of what you did in it, and a request to a
+space is recorded with the day it was received. It is answered within one
+calendar month — the same date the following month, or that month's last
+day when it has no such date — counted in the space's own time zone. A
+space may extend that by two further months only by telling you why
+within the first month; the original date stays on the record. You can
+file a request after you have left a space, and no optional setting or
+suspended feature closes that route; a space can also record a request
+you made by letter or in person.
+
+When a request is completed it says, store by store, what was removed,
+corrected, restricted, kept (with the legal basis and how long) and what
+is outside this installation. Your data export says the same about
+itself: it covers one space on one installation, not another
+installation, your devices' caches or the operator's backups. Before you
+erase, the app can show what will go and what stays — invoices and the
+ledger stay as accounting evidence, your answers to the space's
+questions go — and the membership row that keeps those records together
+is pseudonymous, not anonymous.
 
 ## Children
 

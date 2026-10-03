@@ -20,7 +20,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
-import 'invoices_test.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 Invoice _invoice(
   String id, {

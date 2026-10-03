@@ -11,6 +11,10 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
+import 'list_space_tap.dart';
+import '../../domain/space_code.dart';
+import '../../domain/whole_space_blocking.dart';
+import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/format_controller.dart';
 
 /// The plan's SEAT LIST (#687), ported out of the deleted Plan tab.
@@ -31,6 +35,7 @@ class SeatListView extends ConsumerWidget {
     required this.at,
     required this.dayOpen,
     required this.onSeatTap,
+    this.onSpaceTap,
     this.windowEndOrNull,
   });
 
@@ -52,13 +57,26 @@ class SeatListView extends ConsumerWidget {
 
   final void Function(Seat seat) onSeatTap;
 
+  /// #1825 — whole-space reservation from a desk or office header; null
+  /// when this member may not reserve a space as a whole (feature off, no
+  /// grant, no roster). Only a header whose space is bookable as a whole
+  /// becomes actionable. Called with neither id, it reserves the level.
+  final void Function(String? deskId, String? officeId)? onSpaceTap;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final timeFormat = ref.watch(appFormatProvider); // #1150
-    final myMemberId = ref.watch(myMemberProvider).value?.id;
 
-    if (plan.seats.isEmpty) {
+    final level = ref
+        .watch(levelsProvider)
+        .value
+        ?.where((l) => l.id == plan.levelId)
+        .firstOrNull;
+    final wholeLevel = onSpaceTap != null && levelReservable(ref, level);
+    if (plan.seats.isEmpty &&
+        !wholeLevel &&
+        !plan.desks.any((d) => d.bookableAsWhole) &&
+        !plan.offices.any((o) => o.bookableAsWhole)) {
       return EmptyState(
         icon: Icons.event_seat_outlined,
         title: l10n?.planNoSeats ?? 'This level has no seats yet.',
@@ -84,12 +102,164 @@ class SeatListView extends ConsumerWidget {
           .join(' · ');
     }
 
-    final seats = [...plan.seats]..sort((a, b) => a.name.compareTo(b.name));
+    // #1825 — the structure the member reserves in: each office, its
+    // desks, each desk's seats; seats with no desk last. A desk or office
+    // with no seat still shows when it can be reserved as a whole.
+    int byName(String a, String b) => a.toLowerCase().compareTo(b.toLowerCase());
+    final rows = <Widget>[];
+    // #1825 — a closed day mutes the structure, as the canvas does.
+    final titleStyle = Theme.of(context).textTheme.titleSmall?.copyWith(
+        color: dayOpen ? null : Theme.of(context).disabledColor);
+    Widget header(String key, IconData icon, String name, double indent,
+        {VoidCallback? onTap, String? subtitle}) =>
+        ListTile(
+          key: ValueKey(key),
+          contentPadding: EdgeInsetsDirectional.only(start: 16 + indent, end: 16),
+          leading: Icon(icon, color: dayOpen ? null : Theme.of(context).disabledColor),
+          title: Text(name, style: titleStyle),
+          subtitle: subtitle == null ? null : Text(subtitle),
+          trailing: onTap == null
+              ? null
+              : Icon(Icons.add_circle_outline,
+                  semanticLabel: l10n?.planReserveButton ?? 'Reserve'),
+          onTap: onTap,
+        );
+    // #1825 — the window the rows describe (live: the instant).
+    final windowEnd = windowEndOrNull ?? at.add(const Duration(minutes: 1));
+    Reservation? blocking(SpaceKind kind, {String? deskId, String? officeId, String? levelId}) =>
+        wholeSpaceBlocking(
+          kind: kind,
+          plan: plan,
+          reservations: reservations,
+          from: at,
+          to: windowEnd,
+          deskId: deskId,
+          officeId: officeId,
+          levelId: levelId,
+        );
+    final currency = ref.watch(currentWorkspaceProvider).value?.currencyCode ?? '';
+    // What a reservable header covers ("Reservable as a whole · 3 tables
+    // · 12 seats · 25.00 EUR"), or who holds it when it is taken.
+    String? wholeLine({required bool offered, required Reservation? taken,
+        int tables = 0, required int seats, required int priceCents}) {
+      if (!offered) return null;
+      if (taken != null) {
+        return l10n?.planReservedBy(names[taken.memberId] ?? '—') ??
+            'Reserved by ${names[taken.memberId] ?? '—'}';
+      }
+      return [
+        l10n?.listWholeReservable ?? 'Reservable as a whole',
+        if (tables > 0) l10n?.listCoversTables(tables) ?? '$tables tables',
+        if (seats > 0) l10n?.listCoversSeats(seats) ?? '$seats seats',
+        if (priceCents > 0) '${centsToMajor(priceCents)} $currency',
+      ].join(' · ');
+    }
+    VoidCallback? spaceTap({String? deskId, String? officeId, required bool whole,
+        Reservation? taken}) {
+      final tap = onSpaceTap;
+      return tap == null || !whole || !dayOpen || taken != null
+          ? null
+          : () => tap(deskId, officeId);
+    }
 
-    return ListView.builder(
-      itemCount: seats.length,
-      itemBuilder: (context, index) {
-        final seat = seats[index];
+    // #1825 — the whole level, at the top, only where the level rail
+    // offers it (its stricter rule); structure otherwise stays the rail's.
+    if (wholeLevel) {
+      final taken = blocking(SpaceKind.level, levelId: plan.levelId);
+      rows.add(header('list-level-${plan.levelId}', Icons.layers_outlined,
+          level!.name, 0,
+          onTap: spaceTap(whole: true, taken: taken),
+          subtitle: wholeLine(
+            offered: true,
+            taken: taken,
+            tables: plan.desks.length,
+            seats: plan.seats.length,
+            priceCents: level.priceCents,
+          )));
+    }
+    final placed = <String>{};
+    final offices = [...plan.offices]..sort((a, b) => byName(a.name, b.name));
+    for (final office in offices) {
+      final desks = [
+        for (final d in plan.desks)
+          if (d.officeId == office.id) d,
+      ]..sort((a, b) => byName(a.name, b.name));
+      final seatsOf = {
+        for (final d in desks)
+          d.id: [
+            for (final s in plan.seats)
+              if (s.deskId == d.id) s,
+          ]..sort((a, b) => byName(a.name, b.name)),
+      };
+      final shown = desks
+          .where((d) => d.bookableAsWhole || seatsOf[d.id]!.isNotEmpty)
+          .toList();
+      if (shown.isEmpty && !office.bookableAsWhole) continue;
+      final officeName =
+          plan.officeContextName(office, levelName: levelName, byLevel: byLevel);
+      // #1273 — a level's only room is named by the level: under the level
+      // header it would print the same name twice.
+      final duplicate = wholeLevel && officeName == level?.name;
+      final officeTaken = blocking(SpaceKind.office,
+          officeId: office.id, levelId: office.levelId);
+      final officeOffered = onSpaceTap != null && office.bookableAsWhole;
+      if (!duplicate) {
+        rows.add(header(
+          'list-office-${office.id}',
+          Icons.meeting_room_outlined,
+          officeName,
+          0,
+          onTap: spaceTap(
+              officeId: office.id, whole: office.bookableAsWhole, taken: officeTaken),
+          subtitle: wholeLine(
+            offered: officeOffered,
+            taken: officeTaken,
+            tables: desks.length,
+            seats: seatsOf.values.fold(0, (n, l) => n + l.length),
+            priceCents: office.priceCents,
+          ),
+        ));
+      }
+      for (final desk in shown) {
+        final deskTaken = blocking(SpaceKind.desk,
+            deskId: desk.id, officeId: office.id, levelId: office.levelId);
+        rows.add(header('list-desk-${desk.id}', Icons.table_restaurant_outlined,
+            desk.name, 16,
+            onTap: spaceTap(
+                deskId: desk.id, whole: desk.bookableAsWhole, taken: deskTaken),
+            subtitle: wholeLine(
+              offered: onSpaceTap != null && desk.bookableAsWhole,
+              taken: deskTaken,
+              seats: seatsOf[desk.id]!.length,
+              priceCents: desk.priceCents,
+            )));
+        for (final seat in seatsOf[desk.id]!) {
+          placed.add(seat.id);
+          rows.add(_seatRow(context, ref, seat, 32, ''));
+        }
+      }
+    }
+    final unplaced = [
+      for (final s in plan.seats)
+        if (!placed.contains(s.id)) s,
+    ]..sort((a, b) => byName(a.name, b.name));
+    for (final seat in unplaced) {
+      rows.add(_seatRow(context, ref, seat, 0, contextOf(seat)));
+    }
+
+    return ListView(children: rows);
+  }
+
+  Widget _seatRow(
+    BuildContext context,
+    WidgetRef ref,
+    Seat seat,
+    double indent,
+    String place,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    final timeFormat = ref.watch(appFormatProvider); // #1150
+    final myMemberId = ref.watch(myMemberProvider).value?.id;
         // Browsing (#184): the row mirrors the canvas — occupancy over the
         // whole window, instant-based in live mode. Closed day (#186):
         // every row muted like the canvas, tap gated in [_onSeatTap].
@@ -204,17 +374,18 @@ class SeatListView extends ConsumerWidget {
                 ),
             ],
           ),
-          title: Text(seat.name.isEmpty ? contextOf(seat) : seat.name),
+          key: ValueKey('list-seat-${seat.id}'),
+          contentPadding:
+              EdgeInsetsDirectional.only(start: 16 + indent, end: 16),
+          title: Text(seat.name.isEmpty ? place : seat.name),
           subtitle: Text(
-            [contextOf(seat), stateText]
-                .where((s) => seat.name.isNotEmpty || s != contextOf(seat))
+            [place, stateText]
+                .where((s) => seat.name.isNotEmpty || s != place)
                 .where((s) => s.isNotEmpty)
                 .join('\n'),
           ),
-          isThreeLine: seat.name.isNotEmpty && contextOf(seat).isNotEmpty,
+          isThreeLine: seat.name.isNotEmpty && place.isNotEmpty,
           onTap: () => onSeatTap(seat),
         );
-      },
-    );
   }
 }

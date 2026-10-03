@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../period_label.dart';
 import '../../domain/invoice_line_text.dart';
+import '../../domain/payment_request_ids.dart';
 import '../payment_provider_labels.dart';
 import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
@@ -85,6 +86,7 @@ class MoneyScreen extends ConsumerStatefulWidget {
 }
 
 class _MoneyScreenState extends ConsumerState<MoneyScreen> {
+  final _paymentRequests = PaymentRequestIds(); // #2014 B
   /// First day of the visible month; the bill shows this period.
   late DateTime _month;
 
@@ -836,22 +838,21 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
-        start = await ref.read(moneyRepositoryProvider).createPaymentOrder(
-              provider: chosen,
-              workspaceId: workspace.id,
-              memberId: member.id,
-              amountCents: amountCents,
-              currencyCode:
-                  ref.read(currentWorkspaceProvider).value?.currencyCode ??
-                      'EUR',
-              period: _period,
-            );
+        final repo = ref.read(moneyRepositoryProvider);
+        final currency =
+            ref.read(currentWorkspaceProvider).value?.currencyCode ?? 'EUR';
+        start = await _paymentRequests.run(workspace.id, member.id, chosen,
+            _period, amountCents, (id) => repo.createPaymentOrder(
+                provider: chosen, workspaceId: workspace.id, memberId: member.id,
+                amountCents: amountCents, currencyCode: currency,
+                period: _period, requestId: id));
       },
     )) {
       return;
     }
     final order = start;
     if (order == null || !mounted) return;
+    if (order.alreadyPaid) return ref.invalidate(myPaymentIntentsProvider); // #2014 B: retry of a paid request
     if (!order.started) {
       trace.warn(
         'payments',

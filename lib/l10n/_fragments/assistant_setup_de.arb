@@ -7,7 +7,7 @@
   "assistantSetupSaved": "Gespeichert.",
   "assistantSetupStale": "Jemand hat das Angebot inzwischen geändert. Prüfen Sie es und versuchen Sie es erneut.",
   "assistantSetupFailed": "Speichern fehlgeschlagen. Nichts wurde geändert; versuchen Sie es erneut.",
-  "assistantSetupLinkIdentity": "Meine Identität verknüpfen",
+  "assistantSetupLinkIdentity": "Meine Identität bestätigen",
   "assistantSetupTurnOn": "Einschalten",
   "assistantSetupRecommended": "Empfohlene Auswahl verwenden",
   "assistantSetupCustomise": "Anpassen",

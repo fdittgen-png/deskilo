@@ -12,6 +12,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/profile_providers.dart';
+import '../widgets/privacy_notice_view.dart';
 
 /// #751 — the GDPR consent. Shown by the router before anything else
 /// while the account has not accepted [kPrivacyPolicyVersion]; shown
@@ -37,6 +38,8 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
     final profileAsync = ref.watch(myProfileProvider);
     final profile = profileAsync.value;
     final acceptedAt = profile?.privacyAcceptedAt;
+    final notice = ref.watch(privacyNoticesProvider).value?.installation;
+    final requiredVersion = ref.watch(requiredPrivacyVersionProvider);
     // #1650 — a profile that could not be FETCHED is not a profile that
     // never accepted: the form would record a fresh acceptance over an
     // unknown state. The router sends here for both; only this screen
@@ -68,8 +71,19 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                   Text(s.body, style: theme.textTheme.bodyMedium),
                   const SizedBox(height: AppSpacing.md),
                 ],
+                // #1914 — the notice the server publishes for this
+                // installation: the controller and every recipient.
+                if (notice != null) ...[
+                  Text(
+                    l10n?.privacyNoticeTitle ?? 'Who processes your data',
+                    style: theme.textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 4),
+                  PrivacyNoticeView(notice: notice, showVersion: false),
+                  const SizedBox(height: AppSpacing.md),
+                ],
                 Text(
-                  '${l10n?.consentVersion ?? 'Version'} $kPrivacyPolicyVersion',
+                  '${l10n?.consentVersion ?? 'Version'} $requiredVersion',
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
@@ -87,6 +101,15 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                   ),
                 const SizedBox(height: AppSpacing.sm),
                 Wrap(spacing: AppSpacing.sm, children: [
+                  // #1914 — the rights and the contact stay reachable
+                  // before anything is accepted (/privacy is public).
+                  TextButton.icon(
+                    key: const ValueKey('consent-rights'),
+                    onPressed: () => context.push('/privacy'),
+                    icon: const Icon(Icons.gavel_outlined, size: 18),
+                    label: Text(l10n?.privacyNoticeRightsRoute ??
+                        'Your rights and the contact'),
+                  ),
                   TextButton.icon(
                     key: const ValueKey('consent-help'),
                     onPressed: () => context.push('/help?topic=Privacy'),
@@ -155,9 +178,11 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
       message: 'accept privacy policy failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
+      // #1914 — the version the server publishes, which is what this
+      // screen shows; the shipped one only when the server has none.
       action: () => ref
           .read(profileRepositoryProvider)
-          .acceptPrivacyPolicy(kPrivacyPolicyVersion),
+          .acceptPrivacyPolicy(ref.read(requiredPrivacyVersionProvider)),
     );
     if (!ok) return;
     // #1650 — where the person was going, read BEFORE the refresh: the

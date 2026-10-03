@@ -28,7 +28,7 @@
   "mcpEligibleYes": "Diese Datenbank erlaubt Ihnen, Assistenten zu nutzen.",
   "mcpEligibleRequested": "Sie haben um Freigabe gebeten. Ein Datenbankadministrator prüft sie.",
   "mcpEligibleExpired": "Ihre Freigabe ist abgelaufen. Fragen Sie erneut an, um Assistenten weiter zu nutzen.",
-  "mcpEligibleNoIdentity": "Ihr Konto ist auf dieser Datenbank nicht mit einer bestätigten Identität verknüpft.",
+  "mcpEligibleNoIdentity": "Ihre Identität ist für Assistenten auf dieser Datenbank noch nicht bestätigt.",
   "mcpEligibleNot": "Diese Datenbank hat Assistenten für Sie nicht freigegeben.",
   "mcpEligibleWithdraw": "Assistentenzugang auf dieser Datenbank aufgeben",
   "mcpConnectedNoWorkspace": "Kein Arbeitsbereich: Dieser Assistent kann hier nichts tun.",

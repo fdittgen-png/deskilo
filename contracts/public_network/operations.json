@@ -371,7 +371,7 @@
       ],
       "tests": [
         "test/core/public_network/public_network_negotiation_test.dart",
-        "supabase/tests/database/106_public_network_negotiation.sql"
+        "supabase/tests/database/130_public_network_negotiation.sql"
       ]
     },
     {
@@ -550,6 +550,42 @@
       "baseline": true
     },
     {
+      "id": "publication.page.reset",
+      "summary": "The owner returns inherited public fields to the workspace's own information: the named ones, or all of them when p_fields is null; answers the page as publication.page.read does.",
+      "surface": "management",
+      "principal": "authenticated",
+      "authority": "owner",
+      "binding": {
+        "kind": "rpc",
+        "method": "POST",
+        "rpc": "reset_workspace_public_page",
+        "params": {
+          "p_workspace": "uuid",
+          "p_fields": "text[]"
+        }
+      },
+      "output": {
+        "schema": "PublicationPage",
+        "cardinality": "one"
+      },
+      "mutation": "write",
+      "idempotency": "clearing an override that is already cleared has no effect",
+      "side_effects": [
+        "removes the named overrides from the page row",
+        "refreshes the public card when the page is published; never publishes or withdraws it"
+      ],
+      "features": [
+        "publicListings"
+      ],
+      "consumers": [
+        "lib/features/directory/data/supabase_publication_repository.dart"
+      ],
+      "tests": [
+        "test/features/directory/publication_repository_test.dart",
+        "supabase/tests/database/123_public_page_defaults.sql"
+      ]
+    },
+    {
       "id": "publication.page.save",
       "summary": "The owner saves the public page and publishes or withdraws it; answers the public projection it produced.",
       "surface": "management",
@@ -622,7 +658,7 @@
       "tests": [
         "supabase/tests/database/105_public_network_boundary.sql",
         "test/features/directory/participant_negotiation_test.dart",
-        "supabase/tests/database/106_public_network_negotiation.sql"
+        "supabase/tests/database/130_public_network_negotiation.sql"
       ],
       "versions": [
         1
@@ -663,7 +699,7 @@
       "tests": [
         "supabase/tests/database/105_public_network_boundary.sql",
         "test/features/directory/participant_negotiation_test.dart",
-        "supabase/tests/database/106_public_network_negotiation.sql"
+        "supabase/tests/database/130_public_network_negotiation.sql"
       ],
       "versions": [
         1

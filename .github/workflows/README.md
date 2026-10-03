@@ -37,6 +37,7 @@ changes.
 | Name | File | What it is for |
 | --- | --- | --- |
 | CI · Quality report | `quality.yml` | **the gate every PR waits on**: l10n, analyze, the suite with coverage, then nine disciplines as one table in the run summary — including the migration replay and the pgTAP suite. Its first job keeps the name `analyze · l10n gate · test · coverage`, because that name is master's required status check |
+| CI · Dictionary refresh | `dictionary-refresh.yml` | after a merge to master, regenerates `docs/database/dictionary.json` and its renderings from the migration replay and keeps one auto-merging pull request, so a migration PR pays no CI round for the data dictionary (#2088) |
 | CI · Android boot check | `android-boot.yml` | installs the shrunk release APK on an emulator and proves it stays alive |
 | CI · F-Droid no-GMS audit | `fdroid-foss.yml` | proves the libre flavour carries no Google dependency |
 | Nightly · Journey latency benchmark | `perf-bench.yml` | runs `tool/bench` on the large workload and gates its SHAPE — round trips, elements, frames, the retry budget. The wall clock is reported, never gated, and the record declares what is not measured at all |

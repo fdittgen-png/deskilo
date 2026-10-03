@@ -50,5 +50,11 @@
   "portalEmploymentHint": "El empleo no modifica los permisos ni las suscripciones. Los pagos de salarios no están habilitados.",
   "portalAdminVisible": "Mostrarme como administrador público",
   "featurePublicListings": "Anuncio público del espacio",
-  "featurePublicListingsDesc": "Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores."
+  "featurePublicListingsDesc": "Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores.",
+  "portalFollowsWorkspace": "De la información del espacio",
+  "portalCustomised": "Personalizado",
+  "portalUseWorkspaceInfo": "Usar la información del espacio",
+  "portalResetAll": "Restablecer todos los datos públicos con la información del espacio",
+  "portalResetAllBody": "Los valores públicos de cada campo que tiene información en el espacio se sustituyen por ella. Los campos sin equivalente en el espacio conservan lo que escribió.",
+  "portalResetAllConfirm": "Restablecer"
 }

@@ -33,9 +33,9 @@
   "workspaceCodeCopy": "Copiar ID",
   "workspaceCodeCopied": "Copiado",
   "inviteRoleMember": "Invitación de miembro",
-  "inviteRoleAdmin": "Invitación de admin",
+  "inviteRoleAdmin": "Invitación de administrador/a",
   "inviteAdminExplainer": "Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entrégalo solo a la persona a la que está destinado.",
-  "inviteAdminNewCode": "Nuevo código de admin",
+  "inviteAdminNewCode": "Nuevo código de administrador/a",
   "inviteOwnerNote": "No existe invitación de propietario — solo un propietario puede conceder la propiedad, en Miembros y planes.",
   "scanJoinTitle": "Escanear QR del espacio",
   "scanJoinHelp": "Apunta la cámara al QR de invitación — verás el espacio antes de unirte.",
@@ -214,11 +214,11 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
-  "rolesTitle": "Gestión de roles",
+  "rolesTitle": "Roles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "El propietario siempre tiene todos los permisos. Decide aquí qué pueden hacer los demás roles: un copropietario puede tener menos que un propietario.",
+  "rolesIntroEditor": "Aquí todas las personas son miembros. Un rol añade lo que pueden hacer quienes lo tienen y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
@@ -234,11 +234,11 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleAdmin": "Admin",
+  "roleAdmin": "Administrador/a",
   "@roleAdmin": {
     "description": "Role label (#513)"
   },
-  "roleMember": "Miembro",
+  "roleMember": "Todos los miembros",
   "@roleMember": {
     "description": "Role label (#513)"
   },

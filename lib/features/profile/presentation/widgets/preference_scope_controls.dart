@@ -43,8 +43,10 @@ class PreferenceScopeControls extends ConsumerWidget {
   }
 }
 
-Future<void> savePersonalLanguage(WidgetRef ref, Locale? locale) async {
-  final scoped = ref.read(workspacePreferenceEditingProvider);
+/// [workspaceOnly] overrides the scope switch (#1823: Me always edits
+/// the account's defaults); null follows it.
+Future<void> savePersonalLanguage(WidgetRef ref, Locale? locale, {bool? workspaceOnly}) async {
+  final bool scoped = workspaceOnly ?? ref.read(workspacePreferenceEditingProvider);
   final account = ref.read(personalPreferenceContextProvider).account;
   final controller = ref.read(localeControllerProvider.notifier);
   if (account != null) {
@@ -56,8 +58,8 @@ Future<void> savePersonalLanguage(WidgetRef ref, Locale? locale) async {
   if (!scoped && ref.context.mounted && ref.read(personalPreferenceContextProvider).account == account) await controller.set(locale, updateProfile: false);
 }
 
-Future<void> savePersonalTheme(WidgetRef ref, ThemeMode? mode) async {
-  final scoped = ref.read(workspacePreferenceEditingProvider);
+Future<void> savePersonalTheme(WidgetRef ref, ThemeMode? mode, {bool? workspaceOnly}) async {
+  final bool scoped = workspaceOnly ?? ref.read(workspacePreferenceEditingProvider);
   final account = ref.read(personalPreferenceContextProvider).account;
   final controller = ref.read(themeControllerProvider.notifier);
   if (account != null) {

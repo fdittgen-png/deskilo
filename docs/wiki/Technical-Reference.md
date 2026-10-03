@@ -28,7 +28,7 @@ contribute).
 |---|---|
 | `flutter_riverpod` 3 · `riverpod_annotation` · `riverpod_generator` | every provider is generated from an annotated function; no global singletons, and a widget test overrides any seam |
 | `freezed` · `json_serializable` | immutable domain models with value equality; a model is never mutated, only copied |
-| `go_router` 17 | one route registry, pinned by `route_registry_test`; every gated route redirects on its feature flag |
+| `go_router` 17 | one route registry, checked against the live router by `route_registry_test`; every gated route redirects on its feature flag |
 | `flex_color_scheme` | the theme, light and dark, from one seed |
 
 **Backend and transport**
@@ -78,7 +78,7 @@ table of contents honest in tests.
   for its whole life, with a `requires` graph; the registry is pinned.
 - **Five languages**, always: `lib/l10n/_fragments/<topic>_<lang>.arb`
   merged by `tool/build_arb.dart`; English is canonical; a bare string
-  literal in a widget fails `no_hardcoded_strings_test`.
+  literal in a widget fails `l10n_audit_test`.
 
 ## The server
 
@@ -123,7 +123,7 @@ table of contents honest in tests.
 | Gate | Promise |
 |---|---|
 | `feature_registry` · `route_registry` · `report_kind_registry` · `help_anchor` · `system_columns` | a registry and the code that reads it cannot drift |
-| `l10n_completeness` · `no_hardcoded_strings` | five languages, no bare literal |
+| `arb_key_parity` · `l10n_audit` | five languages, no bare literal |
 | `layering` · `file_length` · `no_inline_border_radius` | the shape of the code |
 | `no_silent_catch` · `no_wall_clock` | an exception is always traced; time is always injected |
 | `spdx_headers` · `adr_format` | provenance and decisions |

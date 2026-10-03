@@ -126,6 +126,154 @@ case "$after" in
        This is the app's central invariant: one seat, one booking." ;;
 esac
 
+# #1908 — cancel vs check-in on ONE reservation. A cancels and holds its
+# transaction open; B checks in meanwhile. Without the row lock on the
+# transitions' initial read, B read the committed `reserved`, waited only
+# at its UPDATE and wrote `checked_in` over the cancellation. With it, B
+# waits for A, then sees `cancelled` and is refused.
+RES=00000000-0000-4000-8000-00000000c00a
+psql_q "insert into public.reservations (id, workspace_id, member_id, seat_id, starts_at, ends_at)
+        values ('$RES', '$WS', '$MEMBER', '$SEAT', now() - interval '10 minutes', now() + interval '2 hours')" \
+  >/dev/null || fail "the #1908 fixture reservation would not build"
+ACT="select set_config('request.jwt.claims', '{\"sub\":\"00000000-0000-4000-8000-00000000c004\",\"role\":\"authenticated\"}', true); set local role authenticated;"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 \
+  -c "begin; $ACT select public.cancel_reservation('$RES'); select pg_sleep(3); commit;" >/dev/null 2>&1 &
+canceller=$!
+sleep 1
+checkin=$(psql "$DB_URL" -qX -c "begin; $ACT select public.check_in_reservation('$RES'); commit;" 2>&1 || true)
+wait "$canceller" || fail "the cancelling session did not commit"
+final=$(psql_q "select status from public.reservations where id = '$RES'")
+if [ "$final" = "cancelled" ]; then
+  say "cancel vs check-in: the reservation stays cancelled (check-in said: $(echo "$checkin" | grep -o 'ERROR:.*' | head -1))"
+else
+  fail "a check-in overwrote a concurrent cancellation: the reservation is '$final'.
+       The transition read its state without the row lock (#1908)."
+fi
+
+# #1908 B — a seat and its whole office, two connections. A books the
+# seat and holds; B books the whole office for overlapping hours. Without
+# the hierarchy guard both pass their checks; with it B waits for A's
+# lock, then sees the seat and is refused.
+SPAN="date_trunc('day', now()) + interval '2 days 9 hours', date_trunc('day', now()) + interval '2 days 12 hours'"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 \
+  -c "begin; insert into public.reservations (workspace_id, member_id, seat_id, starts_at, ends_at) values ('$WS', '$MEMBER', '$SEAT', $SPAN); select pg_sleep(3); commit;" >/dev/null 2>&1 &
+seat_holder=$!
+sleep 1
+whole=$(psql "$DB_URL" -qX -c "insert into public.reservations (workspace_id, member_id, office_id, starts_at, ends_at) values ('$WS', '$RIVAL', '00000000-0000-4000-8000-00000000c006', $SPAN)" 2>&1 || true)
+wait "$seat_holder" || fail "the seat session did not commit"
+both=$(psql_q "select count(*) from public.reservations where workspace_id = '$WS' and starts_at = date_trunc('day', now()) + interval '2 days 9 hours'")
+if [ "$both" = "1" ]; then
+  say "seat vs whole office: one booking, the whole office refused ($(echo "$whole" | grep -o 'ERROR:.*' | head -1))"
+else
+  fail "a seat and its whole office were both booked for the same hours ($both rows). #1908"
+fi
+
+# #1908 — one member, two seats, the same hours, two connections: the
+# member lock makes the one-place rule see the first booking.
+SEAT2=00000000-0000-4000-8000-00000000c00b
+psql_q "insert into public.seats (id, workspace_id, desk_id, x, y) values ('$SEAT2', '$WS', '00000000-0000-4000-8000-00000000c007', 2, 1)" >/dev/null \
+  || fail "the second seat would not build"
+SPAN3="date_trunc('day', now()) + interval '3 days 9 hours', date_trunc('day', now()) + interval '3 days 12 hours'"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 \
+  -c "begin; insert into public.reservations (workspace_id, member_id, seat_id, starts_at, ends_at) values ('$WS', '$RIVAL', '$SEAT', $SPAN3); select pg_sleep(3); commit;" >/dev/null 2>&1 &
+first=$!
+sleep 1
+second=$(psql "$DB_URL" -qX -c "insert into public.reservations (workspace_id, member_id, seat_id, starts_at, ends_at) values ('$WS', '$RIVAL', '$SEAT2', $SPAN3)" 2>&1 || true)
+wait "$first" || fail "the first booking did not commit"
+mine=$(psql_q "select count(*) from public.reservations where member_id = '$RIVAL' and starts_at = date_trunc('day', now()) + interval '3 days 9 hours'")
+if [ "$mine" = "1" ]; then
+  say "one member, two seats at once: one booking ($(echo "$second" | grep -o 'ERROR:.*' | head -1))"
+else
+  fail "one member holds $mine places for the same hours — the one-place rule raced. #1908"
+fi
+
+# #1908 — negative control: the checkout race below must be able to SEE
+# the defect. With the row lock removed from the two checkout functions,
+# a duplicate checkout succeeds; the exact definitions are restored before
+# the real race runs (and on any exit).
+fn_def() { psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select pg_get_functiondef('public.$1(uuid)'::regprocedure)"; }
+ORIG_CHECK_OUT=$(fn_def check_out_reservation) || fail "could not read check_out_reservation"
+ORIG_COMPLETE=$(fn_def complete_check_out) || fail "could not read complete_check_out"
+restore_locks() {
+  psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$ORIG_CHECK_OUT" >/dev/null 2>&1
+  psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$ORIG_COMPLETE" >/dev/null 2>&1
+}
+trap restore_locks EXIT
+for def in "$ORIG_CHECK_OUT" "$ORIG_COMPLETE"; do
+  case "$def" in *"p_reservation_id for update;"*) ;; *) fail "a checkout function lost its row lock (#1908 0321)";; esac
+  psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "${def//p_reservation_id for update;/p_reservation_id;}" >/dev/null \
+    || fail "could not install the unlocked control definition"
+done
+RES4=00000000-0000-4000-8000-00000000c00e
+psql_q "insert into public.reservations (id, workspace_id, member_id, seat_id, starts_at, ends_at, status, checked_in_at)
+        values ('$RES4', '$WS', '$RIVAL', '$SEAT2', now() + interval '4 days', now() + interval '4 days 2 hours', 'checked_in', now())" \
+  >/dev/null || fail "the negative-control reservation would not build"
+RIVAL_ACT="select set_config('request.jwt.claims', '{\"sub\":\"00000000-0000-4000-8000-00000000c009\",\"role\":\"authenticated\"}', true); set local role authenticated;"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 \
+  -c "begin; $RIVAL_ACT select public.check_out_reservation('$RES4'); select pg_sleep(3); commit;" >/dev/null 2>&1 &
+control_first=$!
+sleep 1
+control_second=$(psql "$DB_URL" -qX -c "begin; $RIVAL_ACT select public.check_out_reservation('$RES4'); commit;" 2>&1 || true)
+wait "$control_first" || fail "the control's first checkout did not commit"
+restore_locks
+case "$control_second" in
+  *ERROR*) fail "negative control: without the row lock the duplicate checkout was still refused
+       ($control_second) — the race below would pass whether or not the guard exists." ;;
+  *) say "negative control: without the row lock a duplicate checkout succeeds — the race can see the defect" ;;
+esac
+for f in check_out_reservation complete_check_out; do
+  case "$(fn_def $f)" in *"p_reservation_id for update;"*) ;; *) fail "$f was not restored with its row lock";; esac
+done
+
+# #1908 — checkout vs duplicate checkout on ONE checked-in reservation.
+# A checks out and holds; B checks out the same reservation meanwhile.
+# With the row lock on the transition's read, B waits, then sees
+# `completed` and is refused ("not checked in"); without it B read the
+# committed `checked_in` and wrote a second checkout over the first.
+RES2=00000000-0000-4000-8000-00000000c00c
+psql_q "insert into public.reservations (id, workspace_id, member_id, seat_id, starts_at, ends_at, status, checked_in_at)
+        values ('$RES2', '$WS', '$MEMBER', '$SEAT2', now() - interval '30 minutes', now() + interval '2 hours', 'checked_in', now() - interval '30 minutes')" \
+  >/dev/null || fail "the checkout fixture reservation would not build"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 \
+  -c "begin; $ACT select public.check_out_reservation('$RES2'); select pg_sleep(3); commit;" >/dev/null 2>&1 &
+first_out=$!
+sleep 1
+second_out=$(psql "$DB_URL" -qX -c "begin; $ACT select public.check_out_reservation('$RES2'); commit;" 2>&1 || true)
+wait "$first_out" || fail "the first checkout did not commit"
+state=$(psql_q "select status || '|' || (checked_out_at is not null) from public.reservations where id = '$RES2'")
+case "$second_out" in
+  *"not checked in"*)
+    [ "$state" = "completed|true" ] || fail "after two checkouts the reservation reads '$state'"
+    say "checkout vs duplicate checkout: one checkout, the duplicate refused (not checked in)" ;;
+  *)
+    fail "a second concurrent checkout was not refused (it said: ${second_out:-nothing — it SUCCEEDED}).
+       The checkout read its state without the row lock (#1908)." ;;
+esac
+
+# #1908 — the automated day-end vs a manual checkout. The sweep closes a
+# forgotten checked-in booking AT ITS OWN END (checked_out_at = ends_at)
+# and holds its transaction; a manual checkout arrives meanwhile. It waits
+# for the sweep, then sees `completed` and is refused, so the sweep's
+# end-of-booking time stands instead of being overwritten with now().
+psql_q "update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{\"autoCheckInOut\": true}'::jsonb where id = '$WS'" \
+  >/dev/null || fail "could not turn the day-end sweep on for the fixture"
+RES3=00000000-0000-4000-8000-00000000c00d
+psql_q "insert into public.reservations (id, workspace_id, member_id, seat_id, starts_at, ends_at, status, checked_in_at)
+        values ('$RES3', '$WS', '$RIVAL', '$SEAT', now() - interval '1 day 4 hours', now() - interval '1 day', 'checked_in', now() - interval '1 day 4 hours')" \
+  >/dev/null || fail "the day-end fixture reservation would not build"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 \
+  -c "begin; $ACT select public.sweep_day_end('$WS'); select pg_sleep(3); commit;" >/dev/null 2>&1 &
+sweeper=$!
+sleep 1
+manual=$(psql "$DB_URL" -qX -c "begin; $RIVAL_ACT select public.check_out_reservation('$RES3'); commit;" 2>&1 || true)
+wait "$sweeper" || fail "the day-end sweep did not commit"
+closed=$(psql_q "select status || '|' || (checked_out_at = ends_at) from public.reservations where id = '$RES3'")
+if [ "$closed" = "completed|true" ]; then
+  say "day-end vs manual checkout: closed at the booking's end, the late manual checkout refused ($(echo "$manual" | grep -o 'ERROR:.*' | head -1))"
+else
+  fail "the day-end sweep and a manual checkout raced: the reservation reads '$closed' (want completed|true). #1908"
+fi
+
 # Tidy up, so a second run on the same database fails on the property
 # rather than on a primary key.
 #

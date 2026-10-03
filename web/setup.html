@@ -189,6 +189,9 @@ function applyChrome(){
 const FEATURES=[
  ['carnets',0],
  ['publicHolidays',0],
+ ['holidayImport',0],
+ ['capacityKpi',0],
+ ['accountingBook',0],
  ['workspaceVocabulary',0],
  ['workspaceBranding',0],
  ['publicListings',0],
@@ -200,6 +203,7 @@ const FEATURES=[
  ['mcpAccess',0],
  ['calendarFileExport',1],
  ['memberGettingStarted',1],
+ ['taskRecorder',0],
  ['spaceInquiries',1],
  ['messageForwarding',1],
  ['captureProtection',1],
@@ -234,6 +238,7 @@ const FEATURES=[
  ['memberReports',0],
  ['deletionRequests',1],
  ['roleManagement',1],
+ ['roleAssignment',1],
  ['vatManagement',0],
  ['vatDeclarations',0],
  ['einvoiceCustomerDelivery',0],
@@ -385,7 +390,7 @@ const DEFAULTS={
  pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:''},
  org:'association',vatRegime:'not_subject',vatExigibility:'invoice',numbering:{prefix:'INV-',datePart:'year',digits:'4',reset:'yearly'},memberNumbering:{prefix:'M-',digits:'4'},regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
  mentions:{legalForm:'',register:'',terms:'',penalty:'',recovery:'',escompte:'',insurance:'',special:''},
- reminders:{levels:2,firstDays:14,betweenDays:14,automatic:true},
+ reminders:{levels:2,firstDays:14,betweenDays:14,automatic:false},
  perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),
  validation:{required:1,ownerSignOff:false},
  domains:Object.fromEntries(DOMAINS.map(d=>[d,{on:false,required:1,ownerSignOff:false}])),
@@ -424,7 +429,7 @@ function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.sh
 // The feature tree as the app declares it (featureManifest `requires`):
 // a child is only offered while its parent is on, and switching a parent
 // off switches its children off — exactly what effectiveFeatures does.
-const REQUIRES={carnets:'invoicing',configurationTransfer:'dataExport',services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab',subscriptionInvoices:'invoicing',usageInvoices:'invoicing',invoiceSettlement:'invoicing',invoiceJourney:'invoicing',bookingGate:'bookingPolicies',calendarViews:'calendarHub',reportDesigner:'invoicePdfTemplate',memberEnvironments:'environmentPairs',memberOrigin:'membersDirectory',memberPage:'membersDirectory',invoicingWizard:'invoicing',expenseRepartition:'invoicing',settlementFold:'invoiceSettlement',richMessageRefs:'memberNotifications',calendarValidations:'calendarHub',usageRecords:'invoicing',reportDesignExchange:'reportDesigner',invoiceAddressWindow:'invoicing',reportLayouts:'reportDesigner',managedProfiles:'membersDirectory',managedProfileAccess:'managedProfiles',numberSequences:'invoicing',workspaceStatus:'invoicing',siteDocuments:'multiSite',vatGroups:'vatManagement',vatRateHistory:'vatManagement',vatCounterparty:'vatManagement',deployments:'environmentPairs',expenseRepartitionWizard:'expenseRepartition',memberPaymentTerms:'invoicing',reportTexts:'reportDesigner',usageReport:'usageRecords',vatReport:'vatDeclarations',letterStandard:'reportLayouts',messageForwarding:'memberNotifications',captureProtection:'memberNotifications'};
+const REQUIRES={carnets:'invoicing',configurationTransfer:'dataExport',services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab',subscriptionInvoices:'invoicing',usageInvoices:'invoicing',invoiceSettlement:'invoicing',invoiceJourney:'invoicing',bookingGate:'bookingPolicies',calendarViews:'calendarHub',reportDesigner:'invoicePdfTemplate',memberEnvironments:'environmentPairs',memberOrigin:'membersDirectory',memberPage:'membersDirectory',invoicingWizard:'invoicing',expenseRepartition:'invoicing',settlementFold:'invoiceSettlement',richMessageRefs:'memberNotifications',calendarValidations:'calendarHub',usageRecords:'invoicing',reportDesignExchange:'reportDesigner',invoiceAddressWindow:'invoicing',reportLayouts:'reportDesigner',managedProfiles:'membersDirectory',managedProfileAccess:'managedProfiles',numberSequences:'invoicing',workspaceStatus:'invoicing',siteDocuments:'multiSite',vatGroups:'vatManagement',vatRateHistory:'vatManagement',vatCounterparty:'vatManagement',deployments:'environmentPairs',expenseRepartitionWizard:'expenseRepartition',memberPaymentTerms:'invoicing',reportTexts:'reportDesigner',usageReport:'usageRecords',vatReport:'vatDeclarations',letterStandard:'reportLayouts',messageForwarding:'memberNotifications',captureProtection:'memberNotifications',holidayImport:'publicHolidays',accountingBook:'invoicing',roleAssignment:'roleManagement'};
 const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
 const on=k=>{let f=k;while(f){if(!S.features[f])return false;f=REQUIRES[f]}return true};
 const FEATURE_KEYS=new Set(FEATURES.map(([k])=>k));
@@ -487,7 +492,7 @@ const FEATURE_HELP={calendarTab:'calendar',calendarHub:'calendar',eventsTab:'val
  validationScopes:'scopes',memberNotifications:'messages',membersDirectory:'whatsapp',whatsappIntegration:'whatsapp',
  documents:'documents',kioskMode:'kiosk',nfcBadges:'tags',qrBadges:'kiosk',badgeSignIn:'kiosk',kioskMemberPhotos:'kiosk',
  nfcSeatTags:'tags',spaceQrCodes:'whole',levelBooking:'whole',adminLevelAssign:'whole',bookingPolicies:'booking',
- workingHours:'availability',roleManagement:'roles',coOwner:'roles',deletionRequests:'validation',
+ workingHours:'availability',roleManagement:'roles',roleAssignment:'roles',coOwner:'roles',deletionRequests:'validation',
  vatManagement:'vat',vatDeclarations:'vat',einvoiceCustomerDelivery:'einvoice',memberReports:'faces',
  regionalFormats:'region',dataAccessLog:'privacy',memberDataExport:'privacy',planMemberPhotos:'plan',planObjectDelete:'plan'};
 let BUILDING='';
@@ -715,7 +720,7 @@ const STEPS=[
    h('div',{class:'row'},input(T('mentionPenalty'),'mentions.penalty',''),input(T('mentionRecovery'),'mentions.recovery','')),
    h('div',{class:'row'},input(T('mentionEscompte'),'mentions.escompte',''),input(T('mentionInsurance'),'mentions.insurance','')),input(T('mentionSpecial'),'mentions.special',''));
   if(on('dunning')){k.push(lbl(T('legalDunning'),'dunning'),help('dunning'),h('p',{class:'hint'},T('legalDunningHint')),h('div',{class:'row'},input(T('dunningLevels'),'reminders.levels','','number'),input(T('dunningFirstDays'),'reminders.firstDays','','number'),input(T('dunningBetweenDays'),'reminders.betweenDays','','number')));
-   if(on('paymentReminders'))k.push(help('reminders_auto'),checkbox(T('dunningAutomatic'),T('dunningAutomaticDesc'),S.reminders.automatic!==false,v=>{S.reminders.automatic=v;save()},'','reminders_auto'));else k.push(needs('paymentReminders'))}
+   if(on('paymentReminders'))k.push(help('reminders_auto'),checkbox(T('dunningAutomatic'),T('dunningAutomaticDesc'),S.reminders.automatic===true,v=>{S.reminders.automatic=v;save()},'','reminders_auto'));else k.push(needs('paymentReminders'))}
   else k.push(needs('dunning'));
   if(isEU()){k.push(lbl(T('einvoicePlatform'),'einvoice'),help('einvoice'),h('p',{class:'hint'},T('einvoiceHint')),
     input(T('einvoiceUrl'),'einvoice.url','','text','https://…'),h('div',{class:'row'},input(T('einvoiceToken'),'einvoice.token',''),input(T('einvoiceHeader'),'einvoice.header',T('einvoiceHeaderHint'),'text','Authorization')),input(T('einvoiceField'),'einvoice.field',T('einvoiceFieldHint'),'text','file'),
@@ -758,7 +763,7 @@ const STEPS=[
 
 {id:'roles',get title(){return T('rolesTitle')},get why(){return T('rolesWhy')},
  build(){const k=[];
-  if(on('roleManagement')){k.push(help('roles'));for(const[role,label]of[['co_owner','roleCoOwner'],['admin','roleAdmin'],['member','roleMember']]){if(role==='co_owner'&&!on('coOwner'))continue;
+  if(on('roleManagement')){k.push(help('roles'));for(const[role,label]of[['co_owner','roleCoOwner'],['admin','roleAdmin'],['member','roleEveryMember']]){if(role==='co_owner'&&!on('coOwner'))continue;
     k.push(h('div',{class:'card'},lbl(T(label),'roles'),...PERMS.filter(p=>p!=='issueInvoices'||on('invoicing')).filter(p=>p!=='manageServices'||on('services')).filter(p=>p!=='manageDocuments'||on('documents')).filter(p=>(p!=='viewNegotiations'&&p!=='manageNegotiations')||on('priceNegotiations')).map(p=>checkbox(permName(p),'',S.perms[role].includes(p),v=>{S.perms[role]=v?[...S.perms[role],p]:S.perms[role].filter(x=>x!==p);save()},'',p.endsWith('Negotiations')?'negotiations':'roles'))))}}
   else k.push(needs('roleManagement'),h('p',{class:'hint'},T('rolesDefaultMatrixHint')),help('roles'));
   if(on('adminInvoicing'))k.push(dep(T('rolesAdminInvoicingDep',{feature:quoted(featureTitle('adminInvoicing'))}),'features'));
@@ -841,7 +846,7 @@ const STEPS=[
    memberNotifications:()=>T('cfgMemberNotifications'),
    documents:()=>T('cfgDocuments'),
    dunning:()=>T('cfgDunning',{levels:S.reminders.levels,first:S.reminders.firstDays,between:S.reminders.betweenDays}),
-   paymentReminders:()=>T(S.reminders.automatic===false?'cfgRemindersManual':'cfgRemindersAuto'),
+   paymentReminders:()=>T(S.reminders.automatic===true?'cfgRemindersAuto':'cfgRemindersManual'),
    memberReports:()=>T('cfgMemberReports'),
    deletionRequests:()=>{const who=[S.autoValidate.owner?T('cfgOwners'):null,S.autoValidate.admin?T('cfgAdmins'):null].filter(Boolean);return [T('cfgDeletionRequests'),who.length?T('cfgAutoValidation',{list:who.join(', ')}):null].filter(Boolean).join(' · ')+'.'},
    roleManagement:()=>T('cfgRoleManagement',{coOwner:(S.perms.co_owner||[]).length,admin:(S.perms.admin||[]).length,member:(S.perms.member||[]).length}),
@@ -1093,7 +1098,7 @@ function exportXml(){
  push(`    <legal organization="${S.org}" vat-regime="${S.vatRegime}" vat-exigibility="${S.vatExigibility}" registration="${esc(S.regNumber)}" vat-id="${esc(S.vatId)}" exemption-reason="${esc(S.exemption)}" street="${esc(S.street)}" postal-code="${esc(S.postal)}" city="${esc(S.city)}">`);
  if(on('vatManagement')&&registered())S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).forEach((r,i)=>push(`      <vat-rate label="${esc(r.label)}" percent="${r.percent}" default="${i===0}"${on('vatGroups')&&r.group?` group="${r.group}"`:``}${on('vatRateHistory')&&r.validFrom?` valid-from="${r.validFrom}"`:``}/>`));
  for(const[k,v]of Object.entries(S.mentions))if(String(v).trim())push(`      <mention key="${k}" value="${esc(v.trim())}"/>`);
- if(on('dunning'))push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}" automatic="${on('paymentReminders')&&S.reminders.automatic!==false}"/>`);
+ if(on('dunning'))push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}" automatic="${on('paymentReminders')&&S.reminders.automatic===true}"/>`);
  if(on('vatDeclarations')&&registered())push(`      <vat-declaration period="${S.vatPeriod}"/>`);
  push(`      <numbering journal="invoice" prefix="${esc(S.numbering.prefix)}" date-part="${S.numbering.datePart}" digits="${S.numbering.digits}" reset="${S.numbering.reset}"/>`);
  push(`      <numbering journal="member" prefix="${esc(S.memberNumbering.prefix)}" date-part="none" digits="${S.memberNumbering.digits}" reset="never"/>`);
@@ -1142,7 +1147,7 @@ function parseBack(text){
   Object.keys(S.invites).forEach(k=>S.invites[k]='');id.querySelectorAll('invitation').forEach(iv=>{const k=iv.getAttribute('lang');if(k in S.invites)S.invites[k]=iv.getAttribute('text')||''})}
  const bi=su.querySelector('billing');if(bi){S.tiers=[...bi.querySelectorAll('tier')].map(t=>({from:t.getAttribute('from-pct'),to:t.getAttribute('to-pct'),fee:String((parseInt(t.getAttribute('fee-cents'))||0)/100),over:String((parseInt(t.getAttribute('overage-cents'))||0)/100)}));const sl=bi.querySelector('subscription-levels');if(sl){S.subLevels=(sl.getAttribute('values')||'').split(',').filter(Boolean);S.freeLevel=sl.getAttribute('free-value')==='true'}S.packages=[...bi.querySelectorAll('package')].map(p=>({name:p.getAttribute('name'),days:p.getAttribute('days'),price:String((parseInt(p.getAttribute('price-cents'))||0)/100)}))}
  S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??''}));
- const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.vatExigibility=le.getAttribute('vat-exigibility')||S.vatExigibility;le.querySelectorAll('numbering').forEach(nu=>{const j=nu.getAttribute('journal')||'invoice';if(j==='member'){S.memberNumbering={prefix:nu.getAttribute('prefix')||'M-',digits:nu.getAttribute('digits')||'4'}}else if(j==='invoice'){S.numbering={prefix:nu.getAttribute('prefix')||'INV-',datePart:nu.getAttribute('date-part')||'year',digits:nu.getAttribute('digits')||'4',reset:nu.getAttribute('reset')||'yearly'}}});S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({group:r.getAttribute('group')||'standard',label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days'),automatic:rm.getAttribute('automatic')!=='false'}}
+ const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.vatExigibility=le.getAttribute('vat-exigibility')||S.vatExigibility;le.querySelectorAll('numbering').forEach(nu=>{const j=nu.getAttribute('journal')||'invoice';if(j==='member'){S.memberNumbering={prefix:nu.getAttribute('prefix')||'M-',digits:nu.getAttribute('digits')||'4'}}else if(j==='invoice'){S.numbering={prefix:nu.getAttribute('prefix')||'INV-',datePart:nu.getAttribute('date-part')||'year',digits:nu.getAttribute('digits')||'4',reset:nu.getAttribute('reset')||'yearly'}}});S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({group:r.getAttribute('group')||'standard',label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days'),automatic:rm.getAttribute('automatic')==='true'}}
 S.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name')||'',street:st.getAttribute('street')||'',postal:st.getAttribute('postal-code')||'',city:st.getAttribute('city')||'',legalId:st.getAttribute('legal-id')||''}));
   const vd=le.querySelector('vat-declaration');if(vd)S.vatPeriod=vd.getAttribute('period')||S.vatPeriod;
   const ei=le.querySelector('einvoice');if(ei)S.einvoice={url:ei.getAttribute('url')||'',token:ei.getAttribute('token')||'',header:ei.getAttribute('auth-header')||'',field:ei.getAttribute('file-field')||'',uatUrl:ei.getAttribute('uat-url')||'',uatToken:ei.getAttribute('uat-token')||'',devUrl:ei.getAttribute('dev-url')||'',devToken:ei.getAttribute('dev-token')||'',customerUrl:ei.getAttribute('customer-url')||'',customerToken:ei.getAttribute('customer-token')||'',customerHeader:ei.getAttribute('customer-auth-header')||'',customerField:ei.getAttribute('customer-file-field')||''}}

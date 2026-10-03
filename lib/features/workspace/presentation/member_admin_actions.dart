@@ -200,7 +200,7 @@ Future<void> pickMemberCoOwner(
 ) async {
   final l10n = AppLocalizations.of(context);
   final options = <(CoOwnerStatus, String)>[
-    (CoOwnerStatus.none, l10n?.coOwnerNone ?? 'No co-owner role'),
+    (CoOwnerStatus.none, l10n?.coOwnerNone ?? 'No co-ownership'),
     (
       CoOwnerStatus.active,
       l10n?.coOwnerActive ??

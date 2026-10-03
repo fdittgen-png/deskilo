@@ -88,6 +88,81 @@
         }
       }
     },
+    "/rest/v1/rpc/reset_workspace_public_page": {
+      "post": {
+        "operationId": "publicationPageReset",
+        "summary": "The owner returns inherited public fields to the workspace's own information: the named ones, or all of them when p_fields is null; answers the page as publication.page.read does.",
+        "x-deskilo-operation": "publication.page.reset",
+        "x-deskilo-surface": "management",
+        "x-deskilo-principal": "authenticated",
+        "x-deskilo-authority": "owner",
+        "x-deskilo-mutation": "write",
+        "x-deskilo-features": [
+          "publicListings"
+        ],
+        "x-deskilo-idempotency": "clearing an override that is already cleared has no effect",
+        "x-deskilo-side-effects": [
+          "removes the named overrides from the page row",
+          "refreshes the public card when the page is published; never publishes or withdraws it"
+        ],
+        "x-deskilo-cardinality": "one",
+        "security": [
+          {
+            "sessionBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "p_workspace",
+                  "p_fields"
+                ],
+                "properties": {
+                  "p_workspace": {
+                    "type": "string",
+                    "format": "uuid",
+                    "x-sql-type": "uuid"
+                  },
+                  "p_fields": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "x-sql-type": "text[]"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The allow-listed answer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationPage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No session, or a session that may not do this (PostgREST 42501)"
+          },
+          "400": {
+            "description": "A refusal: PostgREST error body with the SQL message"
+          }
+        }
+      }
+    },
     "/rest/v1/rpc/save_workspace_public_page": {
       "post": {
         "operationId": "publicationPageSave",

@@ -4,6 +4,8 @@ import 'personal_info.dart';
 import 'dart:typed_data';
 
 import 'profile.dart';
+import 'privacy_notice.dart';
+import 'rights_request.dart';
 
 /// Pure-Dart profile boundary (#223). Implemented by Supabase in data/,
 /// faked in tests — presentation never sees supabase_flutter types.
@@ -65,6 +67,29 @@ abstract class ProfileRepository {
   /// #751 — record the acceptance of the privacy policy [version] on the
   /// account (server timestamp).
   Future<void> acceptPrivacyPolicy(String version);
+
+  /// #1914 (0329) — the notices that apply to me (RPC
+  /// `current_privacy_notice`): the installation's, [workspaceId]'s own
+  /// when I am a member, and the versions I acknowledged.
+  Future<PrivacyNotices> fetchPrivacyNotices(String? workspaceId);
+
+  /// #1915 (0327) — files a rights request with the space's controller.
+  /// [clientRequestId] makes a retried submission return the same request.
+  Future<RightsRequest> submitRightsRequest({
+    required String workspaceId,
+    required String kind,
+    required String details,
+    required String clientRequestId,
+  });
+
+  /// #1915 — my requests, in every space, newest first.
+  Future<List<RightsRequest>> fetchMyRightsRequests();
+
+  /// #1915 — what erasing my membership of [workspaceId] would do.
+  Future<ErasurePreview> previewMyErasure(String workspaceId);
+
+  /// #1914 — acknowledges the CURRENT notice of a space I belong to.
+  Future<void> acknowledgeWorkspaceNotice(String workspaceId, String version);
 
   /// Uploads my profile photo to the private `avatars` bucket (0038) and
   /// records its path on my profile row. Throws [StateError] signed out.

@@ -3,6 +3,7 @@ import '../features/workspace/presentation/screens/colours_screen.dart';
 import '../features/workspace/presentation/screens/attention_screen.dart';
 import '../features/workspace/presentation/screens/questions_screen.dart';
 import '../features/workspace/presentation/screens/roles_of_space_screen.dart';
+import '../features/workspace/presentation/screens/what_you_can_do_screen.dart';
 import '../features/workspace/presentation/screens/deployment_screen.dart';
 import '../features/workspace/presentation/screens/wording_screen.dart';
 import '../features/directory/presentation/directory_screen.dart' as discovery;
@@ -46,6 +47,7 @@ import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/backend_screen.dart';
+import '../features/mcp/presentation/instance_assistants_screen.dart';
 import '../features/mcp/presentation/mcp_confirmation_screen.dart';
 import 'oauth_consent_route.dart';
 import '../features/mcp/presentation/assistants_screen.dart';
@@ -57,7 +59,6 @@ import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
 import '../features/workspace/presentation/widgets/conversation_thread.dart';
 import '../core/i18n/regional_formats_section.dart';
-import '../core/privacy/privacy_policy.dart';
 import '../features/profile/presentation/screens/consent_screen.dart';
 import '../features/profile/providers/profile_providers.dart';
 import '../features/profile/presentation/screens/privacy_screen.dart';
@@ -75,6 +76,9 @@ import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/reservations/presentation/screens/reserve_screen.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/presentation/screens/availability_screen.dart';
+import '../features/workspace/presentation/screens/bi_screen.dart';
+import '../features/workspace/domain/bi_modules.dart';
+import '../core/navigation/navigation_style.dart';
 import '../features/workspace/presentation/screens/features_screen.dart';
 import '../features/workspace/presentation/screens/members_screen.dart';
 import '../features/workspace/domain/member.dart';
@@ -96,6 +100,7 @@ import '../features/kiosk/providers/kiosk_mode.dart';
 import '../features/money/presentation/screens/payment_config_screen.dart';
 import '../features/workspace/presentation/screens/nfc_config_screen.dart';
 import 'shell/shell_screen.dart';
+import '../features/me/presentation/me_shell.dart';
 import '../features/money/presentation/screens/number_sequences_screen.dart';
 import '../features/money/presentation/screens/workspace_status_screen.dart';
 import '../features/money/presentation/screens/repartition_wizard_screen.dart';
@@ -129,12 +134,14 @@ GoRouter router(Ref ref) {
     // Kiosk lock (0043): the active membership decides whether the app is
     // a wall tablet — re-evaluate when it resolves or changes.
     ..listen(myMemberProvider, (_, _) => reask())
+    ..listen(activeWorkspaceIdProvider, (_, _) => reask()) // #1823
     // Kiosk gate: the accept/reject decision moves the pad between the
     // gate, the locked kiosk view, and the normal app.
     ..listen(kioskModeProvider, (_, _) => reask())
     // #751 — the consent gate reads the profile's accepted policy version:
     // re-evaluate when the profile resolves, and after an acceptance.
     ..listen(myProfileProvider, (_, _) => reask())
+    ..listen(requiredPrivacyVersionProvider, (_, _) => reask()) // #1914
     ..listen(schemaCompatibilityProvider, (_, _) => reask()) // #1312
     // #1650 — the continuation restored from the device, or captured on
     // the way to sign-in: its destination is where sign-in returns to.
@@ -191,6 +198,7 @@ GoRouter router(Ref ref) {
       final profile = ref.read(myProfileProvider);
       final workspaces = ref.read(myWorkspacesProvider);
       final member = ref.read(myMemberProvider);
+      final chosen = ref.read(activeWorkspaceIdProvider);
       final me = member.value;
       final kioskAccount = me != null &&
           me.isKiosk &&
@@ -199,25 +207,14 @@ GoRouter router(Ref ref) {
         schema: ref.read(schemaCompatibilityProvider).value ??
             SchemaCompatibility.unknown,
         auth: auth.value == null ? AuthFact.signedOut : AuthFact.signedIn,
-        privacy: profile.isLoading
-            ? PrivacyFact.loading
-            : profile.hasError
-                ? PrivacyFact.unavailable
-                : profile.value?.privacyAcceptedVersion == kPrivacyPolicyVersion
-                    ? PrivacyFact.accepted
-                    : PrivacyFact.notAccepted,
+        privacy: privacyFactOf(loading: profile.isLoading, failed: profile.hasError,
+            accepted: profile.value?.privacyAcceptedVersion ==
+                ref.read(requiredPrivacyVersionProvider)),
         // A list being REFRESHED is loading, whatever it held before: the
         // signed-out answer is an empty list, and reading it as "none"
         // in the frame after sign-in sent everybody through onboarding.
-        workspaces: workspaces.isLoading
-            ? WorkspacesFact.loading
-            : workspaces.hasValue
-                ? (workspaces.value!.isEmpty
-                    ? WorkspacesFact.none
-                    : WorkspacesFact.some)
-                : workspaces.hasError
-                    ? WorkspacesFact.unavailable
-                    : WorkspacesFact.loading,
+        workspaces: workspacesFactOf(loading: workspaces.isLoading,
+            count: workspaces.value?.length, failed: workspaces.hasError),
         membership: member.isLoading && !member.hasValue
             ? MembershipFact.loading
             : switch (me?.status) {
@@ -226,6 +223,8 @@ GoRouter router(Ref ref) {
                 MemberStatus.pending => MembershipFact.pending,
                 _ => MembershipFact.inactive,
               },
+        space: spaceFactOf(resolving: chosen.isLoading, // #1823: a refresh is not an answer
+            chosen: chosen.value, spaces: [...?workspaces.value?.map((w) => w.id)]),
         kiosk: !kioskAccount
             ? KioskFact.notKiosk
             : switch (ref.read(kioskModeProvider)) {
@@ -249,6 +248,8 @@ GoRouter router(Ref ref) {
     },
     routes: [
       GoRoute(path: '/auth', builder: (context, state) => const AuthScreen()),
+      GoRoute(path: '/me', builder: (context, state) => // #1823 the Me layer
+          MeShell(tab: MeTab.fromQuery(state.uri.queryParameters['tab']))),
       GoRoute(
         path: '/kiosk-gate',
         builder: (context, state) => const KioskGateScreen(),
@@ -494,6 +495,12 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/assistants',
         builder: (context, state) => const AssistantsScreen(),
+      ),
+      // #1827 B — the installation's assistant switches, for the instance
+      // operator (the server refuses everyone else; 0341).
+      GoRoute(
+        path: '/installation/assistants',
+        builder: (context, state) => const InstanceAssistantsScreen(),
       ),
       // #1627 — database administrators review eligibility; the server
       // checks administrator status and the second factor on every call.
@@ -808,6 +815,18 @@ GoRouter router(Ref ref) {
         },
         builder: (context, state) => const ValidationSettingsScreen(),
       ),
+      // #1923 — Web-BI: web build only, and only with a module this
+      // reader may see; a native link is turned away before any fetch.
+      GoRoute(
+        path: '/bi',
+        redirect: (context, state) => biAvailable(
+                platformIsWeb: ref.read(platformIsWebProvider),
+                features: ref.read(enabledFeaturesSyncProvider),
+                permissions: ref.read(myPermissionsProvider))
+            ? null
+            : '/messages',
+        builder: (context, state) => const BiScreen(),
+      ),
       GoRoute(
         path: '/availability',
         redirect: needs(WorkspacePermission.workspaceSettings),
@@ -853,6 +872,15 @@ GoRouter router(Ref ref) {
       GoRoute(path: '/settings/public-page',redirect:(context,state)=>(ref.read(myMemberProvider).value?.actsAsOwner??false)?null:'/profiles',builder:(context,state)=>const PublicPageEditor()),
       GoRoute(path: '/applications',
           builder: (context, state) => const WorkspaceApplicationsScreen()),
+      // #2085 — what my roles give me here (or, for whoever administers
+      // members or roles, what someone else's give them).
+      GoRoute(
+        path: '/settings/what-you-can-do',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.roleAssignment) ? null : '/settings',
+        builder: (context, state) => WhatYouCanDoScreen(
+            memberId: state.uri.queryParameters['member']),
+      ),
     ],
   );
   ref.onDispose(router.dispose);

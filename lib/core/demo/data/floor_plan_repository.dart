@@ -175,12 +175,35 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
-  Future<void> reorderLevels(List<String> orderedLevelIds) async {
+  Future<LevelReorderOutcome> reorderLevels(
+    String workspaceId,
+    List<String> orderedLevelIds, {
+    required List<String> expected,
+  }) async {
+    reorderCalls++;
+    // #2010 — the server's contract: the whole permutation, from the order
+    // it was made from, or nothing.
+    final current = (levels.where((l) => l.workspaceId == workspaceId).toList()
+          ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder)))
+        .map((l) => l.id)
+        .toList();
+    if (current.join(',') != expected.join(',')) {
+      return LevelReorderOutcome.conflict;
+    }
+    if (orderedLevelIds.toSet().length != orderedLevelIds.length ||
+        orderedLevelIds.toSet().difference(current.toSet()).isNotEmpty ||
+        orderedLevelIds.length != current.length) {
+      return LevelReorderOutcome.refused;
+    }
     for (var i = 0; i < orderedLevelIds.length; i++) {
       final idx = levels.indexWhere((l) => l.id == orderedLevelIds[i]);
-      if (idx >= 0) levels[idx] = levels[idx].copyWith(sortOrder: i);
+      levels[idx] = levels[idx].copyWith(sortOrder: i);
     }
+    return LevelReorderOutcome.saved;
   }
+
+  /// #2010 — how many reorder commands were sent (one per save).
+  var reorderCalls = 0;
 
   /// levelId → background image bytes (0036).
   final backgrounds = <String, Uint8List>{};
@@ -224,6 +247,9 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   final imageBytes = <String, Uint8List>{};
   var _imgSeq = 1;
 
+  /// #2012 — the next N creates commit, then lose their answer.
+  int loseCreateAnswers = 0;
+
   @override
   Future<PlanImage> createPlanImage({
     required String workspaceId,
@@ -231,15 +257,22 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
     required GridRect rect,
     required Uint8List bytes,
     required String contentType,
+    String? imageId,
   }) async {
+    final existing = planImages.where((im) => im.id == imageId);
+    if (existing.isNotEmpty) return existing.first;
     final image = PlanImage(
-      id: 'img-${_imgSeq++}',
+      id: imageId ?? 'img-${_imgSeq++}',
       levelId: levelId,
       rect: rect,
       storagePath: '$workspaceId/img/img-$_imgSeq',
     );
     planImages.add(image);
     imageBytes[image.id] = bytes;
+    if (loseCreateAnswers > 0) {
+      loseCreateAnswers--;
+      throw StateError('answer lost'); // #2012: committed, answer lost
+    }
     return image;
   }
 

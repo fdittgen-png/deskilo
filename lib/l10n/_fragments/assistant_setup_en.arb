@@ -28,7 +28,7 @@
   "@assistantSetupFailed": {
     "description": "#1827 Assistant setup: assistantSetupFailed"
   },
-  "assistantSetupLinkIdentity": "Link my identity",
+  "assistantSetupLinkIdentity": "Confirm my identity",
   "@assistantSetupLinkIdentity": {
     "description": "#1827 Assistant setup: assistantSetupLinkIdentity"
   },

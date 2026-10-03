@@ -84,6 +84,10 @@ const Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'analytics_history': 'when this installation began recording analytics history (#1920); a fact about this installation, not portable configuration — an imported space starts its own history',
+  'seat_history': 'analytics evidence written by triggers on this installation (#1920); the seats it describes are exported, and an import records history from the rows it creates',
+  'opening_hours_history': 'analytics evidence written by triggers on this installation (#1920); the booking rules it describes are exported',
+  'reservation_target_history': 'analytics evidence written by triggers on this installation (#1920); the reservations it describes are exported',
   'retired_invite_codes': 'withdrawn invitation secrets of this installation, kept only to answer "revoked"; never portable configuration (#1652)',
   'workspace_public_pages': 'publication consent is installation-specific; importing a workspace must not publish it (#1791)',
   'public_workspace_cards': 'derived public projection regenerated only by explicit publication on this installation (#1791)',
@@ -100,6 +104,9 @@ const Map<String, String> _notExported = {
   'mcp_idempotency': 'replay records of MCP calls, operational state only (#1612)',
   'mcp_action_confirmations': 'a person\'s pending confirmation of an assistant request, never portable (#1619)',
   'mcp_usage': 'the audit of MCP calls and the count the limits read, operational state only (#1630)',
+  'book_accounts': 'an issuer\'s chart of accounts is reviewed on this installation by someone who manages billing, never copied with the data (#1869)',
+  'book_mappings': 'which account each posting role books to is a reviewed finance decision of this installation, never copied with the data (#1869)',
+  'book_profiles': 'who keeps the official books of each issuer is a finance decision taken on this installation, never copied with the data (#1869)',
   'workspace_recovery_evidence': 'the record that an export was taken; a copy of it would claim a backup the copy never had (#1636)',
   'readiness_acknowledgements': 'a person\'s own "later" on a setup section, per installation; a copy must re-ask (#1636)',
   // --- authority a copy must not carry by itself (#1287) ------------
@@ -127,8 +134,33 @@ const Map<String, String> _notExported = {
       'an answer is the member\'s personal data, not the operator\'s copy '
           'of their space — export_my_data carries it (0248), and a '
           'template must never carry answers',
+  'invoice_maturities':
+      'the due date frozen for each invoice at issue (#1913); derived from '
+          'the invoice and the payment term, so the invoices tab already '
+          'carries what an operator needs',
+  'invoice_dunning_holds':
+      'why an invoice is not being reminded (#1913); an operational state '
+          'of the dunning flow, not a record the operator re-imports',
+  'privacy_notices':
+      'the published privacy notices (#1914); public text every member '
+          'reads in the app, and the installation\'s own rows belong to no '
+          'space at all',
+  'reminder_intents':
+      'one row per payment reminder and its delivery status (#1922); the '
+          'invoices tab already shows reminders, and this is collection '
+          'evidence, not data an operator re-imports',
+  'reminder_attempts':
+      'the append-only delivery evidence of each reminder (#1922); as above',
   'workspace_field_value_options':
       'which choices one member made; personal in the same way',
+  'rights_requests':
+      'a person\'s requests to exercise their data-protection rights '
+          '(#1915); they belong to the requester\'s own export, not to the '
+          'operator\'s spreadsheet of the space',
+  'workspace_field_retention_holds':
+      'a documented legal basis for keeping one question\'s answers after '
+          'erasure (#1912); it governs personal data, so it stays with the '
+          'owner and the privacy policy rather than in a spreadsheet',
 
   // --- secrets: exporting them would hand over a credential ---------
   'payment_credentials':

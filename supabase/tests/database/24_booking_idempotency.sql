@@ -12,7 +12,7 @@
 -- network is exactly the client whose local state you cannot trust, so
 -- "I already sent this" is not something it gets to assert.
 begin;
-select plan(6);
+select plan(10);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -94,6 +94,38 @@ select is(
   1,
   'and books it exactly once — which is what makes an offline queue safe');
 
+-- #2016 — what the confirmed choice PERSISTS. A plain reservation (the
+-- sheet's Reserve, check-in false) is reserved and not checked in; an
+-- explicit "check in now" (true) starts checked in. The client sends the
+-- final mode; the row must say the same.
+select is(
+  (select status || '|' || coalesce(checked_in_at::text, 'none') from public.reservations
+    where id = current_setting('deskilo.queue.first')::uuid),
+  'reserved|none',
+  'a plain reservation persists as reserved, never checked in');
+
+select lives_ok(
+  $$ select public.create_reservation_once(
+       gen_random_uuid(),
+       current_setting('deskilo.queue.ws')::uuid,
+       current_setting('deskilo.queue.seat')::uuid,
+       null, null, null,
+       now(),
+       -- inside the workspace's day, so the file is green at any hour
+       least(now() + interval '1 hour',
+             (date_trunc('day', now() at time zone 'Europe/Paris')
+               + interval '1 day' - interval '1 minute') at time zone 'Europe/Paris'),
+       true) $$,
+  'an explicit check-in now is accepted');
+
+select is(
+  (select count(*)::int from public.reservations
+    where workspace_id = current_setting('deskilo.queue.ws')::uuid
+      and status = 'checked_in' and checked_in_at is not null
+      and starts_at <= now()),
+  1,
+  'and persists as checked in, started now');
+
 -- ------------------------------------------------------------ the guards
 select throws_ok(
   $$ select public.create_reservation_once(null, null, null, null, null,
@@ -101,8 +133,29 @@ select throws_ok(
   'a replayable booking needs a request id',
   'the replayable path refuses to run without a key');
 
+-- #1862 — the ordinary path, really called by the member (not a no-op):
+-- a later, non-overlapping interval through create_reservation as the
+-- authenticated role, then the row it persisted.
+set local role authenticated;
 select lives_ok(
-  $$ select 1 $$, 'ordinary create_reservation is untouched by any of this');
+  $$ select public.create_reservation(
+       current_setting('deskilo.queue.ws')::uuid,
+       current_setting('deskilo.queue.seat')::uuid,
+       null,
+       current_setting('deskilo.queue.from')::timestamptz + interval '5 hours',
+       current_setting('deskilo.queue.from')::timestamptz + interval '7 hours') $$,
+  'ordinary create_reservation still books a non-overlapping interval');
+reset role;
+select is(
+  (select count(*)::int from public.reservations r
+     join public.members m on m.id = r.member_id
+    where r.workspace_id = current_setting('deskilo.queue.ws')::uuid
+      and r.seat_id = current_setting('deskilo.queue.seat')::uuid
+      and m.user_id = current_setting('deskilo.queue.u_mine')::uuid
+      and r.starts_at = current_setting('deskilo.queue.from')::timestamptz + interval '5 hours'
+      and r.ends_at = current_setting('deskilo.queue.from')::timestamptz + interval '7 hours'),
+  1,
+  'and persists it for the caller, on that seat and those hours');
 
 -- A request id is its member's own: replaying somebody else's would hand
 -- them a reservation id they may have no policy to read.

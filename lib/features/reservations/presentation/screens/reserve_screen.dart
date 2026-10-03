@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/help/help_hint.dart';
 import '../../../../core/backend/backend_settings.dart';
 import '../../application/getting_started_hint.dart';
 import '../getting_started_facts.dart';
@@ -30,6 +29,7 @@ import '../widgets/getting_started_card.dart';
 import '../widgets/reserve_canvas.dart';
 import '../widgets/reserve_view_menu.dart';
 import '../widgets/reserve_hub_layout.dart';
+import '../widgets/list_space_tap.dart';
 import '../widgets/seat_list_view.dart';
 import '../widgets/stale_availability_banner.dart';
 import '../../../plan/providers/default_level_controller.dart';
@@ -660,18 +660,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
               onChanged: (view) => setState(() => _view = view),
               onGetStarted: gettingStartedReopen(ref, guidanceKey),
             ),
-            // 'Now' returns to today AND to the live window — parity
-            // with the Plan tab, which has had it since #184.
-            //
-            // Shown only while browsing, like Plan's: an always-visible
-            // disabled button is header noise. Without it, getting back
-            // from a browsed date meant opening the picker and hunting
-            // for today, on the surface people book from most.
-            //
-            // It clears the WINDOW too, not just the day. Leaving a
-            // hand-picked window on today reads as live while showing a
-            // slot that may already be past.
-            //
             // Map <-> list, as ONE button showing the icon of what you
             // would switch TO.
             //
@@ -695,6 +683,33 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 onPressed: () => setState(() => _view = _seatList
                     ? ReserveView.plan
                     : ReserveView.list),
+              ),
+            // #2016 — 'Back to now': today AND the live window (a
+            // hand-picked window left on today reads as live while past).
+            // Only while browsing; on this row so #699's two rows hold.
+            if (!_selectedDay.isAtSameMomentAs(_today) ||
+                _windowStart != null)
+              // A word, not a clock (that read as a time editor); the
+              // full action is the tooltip and the screen-reader label.
+              Tooltip(
+                message: l10n?.reserveBackToNow ?? 'Back to now',
+                child: TextButton(
+                  key: const ValueKey('reserve-now-button'),
+                  onPressed: () => setState(() {
+                    _selectedDay = _today;
+                    _windowStart = null;
+                    _windowEnd = null;
+                  }),
+                  style: TextButton.styleFrom(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+                    minimumSize: const Size(0, kMinInteractiveDimension),
+                  ),
+                  child: Text(
+                    l10n?.planNowButton ?? 'Now',
+                    semanticsLabel: l10n?.reserveBackToNow ?? 'Back to now',
+                  ),
+                ),
               ),
       ];
       // ROW 2 — WHEN you are looking at it, plus how the plan draws.
@@ -723,24 +738,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 Text(DateFormat.MMMd().format(_selectedDay)),
               ]),
             ),
-            // 'Now' returns to today AND to the live window (#184
-            // parity). Shown only while browsing — an always-visible
-            // disabled button is header noise — and sitting HERE, beside
-            // the date and chips it undoes. It clears the WINDOW too:
-            // a hand-picked window left on today reads as live while
-            // showing a slot that may already be past.
-            if (!_selectedDay.isAtSameMomentAs(_today) ||
-                _windowStart != null)
-              IconButton(
-                key: const ValueKey('reserve-now-button'),
-                tooltip: l10n?.planNowButton ?? 'Now',
-                icon: const Icon(Icons.schedule_outlined),
-                onPressed: () => setState(() {
-                  _selectedDay = _today;
-                  _windowStart = null;
-                  _windowEnd = null;
-                }),
-              ),
             // Honest controls: the window chips act on Plan (state
             // filter + booking window) and Day (the window a free-row
             // tap books). Week books per tapped half, Month is an
@@ -768,8 +765,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // #606 hub how-to (gated inside); #611 MotionReveal eases it and the banners below.
-          const MotionReveal(child: HelpHint(HelpHintId.reserve)),
           MotionReveal(
             child: dayOpen
                 ? const SizedBox.shrink(
@@ -792,10 +787,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                   _view == ReserveView.month ||
                   _view == ReserveView.day,
             ),
-          // #1654 — the Get started card: the workspace and ONE next step,
-          // from what this build already resolved; gated inside.
+          // #1853 A — ONE help slot: the Get started next step (#1654), or
+          // else the hub's tip carousel (#606); each gated inside.
           MotionReveal(
-            child: GettingStartedCard(
+            child: ReserveHelpHost(
               facts: facts,
               seenKey: guidanceKey,
               onChooseTime: _pickDate, workspaceId: workspace?.id, // #1636
@@ -924,6 +919,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 dayOpen: dayOpen,
                   onSeatTap: (seat) =>
                       onSeatTap(plan, seat, reservations, window),
+                  onSpaceTap: listSpaceTap(context, ref,
+                      level: level, plan: plan, window: window),
                 ),
               ),
             AsyncData(value: final plan) => ReserveCanvas(

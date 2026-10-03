@@ -273,19 +273,22 @@ void main() {
     expect(_key('assistant-setup-request'), findsNothing);
   });
 
-  testWidgets('an unlinked identity offers linked accounts', (tester) async {
+  testWidgets('an unlinked identity is confirmed in place', (tester) async {
+    final identity = _identity(
+      state: IdentityBindingState.unlinked,
+      eligibility: McpEligibility.noIdentity,
+    )..finalizeAnswer =
+        const IdentityBindingStatus(state: IdentityBindingState.verified);
     await _pump(
       tester,
-      identity: _identity(
-        state: IdentityBindingState.unlinked,
-        eligibility: McpEligibility.noIdentity,
-      ),
+      identity: identity,
       admin: FakeMcpAdminRepository(policy: _policy()),
     );
     expect(_key('assistant-setup-eligibility-blocked'), findsOneWidget);
     expect(_key('assistant-setup-request'), findsNothing);
     await _tap(tester, 'assistant-setup-link-identity');
-    expect(_key('linked-page'), findsOneWidget);
+    expect(identity.finalizeCalls, 1);
+    expect(_key('linked-page'), findsNothing);
   });
 
   testWidgets('runtime off: the installation waits on the instance owner, '

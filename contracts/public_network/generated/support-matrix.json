@@ -50,6 +50,12 @@
       "requires": [],
       "baseline": true
     },
+    "publication.page.reset": {
+      "surface": "management",
+      "versions": null,
+      "requires": null,
+      "baseline": false
+    },
     "publication.page.save": {
       "surface": "management",
       "versions": [
@@ -88,7 +94,7 @@
     {
       "id": "baseline",
       "summary": "A server from before negotiation: no descriptor (PGRST202), version 1 of every baseline operation, no revalidation.",
-      "internal_schema": "below 320",
+      "internal_schema": "below 347",
       "evidence": [
         "test/fixtures/public_network/legacy_server_no_descriptor.json",
         "test/core/public_network/public_network_negotiation_test.dart",
@@ -98,10 +104,10 @@
     {
       "id": "negotiating",
       "summary": "The descriptor is published; participant mutations revalidate x-deskilo-operation; an unlabelled request is the operation's unlabelled version.",
-      "internal_schema": "320 and above",
+      "internal_schema": "347 and above",
       "evidence": [
         "test/fixtures/public_network/descriptor_current.json",
-        "supabase/tests/database/106_public_network_negotiation.sql",
+        "supabase/tests/database/130_public_network_negotiation.sql",
         "test/features/directory/participant_negotiation_test.dart"
       ]
     }
@@ -112,7 +118,7 @@
       "summary": "The released client before negotiation: reads cards with the checkpoint A adapter (or none), sends no operation header.",
       "evidence": [
         "test/fixtures/public_network/released_client_requests.json",
-        "supabase/tests/database/106_public_network_negotiation.sql"
+        "supabase/tests/database/130_public_network_negotiation.sql"
       ]
     },
     {
@@ -164,7 +170,7 @@
       "outcome": "negotiated version 1, header revalidated",
       "evidence": [
         "test/features/directory/participant_negotiation_test.dart",
-        "supabase/tests/database/106_public_network_negotiation.sql"
+        "supabase/tests/database/130_public_network_negotiation.sql"
       ]
     },
     {
@@ -180,7 +186,7 @@
       "server": "negotiating",
       "outcome": "unlabelled request accepted as version 1; refused by name once version 1 is retired",
       "evidence": [
-        "supabase/tests/database/106_public_network_negotiation.sql"
+        "supabase/tests/database/130_public_network_negotiation.sql"
       ]
     },
     {
@@ -212,19 +218,19 @@
   ],
   "hashes": {
     "sources": {
-      "contracts/public_network/operations.json": "17411af498b37a1205a124dd791ec60c30bd43669c5575ff0d59efe2d0f6f23a",
-      "contracts/public_network/support.json": "502d6988c977cb890cbb5c80bd50b62a0e19382ad86e11f16139782c2b7471bf"
+      "contracts/public_network/operations.json": "b5b68fcee954ce0b659fd12b243ff27656b237d22568c70ee05cb1238b9be414",
+      "contracts/public_network/support.json": "8457a89593641d6ef7fe028be57520f5884deb49ca28d69ba265f54b1cf85585"
     },
     "artifacts": {
-      "lib/core/public_network/public_network_operations.dart": "3033f8e0e42f8487e2b6ee8dc3ac183471ea740564b5cda1c3a5acd633be9128",
+      "lib/core/public_network/public_network_operations.dart": "5c3e70496ec017e2a39ed5ddffb8cfc117690018c21c6d2a3abdded95cb7f147",
       "public_network_descriptor()": "a241bc44f17f7029f49195b02412d5142de31e1522037aa5fdf97a030891ea55"
     },
     "evidence": {
-      "supabase/tests/database/106_public_network_negotiation.sql": "1e9e84cc05cacff545b9e686c65d14066fdacf49fd15a48fd797c53fc953acb8",
+      "supabase/tests/database/130_public_network_negotiation.sql": "1e9e84cc05cacff545b9e686c65d14066fdacf49fd15a48fd797c53fc953acb8",
       "test/core/public_network/public_network_codec_test.dart": "f40b0596cea349131d15d97311672ba58861aa7da3922d3cdb77df52760bf15c",
       "test/core/public_network/public_network_negotiation_test.dart": "54740b1ca949a6287f096a6723114dc1661bb84ea7adb3aee2ff85fffe0b8119",
       "test/features/directory/participant_negotiation_test.dart": "df6291acac00af0a99da82fb055cb161d35a69a7c7b4c1535990086d06da276a",
-      "test/fixtures/public_network/descriptor_current.json": "8e2f79c6edc601f02d4336bfde88cc54092d6fb28fd293c448ed2c2263a84f0e",
+      "test/fixtures/public_network/descriptor_current.json": "51fb6f5b32d4a232b3ad92865c03dcd2eb6e8cc21c24176fc5aa7cb95b683189",
       "test/fixtures/public_network/legacy_server_no_descriptor.json": "577eea25d7b5cd945504ed49c6eef95096155d8d46185587fab3efdbd86b9859",
       "test/fixtures/public_network/released_client_requests.json": "35192f11ad727121ab15c4f108efb99315afdcbd973506f01dab57d6c9cd42e0",
       "test/fixtures/public_network/synthetic_newer_server.json": "92c5f27107d9d09b21b8bf0e667508e822c31754f38c6a845f9ba053319cfdbf",

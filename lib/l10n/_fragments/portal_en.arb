@@ -50,5 +50,11 @@
   "portalEmploymentHint": "Employment does not change access or subscriptions. Salary payments are not enabled.",
   "portalAdminVisible": "Show me as a public administrator",
   "featurePublicListings": "Public workspace listing",
-  "featurePublicListingsDesc": "Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts."
+  "featurePublicListingsDesc": "Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.",
+  "portalFollowsWorkspace": "From workspace information",
+  "portalCustomised": "Customised",
+  "portalUseWorkspaceInfo": "Use workspace information",
+  "portalResetAll": "Reset all public data to workspace information",
+  "portalResetAllBody": "The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.",
+  "portalResetAllConfirm": "Reset"
 }

@@ -102,5 +102,9 @@
   "workspaceFieldsSaveFailed": "Ihre Antworten auf die Fragen dieses Bereichs wurden nicht gespeichert. Ihre übrigen Angaben schon.",
   "@workspaceFieldsSaveFailed": {
     "description": "#1288 custom fields: workspaceFieldsSaveFailed"
+  },
+  "workspaceFieldsPersonalNote": "Ihre Antworten sind personenbezogene Daten: Sie sind Teil Ihres Datenexports und werden gelöscht, wenn Sie diesen Bereich verlassen, außer der Bereich dokumentiert eine gesetzliche Aufbewahrungspflicht.",
+  "@workspaceFieldsPersonalNote": {
+    "description": "#1912 custom fields: every answer is personal data"
   }
 }

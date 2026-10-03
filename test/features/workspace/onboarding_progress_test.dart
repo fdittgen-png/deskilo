@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'onboarding_layout_test.dart' show pumpOnboardingLayout;
+import '../../helpers/screens/onboarding_layout.dart' show pumpOnboardingLayout;
 
 void main() {
   testWidgets('suggested steps are skipped, not falsely completed', (tester) async {

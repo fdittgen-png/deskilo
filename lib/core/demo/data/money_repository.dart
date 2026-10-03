@@ -30,6 +30,7 @@ import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'event_repository.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
+import '../../../features/money/domain/reminder_evidence.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
@@ -600,7 +601,53 @@ class FakeMoneyRepository implements MoneyRepository {
     final invoice = invoices.where((i) => i.id == invoiceId).firstOrNull;
     if (invoice == null) throw StateError('unknown invoice');
     if (invoice.isVoided) throw StateError('invoice is voided');
+    // #1913 — the server refuses a held invoice; so does the demo.
+    if (dunningHolds.containsKey(invoiceId)) {
+      throw StateError('this invoice is on hold');
+    }
     invoiceReminders.putIfAbsent(invoiceId, () => []).add(kTestNow);
+  }
+
+  /// #1922 — the demo sends by hand only, and its share sheet always
+  /// completes: every reminder is the sender's declaration.
+  @override
+  Future<List<ReminderEvidence>> fetchReminderEvidence(
+    String invoiceId,
+  ) async => [
+    for (final (i, at) in (invoiceReminders[invoiceId] ?? const <DateTime>[]).indexed)
+      ReminderEvidence(
+        intentId: '$invoiceId-reminder-$i',
+        level: i + 1,
+        origin: 'manual',
+        status: 'declared_delivered',
+        preparedAt: at,
+      ),
+  ];
+
+  /// #1913 — invoiceId → reason of its active hold.
+  final Map<String, String> dunningHolds = {};
+
+  @override
+  Future<Map<String, String>> fetchDunningHolds(String workspaceId) async =>
+      Map.of(dunningHolds);
+
+  @override
+  Future<void> placeDunningHold(
+    String invoiceId, {
+    required String reason,
+    String note = '',
+  }) async {
+    if (dunningHolds.containsKey(invoiceId)) {
+      throw StateError('this invoice is already on hold');
+    }
+    dunningHolds[invoiceId] = reason;
+  }
+
+  @override
+  Future<void> releaseDunningHold(String invoiceId) async {
+    if (dunningHolds.remove(invoiceId) == null) {
+      throw StateError('this invoice is not on hold');
+    }
   }
 
   @override
@@ -1789,6 +1836,7 @@ class FakeMoneyRepository implements MoneyRepository {
     required int amountCents,
     required String currencyCode,
     required String period,
+    String? requestId,
   }) async {
     paymentOrders.add((provider, amountCents));
     final url = paymentApprovalUrl;

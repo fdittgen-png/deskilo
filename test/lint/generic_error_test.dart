@@ -25,7 +25,7 @@ const Map<String, int> _baseline = {
   'lib/features/calendar/presentation/screens/calendar_screen.dart': 1,
   'lib/features/calendar/presentation/widgets/access_sheet.dart': 2,
   'lib/features/editor/presentation/screens/editor_screen.dart': 2,
-  'lib/features/editor/presentation/screens/level_canvas_screen.dart': 4,
+  'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1, // #2012 C 4→1: plan-media writes say what happened and offer Try again
   'lib/features/events/presentation/screens/events_screen.dart': 1,
   // #1306 — moved with the pending decisions out of events_screen.dart.
   'lib/features/events/presentation/widgets/pending_decisions_section.dart': 1,
@@ -75,7 +75,7 @@ const Map<String, int> _baseline = {
   'lib/features/profile/presentation/screens/developer_screen.dart': 2,
   'lib/features/profile/presentation/screens/personal_info_screen.dart': 2,
   'lib/features/profile/presentation/screens/privacy_screen.dart': 2,
-  'lib/features/profile/presentation/screens/settings_screen.dart': 2,
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1, // 2026-09-29 #1823 2→1: the address dialog moved to account_settings_dialogs.dart and says what failed
   'lib/features/reservations/presentation/reserve_seat_actions.dart': 3,
   'lib/features/reservations/presentation/screens/reserve_screen.dart': 1,
   'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 2,

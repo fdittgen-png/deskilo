@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'invalidation_map.dart' show kResyncSignal;
+import 'profile_change_classifier.dart';
 
 /// Push-driven freshness (#413): a stream of "table X changed" signals
 /// for the signed-in user, fed by Supabase Realtime `postgres_changes`
@@ -49,6 +50,38 @@ const realtimeTables = [
   'fee_bands',
   'packages',
   'validation_policies',
+];
+
+/// #2019 — tables whose rows belong to exactly one workspace and matter
+/// only inside it: subscribed with `workspace_id=eq.<active>`, so a person
+/// in several workspaces is not woken by the others. Account-wide facts
+/// (profiles, memberships, the messenger, the workspace row itself) stay
+/// unfiltered.
+const workspaceScopedTables = {
+  'reservations', 'levels', 'offices', 'desks', 'seats', 'plan_images',
+  'events', 'ledger_entries', 'payment_intents', 'invoices', 'services',
+  'accessories', 'seat_accessories', 'closure_days', 'quota_extensions',
+  'fee_bands', 'packages', 'validation_policies',
+};
+
+/// One `postgres_changes` binding: [workspaceFilter] null means every row
+/// the subscriber may see (RLS still applies).
+typedef RealtimeBinding = ({
+  String table,
+  PostgresChangeEvent event,
+  String? workspaceFilter,
+});
+
+/// #2019 — the bindings for [workspaceId]. A filter cannot match a DELETE
+/// (the old row carries only its key), so each scoped table also keeps an
+/// unfiltered DELETE binding: deletions stay conservatively visible.
+List<RealtimeBinding> realtimeBindings(String workspaceId) => [
+  for (final table in realtimeTables)
+    if (workspaceScopedTables.contains(table)) ...[
+      (table: table, event: PostgresChangeEvent.all, workspaceFilter: workspaceId),
+      (table: table, event: PostgresChangeEvent.delete, workspaceFilter: null),
+    ] else
+      (table: table, event: PostgresChangeEvent.all, workspaceFilter: null),
 ];
 
 /// How long to wait before the [attempt]-th reconnect (0-based):
@@ -151,17 +184,30 @@ class SupabaseRealtimeSync implements RealtimeSync {
   @override
   Stream<String> watch(String workspaceId) {
     final controller = StreamController<String>.broadcast();
+    // #2019 C — one per watched workspace: presence-only profile updates.
+    final profiles = ProfileChangeClassifier();
     late final ChannelSupervisor<RealtimeChannel> supervisor;
     supervisor = ChannelSupervisor<RealtimeChannel>(
       create: () {
         final ch = _client.channel('db-changes-$workspaceId');
-        for (final table in realtimeTables) {
+        for (final b in realtimeBindings(workspaceId)) {
+          final ws = b.workspaceFilter;
           ch.onPostgresChanges(
-            event: PostgresChangeEvent.all,
+            event: b.event,
             schema: 'public',
-            table: table,
-            callback: (_) {
-              if (!controller.isClosed) controller.add(table);
+            table: b.table,
+            filter: ws == null
+                ? null
+                : PostgresChangeFilter(
+                    type: PostgresChangeFilterType.eq,
+                    column: 'workspace_id',
+                    value: ws,
+                  ),
+            callback: (payload) {
+              if (controller.isClosed) return;
+              controller.add(b.table == 'profiles'
+                  ? profiles.signal(payload.eventType, payload.newRecord)
+                  : b.table);
             },
           );
         }

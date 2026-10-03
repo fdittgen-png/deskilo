@@ -33,6 +33,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.membersDirectory,
       WorkspaceFeature.coOwner,
       WorkspaceFeature.roleManagement,
+      WorkspaceFeature.roleAssignment,
       WorkspaceFeature.customRoles,
       WorkspaceFeature.customFields,
       WorkspaceFeature.personalInfo,
@@ -61,6 +62,8 @@ const workspaceProcesses = <WorkspaceProcess>[
     WorkspaceSubprocess('availability', [
       WorkspaceFeature.workingHours,
       WorkspaceFeature.publicHolidays,
+      WorkspaceFeature.holidayImport,
+      WorkspaceFeature.capacityKpi,
     ]),
     WorkspaceSubprocess('presentation', [
       WorkspaceFeature.planMemberPhotos,
@@ -152,6 +155,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.expenseRepartition,
     ]),
     WorkspaceSubprocess('tax', [
+      WorkspaceFeature.accountingBook,
       WorkspaceFeature.vatManagement,
       WorkspaceFeature.vatDeclarations,
       WorkspaceFeature.vatGroups,
@@ -202,6 +206,9 @@ const workspaceProcesses = <WorkspaceProcess>[
       // #1654 — beside the help hints, for the same reason: optional
       // guidance on an existing screen, not a right anybody holds.
       WorkspaceFeature.memberGettingStarted,
+      // #1865 — beside the guidance for the same reason: a person's own
+      // record of how a task is done, not a right anybody holds.
+      WorkspaceFeature.taskRecorder,
       WorkspaceFeature.uiAnimations,
       WorkspaceFeature.regionalFormats,
       WorkspaceFeature.navigationStyle,

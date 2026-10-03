@@ -30,19 +30,19 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 
 | pair | imports |
 |---|---|
-| `money -> workspace` | 117 |
-| `reservations -> plan` | 69 |
-| `reservations -> workspace` | 57 |
+| `money -> workspace` | 122 |
+| `reservations -> plan` | 73 |
+| `reservations -> workspace` | 60 |
 | `profile -> workspace` | 40 |
+| `members -> workspace` | 35 |
 | `workspace -> money` | 35 |
-| `members -> workspace` | 34 |
 | `money -> events` | 30 |
-| `workspace -> plan` | 25 |
+| `workspace -> plan` | 26 |
 | `editor -> plan` | 20 |
 | `events -> workspace` | 20 |
-| `workspace -> reservations` | 17 |
+| `mcp -> auth` | 20 |
+| `workspace -> reservations` | 19 |
 | `calendar -> workspace` | 15 |
-| `mcp -> auth` | 15 |
 | `workspace -> events` | 15 |
 | `members -> reservations` | 14 |
 | `money -> plan` | 14 |
@@ -53,13 +53,14 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `workspace -> profile` | 11 |
 | `kiosk -> reservations` | 10 |
 | `workspace -> auth` | 10 |
+| `directory -> workspace` | 9 |
+| `me -> workspace` | 9 |
 | `members -> money` | 9 |
 | `members -> profile` | 9 |
 | `plan -> reservations` | 9 |
 | `calendar -> reservations` | 8 |
+| `directory -> auth` | 8 |
 | `money -> profile` | 8 |
-| `directory -> auth` | 7 |
-| `directory -> workspace` | 7 |
 | `kiosk -> plan` | 7 |
 | `kiosk -> workspace` | 7 |
 | `calendar -> money` | 6 |
@@ -71,11 +72,14 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> events` | 5 |
 | `calendar -> events` | 4 |
 | `events -> reservations` | 4 |
+| `me -> profile` | 4 |
 | `plan -> money` | 4 |
 | `workspace -> members` | 4 |
 | `members -> plan` | 3 |
 | `events -> plan` | 2 |
 | `kiosk -> profile` | 2 |
+| `me -> auth` | 2 |
+| `me -> directory` | 2 |
 | `money -> auth` | 2 |
 | `money -> members` | 2 |
 | `plan -> profile` | 2 |
@@ -85,7 +89,6 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `help -> workspace` | 1 |
 | `kiosk -> events` | 1 |
 | `kiosk -> members` | 1 |
-| `me -> directory` | 1 |
 | `money -> calendar` | 1 |
 | `plan -> events` | 1 |
 | `plan -> members` | 1 |
@@ -96,7 +99,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 | `reservations -> money` | 1 |
 | `reservations -> profile` | 1 |
 
-**65 directed relationships, 772 imports.**
+**68 directed relationships, 812 imports.**
 
 Reciprocal (20): `calendar <-> money`, `calendar <-> reservations`, `directory <-> workspace`, `events <-> money`, `events <-> plan`, `events <-> reservations`, `events <-> workspace`, `members <-> money`, `members <-> plan`, `members <-> profile`, `members <-> reservations`, `members <-> workspace`, `money <-> plan`, `money <-> reservations`, `money <-> workspace`, `plan <-> reservations`, `plan <-> workspace`, `profile <-> reservations`, `profile <-> workspace`, `reservations <-> workspace`.
 
@@ -106,46 +109,46 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 
 | file | lines |
 |---|---|
-| `lib/core/demo/data/workspace_repository.dart` | 1942 |
-| `lib/core/demo/data/money_repository.dart` | 1800 |
+| `lib/core/demo/data/workspace_repository.dart` | 1991 |
+| `lib/core/demo/data/money_repository.dart` | 1848 |
 | `lib/features/workspace/presentation/screens/workspace_settings_screen.dart` | 1663 |
-| `lib/features/workspace/domain/workspace_feature.dart` | 1522 |
-| `lib/features/money/data/supabase_money_repository.dart` | 1420 |
-| `lib/features/money/presentation/screens/money_screen.dart` | 1299 |
-| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1298 |
-| `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1145 |
+| `lib/features/workspace/domain/workspace_feature.dart` | 1598 |
+| `lib/features/money/data/supabase_money_repository.dart` | 1469 |
+| `lib/features/workspace/data/supabase_workspace_repository.dart` | 1316 |
+| `lib/features/money/presentation/screens/money_screen.dart` | 1300 |
+| `lib/features/reservations/presentation/screens/reserve_screen.dart` | 1142 |
 | `lib/features/money/presentation/widgets/invoice_template_sheet.dart` | 1113 |
-| `lib/features/profile/presentation/screens/settings_screen.dart` | 1057 |
 | `lib/features/money/domain/invoice_pdf.dart` | 1050 |
 | `lib/features/editor/presentation/screens/level_canvas_screen.dart` | 1044 |
-| `lib/features/money/presentation/invoice_actions.dart` | 1027 |
+| `lib/features/money/presentation/invoice_actions.dart` | 1035 |
 | `lib/features/money/presentation/widgets/report_visual_editor.dart` | 981 |
 | `lib/features/workspace/domain/workspace_xml.dart` | 964 |
+| `lib/features/members/presentation/screens/member_page.dart` | 955 |
 | `lib/features/members/presentation/screens/directory_screen.dart` | 946 |
-| `lib/features/members/presentation/screens/member_page.dart` | 945 |
+| `lib/app/router.dart` | 892 |
 | `lib/features/money/presentation/widgets/bill_view.dart` | 892 |
-| `lib/features/reservations/presentation/widgets/space_scan.dart` | 889 |
 | `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart` | 871 |
-| `lib/app/router.dart` | 864 |
-| `lib/features/workspace/presentation/screens/availability_screen.dart` | 856 |
-| `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 850 |
+| `lib/features/reservations/presentation/widgets/space_scan.dart` | 864 |
+| `lib/features/workspace/presentation/screens/availability_screen.dart` | 860 |
+| `lib/features/money/presentation/widgets/invoicing_dashboard.dart` | 851 |
 | `lib/features/reservations/presentation/widgets/week_grid.dart` | 807 |
 | `lib/features/plan/presentation/widgets/floor_plan_painter.dart` | 785 |
+| `lib/features/workspace/domain/workspace_repository.dart` | 781 |
 | `lib/features/calendar/presentation/widgets/day_timeline.dart` | 776 |
-| `lib/features/workspace/domain/workspace_repository.dart` | 772 |
 | `lib/features/money/presentation/screens/billing_screen.dart` | 767 |
-| `lib/features/reservations/presentation/reserve_seat_actions.dart` | 718 |
+| `lib/features/reservations/presentation/reserve_seat_actions.dart` | 765 |
 | `lib/features/workspace/presentation/member_admin_actions.dart` | 713 |
+| `lib/features/plan/data/supabase_floor_plan_repository.dart` | 711 |
 | `lib/core/demo/data/reservation_repository.dart` | 695 |
 | `lib/features/calendar/presentation/screens/calendar_screen.dart` | 676 |
+| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 656 |
 | `lib/features/kiosk/presentation/screens/kiosk_screen.dart` | 655 |
 | `lib/core/help/help_anchors.dart` | 649 |
-| `lib/features/money/presentation/screens/legal_identity_screen.dart` | 649 |
 | `lib/features/workspace/presentation/screens/onboarding_screen.dart` | 633 |
-| `lib/features/plan/data/supabase_floor_plan_repository.dart` | 631 |
-| `lib/features/workspace/providers/workspace_providers.dart` | 630 |
+| `lib/features/workspace/providers/workspace_providers.dart` | 632 |
+| `lib/features/reservations/presentation/widgets/booking_sheet.dart` | 629 |
 | `lib/features/money/presentation/report_defaults.dart` | 628 |
-| `lib/features/money/presentation/invoice_documents.dart` | 608 |
+| `lib/features/money/presentation/invoice_documents.dart` | 614 |
 
 **40 files.**
 

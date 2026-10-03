@@ -29,6 +29,21 @@ import 'package:flutter_test/flutter_test.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #1922/0334 restates sweep_payment_reminders and record_invoice_reminder
+  // once more, from 0331's bodies (the live dev definitions): the row
+  // lock, the feature gate and the shared invoice_dunning_state_core are
+  // unchanged; the push moved into reminder_queue_push so its outcome is
+  // recorded instead of swallowed. pgTAP 120 drives both paths.
+  'sweep_payment_reminders@0334',
+  'record_invoice_reminder@0334',
+  // #1913/0331 restates sweep_payment_reminders and record_invoice_reminder
+  // around the shared invoice_dunning_state_core. Both new bodies were
+  // built from pg_get_functiondef on the LIVE dev project, which already
+  // carried 0162's per-invoice row lock and 0227's feature_effective_in
+  // gate; both are kept verbatim, and pgTAP 117 drives the sweep and the
+  // manual path under real authenticated roles.
+  'sweep_payment_reminders@0331',
+  'record_invoice_reminder@0331',
   // #1276 S3/0230 re-creates preview_deployment as a caller of
   // configuration_change_set. The body was read from pg_get_functiondef on
   // the LIVE project, so 0190's design-image additions are carried forward

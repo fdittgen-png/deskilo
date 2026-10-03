@@ -325,7 +325,7 @@ window.SETUP_L10N={
    "dunningFirstDays": "Days before the 1st reminder (payment term)",
    "dunningBetweenDays": "Days between reminders",
    "dunningAutomatic": "Automatic reminders",
-   "dunningAutomaticDesc": "Every morning — and as soon as an owner or admin opens Money — open invoices past the term get their next reminder level: an alert in the member's feed and a notification. Unticked: a reminder stays a manual gesture.",
+   "dunningAutomaticDesc": "Every morning — and as soon as an owner or admin opens Money — invoices past their recorded payment term get their next reminder level, for the amount still outstanding and never while a payment is pending or the invoice is on hold. Unticked (the default): a reminder stays a manual gesture.",
    "einvoicePlatform": "E-invoicing platform",
    "einvoiceHint": "Where DesKilo delivers your EN 16931 invoices: an accredited platform, a Peppol access point, a national platform. The token is stored on the server and never leaves it — only put it here if you are filling in this document privately.",
    "einvoiceUrl": "Upload URL",
@@ -406,8 +406,9 @@ window.SETUP_L10N={
    "rolesTitle": "Roles and validations",
    "rolesWhy": "Who can do what, and which actions wait for a confirmation before they count. The owner always holds every permission.",
    "roleCoOwner": "Co-owner",
-   "roleAdmin": "Admin",
+   "roleAdmin": "Administrator",
    "roleMember": "Member",
+   "roleEveryMember": "Every member",
    "rolesDefaultMatrixHint": "Without role management, the default matrix applies: admins manage members, documents, services and expenses and view the finances; co-owners have everything.",
    "rolesAdminInvoicingDep": "{feature} is on: the feature itself delegates the permission to issue invoices to admins.",
    "rolesDefaultRule": "Default validation rule",
@@ -1046,7 +1047,7 @@ window.SETUP_L10N={
    ],
    "spaceInquiries": [
     "Write to the hosts",
-    "A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay."
+    "A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view, so nobody starts a new inquiry; open ones stay in the hosts' inbox to answer and close."
    ],
    "messageForwarding": [
     "Message forwarding",
@@ -1055,6 +1056,26 @@ window.SETUP_L10N={
    "captureProtection": [
     "Screen capture protection",
     "Message screens refuse screenshots and screen recording where the device allows it, hide their content while the screen is recorded, and announce a screenshot in the conversation where it can only be detected. A browser cannot block screenshots; there the thread is blurred when the tab loses focus."
+   ],
+   "holidayImport": [
+    "Import public holidays",
+    "An owner imports the public holidays of the country, and of one region, from an open-data source, deselects the days the space stays open and imports the rest as closure days. Invoiced months are skipped and named."
+   ],
+   "capacityKpi": [
+    "Seat utilisation",
+    "Shows owners and reservation managers how much of the offered seat time was reserved in a month, with how it is computed and what the figure cannot know."
+   ],
+   "accountingBook": [
+    "Accounting book",
+    "Who keeps the official books of each issuer: Deskilo as pre-accounting, a local book, or an external accounting system that stays authoritative. Each issuer states its currency, fiscal year and accounting basis. Off: member balances and invoices work as before."
+   ],
+   "roleAssignment": [
+    "Giving roles",
+    "Shows a Roles section on each member's page to give or take back a role, the members holding each role, and lets every member see what they can do here."
+   ],
+   "taskRecorder": [
+    "Task recorder",
+    "Lets a person record the steps of a task on this workspace's screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here."
    ]
   },
   "process": {
@@ -1589,7 +1610,7 @@ window.SETUP_L10N={
    "dunningFirstDays": "Jours avant la 1re relance (délai de paiement)",
    "dunningBetweenDays": "Jours entre les relances",
    "dunningAutomatic": "Relances automatiques",
-   "dunningAutomaticDesc": "Chaque matin — et dès qu'un propriétaire ou admin ouvre Finances — les factures ouvertes au-delà du délai reçoivent leur niveau de relance suivant : alerte dans le fil du membre et notification. Décoché : la relance reste un geste manuel.",
+   "dunningAutomaticDesc": "Chaque matin — et dès qu'un propriétaire ou un admin ouvre Finances — les factures dont l'échéance enregistrée est dépassée passent au niveau de relance suivant, pour le montant restant dû et jamais pendant qu'un paiement est en attente ou que la facture est suspendue. Décoché (par défaut) : une relance reste un geste manuel.",
    "einvoicePlatform": "Plateforme de facturation électronique",
    "einvoiceHint": "Là où DesKilo dépose vos factures EN 16931 : une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Le jeton est stocké côté serveur et n'en ressort jamais — ne le mettez ici que si vous remplissez ce document en privé.",
    "einvoiceUrl": "URL de dépôt",
@@ -1670,8 +1691,9 @@ window.SETUP_L10N={
    "rolesTitle": "Rôles et validations",
    "rolesWhy": "Qui peut faire quoi, et quelles actions attendent une confirmation avant de compter. Le propriétaire détient toujours toutes les permissions.",
    "roleCoOwner": "Copropriétaire",
-   "roleAdmin": "Admin",
+   "roleAdmin": "Administrateur·rice",
    "roleMember": "Membre",
+   "roleEveryMember": "Tous les membres",
    "rolesDefaultMatrixHint": "Sans gestion des rôles, la matrice par défaut s'applique : les admins gèrent membres, documents, services, dépenses et consultent les finances ; les copropriétaires ont tout.",
    "rolesAdminInvoicingDep": "{feature} est activé : la permission d'émission est déléguée aux admins par la fonctionnalité elle-même.",
    "rolesDefaultRule": "Règle de validation par défaut",
@@ -2310,7 +2332,7 @@ window.SETUP_L10N={
    ],
    "spaceInquiries": [
     "Écrire aux hôtes",
-    "Une personne connectée qui trouve la page publiée peut écrire aux hôtes : les propriétaires et les administrateurs qui ont choisi d’être contacts publics. Les hôtes sont nommés avant l’écriture, et seuls cette personne et les hôtes lisent la conversation. Désactivé, le bouton et la vue Demandes disparaissent ; les demandes enregistrées restent."
+    "Une personne connectée qui trouve la page publiée peut écrire aux hôtes : les propriétaires et les administrateurs qui ont choisi d’être contacts publics. Les hôtes sont nommés avant l’écriture, et seuls cette personne et les hôtes lisent la conversation. Désactivé, le bouton et la vue Demandes disparaissent : personne n’ouvre de nouvelle demande ; celles en cours restent dans la boîte des hôtes pour y répondre et les clore."
    ],
    "messageForwarding": [
     "Transfert de messages",
@@ -2319,6 +2341,26 @@ window.SETUP_L10N={
    "captureProtection": [
     "Protection contre la capture d’écran",
     "Les écrans de messages refusent les captures et l’enregistrement d’écran quand l’appareil le permet, masquent leur contenu pendant un enregistrement et annoncent une capture dans la conversation quand elle peut seulement être détectée. Un navigateur ne peut pas bloquer les captures ; la conversation y est floutée quand l’onglet perd le focus."
+   ],
+   "holidayImport": [
+    "Importer les jours fériés",
+    "Un propriétaire importe les jours fériés du pays, et d'une région, depuis une source de données ouvertes, désélectionne les jours où l'espace reste ouvert et importe les autres comme jours de fermeture. Les mois déjà facturés sont ignorés et nommés."
+   ],
+   "capacityKpi": [
+    "Occupation des places",
+    "Montre aux propriétaires et aux gestionnaires des réservations quelle part du temps de place offert a été réservée dans le mois, avec la façon dont c'est calculé et ce que le chiffre ne peut pas savoir."
+   ],
+   "accountingBook": [
+    "Livre comptable",
+    "Qui tient les livres officiels de chaque émetteur : Deskilo en pré-comptabilité, un livre local ou un logiciel comptable externe qui fait foi. Chaque émetteur indique sa devise, son exercice et sa base comptable. Désactivé : les soldes des membres et les factures fonctionnent comme avant."
+   ],
+   "roleAssignment": [
+    "Attribution des rôles",
+    "Affiche une section Rôles sur la page de chaque membre pour attribuer ou retirer un rôle, les membres ayant chaque rôle, et permet à chacun de voir ce qu'il peut faire ici."
+   ],
+   "taskRecorder": [
+    "Enregistreur de tâches",
+    "Permet d'enregistrer les étapes d'une tâche sur les écrans de cet espace, sur son propre appareil, de les relire et d'exporter un fichier sans aucune valeur saisie. Rien n'est envoyé. Désactivé : personne n'enregistre ici."
    ]
   },
   "process": {
@@ -2853,7 +2895,7 @@ window.SETUP_L10N={
    "dunningFirstDays": "Tage bis zur 1. Mahnung (Zahlungsziel)",
    "dunningBetweenDays": "Tage zwischen den Mahnungen",
    "dunningAutomatic": "Automatische Mahnungen",
-   "dunningAutomaticDesc": "Jeden Morgen — und sobald ein Inhaber oder Admin Finanzen öffnet — erhalten offene Rechnungen nach Ablauf der Frist ihre nächste Mahnstufe: eine Meldung im Feed des Mitglieds und eine Benachrichtigung. Nicht angekreuzt: Die Mahnung bleibt ein manueller Schritt.",
+   "dunningAutomaticDesc": "Jeden Morgen — und sobald ein Eigentümer oder Admin Finanzen öffnet — erhalten Rechnungen nach Ablauf ihrer erfassten Zahlungsfrist die nächste Mahnstufe, für den noch offenen Betrag und nie während eine Zahlung geprüft wird oder die Rechnung angehalten ist. Nicht angehakt (Standard): Eine Mahnung bleibt eine manuelle Handlung.",
    "einvoicePlatform": "E-Rechnungs-Plattform",
    "einvoiceHint": "Wohin DesKilo Ihre EN-16931-Rechnungen liefert: eine zugelassene Plattform, ein Peppol-Zugangspunkt, eine nationale Plattform. Das Token wird auf dem Server gespeichert und verlässt ihn nie — tragen Sie es hier nur ein, wenn Sie dieses Dokument privat ausfüllen.",
    "einvoiceUrl": "Upload-URL",
@@ -2934,8 +2976,9 @@ window.SETUP_L10N={
    "rolesTitle": "Rollen und Validierungen",
    "rolesWhy": "Wer was darf und welche Aktionen auf eine Bestätigung warten, bevor sie zählen. Der Inhaber hat immer alle Berechtigungen.",
    "roleCoOwner": "Mit-Inhaberin",
-   "roleAdmin": "Admin",
+   "roleAdmin": "Administrator:in",
    "roleMember": "Mitglied",
+   "roleEveryMember": "Alle Mitglieder",
    "rolesDefaultMatrixHint": "Ohne Rollenverwaltung gilt die Standardmatrix: Admins verwalten Mitglieder, Dokumente, Services und Ausgaben und sehen die Finanzen; Mit-Inhaberinnen haben alles.",
    "rolesAdminInvoicingDep": "{feature} ist aktiv: Die Funktion selbst überträgt die Berechtigung zum Ausstellen von Rechnungen an die Admins.",
    "rolesDefaultRule": "Standard-Validierungsregel",
@@ -3574,7 +3617,7 @@ window.SETUP_L10N={
    ],
    "spaceInquiries": [
     "Den Gastgebern schreiben",
-    "Eine angemeldete Person, die die veröffentlichte Seite findet, kann den Gastgebern schreiben: den Eigentümern und den Administratoren, die öffentliche Kontakte sein wollen. Die Gastgeber werden vor dem Schreiben genannt, und nur diese Person und die Gastgeber lesen das Gespräch. Aus entfernt die Schaltfläche und die Ansicht Anfragen; gespeicherte Anfragen bleiben erhalten."
+    "Eine angemeldete Person, die die veröffentlichte Seite findet, kann den Gastgebern schreiben: den Eigentümern und den Administratoren, die öffentliche Kontakte sein wollen. Die Gastgeber werden vor dem Schreiben genannt, und nur diese Person und die Gastgeber lesen das Gespräch. Aus entfernt die Schaltfläche und die Ansicht Anfragen, sodass niemand eine neue Anfrage beginnt; offene bleiben im Posteingang der Gastgeber, um sie zu beantworten und zu schließen."
    ],
    "messageForwarding": [
     "Nachrichten weiterleiten",
@@ -3583,6 +3626,26 @@ window.SETUP_L10N={
    "captureProtection": [
     "Schutz vor Bildschirmaufnahmen",
     "Nachrichtenbildschirme verweigern Bildschirmfotos und Bildschirmaufnahmen, wo das Gerät es erlaubt, verbergen ihren Inhalt während einer Aufnahme und melden ein Bildschirmfoto im Gespräch, wo es nur erkannt werden kann. Ein Browser kann Bildschirmfotos nicht verhindern; dort wird das Gespräch unscharf, sobald der Tab den Fokus verliert."
+   ],
+   "holidayImport": [
+    "Feiertage importieren",
+    "Ein Eigentümer importiert die Feiertage des Landes und einer Region aus einer Open-Data-Quelle, wählt die Tage ab, an denen der Raum geöffnet bleibt, und importiert die übrigen als Schließtage. Bereits abgerechnete Monate werden übersprungen und genannt."
+   ],
+   "capacityKpi": [
+    "Platzauslastung",
+    "Zeigt Eigentümern und Reservierungsverwaltern, wie viel der angebotenen Platzzeit eines Monats reserviert wurde, wie das berechnet wird und was die Zahl nicht wissen kann."
+   ],
+   "accountingBook": [
+    "Buchführung",
+    "Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher."
+   ],
+   "roleAssignment": [
+    "Rollen vergeben",
+    "Zeigt auf der Seite jedes Mitglieds einen Bereich Rollen, um eine Rolle zu geben oder zu entziehen, die Mitglieder jeder Rolle, und lässt jedes Mitglied sehen, was es hier tun kann."
+   ],
+   "taskRecorder": [
+    "Aufgabenrekorder",
+    "Erlaubt, die Schritte einer Aufgabe auf den Bildschirmen dieses Arbeitsbereichs auf dem eigenen Gerät aufzuzeichnen, sie zu prüfen und eine Datei ohne eingegebene Werte zu exportieren. Nichts wird hochgeladen. Aus: Hier zeichnet niemand auf."
    ]
   },
   "process": {
@@ -4117,7 +4180,7 @@ window.SETUP_L10N={
    "dunningFirstDays": "Días antes del 1.er recordatorio (plazo de pago)",
    "dunningBetweenDays": "Días entre recordatorios",
    "dunningAutomatic": "Recordatorios automáticos",
-   "dunningAutomaticDesc": "Cada mañana — y en cuanto un propietario o admin abre Finanzas — las facturas abiertas fuera de plazo reciben su siguiente nivel de recordatorio: alerta en el feed del miembro y notificación. Desmarcado: el recordatorio sigue siendo un gesto manual.",
+   "dunningAutomaticDesc": "Cada mañana — y en cuanto un propietario o admin abre Finanzas — las facturas que superan su plazo de pago registrado pasan al siguiente nivel de recordatorio, por el importe aún pendiente y nunca mientras un pago está pendiente o la factura está en suspenso. Sin marcar (por defecto): un recordatorio sigue siendo un gesto manual.",
    "einvoicePlatform": "Plataforma de facturación electrónica",
    "einvoiceHint": "Donde DesKilo entrega tus facturas EN 16931: una plataforma acreditada, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor y nunca sale de él — ponlo aquí solo si rellenas este documento en privado.",
    "einvoiceUrl": "URL de envío",
@@ -4198,8 +4261,9 @@ window.SETUP_L10N={
    "rolesTitle": "Roles y validaciones",
    "rolesWhy": "Quién puede hacer qué y qué acciones esperan una confirmación antes de contar. El propietario siempre tiene todos los permisos.",
    "roleCoOwner": "Copropietario",
-   "roleAdmin": "Admin",
+   "roleAdmin": "Administrador/a",
    "roleMember": "Miembro",
+   "roleEveryMember": "Todos los miembros",
    "rolesDefaultMatrixHint": "Sin gestión de roles se aplica la matriz predeterminada: los admins gestionan miembros, documentos, servicios y gastos y consultan las finanzas; los copropietarios lo tienen todo.",
    "rolesAdminInvoicingDep": "{feature} está activada: la propia función delega en los admins el permiso de emitir facturas.",
    "rolesDefaultRule": "Regla de validación predeterminada",
@@ -4838,7 +4902,7 @@ window.SETUP_L10N={
    ],
    "spaceInquiries": [
     "Escribir a los anfitriones",
-    "Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas; las consultas guardadas se conservan."
+    "Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas, así que nadie abre una consulta nueva; las abiertas siguen en la bandeja de los anfitriones para responderlas y cerrarlas."
    ],
    "messageForwarding": [
     "Reenvío de mensajes",
@@ -4847,6 +4911,26 @@ window.SETUP_L10N={
    "captureProtection": [
     "Protección contra capturas de pantalla",
     "Las pantallas de mensajes rechazan capturas y grabaciones de pantalla cuando el dispositivo lo permite, ocultan su contenido mientras se graba la pantalla y anuncian una captura en la conversación cuando solo puede detectarse. Un navegador no puede bloquear capturas; allí la conversación se difumina cuando la pestaña pierde el foco."
+   ],
+   "holidayImport": [
+    "Importar días festivos",
+    "Un propietario importa los días festivos del país, y de una región, desde una fuente de datos abiertos, desmarca los días en que el espacio sigue abierto e importa el resto como días de cierre. Los meses ya facturados se omiten y se nombran."
+   ],
+   "capacityKpi": [
+    "Ocupación de puestos",
+    "Muestra a los propietarios y a quienes gestionan las reservas qué parte del tiempo de puesto ofrecido se reservó en un mes, cómo se calcula y lo que la cifra no puede saber."
+   ],
+   "accountingBook": [
+    "Libro contable",
+    "Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes."
+   ],
+   "roleAssignment": [
+    "Asignación de roles",
+    "Muestra una sección Roles en la página de cada miembro para dar o retirar un rol, los miembros de cada rol, y permite a cada miembro ver lo que puede hacer aquí."
+   ],
+   "taskRecorder": [
+    "Grabador de tareas",
+    "Permite grabar los pasos de una tarea en las pantallas de este espacio, en el propio dispositivo, revisarlos y exportar un archivo sin ningún valor escrito. No se envía nada. Desactivado: nadie graba aquí."
    ]
   },
   "process": {
@@ -5381,7 +5465,7 @@ window.SETUP_L10N={
    "dunningFirstDays": "Giorni prima del 1° sollecito (termine di pagamento)",
    "dunningBetweenDays": "Giorni tra i solleciti",
    "dunningAutomatic": "Solleciti automatici",
-   "dunningAutomaticDesc": "Ogni mattina — e non appena un proprietario o un admin apre Finanze — le fatture aperte oltre il termine ricevono il livello di sollecito successivo: avviso nel feed del membro e notifica. Non selezionato: il sollecito resta un gesto manuale.",
+   "dunningAutomaticDesc": "Ogni mattina — e non appena un proprietario o un admin apre Finanze — le fatture oltre la scadenza registrata passano al livello di sollecito successivo, per l'importo ancora dovuto e mai mentre un pagamento è in attesa o la fattura è sospesa. Non spuntato (predefinito): un sollecito resta un gesto manuale.",
    "einvoicePlatform": "Piattaforma di fatturazione elettronica",
    "einvoiceHint": "Dove DesKilo deposita le tue fatture EN 16931: una piattaforma accreditata, un access point Peppol, una piattaforma nazionale. Il token è conservato sul server e non ne esce mai — inseriscilo qui solo se compili questo documento in privato.",
    "einvoiceUrl": "URL di deposito",
@@ -5462,8 +5546,9 @@ window.SETUP_L10N={
    "rolesTitle": "Ruoli e validazioni",
    "rolesWhy": "Chi può fare cosa, e quali azioni attendono una conferma prima di contare. Il proprietario detiene sempre tutti i permessi.",
    "roleCoOwner": "Comproprietario",
-   "roleAdmin": "Admin",
+   "roleAdmin": "Amministratore",
    "roleMember": "Membro",
+   "roleEveryMember": "Tutti i membri",
    "rolesDefaultMatrixHint": "Senza gestione dei ruoli si applica la matrice predefinita: gli admin gestiscono membri, documenti, servizi e spese e consultano le finanze; i comproprietari hanno tutto.",
    "rolesAdminInvoicingDep": "{feature} è attiva: la funzionalità stessa delega agli admin il permesso di emettere fatture.",
    "rolesDefaultRule": "Regola di validazione predefinita",
@@ -6102,7 +6187,7 @@ window.SETUP_L10N={
    ],
    "spaceInquiries": [
     "Scrivi agli host",
-    "Una persona connessa che trova la pagina pubblicata può scrivere agli host: i proprietari e gli amministratori che hanno scelto di essere contatti pubblici. Gli host vengono nominati prima di scrivere, e solo quella persona e gli host leggono la conversazione. Disattivato, il pulsante e la vista Richieste scompaiono; le richieste salvate restano."
+    "Una persona connessa che trova la pagina pubblicata può scrivere agli host: i proprietari e gli amministratori che hanno scelto di essere contatti pubblici. Gli host vengono nominati prima di scrivere, e solo quella persona e gli host leggono la conversazione. Disattivato, il pulsante e la vista Richieste scompaiono, quindi nessuno apre una nuova richiesta; quelle aperte restano nella posta degli host per rispondere e chiuderle."
    ],
    "messageForwarding": [
     "Inoltro dei messaggi",
@@ -6111,6 +6196,26 @@ window.SETUP_L10N={
    "captureProtection": [
     "Protezione dalle catture dello schermo",
     "Le schermate dei messaggi rifiutano screenshot e registrazioni dello schermo quando il dispositivo lo consente, nascondono il contenuto durante una registrazione e annunciano uno screenshot nella conversazione quando può solo essere rilevato. Un browser non può bloccare gli screenshot; lì la conversazione viene sfocata quando la scheda perde il focus."
+   ],
+   "holidayImport": [
+    "Importa i giorni festivi",
+    "Un proprietario importa i giorni festivi del paese, e di una regione, da una fonte di dati aperti, deseleziona i giorni in cui lo spazio resta aperto e importa gli altri come giorni di chiusura. I mesi già fatturati vengono saltati e indicati."
+   ],
+   "capacityKpi": [
+    "Occupazione dei posti",
+    "Mostra ai proprietari e a chi gestisce le prenotazioni quanta parte del tempo di posto offerto è stata prenotata in un mese, come viene calcolata e cosa la cifra non può sapere."
+   ],
+   "accountingBook": [
+    "Libro contabile",
+    "Chi tiene i libri ufficiali di ogni emittente: Deskilo come precontabilità, un libro locale o un sistema contabile esterno che fa fede. Ogni emittente indica valuta, esercizio e base contabile. Disattivato: i saldi dei membri e le fatture funzionano come prima."
+   ],
+   "roleAssignment": [
+    "Assegnazione dei ruoli",
+    "Mostra una sezione Ruoli nella pagina di ogni membro per dare o revocare un ruolo, i membri di ogni ruolo, e permette a ogni membro di vedere cosa può fare qui."
+   ],
+   "taskRecorder": [
+    "Registratore di attività",
+    "Consente di registrare i passaggi di un'attività sulle schermate di questo spazio, sul proprio dispositivo, rivederli ed esportare un file senza alcun valore digitato. Nulla viene inviato. Disattivato: qui nessuno registra."
    ]
   },
   "process": {

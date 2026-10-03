@@ -52,8 +52,10 @@ class WorkspaceOwnScreens extends ConsumerWidget {
             path: '/settings/colours',
             helpTopic: helpTopic,
           ),
-        // #1528 — the roles this space defines for itself.
-        if (features.contains(WorkspaceFeature.customRoles))
+        // #1528 — the roles this space defines for itself. #2085 — with
+        // roleAssignment they are reached from Roles, the one entry.
+        if (features.contains(WorkspaceFeature.customRoles) &&
+            !features.contains(WorkspaceFeature.roleAssignment))
           _Row(
             rowKey: 'workspaceSettingsRolesOfSpace',
             icon: Icons.badge_outlined,

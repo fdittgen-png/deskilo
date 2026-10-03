@@ -58,7 +58,7 @@ cannot write the ledger, the invoices or the reservations directly.
 | T7 | A QR or NFC badge photographed and replayed | hashed credentials, revocable, PIN as a second factor for sign-in | Dart tests; the SQL gate is untested |
 | T8 | Booking manipulation — taking a seat that is held | database constraints and `create_reservation` | untested at the database (#1232) |
 | T9 | Financial manipulation — altering an issued invoice | `invoices_no_mutation` trigger, SHA-256 content signature | **trigger never fires in a test** (#1226) |
-| T10 | Webhook spoofing | signature verification in each edge function | `payment_money_test` reads the source; Deno never runs in CI |
+| T10 | Webhook spoofing | signature verification in each edge function | the real handlers run in CI: `deno test` (edge-functions.yml) and `scripts/edge_payment_check.sh` signed-event matrices (#1863 C) |
 | T11 | A webhook replayed to double a payment | `for update` + status guard, `0205:48` | none (#1231) |
 | T12 | Document access outside the member's role | RLS on `workspace_documents` | none |
 | T13 | Export abuse — exporting somebody else's data | `export_my_data` takes no member parameter; it is always the caller | none (#1238) |

@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 import 'package:deskilo/features/money/domain/report_data_letters.dart';
-import 'invoices_test.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 /// Builds the agreement's data model off a floor plan, in English —
 /// the document body itself is rendered by the shared report engine, so

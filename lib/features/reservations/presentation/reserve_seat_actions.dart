@@ -216,8 +216,11 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           );
         }
       case SeatState.free:
+        // #2016 — a live free-seat tap OFFERS the walk-up; the sheet
+        // opens on Reserve with its period editable, and checking in
+        // now is the member's explicit choice there.
         await bookingSheet(seat, reservations, window,
-            plan: plan, walkUp: isLive);
+            plan: plan, offerWalkUp: isLive);
       case SeatState.mine:
         final mine = _coveringReservation(plan, seat, reservations, window);
         // #687 — MANAGEMENT, not just visibility: check in, check out,
@@ -392,18 +395,21 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
 
   /// The booking sheet, also reached from the Day and Week views where a
   /// free slot is tapped directly.
-  /// [walkUp] is whether this tap MEANS "I am sitting here now".
+  /// [walkUp] is whether the sheet STARTS as "I am sitting here now";
+  /// [offerWalkUp] lets the member choose it there (#2016).
   ///
-  /// Only the plan's free-seat tap in live mode does. A Day-row or
-  /// Week-cell tap books the slot it names — deriving it from `isLive`
-  /// alone turned "reserve tomorrow morning" into a check-in the moment
-  /// the hub happened to be showing today.
+  /// A Day-row or Week-cell tap books the slot it names — deriving it
+  /// from `isLive` alone turned "reserve tomorrow morning" into a
+  /// check-in the moment the hub happened to be showing today. The
+  /// plan's live free-seat tap offers the walk-up instead of forcing it:
+  /// forced, the sheet hid the period and only a header chip got it back.
   Future<void> bookingSheet(
     Seat seat,
     List<Reservation> reservations,
     HalfDayWindow window, {
     FloorPlan? plan,
     bool walkUp = false,
+    bool offerWalkUp = false,
   }) async {
     final liveWindow = !walkUp && windowIsNow;
     final l10n = AppLocalizations.of(context);
@@ -433,7 +439,17 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         walkUp: walkUp,
         seat: seat,
       );
-      if (refusal != null) {
+      // #2016 — with the walk-up offered, the sheet opens when EITHER
+      // action is allowed; it shows the refusal of the chosen one.
+      final walkUpAllowed = offerWalkUp &&
+          gate.refusalFor(
+                start: window.start,
+                end: window.end,
+                walkUp: true,
+                seat: seat,
+              ) ==
+              null;
+      if (refusal != null && !walkUpAllowed) {
         traceGateRefusal(seat: seat, refusal: refusal, walkUp: walkUp);
         AppSnack.info(
           context,
@@ -472,9 +488,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     // Without this, walking up in a half-day workspace booked the
     // member's default period from NOW — a morning that started at 11:00
     // and ran to midnight.
-    var end = !walkUp
-        ? window.end
-        : switch (granularity) {
+    final walkUpEnd = switch (granularity) {
             BookingGranularity.halfDay => (ref
                             .read(defaultPeriodProvider)
                             .value ==
@@ -488,11 +502,22 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
               walkUpWindow(granularity, window.start).end,
             _ => defaultEndFor(window.start),
           };
+    var end = walkUp ? walkUpEnd : window.end;
     var capped = false;
     if (next != null && next.startsAt.isBefore(end)) {
       end = next.startsAt;
       capped = true;
     }
+    final nextStart = next?.startsAt;
+    final walkUpCapped = nextStart != null && nextStart.isBefore(walkUpEnd);
+    final WalkUpOption? walkUpOption = offerWalkUp
+        ? (
+            start: window.start,
+            end: walkUpCapped ? nextStart : walkUpEnd,
+            cap: nextStart,
+            capped: walkUpCapped,
+          )
+        : null;
 
     final choice = await showModalBottomSheet<BookingChoice>(
       context: context,
@@ -509,7 +534,23 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         // walk-up: on a live view a free-seat tap is "I am sitting here",
         // not a reservation for later.
         walkUp: walkUp,
+        walkUpOption: walkUpOption,
         liveWindow: liveWindow,
+        // #2016 — the check-in-right-away switch follows the window the
+        // member edits, not the one the hub browsed.
+        now: ref.read(clockProvider).now(),
+        overlaps: seatPlan == null
+            ? null
+            : (start, end) =>
+                seatStateInRange(
+                  plan: seatPlan,
+                  seat: seat,
+                  reservations: reservations,
+                  myMemberId: myMemberId,
+                  from: start,
+                  to: end,
+                ) !=
+                SeatState.free,
         fixedEnd: dayBased,
         members: _bookingCandidates,
         myMemberId: myMemberId,
@@ -526,7 +567,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         // picks, so the Reserve button never offers a refused window.
         refusalOf: gate == null
             ? null
-            : (start, end) => gate.refusalFor(
+            : (start, end, walkUp) => gate.refusalFor(
                   start: start,
                   end: end,
                   walkUp: walkUp,
@@ -543,6 +584,9 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       ),
     );
     if (choice == null || !mounted) return;
+    // #2016 T08 — the choice belongs to the workspace the sheet opened for:
+    // after a switch it is dropped, never booked in either workspace.
+    if (ref.read(currentWorkspaceProvider).value?.id != workspace.id) return;
     // Blocking is not a booking: it takes the seat OUT of service from
     // now, open-ended, and returns before any reservation is created.
     if (choice.block) {
@@ -568,7 +612,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       // for, and what to say once it happened.
       if (choice.pattern == null &&
           (choice.forMemberId == null || choice.forMemberId == myMemberId) &&
-          !walkUp &&
+          !choice.walkUp &&
           !choice.checkInNow &&
           liveWindow) {
         traceReserveWithoutCheckIn(
@@ -586,7 +630,10 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           // here", so it checks in atomically. Booking without the
           // check-in left someone at a desk the plan showed as merely
           // reserved.
-          checkIn: walkUp || choice.checkInNow,
+          // #2016 — what the member CONFIRMED in the sheet: a walk-up
+          // checks in atomically ("I am sitting here"); a reservation
+          // checks in only with its own explicit switch.
+          checkIn: choice.walkUp || choice.checkInNow,
           forMemberId: choice.forMemberId,
           pattern: choice.pattern,
           until: choice.until,
@@ -626,7 +673,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         seat: seat,
         start: choice.start,
         end: choice.end,
-        checkIn: walkUp || choice.checkInNow,
+        checkIn: choice.walkUp || choice.checkInNow,
         series: choice.pattern != null,
         member: ref.read(myMemberProvider).value?.id,
       );
@@ -639,7 +686,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           // #687 — say what was ATTEMPTED. A live tap is a walk-up
           // check-in; "could not reserve" sends someone standing at the
           // desk looking for a reservation they never tried to make.
-          walkUp
+          choice.walkUp
               ? (l10n?.planCheckInFailed ??
                   'Could not check in — the seat may have just been taken.')
               : (l10n?.reserveBookingFailed ??

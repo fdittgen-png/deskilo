@@ -3,6 +3,8 @@
 // HARD RULE #4: every locale must carry every key that exists in the
 // canonical English ARB. Fails CI when a locale is missing keys (or carries
 // keys English does not have, which usually means a typo or a stale key).
+// #1862 — the one owner of this invariant; test/lint/l10n_completeness_test
+// repeated it and was removed. Its repair hint lives on in the reasons.
 
 import 'dart:convert';
 import 'dart:io';
@@ -35,7 +37,9 @@ void main() {
       expect(
         missing,
         isEmpty,
-        reason: '"$locale" is missing keys present in app_en.arb: $missing',
+        reason: '"$locale" is missing keys present in app_en.arb: $missing '
+            '— add them to the _fragments/*_$locale.arb files and run '
+            'dart run tool/build_arb.dart',
       );
       expect(
         extra,

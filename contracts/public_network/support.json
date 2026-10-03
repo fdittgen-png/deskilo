@@ -11,7 +11,7 @@
     {
       "id": "baseline",
       "summary": "A server from before negotiation: no descriptor (PGRST202), version 1 of every baseline operation, no revalidation.",
-      "internal_schema": "below 320",
+      "internal_schema": "below 347",
       "evidence": [
         "test/fixtures/public_network/legacy_server_no_descriptor.json",
         "test/core/public_network/public_network_negotiation_test.dart",
@@ -21,10 +21,10 @@
     {
       "id": "negotiating",
       "summary": "The descriptor is published; participant mutations revalidate x-deskilo-operation; an unlabelled request is the operation's unlabelled version.",
-      "internal_schema": "320 and above",
+      "internal_schema": "347 and above",
       "evidence": [
         "test/fixtures/public_network/descriptor_current.json",
-        "supabase/tests/database/106_public_network_negotiation.sql",
+        "supabase/tests/database/130_public_network_negotiation.sql",
         "test/features/directory/participant_negotiation_test.dart"
       ]
     }
@@ -35,7 +35,7 @@
       "summary": "The released client before negotiation: reads cards with the checkpoint A adapter (or none), sends no operation header.",
       "evidence": [
         "test/fixtures/public_network/released_client_requests.json",
-        "supabase/tests/database/106_public_network_negotiation.sql"
+        "supabase/tests/database/130_public_network_negotiation.sql"
       ]
     },
     {
@@ -56,9 +56,9 @@
     {"id": "desktop", "flavor": "macOS, Windows, Linux", "public_network": "Same code path.", "status": "fixture conformance on the Dart VM; no device run recorded"}
   ],
   "pairs": [
-    {"client": "negotiating", "server": "negotiating", "outcome": "negotiated version 1, header revalidated", "evidence": ["test/features/directory/participant_negotiation_test.dart", "supabase/tests/database/106_public_network_negotiation.sql"]},
+    {"client": "negotiating", "server": "negotiating", "outcome": "negotiated version 1, header revalidated", "evidence": ["test/features/directory/participant_negotiation_test.dart", "supabase/tests/database/130_public_network_negotiation.sql"]},
     {"client": "negotiating", "server": "baseline", "outcome": "baseline version 1; the request is accepted", "evidence": ["test/features/directory/participant_negotiation_test.dart"]},
-    {"client": "pre-negotiation", "server": "negotiating", "outcome": "unlabelled request accepted as version 1; refused by name once version 1 is retired", "evidence": ["supabase/tests/database/106_public_network_negotiation.sql"]},
+    {"client": "pre-negotiation", "server": "negotiating", "outcome": "unlabelled request accepted as version 1; refused by name once version 1 is retired", "evidence": ["supabase/tests/database/130_public_network_negotiation.sql"]},
     {"client": "pre-negotiation", "server": "baseline", "outcome": "unchanged behaviour (both predate negotiation)", "evidence": ["test/fixtures/public_network/released_client_requests.json"]},
     {"client": "negotiating", "server": "synthetic newer", "outcome": "common version taken; an unknown required capability refuses only its operation", "evidence": ["test/fixtures/public_network/synthetic_newer_server.json", "test/core/public_network/public_network_negotiation_test.dart"]},
     {"client": "negotiating", "server": "synthetic retired v1", "outcome": "the retired operation is refused before sending; unrelated operations work", "evidence": ["test/fixtures/public_network/synthetic_retired_v1.json", "test/features/directory/participant_negotiation_test.dart"]}

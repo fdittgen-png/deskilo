@@ -1,74 +1,109 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// Route-registry lint: a new route cannot be added silently.
+// Route-registry contract (#1863): a route cannot be added, duplicated
+// or ungated silently.
 //
-// Every feature-linked surface must be gated at TWO layers — the entry
-// point checks `enabledFeaturesSync`, and the route guards with a
-// `featureEnabled(...)` redirect so deep links bounce too. The second
-// layer is the one people forget, because the screen "works" without it.
-// Pinning the route count turns adding a route into a deliberate act
-// that walks through the checklist below, instead of a silent line in a
-// thousand-line router.
-
-import 'dart:io';
-
+// It used to pin how many times `GoRoute(` was spelled in router.dart. A
+// count stays the same when a route's path changes or its
+// `featureEnabled(...)` redirect goes missing, and moves when a
+// correct refactor re-spells a route. This reads the routes the live
+// GoRouter registers and resolves a deep link to each through every
+// redirect it really has.
+//
+// Adding a route? Still walk the checklist:
+//  1. If the surface belongs to a WorkspaceFeature: `featureEnabled`
+//     redirect on the route AND the hidden entry point.
+//  2. A RouteRule in lib/app/route_classes.dart
+//     (route_policy_registry_test).
+//  3. The Features screen itself stays ungated — always reachable.
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// RATCHET-ADJACENT PIN. Changing this number is fine — that is the
-/// point: it makes you read this comment first.
-///
-/// Adding a route? The checklist (Implementation.md, feature-flags
-/// section):
-///  1. If the surface belongs to a WorkspaceFeature: `featureEnabled`
-///     redirect on the route AND the hidden entry point.
-///  2. A widget test for the hidden entry and the bounced deep link
-///     (see test/features/profile/settings_sections_test.dart).
-///  3. The Features screen itself stays ungated — always reachable.
-// 35→36 (2026-08-05): #486 /payment-methods (owner-gated redirect).
-// 36→37 (2026-08-05): #500 /documents (feature-gated redirect).
-// 37→38 (2026-08-06): #513 /roles (feature-gated redirect).
-// 38→41 (2026-08-10): 0106 WhatsApp message mirror deep links —
-// /msg/:id (feature-gated), /res/:id, /space/:kind/:id.
-// 42→43 (2026-08-27): #687 /messages — the messaging centre, on its
-//   own route before it becomes a bottom-bar destination.
-// 41→42 (2026-08-11): #534 /vat-declarations (owner+feature-gated).
-// 43→44 (2026-08-29): #719 /privacy.
-// 44→45 (2026-08-29): #734 /formats.
-// 45→44 (2026-08-29): #737 /msg/:id gone with the WhatsApp mirror.
-// 44→45 (2026-08-30): #751 /consent.
-// 45→46 (2026-08-31): #780 /server — choose the Supabase instance.
-// 46→47 (2026-09-02): #821 /conversation/:conversationId — a thread as a page.
-// 47→48 (2026-09-02): #822 /report-editor — the full-screen report designer.
-// 48→49 (2026-09-02): #825 /member/:memberId — one page per member.
-// 49→50 (2026-09-02): #827 /invoicing/wizard — the guided month-close.
-// 50→51 (2026-09-05): #886 /settings/personal-info — the identity form.
-// 51→52 (2026-09-05): #887 /members/managed — a managed member's identity.
-// 52→53 (2026-09-05): #902 /settings/payment-terms — the member reads
-//   the conditions their documents print.
-// 53→54 (2026-09-06): #925 /settings/number-sequences.
-// 54→56 (2026-09-06): #934 /money/status, /money/repartition-wizard.
-// 56→57 (2026-09-06): #945 /settings/sites.
-// 60→61 (2026-09-16): #1277 /settings/wording — the owner renames the
-//   product's words, per locale, behind workspaceVocabulary.
-// 61→62 (2026-09-16): #1312 /server-update — where a server whose schema
-//   is older than the app sends every route. No flag: the flags live on
-//   that server.
-// 71→72 (2026-09-28): #1791 account admission history; no membership required.
-const int _expectedRouteCount = 78; // 2026-10-01 #1827 /settings/assistant-setup — manageIntegrations redirect; deliberately not behind mcpAccess, since turning it on is one of its steps (like /settings/assistants) // 2026-09-26 #1626/#1627/#1628 /settings/assistants (owner redirect), /assistants and /database/assistant-approvals (the server answers only the caller, administrators with aal2) // 2026-09-26 #1615 /oauth/consent — every consent RPC refuses a delegated token, and only mcpAccess workspaces are offered // 2026-09-26 #1619 /mcp/confirm/:id — the server answers only the bound person, and a confirmation exists only where mcpAccess is on // 2026-09-19 #1247 /attention // 2026-09-19 #1528 /settings/roles-of-this-space // 2026-09-19 #1288 /settings/questions // 2026-09-18 #1289 /settings/colours // 2026-09-16 #1312 /server-update
-// 57→58 (2026-09-06): #977 /server/new-instance.
+import '../helpers/router_paths.dart';
+
+/// What an owner can still open with EVERY feature switched off: the
+/// account, entry and settings routes no flag owns. Reviewed 2026-10-01
+/// (#1863). A route that joins this set lost its feature gate, or was
+/// added without one; a route that leaves it gained one. Either way the
+/// change is a decision, so it is written here.
+const Set<String> _openWithEveryFeatureOff = {
+  '/me',
+  '/onboarding',
+  '/messages',
+  '/reserve',
+  '/settings',
+  '/profiles',
+  '/server',
+  '/developer',
+  '/help',
+  '/privacy',
+  '/linked-accounts',
+  '/workspace-code',
+  '/scan-join',
+  '/mcp/confirm/:id',
+  '/assistants',
+  '/database/assistant-approvals',
+  // #1827 B — installation-wide, for the instance operator: no workspace
+  // flag owns it; the server (0341) refuses everyone else.
+  '/installation/assistants',
+  '/settings/assistants',
+  '/settings/assistant-setup',
+  '/oauth/consent',
+  '/billing',
+  '/payment-methods',
+  '/features',
+  '/workspace-settings',
+  '/validation',
+  '/availability',
+  '/members',
+  '/editor',
+  '/editor/level/:levelId',
+  '/account-activity',
+  '/discover',
+  '/connections',
+  '/account-messages',
+  '/settings/public-page',
+  '/applications',
+};
 
 void main() {
-  test('router carries exactly $_expectedRouteCount GoRoutes', () {
-    final source = File('lib/app/router.dart').readAsStringSync();
-    final count = RegExp(r'GoRoute\(').allMatches(source).length;
+  testWidgets('the router registers every path once', (tester) async {
+    final app = await bootRouter(tester);
+    final paths = registeredRoutePaths(app.router.configuration.routes);
+    final seen = <String>{};
+    final twice = [
+      for (final p in paths)
+        if (!seen.add(p)) p,
+    ];
+    expect(paths, isNotEmpty);
+    expect(twice, isEmpty, reason: 'registered more than once: $twice');
+  });
+
+  testWidgets('with every feature off, only the reviewed routes open', (
+    tester,
+  ) async {
+    final app = await bootRouter(
+      tester,
+      featureFlags: {for (final f in WorkspaceFeature.values) f.dbKey: false},
+    );
+    final open = <String>{};
+    for (final p in registeredRoutePaths(app.router.configuration.routes)) {
+      final location = concreteRoute(p);
+      if (await resolveRoute(app, location) == location) open.add(p);
+    }
     expect(
-      count,
-      _expectedRouteCount,
-      reason: 'lib/app/router.dart has $count GoRoutes, the pin says '
-          '$_expectedRouteCount. If you added or removed a route on '
-          'purpose, update the pin — after walking the gating checklist '
-          'in this file\'s header. A route without its featureEnabled '
-          'redirect is reachable by deep link with the feature off.',
+      open.difference(_openWithEveryFeatureOff),
+      isEmpty,
+      reason:
+          'these deep links open with every feature off — add the '
+          "route's featureEnabled redirect, or review it into the set",
+    );
+    expect(
+      _openWithEveryFeatureOff.difference(open),
+      isEmpty,
+      reason:
+          'these no longer open with every feature off — remove '
+          'them from the reviewed set',
     );
   });
 }

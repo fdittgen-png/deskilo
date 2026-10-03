@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "featureTaskRecorderTitle": "Task recorder",
+  "@featureTaskRecorderTitle": {
+    "description": "#1865 task recorder: the feature's name"
+  },
+  "featureTaskRecorderDesc": "Lets a person record the steps of a task on this workspace's screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here.",
+  "@featureTaskRecorderDesc": {
+    "description": "#1865 task recorder: the feature's description"
+  }
+}

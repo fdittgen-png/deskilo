@@ -118,4 +118,31 @@ void main() {
     expect(plans.planImages, isNotEmpty);
     expect(plans.imageBytes.values.first, _png);
   });
+
+  testWidgets('#2012 C — a create whose answer was lost: Try again gives '
+      'ONE image, not two', (tester) async {
+    final plans = await pumpCanvas(
+      tester,
+      override: (overrides, fakePlans) {
+        fakePlans.loseCreateAnswers = 1;
+        overrides.add(
+          filePickerProvider.overrideWithValue(
+            (XTypeGroup group) async =>
+                XFile.fromData(_png, name: 'plant.png', mimeType: 'image/png'),
+          ),
+        );
+      },
+    );
+    await tester.tap(find.text('Image'));
+    await tester.pumpAndSettle();
+    await tester.tapAt(tester.getCenter(find.byType(CustomPaint).first));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('could not be confirmed as saved'),
+        findsOneWidget);
+    expect(plans.planImages, hasLength(1), reason: 'it did commit');
+    await tester.tap(find.byKey(const ValueKey('plan-media-retry')));
+    await tester.pumpAndSettle();
+    expect(plans.planImages, hasLength(1),
+        reason: 'the retry carries the same image id');
+  });
 }

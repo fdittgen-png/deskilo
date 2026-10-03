@@ -28,7 +28,7 @@
   "mcpEligibleYes": "Esta base de datos le permite usar asistentes.",
   "mcpEligibleRequested": "Solicitó la aprobación. Un administrador de la base de datos la revisará.",
   "mcpEligibleExpired": "Su aprobación caducó. Vuelva a solicitarla para seguir usando asistentes.",
-  "mcpEligibleNoIdentity": "Su cuenta no está vinculada a una identidad verificada en esta base de datos.",
+  "mcpEligibleNoIdentity": "Su identidad aún no está confirmada para los asistentes en esta base.",
   "mcpEligibleNot": "Esta base de datos no ha aprobado asistentes para usted.",
   "mcpEligibleWithdraw": "Renunciar al acceso de asistentes en esta base de datos",
   "mcpConnectedNoWorkspace": "Ningún espacio: este asistente no puede hacer nada aquí.",

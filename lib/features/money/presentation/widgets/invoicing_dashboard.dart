@@ -357,6 +357,7 @@ class OpenInvoicesTab extends ConsumerWidget {
         // #508 — a credit note owes the MEMBER nothing; never remind.
         if (e.invoice.totalCents > 0)
           e.invoice.id: dueReminderLevel(
+          dueOn: e.invoice.dueOn,
           issuedAt: e.invoice.issuedAt,
           reminderCount: reminders[e.invoice.id]?.count ?? 0,
           lastReminderAt: reminders[e.invoice.id]?.last,

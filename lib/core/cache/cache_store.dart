@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kIsWeb, visibleForTesting;
 
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -20,7 +20,7 @@ part 'cache_store.g.dart';
 /// code (the tankstellen #3219 lesson, keyed on a manual version rather
 /// than the app build since rows — unlike parsed output — only break on
 /// deliberate shape changes). Bump when a cached row shape changes.
-const int cacheSchemaVersion = 1;
+const int cacheSchemaVersion = 2; // #2008: exact key in the envelope
 
 /// One cached payload with its freshness envelope (the tankstellen
 /// `CacheManager` shape): [isExpired] gates the fresh tier, the entry
@@ -99,13 +99,16 @@ class FileCacheStore implements CacheStore {
     }
   }
 
-  /// Human-readable slug + hash suffix: collision-safe and greppable on
-  /// a device.
-  static String _fileName(String key) {
+  /// Slug + digest suffix: greppable on a device, and the same name on
+  /// every run (#2008 — `String.hashCode` is not stable across runs).
+  /// The envelope carries the exact key, so a name collision is a miss.
+  @visibleForTesting
+  static String fileNameFor(String key) {
     final slug = key.toLowerCase().replaceAll(RegExp(r'[^a-z0-9._-]+'), '_');
-    final hash = key.hashCode.toUnsigned(32).toRadixString(16);
-    return '$slug-$hash.json';
+    return '$slug-${cacheDigest('cache-file-v2', [key], 16)}.json';
   }
+
+  static String _fileName(String key) => fileNameFor(key);
 
   @override
   Future<CacheEntry?> get(String key) async {
@@ -119,6 +122,9 @@ class FileCacheStore implements CacheStore {
         await file.delete();
         return null;
       }
+      // #2008 — the entry must be for exactly this key (scope included).
+      // Another key's file is not deleted: it is simply not this one.
+      if (raw['k'] != key) return null;
       return CacheEntry(
         payload: raw['payload'],
         storedAt:
@@ -148,6 +154,7 @@ class FileCacheStore implements CacheStore {
       final tmp = File('${dir.path}/${_fileName(key)}.tmp');
       await tmp.writeAsString(jsonEncode({
         'v': cacheSchemaVersion,
+        'k': key,
         'storedAt': DateTime.now().millisecondsSinceEpoch,
         'ttlMs': ttl.inMilliseconds,
         'payload': payload,
@@ -186,7 +193,9 @@ class FileCacheStore implements CacheStore {
       for (final file in dir.listSync().whereType<File>()) {
         try {
           final raw = jsonDecode(await file.readAsString());
-          if (raw is! Map) {
+          // #2008 — a legacy or foreign-format entry is dropped, never
+          // migrated into a namespace it was not written for.
+          if (raw is! Map || raw['v'] != cacheSchemaVersion) {
             await file.delete();
             evicted++;
             continue;

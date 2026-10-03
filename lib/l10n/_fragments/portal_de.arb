@@ -50,5 +50,11 @@
   "portalEmploymentHint": "Eine Anstellung ändert weder Zugriffsrechte noch Abonnements. Gehaltszahlungen sind nicht aktiviert.",
   "portalAdminVisible": "Mich als öffentlichen Administrator anzeigen",
   "featurePublicListings": "Öffentlicher Workspace-Eintrag",
-  "featurePublicListingsDesc": "Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten."
+  "featurePublicListingsDesc": "Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten.",
+  "portalFollowsWorkspace": "Aus den Arbeitsbereichsangaben",
+  "portalCustomised": "Angepasst",
+  "portalUseWorkspaceInfo": "Arbeitsbereichsangaben verwenden",
+  "portalResetAll": "Alle öffentlichen Daten auf die Arbeitsbereichsangaben zurücksetzen",
+  "portalResetAllBody": "Die öffentlichen Werte aller Felder, für die es Arbeitsbereichsangaben gibt, werden durch diese ersetzt. Felder ohne Entsprechung im Arbeitsbereich behalten Ihre Eingabe.",
+  "portalResetAllConfirm": "Zurücksetzen"
 }

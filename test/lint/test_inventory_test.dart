@@ -79,4 +79,100 @@ void main() {
           'the invariant; poll the result:\n${needing.join('\n')}',
     );
   });
+
+  // #1864 — the inventory knows every runner, says who runs what, and
+  // claims no review it did not get.
+  test('every registered runner family has files and a live owner', () {
+    expect(deadRunnerEntries(), isEmpty);
+  });
+
+  test('no test-shaped file sits outside a registered runner family', () {
+    expect(unregisteredTestFiles(), isEmpty,
+        reason: 'register the runner in runnerFamilies '
+            '(tool/test_inventory/inventory.dart) with who executes it');
+  });
+
+  test('reviewed dispositions name real files and survivors', () {
+    final files = {for (final e in classify()) e.path};
+    expect(dispositionProblems(reviewedDispositions, files), isEmpty);
+  });
+
+  test('the recovery proof is conditional integration, run by its script',
+      () {
+    final row = classify()
+        .singleWhere((e) => e.path == 'test/core/instance/local_recovery_test.dart');
+    expect(row.layer, 'integration');
+    expect(row.execution, contains('DESKILO_RECOVERY_FIXTURE'));
+    expect(row.execution, contains('scripts/recovery/application.py'));
+    expect(row.action, 'KEEP');
+  });
+
+  test('a fixture tree: runners, conditions, names and decisions', () {
+    final root = Directory.systemTemp.createTempSync('inventory_');
+    addTearDown(() => root.deleteSync(recursive: true));
+    void write(String path, String text) =>
+        (File('${root.path}/$path')..createSync(recursive: true))
+            .writeAsStringSync(text);
+    const header = '// SPDX-License-Identifier: AGPL-3.0-or-later\n//\n';
+    write('.github/workflows/quality.yml',
+        'run: flutter test --coverage\nrun: supabase test db\n'
+        'working-directory: packages/deskilo_push\n');
+    write('.github/workflows/edge-functions.yml', 'deno test -A\n');
+    // perf-bench.yml is missing: its family is a dead entry.
+    write('scripts/run_fixture.sh', 'export DESKILO_OWNED_FIXTURE=1\n');
+    write('test/a_test.dart',
+        "$header// A states a.\nvoid main() { test('shows the empty state', () {}); "
+        "for (final x in [1, 2]) { test('case \$x', () {}); } }\n");
+    write('test/b_test.dart',
+        "$header// B states b.\nvoid main() { test('shows the empty state', () {}); }\n");
+    write('test/owned_test.dart',
+        "$header// Owned fixture.\nfinal f = Platform.environment['DESKILO_OWNED_FIXTURE'];\n"
+        "void main() { test('x', () {}, skip: f == null); }\n");
+    write('test/orphan_test.dart',
+        "$header// Orphan fixture.\nfinal f = Platform.environment['DESKILO_NOBODY'];\n"
+        "void main() { test('y', () {}, skip: f == null); }\n");
+    write('supabase/tests/database/1_x.sql', '-- X.\nselect plan(3);\n');
+    write('packages/deskilo_push/test/p_test.dart', "$header// P.\nvoid main() {}\n");
+    write('supabase/functions/f/index_test.ts', "// F.\nDeno.test('a', () {});\n");
+    write('tool/bench/b_test.dart', "$header// Bench.\nvoid main() {}\n");
+    write('integration_test/i_test.dart', "$header// I.\nvoid main() {}\n");
+    write('tool/store_assets/s_test.dart', "$header// S.\nvoid main() {}\n");
+    write('elsewhere/stray_test.dart', '// nobody runs me\n');
+
+    final rows = {for (final e in classify(root: root.path)) e.path: e};
+    expect(rows.values.map((e) => e.action).toSet(), {'UNREVIEWED'},
+        reason: 'no rule may claim a review');
+    expect(rows['test/owned_test.dart']!.layer, 'integration');
+    expect(rows['test/owned_test.dart']!.execution,
+        contains('set by scripts/run_fixture.sh'));
+    expect(rows['test/orphan_test.dart']!.execution,
+        contains('no automated owner sets it'));
+    expect(rows['supabase/tests/database/1_x.sql']!.tests, 3);
+    expect(rows['supabase/functions/f/index_test.ts']!.layer, 'edge');
+    expect(rows['test/a_test.dart']!.tests, 2,
+        reason: 'declarations, not the cases the loop expands to');
+    expect(rows['test/a_test.dart']!.duplicate, contains('test/b_test.dart'),
+        reason: 'a shared generic name is a candidate');
+    expect(unregisteredTestFiles(root: root.path), ['elsewhere/stray_test.dart']);
+    expect(deadRunnerEntries(root: root.path),
+        ['benchmarks: perf-bench.yml does not exist']);
+
+    final files = rows.keys.toSet();
+    expect(
+      dispositionProblems({
+        'test/a_test.dart': (action: 'DELETE', reason: 'r', survivor: 'test/gone_test.dart'),
+        'test/b_test.dart': (action: 'REPLACE', reason: 'r', survivor: 'test/owned_test.dart'),
+        'test/owned_test.dart': (action: 'REPLACE', reason: 'r', survivor: 'test/b_test.dart'),
+        'test/orphan_test.dart': (action: 'DELETE', reason: 'r', survivor: null),
+        'test/missing_test.dart': (action: 'KEEP', reason: 'r', survivor: null),
+      }, files),
+      unorderedEquals([
+        'test/a_test.dart: survivor test/gone_test.dart does not exist',
+        'test/b_test.dart: replacement cycle through test/b_test.dart',
+        'test/owned_test.dart: replacement cycle through test/owned_test.dart',
+        'test/orphan_test.dart: DELETE names no survivor',
+        'test/missing_test.dart: no such test file',
+      ]),
+    );
+  });
 }

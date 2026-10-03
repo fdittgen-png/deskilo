@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
-import 'invoices_test.dart' show pumpInvoices;
+import '../../helpers/screens/invoices.dart' show pumpInvoices;
 
 /// Two invoices of one member, regrouped into a third.
 Future<

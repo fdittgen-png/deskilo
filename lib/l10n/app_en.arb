@@ -217,6 +217,202 @@
   "@handoffChanged": {
     "description": "#1640 accountant_handoff"
   },
+  "handoffUnsupportedCurrency": "{number}: its currency has no reviewed number of decimals",
+  "@handoffUnsupportedCurrency": {
+    "description": "#1870 accountant handoff blocking finding",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "handoffAmountOutOfRange": "{number}: a total too large to carry exactly",
+  "@handoffAmountOutOfRange": {
+    "description": "#1870 accountant handoff blocking finding",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "featureAccountingBookTitle": "Accounting book",
+  "@featureAccountingBookTitle": {
+    "description": "#1869 feature name"
+  },
+  "featureAccountingBookDesc": "Who keeps the official books of each issuer: Deskilo as pre-accounting, a local book, or an external accounting system that stays authoritative. Each issuer states its currency, fiscal year and accounting basis. Off: member balances and invoices work as before.",
+  "@featureAccountingBookDesc": {
+    "description": "#1869 feature description"
+  },
+  "bookSheetTitle": "Accounting book",
+  "@bookSheetTitle": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookTileEmpty": "No book set: DesKilo keeps member balances and invoices (pre-accounting).",
+  "@bookTileEmpty": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookIssuer": "Issuer",
+  "@bookIssuer": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookAuthorityPre": "Pre-accounting",
+  "@bookAuthorityPre": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookAuthorityLocal": "DesKilo is the book",
+  "@bookAuthorityLocal": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookAuthorityExternal": "External system",
+  "@bookAuthorityExternal": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookExternalSystem": "Authoritative system",
+  "@bookExternalSystem": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookCurrency": "Functional currency",
+  "@bookCurrency": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookFiscalStart": "Fiscal year starts on",
+  "@bookFiscalStart": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookBasisAccrual": "Accrual basis",
+  "@bookBasisAccrual": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookBasisCash": "Cash basis",
+  "@bookBasisCash": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookEffectiveFrom": "Takes effect from {date}",
+  "@bookEffectiveFrom": {
+    "description": "#1869 accounting book sheet",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bookFiscalPreview": "Fiscal year {label}: {start} – {end}",
+  "@bookFiscalPreview": {
+    "description": "#1869 accounting book sheet",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "bookProblemExternal": "Name the external system that keeps the official books.",
+  "@bookProblemExternal": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookProblemCurrency": "This currency has no reviewed number of decimals.",
+  "@bookProblemCurrency": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookProblemFiscal": "A fiscal year starts on a day every year has (never 29 February).",
+  "@bookProblemFiscal": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookSaved": "Book saved",
+  "@bookSaved": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookStale": "Someone saved this book since you opened it. Close and reopen to see their version.",
+  "@bookStale": {
+    "description": "#1869 accounting book sheet"
+  },
+  "bookSaveFailed": "The book was not saved. Check the connection and try again.",
+  "@bookSaveFailed": {
+    "description": "#1869 the save failed (connection or server)"
+  },
+  "bookRoleCustomers": "Customers (receivable)",
+  "@bookRoleCustomers": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleRevenue": "Revenue",
+  "@bookRoleRevenue": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleBank": "Bank",
+  "@bookRoleBank": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleVatOutput": "Output VAT",
+  "@bookRoleVatOutput": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookRoleExpenses": "Expenses",
+  "@bookRoleExpenses": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeAsset": "Asset",
+  "@bookTypeAsset": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeLiability": "Liability",
+  "@bookTypeLiability": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeEquity": "Equity",
+  "@bookTypeEquity": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeIncome": "Income",
+  "@bookTypeIncome": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookTypeExpense": "Expense",
+  "@bookTypeExpense": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookChartTitle": "Chart of accounts · {site}",
+  "@bookChartTitle": {
+    "description": "#1869 B chart of accounts",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "bookChartSuggest": "Add the suggested accounts to review",
+  "@bookChartSuggest": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountCode": "Account code",
+  "@bookAccountCode": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountName": "Account name",
+  "@bookAccountName": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookAccountPosting": "Takes postings",
+  "@bookAccountPosting": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookMappingsTitle": "Which account each entry books to",
+  "@bookMappingsTitle": {
+    "description": "#1869 B chart of accounts"
+  },
+  "bookProblemUnmapped": "Map these accounts before a local book starts: {roles}.",
+  "@bookProblemUnmapped": {
+    "description": "#1869 B chart of accounts",
+    "placeholders": {
+      "roles": {
+        "type": "String"
+      }
+    }
+  },
   "fecAccountExpenses": "Expenses",
   "@fecAccountExpenses": {
     "description": "#936 accounting exports: fecAccountExpenses"
@@ -337,7 +533,7 @@
   "@assistantSetupFailed": {
     "description": "#1827 Assistant setup: assistantSetupFailed"
   },
-  "assistantSetupLinkIdentity": "Link my identity",
+  "assistantSetupLinkIdentity": "Confirm my identity",
   "@assistantSetupLinkIdentity": {
     "description": "#1827 Assistant setup: assistantSetupLinkIdentity"
   },
@@ -1815,6 +2011,22 @@
       }
     }
   },
+  "bootFailedTitle": "DesKilo could not start",
+  "@bootFailedTitle": {
+    "description": "#2015 Bounded start-up: bootFailedTitle"
+  },
+  "bootFailedBody": "The server or this device's secure storage did not answer. Nothing was changed. Close the app and open it again; if it keeps happening, check the network.",
+  "@bootFailedBody": {
+    "description": "#2015 Bounded start-up: bootFailedBody"
+  },
+  "bootSlowTitle": "Starting is taking longer than usual",
+  "@bootSlowTitle": {
+    "description": "#2015 Bounded start-up: bootSlowTitle"
+  },
+  "bootSlowBody": "It keeps trying. If nothing happens, close the app and open it again.",
+  "@bootSlowBody": {
+    "description": "#2015 Bounded start-up: bootSlowBody"
+  },
   "eInvoiceGapBuyerLegalIdAdvisable": "The buyer's SIREN is missing. A French platform routes by it: enter it on the member's profile before transmitting. Not a refusal — the file is valid without it.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -2213,6 +2425,148 @@
   "@reservationCalendarFileRefused": {
     "description": "#1643 calendar file: reservationCalendarFileRefused"
   },
+  "featureCapacityKpiTitle": "Seat utilisation",
+  "@featureCapacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "featureCapacityKpiDesc": "Shows owners and reservation managers how much of the offered seat time was reserved in a month, with how it is computed and what the figure cannot know.",
+  "@featureCapacityKpiDesc": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiTitle": "Seat utilisation",
+  "@capacityKpiTitle": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRatio": "{reserved} of {offered} seat-hours reserved",
+  "@capacityKpiRatio": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiUndefined": "No seat time was offered in this period, so there is no utilisation to show.",
+  "@capacityKpiUndefined": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiExplain": "How is this computed?",
+  "@capacityKpiExplain": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiDefinition": "Reserved seat-hours inside the opening hours, divided by offered seat-hours: every seat times the opening hours of the open days, minus closure days and seat blocks. A whole desk, room or level counts each of its seats once; cancelled bookings do not count.",
+  "@capacityKpiDefinition": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiPhysical": "Physical capacity: {hours} seat-hours",
+  "@capacityKpiPhysical": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOutside": "Reserved outside the offered hours: {hours} seat-hours, not in the ratio",
+  "@capacityKpiOutside": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiOverlap": "Claimed twice at the same time: {hours} seat-hours, counted once",
+  "@capacityKpiOverlap": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRooms": "Rooms without seats: {count}, {reserved} of {offered} room-hours reserved",
+  "@capacityKpiRooms": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "reserved": {
+        "type": "String"
+      },
+      "offered": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiUnattributed": "Some reservations in this period point to a place that no longer exists; they are not counted.",
+  "@capacityKpiUnattributed": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiKnownZero": "Measured: nothing was reserved.",
+  "@capacityKpiKnownZero": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiAsOf": "Computed {time}",
+  "@capacityKpiAsOf": {
+    "description": "#1918 capacity KPI",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiForbidden": "You may not read the capacity figures of this workspace.",
+  "@capacityKpiForbidden": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiUnavailable": "The seat utilisation could not be computed.",
+  "@capacityKpiUnavailable": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiRetry": "Try again",
+  "@capacityKpiRetry": {
+    "description": "#1918 capacity KPI"
+  },
+  "capacityKpiHistorySince": "Counted from {date}, when this workspace’s history began; earlier time is not known and not counted.",
+  "@capacityKpiHistorySince": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiNotRecorded": "This period lies before the workspace’s history began on {date}; there is nothing recorded to count.",
+  "@capacityKpiNotRecorded": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiHistory": "History recorded since {date}",
+  "@capacityKpiHistory": {
+    "description": "#1920 capacity KPI history",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "capacityKpiRoomsToday": "Rooms without seats are read as they are today.",
+  "@capacityKpiRoomsToday": {
+    "description": "#1920 capacity KPI history"
+  },
+  "permViewAnalytics": "Read the workspace figures",
+  "@permViewAnalytics": {
+    "description": "#1921 permission: read aggregated operational KPIs"
+  },
   "featureCarnetsTitle": "Carnets",
   "@featureCarnetsTitle": {
     "description": "#1279 carnets: featureCarnetsTitle"
@@ -2536,7 +2890,7 @@
   "@coOwnerAction": {
     "description": "Member-sheet action opening the co-owner dialog (0058)"
   },
-  "coOwnerNone": "No co-owner role",
+  "coOwnerNone": "No co-ownership",
   "@coOwnerNone": {
     "description": "Co-owner dialog option: clear the role"
   },
@@ -2544,7 +2898,7 @@
   "@coOwnerActive": {
     "description": "Co-owner dialog option: the active flavor"
   },
-  "coOwnerPassive": "Passive co-owner — becomes owner when activated or when the owner leaves",
+  "coOwnerPassive": "Successor — becomes owner when activated or when the owner leaves",
   "@coOwnerPassive": {
     "description": "Co-owner dialog option: the passive flavor"
   },
@@ -2556,7 +2910,7 @@
   "@memberCoOwnerChip": {
     "description": "Members-list chip for an active co-owner"
   },
-  "memberCoOwnerPassiveChip": "Co-owner (passive)",
+  "memberCoOwnerPassiveChip": "Successor",
   "@memberCoOwnerPassiveChip": {
     "description": "Members-list chip for a passive co-owner"
   },
@@ -2710,6 +3064,10 @@
   "workspaceFieldsSaveFailed": "Your answers to this space's questions were not saved. Your other details were.",
   "@workspaceFieldsSaveFailed": {
     "description": "#1288 custom fields: workspaceFieldsSaveFailed"
+  },
+  "workspaceFieldsPersonalNote": "Your answers are personal data: they are part of your data export and are erased when you leave this space, unless the space documents a legal obligation to keep one.",
+  "@workspaceFieldsPersonalNote": {
+    "description": "#1912 custom fields: every answer is personal data"
   },
   "featureCustomRolesTitle": "Roles this space defines",
   "@featureCustomRolesTitle": {
@@ -3258,6 +3616,14 @@
     }
   },
   "memberPageNowHeading": "Right now",
+  "editorMediaWriteFailed": "The image could not be confirmed as saved. Trying again never adds it twice.",
+  "@editorMediaWriteFailed": {
+    "description": "#2012 — a plan image or background write failed or its answer was lost; offered with Try again"
+  },
+  "editorMediaSaving": "Saving the image…",
+  "@editorMediaSaving": {
+    "description": "#2012 — screen-reader label of the progress bar while a plan image or background is saved"
+  },
   "editorBackgroundImage": "Background image",
   "@editorBackgroundImage": {
     "description": "Editor app-bar action opening the level background-image menu (0036)"
@@ -4322,6 +4688,75 @@
   "featureTierCoreDesc": "What every space needs. On from the first day.",
   "featureTierPlatform": "Platform",
   "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs.",
+  "featureMaturityUnreviewed": "Unreviewed",
+  "@featureMaturityUnreviewed": {
+    "description": "#1850 maturity badge: nobody has assessed this feature against evidence yet"
+  },
+  "featureMaturityAlpha": "Alpha",
+  "@featureMaturityAlpha": {
+    "description": "#1850 maturity badge: alpha"
+  },
+  "featureMaturityBeta": "Beta",
+  "@featureMaturityBeta": {
+    "description": "#1850 maturity badge: beta"
+  },
+  "featureMaturityStable": "Stable",
+  "@featureMaturityStable": {
+    "description": "#1850 maturity badge: stable (assessed against evidence)"
+  },
+  "featureLifecycleActive": "Active",
+  "@featureLifecycleActive": {
+    "description": "#1850 lifecycle: active"
+  },
+  "featureLifecycleDeprecated": "Deprecated",
+  "@featureLifecycleDeprecated": {
+    "description": "#1850 lifecycle badge: still served, being replaced"
+  },
+  "featureLifecycleRetired": "Retired",
+  "@featureLifecycleRetired": {
+    "description": "#1850 lifecycle: retired, key kept"
+  },
+  "featureMaturityFilterLabel": "Maturity",
+  "@featureMaturityFilterLabel": {
+    "description": "#1850 maturity filter on the Features screen"
+  },
+  "featureMaturityFilterAll": "All stages",
+  "@featureMaturityFilterAll": {
+    "description": "#1850 maturity filter: no filter"
+  },
+  "featureMaturitySemantics": "Maturity {maturity}, {lifecycle}",
+  "@featureMaturitySemantics": {
+    "description": "#1850 screen-reader label of a feature's maturity badge",
+    "placeholders": {
+      "maturity": {
+        "type": "String"
+      },
+      "lifecycle": {
+        "type": "String"
+      }
+    }
+  },
+  "featureOptInTitle": "Switch on an experimental feature?",
+  "@featureOptInTitle": {
+    "description": "#1851 consent dialog title before switching on an alpha/beta feature"
+  },
+  "featureOptInBody": "Not yet reviewed as stable: {features}. It may change and has known limits. Switch on only if this space accepts that.",
+  "@featureOptInBody": {
+    "description": "#1851 consent dialog body; features = the experimental feature names",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "featureOptInConfirm": "Switch on",
+  "@featureOptInConfirm": {
+    "description": "#1851 consent dialog confirm button"
+  },
+  "featureIntakeStoppedNote": "Off: nothing new starts; what is already open can still be answered and closed.",
+  "@featureIntakeStoppedNote": {
+    "description": "#1851 note on a switched-off feature whose existing work stays serviceable"
+  },
   "federationContinue": "Continue with Deskilo",
   "@federationContinue": {
     "description": "#1648 The one explicit button that starts Sign in with Deskilo in the system browser. Deskilo is the brand; do not translate it."
@@ -4734,6 +5169,160 @@
   "helpTopicInstances": "Instances",
   "helpTopicAccounting": "Accounting exports",
   "helpTopicReadiness": "readiness gate",
+  "featureHolidayImportTitle": "Import public holidays",
+  "@featureHolidayImportTitle": {
+    "description": "#2051 open-data holiday import"
+  },
+  "featureHolidayImportDesc": "An owner imports the public holidays of the country, and of one region, from an open-data source, deselects the days the space stays open and imports the rest as closure days. Invoiced months are skipped and named.",
+  "@featureHolidayImportDesc": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportAction": "Import public holidays (open data)",
+  "@holidayImportAction": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportRegion": "Region",
+  "@holidayImportRegion": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportNationwide": "Nationwide holidays only",
+  "@holidayImportNationwide": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportUnavailable": "The holiday source cannot be reached right now. Try again later, or use “Add public holidays”.",
+  "@holidayImportUnavailable": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportRetry": "Try again",
+  "@holidayImportRetry": {
+    "description": "#2051 open-data holiday import"
+  },
+  "holidayImportSource": "Source: {source}",
+  "@holidayImportSource": {
+    "description": "#2051 open-data holiday import",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "holidayImportConfirm": "Import {count} closure days",
+  "@holidayImportConfirm": {
+    "description": "#2051 open-data holiday import",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "holidayImportFailed": "The holidays could not be checked or imported. Nothing was changed.",
+  "@holidayImportFailed": {
+    "description": "#2051 open-data holiday import"
+  },
+  "instanceTitle": "Installation: assistants",
+  "@instanceTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceIntro": "Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.",
+  "@instanceIntro": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNotOperator": "Only the instance operator manages the installation's assistants.",
+  "@instanceNotOperator": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceSecondFactorNeeded": "Changes here need your second factor on this session.",
+  "@instanceSecondFactorNeeded": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceConfirmSecondFactor": "Confirm with my authenticator",
+  "@instanceConfirmSecondFactor": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeTitle": "Assistants on this installation",
+  "@instanceRuntimeTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeOn": "On",
+  "@instanceRuntimeOn": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeOff": "Off",
+  "@instanceRuntimeOff": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOn": "Turn on for every workspace",
+  "@instanceTurnOn": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOff": "Turn off",
+  "@instanceTurnOff": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOnConfirm": "Assistants become usable in every workspace that offers them. You can turn them off again at any time.",
+  "@instanceTurnOnConfirm": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlockers": "Still missing:",
+  "@instanceBlockers": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlockerNoAdmin": "a database administrator",
+  "@instanceBlockerNoAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceAdminsTitle": "Database administrators",
+  "@instanceAdminsTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceAdminsHelp": "They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.",
+  "@instanceAdminsHelp": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceMakeAdmin": "Make administrator",
+  "@instanceMakeAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRemoveAdmin": "Remove",
+  "@instanceRemoveAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNoCandidates": "Nobody else has confirmed their identity yet.",
+  "@instanceNoCandidates": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceYou": "you",
+  "@instanceYou": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientsTitle": "Assistant clients",
+  "@instanceClientsTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientsHelp": "An assistant registers itself the first time someone connects it; it works only once approved here.",
+  "@instanceClientsHelp": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientWaiting": "Waiting for approval",
+  "@instanceClientWaiting": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientApproved": "Approved",
+  "@instanceClientApproved": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientBlocked": "Blocked",
+  "@instanceClientBlocked": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceApprove": "Approve",
+  "@instanceApprove": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlock": "Block",
+  "@instanceBlock": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
   "instanceOwnerClaimIntro": "Who owns this instance? Enter the e-mail you will sign up with on it. After you confirm that address, claim the ownership from Settings → Instance owner.",
   "@instanceOwnerClaimIntro": {
     "description": "#1829 Instance owner claim: instanceOwnerClaimIntro"
@@ -5869,6 +6458,10 @@
   "@invoiceGapMissingBuyerCountry": {
     "description": "Gap: BR-11 — buyer country"
   },
+  "invoiceGapCreditNoteWithPayments": "This credit note also nets payments, which an EN 16931 credit note cannot state. Issue the credit on its own document.",
+  "@invoiceGapCreditNoteWithPayments": {
+    "description": "#1919 — e-invoice export refused: a credit note that also nets payments has no EN 16931 credit-note form"
+  },
   "invoiceGapNoChargeLines": "This invoice has no charge line — its month was fully covered by payments, so there is no invoice to send.",
   "@invoiceGapNoChargeLines": {
     "description": "Gap: BR-16 — an invoice needs at least one line"
@@ -6723,7 +7316,7 @@
   "eventTypeInvoiceReminder": "Payment reminder",
   "eventInvoiceReminderLine": "Reminder {level}: invoice {number} — {amount} still due",
   "dunningAutomatic": "Automatic reminders",
-  "dunningAutomaticHint": "Once a day, open invoices past the term get their next reminder level by themselves — an alert in the member's feed and a push. Off: you send each reminder yourself.",
+  "dunningAutomaticHint": "Once a day, invoices past their recorded payment term get their next reminder level by themselves — for the amount still outstanding, never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you. Off: you send each reminder yourself.",
   "@eventInvoiceReminderLine": {
     "placeholders": {
       "number": {
@@ -7248,6 +7841,71 @@
   "@reportDesignErrorInvalidDesign": {
     "description": "#864 - import refusal: no readable design"
   },
+  "invoiceHoldAction": "Hold reminders",
+  "@invoiceHoldAction": {
+    "description": "#1913 dunning holds: invoiceHoldAction"
+  },
+  "invoiceHoldReleaseAction": "Release the reminder hold",
+  "@invoiceHoldReleaseAction": {
+    "description": "#1913 dunning holds: invoiceHoldReleaseAction"
+  },
+  "invoiceHoldTitle": "Why hold the reminders?",
+  "@invoiceHoldTitle": {
+    "description": "#1913 dunning holds: invoiceHoldTitle"
+  },
+  "invoiceHoldExplain": "No reminder is sent for this invoice, by hand or automatically, until the hold is released.",
+  "@invoiceHoldExplain": {
+    "description": "#1913 dunning holds: invoiceHoldExplain"
+  },
+  "invoiceHoldReasonDispute": "The member disputes it",
+  "@invoiceHoldReasonDispute": {
+    "description": "#1913 dunning holds: invoiceHoldReasonDispute"
+  },
+  "invoiceHoldReasonIdentity": "Wrong person or identity error",
+  "@invoiceHoldReasonIdentity": {
+    "description": "#1913 dunning holds: invoiceHoldReasonIdentity"
+  },
+  "invoiceHoldReasonInsolvency": "Insolvency proceedings",
+  "@invoiceHoldReasonInsolvency": {
+    "description": "#1913 dunning holds: invoiceHoldReasonInsolvency"
+  },
+  "invoiceHoldReasonOther": "Another reason",
+  "@invoiceHoldReasonOther": {
+    "description": "#1913 dunning holds: invoiceHoldReasonOther"
+  },
+  "invoiceHoldNote": "Note (optional)",
+  "@invoiceHoldNote": {
+    "description": "#1913 dunning holds: invoiceHoldNote"
+  },
+  "invoiceHoldConfirm": "Hold",
+  "@invoiceHoldConfirm": {
+    "description": "#1913 dunning holds: invoiceHoldConfirm"
+  },
+  "invoiceHoldPlaced": "Reminders are on hold for this invoice.",
+  "@invoiceHoldPlaced": {
+    "description": "#1913 dunning holds: invoiceHoldPlaced"
+  },
+  "invoiceHoldReleased": "Reminders can resume for this invoice.",
+  "@invoiceHoldReleased": {
+    "description": "#1913 dunning holds: invoiceHoldReleased"
+  },
+  "invoiceHeldNote": "Reminders on hold: {reason}",
+  "@invoiceHeldNote": {
+    "description": "#1913 dunning holds: invoiceHeldNote",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMaturityReview": "No agreed payment term was recorded for this invoice: reminders are not sent automatically until you review it.",
+  "@invoiceMaturityReview": {
+    "description": "#1913 dunning holds: invoiceMaturityReview"
+  },
+  "invoiceHoldFailed": "The reminder hold could not be changed. Please try again.",
+  "@invoiceHoldFailed": {
+    "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
   "invoicesManage": "Manage invoices",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
@@ -7633,6 +8291,10 @@
   "bookingNotAMember": "You are no longer a member of this space — ask an administrator for an invitation.",
   "@bookingNotAMember": {
     "description": "Refusal when an RPC answers 'not a member of this workspace' (#1030)"
+  },
+  "levelReorderStale": "The levels changed meanwhile. Nothing was saved; the current order is shown.",
+  "@levelReorderStale": {
+    "description": "#2010 Level reorder: levelReorderStale"
   },
   "featureWorkspaceLibraryTitle": "Workspace library",
   "featureWorkspaceLibraryDesc": "Save this space's floor plan and how it works as a template, choose who may see it, invite people by e-mail, and start from what others offer.",
@@ -8499,7 +9161,7 @@
   "@mcpEligibleExpired": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpEligibleNoIdentity": "Your account is not linked to a verified identity on this database.",
+  "mcpEligibleNoIdentity": "Your identity is not confirmed for assistants on this database yet.",
   "@mcpEligibleNoIdentity": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
@@ -8591,7 +9253,7 @@
   "@mcpStatusTitle": {
     "description": "#1625 MCP status: mcpStatusTitle"
   },
-  "mcpStatusIdentity": "Identity",
+  "mcpStatusIdentity": "Identity for assistants",
   "@mcpStatusIdentity": {
     "description": "#1625 MCP status: mcpStatusIdentity"
   },
@@ -8619,7 +9281,7 @@
   "@mcpStateVerified": {
     "description": "#1625 MCP status: mcpStateVerified"
   },
-  "mcpStateUnlinked": "Not linked",
+  "mcpStateUnlinked": "Not confirmed",
   "@mcpStateUnlinked": {
     "description": "#1625 MCP status: mcpStateUnlinked"
   },
@@ -8675,7 +9337,7 @@
   "@mcpStateUnavailable": {
     "description": "#1625 MCP status: mcpStateUnavailable"
   },
-  "mcpNextLinkIdentity": "Next: you link your account to this database's identity.",
+  "mcpNextLinkIdentity": "Next: confirm your identity for assistants on this database — one tap below.",
   "@mcpNextLinkIdentity": {
     "description": "#1625 MCP status: mcpNextLinkIdentity"
   },
@@ -8723,6 +9385,54 @@
   "@mcpReviewSecondFactor": {
     "description": "#1625 MCP status: mcpReviewSecondFactor"
   },
+  "mcpStatusConfirmIdentity": "Confirm my identity",
+  "@mcpStatusConfirmIdentity": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpStateAfterPrevious": "After the step above",
+  "@mcpStateAfterPrevious": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpIdentityIneligible": "This account cannot be confirmed yet — confirm your e-mail address or sign in with a provider first.",
+  "@mcpIdentityIneligible": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpIdentityConflict": "Another account already holds this identity here — a database administrator can resolve it.",
+  "@mcpIdentityConflict": {
+    "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpStatusGoogle": "Google sign-in",
+  "@mcpStatusGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStatusLinkGoogle": "Link Google",
+  "@mcpStatusLinkGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStatusSignInGoogle": "Sign in with Google",
+  "@mcpStatusSignInGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleReady": "Signed in with Google",
+  "@mcpStateGoogleReady": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleOtherSession": "Signed in another way",
+  "@mcpStateGoogleOtherSession": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleMissing": "Google not linked",
+  "@mcpStateGoogleMissing": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpNextLinkGoogle": "Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.",
+  "@mcpNextLinkGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpNextSignInGoogle": "Assistants use your Google sign-in. Sign in with Google to continue.",
+  "@mcpNextSignInGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
   "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
   "@mcpUsageWorkspaceTitle": {
     "description": "#1630 mcp_usage"
@@ -8764,6 +9474,313 @@
   "@mcpUsagePending": {
     "description": "#1630 mcp_usage"
   },
+  "meGroupProfile": "My profile",
+  "@meGroupProfile": {
+    "description": "#1846 Me groups: meGroupProfile"
+  },
+  "meGroupWorkspaces": "My workspaces",
+  "@meGroupWorkspaces": {
+    "description": "#1846 Me groups: meGroupWorkspaces"
+  },
+  "meGroupInstallations": "Connected installations",
+  "@meGroupInstallations": {
+    "description": "#1846 Me groups: meGroupInstallations"
+  },
+  "meTabHome": "Home",
+  "@meTabHome": {
+    "description": "Me layer bottom tab: the person's home with their spaces."
+  },
+  "meTabDiscover": "Discover",
+  "@meTabDiscover": {
+    "description": "Me layer bottom tab: find published spaces."
+  },
+  "meTabMessages": "Messages",
+  "@meTabMessages": {
+    "description": "Me layer bottom tab: the person's messages."
+  },
+  "meTabMe": "Me",
+  "@meTabMe": {
+    "description": "Me layer bottom tab and title: the person's own account."
+  },
+  "meHomeTitle": "Home",
+  "@meHomeTitle": {
+    "description": "Title of the Me layer home tab."
+  },
+  "meMySpaces": "My spaces",
+  "@meMySpaces": {
+    "description": "Heading above the list of spaces the person belongs to."
+  },
+  "meHeaderOwned": "Your account · it belongs only to you",
+  "@meHeaderOwned": {
+    "description": "Line under the person's name on the Me home: this layer belongs to them alone."
+  },
+  "meNoSpaceTitle": "You are not in a space yet",
+  "@meNoSpaceTitle": {
+    "description": "Empty state title on the Me home when the person has no space."
+  },
+  "meNoSpaceBody": "Find one near you, join with an invitation code, or create your own.",
+  "@meNoSpaceBody": {
+    "description": "Empty state body on the Me home when the person has no space."
+  },
+  "meFindSpace": "Find a space",
+  "@meFindSpace": {
+    "description": "Button on the Me home: open Discover."
+  },
+  "meJoinSpace": "Join with a code",
+  "@meJoinSpace": {
+    "description": "Button on the Me home: join a space with an invitation code."
+  },
+  "meCreateSpace": "Create a space",
+  "@meCreateSpace": {
+    "description": "Button on the Me home: create a new space."
+  },
+  "meManageSpaces": "Manage my spaces",
+  "@meManageSpaces": {
+    "description": "Button on the Me home: the detailed list of spaces (default at start, site)."
+  },
+  "meSpacePending": "Waiting for approval",
+  "@meSpacePending": {
+    "description": "Subtitle of a space card whose membership awaits approval."
+  },
+  "meSpaceLastUsed": "Last used",
+  "@meSpaceLastUsed": {
+    "description": "Chip on the space the person used last."
+  },
+  "meLeaveAction": "Leave this space",
+  "@meLeaveAction": {
+    "description": "Menu item and confirm button: leave this space."
+  },
+  "meLeaveOwner": "Owners hand the space over before leaving",
+  "@meLeaveOwner": {
+    "description": "Disabled menu item for an owner, who must hand the space over first."
+  },
+  "meLeaveTitle": "Leave {name}?",
+  "@meLeaveTitle": {
+    "description": "Title of the confirmation before leaving a space.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meLeaveBody": "You stop being a member. Your bookings, invoices and messages stay with the space. To also erase your data, use Privacy.",
+  "@meLeaveBody": {
+    "description": "Body of the confirmation before leaving a space."
+  },
+  "meLeaveFailed": "Could not leave the space. Please try again.",
+  "@meLeaveFailed": {
+    "description": "Error when leaving a space failed."
+  },
+  "meLeaveDone": "You left {name}.",
+  "@meLeaveDone": {
+    "description": "Confirmation after leaving a space.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meLinkedOpenBody": "This space lives on {host}. The app works with one server at a time: opening it switches to that server and asks you to sign in there.",
+  "@meLinkedOpenBody": {
+    "description": "Explains that a space on another server opens by switching this app to that server.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "meLinkedOpen": "Open on {host}",
+  "@meLinkedOpen": {
+    "description": "Button: open a space on its own server.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "meLinkedUnavailable": "{host} did not answer: this list may be incomplete.",
+  "@meLinkedUnavailable": {
+    "description": "Banner when a linked server did not answer.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "meLinkedPendingOn": "Waiting for approval · {host}",
+  "@meLinkedPendingOn": {
+    "description": "Subtitle of a pending space on another server.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "meSectionMine": "My history and data",
+  "@meSectionMine": {
+    "description": "Section heading in Me: the person's own history and data."
+  },
+  "meWhereSpacesLive": "Where my spaces live",
+  "@meWhereSpacesLive": {
+    "description": "Row in Me opening the connected servers."
+  },
+  "meAccountInMe": "My account is in Me",
+  "@meAccountInMe": {
+    "description": "Row in a space's settings leading to the account settings in Me."
+  },
+  "meAccountInMeBody": "Photo, language, theme and sign-ins are yours in every space.",
+  "@meAccountInMeBody": {
+    "description": "Subtitle: the account settings are the person's in every space."
+  },
+  "meSpaceException": "In this space",
+  "@meSpaceException": {
+    "description": "Title of the row listing this space's own overrides of the person's preferences."
+  },
+  "spaceBackToMe": "Back to Me",
+  "@spaceBackToMe": {
+    "description": "Row and avatar tooltip in a space: return to the Me layer."
+  },
+  "spaceChipTooltip": "Switch space",
+  "@spaceChipTooltip": {
+    "description": "Tooltip on the chip naming the current space: it opens the switcher."
+  },
+  "visibilityTitle": "Who sees me",
+  "@visibilityTitle": {
+    "description": "Title of the card choosing who sees what of the account."
+  },
+  "visibilityIntro": "Each part of your account picks its own audience. Nothing is public unless you choose it.",
+  "@visibilityIntro": {
+    "description": "Intro of the visibility card."
+  },
+  "visibilityIdentity": "Name and photo",
+  "@visibilityIdentity": {
+    "description": "Visibility field: name and photo."
+  },
+  "visibilityAbout": "Profession and bio",
+  "@visibilityAbout": {
+    "description": "Visibility field: profession and bio."
+  },
+  "visibilityContact": "WhatsApp and e-mail",
+  "@visibilityContact": {
+    "description": "Visibility field: contact channels."
+  },
+  "visibilityPresence": "In the space today",
+  "@visibilityPresence": {
+    "description": "Visibility field: presence in a space today."
+  },
+  "visibilityReachability": "Who can start a conversation with me",
+  "@visibilityReachability": {
+    "description": "Reachability: who may start a conversation."
+  },
+  "visibilityNobody": "Nobody",
+  "@visibilityNobody": {
+    "description": "Audience: nobody."
+  },
+  "visibilityMySpaces": "Members of my spaces",
+  "@visibilityMySpaces": {
+    "description": "Audience: members of the person's spaces."
+  },
+  "visibilityChosenSpaces": "Members of chosen spaces",
+  "@visibilityChosenSpaces": {
+    "description": "Audience: members of chosen spaces."
+  },
+  "visibilitySignedIn": "Anyone signed in",
+  "@visibilitySignedIn": {
+    "description": "Audience: anyone with an account."
+  },
+  "visibilitySaveFailed": "Could not save who sees this. Please try again.",
+  "@visibilitySaveFailed": {
+    "description": "Error when saving an audience failed."
+  },
+  "visibilityPreviewTitle": "How others see me",
+  "@visibilityPreviewTitle": {
+    "description": "Heading of the live preview of what others see."
+  },
+  "visibilityPreviewMySpaces": "A member of my spaces",
+  "@visibilityPreviewMySpaces": {
+    "description": "Preview audience chip: a member of my spaces."
+  },
+  "visibilityPreviewSignedIn": "Anyone signed in",
+  "@visibilityPreviewSignedIn": {
+    "description": "Preview audience chip: anyone signed in."
+  },
+  "visibilityPreviewNobody": "Only me",
+  "@visibilityPreviewNobody": {
+    "description": "Preview audience chip: only me — everything, as the person alone sees it."
+  },
+  "visibilityPreviewNothing": "They see nothing of you.",
+  "@visibilityPreviewNothing": {
+    "description": "Preview when the audience sees nothing."
+  },
+  "visibilityPreviewFailed": "The preview could not be loaded.",
+  "@visibilityPreviewFailed": {
+    "description": "Preview failed to load."
+  },
+  "visibilityPreviewCanWrite": "Can start a conversation with you",
+  "@visibilityPreviewCanWrite": {
+    "description": "Preview line: this audience may start a conversation."
+  },
+  "visibilityPreviewCannotWrite": "Cannot start a conversation with you",
+  "@visibilityPreviewCannotWrite": {
+    "description": "Preview line: this audience may not start a conversation."
+  },
+  "visibilityChosenCount": "{count, plural, =1{Members of 1 chosen space} other{Members of {count} chosen spaces}}",
+  "@visibilityChosenCount": {
+    "description": "Audience summary for chosen spaces, with how many were chosen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "portalVisibilityLink": "Who can find and message me",
+  "@portalVisibilityLink": {
+    "description": "Row in the account messenger leading to the visibility card in Me."
+  },
+  "portalVisibilityLinkBody": "Chosen in Me, under Who sees me.",
+  "@portalVisibilityLinkBody": {
+    "description": "Subtitle: where that choice is made."
+  },
+  "portalEnterSpace": "Enter",
+  "@portalEnterSpace": {
+    "description": "Button on a public space page for a member: enter the space."
+  },
+  "portalCopyEmail": "Copy the e-mail",
+  "@portalCopyEmail": {
+    "description": "Button on a public space page: copy its e-mail address."
+  },
+  "portalEmailCopied": "E-mail copied",
+  "@portalEmailCopied": {
+    "description": "Confirmation after copying the space's e-mail."
+  },
+  "meAddressSaveFailed": "Could not save your address. Please try again.",
+  "@meAddressSaveFailed": {
+    "description": "Error when saving the postal address from My account failed."
+  },
+  "visibilityAboutMe": "About me",
+  "@visibilityAboutMe": {
+    "description": "Row and dialog title: edit my profession and bio."
+  },
+  "visibilityAboutEmpty": "Add your profession and a few words",
+  "@visibilityAboutEmpty": {
+    "description": "Subtitle when no profession or bio is written yet."
+  },
+  "visibilityProfession": "Profession",
+  "@visibilityProfession": {
+    "description": "Field label: profession."
+  },
+  "visibilityBio": "A few words about you",
+  "@visibilityBio": {
+    "description": "Field label: a short bio."
+  },
+  "visibilityAboutSaveFailed": "Could not save your profession and bio. Please try again.",
+  "@visibilityAboutSaveFailed": {
+    "description": "Error when saving profession and bio failed."
+  },
+  "portalOpenMe": "Me: my account and my spaces",
+  "@portalOpenMe": {
+    "description": "Menu item on the account menu (globe) that opens the Me layer."
+  },
   "featureMemberAccountMenuTitle": "Members see My account",
   "@featureMemberAccountMenuTitle": {
     "description": "#1598 member account menu: featureMemberAccountMenuTitle"
@@ -8788,7 +9805,7 @@
   "@memberRoleOwner": {
     "description": "Role tag on a member row"
   },
-  "memberRoleAdmin": "Admin",
+  "memberRoleAdmin": "Administrator",
   "@memberRoleAdmin": {
     "description": "Role tag on a member row"
   },
@@ -9150,7 +10167,7 @@
   "@featureSpaceInquiriesTitle": {
     "description": "#1824 messenger flags: featureSpaceInquiriesTitle"
   },
-  "featureSpaceInquiriesDesc": "A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view; stored inquiries stay.",
+  "featureSpaceInquiriesDesc": "A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view, so nobody starts a new inquiry; open ones stay in the hosts' inbox to answer and close.",
   "@featureSpaceInquiriesDesc": {
     "description": "#1824 messenger flags: featureSpaceInquiriesDesc"
   },
@@ -11045,6 +12062,103 @@
   "portalAdminVisible": "Show me as a public administrator",
   "featurePublicListings": "Public workspace listing",
   "featurePublicListingsDesc": "Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.",
+  "portalFollowsWorkspace": "From workspace information",
+  "portalCustomised": "Customised",
+  "portalUseWorkspaceInfo": "Use workspace information",
+  "portalResetAll": "Reset all public data to workspace information",
+  "portalResetAllBody": "The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.",
+  "portalResetAllConfirm": "Reset",
+  "privacyNoticeTitle": "Who processes your data",
+  "@privacyNoticeTitle": {
+    "description": "#1914 privacy notice: privacyNoticeTitle"
+  },
+  "privacyNoticeController": "Controller: {name} — {contact}",
+  "@privacyNoticeController": {
+    "description": "#1914 privacy notice: privacyNoticeController",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeRights": "Your rights: {contact}",
+  "@privacyNoticeRights": {
+    "description": "#1914 privacy notice: privacyNoticeRights",
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeRegion": "Region: {region}",
+  "@privacyNoticeRegion": {
+    "description": "#1914 privacy notice: privacyNoticeRegion",
+    "placeholders": {
+      "region": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeTransfer": "Transfer safeguard: {mechanism}",
+  "@privacyNoticeTransfer": {
+    "description": "#1914 privacy notice: privacyNoticeTransfer",
+    "placeholders": {
+      "mechanism": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNoticeNotRecorded": "not recorded by the operator",
+  "@privacyNoticeNotRecorded": {
+    "description": "#1914 privacy notice: privacyNoticeNotRecorded"
+  },
+  "privacyNoticeEssential": "Needed to run the account and the space",
+  "@privacyNoticeEssential": {
+    "description": "#1914 privacy notice: privacyNoticeEssential"
+  },
+  "privacyNoticeOptional": "Optional — you can use the app without it",
+  "@privacyNoticeOptional": {
+    "description": "#1914 privacy notice: privacyNoticeOptional"
+  },
+  "privacyNoticeRightsRoute": "Your rights and the contact",
+  "@privacyNoticeRightsRoute": {
+    "description": "#1914 privacy notice: privacyNoticeRightsRoute"
+  },
+  "privacySpaceNotice": "This space's privacy notice",
+  "@privacySpaceNotice": {
+    "description": "#1914 privacy notice: privacySpaceNotice"
+  },
+  "privacySpaceNoticeRead": "You acknowledged this version.",
+  "@privacySpaceNoticeRead": {
+    "description": "#1914 privacy notice: privacySpaceNoticeRead"
+  },
+  "privacySpaceNoticeUnread": "Not acknowledged yet — read it here.",
+  "@privacySpaceNoticeUnread": {
+    "description": "#1914 privacy notice: privacySpaceNoticeUnread"
+  },
+  "privacySpaceNoticeAcknowledge": "I have read this notice",
+  "@privacySpaceNoticeAcknowledge": {
+    "description": "#1914 privacy notice: privacySpaceNoticeAcknowledge"
+  },
+  "privacySpaceNoticeFailed": "The acknowledgment could not be recorded. Please try again.",
+  "@privacySpaceNoticeFailed": {
+    "description": "#1914 privacy notice: privacySpaceNoticeFailed"
+  },
+  "privacyPushOnDevice": "Push notifications on this device",
+  "@privacyPushOnDevice": {
+    "description": "#1914 privacy notice: privacyPushOnDevice"
+  },
+  "privacyPushOnDeviceHint": "Optional. On, this device's address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.",
+  "@privacyPushOnDeviceHint": {
+    "description": "#1914 privacy notice: privacyPushOnDeviceHint"
+  },
+  "privacyPushOnDeviceFailed": "The choice could not be saved. Please try again.",
+  "@privacyPushOnDeviceFailed": {
+    "description": "#1914 privacy notice: privacyPushOnDeviceFailed"
+  },
   "featuresViewProcesses": "Processes",
   "@featuresViewProcesses": {
     "description": "#1327 the process-first overview of the Features screen"
@@ -11511,7 +12625,7 @@
   "@privacyTitle": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.",
+  "privacyIntro": "Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation's privacy notice. These are your rights under the GDPR — each one is a button.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },
@@ -11951,7 +13065,7 @@
   "@questionEditorPersonal": {
     "description": "#1288 the question editor: questionEditorPersonal"
   },
-  "questionEditorPersonalHelp": "Erased when the member leaves, and carried in their data export. Leave it on unless the answer is really about the space rather than the person.",
+  "questionEditorPersonalHelp": "Every answer is stored against a member, so it is personal data: carried in their data export and erased when they leave.",
   "@questionEditorPersonalHelp": {
     "description": "#1288 the question editor: questionEditorPersonalHelp"
   },
@@ -12051,11 +13165,15 @@
   "@questionTypeMultiChoice": {
     "description": "#1288 the question editor: questionTypeMultiChoice"
   },
+  "questionEditorNotPersonalWarning": "Still personal: the answer is linked to a member, so it is exported and erased with the membership whatever this switch says. Only a documented retention hold can keep it.",
+  "@questionEditorNotPersonalWarning": {
+    "description": "#1912 the question editor: shown while the personal-data switch is off"
+  },
   "eventTypeRoleChange": "Role change",
   "@eventTypeRoleChange": {
     "description": "Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card"
   },
-  "eventRolePromote": "{actor} promotes a member to admin",
+  "eventRolePromote": "{actor} asks to give the Administrator role",
   "@eventRolePromote": {
     "description": "Feed line of a role-change event that grants admin",
     "placeholders": {
@@ -12064,7 +13182,7 @@
       }
     }
   },
-  "eventRoleDemote": "{actor} demotes an admin to member",
+  "eventRoleDemote": "{actor} asks to take back the Administrator role",
   "@eventRoleDemote": {
     "description": "Feed line of a role-change event that removes admin",
     "placeholders": {
@@ -12073,11 +13191,11 @@
       }
     }
   },
-  "memberMakeAdmin": "Make admin",
+  "memberMakeAdmin": "Give the Administrator role",
   "@memberMakeAdmin": {
     "description": "Owner action promoting a member to admin (0035)"
   },
-  "memberMakeMember": "Make regular member",
+  "memberMakeMember": "Take back the Administrator role",
   "@memberMakeMember": {
     "description": "Owner action demoting an admin to a regular member (0035)"
   },
@@ -12293,6 +13411,69 @@
   "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
+  },
+  "reminderHistoryTitle": "Reminder history",
+  "@reminderHistoryTitle": {
+    "description": "#1922 reminder evidence: reminderHistoryTitle"
+  },
+  "reminderHistoryRefresh": "Check delivery again",
+  "@reminderHistoryRefresh": {
+    "description": "#1922 reminder evidence: reminderHistoryRefresh"
+  },
+  "reminderHistoryLine": "Level {level} · {origin} · {date}",
+  "@reminderHistoryLine": {
+    "description": "#1922 reminder evidence: reminderHistoryLine",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "origin": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderStatusPrepared": "Prepared",
+  "@reminderStatusPrepared": {
+    "description": "#1922 reminder evidence: reminderStatusPrepared"
+  },
+  "reminderStatusQueued": "Handed to the push service",
+  "@reminderStatusQueued": {
+    "description": "#1922 reminder evidence: reminderStatusQueued"
+  },
+  "reminderStatusAccepted": "Accepted by the push service — not proof it was read",
+  "@reminderStatusAccepted": {
+    "description": "#1922 reminder evidence: reminderStatusAccepted"
+  },
+  "reminderStatusDeclared": "Shared by the sender — their statement, not a receipt",
+  "@reminderStatusDeclared": {
+    "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusFailed": "Not delivered",
+  "@reminderStatusFailed": {
+    "description": "#1922 reminder evidence: reminderStatusFailed"
+  },
+  "reminderStatusUnknown": "No answer from the push service",
+  "@reminderStatusUnknown": {
+    "description": "#1922 reminder evidence: reminderStatusUnknown"
+  },
+  "reminderStatusLegacy": "Recorded before delivery was tracked — unknown",
+  "@reminderStatusLegacy": {
+    "description": "#1922 reminder evidence: reminderStatusLegacy"
+  },
+  "reminderOriginManual": "by hand",
+  "@reminderOriginManual": {
+    "description": "#1922 reminder evidence: reminderOriginManual"
+  },
+  "reminderOriginAutomatic": "automatic",
+  "@reminderOriginAutomatic": {
+    "description": "#1922 reminder evidence: reminderOriginAutomatic"
+  },
+  "reminderOriginLegacy": "earlier",
+  "@reminderOriginLegacy": {
+    "description": "#1922 reminder evidence: reminderOriginLegacy"
   },
   "reportGuideTitle": "Placeholders and markup",
   "@reportGuideTitle": {
@@ -12815,6 +13996,36 @@
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
   },
+  "bookingSpaceChainTaken": "This space, or a space it belongs to, is already reserved in that period.",
+  "@bookingSpaceChainTaken": {
+    "description": "#1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period"
+  },
+  "bookingNoLongerCheckedIn": "This reservation is no longer checked in — it was checked out or closed in the meantime.",
+  "@bookingNoLongerCheckedIn": {
+    "description": "#1908 — a checkout lost a race: the reservation was already checked out or closed by the day-end sweep"
+  },
+  "listWholeReservable": "Reservable as a whole",
+  "@listWholeReservable": {
+    "description": "#1825 — reserve list: a header whose space this member can reserve as a whole"
+  },
+  "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
+  "@listCoversTables": {
+    "description": "#1825 — what a whole-space reservation includes: its tables",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listCoversSeats": "{count, plural, =1{1 seat} other{{count} seats}}",
+  "@listCoversSeats": {
+    "description": "#1825 — what a whole-space reservation includes: its seats",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reserveMonthView": "Month",
   "@reserveMonthView": {
     "description": "Reserve hub view segment: month availability calendar (#7)"
@@ -12998,6 +14209,18 @@
   },
   "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
   "bookingGateBlocked": "Not bookable as chosen",
+  "reserveBackToNow": "Back to now",
+  "@reserveBackToNow": {
+    "description": "#2016 Reserve time choice: reserveBackToNow"
+  },
+  "bookingModeCheckInNow": "Check in now",
+  "@bookingModeCheckInNow": {
+    "description": "#2016 Reserve time choice: bookingModeCheckInNow"
+  },
+  "bookingOverlapsAnother": "The seat is already booked during part of this time.",
+  "@bookingOverlapsAnother": {
+    "description": "#2016 Reserve time choice: bookingOverlapsAnother"
+  },
   "reverseChargeTitle": "Reverse charge for EU businesses",
   "@reverseChargeTitle": {
     "description": "#895 reverse charge: reverseChargeTitle"
@@ -13010,11 +14233,331 @@
   "@invoiceGapMissingBuyerVatId": {
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
+  "rightsRequestsTitle": "My rights requests",
+  "@rightsRequestsTitle": {
+    "description": "#1915 rights requests: rightsRequestsTitle"
+  },
+  "rightsRequestsHint": "Ask the space for a copy, a correction, a restriction or erasure — answered within one calendar month.",
+  "@rightsRequestsHint": {
+    "description": "#1915 rights requests: rightsRequestsHint"
+  },
+  "rightsRequestsEmpty": "No request yet.",
+  "@rightsRequestsEmpty": {
+    "description": "#1915 rights requests: rightsRequestsEmpty"
+  },
+  "rightsRequestNew": "Make a request",
+  "@rightsRequestNew": {
+    "description": "#1915 rights requests: rightsRequestNew"
+  },
+  "rightsRequestAsk": "What do you ask the space?",
+  "@rightsRequestAsk": {
+    "description": "#1915 rights requests: rightsRequestAsk"
+  },
+  "rightsRequestDetails": "Details (optional)",
+  "@rightsRequestDetails": {
+    "description": "#1915 rights requests: rightsRequestDetails"
+  },
+  "rightsRequestSend": "Send the request",
+  "@rightsRequestSend": {
+    "description": "#1915 rights requests: rightsRequestSend"
+  },
+  "rightsRequestSent": "Request sent — the space answers by {date}.",
+  "@rightsRequestSent": {
+    "description": "#1915 rights requests: rightsRequestSent",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestFailed": "The request could not be sent. Please try again.",
+  "@rightsRequestFailed": {
+    "description": "#1915 rights requests: rightsRequestFailed"
+  },
+  "rightsKindAccess": "See a copy of my data",
+  "@rightsKindAccess": {
+    "description": "#1915 rights requests: rightsKindAccess"
+  },
+  "rightsKindPortability": "Take my data elsewhere (machine-readable)",
+  "@rightsKindPortability": {
+    "description": "#1915 rights requests: rightsKindPortability"
+  },
+  "rightsKindRectification": "Correct my data",
+  "@rightsKindRectification": {
+    "description": "#1915 rights requests: rightsKindRectification"
+  },
+  "rightsKindRestriction": "Restrict how my data is used",
+  "@rightsKindRestriction": {
+    "description": "#1915 rights requests: rightsKindRestriction"
+  },
+  "rightsKindObjection": "Object to a use of my data",
+  "@rightsKindObjection": {
+    "description": "#1915 rights requests: rightsKindObjection"
+  },
+  "rightsKindErasure": "Erase my data",
+  "@rightsKindErasure": {
+    "description": "#1915 rights requests: rightsKindErasure"
+  },
+  "rightsStatusReceived": "Received — answer due by {date}",
+  "@rightsStatusReceived": {
+    "description": "#1915 rights requests: rightsStatusReceived",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusExtended": "Extended to {date}: {reason}",
+  "@rightsStatusExtended": {
+    "description": "#1915 rights requests: rightsStatusExtended",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsStatusCompleted": "Answered — the space recorded what it did",
+  "@rightsStatusCompleted": {
+    "description": "#1915 rights requests: rightsStatusCompleted"
+  },
+  "rightsStatusRefused": "Refused: {reason}",
+  "@rightsStatusRefused": {
+    "description": "#1915 rights requests: rightsStatusRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "erasurePreviewTitle": "What erasing does here",
+  "@erasurePreviewTitle": {
+    "description": "#1915 rights requests: erasurePreviewTitle"
+  },
+  "erasurePreviewRemoved": "Removed",
+  "@erasurePreviewRemoved": {
+    "description": "#1915 rights requests: erasurePreviewRemoved"
+  },
+  "erasurePreviewKept": "Kept, and why",
+  "@erasurePreviewKept": {
+    "description": "#1915 rights requests: erasurePreviewKept"
+  },
+  "erasurePreviewOutside": "Outside this installation",
+  "@erasurePreviewOutside": {
+    "description": "#1915 rights requests: erasurePreviewOutside"
+  },
+  "erasureStoreMessages": "Messages you sent",
+  "@erasureStoreMessages": {
+    "description": "#1915 rights requests: erasureStoreMessages"
+  },
+  "erasureStoreAnswers": "Your answers to the space's questions",
+  "@erasureStoreAnswers": {
+    "description": "#1915 rights requests: erasureStoreAnswers"
+  },
+  "erasureStoreProfile": "Your profile (when this is your last space)",
+  "@erasureStoreProfile": {
+    "description": "#1915 rights requests: erasureStoreProfile"
+  },
+  "erasureStoreOpenBookings": "Open bookings — cancelled",
+  "@erasureStoreOpenBookings": {
+    "description": "#1915 rights requests: erasureStoreOpenBookings"
+  },
+  "erasureStoreAccounts": "Invoices and ledger — accounting evidence, kept for the statutory period; issued documents are not rewritten",
+  "@erasureStoreAccounts": {
+    "description": "#1915 rights requests: erasureStoreAccounts"
+  },
+  "erasureStorePastBookings": "Past bookings — the space's occupancy record",
+  "@erasureStorePastBookings": {
+    "description": "#1915 rights requests: erasureStorePastBookings"
+  },
+  "erasureStoreMembership": "The membership row — links the records kept; pseudonymous, not anonymous",
+  "@erasureStoreMembership": {
+    "description": "#1915 rights requests: erasureStoreMembership"
+  },
+  "erasureStoreHeldAnswers": "Answers under a retention hold the space documented",
+  "@erasureStoreHeldAnswers": {
+    "description": "#1915 rights requests: erasureStoreHeldAnswers"
+  },
+  "erasureStoreOtherInstallations": "Another DesKilo installation is a separate controller — ask it directly",
+  "@erasureStoreOtherInstallations": {
+    "description": "#1915 rights requests: erasureStoreOtherInstallations"
+  },
+  "erasureStoreDeviceCaches": "Copies on your devices — cleared when you sign out of each",
+  "@erasureStoreDeviceCaches": {
+    "description": "#1915 rights requests: erasureStoreDeviceCaches"
+  },
+  "erasureStoreBackups": "The operator's backups — expire on their rotation",
+  "@erasureStoreBackups": {
+    "description": "#1915 rights requests: erasureStoreBackups"
+  },
+  "featureRoleAssignmentTitle": "Giving roles",
+  "@featureRoleAssignmentTitle": {
+    "description": "#2085 giving roles: featureRoleAssignmentTitle"
+  },
+  "featureRoleAssignmentDesc": "Shows a Roles section on each member's page to give or take back a role, the members holding each role, and lets every member see what they can do here.",
+  "@featureRoleAssignmentDesc": {
+    "description": "#2085 giving roles: featureRoleAssignmentDesc"
+  },
+  "memberRolesTitle": "Roles",
+  "@memberRolesTitle": {
+    "description": "#2085 giving roles: memberRolesTitle"
+  },
+  "memberRolesAdd": "Add a role",
+  "@memberRolesAdd": {
+    "description": "#2085 giving roles: memberRolesAdd"
+  },
+  "memberRolesNone": "No role: everything a member can do.",
+  "@memberRolesNone": {
+    "description": "#2085 giving roles: memberRolesNone"
+  },
+  "memberRolesWhatTheyCanDo": "What they can do here",
+  "@memberRolesWhatTheyCanDo": {
+    "description": "#2085 giving roles: memberRolesWhatTheyCanDo"
+  },
+  "roleAssignSheetTitle": "Give a role to {name}",
+  "@roleAssignSheetTitle": {
+    "description": "#2085 giving roles: roleAssignSheetTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roleAssignQuorumHint": "Takes effect once validated.",
+  "@roleAssignQuorumHint": {
+    "description": "#2085 giving roles: roleAssignQuorumHint"
+  },
+  "roleAssignImmediateHint": "Takes effect at once.",
+  "@roleAssignImmediateHint": {
+    "description": "#2085 giving roles: roleAssignImmediateHint"
+  },
+  "roleAssignNothing": "There is no role left to give.",
+  "@roleAssignNothing": {
+    "description": "#2085 giving roles: roleAssignNothing"
+  },
+  "roleRefusalNotPermitted": "Only someone who manages roles can give this one.",
+  "@roleRefusalNotPermitted": {
+    "description": "#2085 giving roles: roleRefusalNotPermitted"
+  },
+  "roleRefusalOwnerOnly": "Only the owner gives a role that manages roles.",
+  "@roleRefusalOwnerOnly": {
+    "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRefusalExceedsYours": "This role can do things you cannot, so only the owner gives it.",
+  "@roleRefusalExceedsYours": {
+    "description": "#2085 giving roles: roleRefusalExceedsYours"
+  },
+  "roleRefusalNotAssignable": "This member cannot hold this role.",
+  "@roleRefusalNotAssignable": {
+    "description": "#2085 giving roles: roleRefusalNotAssignable"
+  },
+  "roleGiven": "Role given.",
+  "@roleGiven": {
+    "description": "#2085 giving roles: roleGiven"
+  },
+  "roleTakenBack": "Role taken back.",
+  "@roleTakenBack": {
+    "description": "#2085 giving roles: roleTakenBack"
+  },
+  "roleHoldersAdd": "Add a member",
+  "@roleHoldersAdd": {
+    "description": "#2085 giving roles: roleHoldersAdd"
+  },
+  "rolesOwnRolesLink": "The roles this space defines",
+  "@rolesOwnRolesLink": {
+    "description": "#2085 giving roles: rolesOwnRolesLink"
+  },
+  "whatYouCanDoTitle": "What you can do here",
+  "@whatYouCanDoTitle": {
+    "description": "#2085 giving roles: whatYouCanDoTitle"
+  },
+  "whatTheyCanDoTitle": "What {name} can do here",
+  "@whatTheyCanDoTitle": {
+    "description": "#2085 giving roles: whatTheyCanDoTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoIntro": "Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.",
+  "@whatYouCanDoIntro": {
+    "description": "#2085 giving roles: whatYouCanDoIntro"
+  },
+  "whatYouCanDoFromOwner": "As the owner: everything",
+  "@whatYouCanDoFromOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromOwner"
+  },
+  "whatYouCanDoFromCoOwner": "As co-owner",
+  "@whatYouCanDoFromCoOwner": {
+    "description": "#2085 giving roles: whatYouCanDoFromCoOwner"
+  },
+  "whatYouCanDoFromAdministrator": "From the Administrator role",
+  "@whatYouCanDoFromAdministrator": {
+    "description": "#2085 giving roles: whatYouCanDoFromAdministrator"
+  },
+  "whatYouCanDoFromEveryMember": "As every member",
+  "@whatYouCanDoFromEveryMember": {
+    "description": "#2085 giving roles: whatYouCanDoFromEveryMember"
+  },
+  "whatYouCanDoFromRole": "From the role {role}",
+  "@whatYouCanDoFromRole": {
+    "description": "#2085 giving roles: whatYouCanDoFromRole",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "whatYouCanDoNothingMore": "Nothing more than a member.",
+  "@whatYouCanDoNothingMore": {
+    "description": "#2085 giving roles: whatYouCanDoNothingMore"
+  },
+  "roleGiveFailed": "The role was not given.",
+  "@roleGiveFailed": {
+    "description": "#2085 giving roles: roleGiveFailed"
+  },
+  "roleTakeBackFailed": "The role was not taken back.",
+  "@roleTakeBackFailed": {
+    "description": "#2085 giving roles: roleTakeBackFailed"
+  },
+  "eventRoleGiven": "{actor} gives the role {role} to {member}",
+  "@eventRoleGiven": {
+    "description": "#2085 giving roles: eventRoleGiven",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
+  "eventRoleTakenBack": "{actor} takes back the role {role} from {member}",
+  "@eventRoleTakenBack": {
+    "description": "#2085 giving roles: eventRoleTakenBack",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
   "rolesOfSpaceTitle": "Roles this space defines",
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
-  "rolesOfSpaceSubtitle": "Each one adds permissions on top of a member's role. None ever takes one away, and an owner always keeps every one.",
+  "rolesOfSpaceSubtitle": "Each one adds permissions to what its holders can already do. None takes anything away, and the owner always keeps every permission.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -13063,7 +14606,7 @@
   "@roleEditorSaveFailed": {
     "description": "#1528 the roles of a space: roleEditorSaveFailed"
   },
-  "roleEditorHolders": "Who holds it",
+  "roleEditorHolders": "Members in this role",
   "@roleEditorHolders": {
     "description": "#1528 the roles of a space: roleEditorHolders"
   },
@@ -13430,6 +14973,14 @@
         "format": "decimalPattern"
       }
     }
+  },
+  "featureTaskRecorderTitle": "Task recorder",
+  "@featureTaskRecorderTitle": {
+    "description": "#1865 task recorder: the feature's name"
+  },
+  "featureTaskRecorderDesc": "Lets a person record the steps of a task on this workspace's screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here.",
+  "@featureTaskRecorderDesc": {
+    "description": "#1865 task recorder: the feature's description"
   },
   "capabilityMultiApproval": "Two or more approvals",
   "@capabilityMultiApproval": {
@@ -14601,6 +16152,244 @@
   "@vatTreatmentReasonField": {
     "description": "#985 VAT versions and counterparty: vatTreatmentReasonField"
   },
+  "biTitle": "Business analytics",
+  "@biTitle": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaOverview": "Overview",
+  "@biAreaOverview": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaCapacity": "Space and capacity",
+  "@biAreaCapacity": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaPeople": "People and business",
+  "@biAreaPeople": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaFinance": "Finance",
+  "@biAreaFinance": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaTreasury": "Treasury",
+  "@biAreaTreasury": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaOperations": "Operations",
+  "@biAreaOperations": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaPlanning": "Planning",
+  "@biAreaPlanning": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaSaved": "Saved analyses",
+  "@biAreaSaved": {
+    "description": "#1923 Web-BI area"
+  },
+  "biQuarter": "Q{quarter} {year}",
+  "@biQuarter": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "quarter": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "biDimensionLevel": "Level",
+  "@biDimensionLevel": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biNotOffered": "not offered by the analyses shown",
+  "@biNotOffered": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrain": "Period length",
+  "@biGrain": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrainMonth": "Month",
+  "@biGrainMonth": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrainQuarter": "Quarter",
+  "@biGrainQuarter": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrainYear": "Year",
+  "@biGrainYear": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biCompare": "Compare with",
+  "@biCompare": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biCompareNone": "Nothing",
+  "@biCompareNone": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biComparePrevious": "The period before",
+  "@biComparePrevious": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biComparePreviousYear": "The same period a year before",
+  "@biComparePreviousYear": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biCompareCustom": "A period I choose",
+  "@biCompareCustom": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGroupBy": "Group by",
+  "@biGroupBy": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGroupNone": "No grouping",
+  "@biGroupNone": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSort": "Order",
+  "@biSort": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortUngrouped": "Order (groups only)",
+  "@biSortUngrouped": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortNatural": "As listed",
+  "@biSortNatural": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortDescending": "Highest first",
+  "@biSortDescending": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortAscending": "Lowest first",
+  "@biSortAscending": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biViewTable": "Table",
+  "@biViewTable": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biViewChart": "Chart",
+  "@biViewChart": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biChangePoints": "{value} pp",
+  "@biChangePoints": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "biForbidden": "You may not read this analysis in this workspace.",
+  "@biForbidden": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biUnavailable": "This analysis could not be computed.",
+  "@biUnavailable": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedGrain": "This analysis is not offered for that period length.",
+  "@biRefusedGrain": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedComparison": "This analysis cannot make that comparison.",
+  "@biRefusedComparison": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedGrouping": "This analysis cannot be grouped that way.",
+  "@biRefusedGrouping": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedBudget": "There are more than {count} groups; choose no grouping.",
+  "@biRefusedBudget": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biComparedNotRecorded": "{period} was not recorded (history begins {since}); there is no comparison.",
+  "@biComparedNotRecorded": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "since": {
+        "type": "String"
+      }
+    }
+  },
+  "biComparedPartial": "{period} is only partly recorded.",
+  "@biComparedPartial": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "biExposureDiffers": "The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.",
+  "@biExposureDiffers": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biComparedLine": "{period}: {value} ({change})",
+  "@biComparedLine": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biOpenSource": "Open the source",
+  "@biOpenSource": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSourceRestricted": "The source records are shown only to those who manage them.",
+  "@biSourceRestricted": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biTotal": "Total",
+  "@biTotal": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRemainder": "Not in a current group",
+  "@biRemainder": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biColumnValue": "Value",
+  "@biColumnValue": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biColumnChange": "Change",
+  "@biColumnChange": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biInvalidAddress": "This address asks for an analysis that does not exist; nothing was read.",
+  "@biInvalidAddress": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biReset": "Show the standard view",
+  "@biReset": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
   "assistantPrefix": "Assistant",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"
@@ -14925,9 +16714,9 @@
   "workspaceCodeCopy": "Copy ID",
   "workspaceCodeCopied": "Copied",
   "inviteRoleMember": "Member invite",
-  "inviteRoleAdmin": "Admin invite",
+  "inviteRoleAdmin": "Administrator invite",
   "inviteAdminExplainer": "This code is single-use: it admits ONE person as an admin, then expires. Give it only to the person it is meant for.",
-  "inviteAdminNewCode": "New admin code",
+  "inviteAdminNewCode": "New administrator code",
   "inviteOwnerNote": "There is no owner invite — only an owner can grant ownership, in Members & plans.",
   "scanJoinTitle": "Scan workspace QR",
   "onboardingScanButton": "Scan QR code",
@@ -15309,11 +17098,11 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
-  "rolesTitle": "Role management",
+  "rolesTitle": "Roles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.",
+  "rolesIntroEditor": "Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
@@ -15329,11 +17118,11 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleAdmin": "Admin",
+  "roleAdmin": "Administrator",
   "@roleAdmin": {
     "description": "Role label (#513)"
   },
-  "roleMember": "Member",
+  "roleMember": "Every member",
   "@roleMember": {
     "description": "Role label (#513)"
   },

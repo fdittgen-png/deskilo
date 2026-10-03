@@ -28,6 +28,7 @@ import 'package:go_router/go_router.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/open_my_account.dart';
 
 Override _helpOverride() => helpContentProvider.overrideWith(
   (ref, languageCode) async => '# User Guide\n\n## 1. Intro\n\nHi.\n',
@@ -46,8 +47,11 @@ Future<void> _pumpApp(
       overrides: [
         ...standardTestOverrides(
           helpHints: store,
+          // #1853 A — the Reserve hub has ONE help slot, and the Get
+          // started next step outranks the tips; these cases are about
+          // the carousel itself, so that card is off here.
           workspace: FakeWorkspaceRepository.withWorkspace(
-            featureFlags: featureFlags,
+            featureFlags: {'memberGettingStarted': false, ...featureFlags},
           ),
         ),
         _helpOverride(),
@@ -232,7 +236,7 @@ void main() {
     await _pumpApp(tester, store: store);
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsNothing);
 
-    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await openMyAccount(tester); // #1823: My account is in Me
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('settings-restore-hints')),
@@ -245,7 +249,7 @@ void main() {
 
     // Back on the hub the hint greets again.
     final context = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(context).pop();
+    GoRouter.of(context).go('/reserve');
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsOneWidget);
   });
@@ -256,10 +260,10 @@ void main() {
     await _pumpApp(tester, featureFlags: {'formHelpHints': false});
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsNothing);
 
-    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await openMyAccount(tester); // #1823: My account is in Me
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('settings-help')),
+      find.byKey(const ValueKey('me-help')),
       200,
       scrollable: find.byType(Scrollable).first,
     );
@@ -315,7 +319,7 @@ void main() {
   // Both land in all five languages — nothing was broken behind the
   // hole — but a gate that only sees what somebody remembered to type
   // twice is not a gate. Reading the aggregate ARB is the idiom
-  // `l10n_completeness_test`, `legal_terms_test` and
+  // `arb_key_parity_test`, `legal_terms_test` and
   // `lexicon_allow_list_test` already use.
   test('every helpTopic in the ARB matches a heading of its language\'s '
       'guide (#763, #1393)', () {
@@ -339,7 +343,7 @@ void main() {
       final topics = topicsOf(locale);
       expect(topics.keys, unorderedEquals(en.keys),
           reason: '$locale carries a different set of helpTopic keys than '
-              'en — l10n_completeness_test should have caught this first');
+              'en — arb_key_parity_test should have caught this first');
 
       final headings = File('assets/help/$locale.md')
           .readAsLinesSync()

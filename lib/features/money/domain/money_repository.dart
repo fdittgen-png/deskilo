@@ -24,6 +24,7 @@ import 'statement.dart';
 import 'subscription_levels.dart';
 import 'number_sequence.dart';
 import 'workspace_status.dart';
+import 'reminder_evidence.dart';
 
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
 /// event created by [recordPayment] must be confirmed by the other side
@@ -264,7 +265,28 @@ abstract class MoneyRepository {
   /// — collection metadata beside the immutable document.
   Future<void> remindInvoice(String invoiceId);
 
+  /// #1913 (0331) — invoiceId → the reason of its ACTIVE dunning hold
+  /// (`dispute`, `identity_error`, `insolvency`, `other`). A held invoice
+  /// is not reminded, by hand or by the sweep.
+  Future<Map<String, String>> fetchDunningHolds(String workspaceId);
+
+  /// #1913 — places a hold (RPC `place_dunning_hold`); only whoever
+  /// issues the invoices of the space may.
+  Future<void> placeDunningHold(
+    String invoiceId, {
+    required String reason,
+    String note = '',
+  });
+
+  /// #1913 — releases the active hold (RPC `release_dunning_hold`).
+  Future<void> releaseDunningHold(String invoiceId);
+
   /// invoiceId → reminder count + last reminder instant (0066).
+  /// #1922 (0334) — the reminders of one invoice and what is known about
+  /// their delivery (RPC `invoice_reminder_evidence`): issuers and the
+  /// invoice's own member only.
+  Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId);
+
   Future<Map<String, ({int count, DateTime last})>> fetchInvoiceReminders(
     String workspaceId,
   );
@@ -536,6 +558,10 @@ abstract class MoneyRepository {
   /// provider's approval URL + order id, or a not-configured result naming
   /// the missing server env vars. Throws [PaymentGatewayException] on
   /// provider/auth errors so traces carry the server detail.
+  ///
+  /// [requestId] (#2014 B) names the attempt: a retry with the same id is
+  /// answered from the intent it already opened, never a second order.
+  /// A request that was already paid answers [PaymentOrderStart.alreadyPaid].
   Future<PaymentOrderStart> createPaymentOrder({
     required PaymentProvider provider,
     required String workspaceId,
@@ -543,5 +569,6 @@ abstract class MoneyRepository {
     required int amountCents,
     required String currencyCode,
     required String period,
+    String? requestId,
   });
 }

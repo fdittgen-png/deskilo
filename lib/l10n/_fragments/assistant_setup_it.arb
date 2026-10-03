@@ -7,7 +7,7 @@
   "assistantSetupSaved": "Salvato.",
   "assistantSetupStale": "Qualcuno ha modificato l'offerta nel frattempo. Controllala e riprova.",
   "assistantSetupFailed": "Impossibile salvare. Non è cambiato nulla; riprova.",
-  "assistantSetupLinkIdentity": "Collega la mia identità",
+  "assistantSetupLinkIdentity": "Conferma la mia identità",
   "assistantSetupTurnOn": "Attiva",
   "assistantSetupRecommended": "Usa la selezione consigliata",
   "assistantSetupCustomise": "Personalizza",

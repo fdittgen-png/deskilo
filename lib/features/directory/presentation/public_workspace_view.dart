@@ -14,6 +14,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import 'connection_dialog.dart';
+import 'space_offers.dart';
 import 'messenger/inquiry_sheet.dart';
 
 class PublicWorkspaceView extends ConsumerWidget {
@@ -177,13 +178,11 @@ class PublicWorkspaceView extends ConsumerWidget {
                 await showInquirySheet(context, workspace);
               },
             ),
+          // #1823 — what the space offers: enter, request, copy the e-mail.
           if (!preview && !withdrawn)
-            FilledButton.icon(
-              icon: const Icon(Icons.person_add_outlined),
-              label: Text(
-                l?.portalRequestProfile ?? 'Request a workspace profile',
-              ),
-              onPressed: () async {
+            SpaceOffers(
+              workspace: workspace,
+              onRequest: () async {
                 if (!await _connected(context, ref) || !context.mounted) return;
                 // #1847 B — an action this app could not negotiate with that
                 // server is refused before anything is sent; say so once.

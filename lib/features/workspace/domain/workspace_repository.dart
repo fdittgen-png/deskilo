@@ -695,6 +695,15 @@ abstract class WorkspaceRepository {
     bool apply = false,
   });
 
+  /// #2051 — the owner's chosen [days] (date + name, from the open-data
+  /// source), previewed when [apply] is false and written when it is
+  /// true. Same server rules as [generateClosureDays].
+  Future<HolidayGeneration> importClosureDays(
+    String workspaceId, {
+    required List<({DateTime day, String name})> days,
+    bool apply = false,
+  });
+
   /// Owner-only: set the desk fill opacity percentage (0040), clamped
   /// 20..100 server-side. Lower = more translucent desks.
   Future<void> setDeskOpacity(String workspaceId, int opacity);
