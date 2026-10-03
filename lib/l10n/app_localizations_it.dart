@@ -15498,6 +15498,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskWorkbenchReviewIllustrations => 'Rivedi le illustrazioni';
 
   @override
+  String get taskWorkbenchStoryboardRestored =>
+      'Le illustrazioni riviste sono state ripristinate dal file.';
+
+  @override
   String get taskWorkbenchTitle => 'Laboratorio delle attività';
 
   @override

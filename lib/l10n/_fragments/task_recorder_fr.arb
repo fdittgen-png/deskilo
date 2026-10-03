@@ -152,5 +152,6 @@
   "taskGuideRecovery": "En cas de refus : choisissez une autre place, un autre jour ou une autre période, puis confirmez à nouveau.",
   "taskGuideNoText": "Une instruction encore à écrire",
   "taskGuideManual": "Faites cette étape vous-même",
-  "taskGuideManualProtected": "Faites cette étape vous-même, sur un écran protégé : {category}"
+  "taskGuideManualProtected": "Faites cette étape vous-même, sur un écran protégé : {category}",
+  "taskWorkbenchStoryboardRestored": "Les illustrations revues ont été restaurées depuis le fichier."
 }

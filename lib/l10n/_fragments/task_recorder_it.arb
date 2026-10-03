@@ -152,5 +152,6 @@
   "taskGuideRecovery": "Se viene rifiutato: scelga un altro posto, giorno o periodo, poi confermi di nuovo.",
   "taskGuideNoText": "Un'istruzione ancora da scrivere",
   "taskGuideManual": "Esegua questo passaggio da sé",
-  "taskGuideManualProtected": "Esegua questo passaggio da sé, su una schermata protetta: {category}"
+  "taskGuideManualProtected": "Esegua questo passaggio da sé, su una schermata protetta: {category}",
+  "taskWorkbenchStoryboardRestored": "Le illustrazioni riviste sono state ripristinate dal file."
 }

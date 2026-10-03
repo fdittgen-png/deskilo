@@ -9610,6 +9610,7 @@
   "taskWorkbenchRefusedUnsafe": "Questo file è costruito in modo non sicuro da aprire.",
   "taskWorkbenchRefusedUnsupported": "Questo non è un file di attività.",
   "taskWorkbenchReviewIllustrations": "Rivedi le illustrazioni",
+  "taskWorkbenchStoryboardRestored": "Le illustrazioni riviste sono state ripristinate dal file.",
   "taskWorkbenchTitle": "Laboratorio delle attività",
   "taskWorkbenchTranscriptOnly": "Alcuni passaggi provengono da una versione più recente: mostrati solo come trascrizione.",
   "taskWorkbenchUntrusted": "Una bozza privata da un file: nulla al suo interno è considerato affidabile né inviato.",

@@ -9610,6 +9610,7 @@
   "taskWorkbenchRefusedUnsafe": "Ce fichier est construit d'une manière qu'il n'est pas sûr d'ouvrir.",
   "taskWorkbenchRefusedUnsupported": "Ce n'est pas un fichier de tâche.",
   "taskWorkbenchReviewIllustrations": "Revoir les illustrations",
+  "taskWorkbenchStoryboardRestored": "Les illustrations revues ont été restaurées depuis le fichier.",
   "taskWorkbenchTitle": "Atelier de tâches",
   "taskWorkbenchTranscriptOnly": "Certaines étapes viennent d'une version plus récente : affichées comme simple transcription.",
   "taskWorkbenchUntrusted": "Un brouillon privé issu d'un fichier : rien n'y est considéré comme fiable ni envoyé.",
