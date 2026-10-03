@@ -1213,6 +1213,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biAreaTreasury => 'Treasury';
 
   @override
+  String get biBookingBasis =>
+      'Reserved capacity measures bookings, not actual attendance.';
+
+  @override
   String biChangePoints(String value) {
     return '$value pp';
   }
@@ -1254,6 +1258,34 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get biComparisonUnqualified =>
+      'Change unavailable: one period has partial or out-of-date data.';
+
+  @override
+  String biComputedWorkspaceTime(String date) {
+    return 'Computed $date · workspace time';
+  }
+
+  @override
+  String get biCurrentBasis =>
+      'The whole period is included. Comparison with a completed period is not like-for-like.';
+
+  @override
+  String get biDataNotApplicable => 'No applicable capacity';
+
+  @override
+  String get biDataNotRecorded => 'Not recorded';
+
+  @override
+  String get biDataPartial => 'Partial data';
+
+  @override
+  String get biDataStale => 'Out of date';
+
+  @override
+  String get biDataUnavailable => 'Unavailable';
+
+  @override
   String get biDimensionLevel => 'Level';
 
   @override
@@ -1262,6 +1294,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biForbidden => 'You may not read this analysis in this workspace.';
+
+  @override
+  String get biFutureBasis =>
+      'Existing bookings and current opening rules; not a demand forecast or guaranteed usage.';
 
   @override
   String get biGrain => 'Period length';
@@ -1292,9 +1328,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biOpenSource => 'Open the source';
 
   @override
+  String get biPastBasis =>
+      'Recomputed from records available now, not a snapshot of what was known then.';
+
+  @override
   String biQuarter(String quarter, String year) {
     return 'Q$quarter $year';
   }
+
+  @override
+  String get biRecordedFuture => 'Future period · bookings on record';
+
+  @override
+  String get biRecordedPast => 'Past period · current records';
+
+  @override
+  String get biRecordedPresent => 'Current period · includes future dates';
+
+  @override
+  String get biRefresh => 'Refresh data';
 
   @override
   String biRefusedBudget(String count) {
@@ -1317,6 +1369,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biReset => 'Show the standard view';
+
+  @override
+  String biSeatHoursBlocked(String hours) {
+    return '$hours blocked seat-hours';
+  }
+
+  @override
+  String biSeatHoursFree(String hours) {
+    return '$hours unreserved seat-hours';
+  }
 
   @override
   String get biSort => 'Order';
@@ -6074,6 +6136,97 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Whit Monday';
+
+  @override
+  String get identityConnectBrowser => 'The browser could not be opened.';
+
+  @override
+  String identityConnectConfirmApply(String name) {
+    return 'Send your membership request to $name?';
+  }
+
+  @override
+  String get identityConnectConfirmApplyBody =>
+      'You are connected now. The space reviews your request; nothing else is shared.';
+
+  @override
+  String get identityConnectContinue => 'Continue with Deskilo';
+
+  @override
+  String get identityConnectCurrentServer =>
+      'This is the server you are already signed in to.';
+
+  @override
+  String get identityConnectDifferentAuthority =>
+      'This server accepts a different identity provider.';
+
+  @override
+  String identityConnectDone(String host) {
+    return 'Connected to $host.';
+  }
+
+  @override
+  String get identityConnectExistingAccount =>
+      'Use an account I already have on this server';
+
+  @override
+  String get identityConnectExpired =>
+      'The sign-in took too long. Start again.';
+
+  @override
+  String identityConnectExplain(String host) {
+    return '$host will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the space still decides any request.';
+  }
+
+  @override
+  String get identityConnectNetwork => 'The server did not answer. Try again.';
+
+  @override
+  String get identityConnectNoDeskiloSignIn =>
+      'This server does not offer sign-in with Deskilo.';
+
+  @override
+  String get identityConnectNoSharedIdentity =>
+      'Your account here has no Deskilo identity another server could accept.';
+
+  @override
+  String identityConnectNotSaved(String host) {
+    return '$host accepted you, but this device could not keep the connection. Nothing was sent. Try again.';
+  }
+
+  @override
+  String get identityConnectRefused =>
+      'The connection was not completed. Nothing was sent.';
+
+  @override
+  String get identityConnectRetry => 'Try again';
+
+  @override
+  String get identityConnectSend => 'Send request';
+
+  @override
+  String get identityConnectServerUnsupported =>
+      'This server cannot be connected from this version of the app.';
+
+  @override
+  String identityConnectTitle(String host) {
+    return 'Connect to $host';
+  }
+
+  @override
+  String get identityConnectUnavailable => 'This server did not answer.';
+
+  @override
+  String get identityConnectUnlinked =>
+      'An account on that server already uses this identity or e-mail without being linked to it. Use that account instead.';
+
+  @override
+  String get identityConnectWaiting =>
+      'Finish signing in in your browser, then come back here.';
+
+  @override
+  String get identityConnectWrongAccount =>
+      'The browser signed in as someone else. Nothing was connected.';
 
   @override
   String identityConsentAsks(String host) {
@@ -14227,6 +14380,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusNet => 'Net';
 
   @override
+  String get statusNetExplanation =>
+      'This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together.';
+
+  @override
   String get statusPaymentsMatched => 'Payments matched';
 
   @override
@@ -15088,6 +15245,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderActionBack => 'Went back';
 
   @override
+  String get taskRecorderActionCancelReservation => 'Cancelled the reservation';
+
+  @override
   String get taskRecorderActionCancelReview =>
       'Closed the booking without booking';
 
@@ -15095,7 +15255,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderActionChangeField => 'Changed a booking detail';
 
   @override
+  String get taskRecorderActionCheckIn => 'Checked in';
+
+  @override
+  String get taskRecorderActionCheckOut => 'Checked out';
+
+  @override
+  String get taskRecorderActionCloseMyReservation =>
+      'Closed my reservation without changing it';
+
+  @override
   String get taskRecorderActionConfirmBooking => 'Confirmed the booking';
+
+  @override
+  String get taskRecorderActionDeclineOptIn =>
+      'Did not switch on a test feature';
 
   @override
   String get taskRecorderActionOpenReserve => 'Opened Reserve';
@@ -15104,10 +15278,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderActionSelectDate => 'Chose the day';
 
   @override
+  String get taskRecorderActionSelectLevel => 'Chose a level';
+
+  @override
   String get taskRecorderActionSelectPeriod => 'Chose the period';
 
   @override
   String get taskRecorderActionSelectResource => 'Chose a place';
+
+  @override
+  String get taskRecorderActionSwitchFeature => 'Switched a feature';
 
   @override
   String get taskRecorderActionSwitchView => 'Switched the view';
@@ -15220,6 +15400,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderOpenRecorder => 'Open the task recorder';
 
   @override
+  String get taskRecorderOutcomeCancelled => 'Cancelled';
+
+  @override
+  String get taskRecorderOutcomeCheckedIn => 'Checked in';
+
+  @override
+  String get taskRecorderOutcomeCheckedOut => 'Checked out';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Booked';
 
   @override
@@ -15230,6 +15419,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskRecorderOutcomeSeries => 'Series booked';
+
+  @override
+  String get taskRecorderOutcomeSettingNotSaved => 'Not saved';
+
+  @override
+  String get taskRecorderOutcomeSettingSaved => 'Saved';
 
   @override
   String get taskRecorderOutcomeUnknown => 'No answer came';
@@ -15354,6 +15549,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderValueCustom => 'custom times';
 
   @override
+  String get taskRecorderValueDay => 'day';
+
+  @override
   String get taskRecorderValueDesk => 'a desk';
 
   @override
@@ -15372,13 +15570,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderValueList => 'list';
 
   @override
+  String get taskRecorderValueMonth => 'month';
+
+  @override
   String get taskRecorderValueMorning => 'morning';
 
   @override
   String get taskRecorderValueNoCheckIn => 'without check-in';
 
   @override
+  String get taskRecorderValueOff => 'off';
+
+  @override
   String get taskRecorderValueOffline => 'offline';
+
+  @override
+  String get taskRecorderValueOn => 'on';
 
   @override
   String get taskRecorderValueOnce => 'once';
@@ -15421,6 +15628,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskRecorderValueTomorrow => 'tomorrow';
+
+  @override
+  String get taskRecorderValueWeek => 'week';
 
   @override
   String get taskRecorderValueWithheld => 'not recorded';

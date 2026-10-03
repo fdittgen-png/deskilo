@@ -1,0 +1,41 @@
+{
+  "biRefresh": "Actualiser les données",
+  "biRecordedPast": "Période passée · données actuelles",
+  "biRecordedPresent": "Période en cours · dates futures incluses",
+  "biRecordedFuture": "Période future · réservations enregistrées",
+  "biBookingBasis": "La capacité réservée mesure les réservations, pas la présence réelle.",
+  "biPastBasis": "Recalculé à partir des données disponibles aujourd’hui, et non des seules données connues à l’époque.",
+  "biCurrentBasis": "La période entière est incluse. La comparaison avec une période terminée ne porte pas sur une base équivalente.",
+  "biFutureBasis": "Réservations existantes et horaires actuels ; ni prévision de demande ni utilisation garantie.",
+  "biDataPartial": "Données partielles",
+  "biDataStale": "Données anciennes",
+  "biDataUnavailable": "Indisponible",
+  "biDataNotRecorded": "Non enregistré",
+  "biDataNotApplicable": "Aucune capacité applicable",
+  "biComparisonUnqualified": "Évolution indisponible : une période contient des données partielles ou anciennes.",
+  "biSeatHoursFree": "{hours} heures-sièges non réservées",
+  "@biSeatHoursFree": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biSeatHoursBlocked": "{hours} heures-sièges bloquées",
+  "@biSeatHoursBlocked": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biComputedWorkspaceTime": "Calculé le {date} · heure de l’espace",
+  "@biComputedWorkspaceTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "statusNetExplanation": "Ce sous-total correspond aux montants facturés moins les avoirs, remboursements et crédits. Ce n’est ni un bénéfice ni un solde bancaire. Les paiements rapprochés et reçus se recoupent et ne doivent pas être additionnés."
+}

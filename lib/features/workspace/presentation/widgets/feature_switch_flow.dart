@@ -12,6 +12,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../task_recorder/application/booking_observation.dart'
+    show errorObservation;
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../../application/feature_switch.dart';
 import '../../domain/feature_flags_write.dart';
 import '../../domain/feature_lifecycle.dart';
@@ -66,12 +70,26 @@ Future<void> switchWorkspaceFeature(
             if (f != feature) featureName(l10n, f),
         ],
       )) {
+    if (context.mounted) {
+      recordTaskStep(ref, RecorderActions.declineOptIn); // #1884
+    }
     return;
   }
   if (!context.mounted) return;
+  // #1884 — the task recorder notes the attempt, then the real result.
+  final recorded = recordTaskAttempt(
+    ref,
+    RecorderActions.switchFeature,
+    target: feature.name,
+    payload: {'switch_to': value ? 'on' : 'off'},
+  );
   try {
     await applyFeatureSwitch(ref, workspace: workspace, plan: plan);
   } on FeatureFlagsConflict catch (e, st) {
+    recorded?.resolve(
+      RecorderOutcomes.settingNotSaved,
+      payload: const {'refusal': 'conflict'},
+    );
     // The decision is stale and nothing was written: read the row again
     // and let the owner decide on what is there now.
     TraceLogger.instance.warn(
@@ -92,6 +110,7 @@ Future<void> switchWorkspaceFeature(
     }
     return;
   } on FeatureFlagsUnconfirmed catch (e, st) {
+    recorded?.resolve(RecorderOutcomes.settingUnknown);
     TraceLogger.instance.warn(
       'workspace',
       'feature switch unconfirmed',
@@ -109,6 +128,13 @@ Future<void> switchWorkspaceFeature(
     }
     return;
   } catch (e, st) {
+    recorded?.resolveWith(
+      errorObservation(
+        e,
+        refused: RecorderOutcomes.settingNotSaved,
+        unknown: RecorderOutcomes.settingUnknown,
+      ),
+    );
     TraceLogger.instance.error(
       'workspace',
       'set feature flags failed',
@@ -125,6 +151,7 @@ Future<void> switchWorkspaceFeature(
     }
     return;
   }
+  recorded?.resolve(RecorderOutcomes.settingSaved);
   // Naming what else came on: a cascade nobody sees is a surprise the
   // next time they read the list.
   if (value && alsoOn.isNotEmpty && context.mounted) {

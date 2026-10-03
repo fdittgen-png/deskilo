@@ -2316,3 +2316,7 @@ Die Reihenfolge ist nicht die des Eintreffens, sondern das, **was die Verzögeru
 Was **nicht** darauf steht, ist ebenso gewollt. Belegung, Salden und ungelesene Nachrichten sind Zahlen, keine Entscheidungen: auf eine Zahl kann niemand handeln, und jede gehört dem Bildschirm, der sie führt. Eine Fläche, die alles ordnet, ordnet nichts. Wartet nichts, sagt der Bildschirm es — *Nichts wartet auf Sie* — statt eine leere Liste zu zeigen, die Sie deuten müssen.
 
 Die Funktion bleibt aus, bis Sie sie verlangen, und sie steht **neben** der Glocke, nicht an ihrer Stelle.
+
+**Analysen lesen (#1982).** Die Auslastung ist reservierte Sitzzeit geteilt durch angebotene Sitzzeit, nicht gemessene Anwesenheit. Vergangene, laufende und zukünftige Zeiträume erklären die Bedeutung ihrer Zahlen; der Berechnungszeitpunkt verwendet die Workspace-Zeit. Laufende Zeiträume enthalten zukünftige Tage. Zukünftige Buchungen sind keine Nachfrageprognose; vergangene Zeiträume werden aus heutigen Daten neu berechnet, nicht mit dem damaligen Wissensstand. Unvollständige oder veraltete Zeiträume liefern keine Leistungsänderung. Daten aktualisieren behält die Auswahl. Nicht reservierte und gesperrte Sitzstunden bleiben getrennt. Fehlende oder ungültige Daten sind nicht verfügbar, niemals null.
+
+Der Finanzstatus erklärt seine Zwischensumme: Rechnungsbeträge abzüglich Gutschriften, Erstattungen und Guthaben. Sie ist weder Gewinn noch Bankguthaben. Zugeordnete und eingegangene Zahlungen überschneiden sich; sie dürfen nicht addiert werden.

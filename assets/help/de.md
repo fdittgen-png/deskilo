@@ -2238,6 +2238,10 @@ Was **nicht** darauf steht, ist ebenso gewollt. Belegung, Salden und ungelesene 
 
 Die Funktion bleibt aus, bis Sie sie verlangen, und sie steht **neben** der Glocke, nicht an ihrer Stelle.
 
+**Analysen lesen (#1982).** Die Auslastung ist reservierte Sitzzeit geteilt durch angebotene Sitzzeit, nicht gemessene Anwesenheit. Vergangene, laufende und zukünftige Zeiträume erklären die Bedeutung ihrer Zahlen; der Berechnungszeitpunkt verwendet die Workspace-Zeit. Laufende Zeiträume enthalten zukünftige Tage. Zukünftige Buchungen sind keine Nachfrageprognose; vergangene Zeiträume werden aus heutigen Daten neu berechnet, nicht mit dem damaligen Wissensstand. Unvollständige oder veraltete Zeiträume liefern keine Leistungsänderung. Daten aktualisieren behält die Auswahl. Nicht reservierte und gesperrte Sitzstunden bleiben getrennt. Fehlende oder ungültige Daten sind nicht verfügbar, niemals null.
+
+Der Finanzstatus erklärt seine Zwischensumme: Rechnungsbeträge abzüglich Gutschriften, Erstattungen und Guthaben. Sie ist weder Gewinn noch Bankguthaben. Zugeordnete und eingegangene Zahlungen überschneiden sich; sie dürfen nicht addiert werden.
+
 # Administratorhandbuch — den Bereich einrichten
 
 Für die Person, die den Bereich aufsetzt: was jeder Parameter

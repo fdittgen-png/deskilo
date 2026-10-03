@@ -4,6 +4,7 @@
 // the real chrome, in-memory repositories.
 import 'dart:async';
 
+import 'package:deskilo/core/backend/secondary_federation.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
@@ -53,6 +54,7 @@ Future<GoRouter> pumpMeApp(
   FakePersonalPreferencesRepository? preferences,
   FakeDirectoryRepository? directory,
   List<ConnectedInstallation> connectedSources = const [],
+  IdentityConnector? identityConnector,
   Size size = const Size(800, 1600),
 }) async {
   tester.view.physicalSize = size;
@@ -67,6 +69,7 @@ Future<GoRouter> pumpMeApp(
         personalPreferences: preferences,
         directory: directory,
         connectedSources: connectedSources,
+        identityConnector: identityConnector,
       ),
       child: const DeskiloApp(),
     ),

@@ -183,39 +183,100 @@ class ConnectedInstallations {
           password: credential,
         );
       }
-      final user = (await client.auth.getUser()).user;
-      final session = client.auth.currentSession;
-      if (user == null || session == null || user.id != session.user.id) {
-        throw ConnectionFailure(source, ConnectionFailureReason.denied);
-      }
-      final identity = await client
-          .from('installation_identity')
-          .select('installation_id')
-          .single();
-      final installation = identity['installation_id'];
-      if (installation is! String || installation.isEmpty) {
-        throw ConnectionFailure(source, ConnectionFailureReason.malformed);
-      }
-      // #1832 — compatibility comes from the target's public descriptor
-      // (#1847), not from reading the account's invoices: connecting reads
-      // no private payload and runs no financial operation.
-      if (!connectableProfile(await describeTarget(client))) {
-        throw ConnectionFailure(source, ConnectionFailureReason.unsupported);
-      }
-      _check(source);
-      await _write(source, {
-        'key': endpoint.key.trim(),
-        'account': user.id,
-        'installation_id': installation,
-        'session': session.toJson(),
-      }, epoch: epoch);
-      _unsaved.remove(source);
+      await _register(source, endpoint.key.trim(), client, epoch);
     } catch (e, st) {
       // trace-exempt: rethrown as the typed outcome, stack kept; the caller traces.
       Error.throwWithStackTrace(classifyConnectionError(e, source: source), st);
     } finally {
       await client.dispose();
     }
+  }
+
+  /// #1834 — keeps a session that the identity flow obtained on
+  /// [endpoint]'s OWN server (a target-native session whose binding that
+  /// server verified). The same checks and the same record as [connect]:
+  /// no password, no second registration, and nothing granted. The target
+  /// must still be [installationId], the installation the flow was for.
+  Future<void> adopt(
+    BackendEndpoint endpoint,
+    Session session, {
+    required String installationId,
+  }) async {
+    _check();
+    final source = canonicalBackendUrl(endpoint.url);
+    if (source == null) {
+      throw ConnectionFailure(
+        endpoint.url,
+        ConnectionFailureReason.invalidEndpoint,
+      );
+    }
+    if (source == origin) {
+      throw ConnectionFailure(source, ConnectionFailureReason.currentServer);
+    }
+    final epoch = (_epochs[source] ?? 0) + 1;
+    _epochs[source] = epoch;
+    final client = _client(BackendEndpoint(source, endpoint.key.trim()));
+    try {
+      // The canonical provider's tokens never reach a target data API.
+      final native = session.toJson()
+        ..remove('provider_token')
+        ..remove('provider_refresh_token');
+      await client.auth.setInitialSession(jsonEncode(native));
+      await _register(
+        source,
+        endpoint.key.trim(),
+        client,
+        epoch,
+        installationId: installationId,
+      );
+    } catch (e, st) {
+      // trace-exempt: rethrown as the typed outcome, stack kept; the caller traces.
+      Error.throwWithStackTrace(classifyConnectionError(e, source: source), st);
+    } finally {
+      await client.dispose();
+    }
+  }
+
+  /// Verifies [client]'s signed-in session against its own server and
+  /// saves the connection. [installationId], when given, is the
+  /// installation the caller expects; another one is refused.
+  Future<void> _register(
+    String source,
+    String key,
+    SupabaseClient client,
+    int epoch, {
+    String? installationId,
+  }) async {
+    final user = (await client.auth.getUser()).user;
+    final session = client.auth.currentSession;
+    if (user == null || session == null || user.id != session.user.id) {
+      throw ConnectionFailure(source, ConnectionFailureReason.denied);
+    }
+    final identity = await client
+        .from('installation_identity')
+        .select('installation_id')
+        .single();
+    final installation = identity['installation_id'];
+    if (installation is! String || installation.isEmpty) {
+      throw ConnectionFailure(source, ConnectionFailureReason.malformed);
+    }
+    if (installationId != null && installation != installationId) {
+      throw ConnectionFailure(source, ConnectionFailureReason.changedIdentity);
+    }
+    // #1832 — compatibility comes from the target's public descriptor
+    // (#1847), not from reading the account's invoices: connecting reads
+    // no private payload and runs no financial operation.
+    if (!connectableProfile(await describeTarget(client))) {
+      throw ConnectionFailure(source, ConnectionFailureReason.unsupported);
+    }
+    _check(source);
+    await _write(source, {
+      'key': key,
+      'account': user.id,
+      'installation_id': installation,
+      'session': session.toJson(),
+    }, epoch: epoch);
+    _unsaved.remove(source);
   }
 
   Future<T> use<T>(String source, Future<T> Function(SupabaseClient) action) {
