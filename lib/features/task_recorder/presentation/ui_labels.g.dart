@@ -2246,6 +2246,73 @@ Map<String, _Getter> _part5() => {
   'mcpConfirmStale': (l) => l.mcpConfirmStale,
   'mcpConfirmTitle': (l) => l.mcpConfirmTitle,
   'mcpConfirmUnavailable': (l) => l.mcpConfirmUnavailable,
+  'mcpConnectAddTitle': (l) => l.mcpConnectAddTitle,
+  'mcpConnectAddressLabel': (l) => l.mcpConnectAddressLabel,
+  'mcpConnectAllDone': (l) => l.mcpConnectAllDone,
+  'mcpConnectBeforeTitle': (l) => l.mcpConnectBeforeTitle,
+  'mcpConnectChatgptNote': (l) => l.mcpConnectChatgptNote,
+  'mcpConnectChatgptStep1': (l) => l.mcpConnectChatgptStep1,
+  'mcpConnectChatgptStep2': (l) => l.mcpConnectChatgptStep2,
+  'mcpConnectChatgptStep3': (l) => l.mcpConnectChatgptStep3,
+  'mcpConnectClaudeNote': (l) => l.mcpConnectClaudeNote,
+  'mcpConnectClaudeOpen': (l) => l.mcpConnectClaudeOpen,
+  'mcpConnectClaudeStep1': (l) => l.mcpConnectClaudeStep1,
+  'mcpConnectClaudeStep2': (l) => l.mcpConnectClaudeStep2,
+  'mcpConnectClaudeStep3': (l) => l.mcpConnectClaudeStep3,
+  'mcpConnectCodeStep1': (l) => l.mcpConnectCodeStep1,
+  'mcpConnectCodeStep2': (l) => l.mcpConnectCodeStep2,
+  'mcpConnectCopied': (l) => l.mcpConnectCopied,
+  'mcpConnectCopyRequest': (l) => l.mcpConnectCopyRequest,
+  'mcpConnectCursorInstall': (l) => l.mcpConnectCursorInstall,
+  'mcpConnectCursorStep': (l) => l.mcpConnectCursorStep,
+  'mcpConnectDone': (l) => l.mcpConnectDone,
+  'mcpConnectIntro': (l) => l.mcpConnectIntro,
+  'mcpConnectManageHint': (l) => l.mcpConnectManageHint,
+  'mcpConnectOpenFailed': (l) => l.mcpConnectOpenFailed,
+  'mcpConnectOpenGuide': (l) => l.mcpConnectOpenGuide,
+  'mcpConnectOpenInstallation': (l) => l.mcpConnectOpenInstallation,
+  'mcpConnectOpenSetup': (l) => l.mcpConnectOpenSetup,
+  'mcpConnectOperatorRequest': (l) => l.mcpConnectOperatorRequest,
+  'mcpConnectOtherStep1': (l) => l.mcpConnectOtherStep1,
+  'mcpConnectOtherStep2': (l) => l.mcpConnectOtherStep2,
+  'mcpConnectRoleDenied': (l) => l.mcpConnectRoleDenied,
+  'mcpConnectStepAccess': (l) => l.mcpConnectStepAccess,
+  'mcpConnectStepConnect': (l) => l.mcpConnectStepConnect,
+  'mcpConnectStepGoogle': (l) => l.mcpConnectStepGoogle,
+  'mcpConnectStepIdentity': (l) => l.mcpConnectStepIdentity,
+  'mcpConnectStepServer': (l) => l.mcpConnectStepServer,
+  'mcpConnectStepWorkspace': (l) => l.mcpConnectStepWorkspace,
+  'mcpConnectSwitchWorkspace': (l) => l.mcpConnectSwitchWorkspace,
+  'mcpConnectTabChatgpt': (l) => l.mcpConnectTabChatgpt,
+  'mcpConnectTabClaude': (l) => l.mcpConnectTabClaude,
+  'mcpConnectTabClaudeCode': (l) => l.mcpConnectTabClaudeCode,
+  'mcpConnectTabCursor': (l) => l.mcpConnectTabCursor,
+  'mcpConnectTabOther': (l) => l.mcpConnectTabOther,
+  'mcpConnectTabVscode': (l) => l.mcpConnectTabVscode,
+  'mcpConnectTest': (l) => l.mcpConnectTest,
+  'mcpConnectTestAgain': (l) => l.mcpConnectTestAgain,
+  'mcpConnectTestPrompt': (l) => l.mcpConnectTestPrompt,
+  'mcpConnectTestTimeout': (l) => l.mcpConnectTestTimeout,
+  'mcpConnectTestTitle': (l) => l.mcpConnectTestTitle,
+  'mcpConnectTestWaiting': (l) => l.mcpConnectTestWaiting,
+  'mcpConnectTitle': (l) => l.mcpConnectTitle,
+  'mcpConnectTodoConnect': (l) => l.mcpConnectTodoConnect,
+  'mcpConnectTodoYou': (l) => l.mcpConnectTodoYou,
+  'mcpConnectUnavailable': (l) => l.mcpConnectUnavailable,
+  'mcpConnectVscodeInstall': (l) => l.mcpConnectVscodeInstall,
+  'mcpConnectVscodeStep': (l) => l.mcpConnectVscodeStep,
+  'mcpConnectWaitingDatabaseAdmin': (l) => l.mcpConnectWaitingDatabaseAdmin,
+  'mcpConnectWaitingOperatorUnknown': (l) => l.mcpConnectWaitingOperatorUnknown,
+  'mcpConnectWaitingWorkspaceAdmin': (l) => l.mcpConnectWaitingWorkspaceAdmin,
+  'mcpConnectWhich': (l) => l.mcpConnectWhich,
+  'mcpConnectWorkspaceSelected': (l) => l.mcpConnectWorkspaceSelected,
+  'mcpConnectWorkspacesHint': (l) => l.mcpConnectWorkspacesHint,
+  'mcpConnectWorkspacesTitle': (l) => l.mcpConnectWorkspacesTitle,
+  'mcpConnectWsConnected': (l) => l.mcpConnectWsConnected,
+  'mcpConnectWsNotOffered': (l) => l.mcpConnectWsNotOffered,
+  'mcpConnectWsOff': (l) => l.mcpConnectWsOff,
+  'mcpConnectWsReady': (l) => l.mcpConnectWsReady,
+  'mcpConnectWsUnknown': (l) => l.mcpConnectWsUnknown,
   'mcpConnectedNoWorkspace': (l) => l.mcpConnectedNoWorkspace,
   'mcpConnectedNone': (l) => l.mcpConnectedNone,
   'mcpConnectedTitle': (l) => l.mcpConnectedTitle,
@@ -2336,6 +2403,11 @@ Map<String, _Getter> _part5() => {
   'mcpPolicySwitched': (l) => l.mcpPolicySwitched,
   'mcpPolicyTitle': (l) => l.mcpPolicyTitle,
   'mcpPolicyUnavailable': (l) => l.mcpPolicyUnavailable,
+  'mcpRefusalClientNotApproved': (l) => l.mcpRefusalClientNotApproved,
+  'mcpRefusalNoIdentity': (l) => l.mcpRefusalNoIdentity,
+  'mcpRefusalNotEligible': (l) => l.mcpRefusalNotEligible,
+  'mcpRefusalOfferChanged': (l) => l.mcpRefusalOfferChanged,
+  'mcpRefusalRequestExpired': (l) => l.mcpRefusalRequestExpired,
   'mcpRemoveWorkspace': (l) => l.mcpRemoveWorkspace,
   'mcpReviewApprove': (l) => l.mcpReviewApprove,
   'mcpReviewChanged': (l) => l.mcpReviewChanged,
@@ -2368,6 +2440,9 @@ Map<String, _Getter> _part5() => {
   'mcpStateUnlinked': (l) => l.mcpStateUnlinked,
   'mcpStateVerified': (l) => l.mcpStateVerified,
   'mcpStatusBackend': (l) => l.mcpStatusBackend,
+};
+
+Map<String, _Getter> _part6() => {
   'mcpStatusConfirmIdentity': (l) => l.mcpStatusConfirmIdentity,
   'mcpStatusConsent': (l) => l.mcpStatusConsent,
   'mcpStatusEligibility': (l) => l.mcpStatusEligibility,
@@ -2440,9 +2515,6 @@ Map<String, _Getter> _part5() => {
   'memberNoteDelete': (l) => l.memberNoteDelete,
   'memberNoteDeleteConfirm': (l) => l.memberNoteDeleteConfirm,
   'memberNoteDeleteNotMine': (l) => l.memberNoteDeleteNotMine,
-};
-
-Map<String, _Getter> _part6() => {
   'memberNoteDeleteRead': (l) => l.memberNoteDeleteRead,
   'memberNoteDeleted': (l) => l.memberNoteDeleted,
   'memberNoteHint': (l) => l.memberNoteHint,
@@ -2771,6 +2843,9 @@ Map<String, _Getter> _part6() => {
   'paymentInstructionsReferenceLabel': (l) => l.paymentInstructionsReferenceLabel,
   'paymentInstructionsTitle': (l) => l.paymentInstructionsTitle,
   'paymentInstructionsValueCopied': (l) => l.paymentInstructionsValueCopied,
+};
+
+Map<String, _Getter> _part7() => {
   'paymentInstructionsWeroLabel': (l) => l.paymentInstructionsWeroLabel,
   'paymentInstructionsWiseLabel': (l) => l.paymentInstructionsWiseLabel,
   'paymentMethodBankTransfer': (l) => l.paymentMethodBankTransfer,
@@ -2843,9 +2918,6 @@ Map<String, _Getter> _part6() => {
   'personalInfoCompany': (l) => l.personalInfoCompany,
   'personalInfoCountry': (l) => l.personalInfoCountry,
   'personalInfoEmail': (l) => l.personalInfoEmail,
-};
-
-Map<String, _Getter> _part7() => {
   'personalInfoFirstName': (l) => l.personalInfoFirstName,
   'personalInfoLastName': (l) => l.personalInfoLastName,
   'personalInfoLegalId': (l) => l.personalInfoLegalId,
@@ -3174,6 +3246,9 @@ Map<String, _Getter> _part7() => {
   'readinessAreaLocalSetup': (l) => l.readinessAreaLocalSetup,
   'readinessAreaPayments': (l) => l.readinessAreaPayments,
   'readinessAreaPricing': (l) => l.readinessAreaPricing,
+};
+
+Map<String, _Getter> _part8() => {
   'readinessAreaRecovery': (l) => l.readinessAreaRecovery,
   'readinessAreaRegionRules': (l) => l.readinessAreaRegionRules,
   'readinessAreaResources': (l) => l.readinessAreaResources,
@@ -3246,9 +3321,6 @@ Map<String, _Getter> _part7() => {
   'reminderStatusLegacy': (l) => l.reminderStatusLegacy,
   'reminderStatusPrepared': (l) => l.reminderStatusPrepared,
   'reminderStatusQueued': (l) => l.reminderStatusQueued,
-};
-
-Map<String, _Getter> _part8() => {
   'reminderStatusUnknown': (l) => l.reminderStatusUnknown,
   'reminderTitle': (l) => l.reminderTitle,
   'repartitionAction': (l) => l.repartitionAction,
@@ -3577,6 +3649,9 @@ Map<String, _Getter> _part8() => {
   'rightsKindRectification': (l) => l.rightsKindRectification,
   'rightsKindRestriction': (l) => l.rightsKindRestriction,
   'rightsRequestAsk': (l) => l.rightsRequestAsk,
+};
+
+Map<String, _Getter> _part9() => {
   'rightsRequestDetails': (l) => l.rightsRequestDetails,
   'rightsRequestFailed': (l) => l.rightsRequestFailed,
   'rightsRequestNew': (l) => l.rightsRequestNew,
@@ -3649,9 +3724,6 @@ Map<String, _Getter> _part8() => {
   'scheduleStatusRejected': (l) => l.scheduleStatusRejected,
   'scheduleSubmit': (l) => l.scheduleSubmit,
   'scheduleTimesLabel': (l) => l.scheduleTimesLabel,
-};
-
-Map<String, _Getter> _part9() => {
   'scheduleTitleLabel': (l) => l.scheduleTitleLabel,
   'scheduleUnitDays': (l) => l.scheduleUnitDays,
   'scheduleUnitLabel': (l) => l.scheduleUnitLabel,
@@ -3980,6 +4052,9 @@ Map<String, _Getter> _part9() => {
   'taskGuideManual': (l) => l.taskGuideManual,
   'taskGuideNoText': (l) => l.taskGuideNoText,
   'taskGuideOptional': (l) => l.taskGuideOptional,
+};
+
+Map<String, _Getter> _part10() => {
   'taskGuideRecovery': (l) => l.taskGuideRecovery,
   'taskGuideSave': (l) => l.taskGuideSave,
   'taskGuideTitle': (l) => l.taskGuideTitle,
@@ -4052,9 +4127,6 @@ Map<String, _Getter> _part9() => {
   'taskRecorderOutcomeCommandPending': (l) => l.taskRecorderOutcomeCommandPending,
   'taskRecorderOutcomeConfirmed': (l) => l.taskRecorderOutcomeConfirmed,
   'taskRecorderOutcomeRefused': (l) => l.taskRecorderOutcomeRefused,
-};
-
-Map<String, _Getter> _part10() => {
   'taskRecorderOutcomeRequested': (l) => l.taskRecorderOutcomeRequested,
   'taskRecorderOutcomeSeries': (l) => l.taskRecorderOutcomeSeries,
   'taskRecorderOutcomeSettingNotSaved': (l) => l.taskRecorderOutcomeSettingNotSaved,
@@ -4383,6 +4455,9 @@ Map<String, _Getter> _part10() => {
   'wizardRunStartHint': (l) => l.wizardRunStartHint,
   'wizardSendDownload': (l) => l.wizardSendDownload,
   'wizardSendHint': (l) => l.wizardSendHint,
+};
+
+Map<String, _Getter> _part11() => {
   'wizardSendNone': (l) => l.wizardSendNone,
   'wizardSendShare': (l) => l.wizardSendShare,
   'wizardStepClose': (l) => l.wizardStepClose,
@@ -4455,9 +4530,6 @@ Map<String, _Getter> _part10() => {
   'workspaceConfigAvailability': (l) => l.workspaceConfigAvailability,
   'workspaceConfigBookableWhole': (l) => l.workspaceConfigBookableWhole,
   'workspaceConfigClosures': (l) => l.workspaceConfigClosures,
-};
-
-Map<String, _Getter> _part11() => {
   'workspaceConfigColName': (l) => l.workspaceConfigColName,
   'workspaceConfigColRole': (l) => l.workspaceConfigColRole,
   'workspaceConfigColStatus': (l) => l.workspaceConfigColStatus,
