@@ -36,7 +36,8 @@ void main() {
   test("the server's answer for the issue's fixture: 10 seats x 8 h, two "
       'seats blocked 2 h, a whole 4-seat desk for 2 h plus two single '
       'seat-hours', () {
-    final kpi = seatCapacityFromJson(const {
+    final kpi = seatCapacityFromJson({
+      ..._capacityFields,
       'from': '2026-10-05T00:00:00+02:00',
       'to': '2026-10-06T00:00:00+02:00',
       'seats': 10,
@@ -48,7 +49,7 @@ void main() {
       'rooms_without_seats': 1,
       'offered_room_hours': 8.0,
       'reserved_room_hours': '3.00',
-      'quality': ['partial', 'from_a_newer_server'],
+      'quality': ['partial'],
       'reasons': ['history_not_recorded_before'],
       'history_since': '2026-10-02T09:00:00Z',
       'computed_at': '2026-10-01T10:00:00Z',
@@ -59,11 +60,12 @@ void main() {
     expect(kpi.historySince, DateTime.utc(2026, 10, 2, 9));
     expect(kpi.quality, {
       KpiQuality.partial,
-    }, reason: 'an unknown quality word is ignored, not guessed');
+    }, reason: 'the qualification accompanies the value');
   });
 
   test('nothing offered: the utilisation is undefined', () {
-    final kpi = seatCapacityFromJson(const {
+    final kpi = seatCapacityFromJson({
+      ..._capacityFields,
       'from': '2026-10-05T00:00:00Z',
       'to': '2026-10-06T00:00:00Z',
       'offered_seat_hours': 0,
@@ -75,3 +77,17 @@ void main() {
     expect(kpi.quality, {KpiQuality.notApplicable});
   });
 }
+
+const _capacityFields = <String, dynamic>{
+  'seats': 0,
+  'physical_seat_hours': 0,
+  'offered_seat_hours': 0,
+  'reserved_seat_hours': 0,
+  'reserved_outside_offered_seat_hours': 0,
+  'overlapping_seat_hours': 0,
+  'rooms_without_seats': 0,
+  'offered_room_hours': 0,
+  'reserved_room_hours': 0,
+  'quality': <String>[],
+  'reasons': <String>[],
+};

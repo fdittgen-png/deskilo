@@ -31,10 +31,21 @@ void main() {
     expect(s.members.single.subscriptionPct, 50);
   });
 
-  test('an empty answer is a zero status, not a crash', () {
-    final s = WorkspaceStatus.fromJson(const {'from': '2026-01', 'to': '2026-01'});
-    expect((s.currency, s.invoicedCents), ('EUR', 0));
-    expect(s.members, isEmpty);
+  test('missing financial data is unavailable, never an invented zero', () {
+    expect(() => WorkspaceStatus.fromJson(const {
+      'from': '2026-01', 'to': '2026-01',
+    }), throwsA(isA<FormatException>()));
+  });
+
+  test('amounts cannot silently lose fractional minor units or currency', () {
+    for (final invalid in [null, 0.5, double.infinity]) {
+      expect(() => WorkspaceStatus.fromJson({
+        ...json,
+        'payments': {'matched_cents': invalid, 'received_cents': 0},
+      }), throwsA(isA<FormatException>()));
+    }
+    expect(() => WorkspaceStatus.fromJson({...json, 'currency': null}),
+        throwsA(isA<FormatException>()));
   });
 
   test('the repartition rule round-trips, and nonsense falls back to the '

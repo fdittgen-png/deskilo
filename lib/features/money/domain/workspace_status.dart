@@ -5,6 +5,7 @@
 // reimbursed and shared out, and the same per member. Computed in the
 // database so the screen and the printed report read one set of numbers.
 import 'expense_repartition.dart';
+import 'accounting_amount.dart';
 
 class WorkspaceStatus {
   const WorkspaceStatus({
@@ -61,19 +62,31 @@ class WorkspaceStatus {
       invoicedCents - creditNotesCents - reimbursedCents - creditsGrantedCents;
 
   factory WorkspaceStatus.fromJson(Map<String, dynamic> j) {
-    final revenue = (j['revenue'] as Map?)?.cast<String, dynamic>() ?? const {};
-    final payments = (j['payments'] as Map?)?.cast<String, dynamic>() ?? const {};
-    final expenses = (j['expenses'] as Map?)?.cast<String, dynamic>() ?? const {};
-    int cents(Map<String, dynamic> m, String k) => (m[k] as num?)?.toInt() ?? 0;
+    Map<String, dynamic> section(String key) {
+      final value = j[key];
+      if (value is! Map) throw FormatException('Missing status section: $key');
+      return value.cast<String, dynamic>();
+    }
+    final currency = j['currency'];
+    if (currency is! String || !supportedCurrencies.contains(currency)) {
+      throw const FormatException('Missing or unsupported status currency');
+    }
+    final revenue = section('revenue');
+    final payments = section('payments');
+    final expenses = section('expenses');
+    if (revenue['by_kind'] is! Map || j['members'] is! List) {
+      throw const FormatException('Missing status breakdown');
+    }
+    int cents(Map<String, dynamic> m, String k) => _minor(m[k]);
     return WorkspaceStatus(
       from: j['from'] as String? ?? '',
       to: j['to'] as String? ?? '',
-      currency: j['currency'] as String? ?? 'EUR',
+      currency: currency,
       invoicedCents: cents(revenue, 'invoiced_cents'),
       creditNotesCents: cents(revenue, 'credit_notes_cents'),
       byKind: {
         for (final e in ((revenue['by_kind'] as Map?) ?? const {}).entries)
-          e.key as String: (e.value as num).toInt(),
+          e.key as String: _minor(e.value),
       },
       repartitionChargesCents: cents(revenue, 'repartition_charges_cents'),
       paymentsMatchedCents: cents(payments, 'matched_cents'),
@@ -88,6 +101,15 @@ class WorkspaceStatus {
       ],
     );
   }
+}
+
+/// RPC amounts are exact integer minor units, never rounded or defaulted.
+int _minor(Object? value) {
+  if (value is! num || !value.isFinite ||
+      value != value.truncateToDouble() || value.abs() > maxSafeMinor) {
+    throw const FormatException('Invalid or missing status amount');
+  }
+  return value.toInt();
 }
 
 class StatusMemberRow {
@@ -118,11 +140,11 @@ class StatusMemberRow {
         name: j['name'] as String? ?? '',
         memberNumber: j['member_number'] as String? ?? '',
         subscriptionPct: (j['subscription_pct'] as num?)?.toInt() ?? 100,
-        invoicedCents: (j['invoiced_cents'] as num?)?.toInt() ?? 0,
-        paidCents: (j['paid_cents'] as num?)?.toInt() ?? 0,
-        reimbursedCents: (j['reimbursed_cents'] as num?)?.toInt() ?? 0,
-        creditsCents: (j['credits_cents'] as num?)?.toInt() ?? 0,
-        chargedCents: (j['charged_cents'] as num?)?.toInt() ?? 0,
+        invoicedCents: _minor(j['invoiced_cents']),
+        paidCents: _minor(j['paid_cents']),
+        reimbursedCents: _minor(j['reimbursed_cents']),
+        creditsCents: _minor(j['credits_cents']),
+        chargedCents: _minor(j['charged_cents']),
       );
 }
 

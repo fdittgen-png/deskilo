@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/kpi_contract.dart';
@@ -20,6 +21,7 @@ import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/kpi_providers.dart';
 import '../../providers/workspace_providers.dart';
+import 'capacity_evidence.dart';
 
 /// Shown only when the feature is on and the reader holds viewAnalytics
 /// (#1921); the server checks both again.
@@ -32,7 +34,7 @@ class CapacityKpiCard extends ConsumerStatefulWidget {
 
 class _CapacityKpiCardState extends ConsumerState<CapacityKpiCard> {
   late DateTime _month = () {
-    final now = ref.read(clockProvider).now();
+    final now = WorkspaceTime.dateOf(ref.read(clockProvider).now());
     return DateTime(now.year, now.month);
   }();
 
@@ -171,6 +173,7 @@ class _Figure extends StatelessWidget {
           key: const ValueKey('capacity-kpi-value'),
           style: theme.textTheme.headlineMedium,
         ),
+        CapacityEvidence(kpi: kpi),
         Text(ratioLine, key: const ValueKey('capacity-kpi-ratio')),
         for (final note in notes)
           Padding(
@@ -202,7 +205,7 @@ NumberFormat _hours(String locale) =>
 
 String _since(SeatCapacityKpi kpi, String locale) {
   final since = kpi.historySince;
-  return since == null ? '' : DateFormat.yMMMd(locale).format(since.toLocal());
+  return since == null ? '' : DateFormat.yMMMd(locale).format(WorkspaceTime.wall(since));
 }
 
 /// "25 of 100 seat-hours reserved" — the ratio's two sides (#1918). The
@@ -212,6 +215,7 @@ String capacityKpiRatioLine(
   AppLocalizations? l10n,
   String locale,
 ) {
+  if (!kpi.hasValue) return '';
   final hours = _hours(locale);
   final reserved = hours.format(kpi.reservedSeatHours);
   final offered = hours.format(kpi.offeredSeatHours);
@@ -229,7 +233,10 @@ List<String> capacityKpiNotes(
   final ratio = kpi.utilisation;
   final notRecorded = kpi.quality.contains(KpiQuality.notRecorded);
   return <String>[
-    if (notRecorded)
+    if (kpi.quality.contains(KpiQuality.unavailable) ||
+        kpi.quality.contains(KpiQuality.forbidden))
+      l10n?.capacityKpiUnavailable ?? 'The seat utilisation could not be computed.'
+    else if (notRecorded)
       l10n?.capacityKpiNotRecorded(sinceLabel) ??
           'This period lies before the workspace’s history began on '
               '$sinceLabel; there is nothing recorded to count.'
@@ -237,7 +244,7 @@ List<String> capacityKpiNotes(
       l10n?.capacityKpiUndefined ??
           'No seat time was offered in this period, so there is no '
               'utilisation to show.',
-    if (kpi.quality.contains(KpiQuality.knownZero))
+    if (kpi.hasValue && kpi.quality.contains(KpiQuality.knownZero))
       l10n?.capacityKpiKnownZero ?? 'Measured: nothing was reserved.',
     if (!notRecorded && kpi.reasons.contains('history_not_recorded_before'))
       l10n?.capacityKpiHistorySince(sinceLabel) ??
@@ -256,12 +263,13 @@ List<String> capacityKpiDetails(
   AppLocalizations? l10n,
   String locale,
 ) {
+  if (!kpi.hasValue) return capacityKpiNotes(kpi, l10n, locale);
   final hours = _hours(locale);
   final since = kpi.historySince;
   final sinceLabel = _since(kpi, locale);
   final computed = DateFormat.yMd(locale)
       .add_Hm()
-      .format(kpi.computedAt.toLocal());
+      .format(WorkspaceTime.wall(kpi.computedAt));
   return <String>[
     l10n?.capacityKpiDefinition ??
         'Reserved seat-hours inside the opening hours, divided by offered '

@@ -1225,6 +1225,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biAreaTreasury => 'Liquidität';
 
   @override
+  String get biBookingBasis =>
+      'Reservierte Kapazität misst Buchungen, nicht die tatsächliche Anwesenheit.';
+
+  @override
   String biChangePoints(String value) {
     return '$value Pp.';
   }
@@ -1266,6 +1270,34 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get biComparisonUnqualified =>
+      'Änderung nicht verfügbar: Ein Zeitraum enthält unvollständige oder veraltete Daten.';
+
+  @override
+  String biComputedWorkspaceTime(String date) {
+    return 'Berechnet am $date · Ortszeit des Workspace';
+  }
+
+  @override
+  String get biCurrentBasis =>
+      'Der gesamte Zeitraum ist enthalten. Der Vergleich mit einem abgeschlossenen Zeitraum hat keine gleichwertige Basis.';
+
+  @override
+  String get biDataNotApplicable => 'Keine passende Kapazität';
+
+  @override
+  String get biDataNotRecorded => 'Nicht erfasst';
+
+  @override
+  String get biDataPartial => 'Unvollständige Daten';
+
+  @override
+  String get biDataStale => 'Veraltete Daten';
+
+  @override
+  String get biDataUnavailable => 'Nicht verfügbar';
+
+  @override
   String get biDimensionLevel => 'Ebene';
 
   @override
@@ -1275,6 +1307,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get biForbidden =>
       'Sie dürfen diese Analyse in diesem Arbeitsbereich nicht lesen.';
+
+  @override
+  String get biFutureBasis =>
+      'Vorhandene Buchungen und aktuelle Öffnungszeiten; keine Nachfrageprognose oder garantierte Nutzung.';
 
   @override
   String get biGrain => 'Zeitraumlänge';
@@ -1305,9 +1341,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biOpenSource => 'Quelle öffnen';
 
   @override
+  String get biPastBasis =>
+      'Aus den heute verfügbaren Daten neu berechnet, kein damaliger Wissensstand.';
+
+  @override
   String biQuarter(String quarter, String year) {
     return 'Q$quarter $year';
   }
+
+  @override
+  String get biRecordedFuture => 'Zukünftiger Zeitraum · erfasste Buchungen';
+
+  @override
+  String get biRecordedPast => 'Vergangener Zeitraum · heutiger Datenstand';
+
+  @override
+  String get biRecordedPresent =>
+      'Laufender Zeitraum · zukünftige Tage enthalten';
+
+  @override
+  String get biRefresh => 'Daten aktualisieren';
 
   @override
   String biRefusedBudget(String count) {
@@ -1331,6 +1384,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biReset => 'Standardansicht zeigen';
+
+  @override
+  String biSeatHoursBlocked(String hours) {
+    return '$hours gesperrte Sitzstunden';
+  }
+
+  @override
+  String biSeatHoursFree(String hours) {
+    return '$hours nicht reservierte Sitzstunden';
+  }
 
   @override
   String get biSort => 'Reihenfolge';
@@ -14249,6 +14312,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get statusNet => 'Netto';
+
+  @override
+  String get statusNetExplanation =>
+      'Diese Zwischensumme entspricht Rechnungsbeträgen abzüglich Gutschriften, Erstattungen und Guthaben. Sie ist weder Gewinn noch Bankguthaben. Zugeordnete und eingegangene Zahlungen überschneiden sich und dürfen nicht addiert werden.';
 
   @override
   String get statusPaymentsMatched => 'Zugeordnete Zahlungen';

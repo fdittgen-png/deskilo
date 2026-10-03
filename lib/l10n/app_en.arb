@@ -1273,6 +1273,7 @@
   "@biAreaTreasury": {
     "description": "#1923 Web-BI area"
   },
+  "biBookingBasis": "Reserved capacity measures bookings, not actual attendance.",
   "biChangePoints": "{value} pp",
   "@biChangePoints": {
     "description": "#1923 B Web-BI toolbar and module section",
@@ -1346,6 +1347,21 @@
       }
     }
   },
+  "biComparisonUnqualified": "Change unavailable: one period has partial or out-of-date data.",
+  "biComputedWorkspaceTime": "Computed {date} · workspace time",
+  "@biComputedWorkspaceTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biCurrentBasis": "The whole period is included. Comparison with a completed period is not like-for-like.",
+  "biDataNotApplicable": "No applicable capacity",
+  "biDataNotRecorded": "Not recorded",
+  "biDataPartial": "Partial data",
+  "biDataStale": "Out of date",
+  "biDataUnavailable": "Unavailable",
   "biDimensionLevel": "Level",
   "@biDimensionLevel": {
     "description": "#1923 B Web-BI toolbar and module section"
@@ -1358,6 +1374,7 @@
   "@biForbidden": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
+  "biFutureBasis": "Existing bookings and current opening rules; not a demand forecast or guaranteed usage.",
   "biGrain": "Period length",
   "@biGrain": {
     "description": "#1923 B Web-BI toolbar and module section"
@@ -1394,6 +1411,7 @@
   "@biOpenSource": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
+  "biPastBasis": "Recomputed from records available now, not a snapshot of what was known then.",
   "biQuarter": "Q{quarter} {year}",
   "@biQuarter": {
     "description": "#1923 B Web-BI toolbar and module section",
@@ -1406,6 +1424,10 @@
       }
     }
   },
+  "biRecordedFuture": "Future period · bookings on record",
+  "biRecordedPast": "Past period · current records",
+  "biRecordedPresent": "Current period · includes future dates",
+  "biRefresh": "Refresh data",
   "biRefusedBudget": "There are more than {count} groups; choose no grouping.",
   "@biRefusedBudget": {
     "description": "#1923 B Web-BI toolbar and module section",
@@ -1434,6 +1456,22 @@
   "biReset": "Show the standard view",
   "@biReset": {
     "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSeatHoursBlocked": "{hours} blocked seat-hours",
+  "@biSeatHoursBlocked": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biSeatHoursFree": "{hours} unreserved seat-hours",
+  "@biSeatHoursFree": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
   },
   "biSort": "Order",
   "@biSort": {
@@ -16048,6 +16086,7 @@
   "@statusNet": {
     "description": "#934 workspace status / repartition wizard: statusNet"
   },
+  "statusNetExplanation": "This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together.",
   "statusPaymentsMatched": "Payments matched",
   "@statusPaymentsMatched": {
     "description": "#934 workspace status / repartition wizard: statusPaymentsMatched"
