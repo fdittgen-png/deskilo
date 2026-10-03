@@ -149,7 +149,9 @@ class _MemberPageBody extends ConsumerWidget {
 
     final active = member.status == MemberStatus.active;
     final pending = member.status == MemberStatus.pending;
-    final canAdmin = me?.canAdminister ?? false;
+    // #2137 — or whoever manages the members, through a role.
+    final canAdmin = (me?.canAdminister ?? false) ||
+        perms.contains(WorkspacePermission.manageMembers);
     final isOwner = me?.actsAsOwner ?? false;
     final whatsappOn = features.contains(WorkspaceFeature.whatsappIntegration);
     final whatsappUri = whatsappOn ? profile?.whatsappUri : null;
