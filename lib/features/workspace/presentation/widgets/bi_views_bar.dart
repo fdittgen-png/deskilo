@@ -251,6 +251,7 @@ class BiViewsBar extends ConsumerWidget {
                   ),
                   actions: [
                     TextButton(
+                      key: const ValueKey('bi-view-delete-cancel'),
                       onPressed: () => Navigator.of(dialog).pop(false),
                       child: Text(
                         MaterialLocalizations.of(dialog).cancelButtonLabel,
@@ -371,6 +372,7 @@ class _NameDialogState extends State<_NameDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('bi-view-save-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(material.cancelButtonLabel),
         ),
@@ -457,6 +459,7 @@ class _SaveDialogState extends State<_SaveDialog> {
             if (relative) ...[
               const SizedBox(height: AppSpacing.sm),
               RadioGroup<bool>(
+                key: const ValueKey('bi-view-relative-fixed'),
                 groupValue: _fixed,
                 onChanged: (v) => setState(() => _fixed = v ?? false),
                 child: Column(
@@ -491,6 +494,7 @@ class _SaveDialogState extends State<_SaveDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('bi-view-share-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(material.cancelButtonLabel),
         ),

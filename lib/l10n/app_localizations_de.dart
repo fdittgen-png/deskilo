@@ -2002,6 +2002,68 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Buchung liegt vollständig in der Vergangenheit.';
 
   @override
+  String get bookingRecoveryBanner =>
+      'Eine Ihrer Buchungsanfragen ist noch unbeantwortet.';
+
+  @override
+  String get bookingRecoveryBannerAction => 'Prüfen';
+
+  @override
+  String get bookingRecoveryCheck => 'Ergebnis prüfen';
+
+  @override
+  String get bookingRecoveryCommitted =>
+      'Die Buchung existiert – genau eine, aus Ihrer ursprünglichen Anfrage.';
+
+  @override
+  String get bookingRecoveryDiscard => 'Verwerfen';
+
+  @override
+  String get bookingRecoveryInProgress =>
+      'Der Server bearbeitet diese Anfrage noch. Prüfen Sie es gleich noch einmal.';
+
+  @override
+  String get bookingRecoveryNotCommitted =>
+      'Für diese Anfrage wurde nichts gebucht. Sie können sie unverändert fortsetzen oder verwerfen.';
+
+  @override
+  String get bookingRecoveryNotSaved =>
+      'Dieses Gerät konnte Ihre Buchungsanfrage nicht speichern; es wurde nichts gesendet. Schaffen Sie Platz oder versuchen Sie es erneut.';
+
+  @override
+  String get bookingRecoveryResume => 'Dieselbe Anfrage fortsetzen';
+
+  @override
+  String get bookingRecoveryResumed =>
+      'Fortgesetzt: Ihre ursprüngliche Anfrage wurde einmal gebucht.';
+
+  @override
+  String get bookingRecoverySpaceFallback => 'Der gewählte Platz';
+
+  @override
+  String get bookingRecoveryTitle => 'Ihre Buchungsanfrage';
+
+  @override
+  String get bookingRecoveryUnavailable =>
+      'Der Server konnte nicht gefragt werden. Nichts wurde geändert; versuchen Sie es erneut.';
+
+  @override
+  String get bookingRecoveryUnknown =>
+      'Die Verbindung brach ab, nachdem Ihre Anfrage gesendet wurde. Die Buchung existiert vielleicht, vielleicht nicht – prüfen Sie es, bevor Sie erneut buchen.';
+
+  @override
+  String get bookingRecoveryUnresolved =>
+      'Der Server bewahrt zu dieser Anfrage nichts mehr auf und kann nichts sagen. Prüfen Sie Ihre Buchungen, bevor Sie erneut buchen.';
+
+  @override
+  String get bookingRecoveryView => 'Buchung ansehen';
+
+  @override
+  String bookingRecoveryWindow(String space, String from, String to) {
+    return '$space · $from – $to';
+  }
+
+  @override
   String bookingReservedSpaceWhen(String space, String when) {
     return '$space reserviert: $when.';
   }
@@ -4681,6 +4743,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureFormHelpHintsTitle => 'Hilfe-Hinweise';
+
+  @override
+  String get featureGuestParticipationDesc =>
+      'Erlaubt einer Person, die kein Mitglied ist, um einen Besuch dieses Spaces zu bitten, und jemandem, der Reservierungen verwaltet, sie zuzulassen oder abzulehnen. Ein Besuch erzeugt weder Mitgliedschaft noch Abonnement noch Rolle. Aus: niemand fragt an oder wird hier zugelassen.';
+
+  @override
+  String get featureGuestParticipationTitle => 'Gastbesuche';
 
   @override
   String get featureHeldBack =>
@@ -10754,6 +10823,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myBadgeTitle => 'Mein Badge';
 
   @override
+  String get myVisitsHelp =>
+      'Besuche, die Sie als Gast angefragt haben oder zu denen Sie zugelassen wurden. Ein Besuch ist keine Mitgliedschaft.';
+
+  @override
+  String get myVisitsTitle => 'Meine Besuche';
+
+  @override
   String get navigationClassic =>
       'Klassisch: die untere Leiste und der runde Knopf';
 
@@ -16082,6 +16158,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderActionSwitchView => 'Die Ansicht gewechselt';
 
   @override
+  String get taskRecorderActionUiCloseWindow => 'Ein Fenster geschlossen';
+
+  @override
+  String get taskRecorderActionUiCommand => 'Einen Befehl ausgeführt';
+
+  @override
+  String get taskRecorderActionUiCommitField => 'Ein Feld ausgefüllt';
+
+  @override
+  String get taskRecorderActionUiOpenScreen => 'Einen Bildschirm geöffnet';
+
+  @override
+  String get taskRecorderActionUiOpenWindow => 'Ein Fenster geöffnet';
+
+  @override
+  String get taskRecorderActionUiTap => 'Getippt';
+
+  @override
   String get taskRecorderActionViewDetails => 'Die Reservierung geöffnet';
 
   @override
@@ -16202,6 +16296,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderOutcomeCheckedOut => 'Ausgecheckt';
 
   @override
+  String get taskRecorderOutcomeCommandDone => 'Erledigt';
+
+  @override
+  String get taskRecorderOutcomeCommandPending => 'Zur Freigabe gesendet';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Gebucht';
 
   @override
@@ -16251,6 +16351,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskRecorderPutBack => 'Wieder aufnehmen';
+
+  @override
+  String get taskRecorderRecordATask => 'Eine Aufgabe aufzeichnen';
 
   @override
   String get taskRecorderRecordThisTask => 'Diese Aufgabe aufzeichnen';
@@ -16311,6 +16414,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskRecorderStop => 'Beenden';
+
+  @override
+  String get taskRecorderTargetUnkeyed => 'ein unbenanntes Bedienelement';
 
   @override
   String get taskRecorderTitle => 'Aufgabenrekorder';
@@ -17252,6 +17358,31 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get visibilityTitle => 'Wer mich sieht';
+
+  @override
+  String get visitCancel => 'Diesen Besuch absagen';
+
+  @override
+  String get visitCancelFailed =>
+      'Der Besuch konnte nicht abgesagt werden. Nichts wurde geändert; versuchen Sie es erneut.';
+
+  @override
+  String get visitGuestNote => 'Gastbesuch — keine Mitgliedschaft';
+
+  @override
+  String get visitStatusCancelled => 'Abgesagt';
+
+  @override
+  String get visitStatusConfirmed => 'Bestätigt';
+
+  @override
+  String get visitStatusDeclined => 'Abgelehnt';
+
+  @override
+  String get visitStatusExpired => 'Abgelaufen';
+
+  @override
+  String get visitStatusRequested => 'Angefragt';
 
   @override
   String whatTheyCanDoTitle(String name) {

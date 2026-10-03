@@ -64,6 +64,8 @@ public.expense_schedules.mcp_delegated_deny
 public.fee_bands.fee_bands_select
 public.fee_bands.fee_bands_write
 public.fee_bands.mcp_delegated_deny
+public.guest_participation_audit.mcp_delegated_deny
+public.guest_participations.mcp_delegated_deny
 public.identity_authority.identity_public_authority
 public.identity_authority.mcp_delegated_deny
 public.identity_bindings.mcp_delegated_deny

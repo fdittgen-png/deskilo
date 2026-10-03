@@ -65,6 +65,7 @@ import '../../../task_recorder/application/booking_observation.dart'
 import '../../../task_recorder/domain/action_registry.dart'
     show RecorderActions;
 import '../../../task_recorder/presentation/recorder_seam.dart';
+import '../widgets/pending_booking_banner.dart';
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
 /// these as part of the visual/behavioural contract, not free-floating
@@ -793,6 +794,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const PendingBookingBanner(), // #1855 — nothing unless an answer is owed
           MotionReveal(
             child: dayOpen
                 ? const SizedBox.shrink(

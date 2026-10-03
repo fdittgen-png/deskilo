@@ -18,9 +18,18 @@ sealed class RouteTreatment {
   const RouteTreatment();
 }
 
-/// Recorded by the screen's own seams, or the recorder itself.
+/// Recorded by the screen's own seams (and the generic layer).
 final class Instrumented extends RouteTreatment {
-  const Instrumented();
+  const Instrumented({this.selfOpening = false});
+
+  /// #2142 — the screen notes its own opening, so the generic layer
+  /// does not note it again.
+  final bool selfOpening;
+}
+
+/// #2142 — the recorder's own screens: nothing on them is ever noted.
+final class RecorderScreen extends RouteTreatment {
+  const RecorderScreen();
 }
 
 /// Contents never recorded; one marker of [category].
@@ -47,8 +56,8 @@ RouteTreatment treatRoute(String path) {
   for (final row in routeCoverage) {
     if (!row.matches(path)) continue;
     return switch (row.status) {
-      CoverageStatus.recorded ||
-      CoverageStatus.recorder => const Instrumented(),
+      CoverageStatus.recorded => Instrumented(selfOpening: row.selfOpening),
+      CoverageStatus.recorder => const RecorderScreen(),
       CoverageStatus.excluded => Protected(row.category!),
       CoverageStatus.planned => const Unrecorded(),
     };

@@ -1994,6 +1994,68 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa prenotazione è interamente nel passato.';
 
   @override
+  String get bookingRecoveryBanner =>
+      'Una tua richiesta di prenotazione è ancora senza risposta.';
+
+  @override
+  String get bookingRecoveryBannerAction => 'Verifica';
+
+  @override
+  String get bookingRecoveryCheck => 'Verifica l\'esito';
+
+  @override
+  String get bookingRecoveryCommitted =>
+      'La prenotazione esiste: esattamente una, dalla tua richiesta originale.';
+
+  @override
+  String get bookingRecoveryDiscard => 'Lascia andare';
+
+  @override
+  String get bookingRecoveryInProgress =>
+      'Il server sta ancora elaborando questa richiesta. Verifica di nuovo tra un istante.';
+
+  @override
+  String get bookingRecoveryNotCommitted =>
+      'Nulla è stato prenotato per questa richiesta. Puoi riprenderla com\'era o lasciarla andare.';
+
+  @override
+  String get bookingRecoveryNotSaved =>
+      'Questo dispositivo non ha potuto salvare la richiesta di prenotazione, quindi nulla è stato inviato. Libera spazio o riprova.';
+
+  @override
+  String get bookingRecoveryResume => 'Riprendi la stessa richiesta';
+
+  @override
+  String get bookingRecoveryResumed =>
+      'Ripresa: la tua richiesta originale è stata prenotata una sola volta.';
+
+  @override
+  String get bookingRecoverySpaceFallback => 'Lo spazio scelto';
+
+  @override
+  String get bookingRecoveryTitle => 'La tua richiesta di prenotazione';
+
+  @override
+  String get bookingRecoveryUnavailable =>
+      'Impossibile interrogare il server. Nulla è cambiato; riprova.';
+
+  @override
+  String get bookingRecoveryUnknown =>
+      'La connessione si è interrotta dopo l\'invio della richiesta. La prenotazione potrebbe esistere o no: verifica prima di prenotare di nuovo.';
+
+  @override
+  String get bookingRecoveryUnresolved =>
+      'Il server non conserva più traccia di questa richiesta e non può dirlo. Controlla le tue prenotazioni prima di prenotare di nuovo.';
+
+  @override
+  String get bookingRecoveryView => 'Vedi la prenotazione';
+
+  @override
+  String bookingRecoveryWindow(String space, String from, String to) {
+    return '$space · $from – $to';
+  }
+
+  @override
   String bookingReservedSpaceWhen(String space, String when) {
     return '$space prenotato: $when.';
   }
@@ -4675,6 +4737,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureFormHelpHintsTitle => 'Suggerimenti di aiuto';
+
+  @override
+  String get featureGuestParticipationDesc =>
+      'Permette a una persona che non è membro di chiedere di visitare questo spazio, e a chi gestisce le prenotazioni di ammetterla o rifiutarla. Una visita non crea iscrizione, abbonamento né ruolo. Disattivato: nessuno chiede né viene ammesso qui.';
+
+  @override
+  String get featureGuestParticipationTitle => 'Visite degli ospiti';
 
   @override
   String get featureHeldBack =>
@@ -10750,6 +10819,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get myBadgeTitle => 'Il mio badge';
 
   @override
+  String get myVisitsHelp =>
+      'Le visite che hai chiesto o a cui sei stato ammesso come ospite. Una visita non è un\'iscrizione.';
+
+  @override
+  String get myVisitsTitle => 'Le mie visite';
+
+  @override
   String get navigationClassic =>
       'Classica: la barra inferiore e il pulsante rotondo';
 
@@ -16069,6 +16145,24 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderActionSwitchView => 'Ha cambiato vista';
 
   @override
+  String get taskRecorderActionUiCloseWindow => 'Ha chiuso una finestra';
+
+  @override
+  String get taskRecorderActionUiCommand => 'Ha eseguito un comando';
+
+  @override
+  String get taskRecorderActionUiCommitField => 'Ha compilato un campo';
+
+  @override
+  String get taskRecorderActionUiOpenScreen => 'Ha aperto una schermata';
+
+  @override
+  String get taskRecorderActionUiOpenWindow => 'Ha aperto una finestra';
+
+  @override
+  String get taskRecorderActionUiTap => 'Ha toccato';
+
+  @override
   String get taskRecorderActionViewDetails => 'Ha aperto la prenotazione';
 
   @override
@@ -16188,6 +16282,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderOutcomeCheckedOut => 'Check-out registrato';
 
   @override
+  String get taskRecorderOutcomeCommandDone => 'Fatto';
+
+  @override
+  String get taskRecorderOutcomeCommandPending => 'Inviato per la convalida';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Prenotato';
 
   @override
@@ -16237,6 +16337,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderPutBack => 'Reinserisci';
+
+  @override
+  String get taskRecorderRecordATask => 'Registra un\'attività';
 
   @override
   String get taskRecorderRecordThisTask => 'Registra questa attività';
@@ -16295,6 +16398,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderStop => 'Ferma';
+
+  @override
+  String get taskRecorderTargetUnkeyed => 'un comando senza nome';
 
   @override
   String get taskRecorderTitle => 'Registratore di attività';
@@ -17240,6 +17346,31 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get visibilityTitle => 'Chi mi vede';
+
+  @override
+  String get visitCancel => 'Annulla questa visita';
+
+  @override
+  String get visitCancelFailed =>
+      'Impossibile annullare la visita. Nulla è cambiato; riprova.';
+
+  @override
+  String get visitGuestNote => 'Visita da ospite — non un\'iscrizione';
+
+  @override
+  String get visitStatusCancelled => 'Annullata';
+
+  @override
+  String get visitStatusConfirmed => 'Confermata';
+
+  @override
+  String get visitStatusDeclined => 'Rifiutata';
+
+  @override
+  String get visitStatusExpired => 'Scaduta';
+
+  @override
+  String get visitStatusRequested => 'Richiesta';
 
   @override
   String whatTheyCanDoTitle(String name) {

@@ -1,0 +1,51 @@
+{
+  "@@locale": "fr",
+  "featureGuestParticipationTitle": "Visites d'invités",
+  "@featureGuestParticipationTitle": {
+    "description": "#1835 guest participation: the feature's name"
+  },
+  "featureGuestParticipationDesc": "Permet à une personne qui n'est pas membre de demander à visiter cet espace, et à quelqu'un qui gère les réservations de l'admettre ou de refuser. Une visite ne crée ni adhésion, ni abonnement, ni rôle. Désactivé : personne ne demande ni n'est admis ici.",
+  "@featureGuestParticipationDesc": {
+    "description": "#1835 guest participation: the feature's description"
+  },
+  "myVisitsTitle": "Mes visites",
+  "@myVisitsTitle": {
+    "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
+  "myVisitsHelp": "Les visites que vous avez demandées ou auxquelles vous avez été admis, en tant qu'invité. Une visite n'est pas une adhésion.",
+  "@myVisitsHelp": {
+    "description": "#1835 Me › Home: under the My visits heading"
+  },
+  "visitGuestNote": "Visite d'invité — pas une adhésion",
+  "@visitGuestNote": {
+    "description": "#1835 a visit row: the one line that keeps visit and membership apart"
+  },
+  "visitStatusRequested": "Demandée",
+  "@visitStatusRequested": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusConfirmed": "Confirmée",
+  "@visitStatusConfirmed": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusDeclined": "Refusée",
+  "@visitStatusDeclined": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusCancelled": "Annulée",
+  "@visitStatusCancelled": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusExpired": "Expirée",
+  "@visitStatusExpired": {
+    "description": "#1835 visit status"
+  },
+  "visitCancel": "Annuler cette visite",
+  "@visitCancel": {
+    "description": "#1835 a visit row: the guest withdraws or cancels"
+  },
+  "visitCancelFailed": "Impossible d'annuler la visite. Rien n'a changé ; réessayez.",
+  "@visitCancelFailed": {
+    "description": "#1835 a visit row: the cancel failed"
+  }
+}

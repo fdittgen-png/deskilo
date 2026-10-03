@@ -854,6 +854,12 @@
       "capabilities": []
     },
     {
+      "key": "guestParticipation",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "holidayImport",
       "maturity": "unreviewed",
       "lifecycle": "active",

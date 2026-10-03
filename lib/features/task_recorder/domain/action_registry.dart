@@ -21,9 +21,13 @@
 // #1867 (guided tasks) and #1872 (packages) read them from this file
 // rather than copying them.
 
+import 'ui_vocabulary.g.dart';
 import 'workspace_feature_keys.dart';
 
+export 'ui_vocabulary.g.dart';
 export 'workspace_feature_keys.dart';
+
+part 'registry_ui.dart';
 
 /// The version of the action/outcome contract below. Bumped when an
 /// identifier is removed or changes meaning; adding one does not bump it.
@@ -139,11 +143,16 @@ class ActionSpec {
     this.payloadFields = const <String>{},
     this.targets = const <String>{},
     this.outcomes = const <String>{},
+    this.softTargets = false,
   });
 
   final String id;
   final String surface;
   final ActionKind kind;
+
+  /// #2142 — a target this build does not know is dropped on reading,
+  /// not refused: the generic layer's names grow with the source.
+  final bool softTargets;
   final int version;
 
   /// The safe payload fields (safe_payload.dart) this action may carry.
@@ -276,6 +285,9 @@ abstract final class RecorderSurfaces {
   /// #1884 A — the workspace's feature switches.
   static const workspaceFeatures = 'workspace.features';
   static const recorderControls = 'recorder.controls';
+
+  /// #2142 — any screen, through the generic layer.
+  static const anyScreen = 'ui.any';
 }
 
 /// Action identifiers, so call sites do not spell strings.
@@ -299,6 +311,14 @@ abstract final class RecorderActions {
   static const cancelReservation = 'reservations.cancel_reservation';
   static const closeMyReservation = 'reservations.close_my_reservation';
 
+  // #2142 — the generic layer, on any screen.
+  static const uiOpenScreen = 'ui.open_screen';
+  static const uiTap = 'ui.tap';
+  static const uiCommitField = 'ui.commit_field';
+  static const uiCommand = 'ui.command';
+  static const uiOpenWindow = 'ui.open_window';
+  static const uiCloseWindow = 'ui.close_window';
+
   // #1884 A — management forms.
   static const switchFeature = 'workspace.switch_feature';
   static const declineOptIn = 'workspace.decline_opt_in';
@@ -318,6 +338,12 @@ abstract final class RecorderOutcomes {
   static const cancelled = 'reservation.cancelled';
   static const reservationRefused = 'reservation.refused';
   static const reservationUnknown = 'reservation.unknown';
+
+  // #2142 — a guarded command's real result.
+  static const commandDone = 'command.done';
+  static const commandPending = 'command.pending';
+  static const commandRefused = 'command.refused';
+  static const commandUnknown = 'command.unknown';
 
   // #1884 A — a setting's save.
   static const settingSaved = 'setting.saved';
@@ -345,6 +371,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
     RecorderSurface(RecorderSurfaces.myReservation),
     RecorderSurface(RecorderSurfaces.workspaceFeatures),
     RecorderSurface(RecorderSurfaces.recorderControls, recorderControl: true),
+    RecorderSurface(RecorderSurfaces.anyScreen),
     RecorderSurface('navigation.any'),
   ],
   actions: [
@@ -462,6 +489,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       surface: RecorderSurfaces.workspaceFeatures,
       kind: ActionKind.cancel,
     ),
+    ..._uiActions,
     ActionSpec(
       RecorderActions.recorderControl,
       surface: RecorderSurfaces.recorderControls,
@@ -517,6 +545,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       RecorderOutcomes.settingUnknown,
       state: ObservationState.outcomeUnknown,
     ),
+    ..._uiOutcomes,
   ],
   prerequisites: [
     PrerequisiteSpec('signed_in'),

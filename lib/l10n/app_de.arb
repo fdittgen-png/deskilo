@@ -1015,6 +1015,85 @@
   "bookingOutsideWalkUpError": "Außerhalb der Öffnungszeiten ist nur ein spontaner Check-in möglich — keine Vorausbuchung.",
   "bookingOverlapsAnother": "Der Platz ist in einem Teil dieser Zeit bereits gebucht.",
   "bookingPastError": "Diese Buchung liegt vollständig in der Vergangenheit.",
+  "bookingRecoveryBanner": "Eine Ihrer Buchungsanfragen ist noch unbeantwortet.",
+  "@bookingRecoveryBanner": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryBannerAction": "Prüfen",
+  "@bookingRecoveryBannerAction": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryCheck": "Ergebnis prüfen",
+  "@bookingRecoveryCheck": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryCommitted": "Die Buchung existiert – genau eine, aus Ihrer ursprünglichen Anfrage.",
+  "@bookingRecoveryCommitted": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryDiscard": "Verwerfen",
+  "@bookingRecoveryDiscard": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryInProgress": "Der Server bearbeitet diese Anfrage noch. Prüfen Sie es gleich noch einmal.",
+  "@bookingRecoveryInProgress": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryNotCommitted": "Für diese Anfrage wurde nichts gebucht. Sie können sie unverändert fortsetzen oder verwerfen.",
+  "@bookingRecoveryNotCommitted": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryNotSaved": "Dieses Gerät konnte Ihre Buchungsanfrage nicht speichern; es wurde nichts gesendet. Schaffen Sie Platz oder versuchen Sie es erneut.",
+  "@bookingRecoveryNotSaved": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryResume": "Dieselbe Anfrage fortsetzen",
+  "@bookingRecoveryResume": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryResumed": "Fortgesetzt: Ihre ursprüngliche Anfrage wurde einmal gebucht.",
+  "@bookingRecoveryResumed": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoverySpaceFallback": "Der gewählte Platz",
+  "@bookingRecoverySpaceFallback": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryTitle": "Ihre Buchungsanfrage",
+  "@bookingRecoveryTitle": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnavailable": "Der Server konnte nicht gefragt werden. Nichts wurde geändert; versuchen Sie es erneut.",
+  "@bookingRecoveryUnavailable": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnknown": "Die Verbindung brach ab, nachdem Ihre Anfrage gesendet wurde. Die Buchung existiert vielleicht, vielleicht nicht – prüfen Sie es, bevor Sie erneut buchen.",
+  "@bookingRecoveryUnknown": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnresolved": "Der Server bewahrt zu dieser Anfrage nichts mehr auf und kann nichts sagen. Prüfen Sie Ihre Buchungen, bevor Sie erneut buchen.",
+  "@bookingRecoveryUnresolved": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryView": "Buchung ansehen",
+  "@bookingRecoveryView": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryWindow": "{space} · {from} – {to}",
+  "@bookingRecoveryWindow": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "bookingReservedSpaceWhen": "{space} reserviert: {when}.",
   "@bookingReservedSpaceWhen": {
     "description": "#663 - reservation confirmation naming the space",
@@ -2990,6 +3069,14 @@
   "featureFinanceFacesTitle": "Finanzen in vier Ansichten",
   "featureFormHelpHintsDesc": "Ein ausblendbares Tipp-Karussell auf jedem Hauptbildschirm und ein kleines ? neben jedem Parameter und Eingabefeld — ein Tipp öffnet das Handbuch am richtigen Abschnitt. In den Einstellungen wiederherstellbar.",
   "featureFormHelpHintsTitle": "Hilfe-Hinweise",
+  "featureGuestParticipationDesc": "Erlaubt einer Person, die kein Mitglied ist, um einen Besuch dieses Spaces zu bitten, und jemandem, der Reservierungen verwaltet, sie zuzulassen oder abzulehnen. Ein Besuch erzeugt weder Mitgliedschaft noch Abonnement noch Rolle. Aus: niemand fragt an oder wird hier zugelassen.",
+  "@featureGuestParticipationDesc": {
+    "description": "#1835 guest participation: the feature's description"
+  },
+  "featureGuestParticipationTitle": "Gastbesuche",
+  "@featureGuestParticipationTitle": {
+    "description": "#1835 guest participation: the feature's name"
+  },
   "featureHeldBack": "Wartet auf die Funktion darüber — schalte sie ein, dann wirkt auch diese wieder.",
   "featureHolidayImportDesc": "Ein Eigentümer importiert die Feiertage des Landes und einer Region aus einer Open-Data-Quelle, wählt die Tage ab, an denen der Raum geöffnet bleibt, und importiert die übrigen als Schließtage. Bereits abgerechnete Monate werden übersprungen und genannt.",
   "@featureHolidayImportDesc": {
@@ -6267,6 +6354,14 @@
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mein Badge",
+  "myVisitsHelp": "Besuche, die Sie als Gast angefragt haben oder zu denen Sie zugelassen wurden. Ein Besuch ist keine Mitgliedschaft.",
+  "@myVisitsHelp": {
+    "description": "#1835 Me › Home: under the My visits heading"
+  },
+  "myVisitsTitle": "Meine Besuche",
+  "@myVisitsTitle": {
+    "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
   "navigationClassic": "Klassisch: die untere Leiste und der runde Knopf",
   "@navigationClassic": {
     "description": "#969 navigation style: navigationClassic"
@@ -9803,6 +9898,12 @@
   "taskRecorderActionSelectResource": "Einen Platz gewählt",
   "taskRecorderActionSwitchFeature": "Eine Funktion umgeschaltet",
   "taskRecorderActionSwitchView": "Die Ansicht gewechselt",
+  "taskRecorderActionUiCloseWindow": "Ein Fenster geschlossen",
+  "taskRecorderActionUiCommand": "Einen Befehl ausgeführt",
+  "taskRecorderActionUiCommitField": "Ein Feld ausgefüllt",
+  "taskRecorderActionUiOpenScreen": "Einen Bildschirm geöffnet",
+  "taskRecorderActionUiOpenWindow": "Ein Fenster geöffnet",
+  "taskRecorderActionUiTap": "Getippt",
   "taskRecorderActionViewDetails": "Die Reservierung geöffnet",
   "taskRecorderAddNote": "Notiz hinzufügen",
   "taskRecorderCompletenessComplete": "Vollständig",
@@ -9838,6 +9939,8 @@
   "taskRecorderOutcomeCancelled": "Storniert",
   "taskRecorderOutcomeCheckedIn": "Eingecheckt",
   "taskRecorderOutcomeCheckedOut": "Ausgecheckt",
+  "taskRecorderOutcomeCommandDone": "Erledigt",
+  "taskRecorderOutcomeCommandPending": "Zur Freigabe gesendet",
   "taskRecorderOutcomeConfirmed": "Gebucht",
   "taskRecorderOutcomeRefused": "Abgelehnt",
   "taskRecorderOutcomeRequested": "Zur Bestätigung gesendet",
@@ -9855,6 +9958,7 @@
   "taskRecorderProtectedProvider": "Bildschirm eines Anbieters",
   "taskRecorderProtectedSecrets": "Schlüssel und Geheimnisse",
   "taskRecorderPutBack": "Wieder aufnehmen",
+  "taskRecorderRecordATask": "Eine Aufgabe aufzeichnen",
   "taskRecorderRecordThisTask": "Diese Aufgabe aufzeichnen",
   "taskRecorderRecording": "Aufzeichnung läuft",
   "taskRecorderResume": "Fortsetzen",
@@ -9871,6 +9975,7 @@
   "taskRecorderStepNote": "Ihre Notiz",
   "taskRecorderStepUnrecorded": "Ein Schritt, den der Rekorder nicht beschreiben kann",
   "taskRecorderStop": "Beenden",
+  "taskRecorderTargetUnkeyed": "ein unbenanntes Bedienelement",
   "taskRecorderTitle": "Aufgabenrekorder",
   "taskRecorderUnavailable": "Die Aufzeichnung ist in diesem Arbeitsbereich nicht eingeschaltet.",
   "taskRecorderUnreadable": "Diese Aufzeichnung ist nicht lesbar. Sie können sie löschen.",
@@ -10375,6 +10480,38 @@
   "visibilitySaveFailed": "Konnte nicht speichern, wer das sieht. Bitte versuche es erneut.",
   "visibilitySignedIn": "Alle Angemeldeten",
   "visibilityTitle": "Wer mich sieht",
+  "visitCancel": "Diesen Besuch absagen",
+  "@visitCancel": {
+    "description": "#1835 a visit row: the guest withdraws or cancels"
+  },
+  "visitCancelFailed": "Der Besuch konnte nicht abgesagt werden. Nichts wurde geändert; versuchen Sie es erneut.",
+  "@visitCancelFailed": {
+    "description": "#1835 a visit row: the cancel failed"
+  },
+  "visitGuestNote": "Gastbesuch — keine Mitgliedschaft",
+  "@visitGuestNote": {
+    "description": "#1835 a visit row: the one line that keeps visit and membership apart"
+  },
+  "visitStatusCancelled": "Abgesagt",
+  "@visitStatusCancelled": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusConfirmed": "Bestätigt",
+  "@visitStatusConfirmed": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusDeclined": "Abgelehnt",
+  "@visitStatusDeclined": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusExpired": "Abgelaufen",
+  "@visitStatusExpired": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusRequested": "Angefragt",
+  "@visitStatusRequested": {
+    "description": "#1835 visit status"
+  },
   "whatTheyCanDoTitle": "Was {name} hier tun kann",
   "@whatTheyCanDoTitle": {
     "description": "#2085 giving roles: whatTheyCanDoTitle",

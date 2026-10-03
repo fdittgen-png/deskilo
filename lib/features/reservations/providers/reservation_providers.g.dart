@@ -57,6 +57,165 @@ final class ReservationRepositoryProvider
 String _$reservationRepositoryHash() =>
     r'55f521658d95cec06053ca711f6d9e0e5a1c8712';
 
+/// #1855 — where a booking intent is valid: this account on this server.
+/// Read at use, never captured: a later login or server switch reads its
+/// own ledger. Tests and Demo override it with a fixed scope.
+
+@ProviderFor(bookingIntentScope)
+final bookingIntentScopeProvider = BookingIntentScopeProvider._();
+
+/// #1855 — where a booking intent is valid: this account on this server.
+/// Read at use, never captured: a later login or server switch reads its
+/// own ledger. Tests and Demo override it with a fixed scope.
+
+final class BookingIntentScopeProvider
+    extends
+        $FunctionalProvider<
+          BookingIntentScope,
+          BookingIntentScope,
+          BookingIntentScope
+        >
+    with $Provider<BookingIntentScope> {
+  /// #1855 — where a booking intent is valid: this account on this server.
+  /// Read at use, never captured: a later login or server switch reads its
+  /// own ledger. Tests and Demo override it with a fixed scope.
+  BookingIntentScopeProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'bookingIntentScopeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookingIntentScopeHash();
+
+  @$internal
+  @override
+  $ProviderElement<BookingIntentScope> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  BookingIntentScope create(Ref ref) {
+    return bookingIntentScope(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BookingIntentScope value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BookingIntentScope>(value),
+    );
+  }
+}
+
+String _$bookingIntentScopeHash() =>
+    r'927cffa1902d3d6ce89c97410b8f12cedeae2d73';
+
+/// #1855 — the interrupted-booking command: durable intent, own-result
+/// lookup, resume with the original request.
+
+@ProviderFor(bookingRecovery)
+final bookingRecoveryProvider = BookingRecoveryProvider._();
+
+/// #1855 — the interrupted-booking command: durable intent, own-result
+/// lookup, resume with the original request.
+
+final class BookingRecoveryProvider
+    extends
+        $FunctionalProvider<BookingRecovery, BookingRecovery, BookingRecovery>
+    with $Provider<BookingRecovery> {
+  /// #1855 — the interrupted-booking command: durable intent, own-result
+  /// lookup, resume with the original request.
+  BookingRecoveryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'bookingRecoveryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookingRecoveryHash();
+
+  @$internal
+  @override
+  $ProviderElement<BookingRecovery> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  BookingRecovery create(Ref ref) {
+    return bookingRecovery(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BookingRecovery value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BookingRecovery>(value),
+    );
+  }
+}
+
+String _$bookingRecoveryHash() => r'27ffee612c113864e24c245e72e152ff63113a4e';
+
+/// #1855 — the bookings this device confirmed in the active workspace
+/// whose answer it never read, oldest first. Empty is the normal state.
+
+@ProviderFor(unresolvedBookingIntents)
+final unresolvedBookingIntentsProvider = UnresolvedBookingIntentsProvider._();
+
+/// #1855 — the bookings this device confirmed in the active workspace
+/// whose answer it never read, oldest first. Empty is the normal state.
+
+final class UnresolvedBookingIntentsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<BookingIntent>>,
+          List<BookingIntent>,
+          FutureOr<List<BookingIntent>>
+        >
+    with
+        $FutureModifier<List<BookingIntent>>,
+        $FutureProvider<List<BookingIntent>> {
+  /// #1855 — the bookings this device confirmed in the active workspace
+  /// whose answer it never read, oldest first. Empty is the normal state.
+  UnresolvedBookingIntentsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'unresolvedBookingIntentsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$unresolvedBookingIntentsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<BookingIntent>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<BookingIntent>> create(Ref ref) {
+    return unresolvedBookingIntents(ref);
+  }
+}
+
+String _$unresolvedBookingIntentsHash() =>
+    r'abd0df3f661a79d4a93d004537bb4ec4d553234a';
+
 /// Reservations of the active workspace intersecting the given LOCAL day
 /// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock
 /// days, and a UTC window shifts the visible day east/west of UTC (#119).
