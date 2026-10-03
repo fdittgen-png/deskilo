@@ -42,6 +42,7 @@ class HelpArbiter extends _$HelpArbiter {
 
   /// A blocker with [id] is on screen; it outranks the guide and tips.
   void blockerShown(String id) {
+    if (!ref.mounted) return; // a deferred call may outlive its container
     if (state.blockers.contains(id)) return;
     state = HelpArbiterState(
       blockers: {...state.blockers, id},
@@ -50,6 +51,7 @@ class HelpArbiter extends _$HelpArbiter {
   }
 
   void blockerCleared(String id) {
+    if (!ref.mounted) return;
     if (!state.blockers.contains(id)) return;
     state = HelpArbiterState(
       blockers: {...state.blockers}..remove(id),
