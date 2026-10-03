@@ -232,12 +232,9 @@
   "featureOptInBody": "Non ancora valutata come stabile: {features}. Può cambiare e ha limiti noti. Attivala solo se questo spazio lo accetta.",
   "featureOptInConfirm": "Attiva",
   "featureIntakeStoppedNote": "Disattivato: non inizia nulla di nuovo; ciò che è già aperto può ancora essere gestito e chiuso.",
-<<<<<<< HEAD
   "featureOptInAlsoOn": "{count, plural, =1{Viene attivato anche, perché necessario: {features}} other{Vengono attivati anche, perché necessari ({count}): {features}}}",
   "featureOptInStage": "{feature}: {stage}",
   "featureChangedMeanwhile": "Le funzionalità sono cambiate nel frattempo, quindi non è stato salvato nulla. Controlla l'elenco e riprova.",
-  "featureChangeUnconfirmed": "La modifica è stata inviata, ma non è stato possibile ricaricare le funzionalità per confermarla. Riapri la schermata per vedere lo stato."
-=======
+  "featureChangeUnconfirmed": "La modifica è stata inviata, ma non è stato possibile ricaricare le funzionalità per confermarla. Riapri la schermata per vedere lo stato.",
   "featureIntakeUnconfirmedNote": "Disattivato: non inizia nulla di nuovo. Questo server non ha potuto confermare che ciò che è già aperto resti gestibile; non contarci."
->>>>>>> local/1851c
 }
