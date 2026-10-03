@@ -135,9 +135,10 @@ select 'AM_E=' || ((current_setting('race.day') || ' 12:00')::timestamp at time 
 select 'PM_S=' || ((current_setting('race.day') || ' 12:00')::timestamp at time zone 'Europe/Paris');
 select 'PM_E=' || ((current_setting('race.day') || ' 18:00')::timestamp at time zone 'Europe/Paris');
 -- #1631 — the day after, for the revoke races: a morning that gets booked
--- through MCP (5, replayed in 7) and an afternoon that must not (6).
-select 'MCP_S=' || (((current_setting('race.day')::date + 1) || ' 08:00')::timestamp at time zone 'Europe/Paris');
-select 'MCP_E=' || (((current_setting('race.day')::date + 1) || ' 12:00')::timestamp at time zone 'Europe/Paris');
-select 'BLK_S=' || (((current_setting('race.day')::date + 1) || ' 12:00')::timestamp at time zone 'Europe/Paris');
-select 'BLK_E=' || (((current_setting('race.day')::date + 1) || ' 18:00')::timestamp at time zone 'Europe/Paris');
+-- through MCP (5, replayed in 7) and an afternoon that must not (6). As
+-- ISO instants with a Z: mcp_time_arg refuses an offset without minutes.
+select 'MCP_S=' || to_char((((current_setting('race.day')::date + 1) || ' 08:00')::timestamp at time zone 'Europe/Paris') at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"');
+select 'MCP_E=' || to_char((((current_setting('race.day')::date + 1) || ' 12:00')::timestamp at time zone 'Europe/Paris') at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"');
+select 'BLK_S=' || to_char((((current_setting('race.day')::date + 1) || ' 12:00')::timestamp at time zone 'Europe/Paris') at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"');
+select 'BLK_E=' || to_char((((current_setting('race.day')::date + 1) || ' 18:00')::timestamp at time zone 'Europe/Paris') at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"');
 commit;
