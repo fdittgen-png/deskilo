@@ -45,7 +45,8 @@ update public.members set customer_capacity = 'consumer' where id = '00000000-00
 select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"B","street":"","city":""}}'),
   array[]::text[], 'a consumer does not');
 
--- The gate itself: the workspace has no postal address, the member no name.
+-- The gate itself: the workspace has no postal address. The owner issues.
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001917a1","role":"authenticated"}',true);
 select throws_ok($$select public.create_invoice('00000000-0000-4000-8000-0000001917b1',
     '00000000-0000-4000-8000-0000001917c2', '2020-01', null, false, 'full', true)$$,
   'DKI01', 'invoice_essentials_missing', 'create_invoice refuses before taking a number');
