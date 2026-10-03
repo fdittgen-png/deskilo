@@ -2,7 +2,7 @@
 --
 -- #2137 — a money permission given through a role works.
 --
--- The matrix for the three money doors 0362 opened: a member holding the
+-- The matrix for the three money doors 0359 opened: a member holding the
 -- permission only through one of the workspace's own roles acts for
 -- another member; the Administrator still does; a member without it is
 -- refused, though they still act for themselves; the owner still does.

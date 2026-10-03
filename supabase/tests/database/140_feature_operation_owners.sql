@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #1851 C: the remaining operation owners (0356). With each feature off,
+-- #1851 C: the remaining operation owners (0353). With each feature off,
 -- nothing NEW starts, and the work it already created can still be
 -- cleaned up by exactly the people who could before:
 --   * customRoles off: a custom role cannot be given, but can be taken back;

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2145 — the 0358 adapters reach exactly the RPCs the migration defines,
+// #2145 — the 0354 adapters reach exactly the RPCs the migration defines,
 // with its parameter names, and read the answers fail-safe: a status,
 // decider or source this build does not know is never approved or
-// published, and a server before 0358 (missing function) answers unknown
+// published, and a server before 0354 (missing function) answers unknown
 // rather than failing the page.
 import 'dart:convert';
 
@@ -100,7 +100,7 @@ void main() {
     );
   });
 
-  test('a server before 0358 answers unknown, not an error', () async {
+  test('a server before 0354 answers unknown, not an error', () async {
     final w = _wire(
       (_) => {'code': 'PGRST202', 'message': 'Could not find the function'},
       status: 404,

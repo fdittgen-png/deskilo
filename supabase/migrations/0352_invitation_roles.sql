@@ -173,4 +173,4 @@ create trigger members_invitation_roles
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(356);
+select public.set_deskilo_schema_version(352);

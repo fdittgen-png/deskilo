@@ -305,4 +305,4 @@ grant execute on function public.mcp_consent_options(text) to authenticated;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(359);
+select public.set_deskilo_schema_version(356);

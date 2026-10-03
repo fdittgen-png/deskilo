@@ -200,4 +200,4 @@ grant execute on function public.request_usage_record_delete(uuid, text)
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(362);
+select public.set_deskilo_schema_version(359);

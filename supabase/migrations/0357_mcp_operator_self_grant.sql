@@ -458,4 +458,4 @@ grant execute on function public.set_workspace_mcp_access(uuid, boolean, boolean
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(360);
+select public.set_deskilo_schema_version(357);

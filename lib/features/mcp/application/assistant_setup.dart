@@ -24,7 +24,7 @@ enum AssistantSetupStep {
   /// The person links their account to this database's identity.
   identity,
 
-  /// Someone with manageIntegrations turns `mcpAccess` on (0360
+  /// Someone with manageIntegrations turns `mcpAccess` on (0357
   /// `set_workspace_mcp_access`): each workspace for itself.
   workspace,
 

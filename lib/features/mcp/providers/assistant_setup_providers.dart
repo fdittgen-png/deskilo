@@ -49,7 +49,7 @@ Future<AssistantSetup> assistantSetup(Ref ref, McpContextRef context) async {
     policy: results.$3,
     connections: results.$4,
     featureOn: features.contains(WorkspaceFeature.mcpAccess),
-    // #2145 — 0360: whoever manages integrations switches mcpAccess here.
+    // #2145 — 0357: whoever manages integrations switches mcpAccess here.
     canConfigure: permissions.contains(WorkspacePermission.manageIntegrations),
     canManageIntegrations: permissions.contains(
       WorkspacePermission.manageIntegrations,
@@ -74,7 +74,7 @@ Future<ConsentOptions> myMcpConsentOptions(Ref ref) async {
   return commands.read(scope, (r) => r.connections.options());
 }
 
-/// #2145 — the 0358 onboarding RPCs: consent status, published endpoint,
+/// #2145 — the 0354 onboarding RPCs: consent status, published endpoint,
 /// installation notices.
 @Riverpod(keepAlive: true)
 McpOnboardingRepository mcpOnboardingRepository(Ref ref) =>

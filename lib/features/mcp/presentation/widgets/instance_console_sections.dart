@@ -4,7 +4,7 @@
 // #1827 B, so assistants can be set up entirely in the app: the
 // installation notices (an assistant waiting for approval, a grant), the
 // endpoint assistants are given and a check of the deployed server (Turn
-// on needs a fresh, deployed probe, 0360), and the operator's bounded
+// on needs a fresh, deployed probe, 0357), and the operator's bounded
 // approval of assistant access — themselves included while nobody else
 // can decide, with a reason and a length, shown as such afterwards.
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2145 — the server contracts behind "Connect an assistant" (0358):
+// #2145 — the server contracts behind "Connect an assistant" (0354):
 // what the consent page learns at load (the client's approval status, its
 // redirect host and who decides the first open step), the MCP endpoint the
 // installation publishes, and the installation notices the instance
@@ -163,7 +163,7 @@ enum EndpointProbeState {
   };
 }
 
-/// What the database saw when it called the deployed endpoint (0360):
+/// What the database saw when it called the deployed endpoint (0357):
 /// `deployed` only for 401 + `resource_metadata` and a metadata document
 /// naming the resource. Turn on needs a deployed probe under 15 minutes old.
 class EndpointProbe {
@@ -270,7 +270,7 @@ abstract interface class McpOnboardingRepository {
   Future<ConsentStatus> consentStatus(String authorizationId);
 
   /// The endpoint to give an assistant; unknown when the server predates
-  /// 0358 or the caller may not connect one here.
+  /// 0354 or the caller may not connect one here.
   Future<McpEndpointInfo> endpoint();
 
   /// The caller's installation notices, newest first.

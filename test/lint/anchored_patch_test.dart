@@ -29,18 +29,18 @@ import 'package:flutter_test/flutter_test.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
-  // #2145/0358 restates mcp_read_v1 whole. The LIVE dev body is 0275's
+  // #2145/0355 restates mcp_read_v1 whole. The LIVE dev body is 0275's
   // with 0345's one anchored change (free = mcp_seat_bookable(...) is
   // null), comments and blank lines aside; the new body keeps that verdict
   // and every other branch verbatim, and adds labels, the level/office
   // filters and an id-true cursor. pgTAP 144 drives availability paging,
   // the filters and the engine verdict.
-  'mcp_read_v1@0358',
-  // #2137/0361 restates create_invitation from the LIVE dev definition
+  'mcp_read_v1@0355',
+  // #2137/0358 restates create_invitation from the LIVE dev definition
   // (pg_get_functiondef), so every earlier anchored patch (environments,
   // handover, prod access) is carried; the one change is that a member
   // invitation also accepts manageMembers. pgTAP 146 drives it.
-  'create_invitation@0361',
+  'create_invitation@0358',
   // #1922/0334 restates sweep_payment_reminders and record_invoice_reminder
   // once more, from 0331's bodies (the live dev definitions): the row
   // lock, the feature gate and the shared invoice_dunning_state_core are

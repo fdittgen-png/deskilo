@@ -328,4 +328,4 @@ grant execute on function public.import_closure_days(uuid, jsonb, boolean)
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(361);
+select public.set_deskilo_schema_version(358);

@@ -72,7 +72,7 @@ class _ConnectAssistantScreenState
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final scope = ref.watch(currentMcpContextProvider);
-    // #2145 — the endpoint the installation publishes (0358), else the
+    // #2145 — the endpoint the installation publishes (0354), else the
     // one this app derives from its backend, as before.
     final published = ref.watch(mcpPublishedEndpointProvider).value?.resource;
     final url = published != null

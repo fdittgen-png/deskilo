@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2145 / 0359 (S2) — assistant clients are approved per family, by their
+-- #2145 / 0356 (S2) — assistant clients are approved per family, by their
 -- exact registered redirects, when a member of an mcpAccess workspace
 -- arrives with them; the approval is audited with the family. Lookalike
 -- hosts, longer paths, other schemes, mixed registrations and an

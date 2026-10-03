@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2145 — the consent page reads the client's approval first (0358). An
+// #2145 — the consent page reads the client's approval first (0354). An
 // assistant the operator has not approved never reaches Auth's
 // authorization API: the page names the cause, who decides (or "you", with
 // the console), where the answer would go, and offers Deny only. An

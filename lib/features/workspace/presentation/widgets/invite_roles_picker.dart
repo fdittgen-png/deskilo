@@ -5,7 +5,7 @@
 // Whoever invites a new member may choose which of the workspace's own
 // roles the person holds when they arrive. The roles are given by the
 // server when the membership becomes active (`set_invitation_roles`,
-// 0356), asking the inviter's authority again on that day. Here, a role
+// 0352), asking the inviter's authority again on that day. Here, a role
 // the inviter may not give is shown disabled, with the reason.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

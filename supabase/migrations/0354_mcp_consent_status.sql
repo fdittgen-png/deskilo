@@ -449,4 +449,4 @@ revoke execute on function public.operator_set_mcp_endpoint(text) from public, a
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(358);
+select public.set_deskilo_schema_version(354);

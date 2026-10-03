@@ -2,7 +2,7 @@
 --
 -- #2137 — a permission given through a role works, in the database.
 --
--- The matrix, for each door 0361 opened: a member who holds the
+-- The matrix, for each door 0358 opened: a member who holds the
 -- permission ONLY through one of the workspace's own roles succeeds; the
 -- built-in Administrator succeeds where the matrix gives it the
 -- permission; a member without it is refused; the owner still succeeds.

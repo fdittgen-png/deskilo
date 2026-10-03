@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2145 / 0358 (S1 + S5) — the consent page learns the real cause at load.
+-- #2145 / 0354 (S1 + S5) — the consent page learns the real cause at load.
 -- A dynamically registered assistant resolves to purpose `mcp` with the
 -- operator's decision as its status (approved, waiting, blocked); nothing
 -- is approved by it. The first arrival of a member of an mcpAccess
