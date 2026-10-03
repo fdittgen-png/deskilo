@@ -6,6 +6,9 @@
 // active identity binding), and the assistants' OAuth clients.
 // #2145 (0359) — each client's recognised family and redirect hosts, the
 // loopback switch and the published endpoint.
+// #2145 (0360) — the active grants (marking an operator's and a
+// self-grant), whether the operator may grant, the Google session and the
+// latest endpoint probe.
 
 import 'mcp_onboarding.dart';
 
@@ -71,6 +74,39 @@ class InstanceClient {
   );
 }
 
+/// An active assistant-access grant, as the console lists it.
+class InstanceEligibleUser {
+  const InstanceEligibleUser({
+    required this.userId,
+    required this.name,
+    this.expiresAt,
+    this.grantedByOperator = false,
+    this.selfGrant = false,
+    this.me = false,
+  });
+
+  final String userId;
+  final String name;
+  final DateTime? expiresAt;
+
+  /// Granted by the instance operator (S3), not a database administrator.
+  final bool grantedByOperator;
+
+  /// The operator granted themselves: "Self-approved by operator".
+  final bool selfGrant;
+  final bool me;
+
+  factory InstanceEligibleUser.fromJson(Map<String, dynamic> j) =>
+      InstanceEligibleUser(
+        userId: j['user_id'] as String,
+        name: j['name'] as String? ?? '',
+        expiresAt: DateTime.tryParse(j['expires_at'] as String? ?? ''),
+        grantedByOperator: j['granted_by'] == 'operator',
+        selfGrant: j['self_grant'] == true,
+        me: j['me'] == true,
+      );
+}
+
 class InstanceMcpOverview {
   const InstanceMcpOverview({
     required this.enabled,
@@ -81,6 +117,10 @@ class InstanceMcpOverview {
     required this.clients,
     this.allowLoopbackClients = false,
     this.endpoint = const McpEndpointInfo(source: McpEndpointSource.unknown),
+    this.endpointProbe = EndpointProbe.missing,
+    this.eligibleUsers = const [],
+    this.operatorGrantAvailable = false,
+    this.googleSession = false,
   });
 
   final bool enabled;
@@ -97,6 +137,17 @@ class InstanceMcpOverview {
 
   /// The endpoint assistants are given.
   final McpEndpointInfo endpoint;
+
+  /// The latest probe of the deployed endpoint; Turn on needs a fresh,
+  /// deployed one.
+  final EndpointProbe endpointProbe;
+  final List<InstanceEligibleUser> eligibleUsers;
+
+  /// No other database administrator exists, so the operator may grant.
+  final bool operatorGrantAvailable;
+
+  /// This session was opened with Google, which a grant needs.
+  final bool googleSession;
 
   bool get ready => blockers.isEmpty;
 
@@ -116,6 +167,14 @@ class InstanceMcpOverview {
       clients: rows('clients').map(InstanceClient.fromJson).toList(),
       allowLoopbackClients: j['allow_loopback_clients'] == true,
       endpoint: McpEndpointInfo.fromJson(j['endpoint']),
+      endpointProbe: j['endpoint_probe'] == null
+          ? EndpointProbe.missing
+          : EndpointProbe.fromJson(j['endpoint_probe']),
+      eligibleUsers: rows('eligible_users')
+          .map(InstanceEligibleUser.fromJson)
+          .toList(),
+      operatorGrantAvailable: j['operator_grant_available'] == true,
+      googleSession: j['google_session'] == true,
     );
   }
 }

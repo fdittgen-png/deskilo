@@ -198,4 +198,85 @@ void main() {
     expect(older.allowLoopbackClients, isFalse);
     expect(older.endpoint.resource, isNull);
   });
+
+  test(
+    'probe, check, grant and the workspace switch reach their RPCs',
+    () async {
+      final w = _wire(
+        (rpc) => switch (rpc) {
+          'instance_probe_mcp_endpoint' => {'state': 'pending'},
+          'instance_mcp_endpoint_check' => {
+            'state': 'endpoint_not_deployed',
+            'reason': 'challenge_404',
+          },
+          'instance_grant_mcp_eligibility' => {
+            'status': 'granted',
+            'self_grant': true,
+            'expires_at': '2026-11-02T10:00:00Z',
+          },
+          _ => {'workspace_id': 'w-1', 'mcp_access': true, 'unchanged': false},
+        },
+      );
+      final repo = SupabaseMcpOnboardingRepository(w.client);
+      expect((await repo.probeEndpoint()).state, EndpointProbeState.pending);
+      final check = await repo.checkEndpoint();
+      expect(check.state, EndpointProbeState.endpointNotDeployed);
+      expect(check.reason, 'challenge_404');
+      expect(
+        await repo.grantEligibility(subjectId: 'u-1', reason: 'solo', days: 30),
+        DateTime.utc(2026, 11, 2, 10),
+      );
+      expect(
+        await repo.setWorkspaceMcpAccess('w-1', enabled: true, expected: false),
+        isTrue,
+      );
+      expect(w.calls[2].$2, {
+        'p_subject': 'u-1',
+        'p_reason': 'solo',
+        'p_days': 30,
+      });
+      expect(w.calls[3].$2, {
+        'p_workspace_id': 'w-1',
+        'p_enabled': true,
+        'p_expected': false,
+      });
+    },
+  );
+
+  test('the overview reads grants, the probe and the grant availability', () {
+    final o = InstanceMcpOverview.fromJson({
+      'enabled': false,
+      'google_session': true,
+      'operator_grant_available': true,
+      'endpoint_probe': {
+        'state': 'deployed',
+        'fresh': true,
+        'published_resource': 'https://x.example/deskilo-mcp',
+      },
+      'eligible_users': [
+        {
+          'user_id': 'u-1',
+          'name': 'Olga',
+          'expires_at': '2026-11-02T10:00:00Z',
+          'granted_by': 'operator',
+          'self_grant': true,
+          'me': true,
+        },
+      ],
+    });
+    expect(o.googleSession, isTrue);
+    expect(o.operatorGrantAvailable, isTrue);
+    expect(o.endpointProbe.state, EndpointProbeState.deployed);
+    expect(o.endpointProbe.fresh, isTrue);
+    expect(o.eligibleUsers.single.selfGrant, isTrue);
+    expect(o.eligibleUsers.single.grantedByOperator, isTrue);
+    expect(
+      EndpointProbe.fromJson({'state': 'teapot'}).state,
+      EndpointProbeState.unknown,
+    );
+    expect(
+      InstanceMcpOverview.fromJson({}).endpointProbe.state,
+      EndpointProbeState.missing,
+    );
+  });
 }
