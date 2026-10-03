@@ -8798,6 +8798,12 @@
   "taskExportStoryboardGap": "Hueco: aquí no se grabó nada",
   "taskExportStoryboardRenderFailed": "No se pudo dibujar la ilustración; este paso queda como texto.",
   "taskExportStoryboardOrderRefused": "Un resultado no puede ir antes de la orden a la que responde.",
+  "taskExportIncludeIllustrations": "Incluir las ilustraciones aprobadas",
+  "taskExportStoryboardLeftOut": "Paso omitido en la revisión.",
+  "taskExportIllustrationNotApproved": "Ilustración no incluida: no se aprobó.",
+  "taskExportLimitRecreated": "Las ilustraciones se recrean a partir de los datos seguros de la grabación, con nombres de puestos inventados; no son capturas de la pantalla.",
+  "taskExportStale": "El guion gráfico corresponde a otra versión de esta grabación. Revíselo antes de exportar.",
+  "taskExportWordButton": "Exportar como documento de Word",
   "featureTaskRecorderTitle": "Grabador de tareas",
   "@featureTaskRecorderTitle": {
     "description": "#1865 task recorder: the feature's name"

@@ -57,4 +57,4 @@ final class TaskDocxExporterProvider
   }
 }
 
-String _$taskDocxExporterHash() => r'f4674ecf304d801227db97623615c5619273dea8';
+String _$taskDocxExporterHash() => r'20ddc4103cfdb928c82567a9f567f6c432d7428d';

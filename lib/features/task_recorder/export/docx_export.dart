@@ -5,20 +5,26 @@
 // The review screen (and, through #1872, a recording file opened on a
 // device with no account) calls [TaskDocxExporter.save]. It builds the
 // document from the frozen recording, hands the bytes to the local
-// FileSaver and reports what really happened: saved (with the handle the
-// saver returned), refused (empty, too large, not a recording) or failed
-// (the save did not happen). The recording itself is never written, so
+// typed FileSaver and reports what really happened: saved (with the
+// saver's own account of where: a visible file, an app-private copy or a
+// browser download), refused (empty, too large, not a recording, a stale
+// storyboard) or failed (the save did not happen). The recording itself is never written, so
 // a refused or failed export leaves the source exactly as it was. No
 // network, account or business command is involved.
-import 'package:flutter/foundation.dart';
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../app/theme.dart';
 import '../../../core/files/file_names.dart';
 import '../../../core/files/file_saver.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
+import '../storyboard/storyboard.dart';
+import '../storyboard/storyboard_pictures.dart';
 import 'docx/docx_writer.dart';
 import 'task_document.dart';
 
@@ -31,8 +37,15 @@ Uint8List exportDocx(
   AppLocalizations l, {
   TaskDocumentOptions options = const TaskDocumentOptions(),
   RecordingLimits limits = const RecordingLimits(),
+  StoryboardPictures? illustrations,
 }) {
-  final doc = buildTaskDocument(recording, l, options: options, limits: limits);
+  final doc = buildTaskDocument(
+    recording,
+    l,
+    options: options,
+    limits: limits,
+    illustrations: illustrations,
+  );
   try {
     return buildDocx(doc);
   } on DocxException catch (e, st) {
@@ -60,11 +73,12 @@ sealed class TaskDocxResult {
   const TaskDocxResult();
 }
 
-/// Written by the saver; [handle] is what it returned.
+/// Handed to the saver, which says where it went.
 class TaskDocxSaved extends TaskDocxResult {
-  const TaskDocxSaved(this.handle, this.fileName);
+  const TaskDocxSaved(this.outcome, this.fileName);
 
-  final String handle;
+  /// What the saver achieved; never [SaveFailed].
+  final SaveOutcome outcome;
   final String fileName;
 }
 
@@ -84,17 +98,34 @@ class TaskDocxSaveFailed extends TaskDocxResult {
 class TaskDocxExporter {
   const TaskDocxExporter(this._save);
 
-  final FileSaver _save;
+  final TypedFileSaver _save;
 
   /// Exports [recording] and saves it.
   Future<TaskDocxResult> save(
     TaskRecording recording,
     AppLocalizations l, {
     TaskDocumentOptions options = const TaskDocumentOptions(),
+    Storyboard? storyboard,
+    ColorScheme? colors,
   }) async {
     final Uint8List bytes;
     try {
-      bytes = exportDocx(recording, l, options: options);
+      // The pictures are drawn from the storyboard revision frozen here;
+      // a later edit makes a new revision and cannot reach this export.
+      final illustrations = storyboard == null
+          ? null
+          : await renderApprovedPictures(
+              storyboard,
+              colors:
+                  colors ?? DeskiloTheme.light(animations: false).colorScheme,
+              provenance: l.taskExportSceneProvenance,
+            );
+      bytes = exportDocx(
+        recording,
+        l,
+        options: options,
+        illustrations: illustrations,
+      );
     } on TaskExportException catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
@@ -106,10 +137,10 @@ class TaskDocxExporter {
     }
     final name = docxFileName(recording);
     try {
-      final handle = await _save(bytes: bytes, fileName: name);
-      return handle == null
+      final outcome = await _save(bytes: bytes, fileName: name);
+      return outcome is SaveFailed
           ? const TaskDocxSaveFailed()
-          : TaskDocxSaved(handle, name);
+          : TaskDocxSaved(outcome, name);
     } catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
@@ -140,4 +171,4 @@ class TaskDocxExporter {
 /// The Word exporter, over the app's local file saver.
 @riverpod
 TaskDocxExporter taskDocxExporter(Ref ref) =>
-    TaskDocxExporter(ref.watch(fileSaverProvider));
+    TaskDocxExporter(ref.watch(typedFileSaverProvider));

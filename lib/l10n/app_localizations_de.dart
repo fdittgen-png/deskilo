@@ -14228,6 +14228,29 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Ergebnis kann nicht vor dem Befehl stehen, den es beantwortet.';
 
   @override
+  String get taskExportIncludeIllustrations =>
+      'Freigegebene Abbildungen einfügen';
+
+  @override
+  String get taskExportStoryboardLeftOut =>
+      'Schritt bei der Prüfung weggelassen.';
+
+  @override
+  String get taskExportIllustrationNotApproved =>
+      'Abbildung nicht eingefügt: Sie wurde nicht freigegeben.';
+
+  @override
+  String get taskExportLimitRecreated =>
+      'Die Abbildungen sind aus den sicheren Fakten der Aufzeichnung mit erfundenen Platznamen nachgebildet; sie sind keine Bildschirmfotos.';
+
+  @override
+  String get taskExportStale =>
+      'Das Storyboard gehört zu einer anderen Version dieser Aufzeichnung. Prüfen Sie es vor dem Export erneut.';
+
+  @override
+  String get taskExportWordButton => 'Als Word-Dokument exportieren';
+
+  @override
   String get featureTaskRecorderTitle => 'Aufgabenrekorder';
 
   @override

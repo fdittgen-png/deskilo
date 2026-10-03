@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1872 — the generator hook: the workbench reads the registered outputs
-// through one provider (empty until #1866/#1876/#1879 register theirs),
+// through one provider (the registry #1866 and #1879 fill),
 // a generator answers availability by capability, and cancellation is
 // cooperative and observable.
 import 'dart:typed_data';
 
+import 'package:deskilo/features/task_recorder/export/output_registry.dart';
 import 'package:deskilo/features/task_recorder/package/task_output.dart';
 import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,10 +40,13 @@ class _Echo implements TaskOutputGenerator {
 }
 
 void main() {
-  test('no output is registered by default; a test can register one', () async {
+  test('the registry is the default; a test can register one', () async {
     final empty = ProviderContainer();
     addTearDown(empty.dispose);
-    expect(empty.read(taskOutputGeneratorsProvider), isEmpty);
+    expect(
+      empty.read(taskOutputGeneratorsProvider).map((g) => g.id),
+      taskOutputGeneratorList().map((g) => g.id),
+    );
 
     final c = ProviderContainer(
       overrides: [

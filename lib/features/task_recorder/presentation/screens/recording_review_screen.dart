@@ -13,19 +13,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/files/file_saver.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/stored_recording.dart';
 import '../../domain/recording_edit.dart';
 import '../../domain/task_recording.dart';
 import '../../domain/task_recording_codec.dart';
+import '../../export/docx_export.dart';
 import '../../package/task_package.dart';
 import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
 import '../recording_export.dart';
 import '../widgets/recording_steps_view.dart';
-import '../widgets/task_outputs_section.dart';
 
 class RecordingReviewScreen extends ConsumerStatefulWidget {
   const RecordingReviewScreen({super.key, required this.stored});
@@ -72,6 +74,28 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
       ),
       fileName: package ? '$stem$taskPackageExtension' : '$stem.json',
     );
+  }
+
+  /// #1866 — the same edited copy as a Word document; the saver's
+  /// answer is reported as it is, and a refusal saves nothing.
+  Future<void> _saveWord() async {
+    final l10n = AppLocalizations.of(context);
+    final export = _export;
+    if (export == null || l10n == null) return;
+    final result = await ref.read(taskDocxExporterProvider).save(export, l10n);
+    if (!mounted) return;
+    switch (result) {
+      case TaskDocxSaved(outcome: SavedFile(:final path)):
+        AppSnack.success(context, l10n.taskExportSaved(path));
+      case TaskDocxSaved(outcome: SavedPrivately(:final path)):
+        AppSnack.info(context, l10n.taskRecorderSavedPrivately(path));
+      case TaskDocxSaved():
+        AppSnack.info(context, l10n.taskRecorderSaveNoPath);
+      case TaskDocxRefused():
+        AppSnack.error(context, l10n.taskExportRefused);
+      case TaskDocxSaveFailed():
+        AppSnack.error(context, l10n.taskExportSaveFailed);
+    }
   }
 
   Future<void> _delete() async {
@@ -185,8 +209,15 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
                     l10n?.taskRecorderExportPackage ?? 'Export a task package',
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md),
-                TaskOutputsSection(recording: () => _export!),
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  key: const ValueKey('task-recording-export-word'),
+                  onPressed: _saveWord,
+                  icon: const Icon(Icons.description_outlined),
+                  label: Text(
+                    l10n?.taskExportWordButton ?? 'Export as Word document',
+                  ),
+                ),
               ],
             ),
     );

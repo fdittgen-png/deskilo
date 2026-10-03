@@ -14203,6 +14203,28 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un resultado no puede ir antes de la orden a la que responde.';
 
   @override
+  String get taskExportIncludeIllustrations =>
+      'Incluir las ilustraciones aprobadas';
+
+  @override
+  String get taskExportStoryboardLeftOut => 'Paso omitido en la revisión.';
+
+  @override
+  String get taskExportIllustrationNotApproved =>
+      'Ilustración no incluida: no se aprobó.';
+
+  @override
+  String get taskExportLimitRecreated =>
+      'Las ilustraciones se recrean a partir de los datos seguros de la grabación, con nombres de puestos inventados; no son capturas de la pantalla.';
+
+  @override
+  String get taskExportStale =>
+      'El guion gráfico corresponde a otra versión de esta grabación. Revíselo antes de exportar.';
+
+  @override
+  String get taskExportWordButton => 'Exportar como documento de Word';
+
+  @override
   String get featureTaskRecorderTitle => 'Grabador de tareas';
 
   @override

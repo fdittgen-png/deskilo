@@ -14248,6 +14248,29 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un résultat ne peut pas précéder la commande à laquelle il répond.';
 
   @override
+  String get taskExportIncludeIllustrations =>
+      'Inclure les illustrations approuvées';
+
+  @override
+  String get taskExportStoryboardLeftOut =>
+      'Étape écartée lors de la relecture.';
+
+  @override
+  String get taskExportIllustrationNotApproved =>
+      'Illustration non incluse : elle n\'a pas été approuvée.';
+
+  @override
+  String get taskExportLimitRecreated =>
+      'Les illustrations sont recréées à partir des faits sûrs de l\'enregistrement, avec des noms de places inventés ; ce ne sont pas des captures de l\'écran.';
+
+  @override
+  String get taskExportStale =>
+      'Le storyboard correspond à une autre version de cet enregistrement. Relisez-le avant d\'exporter.';
+
+  @override
+  String get taskExportWordButton => 'Exporter en document Word';
+
+  @override
   String get featureTaskRecorderTitle => 'Enregistreur de tâches';
 
   @override
