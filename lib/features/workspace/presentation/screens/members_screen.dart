@@ -66,9 +66,8 @@ class MembersScreen extends ConsumerWidget {
     final reportsOn = ref
         .read(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.memberReports);
-    final rolesOn = ref
-        .read(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.roleAssignment);
+    final rolesOn = ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.roleAssignment);
+    final staff = (ref.read(myMemberProvider).value?.canAdminister ?? false) || perms.contains(WorkspacePermission.manageReservations); // #2137 — the allowances (0364)
     final actions = <Widget>[
       if(isOwner||isSelf)MemberEmploymentTile(member:member.id,editable:isOwner),
       // #494 — the standing financial agreement, sent by owner/admin.
@@ -158,7 +157,7 @@ class MembersScreen extends ConsumerWidget {
           topic: membersTopic,
           onTap: () => pickMemberOveragePolicy(context, ref, member),
         ),
-      if (!isSelf && !member.isKiosk && active)
+      if (staff && !isSelf && !member.isKiosk && active)
         _sheetAction(
           context,
           icon: Icons.stacked_bar_chart_outlined,
@@ -168,7 +167,7 @@ class MembersScreen extends ConsumerWidget {
         ),
       // #628 — the explicit permission to hold OVERLAPPING bookings;
       // same authorization as the cap above, never for themselves.
-      if (!isSelf && !member.isKiosk && active)
+      if (staff && !isSelf && !member.isKiosk && active)
         _sheetAction(
           context,
           icon: Icons.splitscreen_outlined,
@@ -179,7 +178,7 @@ class MembersScreen extends ConsumerWidget {
         ),
       // Whole-level reservations (0050): grant/revoke — owner or admin,
       // never self (the reservation-limit rule), feature-gated.
-      if (levelBookingOn && !isSelf && !member.isKiosk && active)
+      if (staff && levelBookingOn && !isSelf && !member.isKiosk && active)
         _sheetAction(
           context,
           icon: member.canReserveLevel

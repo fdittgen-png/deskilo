@@ -11787,7 +11787,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permManageServices => 'Manage services & packages';
 
   @override
-  String get permManageSites => 'Manage sites and levels';
+  String get permManageSites => 'Manage sites and edit the floor plan';
 
   @override
   String get permManageValidation => 'Configure validation policies';

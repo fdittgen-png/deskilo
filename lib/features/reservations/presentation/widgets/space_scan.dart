@@ -619,7 +619,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
       SpaceKind.seat => null,
     };
     final granted = // owners/admins implicitly allowed since 0079 (#412)
-        (me?.canReserveLevel ?? false) || (me?.canAdminister ?? false);
+        (me?.canReserveLevel ?? false) || ref.read(actsForReservationsProvider);
     // #638 — the caller handed a roster: this actor may ASSIGN the space
     // even without holding the personal grant (an active co-owner who is
     // not flagged admin), exactly what the deleted level sheet allowed.

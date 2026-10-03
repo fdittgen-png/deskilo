@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "permManageSites": "Manage sites and levels",
+  "permManageSites": "Manage sites and edit the floor plan",
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },

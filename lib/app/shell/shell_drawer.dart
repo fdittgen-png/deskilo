@@ -167,7 +167,11 @@ class ShellDrawer extends ConsumerWidget {
       if (may(WorkspacePermission.manageConfiguration))
         _Entry('drawer-features', Icons.toggle_on_outlined,
             l10n?.featuresTitle ?? 'Features', () => go('/features')),
-      if (isOwner)
+      // #2137 — editing the plan is delegable through manageSites.
+      if (isOwner ||
+          ref
+              .watch(myPermissionsProvider)
+              .contains(WorkspacePermission.manageSites))
         _Entry('drawer-editor', Icons.design_services_outlined,
             l10n?.editorOpenTooltip ?? 'Edit workspace', () => go('/editor')),
     ];

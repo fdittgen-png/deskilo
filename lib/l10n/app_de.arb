@@ -6966,7 +6966,7 @@
   "@permManageServices": {
     "description": "Permission label (#513)"
   },
-  "permManageSites": "Standorte und Ebenen verwalten",
+  "permManageSites": "Standorte verwalten und den Grundriss bearbeiten",
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },

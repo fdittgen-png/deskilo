@@ -11867,7 +11867,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get permManageServices => 'Gestionar servicios y paquetes';
 
   @override
-  String get permManageSites => 'Gestionar sedes y plantas';
+  String get permManageSites => 'Gestionar sedes y editar el plano';
 
   @override
   String get permManageValidation => 'Configurar reglas de validación';

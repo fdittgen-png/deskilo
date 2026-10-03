@@ -40,7 +40,8 @@ Future<void> _openOthersBooking(
       windowOpen: windowOpen,
     );
   }
-  final canOverrule = ref.read(myMemberProvider).value?.canAdminister ?? false;
+  // #2137 — or a member holding manageReservations through a role.
+  final canOverrule = ref.read(actsForReservationsProvider);
   // #814 — admins may END a running check-in where the owner's
   // `admin_check_out` policy allows it (gate on).
   final offerCheckOut =
