@@ -50,12 +50,6 @@
       "requires": [],
       "baseline": true
     },
-    "publication.page.reset": {
-      "surface": "management",
-      "versions": null,
-      "requires": null,
-      "baseline": false
-    },
     "publication.page.save": {
       "surface": "management",
       "versions": [
@@ -63,6 +57,12 @@
       ],
       "requires": [],
       "baseline": true
+    },
+    "publication.page.reset": {
+      "surface": "management",
+      "versions": null,
+      "requires": null,
+      "baseline": false
     },
     "directory.sources.register": {
       "surface": "participant",
@@ -218,11 +218,11 @@
   ],
   "hashes": {
     "sources": {
-      "contracts/public_network/operations.json": "b5b68fcee954ce0b659fd12b243ff27656b237d22568c70ee05cb1238b9be414",
+      "contracts/public_network/operations.json": "cc86cc3061ba7051408aa462a13de468b5f8e217ae4d71223ecb9982ba53b1d8",
       "contracts/public_network/support.json": "8457a89593641d6ef7fe028be57520f5884deb49ca28d69ba265f54b1cf85585"
     },
     "artifacts": {
-      "lib/core/public_network/public_network_operations.dart": "5c3e70496ec017e2a39ed5ddffb8cfc117690018c21c6d2a3abdded95cb7f147",
+      "lib/core/public_network/public_network_operations.dart": "ed06b606a8331aeb09359fbf11bc4de569d2f2c67d7be9567162e21d64cc17cc",
       "public_network_descriptor()": "a241bc44f17f7029f49195b02412d5142de31e1522037aa5fdf97a030891ea55"
     },
     "evidence": {

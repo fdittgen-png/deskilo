@@ -168,11 +168,10 @@
       }
     },
     "PublicationInput": {
-      "description": "What the owner may write. Exactly the keys save_workspace_public_page accepts; every value is a string.",
+      "description": "What the owner may write. Exactly the keys save_workspace_public_page accepts; every value is a string. An inherited field (host_type, address) that is absent follows the workspace's own information (#2086); a present one, even blank, overrides it.",
       "fields": {
         "host_type": {
           "type": "enum",
-          "required": true,
           "values": [
             "association",
             "company",
@@ -271,7 +270,7 @@
       }
     },
     "PublicationPage": {
-      "description": "Whether the page is published, and its draft.",
+      "description": "Whether the page is published, its draft with every inherited field resolved, and which inherited fields follow the workspace information.",
       "fields": {
         "published": {
           "type": "boolean",
@@ -281,6 +280,21 @@
           "type": "object",
           "schema": "PublicationDraft",
           "required": true
+        },
+        "following": {
+          "type": "object",
+          "schema": "PublicationFollowing"
+        }
+      }
+    },
+    "PublicationFollowing": {
+      "description": "Per inherited public field: true while it follows the workspace's own information, false once the owner overrode it (#2086).",
+      "fields": {
+        "host_type": {
+          "type": "boolean"
+        },
+        "address": {
+          "type": "boolean"
         }
       }
     },
@@ -550,42 +564,6 @@
       "baseline": true
     },
     {
-      "id": "publication.page.reset",
-      "summary": "The owner returns inherited public fields to the workspace's own information: the named ones, or all of them when p_fields is null; answers the page as publication.page.read does.",
-      "surface": "management",
-      "principal": "authenticated",
-      "authority": "owner",
-      "binding": {
-        "kind": "rpc",
-        "method": "POST",
-        "rpc": "reset_workspace_public_page",
-        "params": {
-          "p_workspace": "uuid",
-          "p_fields": "text[]"
-        }
-      },
-      "output": {
-        "schema": "PublicationPage",
-        "cardinality": "one"
-      },
-      "mutation": "write",
-      "idempotency": "clearing an override that is already cleared has no effect",
-      "side_effects": [
-        "removes the named overrides from the page row",
-        "refreshes the public card when the page is published; never publishes or withdraws it"
-      ],
-      "features": [
-        "publicListings"
-      ],
-      "consumers": [
-        "lib/features/directory/data/supabase_publication_repository.dart"
-      ],
-      "tests": [
-        "test/features/directory/publication_repository_test.dart",
-        "supabase/tests/database/123_public_page_defaults.sql"
-      ]
-    },
-    {
       "id": "publication.page.save",
       "summary": "The owner saves the public page and publishes or withdraws it; answers the public projection it produced.",
       "surface": "management",
@@ -630,6 +608,42 @@
       ],
       "requires": [],
       "baseline": true
+    },
+    {
+      "id": "publication.page.reset",
+      "summary": "The owner returns inherited public fields to the workspace's own information: the named ones, or all of them when p_fields is null; answers the page as publication.page.read does.",
+      "surface": "management",
+      "principal": "authenticated",
+      "authority": "owner",
+      "binding": {
+        "kind": "rpc",
+        "method": "POST",
+        "rpc": "reset_workspace_public_page",
+        "params": {
+          "p_workspace": "uuid",
+          "p_fields": "text[]"
+        }
+      },
+      "output": {
+        "schema": "PublicationPage",
+        "cardinality": "one"
+      },
+      "mutation": "write",
+      "idempotency": "clearing an override that is already cleared has no effect",
+      "side_effects": [
+        "removes the named overrides from the page row",
+        "refreshes the public card when the page is published; never publishes or withdraws it"
+      ],
+      "features": [
+        "publicListings"
+      ],
+      "consumers": [
+        "lib/features/directory/data/supabase_publication_repository.dart"
+      ],
+      "tests": [
+        "test/features/directory/publication_repository_test.dart",
+        "supabase/tests/database/123_public_page_defaults.sql"
+      ]
     },
     {
       "id": "directory.sources.register",
