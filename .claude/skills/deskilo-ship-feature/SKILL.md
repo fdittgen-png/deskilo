@@ -1,229 +1,132 @@
 ---
 name: deskilo-ship-feature
-description: The end-to-end ritual for shipping a functionality in DesKilo — issue, ONE branch at a time, the feature-flag registries (enum, manifest, names, description, ARB ×5, setup.html, pin = enum size, file budgets), migration harness, tests, wiki ×5 + build_help, PR, CI, squash-merge, alpha train. Trigger at the start of any feature or fix, and whenever a PR touches the flag/placeholder registries.
+description: The DesKilo issue-to-merge ritual — claiming work beside other agents, one registry-touching branch at a time in its own worktree, the feature-flag checklist (enum, manifest, names, ARB fragments ×5, setup.html, process catalogue, server registry migration, featureAssessments), code rules, the local gates (dart analyze, lint tests, the shared suite lock, preflight --list), docs in the same PR, Refs vs Closes, and merging master once when it moves. Trigger at the start of any DesKilo issue (feature or fix), when adding a WorkspaceFeature, route, permission or validation domain, before any push, or when another agent's work overlaps yours.
 ---
 # Ship a feature in DesKilo
 
-## 0. Before code
-- A GitHub issue exists (`gh issue create`); big work → `epic-triage`.
-- **One registry-touching branch at a time.** Cut from `origin/master`,
-  merge, then cut the next. If two must overlap, stack the second on the
-  first and merge in order. Five parallel PRs on 2026-09-05 cost a
-  hand-merged rebase EACH — see `git-pr-workflow` "rebase cascade".
-- Never start a `flutter test` in the background and then switch
-  branches: the suite reads the working tree as it runs.
+The rules are binding in `docs/AGENT_RULES.md`; this skill is the how.
+Migrations: `deskilo-supabase-migration`. After the push: `deskilo-ci-release`.
 
-## 1. The flag ritual (every functionality, forever — AGENT_RULES #502)
+**Essentials**
+1. Issue first; claim it; one registry-touching branch at a time, in your own worktree.
+2. Every functionality behind a `WorkspaceFeature` — the §1 checklist in ONE commit.
+3. Strings only in `lib/l10n/_fragments/*_{en,fr,de,es,it}.arb`; `web/setup.html` in the same PR.
+4. Gates before push: `dart analyze --fatal-infos`, `flutter test test/lint` + the affected test folders (§3); the full suite runs in CI only.
+5. `Refs #N` unless the whole acceptance is met; no tool/AI mention anywhere; master moved → merge it ONCE (§5).
+
+Lessons by topic, with their incidents: [reference.md](reference.md).
+
+## 0. Before code
+- A GitHub issue exists; big work → `epic-triage`. Run `git log origin/master --grep '#N'`
+  first: issue bodies go stale and checkpoints may already be merged.
+- **Other agents (Codex, other sessions) push as the same GitHub user**, so
+  `gh pr list --author @me` is not "mine". Read `.agent-work/*.json`, the tail of
+  `AGENT_HANDOFF.md`, open PRs and the issue's last comments; write your own claim
+  (`.agent-work/<issue>.json`).
+- **Own worktree**: `git worktree add /private/tmp/deskilo-<issue> -b <branch> origin/master`,
+  then `flutter pub get` in it — without `.dart_tool` a worktree resolves
+  `package:deskilo` to the MAIN checkout and generators write stale output.
+  Never switch branches in a shared checkout, and never while a suite runs in it.
+- **One registry-touching branch at a time** (AGENT_RULES "One feature branch at a
+  time"). Stacking is the exception — see reference.md.
+- Flutter **3.47.5** only (`.flutter-version`).
+
+## 1. The flag ritual (every functionality, forever — AGENT_RULES "Feature management")
 Edit ALL of these in the same commit:
 1. `lib/features/workspace/domain/workspace_feature.dart` — enum value
-   (append at the end) + `featureManifest` entry (`requires:`).
+   (append at the end) + `featureManifest` entry (`requires:`, default).
 2. `feature_names.dart` — label; `features_screen.dart` — description.
-3. ARB fragments `lib/l10n/_fragments/<topic>_{en,fr,de,es,it}.arb`
-   (keys `featureXxx`, `featureXxxDesc` + the feature's strings). NO `{`
-   in message text unless it is an ICU placeholder — write "text.key",
-   not "{{ text.key }}". Then `dart run tool/build_arb.dart && flutter gen-l10n`.
+3. ARB fragments: keys `featureXxx`, `featureXxxDesc` + the feature's strings (§2 Strings).
 4. `web/setup.html` — a FEATURES line `['key',0|1],` (no label: name and
-   description come from the ARB) + the REQUIRES map entry. Then
-   `dart run tool/build_setup_l10n.dart` and commit `web/setup_l10n.js`
-   AND `web/setup_catalogue.js` (the process grouping, from `workspaceProcesses`, #1330).
-5. `test/lint/feature_registry_test.dart` — no count to bump (#1863): it
-   checks manifest/name/tier/dependency completeness and that every key a
-   migration ever registered is live or in `retiredFeatureAssessments`.
-6. Budgets: `test/lint/file_length_test.dart` — bump WITH a dated reason
-   comment; `workspace_feature.dart` grows ~10 lines per flag.
-7. Routes: `lib/app/router.dart` GoRoute with `featureEnabled(...)`
-   redirect + a RouteRule. `test/lint/route_registry_test.dart` resolves
-   every deep link with all features off against a reviewed set (#1863).
-8. `workspace_process.dart` — primary subprocess or explicit internal reason;
-   regenerate with `dart run tool/build_process_catalogue.dart`.
-9. **A migration** with `dart run tool/build_feature_registry_sql.dart`'s
-   output — the server's copy of the manifest (#1333). A server gate calls
+   description come from the ARB) + the REQUIRES map entry; then
+   `dart run tool/build_setup_l10n.dart` and commit `web/setup_l10n.js` AND
+   `web/setup_catalogue.js` (the process grouping, #1330).
+5. `workspace_process.dart` — primary subprocess or explicit internal reason;
+   `dart run tool/build_process_catalogue.dart`.
+6. `lib/features/workspace/domain/feature_lifecycle.dart` — the flag's
+   `featureAssessments` line (#1850): `_legacy`/unreviewed until a review names
+   evidence ids from `docs/product/capabilities.json`; maturity never gates
+   anything. A removed flag's key moves to `retiredFeatureAssessments`.
+7. **A migration** carrying `dart run tool/build_feature_registry_sql.dart`'s output
+   (the server's copy of the manifest, #1333). A server gate calls
    `public.feature_effective(ws, 'key')`, never reads the flag by hand.
-10. `feature_lifecycle.dart` — the flag's `featureAssessments` line
-   (#1850): `_legacy`/unreviewed until a review names evidence ids from
-   `docs/product/capabilities.json`; maturity never gates anything.
-Validation domains grow in FOUR places (AGENT_RULES #767/#769); the
-placeholders registry has its own pin (`deskilo-reports`).
+8. Routes: `lib/app/router.dart` GoRoute with a `featureEnabled(...)` redirect + a RouteRule.
+9. Budgets: `test/lint/file_length_test.dart` — `workspace_feature.dart` grows ~10
+   lines per flag; bump WITH a dated reason comment (better: extract, then lower it).
+
+**No count pin to bump** (#2058): `feature_registry_test` checks manifest/name/
+tier/dependency completeness and that every key any migration ever registered is
+live or retired; `route_registry_test` reads the LIVE router and resolves every
+deep link with all features off against a reviewed set — a route no flag owns
+joins that set deliberately. What still pins: a **default-off** flag joins
+`defaultOffFeatures` (`workspace_feature_test`) and `featureManifest.length - N`
+(`features_screen_test`, whose viewport grows with the list); a flag in a process
+moves `process_overview_test`'s fixture; a default-ON child of a default-OFF
+parent breaks `template_contract_test` (reference.md "Flags").
+
+Other registries: validation domains grow in FOUR places (AGENT_RULES); a new
+`WorkspacePermission` needs the SQL catalog (`deskilo-supabase-migration`);
+placeholders have their own pin (`deskilo-reports`); a new configuration domain
+needs the deployment entity registry (reference.md "Flags").
 
 ## 2. Code
-- Domain pure Dart (no Flutter, no l10n) — the CLI imports it.
+- AGENT_RULES "Coding rules" apply. `domain/` is pure Dart (no Flutter, no l10n) — the CLI imports it.
 - `catch (e, st)` + TraceLogger; `// trace-exempt:` marker when rethrowing.
-- No `Text('literal')` without an `l10n?.x ?? 'literal'` — hoist
-  computed strings into a variable (the lint greps `Text('`).
-- `AppRadius.mdAll`, not `BorderRadius.circular`.
-- `dart format` ONLY the files you created. Formatting legacy files
-  (member_page, supabase_workspace_repository, invite_sheet,
-  members_screen, mock_providers, test/features/profile) yields hundreds
-  of churn lines; revert and re-apply your edit.
+- **Strings.** `lib/l10n/app_<locale>.arb` is GENERATED — edit
+  `lib/l10n/_fragments/<topic>_<locale>.arb` ×5, then
+  `dart run tool/build_arb.dart && flutter gen-l10n` and commit both outputs (CI's
+  l10n gate rebuilds from the fragments). No `{` in message text unless it is an ICU
+  placeholder. `Text` literals are read by `tool/l10n_audit` (#2055, wrapped lines
+  included): only `l10n?.x ?? 'English'` or a literal made of interpolations passes.
+  Reach for `MaterialLocalizations` before inventing a key for a generic action.
+- **Codegen.** A freezed class or a `@riverpod` provider body change changes its
+  `.g.dart`: `dart run build_runner build --delete-conflicting-outputs`, commit the
+  output. If a full run hangs in a worktree, use `--build-filter 'lib/<path>/<file>.g.dart'`
+  (macOS has no `timeout`); a stale `build.dart.aot` holds the lock (reference.md "Tooling").
+- **Never `dart format` an existing file** — the repo is not format-clean and one
+  file yields hundreds of churn lines. Format only files you created; hand-place
+  edits elsewhere at the surrounding indentation. Never format whole directories.
 
 ## 3. Verify
 ```
-flutter analyze --fatal-infos lib test tool
+dart analyze --fatal-infos            # exactly what CI runs; flutter analyze misses the riverpod_lint plugin (missing_provider_scope)
 flutter test test/lint <your tests>
-flutter test > scratchpad/suite-<pr>.log 2>&1    # background, then grep '\[E\]'
+dart run tool/preflight.dart --list   # which generators this change implicates — run THOSE yourself
 ```
-Codegen after freezed/@riverpod edits: `dart run build_runner build --delete-conflicting-outputs`.
+Never run `tool/preflight.dart` in full on this machine: its build_runner step can hang.
+
+**The full suite runs in CI only** — never `flutter test` without a path before a
+push (the quality job runs it on every PR; local full suites on a shared machine
+starve each other). Run the affected folders, never piped (a pipe masks the exit
+code), and read the verdict line:
+```
+flutter test test/lint test/features/<yours> > scratchpad/<pr>.log 2>&1; echo EXIT=$?
+grep -q "All tests passed!" scratchpad/<pr>.log   # never count [E] lines
+```
+Never `pkill -f flutter` / `flutter_tester` — it kills other agents' runs. A file
+that fails only under load: rerun it alone, and name the flake in the PR rather
+than skip the gate. Docs-only changes need only the lint/doc tests.
 
 ## 4. Docs in the same PR
-Wiki ×5 (`docs/wiki/User-Guide.md`, `Guide-utilisateur.md`,
-`Benutzerhandbuch.md`, `Guia-de-usuario.md`, `Guida-utente.md`) —
-insert before the next `### `/`## ` heading, cite the issue number —
-then `dart run tool/build_help.dart` (commits `assets/help/*.md`).
-An ADR in `docs/decisions/NNNN-*.md` for a decision; `docs/AGENT_RULES.md`
-for a rule the next agent must obey.
+The functionality's guide section in all five languages, citing the issue number, +
+`dart run tool/build_help.dart` (how: `deskilo-documentation`). An ADR in `docs/decisions/NNNN-*.md` for a decision;
+`docs/AGENT_RULES.md` for a rule the next agent must obey. When you change a rule,
+grep the whole repo (skills, commands, workflow comments) for its old wording.
 
-## 5. PR → merge → deploy
-Conventional title with `(#issue)`, body with What/Tests, the session
-footer. Then `deskilo-ci-release`. Record non-obvious lessons in the
-memory file, not in the wiki.
-
-## 6. Lessons of 2026-09-07
-- **Stacking.** Cut the next branch FROM the previous feature branch
-  (`git checkout -B next prev`); after the base PR squash-merges,
-  `git rebase --onto origin/master <old-tip-hash> next` and
-  `push --force-with-lease`; the PR body loses its "stacked on" line.
-- **`Closes #a and #b` closes only the first** — close the others with
-  `gh issue close` and a one-line comment naming the PR.
-- **Default-off flags** are pinned in THREE tests: `workspace_feature_test`
-  (two lists), `features_screen_test` (`featureManifest.length - N`
-  switches on) — and the features screen viewport grows with the list.
-- **Entity registries for deployment** (0186+): a new configuration
-  domain = anchors in `export_workspace_configuration` AND
-  `import_workspace_configuration`, an entry in `deployable_entities()`,
-  a natural key in `entity_row_key` for a new table, a name in
-  `deploymentEntityName` and the fake registry. A key that lives only on
-  `workspaces` (payment_instructions) still needs all of it — the
-  invoice's bank block went missing on the prod for want of it (#1010).
-- **A trigger for user actions:** `runGuarded` logs `<what> — started`
-  and `— done` (#1012); a button "that does nothing" shows a start with no
-  end. Phrase `message:` as `'<what> failed'` so the breadcrumb reads well.
-- **Non-ASCII in a python heredoc** (guides ×5): run with `PYTHONUTF8=1`
-  or the script dies on the first « ».
-- **Register a new fake repository** in `standardTestOverrides`
-  (`deployment:` → `FakeDeploymentRepository`) or every app test that
-  reaches the provider hits Supabase.instance.
-
-## 7. Lessons of 2026-09-09
-
-- **Never `dart format` a file you are editing.** The repository is not
-  format-clean, so formatting one file to tidy four inserted lines
-  produced a 208-line diff that buried the change. Hand-place the edit
-  at the surrounding indentation instead; `flutter analyze` does not
-  care, and the reviewer does.
-- **Adding a named argument to many call sites in one file: make ONE
-  ordered forward pass.** Searching per marker gets the wrong call twice
-  over — `rindex` walks backwards past a `suffixIcon:` into an unrelated
-  helper, and a marker that appears twice matches the first occurrence
-  both times. Collect the anchors in file order, then walk the file once,
-  advancing the cursor past each insertion. Two duplicate-argument
-  compile errors before this was obvious.
-- **Route pins are positional: append a new route LAST.** Sparkilo's
-  `profile_routes_test` asserts "route 5 path is /loyalty-settings";
-  inserting `/help` after `/theme-settings` moved ten of them and failed
-  ten assertions that were describing the right thing. Appending moves
-  only the count. Same shape as DesKilo's route registry.
-- **A shared helper that embeds one help symbol serves many fields.**
-  `_mentionField` and `_withDot` each fed eight and three controls from
-  one `HelpDot`. Give the helper an `anchor` parameter and pass one per
-  call site — the fix is a parameter, never a copy of the helper.
-- **When a lint refuses a legitimate new idiom, widen the lint, do not
-  exempt the file.** `no_silent_catch` demanded the literal word
-  `TraceLogger`, which pushed `ActTrace` calls back inline — the exact
-  thing the trace points were extracted to stop. It now accepts
-  `ActTrace.` and `traceX(…)`, with the reason in the test.
-- **A ratchet that reaches zero should become an invariant.** When the
-  uncovered-symbol count hit 0 of 155, the test stopped asking "did it go
-  down" and started asserting `isEmpty`, so a new symbol without an
-  anchor fails. A ratchet at zero that still only compares is a gate
-  nothing can trip.
-
-## 8. Lessons of 2026-09-10
-
-- **`lib/l10n/app_<locale>.arb` is GENERATED. Edit
-  `lib/l10n/_fragments/<feature>_<locale>.arb`.** Editing the aggregate
-  passes locally, because `flutter gen-l10n` reads it and the app then
-  shows the new string — and CI fails, because the l10n gate re-runs
-  `dart run tool/build_arb.dart` from the fragments and finds the old
-  wording. The whole diff comes back at you as "lib/l10n drift". Cost one
-  red PR before it was obvious. `dart run tool/build_arb.dart && flutter
-  gen-l10n` after every fragment edit, and commit what they write.
-- **Material already translates the generic actions — reach for it
-  before inventing an ARB key.** `MaterialLocalizations.of(context)`
-  carries `closeButtonTooltip`, `deleteButtonTooltip`,
-  `previousMonthTooltip`, `nextMonthTooltip`, `showMenuTooltip`. 15 of
-  the 25 unlabelled icon buttons in #1055 needed no new string at all,
-  in five languages, for free. A new key is for an action Material has no
-  word for.
-- **When a change pushes a file over its length budget, extract — then
-  LOWER the baseline.** The house rule allows raising it with a reason,
-  but the file that fails is usually the one already known to be too big.
-  #1056's overflow menu put `invoice_template_sheet.dart` 19 lines over;
-  moving the pair into `report_history_controls.dart` left it 20 lines
-  UNDER, so the baseline went 1180→1160. The ratchet only shrinks if
-  somebody makes it shrink.
-  **Extracting into a NEW library can trip the layering ratchet.**
-  `layering_test` counts cross-feature import lines per file, so a helper
-  moved out of a presentation mixin re-imports `plan/` and `workspace/`
-  and pushes `reservations -> plan` over its pin (#1813). When the helper
-  only serves that one library, make it a `part` of it: it shares the
-  existing imports and adds no pairs. `others_booking_tap.dart` is the
-  worked example.
-- **Three analyzer strict modes are on now** (`strict-casts`,
-  `strict-inference`, `strict-raw-types`, #1060). `?? const []` no longer
-  passes: write `?? const <Event>[]`. They caught three latent dynamic
-  dispatches on the way in — `event.isPending && …` was a non-`bool`
-  operand because `event` was `dynamic`.
-- **A one-line string fix still needs the ×5 sweep and a pin.** "My
-  badge" appeared twice in Settings because two keys held the same value
-  in all five locales — perfectly parallel, so `arb_key_parity_test`
-  was satisfied. Parallel is not correct.
-
-## 9. Lessons of 2026-09-28 (working beside other agents)
-
-- **Other agents (Codex, other Claude sessions) push to the same repo
-  under the same GitHub user.** `gh pr list --author @me` is not "mine";
-  the claim files are. Check `.agent-work/*.json`, the tail of
-  `AGENT_HANDOFF.md`, open PRs and the issue's last comments before
-  starting, and write your own claim.
-- **Never rebase, never chase.** When master moves under your PR: merge
-  master in ONCE, regenerate the generated files, push, let auto-merge
-  finish. If it conflicts again, stop and report, don't loop.
-  - Conflicts in generated files (bundle, APPLIED, TEST_INVENTORY,
-    capability docs, l10n output): take master's copy with
-    `git diff --name-only --diff-filter=U -z | xargs -0 git checkout origin/master --`,
-    then regenerate. NEVER `for f in $files` in zsh: it passes all paths
-    as one argument, and conflict markers get committed and pushed.
-  - `git grep -l '^<<<<<<<'` before every push.
-- **Push only on a green verdict, in one command:** run the gates into a
-  log; `grep -q "All tests passed!"` AND `grep -q "No issues found"`;
-  only then commit, push, `gh pr create … | xargs -I{} gh pr merge {}
-  --auto --squash`.
-- **A branch whose PR was superseded is deleted, not merged.** Compare
-  its files with master (`git show origin/master:<f> | md5`). If every
-  feature file is identical and only generated files differ, merging
-  would revert newer work.
-- **Close an issue when its last checkpoint merges green.** A remainder
-  that needs other infrastructure is collected in ONE follow-up issue
-  (e.g. #1789 for four issues' race tests), linked from the closing
-  comment. An open issue someone else may continue gets a "Handoff (for
-  whoever continues)" comment: what is done, the files, the next step.
-- **A stale `build_runner` blocks later ones silently.** A hung
-  `build.dart.aot` from hours earlier holds the lock. Check
-  `ps -eo pid,etime,time,command | grep build.dart.aot` (CPU time not
-  moving = stuck), kill it, `rm -rf .dart_tool/build`, and retry.
-
-## 10. Lessons of 2026-09-29 (three flags in one registry change)
-
-- **A default-ON child of a default-OFF parent is a contradiction every
-  builtin template inherits.** `build_builtin_templates.dart` expands a
-  profile from the registry defaults, and `template_contract_test` then
-  refuses "`spaceInquiries` is on but its parent `publicListings` is
-  off". Give such a flag no `requires` and let the server refuse the case
-  the parent would have covered (an inquiry needs a published page), or
-  make it default off.
-- **Adding a flag to a process moves counts in other tests.**
-  `process_overview_test` switches a whole process off in a fixture map
-  and pins "0 of N features on"; a new flag in that process must join the
-  fixture and N. The Pézenas rehearsal (`54_pezenas_template.sql`) carries
-  the variant's configuration byte for byte and needs the new keys too.
-
+## 5. PR → merge
+- Conventional title with `(#issue)`; body: What / Tests. `Refs #N` for a partial
+  PR, `Closes #N` only when the whole acceptance is met (AGENT_RULES "Ready, Done
+  and closure"); a partial landing gets an issue comment — what landed, what
+  remains, the files, the next step. `Closes #a and #b` closes only `#a`.
+- No tool or AI mention in commits, PR bodies, issues or code; no co-author trailer.
+- Push only on a green verdict (analyze clean AND "All tests passed!" for lint +
+  the affected folders), then `deskilo-ci-release`.
+- **Master moved under your PR: merge it in ONCE — never rebase, never chase.**
+  Conflicts in generated files (bundle, APPLIED, l10n output, the dependency map): `git diff --name-only --diff-filter=U -z | xargs -0 git checkout origin/master --`,
+  then regenerate. In hand-written files keep BOTH sides in order (plain
+  concatenation, never a line-dedupe — it drops shared closers like `),`).
+  Never `for f in $files` in zsh: it passes all paths as one
+  argument and conflict markers get committed. `git grep -l '^<<<<<<<'` before
+  every push. If it conflicts again, stop and report.
+- A branch whose PR was superseded is deleted, not merged (reference.md "Working beside other agents").
+- Record non-obvious lessons in the memory file or a skill's reference.md, not in the wiki.

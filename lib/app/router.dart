@@ -105,6 +105,10 @@ import '../features/money/presentation/screens/number_sequences_screen.dart';
 import '../features/money/presentation/screens/workspace_status_screen.dart';
 import '../features/money/presentation/screens/repartition_wizard_screen.dart';
 import '../features/workspace/presentation/screens/sites_screen.dart';
+import '../features/task_recorder/presentation/route_classification.dart'
+    show taskRecorderRoute, taskWorkbenchRoute;
+import '../features/task_recorder/presentation/screens/task_recorder_screen.dart';
+import '../features/task_recorder/presentation/screens/task_workbench_screen.dart';
 
 export 'shell/shell_destinations.dart' show ShellBranch;
 
@@ -881,6 +885,14 @@ GoRouter router(Ref ref) {
         builder: (context, state) => WhatYouCanDoScreen(
             memberId: state.uri.queryParameters['member']),
       ),
+      // #1865 — this account's own recordings on this device. Account-
+      // level: reading, exporting and deleting them never needs a flag;
+      // Start is gated by taskRecorder inside the screen.
+      GoRoute(path: taskRecorderRoute,
+          builder: (context, state) => const TaskRecorderScreen()),
+      // #1872 — the local task workbench: no account, no workspace.
+      GoRoute(path: taskWorkbenchRoute,
+          builder: (context, state) => const TaskWorkbenchScreen()),
     ],
   );
   ref.onDispose(router.dispose);

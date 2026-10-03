@@ -1,0 +1,43 @@
+name: deskilo_video_encoder
+description: DesKilo's local tutorial-video encoder — H.264/MP4 with the platform's own codec (AVAssetWriter on macOS/iOS, MediaCodec + MediaMuxer on Android, WebCodecs + the bundled Mediabunny muxer on the web). No FFmpeg, no network.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+  flutter: ">=3.44.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: de.deskilo.video_encoder
+        pluginClass: DeskiloVideoEncoderPlugin
+      ios:
+        pluginClass: DeskiloVideoEncoderPlugin
+        sharedDarwinSource: true
+      macos:
+        pluginClass: DeskiloVideoEncoderPlugin
+        sharedDarwinSource: true
+      web:
+        pluginClass: DeskiloVideoEncoderWeb
+        fileName: deskilo_video_encoder_web.dart
+
+  # The browser encoder and its muxer ship WITH the app: nothing is
+  # fetched when a video is made. Mediabunny 1.61.0, MPL-2.0 (its licence
+  # beside it); the npm tarball's sha256 is
+  # 2105c960b161cbfcba037c91527e73b89d5208e92d6fb64a14000e7addbe1a8f.
+  assets:
+    - assets/encoder.mjs
+    - assets/mediabunny.min.mjs
+    - assets/MEDIABUNNY_LICENSE
