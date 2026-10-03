@@ -7,6 +7,7 @@ import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../theme/app_spacing.dart';
+import 'help_arbiter.dart';
 import 'help_hint_providers.dart';
 import 'help_tips.dart';
 
@@ -85,6 +86,10 @@ class _HelpHintState extends ConsumerState<HelpHint> {
     if (!ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.formHelpHints)) {
+      return const SizedBox.shrink();
+    }
+    // #1867 — one help at a time: a guide step or a blocker outranks tips.
+    if (ref.watch(helpSlotProvider) != HelpSlot.tips) {
       return const SizedBox.shrink();
     }
     // Unknown while the one-time reads are in flight: stay hidden — a

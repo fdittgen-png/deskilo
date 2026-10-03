@@ -1506,6 +1506,46 @@ Map<String, _Getter> _part3() => {
   'gettingStartedStateCompleted': (l) => l.gettingStartedStateCompleted,
   'gettingStartedStateReleased': (l) => l.gettingStartedStateReleased,
   'gettingStartedStateReserved': (l) => l.gettingStartedStateReserved,
+  'guideActionConfirmBooking': (l) => l.guideActionConfirmBooking,
+  'guideActionOpenReserve': (l) => l.guideActionOpenReserve,
+  'guideActionSelectDate': (l) => l.guideActionSelectDate,
+  'guideActionSelectPeriod': (l) => l.guideActionSelectPeriod,
+  'guideActionSelectResource': (l) => l.guideActionSelectResource,
+  'guideBookingRefusedRecovery': (l) => l.guideBookingRefusedRecovery,
+  'guideBuiltinBooking': (l) => l.guideBuiltinBooking,
+  'guideBuiltinBookingIntro': (l) => l.guideBuiltinBookingIntro,
+  'guideHostBack': (l) => l.guideHostBack,
+  'guideHostBlocked': (l) => l.guideHostBlocked,
+  'guideHostClose': (l) => l.guideHostClose,
+  'guideHostCommand': (l) => l.guideHostCommand,
+  'guideHostCompleted': (l) => l.guideHostCompleted,
+  'guideHostDone': (l) => l.guideHostDone,
+  'guideHostFillField': (l) => l.guideHostFillField,
+  'guideHostInstruction': (l) => l.guideHostInstruction,
+  'guideHostManual': (l) => l.guideHostManual,
+  'guideHostNotOnScreen': (l) => l.guideHostNotOnScreen,
+  'guideHostOpenScreen': (l) => l.guideHostOpenScreen,
+  'guideHostPausedFeature': (l) => l.guideHostPausedFeature,
+  'guideHostPausedScope': (l) => l.guideHostPausedScope,
+  'guideHostRecovery': (l) => l.guideHostRecovery,
+  'guideHostResume': (l) => l.guideHostResume,
+  'guideHostShowMe': (l) => l.guideHostShowMe,
+  'guideHostSkip': (l) => l.guideHostSkip,
+  'guideHostStatusAcknowledged': (l) => l.guideHostStatusAcknowledged,
+  'guideHostStatusDone': (l) => l.guideHostStatusDone,
+  'guideHostStatusPending': (l) => l.guideHostStatusPending,
+  'guideHostStatusSkipped': (l) => l.guideHostStatusSkipped,
+  'guideHostStatusWaiting': (l) => l.guideHostStatusWaiting,
+  'guideHostSteps': (l) => l.guideHostSteps,
+  'guideHostStop': (l) => l.guideHostStop,
+  'guideHostStopped': (l) => l.guideHostStopped,
+  'guideHostTapControl': (l) => l.guideHostTapControl,
+  'guideHostTitle': (l) => l.guideHostTitle,
+  'guideHostUncertain': (l) => l.guideHostUncertain,
+  'guideHostWaiting': (l) => l.guideHostWaiting,
+  'guideStart': (l) => l.guideStart,
+  'guideStartNotRunnable': (l) => l.guideStartNotRunnable,
+  'guideStartRefused': (l) => l.guideStartRefused,
   'handoffBlocked': (l) => l.handoffBlocked,
   'handoffChanged': (l) => l.handoffChanged,
   'handoffIssued': (l) => l.handoffIssued,
@@ -1514,6 +1554,7 @@ Map<String, _Getter> _part3() => {
   'handoffVoided': (l) => l.handoffVoided,
   'helpContents': (l) => l.helpContents,
   'helpDotTooltip': (l) => l.helpDotTooltip,
+  'helpGuidedTasks': (l) => l.helpGuidedTasks,
   'helpHintAvailability': (l) => l.helpHintAvailability,
   'helpHintAvailabilityTip2': (l) => l.helpHintAvailabilityTip2,
   'helpHintAvailabilityTip3': (l) => l.helpHintAvailabilityTip3,
@@ -1593,6 +1634,9 @@ Map<String, _Getter> _part3() => {
   'helpHintMoneyTip3': (l) => l.helpHintMoneyTip3,
   'helpHintMoneyTip4': (l) => l.helpHintMoneyTip4,
   'helpHintMoneyTip4Topic': (l) => l.helpHintMoneyTip4Topic,
+};
+
+Map<String, _Getter> _part4() => {
   'helpHintMoneyTopic': (l) => l.helpHintMoneyTopic,
   'helpHintNextTip': (l) => l.helpHintNextTip,
   'helpHintPlan': (l) => l.helpHintPlan,
@@ -1634,9 +1678,6 @@ Map<String, _Getter> _part3() => {
   'helpTopicAccounting': (l) => l.helpTopicAccounting,
   'helpTopicBilling': (l) => l.helpTopicBilling,
   'helpTopicBookingLimits': (l) => l.helpTopicBookingLimits,
-};
-
-Map<String, _Getter> _part4() => {
   'helpTopicBookingPolicies': (l) => l.helpTopicBookingPolicies,
   'helpTopicDeployment': (l) => l.helpTopicDeployment,
   'helpTopicDocumentLibrary': (l) => l.helpTopicDocumentLibrary,
@@ -1996,6 +2037,9 @@ Map<String, _Getter> _part4() => {
   'invoiceRegisterDate': (l) => l.invoiceRegisterDate,
   'invoiceRegisterName': (l) => l.invoiceRegisterName,
   'invoiceRegisterTitle': (l) => l.invoiceRegisterTitle,
+};
+
+Map<String, _Getter> _part5() => {
   'invoiceRegisterTotal': (l) => l.invoiceRegisterTotal,
   'invoiceRegisterYear': (l) => l.invoiceRegisterYear,
   'invoiceRemainingLabel': (l) => l.invoiceRemainingLabel,
@@ -2037,9 +2081,6 @@ Map<String, _Getter> _part4() => {
   'invoiceTemplateNoPreview': (l) => l.invoiceTemplateNoPreview,
   'invoiceTemplatePresets': (l) => l.invoiceTemplatePresets,
   'invoiceTemplatePreview': (l) => l.invoiceTemplatePreview,
-};
-
-Map<String, _Getter> _part5() => {
   'invoiceTemplateQuickPreview': (l) => l.invoiceTemplateQuickPreview,
   'invoiceTemplateReset': (l) => l.invoiceTemplateReset,
   'invoiceTemplateSaved': (l) => l.invoiceTemplateSaved,
@@ -2399,6 +2440,9 @@ Map<String, _Getter> _part5() => {
   'mcpDisclosureUnlock': (l) => l.mcpDisclosureUnlock,
   'mcpDisconnect': (l) => l.mcpDisconnect,
   'mcpDisconnectBody': (l) => l.mcpDisconnectBody,
+};
+
+Map<String, _Getter> _part6() => {
   'mcpEligibleExpired': (l) => l.mcpEligibleExpired,
   'mcpEligibleNoIdentity': (l) => l.mcpEligibleNoIdentity,
   'mcpEligibleNot': (l) => l.mcpEligibleNot,
@@ -2440,9 +2484,6 @@ Map<String, _Getter> _part5() => {
   'mcpOpRefund': (l) => l.mcpOpRefund,
   'mcpOpReservationDeletion': (l) => l.mcpOpReservationDeletion,
   'mcpOpRespond': (l) => l.mcpOpRespond,
-};
-
-Map<String, _Getter> _part6() => {
   'mcpOpSubscription': (l) => l.mcpOpSubscription,
   'mcpOpUpdateReservation': (l) => l.mcpOpUpdateReservation,
   'mcpOverviewTitle': (l) => l.mcpOverviewTitle,
@@ -2802,6 +2843,9 @@ Map<String, _Getter> _part6() => {
   'numberSequenceDateYearMonth': (l) => l.numberSequenceDateYearMonth,
   'numberSequenceDigits': (l) => l.numberSequenceDigits,
   'numberSequenceGapless': (l) => l.numberSequenceGapless,
+};
+
+Map<String, _Getter> _part7() => {
   'numberSequenceJournalCreditNote': (l) => l.numberSequenceJournalCreditNote,
   'numberSequenceJournalInvoice': (l) => l.numberSequenceJournalInvoice,
   'numberSequenceJournalMember': (l) => l.numberSequenceJournalMember,
@@ -2843,9 +2887,6 @@ Map<String, _Getter> _part6() => {
   'onboardingShapeLabel': (l) => l.onboardingShapeLabel,
   'onboardingShapePair': (l) => l.onboardingShapePair,
   'onboardingShapeReal': (l) => l.onboardingShapeReal,
-};
-
-Map<String, _Getter> _part7() => {
   'onboardingShapeRealHint': (l) => l.onboardingShapeRealHint,
   'onboardingShapeTest': (l) => l.onboardingShapeTest,
   'onboardingShapeTestHint': (l) => l.onboardingShapeTestHint,
@@ -3205,6 +3246,9 @@ Map<String, _Getter> _part7() => {
   'profilePhotoChoose': (l) => l.profilePhotoChoose,
   'profilePhotoFileType': (l) => l.profilePhotoFileType,
   'profilePhotoNone': (l) => l.profilePhotoNone,
+};
+
+Map<String, _Getter> _part8() => {
   'profilePhotoRemove': (l) => l.profilePhotoRemove,
   'profilePhotoRemoved': (l) => l.profilePhotoRemoved,
   'profilePhotoSaveFailed': (l) => l.profilePhotoSaveFailed,
@@ -3246,9 +3290,6 @@ Map<String, _Getter> _part7() => {
   'pushCancelledBody': (l) => l.pushCancelledBody,
   'pushCancelledTitle': (l) => l.pushCancelledTitle,
   'pushPendingBody': (l) => l.pushPendingBody,
-};
-
-Map<String, _Getter> _part8() => {
   'pushPendingTitle': (l) => l.pushPendingTitle,
   'pushStatusNoTransport': (l) => l.pushStatusNoTransport,
   'pushStatusNoTransportHint': (l) => l.pushStatusNoTransportHint,
@@ -3608,6 +3649,9 @@ Map<String, _Getter> _part8() => {
   'reportLayoutTitle': (l) => l.reportLayoutTitle,
   'reportLineBoldRow': (l) => l.reportLineBoldRow,
   'reportLineColumns': (l) => l.reportLineColumns,
+};
+
+Map<String, _Getter> _part9() => {
   'reportLineColumnsSplit': (l) => l.reportLineColumnsSplit,
   'reportLineDivider': (l) => l.reportLineDivider,
   'reportLineImage': (l) => l.reportLineImage,
@@ -3649,9 +3693,6 @@ Map<String, _Getter> _part8() => {
   'reportTemplateClearOverlay': (l) => l.reportTemplateClearOverlay,
   'reportTemplateLangDefault': (l) => l.reportTemplateLangDefault,
   'reportTemplateLangInherits': (l) => l.reportTemplateLangInherits,
-};
-
-Map<String, _Getter> _part9() => {
   'reportTemplateLangOverridden': (l) => l.reportTemplateLangOverridden,
   'reportTextsAdd': (l) => l.reportTextsAdd,
   'reportTextsHint': (l) => l.reportTextsHint,
@@ -4011,6 +4052,9 @@ Map<String, _Getter> _part9() => {
   'taskExportLimitRecreated': (l) => l.taskExportLimitRecreated,
   'taskExportLimitValues': (l) => l.taskExportLimitValues,
   'taskExportNoResult': (l) => l.taskExportNoResult,
+};
+
+Map<String, _Getter> _part10() => {
   'taskExportNoteOmitted': (l) => l.taskExportNoteOmitted,
   'taskExportOutcomeConfirmed': (l) => l.taskExportOutcomeConfirmed,
   'taskExportOutcomeRefused': (l) => l.taskExportOutcomeRefused,
@@ -4052,9 +4096,6 @@ Map<String, _Getter> _part9() => {
   'taskExportStoryboardRenderFailed': (l) => l.taskExportStoryboardRenderFailed,
   'taskExportStoryboardSourceExcluded': (l) => l.taskExportStoryboardSourceExcluded,
   'taskExportStoryboardSourceScene': (l) => l.taskExportStoryboardSourceScene,
-};
-
-Map<String, _Getter> _part10() => {
   'taskExportStoryboardSourceText': (l) => l.taskExportStoryboardSourceText,
   'taskExportSurfaceAny': (l) => l.taskExportSurfaceAny,
   'taskExportSurfaceBookingSheet': (l) => l.taskExportSurfaceBookingSheet,
@@ -4414,6 +4455,9 @@ Map<String, _Getter> _part10() => {
   'vatKeptRate': (l) => l.vatKeptRate,
   'vatNeedsDefault': (l) => l.vatNeedsDefault,
   'vatNewPercent': (l) => l.vatNewPercent,
+};
+
+Map<String, _Getter> _part11() => {
   'vatPdfNet': (l) => l.vatPdfNet,
   'vatPdfVat': (l) => l.vatPdfVat,
   'vatRateDefaultTooltip': (l) => l.vatRateDefaultTooltip,
@@ -4455,9 +4499,6 @@ Map<String, _Getter> _part10() => {
   'visibilityPresence': (l) => l.visibilityPresence,
   'visibilityPreviewCanWrite': (l) => l.visibilityPreviewCanWrite,
   'visibilityPreviewCannotWrite': (l) => l.visibilityPreviewCannotWrite,
-};
-
-Map<String, _Getter> _part11() => {
   'visibilityPreviewFailed': (l) => l.visibilityPreviewFailed,
   'visibilityPreviewMySpaces': (l) => l.visibilityPreviewMySpaces,
   'visibilityPreviewNobody': (l) => l.visibilityPreviewNobody,

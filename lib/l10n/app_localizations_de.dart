@@ -5774,6 +5774,174 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get guideActionConfirmBooking =>
+      'die Buchung bestätigen und auf die Antwort warten';
+
+  @override
+  String get guideActionOpenReserve => 'Reservieren öffnen';
+
+  @override
+  String get guideActionSelectDate => 'den Tag wählen';
+
+  @override
+  String get guideActionSelectPeriod => 'den Zeitraum wählen';
+
+  @override
+  String get guideActionSelectResource =>
+      'einen Platz auf dem Plan oder in der Liste wählen';
+
+  @override
+  String get guideBookingRefusedRecovery =>
+      'Die Buchung wurde abgelehnt (Platz belegt oder eine Regel verbietet es). Wählen Sie einen anderen Platz oder Zeitraum und bestätigen Sie erneut.';
+
+  @override
+  String get guideBuiltinBooking => 'Einen Platz buchen';
+
+  @override
+  String get guideBuiltinBookingIntro =>
+      'Diese Anleitung zeigt, wie Sie einen Platz buchen: Tag und Zeitraum wählen, einen Platz auswählen, dann bestätigen. Nichts wird gebucht, bevor Sie bestätigen.';
+
+  @override
+  String get guideHostBack => 'Zurück';
+
+  @override
+  String get guideHostBlocked =>
+      'Klären Sie zuerst die Meldung auf dem Bildschirm; die Anleitung wartet.';
+
+  @override
+  String get guideHostClose => 'Schließen';
+
+  @override
+  String get guideHostCommand =>
+      'Bestätigen Sie und warten Sie auf das Ergebnis.';
+
+  @override
+  String get guideHostCompleted => 'Anleitung abgeschlossen.';
+
+  @override
+  String guideHostDoAction(String action) {
+    return 'Als Nächstes: $action.';
+  }
+
+  @override
+  String get guideHostDone => 'Erledigt';
+
+  @override
+  String get guideHostFillField =>
+      'Füllen Sie das hervorgehobene Feld aus und verlassen Sie es.';
+
+  @override
+  String guideHostFillLabel(String label) {
+    return 'Füllen Sie „$label“ aus und verlassen Sie dann das Feld.';
+  }
+
+  @override
+  String get guideHostInstruction =>
+      'Lesen Sie dies und markieren Sie es als erledigt.';
+
+  @override
+  String get guideHostManual =>
+      'Erledigen Sie diesen Schritt selbst und markieren Sie ihn als erledigt.';
+
+  @override
+  String guideHostManualProtected(String category) {
+    return 'Dieser Teil findet auf einem geschützten Bildschirm statt ($category). Erledigen Sie ihn selbst und markieren Sie ihn als erledigt.';
+  }
+
+  @override
+  String get guideHostNotOnScreen =>
+      'Dieses Bedienelement ist nicht auf diesem Bildschirm. Gehen Sie zum Bildschirm des vorherigen Schritts oder prüfen Sie die Anleitung.';
+
+  @override
+  String guideHostOpenLabel(String label) {
+    return 'Öffnen Sie „$label“.';
+  }
+
+  @override
+  String get guideHostOpenScreen => 'Öffnen Sie den nächsten Bildschirm.';
+
+  @override
+  String get guideHostPausedFeature =>
+      'Pausiert: Der Aufgabenrekorder ist in diesem Workspace ausgeschaltet.';
+
+  @override
+  String get guideHostPausedScope =>
+      'Pausiert: Konto oder Workspace hat sich geändert. Die Anleitung geht nur dort weiter, wo sie begann.';
+
+  @override
+  String get guideHostRecovery =>
+      'Das wurde abgelehnt. Folgen Sie diesen Schritten und versuchen Sie es dann erneut.';
+
+  @override
+  String get guideHostResume => 'Fortsetzen';
+
+  @override
+  String get guideHostShowMe => 'Zeigen';
+
+  @override
+  String get guideHostSkip => 'Überspringen';
+
+  @override
+  String get guideHostStatusAcknowledged => 'Bestätigt';
+
+  @override
+  String get guideHostStatusDone => 'Erledigt';
+
+  @override
+  String get guideHostStatusPending => 'Offen';
+
+  @override
+  String get guideHostStatusSkipped => 'Übersprungen';
+
+  @override
+  String get guideHostStatusWaiting => 'Wartet';
+
+  @override
+  String guideHostStepOf(int current, int total) {
+    return 'Schritt $current von $total';
+  }
+
+  @override
+  String get guideHostSteps => 'Alle Schritte';
+
+  @override
+  String get guideHostStop => 'Anleitung beenden';
+
+  @override
+  String get guideHostStopped =>
+      'Anleitung beendet. Nichts wurde rückgängig gemacht.';
+
+  @override
+  String get guideHostTapControl =>
+      'Tippen Sie auf das hervorgehobene Bedienelement.';
+
+  @override
+  String guideHostTapLabel(String label) {
+    return 'Tippen Sie auf „$label“.';
+  }
+
+  @override
+  String get guideHostTitle => 'Geführte Aufgabe';
+
+  @override
+  String get guideHostUncertain =>
+      'Die Antwort kam nicht an. Prüfen Sie, ob es geklappt hat, bevor Sie es erneut versuchen.';
+
+  @override
+  String get guideHostWaiting => 'Warte auf das Ergebnis …';
+
+  @override
+  String get guideStart => 'Anleitung starten';
+
+  @override
+  String get guideStartNotRunnable =>
+      'Diese Anleitung enthält Schritte, die diese App-Version nicht kennt; sie kann gelesen, aber nicht befolgt werden.';
+
+  @override
+  String get guideStartRefused =>
+      'Diese Anleitung kann hier nicht starten: Melden Sie sich an und schalten Sie den Aufgabenrekorder in diesem Workspace ein.';
+
+  @override
   String handoffAmountOutOfRange(String number) {
     return '$number: eine Summe, die zu groß ist, um exakt übertragen zu werden';
   }
@@ -5848,6 +6016,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get helpDotTooltip => 'Handbuch öffnen';
+
+  @override
+  String get helpGuidedTasks => 'Geführte Aufgaben';
 
   @override
   String get helpHintAvailability =>

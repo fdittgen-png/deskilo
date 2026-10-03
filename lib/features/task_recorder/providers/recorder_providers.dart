@@ -65,8 +65,9 @@ RecorderScope? recorderScope(Ref ref) {
   );
 }
 
-/// Whether this workspace lets its people record a task here.
-@riverpod
+/// Whether this workspace lets its people record a task here. Kept alive
+/// with the feature set it reads, so a running guide (#1867) can listen.
+@Riverpod(keepAlive: true)
 bool taskRecorderAvailable(Ref ref) => ref
     .watch(enabledFeaturesSyncProvider)
     .contains(WorkspaceFeature.taskRecorder);

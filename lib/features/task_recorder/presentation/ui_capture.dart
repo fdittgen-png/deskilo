@@ -19,6 +19,10 @@
 // protected screen nothing is noted (its one excluded marker stands),
 // and the recorder's own controls are never noted. Every call is
 // guarded: the capture can fail, the app never does.
+//
+// #1867 — a running guide hears the same resolved names
+// ([GuideEvents.sink]) while no recording is live: the guide follows
+// what this layer already understands, and writes nothing anywhere.
 import 'dart:async';
 
 import 'package:flutter/gestures.dart';
@@ -31,6 +35,7 @@ import '../../../l10n/app_localizations.dart';
 import '../application/booking_observation.dart' show errorObservation;
 import '../application/recorder_controller.dart';
 import '../domain/action_registry.dart';
+import '../guide/guide_session.dart';
 import 'ui_labels.g.dart';
 
 /// The live capture, while the recorder's indicator is mounted.
@@ -55,6 +60,11 @@ class UiCapture implements GuardedCommandWatcher {
   ];
 
   bool get _recording => controller().state == RecorderState.recording;
+
+  /// A guide is being followed: it hears what happens (#1867).
+  static GuideEventSink? get _guide => GuideEvents.sink;
+
+  bool get _listening => _guide != null || _recording;
 
   /// The language labels are matched in; the index is rebuilt on change.
   set localizations(AppLocalizations? l10n) {
@@ -123,6 +133,30 @@ class UiCapture implements GuardedCommandWatcher {
     return end > at;
   }
 
+  /// #1867 — the mounted control the recorder would name [target] (its
+  /// key or its pattern), on the route on top; null when it is not on
+  /// screen. The live guide points at it; it never guesses another one.
+  static Element? findControl(String target) {
+    Element? found;
+    var seen = 0;
+    _walk(
+      (e) {
+        final key = e.widget.key;
+        if (key is ValueKey<String> &&
+            (key.value == target || nameOfKey(key.value) == target)) {
+          final route = ModalRoute.of(e);
+          if (route == null || route.isCurrent) {
+            found = e;
+            return false;
+          }
+        }
+        return ++seen < 40000;
+      },
+      skip: (w) => w is TickerMode && !w.enabled,
+    );
+    return found;
+  }
+
   static bool _isRecorderControl(String? key) =>
       key != null &&
       (key.startsWith('recording-indicator') ||
@@ -143,12 +177,19 @@ class UiCapture implements GuardedCommandWatcher {
     try {
       if ((e.position - down.$1).distance > kTouchSlop ||
           e.timeStamp - down.$2 > kLongPressTimeout ||
-          !_recording ||
+          !_listening ||
           protectedNow()) {
         return;
       }
       final tap = _resolveTap(e.position, e.viewId);
       if (tap == null) return;
+      final guide = _guide;
+      if (guide != null) {
+        scheduleMicrotask(
+          () => guide.action(RecorderActions.uiTap, target: tap.target),
+        );
+      }
+      if (!_recording) return;
       final c = controller();
       final before = c.status.stepCount;
       // After the tap's own handlers ran: a seam that noted the tap
@@ -317,7 +358,7 @@ class UiCapture implements GuardedCommandWatcher {
       if (identical(left, _focused) || context == null || !context.mounted) {
         return;
       }
-      if (!_recording || protectedNow()) return;
+      if (!_listening || protectedNow()) return;
       final field = context.findAncestorWidgetOfExactType<EditableText>();
       if (field == null) return;
       final element = context as Element;
@@ -328,6 +369,11 @@ class UiCapture implements GuardedCommandWatcher {
           ?.decoration;
       final label =
           labelKeyOf(decoration?.labelText) ?? labelKeyOf(decoration?.hintText);
+      _guide?.action(
+        RecorderActions.uiCommitField,
+        target: nameOfKey(keyed?.key),
+      );
+      if (!_recording) return;
       controller().record(
         RecorderActions.uiCommitField,
         target: nameOfKey(keyed?.key),
@@ -343,6 +389,8 @@ class UiCapture implements GuardedCommandWatcher {
   /// A screen was opened: its route pattern and, after the frame that
   /// shows it, the app message its bar carries.
   void screenOpened(String pattern) {
+    if (!_listening) return;
+    _guide?.action(RecorderActions.uiOpenScreen, target: pattern);
     if (!_recording) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
@@ -380,10 +428,13 @@ class UiCapture implements GuardedCommandWatcher {
 
   void windowChanged({required bool opened}) {
     try {
-      if (!_recording || protectedNow()) return;
-      controller().record(
-        opened ? RecorderActions.uiOpenWindow : RecorderActions.uiCloseWindow,
-      );
+      if (!_listening || protectedNow()) return;
+      final action = opened
+          ? RecorderActions.uiOpenWindow
+          : RecorderActions.uiCloseWindow;
+      _guide?.action(action);
+      if (!_recording) return;
+      controller().record(action);
     } catch (err, st) {
       TraceLogger.instance.warn('recorder', 'window not noted', stackTrace: st);
     }
@@ -394,16 +445,19 @@ class UiCapture implements GuardedCommandWatcher {
   @override
   Object? started(String domain, String message) {
     try {
+      final target = uiCommandMessages.contains(message) ? message : null;
+      // #1867 — a guide hears the attempt and, later, its real result.
+      final guide = protectedNow() ? null : _guide;
+      guide?.action(RecorderActions.uiCommand, target: target);
       final c = controller();
-      if (c.state != RecorderState.recording ||
-          protectedNow() ||
-          c.awaitingOutcome) {
-        return null;
-      }
-      return c.attempt(
-        RecorderActions.uiCommand,
-        target: uiCommandMessages.contains(message) ? message : null,
-      );
+      final OperationToken? token =
+          c.state != RecorderState.recording ||
+              protectedNow() ||
+              c.awaitingOutcome
+          ? null
+          : c.attempt(RecorderActions.uiCommand, target: target);
+      if (guide == null) return token;
+      return _GuidedCommand(guide, token);
     } catch (err, st) {
       TraceLogger.instance.warn(
         'recorder',
@@ -417,24 +471,48 @@ class UiCapture implements GuardedCommandWatcher {
   @override
   void ended(Object token, {Object? error, bool pending = false}) {
     try {
-      if (token is! OperationToken) return;
-      final c = controller();
+      final OperationToken? recorded;
+      GuideEventSink? guide;
+      switch (token) {
+        case _GuidedCommand(guide: final g, token: final t):
+          guide = g;
+          recorded = t;
+        case OperationToken():
+          recorded = token;
+        default:
+          return;
+      }
+      final ({String outcome, Map<String, Object?> payload}) o;
       if (pending) {
-        c.outcome(token, RecorderOutcomes.commandPending);
+        o = (outcome: RecorderOutcomes.commandPending, payload: const {});
       } else if (error != null) {
-        final o = errorObservation(
+        o = errorObservation(
           error,
           refused: RecorderOutcomes.commandRefused,
           unknown: RecorderOutcomes.commandUnknown,
         );
-        c.outcome(token, o.outcome, payload: o.payload);
       } else {
-        c.outcome(token, RecorderOutcomes.commandDone);
+        o = (outcome: RecorderOutcomes.commandDone, payload: const {});
+      }
+      // Only the guide that saw the attempt, if it still runs.
+      if (guide != null && identical(GuideEvents.sink, guide)) {
+        guide.outcome(o.outcome);
+      }
+      if (recorded != null) {
+        controller().outcome(recorded, o.outcome, payload: o.payload);
       }
     } catch (err, st) {
       TraceLogger.instance.warn('recorder', 'result not noted', stackTrace: st);
     }
   }
+}
+
+/// A guarded command a guide saw: the guide to tell its result, and the
+/// recording's own token when one was live.
+class _GuidedCommand {
+  const _GuidedCommand(this.guide, this.token);
+  final GuideEventSink guide;
+  final OperationToken? token;
 }
 
 /// #2142 — reports windows pushed and popped on the navigator it watches

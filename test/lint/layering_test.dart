@@ -199,7 +199,8 @@ const Set<String> _knownPairs = {
 const Map<String, int> _pairBudget = {
   // 2026-10-02 #1865 — the task recorder's seam and adapter (see the
   // pairs above).
-  'help -> task_recorder': 2,
+  // #1867: the Help screen also offers Guided tasks (guided_tasks_sheet).
+  'help -> task_recorder': 3,
   'reservations -> task_recorder': 8,
   'task_recorder -> reservations': 1,
   'task_recorder -> workspace': 4,
