@@ -12,6 +12,7 @@ import '../../../core/ui/empty_state.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
 import '../../profile/providers/profile_providers.dart';
+import '../../visits/presentation/my_visits_section.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -103,6 +104,8 @@ class MeHomeTab extends ConsumerWidget {
                     ),
                   ),
               const LinkedSpacesSection(),
+              // #1835 — my guest visits: beside my spaces, never among them.
+              const MyVisitsSection(),
               const SizedBox(height: AppSpacing.md),
               Wrap(
                 spacing: AppSpacing.sm,

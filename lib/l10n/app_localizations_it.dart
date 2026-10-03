@@ -4739,6 +4739,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureFormHelpHintsTitle => 'Suggerimenti di aiuto';
 
   @override
+  String get featureGuestParticipationDesc =>
+      'Permette a una persona che non è membro di chiedere di visitare questo spazio, e a chi gestisce le prenotazioni di ammetterla o rifiutarla. Una visita non crea iscrizione, abbonamento né ruolo. Disattivato: nessuno chiede né viene ammesso qui.';
+
+  @override
+  String get featureGuestParticipationTitle => 'Visite degli ospiti';
+
+  @override
   String get featureHeldBack =>
       'In attesa della funzione qui sopra: attivala e anche questa torna a funzionare.';
 
@@ -10628,6 +10635,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'Il mio badge';
+
+  @override
+  String get myVisitsHelp =>
+      'Le visite che hai chiesto o a cui sei stato ammesso come ospite. Una visita non è un\'iscrizione.';
+
+  @override
+  String get myVisitsTitle => 'Le mie visite';
 
   @override
   String get navigationClassic =>
@@ -17120,6 +17134,31 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get visibilityTitle => 'Chi mi vede';
+
+  @override
+  String get visitCancel => 'Annulla questa visita';
+
+  @override
+  String get visitCancelFailed =>
+      'Impossibile annullare la visita. Nulla è cambiato; riprova.';
+
+  @override
+  String get visitGuestNote => 'Visita da ospite — non un\'iscrizione';
+
+  @override
+  String get visitStatusCancelled => 'Annullata';
+
+  @override
+  String get visitStatusConfirmed => 'Confermata';
+
+  @override
+  String get visitStatusDeclined => 'Rifiutata';
+
+  @override
+  String get visitStatusExpired => 'Scaduta';
+
+  @override
+  String get visitStatusRequested => 'Richiesta';
 
   @override
   String whatTheyCanDoTitle(String name) {

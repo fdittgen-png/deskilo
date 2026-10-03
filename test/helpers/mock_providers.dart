@@ -7,6 +7,9 @@ import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 export 'package:deskilo/core/demo/data/me_repository.dart';
+import 'package:deskilo/core/demo/data/guest_participation_repository.dart';
+import 'package:deskilo/features/visits/providers/visits_providers.dart';
+export 'package:deskilo/core/demo/data/guest_participation_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/core/capture/capture_protection.dart';
@@ -144,6 +147,8 @@ const kTestInstallationId = '00000000-0000-4000-8000-0000000071e5';
 
 List<Override> standardTestOverrides({
   FakeMeRepository? me,
+  // #1835 — the account's guest visits; none unless a test seeds them.
+  FakeGuestParticipationRepository? guestVisits,
   FakeWorkspaceApplicationRepository? applications,
   FakeAccountActivityRepository? accountActivity,
   FakeDirectoryRepository? directory,
@@ -270,6 +275,8 @@ List<Override> standardTestOverrides({
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directoryFake),
       // #1823 — the account layer, in memory; the account is the session's.
       meRepositoryProvider.overrideWith((ref) => me ?? FakeMeRepository()),
+      guestParticipationRepositoryProvider
+          .overrideWithValue(guestVisits ?? FakeGuestParticipationRepository()),
       accountContactRepositoryProvider.overrideWith((ref,source)=>contacts??FakeAccountContactRepository()),
       messengerRepositoryProvider.overrideWith(
           (ref, source) => messengers[source] ?? homeMessenger),

@@ -92,6 +92,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.accountingBook,
   // #1865 — recording a task is offered deliberately, never by default.
   WorkspaceFeature.taskRecorder,
+  // #1835 — a space admits guests deliberately, never by default.
+  WorkspaceFeature.guestParticipation,
 };
 
 /// Every other feature ships ON.
@@ -168,6 +170,7 @@ void main() {
       'capacityKpi': true,
       'accountingBook': true,
       'taskRecorder': true,
+      'guestParticipation': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

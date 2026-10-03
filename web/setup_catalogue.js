@@ -19,7 +19,8 @@ window.SETUP_PROCESSES=[
      "managedProfileAccess",
      "memberPage",
      "memberOrigin",
-     "memberEnvironments"
+     "memberEnvironments",
+     "guestParticipation"
     ]
    },
    {

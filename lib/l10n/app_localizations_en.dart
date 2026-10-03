@@ -4706,6 +4706,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureFormHelpHintsTitle => 'Help hints';
 
   @override
+  String get featureGuestParticipationDesc =>
+      'Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here.';
+
+  @override
+  String get featureGuestParticipationTitle => 'Guest visits';
+
+  @override
   String get featureHeldBack =>
       'Waiting on the feature above — switch that on and this one works again.';
 
@@ -10540,6 +10547,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'My badge';
+
+  @override
+  String get myVisitsHelp =>
+      'Visits you asked for or were admitted to, as a guest. A visit is not a membership.';
+
+  @override
+  String get myVisitsTitle => 'My visits';
 
   @override
   String get navigationClassic =>
@@ -16958,6 +16972,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get visibilityTitle => 'Who sees me';
+
+  @override
+  String get visitCancel => 'Cancel this visit';
+
+  @override
+  String get visitCancelFailed =>
+      'Could not cancel the visit. Nothing changed; try again.';
+
+  @override
+  String get visitGuestNote => 'Guest visit — not a membership';
+
+  @override
+  String get visitStatusCancelled => 'Cancelled';
+
+  @override
+  String get visitStatusConfirmed => 'Confirmed';
+
+  @override
+  String get visitStatusDeclined => 'Declined';
+
+  @override
+  String get visitStatusExpired => 'Expired';
+
+  @override
+  String get visitStatusRequested => 'Requested';
 
   @override
   String whatTheyCanDoTitle(String name) {

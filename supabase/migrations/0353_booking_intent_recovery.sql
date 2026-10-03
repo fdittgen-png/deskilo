@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0352 (#1855 A) -- a booking's original intent survives a lost answer.
+-- 0353 (#1855 A) -- a booking's original intent survives a lost answer.
 --
 -- `create_reservation_once` (0214) claims a client request id before it
 -- books, so a replay returns the first booking instead of making a
@@ -165,4 +165,4 @@ $fn$;
 revoke execute on function public.reservation_request_outcome(uuid, uuid) from public, anon;
 grant execute on function public.reservation_request_outcome(uuid, uuid) to authenticated;
 
-select public.set_deskilo_schema_version(352);
+select public.set_deskilo_schema_version(353);

@@ -8238,6 +8238,18 @@ abstract class AppLocalizations {
   /// **'Help hints'**
   String get featureFormHelpHintsTitle;
 
+  /// #1835 guest participation: the feature's description
+  ///
+  /// In en, this message translates to:
+  /// **'Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here.'**
+  String get featureGuestParticipationDesc;
+
+  /// #1835 guest participation: the feature's name
+  ///
+  /// In en, this message translates to:
+  /// **'Guest visits'**
+  String get featureGuestParticipationTitle;
+
   /// Subtitle note: the feature is on but its parent is off (#800)
   ///
   /// In en, this message translates to:
@@ -18119,6 +18131,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My badge'**
   String get myBadgeTitle;
+
+  /// #1835 Me › Home: under the My visits heading
+  ///
+  /// In en, this message translates to:
+  /// **'Visits you asked for or were admitted to, as a guest. A visit is not a membership.'**
+  String get myVisitsHelp;
+
+  /// #1835 Me › Home: the section listing the account's guest visits
+  ///
+  /// In en, this message translates to:
+  /// **'My visits'**
+  String get myVisitsTitle;
 
   /// #969 navigation style: navigationClassic
   ///
@@ -29419,6 +29443,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Who sees me'**
   String get visibilityTitle;
+
+  /// #1835 a visit row: the guest withdraws or cancels
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this visit'**
+  String get visitCancel;
+
+  /// #1835 a visit row: the cancel failed
+  ///
+  /// In en, this message translates to:
+  /// **'Could not cancel the visit. Nothing changed; try again.'**
+  String get visitCancelFailed;
+
+  /// #1835 a visit row: the one line that keeps visit and membership apart
+  ///
+  /// In en, this message translates to:
+  /// **'Guest visit — not a membership'**
+  String get visitGuestNote;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get visitStatusCancelled;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get visitStatusConfirmed;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get visitStatusDeclined;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get visitStatusExpired;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get visitStatusRequested;
 
   /// #2085 giving roles: whatTheyCanDoTitle
   ///
