@@ -304,6 +304,7 @@ class _InstanceGrantDialogState extends State<InstanceGrantDialog> {
             key: const ValueKey('instance-grant-days'),
           ),
           Slider(
+            key: const ValueKey('instance-grant-days-slider'),
             value: _days,
             min: 1,
             max: 30,
@@ -315,6 +316,7 @@ class _InstanceGrantDialogState extends State<InstanceGrantDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('instance-grant-cancel'),
           onPressed: () => Navigator.pop(context),
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
         ),
