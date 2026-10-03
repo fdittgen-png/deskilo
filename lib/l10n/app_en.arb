@@ -17226,6 +17226,10 @@
   "@taskRecorderActionBack": {
     "description": "#1865 task recorder: taskRecorderActionBack"
   },
+  "taskRecorderActionCancelReservation": "Cancelled the reservation",
+  "@taskRecorderActionCancelReservation": {
+    "description": "#1881 recorder: taskRecorderActionCancelReservation"
+  },
   "taskRecorderActionCancelReview": "Closed the booking without booking",
   "@taskRecorderActionCancelReview": {
     "description": "#1865 task recorder: taskRecorderActionCancelReview"
@@ -17234,9 +17238,25 @@
   "@taskRecorderActionChangeField": {
     "description": "#1865 task recorder: taskRecorderActionChangeField"
   },
+  "taskRecorderActionCheckIn": "Checked in",
+  "@taskRecorderActionCheckIn": {
+    "description": "#1881 recorder: taskRecorderActionCheckIn"
+  },
+  "taskRecorderActionCheckOut": "Checked out",
+  "@taskRecorderActionCheckOut": {
+    "description": "#1881 recorder: taskRecorderActionCheckOut"
+  },
+  "taskRecorderActionCloseMyReservation": "Closed my reservation without changing it",
+  "@taskRecorderActionCloseMyReservation": {
+    "description": "#1881 recorder: taskRecorderActionCloseMyReservation"
+  },
   "taskRecorderActionConfirmBooking": "Confirmed the booking",
   "@taskRecorderActionConfirmBooking": {
     "description": "#1865 task recorder: taskRecorderActionConfirmBooking"
+  },
+  "taskRecorderActionDeclineOptIn": "Did not switch on a test feature",
+  "@taskRecorderActionDeclineOptIn": {
+    "description": "#1884 recorder: taskRecorderActionDeclineOptIn"
   },
   "taskRecorderActionOpenReserve": "Opened Reserve",
   "@taskRecorderActionOpenReserve": {
@@ -17246,6 +17266,10 @@
   "@taskRecorderActionSelectDate": {
     "description": "#1865 task recorder: taskRecorderActionSelectDate"
   },
+  "taskRecorderActionSelectLevel": "Chose a level",
+  "@taskRecorderActionSelectLevel": {
+    "description": "#1881 recorder: taskRecorderActionSelectLevel"
+  },
   "taskRecorderActionSelectPeriod": "Chose the period",
   "@taskRecorderActionSelectPeriod": {
     "description": "#1865 task recorder: taskRecorderActionSelectPeriod"
@@ -17253,6 +17277,10 @@
   "taskRecorderActionSelectResource": "Chose a place",
   "@taskRecorderActionSelectResource": {
     "description": "#1865 task recorder: taskRecorderActionSelectResource"
+  },
+  "taskRecorderActionSwitchFeature": "Switched a feature",
+  "@taskRecorderActionSwitchFeature": {
+    "description": "#1884 recorder: taskRecorderActionSwitchFeature"
   },
   "taskRecorderActionSwitchView": "Switched the view",
   "@taskRecorderActionSwitchView": {
@@ -17407,6 +17435,18 @@
   "@taskRecorderOpenRecorder": {
     "description": "#1865 task recorder: taskRecorderOpenRecorder"
   },
+  "taskRecorderOutcomeCancelled": "Cancelled",
+  "@taskRecorderOutcomeCancelled": {
+    "description": "#1881 recorder: taskRecorderOutcomeCancelled"
+  },
+  "taskRecorderOutcomeCheckedIn": "Checked in",
+  "@taskRecorderOutcomeCheckedIn": {
+    "description": "#1881 recorder: taskRecorderOutcomeCheckedIn"
+  },
+  "taskRecorderOutcomeCheckedOut": "Checked out",
+  "@taskRecorderOutcomeCheckedOut": {
+    "description": "#1881 recorder: taskRecorderOutcomeCheckedOut"
+  },
   "taskRecorderOutcomeConfirmed": "Booked",
   "@taskRecorderOutcomeConfirmed": {
     "description": "#1865 task recorder: taskRecorderOutcomeConfirmed"
@@ -17422,6 +17462,14 @@
   "taskRecorderOutcomeSeries": "Series booked",
   "@taskRecorderOutcomeSeries": {
     "description": "#1865 task recorder: taskRecorderOutcomeSeries"
+  },
+  "taskRecorderOutcomeSettingNotSaved": "Not saved",
+  "@taskRecorderOutcomeSettingNotSaved": {
+    "description": "#1884 recorder: taskRecorderOutcomeSettingNotSaved"
+  },
+  "taskRecorderOutcomeSettingSaved": "Saved",
+  "@taskRecorderOutcomeSettingSaved": {
+    "description": "#1884 recorder: taskRecorderOutcomeSettingSaved"
   },
   "taskRecorderOutcomeUnknown": "No answer came",
   "@taskRecorderOutcomeUnknown": {
@@ -17586,6 +17634,10 @@
   "@taskRecorderValueCustom": {
     "description": "#1865 task recorder: taskRecorderValueCustom"
   },
+  "taskRecorderValueDay": "day",
+  "@taskRecorderValueDay": {
+    "description": "#1881 recorder: taskRecorderValueDay"
+  },
   "taskRecorderValueDesk": "a desk",
   "@taskRecorderValueDesk": {
     "description": "#1865 task recorder: taskRecorderValueDesk"
@@ -17610,6 +17662,10 @@
   "@taskRecorderValueList": {
     "description": "#1865 task recorder: taskRecorderValueList"
   },
+  "taskRecorderValueMonth": "month",
+  "@taskRecorderValueMonth": {
+    "description": "#1881 recorder: taskRecorderValueMonth"
+  },
   "taskRecorderValueMorning": "morning",
   "@taskRecorderValueMorning": {
     "description": "#1865 task recorder: taskRecorderValueMorning"
@@ -17618,9 +17674,17 @@
   "@taskRecorderValueNoCheckIn": {
     "description": "#1865 task recorder: taskRecorderValueNoCheckIn"
   },
+  "taskRecorderValueOff": "off",
+  "@taskRecorderValueOff": {
+    "description": "#1884 recorder: taskRecorderValueOff"
+  },
   "taskRecorderValueOffline": "offline",
   "@taskRecorderValueOffline": {
     "description": "#1865 task recorder: taskRecorderValueOffline"
+  },
+  "taskRecorderValueOn": "on",
+  "@taskRecorderValueOn": {
+    "description": "#1884 recorder: taskRecorderValueOn"
   },
   "taskRecorderValueOnce": "once",
   "@taskRecorderValueOnce": {
@@ -17677,6 +17741,10 @@
   "taskRecorderValueTomorrow": "tomorrow",
   "@taskRecorderValueTomorrow": {
     "description": "#1865 task recorder: taskRecorderValueTomorrow"
+  },
+  "taskRecorderValueWeek": "week",
+  "@taskRecorderValueWeek": {
+    "description": "#1881 recorder: taskRecorderValueWeek"
   },
   "taskRecorderValueWithheld": "not recorded",
   "@taskRecorderValueWithheld": {

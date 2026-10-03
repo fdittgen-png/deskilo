@@ -26444,6 +26444,12 @@ abstract class AppLocalizations {
   /// **'Went back'**
   String get taskRecorderActionBack;
 
+  /// #1881 recorder: taskRecorderActionCancelReservation
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled the reservation'**
+  String get taskRecorderActionCancelReservation;
+
   /// #1865 task recorder: taskRecorderActionCancelReview
   ///
   /// In en, this message translates to:
@@ -26456,11 +26462,35 @@ abstract class AppLocalizations {
   /// **'Changed a booking detail'**
   String get taskRecorderActionChangeField;
 
+  /// #1881 recorder: taskRecorderActionCheckIn
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get taskRecorderActionCheckIn;
+
+  /// #1881 recorder: taskRecorderActionCheckOut
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out'**
+  String get taskRecorderActionCheckOut;
+
+  /// #1881 recorder: taskRecorderActionCloseMyReservation
+  ///
+  /// In en, this message translates to:
+  /// **'Closed my reservation without changing it'**
+  String get taskRecorderActionCloseMyReservation;
+
   /// #1865 task recorder: taskRecorderActionConfirmBooking
   ///
   /// In en, this message translates to:
   /// **'Confirmed the booking'**
   String get taskRecorderActionConfirmBooking;
+
+  /// #1884 recorder: taskRecorderActionDeclineOptIn
+  ///
+  /// In en, this message translates to:
+  /// **'Did not switch on a test feature'**
+  String get taskRecorderActionDeclineOptIn;
 
   /// #1865 task recorder: taskRecorderActionOpenReserve
   ///
@@ -26474,6 +26504,12 @@ abstract class AppLocalizations {
   /// **'Chose the day'**
   String get taskRecorderActionSelectDate;
 
+  /// #1881 recorder: taskRecorderActionSelectLevel
+  ///
+  /// In en, this message translates to:
+  /// **'Chose a level'**
+  String get taskRecorderActionSelectLevel;
+
   /// #1865 task recorder: taskRecorderActionSelectPeriod
   ///
   /// In en, this message translates to:
@@ -26485,6 +26521,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chose a place'**
   String get taskRecorderActionSelectResource;
+
+  /// #1884 recorder: taskRecorderActionSwitchFeature
+  ///
+  /// In en, this message translates to:
+  /// **'Switched a feature'**
+  String get taskRecorderActionSwitchFeature;
 
   /// #1865 task recorder: taskRecorderActionSwitchView
   ///
@@ -26684,6 +26726,24 @@ abstract class AppLocalizations {
   /// **'Open the task recorder'**
   String get taskRecorderOpenRecorder;
 
+  /// #1881 recorder: taskRecorderOutcomeCancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get taskRecorderOutcomeCancelled;
+
+  /// #1881 recorder: taskRecorderOutcomeCheckedIn
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get taskRecorderOutcomeCheckedIn;
+
+  /// #1881 recorder: taskRecorderOutcomeCheckedOut
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out'**
+  String get taskRecorderOutcomeCheckedOut;
+
   /// #1865 task recorder: taskRecorderOutcomeConfirmed
   ///
   /// In en, this message translates to:
@@ -26707,6 +26767,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Series booked'**
   String get taskRecorderOutcomeSeries;
+
+  /// #1884 recorder: taskRecorderOutcomeSettingNotSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Not saved'**
+  String get taskRecorderOutcomeSettingNotSaved;
+
+  /// #1884 recorder: taskRecorderOutcomeSettingSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get taskRecorderOutcomeSettingSaved;
 
   /// #1865 task recorder: taskRecorderOutcomeUnknown
   ///
@@ -26930,6 +27002,12 @@ abstract class AppLocalizations {
   /// **'custom times'**
   String get taskRecorderValueCustom;
 
+  /// #1881 recorder: taskRecorderValueDay
+  ///
+  /// In en, this message translates to:
+  /// **'day'**
+  String get taskRecorderValueDay;
+
   /// #1865 task recorder: taskRecorderValueDesk
   ///
   /// In en, this message translates to:
@@ -26966,6 +27044,12 @@ abstract class AppLocalizations {
   /// **'list'**
   String get taskRecorderValueList;
 
+  /// #1881 recorder: taskRecorderValueMonth
+  ///
+  /// In en, this message translates to:
+  /// **'month'**
+  String get taskRecorderValueMonth;
+
   /// #1865 task recorder: taskRecorderValueMorning
   ///
   /// In en, this message translates to:
@@ -26978,11 +27062,23 @@ abstract class AppLocalizations {
   /// **'without check-in'**
   String get taskRecorderValueNoCheckIn;
 
+  /// #1884 recorder: taskRecorderValueOff
+  ///
+  /// In en, this message translates to:
+  /// **'off'**
+  String get taskRecorderValueOff;
+
   /// #1865 task recorder: taskRecorderValueOffline
   ///
   /// In en, this message translates to:
   /// **'offline'**
   String get taskRecorderValueOffline;
+
+  /// #1884 recorder: taskRecorderValueOn
+  ///
+  /// In en, this message translates to:
+  /// **'on'**
+  String get taskRecorderValueOn;
 
   /// #1865 task recorder: taskRecorderValueOnce
   ///
@@ -27067,6 +27163,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'tomorrow'**
   String get taskRecorderValueTomorrow;
+
+  /// #1881 recorder: taskRecorderValueWeek
+  ///
+  /// In en, this message translates to:
+  /// **'week'**
+  String get taskRecorderValueWeek;
 
   /// #1865 task recorder: taskRecorderValueWithheld
   ///

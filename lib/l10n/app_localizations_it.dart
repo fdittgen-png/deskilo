@@ -15382,6 +15382,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderActionBack => 'È tornato indietro';
 
   @override
+  String get taskRecorderActionCancelReservation =>
+      'Ha annullato la prenotazione';
+
+  @override
   String get taskRecorderActionCancelReview =>
       'Ha chiuso la prenotazione senza prenotare';
 
@@ -15390,8 +15394,22 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ha modificato un dettaglio della prenotazione';
 
   @override
+  String get taskRecorderActionCheckIn => 'Ha fatto il check-in';
+
+  @override
+  String get taskRecorderActionCheckOut => 'Ha fatto il check-out';
+
+  @override
+  String get taskRecorderActionCloseMyReservation =>
+      'Ha chiuso la prenotazione senza modificarla';
+
+  @override
   String get taskRecorderActionConfirmBooking =>
       'Ha confermato la prenotazione';
+
+  @override
+  String get taskRecorderActionDeclineOptIn =>
+      'Non ha attivato una funzionalità in prova';
 
   @override
   String get taskRecorderActionOpenReserve => 'Ha aperto Prenota';
@@ -15400,10 +15418,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderActionSelectDate => 'Ha scelto il giorno';
 
   @override
+  String get taskRecorderActionSelectLevel => 'Ha scelto un piano';
+
+  @override
   String get taskRecorderActionSelectPeriod => 'Ha scelto il periodo';
 
   @override
   String get taskRecorderActionSelectResource => 'Ha scelto un posto';
+
+  @override
+  String get taskRecorderActionSwitchFeature => 'Ha cambiato una funzionalità';
 
   @override
   String get taskRecorderActionSwitchView => 'Ha cambiato vista';
@@ -15519,6 +15543,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderOpenRecorder => 'Apri il registratore di attività';
 
   @override
+  String get taskRecorderOutcomeCancelled => 'Annullata';
+
+  @override
+  String get taskRecorderOutcomeCheckedIn => 'Check-in registrato';
+
+  @override
+  String get taskRecorderOutcomeCheckedOut => 'Check-out registrato';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Prenotato';
 
   @override
@@ -15529,6 +15562,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderOutcomeSeries => 'Serie prenotata';
+
+  @override
+  String get taskRecorderOutcomeSettingNotSaved => 'Non salvato';
+
+  @override
+  String get taskRecorderOutcomeSettingSaved => 'Salvato';
 
   @override
   String get taskRecorderOutcomeUnknown => 'Nessuna risposta ricevuta';
@@ -15654,6 +15693,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderValueCustom => 'orari personalizzati';
 
   @override
+  String get taskRecorderValueDay => 'giorno';
+
+  @override
   String get taskRecorderValueDesk => 'una scrivania';
 
   @override
@@ -15672,13 +15714,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderValueList => 'elenco';
 
   @override
+  String get taskRecorderValueMonth => 'mese';
+
+  @override
   String get taskRecorderValueMorning => 'mattina';
 
   @override
   String get taskRecorderValueNoCheckIn => 'senza check-in';
 
   @override
+  String get taskRecorderValueOff => 'disattiva';
+
+  @override
   String get taskRecorderValueOffline => 'offline';
+
+  @override
+  String get taskRecorderValueOn => 'attiva';
 
   @override
   String get taskRecorderValueOnce => 'una volta';
@@ -15721,6 +15772,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderValueTomorrow => 'domani';
+
+  @override
+  String get taskRecorderValueWeek => 'settimana';
 
   @override
   String get taskRecorderValueWithheld => 'non registrato';
