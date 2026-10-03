@@ -11148,6 +11148,18 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get inboxRetry;
 
+  /// #2145 assistant onboarding: instanceAccessTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant access'**
+  String get instanceAccessTitle;
+
+  /// #2145 assistant onboarding: instanceAccessUntil
+  ///
+  /// In en, this message translates to:
+  /// **'Until {date}'**
+  String instanceAccessUntil(String date);
+
   /// #977 instance wizard: instanceAccountIntro
   ///
   /// In en, this message translates to:
@@ -11466,6 +11478,90 @@ abstract class AppLocalizations {
   /// **'The instance is ready. Use it on this device, then share the server QR from the Server screen so members join the same one.'**
   String get instanceDoneIntro;
 
+  /// #2145 assistant onboarding: instanceEndpointTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant endpoint'**
+  String get instanceEndpointTitle;
+
+  /// #2145 assistant onboarding: instanceFamilyChatgpt
+  ///
+  /// In en, this message translates to:
+  /// **'ChatGPT'**
+  String get instanceFamilyChatgpt;
+
+  /// #2145 assistant onboarding: instanceFamilyClaude
+  ///
+  /// In en, this message translates to:
+  /// **'Claude'**
+  String get instanceFamilyClaude;
+
+  /// #2145 assistant onboarding: instanceFamilyLoopback
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop or command-line assistant'**
+  String get instanceFamilyLoopback;
+
+  /// #2145 assistant onboarding: instanceGrant
+  ///
+  /// In en, this message translates to:
+  /// **'Approve access'**
+  String get instanceGrant;
+
+  /// #2145 assistant onboarding: instanceGrantDays
+  ///
+  /// In en, this message translates to:
+  /// **'Choose between 1 and 30 days.'**
+  String get instanceGrantDays;
+
+  /// #2145 assistant onboarding: instanceGrantDaysLabel
+  ///
+  /// In en, this message translates to:
+  /// **'For {days, plural, =1{1 day} other{{days} days}}'**
+  String instanceGrantDaysLabel(int days);
+
+  /// #2145 assistant onboarding: instanceGrantHelp
+  ///
+  /// In en, this message translates to:
+  /// **'While no other database administrator exists, you approve access yourself — yours included — for up to 30 days, with a reason. Each approval is recorded.'**
+  String get instanceGrantHelp;
+
+  /// #2145 assistant onboarding: instanceGrantNeedsGoogle
+  ///
+  /// In en, this message translates to:
+  /// **'Approving access needs this session to be signed in with Google.'**
+  String get instanceGrantNeedsGoogle;
+
+  /// #2145 assistant onboarding: instanceGrantNoIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'That person has not confirmed their identity yet.'**
+  String get instanceGrantNoIdentity;
+
+  /// #2145 assistant onboarding: instanceGrantOtherAdmin
+  ///
+  /// In en, this message translates to:
+  /// **'A database administrator decides access here; ask them.'**
+  String get instanceGrantOtherAdmin;
+
+  /// #2145 assistant onboarding: instanceGrantReason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get instanceGrantReason;
+
+  /// #2145 assistant onboarding: instanceGrantReasonNeeded
+  ///
+  /// In en, this message translates to:
+  /// **'Write why this access is approved (up to 500 characters).'**
+  String get instanceGrantReasonNeeded;
+
+  /// #2145 assistant onboarding: instanceGrantTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Approve assistant access for {name}'**
+  String instanceGrantTitle(String name);
+
   /// #977 instance wizard: instanceInstallSchema
   ///
   /// In en, this message translates to:
@@ -11477,6 +11573,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.'**
   String get instanceIntro;
+
+  /// #2145 assistant onboarding: instanceLoopbackHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Claude Code, Cursor, VS Code and other assistants that run on a person\'s own computer. Each person still approves their own connection.'**
+  String get instanceLoopbackHelp;
+
+  /// #2145 assistant onboarding: instanceLoopbackTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Allow desktop and command-line assistants'**
+  String get instanceLoopbackTitle;
 
   /// #1827 B — instance operator console for the installation's assistants
   ///
@@ -11495,6 +11603,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only the instance operator manages the installation\'s assistants.'**
   String get instanceNotOperator;
+
+  /// #2145 assistant onboarding: instanceNoticeClientWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is waiting for your approval.'**
+  String instanceNoticeClientWaiting(String name);
+
+  /// #2145 assistant onboarding: instanceNoticeOperatorGrant
+  ///
+  /// In en, this message translates to:
+  /// **'The operator approved assistant access for {name}.'**
+  String instanceNoticeOperatorGrant(String name);
+
+  /// #2145 assistant onboarding: instanceNoticeSelfGrant
+  ///
+  /// In en, this message translates to:
+  /// **'{name} approved their own assistant access.'**
+  String instanceNoticeSelfGrant(String name);
+
+  /// #2145 assistant onboarding: instanceNoticesMarkRead
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as read'**
+  String get instanceNoticesMarkRead;
+
+  /// #2145 assistant onboarding: instanceOperatorApproved
+  ///
+  /// In en, this message translates to:
+  /// **'Approved by the operator'**
+  String get instanceOperatorApproved;
 
   /// #977 instance wizard: instanceOrganisationLabel
   ///
@@ -11543,6 +11681,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Instance owner'**
   String get instanceOwnerTitle;
+
+  /// #2145 assistant onboarding: instanceProbeCheck
+  ///
+  /// In en, this message translates to:
+  /// **'Check the server'**
+  String get instanceProbeCheck;
+
+  /// #2145 assistant onboarding: instanceProbeDeployed
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant endpoint answers as it should.'**
+  String get instanceProbeDeployed;
+
+  /// #2145 assistant onboarding: instanceProbeMismatch
+  ///
+  /// In en, this message translates to:
+  /// **'The endpoint answers with another address than the one assistants are given.'**
+  String get instanceProbeMismatch;
+
+  /// #2145 assistant onboarding: instanceProbeMissing
+  ///
+  /// In en, this message translates to:
+  /// **'The server has not been checked yet.'**
+  String get instanceProbeMissing;
+
+  /// #2145 assistant onboarding: instanceProbeNotDeployed
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant endpoint is not deployed on this server yet.'**
+  String get instanceProbeNotDeployed;
+
+  /// #2145 assistant onboarding: instanceProbePending
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the server…'**
+  String get instanceProbePending;
+
+  /// #2145 assistant onboarding: instanceProbeStale
+  ///
+  /// In en, this message translates to:
+  /// **'The last check is more than 15 minutes old. Check again before turning assistants on.'**
+  String get instanceProbeStale;
+
+  /// #2145 assistant onboarding: instanceProbeUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'The server could not be reached. Try again in a moment.'**
+  String get instanceProbeUnavailable;
 
   /// #977 instance wizard: instanceProgress
   ///
@@ -11646,6 +11832,12 @@ abstract class AppLocalizations {
   /// **'Changes here need your second factor on this session.'**
   String get instanceSecondFactorNeeded;
 
+  /// #2145 assistant onboarding: instanceSelfApproved
+  ///
+  /// In en, this message translates to:
+  /// **'Self-approved by operator'**
+  String get instanceSelfApproved;
+
   /// #977 instance wizard: instanceSignInExplain
   ///
   /// In en, this message translates to:
@@ -11735,6 +11927,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Assistants become usable in every workspace that offers them. You can turn them off again at any time.'**
   String get instanceTurnOnConfirm;
+
+  /// #2145 assistant onboarding: instanceTurnOnNeedsProbe
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant endpoint is not confirmed. Check the server first.'**
+  String get instanceTurnOnNeedsProbe;
 
   /// #977 instance wizard: instanceUseExisting
   ///
@@ -15738,11 +15936,41 @@ abstract class AppLocalizations {
   /// **'Choose each workspace and what it may do there. Nothing is chosen for you.'**
   String get mcpConsentChoose;
 
+  /// #2145 assistant onboarding: mcpConsentClientBlocked
+  ///
+  /// In en, this message translates to:
+  /// **'The operator has blocked {name} on this server. It cannot be connected.'**
+  String mcpConsentClientBlocked(String name);
+
+  /// #2145 assistant onboarding: mcpConsentClientWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is not approved on this server yet. The operator approves each assistant once; then connect again from the assistant.'**
+  String mcpConsentClientWaiting(String name);
+
   /// #1615 mcp_consent
   ///
   /// In en, this message translates to:
   /// **'Connected. Returning to the assistant.'**
   String get mcpConsentConnected;
+
+  /// #2145 assistant onboarding: mcpConsentDeciderAsk
+  ///
+  /// In en, this message translates to:
+  /// **'Ask {name} to decide.'**
+  String mcpConsentDeciderAsk(String name);
+
+  /// #2145 assistant onboarding: mcpConsentDeciderMe
+  ///
+  /// In en, this message translates to:
+  /// **'You decide this yourself, in the installation console.'**
+  String get mcpConsentDeciderMe;
+
+  /// #2145 assistant onboarding: mcpConsentDeciderNobody
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody answers for this server yet.'**
+  String get mcpConsentDeciderNobody;
 
   /// #1615 mcp_consent
   ///
@@ -15755,6 +15983,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deny'**
   String get mcpConsentDeny;
+
+  /// #2145 assistant onboarding: mcpConsentFamilyChatgpt
+  ///
+  /// In en, this message translates to:
+  /// **'Approved for every ChatGPT connection.'**
+  String get mcpConsentFamilyChatgpt;
+
+  /// #2145 assistant onboarding: mcpConsentFamilyClaude
+  ///
+  /// In en, this message translates to:
+  /// **'Approved for every Claude connection.'**
+  String get mcpConsentFamilyClaude;
+
+  /// #2145 assistant onboarding: mcpConsentFamilyLoopback
+  ///
+  /// In en, this message translates to:
+  /// **'Approved for desktop and command-line assistants on this computer.'**
+  String get mcpConsentFamilyLoopback;
 
   /// #1809 mcp_disclosure
   ///
@@ -15779,6 +16025,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The assistant was approved but the connection is not usable yet. Connect again from the assistant.'**
   String get mcpConsentPartial;
+
+  /// #2145 assistant onboarding: mcpConsentRedirectHost
+  ///
+  /// In en, this message translates to:
+  /// **'The answer is sent to {host}.'**
+  String mcpConsentRedirectHost(String host);
 
   /// #1615 mcp_consent
   ///

@@ -7,6 +7,7 @@
 // client and turns the runtime on (after confirming what it means).
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
 import 'package:deskilo/features/mcp/domain/instance_operator.dart';
+import 'package:deskilo/features/mcp/domain/mcp_onboarding.dart';
 import 'package:deskilo/features/mcp/presentation/instance_assistants_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,11 @@ InstanceMcpOverview _overview({
   bool secondFactor = true,
   bool enabled = false,
   List<String> blockers = const [],
+  // #2145 — Turn on needs a fresh, deployed probe (0360).
+  EndpointProbe probe = const EndpointProbe(
+    state: EndpointProbeState.deployed,
+    fresh: true,
+  ),
 }) => InstanceMcpOverview(
   enabled: enabled,
   blockers: blockers,
@@ -32,6 +38,7 @@ InstanceMcpOverview _overview({
     InstanceClient(clientId: 'c-claude', name: 'Claude', status: 'active'),
     InstanceClient(clientId: 'c-code', name: 'Claude Code', status: 'waiting'),
   ],
+  endpointProbe: probe,
 );
 
 Finder _key(String k) => find.byKey(ValueKey(k));
@@ -106,6 +113,7 @@ void main() {
   testWidgets('a ready runtime is turned on only after confirming it means '
       'every workspace', (tester) async {
     final admin = await _pump(tester, _overview());
+    await tester.ensureVisible(_key('instance-turn-on'));
     await tester.tap(_key('instance-turn-on'));
     await tester.pumpAndSettle();
     expect(admin.instanceCalls, isEmpty, reason: 'nothing before confirming');

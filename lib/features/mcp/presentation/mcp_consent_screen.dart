@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -10,6 +11,8 @@ import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/connect_assistant.dart';
 import '../domain/mcp_connection.dart';
+import '../domain/mcp_onboarding.dart';
+import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_providers.dart';
 import '../domain/mcp_access_status.dart';
 import '../../auth/domain/identity_binding.dart';
@@ -183,6 +186,25 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // #2145 — the client's approval is read first: an assistant the
+    // operator has not approved never reaches Auth's authorization API
+    // from here, and the person learns why and who decides. A server
+    // before 0358 (or an unreadable answer) keeps the older path, where
+    // the database still refuses an unapproved client.
+    final gate = ref.watch(mcpConsentStatusProvider(widget.authorizationId));
+    final status = gate.value;
+    final client = status?.client;
+    if (gate.isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(l10n?.mcpConsentTitle ?? 'Connect an assistant'),
+        ),
+        body: const LoadingView(),
+      );
+    }
+    if (client != null && client.status != McpClientApproval.approved) {
+      return _notApproved(l10n, client, status!.decider);
+    }
     final consent = ref.watch(mcpConsentProvider(widget.authorizationId));
     return Scaffold(
       appBar: AppBar(
@@ -237,6 +259,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                 key: const ValueKey('mcp-consent-client'),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
+              if (client != null) _clientFacts(l10n, client),
               const SizedBox(height: AppSpacing.md),
               _googleGate(l10n),
               if (!c.options.eligible) ...[
@@ -248,6 +271,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                   Icons.lock_outline,
                   InlineBannerSeverity.error,
                 ),
+                if (status?.decider case final d?) _deciderLine(l10n, d),
                 const SizedBox(height: AppSpacing.md),
                 OutlinedButton(
                   key: const ValueKey('mcp-consent-request-eligibility'),
@@ -381,6 +405,118 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
           ],
         ],
       ),
+    );
+  }
+
+  /// #2145 — an assistant the operator has not approved: the cause, who
+  /// decides, and Deny. Nothing is asked of Auth but the refusal.
+  Widget _notApproved(
+    AppLocalizations? l10n,
+    ConsentClient client,
+    ConsentDecider? decider,
+  ) {
+    final name = client.name.isEmpty ? client.clientId : client.name;
+    final blocked = client.status == McpClientApproval.blocked;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(l10n?.mcpConsentTitle ?? 'Connect an assistant'),
+      ),
+      body: ListView(
+        padding: AppSpacing.gutterAll,
+        children: [
+          if (_outcome != null) _outcomeBanner(l10n, _outcome!),
+          _banner(
+            'mcp-consent-client-${client.status.name}',
+            blocked
+                ? (l10n?.mcpConsentClientBlocked(name) ??
+                      'The operator has blocked $name on this server. It '
+                          'cannot be connected.')
+                : (l10n?.mcpConsentClientWaiting(name) ??
+                      '$name is not approved on this server yet. The '
+                          'operator approves each assistant once; then '
+                          'connect again from the assistant.'),
+            Icons.lock_outline,
+            InlineBannerSeverity.error,
+          ),
+          _clientFacts(l10n, client),
+          if (!blocked && decider != null) _deciderLine(l10n, decider),
+          const SizedBox(height: AppSpacing.lg),
+          OutlinedButton(
+            key: const ValueKey('mcp-consent-deny'),
+            onPressed: _busy || _redirected ? null : _deny,
+            child: Text(l10n?.mcpConsentDeny ?? 'Deny'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Where the answer goes, and the family an approval covers.
+  Widget _clientFacts(AppLocalizations? l10n, ConsentClient client) {
+    final host = client.redirectHost;
+    final family = switch (client.family) {
+      'claude' => l10n?.mcpConsentFamilyClaude ??
+          'Approved for every Claude connection.',
+      'chatgpt' => l10n?.mcpConsentFamilyChatgpt ??
+          'Approved for every ChatGPT connection.',
+      'loopback' => l10n?.mcpConsentFamilyLoopback ??
+          'Approved for desktop and command-line assistants on this computer.',
+      _ => null,
+    };
+    final approved = client.status == McpClientApproval.approved;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (host != null && host.isNotEmpty)
+          Text(
+            key: const ValueKey('mcp-consent-redirect-host'),
+            l10n?.mcpConsentRedirectHost(host) ??
+                'The answer is sent to $host.',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        if (approved && family != null)
+          Text(
+            key: ValueKey('mcp-consent-family-${client.family}'),
+            family,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+      ],
+    );
+  }
+
+  /// Who takes the open step: you (with the console), a named person, or
+  /// nobody yet.
+  Widget _deciderLine(AppLocalizations? l10n, ConsentDecider d) {
+    if (d.me) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            key: const ValueKey('mcp-consent-decider-me'),
+            l10n?.mcpConsentDeciderMe ??
+                'You decide this yourself, in the installation console.',
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton(
+              key: const ValueKey('mcp-consent-open-console'),
+              onPressed: () => context.push('/installation/assistants'),
+              child: Text(
+                l10n?.mcpConnectOpenInstallation ??
+                    'Open the installation console',
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+    final name = d.displayName;
+    return Text(
+      key: ValueKey('mcp-consent-decider-${d.kind.name}'),
+      name == null || name.isEmpty
+          ? (l10n?.mcpConsentDeciderNobody ??
+                'Nobody answers for this server yet.')
+          : (l10n?.mcpConsentDeciderAsk(name) ?? 'Ask $name to decide.'),
     );
   }
 

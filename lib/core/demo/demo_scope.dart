@@ -53,6 +53,8 @@ import 'data/local_setup_repository.dart';
 import 'data/template_search_repository.dart';
 import 'data/instance_repository.dart';
 import 'data/mcp_admin_repository.dart';
+import 'data/mcp_onboarding_repository.dart';
+import '../../features/mcp/providers/assistant_setup_providers.dart';
 import 'data/mcp_connection_repository.dart';
 import '../../features/mcp/providers/mcp_providers.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -135,6 +137,9 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // #1626/#1627 — no policy to save and no queue to review; and no
       // second factor, since Demo has no Auth server to verify one.
       mcpAdminRepositoryProvider.overrideWithValue(FakeMcpAdminRepository()),
+      // #2145 — no client to approve, no endpoint, no notices.
+      mcpOnboardingRepositoryProvider
+          .overrideWithValue(FakeMcpOnboardingRepository()),
       // #1829 — Demo names no instance owner: the visitor is not an account.
       instanceRepositoryProvider.overrideWithValue(FakeInstanceRepository()),
       // #1625 — Demo's one fictional installation: nothing is verified
@@ -275,6 +280,7 @@ const Set<String> demoOverriddenProviders = {
   'actionConfirmationRepositoryProvider',
   'mcpConnectionRepositoryProvider',
   'mcpAdminRepositoryProvider',
+  'mcpOnboardingRepositoryProvider', // #2145
   'instanceRepositoryProvider',
   'activeMcpTargetProvider',
   'localSetupRepositoryProvider',

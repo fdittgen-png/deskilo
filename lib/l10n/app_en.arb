@@ -7115,6 +7115,19 @@
   "inboxNoArchived": "No archived conversations.",
   "inboxNoUnread": "Nothing unread — you are up to date.",
   "inboxRetry": "Try again",
+  "instanceAccessTitle": "Assistant access",
+  "@instanceAccessTitle": {
+    "description": "#2145 assistant onboarding: instanceAccessTitle"
+  },
+  "instanceAccessUntil": "Until {date}",
+  "@instanceAccessUntil": {
+    "description": "#2145 assistant onboarding: instanceAccessUntil",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "instanceAccountIntro": "Create a free account at supabase.com, then make a personal access token (Account → Access Tokens) and paste it here. The wizard uses it to create and set up the project; it is never stored.",
   "@instanceAccountIntro": {
     "description": "#977 instance wizard: instanceAccountIntro"
@@ -7350,6 +7363,72 @@
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
   },
+  "instanceEndpointTitle": "Assistant endpoint",
+  "@instanceEndpointTitle": {
+    "description": "#2145 assistant onboarding: instanceEndpointTitle"
+  },
+  "instanceFamilyChatgpt": "ChatGPT",
+  "@instanceFamilyChatgpt": {
+    "description": "#2145 assistant onboarding: instanceFamilyChatgpt"
+  },
+  "instanceFamilyClaude": "Claude",
+  "@instanceFamilyClaude": {
+    "description": "#2145 assistant onboarding: instanceFamilyClaude"
+  },
+  "instanceFamilyLoopback": "Desktop or command-line assistant",
+  "@instanceFamilyLoopback": {
+    "description": "#2145 assistant onboarding: instanceFamilyLoopback"
+  },
+  "instanceGrant": "Approve access",
+  "@instanceGrant": {
+    "description": "#2145 assistant onboarding: instanceGrant"
+  },
+  "instanceGrantDays": "Choose between 1 and 30 days.",
+  "@instanceGrantDays": {
+    "description": "#2145 assistant onboarding: instanceGrantDays"
+  },
+  "instanceGrantDaysLabel": "For {days, plural, =1{1 day} other{{days} days}}",
+  "@instanceGrantDaysLabel": {
+    "description": "#2145 assistant onboarding: instanceGrantDaysLabel",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceGrantHelp": "While no other database administrator exists, you approve access yourself — yours included — for up to 30 days, with a reason. Each approval is recorded.",
+  "@instanceGrantHelp": {
+    "description": "#2145 assistant onboarding: instanceGrantHelp"
+  },
+  "instanceGrantNeedsGoogle": "Approving access needs this session to be signed in with Google.",
+  "@instanceGrantNeedsGoogle": {
+    "description": "#2145 assistant onboarding: instanceGrantNeedsGoogle"
+  },
+  "instanceGrantNoIdentity": "That person has not confirmed their identity yet.",
+  "@instanceGrantNoIdentity": {
+    "description": "#2145 assistant onboarding: instanceGrantNoIdentity"
+  },
+  "instanceGrantOtherAdmin": "A database administrator decides access here; ask them.",
+  "@instanceGrantOtherAdmin": {
+    "description": "#2145 assistant onboarding: instanceGrantOtherAdmin"
+  },
+  "instanceGrantReason": "Reason",
+  "@instanceGrantReason": {
+    "description": "#2145 assistant onboarding: instanceGrantReason"
+  },
+  "instanceGrantReasonNeeded": "Write why this access is approved (up to 500 characters).",
+  "@instanceGrantReasonNeeded": {
+    "description": "#2145 assistant onboarding: instanceGrantReasonNeeded"
+  },
+  "instanceGrantTitle": "Approve assistant access for {name}",
+  "@instanceGrantTitle": {
+    "description": "#2145 assistant onboarding: instanceGrantTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "instanceInstallSchema": "Install the schema: every migration of the app, in order ({count}).",
   "@instanceInstallSchema": {
     "description": "#977 instance wizard: instanceInstallSchema",
@@ -7363,6 +7442,14 @@
   "@instanceIntro": {
     "description": "#1827 B — instance operator console for the installation's assistants"
   },
+  "instanceLoopbackHelp": "Claude Code, Cursor, VS Code and other assistants that run on a person's own computer. Each person still approves their own connection.",
+  "@instanceLoopbackHelp": {
+    "description": "#2145 assistant onboarding: instanceLoopbackHelp"
+  },
+  "instanceLoopbackTitle": "Allow desktop and command-line assistants",
+  "@instanceLoopbackTitle": {
+    "description": "#2145 assistant onboarding: instanceLoopbackTitle"
+  },
   "instanceMakeAdmin": "Make administrator",
   "@instanceMakeAdmin": {
     "description": "#1827 B — instance operator console for the installation's assistants"
@@ -7374,6 +7461,41 @@
   "instanceNotOperator": "Only the instance operator manages the installation's assistants.",
   "@instanceNotOperator": {
     "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNoticeClientWaiting": "{name} is waiting for your approval.",
+  "@instanceNoticeClientWaiting": {
+    "description": "#2145 assistant onboarding: instanceNoticeClientWaiting",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceNoticeOperatorGrant": "The operator approved assistant access for {name}.",
+  "@instanceNoticeOperatorGrant": {
+    "description": "#2145 assistant onboarding: instanceNoticeOperatorGrant",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceNoticeSelfGrant": "{name} approved their own assistant access.",
+  "@instanceNoticeSelfGrant": {
+    "description": "#2145 assistant onboarding: instanceNoticeSelfGrant",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceNoticesMarkRead": "Mark as read",
+  "@instanceNoticesMarkRead": {
+    "description": "#2145 assistant onboarding: instanceNoticesMarkRead"
+  },
+  "instanceOperatorApproved": "Approved by the operator",
+  "@instanceOperatorApproved": {
+    "description": "#2145 assistant onboarding: instanceOperatorApproved"
   },
   "instanceOrganisationLabel": "Organisation",
   "@instanceOrganisationLabel": {
@@ -7406,6 +7528,38 @@
   "instanceOwnerTitle": "Instance owner",
   "@instanceOwnerTitle": {
     "description": "#1829 instance owner"
+  },
+  "instanceProbeCheck": "Check the server",
+  "@instanceProbeCheck": {
+    "description": "#2145 assistant onboarding: instanceProbeCheck"
+  },
+  "instanceProbeDeployed": "The assistant endpoint answers as it should.",
+  "@instanceProbeDeployed": {
+    "description": "#2145 assistant onboarding: instanceProbeDeployed"
+  },
+  "instanceProbeMismatch": "The endpoint answers with another address than the one assistants are given.",
+  "@instanceProbeMismatch": {
+    "description": "#2145 assistant onboarding: instanceProbeMismatch"
+  },
+  "instanceProbeMissing": "The server has not been checked yet.",
+  "@instanceProbeMissing": {
+    "description": "#2145 assistant onboarding: instanceProbeMissing"
+  },
+  "instanceProbeNotDeployed": "The assistant endpoint is not deployed on this server yet.",
+  "@instanceProbeNotDeployed": {
+    "description": "#2145 assistant onboarding: instanceProbeNotDeployed"
+  },
+  "instanceProbePending": "Checking the server…",
+  "@instanceProbePending": {
+    "description": "#2145 assistant onboarding: instanceProbePending"
+  },
+  "instanceProbeStale": "The last check is more than 15 minutes old. Check again before turning assistants on.",
+  "@instanceProbeStale": {
+    "description": "#2145 assistant onboarding: instanceProbeStale"
+  },
+  "instanceProbeUnavailable": "The server could not be reached. Try again in a moment.",
+  "@instanceProbeUnavailable": {
+    "description": "#2145 assistant onboarding: instanceProbeUnavailable"
   },
   "instanceProgress": "{done} / {total} · {current}",
   "@instanceProgress": {
@@ -7514,6 +7668,10 @@
   "@instanceSecondFactorNeeded": {
     "description": "#1827 B — instance operator console for the installation's assistants"
   },
+  "instanceSelfApproved": "Self-approved by operator",
+  "@instanceSelfApproved": {
+    "description": "#2145 assistant onboarding: instanceSelfApproved"
+  },
   "instanceSignInExplain": "Sign-in settings: e-mail confirmation on (a sign-up must click the link in its mail), and the app's links allowed for password resets and magic links.",
   "@instanceSignInExplain": {
     "description": "#977 instance wizard: instanceSignInExplain"
@@ -7581,6 +7739,10 @@
   "instanceTurnOnConfirm": "Assistants become usable in every workspace that offers them. You can turn them off again at any time.",
   "@instanceTurnOnConfirm": {
     "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOnNeedsProbe": "The assistant endpoint is not confirmed. Check the server first.",
+  "@instanceTurnOnNeedsProbe": {
+    "description": "#2145 assistant onboarding: instanceTurnOnNeedsProbe"
   },
   "instanceUseExisting": "Or use an existing project:",
   "@instanceUseExisting": {
@@ -10368,9 +10530,44 @@
   "@mcpConsentChoose": {
     "description": "#1615 mcp_consent"
   },
+  "mcpConsentClientBlocked": "The operator has blocked {name} on this server. It cannot be connected.",
+  "@mcpConsentClientBlocked": {
+    "description": "#2145 assistant onboarding: mcpConsentClientBlocked",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConsentClientWaiting": "{name} is not approved on this server yet. The operator approves each assistant once; then connect again from the assistant.",
+  "@mcpConsentClientWaiting": {
+    "description": "#2145 assistant onboarding: mcpConsentClientWaiting",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "mcpConsentConnected": "Connected. Returning to the assistant.",
   "@mcpConsentConnected": {
     "description": "#1615 mcp_consent"
+  },
+  "mcpConsentDeciderAsk": "Ask {name} to decide.",
+  "@mcpConsentDeciderAsk": {
+    "description": "#2145 assistant onboarding: mcpConsentDeciderAsk",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConsentDeciderMe": "You decide this yourself, in the installation console.",
+  "@mcpConsentDeciderMe": {
+    "description": "#2145 assistant onboarding: mcpConsentDeciderMe"
+  },
+  "mcpConsentDeciderNobody": "Nobody answers for this server yet.",
+  "@mcpConsentDeciderNobody": {
+    "description": "#2145 assistant onboarding: mcpConsentDeciderNobody"
   },
   "mcpConsentDenied": "Refused. The assistant gets nothing.",
   "@mcpConsentDenied": {
@@ -10379,6 +10576,18 @@
   "mcpConsentDeny": "Deny",
   "@mcpConsentDeny": {
     "description": "#1615 mcp_consent"
+  },
+  "mcpConsentFamilyChatgpt": "Approved for every ChatGPT connection.",
+  "@mcpConsentFamilyChatgpt": {
+    "description": "#2145 assistant onboarding: mcpConsentFamilyChatgpt"
+  },
+  "mcpConsentFamilyClaude": "Approved for every Claude connection.",
+  "@mcpConsentFamilyClaude": {
+    "description": "#2145 assistant onboarding: mcpConsentFamilyClaude"
+  },
+  "mcpConsentFamilyLoopback": "Approved for desktop and command-line assistants on this computer.",
+  "@mcpConsentFamilyLoopback": {
+    "description": "#2145 assistant onboarding: mcpConsentFamilyLoopback"
   },
   "mcpConsentFieldsExplain": "Details it may also see here. Leave them off to keep its answers minimised.",
   "@mcpConsentFieldsExplain": {
@@ -10395,6 +10604,15 @@
   "mcpConsentPartial": "The assistant was approved but the connection is not usable yet. Connect again from the assistant.",
   "@mcpConsentPartial": {
     "description": "#1615 mcp_consent"
+  },
+  "mcpConsentRedirectHost": "The answer is sent to {host}.",
+  "@mcpConsentRedirectHost": {
+    "description": "#2145 assistant onboarding: mcpConsentRedirectHost",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   },
   "mcpConsentRequestEligibility": "Ask for approval",
   "@mcpConsentRequestEligibility": {
