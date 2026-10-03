@@ -28,7 +28,6 @@ class MeAccountTab extends ConsumerWidget {
           onTap: () => context.push(path),
         );
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.meTabMe ?? 'Me')),
       body: ListView(
         key: const ValueKey('me-account-list'),
         children: [

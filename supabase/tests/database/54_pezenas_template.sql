@@ -599,7 +599,7 @@ select is(
   (select format('%s %s %s %s',
                  (select count(*) from public.fee_bands where workspace_id = pg_temp.ws()),
                  (select count(*) from public.credit_products where workspace_id = pg_temp.ws()),
-                 (select count(*) from public.workspace_roles where workspace_id = pg_temp.ws()),
+                 (select count(*) from public.workspace_roles where workspace_id = pg_temp.ws() and not builtin),
                  (select count(*) from public.levels where workspace_id = pg_temp.ws()))),
   '2 2 3 2',
   'a second apply merges: still two bands, two carnets, three roles and '
@@ -628,7 +628,8 @@ select is(
 
 select is(
   (select string_agg(x.key, ',' order by x.sort_order)
-     from public.workspace_roles x where x.workspace_id = pg_temp.ws()),
+     from public.workspace_roles x where x.workspace_id = pg_temp.ws()
+      and not x.builtin),
   'tresorier,secretaire,referent_salle',
   'the three roles inherited from the generic association template — '
   'inherited, not asked for: the report names no officer, and the '

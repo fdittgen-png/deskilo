@@ -1,0 +1,32 @@
+{
+  "provenance": {
+    "kind": "captured",
+    "source": "public_workspace_cards row produced by save_workspace_public_page on the dev project at schema 0319, read in a rolled-back transaction, 2026-10-01; updated_at rendered as PostgREST renders timestamptz"
+  },
+  "rows": [
+    {
+      "workspace_id": "00000000-0000-4000-8000-0000001847b1",
+      "name": "Captured office",
+      "updated_at": "2026-10-01T13:35:03.869332+00:00",
+      "document": {
+        "name": "Captured office",
+        "address": "1 Public Street",
+        "website": "https://captured.example",
+        "contacts": [
+          {
+            "name": "Capture owner",
+            "owner": true,
+            "user_id": "00000000-0000-4000-8000-0000001847a1",
+            "available": false
+          }
+        ],
+        "currency": "EUR",
+        "latitude": "48.86",
+        "host_type": "company",
+        "longitude": "2.35",
+        "description": "Open desks",
+        "booking_unit": "flexible"
+      }
+    }
+  ]
+}

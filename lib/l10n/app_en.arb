@@ -12781,6 +12781,7 @@
     "description": "#628 - title of the workspace-wide simultaneous-reservations stepper"
   },
   "portalActionFailed": "Could not save this change. Please try again.",
+  "portalActionNotNegotiated": "This action is not available between this app and that server. Updating the app may help.",
   "portalAddress": "Public address",
   "portalAdmin": "Administrator",
   "portalAdminVisible": "Show me as a public administrator",
@@ -15354,6 +15355,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Built in. What it may do is set in Roles; it is given on each member's page and takes effect once validated.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Built in. What it may do is set in Roles.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "In use",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -15434,6 +15443,10 @@
   "roleRefusalOwnerOnly": "Only the owner gives a role that manages roles.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Rename",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "The role was not taken back.",
   "@roleTakeBackFailed": {

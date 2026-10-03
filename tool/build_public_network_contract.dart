@@ -18,7 +18,18 @@ void main() {
   }
   final contract =
       jsonDecode(source.readAsStringSync()) as Map<String, dynamic>;
-  for (final entry in renderPublicNetworkContract(contract).entries) {
+  final support = jsonDecode(
+    File('contracts/public_network/support.json').readAsStringSync(),
+  ) as Map<String, dynamic>;
+  final rendered = {
+    ...renderPublicNetworkContract(contract),
+    publicNetworkGeneratedPaths.supportMatrix: renderSupportMatrix(
+      contract,
+      support,
+      (path) => File(path).readAsStringSync(),
+    ),
+  };
+  for (final entry in rendered.entries) {
     final file = File(entry.key)..parent.createSync(recursive: true);
     if (!file.existsSync() || file.readAsStringSync() != entry.value) {
       file.writeAsStringSync(entry.value);

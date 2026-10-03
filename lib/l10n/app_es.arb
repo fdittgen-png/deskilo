@@ -6803,6 +6803,7 @@
   "policySimultaneousDesc": "Cuántas reservas superpuestas puede tener un miembro. 1 mantiene un solo sitio a la vez.",
   "policySimultaneousTitle": "Reservas simultáneas por miembro",
   "portalActionFailed": "No se pudo guardar el cambio. Inténtalo de nuevo.",
+  "portalActionNotNegotiated": "Esta acción no está disponible entre esta aplicación y ese servidor. Actualizar la aplicación puede ayudar.",
   "portalAddress": "Dirección pública",
   "portalAdmin": "Administrador",
   "portalAdminVisible": "Mostrarme como administrador público",
@@ -8732,6 +8733,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Integrado. Lo que permite se define en Roles; se da en la página de cada miembro y surte efecto una vez validado.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Integrado. Lo que permite se define en Roles.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "En uso",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -8812,6 +8821,10 @@
   "roleRefusalOwnerOnly": "Solo el propietario da un rol que gestiona los roles.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Cambiar el nombre",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "El rol no se retiró.",
   "@roleTakeBackFailed": {

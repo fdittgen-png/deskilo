@@ -137,6 +137,21 @@ void main() {
       );
     });
 
+    test('an unknown must-understand term inside an OPTIONAL object still '
+        'refuses its record (#1847 B)', () {
+      expect(
+        () => decodePublicRecord('DescriptorOperation', {
+          'id': 'workspace.profile.request',
+          'versions': [1],
+          'lifecycle': {
+            'stage_v9': 'x',
+            'must_understand': ['stage_v9'],
+          },
+        }),
+        refusedAt('stage_v9'),
+      );
+    });
+
     test('a malformed must-understand list refuses the card', () {
       expect(
         () => decodePublicRecord(

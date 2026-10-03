@@ -8,6 +8,7 @@
 package de.deskilo.video_encoder
 
 import android.os.Handler
+import android.util.Log
 import android.os.Looper
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -17,6 +18,10 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class DeskiloVideoEncoderPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
+    private companion object {
+        const val TAG = "DeskiloVideoEncoder"
+    }
+
     private lateinit var channel: MethodChannel
     private lateinit var cacheDir: File
     private val executor: ExecutorService = Executors.newSingleThreadExecutor()
@@ -49,11 +54,18 @@ class DeskiloVideoEncoderPlugin : FlutterPlugin, MethodChannel.MethodCallHandler
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         executor.execute {
+            // Method names and error codes only: never frame content.
+            Log.d(TAG, "${call.method} begins")
             try {
                 handle(call, result)
+                Log.d(TAG, "${call.method} answered")
             } catch (e: VideoSessionException) {
+                Log.w(TAG, "${call.method} failed: ${e.code}")
                 fail(result, e.code)
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
+                // Every call is answered: an Error that escaped here would
+                // end the executor's thread and leave the Dart side waiting.
+                Log.w(TAG, "${call.method} failed: ${e.javaClass.simpleName}")
                 fail(result, "encode_failed")
             }
         }

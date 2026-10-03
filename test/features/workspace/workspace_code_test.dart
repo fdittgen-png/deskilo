@@ -169,7 +169,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Join a workspace'));
+    await tester.tap(find.byKey(const ValueKey('me-home-join')));
     await tester.pumpAndSettle();
 
     expect(find.text('Scan QR code'), findsOneWidget);

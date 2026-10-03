@@ -6803,6 +6803,7 @@
   "policySimultaneousDesc": "Wie viele sich überschneidende Buchungen ein Mitglied halten darf. 1 bedeutet ein Platz zur selben Zeit.",
   "policySimultaneousTitle": "Gleichzeitige Reservierungen pro Mitglied",
   "portalActionFailed": "Die Änderung konnte nicht gespeichert werden. Bitte erneut versuchen.",
+  "portalActionNotNegotiated": "Diese Aktion ist zwischen dieser App und diesem Server nicht verfügbar. Ein App-Update kann helfen.",
   "portalAddress": "Öffentliche Adresse",
   "portalAdmin": "Administrator",
   "portalAdminVisible": "Mich als öffentlichen Administrator anzeigen",
@@ -8732,6 +8733,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Eingebaut. Was sie darf, wird unter Rollen festgelegt; sie wird auf der Seite jedes Mitglieds vergeben und wirkt nach der Freigabe.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Eingebaut. Was sie darf, wird unter Rollen festgelegt.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "In Gebrauch",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -8812,6 +8821,10 @@
   "roleRefusalOwnerOnly": "Nur die Inhaberin vergibt eine Rolle, die Rollen verwaltet.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Umbenennen",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "Die Rolle wurde nicht entzogen.",
   "@roleTakeBackFailed": {

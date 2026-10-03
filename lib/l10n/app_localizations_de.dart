@@ -11178,6 +11178,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Änderung konnte nicht gespeichert werden. Bitte erneut versuchen.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Diese Aktion ist zwischen dieser App und diesem Server nicht verfügbar. Ein App-Update kann helfen.';
+
+  @override
   String get portalAddress => 'Öffentliche Adresse';
 
   @override
@@ -13543,6 +13547,14 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get roleBuiltInNote =>
+      'Eingebaut. Was sie darf, wird unter Rollen festgelegt; sie wird auf der Seite jedes Mitglieds vergeben und wirkt nach der Freigabe.';
+
+  @override
+  String get roleBuiltInSubtitle =>
+      'Eingebaut. Was sie darf, wird unter Rollen festgelegt.';
+
+  @override
   String get roleEditorActive => 'In Gebrauch';
 
   @override
@@ -13606,6 +13618,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get roleRefusalOwnerOnly =>
       'Nur die Inhaberin vergibt eine Rolle, die Rollen verwaltet.';
+
+  @override
+  String get roleRenameAdministrator => 'Umbenennen';
 
   @override
   String get roleTakeBackFailed => 'Die Rolle wurde nicht entzogen.';
