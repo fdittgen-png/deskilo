@@ -28,6 +28,7 @@ public.book_mappings.mcp_delegated_deny
 public.book_profiles.mcp_delegated_deny
 public.closure_days.closure_days_read
 public.closure_days.closure_days_write
+public.closure_days.closure_days_write_permitted
 public.closure_days.mcp_delegated_deny
 public.conversation_participants.conversation_participants_select
 public.conversation_participants.mcp_delegated_deny
@@ -35,6 +36,7 @@ public.conversations.conversations_select
 public.conversations.mcp_delegated_deny
 public.credit_products.credit_products_select
 public.credit_products.credit_products_write
+public.credit_products.credit_products_write_permitted
 public.credit_products.mcp_delegated_deny
 public.data_access_log.data_access_log_select
 public.data_access_log.mcp_delegated_deny
@@ -132,6 +134,7 @@ public.opening_hours_history.mcp_delegated_deny
 public.packages.mcp_delegated_deny
 public.packages.packages_select
 public.packages.packages_write
+public.packages.packages_write_permitted
 public.payment_credentials.mcp_delegated_deny
 public.payment_intents.mcp_delegated_deny
 public.payment_intents.payment_intents_select
@@ -186,6 +189,7 @@ public.seats.seats_write
 public.services.mcp_delegated_deny
 public.services.services_select
 public.services.services_write
+public.services.services_write_permitted
 public.sites.mcp_delegated_deny
 public.sites.sites_select
 public.space_inquiries.mcp_delegated_deny
@@ -204,6 +208,7 @@ public.workspace_applications.mcp_delegated_deny
 public.workspace_creation_requests.mcp_delegated_deny
 public.workspace_documents.mcp_delegated_deny
 public.workspace_documents.workspace_documents_select
+public.workspace_documents.workspace_documents_select_managers
 public.workspace_documents.workspace_documents_write
 public.workspace_field_definitions.mcp_delegated_deny
 public.workspace_field_definitions.workspace_field_definitions_select
@@ -238,6 +243,7 @@ public.workspaces.workspaces_delete
 public.workspaces.workspaces_select
 public.workspaces.workspaces_select_pending
 public.workspaces.workspaces_update
+public.workspaces.workspaces_update_delegated
 storage.objects.avatars_delete
 storage.objects.avatars_insert
 storage.objects.avatars_select
