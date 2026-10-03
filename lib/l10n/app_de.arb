@@ -4488,6 +4488,10 @@
   "invoiceEInvoiceTransportBilateral": "Kein Kanal ist vorgeschrieben: E-Mail, Portal oder Peppol — wie mit dem Kunden vereinbart.",
   "invoiceEInvoiceTransportClearance": "Die nationale Plattform erhält die Rechnung zuerst und leitet sie weiter — ein direkter Versand an den Kunden ist nicht möglich.",
   "invoiceEInvoiceTransportPeppol": "Ein Access Point liefert sie an den Kunden — keine staatliche Plattform dazwischen.",
+  "invoiceEssentialsRefused": "Die Rechnung wurde nicht ausgestellt: Pflichtangaben fehlen.",
+  "@invoiceEssentialsRefused": {
+    "description": "#1916 invoice essentials: invoiceEssentialsRefused"
+  },
   "invoiceExportAccountantCsv": "Buchhaltungs-CSV",
   "@invoiceExportAccountantCsv": {
     "description": "#669 - accounting export formats"
@@ -4798,6 +4802,34 @@
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
   "invoiceMemberLabel": "Mitglied",
+  "invoiceMissingBuyerAddress": "Die Postanschrift des Mitglieds (bei Unternehmen erforderlich)",
+  "@invoiceMissingBuyerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
+  },
+  "invoiceMissingBuyerName": "Der Name oder die Firma des Mitglieds",
+  "@invoiceMissingBuyerName": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerName"
+  },
+  "invoiceMissingBuyerVatId": "Die USt-IdNr. des Mitglieds (für das Reverse-Charge-Verfahren erforderlich)",
+  "@invoiceMissingBuyerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
+  },
+  "invoiceMissingExemptionReason": "Die Rechtsgrundlage der Umsatzsteuerbefreiung",
+  "@invoiceMissingExemptionReason": {
+    "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
+  },
+  "invoiceMissingSellerAddress": "Die Postanschrift des Arbeitsbereichs (Straße oder Ort)",
+  "@invoiceMissingSellerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
+  },
+  "invoiceMissingSellerVatId": "Die Umsatzsteuer-Identifikationsnummer des Arbeitsbereichs",
+  "@invoiceMissingSellerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
+  },
+  "invoiceMissingTitle": "Vor der Ausstellung bitte ergänzen",
+  "@invoiceMissingTitle": {
+    "description": "#1916 invoice essentials: invoiceMissingTitle"
+  },
   "invoiceNoOpen": "Keine offenen Rechnungen.",
   "invoiceNothingToInvoice": "Für diesen Monat wurde nichts erfasst — nichts zu berechnen.",
   "invoiceOpenAge": "{days} Tage",

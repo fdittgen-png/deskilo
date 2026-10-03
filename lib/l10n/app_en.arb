@@ -8384,6 +8384,10 @@
   "@invoiceEInvoiceTransportPeppol": {
     "description": "E-invoice sheet: how the file travels on Peppol"
   },
+  "invoiceEssentialsRefused": "The invoice was not issued: required details are missing.",
+  "@invoiceEssentialsRefused": {
+    "description": "#1916 invoice essentials: invoiceEssentialsRefused"
+  },
   "invoiceExportAccountantCsv": "Accounting CSV",
   "@invoiceExportAccountantCsv": {
     "description": "#669 - accounting export formats"
@@ -8810,6 +8814,34 @@
   "invoiceMemberLabel": "Member",
   "@invoiceMemberLabel": {
     "description": "Member dropdown label on the invoice form"
+  },
+  "invoiceMissingBuyerAddress": "The member's postal address (a business customer needs one)",
+  "@invoiceMissingBuyerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
+  },
+  "invoiceMissingBuyerName": "The member's name or company",
+  "@invoiceMissingBuyerName": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerName"
+  },
+  "invoiceMissingBuyerVatId": "The member's VAT number (needed for reverse charge)",
+  "@invoiceMissingBuyerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
+  },
+  "invoiceMissingExemptionReason": "The legal basis for the VAT exemption",
+  "@invoiceMissingExemptionReason": {
+    "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
+  },
+  "invoiceMissingSellerAddress": "The workspace's postal address (street or city)",
+  "@invoiceMissingSellerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
+  },
+  "invoiceMissingSellerVatId": "The workspace's VAT identification number",
+  "@invoiceMissingSellerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
+  },
+  "invoiceMissingTitle": "Complete these details before issuing",
+  "@invoiceMissingTitle": {
+    "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
   "invoiceNoOpen": "No open invoices.",
   "@invoiceNoOpen": {

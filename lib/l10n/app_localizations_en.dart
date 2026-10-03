@@ -7498,6 +7498,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'An access point delivers it to the customer — no government platform in between.';
 
   @override
+  String get invoiceEssentialsRefused =>
+      'The invoice was not issued: required details are missing.';
+
+  @override
   String get invoiceExportAccountantCsv => 'Accounting CSV';
 
   @override
@@ -7828,6 +7832,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceMemberLabel => 'Member';
+
+  @override
+  String get invoiceMissingBuyerAddress =>
+      'The member\'s postal address (a business customer needs one)';
+
+  @override
+  String get invoiceMissingBuyerName => 'The member\'s name or company';
+
+  @override
+  String get invoiceMissingBuyerVatId =>
+      'The member\'s VAT number (needed for reverse charge)';
+
+  @override
+  String get invoiceMissingExemptionReason =>
+      'The legal basis for the VAT exemption';
+
+  @override
+  String get invoiceMissingSellerAddress =>
+      'The workspace\'s postal address (street or city)';
+
+  @override
+  String get invoiceMissingSellerVatId =>
+      'The workspace\'s VAT identification number';
+
+  @override
+  String get invoiceMissingTitle => 'Complete these details before issuing';
 
   @override
   String get invoiceNoOpen => 'No open invoices.';

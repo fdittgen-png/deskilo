@@ -7565,6 +7565,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un point d\'accès la livre au client — aucune plateforme publique dans le circuit.';
 
   @override
+  String get invoiceEssentialsRefused =>
+      'La facture n\'a pas été émise : des informations obligatoires manquent.';
+
+  @override
   String get invoiceExportAccountantCsv => 'CSV comptable';
 
   @override
@@ -7900,6 +7904,33 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceMemberLabel => 'Membre';
+
+  @override
+  String get invoiceMissingBuyerAddress =>
+      'L\'adresse postale du membre (obligatoire pour un client professionnel)';
+
+  @override
+  String get invoiceMissingBuyerName => 'Le nom ou la société du membre';
+
+  @override
+  String get invoiceMissingBuyerVatId =>
+      'Le numéro de TVA du membre (requis pour l\'autoliquidation)';
+
+  @override
+  String get invoiceMissingExemptionReason =>
+      'Le fondement légal de l\'exonération de TVA';
+
+  @override
+  String get invoiceMissingSellerAddress =>
+      'L\'adresse postale de l\'espace (rue ou ville)';
+
+  @override
+  String get invoiceMissingSellerVatId =>
+      'Le numéro d\'identification TVA de l\'espace';
+
+  @override
+  String get invoiceMissingTitle =>
+      'Complétez ces informations avant d\'émettre';
 
   @override
   String get invoiceNoOpen => 'Aucune facture en cours.';

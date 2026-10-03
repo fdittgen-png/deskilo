@@ -1,0 +1,35 @@
+{
+  "@@locale": "es",
+  "invoiceMissingTitle": "Complete estos datos antes de emitir",
+  "@invoiceMissingTitle": {
+    "description": "#1916 invoice essentials: invoiceMissingTitle"
+  },
+  "invoiceMissingSellerAddress": "La dirección postal del espacio (calle o ciudad)",
+  "@invoiceMissingSellerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
+  },
+  "invoiceMissingSellerVatId": "El número de identificación fiscal (IVA) del espacio",
+  "@invoiceMissingSellerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
+  },
+  "invoiceMissingExemptionReason": "El fundamento legal de la exención de IVA",
+  "@invoiceMissingExemptionReason": {
+    "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
+  },
+  "invoiceMissingBuyerName": "El nombre o la empresa del miembro",
+  "@invoiceMissingBuyerName": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerName"
+  },
+  "invoiceMissingBuyerAddress": "La dirección postal del miembro (obligatoria para una empresa)",
+  "@invoiceMissingBuyerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
+  },
+  "invoiceMissingBuyerVatId": "El número de IVA del miembro (necesario para la inversión del sujeto pasivo)",
+  "@invoiceMissingBuyerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
+  },
+  "invoiceEssentialsRefused": "La factura no se emitió: faltan datos obligatorios.",
+  "@invoiceEssentialsRefused": {
+    "description": "#1916 invoice essentials: invoiceEssentialsRefused"
+  }
+}

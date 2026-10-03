@@ -4488,6 +4488,10 @@
   "invoiceEInvoiceTransportBilateral": "Aucun canal imposé : e-mail, portail ou Peppol — comme convenu avec le client.",
   "invoiceEInvoiceTransportClearance": "La plateforme nationale reçoit la facture d'abord et la transmet — l'envoi direct au client n'est pas possible.",
   "invoiceEInvoiceTransportPeppol": "Un point d'accès la livre au client — aucune plateforme publique dans le circuit.",
+  "invoiceEssentialsRefused": "La facture n'a pas été émise : des informations obligatoires manquent.",
+  "@invoiceEssentialsRefused": {
+    "description": "#1916 invoice essentials: invoiceEssentialsRefused"
+  },
   "invoiceExportAccountantCsv": "CSV comptable",
   "@invoiceExportAccountantCsv": {
     "description": "#669 - accounting export formats"
@@ -4798,6 +4802,34 @@
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
   "invoiceMemberLabel": "Membre",
+  "invoiceMissingBuyerAddress": "L'adresse postale du membre (obligatoire pour un client professionnel)",
+  "@invoiceMissingBuyerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
+  },
+  "invoiceMissingBuyerName": "Le nom ou la société du membre",
+  "@invoiceMissingBuyerName": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerName"
+  },
+  "invoiceMissingBuyerVatId": "Le numéro de TVA du membre (requis pour l'autoliquidation)",
+  "@invoiceMissingBuyerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
+  },
+  "invoiceMissingExemptionReason": "Le fondement légal de l'exonération de TVA",
+  "@invoiceMissingExemptionReason": {
+    "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
+  },
+  "invoiceMissingSellerAddress": "L'adresse postale de l'espace (rue ou ville)",
+  "@invoiceMissingSellerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
+  },
+  "invoiceMissingSellerVatId": "Le numéro d'identification TVA de l'espace",
+  "@invoiceMissingSellerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
+  },
+  "invoiceMissingTitle": "Complétez ces informations avant d'émettre",
+  "@invoiceMissingTitle": {
+    "description": "#1916 invoice essentials: invoiceMissingTitle"
+  },
   "invoiceNoOpen": "Aucune facture en cours.",
   "invoiceNothingToInvoice": "Rien de suivi pour ce mois — rien à facturer.",
   "invoiceOpenAge": "{days} jours",

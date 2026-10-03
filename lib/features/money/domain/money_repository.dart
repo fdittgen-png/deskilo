@@ -257,6 +257,18 @@ abstract class MoneyRepository {
     required String period,
   });
 
+  /// What stops [createInvoice] from issuing for [period] (RPC
+  /// `invoice_issue_readiness`, 0365): the essential details of a legal
+  /// invoice that are still missing, as stable keys; empty when nothing
+  /// is. A dry run of the very same issue, so the two cannot disagree.
+  Future<List<String>> invoiceIssueReadiness({
+    required String workspaceId,
+    required String memberId,
+    required String period,
+    InvoiceKind kind = InvoiceKind.full,
+    String? replacesId,
+  });
+
   /// Tags an invoice erroneous (RPC `void_invoice`, 0061) — the sole
   /// one-way change the server permits on an issued invoice.
   Future<void> voidInvoice(String invoiceId);
