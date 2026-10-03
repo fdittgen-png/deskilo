@@ -241,6 +241,7 @@ begin
       "spaceQrCodes": true,
       "subscriptionInvoices": false,
       "supplyExpenses": false,
+      "taskRecorder": false,
       "uiAnimations": true,
       "uniqueMonograms": true,
       "usageInvoices": false,

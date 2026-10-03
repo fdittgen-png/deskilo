@@ -21,7 +21,7 @@
       ],
       "prerequisites": "A workspace with a published plan and opening hours; booking rules in Settings.",
       "limitations": "Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.",
-      "fingerprint": "c92c581b126c",
+      "fingerprint": "9becbe278074",
       "scopes": {
         "unit": "gated",
         "local_integration": "gated",
@@ -400,7 +400,7 @@
       ],
       "prerequisites": "A complete legal identity for the workspace; VAT configured.",
       "limitations": "Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.",
-      "fingerprint": "5377cf36b8d8",
+      "fingerprint": "d12a32e9b77a",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",
@@ -512,7 +512,7 @@
       ],
       "prerequisites": "None: the Demo is built into every client.",
       "limitations": "The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.",
-      "fingerprint": "989176b4c913",
+      "fingerprint": "a89ff86ea7f9",
       "scopes": {
         "unit": "gated",
         "local_integration": "unverified",

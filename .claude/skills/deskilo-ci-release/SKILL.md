@@ -1,137 +1,73 @@
 ---
 name: deskilo-ci-release
-description: Watching CI, merging and deploying DesKilo — the JSON check-state idiom (the analyze job is named "analyze · l10n gate · test · coverage"), background watcher loops, cancelled jobs, mergeStateStatus, squash-merge, the alpha release train, the opt-in web Pages publish, and what must never be used (the retired alpha1 track, --admin, force-push to master). Trigger after opening a PR or when asked to deploy.
+description: After a DesKilo push — the three required checks ("analyze · l10n gate · test · coverage", "quality · database", "quality · report"), one bounded background watcher per PR, cancelled vs real failures, auto-merge pinned to the head SHA, verifying MERGED, master red with every PR green, the release train (-f track=alpha|production), the opt-in web Pages publish, and what is forbidden (--admin, force-push to master, renaming a required job, the retired alpha1 track). Trigger once a PR is open, when a check is red or stuck, when master is red, or when asked to deploy.
 ---
 # CI, merge, deploy (DesKilo)
 
-## Watch a PR without polling by hand
+**Essentials**
+1. Required on master: `analyze · l10n gate · test · coverage`, `quality · database`, `quality · report`.
+2. `gh pr merge <n> --auto --squash --match-head-commit <sha>`, then verify `MERGED` on origin/master. Never `--admin`.
+3. One bounded watcher per PR in the background; read JSON states, never grep the plain output.
+4. `cancelled` = runner/concurrency, rerun once; infrastructure flakes get ONE rerun; anything else is real.
+5. Deploy with ONE train after the last merge: `gh workflow run release-train.yml -f track=alpha`.
+
+Android build notes and older incidents: [reference.md](reference.md).
+
+## Watch
 ```
-gh pr checks <n|branch> --json name,state          # states: SUCCESS|FAILURE|SKIPPED|IN_PROGRESS|PENDING
-until s=$(gh pr checks <n> --json name,state) && ! echo "$s" | grep -qE '"state":"(PENDING|QUEUED|IN_PROGRESS|EXPECTED)"'; do sleep 60; done
+sleep 90   # a watcher started right after a push sees the OLD run
+until gh pr checks <n> --json name,bucket | jq -e 'length>0 and all(.bucket!="pending")'; do sleep 60; done
+gh pr view <n> --json state,mergeable,mergeStateStatus,headRefOid
 ```
-Run that in the background (`run_in_background`) with a leading `sleep`;
-`gh pr checks --watch` right after `pr create` exits 1. Do NOT grep the
-plain output for "pass": the analyze job's name contains "l10n" and
-"test", which pollutes greps. Failing test: `gh run view <id> --log-failed | grep -a "❌"`.
-A job in state `cancelled` is a runner hiccup — `gh run rerun <id>`.
+- Run it with `run_in_background`, exiting on MERGED or a failure. A new push
+  restarts the checks: start a NEW watcher; the old one reports the old head.
+  `gh pr checks --json` has `state`/`bucket`, no `conclusion` field;
+  `gh pr checks --watch` right after `pr create` exits 1 (no checks yet).
+- Do NOT grep the plain output for "pass": the analyze job's name contains "l10n"
+  and "test". A failing test: `gh run view <id> --log-failed | grep -a "❌"`; a
+  finished job's log mid-run: `gh api repos/{owner}/{repo}/actions/jobs/<job>/logs`.
+
+## Failures that are not the code
+- **`cancelled` / `CANCELLED`** — a runner hiccup or the concurrency group (a newer
+  push superseded it): `gh run rerun <run-id>` (find it with `gh run list --commit <sha>`).
+- **Infrastructure flakes get ONE rerun**: "port … is still held by an earlier
+  pass", a Supabase CLI download rate limit. Anything else is real.
+- **`quality · report` can read a stale attempt** after `gh run rerun --failed`; do
+  not rerun it a third time — push an empty commit (`ci: re-run the quality report
+  on a clean attempt`).
+- **A red `quality · database` holds the PR OPEN/BLOCKED** — usually a stale
+  `contract.txt` (`deskilo-supabase-migration` §4).
+- **A commit pushed by `GITHUB_TOKEN` starts no workflow run** (checks sit at
+  `action_required` for ever): re-author it as a real user. Waiting is not a strategy.
+- **Master can be red with every PR green** (#1815 added a required constructor
+  parameter, #1817 a test building the old shape). `dart analyze` on a fresh
+  worktree of origin/master finds it; fix it in your PR with the one-line change
+  and name it in the body.
 
 ## Merge
-`gh pr view <n> --json mergeable,mergeStateStatus` → `MERGEABLE CLEAN`
-then `gh pr merge <n> --squash --delete-branch`. `BLOCKED` = checks
-missing; never `--admin`. With a stacked PR do not `--delete-branch` the
-base (GitHub closes the child). `BEHIND`/`CONFLICTING` after a sibling
-merged = the cost of parallel registry branches — avoid by serialising
-(`deskilo-ship-feature`); if it happens anyway, `git rebase origin/master`,
-resolve by keeping BOTH sides in order (plain concatenation, never
-line-dedupe — it drops shared closers like `),`), re-pin
-(feature pin = enum size), regenerate l10n, `git commit --amend`, push
-with `--force-with-lease`, then hand-merge any data-map call site where
-two branches touched the same lines.
+- `gh pr merge <n> --auto --squash --match-head-commit <sha>` — queue it as soon as
+  the PR is open; a queued auto-merge is not a merge, and a new head SHA invalidates
+  earlier evidence (AGENT_RULES "Ready, Done and closure"). Then confirm
+  `gh pr view <n> --json state,mergedAt` and that the squash commit is on origin/master.
+- `BLOCKED` = a required check is missing or red; never `--admin`, never force-push
+  to master. `BEHIND`/`CONFLICTING` = merge master once (`deskilo-ship-feature` §5).
+- A workflow's name is free to change (`<Group> · <what it does>`, enforced by
+  `workflow_naming_test`, table in `.github/workflows/README.md`); a JOB name is a
+  required status-check context — never rename `analyze · l10n gate · test · coverage`
+  without updating branch protection in lockstep.
 
 ## Deploy
-- Beta train (iOS TestFlight external + Play closed alpha + web + DMG + MSI):
-  `gh workflow run release-train.yml -f track=alpha -f release_notes="…"`;
-  watch `gh run view <id> --json status,conclusion`.
-- Web Pages publish is opt-in: `gh workflow run web.yml -f ref=master -f deploy=true`.
-- Never the Play "alpha1"/open testing track; F-Droid is frozen.
-- Owner-side blockers stay listed in memory (BETA_CONTACT_PHONE, logo upload).
-
-## Lessons of 2026-09-07
-- The reliable waiter: `until gh pr checks <n> --json name,bucket | jq -e 'length>0 and all(.bucket!="pending")'; do sleep 30; done`
-  then `gh pr view <n> --json mergeable,mergeStateStatus`. Start it with
-  a leading `sleep 120` right after `pr create`; a force-push restarts
-  the checks — start a NEW waiter, the old one reports the old head.
-- `analyze · l10n gate · test · coverage: cancel` = a runner cancellation:
-  `gh run rerun <run-id>` (find it with `gh run list --commit <sha>`),
-  never a code change.
-- Several merges in a row need ONE train: dispatch after the last merge.
-  Every train + web publish pair is watched with `gh run watch <id> --exit-status`
-  in the background and reported per job.
-- The wiki mirror: clone `deskilo.wiki.git` into the scratchpad once,
-  copy `docs/wiki/*.md` after each merge that touched them, commit, push.
-
-## Lessons of 2026-09-09
-
-- **Workflow names follow `<Group> · <what it does>`** — CI, Nightly,
-  Release, Publish, Status, Tools — the same convention as Sparkilo, so
-  one habit reads both sidebars. `.github/workflows/README.md` has the
-  table and the rules; `test/lint/workflow_naming_test.dart` enforces
-  the shape, uniqueness and sentence case.
-- **A workflow name is free to change; a JOB name is not.** A job name
-  is a required status-check context, so renaming one can block
-  auto-merge until branch protection is updated in lockstep. Rename the
-  workflow, leave `analyze · l10n gate · test · coverage` alone.
-- **Android deploy, in one line each.**
-  `gh workflow run release-train.yml -f track=alpha -f release_notes="…"`
-  puts iOS and Android on the same commit — that is the point of the
-  train. `play-internal.yml -f track=internal` is the Android leg alone.
-- **A commit pushed by `GITHUB_TOKEN` starts no workflow run.** The
-  lockfile-regeneration workflow pushes as the bot, and every check on
-  its commit then sits at `action_required` for ever. Re-author that
-  commit (`git commit --amend` from a real user, force-with-lease) and
-  the runs start. Waiting is not a strategy — nothing is coming.
-- **Another agent may hold the working tree.** Mid-task the checkout
-  switched branches under me. Commits already pushed are safe; finish
-  from a fresh `git clone --depth 3 --branch <b>` in the scratchpad
-  rather than fighting over the directory.
-
-## Lessons of 2026-09-10
-
-- **The train's input IS the Play track (#1073).** `-f track=alpha` (the
-  default) or `-f track=production`. It used to be `-f track=beta`
-  resolving to `alpha`, which is where CLAUDE.md's "never use the alpha
-  track" came from. Alpha is the CLOSED test whose 12-tester / 14-day
-  countdown gates production; Play's open beta is not a track this
-  project ships to, and the train no longer offers it.
-- **A run that ends `CANCELLED` is usually the concurrency group**, not a
-  failure — a newer push superseded it. `gh run rerun <id>` and wait
-  again; do not go hunting for a test that never ran.
-- **The alpha countdown is not advanced by shipping.** Twelve testers
-  must each opt in at `play.google.com/apps/testing/de.deskilo.app`, and
-  only then do the 14 continuous days start. Uploading another build
-  changes nothing about it, so do not read a green train as progress
-  toward production.
-
-## Lessons of 2026-09-28
-
-- **Three contexts are required on master**: `analyze · l10n gate · test
-  · coverage`, `quality · database` and `quality · report`. A PR with a
-  red database job does not merge any more, so a missing contract digest
-  shows up as a PR that sits OPEN/BLOCKED.
-- **The report job can read a stale attempt.** After `gh run rerun
-  --failed`, `quality · report` may still download the first attempt's
-  artifacts and report a row as regressed that the rerun passed. Don't
-  rerun it a third time; push an empty commit (`ci: re-run the quality
-  report on a clean attempt`) for a fresh run.
-- **Infrastructure flakes get ONE rerun**: "port 54996 is still held by
-  an earlier pass", or a Supabase CLI download rate limit. Anything else
-  is real.
-- **Watch with one bounded loop per PR**, run in the background and
-  exiting on MERGED or FAILURE, not repeated manual checks. A watcher
-  started right after a push can see the OLD run's failure: sleep ~60 s
-  first, or skip failures from runs already handled.
-- **Local suites flake under load.** With several builds in parallel,
-  `flutter test` crashed ("Cannot add event while adding stream"), and
-  `ci_classify_script_test` (subprocess timing) failed. Rerun the file
-  alone. If it passes, run `--concurrency=4`, and name the flake in the
-  PR rather than skip the gate.
-- **Android on AGP 9 (#1792)**:
-  - AGP 9.0.1 needs Gradle ≥ 9.1.0. Flutter wants Kotlin ≥ 2.3.20.
-  - `android.applicationVariants` is gone, so the F-Droid per-ABI
-    versionCode (#795, `versionCode * 10 + abi`) lives in
-    `androidComponents.onVariants`.
-  - Flutter's own split-per-abi code (`abi * 1000 + code`) then runs
-    AFTER ours and wraps it (1031/2031/4031), so `gradle.properties`
-    carries `force-version-code-ignoring-abi=true`.
-  - Verify with `aapt2 dump badging` on the split APKs (31/32/33) and
-    the universal APK (3). The AGP 10 opt-outs (`android.builtInKotlin`,
-    `android.newDsl`) stay until the plugins support it.
-  - The PR checks do not build Android; the release train does.
-
-## Lessons of 2026-09-29
-
-- **Master can be red with every PR green.** #1815 added a required
-  constructor parameter and #1817 added a test constructing the old shape;
-  each passed alone, the merge does not compile. `flutter analyze` on a
-  fresh worktree of origin/master finds it first — fix it in your PR with
-  the one-line change and name it in the body, rather than waiting.
+- **The train**: `gh workflow run release-train.yml -f track=alpha -f release_notes="…"`
+  (or `-f track=production`). The input IS the Play track; it puts iOS (TestFlight
+  external), Android (Play closed alpha), web, DMG and MSI on ONE commit. Several
+  merges in a row need ONE train, dispatched after the last merge; watch each run
+  with `gh run watch <id> --exit-status` in the background and report per job.
+- `play-internal.yml -f track=internal` is the Android leg alone. The PR checks do
+  not build Android; the train does.
+- **Web Pages publish is opt-in**: `gh workflow run web.yml -f ref=master -f deploy=true`.
+  Merging `web/setup.html` does not publish it.
+- Never the Play `alpha1` / open-testing track. F-Droid is frozen (owner-blocked).
+- The alpha → production countdown is not advanced by shipping: twelve testers must
+  each opt in at `play.google.com/apps/testing/de.deskilo.app`, then 14 continuous
+  days. A green train is not progress toward production.
+- Wiki mirror after a docs merge: `/doc-wiki`.

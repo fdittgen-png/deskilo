@@ -35,6 +35,9 @@ import '../../providers/reservation_providers.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../task_recorder/domain/action_registry.dart'
+    show RecorderActions;
+import '../../../task_recorder/presentation/recorder_seam.dart';
 
 /// Where is my reserved seat — and what can I do about it? (#182, edit
 /// pass) Time range and status icon, the resolved location chain, the
@@ -843,11 +846,15 @@ Future<void> showReservationDetail(
   WidgetRef ref,
   Reservation reservation,
 ) async {
+  recordTaskStep(ref, RecorderActions.viewDetails); // #1865
   final target = await showModalBottomSheet<SeatContext>(
     context: context,
     isScrollControlled: true,
     builder: (_) => ReservationDetailSheet(reservation: reservation),
   );
+  if (target == null && context.mounted) {
+    recordTaskStep(ref, RecorderActions.back); // #1865
+  }
   if (target == null || !context.mounted) return;
   ref.read(planFocusControllerProvider.notifier).setFocus(
         PlanFocus(

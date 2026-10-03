@@ -5219,6 +5219,110 @@
   "@holidayImportFailed": {
     "description": "#2051 open-data holiday import"
   },
+  "instanceTitle": "Installation: assistants",
+  "@instanceTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceIntro": "Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.",
+  "@instanceIntro": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNotOperator": "Only the instance operator manages the installation's assistants.",
+  "@instanceNotOperator": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceSecondFactorNeeded": "Changes here need your second factor on this session.",
+  "@instanceSecondFactorNeeded": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceConfirmSecondFactor": "Confirm with my authenticator",
+  "@instanceConfirmSecondFactor": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeTitle": "Assistants on this installation",
+  "@instanceRuntimeTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeOn": "On",
+  "@instanceRuntimeOn": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRuntimeOff": "Off",
+  "@instanceRuntimeOff": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOn": "Turn on for every workspace",
+  "@instanceTurnOn": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOff": "Turn off",
+  "@instanceTurnOff": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceTurnOnConfirm": "Assistants become usable in every workspace that offers them. You can turn them off again at any time.",
+  "@instanceTurnOnConfirm": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlockers": "Still missing:",
+  "@instanceBlockers": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlockerNoAdmin": "a database administrator",
+  "@instanceBlockerNoAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceAdminsTitle": "Database administrators",
+  "@instanceAdminsTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceAdminsHelp": "They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.",
+  "@instanceAdminsHelp": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceMakeAdmin": "Make administrator",
+  "@instanceMakeAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceRemoveAdmin": "Remove",
+  "@instanceRemoveAdmin": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceNoCandidates": "Nobody else has confirmed their identity yet.",
+  "@instanceNoCandidates": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceYou": "you",
+  "@instanceYou": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientsTitle": "Assistant clients",
+  "@instanceClientsTitle": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientsHelp": "An assistant registers itself the first time someone connects it; it works only once approved here.",
+  "@instanceClientsHelp": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientWaiting": "Waiting for approval",
+  "@instanceClientWaiting": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientApproved": "Approved",
+  "@instanceClientApproved": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceClientBlocked": "Blocked",
+  "@instanceClientBlocked": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceApprove": "Approve",
+  "@instanceApprove": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
+  "instanceBlock": "Block",
+  "@instanceBlock": {
+    "description": "#1827 B — instance operator console for the installation's assistants"
+  },
   "instanceOwnerClaimIntro": "Who owns this instance? Enter the e-mail you will sign up with on it. After you confirm that address, claim the ownership from Settings → Instance owner.",
   "@instanceOwnerClaimIntro": {
     "description": "#1829 Instance owner claim: instanceOwnerClaimIntro"
@@ -6381,6 +6485,10 @@
   "invoiceGapMissingBuyerCountry": "The customer's country is missing.",
   "@invoiceGapMissingBuyerCountry": {
     "description": "Gap: BR-11 — buyer country"
+  },
+  "invoiceGapCreditNoteWithPayments": "This credit note also nets payments, which an EN 16931 credit note cannot state. Issue the credit on its own document.",
+  "@invoiceGapCreditNoteWithPayments": {
+    "description": "#1919 — e-invoice export refused: a credit note that also nets payments has no EN 16931 credit-note form"
   },
   "invoiceGapNoChargeLines": "This invoice has no charge line — its month was fully covered by payments, so there is no invoice to send.",
   "@invoiceGapNoChargeLines": {
@@ -9316,6 +9424,38 @@
   "mcpIdentityConflict": "Another account already holds this identity here — a database administrator can resolve it.",
   "@mcpIdentityConflict": {
     "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpStatusGoogle": "Google sign-in",
+  "@mcpStatusGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStatusLinkGoogle": "Link Google",
+  "@mcpStatusLinkGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStatusSignInGoogle": "Sign in with Google",
+  "@mcpStatusSignInGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleReady": "Signed in with Google",
+  "@mcpStateGoogleReady": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleOtherSession": "Signed in another way",
+  "@mcpStateGoogleOtherSession": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleMissing": "Google not linked",
+  "@mcpStateGoogleMissing": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpNextLinkGoogle": "Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.",
+  "@mcpNextLinkGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpNextSignInGoogle": "Assistants use your Google sign-in. Sign in with Google to continue.",
+  "@mcpNextSignInGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
   },
   "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
   "@mcpUsageWorkspaceTitle": {
@@ -13887,6 +14027,28 @@
   "@bookingNoLongerCheckedIn": {
     "description": "#1908 — a checkout lost a race: the reservation was already checked out or closed by the day-end sweep"
   },
+  "listWholeReservable": "Reservable as a whole",
+  "@listWholeReservable": {
+    "description": "#1825 — reserve list: a header whose space this member can reserve as a whole"
+  },
+  "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
+  "@listCoversTables": {
+    "description": "#1825 — what a whole-space reservation includes: its tables",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listCoversSeats": "{count, plural, =1{1 seat} other{{count} seats}}",
+  "@listCoversSeats": {
+    "description": "#1825 — what a whole-space reservation includes: its seats",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reserveMonthView": "Month",
   "@reserveMonthView": {
     "description": "Reserve hub view segment: month availability calendar (#7)"
@@ -14834,6 +14996,1332 @@
         "format": "decimalPattern"
       }
     }
+  },
+  "taskExportDocFallbackTitle": "Task procedure",
+  "@taskExportDocFallbackTitle": {
+    "description": "#1866 task export (Word document): DocFallbackTitle"
+  },
+  "taskExportIntro": "This document describes, step by step, a task recorded in DesKilo. It is documentation: it does not replay the task and it does not prove that the task succeeded. Only what the recording observed is stated as observed.",
+  "@taskExportIntro": {
+    "description": "#1866 task export (Word document): Intro"
+  },
+  "taskExportSectionAbout": "About this recording",
+  "@taskExportSectionAbout": {
+    "description": "#1866 task export (Word document): SectionAbout"
+  },
+  "taskExportSectionBefore": "Before you start",
+  "@taskExportSectionBefore": {
+    "description": "#1866 task export (Word document): SectionBefore"
+  },
+  "taskExportSectionSteps": "Steps",
+  "@taskExportSectionSteps": {
+    "description": "#1866 task export (Word document): SectionSteps"
+  },
+  "taskExportSectionLimits": "Limitations",
+  "@taskExportSectionLimits": {
+    "description": "#1866 task export (Word document): SectionLimits"
+  },
+  "taskExportKindSource": "Original capture: the steps were observed by the recorder.",
+  "@taskExportKindSource": {
+    "description": "#1866 task export (Word document): KindSource"
+  },
+  "taskExportKindEdited": "Edited procedure: derived from a recording and changed by a person.",
+  "@taskExportKindEdited": {
+    "description": "#1866 task export (Word document): KindEdited"
+  },
+  "taskExportCompletenessComplete": "Complete: the recording was stopped by the person and every command received an answer.",
+  "@taskExportCompletenessComplete": {
+    "description": "#1866 task export (Word document): CompletenessComplete"
+  },
+  "taskExportCompletenessPartial": "Partial: the recording ended early or a command received no answer.",
+  "@taskExportCompletenessPartial": {
+    "description": "#1866 task export (Word document): CompletenessPartial"
+  },
+  "taskExportCompletenessInterrupted": "Interrupted: the app stopped while recording.",
+  "@taskExportCompletenessInterrupted": {
+    "description": "#1866 task export (Word document): CompletenessInterrupted"
+  },
+  "taskExportEndStopped": "Ended by the person who recorded it.",
+  "@taskExportEndStopped": {
+    "description": "#1866 task export (Word document): EndStopped"
+  },
+  "taskExportEndScopeChanged": "Ended because the account, workspace or installation changed.",
+  "@taskExportEndScopeChanged": {
+    "description": "#1866 task export (Word document): EndScopeChanged"
+  },
+  "taskExportEndLimitReached": "Ended because a step, size or duration limit was reached.",
+  "@taskExportEndLimitReached": {
+    "description": "#1866 task export (Word document): EndLimitReached"
+  },
+  "taskExportEndStorageFailed": "Ended because writing the recording failed.",
+  "@taskExportEndStorageFailed": {
+    "description": "#1866 task export (Word document): EndStorageFailed"
+  },
+  "taskExportEndInterrupted": "Ended because the app stopped.",
+  "@taskExportEndInterrupted": {
+    "description": "#1866 task export (Word document): EndInterrupted"
+  },
+  "taskExportPlatform": "Recorded on: {platform}",
+  "@taskExportPlatform": {
+    "description": "#1866 task export (Word document): Platform",
+    "placeholders": {
+      "platform": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportDuration": "Duration: {minutes} min {seconds} s",
+  "@taskExportDuration": {
+    "description": "#1866 task export (Word document): Duration",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportPauses": "{count, plural, =0{No pause} =1{Paused once} other{Paused {count} times}}",
+  "@taskExportPauses": {
+    "description": "#1866 task export (Word document): Pauses",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportVersion": "Recording format {schema}, action contract {contract}",
+  "@taskExportVersion": {
+    "description": "#1866 task export (Word document): Version",
+    "placeholders": {
+      "schema": {
+        "type": "int"
+      },
+      "contract": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportRevision": "Content revision: {revision}",
+  "@taskExportRevision": {
+    "description": "#1866 task export (Word document): Revision",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportPrereqSignedIn": "You are signed in.",
+  "@taskExportPrereqSignedIn": {
+    "description": "#1866 task export (Word document): PrereqSignedIn"
+  },
+  "taskExportPrereqWorkspaceMember": "You are a member of the workspace.",
+  "@taskExportPrereqWorkspaceMember": {
+    "description": "#1866 task export (Word document): PrereqWorkspaceMember"
+  },
+  "taskExportPrereqStartsOn": "Start on {screen}.",
+  "@taskExportPrereqStartsOn": {
+    "description": "#1866 task export (Word document): PrereqStartsOn",
+    "placeholders": {
+      "screen": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportPrereqBookablePlace": "At least one place can be booked.",
+  "@taskExportPrereqBookablePlace": {
+    "description": "#1866 task export (Word document): PrereqBookablePlace"
+  },
+  "taskExportPrereqUnknown": "A condition this version cannot describe.",
+  "@taskExportPrereqUnknown": {
+    "description": "#1866 task export (Word document): PrereqUnknown"
+  },
+  "taskExportSurfaceReserve": "the Reserve screen",
+  "@taskExportSurfaceReserve": {
+    "description": "#1866 task export (Word document): SurfaceReserve"
+  },
+  "taskExportSurfaceBookingSheet": "the booking sheet",
+  "@taskExportSurfaceBookingSheet": {
+    "description": "#1866 task export (Word document): SurfaceBookingSheet"
+  },
+  "taskExportSurfaceReservationDetail": "the reservation details",
+  "@taskExportSurfaceReservationDetail": {
+    "description": "#1866 task export (Word document): SurfaceReservationDetail"
+  },
+  "taskExportSurfaceAny": "any screen",
+  "@taskExportSurfaceAny": {
+    "description": "#1866 task export (Word document): SurfaceAny"
+  },
+  "taskExportSurfaceUnknown": "a screen this version cannot describe",
+  "@taskExportSurfaceUnknown": {
+    "description": "#1866 task export (Word document): SurfaceUnknown"
+  },
+  "taskExportOnScreen": "Screen: {screen}",
+  "@taskExportOnScreen": {
+    "description": "#1866 task export (Word document): OnScreen",
+    "placeholders": {
+      "screen": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportActionOpenReserve": "Open the Reserve screen.",
+  "@taskExportActionOpenReserve": {
+    "description": "#1866 task export (Word document): ActionOpenReserve"
+  },
+  "taskExportActionSelectDate": "Choose the date.",
+  "@taskExportActionSelectDate": {
+    "description": "#1866 task export (Word document): ActionSelectDate"
+  },
+  "taskExportActionSelectPeriod": "Choose the period.",
+  "@taskExportActionSelectPeriod": {
+    "description": "#1866 task export (Word document): ActionSelectPeriod"
+  },
+  "taskExportActionSwitchView": "Switch the view.",
+  "@taskExportActionSwitchView": {
+    "description": "#1866 task export (Word document): ActionSwitchView"
+  },
+  "taskExportActionSelectResource": "Choose a place.",
+  "@taskExportActionSelectResource": {
+    "description": "#1866 task export (Word document): ActionSelectResource"
+  },
+  "taskExportActionChangeField": "Change the field: {field}.",
+  "@taskExportActionChangeField": {
+    "description": "#1866 task export (Word document): ActionChangeField",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportActionConfirmBooking": "Confirm the booking.",
+  "@taskExportActionConfirmBooking": {
+    "description": "#1866 task export (Word document): ActionConfirmBooking"
+  },
+  "taskExportActionCancelReview": "Cancel the review without booking.",
+  "@taskExportActionCancelReview": {
+    "description": "#1866 task export (Word document): ActionCancelReview"
+  },
+  "taskExportActionViewDetails": "Open the reservation details.",
+  "@taskExportActionViewDetails": {
+    "description": "#1866 task export (Word document): ActionViewDetails"
+  },
+  "taskExportActionBack": "Go back.",
+  "@taskExportActionBack": {
+    "description": "#1866 task export (Word document): ActionBack"
+  },
+  "taskExportActionUnknown": "An action this version cannot describe.",
+  "@taskExportActionUnknown": {
+    "description": "#1866 task export (Word document): ActionUnknown"
+  },
+  "taskExportFieldDateRelation": "Date",
+  "@taskExportFieldDateRelation": {
+    "description": "#1866 task export (Word document): FieldDateRelation"
+  },
+  "taskExportFieldPeriod": "Period",
+  "@taskExportFieldPeriod": {
+    "description": "#1866 task export (Word document): FieldPeriod"
+  },
+  "taskExportFieldViewMode": "View",
+  "@taskExportFieldViewMode": {
+    "description": "#1866 task export (Word document): FieldViewMode"
+  },
+  "taskExportFieldResourceKind": "Kind of place",
+  "@taskExportFieldResourceKind": {
+    "description": "#1866 task export (Word document): FieldResourceKind"
+  },
+  "taskExportFieldForWhom": "For whom",
+  "@taskExportFieldForWhom": {
+    "description": "#1866 task export (Word document): FieldForWhom"
+  },
+  "taskExportFieldRepeat": "Repeat",
+  "@taskExportFieldRepeat": {
+    "description": "#1866 task export (Word document): FieldRepeat"
+  },
+  "taskExportFieldCheckIn": "Check in",
+  "@taskExportFieldCheckIn": {
+    "description": "#1866 task export (Word document): FieldCheckIn"
+  },
+  "taskExportFieldSeriesResult": "Series",
+  "@taskExportFieldSeriesResult": {
+    "description": "#1866 task export (Word document): FieldSeriesResult"
+  },
+  "taskExportFieldRefusal": "Reason",
+  "@taskExportFieldRefusal": {
+    "description": "#1866 task export (Word document): FieldRefusal"
+  },
+  "taskExportFieldTime": "Time",
+  "@taskExportFieldTime": {
+    "description": "#1866 task export (Word document): FieldTime"
+  },
+  "taskExportFieldAccessories": "Accessories",
+  "@taskExportFieldAccessories": {
+    "description": "#1866 task export (Word document): FieldAccessories"
+  },
+  "taskExportFieldUnknown": "a field this version cannot describe",
+  "@taskExportFieldUnknown": {
+    "description": "#1866 task export (Word document): FieldUnknown"
+  },
+  "taskExportDetail": "{field}: {value}",
+  "@taskExportDetail": {
+    "description": "#1866 task export (Word document): Detail",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportValueToday": "today",
+  "@taskExportValueToday": {
+    "description": "#1866 task export (Word document): ValueToday"
+  },
+  "taskExportValueTomorrow": "tomorrow",
+  "@taskExportValueTomorrow": {
+    "description": "#1866 task export (Word document): ValueTomorrow"
+  },
+  "taskExportValueLaterThisWeek": "later this week",
+  "@taskExportValueLaterThisWeek": {
+    "description": "#1866 task export (Word document): ValueLaterThisWeek"
+  },
+  "taskExportValueLater": "later",
+  "@taskExportValueLater": {
+    "description": "#1866 task export (Word document): ValueLater"
+  },
+  "taskExportValuePast": "a past day",
+  "@taskExportValuePast": {
+    "description": "#1866 task export (Word document): ValuePast"
+  },
+  "taskExportValueFullDay": "full day",
+  "@taskExportValueFullDay": {
+    "description": "#1866 task export (Word document): ValueFullDay"
+  },
+  "taskExportValueMorning": "morning",
+  "@taskExportValueMorning": {
+    "description": "#1866 task export (Word document): ValueMorning"
+  },
+  "taskExportValueAfternoon": "afternoon",
+  "@taskExportValueAfternoon": {
+    "description": "#1866 task export (Word document): ValueAfternoon"
+  },
+  "taskExportValueHours": "by the hour",
+  "@taskExportValueHours": {
+    "description": "#1866 task export (Word document): ValueHours"
+  },
+  "taskExportValueCustom": "custom",
+  "@taskExportValueCustom": {
+    "description": "#1866 task export (Word document): ValueCustom"
+  },
+  "taskExportValuePlan": "floor plan",
+  "@taskExportValuePlan": {
+    "description": "#1866 task export (Word document): ValuePlan"
+  },
+  "taskExportValueList": "list",
+  "@taskExportValueList": {
+    "description": "#1866 task export (Word document): ValueList"
+  },
+  "taskExportValueDesk": "a desk",
+  "@taskExportValueDesk": {
+    "description": "#1866 task export (Word document): ValueDesk"
+  },
+  "taskExportValueRoom": "a room",
+  "@taskExportValueRoom": {
+    "description": "#1866 task export (Word document): ValueRoom"
+  },
+  "taskExportValueOtherPlace": "another kind of place",
+  "@taskExportValueOtherPlace": {
+    "description": "#1866 task export (Word document): ValueOtherPlace"
+  },
+  "taskExportValueSelf": "myself",
+  "@taskExportValueSelf": {
+    "description": "#1866 task export (Word document): ValueSelf"
+  },
+  "taskExportValueOtherMember": "another member",
+  "@taskExportValueOtherMember": {
+    "description": "#1866 task export (Word document): ValueOtherMember"
+  },
+  "taskExportValueOnce": "once",
+  "@taskExportValueOnce": {
+    "description": "#1866 task export (Word document): ValueOnce"
+  },
+  "taskExportValueSeries": "as a series",
+  "@taskExportValueSeries": {
+    "description": "#1866 task export (Word document): ValueSeries"
+  },
+  "taskExportValueYes": "yes",
+  "@taskExportValueYes": {
+    "description": "#1866 task export (Word document): ValueYes"
+  },
+  "taskExportValueNo": "no",
+  "@taskExportValueNo": {
+    "description": "#1866 task export (Word document): ValueNo"
+  },
+  "taskExportValueAllBooked": "all booked",
+  "@taskExportValueAllBooked": {
+    "description": "#1866 task export (Word document): ValueAllBooked"
+  },
+  "taskExportValuePartiallyBooked": "partly booked",
+  "@taskExportValuePartiallyBooked": {
+    "description": "#1866 task export (Word document): ValuePartiallyBooked"
+  },
+  "taskExportValueConflict": "the place was already taken",
+  "@taskExportValueConflict": {
+    "description": "#1866 task export (Word document): ValueConflict"
+  },
+  "taskExportValuePolicy": "a booking rule",
+  "@taskExportValuePolicy": {
+    "description": "#1866 task export (Word document): ValuePolicy"
+  },
+  "taskExportValueQuota": "a quota",
+  "@taskExportValueQuota": {
+    "description": "#1866 task export (Word document): ValueQuota"
+  },
+  "taskExportValuePermission": "a missing permission",
+  "@taskExportValuePermission": {
+    "description": "#1866 task export (Word document): ValuePermission"
+  },
+  "taskExportValueClosed": "the workspace was closed",
+  "@taskExportValueClosed": {
+    "description": "#1866 task export (Word document): ValueClosed"
+  },
+  "taskExportValueOffline": "no connection",
+  "@taskExportValueOffline": {
+    "description": "#1866 task export (Word document): ValueOffline"
+  },
+  "taskExportValueOtherReason": "another reason",
+  "@taskExportValueOtherReason": {
+    "description": "#1866 task export (Word document): ValueOtherReason"
+  },
+  "taskExportValueWithheld": "not recorded",
+  "@taskExportValueWithheld": {
+    "description": "#1866 task export (Word document): ValueWithheld"
+  },
+  "taskExportResult": "Result: {outcome}",
+  "@taskExportResult": {
+    "description": "#1866 task export (Word document): Result",
+    "placeholders": {
+      "outcome": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportOutcomeConfirmed": "the booking was confirmed",
+  "@taskExportOutcomeConfirmed": {
+    "description": "#1866 task export (Word document): OutcomeConfirmed"
+  },
+  "taskExportOutcomeRequested": "the booking was requested and waits for a decision",
+  "@taskExportOutcomeRequested": {
+    "description": "#1866 task export (Word document): OutcomeRequested"
+  },
+  "taskExportOutcomeSeriesBooked": "the series was booked",
+  "@taskExportOutcomeSeriesBooked": {
+    "description": "#1866 task export (Word document): OutcomeSeriesBooked"
+  },
+  "taskExportOutcomeRefused": "the booking was refused",
+  "@taskExportOutcomeRefused": {
+    "description": "#1866 task export (Word document): OutcomeRefused"
+  },
+  "taskExportOutcomeUnknown": "no answer could be confirmed; the outcome is unknown",
+  "@taskExportOutcomeUnknown": {
+    "description": "#1866 task export (Word document): OutcomeUnknown"
+  },
+  "taskExportOutcomeUnregistered": "an outcome this version cannot describe",
+  "@taskExportOutcomeUnregistered": {
+    "description": "#1866 task export (Word document): OutcomeUnregistered"
+  },
+  "taskExportNoResult": "No result was recorded for this command.",
+  "@taskExportNoResult": {
+    "description": "#1866 task export (Word document): NoResult"
+  },
+  "taskExportAuthored": "Added while editing: not observed by the recorder.",
+  "@taskExportAuthored": {
+    "description": "#1866 task export (Word document): Authored"
+  },
+  "taskExportNote": "Note written by the person who recorded (their own words): {note}",
+  "@taskExportNote": {
+    "description": "#1866 task export (Word document): Note",
+    "placeholders": {
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportNoteOmitted": "A personal note was left out of this document.",
+  "@taskExportNoteOmitted": {
+    "description": "#1866 task export (Word document): NoteOmitted"
+  },
+  "taskExportExcluded": "A protected screen was visited ({category}); nothing on it was recorded.",
+  "@taskExportExcluded": {
+    "description": "#1866 task export (Word document): Excluded",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportProtectedAuthentication": "sign-in",
+  "@taskExportProtectedAuthentication": {
+    "description": "#1866 task export (Word document): ProtectedAuthentication"
+  },
+  "taskExportProtectedPayment": "payment",
+  "@taskExportProtectedPayment": {
+    "description": "#1866 task export (Word document): ProtectedPayment"
+  },
+  "taskExportProtectedProvider": "provider",
+  "@taskExportProtectedProvider": {
+    "description": "#1866 task export (Word document): ProtectedProvider"
+  },
+  "taskExportProtectedSecrets": "secrets",
+  "@taskExportProtectedSecrets": {
+    "description": "#1866 task export (Word document): ProtectedSecrets"
+  },
+  "taskExportProtectedMessenger": "messages",
+  "@taskExportProtectedMessenger": {
+    "description": "#1866 task export (Word document): ProtectedMessenger"
+  },
+  "taskExportProtectedIdentity": "identity",
+  "@taskExportProtectedIdentity": {
+    "description": "#1866 task export (Word document): ProtectedIdentity"
+  },
+  "taskExportProtectedOperator": "operator",
+  "@taskExportProtectedOperator": {
+    "description": "#1866 task export (Word document): ProtectedOperator"
+  },
+  "taskExportUnrecorded": "A step this version cannot describe.",
+  "@taskExportUnrecorded": {
+    "description": "#1866 task export (Word document): Unrecorded"
+  },
+  "taskExportLimitValues": "Values that were typed or chosen are never recorded: only their kind appears, and \"not recorded\" stands in for anything else.",
+  "@taskExportLimitValues": {
+    "description": "#1866 task export (Word document): LimitValues"
+  },
+  "taskExportLimitNoIllustrations": "This document has no illustrations.",
+  "@taskExportLimitNoIllustrations": {
+    "description": "#1866 task export (Word document): LimitNoIllustrations"
+  },
+  "taskExportLimitNotRunnable": "Some steps come from a newer version and cannot be described here.",
+  "@taskExportLimitNotRunnable": {
+    "description": "#1866 task export (Word document): LimitNotRunnable"
+  },
+  "taskExportLimitIncomplete": "The recording is incomplete: what happened after the last step shown is not known.",
+  "@taskExportLimitIncomplete": {
+    "description": "#1866 task export (Word document): LimitIncomplete"
+  },
+  "taskExportLimitEdited": "Steps marked as added while editing were written by a person, not observed.",
+  "@taskExportLimitEdited": {
+    "description": "#1866 task export (Word document): LimitEdited"
+  },
+  "taskExportFooter": "Page {page} of {pages}",
+  "@taskExportFooter": {
+    "description": "#1866 task export (Word document): Footer",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      },
+      "pages": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportSaved": "Word document saved: {file}",
+  "@taskExportSaved": {
+    "description": "#1866 task export (Word document): Saved",
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportSaveFailed": "The Word document could not be saved. The recording is unchanged.",
+  "@taskExportSaveFailed": {
+    "description": "#1866 task export (Word document): SaveFailed"
+  },
+  "taskExportRefused": "This recording cannot be exported as a Word document.",
+  "@taskExportRefused": {
+    "description": "#1866 task export (Word document): Refused"
+  },
+  "taskExportSceneLater": "Later",
+  "@taskExportSceneLater": {
+    "description": "#1876 storyboard and illustrations: SceneLater"
+  },
+  "taskExportSceneBookingTitle": "Book a place",
+  "@taskExportSceneBookingTitle": {
+    "description": "#1876 storyboard and illustrations: SceneBookingTitle"
+  },
+  "taskExportSceneDetailTitle": "Reservation",
+  "@taskExportSceneDetailTitle": {
+    "description": "#1876 storyboard and illustrations: SceneDetailTitle"
+  },
+  "taskExportSceneConfirm": "Confirm",
+  "@taskExportSceneConfirm": {
+    "description": "#1876 storyboard and illustrations: SceneConfirm"
+  },
+  "taskExportSceneCancel": "Cancel",
+  "@taskExportSceneCancel": {
+    "description": "#1876 storyboard and illustrations: SceneCancel"
+  },
+  "taskExportSceneProvenance": "Illustration recreated from the recording, not a screenshot",
+  "@taskExportSceneProvenance": {
+    "description": "#1876 storyboard and illustrations: SceneProvenance"
+  },
+  "taskExportSceneAlt": "Illustration: {screen} – {step}",
+  "@taskExportSceneAlt": {
+    "description": "#1876 storyboard and illustrations: SceneAlt",
+    "placeholders": {
+      "screen": {
+        "type": "String"
+      },
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportStoryboardInclude": "Include",
+  "@taskExportStoryboardInclude": {
+    "description": "#1876 storyboard and illustrations: StoryboardInclude"
+  },
+  "taskExportStoryboardApprove": "Approve illustration",
+  "@taskExportStoryboardApprove": {
+    "description": "#1876 storyboard and illustrations: StoryboardApprove"
+  },
+  "taskExportStoryboardMoveUp": "Move up",
+  "@taskExportStoryboardMoveUp": {
+    "description": "#1876 storyboard and illustrations: StoryboardMoveUp"
+  },
+  "taskExportStoryboardMoveDown": "Move down",
+  "@taskExportStoryboardMoveDown": {
+    "description": "#1876 storyboard and illustrations: StoryboardMoveDown"
+  },
+  "taskExportStoryboardSourceScene": "Recreated illustration (not a screenshot)",
+  "@taskExportStoryboardSourceScene": {
+    "description": "#1876 storyboard and illustrations: StoryboardSourceScene"
+  },
+  "taskExportStoryboardSourceText": "Text slide",
+  "@taskExportStoryboardSourceText": {
+    "description": "#1876 storyboard and illustrations: StoryboardSourceText"
+  },
+  "taskExportStoryboardSourceExcluded": "Protected screen: not illustrated",
+  "@taskExportStoryboardSourceExcluded": {
+    "description": "#1876 storyboard and illustrations: StoryboardSourceExcluded"
+  },
+  "taskExportStoryboardGap": "Gap: nothing was recorded here",
+  "@taskExportStoryboardGap": {
+    "description": "#1876 storyboard and illustrations: StoryboardGap"
+  },
+  "taskExportStoryboardRenderFailed": "The illustration could not be drawn; this step stays as text.",
+  "@taskExportStoryboardRenderFailed": {
+    "description": "#1876 storyboard and illustrations: StoryboardRenderFailed"
+  },
+  "taskExportStoryboardOrderRefused": "A result cannot come before the command it answers.",
+  "@taskExportStoryboardOrderRefused": {
+    "description": "#1876 storyboard and illustrations: StoryboardOrderRefused"
+  },
+  "taskExportIncludeIllustrations": "Include approved illustrations",
+  "@taskExportIncludeIllustrations": {
+    "description": "#1866 task export (Word document): IncludeIllustrations"
+  },
+  "taskExportStoryboardLeftOut": "Step left out by the reviewer.",
+  "@taskExportStoryboardLeftOut": {
+    "description": "#1876 storyboard and illustrations: StoryboardLeftOut"
+  },
+  "taskExportIllustrationNotApproved": "Illustration not included: it was not approved.",
+  "@taskExportIllustrationNotApproved": {
+    "description": "#1866 task export (Word document): IllustrationNotApproved"
+  },
+  "taskExportLimitRecreated": "Illustrations are recreated from the recording's safe facts with invented place names; they are not screenshots of what was on screen.",
+  "@taskExportLimitRecreated": {
+    "description": "#1866 task export (Word document): LimitRecreated"
+  },
+  "taskExportStale": "The storyboard belongs to another version of this recording. Review it again before exporting.",
+  "@taskExportStale": {
+    "description": "#1866 task export (Word document): Stale"
+  },
+  "taskExportVideoIntro": "A tutorial recreated from a recorded task. It shows the steps, not proof that the task succeeded.",
+  "@taskExportVideoIntro": {
+    "description": "#1879 captioned video: VideoIntro"
+  },
+  "taskExportVideoStepHeading": "Step {number}: {title}",
+  "@taskExportVideoStepHeading": {
+    "description": "#1879 captioned video: VideoStepHeading",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportVideoSummary": "Summary",
+  "@taskExportVideoSummary": {
+    "description": "#1879 captioned video: VideoSummary"
+  },
+  "taskExportVideoLeftOut": "{count, plural, =1{One step was left out by the reviewer.} other{{count} steps were left out by the reviewer.}}",
+  "@taskExportVideoLeftOut": {
+    "description": "#1879 captioned video: VideoLeftOut",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportVideoEmpty": "Every step was left out: there is nothing to show in a video.",
+  "@taskExportVideoEmpty": {
+    "description": "#1879 captioned video: VideoEmpty"
+  },
+  "taskExportVideoTooLong": "The video would be longer than allowed. Shorten durations or leave steps out.",
+  "@taskExportVideoTooLong": {
+    "description": "#1879 captioned video: VideoTooLong"
+  },
+  "taskExportVideoBusy": "Another video is still being generated.",
+  "@taskExportVideoBusy": {
+    "description": "#1879 captioned video: VideoBusy"
+  },
+  "taskExportVideoUnsupported": "This device cannot generate a video. Export the recording file and open it on a supported device: macOS, iOS, Android, or a current browser that can encode H.264 video.",
+  "@taskExportVideoUnsupported": {
+    "description": "#1879 captioned video: VideoUnsupported"
+  },
+  "taskExportVideoFailed": "The video could not be generated. Nothing was saved.",
+  "@taskExportVideoFailed": {
+    "description": "#1879 captioned video: VideoFailed"
+  },
+  "taskExportVideoCancelled": "Video generation cancelled. Nothing was saved.",
+  "@taskExportVideoCancelled": {
+    "description": "#1879 captioned video: VideoCancelled"
+  },
+  "taskExportVideoGenerating": "Generating the video: {percent} %",
+  "@taskExportVideoGenerating": {
+    "description": "#1879 captioned video: VideoGenerating",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportVideoCancel": "Cancel video",
+  "@taskExportVideoCancel": {
+    "description": "#1879 captioned video: VideoCancel"
+  },
+  "taskExportVideoGenerate": "Generate video",
+  "@taskExportVideoGenerate": {
+    "description": "#1879 captioned video: VideoGenerate"
+  },
+  "taskExportVideoLandscape": "Landscape",
+  "@taskExportVideoLandscape": {
+    "description": "#1879 captioned video: VideoLandscape"
+  },
+  "taskExportVideoPortrait": "Portrait",
+  "@taskExportVideoPortrait": {
+    "description": "#1879 captioned video: VideoPortrait"
+  },
+  "taskExportVideoSaved": "Video saved with its captions and transcript: {file}",
+  "@taskExportVideoSaved": {
+    "description": "#1879 captioned video: VideoSaved",
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "taskExportWordButton": "Export as Word document",
+  "@taskExportWordButton": {
+    "description": "#1866 task export (Word document): the review screen button"
+  },
+  "featureTaskRecorderTitle": "Task recorder",
+  "@featureTaskRecorderTitle": {
+    "description": "#1865 task recorder: the feature's name"
+  },
+  "featureTaskRecorderDesc": "Lets a person record the steps of a task on this workspace's screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here.",
+  "@featureTaskRecorderDesc": {
+    "description": "#1865 task recorder: the feature's description"
+  },
+  "taskRecorderTitle": "Task recorder",
+  "@taskRecorderTitle": {
+    "description": "#1865 task recorder: taskRecorderTitle"
+  },
+  "taskRecorderRecordThisTask": "Record this task",
+  "@taskRecorderRecordThisTask": {
+    "description": "#1865 task recorder: taskRecorderRecordThisTask"
+  },
+  "taskRecorderDisclosureTitle": "Before you record",
+  "@taskRecorderDisclosureTitle": {
+    "description": "#1865 task recorder: taskRecorderDisclosureTitle"
+  },
+  "taskRecorderDisclosureBody": "The recorder notes the steps you take on this workspace's screens — which screen, which action, what the app answered — on this device only. It never keeps what you type, names, amounts, messages, codes or passwords. Sign-in, payment, messages and other protected screens leave only a marker. Nothing is uploaded: you decide what to export.",
+  "@taskRecorderDisclosureBody": {
+    "description": "#1865 task recorder: taskRecorderDisclosureBody"
+  },
+  "taskRecorderLimits": "Up to {steps} steps or {minutes} minutes per recording. Recordings are deleted from this device after {days} days; a file you exported is yours and stays where you saved it.",
+  "@taskRecorderLimits": {
+    "description": "#1865 task recorder: taskRecorderLimits",
+    "placeholders": {
+      "steps": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "taskRecorderStart": "Start recording",
+  "@taskRecorderStart": {
+    "description": "#1865 task recorder: taskRecorderStart"
+  },
+  "taskRecorderUnavailable": "Recording is not switched on in this workspace.",
+  "@taskRecorderUnavailable": {
+    "description": "#1865 task recorder: taskRecorderUnavailable"
+  },
+  "taskRecorderSignedOut": "Sign in to record a task.",
+  "@taskRecorderSignedOut": {
+    "description": "#1865 task recorder: taskRecorderSignedOut"
+  },
+  "taskRecorderStartFailed": "The recording could not start on this device.",
+  "@taskRecorderStartFailed": {
+    "description": "#1865 task recorder: taskRecorderStartFailed"
+  },
+  "taskRecorderPause": "Pause",
+  "@taskRecorderPause": {
+    "description": "#1865 task recorder: taskRecorderPause"
+  },
+  "taskRecorderResume": "Resume",
+  "@taskRecorderResume": {
+    "description": "#1865 task recorder: taskRecorderResume"
+  },
+  "taskRecorderStop": "Stop",
+  "@taskRecorderStop": {
+    "description": "#1865 task recorder: taskRecorderStop"
+  },
+  "taskRecorderDiscard": "Discard",
+  "@taskRecorderDiscard": {
+    "description": "#1865 task recorder: taskRecorderDiscard"
+  },
+  "taskRecorderAddNote": "Add a note",
+  "@taskRecorderAddNote": {
+    "description": "#1865 task recorder: taskRecorderAddNote"
+  },
+  "taskRecorderNoteHint": "Your own words, kept as you write them",
+  "@taskRecorderNoteHint": {
+    "description": "#1865 task recorder: taskRecorderNoteHint"
+  },
+  "taskRecorderRecording": "Recording",
+  "@taskRecorderRecording": {
+    "description": "#1865 task recorder: taskRecorderRecording"
+  },
+  "taskRecorderPaused": "Paused",
+  "@taskRecorderPaused": {
+    "description": "#1865 task recorder: taskRecorderPaused"
+  },
+  "taskRecorderIndicator": "Recording a task: {count} steps",
+  "@taskRecorderIndicator": {
+    "description": "#1865 task recorder: taskRecorderIndicator",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "taskRecorderMyRecordings": "My recordings on this device",
+  "@taskRecorderMyRecordings": {
+    "description": "#1865 task recorder: taskRecorderMyRecordings"
+  },
+  "taskRecorderNoRecordings": "No recordings on this device.",
+  "@taskRecorderNoRecordings": {
+    "description": "#1865 task recorder: taskRecorderNoRecordings"
+  },
+  "taskRecorderStepCount": "{count} steps",
+  "@taskRecorderStepCount": {
+    "description": "#1865 task recorder: taskRecorderStepCount",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "taskRecorderUntitled": "Untitled task",
+  "@taskRecorderUntitled": {
+    "description": "#1865 task recorder: taskRecorderUntitled"
+  },
+  "taskRecorderUnreadable": "This recording cannot be read. You can delete it.",
+  "@taskRecorderUnreadable": {
+    "description": "#1865 task recorder: taskRecorderUnreadable"
+  },
+  "taskRecorderCompletenessComplete": "Complete",
+  "@taskRecorderCompletenessComplete": {
+    "description": "#1865 task recorder: taskRecorderCompletenessComplete"
+  },
+  "taskRecorderCompletenessPartial": "Partial",
+  "@taskRecorderCompletenessPartial": {
+    "description": "#1865 task recorder: taskRecorderCompletenessPartial"
+  },
+  "taskRecorderCompletenessInterrupted": "Interrupted",
+  "@taskRecorderCompletenessInterrupted": {
+    "description": "#1865 task recorder: taskRecorderCompletenessInterrupted"
+  },
+  "taskRecorderEndStopped": "Stopped by you",
+  "@taskRecorderEndStopped": {
+    "description": "#1865 task recorder: taskRecorderEndStopped"
+  },
+  "taskRecorderEndScopeChanged": "Ended: the account or workspace changed",
+  "@taskRecorderEndScopeChanged": {
+    "description": "#1865 task recorder: taskRecorderEndScopeChanged"
+  },
+  "taskRecorderEndLimitReached": "Ended: a limit was reached",
+  "@taskRecorderEndLimitReached": {
+    "description": "#1865 task recorder: taskRecorderEndLimitReached"
+  },
+  "taskRecorderEndStorageFailed": "Ended: it could not be saved on this device",
+  "@taskRecorderEndStorageFailed": {
+    "description": "#1865 task recorder: taskRecorderEndStorageFailed"
+  },
+  "taskRecorderEndInterrupted": "Interrupted: the app stopped while recording",
+  "@taskRecorderEndInterrupted": {
+    "description": "#1865 task recorder: taskRecorderEndInterrupted"
+  },
+  "taskRecorderActionOpenReserve": "Opened Reserve",
+  "@taskRecorderActionOpenReserve": {
+    "description": "#1865 task recorder: taskRecorderActionOpenReserve"
+  },
+  "taskRecorderActionSelectDate": "Chose the day",
+  "@taskRecorderActionSelectDate": {
+    "description": "#1865 task recorder: taskRecorderActionSelectDate"
+  },
+  "taskRecorderActionSelectPeriod": "Chose the period",
+  "@taskRecorderActionSelectPeriod": {
+    "description": "#1865 task recorder: taskRecorderActionSelectPeriod"
+  },
+  "taskRecorderActionSwitchView": "Switched the view",
+  "@taskRecorderActionSwitchView": {
+    "description": "#1865 task recorder: taskRecorderActionSwitchView"
+  },
+  "taskRecorderActionSelectResource": "Chose a place",
+  "@taskRecorderActionSelectResource": {
+    "description": "#1865 task recorder: taskRecorderActionSelectResource"
+  },
+  "taskRecorderActionChangeField": "Changed a booking detail",
+  "@taskRecorderActionChangeField": {
+    "description": "#1865 task recorder: taskRecorderActionChangeField"
+  },
+  "taskRecorderActionConfirmBooking": "Confirmed the booking",
+  "@taskRecorderActionConfirmBooking": {
+    "description": "#1865 task recorder: taskRecorderActionConfirmBooking"
+  },
+  "taskRecorderActionCancelReview": "Closed the booking without booking",
+  "@taskRecorderActionCancelReview": {
+    "description": "#1865 task recorder: taskRecorderActionCancelReview"
+  },
+  "taskRecorderActionViewDetails": "Opened the reservation",
+  "@taskRecorderActionViewDetails": {
+    "description": "#1865 task recorder: taskRecorderActionViewDetails"
+  },
+  "taskRecorderActionBack": "Went back",
+  "@taskRecorderActionBack": {
+    "description": "#1865 task recorder: taskRecorderActionBack"
+  },
+  "taskRecorderOutcomeConfirmed": "Booked",
+  "@taskRecorderOutcomeConfirmed": {
+    "description": "#1865 task recorder: taskRecorderOutcomeConfirmed"
+  },
+  "taskRecorderOutcomeRequested": "Sent for confirmation",
+  "@taskRecorderOutcomeRequested": {
+    "description": "#1865 task recorder: taskRecorderOutcomeRequested"
+  },
+  "taskRecorderOutcomeSeries": "Series booked",
+  "@taskRecorderOutcomeSeries": {
+    "description": "#1865 task recorder: taskRecorderOutcomeSeries"
+  },
+  "taskRecorderOutcomeRefused": "Refused",
+  "@taskRecorderOutcomeRefused": {
+    "description": "#1865 task recorder: taskRecorderOutcomeRefused"
+  },
+  "taskRecorderOutcomeUnknown": "No answer came",
+  "@taskRecorderOutcomeUnknown": {
+    "description": "#1865 task recorder: taskRecorderOutcomeUnknown"
+  },
+  "taskRecorderNoOutcome": "No answer recorded",
+  "@taskRecorderNoOutcome": {
+    "description": "#1865 task recorder: taskRecorderNoOutcome"
+  },
+  "taskRecorderStepExcluded": "A protected screen — not recorded",
+  "@taskRecorderStepExcluded": {
+    "description": "#1865 task recorder: taskRecorderStepExcluded"
+  },
+  "taskRecorderStepUnrecorded": "A step the recorder cannot describe",
+  "@taskRecorderStepUnrecorded": {
+    "description": "#1865 task recorder: taskRecorderStepUnrecorded"
+  },
+  "taskRecorderStepNote": "Your note",
+  "@taskRecorderStepNote": {
+    "description": "#1865 task recorder: taskRecorderStepNote"
+  },
+  "taskRecorderSegmentGap": "Paused here",
+  "@taskRecorderSegmentGap": {
+    "description": "#1865 task recorder: taskRecorderSegmentGap"
+  },
+  "taskRecorderExport": "Export a file",
+  "@taskRecorderExport": {
+    "description": "#1865 task recorder: taskRecorderExport"
+  },
+  "taskRecorderExportPreview": "What the file will contain",
+  "@taskRecorderExportPreview": {
+    "description": "#1865 task recorder: taskRecorderExportPreview"
+  },
+  "taskRecorderSaved": "Saved: {path}",
+  "@taskRecorderSaved": {
+    "description": "#1865 task recorder: taskRecorderSaved",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "taskRecorderSaveFailed": "The file could not be saved.",
+  "@taskRecorderSaveFailed": {
+    "description": "#1865 task recorder: taskRecorderSaveFailed"
+  },
+  "taskRecorderSaveNoPath": "The file was handed to your browser or device; it did not say where it went.",
+  "@taskRecorderSaveNoPath": {
+    "description": "#1865 task recorder: taskRecorderSaveNoPath"
+  },
+  "taskRecorderDelete": "Delete from this device",
+  "@taskRecorderDelete": {
+    "description": "#1865 task recorder: taskRecorderDelete"
+  },
+  "taskRecorderDeleteConfirm": "Delete this recording from this device? Files you exported are not affected, and nothing in the workspace changes.",
+  "@taskRecorderDeleteConfirm": {
+    "description": "#1865 task recorder: taskRecorderDeleteConfirm"
+  },
+  "taskRecorderLeaveOut": "Leave out of the export",
+  "@taskRecorderLeaveOut": {
+    "description": "#1865 task recorder: taskRecorderLeaveOut"
+  },
+  "taskRecorderPutBack": "Put back",
+  "@taskRecorderPutBack": {
+    "description": "#1865 task recorder: taskRecorderPutBack"
+  },
+  "taskRecorderEditedNote": "Edited copy: {count} steps left out. The recording on this device is unchanged.",
+  "@taskRecorderEditedNote": {
+    "description": "#1865 task recorder: taskRecorderEditedNote",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "taskRecorderOpenRecorder": "Open the task recorder",
+  "@taskRecorderOpenRecorder": {
+    "description": "#1865 task recorder: taskRecorderOpenRecorder"
+  },
+  "taskRecorderValueToday": "today",
+  "@taskRecorderValueToday": {
+    "description": "#1865 task recorder: taskRecorderValueToday"
+  },
+  "taskRecorderValueTomorrow": "tomorrow",
+  "@taskRecorderValueTomorrow": {
+    "description": "#1865 task recorder: taskRecorderValueTomorrow"
+  },
+  "taskRecorderValueLaterThisWeek": "later this week",
+  "@taskRecorderValueLaterThisWeek": {
+    "description": "#1865 task recorder: taskRecorderValueLaterThisWeek"
+  },
+  "taskRecorderValueLater": "a later day",
+  "@taskRecorderValueLater": {
+    "description": "#1865 task recorder: taskRecorderValueLater"
+  },
+  "taskRecorderValuePast": "a past day",
+  "@taskRecorderValuePast": {
+    "description": "#1865 task recorder: taskRecorderValuePast"
+  },
+  "taskRecorderValueFullDay": "full day",
+  "@taskRecorderValueFullDay": {
+    "description": "#1865 task recorder: taskRecorderValueFullDay"
+  },
+  "taskRecorderValueMorning": "morning",
+  "@taskRecorderValueMorning": {
+    "description": "#1865 task recorder: taskRecorderValueMorning"
+  },
+  "taskRecorderValueAfternoon": "afternoon",
+  "@taskRecorderValueAfternoon": {
+    "description": "#1865 task recorder: taskRecorderValueAfternoon"
+  },
+  "taskRecorderValueHours": "by the hour",
+  "@taskRecorderValueHours": {
+    "description": "#1865 task recorder: taskRecorderValueHours"
+  },
+  "taskRecorderValueCustom": "custom times",
+  "@taskRecorderValueCustom": {
+    "description": "#1865 task recorder: taskRecorderValueCustom"
+  },
+  "taskRecorderValuePlan": "plan",
+  "@taskRecorderValuePlan": {
+    "description": "#1865 task recorder: taskRecorderValuePlan"
+  },
+  "taskRecorderValueList": "list",
+  "@taskRecorderValueList": {
+    "description": "#1865 task recorder: taskRecorderValueList"
+  },
+  "taskRecorderValueDesk": "a desk",
+  "@taskRecorderValueDesk": {
+    "description": "#1865 task recorder: taskRecorderValueDesk"
+  },
+  "taskRecorderValueRoom": "a room",
+  "@taskRecorderValueRoom": {
+    "description": "#1865 task recorder: taskRecorderValueRoom"
+  },
+  "taskRecorderValueOther": "other",
+  "@taskRecorderValueOther": {
+    "description": "#1865 task recorder: taskRecorderValueOther"
+  },
+  "taskRecorderValueSelf": "for me",
+  "@taskRecorderValueSelf": {
+    "description": "#1865 task recorder: taskRecorderValueSelf"
+  },
+  "taskRecorderValueOtherMember": "for another member",
+  "@taskRecorderValueOtherMember": {
+    "description": "#1865 task recorder: taskRecorderValueOtherMember"
+  },
+  "taskRecorderValueOnce": "once",
+  "@taskRecorderValueOnce": {
+    "description": "#1865 task recorder: taskRecorderValueOnce"
+  },
+  "taskRecorderValueSeries": "repeating",
+  "@taskRecorderValueSeries": {
+    "description": "#1865 task recorder: taskRecorderValueSeries"
+  },
+  "taskRecorderValueCheckIn": "with check-in",
+  "@taskRecorderValueCheckIn": {
+    "description": "#1865 task recorder: taskRecorderValueCheckIn"
+  },
+  "taskRecorderValueNoCheckIn": "without check-in",
+  "@taskRecorderValueNoCheckIn": {
+    "description": "#1865 task recorder: taskRecorderValueNoCheckIn"
+  },
+  "taskRecorderValueAllBooked": "every date booked",
+  "@taskRecorderValueAllBooked": {
+    "description": "#1865 task recorder: taskRecorderValueAllBooked"
+  },
+  "taskRecorderValuePartiallyBooked": "some dates refused",
+  "@taskRecorderValuePartiallyBooked": {
+    "description": "#1865 task recorder: taskRecorderValuePartiallyBooked"
+  },
+  "taskRecorderValueConflict": "already taken",
+  "@taskRecorderValueConflict": {
+    "description": "#1865 task recorder: taskRecorderValueConflict"
+  },
+  "taskRecorderValuePolicy": "a booking rule",
+  "@taskRecorderValuePolicy": {
+    "description": "#1865 task recorder: taskRecorderValuePolicy"
+  },
+  "taskRecorderValueQuota": "an allowance",
+  "@taskRecorderValueQuota": {
+    "description": "#1865 task recorder: taskRecorderValueQuota"
+  },
+  "taskRecorderValuePermission": "a permission",
+  "@taskRecorderValuePermission": {
+    "description": "#1865 task recorder: taskRecorderValuePermission"
+  },
+  "taskRecorderValueClosed": "closed",
+  "@taskRecorderValueClosed": {
+    "description": "#1865 task recorder: taskRecorderValueClosed"
+  },
+  "taskRecorderValueOffline": "offline",
+  "@taskRecorderValueOffline": {
+    "description": "#1865 task recorder: taskRecorderValueOffline"
+  },
+  "taskRecorderValueWithheld": "not recorded",
+  "@taskRecorderValueWithheld": {
+    "description": "#1865 task recorder: taskRecorderValueWithheld"
+  },
+  "taskRecorderFieldForWhom": "who it is for",
+  "@taskRecorderFieldForWhom": {
+    "description": "#1865 task recorder: taskRecorderFieldForWhom"
+  },
+  "taskRecorderFieldRepeat": "repeat",
+  "@taskRecorderFieldRepeat": {
+    "description": "#1865 task recorder: taskRecorderFieldRepeat"
+  },
+  "taskRecorderFieldCheckIn": "check-in",
+  "@taskRecorderFieldCheckIn": {
+    "description": "#1865 task recorder: taskRecorderFieldCheckIn"
+  },
+  "taskRecorderFieldTime": "time",
+  "@taskRecorderFieldTime": {
+    "description": "#1865 task recorder: taskRecorderFieldTime"
+  },
+  "taskRecorderFieldAccessories": "accessories",
+  "@taskRecorderFieldAccessories": {
+    "description": "#1865 task recorder: taskRecorderFieldAccessories"
+  },
+  "taskRecorderProtectedAuthentication": "sign-in",
+  "@taskRecorderProtectedAuthentication": {
+    "description": "#1865 task recorder: taskRecorderProtectedAuthentication"
+  },
+  "taskRecorderProtectedPayment": "payment",
+  "@taskRecorderProtectedPayment": {
+    "description": "#1865 task recorder: taskRecorderProtectedPayment"
+  },
+  "taskRecorderProtectedProvider": "a provider's screen",
+  "@taskRecorderProtectedProvider": {
+    "description": "#1865 task recorder: taskRecorderProtectedProvider"
+  },
+  "taskRecorderProtectedSecrets": "keys and secrets",
+  "@taskRecorderProtectedSecrets": {
+    "description": "#1865 task recorder: taskRecorderProtectedSecrets"
+  },
+  "taskRecorderProtectedMessenger": "messages",
+  "@taskRecorderProtectedMessenger": {
+    "description": "#1865 task recorder: taskRecorderProtectedMessenger"
+  },
+  "taskRecorderProtectedIdentity": "identity",
+  "@taskRecorderProtectedIdentity": {
+    "description": "#1865 task recorder: taskRecorderProtectedIdentity"
+  },
+  "taskRecorderProtectedOperator": "installation operator",
+  "@taskRecorderProtectedOperator": {
+    "description": "#1865 task recorder: taskRecorderProtectedOperator"
+  },
+  "taskRecorderExportPackage": "Export a task package",
+  "@taskRecorderExportPackage": {
+    "description": "#1872 task package: taskRecorderExportPackage"
+  },
+  "taskRecorderSavedPrivately": "Kept only inside the app: {path}",
+  "@taskRecorderSavedPrivately": {
+    "description": "#1872 task package: taskRecorderSavedPrivately",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "taskWorkbenchTitle": "Task workbench",
+  "@taskWorkbenchTitle": {
+    "description": "#1872 task workbench: taskWorkbenchTitle"
+  },
+  "taskWorkbenchOpen": "Open a task file",
+  "@taskWorkbenchOpen": {
+    "description": "#1872 task workbench: taskWorkbenchOpen"
+  },
+  "taskWorkbenchIntro": "Open a saved task file. It is read on this device only; nothing is uploaded and no sign-in is needed.",
+  "@taskWorkbenchIntro": {
+    "description": "#1872 task workbench: taskWorkbenchIntro"
+  },
+  "taskWorkbenchAccepted": "Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.",
+  "@taskWorkbenchAccepted": {
+    "description": "#1872 task workbench: taskWorkbenchAccepted",
+    "placeholders": {
+      "megabytes": {
+        "type": "int"
+      }
+    }
+  },
+  "taskWorkbenchChoose": "Choose a task file",
+  "@taskWorkbenchChoose": {
+    "description": "#1872 task workbench: taskWorkbenchChoose"
+  },
+  "taskWorkbenchFileType": "Task file",
+  "@taskWorkbenchFileType": {
+    "description": "#1872 task workbench: taskWorkbenchFileType"
+  },
+  "taskWorkbenchEdited": "An edited copy of a recording.",
+  "@taskWorkbenchEdited": {
+    "description": "#1872 task workbench: taskWorkbenchEdited"
+  },
+  "taskWorkbenchTranscriptOnly": "Some steps come from a newer version: shown as a transcript only.",
+  "@taskWorkbenchTranscriptOnly": {
+    "description": "#1872 task workbench: taskWorkbenchTranscriptOnly"
+  },
+  "taskWorkbenchUntrusted": "A private draft from a file: nothing in it is trusted or sent.",
+  "@taskWorkbenchUntrusted": {
+    "description": "#1872 task workbench: taskWorkbenchUntrusted"
+  },
+  "taskWorkbenchClaim": "The file says {key}: {value}",
+  "@taskWorkbenchClaim": {
+    "description": "#1872 task workbench: taskWorkbenchClaim",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "taskWorkbenchRefusedTooLarge": "This file is larger than the workbench reads.",
+  "@taskWorkbenchRefusedTooLarge": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedTooLarge"
+  },
+  "taskWorkbenchRefusedUnsupported": "This is not a task file.",
+  "@taskWorkbenchRefusedUnsupported": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedUnsupported"
+  },
+  "taskWorkbenchRefusedUnsafe": "This file is built in a way that is not safe to open.",
+  "@taskWorkbenchRefusedUnsafe": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedUnsafe"
+  },
+  "taskWorkbenchRefusedDamaged": "This file is damaged or was changed after it was made.",
+  "@taskWorkbenchRefusedDamaged": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedDamaged"
+  },
+  "taskWorkbenchRefusedNewer": "This file was made by a newer version of the app.",
+  "@taskWorkbenchRefusedNewer": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedNewer"
+  },
+  "taskWorkbenchRefusedInvalid": "This file does not hold a valid task.",
+  "@taskWorkbenchRefusedInvalid": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedInvalid"
+  },
+  "taskOutputMake": "Make",
+  "@taskOutputMake": {
+    "description": "#1872 task workbench: taskOutputMake"
+  },
+  "taskOutputDocument": "Word document",
+  "@taskOutputDocument": {
+    "description": "#1872 task workbench: taskOutputDocument"
+  },
+  "taskOutputStoryboard": "Storyboard",
+  "@taskOutputStoryboard": {
+    "description": "#1872 task workbench: taskOutputStoryboard"
+  },
+  "taskOutputVideo": "Video",
+  "@taskOutputVideo": {
+    "description": "#1872 task workbench: taskOutputVideo"
+  },
+  "taskOutputCaptions": "Captions",
+  "@taskOutputCaptions": {
+    "description": "#1872 task workbench: taskOutputCaptions"
+  },
+  "taskOutputUnsupportedPlatform": "Not available on this device.",
+  "@taskOutputUnsupportedPlatform": {
+    "description": "#1872 task workbench: taskOutputUnsupportedPlatform"
+  },
+  "taskOutputMissingMedia": "This task has no images or video to use.",
+  "@taskOutputMissingMedia": {
+    "description": "#1872 task workbench: taskOutputMissingMedia"
+  },
+  "taskOutputTooLong": "This task is too long for this output.",
+  "@taskOutputTooLong": {
+    "description": "#1872 task workbench: taskOutputTooLong"
+  },
+  "taskOutputFailed": "The output could not be made.",
+  "@taskOutputFailed": {
+    "description": "#1872 task workbench: taskOutputFailed"
+  },
+  "taskOutputStale": "The illustrations were reviewed for an earlier version.",
+  "@taskOutputStale": {
+    "description": "#1872 workbench: taskOutputStale"
+  },
+  "taskOutputBusy": "This output is already being made.",
+  "@taskOutputBusy": {
+    "description": "#1872 workbench: taskOutputBusy"
+  },
+  "taskWorkbenchReviewIllustrations": "Review the illustrations",
+  "@taskWorkbenchReviewIllustrations": {
+    "description": "#1872 workbench: taskWorkbenchReviewIllustrations"
   },
   "capabilityMultiApproval": "Two or more approvals",
   "@capabilityMultiApproval": {
@@ -16004,6 +17492,244 @@
   "vatTreatmentReasonField": "Exemption reason (printed on the invoice)",
   "@vatTreatmentReasonField": {
     "description": "#985 VAT versions and counterparty: vatTreatmentReasonField"
+  },
+  "biTitle": "Business analytics",
+  "@biTitle": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaOverview": "Overview",
+  "@biAreaOverview": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaCapacity": "Space and capacity",
+  "@biAreaCapacity": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaPeople": "People and business",
+  "@biAreaPeople": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaFinance": "Finance",
+  "@biAreaFinance": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaTreasury": "Treasury",
+  "@biAreaTreasury": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaOperations": "Operations",
+  "@biAreaOperations": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaPlanning": "Planning",
+  "@biAreaPlanning": {
+    "description": "#1923 Web-BI area"
+  },
+  "biAreaSaved": "Saved analyses",
+  "@biAreaSaved": {
+    "description": "#1923 Web-BI area"
+  },
+  "biQuarter": "Q{quarter} {year}",
+  "@biQuarter": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "quarter": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "biDimensionLevel": "Level",
+  "@biDimensionLevel": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biNotOffered": "not offered by the analyses shown",
+  "@biNotOffered": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrain": "Period length",
+  "@biGrain": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrainMonth": "Month",
+  "@biGrainMonth": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrainQuarter": "Quarter",
+  "@biGrainQuarter": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGrainYear": "Year",
+  "@biGrainYear": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biCompare": "Compare with",
+  "@biCompare": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biCompareNone": "Nothing",
+  "@biCompareNone": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biComparePrevious": "The period before",
+  "@biComparePrevious": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biComparePreviousYear": "The same period a year before",
+  "@biComparePreviousYear": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biCompareCustom": "A period I choose",
+  "@biCompareCustom": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGroupBy": "Group by",
+  "@biGroupBy": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biGroupNone": "No grouping",
+  "@biGroupNone": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSort": "Order",
+  "@biSort": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortUngrouped": "Order (groups only)",
+  "@biSortUngrouped": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortNatural": "As listed",
+  "@biSortNatural": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortDescending": "Highest first",
+  "@biSortDescending": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSortAscending": "Lowest first",
+  "@biSortAscending": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biViewTable": "Table",
+  "@biViewTable": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biViewChart": "Chart",
+  "@biViewChart": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biChangePoints": "{value} pp",
+  "@biChangePoints": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "biForbidden": "You may not read this analysis in this workspace.",
+  "@biForbidden": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biUnavailable": "This analysis could not be computed.",
+  "@biUnavailable": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedGrain": "This analysis is not offered for that period length.",
+  "@biRefusedGrain": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedComparison": "This analysis cannot make that comparison.",
+  "@biRefusedComparison": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedGrouping": "This analysis cannot be grouped that way.",
+  "@biRefusedGrouping": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRefusedBudget": "There are more than {count} groups; choose no grouping.",
+  "@biRefusedBudget": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biComparedNotRecorded": "{period} was not recorded (history begins {since}); there is no comparison.",
+  "@biComparedNotRecorded": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "since": {
+        "type": "String"
+      }
+    }
+  },
+  "biComparedPartial": "{period} is only partly recorded.",
+  "@biComparedPartial": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "biExposureDiffers": "The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.",
+  "@biExposureDiffers": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biComparedLine": "{period}: {value} ({change})",
+  "@biComparedLine": {
+    "description": "#1923 B Web-BI toolbar and module section",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biOpenSource": "Open the source",
+  "@biOpenSource": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biSourceRestricted": "The source records are shown only to those who manage them.",
+  "@biSourceRestricted": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biTotal": "Total",
+  "@biTotal": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biRemainder": "Not in a current group",
+  "@biRemainder": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biColumnValue": "Value",
+  "@biColumnValue": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biColumnChange": "Change",
+  "@biColumnChange": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biInvalidAddress": "This address asks for an analysis that does not exist; nothing was read.",
+  "@biInvalidAddress": {
+    "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biReset": "Show the standard view",
+  "@biReset": {
+    "description": "#1923 B Web-BI toolbar and module section"
   },
   "assistantPrefix": "Assistant",
   "@assistantPrefix": {

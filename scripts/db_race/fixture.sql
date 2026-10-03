@@ -51,12 +51,17 @@ end;
 $$;
 
 select set_config('race.i', public.installation_id()::text, false);
-select set_config('race.ops', 'request_invoice_void,request_subscription_change,respond_to_validation', false);
+-- #1631 — member d's own booking operations, for the revoke races (5–7).
+select set_config('race.ops', 'request_invoice_void,request_subscription_change,respond_to_validation,create_reservation,list_my_reservations', false);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select u.id, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        u.tag || '-' || :'run' || '@race.deskilo.test', '', now(), now(), now()
   from (values (:'o'::uuid, 'owner'), (:'b'::uuid, 'admin-b'), (:'c'::uuid, 'admin-c'),
                (:'d'::uuid, 'member-d'), (:'r'::uuid, 'member-r')) u(id, tag);
+-- 0340 — assistants act only for Google accounts.
+insert into auth.identities (id, provider_id, user_id, identity_data, provider, created_at, updated_at)
+select gen_random_uuid(), 'google-' || u.id, u.id, jsonb_build_object('sub', 'google-' || u.id), 'google', now(), now()
+  from (values (:'o'::uuid), (:'b'::uuid), (:'c'::uuid), (:'d'::uuid), (:'r'::uuid)) u(id);
 insert into public.identity_authority (kind, issuer) values ('native', 'https://auth.deskilo.test/auth/v1')
 on conflict (singleton) do update set kind = excluded.kind, issuer = excluded.issuer, oidc_provider = null;
 insert into public.mcp_clients (client_id, name) values ('claude-test', 'Test assistant') on conflict do nothing;
@@ -67,6 +72,9 @@ select public.finalize_identity_binding();
 select set_config('race.ws', public.create_workspace('Race ' || :'run', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null)::text, false);
 select public.apply_workspace_template(current_setting('race.ws')::uuid, (select id from public.workspace_templates where key = 'tiny'));
 select pg_temp.act_as(:'b');
+select public.finalize_identity_binding();
+-- #1631 — d binds too: the revoke races act for d's assistant.
+select pg_temp.act_as(:'d');
 select public.finalize_identity_binding();
 reset role;
 
@@ -92,6 +100,7 @@ values (current_setting('race.ws')::uuid, public.installation_id(), 1, true,
         string_to_array(current_setting('race.ops'), ','), 'workspace');
 select pg_temp.connect(:'o', string_to_array(current_setting('race.ops'), ','));
 select pg_temp.connect(:'b', string_to_array(current_setting('race.ops'), ','));
+select pg_temp.connect(:'d', string_to_array(current_setting('race.ops'), ','));
 
 -- Case 2's invoice, and case 4's event: the owner asks, in the app, for
 -- member d's share to halve.
@@ -125,4 +134,11 @@ select 'AM_S=' || ((current_setting('race.day') || ' 08:00')::timestamp at time 
 select 'AM_E=' || ((current_setting('race.day') || ' 12:00')::timestamp at time zone 'Europe/Paris');
 select 'PM_S=' || ((current_setting('race.day') || ' 12:00')::timestamp at time zone 'Europe/Paris');
 select 'PM_E=' || ((current_setting('race.day') || ' 18:00')::timestamp at time zone 'Europe/Paris');
+-- #1631 — the day after, for the revoke races: a morning that gets booked
+-- through MCP (5, replayed in 7) and an afternoon that must not (6). As
+-- ISO instants with a Z: mcp_time_arg refuses an offset without minutes.
+select 'MCP_S=' || to_char((((current_setting('race.day')::date + 1) || ' 08:00')::timestamp at time zone 'Europe/Paris') at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"');
+select 'MCP_E=' || to_char((((current_setting('race.day')::date + 1) || ' 12:00')::timestamp at time zone 'Europe/Paris') at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"');
+select 'BLK_S=' || to_char((((current_setting('race.day')::date + 1) || ' 12:00')::timestamp at time zone 'Europe/Paris') at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"');
+select 'BLK_E=' || to_char((((current_setting('race.day')::date + 1) || ' 18:00')::timestamp at time zone 'Europe/Paris') at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"');
 commit;

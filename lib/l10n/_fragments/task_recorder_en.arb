@@ -1,0 +1,596 @@
+{
+  "@@locale": "en",
+  "featureTaskRecorderTitle": "Task recorder",
+  "@featureTaskRecorderTitle": {
+    "description": "#1865 task recorder: the feature's name"
+  },
+  "featureTaskRecorderDesc": "Lets a person record the steps of a task on this workspace's screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here.",
+  "@featureTaskRecorderDesc": {
+    "description": "#1865 task recorder: the feature's description"
+  },
+  "taskRecorderTitle": "Task recorder",
+  "@taskRecorderTitle": {
+    "description": "#1865 task recorder: taskRecorderTitle"
+  },
+  "taskRecorderRecordThisTask": "Record this task",
+  "@taskRecorderRecordThisTask": {
+    "description": "#1865 task recorder: taskRecorderRecordThisTask"
+  },
+  "taskRecorderDisclosureTitle": "Before you record",
+  "@taskRecorderDisclosureTitle": {
+    "description": "#1865 task recorder: taskRecorderDisclosureTitle"
+  },
+  "taskRecorderDisclosureBody": "The recorder notes the steps you take on this workspace's screens — which screen, which action, what the app answered — on this device only. It never keeps what you type, names, amounts, messages, codes or passwords. Sign-in, payment, messages and other protected screens leave only a marker. Nothing is uploaded: you decide what to export.",
+  "@taskRecorderDisclosureBody": {
+    "description": "#1865 task recorder: taskRecorderDisclosureBody"
+  },
+  "taskRecorderLimits": "Up to {steps} steps or {minutes} minutes per recording. Recordings are deleted from this device after {days} days; a file you exported is yours and stays where you saved it.",
+  "@taskRecorderLimits": {
+    "description": "#1865 task recorder: taskRecorderLimits",
+    "placeholders": {
+      "steps": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "taskRecorderStart": "Start recording",
+  "@taskRecorderStart": {
+    "description": "#1865 task recorder: taskRecorderStart"
+  },
+  "taskRecorderUnavailable": "Recording is not switched on in this workspace.",
+  "@taskRecorderUnavailable": {
+    "description": "#1865 task recorder: taskRecorderUnavailable"
+  },
+  "taskRecorderSignedOut": "Sign in to record a task.",
+  "@taskRecorderSignedOut": {
+    "description": "#1865 task recorder: taskRecorderSignedOut"
+  },
+  "taskRecorderStartFailed": "The recording could not start on this device.",
+  "@taskRecorderStartFailed": {
+    "description": "#1865 task recorder: taskRecorderStartFailed"
+  },
+  "taskRecorderPause": "Pause",
+  "@taskRecorderPause": {
+    "description": "#1865 task recorder: taskRecorderPause"
+  },
+  "taskRecorderResume": "Resume",
+  "@taskRecorderResume": {
+    "description": "#1865 task recorder: taskRecorderResume"
+  },
+  "taskRecorderStop": "Stop",
+  "@taskRecorderStop": {
+    "description": "#1865 task recorder: taskRecorderStop"
+  },
+  "taskRecorderDiscard": "Discard",
+  "@taskRecorderDiscard": {
+    "description": "#1865 task recorder: taskRecorderDiscard"
+  },
+  "taskRecorderAddNote": "Add a note",
+  "@taskRecorderAddNote": {
+    "description": "#1865 task recorder: taskRecorderAddNote"
+  },
+  "taskRecorderNoteHint": "Your own words, kept as you write them",
+  "@taskRecorderNoteHint": {
+    "description": "#1865 task recorder: taskRecorderNoteHint"
+  },
+  "taskRecorderRecording": "Recording",
+  "@taskRecorderRecording": {
+    "description": "#1865 task recorder: taskRecorderRecording"
+  },
+  "taskRecorderPaused": "Paused",
+  "@taskRecorderPaused": {
+    "description": "#1865 task recorder: taskRecorderPaused"
+  },
+  "taskRecorderIndicator": "Recording a task: {count} steps",
+  "@taskRecorderIndicator": {
+    "description": "#1865 task recorder: taskRecorderIndicator",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "taskRecorderMyRecordings": "My recordings on this device",
+  "@taskRecorderMyRecordings": {
+    "description": "#1865 task recorder: taskRecorderMyRecordings"
+  },
+  "taskRecorderNoRecordings": "No recordings on this device.",
+  "@taskRecorderNoRecordings": {
+    "description": "#1865 task recorder: taskRecorderNoRecordings"
+  },
+  "taskRecorderStepCount": "{count} steps",
+  "@taskRecorderStepCount": {
+    "description": "#1865 task recorder: taskRecorderStepCount",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "taskRecorderUntitled": "Untitled task",
+  "@taskRecorderUntitled": {
+    "description": "#1865 task recorder: taskRecorderUntitled"
+  },
+  "taskRecorderUnreadable": "This recording cannot be read. You can delete it.",
+  "@taskRecorderUnreadable": {
+    "description": "#1865 task recorder: taskRecorderUnreadable"
+  },
+  "taskRecorderCompletenessComplete": "Complete",
+  "@taskRecorderCompletenessComplete": {
+    "description": "#1865 task recorder: taskRecorderCompletenessComplete"
+  },
+  "taskRecorderCompletenessPartial": "Partial",
+  "@taskRecorderCompletenessPartial": {
+    "description": "#1865 task recorder: taskRecorderCompletenessPartial"
+  },
+  "taskRecorderCompletenessInterrupted": "Interrupted",
+  "@taskRecorderCompletenessInterrupted": {
+    "description": "#1865 task recorder: taskRecorderCompletenessInterrupted"
+  },
+  "taskRecorderEndStopped": "Stopped by you",
+  "@taskRecorderEndStopped": {
+    "description": "#1865 task recorder: taskRecorderEndStopped"
+  },
+  "taskRecorderEndScopeChanged": "Ended: the account or workspace changed",
+  "@taskRecorderEndScopeChanged": {
+    "description": "#1865 task recorder: taskRecorderEndScopeChanged"
+  },
+  "taskRecorderEndLimitReached": "Ended: a limit was reached",
+  "@taskRecorderEndLimitReached": {
+    "description": "#1865 task recorder: taskRecorderEndLimitReached"
+  },
+  "taskRecorderEndStorageFailed": "Ended: it could not be saved on this device",
+  "@taskRecorderEndStorageFailed": {
+    "description": "#1865 task recorder: taskRecorderEndStorageFailed"
+  },
+  "taskRecorderEndInterrupted": "Interrupted: the app stopped while recording",
+  "@taskRecorderEndInterrupted": {
+    "description": "#1865 task recorder: taskRecorderEndInterrupted"
+  },
+  "taskRecorderActionOpenReserve": "Opened Reserve",
+  "@taskRecorderActionOpenReserve": {
+    "description": "#1865 task recorder: taskRecorderActionOpenReserve"
+  },
+  "taskRecorderActionSelectDate": "Chose the day",
+  "@taskRecorderActionSelectDate": {
+    "description": "#1865 task recorder: taskRecorderActionSelectDate"
+  },
+  "taskRecorderActionSelectPeriod": "Chose the period",
+  "@taskRecorderActionSelectPeriod": {
+    "description": "#1865 task recorder: taskRecorderActionSelectPeriod"
+  },
+  "taskRecorderActionSwitchView": "Switched the view",
+  "@taskRecorderActionSwitchView": {
+    "description": "#1865 task recorder: taskRecorderActionSwitchView"
+  },
+  "taskRecorderActionSelectResource": "Chose a place",
+  "@taskRecorderActionSelectResource": {
+    "description": "#1865 task recorder: taskRecorderActionSelectResource"
+  },
+  "taskRecorderActionChangeField": "Changed a booking detail",
+  "@taskRecorderActionChangeField": {
+    "description": "#1865 task recorder: taskRecorderActionChangeField"
+  },
+  "taskRecorderActionConfirmBooking": "Confirmed the booking",
+  "@taskRecorderActionConfirmBooking": {
+    "description": "#1865 task recorder: taskRecorderActionConfirmBooking"
+  },
+  "taskRecorderActionCancelReview": "Closed the booking without booking",
+  "@taskRecorderActionCancelReview": {
+    "description": "#1865 task recorder: taskRecorderActionCancelReview"
+  },
+  "taskRecorderActionViewDetails": "Opened the reservation",
+  "@taskRecorderActionViewDetails": {
+    "description": "#1865 task recorder: taskRecorderActionViewDetails"
+  },
+  "taskRecorderActionBack": "Went back",
+  "@taskRecorderActionBack": {
+    "description": "#1865 task recorder: taskRecorderActionBack"
+  },
+  "taskRecorderOutcomeConfirmed": "Booked",
+  "@taskRecorderOutcomeConfirmed": {
+    "description": "#1865 task recorder: taskRecorderOutcomeConfirmed"
+  },
+  "taskRecorderOutcomeRequested": "Sent for confirmation",
+  "@taskRecorderOutcomeRequested": {
+    "description": "#1865 task recorder: taskRecorderOutcomeRequested"
+  },
+  "taskRecorderOutcomeSeries": "Series booked",
+  "@taskRecorderOutcomeSeries": {
+    "description": "#1865 task recorder: taskRecorderOutcomeSeries"
+  },
+  "taskRecorderOutcomeRefused": "Refused",
+  "@taskRecorderOutcomeRefused": {
+    "description": "#1865 task recorder: taskRecorderOutcomeRefused"
+  },
+  "taskRecorderOutcomeUnknown": "No answer came",
+  "@taskRecorderOutcomeUnknown": {
+    "description": "#1865 task recorder: taskRecorderOutcomeUnknown"
+  },
+  "taskRecorderNoOutcome": "No answer recorded",
+  "@taskRecorderNoOutcome": {
+    "description": "#1865 task recorder: taskRecorderNoOutcome"
+  },
+  "taskRecorderStepExcluded": "A protected screen — not recorded",
+  "@taskRecorderStepExcluded": {
+    "description": "#1865 task recorder: taskRecorderStepExcluded"
+  },
+  "taskRecorderStepUnrecorded": "A step the recorder cannot describe",
+  "@taskRecorderStepUnrecorded": {
+    "description": "#1865 task recorder: taskRecorderStepUnrecorded"
+  },
+  "taskRecorderStepNote": "Your note",
+  "@taskRecorderStepNote": {
+    "description": "#1865 task recorder: taskRecorderStepNote"
+  },
+  "taskRecorderSegmentGap": "Paused here",
+  "@taskRecorderSegmentGap": {
+    "description": "#1865 task recorder: taskRecorderSegmentGap"
+  },
+  "taskRecorderExport": "Export a file",
+  "@taskRecorderExport": {
+    "description": "#1865 task recorder: taskRecorderExport"
+  },
+  "taskRecorderExportPreview": "What the file will contain",
+  "@taskRecorderExportPreview": {
+    "description": "#1865 task recorder: taskRecorderExportPreview"
+  },
+  "taskRecorderSaved": "Saved: {path}",
+  "@taskRecorderSaved": {
+    "description": "#1865 task recorder: taskRecorderSaved",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "taskRecorderSaveFailed": "The file could not be saved.",
+  "@taskRecorderSaveFailed": {
+    "description": "#1865 task recorder: taskRecorderSaveFailed"
+  },
+  "taskRecorderSaveNoPath": "The file was handed to your browser or device; it did not say where it went.",
+  "@taskRecorderSaveNoPath": {
+    "description": "#1865 task recorder: taskRecorderSaveNoPath"
+  },
+  "taskRecorderDelete": "Delete from this device",
+  "@taskRecorderDelete": {
+    "description": "#1865 task recorder: taskRecorderDelete"
+  },
+  "taskRecorderDeleteConfirm": "Delete this recording from this device? Files you exported are not affected, and nothing in the workspace changes.",
+  "@taskRecorderDeleteConfirm": {
+    "description": "#1865 task recorder: taskRecorderDeleteConfirm"
+  },
+  "taskRecorderLeaveOut": "Leave out of the export",
+  "@taskRecorderLeaveOut": {
+    "description": "#1865 task recorder: taskRecorderLeaveOut"
+  },
+  "taskRecorderPutBack": "Put back",
+  "@taskRecorderPutBack": {
+    "description": "#1865 task recorder: taskRecorderPutBack"
+  },
+  "taskRecorderEditedNote": "Edited copy: {count} steps left out. The recording on this device is unchanged.",
+  "@taskRecorderEditedNote": {
+    "description": "#1865 task recorder: taskRecorderEditedNote",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "taskRecorderOpenRecorder": "Open the task recorder",
+  "@taskRecorderOpenRecorder": {
+    "description": "#1865 task recorder: taskRecorderOpenRecorder"
+  },
+  "taskRecorderValueToday": "today",
+  "@taskRecorderValueToday": {
+    "description": "#1865 task recorder: taskRecorderValueToday"
+  },
+  "taskRecorderValueTomorrow": "tomorrow",
+  "@taskRecorderValueTomorrow": {
+    "description": "#1865 task recorder: taskRecorderValueTomorrow"
+  },
+  "taskRecorderValueLaterThisWeek": "later this week",
+  "@taskRecorderValueLaterThisWeek": {
+    "description": "#1865 task recorder: taskRecorderValueLaterThisWeek"
+  },
+  "taskRecorderValueLater": "a later day",
+  "@taskRecorderValueLater": {
+    "description": "#1865 task recorder: taskRecorderValueLater"
+  },
+  "taskRecorderValuePast": "a past day",
+  "@taskRecorderValuePast": {
+    "description": "#1865 task recorder: taskRecorderValuePast"
+  },
+  "taskRecorderValueFullDay": "full day",
+  "@taskRecorderValueFullDay": {
+    "description": "#1865 task recorder: taskRecorderValueFullDay"
+  },
+  "taskRecorderValueMorning": "morning",
+  "@taskRecorderValueMorning": {
+    "description": "#1865 task recorder: taskRecorderValueMorning"
+  },
+  "taskRecorderValueAfternoon": "afternoon",
+  "@taskRecorderValueAfternoon": {
+    "description": "#1865 task recorder: taskRecorderValueAfternoon"
+  },
+  "taskRecorderValueHours": "by the hour",
+  "@taskRecorderValueHours": {
+    "description": "#1865 task recorder: taskRecorderValueHours"
+  },
+  "taskRecorderValueCustom": "custom times",
+  "@taskRecorderValueCustom": {
+    "description": "#1865 task recorder: taskRecorderValueCustom"
+  },
+  "taskRecorderValuePlan": "plan",
+  "@taskRecorderValuePlan": {
+    "description": "#1865 task recorder: taskRecorderValuePlan"
+  },
+  "taskRecorderValueList": "list",
+  "@taskRecorderValueList": {
+    "description": "#1865 task recorder: taskRecorderValueList"
+  },
+  "taskRecorderValueDesk": "a desk",
+  "@taskRecorderValueDesk": {
+    "description": "#1865 task recorder: taskRecorderValueDesk"
+  },
+  "taskRecorderValueRoom": "a room",
+  "@taskRecorderValueRoom": {
+    "description": "#1865 task recorder: taskRecorderValueRoom"
+  },
+  "taskRecorderValueOther": "other",
+  "@taskRecorderValueOther": {
+    "description": "#1865 task recorder: taskRecorderValueOther"
+  },
+  "taskRecorderValueSelf": "for me",
+  "@taskRecorderValueSelf": {
+    "description": "#1865 task recorder: taskRecorderValueSelf"
+  },
+  "taskRecorderValueOtherMember": "for another member",
+  "@taskRecorderValueOtherMember": {
+    "description": "#1865 task recorder: taskRecorderValueOtherMember"
+  },
+  "taskRecorderValueOnce": "once",
+  "@taskRecorderValueOnce": {
+    "description": "#1865 task recorder: taskRecorderValueOnce"
+  },
+  "taskRecorderValueSeries": "repeating",
+  "@taskRecorderValueSeries": {
+    "description": "#1865 task recorder: taskRecorderValueSeries"
+  },
+  "taskRecorderValueCheckIn": "with check-in",
+  "@taskRecorderValueCheckIn": {
+    "description": "#1865 task recorder: taskRecorderValueCheckIn"
+  },
+  "taskRecorderValueNoCheckIn": "without check-in",
+  "@taskRecorderValueNoCheckIn": {
+    "description": "#1865 task recorder: taskRecorderValueNoCheckIn"
+  },
+  "taskRecorderValueAllBooked": "every date booked",
+  "@taskRecorderValueAllBooked": {
+    "description": "#1865 task recorder: taskRecorderValueAllBooked"
+  },
+  "taskRecorderValuePartiallyBooked": "some dates refused",
+  "@taskRecorderValuePartiallyBooked": {
+    "description": "#1865 task recorder: taskRecorderValuePartiallyBooked"
+  },
+  "taskRecorderValueConflict": "already taken",
+  "@taskRecorderValueConflict": {
+    "description": "#1865 task recorder: taskRecorderValueConflict"
+  },
+  "taskRecorderValuePolicy": "a booking rule",
+  "@taskRecorderValuePolicy": {
+    "description": "#1865 task recorder: taskRecorderValuePolicy"
+  },
+  "taskRecorderValueQuota": "an allowance",
+  "@taskRecorderValueQuota": {
+    "description": "#1865 task recorder: taskRecorderValueQuota"
+  },
+  "taskRecorderValuePermission": "a permission",
+  "@taskRecorderValuePermission": {
+    "description": "#1865 task recorder: taskRecorderValuePermission"
+  },
+  "taskRecorderValueClosed": "closed",
+  "@taskRecorderValueClosed": {
+    "description": "#1865 task recorder: taskRecorderValueClosed"
+  },
+  "taskRecorderValueOffline": "offline",
+  "@taskRecorderValueOffline": {
+    "description": "#1865 task recorder: taskRecorderValueOffline"
+  },
+  "taskRecorderValueWithheld": "not recorded",
+  "@taskRecorderValueWithheld": {
+    "description": "#1865 task recorder: taskRecorderValueWithheld"
+  },
+  "taskRecorderFieldForWhom": "who it is for",
+  "@taskRecorderFieldForWhom": {
+    "description": "#1865 task recorder: taskRecorderFieldForWhom"
+  },
+  "taskRecorderFieldRepeat": "repeat",
+  "@taskRecorderFieldRepeat": {
+    "description": "#1865 task recorder: taskRecorderFieldRepeat"
+  },
+  "taskRecorderFieldCheckIn": "check-in",
+  "@taskRecorderFieldCheckIn": {
+    "description": "#1865 task recorder: taskRecorderFieldCheckIn"
+  },
+  "taskRecorderFieldTime": "time",
+  "@taskRecorderFieldTime": {
+    "description": "#1865 task recorder: taskRecorderFieldTime"
+  },
+  "taskRecorderFieldAccessories": "accessories",
+  "@taskRecorderFieldAccessories": {
+    "description": "#1865 task recorder: taskRecorderFieldAccessories"
+  },
+  "taskRecorderProtectedAuthentication": "sign-in",
+  "@taskRecorderProtectedAuthentication": {
+    "description": "#1865 task recorder: taskRecorderProtectedAuthentication"
+  },
+  "taskRecorderProtectedPayment": "payment",
+  "@taskRecorderProtectedPayment": {
+    "description": "#1865 task recorder: taskRecorderProtectedPayment"
+  },
+  "taskRecorderProtectedProvider": "a provider's screen",
+  "@taskRecorderProtectedProvider": {
+    "description": "#1865 task recorder: taskRecorderProtectedProvider"
+  },
+  "taskRecorderProtectedSecrets": "keys and secrets",
+  "@taskRecorderProtectedSecrets": {
+    "description": "#1865 task recorder: taskRecorderProtectedSecrets"
+  },
+  "taskRecorderProtectedMessenger": "messages",
+  "@taskRecorderProtectedMessenger": {
+    "description": "#1865 task recorder: taskRecorderProtectedMessenger"
+  },
+  "taskRecorderProtectedIdentity": "identity",
+  "@taskRecorderProtectedIdentity": {
+    "description": "#1865 task recorder: taskRecorderProtectedIdentity"
+  },
+  "taskRecorderProtectedOperator": "installation operator",
+  "@taskRecorderProtectedOperator": {
+    "description": "#1865 task recorder: taskRecorderProtectedOperator"
+  },
+  "taskRecorderExportPackage": "Export a task package",
+  "@taskRecorderExportPackage": {
+    "description": "#1872 task package: taskRecorderExportPackage"
+  },
+  "taskRecorderSavedPrivately": "Kept only inside the app: {path}",
+  "@taskRecorderSavedPrivately": {
+    "description": "#1872 task package: taskRecorderSavedPrivately",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "taskWorkbenchTitle": "Task workbench",
+  "@taskWorkbenchTitle": {
+    "description": "#1872 task workbench: taskWorkbenchTitle"
+  },
+  "taskWorkbenchOpen": "Open a task file",
+  "@taskWorkbenchOpen": {
+    "description": "#1872 task workbench: taskWorkbenchOpen"
+  },
+  "taskWorkbenchIntro": "Open a saved task file. It is read on this device only; nothing is uploaded and no sign-in is needed.",
+  "@taskWorkbenchIntro": {
+    "description": "#1872 task workbench: taskWorkbenchIntro"
+  },
+  "taskWorkbenchAccepted": "Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.",
+  "@taskWorkbenchAccepted": {
+    "description": "#1872 task workbench: taskWorkbenchAccepted",
+    "placeholders": {
+      "megabytes": {
+        "type": "int"
+      }
+    }
+  },
+  "taskWorkbenchChoose": "Choose a task file",
+  "@taskWorkbenchChoose": {
+    "description": "#1872 task workbench: taskWorkbenchChoose"
+  },
+  "taskWorkbenchFileType": "Task file",
+  "@taskWorkbenchFileType": {
+    "description": "#1872 task workbench: taskWorkbenchFileType"
+  },
+  "taskWorkbenchEdited": "An edited copy of a recording.",
+  "@taskWorkbenchEdited": {
+    "description": "#1872 task workbench: taskWorkbenchEdited"
+  },
+  "taskWorkbenchTranscriptOnly": "Some steps come from a newer version: shown as a transcript only.",
+  "@taskWorkbenchTranscriptOnly": {
+    "description": "#1872 task workbench: taskWorkbenchTranscriptOnly"
+  },
+  "taskWorkbenchUntrusted": "A private draft from a file: nothing in it is trusted or sent.",
+  "@taskWorkbenchUntrusted": {
+    "description": "#1872 task workbench: taskWorkbenchUntrusted"
+  },
+  "taskWorkbenchClaim": "The file says {key}: {value}",
+  "@taskWorkbenchClaim": {
+    "description": "#1872 task workbench: taskWorkbenchClaim",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "taskWorkbenchRefusedTooLarge": "This file is larger than the workbench reads.",
+  "@taskWorkbenchRefusedTooLarge": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedTooLarge"
+  },
+  "taskWorkbenchRefusedUnsupported": "This is not a task file.",
+  "@taskWorkbenchRefusedUnsupported": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedUnsupported"
+  },
+  "taskWorkbenchRefusedUnsafe": "This file is built in a way that is not safe to open.",
+  "@taskWorkbenchRefusedUnsafe": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedUnsafe"
+  },
+  "taskWorkbenchRefusedDamaged": "This file is damaged or was changed after it was made.",
+  "@taskWorkbenchRefusedDamaged": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedDamaged"
+  },
+  "taskWorkbenchRefusedNewer": "This file was made by a newer version of the app.",
+  "@taskWorkbenchRefusedNewer": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedNewer"
+  },
+  "taskWorkbenchRefusedInvalid": "This file does not hold a valid task.",
+  "@taskWorkbenchRefusedInvalid": {
+    "description": "#1872 task workbench: taskWorkbenchRefusedInvalid"
+  },
+  "taskOutputMake": "Make",
+  "@taskOutputMake": {
+    "description": "#1872 task workbench: taskOutputMake"
+  },
+  "taskOutputDocument": "Word document",
+  "@taskOutputDocument": {
+    "description": "#1872 task workbench: taskOutputDocument"
+  },
+  "taskOutputStoryboard": "Storyboard",
+  "@taskOutputStoryboard": {
+    "description": "#1872 task workbench: taskOutputStoryboard"
+  },
+  "taskOutputVideo": "Video",
+  "@taskOutputVideo": {
+    "description": "#1872 task workbench: taskOutputVideo"
+  },
+  "taskOutputCaptions": "Captions",
+  "@taskOutputCaptions": {
+    "description": "#1872 task workbench: taskOutputCaptions"
+  },
+  "taskOutputUnsupportedPlatform": "Not available on this device.",
+  "@taskOutputUnsupportedPlatform": {
+    "description": "#1872 task workbench: taskOutputUnsupportedPlatform"
+  },
+  "taskOutputMissingMedia": "This task has no images or video to use.",
+  "@taskOutputMissingMedia": {
+    "description": "#1872 task workbench: taskOutputMissingMedia"
+  },
+  "taskOutputTooLong": "This task is too long for this output.",
+  "@taskOutputTooLong": {
+    "description": "#1872 task workbench: taskOutputTooLong"
+  },
+  "taskOutputFailed": "The output could not be made.",
+  "@taskOutputFailed": {
+    "description": "#1872 task workbench: taskOutputFailed"
+  },
+  "taskOutputStale": "The illustrations were reviewed for an earlier version.",
+  "@taskOutputStale": {
+    "description": "#1872 workbench: taskOutputStale"
+  },
+  "taskOutputBusy": "This output is already being made.",
+  "@taskOutputBusy": {
+    "description": "#1872 workbench: taskOutputBusy"
+  },
+  "taskWorkbenchReviewIllustrations": "Review the illustrations",
+  "@taskWorkbenchReviewIllustrations": {
+    "description": "#1872 workbench: taskWorkbenchReviewIllustrations"
+  }
+}

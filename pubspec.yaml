@@ -52,6 +52,8 @@ dependencies:
   # services. The app never imports Firebase directly.
   deskilo_push:
     path: packages/deskilo_push
+  deskilo_video_encoder:
+    path: packages/deskilo_video_encoder
   # App-icon badge counter (#426): pending confirmations on the launcher
   # icon (Android launchers, iOS, macOS).
   app_badge_plus: ^1.2.4

@@ -12,6 +12,16 @@ import 'file_types.dart';
 /// hidden from on-device file managers (field report).
 const _downloadsChannel = MethodChannel('deskilo/downloads');
 
+/// The export types the legacy-directory repair moves.
+const _legacyExportTypes = {
+  'application/pdf',
+  'text/xml',
+  'application/json',
+  'image/png',
+  'text/calendar',
+  'text/plain',
+};
+
 /// The device implementation: every export lands in the user's DOWNLOADS
 /// — Android via the MediaStore channel, desktop/iOS via the Downloads
 /// directory, falling back to app storage.
@@ -45,6 +55,47 @@ Future<String?> saveToDownloads({
   return file.path;
 }
 
+/// #1872 — the same save, answering with what it achieved: a file the
+/// person can find (MediaStore Downloads, a desktop Downloads folder),
+/// or a copy only the app can see (the Android fallback, iOS app
+/// documents, which this app does not share with Files), or a failure.
+Future<SaveOutcome> saveToDownloadsTyped({
+  required Uint8List bytes,
+  required String fileName,
+}) async {
+  Future<String> write(Directory dir) async {
+    final file = File('${dir.path}/$fileName');
+    await file.writeAsBytes(bytes, flush: true);
+    return file.path;
+  }
+
+  try {
+    if (Platform.isAndroid) {
+      try {
+        final path = await _downloadsChannel.invokeMethod<String>('save', {
+          'fileName': fileName,
+          'bytes': bytes,
+          'mimeType': mimeTypeFor(fileName),
+        });
+        if (path != null) return SavedFile(path);
+      } catch (e, st) {
+        TraceLogger.instance.error('files', 'downloads save failed',
+            error: e, stackTrace: st);
+      }
+      final private = await getExternalStorageDirectory();
+      if (private != null) return SavedPrivately(await write(private));
+    } else if (!Platform.isIOS) {
+      final downloads = await getDownloadsDirectory();
+      if (downloads != null) return SavedFile(await write(downloads));
+    }
+    return SavedPrivately(await write(await getApplicationDocumentsDirectory()));
+  } catch (e, st) {
+    TraceLogger.instance
+        .error('files', 'typed save failed', error: e, stackTrace: st);
+    return const SaveFailed();
+  }
+}
+
 /// One-time repair (field report): files saved before the Downloads
 /// bridge sit in the app-private external dir, invisible to on-device
 /// file managers. Moves every export there (*.pdf, *.xml, *.png, *.log)
@@ -64,7 +115,9 @@ Future<int> migrateLegacyExports({
   for (final entry in dir.listSync()) {
     if (entry is! File) continue;
     final name = entry.uri.pathSegments.last;
-    if (mimeTypeFor(name) == 'application/octet-stream') continue;
+    // #1872 — only the kinds this repair was written for; a newer
+    // export type never lived in the legacy directory.
+    if (!_legacyExportTypes.contains(mimeTypeFor(name))) continue;
     try {
       final path = await saver(
         bytes: await entry.readAsBytes(),

@@ -8275,6 +8275,162 @@ abstract class AppLocalizations {
   /// **'The holidays could not be checked or imported. Nothing was changed.'**
   String get holidayImportFailed;
 
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Installation: assistants'**
+  String get instanceTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.'**
+  String get instanceIntro;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Only the instance operator manages the installation\'s assistants.'**
+  String get instanceNotOperator;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Changes here need your second factor on this session.'**
+  String get instanceSecondFactorNeeded;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm with my authenticator'**
+  String get instanceConfirmSecondFactor;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants on this installation'**
+  String get instanceRuntimeTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get instanceRuntimeOn;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get instanceRuntimeOff;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on for every workspace'**
+  String get instanceTurnOn;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off'**
+  String get instanceTurnOff;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants become usable in every workspace that offers them. You can turn them off again at any time.'**
+  String get instanceTurnOnConfirm;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Still missing:'**
+  String get instanceBlockers;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'a database administrator'**
+  String get instanceBlockerNoAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Database administrators'**
+  String get instanceAdminsTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.'**
+  String get instanceAdminsHelp;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Make administrator'**
+  String get instanceMakeAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get instanceRemoveAdmin;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody else has confirmed their identity yet.'**
+  String get instanceNoCandidates;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get instanceYou;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant clients'**
+  String get instanceClientsTitle;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'An assistant registers itself the first time someone connects it; it works only once approved here.'**
+  String get instanceClientsHelp;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get instanceClientWaiting;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get instanceClientApproved;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get instanceClientBlocked;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get instanceApprove;
+
+  /// #1827 B — instance operator console for the installation's assistants
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get instanceBlock;
+
   /// #1829 Instance owner claim: instanceOwnerClaimIntro
   ///
   /// In en, this message translates to:
@@ -9840,6 +9996,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The customer\'s country is missing.'**
   String get invoiceGapMissingBuyerCountry;
+
+  /// #1919 — e-invoice export refused: a credit note that also nets payments has no EN 16931 credit-note form
+  ///
+  /// In en, this message translates to:
+  /// **'This credit note also nets payments, which an EN 16931 credit note cannot state. Issue the credit on its own document.'**
+  String get invoiceGapCreditNoteWithPayments;
 
   /// Gap: BR-16 — an invoice needs at least one line
   ///
@@ -14700,6 +14862,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Another account already holds this identity here — a database administrator can resolve it.'**
   String get mcpIdentityConflict;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in'**
+  String get mcpStatusGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Link Google'**
+  String get mcpStatusLinkGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get mcpStatusSignInGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in with Google'**
+  String get mcpStateGoogleReady;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in another way'**
+  String get mcpStateGoogleOtherSession;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Google not linked'**
+  String get mcpStateGoogleMissing;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.'**
+  String get mcpNextLinkGoogle;
+
+  /// 0340 — assistants use the profile Google sign-in and nothing else
+  ///
+  /// In en, this message translates to:
+  /// **'Assistants use your Google sign-in. Sign in with Google to continue.'**
+  String get mcpNextSignInGoogle;
 
   /// #1630 mcp_usage
   ///
@@ -22038,6 +22248,24 @@ abstract class AppLocalizations {
   /// **'This reservation is no longer checked in — it was checked out or closed in the meantime.'**
   String get bookingNoLongerCheckedIn;
 
+  /// #1825 — reserve list: a header whose space this member can reserve as a whole
+  ///
+  /// In en, this message translates to:
+  /// **'Reservable as a whole'**
+  String get listWholeReservable;
+
+  /// #1825 — what a whole-space reservation includes: its tables
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 table} other{{count} tables}}'**
+  String listCoversTables(int count);
+
+  /// #1825 — what a whole-space reservation includes: its seats
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 seat} other{{count} seats}}'**
+  String listCoversSeats(int count);
+
   /// Reserve hub view segment: month availability calendar (#7)
   ///
   /// In en, this message translates to:
@@ -23405,6 +23633,1752 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Demo: simulated local context'**
   String get supportDemo;
+
+  /// #1866 task export (Word document): DocFallbackTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Task procedure'**
+  String get taskExportDocFallbackTitle;
+
+  /// #1866 task export (Word document): Intro
+  ///
+  /// In en, this message translates to:
+  /// **'This document describes, step by step, a task recorded in DesKilo. It is documentation: it does not replay the task and it does not prove that the task succeeded. Only what the recording observed is stated as observed.'**
+  String get taskExportIntro;
+
+  /// #1866 task export (Word document): SectionAbout
+  ///
+  /// In en, this message translates to:
+  /// **'About this recording'**
+  String get taskExportSectionAbout;
+
+  /// #1866 task export (Word document): SectionBefore
+  ///
+  /// In en, this message translates to:
+  /// **'Before you start'**
+  String get taskExportSectionBefore;
+
+  /// #1866 task export (Word document): SectionSteps
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get taskExportSectionSteps;
+
+  /// #1866 task export (Word document): SectionLimits
+  ///
+  /// In en, this message translates to:
+  /// **'Limitations'**
+  String get taskExportSectionLimits;
+
+  /// #1866 task export (Word document): KindSource
+  ///
+  /// In en, this message translates to:
+  /// **'Original capture: the steps were observed by the recorder.'**
+  String get taskExportKindSource;
+
+  /// #1866 task export (Word document): KindEdited
+  ///
+  /// In en, this message translates to:
+  /// **'Edited procedure: derived from a recording and changed by a person.'**
+  String get taskExportKindEdited;
+
+  /// #1866 task export (Word document): CompletenessComplete
+  ///
+  /// In en, this message translates to:
+  /// **'Complete: the recording was stopped by the person and every command received an answer.'**
+  String get taskExportCompletenessComplete;
+
+  /// #1866 task export (Word document): CompletenessPartial
+  ///
+  /// In en, this message translates to:
+  /// **'Partial: the recording ended early or a command received no answer.'**
+  String get taskExportCompletenessPartial;
+
+  /// #1866 task export (Word document): CompletenessInterrupted
+  ///
+  /// In en, this message translates to:
+  /// **'Interrupted: the app stopped while recording.'**
+  String get taskExportCompletenessInterrupted;
+
+  /// #1866 task export (Word document): EndStopped
+  ///
+  /// In en, this message translates to:
+  /// **'Ended by the person who recorded it.'**
+  String get taskExportEndStopped;
+
+  /// #1866 task export (Word document): EndScopeChanged
+  ///
+  /// In en, this message translates to:
+  /// **'Ended because the account, workspace or installation changed.'**
+  String get taskExportEndScopeChanged;
+
+  /// #1866 task export (Word document): EndLimitReached
+  ///
+  /// In en, this message translates to:
+  /// **'Ended because a step, size or duration limit was reached.'**
+  String get taskExportEndLimitReached;
+
+  /// #1866 task export (Word document): EndStorageFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Ended because writing the recording failed.'**
+  String get taskExportEndStorageFailed;
+
+  /// #1866 task export (Word document): EndInterrupted
+  ///
+  /// In en, this message translates to:
+  /// **'Ended because the app stopped.'**
+  String get taskExportEndInterrupted;
+
+  /// #1866 task export (Word document): Platform
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded on: {platform}'**
+  String taskExportPlatform(String platform);
+
+  /// #1866 task export (Word document): Duration
+  ///
+  /// In en, this message translates to:
+  /// **'Duration: {minutes} min {seconds} s'**
+  String taskExportDuration(int minutes, int seconds);
+
+  /// #1866 task export (Word document): Pauses
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No pause} =1{Paused once} other{Paused {count} times}}'**
+  String taskExportPauses(int count);
+
+  /// #1866 task export (Word document): Version
+  ///
+  /// In en, this message translates to:
+  /// **'Recording format {schema}, action contract {contract}'**
+  String taskExportVersion(int schema, int contract);
+
+  /// #1866 task export (Word document): Revision
+  ///
+  /// In en, this message translates to:
+  /// **'Content revision: {revision}'**
+  String taskExportRevision(String revision);
+
+  /// #1866 task export (Word document): PrereqSignedIn
+  ///
+  /// In en, this message translates to:
+  /// **'You are signed in.'**
+  String get taskExportPrereqSignedIn;
+
+  /// #1866 task export (Word document): PrereqWorkspaceMember
+  ///
+  /// In en, this message translates to:
+  /// **'You are a member of the workspace.'**
+  String get taskExportPrereqWorkspaceMember;
+
+  /// #1866 task export (Word document): PrereqStartsOn
+  ///
+  /// In en, this message translates to:
+  /// **'Start on {screen}.'**
+  String taskExportPrereqStartsOn(String screen);
+
+  /// #1866 task export (Word document): PrereqBookablePlace
+  ///
+  /// In en, this message translates to:
+  /// **'At least one place can be booked.'**
+  String get taskExportPrereqBookablePlace;
+
+  /// #1866 task export (Word document): PrereqUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'A condition this version cannot describe.'**
+  String get taskExportPrereqUnknown;
+
+  /// #1866 task export (Word document): SurfaceReserve
+  ///
+  /// In en, this message translates to:
+  /// **'the Reserve screen'**
+  String get taskExportSurfaceReserve;
+
+  /// #1866 task export (Word document): SurfaceBookingSheet
+  ///
+  /// In en, this message translates to:
+  /// **'the booking sheet'**
+  String get taskExportSurfaceBookingSheet;
+
+  /// #1866 task export (Word document): SurfaceReservationDetail
+  ///
+  /// In en, this message translates to:
+  /// **'the reservation details'**
+  String get taskExportSurfaceReservationDetail;
+
+  /// #1866 task export (Word document): SurfaceAny
+  ///
+  /// In en, this message translates to:
+  /// **'any screen'**
+  String get taskExportSurfaceAny;
+
+  /// #1866 task export (Word document): SurfaceUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'a screen this version cannot describe'**
+  String get taskExportSurfaceUnknown;
+
+  /// #1866 task export (Word document): OnScreen
+  ///
+  /// In en, this message translates to:
+  /// **'Screen: {screen}'**
+  String taskExportOnScreen(String screen);
+
+  /// #1866 task export (Word document): ActionOpenReserve
+  ///
+  /// In en, this message translates to:
+  /// **'Open the Reserve screen.'**
+  String get taskExportActionOpenReserve;
+
+  /// #1866 task export (Word document): ActionSelectDate
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the date.'**
+  String get taskExportActionSelectDate;
+
+  /// #1866 task export (Word document): ActionSelectPeriod
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the period.'**
+  String get taskExportActionSelectPeriod;
+
+  /// #1866 task export (Word document): ActionSwitchView
+  ///
+  /// In en, this message translates to:
+  /// **'Switch the view.'**
+  String get taskExportActionSwitchView;
+
+  /// #1866 task export (Word document): ActionSelectResource
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a place.'**
+  String get taskExportActionSelectResource;
+
+  /// #1866 task export (Word document): ActionChangeField
+  ///
+  /// In en, this message translates to:
+  /// **'Change the field: {field}.'**
+  String taskExportActionChangeField(String field);
+
+  /// #1866 task export (Word document): ActionConfirmBooking
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the booking.'**
+  String get taskExportActionConfirmBooking;
+
+  /// #1866 task export (Word document): ActionCancelReview
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the review without booking.'**
+  String get taskExportActionCancelReview;
+
+  /// #1866 task export (Word document): ActionViewDetails
+  ///
+  /// In en, this message translates to:
+  /// **'Open the reservation details.'**
+  String get taskExportActionViewDetails;
+
+  /// #1866 task export (Word document): ActionBack
+  ///
+  /// In en, this message translates to:
+  /// **'Go back.'**
+  String get taskExportActionBack;
+
+  /// #1866 task export (Word document): ActionUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'An action this version cannot describe.'**
+  String get taskExportActionUnknown;
+
+  /// #1866 task export (Word document): FieldDateRelation
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get taskExportFieldDateRelation;
+
+  /// #1866 task export (Word document): FieldPeriod
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get taskExportFieldPeriod;
+
+  /// #1866 task export (Word document): FieldViewMode
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get taskExportFieldViewMode;
+
+  /// #1866 task export (Word document): FieldResourceKind
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of place'**
+  String get taskExportFieldResourceKind;
+
+  /// #1866 task export (Word document): FieldForWhom
+  ///
+  /// In en, this message translates to:
+  /// **'For whom'**
+  String get taskExportFieldForWhom;
+
+  /// #1866 task export (Word document): FieldRepeat
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
+  String get taskExportFieldRepeat;
+
+  /// #1866 task export (Word document): FieldCheckIn
+  ///
+  /// In en, this message translates to:
+  /// **'Check in'**
+  String get taskExportFieldCheckIn;
+
+  /// #1866 task export (Word document): FieldSeriesResult
+  ///
+  /// In en, this message translates to:
+  /// **'Series'**
+  String get taskExportFieldSeriesResult;
+
+  /// #1866 task export (Word document): FieldRefusal
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get taskExportFieldRefusal;
+
+  /// #1866 task export (Word document): FieldTime
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get taskExportFieldTime;
+
+  /// #1866 task export (Word document): FieldAccessories
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories'**
+  String get taskExportFieldAccessories;
+
+  /// #1866 task export (Word document): FieldUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'a field this version cannot describe'**
+  String get taskExportFieldUnknown;
+
+  /// #1866 task export (Word document): Detail
+  ///
+  /// In en, this message translates to:
+  /// **'{field}: {value}'**
+  String taskExportDetail(String field, String value);
+
+  /// #1866 task export (Word document): ValueToday
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get taskExportValueToday;
+
+  /// #1866 task export (Word document): ValueTomorrow
+  ///
+  /// In en, this message translates to:
+  /// **'tomorrow'**
+  String get taskExportValueTomorrow;
+
+  /// #1866 task export (Word document): ValueLaterThisWeek
+  ///
+  /// In en, this message translates to:
+  /// **'later this week'**
+  String get taskExportValueLaterThisWeek;
+
+  /// #1866 task export (Word document): ValueLater
+  ///
+  /// In en, this message translates to:
+  /// **'later'**
+  String get taskExportValueLater;
+
+  /// #1866 task export (Word document): ValuePast
+  ///
+  /// In en, this message translates to:
+  /// **'a past day'**
+  String get taskExportValuePast;
+
+  /// #1866 task export (Word document): ValueFullDay
+  ///
+  /// In en, this message translates to:
+  /// **'full day'**
+  String get taskExportValueFullDay;
+
+  /// #1866 task export (Word document): ValueMorning
+  ///
+  /// In en, this message translates to:
+  /// **'morning'**
+  String get taskExportValueMorning;
+
+  /// #1866 task export (Word document): ValueAfternoon
+  ///
+  /// In en, this message translates to:
+  /// **'afternoon'**
+  String get taskExportValueAfternoon;
+
+  /// #1866 task export (Word document): ValueHours
+  ///
+  /// In en, this message translates to:
+  /// **'by the hour'**
+  String get taskExportValueHours;
+
+  /// #1866 task export (Word document): ValueCustom
+  ///
+  /// In en, this message translates to:
+  /// **'custom'**
+  String get taskExportValueCustom;
+
+  /// #1866 task export (Word document): ValuePlan
+  ///
+  /// In en, this message translates to:
+  /// **'floor plan'**
+  String get taskExportValuePlan;
+
+  /// #1866 task export (Word document): ValueList
+  ///
+  /// In en, this message translates to:
+  /// **'list'**
+  String get taskExportValueList;
+
+  /// #1866 task export (Word document): ValueDesk
+  ///
+  /// In en, this message translates to:
+  /// **'a desk'**
+  String get taskExportValueDesk;
+
+  /// #1866 task export (Word document): ValueRoom
+  ///
+  /// In en, this message translates to:
+  /// **'a room'**
+  String get taskExportValueRoom;
+
+  /// #1866 task export (Word document): ValueOtherPlace
+  ///
+  /// In en, this message translates to:
+  /// **'another kind of place'**
+  String get taskExportValueOtherPlace;
+
+  /// #1866 task export (Word document): ValueSelf
+  ///
+  /// In en, this message translates to:
+  /// **'myself'**
+  String get taskExportValueSelf;
+
+  /// #1866 task export (Word document): ValueOtherMember
+  ///
+  /// In en, this message translates to:
+  /// **'another member'**
+  String get taskExportValueOtherMember;
+
+  /// #1866 task export (Word document): ValueOnce
+  ///
+  /// In en, this message translates to:
+  /// **'once'**
+  String get taskExportValueOnce;
+
+  /// #1866 task export (Word document): ValueSeries
+  ///
+  /// In en, this message translates to:
+  /// **'as a series'**
+  String get taskExportValueSeries;
+
+  /// #1866 task export (Word document): ValueYes
+  ///
+  /// In en, this message translates to:
+  /// **'yes'**
+  String get taskExportValueYes;
+
+  /// #1866 task export (Word document): ValueNo
+  ///
+  /// In en, this message translates to:
+  /// **'no'**
+  String get taskExportValueNo;
+
+  /// #1866 task export (Word document): ValueAllBooked
+  ///
+  /// In en, this message translates to:
+  /// **'all booked'**
+  String get taskExportValueAllBooked;
+
+  /// #1866 task export (Word document): ValuePartiallyBooked
+  ///
+  /// In en, this message translates to:
+  /// **'partly booked'**
+  String get taskExportValuePartiallyBooked;
+
+  /// #1866 task export (Word document): ValueConflict
+  ///
+  /// In en, this message translates to:
+  /// **'the place was already taken'**
+  String get taskExportValueConflict;
+
+  /// #1866 task export (Word document): ValuePolicy
+  ///
+  /// In en, this message translates to:
+  /// **'a booking rule'**
+  String get taskExportValuePolicy;
+
+  /// #1866 task export (Word document): ValueQuota
+  ///
+  /// In en, this message translates to:
+  /// **'a quota'**
+  String get taskExportValueQuota;
+
+  /// #1866 task export (Word document): ValuePermission
+  ///
+  /// In en, this message translates to:
+  /// **'a missing permission'**
+  String get taskExportValuePermission;
+
+  /// #1866 task export (Word document): ValueClosed
+  ///
+  /// In en, this message translates to:
+  /// **'the workspace was closed'**
+  String get taskExportValueClosed;
+
+  /// #1866 task export (Word document): ValueOffline
+  ///
+  /// In en, this message translates to:
+  /// **'no connection'**
+  String get taskExportValueOffline;
+
+  /// #1866 task export (Word document): ValueOtherReason
+  ///
+  /// In en, this message translates to:
+  /// **'another reason'**
+  String get taskExportValueOtherReason;
+
+  /// #1866 task export (Word document): ValueWithheld
+  ///
+  /// In en, this message translates to:
+  /// **'not recorded'**
+  String get taskExportValueWithheld;
+
+  /// #1866 task export (Word document): Result
+  ///
+  /// In en, this message translates to:
+  /// **'Result: {outcome}'**
+  String taskExportResult(String outcome);
+
+  /// #1866 task export (Word document): OutcomeConfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'the booking was confirmed'**
+  String get taskExportOutcomeConfirmed;
+
+  /// #1866 task export (Word document): OutcomeRequested
+  ///
+  /// In en, this message translates to:
+  /// **'the booking was requested and waits for a decision'**
+  String get taskExportOutcomeRequested;
+
+  /// #1866 task export (Word document): OutcomeSeriesBooked
+  ///
+  /// In en, this message translates to:
+  /// **'the series was booked'**
+  String get taskExportOutcomeSeriesBooked;
+
+  /// #1866 task export (Word document): OutcomeRefused
+  ///
+  /// In en, this message translates to:
+  /// **'the booking was refused'**
+  String get taskExportOutcomeRefused;
+
+  /// #1866 task export (Word document): OutcomeUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'no answer could be confirmed; the outcome is unknown'**
+  String get taskExportOutcomeUnknown;
+
+  /// #1866 task export (Word document): OutcomeUnregistered
+  ///
+  /// In en, this message translates to:
+  /// **'an outcome this version cannot describe'**
+  String get taskExportOutcomeUnregistered;
+
+  /// #1866 task export (Word document): NoResult
+  ///
+  /// In en, this message translates to:
+  /// **'No result was recorded for this command.'**
+  String get taskExportNoResult;
+
+  /// #1866 task export (Word document): Authored
+  ///
+  /// In en, this message translates to:
+  /// **'Added while editing: not observed by the recorder.'**
+  String get taskExportAuthored;
+
+  /// #1866 task export (Word document): Note
+  ///
+  /// In en, this message translates to:
+  /// **'Note written by the person who recorded (their own words): {note}'**
+  String taskExportNote(String note);
+
+  /// #1866 task export (Word document): NoteOmitted
+  ///
+  /// In en, this message translates to:
+  /// **'A personal note was left out of this document.'**
+  String get taskExportNoteOmitted;
+
+  /// #1866 task export (Word document): Excluded
+  ///
+  /// In en, this message translates to:
+  /// **'A protected screen was visited ({category}); nothing on it was recorded.'**
+  String taskExportExcluded(String category);
+
+  /// #1866 task export (Word document): ProtectedAuthentication
+  ///
+  /// In en, this message translates to:
+  /// **'sign-in'**
+  String get taskExportProtectedAuthentication;
+
+  /// #1866 task export (Word document): ProtectedPayment
+  ///
+  /// In en, this message translates to:
+  /// **'payment'**
+  String get taskExportProtectedPayment;
+
+  /// #1866 task export (Word document): ProtectedProvider
+  ///
+  /// In en, this message translates to:
+  /// **'provider'**
+  String get taskExportProtectedProvider;
+
+  /// #1866 task export (Word document): ProtectedSecrets
+  ///
+  /// In en, this message translates to:
+  /// **'secrets'**
+  String get taskExportProtectedSecrets;
+
+  /// #1866 task export (Word document): ProtectedMessenger
+  ///
+  /// In en, this message translates to:
+  /// **'messages'**
+  String get taskExportProtectedMessenger;
+
+  /// #1866 task export (Word document): ProtectedIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'identity'**
+  String get taskExportProtectedIdentity;
+
+  /// #1866 task export (Word document): ProtectedOperator
+  ///
+  /// In en, this message translates to:
+  /// **'operator'**
+  String get taskExportProtectedOperator;
+
+  /// #1866 task export (Word document): Unrecorded
+  ///
+  /// In en, this message translates to:
+  /// **'A step this version cannot describe.'**
+  String get taskExportUnrecorded;
+
+  /// #1866 task export (Word document): LimitValues
+  ///
+  /// In en, this message translates to:
+  /// **'Values that were typed or chosen are never recorded: only their kind appears, and \"not recorded\" stands in for anything else.'**
+  String get taskExportLimitValues;
+
+  /// #1866 task export (Word document): LimitNoIllustrations
+  ///
+  /// In en, this message translates to:
+  /// **'This document has no illustrations.'**
+  String get taskExportLimitNoIllustrations;
+
+  /// #1866 task export (Word document): LimitNotRunnable
+  ///
+  /// In en, this message translates to:
+  /// **'Some steps come from a newer version and cannot be described here.'**
+  String get taskExportLimitNotRunnable;
+
+  /// #1866 task export (Word document): LimitIncomplete
+  ///
+  /// In en, this message translates to:
+  /// **'The recording is incomplete: what happened after the last step shown is not known.'**
+  String get taskExportLimitIncomplete;
+
+  /// #1866 task export (Word document): LimitEdited
+  ///
+  /// In en, this message translates to:
+  /// **'Steps marked as added while editing were written by a person, not observed.'**
+  String get taskExportLimitEdited;
+
+  /// #1866 task export (Word document): Footer
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} of {pages}'**
+  String taskExportFooter(String page, String pages);
+
+  /// #1866 task export (Word document): Saved
+  ///
+  /// In en, this message translates to:
+  /// **'Word document saved: {file}'**
+  String taskExportSaved(String file);
+
+  /// #1866 task export (Word document): SaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The Word document could not be saved. The recording is unchanged.'**
+  String get taskExportSaveFailed;
+
+  /// #1866 task export (Word document): Refused
+  ///
+  /// In en, this message translates to:
+  /// **'This recording cannot be exported as a Word document.'**
+  String get taskExportRefused;
+
+  /// #1876 storyboard and illustrations: SceneLater
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get taskExportSceneLater;
+
+  /// #1876 storyboard and illustrations: SceneBookingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Book a place'**
+  String get taskExportSceneBookingTitle;
+
+  /// #1876 storyboard and illustrations: SceneDetailTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation'**
+  String get taskExportSceneDetailTitle;
+
+  /// #1876 storyboard and illustrations: SceneConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get taskExportSceneConfirm;
+
+  /// #1876 storyboard and illustrations: SceneCancel
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get taskExportSceneCancel;
+
+  /// #1876 storyboard and illustrations: SceneProvenance
+  ///
+  /// In en, this message translates to:
+  /// **'Illustration recreated from the recording, not a screenshot'**
+  String get taskExportSceneProvenance;
+
+  /// #1876 storyboard and illustrations: SceneAlt
+  ///
+  /// In en, this message translates to:
+  /// **'Illustration: {screen} – {step}'**
+  String taskExportSceneAlt(String screen, String step);
+
+  /// #1876 storyboard and illustrations: StoryboardInclude
+  ///
+  /// In en, this message translates to:
+  /// **'Include'**
+  String get taskExportStoryboardInclude;
+
+  /// #1876 storyboard and illustrations: StoryboardApprove
+  ///
+  /// In en, this message translates to:
+  /// **'Approve illustration'**
+  String get taskExportStoryboardApprove;
+
+  /// #1876 storyboard and illustrations: StoryboardMoveUp
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get taskExportStoryboardMoveUp;
+
+  /// #1876 storyboard and illustrations: StoryboardMoveDown
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get taskExportStoryboardMoveDown;
+
+  /// #1876 storyboard and illustrations: StoryboardSourceScene
+  ///
+  /// In en, this message translates to:
+  /// **'Recreated illustration (not a screenshot)'**
+  String get taskExportStoryboardSourceScene;
+
+  /// #1876 storyboard and illustrations: StoryboardSourceText
+  ///
+  /// In en, this message translates to:
+  /// **'Text slide'**
+  String get taskExportStoryboardSourceText;
+
+  /// #1876 storyboard and illustrations: StoryboardSourceExcluded
+  ///
+  /// In en, this message translates to:
+  /// **'Protected screen: not illustrated'**
+  String get taskExportStoryboardSourceExcluded;
+
+  /// #1876 storyboard and illustrations: StoryboardGap
+  ///
+  /// In en, this message translates to:
+  /// **'Gap: nothing was recorded here'**
+  String get taskExportStoryboardGap;
+
+  /// #1876 storyboard and illustrations: StoryboardRenderFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The illustration could not be drawn; this step stays as text.'**
+  String get taskExportStoryboardRenderFailed;
+
+  /// #1876 storyboard and illustrations: StoryboardOrderRefused
+  ///
+  /// In en, this message translates to:
+  /// **'A result cannot come before the command it answers.'**
+  String get taskExportStoryboardOrderRefused;
+
+  /// #1866 task export (Word document): IncludeIllustrations
+  ///
+  /// In en, this message translates to:
+  /// **'Include approved illustrations'**
+  String get taskExportIncludeIllustrations;
+
+  /// #1876 storyboard and illustrations: StoryboardLeftOut
+  ///
+  /// In en, this message translates to:
+  /// **'Step left out by the reviewer.'**
+  String get taskExportStoryboardLeftOut;
+
+  /// #1866 task export (Word document): IllustrationNotApproved
+  ///
+  /// In en, this message translates to:
+  /// **'Illustration not included: it was not approved.'**
+  String get taskExportIllustrationNotApproved;
+
+  /// #1866 task export (Word document): LimitRecreated
+  ///
+  /// In en, this message translates to:
+  /// **'Illustrations are recreated from the recording\'s safe facts with invented place names; they are not screenshots of what was on screen.'**
+  String get taskExportLimitRecreated;
+
+  /// #1866 task export (Word document): Stale
+  ///
+  /// In en, this message translates to:
+  /// **'The storyboard belongs to another version of this recording. Review it again before exporting.'**
+  String get taskExportStale;
+
+  /// #1879 captioned video: VideoIntro
+  ///
+  /// In en, this message translates to:
+  /// **'A tutorial recreated from a recorded task. It shows the steps, not proof that the task succeeded.'**
+  String get taskExportVideoIntro;
+
+  /// #1879 captioned video: VideoStepHeading
+  ///
+  /// In en, this message translates to:
+  /// **'Step {number}: {title}'**
+  String taskExportVideoStepHeading(int number, String title);
+
+  /// #1879 captioned video: VideoSummary
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get taskExportVideoSummary;
+
+  /// #1879 captioned video: VideoLeftOut
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One step was left out by the reviewer.} other{{count} steps were left out by the reviewer.}}'**
+  String taskExportVideoLeftOut(int count);
+
+  /// #1879 captioned video: VideoEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'Every step was left out: there is nothing to show in a video.'**
+  String get taskExportVideoEmpty;
+
+  /// #1879 captioned video: VideoTooLong
+  ///
+  /// In en, this message translates to:
+  /// **'The video would be longer than allowed. Shorten durations or leave steps out.'**
+  String get taskExportVideoTooLong;
+
+  /// #1879 captioned video: VideoBusy
+  ///
+  /// In en, this message translates to:
+  /// **'Another video is still being generated.'**
+  String get taskExportVideoBusy;
+
+  /// #1879 captioned video: VideoUnsupported
+  ///
+  /// In en, this message translates to:
+  /// **'This device cannot generate a video. Export the recording file and open it on a supported device: macOS, iOS, Android, or a current browser that can encode H.264 video.'**
+  String get taskExportVideoUnsupported;
+
+  /// #1879 captioned video: VideoFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The video could not be generated. Nothing was saved.'**
+  String get taskExportVideoFailed;
+
+  /// #1879 captioned video: VideoCancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Video generation cancelled. Nothing was saved.'**
+  String get taskExportVideoCancelled;
+
+  /// #1879 captioned video: VideoGenerating
+  ///
+  /// In en, this message translates to:
+  /// **'Generating the video: {percent} %'**
+  String taskExportVideoGenerating(int percent);
+
+  /// #1879 captioned video: VideoCancel
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel video'**
+  String get taskExportVideoCancel;
+
+  /// #1879 captioned video: VideoGenerate
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video'**
+  String get taskExportVideoGenerate;
+
+  /// #1879 captioned video: VideoLandscape
+  ///
+  /// In en, this message translates to:
+  /// **'Landscape'**
+  String get taskExportVideoLandscape;
+
+  /// #1879 captioned video: VideoPortrait
+  ///
+  /// In en, this message translates to:
+  /// **'Portrait'**
+  String get taskExportVideoPortrait;
+
+  /// #1879 captioned video: VideoSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Video saved with its captions and transcript: {file}'**
+  String taskExportVideoSaved(String file);
+
+  /// #1866 task export (Word document): the review screen button
+  ///
+  /// In en, this message translates to:
+  /// **'Export as Word document'**
+  String get taskExportWordButton;
+
+  /// #1865 task recorder: the feature's name
+  ///
+  /// In en, this message translates to:
+  /// **'Task recorder'**
+  String get featureTaskRecorderTitle;
+
+  /// #1865 task recorder: the feature's description
+  ///
+  /// In en, this message translates to:
+  /// **'Lets a person record the steps of a task on this workspace\'s screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here.'**
+  String get featureTaskRecorderDesc;
+
+  /// #1865 task recorder: taskRecorderTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Task recorder'**
+  String get taskRecorderTitle;
+
+  /// #1865 task recorder: taskRecorderRecordThisTask
+  ///
+  /// In en, this message translates to:
+  /// **'Record this task'**
+  String get taskRecorderRecordThisTask;
+
+  /// #1865 task recorder: taskRecorderDisclosureTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Before you record'**
+  String get taskRecorderDisclosureTitle;
+
+  /// #1865 task recorder: taskRecorderDisclosureBody
+  ///
+  /// In en, this message translates to:
+  /// **'The recorder notes the steps you take on this workspace\'s screens — which screen, which action, what the app answered — on this device only. It never keeps what you type, names, amounts, messages, codes or passwords. Sign-in, payment, messages and other protected screens leave only a marker. Nothing is uploaded: you decide what to export.'**
+  String get taskRecorderDisclosureBody;
+
+  /// #1865 task recorder: taskRecorderLimits
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {steps} steps or {minutes} minutes per recording. Recordings are deleted from this device after {days} days; a file you exported is yours and stays where you saved it.'**
+  String taskRecorderLimits(int steps, int minutes, int days);
+
+  /// #1865 task recorder: taskRecorderStart
+  ///
+  /// In en, this message translates to:
+  /// **'Start recording'**
+  String get taskRecorderStart;
+
+  /// #1865 task recorder: taskRecorderUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Recording is not switched on in this workspace.'**
+  String get taskRecorderUnavailable;
+
+  /// #1865 task recorder: taskRecorderSignedOut
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to record a task.'**
+  String get taskRecorderSignedOut;
+
+  /// #1865 task recorder: taskRecorderStartFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The recording could not start on this device.'**
+  String get taskRecorderStartFailed;
+
+  /// #1865 task recorder: taskRecorderPause
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get taskRecorderPause;
+
+  /// #1865 task recorder: taskRecorderResume
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get taskRecorderResume;
+
+  /// #1865 task recorder: taskRecorderStop
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get taskRecorderStop;
+
+  /// #1865 task recorder: taskRecorderDiscard
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get taskRecorderDiscard;
+
+  /// #1865 task recorder: taskRecorderAddNote
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note'**
+  String get taskRecorderAddNote;
+
+  /// #1865 task recorder: taskRecorderNoteHint
+  ///
+  /// In en, this message translates to:
+  /// **'Your own words, kept as you write them'**
+  String get taskRecorderNoteHint;
+
+  /// #1865 task recorder: taskRecorderRecording
+  ///
+  /// In en, this message translates to:
+  /// **'Recording'**
+  String get taskRecorderRecording;
+
+  /// #1865 task recorder: taskRecorderPaused
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get taskRecorderPaused;
+
+  /// #1865 task recorder: taskRecorderIndicator
+  ///
+  /// In en, this message translates to:
+  /// **'Recording a task: {count} steps'**
+  String taskRecorderIndicator(int count);
+
+  /// #1865 task recorder: taskRecorderMyRecordings
+  ///
+  /// In en, this message translates to:
+  /// **'My recordings on this device'**
+  String get taskRecorderMyRecordings;
+
+  /// #1865 task recorder: taskRecorderNoRecordings
+  ///
+  /// In en, this message translates to:
+  /// **'No recordings on this device.'**
+  String get taskRecorderNoRecordings;
+
+  /// #1865 task recorder: taskRecorderStepCount
+  ///
+  /// In en, this message translates to:
+  /// **'{count} steps'**
+  String taskRecorderStepCount(int count);
+
+  /// #1865 task recorder: taskRecorderUntitled
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled task'**
+  String get taskRecorderUntitled;
+
+  /// #1865 task recorder: taskRecorderUnreadable
+  ///
+  /// In en, this message translates to:
+  /// **'This recording cannot be read. You can delete it.'**
+  String get taskRecorderUnreadable;
+
+  /// #1865 task recorder: taskRecorderCompletenessComplete
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get taskRecorderCompletenessComplete;
+
+  /// #1865 task recorder: taskRecorderCompletenessPartial
+  ///
+  /// In en, this message translates to:
+  /// **'Partial'**
+  String get taskRecorderCompletenessPartial;
+
+  /// #1865 task recorder: taskRecorderCompletenessInterrupted
+  ///
+  /// In en, this message translates to:
+  /// **'Interrupted'**
+  String get taskRecorderCompletenessInterrupted;
+
+  /// #1865 task recorder: taskRecorderEndStopped
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped by you'**
+  String get taskRecorderEndStopped;
+
+  /// #1865 task recorder: taskRecorderEndScopeChanged
+  ///
+  /// In en, this message translates to:
+  /// **'Ended: the account or workspace changed'**
+  String get taskRecorderEndScopeChanged;
+
+  /// #1865 task recorder: taskRecorderEndLimitReached
+  ///
+  /// In en, this message translates to:
+  /// **'Ended: a limit was reached'**
+  String get taskRecorderEndLimitReached;
+
+  /// #1865 task recorder: taskRecorderEndStorageFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Ended: it could not be saved on this device'**
+  String get taskRecorderEndStorageFailed;
+
+  /// #1865 task recorder: taskRecorderEndInterrupted
+  ///
+  /// In en, this message translates to:
+  /// **'Interrupted: the app stopped while recording'**
+  String get taskRecorderEndInterrupted;
+
+  /// #1865 task recorder: taskRecorderActionOpenReserve
+  ///
+  /// In en, this message translates to:
+  /// **'Opened Reserve'**
+  String get taskRecorderActionOpenReserve;
+
+  /// #1865 task recorder: taskRecorderActionSelectDate
+  ///
+  /// In en, this message translates to:
+  /// **'Chose the day'**
+  String get taskRecorderActionSelectDate;
+
+  /// #1865 task recorder: taskRecorderActionSelectPeriod
+  ///
+  /// In en, this message translates to:
+  /// **'Chose the period'**
+  String get taskRecorderActionSelectPeriod;
+
+  /// #1865 task recorder: taskRecorderActionSwitchView
+  ///
+  /// In en, this message translates to:
+  /// **'Switched the view'**
+  String get taskRecorderActionSwitchView;
+
+  /// #1865 task recorder: taskRecorderActionSelectResource
+  ///
+  /// In en, this message translates to:
+  /// **'Chose a place'**
+  String get taskRecorderActionSelectResource;
+
+  /// #1865 task recorder: taskRecorderActionChangeField
+  ///
+  /// In en, this message translates to:
+  /// **'Changed a booking detail'**
+  String get taskRecorderActionChangeField;
+
+  /// #1865 task recorder: taskRecorderActionConfirmBooking
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed the booking'**
+  String get taskRecorderActionConfirmBooking;
+
+  /// #1865 task recorder: taskRecorderActionCancelReview
+  ///
+  /// In en, this message translates to:
+  /// **'Closed the booking without booking'**
+  String get taskRecorderActionCancelReview;
+
+  /// #1865 task recorder: taskRecorderActionViewDetails
+  ///
+  /// In en, this message translates to:
+  /// **'Opened the reservation'**
+  String get taskRecorderActionViewDetails;
+
+  /// #1865 task recorder: taskRecorderActionBack
+  ///
+  /// In en, this message translates to:
+  /// **'Went back'**
+  String get taskRecorderActionBack;
+
+  /// #1865 task recorder: taskRecorderOutcomeConfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Booked'**
+  String get taskRecorderOutcomeConfirmed;
+
+  /// #1865 task recorder: taskRecorderOutcomeRequested
+  ///
+  /// In en, this message translates to:
+  /// **'Sent for confirmation'**
+  String get taskRecorderOutcomeRequested;
+
+  /// #1865 task recorder: taskRecorderOutcomeSeries
+  ///
+  /// In en, this message translates to:
+  /// **'Series booked'**
+  String get taskRecorderOutcomeSeries;
+
+  /// #1865 task recorder: taskRecorderOutcomeRefused
+  ///
+  /// In en, this message translates to:
+  /// **'Refused'**
+  String get taskRecorderOutcomeRefused;
+
+  /// #1865 task recorder: taskRecorderOutcomeUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'No answer came'**
+  String get taskRecorderOutcomeUnknown;
+
+  /// #1865 task recorder: taskRecorderNoOutcome
+  ///
+  /// In en, this message translates to:
+  /// **'No answer recorded'**
+  String get taskRecorderNoOutcome;
+
+  /// #1865 task recorder: taskRecorderStepExcluded
+  ///
+  /// In en, this message translates to:
+  /// **'A protected screen — not recorded'**
+  String get taskRecorderStepExcluded;
+
+  /// #1865 task recorder: taskRecorderStepUnrecorded
+  ///
+  /// In en, this message translates to:
+  /// **'A step the recorder cannot describe'**
+  String get taskRecorderStepUnrecorded;
+
+  /// #1865 task recorder: taskRecorderStepNote
+  ///
+  /// In en, this message translates to:
+  /// **'Your note'**
+  String get taskRecorderStepNote;
+
+  /// #1865 task recorder: taskRecorderSegmentGap
+  ///
+  /// In en, this message translates to:
+  /// **'Paused here'**
+  String get taskRecorderSegmentGap;
+
+  /// #1865 task recorder: taskRecorderExport
+  ///
+  /// In en, this message translates to:
+  /// **'Export a file'**
+  String get taskRecorderExport;
+
+  /// #1865 task recorder: taskRecorderExportPreview
+  ///
+  /// In en, this message translates to:
+  /// **'What the file will contain'**
+  String get taskRecorderExportPreview;
+
+  /// #1865 task recorder: taskRecorderSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Saved: {path}'**
+  String taskRecorderSaved(String path);
+
+  /// #1865 task recorder: taskRecorderSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The file could not be saved.'**
+  String get taskRecorderSaveFailed;
+
+  /// #1865 task recorder: taskRecorderSaveNoPath
+  ///
+  /// In en, this message translates to:
+  /// **'The file was handed to your browser or device; it did not say where it went.'**
+  String get taskRecorderSaveNoPath;
+
+  /// #1865 task recorder: taskRecorderDelete
+  ///
+  /// In en, this message translates to:
+  /// **'Delete from this device'**
+  String get taskRecorderDelete;
+
+  /// #1865 task recorder: taskRecorderDeleteConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this recording from this device? Files you exported are not affected, and nothing in the workspace changes.'**
+  String get taskRecorderDeleteConfirm;
+
+  /// #1865 task recorder: taskRecorderLeaveOut
+  ///
+  /// In en, this message translates to:
+  /// **'Leave out of the export'**
+  String get taskRecorderLeaveOut;
+
+  /// #1865 task recorder: taskRecorderPutBack
+  ///
+  /// In en, this message translates to:
+  /// **'Put back'**
+  String get taskRecorderPutBack;
+
+  /// #1865 task recorder: taskRecorderEditedNote
+  ///
+  /// In en, this message translates to:
+  /// **'Edited copy: {count} steps left out. The recording on this device is unchanged.'**
+  String taskRecorderEditedNote(int count);
+
+  /// #1865 task recorder: taskRecorderOpenRecorder
+  ///
+  /// In en, this message translates to:
+  /// **'Open the task recorder'**
+  String get taskRecorderOpenRecorder;
+
+  /// #1865 task recorder: taskRecorderValueToday
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get taskRecorderValueToday;
+
+  /// #1865 task recorder: taskRecorderValueTomorrow
+  ///
+  /// In en, this message translates to:
+  /// **'tomorrow'**
+  String get taskRecorderValueTomorrow;
+
+  /// #1865 task recorder: taskRecorderValueLaterThisWeek
+  ///
+  /// In en, this message translates to:
+  /// **'later this week'**
+  String get taskRecorderValueLaterThisWeek;
+
+  /// #1865 task recorder: taskRecorderValueLater
+  ///
+  /// In en, this message translates to:
+  /// **'a later day'**
+  String get taskRecorderValueLater;
+
+  /// #1865 task recorder: taskRecorderValuePast
+  ///
+  /// In en, this message translates to:
+  /// **'a past day'**
+  String get taskRecorderValuePast;
+
+  /// #1865 task recorder: taskRecorderValueFullDay
+  ///
+  /// In en, this message translates to:
+  /// **'full day'**
+  String get taskRecorderValueFullDay;
+
+  /// #1865 task recorder: taskRecorderValueMorning
+  ///
+  /// In en, this message translates to:
+  /// **'morning'**
+  String get taskRecorderValueMorning;
+
+  /// #1865 task recorder: taskRecorderValueAfternoon
+  ///
+  /// In en, this message translates to:
+  /// **'afternoon'**
+  String get taskRecorderValueAfternoon;
+
+  /// #1865 task recorder: taskRecorderValueHours
+  ///
+  /// In en, this message translates to:
+  /// **'by the hour'**
+  String get taskRecorderValueHours;
+
+  /// #1865 task recorder: taskRecorderValueCustom
+  ///
+  /// In en, this message translates to:
+  /// **'custom times'**
+  String get taskRecorderValueCustom;
+
+  /// #1865 task recorder: taskRecorderValuePlan
+  ///
+  /// In en, this message translates to:
+  /// **'plan'**
+  String get taskRecorderValuePlan;
+
+  /// #1865 task recorder: taskRecorderValueList
+  ///
+  /// In en, this message translates to:
+  /// **'list'**
+  String get taskRecorderValueList;
+
+  /// #1865 task recorder: taskRecorderValueDesk
+  ///
+  /// In en, this message translates to:
+  /// **'a desk'**
+  String get taskRecorderValueDesk;
+
+  /// #1865 task recorder: taskRecorderValueRoom
+  ///
+  /// In en, this message translates to:
+  /// **'a room'**
+  String get taskRecorderValueRoom;
+
+  /// #1865 task recorder: taskRecorderValueOther
+  ///
+  /// In en, this message translates to:
+  /// **'other'**
+  String get taskRecorderValueOther;
+
+  /// #1865 task recorder: taskRecorderValueSelf
+  ///
+  /// In en, this message translates to:
+  /// **'for me'**
+  String get taskRecorderValueSelf;
+
+  /// #1865 task recorder: taskRecorderValueOtherMember
+  ///
+  /// In en, this message translates to:
+  /// **'for another member'**
+  String get taskRecorderValueOtherMember;
+
+  /// #1865 task recorder: taskRecorderValueOnce
+  ///
+  /// In en, this message translates to:
+  /// **'once'**
+  String get taskRecorderValueOnce;
+
+  /// #1865 task recorder: taskRecorderValueSeries
+  ///
+  /// In en, this message translates to:
+  /// **'repeating'**
+  String get taskRecorderValueSeries;
+
+  /// #1865 task recorder: taskRecorderValueCheckIn
+  ///
+  /// In en, this message translates to:
+  /// **'with check-in'**
+  String get taskRecorderValueCheckIn;
+
+  /// #1865 task recorder: taskRecorderValueNoCheckIn
+  ///
+  /// In en, this message translates to:
+  /// **'without check-in'**
+  String get taskRecorderValueNoCheckIn;
+
+  /// #1865 task recorder: taskRecorderValueAllBooked
+  ///
+  /// In en, this message translates to:
+  /// **'every date booked'**
+  String get taskRecorderValueAllBooked;
+
+  /// #1865 task recorder: taskRecorderValuePartiallyBooked
+  ///
+  /// In en, this message translates to:
+  /// **'some dates refused'**
+  String get taskRecorderValuePartiallyBooked;
+
+  /// #1865 task recorder: taskRecorderValueConflict
+  ///
+  /// In en, this message translates to:
+  /// **'already taken'**
+  String get taskRecorderValueConflict;
+
+  /// #1865 task recorder: taskRecorderValuePolicy
+  ///
+  /// In en, this message translates to:
+  /// **'a booking rule'**
+  String get taskRecorderValuePolicy;
+
+  /// #1865 task recorder: taskRecorderValueQuota
+  ///
+  /// In en, this message translates to:
+  /// **'an allowance'**
+  String get taskRecorderValueQuota;
+
+  /// #1865 task recorder: taskRecorderValuePermission
+  ///
+  /// In en, this message translates to:
+  /// **'a permission'**
+  String get taskRecorderValuePermission;
+
+  /// #1865 task recorder: taskRecorderValueClosed
+  ///
+  /// In en, this message translates to:
+  /// **'closed'**
+  String get taskRecorderValueClosed;
+
+  /// #1865 task recorder: taskRecorderValueOffline
+  ///
+  /// In en, this message translates to:
+  /// **'offline'**
+  String get taskRecorderValueOffline;
+
+  /// #1865 task recorder: taskRecorderValueWithheld
+  ///
+  /// In en, this message translates to:
+  /// **'not recorded'**
+  String get taskRecorderValueWithheld;
+
+  /// #1865 task recorder: taskRecorderFieldForWhom
+  ///
+  /// In en, this message translates to:
+  /// **'who it is for'**
+  String get taskRecorderFieldForWhom;
+
+  /// #1865 task recorder: taskRecorderFieldRepeat
+  ///
+  /// In en, this message translates to:
+  /// **'repeat'**
+  String get taskRecorderFieldRepeat;
+
+  /// #1865 task recorder: taskRecorderFieldCheckIn
+  ///
+  /// In en, this message translates to:
+  /// **'check-in'**
+  String get taskRecorderFieldCheckIn;
+
+  /// #1865 task recorder: taskRecorderFieldTime
+  ///
+  /// In en, this message translates to:
+  /// **'time'**
+  String get taskRecorderFieldTime;
+
+  /// #1865 task recorder: taskRecorderFieldAccessories
+  ///
+  /// In en, this message translates to:
+  /// **'accessories'**
+  String get taskRecorderFieldAccessories;
+
+  /// #1865 task recorder: taskRecorderProtectedAuthentication
+  ///
+  /// In en, this message translates to:
+  /// **'sign-in'**
+  String get taskRecorderProtectedAuthentication;
+
+  /// #1865 task recorder: taskRecorderProtectedPayment
+  ///
+  /// In en, this message translates to:
+  /// **'payment'**
+  String get taskRecorderProtectedPayment;
+
+  /// #1865 task recorder: taskRecorderProtectedProvider
+  ///
+  /// In en, this message translates to:
+  /// **'a provider\'s screen'**
+  String get taskRecorderProtectedProvider;
+
+  /// #1865 task recorder: taskRecorderProtectedSecrets
+  ///
+  /// In en, this message translates to:
+  /// **'keys and secrets'**
+  String get taskRecorderProtectedSecrets;
+
+  /// #1865 task recorder: taskRecorderProtectedMessenger
+  ///
+  /// In en, this message translates to:
+  /// **'messages'**
+  String get taskRecorderProtectedMessenger;
+
+  /// #1865 task recorder: taskRecorderProtectedIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'identity'**
+  String get taskRecorderProtectedIdentity;
+
+  /// #1865 task recorder: taskRecorderProtectedOperator
+  ///
+  /// In en, this message translates to:
+  /// **'installation operator'**
+  String get taskRecorderProtectedOperator;
+
+  /// #1872 task package: taskRecorderExportPackage
+  ///
+  /// In en, this message translates to:
+  /// **'Export a task package'**
+  String get taskRecorderExportPackage;
+
+  /// #1872 task package: taskRecorderSavedPrivately
+  ///
+  /// In en, this message translates to:
+  /// **'Kept only inside the app: {path}'**
+  String taskRecorderSavedPrivately(String path);
+
+  /// #1872 task workbench: taskWorkbenchTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Task workbench'**
+  String get taskWorkbenchTitle;
+
+  /// #1872 task workbench: taskWorkbenchOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Open a task file'**
+  String get taskWorkbenchOpen;
+
+  /// #1872 task workbench: taskWorkbenchIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Open a saved task file. It is read on this device only; nothing is uploaded and no sign-in is needed.'**
+  String get taskWorkbenchIntro;
+
+  /// #1872 task workbench: taskWorkbenchAccepted
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.'**
+  String taskWorkbenchAccepted(int megabytes);
+
+  /// #1872 task workbench: taskWorkbenchChoose
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a task file'**
+  String get taskWorkbenchChoose;
+
+  /// #1872 task workbench: taskWorkbenchFileType
+  ///
+  /// In en, this message translates to:
+  /// **'Task file'**
+  String get taskWorkbenchFileType;
+
+  /// #1872 task workbench: taskWorkbenchEdited
+  ///
+  /// In en, this message translates to:
+  /// **'An edited copy of a recording.'**
+  String get taskWorkbenchEdited;
+
+  /// #1872 task workbench: taskWorkbenchTranscriptOnly
+  ///
+  /// In en, this message translates to:
+  /// **'Some steps come from a newer version: shown as a transcript only.'**
+  String get taskWorkbenchTranscriptOnly;
+
+  /// #1872 task workbench: taskWorkbenchUntrusted
+  ///
+  /// In en, this message translates to:
+  /// **'A private draft from a file: nothing in it is trusted or sent.'**
+  String get taskWorkbenchUntrusted;
+
+  /// #1872 task workbench: taskWorkbenchClaim
+  ///
+  /// In en, this message translates to:
+  /// **'The file says {key}: {value}'**
+  String taskWorkbenchClaim(String key, String value);
+
+  /// #1872 task workbench: taskWorkbenchRefusedTooLarge
+  ///
+  /// In en, this message translates to:
+  /// **'This file is larger than the workbench reads.'**
+  String get taskWorkbenchRefusedTooLarge;
+
+  /// #1872 task workbench: taskWorkbenchRefusedUnsupported
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a task file.'**
+  String get taskWorkbenchRefusedUnsupported;
+
+  /// #1872 task workbench: taskWorkbenchRefusedUnsafe
+  ///
+  /// In en, this message translates to:
+  /// **'This file is built in a way that is not safe to open.'**
+  String get taskWorkbenchRefusedUnsafe;
+
+  /// #1872 task workbench: taskWorkbenchRefusedDamaged
+  ///
+  /// In en, this message translates to:
+  /// **'This file is damaged or was changed after it was made.'**
+  String get taskWorkbenchRefusedDamaged;
+
+  /// #1872 task workbench: taskWorkbenchRefusedNewer
+  ///
+  /// In en, this message translates to:
+  /// **'This file was made by a newer version of the app.'**
+  String get taskWorkbenchRefusedNewer;
+
+  /// #1872 task workbench: taskWorkbenchRefusedInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'This file does not hold a valid task.'**
+  String get taskWorkbenchRefusedInvalid;
+
+  /// #1872 task workbench: taskOutputMake
+  ///
+  /// In en, this message translates to:
+  /// **'Make'**
+  String get taskOutputMake;
+
+  /// #1872 task workbench: taskOutputDocument
+  ///
+  /// In en, this message translates to:
+  /// **'Word document'**
+  String get taskOutputDocument;
+
+  /// #1872 task workbench: taskOutputStoryboard
+  ///
+  /// In en, this message translates to:
+  /// **'Storyboard'**
+  String get taskOutputStoryboard;
+
+  /// #1872 task workbench: taskOutputVideo
+  ///
+  /// In en, this message translates to:
+  /// **'Video'**
+  String get taskOutputVideo;
+
+  /// #1872 task workbench: taskOutputCaptions
+  ///
+  /// In en, this message translates to:
+  /// **'Captions'**
+  String get taskOutputCaptions;
+
+  /// #1872 task workbench: taskOutputUnsupportedPlatform
+  ///
+  /// In en, this message translates to:
+  /// **'Not available on this device.'**
+  String get taskOutputUnsupportedPlatform;
+
+  /// #1872 task workbench: taskOutputMissingMedia
+  ///
+  /// In en, this message translates to:
+  /// **'This task has no images or video to use.'**
+  String get taskOutputMissingMedia;
+
+  /// #1872 task workbench: taskOutputTooLong
+  ///
+  /// In en, this message translates to:
+  /// **'This task is too long for this output.'**
+  String get taskOutputTooLong;
+
+  /// #1872 task workbench: taskOutputFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The output could not be made.'**
+  String get taskOutputFailed;
+
+  /// #1872 workbench: taskOutputStale
+  ///
+  /// In en, this message translates to:
+  /// **'The illustrations were reviewed for an earlier version.'**
+  String get taskOutputStale;
+
+  /// #1872 workbench: taskOutputBusy
+  ///
+  /// In en, this message translates to:
+  /// **'This output is already being made.'**
+  String get taskOutputBusy;
+
+  /// #1872 workbench: taskWorkbenchReviewIllustrations
+  ///
+  /// In en, this message translates to:
+  /// **'Review the illustrations'**
+  String get taskWorkbenchReviewIllustrations;
 
   /// #1659 template_capabilities
   ///
@@ -24881,6 +26855,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Exemption reason (printed on the invoice)'**
   String get vatTreatmentReasonField;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Business analytics'**
+  String get biTitle;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get biAreaOverview;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Space and capacity'**
+  String get biAreaCapacity;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'People and business'**
+  String get biAreaPeople;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get biAreaFinance;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury'**
+  String get biAreaTreasury;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Operations'**
+  String get biAreaOperations;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Planning'**
+  String get biAreaPlanning;
+
+  /// #1923 Web-BI area
+  ///
+  /// In en, this message translates to:
+  /// **'Saved analyses'**
+  String get biAreaSaved;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Q{quarter} {year}'**
+  String biQuarter(String quarter, String year);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get biDimensionLevel;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'not offered by the analyses shown'**
+  String get biNotOffered;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Period length'**
+  String get biGrain;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get biGrainMonth;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Quarter'**
+  String get biGrainQuarter;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get biGrainYear;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Compare with'**
+  String get biCompare;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing'**
+  String get biCompareNone;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The period before'**
+  String get biComparePrevious;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The same period a year before'**
+  String get biComparePreviousYear;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'A period I choose'**
+  String get biCompareCustom;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Group by'**
+  String get biGroupBy;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'No grouping'**
+  String get biGroupNone;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get biSort;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Order (groups only)'**
+  String get biSortUngrouped;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'As listed'**
+  String get biSortNatural;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Highest first'**
+  String get biSortDescending;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest first'**
+  String get biSortAscending;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Table'**
+  String get biViewTable;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Chart'**
+  String get biViewChart;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{value} pp'**
+  String biChangePoints(String value);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read this analysis in this workspace.'**
+  String get biForbidden;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis could not be computed.'**
+  String get biUnavailable;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis is not offered for that period length.'**
+  String get biRefusedGrain;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis cannot make that comparison.'**
+  String get biRefusedComparison;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This analysis cannot be grouped that way.'**
+  String get biRefusedGrouping;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'There are more than {count} groups; choose no grouping.'**
+  String biRefusedBudget(String count);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{period} was not recorded (history begins {since}); there is no comparison.'**
+  String biComparedNotRecorded(String period, String since);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{period} is only partly recorded.'**
+  String biComparedPartial(String period);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.'**
+  String get biExposureDiffers;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'{period}: {value} ({change})'**
+  String biComparedLine(String period, String value, String change);
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Open the source'**
+  String get biOpenSource;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'The source records are shown only to those who manage them.'**
+  String get biSourceRestricted;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get biTotal;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Not in a current group'**
+  String get biRemainder;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get biColumnValue;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get biColumnChange;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'This address asks for an analysis that does not exist; nothing was read.'**
+  String get biInvalidAddress;
+
+  /// #1923 B Web-BI toolbar and module section
+  ///
+  /// In en, this message translates to:
+  /// **'Show the standard view'**
+  String get biReset;
 
   /// #872 one wizard idiom: assistantPrefix
   ///

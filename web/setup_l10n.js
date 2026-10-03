@@ -1077,6 +1077,10 @@ window.SETUP_L10N={
    "roleAssignment": [
     "Giving roles",
     "Shows a Roles section on each member's page to give or take back a role, the members holding each role, and lets every member see what they can do here."
+   ],
+   "taskRecorder": [
+    "Task recorder",
+    "Lets a person record the steps of a task on this workspace's screens, on their own device, review them and export a file without any value they typed. Nothing is uploaded. Off: nobody records here."
    ]
   },
   "process": {
@@ -2363,6 +2367,10 @@ window.SETUP_L10N={
    "roleAssignment": [
     "Attribution des rôles",
     "Affiche une section Rôles sur la page de chaque membre pour attribuer ou retirer un rôle, les membres ayant chaque rôle, et permet à chacun de voir ce qu'il peut faire ici."
+   ],
+   "taskRecorder": [
+    "Enregistreur de tâches",
+    "Permet d'enregistrer les étapes d'une tâche sur les écrans de cet espace, sur son propre appareil, de les relire et d'exporter un fichier sans aucune valeur saisie. Rien n'est envoyé. Désactivé : personne n'enregistre ici."
    ]
   },
   "process": {
@@ -3649,6 +3657,10 @@ window.SETUP_L10N={
    "roleAssignment": [
     "Rollen vergeben",
     "Zeigt auf der Seite jedes Mitglieds einen Bereich Rollen, um eine Rolle zu geben oder zu entziehen, die Mitglieder jeder Rolle, und lässt jedes Mitglied sehen, was es hier tun kann."
+   ],
+   "taskRecorder": [
+    "Aufgabenrekorder",
+    "Erlaubt, die Schritte einer Aufgabe auf den Bildschirmen dieses Arbeitsbereichs auf dem eigenen Gerät aufzuzeichnen, sie zu prüfen und eine Datei ohne eingegebene Werte zu exportieren. Nichts wird hochgeladen. Aus: Hier zeichnet niemand auf."
    ]
   },
   "process": {
@@ -4935,6 +4947,10 @@ window.SETUP_L10N={
    "roleAssignment": [
     "Asignación de roles",
     "Muestra una sección Roles en la página de cada miembro para dar o retirar un rol, los miembros de cada rol, y permite a cada miembro ver lo que puede hacer aquí."
+   ],
+   "taskRecorder": [
+    "Grabador de tareas",
+    "Permite grabar los pasos de una tarea en las pantallas de este espacio, en el propio dispositivo, revisarlos y exportar un archivo sin ningún valor escrito. No se envía nada. Desactivado: nadie graba aquí."
    ]
   },
   "process": {
@@ -6221,6 +6237,10 @@ window.SETUP_L10N={
    "roleAssignment": [
     "Assegnazione dei ruoli",
     "Mostra una sezione Ruoli nella pagina di ogni membro per dare o revocare un ruolo, i membri di ogni ruolo, e permette a ogni membro di vedere cosa può fare qui."
+   ],
+   "taskRecorder": [
+    "Registratore di attività",
+    "Consente di registrare i passaggi di un'attività sulle schermate di questo spazio, sul proprio dispositivo, rivederli ed esportare un file senza alcun valore digitato. Nulla viene inviato. Disattivato: qui nessuno registra."
    ]
   },
   "process": {

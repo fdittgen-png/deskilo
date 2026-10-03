@@ -19,6 +19,7 @@ import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../../features/workspace/domain/bi_modules.dart';
 import 'shell_destinations.dart';
 
 part 'shell_drawer.g.dart';
@@ -114,6 +115,13 @@ class ShellDrawer extends ConsumerWidget {
         _Entry('drawer-availability', Icons.event_busy_outlined,
             l10n?.availabilityTitle ?? 'Availability',
             () => go('/availability')),
+      // #1923 — the BI area: the web build only, never a native menu.
+      if (biAvailable(
+          platformIsWeb: ref.watch(platformIsWebProvider),
+          features: features,
+          permissions: ref.watch(myPermissionsProvider)))
+        _Entry('drawer-bi', Icons.insights_outlined,
+            l10n?.biTitle ?? 'Business analytics', () => go('/bi')),
       if (showAdminSection &&
           features.contains(WorkspaceFeature.roleManagement))
         _Entry('drawer-roles', Icons.admin_panel_settings_outlined,

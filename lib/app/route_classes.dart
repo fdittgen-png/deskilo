@@ -79,6 +79,10 @@ const List<RouteRule> routeRules = [
   RouteRule('/consent', RouteClass.nativeAccount),
   RouteRule('/profiles', RouteClass.nativeAccount),
   RouteRule('/applications', RouteClass.nativeAccount),
+  // #1865 — the account's own recordings on this device.
+  RouteRule('/task-recorder', RouteClass.nativeAccount),
+  // #1872 — reads a file the person picks, on this device; no session.
+  RouteRule('/task-workbench', RouteClass.publicEntry),
   RouteRule('/account-activity', RouteClass.nativeAccount),
   RouteRule('/linked-accounts', RouteClass.nativeAccount),
   RouteRule('/onboarding', RouteClass.nativeAccount),
@@ -87,6 +91,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/oauth/consent', RouteClass.nativeAccount),
   RouteRule('/assistants', RouteClass.nativeAccount),
   RouteRule('/database/assistant-approvals', RouteClass.nativeAccount),
+  RouteRule('/installation/assistants', RouteClass.nativeAccount),
   RouteRule('/settings/assistants', RouteClass.workspace),
   RouteRule('/settings/assistant-setup', RouteClass.workspace),
   RouteRule('/kiosk-gate', RouteClass.workspace),
@@ -142,6 +147,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/workspace-settings', RouteClass.workspace),
   RouteRule('/validation', RouteClass.workspace),
   RouteRule('/availability', RouteClass.workspace),
+  RouteRule('/bi', RouteClass.workspace), // #1923
   RouteRule('/members', RouteClass.workspace),
   RouteRule('/editor', RouteClass.workspace),
   RouteRule('/editor/level/:levelId', RouteClass.workspace),

@@ -47,6 +47,7 @@ import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/backend_screen.dart';
+import '../features/mcp/presentation/instance_assistants_screen.dart';
 import '../features/mcp/presentation/mcp_confirmation_screen.dart';
 import 'oauth_consent_route.dart';
 import '../features/mcp/presentation/assistants_screen.dart';
@@ -75,6 +76,9 @@ import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/reservations/presentation/screens/reserve_screen.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/presentation/screens/availability_screen.dart';
+import '../features/workspace/presentation/screens/bi_screen.dart';
+import '../features/workspace/domain/bi_modules.dart';
+import '../core/navigation/navigation_style.dart';
 import '../features/workspace/presentation/screens/features_screen.dart';
 import '../features/workspace/presentation/screens/members_screen.dart';
 import '../features/workspace/domain/member.dart';
@@ -101,6 +105,10 @@ import '../features/money/presentation/screens/number_sequences_screen.dart';
 import '../features/money/presentation/screens/workspace_status_screen.dart';
 import '../features/money/presentation/screens/repartition_wizard_screen.dart';
 import '../features/workspace/presentation/screens/sites_screen.dart';
+import '../features/task_recorder/presentation/route_classification.dart'
+    show taskRecorderRoute, taskWorkbenchRoute;
+import '../features/task_recorder/presentation/screens/task_recorder_screen.dart';
+import '../features/task_recorder/presentation/screens/task_workbench_screen.dart';
 
 export 'shell/shell_destinations.dart' show ShellBranch;
 
@@ -492,6 +500,12 @@ GoRouter router(Ref ref) {
         path: '/assistants',
         builder: (context, state) => const AssistantsScreen(),
       ),
+      // #1827 B — the installation's assistant switches, for the instance
+      // operator (the server refuses everyone else; 0341).
+      GoRoute(
+        path: '/installation/assistants',
+        builder: (context, state) => const InstanceAssistantsScreen(),
+      ),
       // #1627 — database administrators review eligibility; the server
       // checks administrator status and the second factor on every call.
       GoRoute(
@@ -805,6 +819,18 @@ GoRouter router(Ref ref) {
         },
         builder: (context, state) => const ValidationSettingsScreen(),
       ),
+      // #1923 — Web-BI: web build only, and only with a module this
+      // reader may see; a native link is turned away before any fetch.
+      GoRoute(
+        path: '/bi',
+        redirect: (context, state) => biAvailable(
+                platformIsWeb: ref.read(platformIsWebProvider),
+                features: ref.read(enabledFeaturesSyncProvider),
+                permissions: ref.read(myPermissionsProvider))
+            ? null
+            : '/messages',
+        builder: (context, state) => const BiScreen(),
+      ),
       GoRoute(
         path: '/availability',
         redirect: needs(WorkspacePermission.workspaceSettings),
@@ -859,6 +885,14 @@ GoRouter router(Ref ref) {
         builder: (context, state) => WhatYouCanDoScreen(
             memberId: state.uri.queryParameters['member']),
       ),
+      // #1865 — this account's own recordings on this device. Account-
+      // level: reading, exporting and deleting them never needs a flag;
+      // Start is gated by taskRecorder inside the screen.
+      GoRoute(path: taskRecorderRoute,
+          builder: (context, state) => const TaskRecorderScreen()),
+      // #1872 — the local task workbench: no account, no workspace.
+      GoRoute(path: taskWorkbenchRoute,
+          builder: (context, state) => const TaskWorkbenchScreen()),
     ],
   );
   ref.onDispose(router.dispose);

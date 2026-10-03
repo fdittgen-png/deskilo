@@ -4821,6 +4821,91 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile verificare né importare i giorni festivi. Non è stato modificato nulla.';
 
   @override
+  String get instanceTitle => 'Installazione: assistenti';
+
+  @override
+  String get instanceIntro =>
+      'Impostazioni valide per tutti gli spazi di lavoro di questa installazione. Solo l\'operatore dell\'istanza vede questa pagina; ogni modifica richiede il secondo fattore e viene registrata.';
+
+  @override
+  String get instanceNotOperator =>
+      'Solo l\'operatore dell\'istanza gestisce gli assistenti dell\'installazione.';
+
+  @override
+  String get instanceSecondFactorNeeded =>
+      'Le modifiche qui richiedono il secondo fattore in questa sessione.';
+
+  @override
+  String get instanceConfirmSecondFactor => 'Conferma con il mio autenticatore';
+
+  @override
+  String get instanceRuntimeTitle => 'Assistenti su questa installazione';
+
+  @override
+  String get instanceRuntimeOn => 'Attivi';
+
+  @override
+  String get instanceRuntimeOff => 'Disattivati';
+
+  @override
+  String get instanceTurnOn => 'Attiva per tutti gli spazi';
+
+  @override
+  String get instanceTurnOff => 'Disattiva';
+
+  @override
+  String get instanceTurnOnConfirm =>
+      'Gli assistenti diventano utilizzabili in ogni spazio che li offre. Puoi disattivarli in qualsiasi momento.';
+
+  @override
+  String get instanceBlockers => 'Manca ancora:';
+
+  @override
+  String get instanceBlockerNoAdmin => 'un amministratore della base';
+
+  @override
+  String get instanceAdminsTitle => 'Amministratori della base';
+
+  @override
+  String get instanceAdminsHelp =>
+      'Decidono chi può usare gli assistenti. Si possono scegliere solo persone che hanno confermato la propria identità per gli assistenti.';
+
+  @override
+  String get instanceMakeAdmin => 'Nomina amministratore';
+
+  @override
+  String get instanceRemoveAdmin => 'Rimuovi';
+
+  @override
+  String get instanceNoCandidates =>
+      'Nessun altro ha ancora confermato la propria identità.';
+
+  @override
+  String get instanceYou => 'tu';
+
+  @override
+  String get instanceClientsTitle => 'Client degli assistenti';
+
+  @override
+  String get instanceClientsHelp =>
+      'Un assistente si registra da solo alla prima connessione; funziona solo dopo l\'approvazione qui.';
+
+  @override
+  String get instanceClientWaiting => 'In attesa di approvazione';
+
+  @override
+  String get instanceClientApproved => 'Approvato';
+
+  @override
+  String get instanceClientBlocked => 'Bloccato';
+
+  @override
+  String get instanceApprove => 'Approva';
+
+  @override
+  String get instanceBlock => 'Blocca';
+
+  @override
   String get instanceOwnerClaimIntro =>
       'Di chi è questa istanza? Inserisci l\'e-mail con cui ti registrerai. Dopo aver confermato l\'indirizzo, rivendica la titolarità da Impostazioni → Proprietario dell\'istanza.';
 
@@ -5762,6 +5847,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceGapMissingBuyerCountry => 'Manca il paese del cliente.';
+
+  @override
+  String get invoiceGapCreditNoteWithPayments =>
+      'Questa nota di credito compensa anche dei pagamenti, cosa che una nota di credito EN 16931 non può esprimere. Emetti l\'accredito su un documento a parte.';
 
   @override
   String get invoiceGapNoChargeLines =>
@@ -8592,6 +8681,32 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get mcpIdentityConflict =>
       'Un altro account detiene già questa identità qui: un amministratore della base può risolverlo.';
+
+  @override
+  String get mcpStatusGoogle => 'Accesso con Google';
+
+  @override
+  String get mcpStatusLinkGoogle => 'Collega Google';
+
+  @override
+  String get mcpStatusSignInGoogle => 'Accedi con Google';
+
+  @override
+  String get mcpStateGoogleReady => 'Accesso con Google effettuato';
+
+  @override
+  String get mcpStateGoogleOtherSession => 'Accesso effettuato in altro modo';
+
+  @override
+  String get mcpStateGoogleMissing => 'Google non collegato';
+
+  @override
+  String get mcpNextLinkGoogle =>
+      'Gli assistenti usano il tuo accesso Google. Collega prima Google a questo account; senza, l\'account non può usare assistenti.';
+
+  @override
+  String get mcpNextSignInGoogle =>
+      'Gli assistenti usano il tuo accesso Google. Accedi con Google per continuare.';
 
   @override
   String get mcpUsageWorkspaceTitle => 'Uso degli assistenti, ultimi 30 giorni';
@@ -12838,6 +12953,31 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa prenotazione non è più in corso — è stata chiusa nel frattempo.';
 
   @override
+  String get listWholeReservable => 'Prenotabile per intero';
+
+  @override
+  String listCoversTables(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tavoli',
+      one: '1 tavolo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String listCoversSeats(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count posti',
+      one: '1 posto',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get reserveMonthView => 'Mese';
 
   @override
@@ -13628,6 +13768,1027 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get supportDemo => 'Demo: contesto locale simulato';
+
+  @override
+  String get taskExportDocFallbackTitle => 'Procedura dell\'attività';
+
+  @override
+  String get taskExportIntro =>
+      'Questo documento descrive, passo dopo passo, un\'attività registrata in DesKilo. È documentazione: non riproduce l\'attività e non dimostra che sia riuscita. Solo ciò che la registrazione ha osservato è indicato come osservato.';
+
+  @override
+  String get taskExportSectionAbout => 'Informazioni su questa registrazione';
+
+  @override
+  String get taskExportSectionBefore => 'Prima di iniziare';
+
+  @override
+  String get taskExportSectionSteps => 'Passaggi';
+
+  @override
+  String get taskExportSectionLimits => 'Limiti';
+
+  @override
+  String get taskExportKindSource =>
+      'Acquisizione originale: i passaggi sono stati osservati dal registratore.';
+
+  @override
+  String get taskExportKindEdited =>
+      'Procedura modificata: derivata da una registrazione e modificata da una persona.';
+
+  @override
+  String get taskExportCompletenessComplete =>
+      'Completa: la registrazione è stata fermata dalla persona e ogni comando ha ricevuto una risposta.';
+
+  @override
+  String get taskExportCompletenessPartial =>
+      'Parziale: la registrazione è terminata prima o un comando non ha ricevuto risposta.';
+
+  @override
+  String get taskExportCompletenessInterrupted =>
+      'Interrotta: l\'app si è chiusa durante la registrazione.';
+
+  @override
+  String get taskExportEndStopped =>
+      'Fermata dalla persona che l\'ha registrata.';
+
+  @override
+  String get taskExportEndScopeChanged =>
+      'Fermata perché l\'account, lo spazio o l\'installazione sono cambiati.';
+
+  @override
+  String get taskExportEndLimitReached =>
+      'Fermata perché è stato raggiunto un limite di passaggi, dimensione o durata.';
+
+  @override
+  String get taskExportEndStorageFailed =>
+      'Fermata perché la scrittura della registrazione non è riuscita.';
+
+  @override
+  String get taskExportEndInterrupted => 'Fermata perché l\'app si è chiusa.';
+
+  @override
+  String taskExportPlatform(String platform) {
+    return 'Registrata su: $platform';
+  }
+
+  @override
+  String taskExportDuration(int minutes, int seconds) {
+    return 'Durata: $minutes min $seconds s';
+  }
+
+  @override
+  String taskExportPauses(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pause',
+      one: 'Una pausa',
+      zero: 'Nessuna pausa',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String taskExportVersion(int schema, int contract) {
+    return 'Formato di registrazione $schema, contratto delle azioni $contract';
+  }
+
+  @override
+  String taskExportRevision(String revision) {
+    return 'Revisione del contenuto: $revision';
+  }
+
+  @override
+  String get taskExportPrereqSignedIn => 'Hai effettuato l\'accesso.';
+
+  @override
+  String get taskExportPrereqWorkspaceMember => 'Sei membro dello spazio.';
+
+  @override
+  String taskExportPrereqStartsOn(String screen) {
+    return 'Inizia da $screen.';
+  }
+
+  @override
+  String get taskExportPrereqBookablePlace => 'Almeno un posto è prenotabile.';
+
+  @override
+  String get taskExportPrereqUnknown =>
+      'Una condizione che questa versione non sa descrivere.';
+
+  @override
+  String get taskExportSurfaceReserve => 'la schermata Prenota';
+
+  @override
+  String get taskExportSurfaceBookingSheet => 'la scheda di prenotazione';
+
+  @override
+  String get taskExportSurfaceReservationDetail =>
+      'il dettaglio della prenotazione';
+
+  @override
+  String get taskExportSurfaceAny => 'qualsiasi schermata';
+
+  @override
+  String get taskExportSurfaceUnknown =>
+      'una schermata che questa versione non sa descrivere';
+
+  @override
+  String taskExportOnScreen(String screen) {
+    return 'Schermata: $screen';
+  }
+
+  @override
+  String get taskExportActionOpenReserve => 'Apri la schermata Prenota.';
+
+  @override
+  String get taskExportActionSelectDate => 'Scegli la data.';
+
+  @override
+  String get taskExportActionSelectPeriod => 'Scegli il periodo.';
+
+  @override
+  String get taskExportActionSwitchView => 'Cambia la vista.';
+
+  @override
+  String get taskExportActionSelectResource => 'Scegli un posto.';
+
+  @override
+  String taskExportActionChangeField(String field) {
+    return 'Modifica il campo: $field.';
+  }
+
+  @override
+  String get taskExportActionConfirmBooking => 'Conferma la prenotazione.';
+
+  @override
+  String get taskExportActionCancelReview =>
+      'Annulla il riepilogo senza prenotare.';
+
+  @override
+  String get taskExportActionViewDetails =>
+      'Apri il dettaglio della prenotazione.';
+
+  @override
+  String get taskExportActionBack => 'Torna indietro.';
+
+  @override
+  String get taskExportActionUnknown =>
+      'Un\'azione che questa versione non sa descrivere.';
+
+  @override
+  String get taskExportFieldDateRelation => 'Data';
+
+  @override
+  String get taskExportFieldPeriod => 'Periodo';
+
+  @override
+  String get taskExportFieldViewMode => 'Vista';
+
+  @override
+  String get taskExportFieldResourceKind => 'Tipo di posto';
+
+  @override
+  String get taskExportFieldForWhom => 'Per chi';
+
+  @override
+  String get taskExportFieldRepeat => 'Ripetizione';
+
+  @override
+  String get taskExportFieldCheckIn => 'Check-in';
+
+  @override
+  String get taskExportFieldSeriesResult => 'Serie';
+
+  @override
+  String get taskExportFieldRefusal => 'Motivo';
+
+  @override
+  String get taskExportFieldTime => 'Orario';
+
+  @override
+  String get taskExportFieldAccessories => 'Accessori';
+
+  @override
+  String get taskExportFieldUnknown =>
+      'un campo che questa versione non sa descrivere';
+
+  @override
+  String taskExportDetail(String field, String value) {
+    return '$field: $value';
+  }
+
+  @override
+  String get taskExportValueToday => 'oggi';
+
+  @override
+  String get taskExportValueTomorrow => 'domani';
+
+  @override
+  String get taskExportValueLaterThisWeek => 'più avanti questa settimana';
+
+  @override
+  String get taskExportValueLater => 'più avanti';
+
+  @override
+  String get taskExportValuePast => 'un giorno passato';
+
+  @override
+  String get taskExportValueFullDay => 'giornata intera';
+
+  @override
+  String get taskExportValueMorning => 'mattina';
+
+  @override
+  String get taskExportValueAfternoon => 'pomeriggio';
+
+  @override
+  String get taskExportValueHours => 'a ore';
+
+  @override
+  String get taskExportValueCustom => 'personalizzato';
+
+  @override
+  String get taskExportValuePlan => 'planimetria';
+
+  @override
+  String get taskExportValueList => 'elenco';
+
+  @override
+  String get taskExportValueDesk => 'una scrivania';
+
+  @override
+  String get taskExportValueRoom => 'una sala';
+
+  @override
+  String get taskExportValueOtherPlace => 'un altro tipo di posto';
+
+  @override
+  String get taskExportValueSelf => 'me stesso';
+
+  @override
+  String get taskExportValueOtherMember => 'un altro membro';
+
+  @override
+  String get taskExportValueOnce => 'una volta';
+
+  @override
+  String get taskExportValueSeries => 'come serie';
+
+  @override
+  String get taskExportValueYes => 'sì';
+
+  @override
+  String get taskExportValueNo => 'no';
+
+  @override
+  String get taskExportValueAllBooked => 'tutto prenotato';
+
+  @override
+  String get taskExportValuePartiallyBooked => 'prenotato in parte';
+
+  @override
+  String get taskExportValueConflict => 'il posto era già occupato';
+
+  @override
+  String get taskExportValuePolicy => 'una regola di prenotazione';
+
+  @override
+  String get taskExportValueQuota => 'una quota';
+
+  @override
+  String get taskExportValuePermission => 'un\'autorizzazione mancante';
+
+  @override
+  String get taskExportValueClosed => 'lo spazio era chiuso';
+
+  @override
+  String get taskExportValueOffline => 'nessuna connessione';
+
+  @override
+  String get taskExportValueOtherReason => 'un altro motivo';
+
+  @override
+  String get taskExportValueWithheld => 'non registrato';
+
+  @override
+  String taskExportResult(String outcome) {
+    return 'Risultato: $outcome';
+  }
+
+  @override
+  String get taskExportOutcomeConfirmed => 'la prenotazione è stata confermata';
+
+  @override
+  String get taskExportOutcomeRequested =>
+      'la prenotazione è stata richiesta e attende una decisione';
+
+  @override
+  String get taskExportOutcomeSeriesBooked => 'la serie è stata prenotata';
+
+  @override
+  String get taskExportOutcomeRefused => 'la prenotazione è stata rifiutata';
+
+  @override
+  String get taskExportOutcomeUnknown =>
+      'nessuna risposta ha potuto essere confermata; il risultato è sconosciuto';
+
+  @override
+  String get taskExportOutcomeUnregistered =>
+      'un risultato che questa versione non sa descrivere';
+
+  @override
+  String get taskExportNoResult =>
+      'Per questo comando non è stato registrato alcun risultato.';
+
+  @override
+  String get taskExportAuthored =>
+      'Aggiunto durante la modifica: non osservato dal registratore.';
+
+  @override
+  String taskExportNote(String note) {
+    return 'Nota scritta dalla persona che ha registrato (parole sue): $note';
+  }
+
+  @override
+  String get taskExportNoteOmitted =>
+      'Una nota personale è stata esclusa da questo documento.';
+
+  @override
+  String taskExportExcluded(String category) {
+    return 'È stata visitata una schermata protetta ($category); non vi è stato registrato nulla.';
+  }
+
+  @override
+  String get taskExportProtectedAuthentication => 'accesso';
+
+  @override
+  String get taskExportProtectedPayment => 'pagamento';
+
+  @override
+  String get taskExportProtectedProvider => 'fornitore';
+
+  @override
+  String get taskExportProtectedSecrets => 'segreti';
+
+  @override
+  String get taskExportProtectedMessenger => 'messaggi';
+
+  @override
+  String get taskExportProtectedIdentity => 'identità';
+
+  @override
+  String get taskExportProtectedOperator => 'operatore';
+
+  @override
+  String get taskExportUnrecorded =>
+      'Un passaggio che questa versione non sa descrivere.';
+
+  @override
+  String get taskExportLimitValues =>
+      'I valori digitati o scelti non vengono mai registrati: appare solo il loro tipo, e «non registrato» sostituisce tutto il resto.';
+
+  @override
+  String get taskExportLimitNoIllustrations =>
+      'Questo documento non contiene illustrazioni.';
+
+  @override
+  String get taskExportLimitNotRunnable =>
+      'Alcuni passaggi provengono da una versione più recente e non possono essere descritti qui.';
+
+  @override
+  String get taskExportLimitIncomplete =>
+      'La registrazione è incompleta: non si sa cosa sia successo dopo l\'ultimo passaggio mostrato.';
+
+  @override
+  String get taskExportLimitEdited =>
+      'I passaggi segnati come aggiunti durante la modifica sono stati scritti da una persona, non osservati.';
+
+  @override
+  String taskExportFooter(String page, String pages) {
+    return 'Pagina $page di $pages';
+  }
+
+  @override
+  String taskExportSaved(String file) {
+    return 'Documento Word salvato: $file';
+  }
+
+  @override
+  String get taskExportSaveFailed =>
+      'Impossibile salvare il documento Word. La registrazione è invariata.';
+
+  @override
+  String get taskExportRefused =>
+      'Questa registrazione non può essere esportata come documento Word.';
+
+  @override
+  String get taskExportSceneLater => 'Più avanti';
+
+  @override
+  String get taskExportSceneBookingTitle => 'Prenota un posto';
+
+  @override
+  String get taskExportSceneDetailTitle => 'Prenotazione';
+
+  @override
+  String get taskExportSceneConfirm => 'Conferma';
+
+  @override
+  String get taskExportSceneCancel => 'Annulla';
+
+  @override
+  String get taskExportSceneProvenance =>
+      'Illustrazione ricreata dalla registrazione, non uno screenshot';
+
+  @override
+  String taskExportSceneAlt(String screen, String step) {
+    return 'Illustrazione: $screen – $step';
+  }
+
+  @override
+  String get taskExportStoryboardInclude => 'Includi';
+
+  @override
+  String get taskExportStoryboardApprove => 'Approva l\'illustrazione';
+
+  @override
+  String get taskExportStoryboardMoveUp => 'Sposta su';
+
+  @override
+  String get taskExportStoryboardMoveDown => 'Sposta giù';
+
+  @override
+  String get taskExportStoryboardSourceScene =>
+      'Illustrazione ricreata (non uno screenshot)';
+
+  @override
+  String get taskExportStoryboardSourceText => 'Diapositiva di testo';
+
+  @override
+  String get taskExportStoryboardSourceExcluded =>
+      'Schermata protetta: non illustrata';
+
+  @override
+  String get taskExportStoryboardGap =>
+      'Lacuna: qui non è stato registrato nulla';
+
+  @override
+  String get taskExportStoryboardRenderFailed =>
+      'Impossibile disegnare l\'illustrazione; questo passaggio resta testo.';
+
+  @override
+  String get taskExportStoryboardOrderRefused =>
+      'Un risultato non può precedere il comando a cui risponde.';
+
+  @override
+  String get taskExportIncludeIllustrations =>
+      'Includi le illustrazioni approvate';
+
+  @override
+  String get taskExportStoryboardLeftOut =>
+      'Passaggio escluso durante la revisione.';
+
+  @override
+  String get taskExportIllustrationNotApproved =>
+      'Illustrazione non inclusa: non è stata approvata.';
+
+  @override
+  String get taskExportLimitRecreated =>
+      'Le illustrazioni sono ricreate dai dati sicuri della registrazione, con nomi di posti inventati; non sono screenshot dello schermo.';
+
+  @override
+  String get taskExportStale =>
+      'Lo storyboard appartiene a un\'altra versione di questa registrazione. Rivedilo prima di esportare.';
+
+  @override
+  String get taskExportVideoIntro =>
+      'Un tutorial ricreato da un\'attività registrata. Mostra i passaggi, non la prova che l\'attività sia riuscita.';
+
+  @override
+  String taskExportVideoStepHeading(int number, String title) {
+    return 'Passaggio $number: $title';
+  }
+
+  @override
+  String get taskExportVideoSummary => 'Riepilogo';
+
+  @override
+  String taskExportVideoLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count passaggi sono stati esclusi durante la revisione.',
+      one: 'Un passaggio è stato escluso durante la revisione.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get taskExportVideoEmpty =>
+      'Tutti i passaggi sono stati esclusi: non c\'è nulla da mostrare in un video.';
+
+  @override
+  String get taskExportVideoTooLong =>
+      'Il video supererebbe la durata consentita. Accorcia le durate o escludi dei passaggi.';
+
+  @override
+  String get taskExportVideoBusy =>
+      'Un altro video è ancora in fase di creazione.';
+
+  @override
+  String get taskExportVideoUnsupported =>
+      'Questo dispositivo non può creare un video. Esporta il file di registrazione e aprilo su un dispositivo supportato: macOS, iOS, Android o un browser recente in grado di codificare video H.264.';
+
+  @override
+  String get taskExportVideoFailed =>
+      'Impossibile creare il video. Non è stato salvato nulla.';
+
+  @override
+  String get taskExportVideoCancelled =>
+      'Creazione del video annullata. Non è stato salvato nulla.';
+
+  @override
+  String taskExportVideoGenerating(int percent) {
+    return 'Creazione del video: $percent %';
+  }
+
+  @override
+  String get taskExportVideoCancel => 'Annulla il video';
+
+  @override
+  String get taskExportVideoGenerate => 'Crea il video';
+
+  @override
+  String get taskExportVideoLandscape => 'Orizzontale';
+
+  @override
+  String get taskExportVideoPortrait => 'Verticale';
+
+  @override
+  String taskExportVideoSaved(String file) {
+    return 'Video salvato con sottotitoli e trascrizione: $file';
+  }
+
+  @override
+  String get taskExportWordButton => 'Esporta come documento Word';
+
+  @override
+  String get featureTaskRecorderTitle => 'Registratore di attività';
+
+  @override
+  String get featureTaskRecorderDesc =>
+      'Consente di registrare i passaggi di un\'attività sulle schermate di questo spazio, sul proprio dispositivo, rivederli ed esportare un file senza alcun valore digitato. Nulla viene inviato. Disattivato: qui nessuno registra.';
+
+  @override
+  String get taskRecorderTitle => 'Registratore di attività';
+
+  @override
+  String get taskRecorderRecordThisTask => 'Registra questa attività';
+
+  @override
+  String get taskRecorderDisclosureTitle => 'Prima di registrare';
+
+  @override
+  String get taskRecorderDisclosureBody =>
+      'Il registratore annota i passaggi che compie sulle schermate di questo spazio — quale schermata, quale azione, cosa ha risposto l\'app — solo su questo dispositivo. Non conserva mai ciò che digita, né nomi, importi, messaggi, codici o password. Accesso, pagamento, messaggi e altre schermate protette lasciano solo un segno. Nulla viene inviato: decide lei cosa esportare.';
+
+  @override
+  String taskRecorderLimits(int steps, int minutes, int days) {
+    return 'Fino a $steps passaggi o $minutes minuti per registrazione. Le registrazioni vengono eliminate da questo dispositivo dopo $days giorni; un file esportato è suo e resta dove lo ha salvato.';
+  }
+
+  @override
+  String get taskRecorderStart => 'Avvia registrazione';
+
+  @override
+  String get taskRecorderUnavailable =>
+      'La registrazione non è attivata in questo spazio.';
+
+  @override
+  String get taskRecorderSignedOut => 'Accedi per registrare un\'attività.';
+
+  @override
+  String get taskRecorderStartFailed =>
+      'La registrazione non è potuta partire su questo dispositivo.';
+
+  @override
+  String get taskRecorderPause => 'Pausa';
+
+  @override
+  String get taskRecorderResume => 'Riprendi';
+
+  @override
+  String get taskRecorderStop => 'Ferma';
+
+  @override
+  String get taskRecorderDiscard => 'Scarta';
+
+  @override
+  String get taskRecorderAddNote => 'Aggiungi una nota';
+
+  @override
+  String get taskRecorderNoteHint => 'Le sue parole, conservate come le scrive';
+
+  @override
+  String get taskRecorderRecording => 'Registrazione in corso';
+
+  @override
+  String get taskRecorderPaused => 'In pausa';
+
+  @override
+  String taskRecorderIndicator(int count) {
+    return 'Registrazione di un\'attività: $count passaggi';
+  }
+
+  @override
+  String get taskRecorderMyRecordings =>
+      'Le mie registrazioni su questo dispositivo';
+
+  @override
+  String get taskRecorderNoRecordings =>
+      'Nessuna registrazione su questo dispositivo.';
+
+  @override
+  String taskRecorderStepCount(int count) {
+    return '$count passaggi';
+  }
+
+  @override
+  String get taskRecorderUntitled => 'Attività senza titolo';
+
+  @override
+  String get taskRecorderUnreadable =>
+      'Questa registrazione non è leggibile. Può eliminarla.';
+
+  @override
+  String get taskRecorderCompletenessComplete => 'Completa';
+
+  @override
+  String get taskRecorderCompletenessPartial => 'Parziale';
+
+  @override
+  String get taskRecorderCompletenessInterrupted => 'Interrotta';
+
+  @override
+  String get taskRecorderEndStopped => 'Fermata da lei';
+
+  @override
+  String get taskRecorderEndScopeChanged =>
+      'Terminata: è cambiato l\'account o lo spazio';
+
+  @override
+  String get taskRecorderEndLimitReached =>
+      'Terminata: è stato raggiunto un limite';
+
+  @override
+  String get taskRecorderEndStorageFailed =>
+      'Terminata: non è stato possibile salvarla su questo dispositivo';
+
+  @override
+  String get taskRecorderEndInterrupted =>
+      'Interrotta: l\'app si è fermata durante la registrazione';
+
+  @override
+  String get taskRecorderActionOpenReserve => 'Ha aperto Prenota';
+
+  @override
+  String get taskRecorderActionSelectDate => 'Ha scelto il giorno';
+
+  @override
+  String get taskRecorderActionSelectPeriod => 'Ha scelto il periodo';
+
+  @override
+  String get taskRecorderActionSwitchView => 'Ha cambiato vista';
+
+  @override
+  String get taskRecorderActionSelectResource => 'Ha scelto un posto';
+
+  @override
+  String get taskRecorderActionChangeField =>
+      'Ha modificato un dettaglio della prenotazione';
+
+  @override
+  String get taskRecorderActionConfirmBooking =>
+      'Ha confermato la prenotazione';
+
+  @override
+  String get taskRecorderActionCancelReview =>
+      'Ha chiuso la prenotazione senza prenotare';
+
+  @override
+  String get taskRecorderActionViewDetails => 'Ha aperto la prenotazione';
+
+  @override
+  String get taskRecorderActionBack => 'È tornato indietro';
+
+  @override
+  String get taskRecorderOutcomeConfirmed => 'Prenotato';
+
+  @override
+  String get taskRecorderOutcomeRequested => 'Inviato per conferma';
+
+  @override
+  String get taskRecorderOutcomeSeries => 'Serie prenotata';
+
+  @override
+  String get taskRecorderOutcomeRefused => 'Rifiutato';
+
+  @override
+  String get taskRecorderOutcomeUnknown => 'Nessuna risposta ricevuta';
+
+  @override
+  String get taskRecorderNoOutcome => 'Nessuna risposta registrata';
+
+  @override
+  String get taskRecorderStepExcluded =>
+      'Una schermata protetta — non registrata';
+
+  @override
+  String get taskRecorderStepUnrecorded =>
+      'Un passaggio che il registratore non sa descrivere';
+
+  @override
+  String get taskRecorderStepNote => 'La sua nota';
+
+  @override
+  String get taskRecorderSegmentGap => 'In pausa qui';
+
+  @override
+  String get taskRecorderExport => 'Esporta un file';
+
+  @override
+  String get taskRecorderExportPreview => 'Cosa conterrà il file';
+
+  @override
+  String taskRecorderSaved(String path) {
+    return 'Salvato: $path';
+  }
+
+  @override
+  String get taskRecorderSaveFailed => 'Non è stato possibile salvare il file.';
+
+  @override
+  String get taskRecorderSaveNoPath =>
+      'Il file è stato consegnato al browser o al dispositivo, che non ha detto dove è finito.';
+
+  @override
+  String get taskRecorderDelete => 'Elimina da questo dispositivo';
+
+  @override
+  String get taskRecorderDeleteConfirm =>
+      'Eliminare questa registrazione da questo dispositivo? I file esportati non sono toccati e nulla cambia nello spazio.';
+
+  @override
+  String get taskRecorderLeaveOut => 'Escludi dall\'esportazione';
+
+  @override
+  String get taskRecorderPutBack => 'Reinserisci';
+
+  @override
+  String taskRecorderEditedNote(int count) {
+    return 'Copia modificata: $count passaggi esclusi. La registrazione su questo dispositivo resta invariata.';
+  }
+
+  @override
+  String get taskRecorderOpenRecorder => 'Apri il registratore di attività';
+
+  @override
+  String get taskRecorderValueToday => 'oggi';
+
+  @override
+  String get taskRecorderValueTomorrow => 'domani';
+
+  @override
+  String get taskRecorderValueLaterThisWeek => 'più avanti questa settimana';
+
+  @override
+  String get taskRecorderValueLater => 'un giorno successivo';
+
+  @override
+  String get taskRecorderValuePast => 'un giorno passato';
+
+  @override
+  String get taskRecorderValueFullDay => 'giornata intera';
+
+  @override
+  String get taskRecorderValueMorning => 'mattina';
+
+  @override
+  String get taskRecorderValueAfternoon => 'pomeriggio';
+
+  @override
+  String get taskRecorderValueHours => 'a ore';
+
+  @override
+  String get taskRecorderValueCustom => 'orari personalizzati';
+
+  @override
+  String get taskRecorderValuePlan => 'pianta';
+
+  @override
+  String get taskRecorderValueList => 'elenco';
+
+  @override
+  String get taskRecorderValueDesk => 'una scrivania';
+
+  @override
+  String get taskRecorderValueRoom => 'una sala';
+
+  @override
+  String get taskRecorderValueOther => 'altro';
+
+  @override
+  String get taskRecorderValueSelf => 'per me';
+
+  @override
+  String get taskRecorderValueOtherMember => 'per un altro membro';
+
+  @override
+  String get taskRecorderValueOnce => 'una volta';
+
+  @override
+  String get taskRecorderValueSeries => 'ripetuta';
+
+  @override
+  String get taskRecorderValueCheckIn => 'con check-in';
+
+  @override
+  String get taskRecorderValueNoCheckIn => 'senza check-in';
+
+  @override
+  String get taskRecorderValueAllBooked => 'tutte le date prenotate';
+
+  @override
+  String get taskRecorderValuePartiallyBooked => 'alcune date rifiutate';
+
+  @override
+  String get taskRecorderValueConflict => 'già occupato';
+
+  @override
+  String get taskRecorderValuePolicy => 'una regola di prenotazione';
+
+  @override
+  String get taskRecorderValueQuota => 'una quota';
+
+  @override
+  String get taskRecorderValuePermission => 'un\'autorizzazione';
+
+  @override
+  String get taskRecorderValueClosed => 'chiuso';
+
+  @override
+  String get taskRecorderValueOffline => 'offline';
+
+  @override
+  String get taskRecorderValueWithheld => 'non registrato';
+
+  @override
+  String get taskRecorderFieldForWhom => 'per chi';
+
+  @override
+  String get taskRecorderFieldRepeat => 'ripetizione';
+
+  @override
+  String get taskRecorderFieldCheckIn => 'check-in';
+
+  @override
+  String get taskRecorderFieldTime => 'orario';
+
+  @override
+  String get taskRecorderFieldAccessories => 'accessori';
+
+  @override
+  String get taskRecorderProtectedAuthentication => 'accesso';
+
+  @override
+  String get taskRecorderProtectedPayment => 'pagamento';
+
+  @override
+  String get taskRecorderProtectedProvider => 'schermata di un fornitore';
+
+  @override
+  String get taskRecorderProtectedSecrets => 'chiavi e segreti';
+
+  @override
+  String get taskRecorderProtectedMessenger => 'messaggi';
+
+  @override
+  String get taskRecorderProtectedIdentity => 'identità';
+
+  @override
+  String get taskRecorderProtectedOperator => 'operatore dell\'installazione';
+
+  @override
+  String get taskRecorderExportPackage => 'Esporta un pacchetto dell\'attività';
+
+  @override
+  String taskRecorderSavedPrivately(String path) {
+    return 'Conservato solo nell\'app: $path';
+  }
+
+  @override
+  String get taskWorkbenchTitle => 'Laboratorio delle attività';
+
+  @override
+  String get taskWorkbenchOpen => 'Apri un file di attività';
+
+  @override
+  String get taskWorkbenchIntro =>
+      'Apra un file di attività salvato. Viene letto solo su questo dispositivo; nulla viene inviato e non serve accedere.';
+
+  @override
+  String taskWorkbenchAccepted(int megabytes) {
+    return 'Accettati: .json e .deskilo-task.zip, fino a $megabytes MB.';
+  }
+
+  @override
+  String get taskWorkbenchChoose => 'Scegli un file di attività';
+
+  @override
+  String get taskWorkbenchFileType => 'File di attività';
+
+  @override
+  String get taskWorkbenchEdited =>
+      'Una copia modificata di una registrazione.';
+
+  @override
+  String get taskWorkbenchTranscriptOnly =>
+      'Alcuni passaggi provengono da una versione più recente: mostrati solo come trascrizione.';
+
+  @override
+  String get taskWorkbenchUntrusted =>
+      'Una bozza privata da un file: nulla al suo interno è considerato affidabile né inviato.';
+
+  @override
+  String taskWorkbenchClaim(String key, String value) {
+    return 'Il file indica $key: $value';
+  }
+
+  @override
+  String get taskWorkbenchRefusedTooLarge =>
+      'Questo file è più grande di quanto il laboratorio legga.';
+
+  @override
+  String get taskWorkbenchRefusedUnsupported =>
+      'Questo non è un file di attività.';
+
+  @override
+  String get taskWorkbenchRefusedUnsafe =>
+      'Questo file è costruito in modo non sicuro da aprire.';
+
+  @override
+  String get taskWorkbenchRefusedDamaged =>
+      'Questo file è danneggiato o è stato modificato dopo la creazione.';
+
+  @override
+  String get taskWorkbenchRefusedNewer =>
+      'Questo file è stato creato da una versione più recente dell\'app.';
+
+  @override
+  String get taskWorkbenchRefusedInvalid =>
+      'Questo file non contiene un\'attività valida.';
+
+  @override
+  String get taskOutputMake => 'Crea';
+
+  @override
+  String get taskOutputDocument => 'Documento Word';
+
+  @override
+  String get taskOutputStoryboard => 'Storyboard';
+
+  @override
+  String get taskOutputVideo => 'Video';
+
+  @override
+  String get taskOutputCaptions => 'Sottotitoli';
+
+  @override
+  String get taskOutputUnsupportedPlatform =>
+      'Non disponibile su questo dispositivo.';
+
+  @override
+  String get taskOutputMissingMedia =>
+      'Questa attività non ha immagini o video da usare.';
+
+  @override
+  String get taskOutputTooLong =>
+      'Questa attività è troppo lunga per questo formato.';
+
+  @override
+  String get taskOutputFailed => 'Non è stato possibile creare il risultato.';
+
+  @override
+  String get taskOutputStale =>
+      'Le illustrazioni sono state riviste per una versione precedente.';
+
+  @override
+  String get taskOutputBusy => 'Questo risultato è già in creazione.';
+
+  @override
+  String get taskWorkbenchReviewIllustrations => 'Rivedi le illustrazioni';
 
   @override
   String get capabilityMultiApproval => 'Due o più approvazioni';
@@ -14483,6 +15644,171 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get vatTreatmentReasonField =>
       'Motivo di esenzione (stampato sulla fattura)';
+
+  @override
+  String get biTitle => 'Analisi aziendale';
+
+  @override
+  String get biAreaOverview => 'Panoramica';
+
+  @override
+  String get biAreaCapacity => 'Spazi e capacità';
+
+  @override
+  String get biAreaPeople => 'Persone e attività';
+
+  @override
+  String get biAreaFinance => 'Finanze';
+
+  @override
+  String get biAreaTreasury => 'Tesoreria';
+
+  @override
+  String get biAreaOperations => 'Operatività';
+
+  @override
+  String get biAreaPlanning => 'Pianificazione';
+
+  @override
+  String get biAreaSaved => 'Analisi salvate';
+
+  @override
+  String biQuarter(String quarter, String year) {
+    return 'T$quarter $year';
+  }
+
+  @override
+  String get biDimensionLevel => 'Piano';
+
+  @override
+  String get biNotOffered => 'non offerto dalle analisi mostrate';
+
+  @override
+  String get biGrain => 'Durata del periodo';
+
+  @override
+  String get biGrainMonth => 'Mese';
+
+  @override
+  String get biGrainQuarter => 'Trimestre';
+
+  @override
+  String get biGrainYear => 'Anno';
+
+  @override
+  String get biCompare => 'Confronta con';
+
+  @override
+  String get biCompareNone => 'Niente';
+
+  @override
+  String get biComparePrevious => 'Il periodo precedente';
+
+  @override
+  String get biComparePreviousYear => 'Lo stesso periodo un anno prima';
+
+  @override
+  String get biCompareCustom => 'Un periodo che scelgo';
+
+  @override
+  String get biGroupBy => 'Raggruppa per';
+
+  @override
+  String get biGroupNone => 'Nessun raggruppamento';
+
+  @override
+  String get biSort => 'Ordine';
+
+  @override
+  String get biSortUngrouped => 'Ordine (solo gruppi)';
+
+  @override
+  String get biSortNatural => 'Come elencato';
+
+  @override
+  String get biSortDescending => 'Prima il più alto';
+
+  @override
+  String get biSortAscending => 'Prima il più basso';
+
+  @override
+  String get biViewTable => 'Tabella';
+
+  @override
+  String get biViewChart => 'Grafico';
+
+  @override
+  String biChangePoints(String value) {
+    return '$value p.p.';
+  }
+
+  @override
+  String get biForbidden => 'Non puoi leggere questa analisi in questo spazio.';
+
+  @override
+  String get biUnavailable => 'Non è stato possibile calcolare questa analisi.';
+
+  @override
+  String get biRefusedGrain =>
+      'Questa analisi non è offerta per questa durata del periodo.';
+
+  @override
+  String get biRefusedComparison =>
+      'Questa analisi non può fare questo confronto.';
+
+  @override
+  String get biRefusedGrouping =>
+      'Questa analisi non può essere raggruppata così.';
+
+  @override
+  String biRefusedBudget(String count) {
+    return 'Ci sono più di $count gruppi; scegli «Nessun raggruppamento».';
+  }
+
+  @override
+  String biComparedNotRecorded(String period, String since) {
+    return '$period non è stato registrato (lo storico inizia il $since); nessun confronto.';
+  }
+
+  @override
+  String biComparedPartial(String period) {
+    return '$period è registrato solo in parte.';
+  }
+
+  @override
+  String get biExposureDiffers =>
+      'I due periodi non hanno la stessa base; il tasso ne tiene conto, i valori grezzi non si confrontano direttamente.';
+
+  @override
+  String biComparedLine(String period, String value, String change) {
+    return '$period: $value ($change)';
+  }
+
+  @override
+  String get biOpenSource => 'Apri la fonte';
+
+  @override
+  String get biSourceRestricted =>
+      'I dati di origine sono visibili solo a chi li gestisce.';
+
+  @override
+  String get biTotal => 'Totale';
+
+  @override
+  String get biRemainder => 'Fuori dai gruppi attuali';
+
+  @override
+  String get biColumnValue => 'Valore';
+
+  @override
+  String get biColumnChange => 'Variazione';
+
+  @override
+  String get biInvalidAddress =>
+      'Questo indirizzo chiede un’analisi che non esiste; non è stato letto nulla.';
+
+  @override
+  String get biReset => 'Mostra la vista standard';
 
   @override
   String get assistantPrefix => 'Assistente';

@@ -29,7 +29,7 @@ Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipp
 
 A member finds a free place on the plan and holds it for a period; the database refuses a second booking of the same place at the same time, whoever asks and however many clients race.
 
-- **Code:** shipped · component `c92c581b126c`
+- **Code:** shipped · component `9becbe278074`
 - **Needs:** A workspace with a published plan and opening hours; booking rules in Settings.
 - **Limits:** Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.
 - **Feature flags:** `bookingGate`, `bookingPolicies`, `seriesBooking`, `autoCheckInOut`
@@ -147,7 +147,7 @@ The books of a period leave as FEC, SAF-T or DATEV files an accountant can load.
 
 An invoice becomes an EN 16931 document (UBL 2.1 or Factur-X) with the references its destination platform requires.
 
-- **Code:** shipped · component `5377cf36b8d8`
+- **Code:** shipped · component `d12a32e9b77a`
 - **Needs:** A complete legal identity for the workspace; VAT configured.
 - **Limits:** Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.
 - **Feature flags:** `invoicing`, `vatManagement`
@@ -189,7 +189,7 @@ Storage objects, Auth configuration and the running application recover to a kno
 
 A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.
 
-- **Code:** shipped · component `989176b4c913`
+- **Code:** shipped · component `a89ff86ea7f9`
 - **Needs:** None: the Demo is built into every client.
 - **Limits:** The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.
 - **Feature flags:** `demoMode`

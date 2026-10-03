@@ -284,6 +284,7 @@
   "invoiceGapMissingExemptionReason": "Der Grund für die Steuerbefreiung fehlt.",
   "invoiceGapMissingSellerCountry": "Das Land des Workspace fehlt.",
   "invoiceGapMissingBuyerCountry": "Das Land des Kunden fehlt.",
+  "invoiceGapCreditNoteWithPayments": "Diese Gutschrift verrechnet auch Zahlungen, was eine EN-16931-Gutschrift nicht ausdrücken kann. Stellen Sie die Gutschrift als eigenes Dokument aus.",
   "invoiceGapNoChargeLines": "Diese Rechnung hat keine Belastungsposition — ihr Monat war vollständig durch Zahlungen gedeckt, es gibt nichts zu übermitteln.",
   "invoiceGapMissingSellerCity": "die Stadt der Workspace-Adresse",
   "invoiceGapMissingSellerPostalCode": "die Postleitzahl der Workspace-Adresse",

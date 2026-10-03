@@ -151,5 +151,37 @@
   "mcpIdentityConflict": "Another account already holds this identity here — a database administrator can resolve it.",
   "@mcpIdentityConflict": {
     "description": "MCP status card (assistant setup): identity confirmation, taken in place"
+  },
+  "mcpStatusGoogle": "Google sign-in",
+  "@mcpStatusGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStatusLinkGoogle": "Link Google",
+  "@mcpStatusLinkGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStatusSignInGoogle": "Sign in with Google",
+  "@mcpStatusSignInGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleReady": "Signed in with Google",
+  "@mcpStateGoogleReady": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleOtherSession": "Signed in another way",
+  "@mcpStateGoogleOtherSession": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpStateGoogleMissing": "Google not linked",
+  "@mcpStateGoogleMissing": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpNextLinkGoogle": "Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.",
+  "@mcpNextLinkGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
+  },
+  "mcpNextSignInGoogle": "Assistants use your Google sign-in. Sign in with Google to continue.",
+  "@mcpNextSignInGoogle": {
+    "description": "0340 — assistants use the profile Google sign-in and nothing else"
   }
 }
