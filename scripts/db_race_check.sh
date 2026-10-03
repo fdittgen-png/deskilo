@@ -34,6 +34,19 @@
 #       still pending under its quorum of two.
 #       guard: event_decisions_one_per_member (0017).
 #
+# #1631 — a command racing its own revocation. The dispatcher reads the
+# consent row FOR SHARE and the revoke UPDATEs it, so whichever came
+# second waits, and the database decides the order:
+#
+#   5   a booking committed BEFORE the revoke stays committed: A books
+#       through MCP and holds, B withdraws the workspace consent natively;
+#       one reservation, the consent gone, the next MCP call denied.
+#   6   a call authorized AFTER a committed revoke is refused: A revokes
+#       and holds, B books through MCP; `no_consent`, no reservation.
+#   7   a replay is re-authorised: A revokes and holds, B replays case 5's
+#       request id; refused, still one reservation. Once consent is given
+#       again the replay answers the stored outcome and books nothing new.
+#
 # The MCP intents that need their human are asked and confirmed in the
 # fixture (scripts/db_race/fixture.sql), before the race.
 #
@@ -73,6 +86,7 @@ uid() { printf '00000000-0000-4000-8000-%08d%04d' "$RUN" "$1"; }
 
 O=$(uid 1) B=$(uid 2) C=$(uid 3) D=$(uid 4) R=$(uid 5)
 RQ1=$(uid 11) RQ2=$(uid 12) RQ3=$(uid 13) RQ4=$(uid 14) RQ1B_A=$(uid 15) RQ1B_B=$(uid 16)
+RQ5=$(uid 17) RQ6=$(uid 18)
 
 echo "two sessions, one MCP intent (run $RUN)"
 
@@ -85,7 +99,8 @@ val() { printf '%s\n' "$fixture" | sed -n "s/^$1=//p" | head -1; }
 I=$(val I) WS=$(val WS) SEAT=$(val SEAT) INV=$(val INV) EV=$(val EV)
 M_B=$(val M_B) M_D=$(val M_D) M_R=$(val M_R)
 AM_S=$(val AM_S) AM_E=$(val AM_E) PM_S=$(val PM_S) PM_E=$(val PM_E)
-for v in I WS SEAT INV EV M_B M_D M_R AM_S AM_E PM_S PM_E; do
+MCP_S=$(val MCP_S) MCP_E=$(val MCP_E) BLK_S=$(val BLK_S) BLK_E=$(val BLK_E)
+for v in I WS SEAT INV EV M_B M_D M_R AM_S AM_E PM_S PM_E MCP_S MCP_E BLK_S BLK_E; do
   [ -n "${!v}" ] || die "the fixture did not report $v. psql said: $fixture"
 done
 say "fixture: workspace $WS, seat $SEAT, invoice $INV, event $EV"
@@ -240,6 +255,74 @@ n=$(q "select status from public.events where id = '$EV'")
 expect "$n" pending "4: the event still waits for its second person" "4: the event is '$n' after one person's approval under a quorum of two"
 n=$(q "select subscription_pct from public.members where id = '$M_D'")
 [ "$n" = 100 ] || bad "4: the change applied (share $n) on one person's approval"
+
+# ── #1631: a command racing its own revocation ─────────────────────────
+# status|code|reservation_id of one MCP call, for the cases below.
+mcpr() { # mcpr <operation> <arguments json> <request id or empty>
+  local rq="null"
+  [ -n "${3:-}" ] && rq="'$3'"
+  printf "select 'ANSWER=' || coalesce(v->>'status', '?') || '|' || coalesce(v->'error'->>'code', '') || '|' || coalesce(v->'data'->>'reservation_id', '')
+  from (select public.mcp_execute_v1('%s', '%s', '%s', '%s'::jsonb, %s) v) s;" "$I" "$WS" "$1" "$2" "$rq"
+}
+REVOKE_D="$(claims "$D")
+select 'ANSWER=' || (public.revoke_mcp_workspace_scope('claude-test', '$WS')->>'status');"
+BOOK_D="$(claims "$D" claude-test)
+$(mcpr create_reservation "{\"seat_id\":\"$SEAT\",\"starts_at\":\"$MCP_S\",\"ends_at\":\"$MCP_E\"}" "$RQ5")"
+# Consent given again, as finalising a new connection does (0276): the
+# same scope row, revoked_at cleared.
+reconsent_d() {
+  q "update public.mcp_connection_scopes s set revoked_at = null, consented_at = now()
+       from public.mcp_connections c
+      where s.connection_id = c.id and c.local_user_id = '$D' and c.client_id = 'claude-test'
+        and s.workspace_id = '$WS'" >/dev/null || die "could not give d's consent again"
+}
+# One MCP call by d in its own session, outside any race.
+d_calls() { # d_calls <operation> <arguments json> <request id or empty>
+  PGOPTIONS='-c statement_timeout=20s' ${LIMIT[@]+"${LIMIT[@]}"} \
+    psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 <<SQL 2>&1 | sed -n 's/^ANSWER=//p' | head -1
+begin;
+$(claims "$D" claude-test)
+$(mcpr "$1" "$2" "${3:-}")
+commit;
+SQL
+}
+
+echo "5. a booking committed before the revoke stays committed"
+race 5 "$BOOK_D" "$REVOKE_D"
+waited 5
+a=$(answer 5 a)
+expect "${a%%|*}" completed "5: the booking completed" "5: the booking answered '${a:-nothing}'. A said: $(cat "$TMP/5.a")"
+expect "$(answer 5 b)" revoked "5: the consent was withdrawn after it" "5: the revoke answered '$(answer 5 b)'. B said: $(cat "$TMP/5.b")"
+n=$(live "starts_at = '$MCP_S'")
+expect "$n" 1 "5: one reservation, kept" "5: $n reservations after a committed booking and a later revoke"
+r=$(d_calls list_my_reservations '{}')
+expect "$(cut -d'|' -f1-2 <<<"$r")" "denied|no_consent" "5: the next MCP call is refused: no consent" "5: after the revoke d's assistant got '$r'"
+
+echo "6. a call authorized after a committed revoke is refused"
+reconsent_d
+race 6 "$REVOKE_D" "$(claims "$D" claude-test)
+$(mcpr create_reservation "{\"seat_id\":\"$SEAT\",\"starts_at\":\"$BLK_S\",\"ends_at\":\"$BLK_E\"}" "$RQ6")"
+waited 6
+expect "$(answer 6 a)" revoked "6: the revoke committed first" "6: the revoke answered '$(answer 6 a)'. A said: $(cat "$TMP/6.a")"
+b=$(answer 6 b)
+expect "$(cut -d'|' -f1-2 <<<"$b")" "denied|no_consent" "6: the booking that waited is refused" "6: the booking after the revoke answered '${b:-nothing}'. B said: $(cat "$TMP/6.b")"
+n=$(live "starts_at = '$BLK_S'")
+expect "$n" 0 "6: no reservation" "6: $n reservations booked under revoked consent"
+
+echo "7. a replay is re-authorised against the revoke"
+reconsent_d
+race 7 "$REVOKE_D" "$BOOK_D"
+waited 7
+b=$(answer 7 b)
+expect "$(cut -d'|' -f1-2 <<<"$b")" "denied|no_consent" "7: the replay that waited is refused" "7: the replay after the revoke answered '${b:-nothing}'. B said: $(cat "$TMP/7.b")"
+n=$(live "starts_at = '$MCP_S'")
+expect "$n" 1 "7: still one reservation" "7: $n reservations after a refused replay"
+reconsent_d
+r=$(d_calls create_reservation "{\"seat_id\":\"$SEAT\",\"starts_at\":\"$MCP_S\",\"ends_at\":\"$MCP_E\"}" "$RQ5")
+expect "$(cut -d'|' -f1 <<<"$r")" completed "7: with consent back, the replay answers the stored outcome" "7: the replay under renewed consent answered '$r'"
+expect "$(cut -d'|' -f3 <<<"$r")" "$(cut -d'|' -f3 <<<"$a")" "7: the same reservation id as case 5" "7: the replay named reservation '$(cut -d'|' -f3 <<<"$r")', case 5 booked '$(cut -d'|' -f3 <<<"$a")'"
+n=$(live "starts_at = '$MCP_S'")
+expect "$n" 1 "7: and books nothing new" "7: $n reservations after the replay"
 
 if [ "$FAILED" -gt 0 ]; then
   echo "db race: $FAILED assertion(s) failed"

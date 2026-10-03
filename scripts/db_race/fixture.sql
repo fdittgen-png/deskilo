@@ -51,7 +51,8 @@ end;
 $$;
 
 select set_config('race.i', public.installation_id()::text, false);
-select set_config('race.ops', 'request_invoice_void,request_subscription_change,respond_to_validation', false);
+-- #1631 — member d's own booking operations, for the revoke races (5–7).
+select set_config('race.ops', 'request_invoice_void,request_subscription_change,respond_to_validation,create_reservation,list_my_reservations', false);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select u.id, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        u.tag || '-' || :'run' || '@race.deskilo.test', '', now(), now(), now()
@@ -96,6 +97,7 @@ values (current_setting('race.ws')::uuid, public.installation_id(), 1, true,
         string_to_array(current_setting('race.ops'), ','), 'workspace');
 select pg_temp.connect(:'o', string_to_array(current_setting('race.ops'), ','));
 select pg_temp.connect(:'b', string_to_array(current_setting('race.ops'), ','));
+select pg_temp.connect(:'d', string_to_array(current_setting('race.ops'), ','));
 
 -- Case 2's invoice, and case 4's event: the owner asks, in the app, for
 -- member d's share to halve.
@@ -129,4 +131,10 @@ select 'AM_S=' || ((current_setting('race.day') || ' 08:00')::timestamp at time 
 select 'AM_E=' || ((current_setting('race.day') || ' 12:00')::timestamp at time zone 'Europe/Paris');
 select 'PM_S=' || ((current_setting('race.day') || ' 12:00')::timestamp at time zone 'Europe/Paris');
 select 'PM_E=' || ((current_setting('race.day') || ' 18:00')::timestamp at time zone 'Europe/Paris');
+-- #1631 — the day after, for the revoke races: a morning that gets booked
+-- through MCP (5, replayed in 7) and an afternoon that must not (6).
+select 'MCP_S=' || (((current_setting('race.day')::date + 1) || ' 08:00')::timestamp at time zone 'Europe/Paris');
+select 'MCP_E=' || (((current_setting('race.day')::date + 1) || ' 12:00')::timestamp at time zone 'Europe/Paris');
+select 'BLK_S=' || (((current_setting('race.day')::date + 1) || ' 12:00')::timestamp at time zone 'Europe/Paris');
+select 'BLK_E=' || (((current_setting('race.day')::date + 1) || ' 18:00')::timestamp at time zone 'Europe/Paris');
 commit;
