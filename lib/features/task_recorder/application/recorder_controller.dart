@@ -105,6 +105,11 @@ class RecorderController {
     endReason: _endReason,
   );
 
+  /// #2142 — whether the newest step is a command still waiting for its
+  /// result: a screen's own seam asked first, so the generic layer keeps
+  /// quiet about the same command.
+  bool get awaitingOutcome => _steps.lastOrNull?.isAttempt ?? false;
+
   bool get _live =>
       _state == RecorderState.recording || _state == RecorderState.paused;
 

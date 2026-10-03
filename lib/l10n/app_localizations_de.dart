@@ -15174,6 +15174,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderActionSwitchView => 'Die Ansicht gewechselt';
 
   @override
+  String get taskRecorderActionUiCloseWindow => 'Ein Fenster geschlossen';
+
+  @override
+  String get taskRecorderActionUiCommand => 'Einen Befehl ausgeführt';
+
+  @override
+  String get taskRecorderActionUiCommitField => 'Ein Feld ausgefüllt';
+
+  @override
+  String get taskRecorderActionUiOpenScreen => 'Einen Bildschirm geöffnet';
+
+  @override
+  String get taskRecorderActionUiOpenWindow => 'Ein Fenster geöffnet';
+
+  @override
+  String get taskRecorderActionUiTap => 'Getippt';
+
+  @override
   String get taskRecorderActionViewDetails => 'Die Reservierung geöffnet';
 
   @override
@@ -15294,6 +15312,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderOutcomeCheckedOut => 'Ausgecheckt';
 
   @override
+  String get taskRecorderOutcomeCommandDone => 'Erledigt';
+
+  @override
+  String get taskRecorderOutcomeCommandPending => 'Zur Freigabe gesendet';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Gebucht';
 
   @override
@@ -15343,6 +15367,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskRecorderPutBack => 'Wieder aufnehmen';
+
+  @override
+  String get taskRecorderRecordATask => 'Eine Aufgabe aufzeichnen';
 
   @override
   String get taskRecorderRecordThisTask => 'Diese Aufgabe aufzeichnen';
@@ -15403,6 +15430,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskRecorderStop => 'Beenden';
+
+  @override
+  String get taskRecorderTargetUnkeyed => 'ein unbenanntes Bedienelement';
 
   @override
   String get taskRecorderTitle => 'Aufgabenrekorder';

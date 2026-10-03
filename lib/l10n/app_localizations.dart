@@ -26120,6 +26120,42 @@ abstract class AppLocalizations {
   /// **'Switched the view'**
   String get taskRecorderActionSwitchView;
 
+  /// #2142 recorder: taskRecorderActionUiCloseWindow
+  ///
+  /// In en, this message translates to:
+  /// **'Closed a window'**
+  String get taskRecorderActionUiCloseWindow;
+
+  /// #2142 recorder: taskRecorderActionUiCommand
+  ///
+  /// In en, this message translates to:
+  /// **'Ran a command'**
+  String get taskRecorderActionUiCommand;
+
+  /// #2142 recorder: taskRecorderActionUiCommitField
+  ///
+  /// In en, this message translates to:
+  /// **'Filled in a field'**
+  String get taskRecorderActionUiCommitField;
+
+  /// #2142 recorder: taskRecorderActionUiOpenScreen
+  ///
+  /// In en, this message translates to:
+  /// **'Opened a screen'**
+  String get taskRecorderActionUiOpenScreen;
+
+  /// #2142 recorder: taskRecorderActionUiOpenWindow
+  ///
+  /// In en, this message translates to:
+  /// **'Opened a window'**
+  String get taskRecorderActionUiOpenWindow;
+
+  /// #2142 recorder: taskRecorderActionUiTap
+  ///
+  /// In en, this message translates to:
+  /// **'Tapped'**
+  String get taskRecorderActionUiTap;
+
   /// #1865 task recorder: taskRecorderActionViewDetails
   ///
   /// In en, this message translates to:
@@ -26330,6 +26366,18 @@ abstract class AppLocalizations {
   /// **'Checked out'**
   String get taskRecorderOutcomeCheckedOut;
 
+  /// #2142 recorder: taskRecorderOutcomeCommandDone
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get taskRecorderOutcomeCommandDone;
+
+  /// #2142 recorder: taskRecorderOutcomeCommandPending
+  ///
+  /// In en, this message translates to:
+  /// **'Sent for validation'**
+  String get taskRecorderOutcomeCommandPending;
+
   /// #1865 task recorder: taskRecorderOutcomeConfirmed
   ///
   /// In en, this message translates to:
@@ -26432,6 +26480,12 @@ abstract class AppLocalizations {
   /// **'Put back'**
   String get taskRecorderPutBack;
 
+  /// #2142 recorder: taskRecorderRecordATask — the labelled entry in the drawer and Me → Account
+  ///
+  /// In en, this message translates to:
+  /// **'Record a task'**
+  String get taskRecorderRecordATask;
+
   /// #1865 task recorder: taskRecorderRecordThisTask
   ///
   /// In en, this message translates to:
@@ -26527,6 +26581,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stop'**
   String get taskRecorderStop;
+
+  /// #2142 recorder: taskRecorderTargetUnkeyed
+  ///
+  /// In en, this message translates to:
+  /// **'an unnamed control'**
+  String get taskRecorderTargetUnkeyed;
 
   /// #1865 task recorder: taskRecorderTitle
   ///

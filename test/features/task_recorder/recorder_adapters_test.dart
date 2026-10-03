@@ -135,7 +135,7 @@ void main() {
     test('instrumented, protected and unrecorded routes', () {
       expect(treatRoute('/reserve'), isA<Instrumented>());
       expect(treatRoute('/res/abc'), isA<Instrumented>());
-      expect(treatRoute(taskRecorderRoute), isA<Instrumented>());
+      expect(treatRoute(taskRecorderRoute), isA<RecorderScreen>());
       expect((treatRoute('/auth') as Protected).category,
           ProtectedSurface.authentication);
       expect((treatRoute('/conversation/42') as Protected).category,
@@ -146,8 +146,12 @@ void main() {
           ProtectedSurface.provider);
       expect((treatRoute('/installation/assistants') as Protected).category,
           ProtectedSurface.operator);
-      expect((treatRoute('/member/7') as Protected).category,
+      expect((treatRoute('/settings/personal-info') as Protected).category,
           ProtectedSurface.identity);
+      // #2142 — a member's page is the generic layer's: keys and the
+      // app's own words only, never what the page shows.
+      expect(treatRoute('/member/7'), isA<Unrecorded>());
+      expect(treatRoute('/task-recorder'), isA<RecorderScreen>());
       expect(treatRoute('/settings'), isA<Unrecorded>());
       expect(treatRoute('/calendar'), isA<Unrecorded>());
       expect(treatRoute('/messagesX'), isA<Unrecorded>(),

@@ -14,6 +14,8 @@
 // one "excluded" marker, any other screen a visible "cannot describe"
 // step (route_classification.dart).
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +25,9 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/recorder_controller.dart';
 import '../../providers/recorder_providers.dart';
+import '../../domain/action_registry.dart' show uiRoutes;
 import '../route_classification.dart';
+import '../ui_capture.dart';
 
 class RecordingIndicator extends ConsumerWidget {
   const RecordingIndicator({
@@ -55,10 +59,20 @@ class _LiveIndicator extends ConsumerStatefulWidget {
 class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
   String? _lastPath;
 
+  /// #2142 — the screen on top is protected or the recorder's own: the
+  /// generic layer notes nothing there.
+  bool _quiet = false;
+
+  late final UiCapture _capture = UiCapture(
+    controller: () => ref.read(recorderControllerProvider),
+    protectedNow: () => _quiet,
+  );
+
   @override
   void initState() {
     super.initState();
     widget.router.routerDelegate.addListener(_onRoute);
+    _capture.attach();
   }
 
   @override
@@ -73,6 +87,7 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
   @override
   void dispose() {
     widget.router.routerDelegate.removeListener(_onRoute);
+    _capture.detach();
     super.dispose();
   }
 
@@ -82,19 +97,31 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
       // configuration uri stays on the route a push was made from, so a
       // pushed protected screen went unmarked.
       if (widget.router.routerDelegate.currentConfiguration.isEmpty) return;
-      final path = widget.router.state.uri.path;
+      final state = widget.router.state;
+      final path = state.uri.path;
       if (path == _lastPath) return;
       _lastPath = path;
+      final treatment = treatRoute(path);
+      _quiet = treatment is Protected || treatment is RecorderScreen;
       final controller = ref.read(recorderControllerProvider);
       if (controller.state != RecorderState.recording) return;
-      switch (treatRoute(path)) {
-        case Instrumented():
-          break;
-        case Protected(:final category):
-          controller.excluded(category);
-        case Unrecorded():
-          controller.unrecorded();
-      }
+      // #2142 — every other screen is noted by its route PATTERN (never
+      // the path, which may carry an id), unless it notes itself. After
+      // the event that navigated, so the tap that led here comes first.
+      final pattern = state.fullPath;
+      scheduleMicrotask(() {
+        switch (treatment) {
+          case Instrumented(:final selfOpening) when !selfOpening:
+          case Unrecorded() when pattern != null && uiRoutes.contains(pattern):
+            _capture.screenOpened(pattern!);
+          case Instrumented() || RecorderScreen():
+            break;
+          case Protected(:final category):
+            controller.excluded(category);
+          case Unrecorded():
+            controller.unrecorded();
+        }
+      });
     } catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
@@ -111,19 +138,28 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
         status != null &&
         (status.state == RecorderState.recording ||
             status.state == RecorderState.paused);
-    if (!live) return widget.child;
-    return Stack(
-      children: [
-        widget.child,
-        PositionedDirectional(
-          top: MediaQuery.paddingOf(context).top + AppSpacing.xs,
-          end: AppSpacing.sm,
-          child: _Pill(
-            status: status,
-            onOpen: () => widget.router.push(taskRecorderRoute),
-          ),
-        ),
-      ],
+    _capture.localizations = AppLocalizations.of(context);
+    // One shape whether live or not, so starting or stopping a recording
+    // never rebuilds the app beneath it from scratch.
+    return Listener(
+      behavior: HitTestBehavior.translucent,
+      onPointerDown: _capture.onPointerDown,
+      onPointerUp: _capture.onPointerUp,
+      onPointerCancel: _capture.onPointerCancel,
+      child: Stack(
+        children: [
+          widget.child,
+          if (live)
+            PositionedDirectional(
+              top: MediaQuery.paddingOf(context).top + AppSpacing.xs,
+              end: AppSpacing.sm,
+              child: _Pill(
+                status: status,
+                onOpen: () => widget.router.push(taskRecorderRoute),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

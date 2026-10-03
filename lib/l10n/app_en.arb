@@ -17053,6 +17053,30 @@
   "@taskRecorderActionSwitchView": {
     "description": "#1865 task recorder: taskRecorderActionSwitchView"
   },
+  "taskRecorderActionUiCloseWindow": "Closed a window",
+  "@taskRecorderActionUiCloseWindow": {
+    "description": "#2142 recorder: taskRecorderActionUiCloseWindow"
+  },
+  "taskRecorderActionUiCommand": "Ran a command",
+  "@taskRecorderActionUiCommand": {
+    "description": "#2142 recorder: taskRecorderActionUiCommand"
+  },
+  "taskRecorderActionUiCommitField": "Filled in a field",
+  "@taskRecorderActionUiCommitField": {
+    "description": "#2142 recorder: taskRecorderActionUiCommitField"
+  },
+  "taskRecorderActionUiOpenScreen": "Opened a screen",
+  "@taskRecorderActionUiOpenScreen": {
+    "description": "#2142 recorder: taskRecorderActionUiOpenScreen"
+  },
+  "taskRecorderActionUiOpenWindow": "Opened a window",
+  "@taskRecorderActionUiOpenWindow": {
+    "description": "#2142 recorder: taskRecorderActionUiOpenWindow"
+  },
+  "taskRecorderActionUiTap": "Tapped",
+  "@taskRecorderActionUiTap": {
+    "description": "#2142 recorder: taskRecorderActionUiTap"
+  },
   "taskRecorderActionViewDetails": "Opened the reservation",
   "@taskRecorderActionViewDetails": {
     "description": "#1865 task recorder: taskRecorderActionViewDetails"
@@ -17214,6 +17238,14 @@
   "@taskRecorderOutcomeCheckedOut": {
     "description": "#1881 recorder: taskRecorderOutcomeCheckedOut"
   },
+  "taskRecorderOutcomeCommandDone": "Done",
+  "@taskRecorderOutcomeCommandDone": {
+    "description": "#2142 recorder: taskRecorderOutcomeCommandDone"
+  },
+  "taskRecorderOutcomeCommandPending": "Sent for validation",
+  "@taskRecorderOutcomeCommandPending": {
+    "description": "#2142 recorder: taskRecorderOutcomeCommandPending"
+  },
   "taskRecorderOutcomeConfirmed": "Booked",
   "@taskRecorderOutcomeConfirmed": {
     "description": "#1865 task recorder: taskRecorderOutcomeConfirmed"
@@ -17281,6 +17313,10 @@
   "taskRecorderPutBack": "Put back",
   "@taskRecorderPutBack": {
     "description": "#1865 task recorder: taskRecorderPutBack"
+  },
+  "taskRecorderRecordATask": "Record a task",
+  "@taskRecorderRecordATask": {
+    "description": "#2142 recorder: taskRecorderRecordATask — the labelled entry in the drawer and Me → Account"
   },
   "taskRecorderRecordThisTask": "Record this task",
   "@taskRecorderRecordThisTask": {
@@ -17360,6 +17396,10 @@
   "taskRecorderStop": "Stop",
   "@taskRecorderStop": {
     "description": "#1865 task recorder: taskRecorderStop"
+  },
+  "taskRecorderTargetUnkeyed": "an unnamed control",
+  "@taskRecorderTargetUnkeyed": {
+    "description": "#2142 recorder: taskRecorderTargetUnkeyed"
   },
   "taskRecorderTitle": "Task recorder",
   "@taskRecorderTitle": {

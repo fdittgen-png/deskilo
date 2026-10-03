@@ -254,7 +254,7 @@ void main() {
     final router = GoRouter(routes: [
       GoRoute(path: '/', builder: (_, _) => const Text('home')),
       GoRoute(path: '/auth', builder: (_, _) => const Text('sign in')),
-      GoRoute(path: '/calendar', builder: (_, _) => const Text('calendar')),
+      GoRoute(path: '/nowhere', builder: (_, _) => const Text('nowhere')),
     ]);
     addTearDown(router.dispose);
     await tester.pumpWidget(UncontrolledProviderScope(
@@ -280,7 +280,7 @@ void main() {
 
     router.go('/auth');
     await tester.pumpAndSettle();
-    router.go('/calendar');
+    router.go('/nowhere');
     await tester.pumpAndSettle();
     // #1884 B — a PUSHED protected screen is marked too: the top route
     // decides, not the one the push was made from.
