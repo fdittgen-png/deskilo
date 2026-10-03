@@ -11,8 +11,12 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_feature.dart';
+import '../../domain/role_assignment.dart';
 import '../../domain/workspace_permission.dart';
+import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
+import '../../providers/workspace_roles_providers.dart';
+import '../widgets/role_editor_sheet.dart';
 
 /// #513 — the CENTRAL role management: one matrix, roles × permissions.
 ///
@@ -27,11 +31,17 @@ class RolesScreen extends ConsumerWidget {
   static const Key ownRolesKey = Key('roles-own-roles');
 
 
-  String _roleLabel(AppLocalizations? l10n, PermissionRole role) =>
+  static const Key renameAdministratorKey = Key('roles-rename-administrator');
+
+  String _roleLabel(
+    AppLocalizations? l10n,
+    PermissionRole role, {
+    required String administrator,
+  }) =>
       switch (role) {
         PermissionRole.owner => l10n?.roleOwner ?? 'Owner',
         PermissionRole.coOwner => l10n?.memberCoOwnerChip ?? 'Co-owner',
-        PermissionRole.admin => l10n?.roleAdmin ?? 'Administrator',
+        PermissionRole.admin => administrator,
         PermissionRole.member => l10n?.roleMember ?? 'Every member',
       };
 
@@ -70,6 +80,42 @@ class RolesScreen extends ConsumerWidget {
     );
   }
 
+  /// #2085 — the owner renames the Administrator; what it may do stays
+  /// in the matrix below.
+  Future<void> _rename(
+    BuildContext context,
+    WidgetRef ref,
+    WorkspaceRole role,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    final locale =
+        workspace.defaultLocale.isEmpty ? 'en' : workspace.defaultLocale;
+    final draft = await showModalBottomSheet<WorkspaceRole>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (sheetContext) => RoleEditorSheet(
+        initial: role,
+        workspaceLocale: locale,
+        onSave: (d) async => Navigator.of(sheetContext).pop(d),
+      ),
+    );
+    if (draft == null || !context.mounted) return;
+    final ok = await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'administrator rename failed',
+      errorText: l10n?.roleEditorSaveFailed ?? 'The role was not saved.',
+      action: () => ref
+          .read(workspaceRolesRepositoryProvider)
+          .renameAdministrator(workspace.id, draft.names),
+    );
+    if (!ok) return;
+    ref.invalidate(workspaceRolesProvider);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -81,6 +127,15 @@ class RolesScreen extends ConsumerWidget {
     final features = ref.watch(enabledFeaturesSyncProvider);
     // #2085 — one Roles entry: the space's own roles are reached from
     // here, by whoever defines them or gives them.
+    final roles =
+        ref.watch(workspaceRolesProvider).value ?? const <WorkspaceRole>[];
+    final locale = Localizations.localeOf(context).languageCode;
+    final administrator =
+        administratorName(roles, locale, l10n?.roleAdmin ?? 'Administrator');
+    final renameable = features.contains(WorkspaceFeature.roleAssignment) &&
+            (me?.actsAsOwner ?? false)
+        ? administratorRole(roles)
+        : null;
     final ownRolesLink = features.contains(WorkspaceFeature.roleAssignment) &&
         features.contains(WorkspaceFeature.customRoles) &&
         ((me?.actsAsOwner ?? false) || canEdit);
@@ -143,7 +198,8 @@ class RolesScreen extends ConsumerWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                _roleLabel(l10n, role),
+                                _roleLabel(l10n, role,
+                                    administrator: administrator),
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall
@@ -156,6 +212,17 @@ class RolesScreen extends ConsumerWidget {
                                 label: Text(
                                     l10n?.rolesYourRole ?? 'Your role'),
                                 visualDensity: VisualDensity.compact,
+                              ),
+                            // #2085 — the owner renames the Administrator.
+                            if (role == PermissionRole.admin &&
+                                renameable != null)
+                              IconButton(
+                                key: renameAdministratorKey,
+                                icon: const Icon(Icons.edit_outlined),
+                                tooltip: l10n?.roleRenameAdministrator ??
+                                    'Rename',
+                                onPressed: () =>
+                                    _rename(context, ref, renameable),
                               ),
                             if (role == PermissionRole.owner)
                               Padding(

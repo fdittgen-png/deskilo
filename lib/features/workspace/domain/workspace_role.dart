@@ -17,6 +17,7 @@ class WorkspaceRole {
     this.permissions = const {},
     this.sortOrder = 0,
     this.active = true,
+    this.builtin = false,
   });
 
   final String id;
@@ -30,6 +31,12 @@ class WorkspaceRole {
   final Set<WorkspacePermission> permissions;
   final int sortOrder;
   final bool active;
+
+  /// #2085 — the Administrator: one per workspace, renamed by the owner,
+  /// never defined, put aside or carried by a template. Its permissions
+  /// are the matrix row `admin`, not [permissions], and who holds it is
+  /// `members.is_admin` (the server keeps the holder rows in step).
+  final bool builtin;
 
   /// The four the product decided, which 0247 refuses to redefine.
   static const builtInKeys = {'owner', 'co_owner', 'admin', 'member'};
@@ -49,6 +56,11 @@ List<WorkspaceRole> orderedRoles(Iterable<WorkspaceRole> roles) =>
 /// raises, so an owner meets them as a disabled button rather than as an
 /// error from the server.
 RoleProblem? roleProblem(WorkspaceRole role, String workspaceLocale) {
+  // #2085 — the Administrator keeps its key; only its name is checked.
+  if (role.builtin) {
+    final own = role.names[workspaceLocale];
+    return (own == null || own.trim().isEmpty) ? RoleProblem.name : null;
+  }
   if (WorkspaceRole.builtInKeys.contains(role.key)) return RoleProblem.builtIn;
   if (!RegExp(r'^[a-z][a-z0-9_]{1,30}$').hasMatch(role.key)) {
     return RoleProblem.key;

@@ -13117,6 +13117,17 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get roleBuiltInSubtitle =>
+      'Intégré. Ce qu\'il permet se règle dans Rôles.';
+
+  @override
+  String get roleBuiltInNote =>
+      'Intégré. Ce qu\'il permet se règle dans Rôles ; il s\'attribue sur la page de chaque membre et prend effet une fois validé.';
+
+  @override
+  String get roleRenameAdministrator => 'Renommer';
+
+  @override
   String get rolesOfSpaceTitle => 'Les rôles de cet espace';
 
   @override

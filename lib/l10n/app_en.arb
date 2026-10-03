@@ -14231,6 +14231,18 @@
       }
     }
   },
+  "roleBuiltInSubtitle": "Built in. What it may do is set in Roles.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
+  "roleBuiltInNote": "Built in. What it may do is set in Roles; it is given on each member's page and takes effect once validated.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleRenameAdministrator": "Rename",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
+  },
   "rolesOfSpaceTitle": "Roles this space defines",
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"

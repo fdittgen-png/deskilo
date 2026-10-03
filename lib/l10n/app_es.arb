@@ -8172,6 +8172,18 @@
       }
     }
   },
+  "roleBuiltInSubtitle": "Integrado. Lo que permite se define en Roles.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
+  "roleBuiltInNote": "Integrado. Lo que permite se define en Roles; se da en la página de cada miembro y surte efecto una vez validado.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleRenameAdministrator": "Cambiar el nombre",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
+  },
   "rolesOfSpaceTitle": "Los roles de este espacio",
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"

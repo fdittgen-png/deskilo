@@ -160,5 +160,17 @@
         "type": "String"
       }
     }
+  },
+  "roleBuiltInSubtitle": "Eingebaut. Was sie darf, wird unter Rollen festgelegt.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
+  "roleBuiltInNote": "Eingebaut. Was sie darf, wird unter Rollen festgelegt; sie wird auf der Seite jedes Mitglieds vergeben und wirkt nach der Freigabe.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleRenameAdministrator": "Umbenennen",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   }
 }

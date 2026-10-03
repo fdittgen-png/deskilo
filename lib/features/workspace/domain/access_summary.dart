@@ -61,7 +61,10 @@ List<AccessSource> accessSources({
           .contains(WorkspaceFeature.customRoles);
   if (!customOn) return sources;
   for (final role in orderedRoles(roles)) {
-    if (!role.active || !heldRoleIds.contains(role.id)) continue;
+    // The Administrator's permissions are the base above, never a role row.
+    if (role.builtin || !role.active || !heldRoleIds.contains(role.id)) {
+      continue;
+    }
     sources.add(
       AccessSource(AccessSourceKind.role, role.permissions, role: role),
     );

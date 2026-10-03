@@ -8172,6 +8172,18 @@
       }
     }
   },
+  "roleBuiltInSubtitle": "Integrato. Cosa consente si imposta in Ruoli.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
+  "roleBuiltInNote": "Integrato. Cosa consente si imposta in Ruoli; si assegna nella pagina di ogni membro e ha effetto una volta convalidato.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleRenameAdministrator": "Rinomina",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
+  },
   "rolesOfSpaceTitle": "I ruoli di questo spazio",
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"

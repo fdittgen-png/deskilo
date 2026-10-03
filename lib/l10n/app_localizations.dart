@@ -22470,6 +22470,24 @@ abstract class AppLocalizations {
   /// **'{actor} takes back the role {role} from {member}'**
   String eventRoleTakenBack(String actor, String role, String member);
 
+  /// #2085 giving roles: roleBuiltInSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Built in. What it may do is set in Roles.'**
+  String get roleBuiltInSubtitle;
+
+  /// #2085 giving roles: roleBuiltInNote
+  ///
+  /// In en, this message translates to:
+  /// **'Built in. What it may do is set in Roles; it is given on each member\'s page and takes effect once validated.'**
+  String get roleBuiltInNote;
+
+  /// #2085 giving roles: roleRenameAdministrator
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get roleRenameAdministrator;
+
   /// #1528 the roles of a space: rolesOfSpaceTitle
   ///
   /// In en, this message translates to:
