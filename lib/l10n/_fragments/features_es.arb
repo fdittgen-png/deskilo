@@ -231,5 +231,9 @@
   "featureOptInTitle": "¿Activar una función experimental?",
   "featureOptInBody": "Aún no evaluada como estable: {features}. Puede cambiar y tiene límites conocidos. Actívela solo si este espacio lo acepta.",
   "featureOptInConfirm": "Activar",
-  "featureIntakeStoppedNote": "Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse."
+  "featureIntakeStoppedNote": "Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse.",
+  "featureOptInAlsoOn": "{count, plural, =1{También se activa, porque es necesario: {features}} other{También se activan, porque son necesarios ({count}): {features}}}",
+  "featureOptInStage": "{feature}: {stage}",
+  "featureChangedMeanwhile": "Las funciones cambiaron mientras tanto, así que no se guardó nada. Revise la lista y vuelva a intentarlo.",
+  "featureChangeUnconfirmed": "El cambio se envió, pero no se pudieron recargar las funciones para confirmarlo. Vuelva a abrir la pantalla para ver el estado."
 }
