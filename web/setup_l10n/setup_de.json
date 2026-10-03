@@ -577,5 +577,10 @@
  "loadOk": "Datei geladen.",
  "loadError": "Datei nicht lesbar: {error}",
  "loadMalformed": "Fehlerhaftes XML",
- "loadWrongRoot": "unerwartetes Wurzelelement"
+ "loadWrongRoot": "unerwartetes Wurzelelement",
+ "legalCustomerCapacity": "Ihre Kunden handeln als",
+ "capacityNotStated": "Nicht angegeben",
+ "capacityBusiness": "Unternehmer",
+ "capacityConsumer": "Verbraucher",
+ "legalCustomerCapacityHint": "Entscheidet, welche Zahlungsklauseln eine Rechnung druckt: die gesetzlichen Texte zu Verzugszinsen, Beitreibungspauschale und Skonto gelten nur für Unternehmer als Kunden. Jedes Mitglied lässt sich in der App einzeln festlegen."
 }

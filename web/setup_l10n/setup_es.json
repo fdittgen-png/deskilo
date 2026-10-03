@@ -577,5 +577,10 @@
  "loadOk": "Archivo cargado.",
  "loadError": "Archivo ilegible: {error}",
  "loadMalformed": "XML mal formado",
- "loadWrongRoot": "elemento raíz inesperado"
+ "loadWrongRoot": "elemento raíz inesperado",
+ "legalCustomerCapacity": "Sus clientes actúan como",
+ "capacityNotStated": "Sin indicar",
+ "capacityBusiness": "Empresas",
+ "capacityConsumer": "Consumidores",
+ "legalCustomerCapacityHint": "Decide qué cláusulas de pago imprime una factura: los textos legales de intereses de demora, indemnización por costes de cobro y descuento solo se aplican a clientes empresariales. Cada miembro puede indicarse aparte en la aplicación."
 }

@@ -2940,6 +2940,23 @@
     }
   },
   "composerDraftKept": "Draft kept",
+  "connectionCancelled": "The account changed meanwhile, so this answer was discarded.",
+  "connectionChangedIdentity": "This server is no longer the one you connected. Its actions are paused until you verify it again.",
+  "connectionChecking": "Checking…",
+  "connectionCurrentServer": "This is the server this app already uses.",
+  "connectionDenied": "This server refused the account. Check the sign-in details, or disconnect it.",
+  "connectionExpired": "Your sign-in to this server has ended. Sign in to this server again.",
+  "connectionInvalidEndpoint": "This address or key is not a valid server.",
+  "connectionMalformed": "This server answered something this app cannot read.",
+  "connectionNotConnected": "This server is not connected on this device.",
+  "connectionRetry": "Try again",
+  "connectionSessionNotSaved": "The action was done, but this device could not save the server's sign-in. You may be asked to sign in again.",
+  "connectionSignInAgain": "Sign in again",
+  "connectionUnavailable": "This server is not answering right now. Your other servers are not affected.",
+  "connectionUnknownOutcome": "The connection dropped after the request was sent. It may have been applied: check before trying again.",
+  "connectionUnsupported": "This server's version cannot be connected from this app. Update the app, or ask the server's operator to update the server.",
+  "connectionUsable": "Connected",
+  "connectionVerifyAgain": "Verify again",
   "consentAccept": "Accept and continue",
   "consentAcceptedOn": "Accepted on {date} ({version})",
   "@consentAcceptedOn": {
@@ -3228,6 +3245,30 @@
   "courtesyNone": "None",
   "@courtesyNone": {
     "description": "#912 courtesy title: courtesyNone"
+  },
+  "customerCapacityBusiness": "Business",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Consumer",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Whether this customer acts for a trade or business (a company, a sole trader, an association acting as one) or as a private consumer. It decides which payment clauses an invoice prints; a VAT number alone does not decide it. Not stated: the workspace default applies.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "customerCapacityLabel": "Customer capacity",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Not stated",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacitySaveError": "The customer capacity was not saved.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
   "datevAccountsIntro": "Your accountant gives you the consultant and client numbers. DATEV refuses a file whose numbers do not match — which is what keeps it out of the wrong company’s books.",
   "@datevAccountsIntro": {
@@ -7696,13 +7737,17 @@
   "invoiceKindSettlement": "Regrouped invoices",
   "invoiceKindSubscription": "Subscription, in advance",
   "invoiceKindUsage": "The month's extras",
-  "invoiceLegalAssociationHint": "The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.",
-  "@invoiceLegalAssociationHint": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
   "invoiceLegalAssociationReasonHint": "e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members",
   "@invoiceLegalAssociationReasonHint": {
     "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalCustomerCapacityField": "Default customer capacity",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Decides which payment clauses an invoice prints. The statutory late-penalty, recovery-indemnity and discount defaults apply only to business customers, and a consumer never receives the recovery indemnity. A member's own capacity wins over this default. Every invoice keeps the clauses it was issued with.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
   },
   "invoiceLegalEscompteDefault": "No discount for early payment.",
   "@invoiceLegalEscompteDefault": {

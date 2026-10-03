@@ -239,7 +239,7 @@ const Map<String, int> _pairBudget = {
   'members -> plan': 3,
   'members -> profile': 9,
   'members -> reservations': 14,
-  'members -> workspace': 35, // 2026-10-02 #2085 34→35: the member page hosts the Roles card (workspace/presentation/widgets/member_roles_card.dart), which gives the roles workspace/ defines.
+  'members -> workspace': 36, // 2026-10-03 #1916 35→36: the member page states the customer capacity through workspace/presentation/member_customer_capacity.dart, beside the VAT treatment dialog it mirrors; 2026-10-02 #2085 34→35: the member page hosts the Roles card (workspace/presentation/widgets/member_roles_card.dart), which gives the roles workspace/ defines.
   'money -> calendar': 1,
   'money -> events': 30,
   'money -> members': 2,
@@ -248,7 +248,7 @@ const Map<String, int> _pairBudget = {
   'money -> reservations': 13,
   // 2026-09-15 #1310 S0 112→113: the invoice register asks for the
   // exportData permission before offering the accounting export.
-  'money -> workspace': 122, // 2026-10-02 #1869 B 120→122: the chart sheet names its issuer site and reads the current workspace, as the book sheet does; 2026-10-02 #1869 117→120: a book profile belongs to an issuer, which IS a workspace site, and is read for the current workspace — the book sheet names the site, the providers the current workspace; // 2026-09-19 #1449 116→117: save_legal_identity.dart names WorkspaceRepository — the command writes both aggregates, which is the point of it; the SCREEN stopped importing it, so the coupling moved from presentation into application where it is one line // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
+  'money -> workspace': 123, // 2026-10-03 #1916 122→123: the legal identity screen names the capacities with the same customerCapacityName the member page uses; 2026-10-02 #1869 B 120→122: the chart sheet names its issuer site and reads the current workspace, as the book sheet does; 2026-10-02 #1869 117→120: a book profile belongs to an issuer, which IS a workspace site, and is read for the current workspace — the book sheet names the site, the providers the current workspace; // 2026-09-19 #1449 116→117: save_legal_identity.dart names WorkspaceRepository — the command writes both aggregates, which is the point of it; the SCREEN stopped importing it, so the coupling moved from presentation into application where it is one line // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
   'plan -> events': 1,
   'plan -> members': 1,
   'plan -> money': 4,

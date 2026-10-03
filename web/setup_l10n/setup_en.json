@@ -577,5 +577,10 @@
  "loadOk": "File loaded.",
  "loadError": "Unreadable file: {error}",
  "loadMalformed": "Malformed XML",
- "loadWrongRoot": "unexpected root element"
+ "loadWrongRoot": "unexpected root element",
+ "legalCustomerCapacity": "Your customers act as",
+ "capacityNotStated": "Not stated",
+ "capacityBusiness": "Businesses",
+ "capacityConsumer": "Consumers",
+ "legalCustomerCapacityHint": "Decides which payment clauses an invoice prints: the statutory late-penalty, recovery-indemnity and discount wording applies only to business customers. Each member can be set apart in the app."
 }
