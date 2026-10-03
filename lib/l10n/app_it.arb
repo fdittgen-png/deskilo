@@ -6803,6 +6803,7 @@
   "policySimultaneousDesc": "Quante prenotazioni sovrapposte può avere un membro. 1 mantiene un solo posto alla volta.",
   "policySimultaneousTitle": "Prenotazioni simultanee per membro",
   "portalActionFailed": "Impossibile salvare la modifica. Riprova.",
+  "portalActionNotNegotiated": "Questa azione non è disponibile tra questa app e quel server. Aggiornare l’app può aiutare.",
   "portalAddress": "Indirizzo pubblico",
   "portalAdmin": "Amministratore",
   "portalAdminVisible": "Mostrami come amministratore pubblico",
@@ -8732,6 +8733,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Integrato. Cosa consente si imposta in Ruoli; si assegna nella pagina di ogni membro e ha effetto una volta convalidato.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Integrato. Cosa consente si imposta in Ruoli.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "In uso",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -8812,6 +8821,10 @@
   "roleRefusalOwnerOnly": "Solo il proprietario dà un ruolo che gestisce i ruoli.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Rinomina",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "Il ruolo non è stato revocato.",
   "@roleTakeBackFailed": {
@@ -9468,6 +9481,17 @@
   "taskExportVideoTooLong": "Il video supererebbe la durata consentita. Accorcia le durate o escludi dei passaggi.",
   "taskExportVideoUnsupported": "Questo dispositivo non può creare un video. Esporta il file di registrazione e aprilo su un dispositivo supportato: macOS, iOS, Android o un browser recente in grado di codificare video H.264.",
   "taskExportWordButton": "Esporta come documento Word",
+  "taskGuideCreate": "Crea una bozza di guida",
+  "taskGuideEditText": "Scrivi il testo",
+  "taskGuideIntro": "Ogni passaggio come lo seguirà un lettore. Un passaggio che prenota attende la risposta reale; nulla viene fatto al posto del lettore.",
+  "taskGuideManual": "Esegua questo passaggio da sé",
+  "taskGuideManualProtected": "Esegua questo passaggio da sé, su una schermata protetta: {category}",
+  "taskGuideNoText": "Un'istruzione ancora da scrivere",
+  "taskGuideOptional": "Il lettore può saltarlo",
+  "taskGuideRecovery": "Se viene rifiutato: scelga un altro posto, giorno o periodo, poi confermi di nuovo.",
+  "taskGuideSave": "Salva la guida",
+  "taskGuideTitle": "Bozza di guida",
+  "taskGuideWaitsFor": "Attende: {outcomes}",
   "taskOutputBusy": "Questo risultato è già in creazione.",
   "taskOutputCaptions": "Sottotitoli",
   "taskOutputDocument": "Documento Word",
@@ -9599,6 +9623,7 @@
   "taskWorkbenchRefusedUnsafe": "Questo file è costruito in modo non sicuro da aprire.",
   "taskWorkbenchRefusedUnsupported": "Questo non è un file di attività.",
   "taskWorkbenchReviewIllustrations": "Rivedi le illustrazioni",
+  "taskWorkbenchStoryboardRestored": "Le illustrazioni riviste sono state ripristinate dal file.",
   "taskWorkbenchTitle": "Laboratorio delle attività",
   "taskWorkbenchTranscriptOnly": "Alcuni passaggi provengono da una versione più recente: mostrati solo come trascrizione.",
   "taskWorkbenchUntrusted": "Una bozza privata da un file: nulla al suo interno è considerato affidabile né inviato.",

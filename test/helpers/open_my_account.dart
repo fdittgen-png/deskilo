@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 Future<void> openMyAccount(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('shell-back-to-me')));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('me-tab-me')));
+  await tester.tap(find.byKey(const ValueKey('me-profile-settings')));
   await tester.pumpAndSettle();
 }
 

@@ -266,7 +266,7 @@ void main() {
       TaskPackageIssueCode.inconsistent,
     );
 
-    final future = manifest()..['package_version'] = 2;
+    final future = manifest()..['package_version'] = 3;
     expect(
       refusal(
         _zip({...files, 'manifest.json': utf8.encode(jsonEncode(future))}),

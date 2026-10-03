@@ -6803,6 +6803,7 @@
   "policySimultaneousDesc": "Wie viele sich überschneidende Buchungen ein Mitglied halten darf. 1 bedeutet ein Platz zur selben Zeit.",
   "policySimultaneousTitle": "Gleichzeitige Reservierungen pro Mitglied",
   "portalActionFailed": "Die Änderung konnte nicht gespeichert werden. Bitte erneut versuchen.",
+  "portalActionNotNegotiated": "Diese Aktion ist zwischen dieser App und diesem Server nicht verfügbar. Ein App-Update kann helfen.",
   "portalAddress": "Öffentliche Adresse",
   "portalAdmin": "Administrator",
   "portalAdminVisible": "Mich als öffentlichen Administrator anzeigen",
@@ -8732,6 +8733,14 @@
       }
     }
   },
+  "roleBuiltInNote": "Eingebaut. Was sie darf, wird unter Rollen festgelegt; sie wird auf der Seite jedes Mitglieds vergeben und wirkt nach der Freigabe.",
+  "@roleBuiltInNote": {
+    "description": "#2085 giving roles: roleBuiltInNote"
+  },
+  "roleBuiltInSubtitle": "Eingebaut. Was sie darf, wird unter Rollen festgelegt.",
+  "@roleBuiltInSubtitle": {
+    "description": "#2085 giving roles: roleBuiltInSubtitle"
+  },
   "roleEditorActive": "In Gebrauch",
   "@roleEditorActive": {
     "description": "#1528 the roles of a space: roleEditorActive"
@@ -8812,6 +8821,10 @@
   "roleRefusalOwnerOnly": "Nur die Inhaberin vergibt eine Rolle, die Rollen verwaltet.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
+  },
+  "roleRenameAdministrator": "Umbenennen",
+  "@roleRenameAdministrator": {
+    "description": "#2085 giving roles: roleRenameAdministrator"
   },
   "roleTakeBackFailed": "Die Rolle wurde nicht entzogen.",
   "@roleTakeBackFailed": {
@@ -9468,6 +9481,17 @@
   "taskExportVideoTooLong": "Das Video wäre länger als erlaubt. Kürzen Sie die Dauer oder lassen Sie Schritte weg.",
   "taskExportVideoUnsupported": "Dieses Gerät kann kein Video erstellen. Exportieren Sie die Aufzeichnungsdatei und öffnen Sie sie auf einem unterstützten Gerät: macOS, iOS, Android oder ein aktueller Browser, der H.264-Video kodieren kann.",
   "taskExportWordButton": "Als Word-Dokument exportieren",
+  "taskGuideCreate": "Leitfaden-Entwurf erstellen",
+  "taskGuideEditText": "Text schreiben",
+  "taskGuideIntro": "Jeder Schritt so, wie ihn eine Person befolgen wird. Ein buchender Schritt wartet auf die echte Antwort; nichts wird für die Person erledigt.",
+  "taskGuideManual": "Diesen Schritt selbst ausführen",
+  "taskGuideManualProtected": "Diesen Schritt selbst ausführen, auf einem geschützten Bildschirm: {category}",
+  "taskGuideNoText": "Eine noch zu schreibende Anweisung",
+  "taskGuideOptional": "Darf übersprungen werden",
+  "taskGuideRecovery": "Bei Ablehnung: einen anderen Platz, Tag oder Zeitraum wählen und erneut bestätigen.",
+  "taskGuideSave": "Leitfaden speichern",
+  "taskGuideTitle": "Leitfaden-Entwurf",
+  "taskGuideWaitsFor": "Wartet auf: {outcomes}",
   "taskOutputBusy": "Diese Ausgabe wird bereits erstellt.",
   "taskOutputCaptions": "Untertitel",
   "taskOutputDocument": "Word-Dokument",
@@ -9599,6 +9623,7 @@
   "taskWorkbenchRefusedUnsafe": "Diese Datei ist so aufgebaut, dass das Öffnen nicht sicher ist.",
   "taskWorkbenchRefusedUnsupported": "Das ist keine Aufgabendatei.",
   "taskWorkbenchReviewIllustrations": "Illustrationen prüfen",
+  "taskWorkbenchStoryboardRestored": "Die geprüften Illustrationen wurden aus der Datei wiederhergestellt.",
   "taskWorkbenchTitle": "Aufgaben-Werkbank",
   "taskWorkbenchTranscriptOnly": "Einige Schritte stammen aus einer neueren Version: nur als Mitschrift angezeigt.",
   "taskWorkbenchUntrusted": "Ein privater Entwurf aus einer Datei: nichts darin gilt als vertrauenswürdig oder wird gesendet.",

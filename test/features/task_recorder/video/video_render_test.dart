@@ -6,7 +6,8 @@
 // order for its reviewed duration, summary) feeds the frames, the WebVTT
 // track and the transcript alike; caption text cannot inject markup or a
 // timing line; frames reach the encoder one at a time (never two in
-// flight), at strictly increasing times covering the whole timeline,
+// flight), at strictly increasing times covering the whole timeline and
+// closing one frame step before its end,
 // and every cue's settled frame differs from its neighbours (nothing
 // missing, duplicated or blank); cancel, encoder failure and an
 // unsupported runtime each end with the encoder cancelled and nothing
@@ -154,6 +155,12 @@ void main() {
         );
       }
       expect(e.frames.last.ptsMs, lessThan(t.durationMs));
+      // Two closing frames one step apart, so a muxer that repeats the
+      // previous sample's duration still ends on the timeline.
+      expect(e.frames.reversed.take(2).map((f) => f.ptsMs).toList(), [
+        t.durationMs - 100,
+        t.durationMs - 200,
+      ]);
       expect(e.endMs, t.durationMs);
       expect(e.frames.every((f) => f.rgba.length == 720 * 1280 * 4), isTrue);
       // The settled frame of every cue is distinct from its neighbours.

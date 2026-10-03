@@ -13,7 +13,9 @@ import 'directory_map.dart';
 import 'public_workspace_view.dart';
 
 class DirectoryScreen extends ConsumerStatefulWidget {
-  const DirectoryScreen({super.key});
+  const DirectoryScreen({super.key, this.embedded = false});
+
+  final bool embedded;
   @override
   ConsumerState<DirectoryScreen> createState() => _DirectoryState();
 }
@@ -57,7 +59,10 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(l?.portalDiscover ?? 'Find a workspace'),
+        automaticallyImplyLeading: !widget.embedded,
+        title: widget.embedded
+            ? null
+            : Text(l?.portalDiscover ?? 'Find a workspace'),
         actions: [
           IconButton(
             tooltip: _map ? (l?.portalList ?? 'List') : (l?.portalMap ?? 'Map'),

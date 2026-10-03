@@ -23,8 +23,11 @@ import '../providers/me_providers.dart';
 class LinkedSpacesSection extends ConsumerWidget {
   const LinkedSpacesSection({super.key});
 
-  Future<void> _open(BuildContext context, LinkedServerSpaces server,
-      LinkedSpace space) async {
+  Future<void> _open(
+    BuildContext context,
+    LinkedServerSpaces server,
+    LinkedSpace space,
+  ) async {
     final l10n = AppLocalizations.of(context);
     final go = await showModalBottomSheet<bool>(
       context: context,
@@ -35,18 +38,24 @@ class LinkedSpacesSection extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(space.name, style: Theme.of(sheetContext).textTheme.titleLarge),
+              Text(
+                space.name,
+                style: Theme.of(sheetContext).textTheme.titleLarge,
+              ),
               const SizedBox(height: AppSpacing.sm),
-              Text(l10n?.meLinkedOpenBody(server.host) ??
-                  'This space lives on ${server.host}. The app works with one '
-                      'server at a time: opening it switches to that server and '
-                      'asks you to sign in there.'),
+              Text(
+                l10n?.meLinkedOpenBody(server.host) ??
+                    'This space lives on ${server.host}. The app works with one '
+                        'server at a time: opening it switches to that server and '
+                        'asks you to sign in there.',
+              ),
               const SizedBox(height: AppSpacing.lg),
               FilledButton.icon(
                 key: const ValueKey('linked-space-open'),
                 icon: const Icon(Icons.swap_horiz),
-                label: Text(l10n?.meLinkedOpen(server.host) ??
-                    'Open on ${server.host}'),
+                label: Text(
+                  l10n?.meLinkedOpen(server.host) ?? 'Open on ${server.host}',
+                ),
                 onPressed: () => Navigator.of(sheetContext).pop(true),
               ),
             ],
@@ -57,8 +66,10 @@ class LinkedSpacesSection extends ConsumerWidget {
     if (go != true || !context.mounted) return;
     await context.push(
       '/server',
-      extra: BackendDescriptor(BackendEndpoint(server.source, server.key),
-          label: server.host),
+      extra: BackendDescriptor(
+        BackendEndpoint(server.source, server.key),
+        label: server.host,
+      ),
     );
   }
 
@@ -75,27 +86,58 @@ class LinkedSpacesSection extends ConsumerWidget {
               key: ValueKey('linked-unavailable-${server.host}'),
               icon: Icons.cloud_off_outlined,
               severity: InlineBannerSeverity.info,
-              text: l10n?.meLinkedUnavailable(server.host) ??
+              text:
+                  l10n?.meLinkedUnavailable(server.host) ??
                   '${server.host} did not answer: this list may be incomplete.',
               actionLabel: l10n?.commonRetry ?? 'Try again',
               onAction: () => ref.invalidate(linkedServerSpacesProvider),
             ),
-          for (final space in server.spaces)
+          for (final group in _groups(server.spaces))
             Card(
-              key: ValueKey('linked-space-${server.host}-${space.id}'),
-              child: ListTile(
-                leading: const CircleAvatar(child: Icon(Icons.dns_outlined)),
-                title: Text(space.name),
-                subtitle: Text(space.standing == MySpaceStanding.pending
-                    ? (l10n?.meLinkedPendingOn(server.host) ??
-                        'Waiting for approval · ${server.host}')
-                    : server.host),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () => _open(context, server, space),
+              child: Column(
+                children: [
+                  if (group.length > 1) ListTile(title: Text(group.first.name)),
+                  for (final space in group)
+                    ListTile(
+                      key: ValueKey('linked-space-${server.host}-${space.id}'),
+                      leading: const CircleAvatar(
+                        child: Icon(Icons.dns_outlined),
+                      ),
+                      title: Text(
+                        group.length == 1
+                            ? space.name
+                            : (space.environment == 'prod'
+                                  ? (l10n?.profilesPairProd ?? 'PROD')
+                                  : (l10n?.profilesPairDev ?? 'DEV')),
+                      ),
+                      subtitle: Text(
+                        space.standing == MySpaceStanding.pending
+                            ? (l10n?.meLinkedPendingOn(server.host) ??
+                                  'Waiting for approval · ${server.host}')
+                            : server.host,
+                      ),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => _open(context, server, space),
+                    ),
+                ],
               ),
             ),
         ],
       ],
     );
   }
+}
+
+List<List<LinkedSpace>> _groups(List<LinkedSpace> spaces) {
+  final groups = <String, List<LinkedSpace>>{};
+  for (final space in spaces) {
+    final key = space.pairId.isEmpty
+        ? 'space:${space.id}'
+        : 'pair:${space.pairId}';
+    groups.putIfAbsent(key, () => []).add(space);
+  }
+  return [
+    for (final group in groups.values)
+      group..sort((a, b) => b.environment.compareTo(a.environment)),
+  ];
 }

@@ -126,7 +126,8 @@ class MemberRolesCard extends ConsumerWidget {
       if (holdsAdministrator(member))
         InputChip(
           key: administratorKey,
-          label: Text(l10n?.roleAdmin ?? 'Administrator'),
+          label: Text(administratorName(
+              roles, locale, l10n?.roleAdmin ?? 'Administrator')),
           onDeleted: adminRefusal == null
               ? () => requestMemberRoleChange(context, ref, member)
               : null,
@@ -286,7 +287,8 @@ Future<void> showRoleAssignSheet(
             if (offerAdministrator)
               tile(
                 key: const ValueKey('role-assign-administrator'),
-                title: l10n?.roleAdmin ?? 'Administrator',
+                title: administratorName(
+                    roles, locale, l10n?.roleAdmin ?? 'Administrator'),
                 hint: l10n?.roleAssignQuorumHint ??
                     'Takes effect once validated.',
                 refusal: adminRefusal,

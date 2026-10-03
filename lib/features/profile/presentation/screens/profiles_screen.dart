@@ -291,27 +291,13 @@ class _HomeSiteLine extends ConsumerWidget {
   }
 }
 
-/// #987 — the other side of [workspace]'s pair when it is in the list
-/// and the couple is switched on; null for a lone workspace.
-///
-/// #1550 — ONE side decides for the couple, and it is the development
-/// one, because the card renders at the dev's place. Asking each row
-/// about its own flag looked symmetrical and was not:
-/// `toggleWorkspaceFeature` writes the side you are standing on, so a
-/// pair switched on from the dev and never from the prod rendered the
-/// card AND a second, ordinary prod row — the same space, twice, which
-/// is the thing the card exists to stop.
+/// Existing pairs always render together, regardless of the creation flag.
 Workspace? _pairedTwin(List<Workspace> all, Workspace workspace) {
   if (workspace.pairId.isEmpty) return null;
   final twin = all
       .where((w) => w.pairId == workspace.pairId && w.id != workspace.id)
       .firstOrNull;
   if (twin == null) return null;
-  final decides = workspace.isDevelopment ? workspace : twin;
-  if (!effectiveFeatures(resolveEnabledFeatures(decides.featureFlags))
-      .contains(WorkspaceFeature.environmentPairs)) {
-    return null;
-  }
   return twin;
 }
 

@@ -11178,6 +11178,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Änderung konnte nicht gespeichert werden. Bitte erneut versuchen.';
 
   @override
+  String get portalActionNotNegotiated =>
+      'Diese Aktion ist zwischen dieser App und diesem Server nicht verfügbar. Ein App-Update kann helfen.';
+
+  @override
   String get portalAddress => 'Öffentliche Adresse';
 
   @override
@@ -13543,6 +13547,14 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get roleBuiltInNote =>
+      'Eingebaut. Was sie darf, wird unter Rollen festgelegt; sie wird auf der Seite jedes Mitglieds vergeben und wirkt nach der Freigabe.';
+
+  @override
+  String get roleBuiltInSubtitle =>
+      'Eingebaut. Was sie darf, wird unter Rollen festgelegt.';
+
+  @override
   String get roleEditorActive => 'In Gebrauch';
 
   @override
@@ -13606,6 +13618,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get roleRefusalOwnerOnly =>
       'Nur die Inhaberin vergibt eine Rolle, die Rollen verwaltet.';
+
+  @override
+  String get roleRenameAdministrator => 'Umbenennen';
 
   @override
   String get roleTakeBackFailed => 'Die Rolle wurde nicht entzogen.';
@@ -15031,6 +15046,45 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskExportWordButton => 'Als Word-Dokument exportieren';
 
   @override
+  String get taskGuideCreate => 'Leitfaden-Entwurf erstellen';
+
+  @override
+  String get taskGuideEditText => 'Text schreiben';
+
+  @override
+  String get taskGuideIntro =>
+      'Jeder Schritt so, wie ihn eine Person befolgen wird. Ein buchender Schritt wartet auf die echte Antwort; nichts wird für die Person erledigt.';
+
+  @override
+  String get taskGuideManual => 'Diesen Schritt selbst ausführen';
+
+  @override
+  String taskGuideManualProtected(String category) {
+    return 'Diesen Schritt selbst ausführen, auf einem geschützten Bildschirm: $category';
+  }
+
+  @override
+  String get taskGuideNoText => 'Eine noch zu schreibende Anweisung';
+
+  @override
+  String get taskGuideOptional => 'Darf übersprungen werden';
+
+  @override
+  String get taskGuideRecovery =>
+      'Bei Ablehnung: einen anderen Platz, Tag oder Zeitraum wählen und erneut bestätigen.';
+
+  @override
+  String get taskGuideSave => 'Leitfaden speichern';
+
+  @override
+  String get taskGuideTitle => 'Leitfaden-Entwurf';
+
+  @override
+  String taskGuideWaitsFor(String outcomes) {
+    return 'Wartet auf: $outcomes';
+  }
+
+  @override
   String get taskOutputBusy => 'Diese Ausgabe wird bereits erstellt.';
 
   @override
@@ -15467,6 +15521,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskWorkbenchReviewIllustrations => 'Illustrationen prüfen';
+
+  @override
+  String get taskWorkbenchStoryboardRestored =>
+      'Die geprüften Illustrationen wurden aus der Datei wiederhergestellt.';
 
   @override
   String get taskWorkbenchTitle => 'Aufgaben-Werkbank';

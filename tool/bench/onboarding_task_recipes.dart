@@ -10,7 +10,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
-import 'package:deskilo/features/profile/presentation/screens/profiles_screen.dart';
+import 'package:deskilo/features/me/presentation/me_shell.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/presentation/screens/pending_approval_screen.dart';
@@ -71,7 +71,7 @@ Future<RecipeRun> ownerFirstBooking(
 }) async {
   final meter = BackendMeter();
   final run = RecipeRun('owner_first_booking', meter)
-    ..stops.addAll(['/onboarding', '/reserve']);
+    ..stops.addAll(['/me', '/onboarding', '/reserve']);
   sizeView(tester, const Size(800, 1400));
   final ws = (workspace ?? MeteredWorkspace.new)(meter)
     ..openWeekdays[kCreatedSpace] = const [1, 2, 3, 4, 5, 6, 7];
@@ -87,8 +87,10 @@ Future<RecipeRun> ownerFirstBooking(
           reservations: reservations,
         ),
       ),
-      () => probe.shows(_name),
+      () => probe.shows(find.byKey(const ValueKey('me-home-create'))),
     );
+    await probe.choose(find.byKey(const ValueKey('me-home-create')));
+    await probe.arrive('create_workspace', () => probe.shows(_name));
     await probe.type(_name, 'Kraftwerk', name: 'name');
     await probe.choose(find.byKey(const ValueKey('onboarding-use-suggested')));
     await probe.arrive('confirm', () => probe.shows(_create));
@@ -137,7 +139,7 @@ Future<RecipeRun> ownerFirstBooking(
   return run;
 }
 
-/// A pending member leaves the waiting room for their profiles and comes
+/// A pending member leaves the waiting room for Me and comes
 /// back; then, by an assistant's link, asks this database for assistant
 /// access, gives the request up, and goes back — landing in the waiting
 /// room again every time, with no workspace screen shown on the way and
@@ -145,7 +147,7 @@ Future<RecipeRun> ownerFirstBooking(
 Future<RecipeRun> pendingLeaveReturn(WidgetTester tester) async {
   final meter = BackendMeter();
   final run = RecipeRun('pending_leave_return', meter)
-    ..stops.addAll(['/pending', '/profiles', '/assistants'])
+    ..stops.addAll(['/pending', '/me', '/assistants'])
     ..allowedReturns.add('/pending');
   sizeView(tester, const Size(800, 1400));
   final ws = MeteredWorkspace(meter)
@@ -172,11 +174,11 @@ Future<RecipeRun> pendingLeaveReturn(WidgetTester tester) async {
     );
     await probe.choose(find.byKey(const ValueKey('pending-switch')));
     await probe.arrive(
-      'profiles',
-      () => probe.shows(find.byType(ProfilesScreen)),
+      'personal_home',
+      () => probe.shows(find.byType(MeShell)),
     );
-    await probe.back(find.byType(BackButton));
-    await probe.arrive('return_from_profiles', () => probe.shows(waiting));
+    await probe.choose(find.byKey(ValueKey('me-space-${kSpaceB.id}')));
+    await probe.arrive('return_from_me', () => probe.shows(waiting));
     shellSeen |= probe.shows(find.byType(ShellBottomBar));
 
     // The link an assistant gives: the only way a pending member reaches
@@ -242,7 +244,7 @@ Future<RecipeRun> wizardKeyboardBackEdit(
 }) async {
   final meter = BackendMeter();
   final run = RecipeRun('wizard_keyboard_back_edit', meter)
-    ..stops.addAll(['/onboarding', '/reserve']);
+    ..stops.addAll(['/me', '/onboarding', '/reserve']);
   const size = Size(400, 800);
   sizeView(tester, size);
   if (!motion) {
@@ -261,8 +263,10 @@ Future<RecipeRun> wizardKeyboardBackEdit(
           workspace: ws,
         ),
       ),
-      () => probe.shows(_name),
+      () => probe.shows(find.byKey(const ValueKey('me-home-create'))),
     );
+    await probe.choose(find.byKey(const ValueKey('me-home-create')));
+    await probe.arrive('create_workspace', () => probe.shows(_name));
     // The soft keyboard takes the bottom 300 px while the name is typed.
     tester.view.viewInsets = const FakeViewPadding(bottom: 300);
     addTearDown(tester.view.resetViewInsets);

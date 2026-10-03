@@ -117,7 +117,7 @@ final class WorkspaceRolesProvider
   }
 }
 
-String _$workspaceRolesHash() => r'47307c0cf5f4b05359e2434070e5133e32976973';
+String _$workspaceRolesHash() => r'6f650bbba46b1261bccbb9b37dba0935a92a944b';
 
 /// Who holds one role.
 

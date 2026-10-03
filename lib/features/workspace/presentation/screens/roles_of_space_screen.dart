@@ -58,7 +58,7 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
                 ref
                     .read(enabledFeaturesSyncProvider)
                     .contains(WorkspaceFeature.roleAssignment)
-            ? RoleHoldersSection(role: role)
+            ? RoleHoldersSection(role: role, readOnly: role.builtin)
             : null,
         onSave: (draft) async {
           Navigator.of(sheetContext).pop();
@@ -79,7 +79,10 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
       // Its own sentence: the server refuses a built-in key and an
       // unknown permission, and an owner needs to know THAT.
       errorText: l10n?.roleEditorSaveFailed ?? 'The role was not saved.',
-      action: () => repository.setRole(workspaceId, draft),
+      // #2085 — the Administrator is renamed, never redefined.
+      action: () => draft.builtin
+          ? repository.renameAdministrator(workspaceId, draft.names)
+          : repository.setRole(workspaceId, draft),
     );
     if (!mounted) return;
     setState(() => _saving = false);
@@ -136,7 +139,10 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
                 title: Text(role.nameIn(locale)),
                 subtitle: Text(
                   [
-                    if (role.permissions.isEmpty)
+                    if (role.builtin)
+                      l10n?.roleBuiltInSubtitle ??
+                          'Built in. What it may do is set in Roles.'
+                    else if (role.permissions.isEmpty)
                       '—'
                     else
                       role.permissions

@@ -23,6 +23,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/workbench_import.dart';
 import '../../domain/recording_edit.dart';
 import '../../domain/task_recording.dart';
+import '../../guide/guide_compiler.dart';
+import 'guide_draft_screen.dart';
 import '../../package/task_package.dart';
 import '../recorder_labels.dart';
 import '../recording_export.dart';
@@ -31,6 +33,9 @@ import '../widgets/task_outputs_section.dart';
 import '../../package/task_output.dart';
 import '../../storyboard/storyboard.dart';
 import '../../storyboard/storyboard_builder.dart';
+import '../../storyboard/storyboard_pictures.dart';
+import '../../export/task_document.dart' show recordingRevision;
+import '../../package/storyboard_review.dart';
 import '../../storyboard/storyboard_preview.dart';
 
 class TaskWorkbenchScreen extends ConsumerStatefulWidget {
@@ -88,10 +93,11 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
     if (!mounted) return;
     switch (result) {
       case final WorkbenchOpened opened:
+        final restored = _restoredStoryboard(opened);
         setState(() {
           _opened = opened;
           _leftOut.clear();
-          _storyboard = null;
+          _storyboard = restored;
         });
       case WorkbenchRefused(:final reason):
         AppSnack.error(context, refusalText(l10n, reason));
@@ -139,11 +145,58 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
     );
   }
 
+  /// #1876 — the package's reviewed storyboard, replayed on one derived
+  /// again from its recording. Said aloud when it cannot be used.
+  Storyboard? _restoredStoryboard(WorkbenchOpened opened) {
+    final review = opened.storyboard;
+    final l10n = AppLocalizations.of(context);
+    if (review == null || l10n == null) return null;
+    try {
+      final result = applyReview(
+        buildStoryboard(opened.recording, l10n),
+        review,
+      );
+      if (result.outcome == ReviewOutcome.applied) {
+        AppSnack.info(context, l10n.taskWorkbenchStoryboardRestored);
+        return result.storyboard;
+      }
+    } catch (e, st) {
+      TraceLogger.instance.warn(
+        'recorder',
+        'storyboard not restored (${e.runtimeType})',
+        stackTrace: st,
+      );
+    }
+    AppSnack.info(context, outputReasonText(l10n, TaskOutputReason.stale));
+    return null;
+  }
+
   Future<void> _saveTask({required bool package}) async {
     final copy = _copy;
     final opened = _opened;
     if (copy == null || opened == null) return;
     final l10n = AppLocalizations.of(context);
+    // #1876 — a package keeps the reviewed storyboard of THIS copy and the
+    // pictures of its approved frames.
+    final board = _storyboard;
+    final keep =
+        package &&
+        board != null &&
+        board.sourceRevision == recordingRevision(copy);
+    var assets = opened.assets;
+    if (keep) {
+      final pictures = await renderApprovedPictures(
+        board,
+        colors: Theme.of(context).colorScheme,
+        provenance: l10n?.taskExportSceneProvenance ?? 'Illustration',
+      );
+      assets = [
+        ...opened.assets.where((a) => !a.path.startsWith('media/frame-')),
+        for (final p in pictures.pictures.entries)
+          TaskPackageAsset('media/frame-${p.key}.png', p.value),
+      ];
+      if (!mounted) return;
+    }
     await saveAndTell(
       context,
       ref,
@@ -151,7 +204,8 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
         l10n,
         copy,
         package: package,
-        assets: opened.assets,
+        assets: assets,
+        storyboard: keep ? StoryboardReview.of(board) : null,
       ),
       fileName: package
           ? 'deskilo-task$taskPackageExtension'
@@ -227,6 +281,17 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
                 l10n?.taskWorkbenchReviewIllustrations ??
                     'Review the illustrations',
               ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            OutlinedButton.icon(
+              key: const ValueKey('workbench-create-guide'),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => GuideDraftScreen(guide: compileGuide(copy)),
+                ),
+              ),
+              icon: const Icon(Icons.route_outlined),
+              label: Text(l10n?.taskGuideCreate ?? 'Create a guide draft'),
             ),
             const SizedBox(height: AppSpacing.md),
             TaskOutputsSection(
