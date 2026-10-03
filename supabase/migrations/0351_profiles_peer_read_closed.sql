@@ -56,6 +56,6 @@ grant execute on function public.profile_row_readable(uuid) to authenticated;
 
 drop policy if exists profiles_select on public.profiles;
 create policy profiles_select on public.profiles for select
-  using (id = auth.uid() or public.profile_row_readable(id));
+  using (id = (select auth.uid()) or public.profile_row_readable(id));
 
 select public.set_deskilo_schema_version(351);
