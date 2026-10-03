@@ -96,6 +96,7 @@ class ThrowingReservationRepository extends FakeReservationRepository {
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
+    String? requestId,
   }) async {
     throw error;
   }

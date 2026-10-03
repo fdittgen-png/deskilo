@@ -27,6 +27,7 @@
 // member needs verbatim (#1030), and swallowing it here to return a
 // tidier type would throw away the server's own words.
 import '../domain/reservation_repository.dart';
+import 'booking_recovery.dart';
 
 /// What the member asked for, with nothing in it about how they asked.
 ///
@@ -102,10 +103,17 @@ final class SeriesBooked extends BookingOutcome {
 /// widget.
 ///
 /// Throws whatever the repository throws. See the note above.
+///
+/// #1855 — with [recovery], the plain booking (for me, once) is made
+/// through a durable intent: saved before the send, settled by the
+/// server's answer, and recoverable by its original request id when the
+/// answer is lost ([BookingOutcomeUnknown]). The other two writes keep
+/// their existing paths.
 Future<BookingOutcome> bookSeat(
   ReservationRepository reservations,
   BookingRequest request, {
   required String? myMemberId,
+  BookingRecovery? recovery,
 }) async {
   final forSomeoneElse = request.forMemberId != null &&
       request.forMemberId != myMemberId;
@@ -136,6 +144,8 @@ Future<BookingOutcome> bookSeat(
       until: request.until!,
     ));
   }
+
+  if (recovery != null) return recovery.book(request);
 
   final id = await reservations.create(
     workspaceId: request.workspaceId,

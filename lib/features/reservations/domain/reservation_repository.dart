@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'booking_intent.dart';
 import 'reservation.dart';
+
+export 'booking_intent.dart' show RequestOutcome, RequestOutcomeStatus;
 
 /// Recurrence patterns supported by the backend (spec §5.2 subset).
 enum SeriesPattern { daily, weekdays, weekly }
@@ -45,6 +48,11 @@ abstract class ReservationRepository {
 
   /// Creates a reservation for the signed-in member. [checkIn] makes it an
   /// atomic walk-up (reservation + check-in in one transaction).
+  ///
+  /// [requestId] is the client request id the server claims before it
+  /// books (#1241). Null mints a fresh one; #1855 passes the ORIGINAL id
+  /// of an interrupted booking, so a recovery is a replay of that request
+  /// and never a second one.
   Future<String> create({
     required String workspaceId,
     String? seatId,
@@ -54,7 +62,13 @@ abstract class ReservationRepository {
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
+    String? requestId,
   });
+
+  /// #1855 — what became of MY request [requestId] in [workspaceId]:
+  /// committed (with the reservation), still in progress, or absent. The
+  /// server answers for the caller's own requests only.
+  Future<RequestOutcome> requestOutcome(String workspaceId, String requestId);
 
   /// Admin/owner books FOR another member (#106): tentative reservation
   /// that blocks the seat + pending event the subject must accept.

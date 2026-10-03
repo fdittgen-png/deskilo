@@ -1,0 +1,51 @@
+{
+  "@@locale": "de",
+  "featureGuestParticipationTitle": "Gastbesuche",
+  "@featureGuestParticipationTitle": {
+    "description": "#1835 guest participation: the feature's name"
+  },
+  "featureGuestParticipationDesc": "Erlaubt einer Person, die kein Mitglied ist, um einen Besuch dieses Spaces zu bitten, und jemandem, der Reservierungen verwaltet, sie zuzulassen oder abzulehnen. Ein Besuch erzeugt weder Mitgliedschaft noch Abonnement noch Rolle. Aus: niemand fragt an oder wird hier zugelassen.",
+  "@featureGuestParticipationDesc": {
+    "description": "#1835 guest participation: the feature's description"
+  },
+  "myVisitsTitle": "Meine Besuche",
+  "@myVisitsTitle": {
+    "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
+  "myVisitsHelp": "Besuche, die Sie als Gast angefragt haben oder zu denen Sie zugelassen wurden. Ein Besuch ist keine Mitgliedschaft.",
+  "@myVisitsHelp": {
+    "description": "#1835 Me › Home: under the My visits heading"
+  },
+  "visitGuestNote": "Gastbesuch — keine Mitgliedschaft",
+  "@visitGuestNote": {
+    "description": "#1835 a visit row: the one line that keeps visit and membership apart"
+  },
+  "visitStatusRequested": "Angefragt",
+  "@visitStatusRequested": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusConfirmed": "Bestätigt",
+  "@visitStatusConfirmed": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusDeclined": "Abgelehnt",
+  "@visitStatusDeclined": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusCancelled": "Abgesagt",
+  "@visitStatusCancelled": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusExpired": "Abgelaufen",
+  "@visitStatusExpired": {
+    "description": "#1835 visit status"
+  },
+  "visitCancel": "Diesen Besuch absagen",
+  "@visitCancel": {
+    "description": "#1835 a visit row: the guest withdraws or cancels"
+  },
+  "visitCancelFailed": "Der Besuch konnte nicht abgesagt werden. Nichts wurde geändert; versuchen Sie es erneut.",
+  "@visitCancelFailed": {
+    "description": "#1835 a visit row: the cancel failed"
+  }
+}

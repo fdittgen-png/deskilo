@@ -175,6 +175,7 @@ begin
       "expenseRepartitionWizard": false,
       "financeFaces": true,
       "formHelpHints": true,
+      "guestParticipation": false,
       "holidayImport": false,
       "instanceWizard": false,
       "invoiceAddressWindow": false,

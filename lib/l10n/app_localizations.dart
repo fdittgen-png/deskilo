@@ -3517,6 +3517,108 @@ abstract class AppLocalizations {
   /// **'This booking lies entirely in the past.'**
   String get bookingPastError;
 
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'A booking request of yours is still unanswered.'**
+  String get bookingRecoveryBanner;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get bookingRecoveryBannerAction;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Check outcome'**
+  String get bookingRecoveryCheck;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The booking exists — exactly one, from your original request.'**
+  String get bookingRecoveryCommitted;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Let it go'**
+  String get bookingRecoveryDiscard;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The server is still working on this request. Check again in a moment.'**
+  String get bookingRecoveryInProgress;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was booked for this request. You can resume it as it was, or let it go.'**
+  String get bookingRecoveryNotCommitted;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'This device could not save your booking request, so nothing was sent. Free some space or try again.'**
+  String get bookingRecoveryNotSaved;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Resume the same request'**
+  String get bookingRecoveryResume;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Resumed: your original request was booked once.'**
+  String get bookingRecoveryResumed;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The space you chose'**
+  String get bookingRecoverySpaceFallback;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Your booking request'**
+  String get bookingRecoveryTitle;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The server could not be asked. Nothing was changed; try again.'**
+  String get bookingRecoveryUnavailable;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The connection dropped after your request was sent. The booking may or may not exist — check before booking again.'**
+  String get bookingRecoveryUnknown;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The server no longer keeps a record of this request, so it cannot say. Check your bookings before booking again.'**
+  String get bookingRecoveryUnresolved;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'View the booking'**
+  String get bookingRecoveryView;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'{space} · {from} – {to}'**
+  String bookingRecoveryWindow(String space, String from, String to);
+
   /// #663 - reservation confirmation naming the space
   ///
   /// In en, this message translates to:
@@ -8135,6 +8237,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Help hints'**
   String get featureFormHelpHintsTitle;
+
+  /// #1835 guest participation: the feature's description
+  ///
+  /// In en, this message translates to:
+  /// **'Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here.'**
+  String get featureGuestParticipationDesc;
+
+  /// #1835 guest participation: the feature's name
+  ///
+  /// In en, this message translates to:
+  /// **'Guest visits'**
+  String get featureGuestParticipationTitle;
 
   /// Subtitle note: the feature is on but its parent is off (#800)
   ///
@@ -18017,6 +18131,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My badge'**
   String get myBadgeTitle;
+
+  /// #1835 Me › Home: under the My visits heading
+  ///
+  /// In en, this message translates to:
+  /// **'Visits you asked for or were admitted to, as a guest. A visit is not a membership.'**
+  String get myVisitsHelp;
+
+  /// #1835 Me › Home: the section listing the account's guest visits
+  ///
+  /// In en, this message translates to:
+  /// **'My visits'**
+  String get myVisitsTitle;
 
   /// #969 navigation style: navigationClassic
   ///
@@ -29377,6 +29503,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Who sees me'**
   String get visibilityTitle;
+
+  /// #1835 a visit row: the guest withdraws or cancels
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this visit'**
+  String get visitCancel;
+
+  /// #1835 a visit row: the cancel failed
+  ///
+  /// In en, this message translates to:
+  /// **'Could not cancel the visit. Nothing changed; try again.'**
+  String get visitCancelFailed;
+
+  /// #1835 a visit row: the one line that keeps visit and membership apart
+  ///
+  /// In en, this message translates to:
+  /// **'Guest visit — not a membership'**
+  String get visitGuestNote;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get visitStatusCancelled;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get visitStatusConfirmed;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get visitStatusDeclined;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get visitStatusExpired;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get visitStatusRequested;
 
   /// #2085 giving roles: whatTheyCanDoTitle
   ///
