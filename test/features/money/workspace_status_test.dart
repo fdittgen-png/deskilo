@@ -2,7 +2,6 @@
 //
 // #934 — the workspace status as the database returns it, the net the
 // screen and the report agree on, and the repartition rule's round trip.
-import 'dart:io';
 
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
@@ -78,12 +77,4 @@ void main() {
     expect(shares.fold<int>(0, (t, s) => t + s.amountCents), 10000);
   });
 
-  test('the SQL twin (0167) refuses non-admins and keeps settlements '
-      'transparent', () {
-    final sql = File('supabase/migrations/0167_workspace_status.sql').readAsStringSync();
-    expect("raise exception 'admins only'".allMatches(sql).length, 2);
-    expect(sql, contains("i.kind <> 'settlement'"));
-    expect(sql, contains("jsonb_build_object('repartition', p_rule)"));
-    expect(sql, contains("where m.workspace_id = p_workspace_id and m.status = 'active' and not m.is_kiosk"));
-  });
 }

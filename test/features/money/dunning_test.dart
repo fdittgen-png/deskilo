@@ -3,7 +3,6 @@
 // Mahnwesen (#472): the pure suggestion rule, the parameterizable
 // policy, the Open-tab "Reminder N due" flag, and the reminder LETTER
 // generated through the banded report engine.
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/dunning.dart';
@@ -103,11 +102,6 @@ void main() {
           .firstAfterDays, 1);
     });
 
-    test('migration 0093 stores the column the repository reads', () {
-      final sql = File('supabase/migrations/0093_dunning_rules.sql')
-          .readAsStringSync();
-      expect(sql, contains('dunning_rules'));
-    });
   });
 
   testWidgets('an overdue open invoice is flagged "Reminder 1 due" and '

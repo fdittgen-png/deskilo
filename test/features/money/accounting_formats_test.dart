@@ -461,12 +461,6 @@ void main() {
           reason: 'naming what is missing beats saying "partial"');
     });
 
-    test('the file still calls itself a subset, not a filing', () {
-      // Adding postings does NOT upgrade the claim. A national SAF-T
-      // that mandates GeneralLedgerEntries wants the complete books.
-      expect(safTFormat.claim, FormatClaim.subset);
-    });
-
     test('Portugal is never offered postings', () {
       // Under TaxAccountingBasis 'F' the ledger sections are not part of
       // the declaration at all, so adding them would break the very

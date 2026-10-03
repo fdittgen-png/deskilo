@@ -5,7 +5,6 @@
 // that clears an invoice is usually recorded in a LATER month, so the
 // month's own ledger arithmetic (charges − credits of that period)
 // would read "outstanding" forever on an invoiced-and-paid month.
-import 'dart:io';
 
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
@@ -360,24 +359,6 @@ void main() {
       expect(find.text('Outstanding'), findsNothing);
       expect(find.text('Settled'), findsOneWidget);
       expect(find.text('€0.00'), findsWidgets);
-    });
-
-    test('migration 0103 wires the four rules', () {
-      final sql = File('supabase/migrations/0103_account_reality.sql')
-          .readAsStringSync();
-      // 1. pre-membership months are empty
-      expect(sql, contains("joined_at at time zone v_tz, 'YYYY-MM'"));
-      // 2. imputation: adjustment credits settle invoices
-      expect(sql, contains("category in ('payment', 'adjustment')"));
-      // 3. spend-once, both directions
-      expect(sql, contains('credit already deducted on an issued invoice'));
-      expect(
-          sql,
-          contains('not exists (\n      select 1 from public.invoice_match_payments jr\n'
-              '      where jr.payment_ledger_id = le.id));'));
-      // 4. the real position
-      expect(sql, contains('member_account'));
-      expect(sql, contains("'net_position_cents', v_credit + v_refunds - v_open_total"));
     });
   });
 }

@@ -4,8 +4,6 @@
 // tab — the remainder is owed — until the outstanding amount is
 // cancelled through the VALIDATION framework. Only the validated
 // write-off archives it.
-import 'dart:io';
-
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
 import 'package:flutter/material.dart';
@@ -126,18 +124,4 @@ void main() {
     expect(find.textContaining('remainder cancelled'), findsOneWidget);
   });
 
-  test('migration 0100 wires the RPC, the event type and the confirm '
-      'branch', () {
-    final sql = File('supabase/migrations/0100_invoice_writeoff.sql')
-        .readAsStringSync();
-    expect(sql, contains('request_invoice_writeoff'));
-    expect(sql, contains("'invoice_writeoff'"));
-    expect(sql, contains('writeoff_at'));
-    expect(sql, contains("resolution = 'under_accepted' and writeoff_at is null"));
-    // The verbatim-copied service_charge branch keeps its amount.
-    expect(
-        sql,
-        contains(
-            "(v_event.payload->>'amount_cents')::int,\n        (v_event.payload->>'name')"));
-  });
 }

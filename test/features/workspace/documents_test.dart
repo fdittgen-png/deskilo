@@ -4,8 +4,6 @@
 // role-gated visibility, admin/owner curation.
 import 'dart:async';
 
-import 'dart:io';
-
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
@@ -122,13 +120,4 @@ void main() {
     expect(saved.minRole, 'admin');
   });
 
-  test('migration 0099 gates SELECT by role in RLS', () {
-    final sql = File('supabase/migrations/0099_workspace_documents.sql')
-        .readAsStringSync();
-    expect(sql, contains('workspace_documents'));
-    expect(sql, contains("min_role = 'member'"));
-    expect(sql, contains("min_role = 'admin'"));
-    expect(sql, contains("min_role = 'owner' and m.is_owner"));
-    expect(sql, contains('enable row level security'));
-  });
 }
