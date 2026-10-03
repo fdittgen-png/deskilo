@@ -14145,6 +14145,64 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta grabación no se puede exportar como documento de Word.';
 
   @override
+  String get taskExportSceneLater => 'Más adelante';
+
+  @override
+  String get taskExportSceneBookingTitle => 'Reservar un puesto';
+
+  @override
+  String get taskExportSceneDetailTitle => 'Reserva';
+
+  @override
+  String get taskExportSceneConfirm => 'Confirmar';
+
+  @override
+  String get taskExportSceneCancel => 'Cancelar';
+
+  @override
+  String get taskExportSceneProvenance =>
+      'Ilustración recreada a partir de la grabación, no una captura de pantalla';
+
+  @override
+  String taskExportSceneAlt(String screen, String step) {
+    return 'Ilustración: $screen – $step';
+  }
+
+  @override
+  String get taskExportStoryboardInclude => 'Incluir';
+
+  @override
+  String get taskExportStoryboardApprove => 'Aprobar la ilustración';
+
+  @override
+  String get taskExportStoryboardMoveUp => 'Subir';
+
+  @override
+  String get taskExportStoryboardMoveDown => 'Bajar';
+
+  @override
+  String get taskExportStoryboardSourceScene =>
+      'Ilustración recreada (no es una captura)';
+
+  @override
+  String get taskExportStoryboardSourceText => 'Diapositiva de texto';
+
+  @override
+  String get taskExportStoryboardSourceExcluded =>
+      'Pantalla protegida: sin ilustración';
+
+  @override
+  String get taskExportStoryboardGap => 'Hueco: aquí no se grabó nada';
+
+  @override
+  String get taskExportStoryboardRenderFailed =>
+      'No se pudo dibujar la ilustración; este paso queda como texto.';
+
+  @override
+  String get taskExportStoryboardOrderRefused =>
+      'Un resultado no puede ir antes de la orden a la que responde.';
+
+  @override
   String get featureTaskRecorderTitle => 'Grabador de tareas';
 
   @override

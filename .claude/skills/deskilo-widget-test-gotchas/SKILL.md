@@ -1,8 +1,13 @@
 ---
 name: deskilo-widget-test-gotchas
-description: The recurring reasons a DesKilo widget or lint test fails for a reason that is not the feature — help-dot tiles, lazily built lists, queued snackbars, provider-fed PDF exits needing runAsync, taller columns pushing toolbars off-screen, pinned counts, no_wall_clock, hard-coded Text literals, format churn, background suites. Trigger when a test fails with "No element", a missed tap warning, an unexpected count, or after adding UI to an existing screen.
+description: A symptom → cause → fix table for DesKilo Flutter tests (widget, app and lint) that fail for a reason that is not the feature — help-dot tiles, lazily built lists, queued snackbars, runAsync PDF exits, taller columns pushing toolbars off-screen, registry pins, no_wall_clock, l10n_audit literals, format churn, background suites, Riverpod retries, router-delegate rebuilds, gotrue MFA fixtures, help-card host inventory. Trigger when a test fails with "No element", a missed tap warning, an unexpected count, an unexpected route, or after adding UI to an existing screen.
 ---
 # Widget & lint test gotchas (DesKilo)
+
+Look the symptom up; the canonical rules (formatting, strings, budgets, suite
+runs) live in `deskilo-ship-feature`. Before calling a test "green", prove it red
+against master (the "also passes on master" row). Generic Flutter test advice is the user-level
+`flutter-dart-best-practices` skill.
 
 | Symptom | Cause | Fix |
 |---|---|---|
@@ -11,10 +16,12 @@ description: The recurring reasons a DesKilo widget or lint test fails for a rea
 | a second `AppSnack` text is never found | snackbars queue behind the visible one | `await tester.pump(const Duration(seconds: 5))` before asserting the next |
 | tap on a toolbar toggle silently misses after adding a panel | the column grew taller than the viewport | make the new panel collapsed by default (ExpansionTile) AND `ensureVisible` in the helper |
 | PDF download test saves nothing after a layout change | the layout path awaits providers/fonts/images | run the whole exit inside `tester.runAsync(() async { tap; pump; pumpAndSettle })` |
-| `Found N widgets` counts off by one | a registry grew (validation cards, features switches, placeholders) | bump the pin with a dated comment; the features-screen test needs a taller `physicalSize` |
+| `Found N widgets` / a count off by one | a pinned registry grew (validation cards, default-off features, placeholders) | update the pin with a dated comment; the features-screen test needs a taller `physicalSize`. Feature totals and routes are no longer counted (#2058) — a failure there is a real contract (`deskilo-ship-feature` §1) |
 | `no_wall_clock` lint | `DateTime.now()` in a fake | `kTestNow` |
-| `l10n_audit` lint (displayed text) | `Text('words')` without `l10n?.key ??` | add the ARB key; a literal of interpolations only (`'$a · $b'`) is accepted |
-| `file_length` lint | a file outgrew its budget | bump with `// YYYY-MM-DD #issue reason` |
+| `l10n_audit` lint (displayed text) | `Text('words')` without `l10n?.key ??` — wrapped onto the next line too (#2055) | add the ARB key; a literal of interpolations only (`'$a · $b'`) is accepted |
+| `file_length` lint | a file outgrew its budget | extract and lower the baseline, or bump with `// YYYY-MM-DD #issue reason` |
+| `help_host_inventory_test` fails after adding a help card | a new file mounts a `HelpHint` / Get started card, or a count rose (#2091) | the inventory only shrinks until the shared arbiter lands (#1853): never a new host file; a lowered count lowers the pin, a file at zero leaves the list; only the Reserve help host mounts Get started |
+| an app test hits `Supabase.instance` | a new repository provider has no fake in `standardTestOverrides` | register its fake there (e.g. `deployment:` → `FakeDeploymentRepository`) |
 | hundreds of changed lines in a file you barely touched | `dart format` on an unformatted legacy file | `git checkout -- file` and re-apply the edit |
 | a suite result contradicts the code | a `flutter test` ran in the background across a branch switch | never switch branches while a suite runs; re-run |
 | `Crash when compiling … FFI` in a test run | flaky toolchain crash in build hooks | re-run; not the code |

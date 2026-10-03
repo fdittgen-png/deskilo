@@ -13851,7 +13851,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String taskExportPrereqStartsOn(String screen) {
-    return 'Beginnen Sie auf $screen.';
+    return 'Beginnen Sie hier: $screen.';
   }
 
   @override
@@ -13863,20 +13863,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Bedingung, die diese Version nicht beschreiben kann.';
 
   @override
-  String get taskExportSurfaceReserve => 'dem Bildschirm Reservieren';
+  String get taskExportSurfaceReserve => 'der Bildschirm Reservieren';
 
   @override
-  String get taskExportSurfaceBookingSheet => 'dem Buchungsblatt';
+  String get taskExportSurfaceBookingSheet => 'das Buchungsblatt';
 
   @override
-  String get taskExportSurfaceReservationDetail => 'den Reservierungsdetails';
+  String get taskExportSurfaceReservationDetail => 'die Reservierungsdetails';
 
   @override
-  String get taskExportSurfaceAny => 'einem beliebigen Bildschirm';
+  String get taskExportSurfaceAny => 'ein beliebiger Bildschirm';
 
   @override
   String get taskExportSurfaceUnknown =>
-      'einem Bildschirm, den diese Version nicht beschreiben kann';
+      'ein Bildschirm, den diese Version nicht beschreiben kann';
 
   @override
   String taskExportOnScreen(String screen) {
@@ -14167,6 +14167,65 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taskExportRefused =>
       'Diese Aufzeichnung kann nicht als Word-Dokument exportiert werden.';
+
+  @override
+  String get taskExportSceneLater => 'Später';
+
+  @override
+  String get taskExportSceneBookingTitle => 'Platz buchen';
+
+  @override
+  String get taskExportSceneDetailTitle => 'Reservierung';
+
+  @override
+  String get taskExportSceneConfirm => 'Bestätigen';
+
+  @override
+  String get taskExportSceneCancel => 'Abbrechen';
+
+  @override
+  String get taskExportSceneProvenance =>
+      'Aus der Aufzeichnung nachgebildete Abbildung, kein Bildschirmfoto';
+
+  @override
+  String taskExportSceneAlt(String screen, String step) {
+    return 'Abbildung: $screen – $step';
+  }
+
+  @override
+  String get taskExportStoryboardInclude => 'Aufnehmen';
+
+  @override
+  String get taskExportStoryboardApprove => 'Abbildung freigeben';
+
+  @override
+  String get taskExportStoryboardMoveUp => 'Nach oben';
+
+  @override
+  String get taskExportStoryboardMoveDown => 'Nach unten';
+
+  @override
+  String get taskExportStoryboardSourceScene =>
+      'Nachgebildete Abbildung (kein Bildschirmfoto)';
+
+  @override
+  String get taskExportStoryboardSourceText => 'Textfolie';
+
+  @override
+  String get taskExportStoryboardSourceExcluded =>
+      'Geschützter Bildschirm: nicht abgebildet';
+
+  @override
+  String get taskExportStoryboardGap =>
+      'Lücke: hier wurde nichts aufgezeichnet';
+
+  @override
+  String get taskExportStoryboardRenderFailed =>
+      'Die Abbildung konnte nicht gezeichnet werden; dieser Schritt bleibt Text.';
+
+  @override
+  String get taskExportStoryboardOrderRefused =>
+      'Ein Ergebnis kann nicht vor dem Befehl stehen, den es beantwortet.';
 
   @override
   String get featureTaskRecorderTitle => 'Aufgabenrekorder';

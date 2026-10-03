@@ -24294,6 +24294,108 @@ abstract class AppLocalizations {
   /// **'This recording cannot be exported as a Word document.'**
   String get taskExportRefused;
 
+  /// #1876 storyboard and illustrations: SceneLater
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get taskExportSceneLater;
+
+  /// #1876 storyboard and illustrations: SceneBookingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Book a place'**
+  String get taskExportSceneBookingTitle;
+
+  /// #1876 storyboard and illustrations: SceneDetailTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation'**
+  String get taskExportSceneDetailTitle;
+
+  /// #1876 storyboard and illustrations: SceneConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get taskExportSceneConfirm;
+
+  /// #1876 storyboard and illustrations: SceneCancel
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get taskExportSceneCancel;
+
+  /// #1876 storyboard and illustrations: SceneProvenance
+  ///
+  /// In en, this message translates to:
+  /// **'Illustration recreated from the recording, not a screenshot'**
+  String get taskExportSceneProvenance;
+
+  /// #1876 storyboard and illustrations: SceneAlt
+  ///
+  /// In en, this message translates to:
+  /// **'Illustration: {screen} – {step}'**
+  String taskExportSceneAlt(String screen, String step);
+
+  /// #1876 storyboard and illustrations: StoryboardInclude
+  ///
+  /// In en, this message translates to:
+  /// **'Include'**
+  String get taskExportStoryboardInclude;
+
+  /// #1876 storyboard and illustrations: StoryboardApprove
+  ///
+  /// In en, this message translates to:
+  /// **'Approve illustration'**
+  String get taskExportStoryboardApprove;
+
+  /// #1876 storyboard and illustrations: StoryboardMoveUp
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get taskExportStoryboardMoveUp;
+
+  /// #1876 storyboard and illustrations: StoryboardMoveDown
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get taskExportStoryboardMoveDown;
+
+  /// #1876 storyboard and illustrations: StoryboardSourceScene
+  ///
+  /// In en, this message translates to:
+  /// **'Recreated illustration (not a screenshot)'**
+  String get taskExportStoryboardSourceScene;
+
+  /// #1876 storyboard and illustrations: StoryboardSourceText
+  ///
+  /// In en, this message translates to:
+  /// **'Text slide'**
+  String get taskExportStoryboardSourceText;
+
+  /// #1876 storyboard and illustrations: StoryboardSourceExcluded
+  ///
+  /// In en, this message translates to:
+  /// **'Protected screen: not illustrated'**
+  String get taskExportStoryboardSourceExcluded;
+
+  /// #1876 storyboard and illustrations: StoryboardGap
+  ///
+  /// In en, this message translates to:
+  /// **'Gap: nothing was recorded here'**
+  String get taskExportStoryboardGap;
+
+  /// #1876 storyboard and illustrations: StoryboardRenderFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The illustration could not be drawn; this step stays as text.'**
+  String get taskExportStoryboardRenderFailed;
+
+  /// #1876 storyboard and illustrations: StoryboardOrderRefused
+  ///
+  /// In en, this message translates to:
+  /// **'A result cannot come before the command it answers.'**
+  String get taskExportStoryboardOrderRefused;
+
   /// #1865 task recorder: the feature's name
   ///
   /// In en, this message translates to:
