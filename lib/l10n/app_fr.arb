@@ -959,6 +959,85 @@
       }
     }
   },
+  "bookingRecoveryTitle": "Votre demande de réservation",
+  "@bookingRecoveryTitle": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnknown": "La connexion a été coupée après l'envoi de votre demande. La réservation existe peut-être, peut-être pas : vérifiez avant de réserver à nouveau.",
+  "@bookingRecoveryUnknown": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryWindow": "{space} · {from} – {to}",
+  "@bookingRecoveryWindow": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingRecoverySpaceFallback": "L'espace choisi",
+  "@bookingRecoverySpaceFallback": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryCheck": "Vérifier le résultat",
+  "@bookingRecoveryCheck": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryResume": "Reprendre la même demande",
+  "@bookingRecoveryResume": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryView": "Voir la réservation",
+  "@bookingRecoveryView": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryDiscard": "Abandonner",
+  "@bookingRecoveryDiscard": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryCommitted": "La réservation existe — une seule, issue de votre demande d'origine.",
+  "@bookingRecoveryCommitted": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryInProgress": "Le serveur traite encore cette demande. Vérifiez à nouveau dans un instant.",
+  "@bookingRecoveryInProgress": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryNotCommitted": "Rien n'a été réservé pour cette demande. Vous pouvez la reprendre telle quelle, ou l'abandonner.",
+  "@bookingRecoveryNotCommitted": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnresolved": "Le serveur ne conserve plus de trace de cette demande et ne peut rien dire. Vérifiez vos réservations avant de réserver à nouveau.",
+  "@bookingRecoveryUnresolved": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnavailable": "Le serveur n'a pas pu être interrogé. Rien n'a changé ; réessayez.",
+  "@bookingRecoveryUnavailable": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryResumed": "Reprise : votre demande d'origine a été réservée une seule fois.",
+  "@bookingRecoveryResumed": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryNotSaved": "Cet appareil n'a pas pu enregistrer votre demande de réservation ; rien n'a été envoyé. Libérez de l'espace ou réessayez.",
+  "@bookingRecoveryNotSaved": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryBanner": "Une de vos demandes de réservation est restée sans réponse.",
+  "@bookingRecoveryBanner": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryBannerAction": "Vérifier",
+  "@bookingRecoveryBannerAction": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
   "bootFailedTitle": "DesKilo n'a pas pu démarrer",
   "bootFailedBody": "Le serveur ou le stockage sécurisé de cet appareil n'a pas répondu. Rien n'a été modifié. Fermez l'application et rouvrez-la ; si cela se reproduit, vérifiez le réseau.",
   "bootSlowTitle": "Le démarrage prend plus de temps que d'habitude",

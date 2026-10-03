@@ -29,7 +29,7 @@ Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipp
 
 A member finds a free place on the plan and holds it for a period; the database refuses a second booking of the same place at the same time, whoever asks and however many clients race.
 
-- **Code:** shipped · component `9e76fde8c780`
+- **Code:** shipped · component `d1eb59704070`
 - **Needs:** A workspace with a published plan and opening hours; booking rules in Settings.
 - **Limits:** Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.
 - **Feature flags:** `bookingGate`, `bookingPolicies`, `seriesBooking`, `autoCheckInOut`
@@ -189,7 +189,7 @@ Storage objects, Auth configuration and the running application recover to a kno
 
 A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.
 
-- **Code:** shipped · component `87bfcd68a17d`
+- **Code:** shipped · component `4c7eaefadd30`
 - **Needs:** None: the Demo is built into every client.
 - **Limits:** The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.
 - **Feature flags:** `demoMode`

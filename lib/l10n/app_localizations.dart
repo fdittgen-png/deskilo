@@ -2968,6 +2968,108 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}'**
   String settlementAnnexBody(int count);
 
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Your booking request'**
+  String get bookingRecoveryTitle;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The connection dropped after your request was sent. The booking may or may not exist — check before booking again.'**
+  String get bookingRecoveryUnknown;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'{space} · {from} – {to}'**
+  String bookingRecoveryWindow(String space, String from, String to);
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The space you chose'**
+  String get bookingRecoverySpaceFallback;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Check outcome'**
+  String get bookingRecoveryCheck;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Resume the same request'**
+  String get bookingRecoveryResume;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'View the booking'**
+  String get bookingRecoveryView;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Let it go'**
+  String get bookingRecoveryDiscard;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The booking exists — exactly one, from your original request.'**
+  String get bookingRecoveryCommitted;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The server is still working on this request. Check again in a moment.'**
+  String get bookingRecoveryInProgress;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was booked for this request. You can resume it as it was, or let it go.'**
+  String get bookingRecoveryNotCommitted;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The server no longer keeps a record of this request, so it cannot say. Check your bookings before booking again.'**
+  String get bookingRecoveryUnresolved;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The server could not be asked. Nothing was changed; try again.'**
+  String get bookingRecoveryUnavailable;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Resumed: your original request was booked once.'**
+  String get bookingRecoveryResumed;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'This device could not save your booking request, so nothing was sent. Free some space or try again.'**
+  String get bookingRecoveryNotSaved;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'A booking request of yours is still unanswered.'**
+  String get bookingRecoveryBanner;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get bookingRecoveryBannerAction;
+
   /// #2015 Bounded start-up: bootFailedTitle
   ///
   /// In en, this message translates to:

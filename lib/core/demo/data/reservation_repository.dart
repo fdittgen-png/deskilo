@@ -214,8 +214,24 @@ class FakeReservationRepository implements ReservationRepository {
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
+    String? requestId,
   }) async {
     createCalls++;
+    // #1855 — the server's claim (0214/0350) mirrored: the same request id
+    // with the same payload returns the original booking; another payload
+    // under the same id is refused by name. [failNextCreateTransport]
+    // loses the ANSWER of a call that booked, which is the whole case.
+    final digest = '$seatId|$deskId|$officeId|$levelId|'
+        '${startsAt.toUtc()}|${endsAt.toUtc()}|$checkIn';
+    if (requestId != null) {
+      final claim = _requests[requestId];
+      if (claim != null) {
+        if (claim.digest != digest) {
+          throw StateError('that request id was used for a different booking');
+        }
+        return claim.reservationId;
+      }
+    }
     final targets =
         [seatId, deskId, officeId, levelId].whereType<String>().length;
     if (targets != 1) {
@@ -275,7 +291,51 @@ class FakeReservationRepository implements ReservationRepository {
       checkedInAt: checkIn ? now() : null,
     );
     reservations.add(reservation);
+    if (requestId != null) {
+      _requests[requestId] = (digest: digest, reservationId: reservation.id);
+      lastRequestId = requestId;
+    }
+    if (failNextCreateTransport) {
+      // Booked — and the answer is lost on the way back. The wording is
+      // what `isTransientNetworkFailure` recognises (no dart:io here: the
+      // Demo backend also runs on the web).
+      failNextCreateTransport = false;
+      throw StateError('connection reset by peer');
+    }
     return reservation.id;
+  }
+
+  /// #1855 — the claims `create` recorded, by request id.
+  final _requests = <String, ({String digest, String reservationId})>{};
+
+  /// #1855 — the request id the last claiming `create` carried.
+  String? lastRequestId;
+
+  /// #1855 — the next `create` books and then throws a transport failure,
+  /// so the caller holds an intent whose outcome it does not know.
+  bool failNextCreateTransport = false;
+
+  /// #1855 — how many times the outcome of a request was asked.
+  int outcomeCalls = 0;
+
+  @override
+  Future<RequestOutcome> requestOutcome(
+    String workspaceId,
+    String requestId,
+  ) async {
+    outcomeCalls++;
+    final claim = _requests[requestId];
+    final reservation = claim == null
+        ? null
+        : reservations.where((r) => r.id == claim.reservationId).firstOrNull;
+    if (claim == null || reservation?.workspaceId != workspaceId) {
+      return const RequestOutcome(status: RequestOutcomeStatus.absent);
+    }
+    return RequestOutcome(
+      status: RequestOutcomeStatus.committed,
+      reservationId: claim.reservationId,
+      reservationStatus: reservation!.status.name,
+    );
   }
 
   /// canonical_walkup_start (0113): the slot start pairing with the

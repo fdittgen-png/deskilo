@@ -97,6 +97,8 @@ import 'package:deskilo/features/reservations/providers/default_period_controlle
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/profile/domain/profile_repository.dart';
 import 'package:deskilo/features/profile/providers/profile_providers.dart';
+import 'package:deskilo/core/storage/booking_intent_store.dart';
+import 'package:deskilo/features/reservations/domain/booking_intent.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/providers/instance_providers.dart';
@@ -172,6 +174,7 @@ List<Override> standardTestOverrides({
   FloorPlanRepository? floorPlan,
   AccessoryRepository? accessories,
   ReservationRepository? reservations,
+  BookingIntentStore? bookingIntents,
   EventRepository? events,
   CalendarRepository? calendar,
   MoneyRepository? money,
@@ -294,6 +297,13 @@ List<Override> standardTestOverrides({
         .overrideWithValue(accessories ?? FakeAccessoryRepository()),
     reservationRepositoryProvider
         .overrideWithValue(reservations ?? FakeReservationRepository()),
+    // #1855 — the booking-intent ledger and its scope: one fixed account
+    // on one fixed server, so a test's intents never meet the device's.
+    bookingIntentStoreProvider
+        .overrideWithValue(bookingIntents ?? InMemoryBookingIntentStore()),
+    bookingIntentScopeProvider.overrideWithValue(
+      const BookingIntentScope(account: 'user-1', origin: 'https://test.local'),
+    ),
     eventRepositoryProvider
         .overrideWithValue(events ?? FakeEventRepository()),
     calendarRepositoryProvider

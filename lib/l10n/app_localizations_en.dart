@@ -1691,6 +1691,68 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get bookingRecoveryTitle => 'Your booking request';
+
+  @override
+  String get bookingRecoveryUnknown =>
+      'The connection dropped after your request was sent. The booking may or may not exist — check before booking again.';
+
+  @override
+  String bookingRecoveryWindow(String space, String from, String to) {
+    return '$space · $from – $to';
+  }
+
+  @override
+  String get bookingRecoverySpaceFallback => 'The space you chose';
+
+  @override
+  String get bookingRecoveryCheck => 'Check outcome';
+
+  @override
+  String get bookingRecoveryResume => 'Resume the same request';
+
+  @override
+  String get bookingRecoveryView => 'View the booking';
+
+  @override
+  String get bookingRecoveryDiscard => 'Let it go';
+
+  @override
+  String get bookingRecoveryCommitted =>
+      'The booking exists — exactly one, from your original request.';
+
+  @override
+  String get bookingRecoveryInProgress =>
+      'The server is still working on this request. Check again in a moment.';
+
+  @override
+  String get bookingRecoveryNotCommitted =>
+      'Nothing was booked for this request. You can resume it as it was, or let it go.';
+
+  @override
+  String get bookingRecoveryUnresolved =>
+      'The server no longer keeps a record of this request, so it cannot say. Check your bookings before booking again.';
+
+  @override
+  String get bookingRecoveryUnavailable =>
+      'The server could not be asked. Nothing was changed; try again.';
+
+  @override
+  String get bookingRecoveryResumed =>
+      'Resumed: your original request was booked once.';
+
+  @override
+  String get bookingRecoveryNotSaved =>
+      'This device could not save your booking request, so nothing was sent. Free some space or try again.';
+
+  @override
+  String get bookingRecoveryBanner =>
+      'A booking request of yours is still unanswered.';
+
+  @override
+  String get bookingRecoveryBannerAction => 'Check';
+
+  @override
   String get bootFailedTitle => 'DesKilo could not start';
 
   @override

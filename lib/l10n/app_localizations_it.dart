@@ -1702,6 +1702,68 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get bookingRecoveryTitle => 'La tua richiesta di prenotazione';
+
+  @override
+  String get bookingRecoveryUnknown =>
+      'La connessione si è interrotta dopo l\'invio della richiesta. La prenotazione potrebbe esistere o no: verifica prima di prenotare di nuovo.';
+
+  @override
+  String bookingRecoveryWindow(String space, String from, String to) {
+    return '$space · $from – $to';
+  }
+
+  @override
+  String get bookingRecoverySpaceFallback => 'Lo spazio scelto';
+
+  @override
+  String get bookingRecoveryCheck => 'Verifica l\'esito';
+
+  @override
+  String get bookingRecoveryResume => 'Riprendi la stessa richiesta';
+
+  @override
+  String get bookingRecoveryView => 'Vedi la prenotazione';
+
+  @override
+  String get bookingRecoveryDiscard => 'Lascia andare';
+
+  @override
+  String get bookingRecoveryCommitted =>
+      'La prenotazione esiste: esattamente una, dalla tua richiesta originale.';
+
+  @override
+  String get bookingRecoveryInProgress =>
+      'Il server sta ancora elaborando questa richiesta. Verifica di nuovo tra un istante.';
+
+  @override
+  String get bookingRecoveryNotCommitted =>
+      'Nulla è stato prenotato per questa richiesta. Puoi riprenderla com\'era o lasciarla andare.';
+
+  @override
+  String get bookingRecoveryUnresolved =>
+      'Il server non conserva più traccia di questa richiesta e non può dirlo. Controlla le tue prenotazioni prima di prenotare di nuovo.';
+
+  @override
+  String get bookingRecoveryUnavailable =>
+      'Impossibile interrogare il server. Nulla è cambiato; riprova.';
+
+  @override
+  String get bookingRecoveryResumed =>
+      'Ripresa: la tua richiesta originale è stata prenotata una sola volta.';
+
+  @override
+  String get bookingRecoveryNotSaved =>
+      'Questo dispositivo non ha potuto salvare la richiesta di prenotazione, quindi nulla è stato inviato. Libera spazio o riprova.';
+
+  @override
+  String get bookingRecoveryBanner =>
+      'Una tua richiesta di prenotazione è ancora senza risposta.';
+
+  @override
+  String get bookingRecoveryBannerAction => 'Verifica';
+
+  @override
   String get bootFailedTitle => 'DesKilo non è riuscito ad avviarsi';
 
   @override
