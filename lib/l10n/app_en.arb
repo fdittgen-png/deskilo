@@ -17541,6 +17541,34 @@
   "@taskWorkbenchIntro": {
     "description": "#1872 task workbench: taskWorkbenchIntro"
   },
+  "taskWorkbenchOfflineFailed": "The browser refused to keep it.",
+  "@taskWorkbenchOfflineFailed": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineFailed"
+  },
+  "taskWorkbenchOfflineForget": "Stop keeping it",
+  "@taskWorkbenchOfflineForget": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineForget"
+  },
+  "taskWorkbenchOfflineKeep": "Keep it on this device",
+  "@taskWorkbenchOfflineKeep": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineKeep"
+  },
+  "taskWorkbenchOfflineOff": "Not kept: without a connection this page will not open.",
+  "@taskWorkbenchOfflineOff": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineOff"
+  },
+  "taskWorkbenchOfflineReady": "Kept on this browser: the screens you have opened work without a connection.",
+  "@taskWorkbenchOfflineReady": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineReady"
+  },
+  "taskWorkbenchOfflineTitle": "Use the workbench offline",
+  "@taskWorkbenchOfflineTitle": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineTitle"
+  },
+  "taskWorkbenchOfflineUnsupported": "This browser cannot keep it (a private window usually cannot).",
+  "@taskWorkbenchOfflineUnsupported": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineUnsupported"
+  },
   "taskWorkbenchOpen": "Open a task file",
   "@taskWorkbenchOpen": {
     "description": "#1872 task workbench: taskWorkbenchOpen"

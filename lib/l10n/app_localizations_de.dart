@@ -15533,6 +15533,31 @@ class AppLocalizationsDe extends AppLocalizations {
       'Öffnen Sie eine gespeicherte Aufgabendatei. Sie wird nur auf diesem Gerät gelesen; nichts wird hochgeladen und keine Anmeldung ist nötig.';
 
   @override
+  String get taskWorkbenchOfflineFailed =>
+      'Der Browser hat das Behalten abgelehnt.';
+
+  @override
+  String get taskWorkbenchOfflineForget => 'Nicht mehr behalten';
+
+  @override
+  String get taskWorkbenchOfflineKeep => 'Auf diesem Gerät behalten';
+
+  @override
+  String get taskWorkbenchOfflineOff =>
+      'Nicht behalten: ohne Verbindung öffnet sich diese Seite nicht.';
+
+  @override
+  String get taskWorkbenchOfflineReady =>
+      'In diesem Browser behalten: bereits geöffnete Bildschirme funktionieren ohne Verbindung.';
+
+  @override
+  String get taskWorkbenchOfflineTitle => 'Werkbank offline nutzen';
+
+  @override
+  String get taskWorkbenchOfflineUnsupported =>
+      'Dieser Browser kann es nicht behalten (ein privates Fenster meist nicht).';
+
+  @override
   String get taskWorkbenchOpen => 'Aufgabendatei öffnen';
 
   @override

@@ -170,5 +170,12 @@
   "taskRecorderOutcomeSettingSaved": "Enregistré",
   "taskRecorderOutcomeSettingNotSaved": "Non enregistré",
   "taskRecorderValueOn": "activée",
-  "taskRecorderValueOff": "désactivée"
+  "taskRecorderValueOff": "désactivée",
+  "taskWorkbenchOfflineTitle": "Utiliser l'atelier hors ligne",
+  "taskWorkbenchOfflineKeep": "Le garder sur cet appareil",
+  "taskWorkbenchOfflineForget": "Ne plus le garder",
+  "taskWorkbenchOfflineReady": "Gardé dans ce navigateur : les écrans déjà ouverts fonctionnent sans connexion.",
+  "taskWorkbenchOfflineOff": "Non gardé : sans connexion, cette page ne s'ouvrira pas.",
+  "taskWorkbenchOfflineUnsupported": "Ce navigateur ne peut pas le garder (une fenêtre privée ne le peut généralement pas).",
+  "taskWorkbenchOfflineFailed": "Le navigateur a refusé de le garder."
 }

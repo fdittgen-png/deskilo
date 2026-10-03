@@ -170,5 +170,12 @@
   "taskRecorderOutcomeSettingSaved": "Salvato",
   "taskRecorderOutcomeSettingNotSaved": "Non salvato",
   "taskRecorderValueOn": "attiva",
-  "taskRecorderValueOff": "disattiva"
+  "taskRecorderValueOff": "disattiva",
+  "taskWorkbenchOfflineTitle": "Usa il laboratorio offline",
+  "taskWorkbenchOfflineKeep": "Conservalo su questo dispositivo",
+  "taskWorkbenchOfflineForget": "Smetti di conservarlo",
+  "taskWorkbenchOfflineReady": "Conservato in questo browser: le schermate già aperte funzionano senza connessione.",
+  "taskWorkbenchOfflineOff": "Non conservato: senza connessione questa pagina non si aprirà.",
+  "taskWorkbenchOfflineUnsupported": "Questo browser non può conservarlo (una finestra privata di solito non può).",
+  "taskWorkbenchOfflineFailed": "Il browser si è rifiutato di conservarlo."
 }

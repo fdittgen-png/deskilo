@@ -170,5 +170,12 @@
   "taskRecorderOutcomeSettingSaved": "Gespeichert",
   "taskRecorderOutcomeSettingNotSaved": "Nicht gespeichert",
   "taskRecorderValueOn": "ein",
-  "taskRecorderValueOff": "aus"
+  "taskRecorderValueOff": "aus",
+  "taskWorkbenchOfflineTitle": "Werkbank offline nutzen",
+  "taskWorkbenchOfflineKeep": "Auf diesem Gerät behalten",
+  "taskWorkbenchOfflineForget": "Nicht mehr behalten",
+  "taskWorkbenchOfflineReady": "In diesem Browser behalten: bereits geöffnete Bildschirme funktionieren ohne Verbindung.",
+  "taskWorkbenchOfflineOff": "Nicht behalten: ohne Verbindung öffnet sich diese Seite nicht.",
+  "taskWorkbenchOfflineUnsupported": "Dieser Browser kann es nicht behalten (ein privates Fenster meist nicht).",
+  "taskWorkbenchOfflineFailed": "Der Browser hat das Behalten abgelehnt."
 }

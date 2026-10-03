@@ -31,6 +31,7 @@ import '../recording_export.dart';
 import '../widgets/recording_steps_view.dart';
 import '../widgets/task_outputs_section.dart';
 import '../../package/task_output.dart';
+import '../../offline/offline_card.dart';
 import '../../storyboard/storyboard.dart';
 import '../../storyboard/storyboard_builder.dart';
 import '../../storyboard/storyboard_pictures.dart';
@@ -235,6 +236,8 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
                     '${workbenchMaxBytes ~/ (1024 * 1024)} MB.',
             style: Theme.of(context).textTheme.bodySmall,
           ),
+          const SizedBox(height: AppSpacing.md),
+          const OfflineToolCard(),
           const SizedBox(height: AppSpacing.md),
           FilledButton.icon(
             key: const ValueKey('workbench-choose'),

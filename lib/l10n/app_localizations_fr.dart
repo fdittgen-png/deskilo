@@ -15550,6 +15550,31 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ouvrez un fichier de tâche enregistré. Il est lu sur cet appareil uniquement ; rien n\'est envoyé et aucune connexion n\'est nécessaire.';
 
   @override
+  String get taskWorkbenchOfflineFailed =>
+      'Le navigateur a refusé de le garder.';
+
+  @override
+  String get taskWorkbenchOfflineForget => 'Ne plus le garder';
+
+  @override
+  String get taskWorkbenchOfflineKeep => 'Le garder sur cet appareil';
+
+  @override
+  String get taskWorkbenchOfflineOff =>
+      'Non gardé : sans connexion, cette page ne s\'ouvrira pas.';
+
+  @override
+  String get taskWorkbenchOfflineReady =>
+      'Gardé dans ce navigateur : les écrans déjà ouverts fonctionnent sans connexion.';
+
+  @override
+  String get taskWorkbenchOfflineTitle => 'Utiliser l\'atelier hors ligne';
+
+  @override
+  String get taskWorkbenchOfflineUnsupported =>
+      'Ce navigateur ne peut pas le garder (une fenêtre privée ne le peut généralement pas).';
+
+  @override
   String get taskWorkbenchOpen => 'Ouvrir un fichier de tâche';
 
   @override
