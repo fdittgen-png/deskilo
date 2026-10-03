@@ -14223,6 +14223,29 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un risultato non può precedere il comando a cui risponde.';
 
   @override
+  String get taskExportIncludeIllustrations =>
+      'Includi le illustrazioni approvate';
+
+  @override
+  String get taskExportStoryboardLeftOut =>
+      'Passaggio escluso durante la revisione.';
+
+  @override
+  String get taskExportIllustrationNotApproved =>
+      'Illustrazione non inclusa: non è stata approvata.';
+
+  @override
+  String get taskExportLimitRecreated =>
+      'Le illustrazioni sono ricreate dai dati sicuri della registrazione, con nomi di posti inventati; non sono screenshot dello schermo.';
+
+  @override
+  String get taskExportStale =>
+      'Lo storyboard appartiene a un\'altra versione di questa registrazione. Rivedilo prima di esportare.';
+
+  @override
+  String get taskExportWordButton => 'Esporta come documento Word';
+
+  @override
   String get featureTaskRecorderTitle => 'Registratore di attività';
 
   @override

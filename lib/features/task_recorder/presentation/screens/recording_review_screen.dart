@@ -26,6 +26,7 @@ import '../../domain/action_registry.dart';
 import '../../domain/recording_edit.dart';
 import '../../domain/task_recording.dart';
 import '../../domain/task_recording_codec.dart';
+import '../../export/docx_export.dart';
 import '../../package/task_package.dart';
 import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
@@ -122,6 +123,28 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
           context,
           l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.',
         );
+    }
+  }
+
+  /// #1866 — the same edited copy as a Word document; the saver's
+  /// answer is reported as it is, and a refusal saves nothing.
+  Future<void> _saveWord() async {
+    final l10n = AppLocalizations.of(context);
+    final export = _export;
+    if (export == null || l10n == null) return;
+    final result = await ref.read(taskDocxExporterProvider).save(export, l10n);
+    if (!mounted) return;
+    switch (result) {
+      case TaskDocxSaved(outcome: SavedFile(:final path)):
+        AppSnack.success(context, l10n.taskExportSaved(path));
+      case TaskDocxSaved(outcome: SavedPrivately(:final path)):
+        AppSnack.info(context, l10n.taskRecorderSavedPrivately(path));
+      case TaskDocxSaved():
+        AppSnack.info(context, l10n.taskRecorderSaveNoPath);
+      case TaskDocxRefused():
+        AppSnack.error(context, l10n.taskExportRefused);
+      case TaskDocxSaveFailed():
+        AppSnack.error(context, l10n.taskExportSaveFailed);
     }
   }
 
@@ -253,6 +276,15 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
                   icon: const Icon(Icons.inventory_2_outlined),
                   label: Text(
                     l10n?.taskRecorderExportPackage ?? 'Export a task package',
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  key: const ValueKey('task-recording-export-word'),
+                  onPressed: _saveWord,
+                  icon: const Icon(Icons.description_outlined),
+                  label: Text(
+                    l10n?.taskExportWordButton ?? 'Export as Word document',
                   ),
                 ),
               ],

@@ -15595,6 +15595,30 @@
   "@taskExportStoryboardOrderRefused": {
     "description": "#1876 storyboard and illustrations: StoryboardOrderRefused"
   },
+  "taskExportIncludeIllustrations": "Include approved illustrations",
+  "@taskExportIncludeIllustrations": {
+    "description": "#1866 task export (Word document): IncludeIllustrations"
+  },
+  "taskExportStoryboardLeftOut": "Step left out by the reviewer.",
+  "@taskExportStoryboardLeftOut": {
+    "description": "#1876 storyboard and illustrations: StoryboardLeftOut"
+  },
+  "taskExportIllustrationNotApproved": "Illustration not included: it was not approved.",
+  "@taskExportIllustrationNotApproved": {
+    "description": "#1866 task export (Word document): IllustrationNotApproved"
+  },
+  "taskExportLimitRecreated": "Illustrations are recreated from the recording's safe facts with invented place names; they are not screenshots of what was on screen.",
+  "@taskExportLimitRecreated": {
+    "description": "#1866 task export (Word document): LimitRecreated"
+  },
+  "taskExportStale": "The storyboard belongs to another version of this recording. Review it again before exporting.",
+  "@taskExportStale": {
+    "description": "#1866 task export (Word document): Stale"
+  },
+  "taskExportWordButton": "Export as Word document",
+  "@taskExportWordButton": {
+    "description": "#1866 task export (Word document): the review screen button"
+  },
   "featureTaskRecorderTitle": "Task recorder",
   "@featureTaskRecorderTitle": {
     "description": "#1865 task recorder: the feature's name"
