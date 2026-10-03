@@ -8,7 +8,7 @@
 import 'dart:io';
 
 import 'package:deskilo/app/route_classes.dart';
-import 'package:deskilo/features/task_recorder/coverage/coverage_manifest.dart';
+import 'package:deskilo/features/task_recorder/domain/coverage_manifest.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/presentation/route_classification.dart';
 import 'package:flutter_test/flutter_test.dart';

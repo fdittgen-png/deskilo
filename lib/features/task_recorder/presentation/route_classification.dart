@@ -10,7 +10,7 @@
 //   * anything else: a visible "the recorder cannot describe this" step,
 //     so an uninstrumented screen never passes for covered.
 
-import '../coverage/coverage_manifest.dart';
+import '../domain/coverage_manifest.dart';
 import '../domain/action_registry.dart';
 
 /// How the recorder treats a route.
@@ -41,7 +41,7 @@ const String taskRecorderRoute = '/task-recorder';
 const String taskWorkbenchRoute = '/task-workbench';
 
 /// How the recorder treats the route at [path], from the coverage
-/// manifest (coverage/coverage_manifest.dart). A path no row matches is
+/// manifest (domain/coverage_manifest.dart). A path no row matches is
 /// a manual step: never silently covered.
 RouteTreatment treatRoute(String path) {
   for (final row in routeCoverage) {
