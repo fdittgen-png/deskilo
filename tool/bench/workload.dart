@@ -196,6 +196,7 @@ class MeteredReservations extends FakeReservationRepository {
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
+    String? requestId,
   }) =>
       meter.trip(
           'reservations.create',
@@ -208,5 +209,6 @@ class MeteredReservations extends FakeReservationRepository {
                 startsAt: startsAt,
                 endsAt: endsAt,
                 checkIn: checkIn,
+                requestId: requestId,
               ));
 }

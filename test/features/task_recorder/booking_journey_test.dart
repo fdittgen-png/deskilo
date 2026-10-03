@@ -44,6 +44,7 @@ class _RefusingRepository extends FakeReservationRepository {
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
+    String? requestId,
   }) async {
     createCalls++;
     throw const PostgrestException(
@@ -64,6 +65,7 @@ class _OfflineRepository extends FakeReservationRepository {
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
+    String? requestId,
   }) async {
     createCalls++;
     throw const SocketException('Failed host lookup: canary.invalid');

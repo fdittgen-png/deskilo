@@ -1015,6 +1015,85 @@
   "bookingOutsideWalkUpError": "Fuera del horario de apertura solo es posible un check-in espontáneo, no una reserva por adelantado.",
   "bookingOverlapsAnother": "El puesto ya está reservado durante parte de este tiempo.",
   "bookingPastError": "Esta reserva está completamente en el pasado.",
+  "bookingRecoveryBanner": "Una de sus solicitudes de reserva sigue sin respuesta.",
+  "@bookingRecoveryBanner": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryBannerAction": "Comprobar",
+  "@bookingRecoveryBannerAction": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryCheck": "Comprobar el resultado",
+  "@bookingRecoveryCheck": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryCommitted": "La reserva existe: exactamente una, de su solicitud original.",
+  "@bookingRecoveryCommitted": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryDiscard": "Descartar",
+  "@bookingRecoveryDiscard": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryInProgress": "El servidor sigue procesando esta solicitud. Compruébelo de nuevo en un momento.",
+  "@bookingRecoveryInProgress": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryNotCommitted": "No se reservó nada para esta solicitud. Puede reanudarla tal cual o descartarla.",
+  "@bookingRecoveryNotCommitted": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryNotSaved": "Este dispositivo no pudo guardar su solicitud de reserva, así que no se envió nada. Libere espacio o inténtelo de nuevo.",
+  "@bookingRecoveryNotSaved": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryResume": "Reanudar la misma solicitud",
+  "@bookingRecoveryResume": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryResumed": "Reanudada: su solicitud original se reservó una sola vez.",
+  "@bookingRecoveryResumed": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoverySpaceFallback": "El espacio elegido",
+  "@bookingRecoverySpaceFallback": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryTitle": "Su solicitud de reserva",
+  "@bookingRecoveryTitle": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnavailable": "No se pudo consultar al servidor. Nada cambió; inténtelo de nuevo.",
+  "@bookingRecoveryUnavailable": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnknown": "La conexión se cortó después de enviar su solicitud. La reserva puede existir o no: compruébelo antes de reservar de nuevo.",
+  "@bookingRecoveryUnknown": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnresolved": "El servidor ya no guarda registro de esta solicitud y no puede decirlo. Revise sus reservas antes de reservar de nuevo.",
+  "@bookingRecoveryUnresolved": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryView": "Ver la reserva",
+  "@bookingRecoveryView": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryWindow": "{space} · {from} – {to}",
+  "@bookingRecoveryWindow": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "bookingReservedSpaceWhen": "{space} reservado: {when}.",
   "@bookingReservedSpaceWhen": {
     "description": "#663 - reservation confirmation naming the space",

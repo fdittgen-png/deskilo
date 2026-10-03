@@ -2002,6 +2002,68 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Buchung liegt vollständig in der Vergangenheit.';
 
   @override
+  String get bookingRecoveryBanner =>
+      'Eine Ihrer Buchungsanfragen ist noch unbeantwortet.';
+
+  @override
+  String get bookingRecoveryBannerAction => 'Prüfen';
+
+  @override
+  String get bookingRecoveryCheck => 'Ergebnis prüfen';
+
+  @override
+  String get bookingRecoveryCommitted =>
+      'Die Buchung existiert – genau eine, aus Ihrer ursprünglichen Anfrage.';
+
+  @override
+  String get bookingRecoveryDiscard => 'Verwerfen';
+
+  @override
+  String get bookingRecoveryInProgress =>
+      'Der Server bearbeitet diese Anfrage noch. Prüfen Sie es gleich noch einmal.';
+
+  @override
+  String get bookingRecoveryNotCommitted =>
+      'Für diese Anfrage wurde nichts gebucht. Sie können sie unverändert fortsetzen oder verwerfen.';
+
+  @override
+  String get bookingRecoveryNotSaved =>
+      'Dieses Gerät konnte Ihre Buchungsanfrage nicht speichern; es wurde nichts gesendet. Schaffen Sie Platz oder versuchen Sie es erneut.';
+
+  @override
+  String get bookingRecoveryResume => 'Dieselbe Anfrage fortsetzen';
+
+  @override
+  String get bookingRecoveryResumed =>
+      'Fortgesetzt: Ihre ursprüngliche Anfrage wurde einmal gebucht.';
+
+  @override
+  String get bookingRecoverySpaceFallback => 'Der gewählte Platz';
+
+  @override
+  String get bookingRecoveryTitle => 'Ihre Buchungsanfrage';
+
+  @override
+  String get bookingRecoveryUnavailable =>
+      'Der Server konnte nicht gefragt werden. Nichts wurde geändert; versuchen Sie es erneut.';
+
+  @override
+  String get bookingRecoveryUnknown =>
+      'Die Verbindung brach ab, nachdem Ihre Anfrage gesendet wurde. Die Buchung existiert vielleicht, vielleicht nicht – prüfen Sie es, bevor Sie erneut buchen.';
+
+  @override
+  String get bookingRecoveryUnresolved =>
+      'Der Server bewahrt zu dieser Anfrage nichts mehr auf und kann nichts sagen. Prüfen Sie Ihre Buchungen, bevor Sie erneut buchen.';
+
+  @override
+  String get bookingRecoveryView => 'Buchung ansehen';
+
+  @override
+  String bookingRecoveryWindow(String space, String from, String to) {
+    return '$space · $from – $to';
+  }
+
+  @override
   String bookingReservedSpaceWhen(String space, String when) {
     return '$space reserviert: $when.';
   }
