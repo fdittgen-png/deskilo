@@ -54,18 +54,43 @@ Observation bookingOutcomeObservation(BookingOutcome outcome) =>
 /// outcome nobody can vouch for: the booking may or may not exist. Any
 /// other error is the server refusing, sorted into a category by its
 /// code or wording — which is then thrown away.
-Observation bookingErrorObservation(Object error) {
+Observation bookingErrorObservation(Object error) => errorObservation(
+  error,
+  refused: RecorderOutcomes.bookingRefused,
+  unknown: RecorderOutcomes.bookingUnknown,
+);
+
+/// The same reading of an error, for any command's own outcome ids.
+Observation errorObservation(
+  Object error, {
+  required String refused,
+  required String unknown,
+}) {
   if (error is TimeoutException || isTransientNetworkFailure(error)) {
-    return (
-      outcome: RecorderOutcomes.bookingUnknown,
-      payload: const <String, Object?>{},
-    );
+    return (outcome: unknown, payload: const <String, Object?>{});
   }
-  return (
-    outcome: RecorderOutcomes.bookingRefused,
-    payload: {'refusal': refusalCategory(error)},
-  );
+  return (outcome: refused, payload: {'refusal': refusalCategory(error)});
 }
+
+/// #1881 A — my own reservation's sheet: the command a choice is, and
+/// the outcome its success records. Null for a choice the recorder does
+/// not know.
+({String action, String done})? myReservationCommand(String choice) =>
+    switch (choice) {
+      'checkin' => (
+        action: RecorderActions.checkIn,
+        done: RecorderOutcomes.checkedIn,
+      ),
+      'checkout' => (
+        action: RecorderActions.checkOut,
+        done: RecorderOutcomes.checkedOut,
+      ),
+      'cancel' => (
+        action: RecorderActions.cancelReservation,
+        done: RecorderOutcomes.cancelled,
+      ),
+      _ => null,
+    };
 
 /// The refusal category of a server error.
 String refusalCategory(Object error) {

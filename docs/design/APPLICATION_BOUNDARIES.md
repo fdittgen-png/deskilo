@@ -100,6 +100,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `workspace -> plan`
 - `workspace -> profile`
 - `workspace -> reservations`
+- `workspace -> task_recorder`
 
 Reciprocal:
 
@@ -124,6 +125,7 @@ Reciprocal:
 - `profile <-> workspace`
 - `reservations <-> task_recorder`
 - `reservations <-> workspace`
+- `task_recorder <-> workspace`
 
 ## Hand-written files over 600 lines
 

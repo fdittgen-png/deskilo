@@ -8,6 +8,7 @@ import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
+import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
@@ -159,6 +160,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       profileRepositoryProvider.overrideWithValue(fixture.profiles),
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>[]),
+      // #1834 — Demo never opens another server's sign-in.
+      identityConnectorProvider.overrideWithValue(const OfflineIdentityConnector()),
       // #1847 — public discovery, publication management and participant
       // requests: three interfaces, one in-memory directory.
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
@@ -282,6 +285,7 @@ const Set<String> demoOverriddenProviders = {
   'workspaceApplicationRepositoryProvider',
   'accountActivityRepositoryProvider',
   'connectedInstallationsProvider', 'connectedSourcesProvider',
+  'identityConnectorProvider', // #1834
   'publicDiscoveryRepositoryProvider', 'publicationRepositoryProvider',
   'directoryParticipantRepositoryProvider', 'accountContactRepositoryProvider',
   'meRepositoryProvider', // #1823

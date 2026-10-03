@@ -2209,6 +2209,12 @@ abstract class AppLocalizations {
   /// **'Treasury'**
   String get biAreaTreasury;
 
+  /// No description provided for @biBookingBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved capacity measures bookings, not actual attendance.'**
+  String get biBookingBasis;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -2275,6 +2281,54 @@ abstract class AppLocalizations {
   /// **'{period} is only partly recorded.'**
   String biComparedPartial(String period);
 
+  /// No description provided for @biComparisonUnqualified.
+  ///
+  /// In en, this message translates to:
+  /// **'Change unavailable: one period has partial or out-of-date data.'**
+  String get biComparisonUnqualified;
+
+  /// No description provided for @biComputedWorkspaceTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Computed {date} · workspace time'**
+  String biComputedWorkspaceTime(String date);
+
+  /// No description provided for @biCurrentBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'The whole period is included. Comparison with a completed period is not like-for-like.'**
+  String get biCurrentBasis;
+
+  /// No description provided for @biDataNotApplicable.
+  ///
+  /// In en, this message translates to:
+  /// **'No applicable capacity'**
+  String get biDataNotApplicable;
+
+  /// No description provided for @biDataNotRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Not recorded'**
+  String get biDataNotRecorded;
+
+  /// No description provided for @biDataPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial data'**
+  String get biDataPartial;
+
+  /// No description provided for @biDataStale.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of date'**
+  String get biDataStale;
+
+  /// No description provided for @biDataUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable'**
+  String get biDataUnavailable;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -2292,6 +2346,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You may not read this analysis in this workspace.'**
   String get biForbidden;
+
+  /// No description provided for @biFutureBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Existing bookings and current opening rules; not a demand forecast or guaranteed usage.'**
+  String get biFutureBasis;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2347,11 +2407,41 @@ abstract class AppLocalizations {
   /// **'Open the source'**
   String get biOpenSource;
 
+  /// No description provided for @biPastBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Recomputed from records available now, not a snapshot of what was known then.'**
+  String get biPastBasis;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
   /// **'Q{quarter} {year}'**
   String biQuarter(String quarter, String year);
+
+  /// No description provided for @biRecordedFuture.
+  ///
+  /// In en, this message translates to:
+  /// **'Future period · bookings on record'**
+  String get biRecordedFuture;
+
+  /// No description provided for @biRecordedPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past period · current records'**
+  String get biRecordedPast;
+
+  /// No description provided for @biRecordedPresent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current period · includes future dates'**
+  String get biRecordedPresent;
+
+  /// No description provided for @biRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh data'**
+  String get biRefresh;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2388,6 +2478,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show the standard view'**
   String get biReset;
+
+  /// No description provided for @biSeatHoursBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} blocked seat-hours'**
+  String biSeatHoursBlocked(String hours);
+
+  /// No description provided for @biSeatHoursFree.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} unreserved seat-hours'**
+  String biSeatHoursFree(String hours);
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -10541,6 +10643,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Whit Monday'**
   String get holidayWhitMonday;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The system browser could not be launched.
+  ///
+  /// In en, this message translates to:
+  /// **'The browser could not be opened.'**
+  String get identityConnectBrowser;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Confirmation after connecting, before the membership request is sent. {name} is the space's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Send your membership request to {name}?'**
+  String identityConnectConfirmApply(String name);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Body of the confirmation before sending the membership request.
+  ///
+  /// In en, this message translates to:
+  /// **'You are connected now. The space reviews your request; nothing else is shared.'**
+  String get identityConnectConfirmApplyBody;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Button that opens the other server's own sign-in in the browser. Deskilo is the brand.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Deskilo'**
+  String get identityConnectContinue;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The target is the app's own server.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the server you are already signed in to.'**
+  String get identityConnectCurrentServer;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server trusts another identity authority.
+  ///
+  /// In en, this message translates to:
+  /// **'This server accepts a different identity provider.'**
+  String get identityConnectDifferentAuthority;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Snackbar after a successful connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {host}.'**
+  String identityConnectDone(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Secondary choice: connect with a separate local account (e-mail and password or code) on that server.
+  ///
+  /// In en, this message translates to:
+  /// **'Use an account I already have on this server'**
+  String get identityConnectExistingAccount;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The pending sign-in expired.
+  ///
+  /// In en, this message translates to:
+  /// **'The sign-in took too long. Start again.'**
+  String get identityConnectExpired;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: What connecting shares and what it never grants. Deskilo is the brand; do not translate it.
+  ///
+  /// In en, this message translates to:
+  /// **'{host} will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the space still decides any request.'**
+  String identityConnectExplain(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Network or server unavailable during the connection.
+  ///
+  /// In en, this message translates to:
+  /// **'The server did not answer. Try again.'**
+  String get identityConnectNetwork;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server has no Deskilo identity provider.
+  ///
+  /// In en, this message translates to:
+  /// **'This server does not offer sign-in with Deskilo.'**
+  String get identityConnectNoDeskiloSignIn;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The person's own server exposes no identity authority another server can trust.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account here has no Deskilo identity another server could accept.'**
+  String get identityConnectNoSharedIdentity;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server accepted the person but saving the connection on the device failed.
+  ///
+  /// In en, this message translates to:
+  /// **'{host} accepted you, but this device could not keep the connection. Nothing was sent. Try again.'**
+  String identityConnectNotSaved(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Generic refusal (provider said no, flow superseded, incompatible server).
+  ///
+  /// In en, this message translates to:
+  /// **'The connection was not completed. Nothing was sent.'**
+  String get identityConnectRefused;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Retry button after a failed connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get identityConnectRetry;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Confirm button that sends the membership request.
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get identityConnectSend;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server speaks no protocol this build speaks.
+  ///
+  /// In en, this message translates to:
+  /// **'This server cannot be connected from this version of the app.'**
+  String get identityConnectServerUnsupported;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Title of the sheet that connects another server. {host} is that server's host name.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to {host}'**
+  String identityConnectTitle(String host);
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The other server could not be checked.
+  ///
+  /// In en, this message translates to:
+  /// **'This server did not answer.'**
+  String get identityConnectUnavailable;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Collision with an existing unlinked account on the other server.
+  ///
+  /// In en, this message translates to:
+  /// **'An account on that server already uses this identity or e-mail without being linked to it. Use that account instead.'**
+  String get identityConnectUnlinked;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: Shown while the browser sign-in is open.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish signing in in your browser, then come back here.'**
+  String get identityConnectWaiting;
+
+  /// #1834 Connecting another server with the person's Deskilo identity: The browser returned a different identity than the person signed in here.
+  ///
+  /// In en, this message translates to:
+  /// **'The browser signed in as someone else. Nothing was connected.'**
+  String get identityConnectWrongAccount;
 
   /// Identity-only consent names the exact destination host.
   ///
@@ -24734,6 +24974,12 @@ abstract class AppLocalizations {
   /// **'Net'**
   String get statusNet;
 
+  /// No description provided for @statusNetExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together.'**
+  String get statusNetExplanation;
+
   /// #934 workspace status / repartition wizard: statusPaymentsMatched
   ///
   /// In en, this message translates to:
@@ -26198,6 +26444,12 @@ abstract class AppLocalizations {
   /// **'Went back'**
   String get taskRecorderActionBack;
 
+  /// #1881 recorder: taskRecorderActionCancelReservation
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled the reservation'**
+  String get taskRecorderActionCancelReservation;
+
   /// #1865 task recorder: taskRecorderActionCancelReview
   ///
   /// In en, this message translates to:
@@ -26210,11 +26462,35 @@ abstract class AppLocalizations {
   /// **'Changed a booking detail'**
   String get taskRecorderActionChangeField;
 
+  /// #1881 recorder: taskRecorderActionCheckIn
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get taskRecorderActionCheckIn;
+
+  /// #1881 recorder: taskRecorderActionCheckOut
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out'**
+  String get taskRecorderActionCheckOut;
+
+  /// #1881 recorder: taskRecorderActionCloseMyReservation
+  ///
+  /// In en, this message translates to:
+  /// **'Closed my reservation without changing it'**
+  String get taskRecorderActionCloseMyReservation;
+
   /// #1865 task recorder: taskRecorderActionConfirmBooking
   ///
   /// In en, this message translates to:
   /// **'Confirmed the booking'**
   String get taskRecorderActionConfirmBooking;
+
+  /// #1884 recorder: taskRecorderActionDeclineOptIn
+  ///
+  /// In en, this message translates to:
+  /// **'Did not switch on a test feature'**
+  String get taskRecorderActionDeclineOptIn;
 
   /// #1865 task recorder: taskRecorderActionOpenReserve
   ///
@@ -26228,6 +26504,12 @@ abstract class AppLocalizations {
   /// **'Chose the day'**
   String get taskRecorderActionSelectDate;
 
+  /// #1881 recorder: taskRecorderActionSelectLevel
+  ///
+  /// In en, this message translates to:
+  /// **'Chose a level'**
+  String get taskRecorderActionSelectLevel;
+
   /// #1865 task recorder: taskRecorderActionSelectPeriod
   ///
   /// In en, this message translates to:
@@ -26239,6 +26521,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chose a place'**
   String get taskRecorderActionSelectResource;
+
+  /// #1884 recorder: taskRecorderActionSwitchFeature
+  ///
+  /// In en, this message translates to:
+  /// **'Switched a feature'**
+  String get taskRecorderActionSwitchFeature;
 
   /// #1865 task recorder: taskRecorderActionSwitchView
   ///
@@ -26438,6 +26726,24 @@ abstract class AppLocalizations {
   /// **'Open the task recorder'**
   String get taskRecorderOpenRecorder;
 
+  /// #1881 recorder: taskRecorderOutcomeCancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get taskRecorderOutcomeCancelled;
+
+  /// #1881 recorder: taskRecorderOutcomeCheckedIn
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get taskRecorderOutcomeCheckedIn;
+
+  /// #1881 recorder: taskRecorderOutcomeCheckedOut
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out'**
+  String get taskRecorderOutcomeCheckedOut;
+
   /// #1865 task recorder: taskRecorderOutcomeConfirmed
   ///
   /// In en, this message translates to:
@@ -26461,6 +26767,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Series booked'**
   String get taskRecorderOutcomeSeries;
+
+  /// #1884 recorder: taskRecorderOutcomeSettingNotSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Not saved'**
+  String get taskRecorderOutcomeSettingNotSaved;
+
+  /// #1884 recorder: taskRecorderOutcomeSettingSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get taskRecorderOutcomeSettingSaved;
 
   /// #1865 task recorder: taskRecorderOutcomeUnknown
   ///
@@ -26684,6 +27002,12 @@ abstract class AppLocalizations {
   /// **'custom times'**
   String get taskRecorderValueCustom;
 
+  /// #1881 recorder: taskRecorderValueDay
+  ///
+  /// In en, this message translates to:
+  /// **'day'**
+  String get taskRecorderValueDay;
+
   /// #1865 task recorder: taskRecorderValueDesk
   ///
   /// In en, this message translates to:
@@ -26720,6 +27044,12 @@ abstract class AppLocalizations {
   /// **'list'**
   String get taskRecorderValueList;
 
+  /// #1881 recorder: taskRecorderValueMonth
+  ///
+  /// In en, this message translates to:
+  /// **'month'**
+  String get taskRecorderValueMonth;
+
   /// #1865 task recorder: taskRecorderValueMorning
   ///
   /// In en, this message translates to:
@@ -26732,11 +27062,23 @@ abstract class AppLocalizations {
   /// **'without check-in'**
   String get taskRecorderValueNoCheckIn;
 
+  /// #1884 recorder: taskRecorderValueOff
+  ///
+  /// In en, this message translates to:
+  /// **'off'**
+  String get taskRecorderValueOff;
+
   /// #1865 task recorder: taskRecorderValueOffline
   ///
   /// In en, this message translates to:
   /// **'offline'**
   String get taskRecorderValueOffline;
+
+  /// #1884 recorder: taskRecorderValueOn
+  ///
+  /// In en, this message translates to:
+  /// **'on'**
+  String get taskRecorderValueOn;
 
   /// #1865 task recorder: taskRecorderValueOnce
   ///
@@ -26821,6 +27163,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'tomorrow'**
   String get taskRecorderValueTomorrow;
+
+  /// #1881 recorder: taskRecorderValueWeek
+  ///
+  /// In en, this message translates to:
+  /// **'week'**
+  String get taskRecorderValueWeek;
 
   /// #1865 task recorder: taskRecorderValueWithheld
   ///

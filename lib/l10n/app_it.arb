@@ -657,6 +657,7 @@
   "@biAreaTreasury": {
     "description": "#1923 Web-BI area"
   },
+  "biBookingBasis": "La capacità prenotata misura le prenotazioni, non la presenza effettiva.",
   "biChangePoints": "{value} p.p.",
   "biColumnChange": "Variazione",
   "biColumnValue": "Valore",
@@ -668,9 +669,25 @@
   "biComparedLine": "{period}: {value} ({change})",
   "biComparedNotRecorded": "{period} non è stato registrato (lo storico inizia il {since}); nessun confronto.",
   "biComparedPartial": "{period} è registrato solo in parte.",
+  "biComparisonUnqualified": "Variazione non disponibile: un periodo contiene dati parziali o non aggiornati.",
+  "biComputedWorkspaceTime": "Calcolato il {date} · ora dello spazio",
+  "@biComputedWorkspaceTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biCurrentBasis": "È incluso l’intero periodo. Il confronto con un periodo concluso non ha una base equivalente.",
+  "biDataNotApplicable": "Nessuna capacità applicabile",
+  "biDataNotRecorded": "Non registrato",
+  "biDataPartial": "Dati parziali",
+  "biDataStale": "Dati non aggiornati",
+  "biDataUnavailable": "Non disponibile",
   "biDimensionLevel": "Piano",
   "biExposureDiffers": "I due periodi non hanno la stessa base; il tasso ne tiene conto, i valori grezzi non si confrontano direttamente.",
   "biForbidden": "Non puoi leggere questa analisi in questo spazio.",
+  "biFutureBasis": "Prenotazioni esistenti e orari attuali; non è una previsione della domanda né un utilizzo garantito.",
   "biGrain": "Durata del periodo",
   "biGrainMonth": "Mese",
   "biGrainQuarter": "Trimestre",
@@ -680,13 +697,34 @@
   "biInvalidAddress": "Questo indirizzo chiede un’analisi che non esiste; non è stato letto nulla.",
   "biNotOffered": "non offerto dalle analisi mostrate",
   "biOpenSource": "Apri la fonte",
+  "biPastBasis": "Ricalcolato dai dati disponibili oggi, non da quelli conosciuti allora.",
   "biQuarter": "T{quarter} {year}",
+  "biRecordedFuture": "Periodo futuro · prenotazioni registrate",
+  "biRecordedPast": "Periodo passato · dati attuali",
+  "biRecordedPresent": "Periodo in corso · include date future",
+  "biRefresh": "Aggiorna i dati",
   "biRefusedBudget": "Ci sono più di {count} gruppi; scegli «Nessun raggruppamento».",
   "biRefusedComparison": "Questa analisi non può fare questo confronto.",
   "biRefusedGrain": "Questa analisi non è offerta per questa durata del periodo.",
   "biRefusedGrouping": "Questa analisi non può essere raggruppata così.",
   "biRemainder": "Fuori dai gruppi attuali",
   "biReset": "Mostra la vista standard",
+  "biSeatHoursBlocked": "{hours} ore-posto bloccate",
+  "@biSeatHoursBlocked": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biSeatHoursFree": "{hours} ore-posto non prenotate",
+  "@biSeatHoursFree": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
   "biSort": "Ordine",
   "biSortAscending": "Prima il più basso",
   "biSortDescending": "Prima il più alto",
@@ -3815,6 +3853,29 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "identityConnectBrowser": "Impossibile aprire il browser.",
+  "identityConnectConfirmApply": "Inviare la tua richiesta di adesione a {name}?",
+  "identityConnectConfirmApplyBody": "Ora sei connesso. Lo spazio esamina la tua richiesta; non viene condiviso nient'altro.",
+  "identityConnectContinue": "Continua con Deskilo",
+  "identityConnectCurrentServer": "È il server a cui sei già connesso.",
+  "identityConnectDifferentAuthority": "Questo server accetta un altro fornitore di identità.",
+  "identityConnectDone": "Connesso a {host}.",
+  "identityConnectExistingAccount": "Usa un account che ho già su questo server",
+  "identityConnectExpired": "L'accesso ha richiesto troppo tempo. Ricomincia.",
+  "identityConnectExplain": "{host} saprà che sei tu, grazie alla tua identità Deskilo. Connettersi non ti rende membro, non ti dà alcun ruolo e non collega alcun assistente: lo spazio decide sempre su ogni richiesta.",
+  "identityConnectNetwork": "Il server non ha risposto. Riprova.",
+  "identityConnectNoDeskiloSignIn": "Questo server non offre l'accesso con Deskilo.",
+  "identityConnectNoSharedIdentity": "Il tuo account qui non ha un'identità Deskilo che un altro server possa accettare.",
+  "identityConnectNotSaved": "{host} ti ha accettato, ma questo dispositivo non ha potuto conservare la connessione. Non è stato inviato nulla. Riprova.",
+  "identityConnectRefused": "La connessione non è stata completata. Non è stato inviato nulla.",
+  "identityConnectRetry": "Riprova",
+  "identityConnectSend": "Invia richiesta",
+  "identityConnectServerUnsupported": "Questo server non può essere collegato da questa versione dell'app.",
+  "identityConnectTitle": "Connettiti a {host}",
+  "identityConnectUnavailable": "Questo server non ha risposto.",
+  "identityConnectUnlinked": "Un account su quel server usa già questa identità o questa e-mail senza esservi collegato. Usa quell'account.",
+  "identityConnectWaiting": "Completa l'accesso nel browser, poi torna qui.",
+  "identityConnectWrongAccount": "Il browser ha effettuato l'accesso come un'altra persona. Non è stato collegato nulla.",
   "identityConsentAsks": "Usa la tua identità Deskilo per accedere a {host}.",
   "@identityConsentAsks": {
     "description": "Identity-only consent names the exact destination host.",
@@ -9277,6 +9338,7 @@
   "@statusNet": {
     "description": "#934 workspace status / repartition wizard: statusNet"
   },
+  "statusNetExplanation": "Questo subtotale è costituito dagli importi fatturati meno note di credito, rimborsi e crediti. Non è un utile né un saldo bancario. I pagamenti abbinati e ricevuti si sovrappongono e non devono essere sommati.",
   "statusPaymentsMatched": "Pagamenti abbinati",
   "@statusPaymentsMatched": {
     "description": "#934 workspace status / repartition wizard: statusPaymentsMatched"
@@ -9553,13 +9615,20 @@
   "taskOutputUnsupportedPlatform": "Non disponibile su questo dispositivo.",
   "taskOutputVideo": "Video",
   "taskRecorderActionBack": "È tornato indietro",
+  "taskRecorderActionCancelReservation": "Ha annullato la prenotazione",
   "taskRecorderActionCancelReview": "Ha chiuso la prenotazione senza prenotare",
   "taskRecorderActionChangeField": "Ha modificato un dettaglio della prenotazione",
+  "taskRecorderActionCheckIn": "Ha fatto il check-in",
+  "taskRecorderActionCheckOut": "Ha fatto il check-out",
+  "taskRecorderActionCloseMyReservation": "Ha chiuso la prenotazione senza modificarla",
   "taskRecorderActionConfirmBooking": "Ha confermato la prenotazione",
+  "taskRecorderActionDeclineOptIn": "Non ha attivato una funzionalità in prova",
   "taskRecorderActionOpenReserve": "Ha aperto Prenota",
   "taskRecorderActionSelectDate": "Ha scelto il giorno",
+  "taskRecorderActionSelectLevel": "Ha scelto un piano",
   "taskRecorderActionSelectPeriod": "Ha scelto il periodo",
   "taskRecorderActionSelectResource": "Ha scelto un posto",
+  "taskRecorderActionSwitchFeature": "Ha cambiato una funzionalità",
   "taskRecorderActionSwitchView": "Ha cambiato vista",
   "taskRecorderActionViewDetails": "Ha aperto la prenotazione",
   "taskRecorderAddNote": "Aggiungi una nota",
@@ -9593,10 +9662,15 @@
   "taskRecorderNoRecordings": "Nessuna registrazione su questo dispositivo.",
   "taskRecorderNoteHint": "Le sue parole, conservate come le scrive",
   "taskRecorderOpenRecorder": "Apri il registratore di attività",
+  "taskRecorderOutcomeCancelled": "Annullata",
+  "taskRecorderOutcomeCheckedIn": "Check-in registrato",
+  "taskRecorderOutcomeCheckedOut": "Check-out registrato",
   "taskRecorderOutcomeConfirmed": "Prenotato",
   "taskRecorderOutcomeRefused": "Rifiutato",
   "taskRecorderOutcomeRequested": "Inviato per conferma",
   "taskRecorderOutcomeSeries": "Serie prenotata",
+  "taskRecorderOutcomeSettingNotSaved": "Non salvato",
+  "taskRecorderOutcomeSettingSaved": "Salvato",
   "taskRecorderOutcomeUnknown": "Nessuna risposta ricevuta",
   "taskRecorderPause": "Pausa",
   "taskRecorderPaused": "In pausa",
@@ -9634,15 +9708,19 @@
   "taskRecorderValueClosed": "chiuso",
   "taskRecorderValueConflict": "già occupato",
   "taskRecorderValueCustom": "orari personalizzati",
+  "taskRecorderValueDay": "giorno",
   "taskRecorderValueDesk": "una scrivania",
   "taskRecorderValueFullDay": "giornata intera",
   "taskRecorderValueHours": "a ore",
   "taskRecorderValueLater": "un giorno successivo",
   "taskRecorderValueLaterThisWeek": "più avanti questa settimana",
   "taskRecorderValueList": "elenco",
+  "taskRecorderValueMonth": "mese",
   "taskRecorderValueMorning": "mattina",
   "taskRecorderValueNoCheckIn": "senza check-in",
+  "taskRecorderValueOff": "disattiva",
   "taskRecorderValueOffline": "offline",
+  "taskRecorderValueOn": "attiva",
   "taskRecorderValueOnce": "una volta",
   "taskRecorderValueOther": "altro",
   "taskRecorderValueOtherMember": "per un altro membro",
@@ -9657,6 +9735,7 @@
   "taskRecorderValueSeries": "ripetuta",
   "taskRecorderValueToday": "oggi",
   "taskRecorderValueTomorrow": "domani",
+  "taskRecorderValueWeek": "settimana",
   "taskRecorderValueWithheld": "non registrato",
   "taskWorkbenchAccepted": "Accettati: .json e .deskilo-task.zip, fino a {megabytes} MB.",
   "taskWorkbenchChoose": "Scegli un file di attività",

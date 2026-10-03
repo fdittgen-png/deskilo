@@ -10,7 +10,7 @@
 // keep the JSON-RPC id and the request UUID apart and associated, and a
 // relabelled answer is refused.
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { handle, projectData, LIMITS } from "./index.ts";
+import { handle, projectData, LIMITS, REFUSAL_TEXT, summarize } from "./index.ts";
 
 function jwt(claims: Record<string, unknown>): string {
   const b = (o: unknown) => btoa(JSON.stringify(o)).replace(/=+$/, "").replace(/\+/g, "-").replace(/\//g, "_");
@@ -115,7 +115,7 @@ Deno.test("tools/call goes through the facade with the caller's own token", asyn
   assertEquals(r.status, 200);
   assertEquals(r.json.result.isError, false);
   assertEquals(r.json.result.structuredContent.status, "pending_validation");
-  assert(r.json.result.content[0].text.includes("Not completed yet"));
+  assert(r.json.result.content[0].text.includes("NOT completed yet"));
   const call = calls.findLast((c) => c.path === "/rest/v1/rpc/mcp_execute_v1")!;
   assertEquals(call.token, ALICE);
   const body = call.body as Record<string, unknown>;
@@ -128,7 +128,10 @@ Deno.test("a refusal from the facade is an error result, never 'done'", async ()
   envelope = { schema_version: 1, status: "denied", error: { code: "not_eligible" } };
   const r = await rpc(ALICE, "tools/call", { name: "deskilo_get_capabilities", arguments: { workspace_id: "6b1d3f0e-0000-4000-8000-000000000002" } });
   assertEquals(r.json.result.isError, true);
-  assert(r.json.result.content[0].text.includes("not_eligible"));
+  assertEquals(r.json.result.structuredContent.error.code, "not_eligible");
+  // #2145 — the person's next step in plain words, not the code.
+  assert(r.json.result.content[0].text.includes("Settings → Assistants"));
+  assert(!r.json.result.content[0].text.includes("not_eligible"));
 });
 
 Deno.test("unknown tools and forbidden fields never reach the database", async () => {
@@ -402,3 +405,81 @@ for (const [what, wrong] of [
     } finally { mislabel = {}; }
   });
 }
+
+// #2145 — what a model reads: the contract's own words, the server's
+// instructions, and refusals that say what to do next.
+
+Deno.test("#2145 tools/list serves exactly the generated tool definitions", async () => {
+  const generated = JSON.parse(await Deno.readTextFile(new URL("../../../contracts/mcp/generated/tools.json", import.meta.url)));
+  const byName = new Map(generated.tools.map((t: { name: string }) => [t.name, t]));
+  const r = await rpc(ALICE, "tools/list");
+  for (const tool of r.json.result.tools) {
+    assertEquals(tool, byName.get(tool.name), tool.name);
+    assert(tool.title && !tool.description.startsWith("Deskilo:"), tool.name);
+    assertEquals(tool.annotations.openWorldHint, false);
+    assert(tool.outputSchema?.type === "object", tool.name);
+  }
+  const create = r.json.result.tools.find((t: { name: string }) => t.name === "deskilo_create_reservation");
+  assertEquals(create.annotations.readOnlyHint, false);
+  assertEquals(create.annotations.destructiveHint, false);
+  assertEquals(create.annotations.idempotentHint, true);
+  assert(create.inputSchema.properties.request_id.description.includes("SAME request_id"));
+  assert(create.inputSchema.properties.starts_at.examples[0].endsWith("+02:00"));
+});
+
+Deno.test("#2145 initialize carries the instructions that chain the tools", async () => {
+  const r = await rpc(ALICE, "initialize", init);
+  const text: string = r.json.result.instructions;
+  for (const needle of ["deskilo_list_workspaces", "request_id", "requires_confirmation", "pending_validation", "minor units", "offset"]) {
+    assert(text.includes(needle), needle);
+  }
+});
+
+Deno.test("#2145 a rate limit keeps its wait, and says it", async () => {
+  envelope = { schema_version: 1, status: "rate_limited", error: { code: "rate_limited" }, data: { retry_after: 42, secret: "x" } };
+  const r = await rpc(ALICE, "tools/call", { name: "deskilo_get_capabilities", arguments: { workspace_id: "6b1d3f0e-0000-4000-8000-000000000002" } });
+  assertEquals(r.json.result.isError, true);
+  assertEquals(r.json.result.structuredContent.data, { retry_after: 42 });
+  assert(r.json.result.content[0].text.includes("Wait 42 seconds"));
+});
+
+Deno.test("#2145 a confirmation says until when, where, and to retry with the same request id", () => {
+  const envelope = { status: "requires_confirmation", data: { confirmation_id: "00000000-0000-4000-8000-0000000000c1", expires_at: "2026-10-03T12:05:00Z" } };
+  Deno.env.delete("DESKILO_APP_URL");
+  const plain = summarize(envelope);
+  assert(plain.startsWith("Nothing happened yet"));
+  assert(plain.includes("before 2026-10-03T12:05:00Z"));
+  assert(plain.includes("same request_id"));
+  assert(!plain.includes("http"));
+  Deno.env.set("DESKILO_APP_URL", "https://app.deskilo.test/");
+  try {
+    assert(summarize(envelope).includes("https://app.deskilo.test/#/mcp/confirm/00000000-0000-4000-8000-0000000000c1"));
+    // An id that is not a UUID never becomes a link.
+    assert(!summarize({ ...envelope, data: { confirmation_id: "../x" } }).includes("http"));
+  } finally { Deno.env.delete("DESKILO_APP_URL"); }
+});
+
+Deno.test("#2145 a business refusal is quoted; pending is never 'done'", () => {
+  assertEquals(
+    summarize({ status: "conflict", error: { code: "refused" }, data: { reason: "outside the opening hours" } }),
+    "Not done: outside the opening hours. Tell the person; the same rules apply in the DesKilo app.",
+  );
+  assert(!summarize({ status: "pending_validation" }).startsWith("Done"));
+  assert(summarize({ status: "denied", error: { code: "something_new" } }).includes("something_new"));
+});
+
+Deno.test("#2145 every refusal code the facade can answer has plain words", async () => {
+  const dir = new URL("../../migrations/", import.meta.url);
+  const codes = new Set<string>();
+  for await (const f of Deno.readDir(dir)) {
+    if (!f.name.endsWith(".sql")) continue;
+    const sql = await Deno.readTextFile(new URL(f.name, dir));
+    if (!sql.includes("mcp_envelope")) continue;
+    for (const m of sql.matchAll(/mcp_envelope\([^;]*?'(?:denied|validation_error|not_found|conflict)',\s*null,\s*'([a-z_]+)'/g)) codes.add(m[1]);
+    for (const m of sql.matchAll(/'refused',\s*'[a-z_]+',\s*'code',\s*'([a-z_]+)'/g)) codes.add(m[1]);
+    for (const m of sql.matchAll(/v_code := '([a-z_]+)'/g)) codes.add(m[1]);
+  }
+  assert(codes.has("not_eligible") && codes.has("not_exposed"), "the scan finds the facade's codes");
+  codes.delete("refused"); // quoted from the business rule itself
+  for (const code of codes) assert(REFUSAL_TEXT[code], `no plain words for ${code}`);
+});

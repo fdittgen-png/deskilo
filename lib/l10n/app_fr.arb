@@ -657,6 +657,7 @@
   "@biAreaTreasury": {
     "description": "#1923 Web-BI area"
   },
+  "biBookingBasis": "La capacité réservée mesure les réservations, pas la présence réelle.",
   "biChangePoints": "{value} pts",
   "biColumnChange": "Écart",
   "biColumnValue": "Valeur",
@@ -668,9 +669,25 @@
   "biComparedLine": "{period} : {value} ({change})",
   "biComparedNotRecorded": "{period} n’a pas été enregistré (l’historique commence le {since}) ; pas de comparaison.",
   "biComparedPartial": "{period} n’est enregistré qu’en partie.",
+  "biComparisonUnqualified": "Évolution indisponible : une période contient des données partielles ou anciennes.",
+  "biComputedWorkspaceTime": "Calculé le {date} · heure de l’espace",
+  "@biComputedWorkspaceTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biCurrentBasis": "La période entière est incluse. La comparaison avec une période terminée ne porte pas sur une base équivalente.",
+  "biDataNotApplicable": "Aucune capacité applicable",
+  "biDataNotRecorded": "Non enregistré",
+  "biDataPartial": "Données partielles",
+  "biDataStale": "Données anciennes",
+  "biDataUnavailable": "Indisponible",
   "biDimensionLevel": "Niveau",
   "biExposureDiffers": "Les deux périodes n’offrent pas la même base ; le taux en tient compte, les chiffres bruts ne se comparent pas directement.",
   "biForbidden": "Vous ne pouvez pas lire cette analyse dans cet espace.",
+  "biFutureBasis": "Réservations existantes et horaires actuels ; ni prévision de demande ni utilisation garantie.",
   "biGrain": "Durée de la période",
   "biGrainMonth": "Mois",
   "biGrainQuarter": "Trimestre",
@@ -680,13 +697,34 @@
   "biInvalidAddress": "Cette adresse demande une analyse qui n’existe pas ; rien n’a été lu.",
   "biNotOffered": "non proposé par les analyses affichées",
   "biOpenSource": "Ouvrir la source",
+  "biPastBasis": "Recalculé à partir des données disponibles aujourd’hui, et non des seules données connues à l’époque.",
   "biQuarter": "T{quarter} {year}",
+  "biRecordedFuture": "Période future · réservations enregistrées",
+  "biRecordedPast": "Période passée · données actuelles",
+  "biRecordedPresent": "Période en cours · dates futures incluses",
+  "biRefresh": "Actualiser les données",
   "biRefusedBudget": "Il y a plus de {count} groupes ; choisissez « Sans regroupement ».",
   "biRefusedComparison": "Cette analyse ne peut pas faire cette comparaison.",
   "biRefusedGrain": "Cette analyse n’est pas proposée pour cette durée de période.",
   "biRefusedGrouping": "Cette analyse ne peut pas être regroupée ainsi.",
   "biRemainder": "Hors des groupes actuels",
   "biReset": "Afficher la vue standard",
+  "biSeatHoursBlocked": "{hours} heures-sièges bloquées",
+  "@biSeatHoursBlocked": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "biSeatHoursFree": "{hours} heures-sièges non réservées",
+  "@biSeatHoursFree": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
   "biSort": "Ordre",
   "biSortAscending": "Le plus bas d’abord",
   "biSortDescending": "Le plus élevé d’abord",
@@ -3815,6 +3853,29 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "identityConnectBrowser": "Le navigateur n'a pas pu être ouvert.",
+  "identityConnectConfirmApply": "Envoyer votre demande d'adhésion à {name} ?",
+  "identityConnectConfirmApplyBody": "Vous êtes maintenant connecté. L'espace examine votre demande ; rien d'autre n'est partagé.",
+  "identityConnectContinue": "Continuer avec Deskilo",
+  "identityConnectCurrentServer": "C'est le serveur auquel vous êtes déjà connecté.",
+  "identityConnectDifferentAuthority": "Ce serveur accepte un autre fournisseur d'identité.",
+  "identityConnectDone": "Connecté à {host}.",
+  "identityConnectExistingAccount": "Utiliser un compte que j'ai déjà sur ce serveur",
+  "identityConnectExpired": "La connexion a pris trop de temps. Recommencez.",
+  "identityConnectExplain": "{host} saura que c'est vous, grâce à votre identité Deskilo. Se connecter ne fait pas de vous un membre, ne vous donne aucun rôle et ne connecte aucun assistant : l'espace décide toujours de chaque demande.",
+  "identityConnectNetwork": "Le serveur n'a pas répondu. Réessayez.",
+  "identityConnectNoDeskiloSignIn": "Ce serveur ne propose pas la connexion avec Deskilo.",
+  "identityConnectNoSharedIdentity": "Votre compte ici n'a pas d'identité Deskilo qu'un autre serveur pourrait accepter.",
+  "identityConnectNotSaved": "{host} vous a accepté, mais cet appareil n'a pas pu garder la connexion. Rien n'a été envoyé. Réessayez.",
+  "identityConnectRefused": "La connexion n'a pas abouti. Rien n'a été envoyé.",
+  "identityConnectRetry": "Réessayer",
+  "identityConnectSend": "Envoyer la demande",
+  "identityConnectServerUnsupported": "Ce serveur ne peut pas être connecté depuis cette version de l'application.",
+  "identityConnectTitle": "Se connecter à {host}",
+  "identityConnectUnavailable": "Ce serveur n'a pas répondu.",
+  "identityConnectUnlinked": "Un compte de ce serveur utilise déjà cette identité ou cette adresse e-mail sans y être lié. Utilisez plutôt ce compte.",
+  "identityConnectWaiting": "Terminez la connexion dans votre navigateur, puis revenez ici.",
+  "identityConnectWrongAccount": "Le navigateur s'est connecté avec quelqu'un d'autre. Rien n'a été connecté.",
   "identityConsentAsks": "Utilisez votre identité Deskilo pour vous connecter à {host}.",
   "@identityConsentAsks": {
     "description": "Identity-only consent names the exact destination host.",
@@ -9277,6 +9338,7 @@
   "@statusNet": {
     "description": "#934 workspace status / repartition wizard: statusNet"
   },
+  "statusNetExplanation": "Ce sous-total correspond aux montants facturés moins les avoirs, remboursements et crédits. Ce n’est ni un bénéfice ni un solde bancaire. Les paiements rapprochés et reçus se recoupent et ne doivent pas être additionnés.",
   "statusPaymentsMatched": "Paiements lettrés",
   "@statusPaymentsMatched": {
     "description": "#934 workspace status / repartition wizard: statusPaymentsMatched"
@@ -9553,13 +9615,20 @@
   "taskOutputUnsupportedPlatform": "Indisponible sur cet appareil.",
   "taskOutputVideo": "Vidéo",
   "taskRecorderActionBack": "Est revenu en arrière",
+  "taskRecorderActionCancelReservation": "A annulé la réservation",
   "taskRecorderActionCancelReview": "A fermé la réservation sans réserver",
   "taskRecorderActionChangeField": "A modifié un détail de la réservation",
+  "taskRecorderActionCheckIn": "A signalé son arrivée",
+  "taskRecorderActionCheckOut": "A signalé son départ",
+  "taskRecorderActionCloseMyReservation": "A fermé sa réservation sans la modifier",
   "taskRecorderActionConfirmBooking": "A confirmé la réservation",
+  "taskRecorderActionDeclineOptIn": "N'a pas activé une fonctionnalité en test",
   "taskRecorderActionOpenReserve": "A ouvert Réserver",
   "taskRecorderActionSelectDate": "A choisi le jour",
+  "taskRecorderActionSelectLevel": "A choisi un niveau",
   "taskRecorderActionSelectPeriod": "A choisi la période",
   "taskRecorderActionSelectResource": "A choisi une place",
+  "taskRecorderActionSwitchFeature": "A changé une fonctionnalité",
   "taskRecorderActionSwitchView": "A changé de vue",
   "taskRecorderActionViewDetails": "A ouvert la réservation",
   "taskRecorderAddNote": "Ajouter une note",
@@ -9593,10 +9662,15 @@
   "taskRecorderNoRecordings": "Aucun enregistrement sur cet appareil.",
   "taskRecorderNoteHint": "Vos propres mots, gardés tels que vous les écrivez",
   "taskRecorderOpenRecorder": "Ouvrir l'enregistreur de tâches",
+  "taskRecorderOutcomeCancelled": "Annulée",
+  "taskRecorderOutcomeCheckedIn": "Arrivée enregistrée",
+  "taskRecorderOutcomeCheckedOut": "Départ enregistré",
   "taskRecorderOutcomeConfirmed": "Réservé",
   "taskRecorderOutcomeRefused": "Refusé",
   "taskRecorderOutcomeRequested": "Envoyé pour confirmation",
   "taskRecorderOutcomeSeries": "Série réservée",
+  "taskRecorderOutcomeSettingNotSaved": "Non enregistré",
+  "taskRecorderOutcomeSettingSaved": "Enregistré",
   "taskRecorderOutcomeUnknown": "Aucune réponse n'est arrivée",
   "taskRecorderPause": "Pause",
   "taskRecorderPaused": "En pause",
@@ -9634,15 +9708,19 @@
   "taskRecorderValueClosed": "fermé",
   "taskRecorderValueConflict": "déjà pris",
   "taskRecorderValueCustom": "horaires choisis",
+  "taskRecorderValueDay": "jour",
   "taskRecorderValueDesk": "un bureau",
   "taskRecorderValueFullDay": "journée entière",
   "taskRecorderValueHours": "à l'heure",
   "taskRecorderValueLater": "un jour plus tard",
   "taskRecorderValueLaterThisWeek": "plus tard cette semaine",
   "taskRecorderValueList": "liste",
+  "taskRecorderValueMonth": "mois",
   "taskRecorderValueMorning": "matin",
   "taskRecorderValueNoCheckIn": "sans arrivée",
+  "taskRecorderValueOff": "désactivée",
   "taskRecorderValueOffline": "hors ligne",
+  "taskRecorderValueOn": "activée",
   "taskRecorderValueOnce": "une fois",
   "taskRecorderValueOther": "autre",
   "taskRecorderValueOtherMember": "pour un autre membre",
@@ -9657,6 +9735,7 @@
   "taskRecorderValueSeries": "répétée",
   "taskRecorderValueToday": "aujourd'hui",
   "taskRecorderValueTomorrow": "demain",
+  "taskRecorderValueWeek": "semaine",
   "taskRecorderValueWithheld": "non enregistré",
   "taskWorkbenchAccepted": "Acceptés : .json et .deskilo-task.zip, jusqu'à {megabytes} Mo.",
   "taskWorkbenchChoose": "Choisir un fichier de tâche",

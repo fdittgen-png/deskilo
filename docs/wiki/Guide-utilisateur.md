@@ -2363,3 +2363,7 @@ L'ordre n'est pas celui des arrivées : c'est **ce que le retard coûte**. L'arg
 Ce qui **n'y est pas** est tout aussi voulu. L'occupation, les soldes et les messages non lus sont des nombres, pas des décisions : personne ne peut agir sur un nombre, et chacun appartient à l'écran qui le porte. Une surface qui classe tout ne classe rien. Quand rien n'attend, l'écran le dit — *Rien ne vous attend* — plutôt que d'afficher une liste vide à interpréter.
 
 La fonctionnalité reste éteinte tant que vous ne la demandez pas, et elle se place **à côté** de la cloche des alertes, sans la remplacer.
+
+**Lire les analyses (#1982).** Le taux d’utilisation correspond aux heures-sièges réservées divisées par les heures-sièges proposées, pas à la présence réelle. Les périodes passées, en cours et futures indiquent le sens des chiffres ; l’heure de calcul est celle de l’espace. Une période en cours inclut les dates futures. Les réservations futures ne sont pas une prévision de demande ; revenir dans le passé recalcule les données actuelles sans recréer les informations connues à l’époque. Une période partielle ou ancienne ne produit pas de chiffre d’évolution. Actualiser les données conserve la sélection. Les heures-sièges non réservées et bloquées sont distinctes. Une donnée absente ou invalide est indisponible, jamais égale à zéro.
+
+L’état financier de l’espace explique son sous-total : montants facturés moins avoirs, remboursements et crédits. Ce n’est ni un bénéfice ni un solde bancaire. Les paiements rapprochés et reçus se recoupent ; ne les additionnez pas.

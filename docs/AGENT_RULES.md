@@ -399,6 +399,22 @@ each with `feature_effective`; a client that cannot read another space's
 flags (a space conversation opened from the inbox, an inquiry to a space
 on another server) offers the action and lets the server refuse it.
 
+
+## Connecting another server with your identity has no feature flag (#1834)
+
+Connecting a participating installation belongs to the PERSON, like their
+own conversations: it happens before (or without) any membership on that
+server, so no workspace's flag could switch it, and the person's own
+workspaces have no say over another server. What matters is decided by
+the servers themselves: the target offers "Continue with Deskilo" only if
+its operator configured the identity provider (`public_identity_authority`,
+an operator setting, not a workspace one), the target verifies the binding
+(`finalize_identity_binding`), and every space on it still decides any
+request (contact, inquiry, membership) with its own flags and validators.
+Connecting grants no membership, role or assistant eligibility. Demo and
+tests never reach a real sign-in (`OfflineIdentityConnector`). Do not add a
+flag that a person without a membership could never have switched.
+
 ## Validation domains grow in FOUR places (#767/#769)
 
 A new server-side validation domain (`events_type_check` +
