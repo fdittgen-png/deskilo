@@ -14433,6 +14433,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderProtectedOperator => 'installation operator';
 
   @override
+  String get taskRecorderExportPackage => 'Export a task package';
+
+  @override
+  String taskRecorderSavedPrivately(String path) {
+    return 'Kept only inside the app: $path';
+  }
+
+  @override
   String get capabilityMultiApproval => 'Two or more approvals';
 
   @override

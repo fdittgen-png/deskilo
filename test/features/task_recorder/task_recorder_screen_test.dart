@@ -16,6 +16,7 @@ import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
+import 'package:deskilo/features/task_recorder/package/task_package.dart';
 import 'package:deskilo/features/task_recorder/presentation/screens/task_recorder_screen.dart';
 import 'package:deskilo/features/task_recorder/presentation/widgets/recording_indicator.dart';
 import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart';
@@ -30,10 +31,11 @@ import 'fixtures/recording_fixtures.dart';
 class _Saver {
   Uint8List? bytes;
   String? name;
-  String? answer = '/Downloads/deskilo-task.json';
+  SaveOutcome answer = const SavedFile('/Downloads/deskilo-task.json');
   bool fail = false;
 
-  Future<String?> call({required Uint8List bytes, required String fileName}) async {
+  Future<SaveOutcome> call(
+      {required Uint8List bytes, required String fileName}) async {
     if (fail) throw StateError('disk full');
     this.bytes = bytes;
     name = fileName;
@@ -47,7 +49,7 @@ class _Harness {
       recorderStoreProvider.overrideWithValue(store),
       recorderScopeProvider.overrideWithValue(canaryScope),
       taskRecorderAvailableProvider.overrideWithValue(available),
-      fileSaverProvider.overrideWithValue(saver.call),
+      typedFileSaverProvider.overrideWithValue(saver.call),
     ]);
   }
 
@@ -174,7 +176,7 @@ void main() {
 
   testWidgets('a saver without a path, or failing, is said truthfully',
       (tester) async {
-    final h = _Harness()..saver.answer = null;
+    final h = _Harness()..saver.answer = const DownloadRequested('x.json');
     await recordJourney(h.controller, StepClock(), BookingJourney.listRefused);
     await h.pump(tester);
     await tester.tap(find.text('Book a desk'));
@@ -187,12 +189,45 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('did not say where it went'), findsOneWidget);
 
+    h.saver.answer = const SavedPrivately('/data/private/x.json');
+    ScaffoldMessenger.of(tester.element(export)).clearSnackBars();
+    await tester.pumpAndSettle();
+    await tester.tap(export);
+    await tester.pumpAndSettle();
+    expect(find.text('Kept only inside the app: /data/private/x.json'),
+        findsOneWidget);
+
     h.saver.fail = true;
     ScaffoldMessenger.of(tester.element(export)).clearSnackBars();
     await tester.pumpAndSettle();
     await tester.tap(export);
     await tester.pumpAndSettle();
     expect(find.text('The file could not be saved.'), findsOneWidget);
+    await h.done(tester);
+  });
+
+  testWidgets('the task package export is the same recording, readable back',
+      (tester) async {
+    final h = _Harness();
+    await recordJourney(h.controller, StepClock(), BookingJourney.listRefused);
+    await h.pump(tester);
+    await tester.tap(find.text('Book a desk'));
+    await tester.pumpAndSettle();
+    final button = find.byKey(const ValueKey('task-recording-export-package'));
+    await tester.scrollUntilVisible(button, 300,
+        scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    await tester.tap(button);
+    await tester.pumpAndSettle();
+    expect(h.saver.name, endsWith('.deskilo-task.zip'));
+    final read = readTaskPackage(h.saver.bytes!);
+    expect(read.accepted, isTrue, reason: '${read.issues}');
+    expect(encodeRecordingText(read.package!.recording),
+        encodeRecordingText(h.controller.snapshot!));
+    expect(read.package!.transcript, contains('Chose a place'));
+    for (final c in [...privateCanaries, ...canaryFragments]) {
+      expect(read.package!.transcript!.contains(c), isFalse, reason: c);
+    }
     await h.done(tester);
   });
 

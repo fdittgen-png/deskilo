@@ -25,6 +25,8 @@ import '../data/recorder_log_backends.dart';
 import '../data/recorder_store.dart';
 import '../domain/recording_sink.dart';
 import '../domain/task_recording.dart';
+import '../export/output_registry.dart';
+import '../package/task_output.dart';
 
 part 'recorder_providers.g.dart';
 
@@ -43,7 +45,9 @@ RecorderStore? recorderStore(Ref ref) {
   return RecorderStore(
     backend: ref.watch(recorderLogBackendProvider),
     namespace: RecorderScope.accountNamespace(
-        backendUrl: ref.watch(bootedBackendUrlProvider), userId: account),
+      backendUrl: ref.watch(bootedBackendUrlProvider),
+      userId: account,
+    ),
     clock: ref.watch(clockProvider),
   );
 }
@@ -136,3 +140,9 @@ class RecorderOpened extends _$RecorderOpened {
 
   void open() => state = true;
 }
+
+/// #1872 — the outputs the workbench offers. Capability-detected by each
+/// generator, never workspace-gated.
+@riverpod
+List<TaskOutputGenerator> taskOutputGenerators(Ref ref) =>
+    taskOutputGeneratorList();

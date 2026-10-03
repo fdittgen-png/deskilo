@@ -454,5 +454,18 @@
   "taskRecorderProtectedOperator": "installation operator",
   "@taskRecorderProtectedOperator": {
     "description": "#1865 task recorder: taskRecorderProtectedOperator"
+  },
+  "taskRecorderExportPackage": "Export a task package",
+  "@taskRecorderExportPackage": {
+    "description": "#1872 task package: taskRecorderExportPackage"
+  },
+  "taskRecorderSavedPrivately": "Kept only inside the app: {path}",
+  "@taskRecorderSavedPrivately": {
+    "description": "#1872 task package: taskRecorderSavedPrivately",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
   }
 }

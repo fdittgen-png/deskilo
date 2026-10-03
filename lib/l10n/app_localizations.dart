@@ -25032,6 +25032,18 @@ abstract class AppLocalizations {
   /// **'installation operator'**
   String get taskRecorderProtectedOperator;
 
+  /// #1872 task package: taskRecorderExportPackage
+  ///
+  /// In en, this message translates to:
+  /// **'Export a task package'**
+  String get taskRecorderExportPackage;
+
+  /// #1872 task package: taskRecorderSavedPrivately
+  ///
+  /// In en, this message translates to:
+  /// **'Kept only inside the app: {path}'**
+  String taskRecorderSavedPrivately(String path);
+
   /// #1659 template_capabilities
   ///
   /// In en, this message translates to:

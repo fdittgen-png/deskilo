@@ -23,31 +23,31 @@ Map<String, Object?> bookingAttemptPayload({
   required bool forSomeoneElse,
   required bool series,
   required bool checkIn,
-}) =>
-    {
-      'for_whom': forSomeoneElse ? 'other_member' : 'self',
-      'repeat': series ? 'series' : 'once',
-      'check_in': checkIn ? 'yes' : 'no',
-    };
+}) => {
+  'for_whom': forSomeoneElse ? 'other_member' : 'self',
+  'repeat': series ? 'series' : 'once',
+  'check_in': checkIn ? 'yes' : 'no',
+};
 
 /// What a returned [BookingOutcome] says.
 Observation bookingOutcomeObservation(BookingOutcome outcome) =>
     switch (outcome) {
       Booked(:final checkedIn) => (
-          outcome: RecorderOutcomes.bookingConfirmed,
-          payload: {'check_in': checkedIn ? 'yes' : 'no'},
-        ),
+        outcome: RecorderOutcomes.bookingConfirmed,
+        payload: {'check_in': checkedIn ? 'yes' : 'no'},
+      ),
       SentForConfirmation() => (
-          outcome: RecorderOutcomes.bookingRequested,
-          payload: const <String, Object?>{},
-        ),
+        outcome: RecorderOutcomes.bookingRequested,
+        payload: const <String, Object?>{},
+      ),
       SeriesBooked(:final result) => (
-          outcome: RecorderOutcomes.seriesBooked,
-          payload: {
-            'series_result':
-                result.skipped.isEmpty ? 'all_booked' : 'partially_booked',
-          },
-        ),
+        outcome: RecorderOutcomes.seriesBooked,
+        payload: {
+          'series_result': result.skipped.isEmpty
+              ? 'all_booked'
+              : 'partially_booked',
+        },
+      ),
     };
 
 /// What a thrown error says. A lost connection or a timeout is an
@@ -71,14 +71,27 @@ Observation bookingErrorObservation(Object error) {
 String refusalCategory(Object error) {
   final text = error.toString().toLowerCase();
   bool any(List<String> marks) => marks.any(text.contains);
-  if (any(['23p01', 'overlap', 'conflict', 'already booked', 'already reserved', 'taken'])) {
+  if (any([
+    '23p01',
+    'overlap',
+    'conflict',
+    'already booked',
+    'already reserved',
+    'taken',
+  ])) {
     return 'conflict';
   }
   if (any(['quota', 'allowance', 'simultaneous', 'limit'])) return 'quota';
   if (any(['closed', 'opening hours', 'outside the opening'])) {
     return 'closed';
   }
-  if (any(['42501', 'permission', 'not allowed', 'not an admin', 'forbidden'])) {
+  if (any([
+    '42501',
+    'permission',
+    'not allowed',
+    'not an admin',
+    'forbidden',
+  ])) {
     return 'permission';
   }
   if (any(['policy', 'horizon', 'past', 'duration', 'granularity'])) {
