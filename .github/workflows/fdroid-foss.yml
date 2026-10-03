@@ -36,7 +36,11 @@ concurrency:
 jobs:
   foss-apk:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # #2123 — 30 minutes stopped fitting: on 2026-09-28 the FOSS-flavour
+    # test step took 18.6 min and the release build 7.9 min; by 2026-10-02
+    # the grown suite alone took 24 min and the build was cut off. Nothing
+    # hangs; the job is the whole suite plus a release build.
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
 
