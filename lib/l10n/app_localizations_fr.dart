@@ -2485,6 +2485,69 @@ class AppLocalizationsFr extends AppLocalizations {
   String get composerDraftKept => 'Brouillon conservé';
 
   @override
+  String get connectionCancelled =>
+      'Le compte a changé entre-temps ; cette réponse a été ignorée.';
+
+  @override
+  String get connectionChangedIdentity =>
+      'Ce serveur n’est plus celui que vous avez connecté. Ses actions sont suspendues jusqu’à une nouvelle vérification.';
+
+  @override
+  String get connectionChecking => 'Vérification…';
+
+  @override
+  String get connectionCurrentServer =>
+      'C’est le serveur que cette application utilise déjà.';
+
+  @override
+  String get connectionDenied =>
+      'Ce serveur a refusé le compte. Vérifiez vos identifiants, ou déconnectez-le.';
+
+  @override
+  String get connectionExpired =>
+      'Votre connexion à ce serveur a expiré. Reconnectez-vous à ce serveur.';
+
+  @override
+  String get connectionInvalidEndpoint =>
+      'Cette adresse ou cette clé n’est pas celle d’un serveur valide.';
+
+  @override
+  String get connectionMalformed =>
+      'Ce serveur a répondu quelque chose que cette application ne sait pas lire.';
+
+  @override
+  String get connectionNotConnected =>
+      'Ce serveur n’est pas connecté sur cet appareil.';
+
+  @override
+  String get connectionRetry => 'Réessayer';
+
+  @override
+  String get connectionSessionNotSaved =>
+      'L’action a été effectuée, mais cet appareil n’a pas pu enregistrer la connexion au serveur. Il vous faudra peut-être vous reconnecter.';
+
+  @override
+  String get connectionSignInAgain => 'Se reconnecter';
+
+  @override
+  String get connectionUnavailable =>
+      'Ce serveur ne répond pas pour le moment. Vos autres serveurs ne sont pas concernés.';
+
+  @override
+  String get connectionUnknownOutcome =>
+      'La connexion s’est interrompue après l’envoi de la demande. Elle a peut-être été appliquée : vérifiez avant de réessayer.';
+
+  @override
+  String get connectionUnsupported =>
+      'Cette version du serveur ne peut pas être connectée depuis cette application. Mettez l’application à jour, ou demandez à l’opérateur du serveur de le mettre à jour.';
+
+  @override
+  String get connectionUsable => 'Connecté';
+
+  @override
+  String get connectionVerifyAgain => 'Vérifier à nouveau';
+
+  @override
   String get consentAccept => 'Accepter et continuer';
 
   @override
@@ -2817,6 +2880,26 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get courtesyNone => 'Aucune';
+
+  @override
+  String get customerCapacityBusiness => 'Professionnel';
+
+  @override
+  String get customerCapacityConsumer => 'Consommateur';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Ce client agit-il pour une activité professionnelle (société, entrepreneur individuel, association agissant comme telle) ou comme consommateur ? Cela décide des clauses de paiement imprimées sur la facture ; un numéro de TVA seul ne le décide pas. Non précisée : la valeur par défaut de l\'espace s\'applique.';
+
+  @override
+  String get customerCapacityLabel => 'Qualité du client';
+
+  @override
+  String get customerCapacityNotStated => 'Non précisée';
+
+  @override
+  String get customerCapacitySaveError =>
+      'La qualité du client n\'a pas été enregistrée.';
 
   @override
   String get datevAccountsIntro =>
@@ -6953,12 +7036,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceKindUsage => 'Les extras du mois';
 
   @override
-  String get invoiceLegalAssociationHint =>
-      'Les clauses de pénalités, d\'indemnité de recouvrement et d\'escompte ne sont imprimées que si renseignées — elles ne sont obligatoires qu\'entre professionnels.';
-
-  @override
   String get invoiceLegalAssociationReasonHint =>
       'ex. « TVA non applicable, art. 293 B du CGI » — ou « Exonération de TVA, art. 261, 7-1° du CGI » pour les services rendus aux membres';
+
+  @override
+  String get invoiceLegalCustomerCapacityField =>
+      'Qualité du client par défaut';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Décide des clauses de paiement imprimées sur la facture. Les mentions légales par défaut (pénalités de retard, indemnité forfaitaire de recouvrement, escompte) ne s\'appliquent qu\'aux clients professionnels, et un consommateur ne reçoit jamais l\'indemnité de recouvrement. La qualité propre d\'un membre l\'emporte sur ce défaut. Chaque facture garde les clauses avec lesquelles elle a été émise.';
 
   @override
   String get invoiceLegalEscompteDefault =>
@@ -15194,6 +15281,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taskRecorderActionSwitchView => 'A changé de vue';
 
   @override
+  String get taskRecorderActionUiCloseWindow => 'A fermé une fenêtre';
+
+  @override
+  String get taskRecorderActionUiCommand => 'A lancé une commande';
+
+  @override
+  String get taskRecorderActionUiCommitField => 'A rempli un champ';
+
+  @override
+  String get taskRecorderActionUiOpenScreen => 'A ouvert un écran';
+
+  @override
+  String get taskRecorderActionUiOpenWindow => 'A ouvert une fenêtre';
+
+  @override
+  String get taskRecorderActionUiTap => 'A touché';
+
+  @override
   String get taskRecorderActionViewDetails => 'A ouvert la réservation';
 
   @override
@@ -15313,6 +15418,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taskRecorderOutcomeCheckedOut => 'Départ enregistré';
 
   @override
+  String get taskRecorderOutcomeCommandDone => 'Fait';
+
+  @override
+  String get taskRecorderOutcomeCommandPending => 'Envoyé pour validation';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Réservé';
 
   @override
@@ -15362,6 +15473,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskRecorderPutBack => 'Remettre';
+
+  @override
+  String get taskRecorderRecordATask => 'Enregistrer une tâche';
 
   @override
   String get taskRecorderRecordThisTask => 'Enregistrer cette tâche';
@@ -15421,6 +15535,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskRecorderStop => 'Arrêter';
+
+  @override
+  String get taskRecorderTargetUnkeyed => 'une commande sans nom';
 
   @override
   String get taskRecorderTitle => 'Enregistreur de tâches';

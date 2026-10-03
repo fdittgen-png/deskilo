@@ -1,0 +1,35 @@
+{
+  "@@locale": "fr",
+  "customerCapacityLabel": "Qualité du client",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Non précisée",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacityBusiness": "Professionnel",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Consommateur",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Ce client agit-il pour une activité professionnelle (société, entrepreneur individuel, association agissant comme telle) ou comme consommateur ? Cela décide des clauses de paiement imprimées sur la facture ; un numéro de TVA seul ne le décide pas. Non précisée : la valeur par défaut de l'espace s'applique.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "invoiceLegalCustomerCapacityField": "Qualité du client par défaut",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Décide des clauses de paiement imprimées sur la facture. Les mentions légales par défaut (pénalités de retard, indemnité forfaitaire de recouvrement, escompte) ne s'appliquent qu'aux clients professionnels, et un consommateur ne reçoit jamais l'indemnité de recouvrement. La qualité propre d'un membre l'emporte sur ce défaut. Chaque facture garde les clauses avec lesquelles elle a été émise.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
+  },
+  "customerCapacitySaveError": "La qualité du client n'a pas été enregistrée.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
+  }
+}

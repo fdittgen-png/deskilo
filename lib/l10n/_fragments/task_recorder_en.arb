@@ -746,5 +746,45 @@
   "taskWorkbenchOfflineFailed": "The browser refused to keep it.",
   "@taskWorkbenchOfflineFailed": {
     "description": "#1886 offline tool: taskWorkbenchOfflineFailed"
+  },
+  "taskRecorderActionUiOpenScreen": "Opened a screen",
+  "@taskRecorderActionUiOpenScreen": {
+    "description": "#2142 recorder: taskRecorderActionUiOpenScreen"
+  },
+  "taskRecorderActionUiTap": "Tapped",
+  "@taskRecorderActionUiTap": {
+    "description": "#2142 recorder: taskRecorderActionUiTap"
+  },
+  "taskRecorderActionUiCommitField": "Filled in a field",
+  "@taskRecorderActionUiCommitField": {
+    "description": "#2142 recorder: taskRecorderActionUiCommitField"
+  },
+  "taskRecorderActionUiCommand": "Ran a command",
+  "@taskRecorderActionUiCommand": {
+    "description": "#2142 recorder: taskRecorderActionUiCommand"
+  },
+  "taskRecorderActionUiOpenWindow": "Opened a window",
+  "@taskRecorderActionUiOpenWindow": {
+    "description": "#2142 recorder: taskRecorderActionUiOpenWindow"
+  },
+  "taskRecorderActionUiCloseWindow": "Closed a window",
+  "@taskRecorderActionUiCloseWindow": {
+    "description": "#2142 recorder: taskRecorderActionUiCloseWindow"
+  },
+  "taskRecorderOutcomeCommandDone": "Done",
+  "@taskRecorderOutcomeCommandDone": {
+    "description": "#2142 recorder: taskRecorderOutcomeCommandDone"
+  },
+  "taskRecorderOutcomeCommandPending": "Sent for validation",
+  "@taskRecorderOutcomeCommandPending": {
+    "description": "#2142 recorder: taskRecorderOutcomeCommandPending"
+  },
+  "taskRecorderTargetUnkeyed": "an unnamed control",
+  "@taskRecorderTargetUnkeyed": {
+    "description": "#2142 recorder: taskRecorderTargetUnkeyed"
+  },
+  "taskRecorderRecordATask": "Record a task",
+  "@taskRecorderRecordATask": {
+    "description": "#2142 recorder: taskRecorderRecordATask — the labelled entry in the drawer and Me → Account"
   }
 }

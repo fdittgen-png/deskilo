@@ -16,15 +16,21 @@
 // booking is "for another member", never for whom. A field change says
 // which field was committed, never its value.
 
+import 'ui_vocabulary.g.dart';
+
 /// The placeholder a value outside its field's vocabulary becomes.
 const String withheldValue = 'withheld';
 
 /// One payload field and the only values it can carry.
 class SafeField {
-  const SafeField(this.key, this.values);
+  const SafeField(this.key, this.values, {this.soft = false});
 
   final String key;
   final Set<String> values;
+
+  /// #2142 — a value this build does not know reads as [withheldValue]
+  /// instead of refusing the file: the generic labels grow with the app.
+  final bool soft;
 }
 
 /// The whole field list. Adding a field is a reviewed change to this
@@ -54,6 +60,9 @@ const Map<String, SafeField> safeFields = {
     'all_booked',
     'partially_booked',
   }),
+  // #2142 — a control's or a screen's label: one of the app's own
+  // messages (by key), never text somebody typed.
+  'label': SafeField('label', uiLabelKeys, soft: true),
   'refusal': SafeField('refusal', {
     'conflict',
     'policy',
@@ -101,7 +110,11 @@ class SafePayload {
       if (key is! String || !declared.contains(key)) return null;
       final field = safeFields[key];
       if (field == null || value is! String) return null;
-      if (value != withheldValue && !field.values.contains(value)) return null;
+      if (value != withheldValue && !field.values.contains(value)) {
+        if (!field.soft) return null;
+        out[key] = withheldValue;
+        continue;
+      }
       out[key] = value;
     }
     return out.isEmpty ? empty : SafePayload._(Map.unmodifiable(out));

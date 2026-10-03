@@ -7,6 +7,20 @@ import '../ui/app_snack.dart';
 import 'refusal_text.dart';
 import 'trace_logger.dart';
 
+/// #2142 — told about each guarded command while something listens: the
+/// task recorder, while it records, sets it and clears it again. With
+/// nothing set, [runGuarded] does exactly what it did before.
+abstract interface class GuardedCommandWatcher {
+  /// Before the action. A null token means "not watched".
+  Object? started(String domain, String message);
+
+  /// After it: [error] when it failed, [pending] when a policy held it.
+  void ended(Object token, {Object? error, bool pending = false});
+}
+
+/// The watcher, when one listens.
+GuardedCommandWatcher? guardedCommandWatcher;
+
 /// Runs a mutating [action] with THE error boilerplate every call site
 /// used to open-code: on failure the error is debug-printed, traced to
 /// [TraceLogger] under [domain]/[message], and — when [errorText] is
@@ -34,11 +48,15 @@ Future<bool> runGuarded(
   // and a device that pretends shows what it actually did.
   final what = message.replaceFirst(RegExp(r'\s+failed$'), '');
   TraceLogger.instance.log(TraceLevel.info, domain, '$what — started');
+  final watcher = guardedCommandWatcher;
+  final watched = watcher?.started(domain, message);
   try {
     await action();
     TraceLogger.instance.log(TraceLevel.info, domain, '$what — done');
+    if (watched != null) watcher?.ended(watched);
     return true;
   } on PendingValidationException catch (e, st) {
+    if (watched != null) watcher?.ended(watched, pending: true);
     // #982 — not a failure: the policy holds the act for a decision. One
     // notice, the same everywhere, and the caller treats it as "not
     // done" (the feed shows the pending request).
@@ -53,6 +71,7 @@ Future<bool> runGuarded(
     }
     return false;
   } catch (e, st) {
+    if (watched != null) watcher?.ended(watched, error: e);
     debugPrint('$message: $e\n$st');
     TraceLogger.instance.error(domain, message, error: e, stackTrace: st);
     if (errorText != null && context.mounted) {

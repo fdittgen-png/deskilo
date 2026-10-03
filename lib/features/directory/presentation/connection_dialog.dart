@@ -4,9 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/backend/connected_installations.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../providers/directory_providers.dart';
+import 'connection_outcome_text.dart';
 
 class ConnectionDialog extends ConsumerStatefulWidget {
   const ConnectionDialog({
@@ -39,45 +42,73 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
     final l10n = AppLocalizations.of(context);
     final endpoint = BackendEndpoint(_url.text.trim(), _key.text.trim());
     setState(() => _busy = true);
+    // #1832 A — a typed outcome says what went wrong and what to do; only
+    // an error without one falls back to the generic sentence.
+    ConnectionFailure? failure;
     final ok = await runGuarded(
       context,
       domain: 'account',
       message: 'connect installation failed',
-      errorText:
-          l10n?.portalConnectionFailed ??
-          'Could not connect. Check this server and your sign-in details.',
       action: () async {
-        if (validateBackendEndpoint(endpoint.url, endpoint.key) != null) {
-          throw StateError('invalid endpoint');
-        }
-        if (widget.publishDirectory) {
-          await ref
-              .read(directoryActionsProvider)
-              .register(endpoint.url, endpoint.key);
-        } else {
-          final registry = ref.read(connectedInstallationsProvider);
-          if (requestCode) {
-            await registry.requestCode(endpoint, _email.text);
-          } else {
-            await registry.connect(
-              endpoint,
-              _email.text,
-              _credential.text,
-              code: _code,
-            );
-          }
+        try {
+          await _connect(endpoint, requestCode: requestCode);
+        // ignore: catch_no_st
+        } on ConnectionFailure catch (f) {
+          // trace-exempt: rethrown unchanged; runGuarded traces it.
+          failure = f;
+          rethrow;
         }
       },
     );
     if (!mounted) return;
     setState(() => _busy = false);
+    if (!ok) {
+      AppSnack.error(
+        context,
+        failure != null
+            ? connectionFailureText(l10n, failure!)
+            : (l10n?.portalConnectionFailed ??
+                  'Could not connect. Check this server and your sign-in '
+                      'details.'),
+      );
+    }
     if (ok && requestCode) {
       setState(() => _code = true);
     }
     if (ok && !requestCode) {
       ref.invalidate(connectedSourcesProvider);
+      ref.invalidate(connectionHealthProvider(endpoint.url));
       ref.invalidate(publicDirectoryProvider);
       Navigator.of(context).pop(true);
+    }
+  }
+
+  Future<void> _connect(
+    BackendEndpoint endpoint, {
+    required bool requestCode,
+  }) async {
+    if (validateBackendEndpoint(endpoint.url, endpoint.key) != null) {
+      throw ConnectionFailure(
+        endpoint.url,
+        ConnectionFailureReason.invalidEndpoint,
+      );
+    }
+    if (widget.publishDirectory) {
+      await ref
+          .read(directoryActionsProvider)
+          .register(endpoint.url, endpoint.key);
+    } else {
+      final registry = ref.read(connectedInstallationsProvider);
+      if (requestCode) {
+        await registry.requestCode(endpoint, _email.text);
+      } else {
+        await registry.connect(
+          endpoint,
+          _email.text,
+          _credential.text,
+          code: _code,
+        );
+      }
     }
   }
 

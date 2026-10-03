@@ -1,0 +1,35 @@
+{
+  "@@locale": "it",
+  "customerCapacityLabel": "Qualità del cliente",
+  "@customerCapacityLabel": {
+    "description": "#1916 invoice clauses: customerCapacityLabel"
+  },
+  "customerCapacityNotStated": "Non indicata",
+  "@customerCapacityNotStated": {
+    "description": "#1916 invoice clauses: customerCapacityNotStated"
+  },
+  "customerCapacityBusiness": "Professionista",
+  "@customerCapacityBusiness": {
+    "description": "#1916 invoice clauses: customerCapacityBusiness"
+  },
+  "customerCapacityConsumer": "Consumatore",
+  "@customerCapacityConsumer": {
+    "description": "#1916 invoice clauses: customerCapacityConsumer"
+  },
+  "customerCapacityExplainer": "Se questo cliente agisce per un'attività imprenditoriale o professionale (società, ditta individuale, associazione che agisce come tale) o come consumatore. Decide quali clausole di pagamento stampa una fattura; la sola partita IVA non lo decide. Non indicata: si applica il valore predefinito dello spazio.",
+  "@customerCapacityExplainer": {
+    "description": "#1916 invoice clauses: customerCapacityExplainer"
+  },
+  "invoiceLegalCustomerCapacityField": "Qualità del cliente predefinita",
+  "@invoiceLegalCustomerCapacityField": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityField"
+  },
+  "invoiceLegalCustomerCapacityHint": "Decide quali clausole di pagamento stampa una fattura. I testi legali predefiniti su interessi di mora, risarcimento forfettario delle spese di recupero e sconto valgono solo per clienti professionisti, e un consumatore non riceve mai il risarcimento delle spese di recupero. La qualità propria di un membro prevale su questo valore. Ogni fattura conserva le clausole con cui è stata emessa.",
+  "@invoiceLegalCustomerCapacityHint": {
+    "description": "#1916 invoice clauses: invoiceLegalCustomerCapacityHint"
+  },
+  "customerCapacitySaveError": "La qualità del cliente non è stata salvata.",
+  "@customerCapacitySaveError": {
+    "description": "#1916 invoice clauses: customerCapacitySaveError"
+  }
+}

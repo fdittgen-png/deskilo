@@ -109,6 +109,8 @@ import '../features/task_recorder/presentation/route_classification.dart'
     show taskRecorderRoute, taskWorkbenchRoute;
 import '../features/task_recorder/presentation/screens/task_recorder_screen.dart';
 import '../features/task_recorder/presentation/screens/task_workbench_screen.dart';
+import '../features/task_recorder/presentation/ui_capture.dart'
+    show RecorderWindowObserver;
 
 export 'shell/shell_destinations.dart' show ShellBranch;
 
@@ -180,6 +182,9 @@ GoRouter router(Ref ref) {
     // is what opens on start, after sign-in and after onboarding.
     initialLocation: '/reserve',
     refreshListenable: refresh,
+    // #2142 — tells a live task recording that a window opened or
+    // closed; does nothing while none is live.
+    observers: [RecorderWindowObserver()],
     // #1650 — the rules live in route_policy.dart as a pure function over
     // facts; this closure only collects the facts and asks. Building them
     // reads; nothing here writes.

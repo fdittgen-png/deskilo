@@ -177,5 +177,15 @@
   "taskWorkbenchOfflineReady": "Conservato in questo browser: le schermate già aperte funzionano senza connessione.",
   "taskWorkbenchOfflineOff": "Non conservato: senza connessione questa pagina non si aprirà.",
   "taskWorkbenchOfflineUnsupported": "Questo browser non può conservarlo (una finestra privata di solito non può).",
-  "taskWorkbenchOfflineFailed": "Il browser si è rifiutato di conservarlo."
+  "taskWorkbenchOfflineFailed": "Il browser si è rifiutato di conservarlo.",
+  "taskRecorderActionUiOpenScreen": "Ha aperto una schermata",
+  "taskRecorderActionUiTap": "Ha toccato",
+  "taskRecorderActionUiCommitField": "Ha compilato un campo",
+  "taskRecorderActionUiCommand": "Ha eseguito un comando",
+  "taskRecorderActionUiOpenWindow": "Ha aperto una finestra",
+  "taskRecorderActionUiCloseWindow": "Ha chiuso una finestra",
+  "taskRecorderOutcomeCommandDone": "Fatto",
+  "taskRecorderOutcomeCommandPending": "Inviato per la convalida",
+  "taskRecorderTargetUnkeyed": "un comando senza nome",
+  "taskRecorderRecordATask": "Registra un'attività"
 }

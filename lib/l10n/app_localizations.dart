@@ -4333,6 +4333,108 @@ abstract class AppLocalizations {
   /// **'Draft kept'**
   String get composerDraftKept;
 
+  /// No description provided for @connectionCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'The account changed meanwhile, so this answer was discarded.'**
+  String get connectionCancelled;
+
+  /// No description provided for @connectionChangedIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'This server is no longer the one you connected. Its actions are paused until you verify it again.'**
+  String get connectionChangedIdentity;
+
+  /// No description provided for @connectionChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking…'**
+  String get connectionChecking;
+
+  /// No description provided for @connectionCurrentServer.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the server this app already uses.'**
+  String get connectionCurrentServer;
+
+  /// No description provided for @connectionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'This server refused the account. Check the sign-in details, or disconnect it.'**
+  String get connectionDenied;
+
+  /// No description provided for @connectionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Your sign-in to this server has ended. Sign in to this server again.'**
+  String get connectionExpired;
+
+  /// No description provided for @connectionInvalidEndpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'This address or key is not a valid server.'**
+  String get connectionInvalidEndpoint;
+
+  /// No description provided for @connectionMalformed.
+  ///
+  /// In en, this message translates to:
+  /// **'This server answered something this app cannot read.'**
+  String get connectionMalformed;
+
+  /// No description provided for @connectionNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'This server is not connected on this device.'**
+  String get connectionNotConnected;
+
+  /// No description provided for @connectionRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get connectionRetry;
+
+  /// No description provided for @connectionSessionNotSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'The action was done, but this device could not save the server\'s sign-in. You may be asked to sign in again.'**
+  String get connectionSessionNotSaved;
+
+  /// No description provided for @connectionSignInAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in again'**
+  String get connectionSignInAgain;
+
+  /// No description provided for @connectionUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This server is not answering right now. Your other servers are not affected.'**
+  String get connectionUnavailable;
+
+  /// No description provided for @connectionUnknownOutcome.
+  ///
+  /// In en, this message translates to:
+  /// **'The connection dropped after the request was sent. It may have been applied: check before trying again.'**
+  String get connectionUnknownOutcome;
+
+  /// No description provided for @connectionUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'This server\'s version cannot be connected from this app. Update the app, or ask the server\'s operator to update the server.'**
+  String get connectionUnsupported;
+
+  /// No description provided for @connectionUsable.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get connectionUsable;
+
+  /// No description provided for @connectionVerifyAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify again'**
+  String get connectionVerifyAgain;
+
   /// No description provided for @consentAccept.
   ///
   /// In en, this message translates to:
@@ -4938,6 +5040,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'None'**
   String get courtesyNone;
+
+  /// #1916 invoice clauses: customerCapacityBusiness
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get customerCapacityBusiness;
+
+  /// #1916 invoice clauses: customerCapacityConsumer
+  ///
+  /// In en, this message translates to:
+  /// **'Consumer'**
+  String get customerCapacityConsumer;
+
+  /// #1916 invoice clauses: customerCapacityExplainer
+  ///
+  /// In en, this message translates to:
+  /// **'Whether this customer acts for a trade or business (a company, a sole trader, an association acting as one) or as a private consumer. It decides which payment clauses an invoice prints; a VAT number alone does not decide it. Not stated: the workspace default applies.'**
+  String get customerCapacityExplainer;
+
+  /// #1916 invoice clauses: customerCapacityLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Customer capacity'**
+  String get customerCapacityLabel;
+
+  /// #1916 invoice clauses: customerCapacityNotStated
+  ///
+  /// In en, this message translates to:
+  /// **'Not stated'**
+  String get customerCapacityNotStated;
+
+  /// #1916 invoice clauses: customerCapacitySaveError
+  ///
+  /// In en, this message translates to:
+  /// **'The customer capacity was not saved.'**
+  String get customerCapacitySaveError;
 
   /// #669 - accounting export formats
   ///
@@ -11937,14 +12075,20 @@ abstract class AppLocalizations {
   /// Association invoicing + VAT regime gate (#484)
   ///
   /// In en, this message translates to:
-  /// **'The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.'**
-  String get invoiceLegalAssociationHint;
-
-  /// Association invoicing + VAT regime gate (#484)
-  ///
-  /// In en, this message translates to:
   /// **'e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members'**
   String get invoiceLegalAssociationReasonHint;
+
+  /// #1916 invoice clauses: invoiceLegalCustomerCapacityField
+  ///
+  /// In en, this message translates to:
+  /// **'Default customer capacity'**
+  String get invoiceLegalCustomerCapacityField;
+
+  /// #1916 invoice clauses: invoiceLegalCustomerCapacityHint
+  ///
+  /// In en, this message translates to:
+  /// **'Decides which payment clauses an invoice prints. The statutory late-penalty, recovery-indemnity and discount defaults apply only to business customers, and a consumer never receives the recovery indemnity. A member\'s own capacity wins over this default. Every invoice keeps the clauses it was issued with.'**
+  String get invoiceLegalCustomerCapacityHint;
 
   /// Legal invoice mentions (#480)
   ///
@@ -26120,6 +26264,42 @@ abstract class AppLocalizations {
   /// **'Switched the view'**
   String get taskRecorderActionSwitchView;
 
+  /// #2142 recorder: taskRecorderActionUiCloseWindow
+  ///
+  /// In en, this message translates to:
+  /// **'Closed a window'**
+  String get taskRecorderActionUiCloseWindow;
+
+  /// #2142 recorder: taskRecorderActionUiCommand
+  ///
+  /// In en, this message translates to:
+  /// **'Ran a command'**
+  String get taskRecorderActionUiCommand;
+
+  /// #2142 recorder: taskRecorderActionUiCommitField
+  ///
+  /// In en, this message translates to:
+  /// **'Filled in a field'**
+  String get taskRecorderActionUiCommitField;
+
+  /// #2142 recorder: taskRecorderActionUiOpenScreen
+  ///
+  /// In en, this message translates to:
+  /// **'Opened a screen'**
+  String get taskRecorderActionUiOpenScreen;
+
+  /// #2142 recorder: taskRecorderActionUiOpenWindow
+  ///
+  /// In en, this message translates to:
+  /// **'Opened a window'**
+  String get taskRecorderActionUiOpenWindow;
+
+  /// #2142 recorder: taskRecorderActionUiTap
+  ///
+  /// In en, this message translates to:
+  /// **'Tapped'**
+  String get taskRecorderActionUiTap;
+
   /// #1865 task recorder: taskRecorderActionViewDetails
   ///
   /// In en, this message translates to:
@@ -26330,6 +26510,18 @@ abstract class AppLocalizations {
   /// **'Checked out'**
   String get taskRecorderOutcomeCheckedOut;
 
+  /// #2142 recorder: taskRecorderOutcomeCommandDone
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get taskRecorderOutcomeCommandDone;
+
+  /// #2142 recorder: taskRecorderOutcomeCommandPending
+  ///
+  /// In en, this message translates to:
+  /// **'Sent for validation'**
+  String get taskRecorderOutcomeCommandPending;
+
   /// #1865 task recorder: taskRecorderOutcomeConfirmed
   ///
   /// In en, this message translates to:
@@ -26432,6 +26624,12 @@ abstract class AppLocalizations {
   /// **'Put back'**
   String get taskRecorderPutBack;
 
+  /// #2142 recorder: taskRecorderRecordATask — the labelled entry in the drawer and Me → Account
+  ///
+  /// In en, this message translates to:
+  /// **'Record a task'**
+  String get taskRecorderRecordATask;
+
   /// #1865 task recorder: taskRecorderRecordThisTask
   ///
   /// In en, this message translates to:
@@ -26527,6 +26725,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stop'**
   String get taskRecorderStop;
+
+  /// #2142 recorder: taskRecorderTargetUnkeyed
+  ///
+  /// In en, this message translates to:
+  /// **'an unnamed control'**
+  String get taskRecorderTargetUnkeyed;
 
   /// #1865 task recorder: taskRecorderTitle
   ///

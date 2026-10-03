@@ -536,10 +536,6 @@
   "@invoiceLegalKindAssociation": {
     "description": "Association invoicing + VAT regime gate (#484)"
   },
-  "invoiceLegalAssociationHint": "Verzugszins-, Beitreibungs- und Skonto-Klauseln werden nur gedruckt, wenn ausgefüllt — sie sind nur zwischen Unternehmen Pflicht.",
-  "@invoiceLegalAssociationHint": {
-    "description": "Association invoicing + VAT regime gate (#484)"
-  },
   "invoiceLegalFormHintAssociation": "z. B. Association loi 1901 / e. V.",
   "@invoiceLegalFormHintAssociation": {
     "description": "Association invoicing + VAT regime gate (#484)"

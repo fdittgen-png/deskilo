@@ -177,5 +177,15 @@
   "taskWorkbenchOfflineReady": "In diesem Browser behalten: bereits geöffnete Bildschirme funktionieren ohne Verbindung.",
   "taskWorkbenchOfflineOff": "Nicht behalten: ohne Verbindung öffnet sich diese Seite nicht.",
   "taskWorkbenchOfflineUnsupported": "Dieser Browser kann es nicht behalten (ein privates Fenster meist nicht).",
-  "taskWorkbenchOfflineFailed": "Der Browser hat das Behalten abgelehnt."
+  "taskWorkbenchOfflineFailed": "Der Browser hat das Behalten abgelehnt.",
+  "taskRecorderActionUiOpenScreen": "Einen Bildschirm geöffnet",
+  "taskRecorderActionUiTap": "Getippt",
+  "taskRecorderActionUiCommitField": "Ein Feld ausgefüllt",
+  "taskRecorderActionUiCommand": "Einen Befehl ausgeführt",
+  "taskRecorderActionUiOpenWindow": "Ein Fenster geöffnet",
+  "taskRecorderActionUiCloseWindow": "Ein Fenster geschlossen",
+  "taskRecorderOutcomeCommandDone": "Erledigt",
+  "taskRecorderOutcomeCommandPending": "Zur Freigabe gesendet",
+  "taskRecorderTargetUnkeyed": "ein unbenanntes Bedienelement",
+  "taskRecorderRecordATask": "Eine Aufgabe aufzeichnen"
 }

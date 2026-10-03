@@ -2478,6 +2478,69 @@ class AppLocalizationsEs extends AppLocalizations {
   String get composerDraftKept => 'Borrador guardado';
 
   @override
+  String get connectionCancelled =>
+      'La cuenta cambió entretanto, así que se descartó esta respuesta.';
+
+  @override
+  String get connectionChangedIdentity =>
+      'Este servidor ya no es el que conectaste. Sus acciones están en pausa hasta que lo verifiques de nuevo.';
+
+  @override
+  String get connectionChecking => 'Comprobando…';
+
+  @override
+  String get connectionCurrentServer =>
+      'Este es el servidor que esta aplicación ya utiliza.';
+
+  @override
+  String get connectionDenied =>
+      'Este servidor ha rechazado la cuenta. Revisa los datos de acceso o desconéctalo.';
+
+  @override
+  String get connectionExpired =>
+      'Tu sesión en este servidor ha caducado. Vuelve a iniciar sesión en este servidor.';
+
+  @override
+  String get connectionInvalidEndpoint =>
+      'Esta dirección o clave no corresponde a un servidor válido.';
+
+  @override
+  String get connectionMalformed =>
+      'Este servidor ha respondido algo que esta aplicación no puede leer.';
+
+  @override
+  String get connectionNotConnected =>
+      'Este servidor no está conectado en este dispositivo.';
+
+  @override
+  String get connectionRetry => 'Reintentar';
+
+  @override
+  String get connectionSessionNotSaved =>
+      'La acción se realizó, pero este dispositivo no pudo guardar la sesión del servidor. Puede que tengas que volver a iniciar sesión.';
+
+  @override
+  String get connectionSignInAgain => 'Volver a iniciar sesión';
+
+  @override
+  String get connectionUnavailable =>
+      'Este servidor no responde en este momento. Tus otros servidores no se ven afectados.';
+
+  @override
+  String get connectionUnknownOutcome =>
+      'La conexión se cortó después de enviar la solicitud. Puede que se haya aplicado: compruébalo antes de volver a intentarlo.';
+
+  @override
+  String get connectionUnsupported =>
+      'Esta versión del servidor no se puede conectar desde esta aplicación. Actualiza la aplicación o pide al operador del servidor que lo actualice.';
+
+  @override
+  String get connectionUsable => 'Conectado';
+
+  @override
+  String get connectionVerifyAgain => 'Verificar de nuevo';
+
+  @override
   String get consentAccept => 'Aceptar y continuar';
 
   @override
@@ -2810,6 +2873,26 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get courtesyNone => 'Ninguno';
+
+  @override
+  String get customerCapacityBusiness => 'Empresa';
+
+  @override
+  String get customerCapacityConsumer => 'Consumidor';
+
+  @override
+  String get customerCapacityExplainer =>
+      'Si este cliente actúa en el marco de una actividad empresarial o profesional (sociedad, autónomo, asociación que actúa como tal) o como consumidor. Decide qué cláusulas de pago imprime una factura; un número de IVA por sí solo no lo decide. Sin indicar: se aplica el valor por defecto del espacio.';
+
+  @override
+  String get customerCapacityLabel => 'Condición del cliente';
+
+  @override
+  String get customerCapacityNotStated => 'Sin indicar';
+
+  @override
+  String get customerCapacitySaveError =>
+      'La condición del cliente no se ha guardado.';
 
   @override
   String get datevAccountsIntro =>
@@ -6934,12 +7017,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceKindUsage => 'Los extras del mes';
 
   @override
-  String get invoiceLegalAssociationHint =>
-      'Las cláusulas de penalización, indemnización de cobro y descuento solo se imprimen si se rellenan — solo son obligatorias entre profesionales.';
-
-  @override
   String get invoiceLegalAssociationReasonHint =>
       'p. ej. «TVA non applicable, art. 293 B du CGI» — o «Exonération de TVA, art. 261, 7-1° du CGI» para servicios a los miembros';
+
+  @override
+  String get invoiceLegalCustomerCapacityField =>
+      'Condición del cliente por defecto';
+
+  @override
+  String get invoiceLegalCustomerCapacityHint =>
+      'Decide qué cláusulas de pago imprime una factura. Los textos legales por defecto de intereses de demora, indemnización por costes de cobro y descuento solo se aplican a clientes empresariales, y un consumidor nunca recibe la indemnización por costes de cobro. La condición propia de un miembro prevalece sobre este valor. Cada factura conserva las cláusulas con las que se emitió.';
 
   @override
   String get invoiceLegalEscompteDefault => 'Sin descuento por pronto pago.';
@@ -15146,6 +15233,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderActionSwitchView => 'Cambió la vista';
 
   @override
+  String get taskRecorderActionUiCloseWindow => 'Cerró una ventana';
+
+  @override
+  String get taskRecorderActionUiCommand => 'Ejecutó una orden';
+
+  @override
+  String get taskRecorderActionUiCommitField => 'Rellenó un campo';
+
+  @override
+  String get taskRecorderActionUiOpenScreen => 'Abrió una pantalla';
+
+  @override
+  String get taskRecorderActionUiOpenWindow => 'Abrió una ventana';
+
+  @override
+  String get taskRecorderActionUiTap => 'Tocó';
+
+  @override
   String get taskRecorderActionViewDetails => 'Abrió la reserva';
 
   @override
@@ -15264,6 +15369,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderOutcomeCheckedOut => 'Salida registrada';
 
   @override
+  String get taskRecorderOutcomeCommandDone => 'Hecho';
+
+  @override
+  String get taskRecorderOutcomeCommandPending => 'Enviado para validación';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Reservado';
 
   @override
@@ -15313,6 +15424,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskRecorderPutBack => 'Volver a incluir';
+
+  @override
+  String get taskRecorderRecordATask => 'Grabar una tarea';
 
   @override
   String get taskRecorderRecordThisTask => 'Grabar esta tarea';
@@ -15370,6 +15484,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskRecorderStop => 'Detener';
+
+  @override
+  String get taskRecorderTargetUnkeyed => 'un control sin nombre';
 
   @override
   String get taskRecorderTitle => 'Grabador de tareas';
