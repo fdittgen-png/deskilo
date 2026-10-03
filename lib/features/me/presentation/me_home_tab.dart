@@ -19,6 +19,8 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../providers/me_providers.dart';
 import 'linked_spaces_section.dart';
 import 'me_space_card.dart';
+import 'me_workspace_row.dart';
+import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/presentation/widgets/workspace_avatar.dart';
 
 class MeHomeTab extends ConsumerWidget {
@@ -70,39 +72,28 @@ class MeHomeTab extends ConsumerWidget {
                   subtitle: l10n?.meNoSpaceBody ?? 'Find one near you, join with an invitation code, or create your own.',
                 ),
               for (final group in groups.values)
-                if (group.length == 1)
-                  MeSpaceCard(
-                    space: group.first,
-                    member: memberships
-                        .where((m) => m.workspaceId == group.first.id)
-                        .firstOrNull,
-                    lastUsed: group.first.id == last,
-                  )
-                else
-                  Card(
-                    key: ValueKey('me-space-pair-${group.first.pairId}'),
-                    margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: WorkspaceAvatar(workspace: group.first),
-                          title: Text(group.first.name),
-                        ),
-                        for (final space
-                            in [...group]..sort(
-                              (a, b) => b.environment.compareTo(a.environment),
-                            ))
-                          MeSpaceCard(
-                            space: space,
-                            member: memberships
-                                .where((m) => m.workspaceId == space.id)
-                                .firstOrNull,
-                            lastUsed: space.id == last,
-                            grouped: true,
-                          ),
-                      ],
-                    ),
-                  ),
+                MeWorkspaceRow(
+                  key: ValueKey('me-space-pair-${group.first.pairId.isEmpty ? group.first.id : group.first.pairId}'),
+                  avatar: WorkspaceAvatar(workspace: group.first),
+                  name: group.first.name,
+                  detail: {
+                    for (final space in group)
+                      if (memberships.where((m) => m.workspaceId == space.id).firstOrNull case final member?)
+                        member.status == MemberStatus.pending
+                            ? (l10n?.meSpacePending ?? 'Waiting for approval')
+                            : memberRoleLabel(l10n, member),
+                  }.join(' · '),
+                  actions: [
+                    for (final space in [...group]..sort(
+                      (a, b) => b.environment.compareTo(a.environment),
+                    ))
+                      MeSpaceCard(
+                        space: space,
+                        member: memberships.where((m) => m.workspaceId == space.id).firstOrNull,
+                        lastUsed: space.id == last,
+                      ),
+                  ],
+                ),
               const LinkedSpacesSection(),
               // #1835 — my guest visits: beside my spaces, never among them.
               const MyVisitsSection(),

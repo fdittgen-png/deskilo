@@ -2276,6 +2276,7 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
+  "directoryApproximate": "Ungefähre Lage der Adresse",
   "directoryCheckedIn": "Eingecheckt",
   "directoryCheckedInSeat": "Eingecheckt · {seat}",
   "directoryClose": "Schließen",
@@ -2283,6 +2284,9 @@
   "directoryLastSeenDays": "{days, plural, =1{Vor 1 Tag gesehen} other{Vor {days} Tagen gesehen}}",
   "directoryLastSeenHours": "{hours, plural, =1{Vor 1 Stunde gesehen} other{Vor {hours} Stunden gesehen}}",
   "directoryLastSeenMinutes": "Vor {minutes} Min. gesehen",
+  "directoryLocate": "Auf der Karte anzeigen",
+  "directoryLocating": "Öffentliche Adresse wird gesucht…",
+  "directoryLocationMissing": "Standort nicht verfügbar. Der Eigentümer kann genaue Koordinaten veröffentlichen.",
   "directoryNoUpcoming": "Keine anstehenden Reservierungen",
   "directoryOnline": "Online",
   "directoryOpenGroup": "WhatsApp-Gruppe öffnen",
@@ -6011,6 +6015,7 @@
   "meSectionMine": "Mein Verlauf und meine Daten",
   "meSpaceException": "In diesem Space",
   "meSpaceLastUsed": "Zuletzt genutzt",
+  "meSpaceOpen": "Öffnen",
   "meSpacePending": "Wartet auf Freigabe",
   "meTabDiscover": "Entdecken",
   "meTabHome": "Start",
