@@ -14981,6 +14981,75 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get taskExportVideoBusy =>
+      'Une autre vidéo est encore en cours de création.';
+
+  @override
+  String get taskExportVideoCancel => 'Annuler la vidéo';
+
+  @override
+  String get taskExportVideoCancelled =>
+      'Création de la vidéo annulée. Rien n\'a été enregistré.';
+
+  @override
+  String get taskExportVideoEmpty =>
+      'Toutes les étapes ont été écartées : il n\'y a rien à montrer dans une vidéo.';
+
+  @override
+  String get taskExportVideoFailed =>
+      'La vidéo n\'a pas pu être créée. Rien n\'a été enregistré.';
+
+  @override
+  String get taskExportVideoGenerate => 'Créer la vidéo';
+
+  @override
+  String taskExportVideoGenerating(int percent) {
+    return 'Création de la vidéo : $percent %';
+  }
+
+  @override
+  String get taskExportVideoIntro =>
+      'Un tutoriel recréé à partir d\'une tâche enregistrée. Il montre les étapes, pas la preuve que la tâche a réussi.';
+
+  @override
+  String get taskExportVideoLandscape => 'Paysage';
+
+  @override
+  String taskExportVideoLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count étapes ont été écartées lors de la relecture.',
+      one: 'Une étape a été écartée lors de la relecture.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get taskExportVideoPortrait => 'Portrait';
+
+  @override
+  String taskExportVideoSaved(String file) {
+    return 'Vidéo enregistrée avec ses sous-titres et sa transcription : $file';
+  }
+
+  @override
+  String taskExportVideoStepHeading(int number, String title) {
+    return 'Étape $number : $title';
+  }
+
+  @override
+  String get taskExportVideoSummary => 'Résumé';
+
+  @override
+  String get taskExportVideoTooLong =>
+      'La vidéo dépasserait la durée autorisée. Raccourcissez les durées ou écartez des étapes.';
+
+  @override
+  String get taskExportVideoUnsupported =>
+      'Cet appareil ne peut pas créer de vidéo. Exportez le fichier d\'enregistrement et ouvrez-le sur un appareil pris en charge : macOS, iOS, Android ou un navigateur récent capable d\'encoder la vidéo H.264.';
+
+  @override
   String get taskExportWordButton => 'Exporter en document Word';
 
   @override
