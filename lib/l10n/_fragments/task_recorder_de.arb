@@ -153,5 +153,16 @@
   "taskGuideNoText": "Eine noch zu schreibende Anweisung",
   "taskGuideManual": "Diesen Schritt selbst ausführen",
   "taskGuideManualProtected": "Diesen Schritt selbst ausführen, auf einem geschützten Bildschirm: {category}",
-  "taskWorkbenchStoryboardRestored": "Die geprüften Illustrationen wurden aus der Datei wiederhergestellt."
+  "taskWorkbenchStoryboardRestored": "Die geprüften Illustrationen wurden aus der Datei wiederhergestellt.",
+  "taskRecorderActionSelectLevel": "Eine Ebene gewählt",
+  "taskRecorderActionCheckIn": "Eingecheckt",
+  "taskRecorderActionCheckOut": "Ausgecheckt",
+  "taskRecorderActionCancelReservation": "Die Reservierung storniert",
+  "taskRecorderActionCloseMyReservation": "Meine Reservierung ohne Änderung geschlossen",
+  "taskRecorderOutcomeCheckedIn": "Eingecheckt",
+  "taskRecorderOutcomeCheckedOut": "Ausgecheckt",
+  "taskRecorderOutcomeCancelled": "Storniert",
+  "taskRecorderValueDay": "Tag",
+  "taskRecorderValueWeek": "Woche",
+  "taskRecorderValueMonth": "Monat"
 }

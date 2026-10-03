@@ -11,7 +11,9 @@ import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_center_button.dart';
+import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
@@ -27,7 +29,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../reservations/reserve_hub_test.dart' show seatCenter;
+import '../reservations/reserve_hub_test.dart' show reservationOn, seatCenter;
 import 'fixtures/recording_fixtures.dart';
 
 /// The booking command answers with a refusal, worded with private
@@ -46,7 +48,8 @@ class _RefusingRepository extends FakeReservationRepository {
   }) async {
     createCalls++;
     throw const PostgrestException(
-        message: 'overlap with the booking of $kCanaryMemberName');
+      message: 'overlap with the booking of $kCanaryMemberName',
+    );
   }
 }
 
@@ -84,7 +87,7 @@ class _BrokenSink implements RecordingSink, RecordingWriter {
 }
 
 Future<({ProviderContainer container, FakeReservationRepository repo})>
-    _pumpHub(
+_pumpHub(
   WidgetTester tester, {
   FakeReservationRepository? repo,
   RecorderController? controller,
@@ -95,32 +98,36 @@ Future<({ProviderContainer container, FakeReservationRepository repo})>
   addTearDown(tester.view.reset);
   final reservations = repo ?? FakeReservationRepository();
   final store = RecorderStore(
-      backend: MemoryRecorderLogBackend(), namespace: canaryNamespace);
-  final container = ProviderContainer(overrides: [
-    ...standardTestOverrides(
-      floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
-      reservations: reservations,
-      workspace: FakeWorkspaceRepository.withWorkspace()
-        ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
-        ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7],
-    ),
-    recorderStoreProvider.overrideWithValue(store),
-    recorderScopeProvider.overrideWithValue(canaryScope),
-    if (controller != null)
-      recorderControllerProvider.overrideWithValue(controller),
-  ]);
+    backend: MemoryRecorderLogBackend(),
+    namespace: canaryNamespace,
+  );
+  final container = ProviderContainer(
+    overrides: [
+      ...standardTestOverrides(
+        floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
+        reservations: reservations,
+        workspace: FakeWorkspaceRepository.withWorkspace()
+          ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
+          ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7],
+      ),
+      recorderStoreProvider.overrideWithValue(store),
+      recorderScopeProvider.overrideWithValue(canaryScope),
+      if (controller != null)
+        recorderControllerProvider.overrideWithValue(controller),
+    ],
+  );
   // The task starts before the app does, so entering the form is in it.
   if (record) {
     expect(
-        await container
-            .read(recorderControllerProvider)
-            .start(scope: canaryScope),
-        isTrue);
+      await container
+          .read(recorderControllerProvider)
+          .start(scope: canaryScope),
+      isTrue,
+    );
   }
-  await tester.pumpWidget(UncontrolledProviderScope(
-    container: container,
-    child: const DeskiloApp(),
-  ));
+  await tester.pumpWidget(
+    UncontrolledProviderScope(container: container, child: const DeskiloApp()),
+  );
   await tester.pumpAndSettle();
   return (container: container, repo: reservations);
 }
@@ -148,12 +155,14 @@ Future<void> _bookA1(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-List<String?> _ids(TaskRecording r) =>
-    [for (final s in r.steps) s.action ?? s.outcome ?? s.kind.wire];
+List<String?> _ids(TaskRecording r) => [
+  for (final s in r.steps) s.action ?? s.outcome ?? s.kind.wire,
+];
 
 void main() {
-  testWidgets('plan: enter, choose, confirm, booked — attempt before outcome',
-      (tester) async {
+  testWidgets('plan: enter, choose, confirm, booked — attempt before outcome', (
+    tester,
+  ) async {
     final hub = await _pumpHub(tester);
     final controller = _recorder(hub.container);
     await _openReserve(tester);
@@ -181,8 +190,9 @@ void main() {
     await _done(tester, hub.container);
   });
 
-  testWidgets('a cancelled review records the cancel and books nothing',
-      (tester) async {
+  testWidgets('a cancelled review records the cancel and books nothing', (
+    tester,
+  ) async {
     final hub = await _pumpHub(tester);
     final controller = _recorder(hub.container);
     await _openReserve(tester);
@@ -198,8 +208,9 @@ void main() {
     await _done(tester, hub.container);
   });
 
-  testWidgets('a refusal is recorded as refused, by category only',
-      (tester) async {
+  testWidgets('a refusal is recorded as refused, by category only', (
+    tester,
+  ) async {
     final hub = await _pumpHub(tester, repo: _RefusingRepository());
     final controller = _recorder(hub.container);
     await _openReserve(tester);
@@ -213,8 +224,9 @@ void main() {
     await _done(tester, hub.container);
   });
 
-  testWidgets('a lost connection is an outcome nobody can vouch for',
-      (tester) async {
+  testWidgets('a lost connection is an outcome nobody can vouch for', (
+    tester,
+  ) async {
     final hub = await _pumpHub(tester, repo: _OfflineRepository());
     final controller = _recorder(hub.container);
     await _openReserve(tester);
@@ -225,15 +237,24 @@ void main() {
     await _done(tester, hub.container);
   });
 
-  testWidgets('the same booking with the recorder on, off and broken',
-      (tester) async {
-    Future<List<String>> book({required bool record, bool broken = false}) async {
+  testWidgets('the same booking with the recorder on, off and broken', (
+    tester,
+  ) async {
+    Future<List<String>> book({
+      required bool record,
+      bool broken = false,
+    }) async {
       final controller = broken
           ? RecorderController(
-              sink: _BrokenSink(), platform: RecordingPlatform.unknown)
+              sink: _BrokenSink(),
+              platform: RecordingPlatform.unknown,
+            )
           : null;
-      final hub =
-          await _pumpHub(tester, controller: controller, record: record);
+      final hub = await _pumpHub(
+        tester,
+        controller: controller,
+        record: record,
+      );
       await _openReserve(tester);
       await _bookA1(tester);
       expect(hub.repo.createCalls, 1);
@@ -251,5 +272,49 @@ void main() {
     final broken = await book(record: true, broken: true);
     expect(on, off);
     expect(broken, off);
+  });
+
+  testWidgets('#1881 — my reservation: cancel is attempted, then answered', (
+    tester,
+  ) async {
+    final repo = FakeReservationRepository()
+      ..reservations.add(
+        reservationOn(kTestNow, id: 'r-mine', startHour: 0, endHour: 23),
+      );
+    final hub = await _pumpHub(tester, repo: repo);
+    final controller = _recorder(hub.container);
+    await _openReserve(tester);
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Cancel reservation'));
+    await tester.pumpAndSettle();
+    final r = (await controller.stop())!;
+    final ids = _ids(r);
+    final attempt = ids.indexOf(RecorderActions.cancelReservation);
+    expect(attempt, greaterThan(0), reason: '$ids');
+    expect(ids[attempt + 1], RecorderOutcomes.cancelled);
+    expect(encodeRecordingText(r), isNot(contains('r-mine')));
+    await _done(tester, hub.container);
+  });
+
+  testWidgets('#1881 — closing my reservation records the close only', (
+    tester,
+  ) async {
+    final repo = FakeReservationRepository()
+      ..reservations.add(
+        reservationOn(kTestNow, id: 'r-mine', startHour: 0, endHour: 23),
+      );
+    final hub = await _pumpHub(tester, repo: repo);
+    final controller = _recorder(hub.container);
+    await _openReserve(tester);
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    Navigator.of(tester.element(find.text('Cancel reservation'))).pop();
+    await tester.pumpAndSettle();
+    final r = (await controller.stop())!;
+    expect(_ids(r), contains(RecorderActions.closeMyReservation));
+    expect(r.steps.where((s) => s.isAttempt), isEmpty);
+    expect(repo.reservations.single.status, isNot(ReservationStatus.cancelled));
+    await _done(tester, hub.container);
   });
 }

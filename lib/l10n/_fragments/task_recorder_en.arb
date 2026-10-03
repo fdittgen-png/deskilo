@@ -650,5 +650,49 @@
   "taskWorkbenchStoryboardRestored": "The reviewed illustrations were restored from the file.",
   "@taskWorkbenchStoryboardRestored": {
     "description": "#1876 workbench: taskWorkbenchStoryboardRestored"
+  },
+  "taskRecorderActionSelectLevel": "Chose a level",
+  "@taskRecorderActionSelectLevel": {
+    "description": "#1881 recorder: taskRecorderActionSelectLevel"
+  },
+  "taskRecorderActionCheckIn": "Checked in",
+  "@taskRecorderActionCheckIn": {
+    "description": "#1881 recorder: taskRecorderActionCheckIn"
+  },
+  "taskRecorderActionCheckOut": "Checked out",
+  "@taskRecorderActionCheckOut": {
+    "description": "#1881 recorder: taskRecorderActionCheckOut"
+  },
+  "taskRecorderActionCancelReservation": "Cancelled the reservation",
+  "@taskRecorderActionCancelReservation": {
+    "description": "#1881 recorder: taskRecorderActionCancelReservation"
+  },
+  "taskRecorderActionCloseMyReservation": "Closed my reservation without changing it",
+  "@taskRecorderActionCloseMyReservation": {
+    "description": "#1881 recorder: taskRecorderActionCloseMyReservation"
+  },
+  "taskRecorderOutcomeCheckedIn": "Checked in",
+  "@taskRecorderOutcomeCheckedIn": {
+    "description": "#1881 recorder: taskRecorderOutcomeCheckedIn"
+  },
+  "taskRecorderOutcomeCheckedOut": "Checked out",
+  "@taskRecorderOutcomeCheckedOut": {
+    "description": "#1881 recorder: taskRecorderOutcomeCheckedOut"
+  },
+  "taskRecorderOutcomeCancelled": "Cancelled",
+  "@taskRecorderOutcomeCancelled": {
+    "description": "#1881 recorder: taskRecorderOutcomeCancelled"
+  },
+  "taskRecorderValueDay": "day",
+  "@taskRecorderValueDay": {
+    "description": "#1881 recorder: taskRecorderValueDay"
+  },
+  "taskRecorderValueWeek": "week",
+  "@taskRecorderValueWeek": {
+    "description": "#1881 recorder: taskRecorderValueWeek"
+  },
+  "taskRecorderValueMonth": "month",
+  "@taskRecorderValueMonth": {
+    "description": "#1881 recorder: taskRecorderValueMonth"
   }
 }

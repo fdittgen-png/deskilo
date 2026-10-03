@@ -33,6 +33,15 @@ String? actionLabel(AppLocalizations? l10n, String? action) => switch (action) {
   RecorderActions.viewDetails =>
     l10n?.taskRecorderActionViewDetails ?? 'Opened the reservation',
   RecorderActions.back => l10n?.taskRecorderActionBack ?? 'Went back',
+  RecorderActions.selectLevel =>
+    l10n?.taskRecorderActionSelectLevel ?? 'Chose a level',
+  RecorderActions.checkIn => l10n?.taskRecorderActionCheckIn ?? 'Checked in',
+  RecorderActions.checkOut => l10n?.taskRecorderActionCheckOut ?? 'Checked out',
+  RecorderActions.cancelReservation =>
+    l10n?.taskRecorderActionCancelReservation ?? 'Cancelled the reservation',
+  RecorderActions.closeMyReservation =>
+    l10n?.taskRecorderActionCloseMyReservation ??
+        'Closed my reservation without changing it',
   _ => null,
 };
 
@@ -48,6 +57,16 @@ String? outcomeLabel(AppLocalizations? l10n, String? outcome) =>
       RecorderOutcomes.bookingRefused =>
         l10n?.taskRecorderOutcomeRefused ?? 'Refused',
       RecorderOutcomes.bookingUnknown =>
+        l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
+      RecorderOutcomes.checkedIn =>
+        l10n?.taskRecorderOutcomeCheckedIn ?? 'Checked in',
+      RecorderOutcomes.checkedOut =>
+        l10n?.taskRecorderOutcomeCheckedOut ?? 'Checked out',
+      RecorderOutcomes.cancelled =>
+        l10n?.taskRecorderOutcomeCancelled ?? 'Cancelled',
+      RecorderOutcomes.reservationRefused =>
+        l10n?.taskRecorderOutcomeRefused ?? 'Refused',
+      RecorderOutcomes.reservationUnknown =>
         l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
       _ => null,
     };
@@ -67,6 +86,9 @@ String valueLabel(AppLocalizations? l10n, String value) => switch (value) {
   'custom' => l10n?.taskRecorderValueCustom ?? 'custom times',
   'plan' => l10n?.taskRecorderValuePlan ?? 'plan',
   'list' => l10n?.taskRecorderValueList ?? 'list',
+  'day' => l10n?.taskRecorderValueDay ?? 'day',
+  'week' => l10n?.taskRecorderValueWeek ?? 'week',
+  'month' => l10n?.taskRecorderValueMonth ?? 'month',
   'desk' => l10n?.taskRecorderValueDesk ?? 'a desk',
   'room' => l10n?.taskRecorderValueRoom ?? 'a room',
   'other' => l10n?.taskRecorderValueOther ?? 'other',

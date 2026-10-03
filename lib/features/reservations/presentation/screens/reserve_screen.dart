@@ -670,7 +670,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
             // #1301 S2 — the time views behind one named control.
             ReserveViewMenu(
               view: _view,
-              onChanged: (view) => setState(() => _view = view),
+              onChanged: (view) {
+                setState(() => _view = view);
+                recordTaskStep(ref, RecorderActions.switchView, // #1881
+                    payload: {'view_mode': view.name});
+              },
               onGetStarted: gettingStartedReopen(ref, guidanceKey),
             ),
             // Map <-> list, as ONE button showing the icon of what you
@@ -995,6 +999,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 // asking, so the ring goes with it.
                 _clearFocus();
                 ref.read(browsedLevelProvider.notifier).select(id);
+                recordTaskStep(ref, RecorderActions.selectLevel); // #1881
                 // #687/#159 — and it STICKS. Choosing a floor used to be
                 // browsing-only here because the Plan tab owned the
                 // stored default; with that tab gone, a member who works

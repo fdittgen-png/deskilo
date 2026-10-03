@@ -265,6 +265,9 @@ abstract final class RecorderSurfaces {
   static const reserve = 'reservations.reserve';
   static const bookingSheet = 'reservations.booking_sheet';
   static const reservationDetail = 'reservations.reservation_detail';
+
+  /// #1881 A — my own reservation's sheet: check in, check out, cancel.
+  static const myReservation = 'reservations.my_reservation';
   static const recorderControls = 'recorder.controls';
 }
 
@@ -281,6 +284,13 @@ abstract final class RecorderActions {
   static const viewDetails = 'reservations.view_details';
   static const back = 'navigation.back';
   static const recorderControl = 'recorder.control';
+
+  // #1881 A — the rest of the reservation surfaces.
+  static const selectLevel = 'reservations.select_level';
+  static const checkIn = 'reservations.check_in';
+  static const checkOut = 'reservations.check_out';
+  static const cancelReservation = 'reservations.cancel_reservation';
+  static const closeMyReservation = 'reservations.close_my_reservation';
 }
 
 /// Outcome identifiers.
@@ -290,6 +300,13 @@ abstract final class RecorderOutcomes {
   static const seriesBooked = 'booking.series_booked';
   static const bookingRefused = 'booking.refused';
   static const bookingUnknown = 'booking.unknown';
+
+  // #1881 A — my own reservation's commands.
+  static const checkedIn = 'reservation.checked_in';
+  static const checkedOut = 'reservation.checked_out';
+  static const cancelled = 'reservation.cancelled';
+  static const reservationRefused = 'reservation.refused';
+  static const reservationUnknown = 'reservation.unknown';
 }
 
 const Set<String> _bookingOutcomes = {
@@ -307,6 +324,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
     RecorderSurface(RecorderSurfaces.reserve),
     RecorderSurface(RecorderSurfaces.bookingSheet),
     RecorderSurface(RecorderSurfaces.reservationDetail),
+    RecorderSurface(RecorderSurfaces.myReservation),
     RecorderSurface(RecorderSurfaces.recorderControls, recorderControl: true),
     RecorderSurface('navigation.any'),
   ],
@@ -369,6 +387,46 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       kind: ActionKind.back,
     ),
     ActionSpec(
+      RecorderActions.selectLevel,
+      surface: RecorderSurfaces.reserve,
+      kind: ActionKind.select,
+    ),
+    ActionSpec(
+      RecorderActions.checkIn,
+      surface: RecorderSurfaces.myReservation,
+      kind: ActionKind.submit,
+      outcomes: {
+        RecorderOutcomes.checkedIn,
+        RecorderOutcomes.reservationRefused,
+        RecorderOutcomes.reservationUnknown,
+      },
+    ),
+    ActionSpec(
+      RecorderActions.checkOut,
+      surface: RecorderSurfaces.myReservation,
+      kind: ActionKind.submit,
+      outcomes: {
+        RecorderOutcomes.checkedOut,
+        RecorderOutcomes.reservationRefused,
+        RecorderOutcomes.reservationUnknown,
+      },
+    ),
+    ActionSpec(
+      RecorderActions.cancelReservation,
+      surface: RecorderSurfaces.myReservation,
+      kind: ActionKind.submit,
+      outcomes: {
+        RecorderOutcomes.cancelled,
+        RecorderOutcomes.reservationRefused,
+        RecorderOutcomes.reservationUnknown,
+      },
+    ),
+    ActionSpec(
+      RecorderActions.closeMyReservation,
+      surface: RecorderSurfaces.myReservation,
+      kind: ActionKind.cancel,
+    ),
+    ActionSpec(
       RecorderActions.recorderControl,
       surface: RecorderSurfaces.recorderControls,
       kind: ActionKind.select,
@@ -398,6 +456,18 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       RecorderOutcomes.bookingUnknown,
       state: ObservationState.outcomeUnknown,
     ),
+    OutcomeSpec(RecorderOutcomes.checkedIn, state: ObservationState.confirmed),
+    OutcomeSpec(RecorderOutcomes.checkedOut, state: ObservationState.confirmed),
+    OutcomeSpec(RecorderOutcomes.cancelled, state: ObservationState.confirmed),
+    OutcomeSpec(
+      RecorderOutcomes.reservationRefused,
+      state: ObservationState.refused,
+      payloadFields: {'refusal'},
+    ),
+    OutcomeSpec(
+      RecorderOutcomes.reservationUnknown,
+      state: ObservationState.outcomeUnknown,
+    ),
   ],
   prerequisites: [
     PrerequisiteSpec('signed_in'),
@@ -408,6 +478,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
         RecorderSurfaces.reserve,
         RecorderSurfaces.bookingSheet,
         RecorderSurfaces.reservationDetail,
+        RecorderSurfaces.myReservation,
       },
     ),
     PrerequisiteSpec('bookable_place'),

@@ -153,5 +153,16 @@
   "taskGuideNoText": "Un'istruzione ancora da scrivere",
   "taskGuideManual": "Esegua questo passaggio da sé",
   "taskGuideManualProtected": "Esegua questo passaggio da sé, su una schermata protetta: {category}",
-  "taskWorkbenchStoryboardRestored": "Le illustrazioni riviste sono state ripristinate dal file."
+  "taskWorkbenchStoryboardRestored": "Le illustrazioni riviste sono state ripristinate dal file.",
+  "taskRecorderActionSelectLevel": "Ha scelto un piano",
+  "taskRecorderActionCheckIn": "Ha fatto il check-in",
+  "taskRecorderActionCheckOut": "Ha fatto il check-out",
+  "taskRecorderActionCancelReservation": "Ha annullato la prenotazione",
+  "taskRecorderActionCloseMyReservation": "Ha chiuso la prenotazione senza modificarla",
+  "taskRecorderOutcomeCheckedIn": "Check-in registrato",
+  "taskRecorderOutcomeCheckedOut": "Check-out registrato",
+  "taskRecorderOutcomeCancelled": "Annullata",
+  "taskRecorderValueDay": "giorno",
+  "taskRecorderValueWeek": "settimana",
+  "taskRecorderValueMonth": "mese"
 }
