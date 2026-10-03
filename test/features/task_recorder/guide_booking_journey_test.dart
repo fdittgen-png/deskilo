@@ -41,6 +41,7 @@ class _RefusingRepository extends FakeReservationRepository {
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
+    String? requestId,
   }) async {
     createCalls++;
     throw const PostgrestException(message: 'overlap');
