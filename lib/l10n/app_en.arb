@@ -7296,6 +7296,14 @@
   "@inviteRoleMember": {
     "description": "Segment label: invite QR/code that joins as a plain member"
   },
+  "inviteRolesHint": "Given when they join, once their membership is active.",
+  "@inviteRolesHint": {
+    "description": "#2085 giving roles: inviteRolesHint"
+  },
+  "inviteRolesTitle": "Roles on arrival",
+  "@inviteRolesTitle": {
+    "description": "#2085 giving roles: inviteRolesTitle"
+  },
   "inviteSectionTitle": "Invite someone",
   "inviteSendFailed": "Could not open the app for sending. The message was copied instead.",
   "inviteViaShare": "Share…",

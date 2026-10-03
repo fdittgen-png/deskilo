@@ -4074,6 +4074,14 @@
   "invitePhoneLabel": "Teléfono (opcional, con prefijo)",
   "inviteRoleAdmin": "Invitación de administrador/a",
   "inviteRoleMember": "Invitación de miembro",
+  "inviteRolesHint": "Se dan al unirse, una vez activa la membresía.",
+  "@inviteRolesHint": {
+    "description": "#2085 giving roles: inviteRolesHint"
+  },
+  "inviteRolesTitle": "Roles al llegar",
+  "@inviteRolesTitle": {
+    "description": "#2085 giving roles: inviteRolesTitle"
+  },
   "inviteSectionTitle": "Invitar a alguien",
   "inviteSendFailed": "No se pudo abrir la aplicación de envío. El mensaje se copió en su lugar.",
   "inviteViaShare": "Compartir…",

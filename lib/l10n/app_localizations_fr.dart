@@ -6628,6 +6628,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inviteRoleMember => 'Invitation membre';
 
   @override
+  String get inviteRolesHint =>
+      'Attribués à l\'arrivée, une fois l\'adhésion active.';
+
+  @override
+  String get inviteRolesTitle => 'Rôles à l\'arrivée';
+
+  @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
 
   @override
