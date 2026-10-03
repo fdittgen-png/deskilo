@@ -4186,6 +4186,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureCarnetsTitle => 'Carnet';
 
   @override
+  String get featureChangeUnconfirmed =>
+      'La modifica è stata inviata, ma non è stato possibile ricaricare le funzionalità per confermarla. Riapri la schermata per vedere lo stato.';
+
+  @override
+  String get featureChangedMeanwhile =>
+      'Le funzionalità sono cambiate nel frattempo, quindi non è stato salvato nulla. Controlla l\'elenco e riprova.';
+
+  @override
   String get featureCoOwner => 'Comproprietari';
 
   @override
@@ -4663,12 +4671,28 @@ class AppLocalizationsIt extends AppLocalizations {
       'Consenti ai membri di pagare la fattura online (PayPal). Richiede la configurazione del fornitore di pagamento sul server.';
 
   @override
+  String featureOptInAlsoOn(int count, String features) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Vengono attivati anche, perché necessari ($count): $features',
+      one: 'Viene attivato anche, perché necessario: $features',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String featureOptInBody(String features) {
     return 'Non ancora valutata come stabile: $features. Può cambiare e ha limiti noti. Attivala solo se questo spazio lo accetta.';
   }
 
   @override
   String get featureOptInConfirm => 'Attiva';
+
+  @override
+  String featureOptInStage(String feature, String stage) {
+    return '$feature: $stage';
+  }
 
   @override
   String get featureOptInTitle => 'Attivare una funzione sperimentale?';

@@ -231,5 +231,9 @@
   "featureOptInTitle": "Activer une fonctionnalité expérimentale ?",
   "featureOptInBody": "Pas encore évaluée comme stable : {features}. Elle peut changer et a des limites connues. N’activez que si cet espace l’accepte.",
   "featureOptInConfirm": "Activer",
-  "featureIntakeStoppedNote": "Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos."
+  "featureIntakeStoppedNote": "Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos.",
+  "featureOptInAlsoOn": "{count, plural, =1{Activé aussi, car nécessaire : {features}} other{Activés aussi, car nécessaires ({count}) : {features}}}",
+  "featureOptInStage": "{feature} : {stage}",
+  "featureChangedMeanwhile": "Les fonctionnalités ont changé entre-temps, rien n'a donc été enregistré. Vérifiez la liste et recommencez.",
+  "featureChangeUnconfirmed": "La modification a été envoyée, mais les fonctionnalités n'ont pas pu être rechargées pour la confirmer. Rouvrez l'écran pour voir l'état actuel."
 }

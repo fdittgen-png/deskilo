@@ -4156,6 +4156,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureCarnetsTitle => 'Carnets';
 
   @override
+  String get featureChangeUnconfirmed =>
+      'The change was sent, but the features could not be reloaded to confirm it. Reopen the screen to see what is set.';
+
+  @override
+  String get featureChangedMeanwhile =>
+      'The features changed meanwhile, so nothing was written. Check the list and switch again.';
+
+  @override
   String get featureCoOwner => 'Co-owners';
 
   @override
@@ -4629,12 +4637,28 @@ class AppLocalizationsEn extends AppLocalizations {
       'Let members pay their bill online (PayPal). Needs the payment provider configured on the server.';
 
   @override
+  String featureOptInAlsoOn(int count, String features) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Also switched on, because they are needed ($count): $features',
+      one: 'Also switched on, because it is needed: $features',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String featureOptInBody(String features) {
     return 'Not yet reviewed as stable: $features. It may change and has known limits. Switch on only if this space accepts that.';
   }
 
   @override
   String get featureOptInConfirm => 'Switch on';
+
+  @override
+  String featureOptInStage(String feature, String stage) {
+    return '$feature: $stage';
+  }
 
   @override
   String get featureOptInTitle => 'Switch on an experimental feature?';
