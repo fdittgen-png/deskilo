@@ -1713,7 +1713,7 @@ routine public.validation_requires(p_workspace_id uuid, p_type text, p_amount_ce
 routine public.vat_rate_family(p_rate_id uuid) -> SETOF vat_rates | function | definer | stable | exec:authenticated,service_role | body:be13b7375d62
 routine public.vat_rate_id_by_label(p_workspace_id uuid, p_label text) -> uuid | function | definer | stable | exec:authenticated,service_role | body:c5e190aea085
 routine public.vat_rate_percent_at(p_rate_id uuid, p_date date) -> numeric | function | definer | stable | exec:authenticated,service_role | body:89d0065cfc67
-routine public.vat_tax_point(p_period text) -> date | function | invoker | stable | exec:authenticated,service_role | body:5cec9532be52
+routine public.vat_tax_point(p_period text) -> date | function | invoker | stable | exec:authenticated,service_role | body:55f2a0c0157c
 routine public.verify_invoice_signature(p_invoice_id uuid) -> text | function | definer | stable | exec:authenticated,service_role | body:65e617ac44a2
 routine public.visible_account(p_user_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b91589690f11
 routine public.void_invoice(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f65d910e8d0a
