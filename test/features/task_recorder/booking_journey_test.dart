@@ -11,7 +11,6 @@ import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_center_button.dart';
-import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
