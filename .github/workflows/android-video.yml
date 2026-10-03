@@ -73,9 +73,11 @@ jobs:
           disable-animations: true
           script: |
             adb uninstall de.deskilo.app || true
-            flutter test integration_test/task_video_encoder_test.dart -d emulator-5554 --reporter expanded 2>&1 | tee video-encoder.txt
+            adb logcat -c
+            timeout 1800 flutter test integration_test/task_video_encoder_test.dart -d emulator-5554 --reporter expanded 2>&1 | tee video-encoder.txt || true
+            adb logcat -d > logcat.txt || true
+            grep -E "DeskiloVideoEncoder|CCodec|MediaCodec|c2\\.android|AndroidRuntime|flutter" logcat.txt | tail -300 > logcat-video.txt || true
             adb shell getprop ro.build.version.release >> video-encoder.txt
-            adb shell dumpsys media.player 2>/dev/null | grep -i "avc.encoder" | head -3 >> video-encoder.txt || true
             grep -q "All tests passed" video-encoder.txt
 
       - name: Upload the run
@@ -83,5 +85,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-video-encoder
-          path: video-encoder.txt
+          path: |
+            video-encoder.txt
+            logcat.txt
+            logcat-video.txt
           if-no-files-found: ignore

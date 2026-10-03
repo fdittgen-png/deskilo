@@ -149,14 +149,19 @@ class RenderJob {
           previous = current;
         }
       }
-      // The last still once more just before the end, so a muxer that
-      // infers the last sample's duration still ends at the timeline's.
-      final closing = total - 1000 ~/ limits.fps;
+      // The last still twice more, one frame step apart, just before the
+      // end: a muxer that gives the last sample the previous sample's
+      // duration (Android's MediaMuxer) then ends exactly on the
+      // timeline instead of up to a second late.
+      final step = 1000 ~/ limits.fps;
       final last = previous;
-      if (last != null &&
-          closing > lastPts &&
-          !(cancel?.isCancelled ?? false)) {
-        await live.addFrame(await composer.rgba(last), closing);
+      if (last != null) {
+        final still = await composer.rgba(last);
+        for (final at in [total - 2 * step, total - step]) {
+          if (at <= lastPts || (cancel?.isCancelled ?? false)) continue;
+          await live.addFrame(still, at);
+          lastPts = at;
+        }
       }
       if (cancel?.isCancelled ?? false) {
         await live.cancel();

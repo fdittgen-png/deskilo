@@ -1,0 +1,13 @@
+{
+  "provenance": {
+    "kind": "captured",
+    "source": "POST /rest/v1/rpc/public_network_descriptor with the publishable key against the dev project at schema 0319 (before negotiation), 2026-10-01"
+  },
+  "status": 404,
+  "body": {
+    "code": "PGRST202",
+    "details": "Searched for the function public.public_network_descriptor without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.",
+    "hint": "Perhaps you meant to call the function public.public_identity_authority",
+    "message": "Could not find the function public.public_network_descriptor without parameters in the schema cache"
+  }
+}
