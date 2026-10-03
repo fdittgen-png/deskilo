@@ -356,6 +356,7 @@ class _CardsDialogState extends State<_CardsDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('bi-toolbar-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(material.cancelButtonLabel),
         ),

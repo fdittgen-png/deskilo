@@ -15903,6 +15903,24 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderActionSwitchView => 'Ha cambiato vista';
 
   @override
+  String get taskRecorderActionUiCloseWindow => 'Ha chiuso una finestra';
+
+  @override
+  String get taskRecorderActionUiCommand => 'Ha eseguito un comando';
+
+  @override
+  String get taskRecorderActionUiCommitField => 'Ha compilato un campo';
+
+  @override
+  String get taskRecorderActionUiOpenScreen => 'Ha aperto una schermata';
+
+  @override
+  String get taskRecorderActionUiOpenWindow => 'Ha aperto una finestra';
+
+  @override
+  String get taskRecorderActionUiTap => 'Ha toccato';
+
+  @override
   String get taskRecorderActionViewDetails => 'Ha aperto la prenotazione';
 
   @override
@@ -16022,6 +16040,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderOutcomeCheckedOut => 'Check-out registrato';
 
   @override
+  String get taskRecorderOutcomeCommandDone => 'Fatto';
+
+  @override
+  String get taskRecorderOutcomeCommandPending => 'Inviato per la convalida';
+
+  @override
   String get taskRecorderOutcomeConfirmed => 'Prenotato';
 
   @override
@@ -16071,6 +16095,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderPutBack => 'Reinserisci';
+
+  @override
+  String get taskRecorderRecordATask => 'Registra un\'attività';
 
   @override
   String get taskRecorderRecordThisTask => 'Registra questa attività';
@@ -16129,6 +16156,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderStop => 'Ferma';
+
+  @override
+  String get taskRecorderTargetUnkeyed => 'un comando senza nome';
 
   @override
   String get taskRecorderTitle => 'Registratore di attività';

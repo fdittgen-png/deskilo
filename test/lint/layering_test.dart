@@ -82,6 +82,8 @@ const Set<String> _knownPairs = {
   'task_recorder -> workspace',
   // #1884 — the feature switch calls the recorder's seam.
   'workspace -> task_recorder',
+  // #2142 — Me → Account offers "Record a task" (the recorder's route).
+  'me -> task_recorder',
   // #1823 — the Me layer is the account's home: it shows the account
   // messenger and discovery (directory), my spaces and memberships
   // (workspace), my photo and account rows (profile), and signs out (auth).
@@ -196,6 +198,8 @@ const Map<String, int> _pairBudget = {
   'task_recorder -> reservations': 1,
   'task_recorder -> workspace': 4,
   'workspace -> task_recorder': 3, // 2026-10-03 #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation)
+  // 2026-10-03 #2142 — the labelled entry in Me → Account.
+  'me -> task_recorder': 1,
   // 2026-09-16 #1306 S2 — the calendar carries the pending decisions when
   // the events bell is off: one import of the events feature's widget.
   'calendar -> events': 4,
