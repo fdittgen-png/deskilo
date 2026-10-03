@@ -172,7 +172,7 @@ void main() {
     // Workspace changes start on Me, then reopen the new space's settings.
     await tester.tap(find.text('Back to Me'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Pezenas'));
+    await tester.tap(find.byKey(const ValueKey('me-space-ws-2')));
     await tester.pumpAndSettle();
     GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/settings');
     await tester.pumpAndSettle();
