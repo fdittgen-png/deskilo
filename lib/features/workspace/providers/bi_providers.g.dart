@@ -163,7 +163,7 @@ final class BiModuleSeriesProvider
   }
 }
 
-String _$biModuleSeriesHash() => r'1ca47ddb93f5e01c0052e2b9dc4418c3665101c2';
+String _$biModuleSeriesHash() => r'7479d35a8aae07516119536a6632790881617d5d';
 
 /// The module's own figure for each of the [count] periods ending at
 /// [end], oldest first. Each is the same read the page makes for one
