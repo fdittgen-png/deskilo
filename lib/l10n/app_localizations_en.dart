@@ -9821,6 +9821,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpCreateReservation => 'Book a place for you';
 
   @override
+  String get mcpOpGetPlace => 'Describe a place, and show it when you ask';
+
+  @override
   String get mcpOpGetValidation => 'Read a validation request';
 
   @override

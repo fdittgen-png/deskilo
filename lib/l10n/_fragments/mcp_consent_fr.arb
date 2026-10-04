@@ -30,6 +30,10 @@
   "@mcpOpCancelReservation": {
     "description": "#1615 mcp_consent"
   },
+  "mcpOpGetPlace": "Décrire un lieu, et le montrer sur demande",
+  "@mcpOpGetPlace": {
+    "description": "#1615 mcp_consent"
+  },
   "@mcpOpReservationDeletion": {
     "description": "#1615 mcp_consent"
   }

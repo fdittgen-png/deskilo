@@ -37,6 +37,7 @@ import {
 } from "npm:@modelcontextprotocol/sdk@1.30.1/types.js";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { delegatedClient } from "../_shared/delegated.ts";
+import { placeImageBase64 } from "../_shared/place_image.ts";
 import {
   MCP_FORBIDDEN_INPUTS,
   MCP_INPUT_SCHEMAS,
@@ -172,6 +173,8 @@ export const INSTRUCTIONS = [
   "DesKilo is a coworking app: bookings of seats, desks, offices and levels, statements and invoices, and requests that the workspace's validators decide.",
   "Start with deskilo_list_workspaces: every other tool needs one of its workspace_id values. If the person has several workspaces, ask which one unless the request makes it obvious.",
   "Times are ISO 8601 with an explicit offset (e.g. 2026-10-05T09:00:00+02:00); interpret 'tomorrow morning' in the workspace's time zone.",
+  "To book a whole morning, afternoon or working day, call deskilo_get_capabilities once for booking_periods (morning, afternoon, full_day, each with its exact local from/to), then pass date (YYYY-MM-DD) and period to deskilo_create_reservation instead of computing times: the workspace applies its own hours exactly.",
+  "Only when the person explicitly asks to SEE a place (image, picture, plan, map), call deskilo_get_place with include_image true; otherwise describe it in words.",
   "Amounts are integer minor units (cents) with a separate currency; divide by 100 to show them.",
   "For every write, generate a new random UUID as request_id. Reuse the same request_id with the same arguments only to retry that same intent: it never acts twice.",
   "Read the status of every answer: completed = done; pending_validation = submitted, NOT done yet, a validator decides; requires_confirmation = nothing happened yet, the person must confirm in the DesKilo app, then call the same tool again with the same request_id and arguments; anything else = not done, and the first text says why and what to do next.",
@@ -278,6 +281,26 @@ function toolResult(op: McpOperationId, raw: Record<string, unknown>) {
   return boundedResult(envelope, summarize(envelope), isError);
 }
 
+/**
+ * get_place — the picture is drawn here, from the geometry the database
+ * returns, and ONLY when the caller asked for it (include_image = true).
+ * The geometry string never reaches the assistant as text; a picture that
+ * would push the answer over its bound is left out rather than the answer.
+ */
+async function placeResult(raw: Record<string, unknown>, wantsImage: boolean) {
+  const data = (raw.data ?? {}) as Record<string, unknown>;
+  const { render, ...described } = data;
+  const result = toolResult("get_place", { ...raw, data: described }) as {
+    isError?: boolean;
+    content: { type: string; text?: string; data?: string; mimeType?: string }[];
+  };
+  if (!wantsImage || result.isError || typeof render !== "string") return result;
+  const picture = await placeImageBase64(render).catch(() => null);
+  if (picture === null) return result;
+  const withImage = { ...result, content: [...result.content, { type: "image", data: picture, mimeType: "image/png" }] };
+  return new TextEncoder().encode(JSON.stringify(withImage)).length > LIMITS.outputBytes ? result : withImage;
+}
+
 function buildServer(db: SupabaseClient, installation: string, signal: AbortSignal) {
   const server = new Server(
     { name: "deskilo", version: "1" },
@@ -338,6 +361,9 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
     if (error || !sameProvenance(data, { operation: op, workspace_id, request_id })) {
       // Never the database's own words: they can name tables and values.
       return { isError: true, content: [{ type: "text", text: "DesKilo could not deliver an answer to this request just now. Call again with the same request_id and arguments to learn the outcome: it never acts twice." }] };
+    }
+    if (op === "get_place") {
+      return await placeResult(data as Record<string, unknown>, (args as { include_image?: unknown }).include_image === true);
     }
     return toolResult(op, data as Record<string, unknown>);
   });

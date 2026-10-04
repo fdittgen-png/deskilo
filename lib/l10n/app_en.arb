@@ -11175,6 +11175,10 @@
   "@mcpOpCreateReservation": {
     "description": "#1615 mcp_consent"
   },
+  "mcpOpGetPlace": "Describe a place, and show it when you ask",
+  "@mcpOpGetPlace": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpGetValidation": "Read a validation request",
   "@mcpOpGetValidation": {
     "description": "#1615 mcp_consent"

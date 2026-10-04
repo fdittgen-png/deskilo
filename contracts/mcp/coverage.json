@@ -2,7 +2,7 @@
  "contract": "deskilo.mcp.coverage",
  "version": 1,
  "_comment": "#1632 — every implemented MCP tool mapped to the executable tests that prove it; checked by tool/mcp_coverage.dart and test/tool/mcp_coverage_test.dart. A change to contracts/mcp/operations.json changes contract_sha256: review this map, then record the new fingerprint.",
- "contract_sha256": "1f1cdac20f13bf86374f2a7a9e796896c8364ef8f66b5f17d7f2eb8681eb7e15",
+ "contract_sha256": "975f6df54ecc7a30d88c8f64342e6704c274351bb1be6e6aa58e73e5062e7842",
  "catalogue_tests": [
   "test/tool/mcp_contract_test.dart",
   "test/features/mcp/mcp_native_contract_parity_test.dart",
@@ -51,6 +51,14 @@
     "supabase/tests/database/97_mcp_conformance_journey.sql"
    ]
   },
+  "get_place": {
+   "positive": [
+    "supabase/tests/database/153_mcp_get_place.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/153_mcp_get_place.sql"
+   ]
+  },
   "get_my_statement": {
    "positive": [
     "supabase/tests/database/97_mcp_conformance_journey.sql"
@@ -70,7 +78,8 @@
   "create_reservation": {
    "positive": [
     "supabase/tests/database/75_mcp_reservation_tools.sql",
-    "supabase/tests/database/97_mcp_conformance_journey.sql"
+    "supabase/tests/database/97_mcp_conformance_journey.sql",
+    "supabase/tests/database/154_mcp_booking_periods.sql"
    ],
    "denial": [
     "supabase/tests/database/96_scoped_invalidation.sql",
@@ -84,7 +93,8 @@
   },
   "update_reservation": {
    "positive": [
-    "supabase/tests/database/75_mcp_reservation_tools.sql"
+    "supabase/tests/database/75_mcp_reservation_tools.sql",
+    "supabase/tests/database/154_mcp_booking_periods.sql"
    ],
    "denial": [
     "supabase/tests/database/75_mcp_reservation_tools.sql"

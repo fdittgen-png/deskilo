@@ -16809,6 +16809,12 @@ abstract class AppLocalizations {
   /// #1615 mcp_consent
   ///
   /// In en, this message translates to:
+  /// **'Describe a place, and show it when you ask'**
+  String get mcpOpGetPlace;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
   /// **'Read a validation request'**
   String get mcpOpGetValidation;
 

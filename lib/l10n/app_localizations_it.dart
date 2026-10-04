@@ -9902,6 +9902,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpOpCreateReservation => 'Prenotare un posto per te';
 
   @override
+  String get mcpOpGetPlace => 'Descrivere un luogo e mostrarlo su richiesta';
+
+  @override
   String get mcpOpGetValidation => 'Leggere una richiesta di convalida';
 
   @override

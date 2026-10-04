@@ -5952,6 +5952,10 @@
   "mcpOpCheckIn": "Sie einchecken",
   "mcpOpCheckOut": "Sie auschecken",
   "mcpOpCreateReservation": "Einen Platz für Sie buchen",
+  "mcpOpGetPlace": "Einen Ort beschreiben und auf Wunsch zeigen",
+  "@mcpOpGetPlace": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpGetValidation": "Eine Freigabeanfrage lesen",
   "mcpOpInvoiceIssue": "Rechnung ausstellen",
   "mcpOpInvoiceVoid": "Rechnung stornieren",

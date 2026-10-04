@@ -115,5 +115,9 @@
   "mcpOpCancelReservation": "Cancel your bookings that have not started",
   "@mcpOpCancelReservation": {
     "description": "#1615 mcp_consent"
+  },
+  "mcpOpGetPlace": "Describe a place, and show it when you ask",
+  "@mcpOpGetPlace": {
+    "description": "#1615 mcp_consent"
   }
 }

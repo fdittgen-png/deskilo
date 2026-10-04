@@ -5952,6 +5952,10 @@
   "mcpOpCheckIn": "Registrar su entrada",
   "mcpOpCheckOut": "Registrar su salida",
   "mcpOpCreateReservation": "Reservar una plaza por usted",
+  "mcpOpGetPlace": "Describir un lugar y mostrarlo si lo pide",
+  "@mcpOpGetPlace": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpGetValidation": "Leer una solicitud de validación",
   "mcpOpInvoiceIssue": "Emitir una factura",
   "mcpOpInvoiceVoid": "Anular una factura",

@@ -9917,6 +9917,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpOpCreateReservation => 'Réserver une place pour vous';
 
   @override
+  String get mcpOpGetPlace => 'Décrire un lieu, et le montrer sur demande';
+
+  @override
   String get mcpOpGetValidation => 'Lire une demande de validation';
 
   @override
