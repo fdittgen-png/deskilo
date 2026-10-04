@@ -8,6 +8,7 @@
 // continuation strip on pages 2+. Pure Dart: the CLI prints them too;
 // the app passes its localized [LetterStrings].
 import 'invoice_pdf_template.dart';
+import 'address_window.dart';
 import 'report_kind.dart';
 
 /// The words a default layout needs, in the reader's language.
@@ -35,13 +36,18 @@ class LetterStrings {
     this.regards = 'Kind regards',
     this.page = 'Page',
     this.records = 'What was consumed',
+    this.creditNote = 'Credit note',
+    this.replaces = 'Replaces',
+    this.net = 'Net',
+    this.vat = 'VAT',
+    this.vatNumber = 'VAT number',
   });
 
   final String invoice, proforma, statement, agreement, payments, usage, status,
       sites,
       reminder, issuedOn, dueOn, orderRef, serviceRef, description, qty, unitPrice, total,
       paymentsLabel,
-      balance, regards, page, records;
+      balance, regards, page, records, creditNote, replaces, net, vat, vatNumber;
 }
 
 /// The kinds a person receives — the ones the standard binds.
@@ -60,11 +66,13 @@ String? resolveLayoutXml({
   required bool letterStandard,
   bool bandsDesigned = false,
   LetterStrings strings = const LetterStrings(),
+  String countryCode = 'FR',
 }) {
   final designed = template.layoutFor(kindId);
   if (designed != null) return designed;
   if (letterStandard && !bandsDesigned && isPersonFacingKind(kindId)) {
-    return defaultLetterLayoutXml(kindId, strings);
+    return defaultLetterLayoutXml(kindId, strings,
+        window: template.addressWindow ?? addressWindowForCountry(countryCode));
   }
   return null;
 }
@@ -77,7 +85,8 @@ String _esc(String s) => s
 
 /// The default positioned layout of [kindId] (the reminders share one
 /// body, the level printed from the data).
-String defaultLetterLayoutXml(String kindId, LetterStrings s) {
+String defaultLetterLayoutXml(String kindId, LetterStrings s,
+    {AddressWindow window = AddressWindow.right}) {
   final kind = reportKindById(kindId, reminderLevels: kMaxReminderLevels);
   final level = switch (kind?.slot) {
     ReportReminderSlot(:final level) => level,
@@ -105,8 +114,12 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s) {
   final payments = _esc(s.paymentsLabel);
   final balance = _esc(s.balance);
   final regards = _esc(s.regards);
-  final page = _esc(s.page);
   final records = _esc(s.records);
+  final recipientWindow = switch (window) {
+    AddressWindow.right => 'fr',
+    AddressWindow.left => 'din',
+    AddressWindow.off => 'off',
+  };
 
   final linesTable = '''
     <table>
@@ -137,11 +150,13 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s) {
 
   final body = switch (kindId) {
     'invoice' || 'proforma' => '''
-    <text style="heading">{% if proforma %}${_esc(s.proforma)}{% else %}$title{% endif %} {{ number }}</text>
+    <text style="heading">{% if credit_note %}${_esc(s.creditNote)}{% elsif proforma %}${_esc(s.proforma)}{% else %}$title{% endif %} {{ number }}</text>
     <text style="small">$issuedOn {{ issued }}</text>
+    {% if replaces != "" %}<text style="small">${_esc(s.replaces)} {{ replaces }}</text>{% endif %}
     {% if due_date != "" %}<text style="small">$dueOn {{ due_date }}</text>{% endif %}
     {% if usage_sites != "" %}<text style="small">$sites {{ usage_sites }}</text>{% endif %}
     <text style="small">{{ period }}</text>
+    {% if client_vat_id != "" %}<text style="small">${_esc(s.vatNumber)}: {{ client_vat_id }}</text>{% endif %}
     {% if client_legal_id != "" %}<text style="small">{{ client_legal_id }}</text>{% endif %}
     {% if purchase_order != "" %}<text style="small">$orderRef {{ purchase_order }}</text>{% endif %}
     {% if buyer_reference != "" %}<text style="small">$serviceRef {{ buyer_reference }}</text>{% endif %}
@@ -155,12 +170,21 @@ $linesTable
       <column>
         <table>
           <col w="60%"/><col w="40%" align="right"/>
-          {% if has_vat %}<row><cell>{{ net_total }}</cell><cell>{{ vat_total }}</cell></row>{% endif %}
+          <row><cell>${_esc(s.net)}</cell><cell>{{ net_total }}</cell></row>
+          {% if has_vat %}<row><cell>${_esc(s.vat)}</cell><cell>{{ vat_total }}</cell></row>{% endif %}
           <row><cell>$payments</cell><cell>{{ payments }}</cell></row>
           <row bold="true"><cell>$balance</cell><cell>{{ total }}</cell></row>
         </table>
       </column>
     </columns>
+    {% if has_vat %}
+    <spacer size="4mm"/>
+    <table>
+      <col w="30%"/><col w="35%" align="right"/><col w="35%" align="right"/>
+      <row bold="true"><cell>${_esc(s.vat)}</cell><cell>${_esc(s.net)}</cell><cell>${_esc(s.vat)}</cell></row>
+      {% for v in vat %}<row><cell>{{ v.rate }}</cell><cell>{{ v.net }}</cell><cell>{{ v.amount }}</cell></row>{% endfor %}
+    </table>
+    {% endif %}
 $mentions''',
     'statement' => '''
     <text style="heading">$title — {{ period }}</text>
@@ -249,7 +273,7 @@ $mentions''',
     <rule/>
   </continuation>
 
-  <recipient window="fr"/>
+  <recipient window="$recipientWindow"/>
 
   <body y="90mm">
 $body
@@ -262,6 +286,7 @@ $body
       <column>
         <text style="small">{{ workspace }}</text>
         <text style="small">{{ workspace_address }}</text>
+        {% if seller_vat_id != "" %}<text style="small">${_esc(s.vatNumber)}: {{ seller_vat_id }}</text>{% endif %}
         {% if seller_registration != "" %}<text style="small">{{ seller_registration }}</text>{% endif %}
       </column>
       <column>
@@ -270,7 +295,6 @@ $body
         {% if account_holder != "" %}<text style="small">{{ account_holder }}</text>{% endif %}
       </column>
       <column>
-        <text style="small">$page</text>
         <text style="small">{{ number }}</text>
       </column>
     </columns>

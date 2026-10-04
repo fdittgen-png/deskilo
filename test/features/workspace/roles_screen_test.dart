@@ -147,21 +147,15 @@ void main() {
   });
 
   testWidgets(
-      'a plain ADMIN reads the matrix — their role highlighted, every '
-      'checkbox disabled (#513)', (tester) async {
+      'a plain ADMIN without manageRoles is not let into the matrix: a screen '
+      'opens only for the permission it is configured for', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace();
     workspace.myMember = workspace.myMember
         .copyWith(isOwner: false, isAdmin: true);
     await _pumpRoles(tester, workspace: workspace);
 
-    expect(find.textContaining('Read-only'), findsOneWidget);
-    expect(find.text('Your role'), findsOneWidget);
-    final adminTile =
-        find.byKey(const ValueKey('perm-admin-manageMembers'));
-    expect(
-        tester.widget<CheckboxListTile>(adminTile).onChanged, isNull);
-    // The default admin set shows checked even though nothing stored.
-    expect(tester.widget<CheckboxListTile>(adminTile).value, isTrue);
+    expect(find.textContaining('Read-only'), findsNothing);
+    expect(find.byKey(const ValueKey('perm-admin-manageMembers')), findsNothing);
   });
 
   test('the fake repository refuses matrix edits without manageRoles, '

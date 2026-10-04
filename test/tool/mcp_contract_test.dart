@@ -32,10 +32,10 @@ void main() {
     expect(renderMcpContract(source()), rendered, reason: 'deterministic');
   });
 
-  test('the fixed catalogue: nineteen operations, one prefix, no duplicates', () {
+  test('the fixed catalogue: twenty-four operations, one prefix, no duplicates', () {
     final ids = [for (final o in source()['operations'] as List) (o as Map)['id']];
     expect(ids.toSet(), hasLength(ids.length));
-    expect(ids, hasLength(19));
+    expect(ids, hasLength(24));
     expect(source()['tool_prefix'], 'deskilo_');
     expect(mcpOperations.keys.toList(), ids);
   });
@@ -207,13 +207,21 @@ void main() {
   });
 
   test('every dispatchable operation has its branch in mcp_execute_v1', () {
-    final migrations = Directory('supabase/migrations')
+    // The replayed function is its last FULL definition plus every later
+    // migration that patches it by anchor (pg_get_functiondef), so the
+    // branches are searched in all of them, in order.
+    final all = Directory('supabase/migrations')
         .listSync()
         .whereType<File>()
-        .where((f) => f.readAsStringSync().contains('function public.mcp_execute_v1('))
         .toList()
       ..sort((a, b) => a.path.compareTo(b.path));
-    final body = migrations.last.readAsStringSync();
+    final lastFull = all.lastIndexWhere(
+      (f) => f.readAsStringSync().contains('function public.mcp_execute_v1('),
+    );
+    final body = [
+      for (final f in all.skip(lastFull))
+        if (f.readAsStringSync().contains('mcp_execute_v1')) f.readAsStringSync(),
+    ].join('\n');
     // An operation needing native confirmation answers
     // `requires_confirmation` through the generic path and executes
     // nothing until #1619 consumes the confirmation.

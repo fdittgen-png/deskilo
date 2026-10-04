@@ -92,7 +92,30 @@ enum WorkspacePermission {
   /// #1921 — read the workspace's aggregated operational KPIs (seat
   /// utilisation). No people, no money, no export: finance and personal
   /// figures keep needing their own permissions.
-  viewAnalytics;
+  viewAnalytics,
+
+  /// The everyday features are permissions too: a member holds only what a
+  /// role gives them, so a treasurer who was never given the messenger has
+  /// no messages. These six are the member's own side of the app.
+
+  /// The messenger: conversations, the alerts feed, notifications.
+  useMessages,
+
+  /// The Reserve hub and the plan: booking, one's own reservations,
+  /// checking in and out.
+  makeReservations,
+
+  /// The calendar.
+  viewCalendar,
+
+  /// The member directory.
+  viewDirectory,
+
+  /// One's own money: the account, statement and invoices.
+  viewMyMoney,
+
+  /// The documents shared with the member.
+  viewDocuments;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;
@@ -229,4 +252,27 @@ bool showsMemberAccountMenu({
   required Set<WorkspacePermission> permissions,
 }) =>
     features.contains(WorkspaceFeature.memberAccountMenu) &&
-    permissions.isEmpty;
+    // The everyday permissions are the member's own side of the app; only
+    // an administration permission makes it Settings.
+    !permissions.any((p) => !everydayPermissionNames.contains(p.wireName));
+
+/// The everyday permissions, as the matrix stores them.
+const everydayPermissionNames = [
+  'useMessages',
+  'makeReservations',
+  'viewCalendar',
+  'viewDirectory',
+  'viewMyMoney',
+  'viewDocuments',
+];
+
+/// A matrix that gives members and administrators the everyday features
+/// explicitly — what the demonstration workspace and the test fixture start
+/// from. A real workspace starts with nothing: its owner grants them.
+Map<String, dynamic> everydayMatrix() => {
+      'member': [...everydayPermissionNames],
+      'admin': [
+        for (final p in defaultPermissionsFor(PermissionRole.admin)) p.wireName,
+        ...everydayPermissionNames,
+      ],
+    };

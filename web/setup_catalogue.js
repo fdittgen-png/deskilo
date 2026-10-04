@@ -256,6 +256,7 @@ window.SETUP_PROCESSES=[
      "decisionSurface",
      "formHelpHints",
      "memberGettingStarted",
+     "placeFeedback",
      "taskRecorder",
      "uiAnimations",
      "regionalFormats",

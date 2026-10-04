@@ -105,8 +105,15 @@ Future<_Kpis> _pump(
 GoRouter _router(WidgetTester tester) =>
     GoRouter.of(tester.element(find.byType(Scaffold).first));
 
+/// These tests are about the TABLE and chart renderings of the rows; the
+/// dashboard is the default view now, so they ask for the table.
+String _tableView(String location) =>
+    location.contains('view=')
+        ? location
+        : '$location${location.contains('?') ? '&' : '?'}view=table';
+
 Future<void> _open(WidgetTester tester, String location) async {
-  unawaited(_router(tester).push(location));
+  unawaited(_router(tester).push(_tableView(location)));
   await tester.pumpAndSettle();
 }
 
@@ -137,7 +144,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('bi-refresh')));
     await tester.pumpAndSettle();
     expect(kpis.calls.length, calls + 1);
-    expect(_uri(tester).queryParameters, isEmpty);
+    expect(_uri(tester).queryParameters, {'view': 'table'});
   });
 
   testWidgets('the toolbar puts its context in the address and the module '
@@ -150,7 +157,7 @@ void main() {
 
     kpis.calls.clear();
     await _choose(tester, 'grain', 'Quarter');
-    expect(_uri(tester).queryParameters, {'grain': 'quarter'});
+    expect(_uri(tester).queryParameters, {'grain': 'quarter', 'view': 'table'});
     expect(_text(tester, 'bi-period-label'), 'Q1 2026');
     expect(_at(kpis.calls.single.from, 2026, 1), isTrue);
     expect(_at(kpis.calls.single.to, 2026, 4), isTrue);
@@ -158,7 +165,7 @@ void main() {
     kpis.calls.clear();
     await tester.tap(find.byKey(const ValueKey('bi-period-previous')));
     await tester.pumpAndSettle();
-    expect(_uri(tester).queryParameters, {'grain': 'quarter', 'at': '-1'});
+    expect(_uri(tester).queryParameters, {'grain': 'quarter', 'at': '-1', 'view': 'table'});
     expect(_at(kpis.calls.single.from, 2025, 10), isTrue);
   });
 
@@ -167,7 +174,7 @@ void main() {
     await _pump(tester);
     await _open(tester, '/bi');
     await _choose(tester, 'comparison', 'The period before');
-    expect(_uri(tester).queryParameters, {'cmp': 'previous'});
+    expect(_uri(tester).queryParameters, {'cmp': 'previous', 'view': 'table'});
     expect(_text(tester, 'bi-compared'), 'February 2026: 25.0% (+5.0 pp)');
     expect(find.textContaining('do not offer the same base'), findsOneWidget);
     expect(_text(tester, 'bi-table-total'), '30.0%');
@@ -198,7 +205,7 @@ void main() {
     await _open(tester, '/bi');
     kpis.calls.clear();
     await _choose(tester, 'group', 'Level');
-    expect(_uri(tester).queryParameters, {'by': 'level'});
+    expect(_uri(tester).queryParameters, {'by': 'level', 'view': 'table'});
     expect({for (final c in kpis.calls) c.level}, {null, 'level-a', 'level-b'});
     expect(_text(tester, 'bi-table-level-a'), '33.3%');
     expect(_text(tester, 'bi-table-level-b'), '16.7%');
@@ -223,7 +230,9 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('bi-reset')));
     await tester.pumpAndSettle();
     expect(_uri(tester).queryParameters, {'saved': 'standard'});
-    expect(kpis.calls, hasLength(1));
+    // The standard view is the dashboard: it reads the period, the periods
+    // before it for the evolution, and the levels for the composition.
+    expect(kpis.calls, isNotEmpty);
   });
 
   testWidgets('a deep link restores the analysis, and Back from the source '
@@ -236,7 +245,7 @@ void main() {
     expect(find.byType(AvailabilityScreen), findsOneWidget);
     _router(tester).pop();
     await tester.pumpAndSettle();
-    expect(_uri(tester).queryParameters, {'grain': 'year', 'cmp': 'previous'});
+    expect(_uri(tester).queryParameters, {'grain': 'year', 'cmp': 'previous', 'view': 'table'});
     expect(_text(tester, 'bi-period-label'), '2026');
   });
 

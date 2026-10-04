@@ -16,7 +16,7 @@ end
 $g$;
 create trigger zz_test_google_identity after insert on auth.users
   for each row execute function public.test_google_identity();
-select plan(9);
+select plan(15);
 
 create function pg_temp.act_as(p_user uuid, p_client text default null) returns void language plpgsql as $$
 begin
@@ -54,14 +54,14 @@ select public.operator_grant_database_admin('00000000-0000-4000-8000-0000000288a
 select pg_temp.act_as('00000000-0000-4000-8000-0000000288a1');
 select public.decide_mcp_eligibility('00000000-0000-4000-8000-0000000288a2', '00000000-0000-4000-8000-00000000e288', true);
 select public.save_mcp_policy(current_setting('t.a')::uuid, 0, gen_random_uuid(), true,
-  array['create_reservation','update_reservation','check_in','check_out','request_reservation_deletion'], 'own');
+  array['create_reservation','update_reservation','check_in','check_out','cancel_reservation','request_reservation_deletion'], 'own');
 reset role;
 insert into public.mcp_connections (installation_id, local_user_id, binding_id, client_id)
 select public.installation_id(), local_user_id, id, 'claude-test' from public.identity_bindings
  where local_user_id = '00000000-0000-4000-8000-0000000288a2' and status = 'active';
 insert into public.mcp_connection_scopes (connection_id, workspace_id, operations)
 select c.id, current_setting('t.a')::uuid,
-       array['create_reservation','update_reservation','check_in','check_out','request_reservation_deletion']
+       array['create_reservation','update_reservation','check_in','check_out','cancel_reservation','request_reservation_deletion']
   from public.mcp_connections c where c.local_user_id = '00000000-0000-4000-8000-0000000288a2';
 select set_config('t.seat', (select id::text from public.seats where workspace_id = current_setting('t.a')::uuid order by name limit 1), true);
 select set_config('t.day', ((now() at time zone 'Europe/Paris')::date + 2)::text, true);
@@ -81,13 +81,25 @@ select set_config('t.u', pg_temp.call('update_reservation', jsonb_build_object('
   'expected_state', current_setting('t.c')::jsonb->'data'->>'state_digest'))::text, true);
 select set_config('t.d', pg_temp.call('request_reservation_deletion', jsonb_build_object('reservation_id', current_setting('t.r'),
   'reason', 'plans changed'))::text, true);
+-- 0370 — the booking that has not started is cancelled DIRECTLY: stale state
+-- refused, then cancelled with the real state read back, a replay of the
+-- same request_id answers the same without cancelling twice, and another
+-- person's booking is not theirs to cancel.
+select set_config('t.cstale', pg_temp.call('cancel_reservation', jsonb_build_object('reservation_id', current_setting('t.r'),
+  'expected_state', 'not-what-you-saw'))::text, true);
+select set_config('t.creq', gen_random_uuid()::text, true);
+select set_config('t.cx', pg_temp.call('cancel_reservation', jsonb_build_object('reservation_id', current_setting('t.r')),
+  current_setting('t.creq')::uuid)::text, true);
+select set_config('t.cx2', pg_temp.call('cancel_reservation', jsonb_build_object('reservation_id', current_setting('t.r')),
+  current_setting('t.creq')::uuid)::text, true);
+select set_config('t.cother', pg_temp.call('cancel_reservation', jsonb_build_object('reservation_id', gen_random_uuid()))::text, true);
 select set_config('t.ci', pg_temp.call('create_reservation', jsonb_build_object('seat_id', current_setting('t.seat'),
   'starts_at', current_setting('t.am_s'), 'ends_at', current_setting('t.am_e'), 'check_in', true))::text, true);
 reset role;
 
 select is(current_setting('t.c')::jsonb->>'status', 'completed', 'create completes');
-select is(current_setting('t.c')::jsonb->'data'->>'status',
-  (select status from public.reservations where id = current_setting('t.r')::uuid), 'and reads the real status back');
+-- (read before the cancel below: the booking ends this file cancelled)
+select is(current_setting('t.c')::jsonb->'data'->>'status', 'reserved', 'and reads the real status back');
 select ok(length(current_setting('t.c')::jsonb->'data'->>'state_digest') = 32, 'with a state digest to act on');
 select is(current_setting('t.stale')::jsonb->'error'->>'code', 'stale', 'a stale expected state is refused');
 select is((select starts_at from public.reservations where id = current_setting('t.r')::uuid),
@@ -101,6 +113,14 @@ select ok(current_setting('t.d')::jsonb->'data'->>'reason' like 'cancel directly
   'and says why, leaving the booking untouched');
 select isnt(current_setting('t.ci')::jsonb->>'status', 'completed',
   'check_in reaches the business rule: a booking two days ahead cannot be checked in');
+
+select is(current_setting('t.cstale')::jsonb->'error'->>'code', 'stale', 'cancel: a stale expected state is refused');
+select is(current_setting('t.cx')::jsonb->>'status', 'completed', 'cancel: a booking that has not started is cancelled directly');
+select is((select status from public.reservations where id = current_setting('t.r')::uuid), 'cancelled',
+  'cancel: and it is really cancelled');
+select is(current_setting('t.cx')::jsonb->'data'->>'status', 'cancelled', 'cancel: the answer reads the real status back');
+select is(current_setting('t.cx2')::jsonb, current_setting('t.cx')::jsonb, 'cancel: the same request_id answers the same');
+select is(current_setting('t.cother')::jsonb->>'status', 'not_found', 'cancel: a booking that is not yours is not found');
 
 select * from finish();
 rollback;

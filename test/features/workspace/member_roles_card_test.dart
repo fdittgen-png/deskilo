@@ -249,6 +249,9 @@ void main() {
   testWidgets('a member without a role reads that they are a member, '
       'nothing more', (tester) async {
     final s = _seed(viewerOwner: false);
+    // A real workspace starts with an empty matrix: nothing is held by default.
+    s.workspace.workspaces[0] =
+        s.workspace.workspaces[0].copyWith(rolePermissions: const {});
     await _pump(tester, const WhatYouCanDoScreen(),
         workspace: s.workspace, roles: s.roles);
     expect(find.text('Nothing more than a member.'), findsOneWidget);

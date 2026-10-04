@@ -84,6 +84,10 @@ class MeHomeTab extends ConsumerWidget {
                             : memberRoleLabel(l10n, member),
                   }.join(' · '),
                   actions: [
+                    // A space without a production side keeps development at
+                    // the right.
+                    if (!group.any((s) => s.environment == 'prod'))
+                      const Spacer(flex: MeSpaceCard.prodFlex),
                     for (final space in [...group]..sort(
                       (a, b) => b.environment.compareTo(a.environment),
                     ))

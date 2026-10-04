@@ -23,12 +23,11 @@ l'app lui remet sont un vocabulaire fixe d'espaces réservés.
 *L'éditeur de rapports : les sélecteurs de langue et de document en haut, les commutateurs Balisage / Visuel et Conception / Aperçu en dessous, et les bandes de la facture — en-tête, corps, pied — plus bas.*
 
 <!-- anchor: admin.reports.kinds -->
-### Les types, et les quatre modèles
+### Types de rapports et modèles
 
-Chaque type (facture, avoir, proforma, relevé, convention, paiements,
-consommation, TVA, espace) part de l'un des quatre modèles — *Simple*,
-*Classique*, *Détaillé*, *Lettre formelle* — qui ne diffèrent que par la
-quantité de choses qu'ils disent, jamais par ce que la loi exige.
+Chaque rapport propose un modèle **Professionnel**, en plus des choix existants (#1994). Il conserve les sections propres au rapport : les paiements confirmés et en attente restent distincts, et les rapports de consommation gardent leur détail. Les rapports de gestion ne réclament pas de pénalités de retard. Les modèles personnalisés restent en place jusqu’à leur remplacement explicite.
+
+La lettre automatique suit le pays de l’espace (France : fenêtre à droite ; Allemagne : à gauche), sauf choix explicite de fenêtre. La langue du document est indépendante du pays. Le modèle affiche les données juridiques fournies ; son aspect et sa traduction ne prouvent pas la conformité et ne remplacent pas la facturation électronique.
 
 <!-- anchor: admin.reports.bands -->
 ### Les bandes : en-tête, suite, corps, pied

@@ -62,12 +62,17 @@
                           "deskilo_get_capabilities",
                           "deskilo_get_availability",
                           "deskilo_list_my_reservations",
+                          "deskilo_get_place",
+                          "deskilo_list_my_favorites",
                           "deskilo_get_my_statement",
                           "deskilo_list_my_invoices",
                           "deskilo_create_reservation",
                           "deskilo_update_reservation",
                           "deskilo_check_in",
                           "deskilo_check_out",
+                          "deskilo_cancel_reservation",
+                          "deskilo_set_favorite",
+                          "deskilo_rate_place",
                           "deskilo_request_reservation_deletion",
                           "deskilo_request_invoice_issue",
                           "deskilo_request_invoice_void",
@@ -1177,12 +1182,17 @@
               "get_capabilities",
               "get_availability",
               "list_my_reservations",
+              "get_place",
+              "list_my_favorites",
               "get_my_statement",
               "list_my_invoices",
               "create_reservation",
               "update_reservation",
               "check_in",
               "check_out",
+              "cancel_reservation",
+              "set_favorite",
+              "rate_place",
               "request_reservation_deletion",
               "request_invoice_issue",
               "request_invoice_void",
@@ -1390,6 +1400,78 @@
         "x-rpc": null,
         "x-handler": true
       },
+      "GetPlaceInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "reservation_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "One of the person's own reservations (a reservation_id from deskilo_list_my_reservations): describes the place it is for."
+          },
+          "seat_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A seat_id from deskilo_get_availability."
+          },
+          "desk_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A desk_id."
+          },
+          "office_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "An office_id."
+          },
+          "level_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A level_id."
+          },
+          "include_image": {
+            "type": "boolean",
+            "description": "False by default. True ONLY when the person explicitly asked for an image, picture, plan or map of the place: the answer then carries a floor-plan picture with the place highlighted. Never set it on your own initiative.",
+            "examples": [
+              false
+            ]
+          }
+        },
+        "required": [
+          "workspace_id"
+        ],
+        "x-operation": "get_place",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "ListMyFavoritesInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          }
+        },
+        "required": [
+          "workspace_id"
+        ],
+        "x-operation": "list_my_favorites",
+        "x-rpc": null,
+        "x-handler": true
+      },
       "GetMyStatementInput": {
         "type": "object",
         "additionalProperties": false,
@@ -1497,7 +1579,7 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
-            "description": "Start, ISO 8601 with an explicit offset in the workspace's time zone, e.g. 2026-10-05T09:00:00+02:00.",
+            "description": "Start, ISO 8601 with an explicit offset in the workspace's time zone, e.g. 2026-10-05T09:00:00+02:00. Optional when date and period are given.",
             "examples": [
               "2026-10-05T09:00:00+02:00"
             ]
@@ -1506,9 +1588,29 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
-            "description": "End, ISO 8601 with an explicit offset, after starts_at.",
+            "description": "End, ISO 8601 with an explicit offset, after starts_at. Optional when date and period are given.",
             "examples": [
               "2026-10-05T13:00:00+02:00"
+            ]
+          },
+          "date": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "The local day to book, YYYY-MM-DD in the workspace's time zone. Use with period instead of starts_at/ends_at.",
+            "examples": [
+              "2026-10-28"
+            ]
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "morning",
+              "afternoon",
+              "full_day"
+            ],
+            "description": "A booking period of the workspace, named in get_capabilities (booking_periods) with its exact local times: morning, afternoon or the full working day. Use with date; the server turns it into the workspace's exact times, so never compute them yourself.",
+            "examples": [
+              "full_day"
             ]
           },
           "check_in": {
@@ -1521,9 +1623,7 @@
         },
         "required": [
           "request_id",
-          "workspace_id",
-          "starts_at",
-          "ends_at"
+          "workspace_id"
         ],
         "x-operation": "create_reservation",
         "x-rpc": "create_reservation_once",
@@ -1558,7 +1658,7 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
-            "description": "The new start, ISO 8601 with an explicit offset.",
+            "description": "The new start, ISO 8601 with an explicit offset. Optional when date and period are given.",
             "examples": [
               "2026-10-05T09:00:00+02:00"
             ]
@@ -1567,9 +1667,29 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
-            "description": "The new end, ISO 8601 with an explicit offset.",
+            "description": "The new end, ISO 8601 with an explicit offset. Optional when date and period are given.",
             "examples": [
               "2026-10-05T13:00:00+02:00"
+            ]
+          },
+          "date": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "The local day to book, YYYY-MM-DD in the workspace's time zone. Use with period instead of starts_at/ends_at.",
+            "examples": [
+              "2026-10-28"
+            ]
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "morning",
+              "afternoon",
+              "full_day"
+            ],
+            "description": "A booking period of the workspace, named in get_capabilities (booking_periods) with its exact local times: morning, afternoon or the full working day. Use with date; the server turns it into the workspace's exact times, so never compute them yourself.",
+            "examples": [
+              "full_day"
             ]
           },
           "expected_state": {
@@ -1581,9 +1701,7 @@
         "required": [
           "request_id",
           "workspace_id",
-          "reservation_id",
-          "starts_at",
-          "ends_at"
+          "reservation_id"
         ],
         "x-operation": "update_reservation",
         "x-rpc": "update_reservation",
@@ -1667,6 +1785,173 @@
         ],
         "x-operation": "check_out",
         "x-rpc": "check_out_reservation",
+        "x-handler": true
+      },
+      "CancelReservationInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "reservation_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "reservation_id"
+        ],
+        "x-operation": "cancel_reservation",
+        "x-rpc": "cancel_reservation",
+        "x-handler": true
+      },
+      "SetFavoriteInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "seat",
+              "desk",
+              "office",
+              "level"
+            ],
+            "description": "What kind of place: a seat, a desk, an office or a level.",
+            "examples": [
+              "seat"
+            ]
+          },
+          "resource_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The place's id, from deskilo_get_availability, deskilo_list_my_favorites or deskilo_get_place.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "favorite": {
+            "type": "boolean",
+            "description": "True (default) to mark it as a favourite, false to take it back.",
+            "examples": [
+              true
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "kind",
+          "resource_id"
+        ],
+        "x-operation": "set_favorite",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "RatePlaceInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "seat",
+              "desk",
+              "office",
+              "level"
+            ],
+            "description": "What kind of place: a seat, a desk, an office or a level.",
+            "examples": [
+              "seat"
+            ]
+          },
+          "resource_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The place's id, from deskilo_get_availability, deskilo_list_my_favorites or deskilo_get_place.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "stars": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5,
+            "description": "The rating, from 0 to 5 stars. Omit with clear true to take the rating back.",
+            "examples": [
+              4
+            ]
+          },
+          "clear": {
+            "type": "boolean",
+            "description": "True to take the person's rating back instead of giving stars.",
+            "examples": [
+              false
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "kind",
+          "resource_id"
+        ],
+        "x-operation": "rate_place",
+        "x-rpc": null,
         "x-handler": true
       },
       "RequestReservationDeletionInput": {

@@ -160,6 +160,7 @@
         "paymentReminders": false,
         "pdfExport": true,
         "personalInfo": true,
+        "placeFeedback": true,
         "planMemberPhotos": false,
         "planObjectDelete": true,
         "priceNegotiations": false,

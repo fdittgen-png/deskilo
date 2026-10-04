@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/domain/workspace_permission.dart';
 
 /// Branch indices of the stateful shell (order = bottom-bar order).
 ///
@@ -29,14 +30,27 @@ abstract final class ShellBranch {
 /// they cannot drift apart, and no feature combination can produce a
 /// duplicate or an empty slot. The Reserve hub is the centre button, not a
 /// bar destination, and is never in the list.
-List<int> visibleShellBranches(Set<WorkspaceFeature> features) => [
-      ShellBranch.messages,
-      if (features.contains(WorkspaceFeature.calendarTab)) ShellBranch.calendar,
+List<int> visibleShellBranches(
+  Set<WorkspaceFeature> features,
+  Set<WorkspacePermission> permissions,
+) =>
+    [
+      if (permissions.contains(WorkspacePermission.useMessages))
+        ShellBranch.messages,
+      if (features.contains(WorkspaceFeature.calendarTab) &&
+          permissions.contains(WorkspacePermission.viewCalendar))
+        ShellBranch.calendar,
       // #707 — Members left of Finances (owner's call): a roster you
       // consult, not a thing that arrives.
-      if (features.contains(WorkspaceFeature.membersDirectory))
+      if (features.contains(WorkspaceFeature.membersDirectory) &&
+          permissions.contains(WorkspacePermission.viewDirectory))
         ShellBranch.directory,
-      if (features.contains(WorkspaceFeature.moneyTab)) ShellBranch.money,
+      if (features.contains(WorkspaceFeature.moneyTab) &&
+          (permissions.contains(WorkspacePermission.viewMyMoney) ||
+              permissions.contains(WorkspacePermission.viewFinances) ||
+              permissions.contains(WorkspacePermission.issueInvoices) ||
+              permissions.contains(WorkspacePermission.manageBilling)))
+        ShellBranch.money,
     ];
 
 /// The icon a destination shows, outlined or filled when [selected] — one

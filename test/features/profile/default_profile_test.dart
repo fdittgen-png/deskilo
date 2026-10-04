@@ -13,13 +13,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import '../../helpers/mock_providers.dart';
 
 FakeWorkspaceRepository _twoWorkspaces() {
   final workspace = FakeWorkspaceRepository.withWorkspace();
   workspace.workspaces.add(
-    const Workspace(
+    Workspace(
       id: 'ws-2',
+      rolePermissions: everydayMatrix(),
       name: 'Second Space',
       countryCode: 'DE',
       currencyCode: 'EUR',

@@ -256,4 +256,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureCalendarFileExportTitle ?? 'Calendar file of a booking',
       WorkspaceFeature.memberGettingStarted =>
         l10n?.featureMemberGettingStartedTitle ?? 'Get started card',
+      WorkspaceFeature.placeFeedback =>
+        l10n?.featurePlaceFeedbackTitle ?? 'Favourites and ratings',
     };

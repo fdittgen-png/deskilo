@@ -12,6 +12,7 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -24,8 +25,9 @@ FakeWorkspaceRepository twoSpaces({String? serverDefault = 'ws-1'}) {
   final repo = FakeWorkspaceRepository.withWorkspace()
     ..serverDefaultWorkspaceId = serverDefault;
   repo.workspaces.add(
-    const Workspace(
+    Workspace(
       id: 'ws-2',
+      rolePermissions: everydayMatrix(),
       name: 'Second Space',
       countryCode: 'DE',
       currencyCode: 'EUR',

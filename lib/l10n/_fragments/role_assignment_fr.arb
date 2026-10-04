@@ -90,7 +90,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Ici, tout le monde est membre : réserver, pointer, les messages et son propre compte. Les rôles ajoutent le reste.",
+  "whatYouCanDoIntro": "Ici, tout le monde est membre ; ce que vous pouvez faire — messages, réservations et le reste — vient uniquement des rôles que vous détenez.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },
