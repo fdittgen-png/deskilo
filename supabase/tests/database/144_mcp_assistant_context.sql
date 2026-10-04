@@ -125,7 +125,7 @@ select is(pg_temp.read('list_my_reservations', jsonb_build_object(
 
 -- The workspace's clock and hours.
 select is(public.mcp_workspace_context(current_setting('t.ws')::uuid)
-            - 'opening_hours' || jsonb_build_object('start', public.mcp_workspace_context(current_setting('t.ws')::uuid)->'opening_hours'->>'work_start'),
+            - 'opening_hours' - 'booking_periods' || jsonb_build_object('start', public.mcp_workspace_context(current_setting('t.ws')::uuid)->'opening_hours'->>'work_start'),
   '{"time_zone": "Europe/Paris", "currency": "EUR", "start": "08:30"}'::jsonb,
   'the zone, the currency and the opening time');
 

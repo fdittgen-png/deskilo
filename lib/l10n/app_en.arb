@@ -11343,6 +11343,10 @@
   "@mcpOpAvailability": {
     "description": "#1615 mcp_consent"
   },
+  "mcpOpCancelReservation": "Cancel your bookings that have not started",
+  "@mcpOpCancelReservation": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpCapabilities": "See what it may do there",
   "@mcpOpCapabilities": {
     "description": "#1615 mcp_consent"
@@ -11357,6 +11361,10 @@
   },
   "mcpOpCreateReservation": "Book a place for you",
   "@mcpOpCreateReservation": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpGetPlace": "Describe a place, and show it when you ask",
+  "@mcpOpGetPlace": {
     "description": "#1615 mcp_consent"
   },
   "mcpOpGetValidation": "Read a validation request",
@@ -11399,7 +11407,7 @@
   "@mcpOpRefund": {
     "description": "#1619 mcp_confirmation"
   },
-  "mcpOpReservationDeletion": "Ask to delete a reservation",
+  "mcpOpReservationDeletion": "Ask to delete a booking that has started",
   "@mcpOpReservationDeletion": {
     "description": "#1615 mcp_consent"
   },

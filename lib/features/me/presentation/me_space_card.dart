@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/status_colors.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
@@ -24,6 +25,10 @@ class MeSpaceCard extends ConsumerWidget {
     required this.member,
     this.lastUsed = false,
   });
+
+  /// Production is twice as wide as development in the row it shares.
+  static const int prodFlex = 2;
+  static const int devFlex = 1;
 
   final Workspace space;
   final Member? member;
@@ -89,22 +94,26 @@ class MeSpaceCard extends ConsumerWidget {
     final status = _pending
         ? (l10n?.meSpacePending ?? 'Waiting for approval')
         : role;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    final brightness = Theme.of(context).brightness;
+    final isProd = space.environment == 'prod';
+    // Green says the space is real, orange says it is one to try things in
+    // (#917); the word is on the button as well.
+    final fill = isProd
+        ? AppEnvironmentColors.productionOf(brightness)
+        : AppEnvironmentColors.developmentOf(brightness);
+    return Expanded(
+      flex: isProd ? prodFlex : devFlex,
+      child: Row(
       children: [
-        Builder(builder: (buttonContext) => Tooltip(
+        Expanded(child: Builder(builder: (buttonContext) => Tooltip(
           message: [space.name, environment, ?status,
             if (lastUsed) l10n?.meSpaceLastUsed ?? 'Last used'].join(' · '),
-          child: OutlinedButton(
+          child: FilledButton(
             key: ValueKey('me-space-${space.id}'),
-            style: OutlinedButton.styleFrom(
+            style: FilledButton.styleFrom(
               padding: AppSpacing.smH,
-              foregroundColor: lastUsed
-                  ? Theme.of(context).colorScheme.onSecondaryContainer
-                  : null,
-              backgroundColor: lastUsed
-                  ? Theme.of(context).colorScheme.secondaryContainer
-                  : null,
+              backgroundColor: fill,
+              foregroundColor: AppStatusColors.onSuccessOf(brightness),
             ),
             onPressed: () {
               final box = buttonContext.findRenderObject() as RenderBox?;
@@ -119,10 +128,12 @@ class MeSpaceCard extends ConsumerWidget {
                   key: ValueKey('me-space-last-${space.id}')),
                 const SizedBox(width: AppSpacing.xs),
               ],
-              Text(environment),
+              Flexible(
+                child: FittedBox(fit: BoxFit.scaleDown, child: Text(environment)),
+              ),
             ]),
           ),
-        )),
+        ))),
         PopupMenuButton<String>(
           key: ValueKey('me-space-menu-${space.id}'),
           tooltip: '$environment · ${MaterialLocalizations.of(context).showMenuTooltip}',
@@ -142,6 +153,7 @@ class MeSpaceCard extends ConsumerWidget {
           ],
         ),
       ],
+    ),
     );
   }
 }

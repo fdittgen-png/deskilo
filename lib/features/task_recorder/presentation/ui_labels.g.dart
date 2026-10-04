@@ -2545,10 +2545,12 @@ Map<String, _Getter> _part6() => {
   'mcpNextSignInGoogle': (l) => l.mcpNextSignInGoogle,
   'mcpNextUnavailable': (l) => l.mcpNextUnavailable,
   'mcpOpAvailability': (l) => l.mcpOpAvailability,
+  'mcpOpCancelReservation': (l) => l.mcpOpCancelReservation,
   'mcpOpCapabilities': (l) => l.mcpOpCapabilities,
   'mcpOpCheckIn': (l) => l.mcpOpCheckIn,
   'mcpOpCheckOut': (l) => l.mcpOpCheckOut,
   'mcpOpCreateReservation': (l) => l.mcpOpCreateReservation,
+  'mcpOpGetPlace': (l) => l.mcpOpGetPlace,
   'mcpOpGetValidation': (l) => l.mcpOpGetValidation,
   'mcpOpInvoiceIssue': (l) => l.mcpOpInvoiceIssue,
   'mcpOpInvoiceVoid': (l) => l.mcpOpInvoiceVoid,
@@ -2841,11 +2843,11 @@ Map<String, _Getter> _part6() => {
   'negotiationItemsHint': (l) => l.negotiationItemsHint,
   'negotiationKeepCurrent': (l) => l.negotiationKeepCurrent,
   'negotiationMineColumn': (l) => l.negotiationMineColumn,
-  'negotiationNote': (l) => l.negotiationNote,
-  'negotiationOccupation': (l) => l.negotiationOccupation,
 };
 
 Map<String, _Getter> _part7() => {
+  'negotiationNote': (l) => l.negotiationNote,
+  'negotiationOccupation': (l) => l.negotiationOccupation,
   'negotiationOccupationHint': (l) => l.negotiationOccupationHint,
   'negotiationOnTariff': (l) => l.negotiationOnTariff,
   'negotiationOverage': (l) => l.negotiationOverage,
@@ -3244,11 +3246,11 @@ Map<String, _Getter> _part7() => {
   'portalResetAllBody': (l) => l.portalResetAllBody,
   'portalResetAllConfirm': (l) => l.portalResetAllConfirm,
   'portalSavePreview': (l) => l.portalSavePreview,
-  'portalSearch': (l) => l.portalSearch,
-  'portalSendCode': (l) => l.portalSendCode,
 };
 
 Map<String, _Getter> _part8() => {
+  'portalSearch': (l) => l.portalSearch,
+  'portalSendCode': (l) => l.portalSendCode,
   'portalSourceUnavailable': (l) => l.portalSourceUnavailable,
   'portalThisServer': (l) => l.portalThisServer,
   'portalUseCode': (l) => l.portalUseCode,
@@ -3647,11 +3649,11 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningNetTotal': (l) => l.reportFieldMeaningNetTotal,
   'reportFieldMeaningNumber': (l) => l.reportFieldMeaningNumber,
   'reportFieldMeaningPaymentReference': (l) => l.reportFieldMeaningPaymentReference,
-  'reportFieldMeaningPaymentTerms': (l) => l.reportFieldMeaningPaymentTerms,
-  'reportFieldMeaningPaymentTermsSource': (l) => l.reportFieldMeaningPaymentTermsSource,
 };
 
 Map<String, _Getter> _part9() => {
+  'reportFieldMeaningPaymentTerms': (l) => l.reportFieldMeaningPaymentTerms,
+  'reportFieldMeaningPaymentTermsSource': (l) => l.reportFieldMeaningPaymentTermsSource,
   'reportFieldMeaningPayments': (l) => l.reportFieldMeaningPayments,
   'reportFieldMeaningPendingExpensesTotal': (l) => l.reportFieldMeaningPendingExpensesTotal,
   'reportFieldMeaningPendingPaymentsTotal': (l) => l.reportFieldMeaningPendingPaymentsTotal,
@@ -4050,11 +4052,11 @@ Map<String, _Getter> _part9() => {
   'subprocessDecisions': (l) => l.subprocessDecisions,
   'subprocessDecisionsDesc': (l) => l.subprocessDecisionsDesc,
   'subprocessDelivery': (l) => l.subprocessDelivery,
-  'subprocessDeliveryDesc': (l) => l.subprocessDeliveryDesc,
-  'subprocessDocuments': (l) => l.subprocessDocuments,
 };
 
 Map<String, _Getter> _part10() => {
+  'subprocessDeliveryDesc': (l) => l.subprocessDeliveryDesc,
+  'subprocessDocuments': (l) => l.subprocessDocuments,
   'subprocessDocumentsDesc': (l) => l.subprocessDocumentsDesc,
   'subprocessExpenses': (l) => l.subprocessExpenses,
   'subprocessExpensesDesc': (l) => l.subprocessExpensesDesc,
@@ -4453,11 +4455,11 @@ Map<String, _Getter> _part10() => {
   'templateDetailSearch': (l) => l.templateDetailSearch,
   'templateDetails': (l) => l.templateDetails,
   'templateNoMatch': (l) => l.templateNoMatch,
-  'templatePricesOtherCurrency': (l) => l.templatePricesOtherCurrency,
-  'templateProfileFull': (l) => l.templateProfileFull,
 };
 
 Map<String, _Getter> _part11() => {
+  'templatePricesOtherCurrency': (l) => l.templatePricesOtherCurrency,
+  'templateProfileFull': (l) => l.templateProfileFull,
   'templatePublishLocalNeeds': (l) => l.templatePublishLocalNeeds,
   'templateRegionUse': (l) => l.templateRegionUse,
   'templateRequirementRemove': (l) => l.templateRequirementRemove,
