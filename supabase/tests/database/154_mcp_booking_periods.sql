@@ -15,7 +15,7 @@ end
 $g$;
 create trigger zz_test_google_identity after insert on auth.users
   for each row execute function public.test_google_identity();
-select plan(13);
+select plan(12);
 
 create function pg_temp.act_as(p_user uuid, p_client text default null) returns void language plpgsql as $$
 begin
@@ -101,8 +101,6 @@ select is(current_setting('t.cap')::jsonb->'data'->'booking_periods'->'full_day'
 select is(current_setting('t.a1')::jsonb->>'status', 'completed', 'an afternoon is booked by date and period');
 select is(current_setting('t.a1s')::timestamptz, current_setting('t.pm_s')::timestamptz, 'from the boundary to...');
 select is(current_setting('t.a1e')::timestamptz, current_setting('t.pm_e')::timestamptz, '...the end of the working day, in the workspace''s zone');
-select is((select ends_at from public.reservations where id = (current_setting('t.a1')::jsonb->'data'->>'reservation_id')::uuid),
-  current_setting('t.pm_e')::timestamptz, '...to the end of the working day, in the workspace''s zone');
 select is(current_setting('t.a2')::jsonb->>'status', 'completed', 'the full working day is booked by date and period');
 select is((select ends_at - starts_at from public.reservations where id = (current_setting('t.a2')::jsonb->'data'->>'reservation_id')::uuid),
   interval '10 hours', 'from work start to work end');

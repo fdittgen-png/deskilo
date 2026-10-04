@@ -187,7 +187,7 @@ begin
   end if;
   -- the facade: the reader is told the ceiling, never asked for it
   v_def := pg_get_functiondef('public.mcp_execute_v1(uuid, uuid, text, jsonb, uuid)'::regprocedure);
-  if position('_ceiling' in v_def) = 0 then
+  if position('jsonb_build_object(''_ceiling'', v_ceiling)' in v_def) = 0 then
     v_next := pg_temp.anchor_replace(v_def,
       $a$v_data := public.mcp_read_v1(p_workspace_id, v_member, p_operation, v_args);$a$,
       $a$v_data := public.mcp_read_v1(p_workspace_id, v_member, p_operation,
