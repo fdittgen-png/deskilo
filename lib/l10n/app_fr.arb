@@ -3895,12 +3895,28 @@
   "guideHostInstruction": "Lisez ceci, puis marquez-le comme fait.",
   "guideHostManual": "Faites cette étape vous-même, puis marquez-la comme faite.",
   "guideHostManualProtected": "Cette partie se passe sur un écran protégé ({category}). Faites-la vous-même, puis marquez-la comme faite.",
+  "guideHostMinimize": "Réduire le guide",
+  "@guideHostMinimize": {
+    "description": "Task wizard: guideHostMinimize"
+  },
   "guideHostNotOnScreen": "Ce contrôle n'est pas sur cet écran. Allez à l'écran de l'étape précédente ou vérifiez le guide.",
   "guideHostOpenLabel": "Ouvrez « {label} ».",
   "guideHostOpenScreen": "Ouvrez l'écran suivant.",
   "guideHostPausedFeature": "En pause : l'enregistreur de tâches est désactivé dans cet espace.",
   "guideHostPausedScope": "En pause : le compte ou l'espace a changé. Le guide ne continue que là où il a commencé.",
   "guideHostRecovery": "C'est refusé. Suivez ces étapes, puis réessayez.",
+  "guideHostRestore": "Afficher le guide (étape {current} sur {total})",
+  "@guideHostRestore": {
+    "description": "Task wizard: guideHostRestore",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "guideHostResume": "Reprendre",
   "guideHostShowMe": "Montrer",
   "guideHostSkip": "Passer",

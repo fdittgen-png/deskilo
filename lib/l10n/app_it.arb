@@ -3895,12 +3895,28 @@
   "guideHostInstruction": "Leggi questo, poi segnalo come fatto.",
   "guideHostManual": "Esegui tu questo passo, poi segnalo come fatto.",
   "guideHostManualProtected": "Questa parte avviene in una schermata protetta ({category}). Eseguila tu, poi segnala come fatta.",
+  "guideHostMinimize": "Riduci la guida",
+  "@guideHostMinimize": {
+    "description": "Task wizard: guideHostMinimize"
+  },
   "guideHostNotOnScreen": "Questo controllo non è in questa schermata. Vai alla schermata del passo precedente o controlla la guida.",
   "guideHostOpenLabel": "Apri «{label}».",
   "guideHostOpenScreen": "Apri la schermata successiva.",
   "guideHostPausedFeature": "In pausa: il registratore di attività è disattivato in questo spazio.",
   "guideHostPausedScope": "In pausa: l'account o lo spazio è cambiato. La guida continua solo dove è iniziata.",
   "guideHostRecovery": "È stato rifiutato. Segui questi passi, poi riprova.",
+  "guideHostRestore": "Mostra la guida (passo {current} di {total})",
+  "@guideHostRestore": {
+    "description": "Task wizard: guideHostRestore",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "guideHostResume": "Riprendi",
   "guideHostShowMe": "Mostrami",
   "guideHostSkip": "Salta",

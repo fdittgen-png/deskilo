@@ -5943,6 +5943,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get guideHostMinimize => 'Minimise the guide';
+
+  @override
   String get guideHostNotOnScreen =>
       'This control is not on this screen. Go to the screen of the previous step, or check the guide.';
 
@@ -5965,6 +5968,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get guideHostRecovery =>
       'That was refused. Follow these steps, then try again.';
+
+  @override
+  String guideHostRestore(int current, int total) {
+    return 'Show the guide (step $current of $total)';
+  }
 
   @override
   String get guideHostResume => 'Resume';

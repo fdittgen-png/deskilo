@@ -6936,6 +6936,10 @@
       }
     }
   },
+  "guideHostMinimize": "Minimise the guide",
+  "@guideHostMinimize": {
+    "description": "Task wizard: guideHostMinimize"
+  },
   "guideHostNotOnScreen": "This control is not on this screen. Go to the screen of the previous step, or check the guide.",
   "@guideHostNotOnScreen": {
     "description": "#1867 live guide host"
@@ -6964,6 +6968,18 @@
   "guideHostRecovery": "That was refused. Follow these steps, then try again.",
   "@guideHostRecovery": {
     "description": "#1867 live guide host"
+  },
+  "guideHostRestore": "Show the guide (step {current} of {total})",
+  "@guideHostRestore": {
+    "description": "Task wizard: guideHostRestore",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
   },
   "guideHostResume": "Resume",
   "@guideHostResume": {

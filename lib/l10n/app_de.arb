@@ -3895,12 +3895,28 @@
   "guideHostInstruction": "Lesen Sie dies und markieren Sie es als erledigt.",
   "guideHostManual": "Erledigen Sie diesen Schritt selbst und markieren Sie ihn als erledigt.",
   "guideHostManualProtected": "Dieser Teil findet auf einem geschützten Bildschirm statt ({category}). Erledigen Sie ihn selbst und markieren Sie ihn als erledigt.",
+  "guideHostMinimize": "Anleitung verkleinern",
+  "@guideHostMinimize": {
+    "description": "Task wizard: guideHostMinimize"
+  },
   "guideHostNotOnScreen": "Dieses Bedienelement ist nicht auf diesem Bildschirm. Gehen Sie zum Bildschirm des vorherigen Schritts oder prüfen Sie die Anleitung.",
   "guideHostOpenLabel": "Öffnen Sie „{label}“.",
   "guideHostOpenScreen": "Öffnen Sie den nächsten Bildschirm.",
   "guideHostPausedFeature": "Pausiert: Der Aufgabenrekorder ist in diesem Workspace ausgeschaltet.",
   "guideHostPausedScope": "Pausiert: Konto oder Workspace hat sich geändert. Die Anleitung geht nur dort weiter, wo sie begann.",
   "guideHostRecovery": "Das wurde abgelehnt. Folgen Sie diesen Schritten und versuchen Sie es dann erneut.",
+  "guideHostRestore": "Anleitung anzeigen (Schritt {current} von {total})",
+  "@guideHostRestore": {
+    "description": "Task wizard: guideHostRestore",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "guideHostResume": "Fortsetzen",
   "guideHostShowMe": "Zeigen",
   "guideHostSkip": "Überspringen",
