@@ -95,6 +95,20 @@ class ActiveWorkspaceId extends _$ActiveWorkspaceId {
   }
 }
 
+/// Session state that belongs to one workspace (the floor browsed, a wizard
+/// under way) starts over when the person moves from one workspace to
+/// another, so nothing chosen in one is ever shown in the other. Call it
+/// from the notifier's `build` with what resets it. Only a change from one
+/// workspace to a DIFFERENT one counts: the id being read for the first
+/// time, or read again, is not a switch.
+void resetOnWorkspaceSwitch(Ref ref, void Function() reset) {
+  ref.listen(activeWorkspaceIdProvider, (previous, next) {
+    final before = previous?.value;
+    final after = next.value;
+    if (before != null && after != null && before != after) reset();
+  });
+}
+
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the
 /// current default clears it.
