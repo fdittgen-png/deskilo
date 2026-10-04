@@ -2516,6 +2516,7 @@ Map<String, _Getter> _part6() => {
   'mcpNextSignInGoogle': (l) => l.mcpNextSignInGoogle,
   'mcpNextUnavailable': (l) => l.mcpNextUnavailable,
   'mcpOpAvailability': (l) => l.mcpOpAvailability,
+  'mcpOpCancelReservation': (l) => l.mcpOpCancelReservation,
   'mcpOpCapabilities': (l) => l.mcpOpCapabilities,
   'mcpOpCheckIn': (l) => l.mcpOpCheckIn,
   'mcpOpCheckOut': (l) => l.mcpOpCheckOut,
@@ -2842,10 +2843,10 @@ Map<String, _Getter> _part6() => {
   'newMemberOverageBlocked': (l) => l.newMemberOverageBlocked,
   'newMemberOveragePackage': (l) => l.newMemberOveragePackage,
   'newMemberOveragePayg': (l) => l.newMemberOveragePayg,
-  'newMemberSubscription': (l) => l.newMemberSubscription,
 };
 
 Map<String, _Getter> _part7() => {
+  'newMemberSubscription': (l) => l.newMemberSubscription,
   'newMemberSubscriptionLess': (l) => l.newMemberSubscriptionLess,
   'newMemberSubscriptionMore': (l) => l.newMemberSubscriptionMore,
   'nfcConfigChecking': (l) => l.nfcConfigChecking,
@@ -3245,10 +3246,10 @@ Map<String, _Getter> _part7() => {
   'privacySpaceNotice': (l) => l.privacySpaceNotice,
   'privacySpaceNoticeAcknowledge': (l) => l.privacySpaceNoticeAcknowledge,
   'privacySpaceNoticeFailed': (l) => l.privacySpaceNoticeFailed,
-  'privacySpaceNoticeRead': (l) => l.privacySpaceNoticeRead,
 };
 
 Map<String, _Getter> _part8() => {
+  'privacySpaceNoticeRead': (l) => l.privacySpaceNoticeRead,
   'privacySpaceNoticeUnread': (l) => l.privacySpaceNoticeUnread,
   'privacyTitle': (l) => l.privacyTitle,
   'privacyWhoCanSee': (l) => l.privacyWhoCanSee,
@@ -3648,10 +3649,10 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningUsageOverage': (l) => l.reportFieldMeaningUsageOverage,
   'reportFieldMeaningUsagePaid': (l) => l.reportFieldMeaningUsagePaid,
   'reportFieldMeaningUsageRecords': (l) => l.reportFieldMeaningUsageRecords,
-  'reportFieldMeaningUsageRemainingHalfDays': (l) => l.reportFieldMeaningUsageRemainingHalfDays,
 };
 
 Map<String, _Getter> _part9() => {
+  'reportFieldMeaningUsageRemainingHalfDays': (l) => l.reportFieldMeaningUsageRemainingHalfDays,
   'reportFieldMeaningUsageSites': (l) => l.reportFieldMeaningUsageSites,
   'reportFieldMeaningUsageSupplements': (l) => l.reportFieldMeaningUsageSupplements,
   'reportFieldMeaningUsageUsedHalfDays': (l) => l.reportFieldMeaningUsageUsedHalfDays,
@@ -4051,10 +4052,10 @@ Map<String, _Getter> _part9() => {
   'supportHour': (l) => l.supportHour,
   'supportPrepare': (l) => l.supportPrepare,
   'supportPrivacy': (l) => l.supportPrivacy,
-  'supportSaved': (l) => l.supportSaved,
 };
 
 Map<String, _Getter> _part10() => {
+  'supportSaved': (l) => l.supportSaved,
   'supportTitle': (l) => l.supportTitle,
   'tabCalendar': (l) => l.tabCalendar,
   'tabEvents': (l) => l.tabEvents,
@@ -4454,10 +4455,10 @@ Map<String, _Getter> _part10() => {
   'usageReportPaid': (l) => l.usageReportPaid,
   'usageReportRecordsHeading': (l) => l.usageReportRecordsHeading,
   'usageReportRemaining': (l) => l.usageReportRemaining,
-  'usageReportSupplements': (l) => l.usageReportSupplements,
 };
 
 Map<String, _Getter> _part11() => {
+  'usageReportSupplements': (l) => l.usageReportSupplements,
   'usageReportUsed': (l) => l.usageReportUsed,
   'usageTitle': (l) => l.usageTitle,
   'validationAdminsMay': (l) => l.validationAdminsMay,

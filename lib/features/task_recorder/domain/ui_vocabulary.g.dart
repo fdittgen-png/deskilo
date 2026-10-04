@@ -5046,6 +5046,7 @@ const Set<String> uiLabelKeys = {
   'mcpNextSignInGoogle',
   'mcpNextUnavailable',
   'mcpOpAvailability',
+  'mcpOpCancelReservation',
   'mcpOpCapabilities',
   'mcpOpCheckIn',
   'mcpOpCheckOut',
