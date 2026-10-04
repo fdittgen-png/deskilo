@@ -21,6 +21,7 @@ import '../../domain/bi_result.dart';
 import '../../domain/kpi_contract.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
+import 'bi_dashboard.dart';
 import 'bi_result_views.dart';
 import 'bi_toolbar.dart';
 import 'capacity_kpi_card.dart';
@@ -369,6 +370,9 @@ class _Result extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (query.view == BiView.dashboard)
+          BiDashboard(module: module, view: view, query: query, result: result)
+        else ...[
         Text(
           biPeriodLabel(result.period, l10n, locale),
           key: const ValueKey('bi-result-period'),
@@ -398,12 +402,14 @@ class _Result extends ConsumerWidget {
                     '(${biChangeLabel(changeOf(total, agg), l10n, locale, format: amount)})',
             key: const ValueKey('bi-compared'),
           ),
+        ],
         for (final note in notes)
           Padding(
             padding: const EdgeInsets.only(top: AppSpacing.xs),
             child: Text(note, style: small),
           ),
         const SizedBox(height: AppSpacing.sm),
+        if (query.view != BiView.dashboard)
         BiRows(
           rows: [...result.groups, total],
           view: query.view,

@@ -89,6 +89,124 @@ final class BiModuleResultFamily extends $Family
   String toString() => r'biModuleResultProvider';
 }
 
+/// The module's own figure for each of the [count] periods ending at
+/// [end], oldest first. Each is the same read the page makes for one
+/// period; a period the data does not know (before the history, or a read
+/// that failed) is a gap in the series, never a zero, and never fails the
+/// others.
+
+@ProviderFor(biModuleSeries)
+final biModuleSeriesProvider = BiModuleSeriesFamily._();
+
+/// The module's own figure for each of the [count] periods ending at
+/// [end], oldest first. Each is the same read the page makes for one
+/// period; a period the data does not know (before the history, or a read
+/// that failed) is a gap in the series, never a zero, and never fails the
+/// others.
+
+final class BiModuleSeriesProvider
+    extends
+        $FunctionalProvider<AsyncValue<BiSeries>, BiSeries, FutureOr<BiSeries>>
+    with $FutureModifier<BiSeries>, $FutureProvider<BiSeries> {
+  /// The module's own figure for each of the [count] periods ending at
+  /// [end], oldest first. Each is the same read the page makes for one
+  /// period; a period the data does not know (before the history, or a read
+  /// that failed) is a gap in the series, never a zero, and never fails the
+  /// others.
+  BiModuleSeriesProvider._({
+    required BiModuleSeriesFamily super.from,
+    required (String, String, BiGrain, BiPeriod, int) super.argument,
+  }) : super(
+         retry: null,
+         name: r'biModuleSeriesProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$biModuleSeriesHash();
+
+  @override
+  String toString() {
+    return r'biModuleSeriesProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<BiSeries> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<BiSeries> create(Ref ref) {
+    final argument = this.argument as (String, String, BiGrain, BiPeriod, int);
+    return biModuleSeries(
+      ref,
+      argument.$1,
+      argument.$2,
+      argument.$3,
+      argument.$4,
+      argument.$5,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is BiModuleSeriesProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$biModuleSeriesHash() => r'1ca47ddb93f5e01c0052e2b9dc4418c3665101c2';
+
+/// The module's own figure for each of the [count] periods ending at
+/// [end], oldest first. Each is the same read the page makes for one
+/// period; a period the data does not know (before the history, or a read
+/// that failed) is a gap in the series, never a zero, and never fails the
+/// others.
+
+final class BiModuleSeriesFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<BiSeries>,
+          (String, String, BiGrain, BiPeriod, int)
+        > {
+  BiModuleSeriesFamily._()
+    : super(
+        retry: null,
+        name: r'biModuleSeriesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The module's own figure for each of the [count] periods ending at
+  /// [end], oldest first. Each is the same read the page makes for one
+  /// period; a period the data does not know (before the history, or a read
+  /// that failed) is a gap in the series, never a zero, and never fails the
+  /// others.
+
+  BiModuleSeriesProvider call(
+    String workspaceId,
+    String moduleId,
+    BiGrain grain,
+    BiPeriod end,
+    int count,
+  ) => BiModuleSeriesProvider._(
+    argument: (workspaceId, moduleId, grain, end, count),
+    from: this,
+  );
+
+  @override
+  String toString() => r'biModuleSeriesProvider';
+}
+
 /// #1923 C — the saved views, through their definer RPCs.
 
 @ProviderFor(biViewRepository)

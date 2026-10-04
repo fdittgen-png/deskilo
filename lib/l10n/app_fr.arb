@@ -663,6 +663,22 @@
   "biCards": "Analyses affichées",
   "biCardsUnavailable": "{count} analyses de cette vue ne vous sont pas accessibles et sont omises.",
   "biChangePoints": "{value} pts",
+  "biCollectionCentre": "de ce qui a été facturé",
+  "@biCollectionCentre": {
+    "description": "Business analytics dashboard: biCollectionCentre"
+  },
+  "biCollectionCollected": "Encaissé",
+  "@biCollectionCollected": {
+    "description": "Business analytics dashboard: biCollectionCollected"
+  },
+  "biCollectionNoComposition": "Les montants encaissés incluent ici des factures antérieures : ils ne sont pas une partie du total facturé de la période.",
+  "@biCollectionNoComposition": {
+    "description": "Business analytics dashboard: biCollectionNoComposition"
+  },
+  "biCollectionOutstanding": "Reste à encaisser",
+  "@biCollectionOutstanding": {
+    "description": "Business analytics dashboard: biCollectionOutstanding"
+  },
   "biColumnChange": "Écart",
   "biColumnValue": "Valeur",
   "biCompare": "Comparer avec",
@@ -670,10 +686,18 @@
   "biCompareNone": "Rien",
   "biComparePrevious": "La période précédente",
   "biComparePreviousYear": "La même période un an avant",
+  "biCompareTitle": "Comparé au passé",
+  "@biCompareTitle": {
+    "description": "Business analytics dashboard: biCompareTitle"
+  },
   "biComparedLine": "{period} : {value} ({change})",
   "biComparedNotRecorded": "{period} n’a pas été enregistré (l’historique commence le {since}) ; pas de comparaison.",
   "biComparedPartial": "{period} n’est enregistré qu’en partie.",
   "biComparisonUnqualified": "Évolution indisponible : une période contient des données partielles ou anciennes.",
+  "biCompositionTitle": "Ce qui la compose",
+  "@biCompositionTitle": {
+    "description": "Business analytics dashboard: biCompositionTitle"
+  },
   "biComputedWorkspaceTime": "Calculé le {date} · heure de l’espace",
   "@biComputedWorkspaceTime": {
     "placeholders": {
@@ -688,7 +712,19 @@
   "biDataPartial": "Données partielles",
   "biDataStale": "Données anciennes",
   "biDataUnavailable": "Indisponible",
+  "biDeltaNone": "Pas encore de comparaison",
+  "@biDeltaNone": {
+    "description": "Business analytics dashboard: biDeltaNone"
+  },
   "biDimensionLevel": "Niveau",
+  "biEvolutionTitle": "Évolution",
+  "@biEvolutionTitle": {
+    "description": "Business analytics dashboard: biEvolutionTitle"
+  },
+  "biExportPdf": "Exporter en PDF",
+  "@biExportPdf": {
+    "description": "Business analytics dashboard: biExportPdf"
+  },
   "biExposureDiffers": "Les deux périodes n’offrent pas la même base ; le taux en tient compte, les chiffres bruts ne se comparent pas directement.",
   "biFinanceCollected": "Encaissé",
   "biFinanceCollectedBasis": "Sur {count} paiements rapprochés de factures",
@@ -714,9 +750,116 @@
   "biGroupBy": "Regrouper par",
   "biGroupNone": "Sans regroupement",
   "biInvalidAddress": "Cette adresse demande une analyse qui n’existe pas ; rien n’a été lu.",
+  "biKindCurrent": "Maintenant",
+  "@biKindCurrent": {
+    "description": "Business analytics dashboard: biKindCurrent"
+  },
+  "biKindPrevious": "Période précédente",
+  "@biKindPrevious": {
+    "description": "Business analytics dashboard: biKindPrevious"
+  },
+  "biKindYearAgo": "Même période l'an dernier",
+  "@biKindYearAgo": {
+    "description": "Business analytics dashboard: biKindYearAgo"
+  },
+  "biNarrativeDown": "Plus bas que {label} ({change}).",
+  "@biNarrativeDown": {
+    "description": "Business analytics dashboard: biNarrativeDown",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeFlat": "À peu près comme {label}.",
+  "@biNarrativeFlat": {
+    "description": "Business analytics dashboard: biNarrativeFlat",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeUp": "Plus haut que {label} ({change}).",
+  "@biNarrativeUp": {
+    "description": "Business analytics dashboard: biNarrativeUp",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biNoDataLabel": "pas de donnée",
+  "@biNoDataLabel": {
+    "description": "Business analytics dashboard: biNoDataLabel"
+  },
   "biNotOffered": "non proposé par les analyses affichées",
+  "biOnPace": "au rythme actuel",
+  "@biOnPace": {
+    "description": "Business analytics dashboard: biOnPace"
+  },
   "biOpenSource": "Ouvrir la source",
   "biPastBasis": "Recalculé à partir des données disponibles aujourd’hui, et non des seules données connues à l’époque.",
+  "biPdfEstimateNote": "Les lignes en pointillés et les zones ombrées sont des estimations tirées des périodes passées, pas des mesures.",
+  "@biPdfEstimateNote": {
+    "description": "Business analytics dashboard: biPdfEstimateNote"
+  },
+  "biPdfFailed": "Le PDF n'a pas pu être créé.",
+  "@biPdfFailed": {
+    "description": "Business analytics dashboard: biPdfFailed"
+  },
+  "biPdfProduced": "Établi le {date}",
+  "@biPdfProduced": {
+    "description": "Business analytics dashboard: biPdfProduced",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biPdfTitle": "Analyse d'activité",
+  "@biPdfTitle": {
+    "description": "Business analytics dashboard: biPdfTitle"
+  },
+  "biProjectionBasis": "Une droite tracée sur les {count} dernières périodes complètes, prolongée. La zone ombrée est la fourchette probable. Une estimation, pas une promesse.",
+  "@biProjectionBasis": {
+    "description": "Business analytics dashboard: biProjectionBasis",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "biProjectionLabel": "Estimation",
+  "@biProjectionLabel": {
+    "description": "Business analytics dashboard: biProjectionLabel"
+  },
+  "biProjectionNotEnough": "Pas encore assez d'historique pour projeter : {have} périodes complètes pour l'instant, {need} nécessaires.",
+  "@biProjectionNotEnough": {
+    "description": "Business analytics dashboard: biProjectionNotEnough",
+    "placeholders": {
+      "have": {
+        "type": "int"
+      },
+      "need": {
+        "type": "int"
+      }
+    }
+  },
+  "biProjectionTitle": "Où cela va",
+  "@biProjectionTitle": {
+    "description": "Business analytics dashboard: biProjectionTitle"
+  },
+  "biProvisionalNote": "Provisoire : la période n'est pas terminée, cette variation est une estimation.",
+  "@biProvisionalNote": {
+    "description": "Business analytics dashboard: biProvisionalNote"
+  },
   "biQuarter": "T{quarter} {year}",
   "biRecordedFuture": "Période future · réservations enregistrées",
   "biRecordedPast": "Période passée · données actuelles",
@@ -728,6 +871,31 @@
   "biRefusedGrouping": "Cette analyse ne peut pas être regroupée ainsi.",
   "biRemainder": "Hors des groupes actuels",
   "biReset": "Afficher la vue standard",
+  "biRunRate": "Au rythme actuel, cette période finirait autour de {value}.",
+  "@biRunRate": {
+    "description": "Business analytics dashboard: biRunRate",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "biRunningLabel": "en cours",
+  "@biRunningLabel": {
+    "description": "Business analytics dashboard: biRunningLabel"
+  },
+  "biSeatCentre": "du temps total des places",
+  "@biSeatCentre": {
+    "description": "Business analytics dashboard: biSeatCentre"
+  },
+  "biSeatClosed": "Hors heures d'ouverture",
+  "@biSeatClosed": {
+    "description": "Business analytics dashboard: biSeatClosed"
+  },
+  "biSeatFree": "Libre pendant les heures d'ouverture",
+  "@biSeatFree": {
+    "description": "Business analytics dashboard: biSeatFree"
+  },
   "biSeatHoursBlocked": "{hours} heures-sièges bloquées",
   "@biSeatHoursBlocked": {
     "placeholders": {
@@ -743,6 +911,14 @@
         "type": "String"
       }
     }
+  },
+  "biSeatReserved": "Réservé",
+  "@biSeatReserved": {
+    "description": "Business analytics dashboard: biSeatReserved"
+  },
+  "biShareByLevel": "Temps réservé par étage",
+  "@biShareByLevel": {
+    "description": "Business analytics dashboard: biShareByLevel"
   },
   "biSort": "Ordre",
   "biSortAscending": "Le plus bas d’abord",
@@ -760,6 +936,10 @@
   "biViewClearMyDefault": "Ne plus ouvrir ma vue par défaut",
   "biViewClearTeamDefault": "Retirer la vue par défaut de l’équipe",
   "biViewCopyName": "{name} (copie)",
+  "biViewDashboard": "Tableau de bord",
+  "@biViewDashboard": {
+    "description": "Business analytics dashboard: biViewDashboard"
+  },
   "biViewDelete": "Supprimer",
   "biViewDeleteConfirm": "Supprimer la vue « {name} » ?",
   "biViewDuplicate": "Dupliquer comme ma vue",
@@ -784,6 +964,14 @@
   "biViews": "Vues",
   "biViewsMine": "Mes vues",
   "biViewsTeam": "Vues de l’équipe",
+  "biVsPrevious": "vs période précédente",
+  "@biVsPrevious": {
+    "description": "Business analytics dashboard: biVsPrevious"
+  },
+  "biVsYearAgo": "vs l'an dernier",
+  "@biVsYearAgo": {
+    "description": "Business analytics dashboard: biVsYearAgo"
+  },
   "billAccessorySupplements": "Suppléments d'accessoires",
   "billBalance": "Solde",
   "billCreditNoteCard": "Avoir {number}",

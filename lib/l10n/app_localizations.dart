@@ -2245,6 +2245,30 @@ abstract class AppLocalizations {
   /// **'{value} pp'**
   String biChangePoints(String value);
 
+  /// Business analytics dashboard: biCollectionCentre
+  ///
+  /// In en, this message translates to:
+  /// **'of what was invoiced'**
+  String get biCollectionCentre;
+
+  /// Business analytics dashboard: biCollectionCollected
+  ///
+  /// In en, this message translates to:
+  /// **'Collected'**
+  String get biCollectionCollected;
+
+  /// Business analytics dashboard: biCollectionNoComposition
+  ///
+  /// In en, this message translates to:
+  /// **'The amounts collected here include earlier invoices, so they are not a part of this period\'s invoiced total.'**
+  String get biCollectionNoComposition;
+
+  /// Business analytics dashboard: biCollectionOutstanding
+  ///
+  /// In en, this message translates to:
+  /// **'Still to collect'**
+  String get biCollectionOutstanding;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -2287,6 +2311,12 @@ abstract class AppLocalizations {
   /// **'The same period a year before'**
   String get biComparePreviousYear;
 
+  /// Business analytics dashboard: biCompareTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Compared with the past'**
+  String get biCompareTitle;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -2310,6 +2340,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change unavailable: one period has partial or out-of-date data.'**
   String get biComparisonUnqualified;
+
+  /// Business analytics dashboard: biCompositionTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What it is made of'**
+  String get biCompositionTitle;
 
   /// No description provided for @biComputedWorkspaceTime.
   ///
@@ -2353,11 +2389,29 @@ abstract class AppLocalizations {
   /// **'Unavailable'**
   String get biDataUnavailable;
 
+  /// Business analytics dashboard: biDeltaNone
+  ///
+  /// In en, this message translates to:
+  /// **'No comparison yet'**
+  String get biDeltaNone;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
   /// **'Level'**
   String get biDimensionLevel;
+
+  /// Business analytics dashboard: biEvolutionTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Evolution'**
+  String get biEvolutionTitle;
+
+  /// Business analytics dashboard: biExportPdf
+  ///
+  /// In en, this message translates to:
+  /// **'Export as PDF'**
+  String get biExportPdf;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2509,11 +2563,59 @@ abstract class AppLocalizations {
   /// **'This address asks for an analysis that does not exist; nothing was read.'**
   String get biInvalidAddress;
 
+  /// Business analytics dashboard: biKindCurrent
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get biKindCurrent;
+
+  /// Business analytics dashboard: biKindPrevious
+  ///
+  /// In en, this message translates to:
+  /// **'Previous period'**
+  String get biKindPrevious;
+
+  /// Business analytics dashboard: biKindYearAgo
+  ///
+  /// In en, this message translates to:
+  /// **'Same period last year'**
+  String get biKindYearAgo;
+
+  /// Business analytics dashboard: biNarrativeDown
+  ///
+  /// In en, this message translates to:
+  /// **'Lower than {label} ({change}).'**
+  String biNarrativeDown(String label, String change);
+
+  /// Business analytics dashboard: biNarrativeFlat
+  ///
+  /// In en, this message translates to:
+  /// **'About the same as {label}.'**
+  String biNarrativeFlat(String label);
+
+  /// Business analytics dashboard: biNarrativeUp
+  ///
+  /// In en, this message translates to:
+  /// **'Higher than {label} ({change}).'**
+  String biNarrativeUp(String label, String change);
+
+  /// Business analytics dashboard: biNoDataLabel
+  ///
+  /// In en, this message translates to:
+  /// **'no data'**
+  String get biNoDataLabel;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
   /// **'not offered by the analyses shown'**
   String get biNotOffered;
+
+  /// Business analytics dashboard: biOnPace
+  ///
+  /// In en, this message translates to:
+  /// **'on pace'**
+  String get biOnPace;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2526,6 +2628,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recomputed from records available now, not a snapshot of what was known then.'**
   String get biPastBasis;
+
+  /// Business analytics dashboard: biPdfEstimateNote
+  ///
+  /// In en, this message translates to:
+  /// **'Dashed lines and shaded bands are estimates from past periods, not measurements.'**
+  String get biPdfEstimateNote;
+
+  /// Business analytics dashboard: biPdfFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The PDF could not be made.'**
+  String get biPdfFailed;
+
+  /// Business analytics dashboard: biPdfProduced
+  ///
+  /// In en, this message translates to:
+  /// **'Produced on {date}'**
+  String biPdfProduced(String date);
+
+  /// Business analytics dashboard: biPdfTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Business analytics'**
+  String get biPdfTitle;
+
+  /// Business analytics dashboard: biProjectionBasis
+  ///
+  /// In en, this message translates to:
+  /// **'A straight line through the last {count} complete periods, carried forward. The shaded band is the likely range. An estimate, not a promise.'**
+  String biProjectionBasis(int count);
+
+  /// Business analytics dashboard: biProjectionLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Estimate'**
+  String get biProjectionLabel;
+
+  /// Business analytics dashboard: biProjectionNotEnough
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough history to project yet: {have} complete periods so far, {need} needed.'**
+  String biProjectionNotEnough(int have, int need);
+
+  /// Business analytics dashboard: biProjectionTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Where it is heading'**
+  String get biProjectionTitle;
+
+  /// Business analytics dashboard: biProvisionalNote
+  ///
+  /// In en, this message translates to:
+  /// **'Provisional: the period is not over, so this change is an estimate.'**
+  String get biProvisionalNote;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2593,6 +2749,36 @@ abstract class AppLocalizations {
   /// **'Show the standard view'**
   String get biReset;
 
+  /// Business analytics dashboard: biRunRate
+  ///
+  /// In en, this message translates to:
+  /// **'At the pace so far, this period would end at about {value}.'**
+  String biRunRate(String value);
+
+  /// Business analytics dashboard: biRunningLabel
+  ///
+  /// In en, this message translates to:
+  /// **'running'**
+  String get biRunningLabel;
+
+  /// Business analytics dashboard: biSeatCentre
+  ///
+  /// In en, this message translates to:
+  /// **'of all seat time'**
+  String get biSeatCentre;
+
+  /// Business analytics dashboard: biSeatClosed
+  ///
+  /// In en, this message translates to:
+  /// **'Outside opening hours'**
+  String get biSeatClosed;
+
+  /// Business analytics dashboard: biSeatFree
+  ///
+  /// In en, this message translates to:
+  /// **'Free during opening hours'**
+  String get biSeatFree;
+
   /// No description provided for @biSeatHoursBlocked.
   ///
   /// In en, this message translates to:
@@ -2604,6 +2790,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{hours} unreserved seat-hours'**
   String biSeatHoursFree(String hours);
+
+  /// Business analytics dashboard: biSeatReserved
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved'**
+  String get biSeatReserved;
+
+  /// Business analytics dashboard: biShareByLevel
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved time by level'**
+  String get biShareByLevel;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -2682,6 +2880,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name} (copy)'**
   String biViewCopyName(String name);
+
+  /// Business analytics dashboard: biViewDashboard
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get biViewDashboard;
 
   /// #1923 C Web-BI saved views
   ///
@@ -2826,6 +3030,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Team views'**
   String get biViewsTeam;
+
+  /// Business analytics dashboard: biVsPrevious
+  ///
+  /// In en, this message translates to:
+  /// **'vs previous period'**
+  String get biVsPrevious;
+
+  /// Business analytics dashboard: biVsYearAgo
+  ///
+  /// In en, this message translates to:
+  /// **'vs last year'**
+  String get biVsYearAgo;
 
   /// Bill line for priced seat accessories charged per booked half-day (#170), shown only when the amount is non-zero; the amount renders trailing
   ///
