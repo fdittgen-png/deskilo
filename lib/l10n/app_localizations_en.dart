@@ -5200,6 +5200,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Members enter their name, postal address, phone, e-mail and legal ids in Settings; invoices and letters print them in the standard postal block.';
 
   @override
+  String get featurePlaceFeedbackDesc =>
+      'Members mark seats, desks, offices and levels as favourites and rate them from 0 to 5 stars. A favourite is the member\'s own; a rating shows its average and how many gave one, never who. An assistant can list the favourites, book one, and record a rating. Off hides the hearts and stars and refuses the writes; nothing else follows it.';
+
+  @override
+  String get featurePlaceFeedbackTitle => 'Favourites and ratings';
+
+  @override
   String get featurePlanMemberPhotosDesc =>
       'Occupied seats on the Plan tab and Reserve hub show the occupant\'s profile photo instead of the initial.';
 
@@ -9958,6 +9965,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpInvoiceVoid => 'Void an invoice';
 
   @override
+  String get mcpOpListMyFavorites => 'Your favourite places';
+
+  @override
   String get mcpOpListWorkspaces => 'See which workspaces it may use';
 
   @override
@@ -9976,6 +9986,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpPendingValidations => 'See pending validation requests';
 
   @override
+  String get mcpOpRatePlace => 'Rate places';
+
+  @override
   String get mcpOpRefund => 'Refund an invoice';
 
   @override
@@ -9984,6 +9997,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpOpRespond => 'Answer a validation request';
+
+  @override
+  String get mcpOpSetFavorite => 'Mark places as favourites';
 
   @override
   String get mcpOpSubscription => 'Change a member\'s subscription share';

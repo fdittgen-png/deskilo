@@ -1,0 +1,10 @@
+{
+  "featurePlaceFeedbackTitle": "Favoris et notes",
+  "@featurePlaceFeedbackTitle": {
+    "description": "#2185 place feedback"
+  },
+  "featurePlaceFeedbackDesc": "Les membres marquent des places, bureaux, salles et étages en favoris et les notent de 0 à 5 étoiles. Un favori est personnel ; une note montre sa moyenne et le nombre de notes, jamais qui. Un assistant peut lister les favoris, en réserver un et enregistrer une note. Désactivé, les cœurs et les étoiles disparaissent et les écritures sont refusées ; rien d'autre n'en dépend.",
+  "@featurePlaceFeedbackDesc": {
+    "description": "#2185 place feedback"
+  }
+}

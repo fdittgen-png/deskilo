@@ -84,6 +84,8 @@ const Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'resource_favorites': 'a member\'s own marks on places (#2185): personal data, returned by export_my_data to the member it belongs to; the places they point at are exported',
+  'resource_ratings': 'a member\'s own 0-5 star ratings of places (#2185): personal data, returned by export_my_data to the member it belongs to, not portable configuration',
   'analytics_history': 'when this installation began recording analytics history (#1920); a fact about this installation, not portable configuration — an imported space starts its own history',
   'seat_history': 'analytics evidence written by triggers on this installation (#1920); the seats it describes are exported, and an import records history from the rows it creates',
   'opening_hours_history': 'analytics evidence written by triggers on this installation (#1920); the booking rules it describes are exported',

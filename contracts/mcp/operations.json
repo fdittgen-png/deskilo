@@ -68,6 +68,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "average": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "balance_cents": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -93,6 +97,10 @@
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "confirmation_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "count": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -161,6 +169,10 @@
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "extra_half_days": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "favorite": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -321,6 +333,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "rating": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "reason": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -338,6 +354,10 @@
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "reservation_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "resource_id": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -663,7 +683,7 @@
    "handler": true,
    "dispatch": true,
    "title": "Describe a place",
-   "description": "Describe one place: a seat, a desk, an office or a level (by its id from deskilo_get_availability or deskilo_list_my_reservations), or one of the person's own reservations by reservation_id. Answers what it is, where it sits (level, office, desk), how many seats it has and what a seat offers. It never includes a picture by default: set include_image to true ONLY when the person explicitly asks to see an image, picture, plan or map; the answer then carries a floor-plan picture with that place highlighted.",
+   "description": "Describe one place: a seat, a desk, an office or a level (by its id from deskilo_get_availability or deskilo_list_my_reservations), or one of the person's own reservations by reservation_id. Answers what it is, where it sits (level, office, desk), how many seats it has and what a seat offers. It never includes a picture by default: set include_image to true ONLY when the person explicitly asks to see an image, picture, plan or map; the answer then carries a floor-plan picture with that place highlighted. It also carries the person's favourite mark and the place's rating.",
    "rpc": null,
    "authority": {
     "kind": "member"
@@ -726,7 +746,52 @@
     "bookable_as_whole",
     "image_requested",
     "image_available",
-    "render"
+    "render",
+    "favorite",
+    "rating",
+    "average",
+    "count",
+    "mine"
+   ]
+  },
+  {
+   "id": "list_my_favorites",
+   "handler": true,
+   "dispatch": true,
+   "title": "My favourite places",
+   "description": "The places this person marked as favourites in one workspace (seats, desks, offices, levels), each with its label, its kind, its id and its rating (average, how many rated, and the person's own). To book one, pass its id to deskilo_create_reservation (seat_id, desk_id, office_id or level_id by kind) with the usual date and period or times.",
+   "rpc": null,
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess",
+    "placeFeedback"
+   ],
+   "scope": "own",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    }
+   },
+   "output": [
+    "items",
+    "kind",
+    "resource_id",
+    "label",
+    "rating",
+    "average",
+    "count",
+    "mine",
+    "favorite"
    ]
   },
   {
@@ -1245,6 +1310,161 @@
     "checked_in_at",
     "checked_out_at",
     "state_digest"
+   ]
+  },
+  {
+   "id": "set_favorite",
+   "handler": true,
+   "dispatch": true,
+   "title": "Favourite or unfavourite a place",
+   "description": "Mark a place as one of this person's favourites, or take it back (favorite false). Generate a new request_id per call; resending the same one never acts twice.",
+   "rpc": null,
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess",
+    "placeFeedback"
+   ],
+   "scope": "own",
+   "mutation": "write",
+   "destructive": true,
+   "idempotency": "request_id",
+   "confirmation": "none",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "kind": {
+     "type": "enum",
+     "required": true,
+     "values": [
+      "seat",
+      "desk",
+      "office",
+      "level"
+     ],
+     "description": "What kind of place: a seat, a desk, an office or a level.",
+     "examples": [
+      "seat"
+     ]
+    },
+    "resource_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The place's id, from deskilo_get_availability, deskilo_list_my_favorites or deskilo_get_place.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "favorite": {
+     "type": "boolean",
+     "description": "True (default) to mark it as a favourite, false to take it back.",
+     "examples": [
+      true
+     ]
+    }
+   },
+   "output": [
+    "favorite",
+    "average",
+    "count",
+    "mine"
+   ]
+  },
+  {
+   "id": "rate_place",
+   "handler": true,
+   "dispatch": true,
+   "title": "Rate a place",
+   "description": "Give a place 0 to 5 stars on this person's behalf, or take their rating back (clear true). Only when the person asks to rate. Generate a new request_id per call; resending the same one never acts twice.",
+   "rpc": null,
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess",
+    "placeFeedback"
+   ],
+   "scope": "own",
+   "mutation": "write",
+   "destructive": true,
+   "idempotency": "request_id",
+   "confirmation": "none",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "kind": {
+     "type": "enum",
+     "required": true,
+     "values": [
+      "seat",
+      "desk",
+      "office",
+      "level"
+     ],
+     "description": "What kind of place: a seat, a desk, an office or a level.",
+     "examples": [
+      "seat"
+     ]
+    },
+    "resource_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The place's id, from deskilo_get_availability, deskilo_list_my_favorites or deskilo_get_place.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "stars": {
+     "type": "integer",
+     "min": 0,
+     "max": 5,
+     "description": "The rating, from 0 to 5 stars. Omit with clear true to take the rating back.",
+     "examples": [
+      4
+     ]
+    },
+    "clear": {
+     "type": "boolean",
+     "description": "True to take the person's rating back instead of giving stars.",
+     "examples": [
+      false
+     ]
+    }
+   },
+   "output": [
+    "favorite",
+    "average",
+    "count",
+    "mine"
    ]
   },
   {

@@ -209,6 +209,9 @@ const workspaceProcesses = <WorkspaceProcess>[
       // #1654 — beside the help hints, for the same reason: optional
       // guidance on an existing screen, not a right anybody holds.
       WorkspaceFeature.memberGettingStarted,
+      // #2185 — a member's own marks on the places they book, not a right
+      // anybody holds.
+      WorkspaceFeature.placeFeedback,
       // #1865 — beside the guidance for the same reason: a person's own
       // record of how a task is done, not a right anybody holds.
       WorkspaceFeature.taskRecorder,

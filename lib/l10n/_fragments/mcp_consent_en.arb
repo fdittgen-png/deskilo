@@ -119,5 +119,17 @@
   "mcpOpGetPlace": "Describe a place, and show it when you ask",
   "@mcpOpGetPlace": {
     "description": "#1615 mcp_consent"
+  },
+  "mcpOpListMyFavorites": "Your favourite places",
+  "@mcpOpListMyFavorites": {
+    "description": "#2185 mcp_consent"
+  },
+  "mcpOpSetFavorite": "Mark places as favourites",
+  "@mcpOpSetFavorite": {
+    "description": "#2185 mcp_consent"
+  },
+  "mcpOpRatePlace": "Rate places",
+  "@mcpOpRatePlace": {
+    "description": "#2185 mcp_consent"
   }
 }

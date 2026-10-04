@@ -36,5 +36,17 @@
   },
   "@mcpOpReservationDeletion": {
     "description": "#1615 mcp_consent"
+  },
+  "mcpOpListMyFavorites": "Ihre Lieblingsplätze",
+  "@mcpOpListMyFavorites": {
+    "description": "#2185 mcp_consent"
+  },
+  "mcpOpSetFavorite": "Plätze als Favoriten markieren",
+  "@mcpOpSetFavorite": {
+    "description": "#2185 mcp_consent"
+  },
+  "mcpOpRatePlace": "Plätze bewerten",
+  "@mcpOpRatePlace": {
+    "description": "#2185 mcp_consent"
   }
 }

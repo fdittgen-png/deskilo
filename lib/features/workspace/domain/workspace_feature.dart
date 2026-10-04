@@ -278,6 +278,13 @@ enum WorkspaceFeature {
   /// space can hide; OFF hides the card and nothing else.
   memberGettingStarted,
 
+  /// #2185 — favourites and 0-5 star ratings on every bookable place
+  /// (seat, desk, office, level): a member's own marks, an average the
+  /// others see, and the same two through an assistant. Reserve, Core,
+  /// default ON, requiring nothing; OFF hides the hearts and the stars and
+  /// refuses the writes, and nothing else follows it.
+  placeFeedback,
+
   /// Explicitly published public workspace page; never private occupancy.
   publicListings,
 
@@ -1380,6 +1387,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // Reserve, because that is where a newly joined member lands.
   WorkspaceFeature.memberGettingStarted: FeatureManifestEntry(
     feature: WorkspaceFeature.memberGettingStarted,
+    surface: FeatureSurface.reserve,
+    tier: FeatureTier.core,
+  ),
+  // #2185 — favourites and ratings need no other feature: they decorate
+  // the places the Reserve hub already shows.
+  WorkspaceFeature.placeFeedback: FeatureManifestEntry(
+    feature: WorkspaceFeature.placeFeedback,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
   ),
