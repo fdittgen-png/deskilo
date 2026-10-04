@@ -107,6 +107,7 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'vat_period_net' ||
       'vat_period_vat' ||
       'vat_period_gross' ||
+      'declaration_status' || 'declaration_note' || 'declaration_invoice_count' ||
       'vat_basis_note' =>
         ReportFieldGroup.vat,
       'site_name' || 'site_address' || 'usage_sites' => ReportFieldGroup.sites,
@@ -115,6 +116,7 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'lines' ||
       'vat' ||
       'usage_records' ||
+      'vat_form_boxes' ||
       'vat_positions' ||
       'vat_rate_totals' ||
       'status_members' =>
@@ -204,6 +206,10 @@ String reportFieldMeaning(String field, AppLocalizations? l10n) =>
       'status_credits' => l10n?.reportFieldMeaningStatusCredits ?? 'The credits granted',
       'status_net' => l10n?.reportFieldMeaningStatusNet ?? 'Revenues minus expenses',
       'status_members' => l10n?.reportFieldMeaningStatusMembers ?? 'The member-by-member lines — a loop',
+      'declaration_status' => l10n?.vatDeclStatus ?? 'Status',
+      'declaration_note' => l10n?.vatDeclDisclaimer ?? 'Verify against your accounting before filing.',
+      'declaration_invoice_count' => l10n?.vatDeclInvoices ?? 'Invoices',
+      'vat_form_boxes' => l10n?.vatDeclBoxes ?? 'Official form lines',
       'vat_positions' => l10n?.reportFieldMeaningVatPositions ?? 'Every invoice of the VAT period — a loop',
       'vat_rate_totals' => l10n?.reportFieldMeaningVatRateTotals ?? 'The VAT period totals by rate — a loop',
       'payment_terms' => l10n?.reportFieldMeaningPaymentTerms ?? 'The payment terms mention',
@@ -248,6 +254,8 @@ String reportFieldMarkup(String field) => switch (field) {
         '{% for v in vat %}{{ v.rate }} | {{ v.net }} | {{ v.amount }}{% endfor %}',
       'usage_records' =>
         '{% for r in usage_records %}{{ r.date }} | {{ r.space }} | {{ r.counted }}{% endfor %}',
+      'vat_form_boxes' =>
+        '{% for box in vat_form_boxes %}{{ box.code }} | {{ box.label }} | {{ box.net }} | {{ box.vat }}{% endfor %}',
       'vat_positions' =>
         '{% for p in vat_positions %}{{ p.number }} | {{ p.rate }} | {{ p.net }} | {{ p.vat }} | {{ p.gross }}{% endfor %}',
       'vat_rate_totals' =>

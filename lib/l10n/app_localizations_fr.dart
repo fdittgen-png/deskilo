@@ -14483,6 +14483,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune image — téléversez votre logo, un tampon ou une signature et référencez-la avec ![nom].';
 
   @override
+  String get reportImagesLoadFailed =>
+      'Impossible de charger les images des rapports. Réessayez.';
+
+  @override
   String get reportImagesTitle => 'Images des rapports';
 
   @override

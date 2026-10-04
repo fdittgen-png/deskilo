@@ -14474,6 +14474,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Noch kein Bild — laden Sie Ihr Logo, einen Stempel oder eine Unterschrift hoch und referenzieren Sie es mit ![name].';
 
   @override
+  String get reportImagesLoadFailed =>
+      'Berichtsbilder konnten nicht geladen werden. Erneut versuchen.';
+
+  @override
   String get reportImagesTitle => 'Berichtsbilder';
 
   @override

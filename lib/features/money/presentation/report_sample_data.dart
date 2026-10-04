@@ -133,6 +133,10 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'vat_basis_note':
           'Base : encaissements (TVA sur les paiements reçus pendant la '
               'période).',
+      'declaration_invoice_count': '2',
+      'declaration_status': 'draft',
+      'declaration_note': l10n?.vatDeclDisclaimer ?? 'Verify against your accounting before filing.',
+      'vat_form_boxes': <Map<String, Object?>>[],
       'vat_positions': [
         {'number': 'INV-2026-0007', 'date': '2026-09-03', 'customer': 'Anne DUPONT', 'rate': '20 %', 'category': 'S', 'net': '500,00 €', 'vat': '100,00 €', 'gross': '600,00 €', 'reverses': ''},
         {'number': 'INV-2026-0008', 'date': '2026-09-12', 'customer': 'Atelier Dupont SARL', 'rate': '20 %', 'category': 'S', 'net': '500,00 €', 'vat': '100,00 €', 'gross': '600,00 €', 'reverses': ''},

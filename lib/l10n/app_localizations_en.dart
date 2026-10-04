@@ -14331,6 +14331,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'No image yet — upload your logo, a stamp or a signature and reference it with ![name].';
 
   @override
+  String get reportImagesLoadFailed =>
+      'Could not load report images. Try again.';
+
+  @override
   String get reportImagesTitle => 'Report images';
 
   @override

@@ -3723,6 +3723,7 @@ Map<String, _Getter> _part9() => {
   'reportImageSizeSmall': (l) => l.reportImageSizeSmall,
   'reportImageUpload': (l) => l.reportImageUpload,
   'reportImagesEmpty': (l) => l.reportImagesEmpty,
+  'reportImagesLoadFailed': (l) => l.reportImagesLoadFailed,
   'reportImagesTitle': (l) => l.reportImagesTitle,
   'reportInsertImage': (l) => l.reportInsertImage,
   'reportLanguageAmbiguous': (l) => l.reportLanguageAmbiguous,
@@ -3761,6 +3762,7 @@ Map<String, _Getter> _part9() => {
   'reportPendingPayments': (l) => l.reportPendingPayments,
   'reportPresetClassic': (l) => l.reportPresetClassic,
   'reportPresetFormalLetter': (l) => l.reportPresetFormalLetter,
+  'reportPresetProfessional': (l) => l.reportPresetProfessional,
   'reportPresetSimple': (l) => l.reportPresetSimple,
   'reportPresetVerbose': (l) => l.reportPresetVerbose,
   'reportPreviewFit': (l) => l.reportPreviewFit,
@@ -4050,11 +4052,11 @@ Map<String, _Getter> _part9() => {
   'subprocessConfiguration': (l) => l.subprocessConfiguration,
   'subprocessConfigurationDesc': (l) => l.subprocessConfigurationDesc,
   'subprocessDecisions': (l) => l.subprocessDecisions,
-  'subprocessDecisionsDesc': (l) => l.subprocessDecisionsDesc,
-  'subprocessDelivery': (l) => l.subprocessDelivery,
 };
 
 Map<String, _Getter> _part10() => {
+  'subprocessDecisionsDesc': (l) => l.subprocessDecisionsDesc,
+  'subprocessDelivery': (l) => l.subprocessDelivery,
   'subprocessDeliveryDesc': (l) => l.subprocessDeliveryDesc,
   'subprocessDocuments': (l) => l.subprocessDocuments,
   'subprocessDocumentsDesc': (l) => l.subprocessDocumentsDesc,
@@ -4453,11 +4455,11 @@ Map<String, _Getter> _part10() => {
   'templateClearFilters': (l) => l.templateClearFilters,
   'templateDetailNone': (l) => l.templateDetailNone,
   'templateDetailSearch': (l) => l.templateDetailSearch,
-  'templateDetails': (l) => l.templateDetails,
-  'templateNoMatch': (l) => l.templateNoMatch,
 };
 
 Map<String, _Getter> _part11() => {
+  'templateDetails': (l) => l.templateDetails,
+  'templateNoMatch': (l) => l.templateNoMatch,
   'templatePricesOtherCurrency': (l) => l.templatePricesOtherCurrency,
   'templateProfileFull': (l) => l.templateProfileFull,
   'templatePublishLocalNeeds': (l) => l.templatePublishLocalNeeds,

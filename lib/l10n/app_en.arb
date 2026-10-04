@@ -16426,6 +16426,7 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportImagesLoadFailed": "Could not load report images. Try again.",
   "reportImagesTitle": "Report images",
   "@reportImagesTitle": {
     "description": "Report WYSIWYG editor + image library (#488)"
