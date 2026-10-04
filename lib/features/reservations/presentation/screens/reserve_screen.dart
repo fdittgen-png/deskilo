@@ -55,6 +55,7 @@ import '../widgets/seat_legend.dart';
 import '../widgets/week_grid.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/help/help_blocker.dart';
 import '../booking_gate_scope.dart';
 import '../../../../core/time/work_hours.dart';
 import '../../../../core/i18n/format_controller.dart';
@@ -800,7 +801,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 ? const SizedBox.shrink(
                     key: ValueKey('reserve-open-day'))
                 : dayKnown
-                    ? _closedDayBanner(l10n)
+                    ? HelpBlocker(id: 'reserve.closed-day', child: _closedDayBanner(l10n))
                     // #1301 S4 — loading reads as loading, not as closed.
                     : const LinearProgressIndicator(
                         key: ValueKey('reserve-availability-loading'),
