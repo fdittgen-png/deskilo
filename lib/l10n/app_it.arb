@@ -9094,6 +9094,7 @@
   },
   "reportPresetClassic": "Classico",
   "reportPresetFormalLetter": "Lettera formale",
+  "reportPresetProfessional": "Professionale",
   "reportPresetSimple": "Semplice",
   "@reportPresetSimple": {
     "description": "Legal invoice mentions (#480)"

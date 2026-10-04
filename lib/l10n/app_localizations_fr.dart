@@ -14584,6 +14584,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportPresetFormalLetter => 'Lettre formelle';
 
   @override
+  String get reportPresetProfessional => 'Professionnel';
+
+  @override
   String get reportPresetSimple => 'Simple';
 
   @override

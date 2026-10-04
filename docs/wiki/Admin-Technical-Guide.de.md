@@ -23,13 +23,11 @@ die App ihm übergibt, sind ein festes Vokabular von Platzhaltern.
 *Der Berichts-Editor: die Sprach- und Dokumentauswahl oben, die Schalter Markup / Visuell und Entwurf / Vorschau darunter, und die Bänder der Rechnung — Kopf, Rumpf, Fuß — weiter unten.*
 
 <!-- anchor: admin.reports.kinds -->
-### Die Arten und die vier Vorlagen
+### Berichtsarten und Vorlagen
 
-Jede Art (Rechnung, Gutschrift, Proforma, Auszug, Vereinbarung,
-Zahlungen, Verbrauch, MwSt., Bereich) geht von einer der vier Vorlagen
-aus — *Einfach*, *Klassisch*, *Ausführlich*, *Formeller Brief* — die
-sich nur darin unterscheiden, wie viel sie sagen, nie darin, was
-rechtlich verlangt ist.
+Jeder Bericht bietet neben den bisherigen Varianten eine **Professionell** genannte Vorlage (#1994). Sie erhält die jeweiligen Detailabschnitte: bestätigte und ausstehende Zahlungen bleiben getrennt, Verbrauchsberichte behalten ihre Einzelnachweise. Verwaltungsberichte verlangen keine Verzugsgebühren. Eigene Entwürfe bleiben bis zum ausdrücklich gewählten Austausch erhalten.
+
+Der automatische Brief folgt dem Land des Bereichs (Frankreich: Fenster rechts; Deutschland: links), sofern keine eigene Fensterposition gewählt wurde. Die Dokumentsprache ist davon unabhängig. Vorlagen zeigen die bereitgestellten rechtlichen Angaben; Gestaltung und Übersetzung belegen weder Rechtskonformität noch die Erfüllung elektronischer Rechnungspflichten.
 
 <!-- anchor: admin.reports.bands -->
 ### Die Bänder: Kopf, Fortsetzung, Rumpf, Fuß

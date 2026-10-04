@@ -16554,6 +16554,7 @@
   "@reportPresetFormalLetter": {
     "description": "Report UX: presets, quick preview, download (#474)"
   },
+  "reportPresetProfessional": "Professional",
   "reportPresetSimple": "Simple",
   "@reportPresetSimple": {
     "description": "Legal invoice mentions (#480)"

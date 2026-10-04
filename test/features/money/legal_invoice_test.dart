@@ -44,12 +44,12 @@ void main() {
 
   });
 
-  group('every document ships the same four presets (#480)', () {
+  group('every document ships professional and legacy presets (#480)', () {
     for (final doc in ['invoice', 'proforma', 'statement', 'r1', 'r2']) {
       test(doc, () {
         final presets = presetsForDoc(doc, null);
         expect(presets.map((p) => p.id),
-            ['classic', 'simple', 'verbose', 'formal']);
+            ['professional', 'classic', 'simple', 'verbose', 'formal']);
         // The first preset IS the default the uncustomized doc renders.
         expect(presets.first.bands.header,
             defaultBandsForDoc(doc, null).header);
