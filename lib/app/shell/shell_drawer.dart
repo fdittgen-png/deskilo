@@ -70,11 +70,7 @@ class ShellDrawer extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final features = ref.watch(enabledFeaturesSyncProvider);
-    final me = ref.watch(myMemberProvider).value;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final isOwner = me?.actsAsOwner ?? false;
-    final canAdminister = me?.canAdminister ?? false;
-    final showAdminSection = isOwner || canAdminister;
     // #2137 — each entry asks the permission its route asks, so a member
     // given it through a role finds the way there.
     final perms = ref.watch(myPermissionsProvider);
@@ -115,7 +111,7 @@ class ShellDrawer extends ConsumerWidget {
         _Entry('drawer-workspace-settings', Icons.business_outlined,
             l10n?.workspaceSettingsTitle ?? 'Workspace',
             () => go('/workspace-settings')),
-      if (canAdminister || may(WorkspacePermission.manageMembers))
+      if (may(WorkspacePermission.manageMembers))
         _Entry('drawer-members', Icons.group_outlined,
             l10n?.membersTitle ?? 'Members & plans', () => go('/members')),
       if (may(WorkspacePermission.workspaceSettings))
@@ -129,12 +125,11 @@ class ShellDrawer extends ConsumerWidget {
           permissions: ref.watch(myPermissionsProvider)))
         _Entry('drawer-bi', Icons.insights_outlined,
             l10n?.biTitle ?? 'Business analytics', () => go('/bi')),
-      if ((showAdminSection || perms.isNotEmpty) &&
+      if (may(WorkspacePermission.manageRoles) &&
           features.contains(WorkspaceFeature.roleManagement))
         _Entry('drawer-roles', Icons.admin_panel_settings_outlined,
             l10n?.rolesTitle ?? 'Roles', () => go('/roles')),
-      if ((showAdminSection ||
-              may(WorkspacePermission.viewFinances) ||
+      if ((may(WorkspacePermission.viewFinances) ||
               may(WorkspacePermission.issueInvoices)) &&
           features.contains(WorkspaceFeature.invoicing))
         _Entry('drawer-invoices', Icons.receipt_long_outlined,
@@ -157,7 +152,7 @@ class ShellDrawer extends ConsumerWidget {
           features.contains(WorkspaceFeature.services))
         _Entry('drawer-services', Icons.room_service_outlined,
             l10n?.servicesTitle ?? 'Services', () => go('/services')),
-      if ((canAdminister || may(WorkspacePermission.manageServices)) &&
+      if (may(WorkspacePermission.manageServices) &&
           features.contains(WorkspaceFeature.accessorySupplements))
         _Entry('drawer-accessories', Icons.chair_outlined,
             l10n?.accessoriesTitle ?? 'Accessories', () => go('/accessories')),
@@ -168,10 +163,7 @@ class ShellDrawer extends ConsumerWidget {
         _Entry('drawer-features', Icons.toggle_on_outlined,
             l10n?.featuresTitle ?? 'Features', () => go('/features')),
       // #2137 — editing the plan is delegable through manageSites.
-      if (isOwner ||
-          ref
-              .watch(myPermissionsProvider)
-              .contains(WorkspacePermission.manageSites))
+      if (may(WorkspacePermission.manageSites))
         _Entry('drawer-editor', Icons.design_services_outlined,
             l10n?.editorOpenTooltip ?? 'Edit workspace', () => go('/editor')),
     ];
