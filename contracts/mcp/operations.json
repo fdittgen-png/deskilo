@@ -1003,11 +1003,72 @@
    ]
   },
   {
+   "id": "cancel_reservation",
+   "handler": true,
+   "dispatch": true,
+   "title": "Cancel a booking",
+   "description": "Cancel one of the person's own bookings that has NOT started yet, directly: it is cancelled at once and the place is free again (status completed). A booking that already started cannot be cancelled this way; for that use deskilo_request_reservation_deletion. Resending the same request_id never cancels twice.",
+   "rpc": "cancel_reservation",
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "own",
+   "mutation": "write",
+   "destructive": true,
+   "idempotency": "request_id",
+   "confirmation": "none",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "reservation_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_reservation_id",
+     "description": "A reservation_id from deskilo_list_my_reservations."
+    },
+    "expected_state": {
+     "type": "text",
+     "maxLength": 64,
+     "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
+    }
+   },
+   "output": [
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
+   ]
+  },
+    {
    "id": "request_reservation_deletion",
    "handler": true,
    "dispatch": true,
-   "title": "Cancel my booking",
-   "description": "Cancel one of the person's own bookings. Depending on the workspace's validation rules it is cancelled at once (status completed) or a validator must approve it first (status pending_validation: tell the person it is not cancelled yet).",
+   "title": "Ask to delete a started booking",
+   "description": "Ask to delete one of the person's own bookings that has ALREADY started. Depending on the workspace's validation rules it is deleted at once (status completed) or a validator must approve it first (status pending_validation: tell the person it is not deleted yet). A booking that has not started is cancelled directly with deskilo_cancel_reservation instead.",
    "rpc": "request_reservation_deletion",
    "authority": {
     "kind": "self"

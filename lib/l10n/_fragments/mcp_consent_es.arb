@@ -23,7 +23,14 @@
   "mcpOpUpdateReservation": "Cambiar sus reservas",
   "mcpOpCheckIn": "Registrar su entrada",
   "mcpOpCheckOut": "Registrar su salida",
-  "mcpOpReservationDeletion": "Pedir que se elimine una reserva",
+  "mcpOpReservationDeletion": "Pedir la eliminación de una reserva ya iniciada",
   "mcpOpPendingValidations": "Ver solicitudes de validación pendientes",
-  "mcpOpGetValidation": "Leer una solicitud de validación"
+  "mcpOpGetValidation": "Leer una solicitud de validación",
+  "mcpOpCancelReservation": "Cancelar sus reservas que aún no han empezado",
+  "@mcpOpCancelReservation": {
+    "description": "#1615 mcp_consent"
+  },
+  "@mcpOpReservationDeletion": {
+    "description": "#1615 mcp_consent"
+  }
 }

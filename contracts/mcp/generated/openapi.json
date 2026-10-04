@@ -68,6 +68,7 @@
                           "deskilo_update_reservation",
                           "deskilo_check_in",
                           "deskilo_check_out",
+                          "deskilo_cancel_reservation",
                           "deskilo_request_reservation_deletion",
                           "deskilo_request_invoice_issue",
                           "deskilo_request_invoice_void",
@@ -1183,6 +1184,7 @@
               "update_reservation",
               "check_in",
               "check_out",
+              "cancel_reservation",
               "request_reservation_deletion",
               "request_invoice_issue",
               "request_invoice_void",
@@ -1667,6 +1669,46 @@
         ],
         "x-operation": "check_out",
         "x-rpc": "check_out_reservation",
+        "x-handler": true
+      },
+      "CancelReservationInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "reservation_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "reservation_id"
+        ],
+        "x-operation": "cancel_reservation",
+        "x-rpc": "cancel_reservation",
         "x-handler": true
       },
       "RequestReservationDeletionInput": {

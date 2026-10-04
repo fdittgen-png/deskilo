@@ -32,10 +32,10 @@ void main() {
     expect(renderMcpContract(source()), rendered, reason: 'deterministic');
   });
 
-  test('the fixed catalogue: nineteen operations, one prefix, no duplicates', () {
+  test('the fixed catalogue: twenty operations, one prefix, no duplicates', () {
     final ids = [for (final o in source()['operations'] as List) (o as Map)['id']];
     expect(ids.toSet(), hasLength(ids.length));
-    expect(ids, hasLength(19));
+    expect(ids, hasLength(20));
     expect(source()['tool_prefix'], 'deskilo_');
     expect(mcpOperations.keys.toList(), ids);
   });

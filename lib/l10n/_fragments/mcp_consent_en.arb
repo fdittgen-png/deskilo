@@ -100,7 +100,7 @@
   "@mcpOpCheckOut": {
     "description": "#1615 mcp_consent"
   },
-  "mcpOpReservationDeletion": "Ask to delete a reservation",
+  "mcpOpReservationDeletion": "Ask to delete a booking that has started",
   "@mcpOpReservationDeletion": {
     "description": "#1615 mcp_consent"
   },
@@ -110,6 +110,10 @@
   },
   "mcpOpGetValidation": "Read a validation request",
   "@mcpOpGetValidation": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpCancelReservation": "Cancel your bookings that have not started",
+  "@mcpOpCancelReservation": {
     "description": "#1615 mcp_consent"
   }
 }

@@ -214,6 +214,7 @@ void main() {
         'update_reservation',
         'check_in',
         'check_out',
+        'cancel_reservation',
         'request_reservation_deletion',
       });
     });

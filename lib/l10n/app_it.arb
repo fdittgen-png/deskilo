@@ -5944,6 +5944,10 @@
   "mcpNextSignInGoogle": "Gli assistenti usano il tuo accesso Google. Accedi con Google per continuare.",
   "mcpNextUnavailable": "Il server non ha potuto rispondere. Non si presume nulla; riprova più tardi.",
   "mcpOpAvailability": "Vedere i posti liberi",
+  "mcpOpCancelReservation": "Annullare le tue prenotazioni non ancora iniziate",
+  "@mcpOpCancelReservation": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpCapabilities": "Vedere cosa può fare lì",
   "mcpOpCheckIn": "Registrare il tuo arrivo",
   "mcpOpCheckOut": "Registrare la tua uscita",
@@ -5958,7 +5962,10 @@
   "mcpOpMyStatement": "Vedere il tuo estratto conto",
   "mcpOpPendingValidations": "Vedere le richieste di convalida in sospeso",
   "mcpOpRefund": "Rimborsare una fattura",
-  "mcpOpReservationDeletion": "Chiedere l'eliminazione di una prenotazione",
+  "mcpOpReservationDeletion": "Chiedere l'eliminazione di una prenotazione già iniziata",
+  "@mcpOpReservationDeletion": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpRespond": "Rispondere a una richiesta di validazione",
   "mcpOpSubscription": "Modificare la quota di abbonamento di un membro",
   "mcpOpUpdateReservation": "Modificare le tue prenotazioni",

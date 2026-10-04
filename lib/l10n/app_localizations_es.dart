@@ -9873,6 +9873,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpAvailability => 'Ver plazas libres';
 
   @override
+  String get mcpOpCancelReservation =>
+      'Cancelar sus reservas que aún no han empezado';
+
+  @override
   String get mcpOpCapabilities => 'Ver qué puede hacer allí';
 
   @override
@@ -9916,7 +9920,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpRefund => 'Reembolsar una factura';
 
   @override
-  String get mcpOpReservationDeletion => 'Pedir que se elimine una reserva';
+  String get mcpOpReservationDeletion =>
+      'Pedir la eliminación de una reserva ya iniciada';
 
   @override
   String get mcpOpRespond => 'Responder a una solicitud de validación';
