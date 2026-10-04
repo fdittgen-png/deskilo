@@ -118,10 +118,15 @@ void main() {
       for (final bad in ['2026-13', '2026-1', '26-01', '2026-00']) {
         expect(validateMcpInput(statement, {
           'workspace_id': '6b1d3f0e-0000-4000-8000-000000000002',
-          'member_id': '6b1d3f0e-0000-4000-8000-000000000004',
           'period': bad,
         })['period'], 'invalid_month', reason: bad);
       }
+      // #2145 — always the caller's own: there is no member to name.
+      expect(validateMcpInput(statement, {
+        'workspace_id': '6b1d3f0e-0000-4000-8000-000000000002',
+        'member_id': '6b1d3f0e-0000-4000-8000-000000000004',
+        'period': '2026-09',
+      })['member_id'], 'unknown_field');
       final pct = mcpOperations['request_subscription_change']!;
       expect(validateMcpInput(pct, {
         'request_id': '6b1d3f0e-0000-4000-8000-000000000001',

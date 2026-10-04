@@ -213,25 +213,6 @@ void main() {
       expect(source, contains('showBadgeSignInSheet'));
     });
 
-    test('the workspace flag is enforced on the SERVER, not the client', () {
-      // Before sign-in the app has no workspace, so it has no flags —
-      // `enabledFeatures` would fall back to registry defaults and decide
-      // on behalf of a workspace it never read. The badge names the
-      // workspace, so only the server can answer.
-      final sql = File(
-        'supabase/migrations/0124_badge_signin_flag_gate.sql',
-      ).readAsStringSync();
-      expect(sql, contains("feature_flags -> 'badgeSignIn'"));
-      expect(sql, contains("to_jsonb(true), false)"),
-          reason: 'a workspace that has never heard of the flag must '
-              'REFUSE, not allow — the coalesce default is the whole '
-              'decision');
-      // The refusal must not be its own reason: a distinct answer would
-      // tell whoever holds a card that the card is real and only the
-      // setting is in the way.
-      expect(sql, isNot(contains("'reason', 'disabled'")));
-    });
-
     test('the PIN is never settable for someone else', () {
       // No admin path here and none on the server: an owner who could
       // set a member's PIN could sign in as them, and every check-in

@@ -8,7 +8,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accounting_view.dart';
@@ -65,13 +64,13 @@ class _InvoiceRegisterScreenState
     final reminders = ref.watch(invoiceRemindersProvider).value ?? const {};
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final me = ref.watch(myMemberProvider).value;
-    final features = ref.watch(enabledFeaturesSyncProvider);
     final permissions = ref.watch(myPermissionsProvider);
-    final canIssue = me != null &&
-        (me.actsAsOwner ||
-            (me.canAdminister &&
-                features.contains(WorkspaceFeature.adminInvoicing)));
-    final showMemberNames = me?.canAdminister ?? false;
+    // #2137 — the matrix decides, as on the invoices screen; it already
+    // folds the legacy adminInvoicing grant in.
+    final canIssue =
+        me != null && permissions.contains(WorkspacePermission.issueInvoices);
+    final showMemberNames = (me?.canAdminister ?? false) ||
+        permissions.contains(WorkspacePermission.viewFinances);
     final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
     final dateFormat = DateFormat.yMd(
       Localizations.maybeLocaleOf(context)?.toString(),

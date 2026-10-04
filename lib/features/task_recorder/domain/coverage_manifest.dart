@@ -147,6 +147,8 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.provider,
   ),
+  // #2150 — the Connect an assistant page: an assistant surface like its
+  // siblings, excluded with the same category.
   RouteCoverage(
     '/assistants/connect',
     CoverageStatus.excluded,

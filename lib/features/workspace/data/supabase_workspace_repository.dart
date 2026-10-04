@@ -484,19 +484,35 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         .where((id) => id.isNotEmpty)
         .toSet()
         .toList();
+    // #1833 — the purpose projection, never the profiles rows: a space
+    // mate's legal name is operational data (0319/0320).
     final profileRows = userIds.isEmpty
         ? const <Map<String, dynamic>>[]
-        : await _client
-        .from('profiles')
-        .select('id, display_name, first_name, last_name')
-        .inFilter('id', userIds);
+        : [
+            for (final r in await _client.rpc<List<dynamic>>(
+              'member_profiles',
+              params: {'p_workspace_id': workspaceId, 'p_user_ids': userIds},
+            ))
+              (r as Map).cast<String, dynamic>(),
+          ];
     // #886 — a structured name outranks the display name on lists that
-    // feed documents; the display name stays the fallback.
+    // feed documents, for whoever may read it (the operational group);
+    // the display name stays the fallback.
     String nameOf(Map<String, dynamic> r) {
-      final first = (r['first_name'] as String? ?? '').trim();
-      final last = (r['last_name'] as String? ?? '').trim().toUpperCase();
+      Map<String, dynamic> group(String purpose) =>
+          (r['purposes'] as List<dynamic>? ?? const <dynamic>[])
+                      .contains(purpose) &&
+                  r[purpose] is Map
+              ? (r[purpose] as Map).cast<String, dynamic>()
+              : const <String, dynamic>{};
+      final operational = group('operational');
+      final first = (operational['first_name'] as String? ?? '').trim();
+      final last =
+          (operational['last_name'] as String? ?? '').trim().toUpperCase();
       final full = [first, last].where((s) => s.isNotEmpty).join(' ');
-      return full.isNotEmpty ? full : r['display_name'] as String;
+      return full.isNotEmpty
+          ? full
+          : group('community')['display_name'] as String? ?? '';
     }
     final nameByUser = {
       for (final r in profileRows) r['id'] as String: nameOf(r),

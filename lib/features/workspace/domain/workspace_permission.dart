@@ -48,7 +48,9 @@ enum WorkspacePermission {
 
   // #982 — what "is admin" and "is owner" guarded, as permissions.
 
-  /// Sites, level assignment, other members' home site.
+  /// Sites, level assignment, other members' home site — and, since
+  /// #2137, editing the floor plan (levels, offices, desks, seats, plan
+  /// images and their files).
   manageSites,
 
   /// Fee bands, VAT rates, number sequences, billing and reminder rules.

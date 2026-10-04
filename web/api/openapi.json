@@ -680,19 +680,24 @@
     "/rest/v1/rpc/mcp_consent_options": {
       "post": {
         "operationId": "mcp_consent_options",
-        "summary": "What an assistant connection may be granted.",
+        "summary": "What an assistant connection may be granted; with the pending authorization, the client's approval status, its redirect host and who decides the first open step.",
         "security": [
           {
             "nativeSession": []
           }
         ],
         "requestBody": {
-          "required": false,
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                  "p_authorization_id": {
+                    "type": "string",
+                    "x-sql-type": "text"
+                  }
+                }
               }
             }
           }
@@ -1297,6 +1302,16 @@
               "2026-10-05T13:00:00+02:00"
             ]
           },
+          "level_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Optional: only places on this level (a level_id from an earlier answer)."
+          },
+          "office_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Optional: only places in this office (an office_id from an earlier answer)."
+          },
           "cursor": {
             "type": "string",
             "maxLength": 400,
@@ -1387,11 +1402,6 @@
               "00000000-0000-4000-8000-0000000000a1"
             ]
           },
-          "member_id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "The member this request is about."
-          },
           "period": {
             "type": "string",
             "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
@@ -1403,7 +1413,6 @@
         },
         "required": [
           "workspace_id",
-          "member_id",
           "period"
         ],
         "x-operation": "get_my_statement",

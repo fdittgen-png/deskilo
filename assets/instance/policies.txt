@@ -28,6 +28,7 @@ public.book_mappings.mcp_delegated_deny
 public.book_profiles.mcp_delegated_deny
 public.closure_days.closure_days_read
 public.closure_days.closure_days_write
+public.closure_days.closure_days_write_permitted
 public.closure_days.mcp_delegated_deny
 public.conversation_participants.conversation_participants_select
 public.conversation_participants.mcp_delegated_deny
@@ -35,6 +36,7 @@ public.conversations.conversations_select
 public.conversations.mcp_delegated_deny
 public.credit_products.credit_products_select
 public.credit_products.credit_products_write
+public.credit_products.credit_products_write_permitted
 public.credit_products.mcp_delegated_deny
 public.data_access_log.data_access_log_select
 public.data_access_log.mcp_delegated_deny
@@ -46,6 +48,7 @@ public.deskilo_schema_version.deskilo_schema_version_read
 public.deskilo_schema_version.mcp_delegated_deny
 public.desks.desks_select
 public.desks.desks_write
+public.desks.desks_write_sites
 public.desks.mcp_delegated_deny
 public.directory_people.mcp_delegated_deny
 public.einvoice_credentials.mcp_delegated_deny
@@ -62,6 +65,8 @@ public.expense_schedules.mcp_delegated_deny
 public.fee_bands.fee_bands_select
 public.fee_bands.fee_bands_write
 public.fee_bands.mcp_delegated_deny
+public.guest_participation_audit.mcp_delegated_deny
+public.guest_participations.mcp_delegated_deny
 public.identity_authority.identity_public_authority
 public.identity_authority.mcp_delegated_deny
 public.identity_bindings.mcp_delegated_deny
@@ -69,6 +74,7 @@ public.identity_federation_clients.mcp_delegated_deny
 public.installation_identity.identity_public_installation
 public.installation_identity.mcp_delegated_deny
 public.instance_delegates.mcp_delegated_deny
+public.instance_notices.mcp_delegated_deny
 public.instance_owner_claims.mcp_delegated_deny
 public.invitations.invitations_select
 public.invitations.mcp_delegated_deny
@@ -90,6 +96,7 @@ public.ledger_entries.ledger_select
 public.ledger_entries.mcp_delegated_deny
 public.levels.levels_select
 public.levels.levels_write
+public.levels.levels_write_sites
 public.levels.mcp_delegated_deny
 public.managed_identities.managed_identities_select
 public.managed_identities.mcp_delegated_deny
@@ -101,7 +108,9 @@ public.mcp_connections.mcp_delegated_deny
 public.mcp_disclosure_maximum.mcp_delegated_deny
 public.mcp_eligibility_grants.mcp_delegated_deny
 public.mcp_eligibility_requests.mcp_delegated_deny
+public.mcp_endpoint_probes.mcp_delegated_deny
 public.mcp_idempotency.mcp_delegated_deny
+public.mcp_installation_settings.mcp_delegated_deny
 public.mcp_limits.mcp_delegated_deny
 public.mcp_runtime.mcp_delegated_deny
 public.mcp_usage.mcp_delegated_deny
@@ -128,16 +137,19 @@ public.number_sequences.number_sequences_select
 public.offices.mcp_delegated_deny
 public.offices.offices_select
 public.offices.offices_write
+public.offices.offices_write_sites
 public.opening_hours_history.mcp_delegated_deny
 public.packages.mcp_delegated_deny
 public.packages.packages_select
 public.packages.packages_write
+public.packages.packages_write_permitted
 public.payment_credentials.mcp_delegated_deny
 public.payment_intents.mcp_delegated_deny
 public.payment_intents.payment_intents_select
 public.plan_images.mcp_delegated_deny
 public.plan_images.plan_images_select
 public.plan_images.plan_images_write
+public.plan_images.plan_images_write_sites
 public.plans.mcp_delegated_deny
 public.plans.plans_select
 public.plans.plans_write
@@ -169,6 +181,8 @@ public.reminder_attempts.mcp_delegated_deny
 public.reminder_attempts.reminder_attempts_select
 public.reminder_intents.mcp_delegated_deny
 public.reminder_intents.reminder_intents_select
+public.reservation_origins.mcp_delegated_deny
+public.reservation_origins.reservation_origins_select
 public.reservation_requests.mcp_delegated_deny
 public.reservation_target_history.mcp_delegated_deny
 public.reservations.mcp_delegated_deny
@@ -183,9 +197,11 @@ public.seat_history.mcp_delegated_deny
 public.seats.mcp_delegated_deny
 public.seats.seats_select
 public.seats.seats_write
+public.seats.seats_write_sites
 public.services.mcp_delegated_deny
 public.services.services_select
 public.services.services_write
+public.services.services_write_permitted
 public.sites.mcp_delegated_deny
 public.sites.sites_select
 public.space_inquiries.mcp_delegated_deny
@@ -204,6 +220,7 @@ public.workspace_applications.mcp_delegated_deny
 public.workspace_creation_requests.mcp_delegated_deny
 public.workspace_documents.mcp_delegated_deny
 public.workspace_documents.workspace_documents_select
+public.workspace_documents.workspace_documents_select_managers
 public.workspace_documents.workspace_documents_write
 public.workspace_field_definitions.mcp_delegated_deny
 public.workspace_field_definitions.workspace_field_definitions_select
@@ -238,12 +255,16 @@ public.workspaces.workspaces_delete
 public.workspaces.workspaces_select
 public.workspaces.workspaces_select_pending
 public.workspaces.workspaces_update
+public.workspaces.workspaces_update_delegated
 storage.objects.avatars_delete
 storage.objects.avatars_insert
 storage.objects.avatars_select
 storage.objects.avatars_update
 storage.objects.floor_plans_delete
+storage.objects.floor_plans_delete_sites
 storage.objects.floor_plans_insert
+storage.objects.floor_plans_insert_sites
 storage.objects.floor_plans_select
 storage.objects.floor_plans_update
+storage.objects.floor_plans_update_sites
 storage.objects.mcp_delegated_deny

@@ -194,7 +194,11 @@ class _MemberPageBody extends ConsumerWidget {
           onPressed: () =>
               _launch(context, ref, Uri(scheme: 'mailto', path: email)),
         ),
-      if (servicesOn && canAdmin && !member.isKiosk && active)
+      // #2137 — record_service_charge accepts manageServices too.
+      if (servicesOn &&
+          (canAdmin || perms.contains(WorkspacePermission.manageServices)) &&
+          !member.isKiosk &&
+          active)
         FilledButton.tonalIcon(
           key: const ValueKey('member-page-action-service'),
           icon: const Icon(Icons.room_service_outlined),
@@ -357,7 +361,8 @@ class _MemberPageBody extends ConsumerWidget {
         ),
     ];
     final booking = <Widget>[
-      if (canAdmin && !isSelf && !member.isKiosk && active) ...[
+      // #2137 — the booking allowances are also manageReservations'.
+      if ((canAdmin || perms.contains(WorkspacePermission.manageReservations)) && !isSelf && !member.isKiosk && active) ...[
         _ManageTile(
           tileKey: const ValueKey('member-page-reservation-limit'),
           icon: Icons.stacked_bar_chart_outlined,
@@ -380,9 +385,7 @@ class _MemberPageBody extends ConsumerWidget {
           onTap: () => pickMemberSimultaneousLimit(context, ref, member),
         ),
         // #985 — who this member is for VAT.
-        if (ref
-            .watch(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.vatCounterparty))
+        if (canAdmin && ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.vatCounterparty))
           _ManageTile(
             tileKey: const ValueKey('member-page-vat-treatment'),
             icon: Icons.account_balance_outlined,
@@ -402,7 +405,7 @@ class _MemberPageBody extends ConsumerWidget {
             onTap: () => pickMemberCustomerCapacity(context, ref, member),
           ),
         // #945 — the site whose address this member's documents carry.
-        if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.multiSite))
+        if (canAdmin && ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.multiSite))
           _ManageTile(
             tileKey: const ValueKey('member-page-home-site'),
             icon: Icons.location_city_outlined,

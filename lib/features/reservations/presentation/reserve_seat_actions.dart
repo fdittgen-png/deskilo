@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/time/clock.dart';
 import '../../../core/trace/act_trace.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../plan/domain/floor_plan.dart';
@@ -25,6 +26,8 @@ import 'booking_gate_scope.dart';
 import '../../plan/domain/half_day_windows.dart';
 import '../domain/default_booking_period.dart';
 import '../application/book_seat.dart';
+import '../application/booking_recovery.dart';
+import 'widgets/booking_recovery_sheet.dart';
 import '../domain/reservation.dart';
 import '../domain/seat_state_logic.dart';
 import '../domain/walk_up_window.dart';
@@ -105,9 +108,8 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   /// feature on. Empty = no "Book for" picker at all.
   List<({String id, String name})> get _bookingCandidates {
     final features = ref.read(enabledFeaturesSyncProvider);
-    final myMember = ref.read(myMemberProvider).value;
     if (!features.contains(WorkspaceFeature.bookForOthers) ||
-        !(myMember?.canAdminister ?? false)) {
+        !ref.read(actsForReservationsProvider)) {
       return const [];
     }
     final names = ref.read(memberNamesProvider).value ?? const {};
@@ -126,13 +128,13 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       ref
           .read(enabledFeaturesSyncProvider)
           .contains(WorkspaceFeature.bookForOthers) &&
-      (ref.read(myMemberProvider).value?.canAdminister ?? false);
+      ref.read(actsForReservationsProvider);
 
   /// Whether I may toggle seat maintenance blocks (#161): owner always,
   /// admins with the adminSeatBlocking feature.
   bool get _canManageSeatBlocks => canManageSeatBlocks(
         member: ref.read(myMemberProvider).value,
-        features: ref.read(enabledFeaturesSyncProvider),
+        features: ref.read(enabledFeaturesSyncProvider), staff: ref.read(actsForReservationsProvider),
       );
 
   /// THE tap. Everything above is what it dispatches to.
@@ -669,6 +671,8 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           until: choice.until,
         ),
         myMemberId: myMemberId,
+        // #1855 — the plain booking keeps its intent until the answer is in.
+        recovery: ref.read(bookingRecoveryProvider),
       );
       recorded?.resolveWith(bookingOutcomeObservation(outcome));
       if (!mounted) return;
@@ -694,6 +698,24 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         case SeriesBooked(:final result):
           await showSeriesResultDialog(context, result);
       }
+    } on BookingIntentNotSaved catch (e, st) {
+      // Nothing was sent: an unprotected mutation is worse than none.
+      recorded?.resolveWith(bookingErrorObservation(e));
+      traceBookingFailed(error: e, stackTrace: st, seat: seat,
+          start: choice.start, end: choice.end, checkIn: choice.checkInNow,
+          series: false, member: myMemberId);
+      if (!mounted) return;
+      AppSnack.error(context, bookingRecoveryNotSavedText(l10n), replace: true);
+      return;
+    } on BookingOutcomeUnknown catch (e, st) {
+      // #1855 — sent, answer lost: neither a success nor a failure. The
+      // intent is kept; the member checks or resumes it, never re-books.
+      TraceLogger.instance.warn('reservations', 'booking answer lost; intent kept',
+          error: e, stackTrace: st);
+      recorded?.resolveWith(bookingErrorObservation(e.cause)); // still "no answer"
+      if (!mounted) return;
+      await showBookingRecoverySheet(context, ref, e.intent, spaceName: seat.name);
+      return;
     } catch (e, st) {
       recorded?.resolveWith(bookingErrorObservation(e));
       debugPrint('reserve hub booking failed: $e\n$st');

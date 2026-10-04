@@ -129,11 +129,14 @@ class SupabaseReservationRepository implements ReservationRepository {
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
+    String? requestId,
   }) async {
     // `checkIn` is the field that answers "they booked but were never
     // checked in" (#772) without guessing: it says whether the walk-up
     // was atomic or whether the app only reserved.
-    final requestId = newRequestId();
+    // #1855 — a recovery passes the ORIGINAL id: the server then returns
+    // the booking that request made, or refuses a changed payload by name.
+    requestId ??= newRequestId();
     final result = await _traced(
       'reserve',
       {
@@ -171,6 +174,21 @@ class SupabaseReservationRepository implements ReservationRepository {
     await _bust();
     return result as String;
   }
+
+  @override
+  Future<RequestOutcome> requestOutcome(
+    String workspaceId,
+    String requestId,
+  ) async => RequestOutcome.fromJson(
+    // A read: retried like every other read (0350 keeps the claim).
+    await retryTransient(
+      'reservation_request_outcome',
+      () => _client.rpc<dynamic>('reservation_request_outcome', params: {
+        'p_workspace_id': workspaceId,
+        'p_client_request_id': requestId,
+      }),
+    ),
+  );
 
   @override
   Future<String> createFor({

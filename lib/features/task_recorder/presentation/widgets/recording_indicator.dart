@@ -13,6 +13,10 @@
 // screen says nothing here (its seams speak), a protected screen leaves
 // one "excluded" marker, any other screen a visible "cannot describe"
 // step (route_classification.dart).
+//
+// #1867 — it also carries the live guide (guide_host.dart): while a guide
+// is open the same layer mounts, so the capture it owns tells the guide
+// what happens on every screen, recording or not.
 
 import 'dart:async';
 
@@ -24,8 +28,10 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/recorder_controller.dart';
+import '../../guide/guide_session.dart';
 import '../../providers/recorder_providers.dart';
 import '../../domain/action_registry.dart' show uiRoutes;
+import '../guide_host/guide_host.dart';
 import '../route_classification.dart';
 import '../ui_capture.dart';
 
@@ -41,7 +47,8 @@ class RecordingIndicator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (!ref.watch(recorderOpenedProvider)) return child;
+    final guiding = ref.watch(guideSessionProvider.select((s) => s.run != null));
+    if (!ref.watch(recorderOpenedProvider) && !guiding) return child;
     return _LiveIndicator(router: router, child: child);
   }
 }
@@ -104,7 +111,17 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
       final treatment = treatRoute(path);
       _quiet = treatment is Protected || treatment is RecorderScreen;
       final controller = ref.read(recorderControllerProvider);
-      if (controller.state != RecorderState.recording) return;
+      if (controller.state != RecorderState.recording) {
+        // #1867 — a guide still hears which screen opened.
+        final pattern = state.fullPath;
+        if (GuideEvents.sink != null &&
+            !_quiet &&
+            pattern != null &&
+            uiRoutes.contains(pattern)) {
+          scheduleMicrotask(() => _capture.screenOpened(pattern));
+        }
+        return;
+      }
       // #2142 — every other screen is noted by its route PATTERN (never
       // the path, which may carry an id), unless it notes itself. After
       // the event that navigated, so the tap that led here comes first.
@@ -149,6 +166,7 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
       child: Stack(
         children: [
           widget.child,
+          const Positioned.fill(child: GuideHostLayer()),
           if (live)
             PositionedDirectional(
               top: MediaQuery.paddingOf(context).top + AppSpacing.xs,

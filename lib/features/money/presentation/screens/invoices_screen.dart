@@ -57,7 +57,9 @@ class InvoicesScreen extends ConsumerWidget {
         ref
             .watch(myPermissionsProvider)
             .contains(WorkspacePermission.issueInvoices);
-    final showMemberNames = me?.canAdminister ?? false;
+    final perms = ref.watch(myPermissionsProvider);
+    final showMemberNames = (me?.canAdminister ?? false) ||
+        perms.contains(WorkspacePermission.viewFinances);
     final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
 
     final archive = InvoiceArchiveTab(
@@ -77,7 +79,9 @@ class InvoicesScreen extends ConsumerWidget {
     );
     // #454: the PDF template editor — owner only (workspaces_update RLS
     // would refuse anyone else anyway), behind its feature flag.
-    final templateAction = (me?.actsAsOwner ?? false) &&
+    // #2137 — set_invoice_pdf_template asks designDocuments.
+    final templateAction =
+        perms.contains(WorkspacePermission.designDocuments) &&
             features.contains(WorkspaceFeature.invoicePdfTemplate)
         ? IconButton(
             key: const ValueKey('invoice-template-button'),
@@ -87,7 +91,8 @@ class InvoicesScreen extends ConsumerWidget {
           )
         : null;
     // Mahnwesen (#472): the dunning policy — owner only.
-    final dunningAction = ((me?.actsAsOwner ?? false) &&
+    // #2137 — set_dunning_rules asks manageBilling.
+    final dunningAction = (perms.contains(WorkspacePermission.manageBilling) &&
             features.contains(WorkspaceFeature.dunning))
         ? IconButton(
             key: const ValueKey('invoice-dunning-settings'),

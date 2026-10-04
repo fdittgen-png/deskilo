@@ -62,12 +62,15 @@ void main() {
     expect(find.text('Members & plans'), findsOneWidget);
   });
 
-  testWidgets('admin boots into the shell with member management but no editor',
-      (tester) async {
+  testWidgets('admin boots into the shell with member management and the '
+      'editor', (tester) async {
     await bootAs(tester, isAdmin: true, isOwner: false);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
-    expect(find.byIcon(Icons.design_services_outlined), findsNothing);
+    // #2137 — the Administrator holds manageSites by default, and editing
+    // the floor plan is that permission's (0363).
+    await switchToPlanTab(tester);
+    expect(find.byIcon(Icons.design_services_outlined), findsOneWidget);
 
     await tester.tap(find.text('Calendar'));
     await tester.pumpAndSettle();

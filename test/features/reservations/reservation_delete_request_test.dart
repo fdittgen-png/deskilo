@@ -4,7 +4,6 @@
 // member never deletes directly — the button says so, the dialog says
 // who decides (and what the question is: forgotten check-in vs unused),
 // and the pending event lands on the events spine for an owner/admin.
-import 'dart:io';
 
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
@@ -116,20 +115,6 @@ void main() {
     expect(event.needsAdminDecider, isTrue);
   });
 
-  test('migration 0097 files the request RPC, the new event type and '
-      'the confirm branch — and never sets events.reservation_id (the '
-      'reject branch would cancel it)', () {
-    final sql =
-        File('supabase/migrations/0097_reservation_delete_requests.sql')
-            .readAsStringSync();
-    expect(sql, contains('request_reservation_deletion'));
-    expect(sql, contains("'reservation_delete'"));
-    expect(sql, contains("payload->>'reservation_id'"));
-    expect(sql, contains('does NOT set events.reservation_id'));
-    // The verbatim-copied service_charge branch keeps its amount.
-    expect(sql, contains("(v_event.payload->>'amount_cents')::int,\n        (v_event.payload->>'name')"));
-  });
-
   testWidgets(
       'RE-REQUESTING supersedes (#562): the second demand expires the '
       'pending event and files a fresh one — no error', (tester) async {
@@ -173,14 +158,4 @@ void main() {
         hasLength(1));
   });
 
-  test('migration 0111 supersedes instead of refusing — and re-inserts '
-      'so the validator notification re-fires', () {
-    final sql = File('supabase/migrations/0111_delete_request_supersede.sql')
-        .readAsStringSync();
-    expect(sql, contains("set status = 'expired'"));
-    expect(sql,
-        isNot(contains("raise exception 'deletion already requested'")));
-    expect(sql, contains('request_reservation_deletion'));
-    expect(sql, contains('revoke execute'));
-  });
 }

@@ -1999,6 +1999,68 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette réservation est entièrement dans le passé.';
 
   @override
+  String get bookingRecoveryBanner =>
+      'Une de vos demandes de réservation est restée sans réponse.';
+
+  @override
+  String get bookingRecoveryBannerAction => 'Vérifier';
+
+  @override
+  String get bookingRecoveryCheck => 'Vérifier le résultat';
+
+  @override
+  String get bookingRecoveryCommitted =>
+      'La réservation existe — une seule, issue de votre demande d\'origine.';
+
+  @override
+  String get bookingRecoveryDiscard => 'Abandonner';
+
+  @override
+  String get bookingRecoveryInProgress =>
+      'Le serveur traite encore cette demande. Vérifiez à nouveau dans un instant.';
+
+  @override
+  String get bookingRecoveryNotCommitted =>
+      'Rien n\'a été réservé pour cette demande. Vous pouvez la reprendre telle quelle, ou l\'abandonner.';
+
+  @override
+  String get bookingRecoveryNotSaved =>
+      'Cet appareil n\'a pas pu enregistrer votre demande de réservation ; rien n\'a été envoyé. Libérez de l\'espace ou réessayez.';
+
+  @override
+  String get bookingRecoveryResume => 'Reprendre la même demande';
+
+  @override
+  String get bookingRecoveryResumed =>
+      'Reprise : votre demande d\'origine a été réservée une seule fois.';
+
+  @override
+  String get bookingRecoverySpaceFallback => 'L\'espace choisi';
+
+  @override
+  String get bookingRecoveryTitle => 'Votre demande de réservation';
+
+  @override
+  String get bookingRecoveryUnavailable =>
+      'Le serveur n\'a pas pu être interrogé. Rien n\'a changé ; réessayez.';
+
+  @override
+  String get bookingRecoveryUnknown =>
+      'La connexion a été coupée après l\'envoi de votre demande. La réservation existe peut-être, peut-être pas : vérifiez avant de réserver à nouveau.';
+
+  @override
+  String get bookingRecoveryUnresolved =>
+      'Le serveur ne conserve plus de trace de cette demande et ne peut rien dire. Vérifiez vos réservations avant de réserver à nouveau.';
+
+  @override
+  String get bookingRecoveryView => 'Voir la réservation';
+
+  @override
+  String bookingRecoveryWindow(String space, String from, String to) {
+    return '$space · $from – $to';
+  }
+
+  @override
   String bookingReservedSpaceWhen(String space, String when) {
     return '$space réservé : $when.';
   }
@@ -3426,6 +3488,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get developmentWatermark => 'DÉVELOPPEMENT';
 
   @override
+  String get directoryApproximate => 'Position approximative de l’adresse';
+
+  @override
   String get directoryCheckedIn => 'Sur place';
 
   @override
@@ -3465,6 +3530,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String directoryLastSeenMinutes(int minutes) {
     return 'Vu il y a $minutes min';
   }
+
+  @override
+  String get directoryLocate => 'Localiser sur la carte';
+
+  @override
+  String get directoryLocating => 'Localisation de l’adresse publique…';
+
+  @override
+  String get directoryLocationMissing =>
+      'Position indisponible. Le propriétaire peut publier des coordonnées précises.';
 
   @override
   String get directoryNoUpcoming => 'Aucune réservation à venir';
@@ -4688,6 +4763,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureFormHelpHintsTitle => 'Astuces d\'aide';
 
   @override
+  String get featureGuestParticipationDesc =>
+      'Permet à une personne qui n\'est pas membre de demander à visiter cet espace, et à quelqu\'un qui gère les réservations de l\'admettre ou de refuser. Une visite ne crée ni adhésion, ni abonnement, ni rôle. Désactivé : personne ne demande ni n\'est admis ici.';
+
+  @override
+  String get featureGuestParticipationTitle => 'Visites d\'invités';
+
+  @override
   String get featureHeldBack =>
       'En attente de la fonction au-dessus — activez-la et celle-ci fonctionne de nouveau.';
 
@@ -4708,6 +4790,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureIntakeStoppedNote =>
       'Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos.';
+
+  @override
+  String get featureIntakeUnconfirmedNote =>
+      'Désactivé : rien de nouveau ne commence. Ce serveur n\'a pas pu confirmer que ce qui est déjà ouvert reste traitable ; n\'y comptez pas.';
 
   @override
   String get featureInvoiceAddressWindow => 'Fenêtre d\'adresse';
@@ -5713,6 +5799,170 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get guideActionConfirmBooking =>
+      'confirmez la réservation et attendez la réponse';
+
+  @override
+  String get guideActionOpenReserve => 'ouvrez Réserver';
+
+  @override
+  String get guideActionSelectDate => 'choisissez le jour';
+
+  @override
+  String get guideActionSelectPeriod => 'choisissez la période';
+
+  @override
+  String get guideActionSelectResource =>
+      'choisissez une place sur le plan ou dans la liste';
+
+  @override
+  String get guideBookingRefusedRecovery =>
+      'La réservation a été refusée (place prise ou règle). Choisissez une autre place ou période, puis confirmez à nouveau.';
+
+  @override
+  String get guideBuiltinBooking => 'Réserver une place';
+
+  @override
+  String get guideBuiltinBookingIntro =>
+      'Ce guide montre comment réserver une place : choisissez le jour et la période, une place, puis confirmez. Rien n\'est réservé avant votre confirmation.';
+
+  @override
+  String get guideHostBack => 'Retour';
+
+  @override
+  String get guideHostBlocked =>
+      'Réglez d\'abord le message à l\'écran ; le guide attend.';
+
+  @override
+  String get guideHostClose => 'Fermer';
+
+  @override
+  String get guideHostCommand => 'Confirmez, puis attendez le résultat.';
+
+  @override
+  String get guideHostCompleted => 'Guide terminé.';
+
+  @override
+  String guideHostDoAction(String action) {
+    return 'Ensuite : $action.';
+  }
+
+  @override
+  String get guideHostDone => 'Fait';
+
+  @override
+  String get guideHostFillField =>
+      'Remplissez le champ mis en évidence, puis quittez-le.';
+
+  @override
+  String guideHostFillLabel(String label) {
+    return 'Remplissez « $label », puis quittez le champ.';
+  }
+
+  @override
+  String get guideHostInstruction => 'Lisez ceci, puis marquez-le comme fait.';
+
+  @override
+  String get guideHostManual =>
+      'Faites cette étape vous-même, puis marquez-la comme faite.';
+
+  @override
+  String guideHostManualProtected(String category) {
+    return 'Cette partie se passe sur un écran protégé ($category). Faites-la vous-même, puis marquez-la comme faite.';
+  }
+
+  @override
+  String get guideHostNotOnScreen =>
+      'Ce contrôle n\'est pas sur cet écran. Allez à l\'écran de l\'étape précédente ou vérifiez le guide.';
+
+  @override
+  String guideHostOpenLabel(String label) {
+    return 'Ouvrez « $label ».';
+  }
+
+  @override
+  String get guideHostOpenScreen => 'Ouvrez l\'écran suivant.';
+
+  @override
+  String get guideHostPausedFeature =>
+      'En pause : l\'enregistreur de tâches est désactivé dans cet espace.';
+
+  @override
+  String get guideHostPausedScope =>
+      'En pause : le compte ou l\'espace a changé. Le guide ne continue que là où il a commencé.';
+
+  @override
+  String get guideHostRecovery =>
+      'C\'est refusé. Suivez ces étapes, puis réessayez.';
+
+  @override
+  String get guideHostResume => 'Reprendre';
+
+  @override
+  String get guideHostShowMe => 'Montrer';
+
+  @override
+  String get guideHostSkip => 'Passer';
+
+  @override
+  String get guideHostStatusAcknowledged => 'Pris en compte';
+
+  @override
+  String get guideHostStatusDone => 'Fait';
+
+  @override
+  String get guideHostStatusPending => 'À faire';
+
+  @override
+  String get guideHostStatusSkipped => 'Passé';
+
+  @override
+  String get guideHostStatusWaiting => 'En attente';
+
+  @override
+  String guideHostStepOf(int current, int total) {
+    return 'Étape $current sur $total';
+  }
+
+  @override
+  String get guideHostSteps => 'Toutes les étapes';
+
+  @override
+  String get guideHostStop => 'Arrêter le guide';
+
+  @override
+  String get guideHostStopped => 'Guide arrêté. Rien n\'a été annulé.';
+
+  @override
+  String get guideHostTapControl => 'Touchez le contrôle mis en évidence.';
+
+  @override
+  String guideHostTapLabel(String label) {
+    return 'Touchez « $label ».';
+  }
+
+  @override
+  String get guideHostTitle => 'Tâche guidée';
+
+  @override
+  String get guideHostUncertain =>
+      'La réponse n\'est pas arrivée. Vérifiez si l\'action a eu lieu avant de réessayer.';
+
+  @override
+  String get guideHostWaiting => 'En attente du résultat…';
+
+  @override
+  String get guideStart => 'Lancer le guide';
+
+  @override
+  String get guideStartNotRunnable =>
+      'Ce guide contient des étapes que cette version de l\'application ne connaît pas ; il peut être lu, pas suivi.';
+
+  @override
+  String get guideStartRefused =>
+      'Ce guide ne peut pas démarrer ici : connectez-vous et activez l\'enregistreur de tâches dans cet espace.';
+
+  @override
   String handoffAmountOutOfRange(String number) {
     return '$number : un total trop grand pour être transmis exactement';
   }
@@ -5787,6 +6037,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get helpDotTooltip => 'Ouvrir le guide';
+
+  @override
+  String get helpGuidedTasks => 'Tâches guidées';
 
   @override
   String get helpHintAvailability =>
@@ -6498,6 +6751,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inboxRetry => 'Réessayer';
 
   @override
+  String get instanceAccessTitle => 'Accès aux assistants';
+
+  @override
+  String instanceAccessUntil(String date) {
+    return 'Jusqu\'au $date';
+  }
+
+  @override
   String get instanceAccountIntro =>
       'Créez un compte gratuit sur supabase.com, puis un jeton d\'accès personnel (Account → Access Tokens) et collez-le ici. L\'assistant s\'en sert pour créer et configurer le projet ; il n\'est jamais enregistré.';
 
@@ -6683,6 +6944,64 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'instance est prête. Utilisez-la sur cet appareil, puis partagez le QR du serveur depuis l\'écran Serveur pour que les membres rejoignent la même.';
 
   @override
+  String get instanceEndpointTitle => 'Point d\'accès des assistants';
+
+  @override
+  String get instanceFamilyChatgpt => 'ChatGPT';
+
+  @override
+  String get instanceFamilyClaude => 'Claude';
+
+  @override
+  String get instanceFamilyLoopback =>
+      'Assistant de bureau ou en ligne de commande';
+
+  @override
+  String get instanceGrant => 'Approuver l\'accès';
+
+  @override
+  String get instanceGrantDays => 'Choisissez entre 1 et 30 jours.';
+
+  @override
+  String instanceGrantDaysLabel(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days jours',
+      one: '1 jour',
+    );
+    return 'Pour $_temp0';
+  }
+
+  @override
+  String get instanceGrantHelp =>
+      'Tant qu\'aucun autre administrateur de la base de données n\'existe, vous approuvez vous-même les accès — le vôtre compris — pour 30 jours au plus, avec une raison. Chaque approbation est enregistrée.';
+
+  @override
+  String get instanceGrantNeedsGoogle =>
+      'Approuver un accès nécessite que cette session soit connectée avec Google.';
+
+  @override
+  String get instanceGrantNoIdentity =>
+      'Cette personne n\'a pas encore confirmé son identité.';
+
+  @override
+  String get instanceGrantOtherAdmin =>
+      'Un administrateur de la base de données décide de l\'accès ici ; demandez-le-lui.';
+
+  @override
+  String get instanceGrantReason => 'Raison';
+
+  @override
+  String get instanceGrantReasonNeeded =>
+      'Indiquez pourquoi cet accès est approuvé (500 caractères maximum).';
+
+  @override
+  String instanceGrantTitle(String name) {
+    return 'Approuver l\'accès aux assistants pour $name';
+  }
+
+  @override
   String instanceInstallSchema(int count) {
     return 'Installer le schéma : chaque migration de l\'app, dans l\'ordre ($count).';
   }
@@ -6690,6 +7009,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get instanceIntro =>
       'Réglages valables pour tous les espaces de travail de cette installation. Seul l\'opérateur de l\'instance voit cette page ; chaque changement exige votre second facteur et est journalisé.';
+
+  @override
+  String get instanceLoopbackHelp =>
+      'Claude Code, Cursor, VS Code et les autres assistants qui tournent sur l\'ordinateur d\'une personne. Chacun approuve toujours sa propre connexion.';
+
+  @override
+  String get instanceLoopbackTitle =>
+      'Autoriser les assistants de bureau et en ligne de commande';
 
   @override
   String get instanceMakeAdmin => 'Nommer administrateur';
@@ -6701,6 +7028,27 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get instanceNotOperator =>
       'Seul l\'opérateur de l\'instance gère les assistants de l\'installation.';
+
+  @override
+  String instanceNoticeClientWaiting(String name) {
+    return '$name attend votre approbation.';
+  }
+
+  @override
+  String instanceNoticeOperatorGrant(String name) {
+    return 'L\'opérateur a approuvé l\'accès aux assistants pour $name.';
+  }
+
+  @override
+  String instanceNoticeSelfGrant(String name) {
+    return '$name a approuvé son propre accès aux assistants.';
+  }
+
+  @override
+  String get instanceNoticesMarkRead => 'Marquer comme lu';
+
+  @override
+  String get instanceOperatorApproved => 'Approuvé par l\'opérateur';
 
   @override
   String get instanceOrganisationLabel => 'Organisation';
@@ -6728,6 +7076,35 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get instanceOwnerTitle => 'Propriétaire de l\'instance';
+
+  @override
+  String get instanceProbeCheck => 'Vérifier le serveur';
+
+  @override
+  String get instanceProbeDeployed =>
+      'Le point d\'accès des assistants répond comme prévu.';
+
+  @override
+  String get instanceProbeMismatch =>
+      'Le point d\'accès répond avec une autre adresse que celle donnée aux assistants.';
+
+  @override
+  String get instanceProbeMissing => 'Le serveur n\'a pas encore été vérifié.';
+
+  @override
+  String get instanceProbeNotDeployed =>
+      'Le point d\'accès des assistants n\'est pas encore déployé sur ce serveur.';
+
+  @override
+  String get instanceProbePending => 'Vérification du serveur…';
+
+  @override
+  String get instanceProbeStale =>
+      'La dernière vérification date de plus de 15 minutes. Vérifiez à nouveau avant d’activer les assistants.';
+
+  @override
+  String get instanceProbeUnavailable =>
+      'Le serveur n\'a pas pu être joint. Réessayez dans un instant.';
 
   @override
   String instanceProgress(int done, int total, String current) {
@@ -6796,6 +7173,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les changements ici exigent votre second facteur sur cette session.';
 
   @override
+  String get instanceSelfApproved => 'Auto-approuvé par l\'opérateur';
+
+  @override
   String get instanceSignInExplain =>
       'Réglages de connexion : confirmation par courriel activée (une inscription doit cliquer le lien reçu), et les liens de l\'app autorisés pour les réinitialisations de mot de passe et les liens magiques.';
 
@@ -6845,6 +7225,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get instanceTurnOnConfirm =>
       'Les assistants deviennent utilisables dans chaque espace qui les propose. Vous pouvez les désactiver à tout moment.';
+
+  @override
+  String get instanceTurnOnNeedsProbe =>
+      'Le point d\'accès des assistants n\'est pas confirmé. Vérifiez d\'abord le serveur.';
 
   @override
   String get instanceUseExisting => 'Ou utiliser un projet existant :';
@@ -7050,6 +7434,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inviteRoleMember => 'Invitation membre';
 
   @override
+  String get inviteRolesHint =>
+      'Attribués à l\'arrivée, une fois l\'adhésion active.';
+
+  @override
+  String get inviteRolesTitle => 'Rôles à l\'arrivée';
+
+  @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
 
   @override
@@ -7172,6 +7563,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoiceEInvoiceTransportPeppol =>
       'Un point d\'accès la livre au client — aucune plateforme publique dans le circuit.';
+
+  @override
+  String get invoiceEssentialsRefused =>
+      'La facture n\'a pas été émise : des informations obligatoires manquent.';
 
   @override
   String get invoiceExportAccountantCsv => 'CSV comptable';
@@ -7509,6 +7904,33 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceMemberLabel => 'Membre';
+
+  @override
+  String get invoiceMissingBuyerAddress =>
+      'L\'adresse postale du membre (obligatoire pour un client professionnel)';
+
+  @override
+  String get invoiceMissingBuyerName => 'Le nom ou la société du membre';
+
+  @override
+  String get invoiceMissingBuyerVatId =>
+      'Le numéro de TVA du membre (requis pour l\'autoliquidation)';
+
+  @override
+  String get invoiceMissingExemptionReason =>
+      'Le fondement légal de l\'exonération de TVA';
+
+  @override
+  String get invoiceMissingSellerAddress =>
+      'L\'adresse postale de l\'espace (rue ou ville)';
+
+  @override
+  String get invoiceMissingSellerVatId =>
+      'Le numéro d\'identification TVA de l\'espace';
+
+  @override
+  String get invoiceMissingTitle =>
+      'Complétez ces informations avant d\'émettre';
 
   @override
   String get invoiceNoOpen => 'Aucune facture en cours.';
@@ -9245,13 +9667,48 @@ class AppLocalizationsFr extends AppLocalizations {
       'Choisissez chaque espace et ce que l\'assistant peut y faire. Rien n\'est choisi à votre place.';
 
   @override
+  String mcpConsentClientBlocked(String name) {
+    return 'L\'opérateur a bloqué $name sur ce serveur. Il ne peut pas être connecté.';
+  }
+
+  @override
+  String mcpConsentClientWaiting(String name) {
+    return '$name n\'est pas encore approuvé sur ce serveur. L\'opérateur approuve chaque assistant une fois ; reconnectez-vous ensuite depuis l\'assistant.';
+  }
+
+  @override
   String get mcpConsentConnected => 'Connecté. Retour vers l\'assistant.';
+
+  @override
+  String mcpConsentDeciderAsk(String name) {
+    return 'Demandez à $name de décider.';
+  }
+
+  @override
+  String get mcpConsentDeciderMe =>
+      'C\'est vous qui décidez, dans la console de l\'installation.';
+
+  @override
+  String get mcpConsentDeciderNobody =>
+      'Personne ne répond encore de ce serveur.';
 
   @override
   String get mcpConsentDenied => 'Refusé. L\'assistant n\'obtient rien.';
 
   @override
   String get mcpConsentDeny => 'Refuser';
+
+  @override
+  String get mcpConsentFamilyChatgpt =>
+      'Approuvé pour toutes les connexions ChatGPT.';
+
+  @override
+  String get mcpConsentFamilyClaude =>
+      'Approuvé pour toutes les connexions Claude.';
+
+  @override
+  String get mcpConsentFamilyLoopback =>
+      'Approuvé pour les assistants de bureau et en ligne de commande sur cet ordinateur.';
 
   @override
   String get mcpConsentFieldsExplain =>
@@ -9268,6 +9725,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get mcpConsentPartial =>
       'L\'assistant a été approuvé mais la connexion n\'est pas encore utilisable. Reconnectez-vous depuis l\'assistant.';
+
+  @override
+  String mcpConsentRedirectHost(String host) {
+    return 'La réponse est envoyée à $host.';
+  }
 
   @override
   String get mcpConsentRequestEligibility => 'Demander l\'autorisation';
@@ -9829,6 +10291,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get meSpaceLastUsed => 'Dernier utilisé';
+
+  @override
+  String get meSpaceOpen => 'Ouvrir';
 
   @override
   String get meSpacePending => 'En attente de validation';
@@ -10584,6 +11049,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'Mon badge';
+
+  @override
+  String get myVisitsHelp =>
+      'Les visites que vous avez demandées ou auxquelles vous avez été admis, en tant qu\'invité. Une visite n\'est pas une adhésion.';
+
+  @override
+  String get myVisitsTitle => 'Mes visites';
 
   @override
   String get navigationClassic =>
@@ -11464,7 +11936,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permManageServices => 'Gérer les services et forfaits';
 
   @override
-  String get permManageSites => 'Gérer les sites et les étages';
+  String get permManageSites => 'Gérer les sites et modifier le plan';
 
   @override
   String get permManageValidation => 'Configurer les règles de validation';
@@ -17141,6 +17613,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get visibilityTitle => 'Qui me voit';
+
+  @override
+  String get visitCancel => 'Annuler cette visite';
+
+  @override
+  String get visitCancelFailed =>
+      'Impossible d\'annuler la visite. Rien n\'a changé ; réessayez.';
+
+  @override
+  String get visitGuestNote => 'Visite d\'invité — pas une adhésion';
+
+  @override
+  String get visitStatusCancelled => 'Annulée';
+
+  @override
+  String get visitStatusConfirmed => 'Confirmée';
+
+  @override
+  String get visitStatusDeclined => 'Refusée';
+
+  @override
+  String get visitStatusExpired => 'Expirée';
+
+  @override
+  String get visitStatusRequested => 'Demandée';
 
   @override
   String whatTheyCanDoTitle(String name) {

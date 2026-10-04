@@ -172,5 +172,13 @@
   "roleRenameAdministrator": "Umbenennen",
   "@roleRenameAdministrator": {
     "description": "#2085 giving roles: roleRenameAdministrator"
+  },
+  "inviteRolesTitle": "Rollen bei der Ankunft",
+  "@inviteRolesTitle": {
+    "description": "#2085 giving roles: inviteRolesTitle"
+  },
+  "inviteRolesHint": "Vergeben beim Beitritt, sobald die Mitgliedschaft aktiv ist.",
+  "@inviteRolesHint": {
+    "description": "#2085 giving roles: inviteRolesHint"
   }
 }

@@ -184,6 +184,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "label": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "level_id": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -238,6 +242,10 @@
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "open_days": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "opening_hours": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -309,6 +317,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "time_zone": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "total_cents": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -375,8 +387,7 @@
    "output": [
     "workspace_id",
     "name",
-    "role",
-    "environment"
+    "operations"
    ]
   },
   {
@@ -384,7 +395,7 @@
    "handler": true,
    "dispatch": true,
    "title": "What can I do here?",
-   "description": "What this assistant may do in one workspace right now, and until when access is approved. Call it when a tool is missing or a call was refused, to explain to the person what is allowed and what is not.",
+   "description": "What this assistant may do in one workspace right now and until when access is approved, plus the workspace's time zone, currency and opening hours. Call it before booking to read \"tomorrow morning\" in the workspace's zone, and when a tool is missing or a call was refused, to explain what is allowed.",
    "rpc": null,
    "authority": {
     "kind": "member"
@@ -409,7 +420,10 @@
    "output": [
     "operations",
     "target_ceiling",
-    "eligible_until"
+    "eligible_until",
+    "time_zone",
+    "currency",
+    "opening_hours"
    ]
   },
   {
@@ -417,7 +431,7 @@
    "dispatch": true,
    "handler": true,
    "title": "Find free places",
-   "description": "Which places can be booked for a time window in a workspace. \"free\" is the booking engine's own verdict for this person (opening hours, booking granularity, limits, blocks and existing bookings), so a free seat_id can be passed to deskilo_create_reservation. Paged: pass next_cursor to see more.",
+   "description": "Which seats can be booked for a time window in a workspace, each with a label naming its level, office, desk and seat (e.g. \"Level 2 \u00b7 Open space \u00b7 Desk 4 \u00b7 Seat B\") and its level_id/office_id, so a follow-up can filter by level_id or office_id. \"free\" is the booking engine's own verdict for this person (opening hours, booking granularity, limits, blocks and existing bookings), so a free seat_id can be passed to deskilo_create_reservation. Paged: pass next_cursor to see more.",
    "rpc": null,
    "authority": {
     "kind": "member"
@@ -454,6 +468,14 @@
       "2026-10-05T13:00:00+02:00"
      ]
     },
+    "level_id": {
+     "type": "uuid",
+     "description": "Optional: only places on this level (a level_id from an earlier answer)."
+    },
+    "office_id": {
+     "type": "uuid",
+     "description": "Optional: only places in this office (an office_id from an earlier answer)."
+    },
     "cursor": {
      "type": "text",
      "maxLength": 400,
@@ -476,6 +498,10 @@
     "observed_at",
     "items",
     "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "label",
     "name",
     "free",
     "next_cursor",
@@ -487,7 +513,7 @@
    "dispatch": true,
    "handler": true,
    "title": "List my bookings",
-   "description": "The person's own bookings that overlap a window (at most 31 days), oldest first, with reservation_id, place, times, status and state_digest. Use it before moving, checking in, checking out or cancelling a booking.",
+   "description": "The person's own bookings that overlap a window (at most 31 days), oldest first, with reservation_id, a label naming the place, times, status and state_digest. Use it before moving, checking in, checking out or cancelling a booking.",
    "rpc": null,
    "authority": {
     "kind": "self"
@@ -546,6 +572,7 @@
     "desk_id",
     "office_id",
     "level_id",
+    "label",
     "starts_at",
     "ends_at",
     "status",
@@ -557,7 +584,7 @@
    "handler": true,
    "dispatch": true,
    "title": "My monthly statement",
-   "description": "The person's own statement for one month: subscription fee, included and used half-days, overage, supplements, credits, balance and VAT. Amounts are integer minor units (cents) of the workspace currency.",
+   "description": "The person's own statement for one month: subscription fee, included and used half-days, overage, supplements, credits, balance and VAT. Amounts are integer minor units (cents) of `currency`.",
    "rpc": "member_statement",
    "authority": {
     "kind": "self"
@@ -578,12 +605,6 @@
      "examples": [
       "00000000-0000-4000-8000-0000000000a1"
      ]
-    },
-    "member_id": {
-     "type": "uuid",
-     "required": true,
-     "param": "p_member_id",
-     "description": "The member this request is about."
     },
     "period": {
      "type": "month",
@@ -623,7 +644,8 @@
     "accessory_supplement_cents",
     "accessory_supplement_by_rate",
     "vat_percent",
-    "amount_cents"
+    "amount_cents",
+    "currency"
    ]
   },
   {
@@ -1632,9 +1654,11 @@
   },
   {
    "rpc": "mcp_consent_options",
-   "params": {},
+   "params": {
+    "p_authorization_id": "text"
+   },
    "security": "nativeSession",
-   "purpose": "What an assistant connection may be granted."
+   "purpose": "What an assistant connection may be granted; with the pending authorization, the client's approval status, its redirect host and who decides the first open step."
   },
   {
    "rpc": "mcp_disclosure_status",

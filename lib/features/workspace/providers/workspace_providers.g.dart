@@ -1732,6 +1732,59 @@ final class MyPermissionsProvider
 
 String _$myPermissionsHash() => r'91d95ae4eb75b760bad053f4c1154b8111f0e3f0';
 
+/// #2137 — I act on reservations as staff (book for others, check them
+/// in, overrule, a whole level without the grant, their allowances): an
+/// active admin or owner, or manageReservations through a role (0364).
+
+@ProviderFor(actsForReservations)
+final actsForReservationsProvider = ActsForReservationsProvider._();
+
+/// #2137 — I act on reservations as staff (book for others, check them
+/// in, overrule, a whole level without the grant, their allowances): an
+/// active admin or owner, or manageReservations through a role (0364).
+
+final class ActsForReservationsProvider
+    extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  /// #2137 — I act on reservations as staff (book for others, check them
+  /// in, overrule, a whole level without the grant, their allowances): an
+  /// active admin or owner, or manageReservations through a role (0364).
+  ActsForReservationsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'actsForReservationsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$actsForReservationsHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return actsForReservations(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$actsForReservationsHash() =>
+    r'c4bd6bb2fa3a107516087674ea2b279158567715';
+
 /// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies
 /// to EVERY member — gates the e-invoice test environments and the
 /// Developer screen. Realtime (0080) pushes a flip to all devices live.

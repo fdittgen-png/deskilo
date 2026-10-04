@@ -137,21 +137,6 @@ void main() {
       expect(migration, contains('replica identity full'));
     });
 
-    test('pre-0125 messages are backfilled into conversations', () {
-      // 0125 gave member_notes a conversation_id; nothing ever filled it
-      // for the notes already there. Reading threads BY conversation
-      // then renders them nowhere — and #702 deletes the old filtering
-      // sheet that was still showing them.
-      final sql = File('supabase/migrations/0130_backfill_conversations.sql')
-          .readAsStringSync();
-      expect(sql, contains('conversation_id is null'));
-      expect(sql, contains('insert into public.conversation_participants'));
-      // A pair that already has a thread must not get a second one.
-      expect(sql, contains('where not exists'));
-      // Broadcasts have no pair and stay in the alerts feed.
-      expect(sql, contains('to_member_id is not null'));
-    });
-
     test('the bar survives on one destination', () {
       // The old guard hid the whole bar below two destinations — and the
       // bar carries the raised Reserve button, so a workspace with

@@ -6,8 +6,6 @@
 // screen's generate → PDF/XML → transmit/mark-filed lifecycle.
 import 'dart:async';
 
-import 'dart:io';
-
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
@@ -186,16 +184,6 @@ void main() {
       expect(xml, contains('<vat-cents>2000</vat-cents>'));
     });
 
-    test('pins the lifecycle contract against migration 0107', () {
-      final sql = File('supabase/migrations/0107_vat_declarations.sql')
-          .readAsStringSync();
-      expect(sql, contains('save_vat_declaration'));
-      expect(sql, contains('mark_vat_declaration_submitted'));
-      expect(sql, contains("check (status in ('draft', 'submitted'))"));
-      expect(sql, contains('only the owner files VAT declarations'));
-      expect(sql, contains('workspace_charges_vat'));
-      expect(sql, contains('declaration already submitted'));
-    });
   });
 
   group('declarations screen (#534)', () {

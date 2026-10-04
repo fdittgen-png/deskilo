@@ -78,7 +78,7 @@ select pg_temp.act_as(:'d');
 select public.finalize_identity_binding();
 reset role;
 
-update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb)
+update public.workspaces set street = '1 Fixture Street', city = 'Fixtureville', feature_flags = coalesce(feature_flags, '{}'::jsonb)
   || '{"mcpAccess": true, "invoicing": true, "moneyTab": true, "adminInvoicing": true}',
   booking_rules = booking_rules || '{"open_weekdays":[1,2,3,4,5,6,7],"granularity":"half_day","work_start_minutes":480,"half_boundary_minutes":720,"work_end_minutes":1080}'
  where id = current_setting('race.ws')::uuid;

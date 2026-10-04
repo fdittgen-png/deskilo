@@ -33,7 +33,7 @@ void Function(String? deskId, String? officeId)? listSpaceTap(
   final me = ref.watch(myMemberProvider).value;
   if (me == null || me.status != MemberStatus.active) return null;
   final roster = spaceAssignmentCandidates(ref);
-  if (!me.canReserveLevel && !me.canAdminister && roster.isEmpty) return null;
+  if (!me.canReserveLevel && !ref.watch(actsForReservationsProvider) && roster.isEmpty) return null;
   return (deskId, officeId) {
     final desk = plan.desks.where((d) => d.id == deskId).firstOrNull;
     showSpaceSheet(
@@ -67,5 +67,5 @@ bool levelReservable(WidgetRef ref, Level? level) {
   }
   final me = ref.watch(myMemberProvider).value;
   if (me == null || me.status != MemberStatus.active) return false;
-  return me.canReserveLevel || me.canAdminister;
+  return me.canReserveLevel || ref.watch(actsForReservationsProvider);
 }

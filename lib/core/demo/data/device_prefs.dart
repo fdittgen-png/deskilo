@@ -27,6 +27,7 @@ import '../../../features/workspace/application/creation_intent.dart';
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
+import 'package:deskilo/core/storage/booking_intent_store.dart';
 import 'package:deskilo/core/storage/entry_intent_store.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
@@ -143,6 +144,11 @@ class DemoDevicePrefs {
   /// demonstration is the demonstration's; the live draft is neither
   /// read nor spent by entering it.
   final InMemoryEntryIntentStore entryIntent = InMemoryEntryIntentStore();
+
+  /// #1855 — a visitor's interrupted booking is the demonstration's; the
+  /// device's real ledger is neither read nor written by entering it.
+  final InMemoryBookingIntentStore bookingIntents =
+      InMemoryBookingIntentStore();
 
   /// #1636 — a creation a visitor started stays inside the demonstration.
   final InMemoryCreationDraftStore creationDraft = InMemoryCreationDraftStore();

@@ -1,0 +1,35 @@
+{
+  "@@locale": "en",
+  "invoiceMissingTitle": "Complete these details before issuing",
+  "@invoiceMissingTitle": {
+    "description": "#1916 invoice essentials: invoiceMissingTitle"
+  },
+  "invoiceMissingSellerAddress": "The workspace's postal address (street or city)",
+  "@invoiceMissingSellerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
+  },
+  "invoiceMissingSellerVatId": "The workspace's VAT identification number",
+  "@invoiceMissingSellerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
+  },
+  "invoiceMissingExemptionReason": "The legal basis for the VAT exemption",
+  "@invoiceMissingExemptionReason": {
+    "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
+  },
+  "invoiceMissingBuyerName": "The member's name or company",
+  "@invoiceMissingBuyerName": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerName"
+  },
+  "invoiceMissingBuyerAddress": "The member's postal address (a business customer needs one)",
+  "@invoiceMissingBuyerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
+  },
+  "invoiceMissingBuyerVatId": "The member's VAT number (needed for reverse charge)",
+  "@invoiceMissingBuyerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
+  },
+  "invoiceEssentialsRefused": "The invoice was not issued: required details are missing.",
+  "@invoiceEssentialsRefused": {
+    "description": "#1916 invoice essentials: invoiceEssentialsRefused"
+  }
+}

@@ -6,6 +6,8 @@ Tout ce qu'un membre, un admin ou un propriétaire doit savoir pour utiliser Des
 
 ![](assets/help/images/settings-language.jpg)
 
+**Mes espaces et la carte (#2155).** Dans Moi → Accueil, chaque espace occupe une ligne compacte. PROD et DEV sont des boutons voisins ; le symbole historique indique le dernier environnement utilisé. Chaque environnement conserve son menu. Sur petit écran, l’identité se place au-dessus des boutons. Dans Découvrir, **Localiser sur la carte** centre un espace ; le bouton de recentrage rétablit cette vue. Les coordonnées publiées sont prioritaires. À défaut, ouvrir la carte pour un résultat ou localiser un résultat recherche son adresse publique via Photon (OpenStreetMap). La position est indiquée comme approximative, peut désigner seulement la rue et ne modifie jamais la page publiée. En cas d’échec, réessayez ou demandez au propriétaire de publier latitude et longitude. La position de votre appareil n’est pas demandée.
+
 ## 1. Premiers pas
 
 ### Créer un compte

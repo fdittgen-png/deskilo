@@ -12,11 +12,11 @@ import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
-import '../../workspace/application/toggle_workspace_feature.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/instance_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/assistant_setup.dart';
+import '../application/mcp_onboarding_commands.dart';
 import '../application/mcp_policy_editor.dart';
 import '../domain/mcp_admin.dart';
 import '../domain/mcp_context.dart';
@@ -61,19 +61,27 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
 
   /// Turns `mcpAccess` on for the workspace the checklist was read for —
   /// refused when the selection moved since, rather than switching
-  /// another workspace's feature.
+  /// another workspace's feature. #2145 — through 0360's
+  /// `set_workspace_mcp_access`, which whoever manages integrations may
+  /// call, against the value read; a change in between is reloaded.
   Future<void> _turnOn(McpContextRef scope) =>
       _run(scope, 'assistant setup feature switch failed', () async {
         final ws = ref.read(currentWorkspaceProvider).value;
         if (ws == null || ws.id != scope.workspaceId) {
           throw const McpContextSuperseded();
         }
-        await toggleWorkspaceFeature(
-          ref,
-          workspace: ws,
-          feature: WorkspaceFeature.mcpAccess,
-          value: true,
-        );
+        final outcome = await ref
+            .read(mcpOnboardingCommandsProvider)
+            .offerAssistants(ws.id);
+        if (outcome == WorkspaceSwitchOutcome.stale && mounted) {
+          AppSnack.info(
+            context,
+            AppLocalizations.of(context)?.assistantSetupStale ??
+                'Someone changed the offer meanwhile. Review it and try '
+                    'again.',
+          );
+        }
+        ref.invalidate(myWorkspacesProvider);
       });
 
   /// Shows exactly what the recommended set changes, and saves it only

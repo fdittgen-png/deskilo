@@ -10,6 +10,13 @@
 // becomes an instruction the author can edit; a protected or unknown
 // screen becomes a manual step that is acknowledged, never verified.
 // The source recording is named by its digest and is never changed.
+//
+// #1867 live guide: on a generic step (#2142) the control the person used
+// (its recorded target — a string key, its pattern, a route pattern or a
+// command's message) and the app message it showed travel with the step,
+// so a reader is shown WHERE to act. An unnamed control ("unkeyed") is
+// not a target: that step matches its action anywhere and says so. A
+// screen seam's own steps keep matching their action as before.
 
 import '../domain/action_registry.dart';
 import '../domain/task_recording.dart';
@@ -43,11 +50,19 @@ TaskGuide compileGuide(
           continue;
         }
         final id = nextId();
+        // A generic step's target IS its control; a screen seam's target
+        // is a detail of its own action (a booking field), not an anchor.
+        final target = !spec.softTargets || step.target == uiUnkeyed
+            ? null
+            : step.target;
+        final label = step.payload.values['label'];
         steps.add(
           GuideStep(
             id: id,
             kind: GuideStepKind.perform,
             action: spec.id,
+            target: target,
+            label: label != null && uiLabelKeys.contains(label) ? label : null,
             expectedOutcomes: spec.isCommand
                 ? successOutcomes(spec, registry: registry)
                 : const {},

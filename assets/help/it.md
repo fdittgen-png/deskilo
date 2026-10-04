@@ -6,6 +6,8 @@ Tutto ciò che un membro, un admin o un proprietario deve sapere per usare DesKi
 
 ![](assets/help/images/settings-language.jpg)
 
+**I miei spazi e la mappa (#2155).** In Io → Home, ogni spazio occupa una riga compatta. PROD e DEV sono affiancati; il simbolo della cronologia indica l’ultimo ambiente usato. Ogni ambiente conserva il proprio menu. Sugli schermi piccoli, l’identità appare sopra i pulsanti. In Scopri, **Localizza sulla mappa** centra lo spazio; il pulsante di centratura ripristina la vista. Le coordinate pubblicate hanno priorità. Se mancano, aprire la mappa per un unico risultato o localizzare un risultato cerca l’indirizzo pubblico tramite Photon (OpenStreetMap). La posizione è dichiarata approssimativa, può indicare solo la strada e non modifica la pagina pubblicata. In caso di errore, riprovare o chiedere al proprietario di pubblicare le coordinate. Non viene richiesta la posizione del dispositivo.
+
 ## 1. Primi passi
 
 ### Creare un account

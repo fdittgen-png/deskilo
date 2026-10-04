@@ -1,0 +1,35 @@
+{
+  "@@locale": "it",
+  "invoiceMissingTitle": "Completa questi dati prima dell'emissione",
+  "@invoiceMissingTitle": {
+    "description": "#1916 invoice essentials: invoiceMissingTitle"
+  },
+  "invoiceMissingSellerAddress": "L'indirizzo postale dello spazio (via o città)",
+  "@invoiceMissingSellerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
+  },
+  "invoiceMissingSellerVatId": "Il numero di partita IVA dello spazio",
+  "@invoiceMissingSellerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
+  },
+  "invoiceMissingExemptionReason": "Il fondamento giuridico dell'esenzione IVA",
+  "@invoiceMissingExemptionReason": {
+    "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
+  },
+  "invoiceMissingBuyerName": "Il nome o la ragione sociale del socio",
+  "@invoiceMissingBuyerName": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerName"
+  },
+  "invoiceMissingBuyerAddress": "L'indirizzo postale del socio (obbligatorio per un'azienda)",
+  "@invoiceMissingBuyerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
+  },
+  "invoiceMissingBuyerVatId": "La partita IVA del socio (necessaria per il reverse charge)",
+  "@invoiceMissingBuyerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
+  },
+  "invoiceEssentialsRefused": "La fattura non è stata emessa: mancano dati obbligatori.",
+  "@invoiceEssentialsRefused": {
+    "description": "#1916 invoice essentials: invoiceEssentialsRefused"
+  }
+}

@@ -338,7 +338,15 @@ enum WorkspaceFeature {
   /// uploaded. Gates recording on workspace screens only; the local
   /// workbench and its outputs are not workspace features. Platform,
   /// default OFF.
-  taskRecorder;
+  taskRecorder,
+
+  /// #1835 — guest participation: a person who is NOT a member asks to
+  /// visit this space and a host admits them, as a relationship of its
+  /// own — no membership, subscription, role or assistant eligibility is
+  /// created by it. Gates asking and admitting on this workspace; a
+  /// person's own visits are theirs to read whatever the flag says. Core,
+  /// default OFF: a space admits guests deliberately.
+  guestParticipation;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1437,6 +1445,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.taskRecorder,
     surface: FeatureSurface.everywhere,
     tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #1835 — admitting guests is a decision a space takes, not a default
+  // that follows from being a space: Core, off, no parent (a visit needs
+  // no published page; the server refuses what it cannot host).
+  WorkspaceFeature.guestParticipation: FeatureManifestEntry(
+    feature: WorkspaceFeature.guestParticipation,
+    surface: FeatureSurface.members,
+    tier: FeatureTier.core,
     defaultOn: false,
   ),
 };

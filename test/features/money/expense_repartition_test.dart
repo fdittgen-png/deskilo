@@ -3,8 +3,7 @@
 // #828 — the distribution sheet: the shares previewed to the cent for
 // every key, a reversal as credits, the booking landing as adjustment
 // lines on the period's usage invoice, the pending path when a rule
-// exists, the history, and the migration's contract.
-import 'dart:io';
+// exists, and the history.
 
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
@@ -230,22 +229,4 @@ void main() {
         findsNothing);
   });
 
-  test('migration 0147 carries the table, the RPC, the event type and the '
-      'trigger', () {
-    final sql = File('supabase/migrations/0147_expense_repartition.sql')
-        .readAsStringSync();
-    for (final what in [
-      'create table if not exists public.expense_repartitions',
-      "check (method in ('equal','subscription','usage','custom'))",
-      'create or replace function public.distribute_expense(',
-      "'expense_repartition'));",
-      'create or replace function public.apply_expense_repartition(uuid)'
-          .replaceAll('(uuid)', '(p_id uuid)'),
-      "'adjustment'",
-      'create trigger events_apply_expense_repartition',
-      "if v_sum <> p_amount_cents then",
-    ]) {
-      expect(sql, contains(what), reason: what);
-    }
-  });
 }

@@ -3517,6 +3517,108 @@ abstract class AppLocalizations {
   /// **'This booking lies entirely in the past.'**
   String get bookingPastError;
 
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'A booking request of yours is still unanswered.'**
+  String get bookingRecoveryBanner;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get bookingRecoveryBannerAction;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Check outcome'**
+  String get bookingRecoveryCheck;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The booking exists — exactly one, from your original request.'**
+  String get bookingRecoveryCommitted;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Let it go'**
+  String get bookingRecoveryDiscard;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The server is still working on this request. Check again in a moment.'**
+  String get bookingRecoveryInProgress;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was booked for this request. You can resume it as it was, or let it go.'**
+  String get bookingRecoveryNotCommitted;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'This device could not save your booking request, so nothing was sent. Free some space or try again.'**
+  String get bookingRecoveryNotSaved;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Resume the same request'**
+  String get bookingRecoveryResume;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Resumed: your original request was booked once.'**
+  String get bookingRecoveryResumed;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The space you chose'**
+  String get bookingRecoverySpaceFallback;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Your booking request'**
+  String get bookingRecoveryTitle;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The server could not be asked. Nothing was changed; try again.'**
+  String get bookingRecoveryUnavailable;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The connection dropped after your request was sent. The booking may or may not exist — check before booking again.'**
+  String get bookingRecoveryUnknown;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'The server no longer keeps a record of this request, so it cannot say. Check your bookings before booking again.'**
+  String get bookingRecoveryUnresolved;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'View the booking'**
+  String get bookingRecoveryView;
+
+  /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'{space} · {from} – {to}'**
+  String bookingRecoveryWindow(String space, String from, String to);
+
   /// #663 - reservation confirmation naming the space
   ///
   /// In en, this message translates to:
@@ -6019,6 +6121,12 @@ abstract class AppLocalizations {
   /// **'DEVELOPMENT'**
   String get developmentWatermark;
 
+  /// No description provided for @directoryApproximate.
+  ///
+  /// In en, this message translates to:
+  /// **'Approximate address location'**
+  String get directoryApproximate;
+
   /// Directory status chip: member is checked in right now (seat name unknown)
   ///
   /// In en, this message translates to:
@@ -6060,6 +6168,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Seen {minutes} min ago'**
   String directoryLastSeenMinutes(int minutes);
+
+  /// No description provided for @directoryLocate.
+  ///
+  /// In en, this message translates to:
+  /// **'Locate on map'**
+  String get directoryLocate;
+
+  /// No description provided for @directoryLocating.
+  ///
+  /// In en, this message translates to:
+  /// **'Locating the public address…'**
+  String get directoryLocating;
+
+  /// No description provided for @directoryLocationMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Location unavailable. The owner can publish precise map coordinates.'**
+  String get directoryLocationMissing;
 
   /// Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead
   ///
@@ -8136,6 +8262,18 @@ abstract class AppLocalizations {
   /// **'Help hints'**
   String get featureFormHelpHintsTitle;
 
+  /// #1835 guest participation: the feature's description
+  ///
+  /// In en, this message translates to:
+  /// **'Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here.'**
+  String get featureGuestParticipationDesc;
+
+  /// #1835 guest participation: the feature's name
+  ///
+  /// In en, this message translates to:
+  /// **'Guest visits'**
+  String get featureGuestParticipationTitle;
+
   /// Subtitle note: the feature is on but its parent is off (#800)
   ///
   /// In en, this message translates to:
@@ -8171,6 +8309,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Off: nothing new starts; what is already open can still be answered and closed.'**
   String get featureIntakeStoppedNote;
+
+  /// #1851 C off-note when the server cannot confirm it keeps existing work serviceable
+  ///
+  /// In en, this message translates to:
+  /// **'Off: nothing new starts. This server could not confirm that what is already open stays answerable, so do not count on it.'**
+  String get featureIntakeUnconfirmedNote;
 
   /// Features screen name for the #869 window-envelope address placement flag
   ///
@@ -9840,6 +9984,282 @@ abstract class AppLocalizations {
   /// **'Get started in {workspace}'**
   String gettingStartedTitle(String workspace);
 
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'confirm the booking and wait for the answer'**
+  String get guideActionConfirmBooking;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'open Reserve'**
+  String get guideActionOpenReserve;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'choose the day'**
+  String get guideActionSelectDate;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'choose the period'**
+  String get guideActionSelectPeriod;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'choose a place on the plan or in the list'**
+  String get guideActionSelectResource;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'The booking was refused (the place is taken or a rule forbids it). Choose another place or period, then confirm again.'**
+  String get guideBookingRefusedRecovery;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Book a place'**
+  String get guideBuiltinBooking;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'This guide shows how to book a place: choose the day and the period, pick a place, then confirm. Nothing is booked until you confirm.'**
+  String get guideBuiltinBookingIntro;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get guideHostBack;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Resolve the message on screen first; the guide waits.'**
+  String get guideHostBlocked;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get guideHostClose;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm, then wait for the result.'**
+  String get guideHostCommand;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Guide completed.'**
+  String get guideHostCompleted;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {action}.'**
+  String guideHostDoAction(String action);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get guideHostDone;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in the highlighted field, then leave it.'**
+  String get guideHostFillField;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in “{label}”, then leave the field.'**
+  String guideHostFillLabel(String label);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Read this, then mark it done.'**
+  String get guideHostInstruction;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Do this step yourself, then mark it done.'**
+  String get guideHostManual;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'This part happens on a protected screen ({category}). Do it yourself, then mark it done.'**
+  String guideHostManualProtected(String category);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'This control is not on this screen. Go to the screen of the previous step, or check the guide.'**
+  String get guideHostNotOnScreen;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Open “{label}”.'**
+  String guideHostOpenLabel(String label);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Open the next screen.'**
+  String get guideHostOpenScreen;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Paused: the task recorder is turned off in this workspace.'**
+  String get guideHostPausedFeature;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Paused: the account or workspace changed. The guide continues only where it started.'**
+  String get guideHostPausedScope;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'That was refused. Follow these steps, then try again.'**
+  String get guideHostRecovery;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get guideHostResume;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Show me'**
+  String get guideHostShowMe;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get guideHostSkip;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Acknowledged'**
+  String get guideHostStatusAcknowledged;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get guideHostStatusDone;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'To do'**
+  String get guideHostStatusPending;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get guideHostStatusSkipped;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get guideHostStatusWaiting;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String guideHostStepOf(int current, int total);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'All steps'**
+  String get guideHostSteps;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Stop the guide'**
+  String get guideHostStop;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Guide stopped. Nothing was undone.'**
+  String get guideHostStopped;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the highlighted control.'**
+  String get guideHostTapControl;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Tap “{label}”.'**
+  String guideHostTapLabel(String label);
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Guided task'**
+  String get guideHostTitle;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'The answer did not arrive. Check whether it happened before trying again.'**
+  String get guideHostUncertain;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the result…'**
+  String get guideHostWaiting;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Start the guide'**
+  String get guideStart;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'This guide names steps this version of the app does not know; it can be read, not followed.'**
+  String get guideStartNotRunnable;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'This guide cannot start here: sign in and turn the task recorder on in this workspace.'**
+  String get guideStartRefused;
+
   /// #1870 accountant handoff blocking finding
   ///
   /// In en, this message translates to:
@@ -9947,6 +10367,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open the guide'**
   String get helpDotTooltip;
+
+  /// #1867 live guide host
+  ///
+  /// In en, this message translates to:
+  /// **'Guided tasks'**
+  String get helpGuidedTasks;
 
   /// No description provided for @helpHintAvailability.
   ///
@@ -11142,6 +11568,18 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get inboxRetry;
 
+  /// #2145 assistant onboarding: instanceAccessTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant access'**
+  String get instanceAccessTitle;
+
+  /// #2145 assistant onboarding: instanceAccessUntil
+  ///
+  /// In en, this message translates to:
+  /// **'Until {date}'**
+  String instanceAccessUntil(String date);
+
   /// #977 instance wizard: instanceAccountIntro
   ///
   /// In en, this message translates to:
@@ -11460,6 +11898,90 @@ abstract class AppLocalizations {
   /// **'The instance is ready. Use it on this device, then share the server QR from the Server screen so members join the same one.'**
   String get instanceDoneIntro;
 
+  /// #2145 assistant onboarding: instanceEndpointTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant endpoint'**
+  String get instanceEndpointTitle;
+
+  /// #2145 assistant onboarding: instanceFamilyChatgpt
+  ///
+  /// In en, this message translates to:
+  /// **'ChatGPT'**
+  String get instanceFamilyChatgpt;
+
+  /// #2145 assistant onboarding: instanceFamilyClaude
+  ///
+  /// In en, this message translates to:
+  /// **'Claude'**
+  String get instanceFamilyClaude;
+
+  /// #2145 assistant onboarding: instanceFamilyLoopback
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop or command-line assistant'**
+  String get instanceFamilyLoopback;
+
+  /// #2145 assistant onboarding: instanceGrant
+  ///
+  /// In en, this message translates to:
+  /// **'Approve access'**
+  String get instanceGrant;
+
+  /// #2145 assistant onboarding: instanceGrantDays
+  ///
+  /// In en, this message translates to:
+  /// **'Choose between 1 and 30 days.'**
+  String get instanceGrantDays;
+
+  /// #2145 assistant onboarding: instanceGrantDaysLabel
+  ///
+  /// In en, this message translates to:
+  /// **'For {days, plural, =1{1 day} other{{days} days}}'**
+  String instanceGrantDaysLabel(int days);
+
+  /// #2145 assistant onboarding: instanceGrantHelp
+  ///
+  /// In en, this message translates to:
+  /// **'While no other database administrator exists, you approve access yourself — yours included — for up to 30 days, with a reason. Each approval is recorded.'**
+  String get instanceGrantHelp;
+
+  /// #2145 assistant onboarding: instanceGrantNeedsGoogle
+  ///
+  /// In en, this message translates to:
+  /// **'Approving access needs this session to be signed in with Google.'**
+  String get instanceGrantNeedsGoogle;
+
+  /// #2145 assistant onboarding: instanceGrantNoIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'That person has not confirmed their identity yet.'**
+  String get instanceGrantNoIdentity;
+
+  /// #2145 assistant onboarding: instanceGrantOtherAdmin
+  ///
+  /// In en, this message translates to:
+  /// **'A database administrator decides access here; ask them.'**
+  String get instanceGrantOtherAdmin;
+
+  /// #2145 assistant onboarding: instanceGrantReason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get instanceGrantReason;
+
+  /// #2145 assistant onboarding: instanceGrantReasonNeeded
+  ///
+  /// In en, this message translates to:
+  /// **'Write why this access is approved (up to 500 characters).'**
+  String get instanceGrantReasonNeeded;
+
+  /// #2145 assistant onboarding: instanceGrantTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Approve assistant access for {name}'**
+  String instanceGrantTitle(String name);
+
   /// #977 instance wizard: instanceInstallSchema
   ///
   /// In en, this message translates to:
@@ -11471,6 +11993,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.'**
   String get instanceIntro;
+
+  /// #2145 assistant onboarding: instanceLoopbackHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Claude Code, Cursor, VS Code and other assistants that run on a person\'s own computer. Each person still approves their own connection.'**
+  String get instanceLoopbackHelp;
+
+  /// #2145 assistant onboarding: instanceLoopbackTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Allow desktop and command-line assistants'**
+  String get instanceLoopbackTitle;
 
   /// #1827 B — instance operator console for the installation's assistants
   ///
@@ -11489,6 +12023,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only the instance operator manages the installation\'s assistants.'**
   String get instanceNotOperator;
+
+  /// #2145 assistant onboarding: instanceNoticeClientWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is waiting for your approval.'**
+  String instanceNoticeClientWaiting(String name);
+
+  /// #2145 assistant onboarding: instanceNoticeOperatorGrant
+  ///
+  /// In en, this message translates to:
+  /// **'The operator approved assistant access for {name}.'**
+  String instanceNoticeOperatorGrant(String name);
+
+  /// #2145 assistant onboarding: instanceNoticeSelfGrant
+  ///
+  /// In en, this message translates to:
+  /// **'{name} approved their own assistant access.'**
+  String instanceNoticeSelfGrant(String name);
+
+  /// #2145 assistant onboarding: instanceNoticesMarkRead
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as read'**
+  String get instanceNoticesMarkRead;
+
+  /// #2145 assistant onboarding: instanceOperatorApproved
+  ///
+  /// In en, this message translates to:
+  /// **'Approved by the operator'**
+  String get instanceOperatorApproved;
 
   /// #977 instance wizard: instanceOrganisationLabel
   ///
@@ -11537,6 +12101,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Instance owner'**
   String get instanceOwnerTitle;
+
+  /// #2145 assistant onboarding: instanceProbeCheck
+  ///
+  /// In en, this message translates to:
+  /// **'Check the server'**
+  String get instanceProbeCheck;
+
+  /// #2145 assistant onboarding: instanceProbeDeployed
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant endpoint answers as it should.'**
+  String get instanceProbeDeployed;
+
+  /// #2145 assistant onboarding: instanceProbeMismatch
+  ///
+  /// In en, this message translates to:
+  /// **'The endpoint answers with another address than the one assistants are given.'**
+  String get instanceProbeMismatch;
+
+  /// #2145 assistant onboarding: instanceProbeMissing
+  ///
+  /// In en, this message translates to:
+  /// **'The server has not been checked yet.'**
+  String get instanceProbeMissing;
+
+  /// #2145 assistant onboarding: instanceProbeNotDeployed
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant endpoint is not deployed on this server yet.'**
+  String get instanceProbeNotDeployed;
+
+  /// #2145 assistant onboarding: instanceProbePending
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the server…'**
+  String get instanceProbePending;
+
+  /// #2145 assistant onboarding: instanceProbeStale
+  ///
+  /// In en, this message translates to:
+  /// **'The last check is more than 15 minutes old. Check again before turning assistants on.'**
+  String get instanceProbeStale;
+
+  /// #2145 assistant onboarding: instanceProbeUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'The server could not be reached. Try again in a moment.'**
+  String get instanceProbeUnavailable;
 
   /// #977 instance wizard: instanceProgress
   ///
@@ -11640,6 +12252,12 @@ abstract class AppLocalizations {
   /// **'Changes here need your second factor on this session.'**
   String get instanceSecondFactorNeeded;
 
+  /// #2145 assistant onboarding: instanceSelfApproved
+  ///
+  /// In en, this message translates to:
+  /// **'Self-approved by operator'**
+  String get instanceSelfApproved;
+
   /// #977 instance wizard: instanceSignInExplain
   ///
   /// In en, this message translates to:
@@ -11729,6 +12347,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Assistants become usable in every workspace that offers them. You can turn them off again at any time.'**
   String get instanceTurnOnConfirm;
+
+  /// #2145 assistant onboarding: instanceTurnOnNeedsProbe
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant endpoint is not confirmed. Check the server first.'**
+  String get instanceTurnOnNeedsProbe;
 
   /// #977 instance wizard: instanceUseExisting
   ///
@@ -12060,6 +12684,18 @@ abstract class AppLocalizations {
   /// **'Member invite'**
   String get inviteRoleMember;
 
+  /// #2085 giving roles: inviteRolesHint
+  ///
+  /// In en, this message translates to:
+  /// **'Given when they join, once their membership is active.'**
+  String get inviteRolesHint;
+
+  /// #2085 giving roles: inviteRolesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Roles on arrival'**
+  String get inviteRolesTitle;
+
   /// No description provided for @inviteSectionTitle.
   ///
   /// In en, this message translates to:
@@ -12257,6 +12893,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An access point delivers it to the customer — no government platform in between.'**
   String get invoiceEInvoiceTransportPeppol;
+
+  /// #1916 invoice essentials: invoiceEssentialsRefused
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice was not issued: required details are missing.'**
+  String get invoiceEssentialsRefused;
 
   /// #669 - accounting export formats
   ///
@@ -12845,6 +13487,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Member'**
   String get invoiceMemberLabel;
+
+  /// #1916 invoice essentials: invoiceMissingBuyerAddress
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s postal address (a business customer needs one)'**
+  String get invoiceMissingBuyerAddress;
+
+  /// #1916 invoice essentials: invoiceMissingBuyerName
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s name or company'**
+  String get invoiceMissingBuyerName;
+
+  /// #1916 invoice essentials: invoiceMissingBuyerVatId
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s VAT number (needed for reverse charge)'**
+  String get invoiceMissingBuyerVatId;
+
+  /// #1916 invoice essentials: invoiceMissingExemptionReason
+  ///
+  /// In en, this message translates to:
+  /// **'The legal basis for the VAT exemption'**
+  String get invoiceMissingExemptionReason;
+
+  /// #1916 invoice essentials: invoiceMissingSellerAddress
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s postal address (street or city)'**
+  String get invoiceMissingSellerAddress;
+
+  /// #1916 invoice essentials: invoiceMissingSellerVatId
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s VAT identification number'**
+  String get invoiceMissingSellerVatId;
+
+  /// #1916 invoice essentials: invoiceMissingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Complete these details before issuing'**
+  String get invoiceMissingTitle;
 
   /// Open tab empty state
   ///
@@ -15720,11 +16404,41 @@ abstract class AppLocalizations {
   /// **'Choose each workspace and what it may do there. Nothing is chosen for you.'**
   String get mcpConsentChoose;
 
+  /// #2145 assistant onboarding: mcpConsentClientBlocked
+  ///
+  /// In en, this message translates to:
+  /// **'The operator has blocked {name} on this server. It cannot be connected.'**
+  String mcpConsentClientBlocked(String name);
+
+  /// #2145 assistant onboarding: mcpConsentClientWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is not approved on this server yet. The operator approves each assistant once; then connect again from the assistant.'**
+  String mcpConsentClientWaiting(String name);
+
   /// #1615 mcp_consent
   ///
   /// In en, this message translates to:
   /// **'Connected. Returning to the assistant.'**
   String get mcpConsentConnected;
+
+  /// #2145 assistant onboarding: mcpConsentDeciderAsk
+  ///
+  /// In en, this message translates to:
+  /// **'Ask {name} to decide.'**
+  String mcpConsentDeciderAsk(String name);
+
+  /// #2145 assistant onboarding: mcpConsentDeciderMe
+  ///
+  /// In en, this message translates to:
+  /// **'You decide this yourself, in the installation console.'**
+  String get mcpConsentDeciderMe;
+
+  /// #2145 assistant onboarding: mcpConsentDeciderNobody
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody answers for this server yet.'**
+  String get mcpConsentDeciderNobody;
 
   /// #1615 mcp_consent
   ///
@@ -15737,6 +16451,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deny'**
   String get mcpConsentDeny;
+
+  /// #2145 assistant onboarding: mcpConsentFamilyChatgpt
+  ///
+  /// In en, this message translates to:
+  /// **'Approved for every ChatGPT connection.'**
+  String get mcpConsentFamilyChatgpt;
+
+  /// #2145 assistant onboarding: mcpConsentFamilyClaude
+  ///
+  /// In en, this message translates to:
+  /// **'Approved for every Claude connection.'**
+  String get mcpConsentFamilyClaude;
+
+  /// #2145 assistant onboarding: mcpConsentFamilyLoopback
+  ///
+  /// In en, this message translates to:
+  /// **'Approved for desktop and command-line assistants on this computer.'**
+  String get mcpConsentFamilyLoopback;
 
   /// #1809 mcp_disclosure
   ///
@@ -15761,6 +16493,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The assistant was approved but the connection is not usable yet. Connect again from the assistant.'**
   String get mcpConsentPartial;
+
+  /// #2145 assistant onboarding: mcpConsentRedirectHost
+  ///
+  /// In en, this message translates to:
+  /// **'The answer is sent to {host}.'**
+  String mcpConsentRedirectHost(String host);
 
   /// #1615 mcp_consent
   ///
@@ -16739,6 +17477,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last used'**
   String get meSpaceLastUsed;
+
+  /// No description provided for @meSpaceOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get meSpaceOpen;
 
   /// Subtitle of a space card whose membership awaits approval.
   ///
@@ -18017,6 +18761,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My badge'**
   String get myBadgeTitle;
+
+  /// #1835 Me › Home: under the My visits heading
+  ///
+  /// In en, this message translates to:
+  /// **'Visits you asked for or were admitted to, as a guest. A visit is not a membership.'**
+  String get myVisitsHelp;
+
+  /// #1835 Me › Home: the section listing the account's guest visits
+  ///
+  /// In en, this message translates to:
+  /// **'My visits'**
+  String get myVisitsTitle;
 
   /// #969 navigation style: navigationClassic
   ///
@@ -19601,7 +20357,7 @@ abstract class AppLocalizations {
   /// #982 permission catalog: permManageSites
   ///
   /// In en, this message translates to:
-  /// **'Manage sites and levels'**
+  /// **'Manage sites and edit the floor plan'**
   String get permManageSites;
 
   /// Permission label (#513)
@@ -29419,6 +30175,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Who sees me'**
   String get visibilityTitle;
+
+  /// #1835 a visit row: the guest withdraws or cancels
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this visit'**
+  String get visitCancel;
+
+  /// #1835 a visit row: the cancel failed
+  ///
+  /// In en, this message translates to:
+  /// **'Could not cancel the visit. Nothing changed; try again.'**
+  String get visitCancelFailed;
+
+  /// #1835 a visit row: the one line that keeps visit and membership apart
+  ///
+  /// In en, this message translates to:
+  /// **'Guest visit — not a membership'**
+  String get visitGuestNote;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get visitStatusCancelled;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get visitStatusConfirmed;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get visitStatusDeclined;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get visitStatusExpired;
+
+  /// #1835 visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get visitStatusRequested;
 
   /// #2085 giving roles: whatTheyCanDoTitle
   ///

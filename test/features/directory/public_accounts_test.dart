@@ -12,9 +12,13 @@ import 'package:deskilo/features/directory/presentation/public_page_editor.dart'
 import 'package:deskilo/l10n/app_localizations.dart';
 
 import 'dart:convert';
+import 'dart:async';
+import 'package:deskilo/features/directory/domain/directory_location.dart';
+import 'package:deskilo/features/directory/providers/directory_location_providers.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:go_router/go_router.dart';
 import 'package:deskilo/features/auth/presentation/screens/auth_screen.dart';
 import 'package:deskilo/features/directory/presentation/directory_map.dart';
@@ -119,6 +123,116 @@ void main() {
       expect(tester.takeException(), isNull);
     },
   );
+
+  testWidgets('map follows selection and asynchronously replaced coordinates', (tester) async {
+    const first = PublicWorkspace('one', 'https://host.example', '', {
+      'name': 'First', 'latitude': '48.86', 'longitude': '2.35',
+    });
+    const second = PublicWorkspace('two', 'https://host.example', '', {
+      'name': 'Second', 'latitude': '43.46', 'longitude': '3.42',
+    });
+    Future<void> show(List<PublicWorkspace> rows, String? selected) => showPortal(
+      tester,
+      Scaffold(body: DirectoryMap(workspaces: rows, selected: selected,
+        onSelect: (_) {}, tileProvider: _BlankTiles())),
+    );
+    await show([first, second], 'https://host.example/one');
+    final controller = MapController.of(tester.element(find.byType(MarkerLayer)));
+    expect(controller.camera.center.latitude, closeTo(48.86, .001));
+    await show([first, second], 'https://host.example/two');
+    expect(controller.camera.center.latitude, closeTo(43.46, .001));
+    await show([first], null);
+    expect(controller.camera.center.latitude, closeTo(48.86, .001));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('address-only result appears after lookup and recenter restores it', (tester) async {
+    const workspace = PublicWorkspace('address', 'https://host.example', '', {
+      'name': 'Address office', 'address': 'Public street',
+    });
+    final answer = Completer<DirectoryLocation?>();
+    await tester.pumpWidget(ProviderScope(overrides: [
+      directoryAddressLocationProvider('Public street').overrideWith((ref) => answer.future),
+    ], child: MaterialApp(home: Scaffold(body: DirectoryMap(
+      workspaces: const [workspace], selected: null,
+      onSelect: (_) {}, tileProvider: _BlankTiles(),
+    )))));
+    await tester.pump();
+    expect(find.text('Locating the public address…'), findsOneWidget);
+    answer.complete(const DirectoryLocation(43.46, 3.42, label: 'Public street'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Approximate address location'), findsOneWidget);
+    expect(find.text('Address office'), findsOneWidget);
+    final controller = MapController.of(tester.element(find.byType(MarkerLayer)));
+    expect(controller.camera.center.latitude, closeTo(43.46, .001));
+    controller.move(const LatLng(48, 2), 8);
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('directory-map-recenter')));
+    await tester.pump();
+    expect(controller.camera.center.latitude, closeTo(43.46, .001));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('failed location can retry and an old answer cannot replace a selection', (tester) async {
+    const old = PublicWorkspace('old', 'https://host.example', '', {
+      'name': 'Old', 'address': 'Old address',
+    });
+    const next = PublicWorkspace('next', 'https://host.example', '', {
+      'name': 'Next', 'address': 'Next address',
+    });
+    final oldAnswer = Completer<DirectoryLocation?>();
+    var attempts = 0;
+    String? selected = 'https://host.example/old';
+    late StateSetter update;
+    await tester.pumpWidget(ProviderScope(overrides: [
+      directoryAddressLocationProvider('Old address').overrideWith((ref) => oldAnswer.future),
+      directoryAddressLocationProvider('Next address').overrideWith((ref) async {
+        if (++attempts == 1) throw StateError('offline');
+        return const DirectoryLocation(43.46, 3.42, label: 'Next address');
+      }),
+    ], child: MaterialApp(home: Scaffold(body: StatefulBuilder(builder: (context, set) {
+      update = set;
+      return DirectoryMap(workspaces: const [old, next], selected: selected,
+        onSelect: (_) {}, tileProvider: _BlankTiles());
+    })))));
+    await tester.pump();
+    update(() => selected = 'https://host.example/next');
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Location unavailable'), findsOneWidget);
+    await tester.tap(find.byTooltip('Try again'));
+    await tester.pumpAndSettle();
+    expect(attempts, 2);
+    oldAnswer.complete(const DirectoryLocation(48.86, 2.35, label: 'Old address'));
+    await tester.pumpAndSettle();
+    final controller = MapController.of(tester.element(find.byType(MarkerLayer)));
+    expect(controller.camera.center.latitude, closeTo(43.46, .001));
+    expect(find.text('Next'), findsOneWidget);
+    expect(find.text('Old'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('locate card action opens the map without opening workspace details', (tester) async {
+    const workspace = PublicWorkspace('unlocated', 'https://host.example', '', {
+      'name': 'No address yet',
+    });
+    final repository = FakeDirectoryRepository()
+      ..cards.addAll([
+        for (var i = 0; i < 20; i++)
+          PublicWorkspace('row-$i', 'https://host.example', '', {'name': 'Office $i'}),
+        workspace,
+      ]);
+    await showPortal(tester, const DirectoryScreen(), directory: repository);
+    final locate = find.byKey(const ValueKey('directory-locate-https://host.example/unlocated'));
+    await tester.scrollUntilVisible(locate, 400, scrollable: find.descendant(
+      of: find.byType(ListView), matching: find.byType(Scrollable)).first);
+    await tester.pumpAndSettle();
+    await tester.tap(locate);
+    await tester.pumpAndSettle();
+    expect(find.byType(DirectoryMap), findsOneWidget);
+    expect(tester.getTopLeft(find.byType(DirectoryMap)).dy, greaterThanOrEqualTo(0));
+    expect(find.textContaining('Location unavailable'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets('owner publishes and previews the same public page at 320px', (
     tester,

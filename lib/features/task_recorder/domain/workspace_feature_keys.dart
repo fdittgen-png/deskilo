@@ -109,6 +109,7 @@ const Set<String> workspaceFeatureKeys = {
   'instanceWizard',
   'memberOrigin',
   'memberEnvironments',
+  'guestParticipation',
   'workspaceLibrary',
   'singleRoomLevelNames',
   'publicHolidays',

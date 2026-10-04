@@ -1015,6 +1015,85 @@
   "bookingOutsideWalkUpError": "En dehors des heures d'ouverture, seul un check-in spontané est possible — pas une réservation à l'avance.",
   "bookingOverlapsAnother": "La place est déjà réservée pendant une partie de ce créneau.",
   "bookingPastError": "Cette réservation est entièrement dans le passé.",
+  "bookingRecoveryBanner": "Une de vos demandes de réservation est restée sans réponse.",
+  "@bookingRecoveryBanner": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryBannerAction": "Vérifier",
+  "@bookingRecoveryBannerAction": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryCheck": "Vérifier le résultat",
+  "@bookingRecoveryCheck": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryCommitted": "La réservation existe — une seule, issue de votre demande d'origine.",
+  "@bookingRecoveryCommitted": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryDiscard": "Abandonner",
+  "@bookingRecoveryDiscard": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryInProgress": "Le serveur traite encore cette demande. Vérifiez à nouveau dans un instant.",
+  "@bookingRecoveryInProgress": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryNotCommitted": "Rien n'a été réservé pour cette demande. Vous pouvez la reprendre telle quelle, ou l'abandonner.",
+  "@bookingRecoveryNotCommitted": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryNotSaved": "Cet appareil n'a pas pu enregistrer votre demande de réservation ; rien n'a été envoyé. Libérez de l'espace ou réessayez.",
+  "@bookingRecoveryNotSaved": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryResume": "Reprendre la même demande",
+  "@bookingRecoveryResume": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryResumed": "Reprise : votre demande d'origine a été réservée une seule fois.",
+  "@bookingRecoveryResumed": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoverySpaceFallback": "L'espace choisi",
+  "@bookingRecoverySpaceFallback": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryTitle": "Votre demande de réservation",
+  "@bookingRecoveryTitle": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnavailable": "Le serveur n'a pas pu être interrogé. Rien n'a changé ; réessayez.",
+  "@bookingRecoveryUnavailable": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnknown": "La connexion a été coupée après l'envoi de votre demande. La réservation existe peut-être, peut-être pas : vérifiez avant de réserver à nouveau.",
+  "@bookingRecoveryUnknown": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryUnresolved": "Le serveur ne conserve plus de trace de cette demande et ne peut rien dire. Vérifiez vos réservations avant de réserver à nouveau.",
+  "@bookingRecoveryUnresolved": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryView": "Voir la réservation",
+  "@bookingRecoveryView": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
+  },
+  "bookingRecoveryWindow": "{space} · {from} – {to}",
+  "@bookingRecoveryWindow": {
+    "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "bookingReservedSpaceWhen": "{space} réservé : {when}.",
   "@bookingReservedSpaceWhen": {
     "description": "#663 - reservation confirmation naming the space",
@@ -2197,6 +2276,7 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
+  "directoryApproximate": "Position approximative de l’adresse",
   "directoryCheckedIn": "Sur place",
   "directoryCheckedInSeat": "Sur place · {seat}",
   "directoryClose": "Fermer",
@@ -2204,6 +2284,9 @@
   "directoryLastSeenDays": "{days, plural, =1{Vu il y a 1 jour} other{Vu il y a {days} jours}}",
   "directoryLastSeenHours": "{hours, plural, =1{Vu il y a 1 heure} other{Vu il y a {hours} heures}}",
   "directoryLastSeenMinutes": "Vu il y a {minutes} min",
+  "directoryLocate": "Localiser sur la carte",
+  "directoryLocating": "Localisation de l’adresse publique…",
+  "directoryLocationMissing": "Position indisponible. Le propriétaire peut publier des coordonnées précises.",
   "directoryNoUpcoming": "Aucune réservation à venir",
   "directoryOnline": "En ligne",
   "directoryOpenGroup": "Ouvrir le groupe WhatsApp",
@@ -2990,6 +3073,14 @@
   "featureFinanceFacesTitle": "Finances en quatre volets",
   "featureFormHelpHintsDesc": "Un carrousel d'astuces masquable sur chaque écran principal, et un petit ? à côté de chaque paramètre et champ de saisie — un geste ouvre le guide à la bonne section. Réactivable dans les réglages.",
   "featureFormHelpHintsTitle": "Astuces d'aide",
+  "featureGuestParticipationDesc": "Permet à une personne qui n'est pas membre de demander à visiter cet espace, et à quelqu'un qui gère les réservations de l'admettre ou de refuser. Une visite ne crée ni adhésion, ni abonnement, ni rôle. Désactivé : personne ne demande ni n'est admis ici.",
+  "@featureGuestParticipationDesc": {
+    "description": "#1835 guest participation: the feature's description"
+  },
+  "featureGuestParticipationTitle": "Visites d'invités",
+  "@featureGuestParticipationTitle": {
+    "description": "#1835 guest participation: the feature's name"
+  },
   "featureHeldBack": "En attente de la fonction au-dessus — activez-la et celle-ci fonctionne de nouveau.",
   "featureHolidayImportDesc": "Un propriétaire importe les jours fériés du pays, et d'une région, depuis une source de données ouvertes, désélectionne les jours où l'espace reste ouvert et importe les autres comme jours de fermeture. Les mois déjà facturés sont ignorés et nommés.",
   "@featureHolidayImportDesc": {
@@ -3008,6 +3099,7 @@
     "description": "#977 instance wizard: featureInstanceWizardDesc"
   },
   "featureIntakeStoppedNote": "Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos.",
+  "featureIntakeUnconfirmedNote": "Désactivé : rien de nouveau ne commence. Ce serveur n'a pas pu confirmer que ce qui est déjà ouvert reste traitable ; n'y comptez pas.",
   "featureInvoiceAddressWindow": "Fenêtre d'adresse",
   "@featureInvoiceAddressWindow": {
     "description": "Features screen name for the #869 window-envelope address placement flag"
@@ -3595,6 +3687,52 @@
   "gettingStartedStateReleased": "libérée",
   "gettingStartedStateReserved": "réservée",
   "gettingStartedTitle": "Premiers pas dans {workspace}",
+  "guideActionConfirmBooking": "confirmez la réservation et attendez la réponse",
+  "guideActionOpenReserve": "ouvrez Réserver",
+  "guideActionSelectDate": "choisissez le jour",
+  "guideActionSelectPeriod": "choisissez la période",
+  "guideActionSelectResource": "choisissez une place sur le plan ou dans la liste",
+  "guideBookingRefusedRecovery": "La réservation a été refusée (place prise ou règle). Choisissez une autre place ou période, puis confirmez à nouveau.",
+  "guideBuiltinBooking": "Réserver une place",
+  "guideBuiltinBookingIntro": "Ce guide montre comment réserver une place : choisissez le jour et la période, une place, puis confirmez. Rien n'est réservé avant votre confirmation.",
+  "guideHostBack": "Retour",
+  "guideHostBlocked": "Réglez d'abord le message à l'écran ; le guide attend.",
+  "guideHostClose": "Fermer",
+  "guideHostCommand": "Confirmez, puis attendez le résultat.",
+  "guideHostCompleted": "Guide terminé.",
+  "guideHostDoAction": "Ensuite : {action}.",
+  "guideHostDone": "Fait",
+  "guideHostFillField": "Remplissez le champ mis en évidence, puis quittez-le.",
+  "guideHostFillLabel": "Remplissez « {label} », puis quittez le champ.",
+  "guideHostInstruction": "Lisez ceci, puis marquez-le comme fait.",
+  "guideHostManual": "Faites cette étape vous-même, puis marquez-la comme faite.",
+  "guideHostManualProtected": "Cette partie se passe sur un écran protégé ({category}). Faites-la vous-même, puis marquez-la comme faite.",
+  "guideHostNotOnScreen": "Ce contrôle n'est pas sur cet écran. Allez à l'écran de l'étape précédente ou vérifiez le guide.",
+  "guideHostOpenLabel": "Ouvrez « {label} ».",
+  "guideHostOpenScreen": "Ouvrez l'écran suivant.",
+  "guideHostPausedFeature": "En pause : l'enregistreur de tâches est désactivé dans cet espace.",
+  "guideHostPausedScope": "En pause : le compte ou l'espace a changé. Le guide ne continue que là où il a commencé.",
+  "guideHostRecovery": "C'est refusé. Suivez ces étapes, puis réessayez.",
+  "guideHostResume": "Reprendre",
+  "guideHostShowMe": "Montrer",
+  "guideHostSkip": "Passer",
+  "guideHostStatusAcknowledged": "Pris en compte",
+  "guideHostStatusDone": "Fait",
+  "guideHostStatusPending": "À faire",
+  "guideHostStatusSkipped": "Passé",
+  "guideHostStatusWaiting": "En attente",
+  "guideHostStepOf": "Étape {current} sur {total}",
+  "guideHostSteps": "Toutes les étapes",
+  "guideHostStop": "Arrêter le guide",
+  "guideHostStopped": "Guide arrêté. Rien n'a été annulé.",
+  "guideHostTapControl": "Touchez le contrôle mis en évidence.",
+  "guideHostTapLabel": "Touchez « {label} ».",
+  "guideHostTitle": "Tâche guidée",
+  "guideHostUncertain": "La réponse n'est pas arrivée. Vérifiez si l'action a eu lieu avant de réessayer.",
+  "guideHostWaiting": "En attente du résultat…",
+  "guideStart": "Lancer le guide",
+  "guideStartNotRunnable": "Ce guide contient des étapes que cette version de l'application ne connaît pas ; il peut être lu, pas suivi.",
+  "guideStartRefused": "Ce guide ne peut pas démarrer ici : connectez-vous et activez l'enregistreur de tâches dans cet espace.",
   "handoffAmountOutOfRange": "{number} : un total trop grand pour être transmis exactement",
   "handoffBlocked": "Ce fichier ne peut pas être transmis tant que la source n’est pas corrigée.",
   "handoffChanged": "Les factures ont changé pendant votre relecture. Exportez à nouveau pour voir les comptes actuels.",
@@ -3613,6 +3751,7 @@
   "handoffVoided": "Annulées",
   "helpContents": "Sommaire",
   "helpDotTooltip": "Ouvrir le guide",
+  "helpGuidedTasks": "Tâches guidées",
   "helpHintAvailability": "Définissez les jours d'ouverture et les horaires, et ajoutez des jours de fermeture que personne ne peut réserver.",
   "helpHintAvailabilityTip2": "La granularité de réservation décide de la forme d'un créneau : demi-journées, journées entières, grilles à la minute ou horaires libres.",
   "helpHintAvailabilityTip3": "Début de journée, limite de demi-journée et fin de journée pilotent chaque créneau — réservation, pointage et facturation les suivent.",
@@ -3947,6 +4086,8 @@
   "inboxNoArchived": "Aucune conversation archivée.",
   "inboxNoUnread": "Rien de non lu — vous êtes à jour.",
   "inboxRetry": "Réessayer",
+  "instanceAccessTitle": "Accès aux assistants",
+  "instanceAccessUntil": "Jusqu'au {date}",
   "instanceAccountIntro": "Créez un compte gratuit sur supabase.com, puis un jeton d'accès personnel (Account → Access Tokens) et collez-le ici. L'assistant s'en sert pour créer et configurer le projet ; il n'est jamais enregistré.",
   "@instanceAccountIntro": {
     "description": "#977 instance wizard: instanceAccountIntro"
@@ -4029,6 +4170,20 @@
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
   },
+  "instanceEndpointTitle": "Point d'accès des assistants",
+  "instanceFamilyChatgpt": "ChatGPT",
+  "instanceFamilyClaude": "Claude",
+  "instanceFamilyLoopback": "Assistant de bureau ou en ligne de commande",
+  "instanceGrant": "Approuver l'accès",
+  "instanceGrantDays": "Choisissez entre 1 et 30 jours.",
+  "instanceGrantDaysLabel": "Pour {days, plural, =1{1 jour} other{{days} jours}}",
+  "instanceGrantHelp": "Tant qu'aucun autre administrateur de la base de données n'existe, vous approuvez vous-même les accès — le vôtre compris — pour 30 jours au plus, avec une raison. Chaque approbation est enregistrée.",
+  "instanceGrantNeedsGoogle": "Approuver un accès nécessite que cette session soit connectée avec Google.",
+  "instanceGrantNoIdentity": "Cette personne n'a pas encore confirmé son identité.",
+  "instanceGrantOtherAdmin": "Un administrateur de la base de données décide de l'accès ici ; demandez-le-lui.",
+  "instanceGrantReason": "Raison",
+  "instanceGrantReasonNeeded": "Indiquez pourquoi cet accès est approuvé (500 caractères maximum).",
+  "instanceGrantTitle": "Approuver l'accès aux assistants pour {name}",
   "instanceInstallSchema": "Installer le schéma : chaque migration de l'app, dans l'ordre ({count}).",
   "@instanceInstallSchema": {
     "description": "#977 instance wizard: instanceInstallSchema",
@@ -4039,9 +4194,16 @@
     }
   },
   "instanceIntro": "Réglages valables pour tous les espaces de travail de cette installation. Seul l'opérateur de l'instance voit cette page ; chaque changement exige votre second facteur et est journalisé.",
+  "instanceLoopbackHelp": "Claude Code, Cursor, VS Code et les autres assistants qui tournent sur l'ordinateur d'une personne. Chacun approuve toujours sa propre connexion.",
+  "instanceLoopbackTitle": "Autoriser les assistants de bureau et en ligne de commande",
   "instanceMakeAdmin": "Nommer administrateur",
   "instanceNoCandidates": "Personne d'autre n'a encore confirmé son identité.",
   "instanceNotOperator": "Seul l'opérateur de l'instance gère les assistants de l'installation.",
+  "instanceNoticeClientWaiting": "{name} attend votre approbation.",
+  "instanceNoticeOperatorGrant": "L'opérateur a approuvé l'accès aux assistants pour {name}.",
+  "instanceNoticeSelfGrant": "{name} a approuvé son propre accès aux assistants.",
+  "instanceNoticesMarkRead": "Marquer comme lu",
+  "instanceOperatorApproved": "Approuvé par l'opérateur",
   "instanceOrganisationLabel": "Organisation",
   "@instanceOrganisationLabel": {
     "description": "#977 instance wizard: instanceOrganisationLabel"
@@ -4053,6 +4215,14 @@
   "instanceOwnerHelp": "Cette installation est partagée par tous ses espaces. Le propriétaire de l'instance en est responsable : contactez-le pour tout ce qui concerne l'ensemble de l'installation, comme les assistants.",
   "instanceOwnerNone": "Aucun propriétaire d'instance n'est encore défini.",
   "instanceOwnerTitle": "Propriétaire de l'instance",
+  "instanceProbeCheck": "Vérifier le serveur",
+  "instanceProbeDeployed": "Le point d'accès des assistants répond comme prévu.",
+  "instanceProbeMismatch": "Le point d'accès répond avec une autre adresse que celle donnée aux assistants.",
+  "instanceProbeMissing": "Le serveur n'a pas encore été vérifié.",
+  "instanceProbeNotDeployed": "Le point d'accès des assistants n'est pas encore déployé sur ce serveur.",
+  "instanceProbePending": "Vérification du serveur…",
+  "instanceProbeStale": "La dernière vérification date de plus de 15 minutes. Vérifiez à nouveau avant d’activer les assistants.",
+  "instanceProbeUnavailable": "Le serveur n'a pas pu être joint. Réessayez dans un instant.",
   "instanceProgress": "{done} / {total} · {current}",
   "@instanceProgress": {
     "description": "#977 instance wizard: instanceProgress",
@@ -4109,6 +4279,7 @@
   "instanceRuntimeOn": "Activés",
   "instanceRuntimeTitle": "Assistants sur cette installation",
   "instanceSecondFactorNeeded": "Les changements ici exigent votre second facteur sur cette session.",
+  "instanceSelfApproved": "Auto-approuvé par l'opérateur",
   "instanceSignInExplain": "Réglages de connexion : confirmation par courriel activée (une inscription doit cliquer le lien reçu), et les liens de l'app autorisés pour les réinitialisations de mot de passe et les liens magiques.",
   "@instanceSignInExplain": {
     "description": "#977 instance wizard: instanceSignInExplain"
@@ -4162,6 +4333,7 @@
   "instanceTurnOff": "Désactiver",
   "instanceTurnOn": "Activer pour tous les espaces",
   "instanceTurnOnConfirm": "Les assistants deviennent utilisables dans chaque espace qui les propose. Vous pouvez les désactiver à tout moment.",
+  "instanceTurnOnNeedsProbe": "Le point d'accès des assistants n'est pas confirmé. Vérifiez d'abord le serveur.",
   "instanceUseExisting": "Ou utiliser un projet existant :",
   "@instanceUseExisting": {
     "description": "#977 instance wizard: instanceUseExisting"
@@ -4225,6 +4397,14 @@
   "invitePhoneLabel": "Téléphone (facultatif, avec indicatif)",
   "inviteRoleAdmin": "Invitation administrateur·rice",
   "inviteRoleMember": "Invitation membre",
+  "inviteRolesHint": "Attribués à l'arrivée, une fois l'adhésion active.",
+  "@inviteRolesHint": {
+    "description": "#2085 giving roles: inviteRolesHint"
+  },
+  "inviteRolesTitle": "Rôles à l'arrivée",
+  "@inviteRolesTitle": {
+    "description": "#2085 giving roles: inviteRolesTitle"
+  },
   "inviteSectionTitle": "Inviter quelqu'un",
   "inviteSendFailed": "Impossible d'ouvrir l'application d'envoi. Le message a été copié à la place.",
   "inviteViaShare": "Partager…",
@@ -4308,6 +4488,10 @@
   "invoiceEInvoiceTransportBilateral": "Aucun canal imposé : e-mail, portail ou Peppol — comme convenu avec le client.",
   "invoiceEInvoiceTransportClearance": "La plateforme nationale reçoit la facture d'abord et la transmet — l'envoi direct au client n'est pas possible.",
   "invoiceEInvoiceTransportPeppol": "Un point d'accès la livre au client — aucune plateforme publique dans le circuit.",
+  "invoiceEssentialsRefused": "La facture n'a pas été émise : des informations obligatoires manquent.",
+  "@invoiceEssentialsRefused": {
+    "description": "#1916 invoice essentials: invoiceEssentialsRefused"
+  },
   "invoiceExportAccountantCsv": "CSV comptable",
   "@invoiceExportAccountantCsv": {
     "description": "#669 - accounting export formats"
@@ -4618,6 +4802,34 @@
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
   "invoiceMemberLabel": "Membre",
+  "invoiceMissingBuyerAddress": "L'adresse postale du membre (obligatoire pour un client professionnel)",
+  "@invoiceMissingBuyerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
+  },
+  "invoiceMissingBuyerName": "Le nom ou la société du membre",
+  "@invoiceMissingBuyerName": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerName"
+  },
+  "invoiceMissingBuyerVatId": "Le numéro de TVA du membre (requis pour l'autoliquidation)",
+  "@invoiceMissingBuyerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
+  },
+  "invoiceMissingExemptionReason": "Le fondement légal de l'exonération de TVA",
+  "@invoiceMissingExemptionReason": {
+    "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
+  },
+  "invoiceMissingSellerAddress": "L'adresse postale de l'espace (rue ou ville)",
+  "@invoiceMissingSellerAddress": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
+  },
+  "invoiceMissingSellerVatId": "Le numéro d'identification TVA de l'espace",
+  "@invoiceMissingSellerVatId": {
+    "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
+  },
+  "invoiceMissingTitle": "Complétez ces informations avant d'émettre",
+  "@invoiceMissingTitle": {
+    "description": "#1916 invoice essentials: invoiceMissingTitle"
+  },
   "invoiceNoOpen": "Aucune facture en cours.",
   "invoiceNothingToInvoice": "Rien de suivi pour ce mois — rien à facturer.",
   "invoiceOpenAge": "{days} jours",
@@ -5656,13 +5868,22 @@
   "mcpConsentApprove": "Connecter",
   "mcpConsentAsks": "{client} demande à agir pour vous dans Deskilo.",
   "mcpConsentChoose": "Choisissez chaque espace et ce que l'assistant peut y faire. Rien n'est choisi à votre place.",
+  "mcpConsentClientBlocked": "L'opérateur a bloqué {name} sur ce serveur. Il ne peut pas être connecté.",
+  "mcpConsentClientWaiting": "{name} n'est pas encore approuvé sur ce serveur. L'opérateur approuve chaque assistant une fois ; reconnectez-vous ensuite depuis l'assistant.",
   "mcpConsentConnected": "Connecté. Retour vers l'assistant.",
+  "mcpConsentDeciderAsk": "Demandez à {name} de décider.",
+  "mcpConsentDeciderMe": "C'est vous qui décidez, dans la console de l'installation.",
+  "mcpConsentDeciderNobody": "Personne ne répond encore de ce serveur.",
   "mcpConsentDenied": "Refusé. L'assistant n'obtient rien.",
   "mcpConsentDeny": "Refuser",
+  "mcpConsentFamilyChatgpt": "Approuvé pour toutes les connexions ChatGPT.",
+  "mcpConsentFamilyClaude": "Approuvé pour toutes les connexions Claude.",
+  "mcpConsentFamilyLoopback": "Approuvé pour les assistants de bureau et en ligne de commande sur cet ordinateur.",
   "mcpConsentFieldsExplain": "Détails qu'il peut aussi voir ici. Laissez-les décochés pour garder ses réponses minimisées.",
   "mcpConsentNoWorkspace": "Aucun de vos espaces n'accepte les assistants. Rien ne peut être connecté.",
   "mcpConsentNotEligible": "Cette base de données n'a pas encore autorisé les assistants pour vous. Demandez l'autorisation, puis reconnectez-vous.",
   "mcpConsentPartial": "L'assistant a été approuvé mais la connexion n'est pas encore utilisable. Reconnectez-vous depuis l'assistant.",
+  "mcpConsentRedirectHost": "La réponse est envoyée à {host}.",
   "mcpConsentRequestEligibility": "Demander l'autorisation",
   "mcpConsentRequested": "Autorisation demandée. Un administrateur de la base l'examinera.",
   "mcpConsentTitle": "Connecter un assistant",
@@ -5826,6 +6047,7 @@
   "meSectionMine": "Mon historique et mes données",
   "meSpaceException": "Dans cet espace",
   "meSpaceLastUsed": "Dernier utilisé",
+  "meSpaceOpen": "Ouvrir",
   "meSpacePending": "En attente de validation",
   "meTabDiscover": "Découvrir",
   "meTabHome": "Accueil",
@@ -6216,6 +6438,14 @@
   "moneyUsageUnlimited": "{used} demi-journées utilisées",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mon badge",
+  "myVisitsHelp": "Les visites que vous avez demandées ou auxquelles vous avez été admis, en tant qu'invité. Une visite n'est pas une adhésion.",
+  "@myVisitsHelp": {
+    "description": "#1835 Me › Home: under the My visits heading"
+  },
+  "myVisitsTitle": "Mes visites",
+  "@myVisitsTitle": {
+    "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
   "navigationClassic": "Classique : la barre du bas et le bouton rond",
   "@navigationClassic": {
     "description": "#969 navigation style: navigationClassic"
@@ -6768,7 +6998,7 @@
   "@permManageServices": {
     "description": "Permission label (#513)"
   },
-  "permManageSites": "Gérer les sites et les étages",
+  "permManageSites": "Gérer les sites et modifier le plan",
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },
@@ -10341,6 +10571,38 @@
   "visibilitySaveFailed": "Impossible d'enregistrer qui le voit. Veuillez réessayer.",
   "visibilitySignedIn": "Toute personne connectée",
   "visibilityTitle": "Qui me voit",
+  "visitCancel": "Annuler cette visite",
+  "@visitCancel": {
+    "description": "#1835 a visit row: the guest withdraws or cancels"
+  },
+  "visitCancelFailed": "Impossible d'annuler la visite. Rien n'a changé ; réessayez.",
+  "@visitCancelFailed": {
+    "description": "#1835 a visit row: the cancel failed"
+  },
+  "visitGuestNote": "Visite d'invité — pas une adhésion",
+  "@visitGuestNote": {
+    "description": "#1835 a visit row: the one line that keeps visit and membership apart"
+  },
+  "visitStatusCancelled": "Annulée",
+  "@visitStatusCancelled": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusConfirmed": "Confirmée",
+  "@visitStatusConfirmed": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusDeclined": "Refusée",
+  "@visitStatusDeclined": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusExpired": "Expirée",
+  "@visitStatusExpired": {
+    "description": "#1835 visit status"
+  },
+  "visitStatusRequested": "Demandée",
+  "@visitStatusRequested": {
+    "description": "#1835 visit status"
+  },
   "whatTheyCanDoTitle": "Ce que {name} peut faire ici",
   "@whatTheyCanDoTitle": {
     "description": "#2085 giving roles: whatTheyCanDoTitle",

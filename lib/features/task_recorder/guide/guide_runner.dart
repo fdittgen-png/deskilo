@@ -61,11 +61,14 @@ class GuideRun {
 
   bool get _live => _state == GuideRunState.running;
 
-  /// The person did [actionId] on a form.
-  void onAction(String actionId) {
+  /// The person did [actionId] on a form — on [target] when the recorder
+  /// could name the control. A step that names its control completes only
+  /// on that control: the same kind of tap elsewhere is not this step.
+  void onAction(String actionId, {String? target}) {
     final step = current;
     if (!_live || step == null || step.kind != GuideStepKind.perform) return;
     if (step.action != actionId) return;
+    if (step.target != null && step.target != target) return;
     if (step.isCommand) {
       // A tap is not a booking: wait for what the command answers.
       _status[step.id] = GuideStepStatus.waiting;

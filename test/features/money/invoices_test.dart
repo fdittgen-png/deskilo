@@ -46,6 +46,58 @@ Future<void> showCancelled(WidgetTester tester) async {
 
 void main() {
   testWidgets(
+      '#1916 an invoice whose essentials are missing says which, and cannot '
+      'be issued until they are there', (tester) async {
+    final money = FakeMoneyRepository()
+      ..invoiceMissing = ['seller_address', 'buyer_name'];
+    money.ledger.add(LedgerEntry(
+      id: 'ledger-1',
+      memberId: 'member-1',
+      kind: LedgerKind.charge,
+      category: LedgerCategory.service,
+      amountCents: 450,
+      description: 'Coffee ×3',
+      period: currentTestPeriod(),
+      createdAt: kTestNow,
+    ));
+    await pumpInvoices(tester, money: money);
+    await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Flo').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-period-next')));
+    await tester.pumpAndSettle();
+
+    final banner = find.byKey(const ValueKey('invoice-missing-essentials'));
+    expect(banner, findsOneWidget);
+    expect(find.descendant(of: banner, matching: find.textContaining('postal address')),
+        findsWidgets);
+    expect(find.descendant(of: banner, matching: find.textContaining('name or company')),
+        findsWidgets);
+    expect(
+      tester
+          .widget<FilledButton>(find.byKey(const ValueKey('invoice-submit')))
+          .onPressed,
+      isNull,
+      reason: 'the server would refuse it, so the form does not offer it',
+    );
+    expect(money.invoices, isEmpty);
+
+    // Complete → the same form issues, once.
+    money.invoiceMissing = const [];
+    await tester.tap(find.byKey(const ValueKey('invoice-period-prev')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-period-next')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoice-missing-essentials')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
+    await tester.pumpAndSettle();
+    expect(money.invoices, hasLength(1));
+  });
+
+  testWidgets(
       'the OWNER issues an invoice: member + month → the DERIVED preview '
       'shows the tracked positions and the issued invoice carries exactly '
       'those', (tester) async {

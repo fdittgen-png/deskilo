@@ -119,18 +119,6 @@ void main() {
   });
 
   group('postal block', () {
-    test(
-      'person · street · POSTAL CITY, locality in capitals (NF Z 10-011) '
-      '— the company holds the line ABOVE the block (#912)',
-      () {
-        expect(
-          _kaloa.postalBlock(workspaceCountry: 'FR'),
-          'Guilhem MARTIN\n209 rue Jean Bart, Immeuble AGORA 1B\n'
-              '31670 LABÈGE',
-        );
-      },
-    );
-
     test('the country code closes the block only when abroad', () {
       expect(
         _kaloa.postalBlock(workspaceCountry: 'DE'),

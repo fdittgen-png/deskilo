@@ -483,3 +483,14 @@ Deno.test("#2145 every refusal code the facade can answer has plain words", asyn
   codes.delete("refused"); // quoted from the business rule itself
   for (const code of codes) assert(REFUSAL_TEXT[code], `no plain words for ${code}`);
 });
+
+Deno.test("#2145 the statement is always the caller's own: a member id is refused before the database", async () => {
+  const before = calls.filter((c) => c.path === "/rest/v1/rpc/mcp_execute_v1").length;
+  const r = await rpc(ALICE, "tools/call", {
+    name: "deskilo_get_my_statement",
+    arguments: { workspace_id: "6b1d3f0e-0000-4000-8000-000000000002", member_id: "6b1d3f0e-0000-4000-8000-000000000004", period: "2026-09" },
+  });
+  assertEquals(r.json.result.isError, true);
+  assert(r.json.result.content[0].text.includes("unknown field member_id"));
+  assertEquals(calls.filter((c) => c.path === "/rest/v1/rpc/mcp_execute_v1").length, before);
+});

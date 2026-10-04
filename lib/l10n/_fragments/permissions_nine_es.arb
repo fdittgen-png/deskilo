@@ -1,6 +1,6 @@
 {
   "@@locale": "es",
-  "permManageSites": "Gestionar sedes y plantas",
+  "permManageSites": "Gestionar sedes y editar el plano",
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },

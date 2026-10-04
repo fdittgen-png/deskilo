@@ -72,7 +72,12 @@ class _ConnectAssistantScreenState
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final scope = ref.watch(currentMcpContextProvider);
-    final url = ref.watch(mcpConnectorUrlProvider);
+    // #2145 — the endpoint the installation publishes (0357), else the
+    // one this app derives from its backend, as before.
+    final published = ref.watch(mcpPublishedEndpointProvider).value?.resource;
+    final url = published != null
+        ? Uri.parse(published)
+        : ref.watch(mcpConnectorUrlProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.mcpConnectTitle ?? 'Connect an assistant'),

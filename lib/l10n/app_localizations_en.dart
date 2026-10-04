@@ -1982,6 +1982,68 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingPastError => 'This booking lies entirely in the past.';
 
   @override
+  String get bookingRecoveryBanner =>
+      'A booking request of yours is still unanswered.';
+
+  @override
+  String get bookingRecoveryBannerAction => 'Check';
+
+  @override
+  String get bookingRecoveryCheck => 'Check outcome';
+
+  @override
+  String get bookingRecoveryCommitted =>
+      'The booking exists — exactly one, from your original request.';
+
+  @override
+  String get bookingRecoveryDiscard => 'Let it go';
+
+  @override
+  String get bookingRecoveryInProgress =>
+      'The server is still working on this request. Check again in a moment.';
+
+  @override
+  String get bookingRecoveryNotCommitted =>
+      'Nothing was booked for this request. You can resume it as it was, or let it go.';
+
+  @override
+  String get bookingRecoveryNotSaved =>
+      'This device could not save your booking request, so nothing was sent. Free some space or try again.';
+
+  @override
+  String get bookingRecoveryResume => 'Resume the same request';
+
+  @override
+  String get bookingRecoveryResumed =>
+      'Resumed: your original request was booked once.';
+
+  @override
+  String get bookingRecoverySpaceFallback => 'The space you chose';
+
+  @override
+  String get bookingRecoveryTitle => 'Your booking request';
+
+  @override
+  String get bookingRecoveryUnavailable =>
+      'The server could not be asked. Nothing was changed; try again.';
+
+  @override
+  String get bookingRecoveryUnknown =>
+      'The connection dropped after your request was sent. The booking may or may not exist — check before booking again.';
+
+  @override
+  String get bookingRecoveryUnresolved =>
+      'The server no longer keeps a record of this request, so it cannot say. Check your bookings before booking again.';
+
+  @override
+  String get bookingRecoveryView => 'View the booking';
+
+  @override
+  String bookingRecoveryWindow(String space, String from, String to) {
+    return '$space · $from – $to';
+  }
+
+  @override
   String bookingReservedSpaceWhen(String space, String when) {
     return 'Reserved $space: $when.';
   }
@@ -3403,6 +3465,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get developmentWatermark => 'DEVELOPMENT';
 
   @override
+  String get directoryApproximate => 'Approximate address location';
+
+  @override
   String get directoryCheckedIn => 'Checked in';
 
   @override
@@ -3442,6 +3507,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String directoryLastSeenMinutes(int minutes) {
     return 'Seen $minutes min ago';
   }
+
+  @override
+  String get directoryLocate => 'Locate on map';
+
+  @override
+  String get directoryLocating => 'Locating the public address…';
+
+  @override
+  String get directoryLocationMissing =>
+      'Location unavailable. The owner can publish precise map coordinates.';
 
   @override
   String get directoryNoUpcoming => 'No upcoming reservations';
@@ -4644,6 +4719,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureFormHelpHintsTitle => 'Help hints';
 
   @override
+  String get featureGuestParticipationDesc =>
+      'Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here.';
+
+  @override
+  String get featureGuestParticipationTitle => 'Guest visits';
+
+  @override
   String get featureHeldBack =>
       'Waiting on the feature above — switch that on and this one works again.';
 
@@ -4664,6 +4746,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureIntakeStoppedNote =>
       'Off: nothing new starts; what is already open can still be answered and closed.';
+
+  @override
+  String get featureIntakeUnconfirmedNote =>
+      'Off: nothing new starts. This server could not confirm that what is already open stays answerable, so do not count on it.';
 
   @override
   String get featureInvoiceAddressWindow => 'Envelope address window';
@@ -5660,6 +5746,169 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get guideActionConfirmBooking =>
+      'confirm the booking and wait for the answer';
+
+  @override
+  String get guideActionOpenReserve => 'open Reserve';
+
+  @override
+  String get guideActionSelectDate => 'choose the day';
+
+  @override
+  String get guideActionSelectPeriod => 'choose the period';
+
+  @override
+  String get guideActionSelectResource =>
+      'choose a place on the plan or in the list';
+
+  @override
+  String get guideBookingRefusedRecovery =>
+      'The booking was refused (the place is taken or a rule forbids it). Choose another place or period, then confirm again.';
+
+  @override
+  String get guideBuiltinBooking => 'Book a place';
+
+  @override
+  String get guideBuiltinBookingIntro =>
+      'This guide shows how to book a place: choose the day and the period, pick a place, then confirm. Nothing is booked until you confirm.';
+
+  @override
+  String get guideHostBack => 'Back';
+
+  @override
+  String get guideHostBlocked =>
+      'Resolve the message on screen first; the guide waits.';
+
+  @override
+  String get guideHostClose => 'Close';
+
+  @override
+  String get guideHostCommand => 'Confirm, then wait for the result.';
+
+  @override
+  String get guideHostCompleted => 'Guide completed.';
+
+  @override
+  String guideHostDoAction(String action) {
+    return 'Next: $action.';
+  }
+
+  @override
+  String get guideHostDone => 'Done';
+
+  @override
+  String get guideHostFillField =>
+      'Fill in the highlighted field, then leave it.';
+
+  @override
+  String guideHostFillLabel(String label) {
+    return 'Fill in “$label”, then leave the field.';
+  }
+
+  @override
+  String get guideHostInstruction => 'Read this, then mark it done.';
+
+  @override
+  String get guideHostManual => 'Do this step yourself, then mark it done.';
+
+  @override
+  String guideHostManualProtected(String category) {
+    return 'This part happens on a protected screen ($category). Do it yourself, then mark it done.';
+  }
+
+  @override
+  String get guideHostNotOnScreen =>
+      'This control is not on this screen. Go to the screen of the previous step, or check the guide.';
+
+  @override
+  String guideHostOpenLabel(String label) {
+    return 'Open “$label”.';
+  }
+
+  @override
+  String get guideHostOpenScreen => 'Open the next screen.';
+
+  @override
+  String get guideHostPausedFeature =>
+      'Paused: the task recorder is turned off in this workspace.';
+
+  @override
+  String get guideHostPausedScope =>
+      'Paused: the account or workspace changed. The guide continues only where it started.';
+
+  @override
+  String get guideHostRecovery =>
+      'That was refused. Follow these steps, then try again.';
+
+  @override
+  String get guideHostResume => 'Resume';
+
+  @override
+  String get guideHostShowMe => 'Show me';
+
+  @override
+  String get guideHostSkip => 'Skip';
+
+  @override
+  String get guideHostStatusAcknowledged => 'Acknowledged';
+
+  @override
+  String get guideHostStatusDone => 'Done';
+
+  @override
+  String get guideHostStatusPending => 'To do';
+
+  @override
+  String get guideHostStatusSkipped => 'Skipped';
+
+  @override
+  String get guideHostStatusWaiting => 'Waiting';
+
+  @override
+  String guideHostStepOf(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get guideHostSteps => 'All steps';
+
+  @override
+  String get guideHostStop => 'Stop the guide';
+
+  @override
+  String get guideHostStopped => 'Guide stopped. Nothing was undone.';
+
+  @override
+  String get guideHostTapControl => 'Tap the highlighted control.';
+
+  @override
+  String guideHostTapLabel(String label) {
+    return 'Tap “$label”.';
+  }
+
+  @override
+  String get guideHostTitle => 'Guided task';
+
+  @override
+  String get guideHostUncertain =>
+      'The answer did not arrive. Check whether it happened before trying again.';
+
+  @override
+  String get guideHostWaiting => 'Waiting for the result…';
+
+  @override
+  String get guideStart => 'Start the guide';
+
+  @override
+  String get guideStartNotRunnable =>
+      'This guide names steps this version of the app does not know; it can be read, not followed.';
+
+  @override
+  String get guideStartRefused =>
+      'This guide cannot start here: sign in and turn the task recorder on in this workspace.';
+
+  @override
   String handoffAmountOutOfRange(String number) {
     return '$number: a total too large to carry exactly';
   }
@@ -5734,6 +5983,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpDotTooltip => 'Open the guide';
+
+  @override
+  String get helpGuidedTasks => 'Guided tasks';
 
   @override
   String get helpHintAvailability =>
@@ -6438,6 +6690,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inboxRetry => 'Try again';
 
   @override
+  String get instanceAccessTitle => 'Assistant access';
+
+  @override
+  String instanceAccessUntil(String date) {
+    return 'Until $date';
+  }
+
+  @override
   String get instanceAccountIntro =>
       'Create a free account at supabase.com, then make a personal access token (Account → Access Tokens) and paste it here. The wizard uses it to create and set up the project; it is never stored.';
 
@@ -6620,6 +6880,63 @@ class AppLocalizationsEn extends AppLocalizations {
       'The instance is ready. Use it on this device, then share the server QR from the Server screen so members join the same one.';
 
   @override
+  String get instanceEndpointTitle => 'Assistant endpoint';
+
+  @override
+  String get instanceFamilyChatgpt => 'ChatGPT';
+
+  @override
+  String get instanceFamilyClaude => 'Claude';
+
+  @override
+  String get instanceFamilyLoopback => 'Desktop or command-line assistant';
+
+  @override
+  String get instanceGrant => 'Approve access';
+
+  @override
+  String get instanceGrantDays => 'Choose between 1 and 30 days.';
+
+  @override
+  String instanceGrantDaysLabel(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days',
+      one: '1 day',
+    );
+    return 'For $_temp0';
+  }
+
+  @override
+  String get instanceGrantHelp =>
+      'While no other database administrator exists, you approve access yourself — yours included — for up to 30 days, with a reason. Each approval is recorded.';
+
+  @override
+  String get instanceGrantNeedsGoogle =>
+      'Approving access needs this session to be signed in with Google.';
+
+  @override
+  String get instanceGrantNoIdentity =>
+      'That person has not confirmed their identity yet.';
+
+  @override
+  String get instanceGrantOtherAdmin =>
+      'A database administrator decides access here; ask them.';
+
+  @override
+  String get instanceGrantReason => 'Reason';
+
+  @override
+  String get instanceGrantReasonNeeded =>
+      'Write why this access is approved (up to 500 characters).';
+
+  @override
+  String instanceGrantTitle(String name) {
+    return 'Approve assistant access for $name';
+  }
+
+  @override
   String instanceInstallSchema(int count) {
     return 'Install the schema: every migration of the app, in order ($count).';
   }
@@ -6627,6 +6944,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get instanceIntro =>
       'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.';
+
+  @override
+  String get instanceLoopbackHelp =>
+      'Claude Code, Cursor, VS Code and other assistants that run on a person\'s own computer. Each person still approves their own connection.';
+
+  @override
+  String get instanceLoopbackTitle =>
+      'Allow desktop and command-line assistants';
 
   @override
   String get instanceMakeAdmin => 'Make administrator';
@@ -6638,6 +6963,27 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get instanceNotOperator =>
       'Only the instance operator manages the installation\'s assistants.';
+
+  @override
+  String instanceNoticeClientWaiting(String name) {
+    return '$name is waiting for your approval.';
+  }
+
+  @override
+  String instanceNoticeOperatorGrant(String name) {
+    return 'The operator approved assistant access for $name.';
+  }
+
+  @override
+  String instanceNoticeSelfGrant(String name) {
+    return '$name approved their own assistant access.';
+  }
+
+  @override
+  String get instanceNoticesMarkRead => 'Mark as read';
+
+  @override
+  String get instanceOperatorApproved => 'Approved by the operator';
 
   @override
   String get instanceOrganisationLabel => 'Organisation';
@@ -6664,6 +7010,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get instanceOwnerTitle => 'Instance owner';
+
+  @override
+  String get instanceProbeCheck => 'Check the server';
+
+  @override
+  String get instanceProbeDeployed =>
+      'The assistant endpoint answers as it should.';
+
+  @override
+  String get instanceProbeMismatch =>
+      'The endpoint answers with another address than the one assistants are given.';
+
+  @override
+  String get instanceProbeMissing => 'The server has not been checked yet.';
+
+  @override
+  String get instanceProbeNotDeployed =>
+      'The assistant endpoint is not deployed on this server yet.';
+
+  @override
+  String get instanceProbePending => 'Checking the server…';
+
+  @override
+  String get instanceProbeStale =>
+      'The last check is more than 15 minutes old. Check again before turning assistants on.';
+
+  @override
+  String get instanceProbeUnavailable =>
+      'The server could not be reached. Try again in a moment.';
 
   @override
   String instanceProgress(int done, int total, String current) {
@@ -6733,6 +7108,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Changes here need your second factor on this session.';
 
   @override
+  String get instanceSelfApproved => 'Self-approved by operator';
+
+  @override
   String get instanceSignInExplain =>
       'Sign-in settings: e-mail confirmation on (a sign-up must click the link in its mail), and the app\'s links allowed for password resets and magic links.';
 
@@ -6782,6 +7160,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get instanceTurnOnConfirm =>
       'Assistants become usable in every workspace that offers them. You can turn them off again at any time.';
+
+  @override
+  String get instanceTurnOnNeedsProbe =>
+      'The assistant endpoint is not confirmed. Check the server first.';
 
   @override
   String get instanceUseExisting => 'Or use an existing project:';
@@ -6987,6 +7369,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inviteRoleMember => 'Member invite';
 
   @override
+  String get inviteRolesHint =>
+      'Given when they join, once their membership is active.';
+
+  @override
+  String get inviteRolesTitle => 'Roles on arrival';
+
+  @override
   String get inviteSectionTitle => 'Invite someone';
 
   @override
@@ -7107,6 +7496,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoiceEInvoiceTransportPeppol =>
       'An access point delivers it to the customer — no government platform in between.';
+
+  @override
+  String get invoiceEssentialsRefused =>
+      'The invoice was not issued: required details are missing.';
 
   @override
   String get invoiceExportAccountantCsv => 'Accounting CSV';
@@ -7439,6 +7832,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceMemberLabel => 'Member';
+
+  @override
+  String get invoiceMissingBuyerAddress =>
+      'The member\'s postal address (a business customer needs one)';
+
+  @override
+  String get invoiceMissingBuyerName => 'The member\'s name or company';
+
+  @override
+  String get invoiceMissingBuyerVatId =>
+      'The member\'s VAT number (needed for reverse charge)';
+
+  @override
+  String get invoiceMissingExemptionReason =>
+      'The legal basis for the VAT exemption';
+
+  @override
+  String get invoiceMissingSellerAddress =>
+      'The workspace\'s postal address (street or city)';
+
+  @override
+  String get invoiceMissingSellerVatId =>
+      'The workspace\'s VAT identification number';
+
+  @override
+  String get invoiceMissingTitle => 'Complete these details before issuing';
 
   @override
   String get invoiceNoOpen => 'No open invoices.';
@@ -9156,13 +9575,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'Choose each workspace and what it may do there. Nothing is chosen for you.';
 
   @override
+  String mcpConsentClientBlocked(String name) {
+    return 'The operator has blocked $name on this server. It cannot be connected.';
+  }
+
+  @override
+  String mcpConsentClientWaiting(String name) {
+    return '$name is not approved on this server yet. The operator approves each assistant once; then connect again from the assistant.';
+  }
+
+  @override
   String get mcpConsentConnected => 'Connected. Returning to the assistant.';
+
+  @override
+  String mcpConsentDeciderAsk(String name) {
+    return 'Ask $name to decide.';
+  }
+
+  @override
+  String get mcpConsentDeciderMe =>
+      'You decide this yourself, in the installation console.';
+
+  @override
+  String get mcpConsentDeciderNobody => 'Nobody answers for this server yet.';
 
   @override
   String get mcpConsentDenied => 'Refused. The assistant gets nothing.';
 
   @override
   String get mcpConsentDeny => 'Deny';
+
+  @override
+  String get mcpConsentFamilyChatgpt =>
+      'Approved for every ChatGPT connection.';
+
+  @override
+  String get mcpConsentFamilyClaude => 'Approved for every Claude connection.';
+
+  @override
+  String get mcpConsentFamilyLoopback =>
+      'Approved for desktop and command-line assistants on this computer.';
 
   @override
   String get mcpConsentFieldsExplain =>
@@ -9179,6 +9631,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mcpConsentPartial =>
       'The assistant was approved but the connection is not usable yet. Connect again from the assistant.';
+
+  @override
+  String mcpConsentRedirectHost(String host) {
+    return 'The answer is sent to $host.';
+  }
 
   @override
   String get mcpConsentRequestEligibility => 'Ask for approval';
@@ -9730,6 +10187,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meSpaceLastUsed => 'Last used';
+
+  @override
+  String get meSpaceOpen => 'Open';
 
   @override
   String get meSpacePending => 'Waiting for approval';
@@ -10478,6 +10938,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'My badge';
+
+  @override
+  String get myVisitsHelp =>
+      'Visits you asked for or were admitted to, as a guest. A visit is not a membership.';
+
+  @override
+  String get myVisitsTitle => 'My visits';
 
   @override
   String get navigationClassic =>
@@ -11350,7 +11817,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permManageServices => 'Manage services & packages';
 
   @override
-  String get permManageSites => 'Manage sites and levels';
+  String get permManageSites => 'Manage sites and edit the floor plan';
 
   @override
   String get permManageValidation => 'Configure validation policies';
@@ -16950,6 +17417,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get visibilityTitle => 'Who sees me';
+
+  @override
+  String get visitCancel => 'Cancel this visit';
+
+  @override
+  String get visitCancelFailed =>
+      'Could not cancel the visit. Nothing changed; try again.';
+
+  @override
+  String get visitGuestNote => 'Guest visit — not a membership';
+
+  @override
+  String get visitStatusCancelled => 'Cancelled';
+
+  @override
+  String get visitStatusConfirmed => 'Confirmed';
+
+  @override
+  String get visitStatusDeclined => 'Declined';
+
+  @override
+  String get visitStatusExpired => 'Expired';
+
+  @override
+  String get visitStatusRequested => 'Requested';
 
   @override
   String whatTheyCanDoTitle(String name) {
