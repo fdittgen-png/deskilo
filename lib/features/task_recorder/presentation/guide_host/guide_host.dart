@@ -31,6 +31,8 @@ import '../../guide/guide_runner.dart';
 import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
 import '../ui_capture.dart';
+import 'guide_attention.dart';
+import 'guide_bubble.dart';
 import 'guide_step_text.dart';
 
 class GuideHostLayer extends ConsumerStatefulWidget {
@@ -46,6 +48,9 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
   bool _targetSearched = false;
   String? _anchor;
   bool _showSteps = false;
+  // The wizard folded into a small circle the person can move.
+  bool _minimized = false;
+  Offset? _bubble;
 
   @override
   void dispose() {
@@ -108,6 +113,8 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
     final run = session.run;
     if (run == null) {
       _follow(null);
+      _minimized = false;
+      _bubble = null;
       return const SizedBox.shrink();
     }
     final step = run.current;
@@ -115,6 +122,17 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
     _follow(live && step != null ? guideStepAnchor(step) : null);
     final blocked = ref.watch(helpSlotProvider) == HelpSlot.blocker;
     final target = _target;
+    final ended =
+        run.state == GuideRunState.completed ||
+        run.state == GuideRunState.stopped;
+    // An ended guide always shows its pane: the result and Close live there.
+    final minimized = _minimized && !ended;
+    final steps = run.guide.steps;
+    final mainIndex = step == null
+        ? steps.length
+        : steps.indexWhere(
+            (s) => s.id == step.id || s.recovery.any((r) => r.id == step.id),
+          );
     return LayoutBuilder(
       builder: (context, box) {
         // Above the app's bottom navigation (its centre button included),
@@ -147,6 +165,7 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
                     onToggleSteps: () =>
                         setState(() => _showSteps = !_showSteps),
                     onShowMe: target == null ? null : _showMe,
+                    onMinimize: () => setState(() => _minimized = true),
                   ),
                 ),
               ),
@@ -156,36 +175,41 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
         return Stack(
           children: [
             if (target != null && live && !blocked)
-              Positioned.fromRect(
-                rect: target.inflate(6),
-                child: const IgnorePointer(child: _Ring()),
+              Positioned.fill(
+                child: IgnorePointer(
+                  // A new control restarts the pulse and the flash.
+                  child: GuideAttention(
+                    key: ValueKey(_anchor),
+                    target: target,
+                    bounds: box.biggest,
+                  ),
+                ),
               ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: dockTop ? 0 : null,
-              bottom: dockTop ? null : bottomClearance,
-              child: pane,
-            ),
+            if (minimized)
+              GuideBubble(
+                position:
+                    _bubble ??
+                    Offset(
+                      box.maxWidth - guideBubbleSize - AppSpacing.md,
+                      box.maxHeight - bottomClearance - guideBubbleSize,
+                    ),
+                bounds: box.biggest,
+                current: (mainIndex + 1).clamp(1, steps.length),
+                total: steps.length,
+                onMove: (p) => setState(() => _bubble = p),
+                onRestore: () => setState(() => _minimized = false),
+              )
+            else
+              Positioned(
+                left: 0,
+                right: 0,
+                top: dockTop ? 0 : null,
+                bottom: dockTop ? null : bottomClearance,
+                child: pane,
+              ),
           ],
         );
       },
-    );
-  }
-}
-
-class _Ring extends StatelessWidget {
-  const _Ring();
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return DecoratedBox(
-      key: const ValueKey('guide-host-ring'),
-      decoration: BoxDecoration(
-        border: Border.all(color: scheme.primary, width: 3),
-        borderRadius: AppRadius.lgAll,
-      ),
     );
   }
 }
@@ -199,6 +223,7 @@ class _Pane extends ConsumerWidget {
     required this.showSteps,
     required this.onToggleSteps,
     required this.onShowMe,
+    required this.onMinimize,
   });
 
   final GuideSessionState session;
@@ -208,6 +233,7 @@ class _Pane extends ConsumerWidget {
   final bool showSteps;
   final VoidCallback onToggleSteps;
   final VoidCallback? onShowMe;
+  final VoidCallback onMinimize;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -318,6 +344,13 @@ class _Pane extends ConsumerWidget {
                         'Step ${mainIndex + 1} of ${steps.length}',
                     key: const ValueKey('guide-host-progress'),
                     style: text.labelMedium,
+                  ),
+                if (!ended)
+                  IconButton(
+                    key: const ValueKey('guide-host-minimize'),
+                    tooltip: l10n?.guideHostMinimize ?? 'Minimise the guide',
+                    icon: const Icon(Icons.minimize_rounded),
+                    onPressed: onMinimize,
                   ),
                 IconButton(
                   key: const ValueKey('guide-host-steps'),
