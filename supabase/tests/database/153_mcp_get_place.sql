@@ -65,6 +65,8 @@ select c.id, current_setting('t.a')::uuid,
        array['create_reservation','get_place']
   from public.mcp_connections c where c.local_user_id = '00000000-0000-4000-8000-0000000289a2';
 select set_config('t.seat', (select id::text from public.seats where workspace_id = current_setting('t.a')::uuid order by name limit 1), true);
+select set_config('t.lvl', (select o.level_id::text from public.seats se join public.desks d on d.id = se.desk_id
+  join public.offices o on o.id = d.office_id where se.id = current_setting('t.seat')::uuid), true);
 select set_config('t.day', ((now() at time zone 'Europe/Paris')::date + 2)::text, true);
 select set_config('t.am_s', to_jsonb((current_setting('t.day') || ' 08:00')::timestamp at time zone 'Europe/Paris')->>0, true);
 select set_config('t.am_e', to_jsonb((current_setting('t.day') || ' 12:00')::timestamp at time zone 'Europe/Paris')->>0, true);
@@ -87,9 +89,7 @@ update public.mcp_connection_scopes set target_ceiling = 'workspace' where works
 select pg_temp.act_as('00000000-0000-4000-8000-0000000289a2', 'claude-test');
 select set_config('t.p6', pg_temp.call('get_place', jsonb_build_object('seat_id', current_setting('t.seat')))::text, true);
 select set_config('t.p7', pg_temp.call('get_place', jsonb_build_object('level_id',
-  (select o.level_id::text from public.seats se join public.desks d on d.id = se.desk_id
-     join public.offices o on o.id = d.office_id where se.id = current_setting('t.seat')::uuid),
-  'include_image', true))::text, true);
+  current_setting('t.lvl'), 'include_image', true))::text, true);
 reset role;
 
 select is(current_setting('t.p1')::jsonb->>'status', 'completed', 'get_place: one''s own reservation is described');
