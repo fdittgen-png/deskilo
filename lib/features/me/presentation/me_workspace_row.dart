@@ -50,10 +50,9 @@ class MeWorkspaceRow extends StatelessWidget {
               ),
             ],
           );
-          final environments = Row(
-            mainAxisSize: MainAxisSize.min,
-            children: actions,
-          );
+          // Production and development share the row, production twice as
+          // wide; the row fills the width so development sits at the right.
+          final environments = Row(children: actions);
           // Large text gets the same stacked identity as a small viewport;
           // environments remain next to each other, with horizontal scrolling
           // only when accessibility text cannot fit both controls.
@@ -63,7 +62,7 @@ class MeWorkspaceRow extends StatelessWidget {
             return Row(
               children: [
                 Expanded(child: identity),
-                environments,
+                SizedBox(width: 420, child: environments),
               ],
             );
           }
@@ -72,10 +71,7 @@ class MeWorkspaceRow extends StatelessWidget {
             children: [
               identity,
               const SizedBox(height: AppSpacing.xs),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: environments,
-              ),
+              environments,
             ],
           );
         },
