@@ -57,6 +57,10 @@ abstract final class InstanceAuthConfig {
         'mailer_autoconfirm': false,
         'site_url': siteUrl,
         'uri_allow_list': redirectAllowList,
+        // Linked accounts (Settings → Linked accounts): without manual
+        // linking gotrue refuses linkIdentity and the app can only say
+        // the provider "is not enabled on the server".
+        'security_manual_linking_enabled': true,
       };
 }
 
