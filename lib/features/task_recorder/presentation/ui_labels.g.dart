@@ -3072,6 +3072,7 @@ Map<String, _Getter> _part7() => {
   'permDesignDocuments': (l) => l.permDesignDocuments,
   'permExportData': (l) => l.permExportData,
   'permIssueInvoices': (l) => l.permIssueInvoices,
+  'permMakeReservations': (l) => l.permMakeReservations,
   'permManageBilling': (l) => l.permManageBilling,
   'permManageConfiguration': (l) => l.permManageConfiguration,
   'permManageDocuments': (l) => l.permManageDocuments,
@@ -3085,8 +3086,13 @@ Map<String, _Getter> _part7() => {
   'permManageValidation': (l) => l.permManageValidation,
   'permOperateKiosk': (l) => l.permOperateKiosk,
   'permPaymentTermsEdit': (l) => l.permPaymentTermsEdit,
+  'permUseMessages': (l) => l.permUseMessages,
   'permViewAnalytics': (l) => l.permViewAnalytics,
+  'permViewCalendar': (l) => l.permViewCalendar,
+  'permViewDirectory': (l) => l.permViewDirectory,
+  'permViewDocuments': (l) => l.permViewDocuments,
   'permViewFinances': (l) => l.permViewFinances,
+  'permViewMyMoney': (l) => l.permViewMyMoney,
   'permViewNegotiations': (l) => l.permViewNegotiations,
   'permViewPersonalData': (l) => l.permViewPersonalData,
   'permWorkspaceSettings': (l) => l.permWorkspaceSettings,
@@ -3240,15 +3246,15 @@ Map<String, _Getter> _part7() => {
   'portalSavePreview': (l) => l.portalSavePreview,
   'portalSearch': (l) => l.portalSearch,
   'portalSendCode': (l) => l.portalSendCode,
+};
+
+Map<String, _Getter> _part8() => {
   'portalSourceUnavailable': (l) => l.portalSourceUnavailable,
   'portalThisServer': (l) => l.portalThisServer,
   'portalUseCode': (l) => l.portalUseCode,
   'portalUseWorkspaceInfo': (l) => l.portalUseWorkspaceInfo,
   'portalVisibilityLink': (l) => l.portalVisibilityLink,
   'portalVisibilityLinkBody': (l) => l.portalVisibilityLinkBody,
-};
-
-Map<String, _Getter> _part8() => {
   'portalWebsite': (l) => l.portalWebsite,
   'preferencesSaveFailed': (l) => l.preferencesSaveFailed,
   'preferencesScopeHint': (l) => l.preferencesScopeHint,
@@ -3643,15 +3649,15 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningPaymentReference': (l) => l.reportFieldMeaningPaymentReference,
   'reportFieldMeaningPaymentTerms': (l) => l.reportFieldMeaningPaymentTerms,
   'reportFieldMeaningPaymentTermsSource': (l) => l.reportFieldMeaningPaymentTermsSource,
+};
+
+Map<String, _Getter> _part9() => {
   'reportFieldMeaningPayments': (l) => l.reportFieldMeaningPayments,
   'reportFieldMeaningPendingExpensesTotal': (l) => l.reportFieldMeaningPendingExpensesTotal,
   'reportFieldMeaningPendingPaymentsTotal': (l) => l.reportFieldMeaningPendingPaymentsTotal,
   'reportFieldMeaningPeriod': (l) => l.reportFieldMeaningPeriod,
   'reportFieldMeaningPeriodMonth': (l) => l.reportFieldMeaningPeriodMonth,
   'reportFieldMeaningPeriodYear': (l) => l.reportFieldMeaningPeriodYear,
-};
-
-Map<String, _Getter> _part9() => {
   'reportFieldMeaningProforma': (l) => l.reportFieldMeaningProforma,
   'reportFieldMeaningPurchaseOrder': (l) => l.reportFieldMeaningPurchaseOrder,
   'reportFieldMeaningRecoveryIndemnity': (l) => l.reportFieldMeaningRecoveryIndemnity,
@@ -4046,15 +4052,15 @@ Map<String, _Getter> _part9() => {
   'subprocessDelivery': (l) => l.subprocessDelivery,
   'subprocessDeliveryDesc': (l) => l.subprocessDeliveryDesc,
   'subprocessDocuments': (l) => l.subprocessDocuments,
+};
+
+Map<String, _Getter> _part10() => {
   'subprocessDocumentsDesc': (l) => l.subprocessDocumentsDesc,
   'subprocessExpenses': (l) => l.subprocessExpenses,
   'subprocessExpensesDesc': (l) => l.subprocessExpensesDesc,
   'subprocessExperience': (l) => l.subprocessExperience,
   'subprocessExperienceDesc': (l) => l.subprocessExperienceDesc,
   'subprocessInvoicing': (l) => l.subprocessInvoicing,
-};
-
-Map<String, _Getter> _part10() => {
   'subprocessInvoicingDesc': (l) => l.subprocessInvoicingDesc,
   'subprocessPeople': (l) => l.subprocessPeople,
   'subprocessPeopleDesc': (l) => l.subprocessPeopleDesc,
@@ -4449,15 +4455,15 @@ Map<String, _Getter> _part10() => {
   'templateNoMatch': (l) => l.templateNoMatch,
   'templatePricesOtherCurrency': (l) => l.templatePricesOtherCurrency,
   'templateProfileFull': (l) => l.templateProfileFull,
+};
+
+Map<String, _Getter> _part11() => {
   'templatePublishLocalNeeds': (l) => l.templatePublishLocalNeeds,
   'templateRegionUse': (l) => l.templateRegionUse,
   'templateRequirementRemove': (l) => l.templateRequirementRemove,
   'templateRequirementsReset': (l) => l.templateRequirementsReset,
   'templateWhy': (l) => l.templateWhy,
   'templateWhyHide': (l) => l.templateWhyHide,
-};
-
-Map<String, _Getter> _part11() => {
   'templateWidenConfirm': (l) => l.templateWidenConfirm,
   'templatesLoadFailed': (l) => l.templatesLoadFailed,
   'themeDark': (l) => l.themeDark,

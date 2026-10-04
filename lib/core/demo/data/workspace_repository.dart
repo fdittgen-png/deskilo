@@ -52,6 +52,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }) : workspaces = [
           Workspace(
             id: 'ws-1',
+            rolePermissions: everydayMatrix(),
             name: 'Test Space',
             countryCode: 'DE',
             currencyCode: 'EUR',
@@ -234,6 +235,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     }
     final workspace = Workspace(
       id: 'ws-created-${_nextId++}',
+      rolePermissions: everydayMatrix(),
       name: name,
       countryCode: countryCode,
       currencyCode: currencyCode,
@@ -341,6 +343,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     }
     final workspace = Workspace(
       id: 'ws-joined-${_nextId++}',
+      rolePermissions: everydayMatrix(),
       name: 'Joined Space',
       countryCode: 'DE',
       currencyCode: 'EUR',

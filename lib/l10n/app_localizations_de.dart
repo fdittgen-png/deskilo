@@ -12032,6 +12032,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get permIssueInvoices => 'Rechnungen ausstellen & Zahlungen zuordnen';
 
   @override
+  String get permMakeReservations => 'Buchen und Reservierungen nutzen';
+
+  @override
   String get permManageBilling => 'Tarife und Abrechnungsregeln verwalten';
 
   @override
@@ -12073,10 +12076,26 @@ class AppLocalizationsDe extends AppLocalizations {
       'Änderung der Zahlungsbedingungen beantragen';
 
   @override
+  String get permUseMessages => 'Den Messenger nutzen';
+
+  @override
   String get permViewAnalytics => 'Kennzahlen des Arbeitsbereichs lesen';
 
   @override
+  String get permViewCalendar => 'Den Kalender sehen';
+
+  @override
+  String get permViewDirectory => 'Das Mitgliederverzeichnis sehen';
+
+  @override
+  String get permViewDocuments => 'Die geteilten Dokumente sehen';
+
+  @override
   String get permViewFinances => 'Workspace-Finanzen einsehen';
+
+  @override
+  String get permViewMyMoney =>
+      'Das eigene Konto und die eigenen Rechnungen sehen';
 
   @override
   String get permViewNegotiations => 'Geschäftsvereinbarungen einsehen';
@@ -17933,7 +17952,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get whatYouCanDoIntro =>
-      'Hier ist jede Person Mitglied: buchen, einchecken, Nachrichten und das eigene Konto. Rollen ergänzen den Rest.';
+      'Hier ist jede Person Mitglied; was Sie tun können — Nachrichten, Reservierungen und der Rest — kommt allein aus den Rollen, die Sie haben.';
 
   @override
   String get whatYouCanDoNothingMore => 'Nicht mehr als ein Mitglied.';

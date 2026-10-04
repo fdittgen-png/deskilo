@@ -265,7 +265,7 @@ GoRouter router(Ref ref) {
           !kioskAccount &&
           !ref.read(workspaceRoleAssignmentsProvider).isLoading &&
           !mayOpen(state.uri.path, ref.read(myPermissionsProvider))) {
-        return '/messages';
+        return landingFor(ref.read(myPermissionsProvider));
       }
       return decision.redirect;
     },

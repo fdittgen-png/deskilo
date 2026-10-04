@@ -92,6 +92,7 @@ class ShellDrawer extends ConsumerWidget {
     }
 
     final navigation = <_Entry>[
+      if (may(WorkspacePermission.makeReservations))
       _Entry('drawer-reserve', _branchIcon(ShellBranch.reserve),
           lexiconText(context, key: 'shellReserveButton', fallback: l10n?.shellReserveButton ?? 'Reserve'), () {
         Navigator.of(context).pop();
@@ -102,7 +103,8 @@ class ShellDrawer extends ConsumerWidget {
           Navigator.of(context).pop();
           onBranch(branch);
         }, selected: currentIndex == branch),
-      if (features.contains(WorkspaceFeature.eventsTab))
+      if (features.contains(WorkspaceFeature.eventsTab) &&
+          may(WorkspacePermission.useMessages))
         _Entry('drawer-events', Icons.notifications_outlined,
             lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events'), () => go('/events', push: false)),
     ];
@@ -168,7 +170,9 @@ class ShellDrawer extends ConsumerWidget {
             l10n?.editorOpenTooltip ?? 'Edit workspace', () => go('/editor')),
     ];
     final account = <_Entry>[
-      if (features.contains(WorkspaceFeature.documents))
+      if (features.contains(WorkspaceFeature.documents) &&
+          (may(WorkspacePermission.viewDocuments) ||
+              may(WorkspacePermission.manageDocuments)))
         _Entry('drawer-documents', Icons.folder_open_outlined,
             l10n?.documentsTitle ?? 'Documents', () => go('/documents')),
       _Entry('drawer-privacy', Icons.shield_outlined,

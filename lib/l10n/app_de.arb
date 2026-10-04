@@ -7169,6 +7169,10 @@
   "@permIssueInvoices": {
     "description": "Permission label (#513)"
   },
+  "permMakeReservations": "Buchen und Reservierungen nutzen",
+  "@permMakeReservations": {
+    "description": "everyday permission"
+  },
   "permManageBilling": "Tarife und Abrechnungsregeln verwalten",
   "@permManageBilling": {
     "description": "#982 permission catalog: permManageBilling"
@@ -7218,13 +7222,33 @@
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
   },
+  "permUseMessages": "Den Messenger nutzen",
+  "@permUseMessages": {
+    "description": "everyday permission"
+  },
   "permViewAnalytics": "Kennzahlen des Arbeitsbereichs lesen",
   "@permViewAnalytics": {
     "description": "#1921 permission: read aggregated operational KPIs"
   },
+  "permViewCalendar": "Den Kalender sehen",
+  "@permViewCalendar": {
+    "description": "everyday permission"
+  },
+  "permViewDirectory": "Das Mitgliederverzeichnis sehen",
+  "@permViewDirectory": {
+    "description": "everyday permission"
+  },
+  "permViewDocuments": "Die geteilten Dokumente sehen",
+  "@permViewDocuments": {
+    "description": "everyday permission"
+  },
   "permViewFinances": "Workspace-Finanzen einsehen",
   "@permViewFinances": {
     "description": "Permission label (#513)"
+  },
+  "permViewMyMoney": "Das eigene Konto und die eigenen Rechnungen sehen",
+  "@permViewMyMoney": {
+    "description": "everyday permission"
   },
   "permViewNegotiations": "Geschäftsvereinbarungen einsehen",
   "permViewPersonalData": "Persönliche Daten der Mitglieder lesen",
@@ -10886,7 +10910,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Hier ist jede Person Mitglied: buchen, einchecken, Nachrichten und das eigene Konto. Rollen ergänzen den Rest.",
+  "whatYouCanDoIntro": "Hier ist jede Person Mitglied; was Sie tun können — Nachrichten, Reservierungen und der Rest — kommt allein aus den Rollen, die Sie haben.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },

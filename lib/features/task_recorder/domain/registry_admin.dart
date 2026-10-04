@@ -41,6 +41,12 @@ const Set<String> workspacePermissionKeys = {
   'deployToDev',
   'accessProd',
   'viewAnalytics',
+  'useMessages',
+  'makeReservations',
+  'viewCalendar',
+  'viewDirectory',
+  'viewMyMoney',
+  'viewDocuments',
 };
 
 /// The event types a validation rule can be for (EventType.dbName, the
