@@ -11,7 +11,6 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/theme/status_colors.dart';
-import 'package:deskilo/core/ui/empty_state.dart';
 import 'dart:typed_data';
 
 import 'package:deskilo/features/profile/domain/profile.dart';
@@ -386,16 +385,19 @@ void main() {
         reason: 'you cannot be 20 minutes away from yourself');
   });
 
-  testWidgets('no active members renders the EmptyState', (tester) async {
+  testWidgets('a member who holds no directory permission has no Members '
+      'destination at all', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace(
-      // #825 — these tests drive the legacy sheets; the page has its own.
-      featureFlags: const {'memberPage': false})
+        featureFlags: const {'memberPage': false})
       ..myMember = _member(1, status: MemberStatus.paused)
       ..memberNames = {'member-1': 'Flo'};
-    await pumpDirectory(tester, workspace: workspace);
-
-    expect(find.byType(EmptyState), findsOneWidget);
-    expect(find.text('No members yet.'), findsOneWidget);
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(
+          timeZoneMode: TimeZoneMode.device, workspace: workspace),
+      child: const DeskiloApp(),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text('Members'), findsNothing);
   });
 
   testWidgets(

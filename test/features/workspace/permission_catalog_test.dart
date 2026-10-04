@@ -8,9 +8,11 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   // 24→25 (2026-10-02): #1921 viewAnalytics — read aggregated operational
   // KPIs without holding a write right.
-  test('the catalog carries 25 permissions, wire names equal to Dart names',
+  // 25→31 (2026-10-04): the everyday features are permissions — useMessages,
+  // makeReservations, viewCalendar, viewDirectory, viewMyMoney, viewDocuments.
+  test('the catalog carries 31 permissions, wire names equal to Dart names',
       () {
-    expect(WorkspacePermission.values, hasLength(25));
+    expect(WorkspacePermission.values, hasLength(31));
     for (final p in WorkspacePermission.values) {
       expect(p.wireName, p.name);
     }

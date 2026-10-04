@@ -135,8 +135,8 @@ void main() {
   });
 
   testWidgets(
-      '#1307 — a delegate holding one permission finds its entry and the '
-      'role matrix, and nothing else of the workspace', (tester) async {
+      '#1307 — a delegate holding one permission finds its entry and nothing '
+      'else of the workspace', (tester) async {
     tester.view.physicalSize = const Size(800, 3600);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -164,8 +164,8 @@ void main() {
 
     expect(find.text('This workspace'), findsOneWidget);
     expect(find.text('Billing'), findsOneWidget);
-    expect(find.text('Roles'), findsOneWidget,
-        reason: 'whoever holds a permission may read the matrix that grants it');
+    expect(find.text('Roles'), findsNothing,
+        reason: 'the matrix is for whoever holds manageRoles');
     for (final entry in ['Workspace', 'Availability', 'Features', 'Members & plans']) {
       expect(find.text(entry), findsNothing, reason: '"$entry" leaked');
     }

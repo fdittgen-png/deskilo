@@ -292,7 +292,13 @@ class ShellScreen extends ConsumerWidget {
     final calendarBadge =
         decisionSignalOnCalendar(features) ? pendingEvents : 0;
     // #1306 — the one destination list the drawer renders too.
-    final visibleBranches = visibleShellBranches(features);
+    final visibleBranches = visibleShellBranches(features, ref.watch(myPermissionsProvider));
+    // Unknown permissions (the membership did not load) hide nothing: the
+    // hub itself explains what went wrong.
+    final showReserve = ref.watch(myMemberProvider).value == null ||
+        ref
+            .watch(myPermissionsProvider)
+            .contains(WorkspacePermission.makeReservations);
     final selectedPosition =
         visibleBranches.indexOf(navigationShell.currentIndex);
 
@@ -459,7 +465,7 @@ class ShellScreen extends ConsumerWidget {
       // back. With the bar showing this is false, so every tab lays out
       // exactly as it always did.
       extendBody: barHidden,
-      bottomNavigationBar: webShell || visibleBranches.isEmpty
+      bottomNavigationBar: webShell || (visibleBranches.isEmpty && !showReserve)
           ? null
           : ShellBottomBar(
               // -1 when no side tab matches the active branch — on the
@@ -468,6 +474,7 @@ class ShellScreen extends ConsumerWidget {
               // Never coerce to 0: that painted Plan as selected while
               // the hub was the loaded form.
               selectedIndex: selectedPosition,
+              showReserve: showReserve,
               reserveSelected:
                   navigationShell.currentIndex == ShellBranch.reserve,
               onDestinationSelected: (position) => navigationShell.goBranch(

@@ -20540,6 +20540,12 @@ abstract class AppLocalizations {
   /// **'Issue invoices & match payments'**
   String get permIssueInvoices;
 
+  /// everyday permission
+  ///
+  /// In en, this message translates to:
+  /// **'Book and use reservations'**
+  String get permMakeReservations;
+
   /// #982 permission catalog: permManageBilling
   ///
   /// In en, this message translates to:
@@ -20618,17 +20624,47 @@ abstract class AppLocalizations {
   /// **'Request payment-condition changes'**
   String get permPaymentTermsEdit;
 
+  /// everyday permission
+  ///
+  /// In en, this message translates to:
+  /// **'Use the messenger'**
+  String get permUseMessages;
+
   /// #1921 permission: read aggregated operational KPIs
   ///
   /// In en, this message translates to:
   /// **'Read the workspace figures'**
   String get permViewAnalytics;
 
+  /// everyday permission
+  ///
+  /// In en, this message translates to:
+  /// **'See the calendar'**
+  String get permViewCalendar;
+
+  /// everyday permission
+  ///
+  /// In en, this message translates to:
+  /// **'See the member directory'**
+  String get permViewDirectory;
+
+  /// everyday permission
+  ///
+  /// In en, this message translates to:
+  /// **'See the shared documents'**
+  String get permViewDocuments;
+
   /// Permission label (#513)
   ///
   /// In en, this message translates to:
   /// **'View workspace finances'**
   String get permViewFinances;
+
+  /// everyday permission
+  ///
+  /// In en, this message translates to:
+  /// **'See their own account and invoices'**
+  String get permViewMyMoney;
 
   /// No description provided for @permViewNegotiations.
   ///
@@ -30779,7 +30815,7 @@ abstract class AppLocalizations {
   /// #2085 giving roles: whatYouCanDoIntro
   ///
   /// In en, this message translates to:
-  /// **'Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.'**
+  /// **'Everyone here is a member; what you can do — messages, reservations and the rest — comes only from the roles you hold.'**
   String get whatYouCanDoIntro;
 
   /// #2085 giving roles: whatYouCanDoNothingMore

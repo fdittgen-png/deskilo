@@ -140,5 +140,29 @@
   "permViewAnalytics": "Consultare i dati dello spazio",
   "@permViewAnalytics": {
     "description": "#1921 permission: read aggregated operational KPIs"
+  },
+  "permUseMessages": "Usare la messaggistica",
+  "@permUseMessages": {
+    "description": "everyday permission"
+  },
+  "permMakeReservations": "Prenotare e usare le prenotazioni",
+  "@permMakeReservations": {
+    "description": "everyday permission"
+  },
+  "permViewCalendar": "Vedere il calendario",
+  "@permViewCalendar": {
+    "description": "everyday permission"
+  },
+  "permViewDirectory": "Vedere l'elenco dei membri",
+  "@permViewDirectory": {
+    "description": "everyday permission"
+  },
+  "permViewMyMoney": "Vedere il proprio conto e le proprie fatture",
+  "@permViewMyMoney": {
+    "description": "everyday permission"
+  },
+  "permViewDocuments": "Vedere i documenti condivisi",
+  "@permViewDocuments": {
+    "description": "everyday permission"
   }
 }

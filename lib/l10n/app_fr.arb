@@ -7180,6 +7180,10 @@
   "@permIssueInvoices": {
     "description": "Permission label (#513)"
   },
+  "permMakeReservations": "Réserver et utiliser les réservations",
+  "@permMakeReservations": {
+    "description": "everyday permission"
+  },
   "permManageBilling": "Gérer les tarifs et règles de facturation",
   "@permManageBilling": {
     "description": "#982 permission catalog: permManageBilling"
@@ -7229,13 +7233,33 @@
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
   },
+  "permUseMessages": "Utiliser la messagerie",
+  "@permUseMessages": {
+    "description": "everyday permission"
+  },
   "permViewAnalytics": "Consulter les chiffres de l'espace",
   "@permViewAnalytics": {
     "description": "#1921 permission: read aggregated operational KPIs"
   },
+  "permViewCalendar": "Voir le calendrier",
+  "@permViewCalendar": {
+    "description": "everyday permission"
+  },
+  "permViewDirectory": "Voir l'annuaire des membres",
+  "@permViewDirectory": {
+    "description": "everyday permission"
+  },
+  "permViewDocuments": "Voir les documents partagés",
+  "@permViewDocuments": {
+    "description": "everyday permission"
+  },
   "permViewFinances": "Consulter les finances de l'espace",
   "@permViewFinances": {
     "description": "Permission label (#513)"
+  },
+  "permViewMyMoney": "Voir son propre compte et ses factures",
+  "@permViewMyMoney": {
+    "description": "everyday permission"
   },
   "permViewNegotiations": "Consulter les accords commerciaux",
   "permViewPersonalData": "Consulter les données personnelles des membres",
@@ -10898,7 +10922,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Ici, tout le monde est membre : réserver, pointer, les messages et son propre compte. Les rôles ajoutent le reste.",
+  "whatYouCanDoIntro": "Ici, tout le monde est membre ; ce que vous pouvez faire — messages, réservations et le reste — vient uniquement des rôles que vous détenez.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },

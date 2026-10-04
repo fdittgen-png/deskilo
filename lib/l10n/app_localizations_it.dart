@@ -12029,6 +12029,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get permIssueInvoices => 'Emettere fatture e riconciliare pagamenti';
 
   @override
+  String get permMakeReservations => 'Prenotare e usare le prenotazioni';
+
+  @override
   String get permManageBilling => 'Gestire tariffe e regole di fatturazione';
 
   @override
@@ -12069,10 +12072,25 @@ class AppLocalizationsIt extends AppLocalizations {
       'Richiedere modifiche alle condizioni di pagamento';
 
   @override
+  String get permUseMessages => 'Usare la messaggistica';
+
+  @override
   String get permViewAnalytics => 'Consultare i dati dello spazio';
 
   @override
+  String get permViewCalendar => 'Vedere il calendario';
+
+  @override
+  String get permViewDirectory => 'Vedere l\'elenco dei membri';
+
+  @override
+  String get permViewDocuments => 'Vedere i documenti condivisi';
+
+  @override
   String get permViewFinances => 'Consultare le finanze dello spazio';
+
+  @override
+  String get permViewMyMoney => 'Vedere il proprio conto e le proprie fatture';
 
   @override
   String get permViewNegotiations => 'Consultare gli accordi commerciali';
@@ -17928,7 +17946,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get whatYouCanDoIntro =>
-      'Qui tutti sono membri: prenotare, fare il check-in, i messaggi e il proprio account. I ruoli aggiungono il resto.';
+      'Qui tutti sono membri; ciò che puoi fare — messaggi, prenotazioni e il resto — deriva solo dai ruoli che hai.';
 
   @override
   String get whatYouCanDoNothingMore => 'Niente più di un membro.';

@@ -160,9 +160,9 @@ List<Widget> workspaceSettingsTiles(
   ];
 
   final governance = <Widget>[
-    // #513 — the role→permission matrix: whoever holds ANY permission may
-    // read it, manageRoles edits it. The route asks only the feature.
-    if (perms.isNotEmpty && features.contains(WorkspaceFeature.roleManagement))
+    // #513 — the role→permission matrix, for whoever holds manageRoles: the
+    // route asks the same permission (route_access.dart).
+    if (perms.contains(WorkspacePermission.manageRoles) && features.contains(WorkspaceFeature.roleManagement))
       ListTile(
         key: const ValueKey('settings-roles'),
         leading: const Icon(Icons.admin_panel_settings_outlined),

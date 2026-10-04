@@ -127,6 +127,10 @@ class ShellBottomBar extends ConsumerWidget {
   /// [selectedIndex] is `-1` so no side tab claims the highlight.
   final bool reserveSelected;
 
+  /// Whether the raised Reserve button shows: only for someone who holds
+  /// the reservations permission.
+  final bool showReserve;
+
   const ShellBottomBar({
     super.key,
     required this.destinations,
@@ -135,6 +139,7 @@ class ShellBottomBar extends ConsumerWidget {
     required this.onReservePressed,
     required this.reserveLabel,
     this.reserveSelected = false,
+    this.showReserve = true,
   });
 
   /// The bar holds no state of its own any more.
@@ -329,6 +334,7 @@ class ShellBottomBar extends ConsumerWidget {
           // vertically CONTINUOUS — this is the anchor the eye follows
           // through the whole transition, and the one piece of chrome
           // still on screen once the bar has gone.
+          if (showReserve)
           Positioned(
             left: 0,
             right: 0,

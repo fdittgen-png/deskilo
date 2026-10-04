@@ -7180,6 +7180,10 @@
   "@permIssueInvoices": {
     "description": "Permission label (#513)"
   },
+  "permMakeReservations": "Reservar y usar las reservas",
+  "@permMakeReservations": {
+    "description": "everyday permission"
+  },
   "permManageBilling": "Gestionar tarifas y reglas de facturación",
   "@permManageBilling": {
     "description": "#982 permission catalog: permManageBilling"
@@ -7229,13 +7233,33 @@
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
   },
+  "permUseMessages": "Usar la mensajería",
+  "@permUseMessages": {
+    "description": "everyday permission"
+  },
   "permViewAnalytics": "Consultar las cifras del espacio",
   "@permViewAnalytics": {
     "description": "#1921 permission: read aggregated operational KPIs"
   },
+  "permViewCalendar": "Ver el calendario",
+  "@permViewCalendar": {
+    "description": "everyday permission"
+  },
+  "permViewDirectory": "Ver el directorio de miembros",
+  "@permViewDirectory": {
+    "description": "everyday permission"
+  },
+  "permViewDocuments": "Ver los documentos compartidos",
+  "@permViewDocuments": {
+    "description": "everyday permission"
+  },
   "permViewFinances": "Ver las finanzas del espacio",
   "@permViewFinances": {
     "description": "Permission label (#513)"
+  },
+  "permViewMyMoney": "Ver su propia cuenta y sus facturas",
+  "@permViewMyMoney": {
+    "description": "everyday permission"
   },
   "permViewNegotiations": "Consultar los acuerdos comerciales",
   "permViewPersonalData": "Consultar los datos personales de los miembros",
@@ -10898,7 +10922,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Aquí todas las personas son miembros: reservar, registrar la llegada, los mensajes y la propia cuenta. Los roles añaden el resto.",
+  "whatYouCanDoIntro": "Aquí todas las personas son miembros; lo que puede hacer — mensajes, reservas y el resto — viene solo de los roles que tiene.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },

@@ -7180,6 +7180,10 @@
   "@permIssueInvoices": {
     "description": "Permission label (#513)"
   },
+  "permMakeReservations": "Prenotare e usare le prenotazioni",
+  "@permMakeReservations": {
+    "description": "everyday permission"
+  },
   "permManageBilling": "Gestire tariffe e regole di fatturazione",
   "@permManageBilling": {
     "description": "#982 permission catalog: permManageBilling"
@@ -7229,13 +7233,33 @@
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
   },
+  "permUseMessages": "Usare la messaggistica",
+  "@permUseMessages": {
+    "description": "everyday permission"
+  },
   "permViewAnalytics": "Consultare i dati dello spazio",
   "@permViewAnalytics": {
     "description": "#1921 permission: read aggregated operational KPIs"
   },
+  "permViewCalendar": "Vedere il calendario",
+  "@permViewCalendar": {
+    "description": "everyday permission"
+  },
+  "permViewDirectory": "Vedere l'elenco dei membri",
+  "@permViewDirectory": {
+    "description": "everyday permission"
+  },
+  "permViewDocuments": "Vedere i documenti condivisi",
+  "@permViewDocuments": {
+    "description": "everyday permission"
+  },
   "permViewFinances": "Consultare le finanze dello spazio",
   "@permViewFinances": {
     "description": "Permission label (#513)"
+  },
+  "permViewMyMoney": "Vedere il proprio conto e le proprie fatture",
+  "@permViewMyMoney": {
+    "description": "everyday permission"
   },
   "permViewNegotiations": "Consultare gli accordi commerciali",
   "permViewPersonalData": "Consultare i dati personali dei membri",
@@ -10898,7 +10922,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Qui tutti sono membri: prenotare, fare il check-in, i messaggi e il proprio account. I ruoli aggiungono il resto.",
+  "whatYouCanDoIntro": "Qui tutti sono membri; ciò che puoi fare — messaggi, prenotazioni e il resto — deriva solo dai ruoli che hai.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },
