@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/ui/height_probe.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
@@ -38,6 +39,10 @@ abstract final class TimelineAxis {
 
   /// Height of one seat row / its track.
   static const double rowHeight = 36;
+
+  /// A seat row grows to use a tall viewport (a few seats must not leave
+  /// the lower part of the screen empty), but never beyond this.
+  static const double maxRowHeight = 96;
 
   /// Height of an `office · desk` group header row.
   static const double headerRowHeight = 28;
@@ -134,6 +139,9 @@ class DayTimeline extends ConsumerStatefulWidget {
 }
 
 class _DayTimelineState extends ConsumerState<DayTimeline> {
+  // The room the grid has, measured by [_HeightProbe]: seat rows grow into it.
+  double _viewportHeight = 0;
+
   final ScrollController _axisController = ScrollController();
 
   /// #1269 — the level choice used to be a `State` field here, and one
@@ -269,9 +277,24 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
               ref.read(browsedLevelProvider.notifier).selectAll(),
         ),
         Expanded(
-          child: allSelected
-              ? _allLevelsBody(context, levels, names)
-              : _singleLevelBody(context, level!, names),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: HeightProbe(
+                  onHeight: (h) {
+                    if (h != _viewportHeight && mounted) {
+                      setState(() => _viewportHeight = h);
+                    }
+                  },
+                ),
+              ),
+              Positioned.fill(
+                child: allSelected
+                    ? _allLevelsBody(context, levels, names)
+                    : _singleLevelBody(context, level!, names),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -359,10 +382,13 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
         .toList()
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 
-    final leadingCells = <Widget>[
-      const SizedBox(height: TimelineAxis.rulerHeight),
+    // Built lazily: how tall a seat row is depends on how many there are.
+    final leadingCells = <Widget Function(double)>[
+      (_) => const SizedBox(height: TimelineAxis.rulerHeight),
     ];
-    final tracks = <Widget>[_ruler(context)];
+    final tracks = <Widget Function(double)>[(_) => _ruler(context)];
+    var seatRows = 0;
+    var fixedHeight = TimelineAxis.rulerHeight;
     final visibleReservations = <Reservation>[];
     for (final (level, plan) in plans) {
       // Only what lives on this level — incl. whole-desk and
@@ -390,12 +416,14 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
 
       final collapsed = level != null && _collapsedLevels.contains(level.id);
       if (level != null) {
-        leadingCells
-            .add(_levelHeaderCell(context, level: level, collapsed: collapsed));
-        tracks.add(const SizedBox(
-          height: TimelineAxis.levelHeaderRowHeight,
-          width: TimelineAxis.trackWidth,
-        ));
+        leadingCells.add(
+          (_) => _levelHeaderCell(context, level: level, collapsed: collapsed),
+        );
+        tracks.add((_) => const SizedBox(
+              height: TimelineAxis.levelHeaderRowHeight,
+              width: TimelineAxis.trackWidth,
+            ));
+        fixedHeight += TimelineAxis.levelHeaderRowHeight;
       }
       // Collapsed: the header stays (a tap re-opens it) but its office /
       // desk / seat rows are skipped entirely.
@@ -416,11 +444,12 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
           if (seats.isEmpty) continue;
           final header =
               '${plan.officeContextName(office, levelName: levelName, byLevel: byLevel)} · ${desk.name}';
-          leadingCells.add(_headerCell(context, header));
-          tracks.add(const SizedBox(
-            height: TimelineAxis.headerRowHeight,
-            width: TimelineAxis.trackWidth,
-          ));
+          leadingCells.add((_) => _headerCell(context, header));
+          tracks.add((_) => const SizedBox(
+                height: TimelineAxis.headerRowHeight,
+                width: TimelineAxis.trackWidth,
+              ));
+          fixedHeight += TimelineAxis.headerRowHeight;
           // Whole-desk rows lane onto this desk's seats (#452).
           final deskReservations = levelReservations
               .where((r) => r.deskId == desk.id)
@@ -432,8 +461,9 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
               ...deskReservations,
               ...levelReservations.where((r) => r.seatId == seat.id),
             ];
-            leadingCells.add(_seatCell(context, seat, brightness));
-            tracks.add(_track(context, seat, blocks, names, brightness));
+            seatRows++;
+            leadingCells.add((h) => _seatCell(context, seat, brightness, h));
+            tracks.add((h) => _track(context, seat, blocks, names, brightness, h));
           }
         }
       }
@@ -455,6 +485,22 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     final now = ref.watch(clockProvider).now();
     final isToday = DateUtils.isSameDay(now, widget.day);
 
+    // A few seats must not leave the lower part of the screen empty: the
+    // rows share the room the viewport has beyond their natural height,
+    // up to a readable maximum. A long list keeps the compact rows and
+    // scrolls as before.
+    var rowHeight = TimelineAxis.rowHeight;
+    if (seatRows > 0) {
+      final natural = fixedHeight + seatRows * TimelineAxis.rowHeight;
+      if (_viewportHeight > natural) {
+        rowHeight = (TimelineAxis.rowHeight +
+                (_viewportHeight - natural) / seatRows)
+            .clamp(TimelineAxis.rowHeight, TimelineAxis.maxRowHeight);
+      }
+    }
+    final leadingBuilt = [for (final b in leadingCells) b(rowHeight)];
+    final tracksBuilt = [for (final b in tracks) b(rowHeight)];
+
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
       child: Row(
@@ -464,7 +510,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
             width: TimelineAxis.leadingWidth,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: leadingCells,
+              children: leadingBuilt,
             ),
           ),
           Expanded(
@@ -490,7 +536,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
                       ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: tracks,
+                      children: tracksBuilt,
                     ),
                     if (isToday)
                       Positioned(
@@ -609,10 +655,15 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     );
   }
 
-  Widget _seatCell(BuildContext context, Seat seat, Brightness brightness) {
+  Widget _seatCell(
+    BuildContext context,
+    Seat seat,
+    Brightness brightness,
+    double rowHeight,
+  ) {
     final blocked = _blockedDuring(seat);
     return SizedBox(
-      height: TimelineAxis.rowHeight,
+      height: rowHeight,
       child: Padding(
         padding: const EdgeInsets.only(
           left: AppSpacing.lg,
@@ -651,6 +702,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     List<Reservation> blocks,
     Map<String, String> names,
     Brightness brightness,
+    double rowHeight,
   ) {
     final scheme = Theme.of(context).colorScheme;
     final blocked = _blockedDuring(seat) || !widget.dayOpen;
@@ -660,7 +712,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     ).withValues(alpha: 0.15);
     return Container(
       key: DayTimeline.trackKey(seat.id),
-      height: TimelineAxis.rowHeight,
+      height: rowHeight,
       width: TimelineAxis.trackWidth,
       decoration: BoxDecoration(
         color: blocked ? blockedTint : null,

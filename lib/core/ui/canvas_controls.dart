@@ -54,6 +54,10 @@ class CanvasControls extends StatefulWidget {
   static const double defaultMaxScale = 3;
   static const double defaultBoundaryMargin = 200;
 
+  /// The automatic fit may zoom this many times past [maxScale] so a small
+  /// plan fills the room it is given.
+  static const double autoFitCeilingFactor = 2;
+
   final TransformationController controller;
   final Size contentSize;
   final double minScale;
@@ -200,7 +204,12 @@ class _CanvasControlsState extends State<CanvasControls>
     const pad = 0.92;
     final scale = (viewport.width / bounds.width)
         .clamp(0.0, viewport.height / bounds.height);
-    final fitted = (scale * pad).clamp(widget.minScale, widget.maxScale);
+    // A small plan in a tall viewport fills it: the automatic fit may go
+    // beyond the manual zoom ceiling, which still limits pinching.
+    final fitted = (scale * pad).clamp(
+      widget.minScale,
+      widget.maxScale * CanvasControls.autoFitCeilingFactor,
+    );
     final topLeft = bounds.center -
         Offset(viewport.width / 2, viewport.height / 2) / fitted;
     _applyTransform(

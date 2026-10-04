@@ -317,7 +317,7 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 851, // 2026-10-02 #1913 850→851: the reminder level reads the frozen due date.
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
-  'lib/features/calendar/presentation/widgets/day_timeline.dart': 776, // 2026-09-15 #1273 772→776: singleRoomLevelNames — the label rule and its flag // // 2026-09-14 #1269 769→772: reading the browsed level from the shared provider instead of its own State field
+  'lib/features/calendar/presentation/widgets/day_timeline.dart': 835, // 2026-10-04 reserve-fill 776→835: seat rows grow into the room the screen has — rows are built lazily once their count and the viewport height are known. 2026-09-15 #1273 772→776: singleRoomLevelNames — the label rule and its flag // // 2026-09-14 #1269 769→772: reading the browsed level from the shared provider instead of its own State field
   // 820→830 (2026-08-25): #622 the whole-space conflict now resolves
   // the blocking RESERVATION (message-the-reserver affordance); the
   // seat action dialog moved OUT into the shared space_act_sheet.
