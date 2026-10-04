@@ -119,6 +119,7 @@ const List<RouteCoverage> routeCoverage = [
     category: ProtectedSurface.provider,
   ),
   RouteCoverage('/task-recorder', CoverageStatus.recorder),
+  RouteCoverage('/task-wizard', CoverageStatus.recorder),
   RouteCoverage('/task-workbench', CoverageStatus.recorder),
   RouteCoverage('/account-activity', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(

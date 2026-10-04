@@ -16858,6 +16858,82 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderValueWithheld => 'no grabado';
 
   @override
+  String get taskWizardAddGuide => 'Añadir una guía';
+
+  @override
+  String get taskWizardAddToGuides => 'Añadir a mis guías';
+
+  @override
+  String get taskWizardBuiltIn => 'Guías incluidas en la aplicación';
+
+  @override
+  String get taskWizardDeleteGuide => 'Eliminar esta guía';
+
+  @override
+  String get taskWizardDeleteGuideBody =>
+      'La guía se elimina de este dispositivo. La grabación de la que procede no se toca.';
+
+  @override
+  String get taskWizardEdit => 'Editar';
+
+  @override
+  String get taskWizardFromFile => 'Desde un archivo o paquete de tarea';
+
+  @override
+  String get taskWizardFromFileHint =>
+      'Una grabación, un paquete de tarea o un archivo de guía de otra persona.';
+
+  @override
+  String get taskWizardFromRecording => 'Desde una de mis grabaciones';
+
+  @override
+  String get taskWizardFromRecordingHint =>
+      'Elija una grabación; se convierte en guía al instante.';
+
+  @override
+  String get taskWizardGuideAdded => 'Añadida a Mis guías.';
+
+  @override
+  String get taskWizardGuideName => 'Nombre de la guía';
+
+  @override
+  String get taskWizardGuideNotSaved => 'No se pudo guardar la guía.';
+
+  @override
+  String get taskWizardGuides => 'Guías';
+
+  @override
+  String get taskWizardIntro =>
+      'Grabe lo que hace, conviértalo en una guía y siga las guías paso a paso en la aplicación real.';
+
+  @override
+  String get taskWizardMakeGuide => 'Crear una guía';
+
+  @override
+  String get taskWizardNoGuides =>
+      'Aún no tiene guías propias. Añada una desde una grabación o un archivo de tarea.';
+
+  @override
+  String get taskWizardOpenFileHint =>
+      'Leer, editar y exportar una grabación o un paquete de tarea, sin cuenta.';
+
+  @override
+  String get taskWizardRecordings => 'Grabaciones';
+
+  @override
+  String get taskWizardSaveChanges => 'Guardar los cambios';
+
+  @override
+  String get taskWizardTitle => 'Asistente de tareas';
+
+  @override
+  String get taskWizardTools => 'Herramientas';
+
+  @override
+  String get taskWizardUnavailable =>
+      'El grabador de tareas está desactivado en este espacio: las guías se pueden leer y editar aquí, pero no seguir.';
+
+  @override
   String taskWorkbenchAccepted(int megabytes) {
     return 'Se aceptan: .json y .deskilo-task.zip, hasta $megabytes MB.';
   }

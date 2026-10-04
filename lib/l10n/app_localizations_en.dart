@@ -16726,6 +16726,82 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderValueWithheld => 'not recorded';
 
   @override
+  String get taskWizardAddGuide => 'Add a guide';
+
+  @override
+  String get taskWizardAddToGuides => 'Add to my guides';
+
+  @override
+  String get taskWizardBuiltIn => 'Guides that come with the app';
+
+  @override
+  String get taskWizardDeleteGuide => 'Delete this guide';
+
+  @override
+  String get taskWizardDeleteGuideBody =>
+      'The guide is removed from this device. The recording it came from is not touched.';
+
+  @override
+  String get taskWizardEdit => 'Edit';
+
+  @override
+  String get taskWizardFromFile => 'From a task file or package';
+
+  @override
+  String get taskWizardFromFileHint =>
+      'A recording, a task package or a guide file from someone else.';
+
+  @override
+  String get taskWizardFromRecording => 'From one of my recordings';
+
+  @override
+  String get taskWizardFromRecordingHint =>
+      'Pick a recording; it becomes a guide at once.';
+
+  @override
+  String get taskWizardGuideAdded => 'Added to My guides.';
+
+  @override
+  String get taskWizardGuideName => 'Name of the guide';
+
+  @override
+  String get taskWizardGuideNotSaved => 'The guide could not be kept.';
+
+  @override
+  String get taskWizardGuides => 'Guides';
+
+  @override
+  String get taskWizardIntro =>
+      'Record what you do, turn it into a guide, and follow guides step by step on the real app.';
+
+  @override
+  String get taskWizardMakeGuide => 'Make a guide';
+
+  @override
+  String get taskWizardNoGuides =>
+      'No guide of your own yet. Add one from a recording or a task file.';
+
+  @override
+  String get taskWizardOpenFileHint =>
+      'Read, edit and export a recording or task package, without an account.';
+
+  @override
+  String get taskWizardRecordings => 'Recordings';
+
+  @override
+  String get taskWizardSaveChanges => 'Save the changes';
+
+  @override
+  String get taskWizardTitle => 'Task wizard';
+
+  @override
+  String get taskWizardTools => 'Tools';
+
+  @override
+  String get taskWizardUnavailable =>
+      'The task recorder is turned off in this workspace: guides can be read and edited here, but not followed.';
+
+  @override
   String taskWorkbenchAccepted(int megabytes) {
     return 'Accepted: .json and .deskilo-task.zip, up to $megabytes MB.';
   }

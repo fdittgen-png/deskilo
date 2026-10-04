@@ -16886,6 +16886,83 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderValueWithheld => 'non registrato';
 
   @override
+  String get taskWizardAddGuide => 'Aggiungi una guida';
+
+  @override
+  String get taskWizardAddToGuides => 'Aggiungi alle mie guide';
+
+  @override
+  String get taskWizardBuiltIn => 'Guide incluse nell\'app';
+
+  @override
+  String get taskWizardDeleteGuide => 'Elimina questa guida';
+
+  @override
+  String get taskWizardDeleteGuideBody =>
+      'La guida viene rimossa da questo dispositivo. La registrazione da cui proviene non viene toccata.';
+
+  @override
+  String get taskWizardEdit => 'Modifica';
+
+  @override
+  String get taskWizardFromFile => 'Da un file o pacchetto di attività';
+
+  @override
+  String get taskWizardFromFileHint =>
+      'Una registrazione, un pacchetto di attività o un file di guida di un\'altra persona.';
+
+  @override
+  String get taskWizardFromRecording => 'Da una delle mie registrazioni';
+
+  @override
+  String get taskWizardFromRecordingHint =>
+      'Scegli una registrazione: diventa subito una guida.';
+
+  @override
+  String get taskWizardGuideAdded => 'Aggiunta a Le mie guide.';
+
+  @override
+  String get taskWizardGuideName => 'Nome della guida';
+
+  @override
+  String get taskWizardGuideNotSaved =>
+      'Non è stato possibile conservare la guida.';
+
+  @override
+  String get taskWizardGuides => 'Guide';
+
+  @override
+  String get taskWizardIntro =>
+      'Registra ciò che fai, trasformalo in una guida e segui le guide passo dopo passo nell\'app vera.';
+
+  @override
+  String get taskWizardMakeGuide => 'Crea una guida';
+
+  @override
+  String get taskWizardNoGuides =>
+      'Ancora nessuna guida tua. Aggiungine una da una registrazione o da un file di attività.';
+
+  @override
+  String get taskWizardOpenFileHint =>
+      'Leggere, modificare ed esportare una registrazione o un pacchetto di attività, senza account.';
+
+  @override
+  String get taskWizardRecordings => 'Registrazioni';
+
+  @override
+  String get taskWizardSaveChanges => 'Salva le modifiche';
+
+  @override
+  String get taskWizardTitle => 'Assistente attività';
+
+  @override
+  String get taskWizardTools => 'Strumenti';
+
+  @override
+  String get taskWizardUnavailable =>
+      'Il registratore di attività è disattivato in questo spazio: le guide si possono leggere e modificare qui, ma non seguire.';
+
+  @override
   String taskWorkbenchAccepted(int megabytes) {
     return 'Accettati: .json e .deskilo-task.zip, fino a $megabytes MB.';
   }

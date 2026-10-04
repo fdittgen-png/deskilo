@@ -81,6 +81,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/applications', RouteClass.nativeAccount),
   // #1865 — the account's own recordings on this device.
   RouteRule('/task-recorder', RouteClass.nativeAccount),
+  RouteRule('/task-wizard', RouteClass.nativeAccount),
   // #1872 — reads a file the person picks, on this device; no session.
   RouteRule('/task-workbench', RouteClass.publicEntry),
   RouteRule('/account-activity', RouteClass.nativeAccount),

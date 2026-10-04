@@ -113,6 +113,101 @@ final class RecorderStoreProvider
 
 String _$recorderStoreHash() => r'b913b1445aae08404b45c19c041ebe5ed0cd99c3';
 
+/// The signed-in account's own guides on this device (the task wizard's
+/// library); null when signed out.
+
+@ProviderFor(guideStore)
+final guideStoreProvider = GuideStoreProvider._();
+
+/// The signed-in account's own guides on this device (the task wizard's
+/// library); null when signed out.
+
+final class GuideStoreProvider
+    extends $FunctionalProvider<GuideStore?, GuideStore?, GuideStore?>
+    with $Provider<GuideStore?> {
+  /// The signed-in account's own guides on this device (the task wizard's
+  /// library); null when signed out.
+  GuideStoreProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'guideStoreProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$guideStoreHash();
+
+  @$internal
+  @override
+  $ProviderElement<GuideStore?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  GuideStore? create(Ref ref) {
+    return guideStore(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(GuideStore? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<GuideStore?>(value),
+    );
+  }
+}
+
+String _$guideStoreHash() => r'5026c69597839b79589e9badebb0dfa54571cd2d';
+
+/// The guides of the library, newest first.
+
+@ProviderFor(myGuides)
+final myGuidesProvider = MyGuidesProvider._();
+
+/// The guides of the library, newest first.
+
+final class MyGuidesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<StoredGuide>>,
+          List<StoredGuide>,
+          FutureOr<List<StoredGuide>>
+        >
+    with
+        $FutureModifier<List<StoredGuide>>,
+        $FutureProvider<List<StoredGuide>> {
+  /// The guides of the library, newest first.
+  MyGuidesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myGuidesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myGuidesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<StoredGuide>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<StoredGuide>> create(Ref ref) {
+    return myGuides(ref);
+  }
+}
+
+String _$myGuidesHash() => r'c6003e2c9f450c829547fcd465cd5426c4779d41';
+
 /// The scope a new recording would belong to; null when signed out.
 /// Kept alive with the recorder that listens to it.
 

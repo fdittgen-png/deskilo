@@ -23,7 +23,7 @@ import '../../features/workspace/domain/bi_modules.dart';
 import 'shell_destinations.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/task_recorder/presentation/route_classification.dart'
-    show taskRecorderRoute;
+    show taskWizardRoute;
 
 part 'shell_drawer.g.dart';
 
@@ -109,6 +109,11 @@ class ShellDrawer extends ConsumerWidget {
       if (features.contains(WorkspaceFeature.eventsTab))
         _Entry('drawer-events', Icons.notifications_outlined,
             lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events'), () => go('/events', push: false)),
+      // The task wizard — recordings, guides and tools — after Finance and
+      // Events (it used to hide behind Help's icons).
+      if (features.contains(WorkspaceFeature.taskRecorder))
+        _Entry('drawer-task-wizard', Icons.assistant_navigation,
+            l10n?.taskWizardTitle ?? 'Task wizard', () => go(taskWizardRoute)),
     ];
     final administration = <_Entry>[
       if (may(WorkspacePermission.workspaceSettings))
@@ -181,11 +186,6 @@ class ShellDrawer extends ConsumerWidget {
             l10n?.documentsTitle ?? 'Documents', () => go('/documents')),
       _Entry('drawer-privacy', Icons.shield_outlined,
           l10n?.privacyTitle ?? 'Privacy & data', () => go('/privacy')),
-      // #2142 — a labelled way to record a task, beside Help's icon.
-      if (features.contains(WorkspaceFeature.taskRecorder))
-        _Entry('drawer-record-task', Icons.fiber_manual_record_outlined,
-            l10n?.taskRecorderRecordATask ?? 'Record a task',
-            () => go(taskRecorderRoute)),
       // #1598 — the wide shell says the same word as the narrow one: the
       // entry keeps its key and its destination and changes only its
       // name and icon, so a member who administers nothing reads

@@ -34,6 +34,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          guideStoreProvider.overrideWithValue(null),
           filePickerProvider.overrideWithValue(
             (_) async => XFile.fromData(
               Uint8List.fromList(utf8.encode(encodeRecordingText(r))),
@@ -124,6 +125,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          guideStoreProvider.overrideWithValue(null),
           filePickerProvider.overrideWithValue(
             (_) async => XFile.fromData(
               Uint8List.fromList(utf8.encode(encodeRecordingText(r))),

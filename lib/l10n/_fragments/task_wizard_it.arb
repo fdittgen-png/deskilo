@@ -1,0 +1,95 @@
+{
+  "@@locale": "it",
+  "taskWizardTitle": "Assistente attività",
+  "@taskWizardTitle": {
+    "description": "Task wizard: taskWizardTitle"
+  },
+  "taskWizardIntro": "Registra ciò che fai, trasformalo in una guida e segui le guide passo dopo passo nell'app vera.",
+  "@taskWizardIntro": {
+    "description": "Task wizard: taskWizardIntro"
+  },
+  "taskWizardGuides": "Guide",
+  "@taskWizardGuides": {
+    "description": "Task wizard: taskWizardGuides"
+  },
+  "taskWizardAddGuide": "Aggiungi una guida",
+  "@taskWizardAddGuide": {
+    "description": "Task wizard: taskWizardAddGuide"
+  },
+  "taskWizardBuiltIn": "Guide incluse nell'app",
+  "@taskWizardBuiltIn": {
+    "description": "Task wizard: taskWizardBuiltIn"
+  },
+  "taskWizardUnavailable": "Il registratore di attività è disattivato in questo spazio: le guide si possono leggere e modificare qui, ma non seguire.",
+  "@taskWizardUnavailable": {
+    "description": "Task wizard: taskWizardUnavailable"
+  },
+  "taskWizardRecordings": "Registrazioni",
+  "@taskWizardRecordings": {
+    "description": "Task wizard: taskWizardRecordings"
+  },
+  "taskWizardTools": "Strumenti",
+  "@taskWizardTools": {
+    "description": "Task wizard: taskWizardTools"
+  },
+  "taskWizardOpenFileHint": "Leggere, modificare ed esportare una registrazione o un pacchetto di attività, senza account.",
+  "@taskWizardOpenFileHint": {
+    "description": "Task wizard: taskWizardOpenFileHint"
+  },
+  "taskWizardFromRecording": "Da una delle mie registrazioni",
+  "@taskWizardFromRecording": {
+    "description": "Task wizard: taskWizardFromRecording"
+  },
+  "taskWizardFromRecordingHint": "Scegli una registrazione: diventa subito una guida.",
+  "@taskWizardFromRecordingHint": {
+    "description": "Task wizard: taskWizardFromRecordingHint"
+  },
+  "taskWizardFromFile": "Da un file o pacchetto di attività",
+  "@taskWizardFromFile": {
+    "description": "Task wizard: taskWizardFromFile"
+  },
+  "taskWizardFromFileHint": "Una registrazione, un pacchetto di attività o un file di guida di un'altra persona.",
+  "@taskWizardFromFileHint": {
+    "description": "Task wizard: taskWizardFromFileHint"
+  },
+  "taskWizardGuideAdded": "Aggiunta a Le mie guide.",
+  "@taskWizardGuideAdded": {
+    "description": "Task wizard: taskWizardGuideAdded"
+  },
+  "taskWizardGuideNotSaved": "Non è stato possibile conservare la guida.",
+  "@taskWizardGuideNotSaved": {
+    "description": "Task wizard: taskWizardGuideNotSaved"
+  },
+  "taskWizardEdit": "Modifica",
+  "@taskWizardEdit": {
+    "description": "Task wizard: taskWizardEdit"
+  },
+  "taskWizardNoGuides": "Ancora nessuna guida tua. Aggiungine una da una registrazione o da un file di attività.",
+  "@taskWizardNoGuides": {
+    "description": "Task wizard: taskWizardNoGuides"
+  },
+  "taskWizardDeleteGuide": "Elimina questa guida",
+  "@taskWizardDeleteGuide": {
+    "description": "Task wizard: taskWizardDeleteGuide"
+  },
+  "taskWizardDeleteGuideBody": "La guida viene rimossa da questo dispositivo. La registrazione da cui proviene non viene toccata.",
+  "@taskWizardDeleteGuideBody": {
+    "description": "Task wizard: taskWizardDeleteGuideBody"
+  },
+  "taskWizardMakeGuide": "Crea una guida",
+  "@taskWizardMakeGuide": {
+    "description": "Task wizard: taskWizardMakeGuide"
+  },
+  "taskWizardGuideName": "Nome della guida",
+  "@taskWizardGuideName": {
+    "description": "Task wizard: taskWizardGuideName"
+  },
+  "taskWizardAddToGuides": "Aggiungi alle mie guide",
+  "@taskWizardAddToGuides": {
+    "description": "Task wizard: taskWizardAddToGuides"
+  },
+  "taskWizardSaveChanges": "Salva le modifiche",
+  "@taskWizardSaveChanges": {
+    "description": "Task wizard: taskWizardSaveChanges"
+  }
+}

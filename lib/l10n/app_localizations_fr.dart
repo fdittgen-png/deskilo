@@ -16916,6 +16916,82 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taskRecorderValueWithheld => 'non enregistré';
 
   @override
+  String get taskWizardAddGuide => 'Ajouter un guide';
+
+  @override
+  String get taskWizardAddToGuides => 'Ajouter à mes guides';
+
+  @override
+  String get taskWizardBuiltIn => 'Guides fournis avec l\'application';
+
+  @override
+  String get taskWizardDeleteGuide => 'Supprimer ce guide';
+
+  @override
+  String get taskWizardDeleteGuideBody =>
+      'Le guide est supprimé de cet appareil. L\'enregistrement dont il provient n\'est pas touché.';
+
+  @override
+  String get taskWizardEdit => 'Modifier';
+
+  @override
+  String get taskWizardFromFile => 'À partir d\'un fichier ou paquet de tâche';
+
+  @override
+  String get taskWizardFromFileHint =>
+      'Un enregistrement, un paquet de tâche ou un fichier de guide venant de quelqu\'un d\'autre.';
+
+  @override
+  String get taskWizardFromRecording => 'À partir d\'un de mes enregistrements';
+
+  @override
+  String get taskWizardFromRecordingHint =>
+      'Choisissez un enregistrement : il devient aussitôt un guide.';
+
+  @override
+  String get taskWizardGuideAdded => 'Ajouté à Mes guides.';
+
+  @override
+  String get taskWizardGuideName => 'Nom du guide';
+
+  @override
+  String get taskWizardGuideNotSaved => 'Le guide n\'a pas pu être conservé.';
+
+  @override
+  String get taskWizardGuides => 'Guides';
+
+  @override
+  String get taskWizardIntro =>
+      'Enregistrez ce que vous faites, transformez-le en guide, et suivez les guides pas à pas dans la vraie application.';
+
+  @override
+  String get taskWizardMakeGuide => 'Créer un guide';
+
+  @override
+  String get taskWizardNoGuides =>
+      'Pas encore de guide à vous. Ajoutez-en un à partir d\'un enregistrement ou d\'un fichier de tâche.';
+
+  @override
+  String get taskWizardOpenFileHint =>
+      'Lire, modifier et exporter un enregistrement ou un paquet de tâche, sans compte.';
+
+  @override
+  String get taskWizardRecordings => 'Enregistrements';
+
+  @override
+  String get taskWizardSaveChanges => 'Enregistrer les modifications';
+
+  @override
+  String get taskWizardTitle => 'Assistant de tâches';
+
+  @override
+  String get taskWizardTools => 'Outils';
+
+  @override
+  String get taskWizardUnavailable =>
+      'L\'enregistreur de tâches est désactivé dans cet espace : les guides peuvent être lus et modifiés ici, mais pas suivis.';
+
+  @override
   String taskWorkbenchAccepted(int megabytes) {
     return 'Acceptés : .json et .deskilo-task.zip, jusqu\'à $megabytes Mo.';
   }

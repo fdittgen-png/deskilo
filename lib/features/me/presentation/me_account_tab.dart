@@ -11,7 +11,7 @@ import '../../auth/providers/sign_out.dart';
 import '../../profile/presentation/screens/settings_screen.dart';
 import '../../profile/presentation/widgets/settings_section_header.dart';
 import '../../task_recorder/presentation/route_classification.dart'
-    show taskRecorderRoute;
+    show taskWizardRoute;
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import 'visibility_card.dart';
@@ -47,13 +47,12 @@ class MeAccountTab extends ConsumerWidget {
               '/account-activity'),
           door('me-privacy', Icons.shield_outlined,
               l10n?.privacyTitle ?? 'Privacy & data', '/privacy'),
-          // #2142 — recording a task, labelled, where the account lives.
+          // The task wizard: recording, guides and tools in one place.
           if (ref
               .watch(enabledFeaturesSyncProvider)
               .contains(WorkspaceFeature.taskRecorder))
-            door('me-record-task', Icons.fiber_manual_record_outlined,
-                l10n?.taskRecorderRecordATask ?? 'Record a task',
-                taskRecorderRoute),
+            door('me-task-wizard', Icons.assistant_navigation,
+                l10n?.taskWizardTitle ?? 'Task wizard', taskWizardRoute),
           SettingsSectionHeader(l10n?.meGroupWorkspaces ?? 'My workspaces'),
           door('me-workspaces', Icons.workspaces_outline,
               l10n?.meGroupWorkspaces ?? 'My workspaces', '/profiles'),

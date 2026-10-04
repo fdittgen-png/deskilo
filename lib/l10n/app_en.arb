@@ -19115,6 +19115,98 @@
   "@taskRecorderValueWithheld": {
     "description": "#1865 task recorder: taskRecorderValueWithheld"
   },
+  "taskWizardAddGuide": "Add a guide",
+  "@taskWizardAddGuide": {
+    "description": "Task wizard: taskWizardAddGuide"
+  },
+  "taskWizardAddToGuides": "Add to my guides",
+  "@taskWizardAddToGuides": {
+    "description": "Task wizard: taskWizardAddToGuides"
+  },
+  "taskWizardBuiltIn": "Guides that come with the app",
+  "@taskWizardBuiltIn": {
+    "description": "Task wizard: taskWizardBuiltIn"
+  },
+  "taskWizardDeleteGuide": "Delete this guide",
+  "@taskWizardDeleteGuide": {
+    "description": "Task wizard: taskWizardDeleteGuide"
+  },
+  "taskWizardDeleteGuideBody": "The guide is removed from this device. The recording it came from is not touched.",
+  "@taskWizardDeleteGuideBody": {
+    "description": "Task wizard: taskWizardDeleteGuideBody"
+  },
+  "taskWizardEdit": "Edit",
+  "@taskWizardEdit": {
+    "description": "Task wizard: taskWizardEdit"
+  },
+  "taskWizardFromFile": "From a task file or package",
+  "@taskWizardFromFile": {
+    "description": "Task wizard: taskWizardFromFile"
+  },
+  "taskWizardFromFileHint": "A recording, a task package or a guide file from someone else.",
+  "@taskWizardFromFileHint": {
+    "description": "Task wizard: taskWizardFromFileHint"
+  },
+  "taskWizardFromRecording": "From one of my recordings",
+  "@taskWizardFromRecording": {
+    "description": "Task wizard: taskWizardFromRecording"
+  },
+  "taskWizardFromRecordingHint": "Pick a recording; it becomes a guide at once.",
+  "@taskWizardFromRecordingHint": {
+    "description": "Task wizard: taskWizardFromRecordingHint"
+  },
+  "taskWizardGuideAdded": "Added to My guides.",
+  "@taskWizardGuideAdded": {
+    "description": "Task wizard: taskWizardGuideAdded"
+  },
+  "taskWizardGuideName": "Name of the guide",
+  "@taskWizardGuideName": {
+    "description": "Task wizard: taskWizardGuideName"
+  },
+  "taskWizardGuideNotSaved": "The guide could not be kept.",
+  "@taskWizardGuideNotSaved": {
+    "description": "Task wizard: taskWizardGuideNotSaved"
+  },
+  "taskWizardGuides": "Guides",
+  "@taskWizardGuides": {
+    "description": "Task wizard: taskWizardGuides"
+  },
+  "taskWizardIntro": "Record what you do, turn it into a guide, and follow guides step by step on the real app.",
+  "@taskWizardIntro": {
+    "description": "Task wizard: taskWizardIntro"
+  },
+  "taskWizardMakeGuide": "Make a guide",
+  "@taskWizardMakeGuide": {
+    "description": "Task wizard: taskWizardMakeGuide"
+  },
+  "taskWizardNoGuides": "No guide of your own yet. Add one from a recording or a task file.",
+  "@taskWizardNoGuides": {
+    "description": "Task wizard: taskWizardNoGuides"
+  },
+  "taskWizardOpenFileHint": "Read, edit and export a recording or task package, without an account.",
+  "@taskWizardOpenFileHint": {
+    "description": "Task wizard: taskWizardOpenFileHint"
+  },
+  "taskWizardRecordings": "Recordings",
+  "@taskWizardRecordings": {
+    "description": "Task wizard: taskWizardRecordings"
+  },
+  "taskWizardSaveChanges": "Save the changes",
+  "@taskWizardSaveChanges": {
+    "description": "Task wizard: taskWizardSaveChanges"
+  },
+  "taskWizardTitle": "Task wizard",
+  "@taskWizardTitle": {
+    "description": "Task wizard: taskWizardTitle"
+  },
+  "taskWizardTools": "Tools",
+  "@taskWizardTools": {
+    "description": "Task wizard: taskWizardTools"
+  },
+  "taskWizardUnavailable": "The task recorder is turned off in this workspace: guides can be read and edited here, but not followed.",
+  "@taskWizardUnavailable": {
+    "description": "Task wizard: taskWizardUnavailable"
+  },
   "taskWorkbenchAccepted": "Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.",
   "@taskWorkbenchAccepted": {
     "description": "#1872 task workbench: taskWorkbenchAccepted",

@@ -18,17 +18,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../guide/guide_codec.dart';
 import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
+import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
 import '../recording_export.dart';
 
 class GuideDraftScreen extends ConsumerStatefulWidget {
-  const GuideDraftScreen({super.key, required this.guide});
+  const GuideDraftScreen({super.key, required this.guide, this.libraryId});
 
   final TaskGuide guide;
+
+  /// The id of the library guide being edited; null for a new draft.
+  final String? libraryId;
 
   @override
   ConsumerState<GuideDraftScreen> createState() => _GuideDraftScreenState();
@@ -36,10 +41,25 @@ class GuideDraftScreen extends ConsumerStatefulWidget {
 
 class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
   late List<GuideStep> _steps = widget.guide.steps;
+  late final _title = TextEditingController(text: widget.guide.title ?? '');
+  String? _libraryId;
+  bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _libraryId = widget.libraryId;
+  }
+
+  @override
+  void dispose() {
+    _title.dispose();
+    super.dispose();
+  }
 
   TaskGuide get _guide => TaskGuide(
     actionContractVersion: widget.guide.actionContractVersion,
-    title: widget.guide.title,
+    title: _title.text.trim().isEmpty ? null : _title.text.trim(),
     sourceDigest: widget.guide.sourceDigest,
     steps: _steps,
   );
@@ -104,6 +124,38 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
+  /// Puts the draft in the library: a new guide, or the changes of the
+  /// one being edited. The guide is kept on this device for this account
+  /// and can be started again from the task wizard.
+  Future<void> _addToLibrary() async {
+    final store = ref.read(guideStoreProvider);
+    final l10n = AppLocalizations.of(context);
+    if (store == null || _saving) return;
+    setState(() => _saving = true);
+    try {
+      final id = _libraryId;
+      if (id == null) {
+        _libraryId = await store.add(_guide);
+      } else {
+        await store.replace(id, _guide);
+      }
+      ref.invalidate(myGuidesProvider);
+      if (!mounted) return;
+      AppSnack.success(
+        context,
+        l10n?.taskWizardGuideAdded ?? 'Added to My guides.',
+      );
+      Navigator.of(context).pop();
+    } on Object {
+      if (!mounted) return;
+      setState(() => _saving = false);
+      AppSnack.error(
+        context,
+        l10n?.taskWizardGuideNotSaved ?? 'The guide could not be kept.',
+      );
+    }
+  }
+
   Future<void> _save() async {
     final text = encodeGuideText(_guide);
     final valid = decodeGuideText(text).accepted;
@@ -130,6 +182,15 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
                     'the reader.',
           ),
           const SizedBox(height: AppSpacing.md),
+          TextField(
+            key: const ValueKey('guide-title-field'),
+            controller: _title,
+            maxLength: 120,
+            decoration: InputDecoration(
+              labelText: l10n?.taskWizardGuideName ?? 'Name of the guide',
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
           for (final step in _steps)
             _StepCard(
               step: step,
@@ -139,7 +200,20 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
               onOptional: (v) => _replace(step.copyWith(optional: v)),
             ),
           const SizedBox(height: AppSpacing.md),
-          FilledButton.icon(
+          if (ref.watch(guideStoreProvider) != null) ...[
+            FilledButton.icon(
+              key: const ValueKey('guide-add-library'),
+              onPressed: _saving ? null : _addToLibrary,
+              icon: const Icon(Icons.library_add_outlined),
+              label: Text(
+                _libraryId == null
+                    ? (l10n?.taskWizardAddToGuides ?? 'Add to my guides')
+                    : (l10n?.taskWizardSaveChanges ?? 'Save the changes'),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+          ],
+          OutlinedButton.icon(
             key: const ValueKey('guide-start'),
             onPressed: _start,
             icon: const Icon(Icons.assistant_navigation),

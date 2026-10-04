@@ -28994,6 +28994,144 @@ abstract class AppLocalizations {
   /// **'not recorded'**
   String get taskRecorderValueWithheld;
 
+  /// Task wizard: taskWizardAddGuide
+  ///
+  /// In en, this message translates to:
+  /// **'Add a guide'**
+  String get taskWizardAddGuide;
+
+  /// Task wizard: taskWizardAddToGuides
+  ///
+  /// In en, this message translates to:
+  /// **'Add to my guides'**
+  String get taskWizardAddToGuides;
+
+  /// Task wizard: taskWizardBuiltIn
+  ///
+  /// In en, this message translates to:
+  /// **'Guides that come with the app'**
+  String get taskWizardBuiltIn;
+
+  /// Task wizard: taskWizardDeleteGuide
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this guide'**
+  String get taskWizardDeleteGuide;
+
+  /// Task wizard: taskWizardDeleteGuideBody
+  ///
+  /// In en, this message translates to:
+  /// **'The guide is removed from this device. The recording it came from is not touched.'**
+  String get taskWizardDeleteGuideBody;
+
+  /// Task wizard: taskWizardEdit
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get taskWizardEdit;
+
+  /// Task wizard: taskWizardFromFile
+  ///
+  /// In en, this message translates to:
+  /// **'From a task file or package'**
+  String get taskWizardFromFile;
+
+  /// Task wizard: taskWizardFromFileHint
+  ///
+  /// In en, this message translates to:
+  /// **'A recording, a task package or a guide file from someone else.'**
+  String get taskWizardFromFileHint;
+
+  /// Task wizard: taskWizardFromRecording
+  ///
+  /// In en, this message translates to:
+  /// **'From one of my recordings'**
+  String get taskWizardFromRecording;
+
+  /// Task wizard: taskWizardFromRecordingHint
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a recording; it becomes a guide at once.'**
+  String get taskWizardFromRecordingHint;
+
+  /// Task wizard: taskWizardGuideAdded
+  ///
+  /// In en, this message translates to:
+  /// **'Added to My guides.'**
+  String get taskWizardGuideAdded;
+
+  /// Task wizard: taskWizardGuideName
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the guide'**
+  String get taskWizardGuideName;
+
+  /// Task wizard: taskWizardGuideNotSaved
+  ///
+  /// In en, this message translates to:
+  /// **'The guide could not be kept.'**
+  String get taskWizardGuideNotSaved;
+
+  /// Task wizard: taskWizardGuides
+  ///
+  /// In en, this message translates to:
+  /// **'Guides'**
+  String get taskWizardGuides;
+
+  /// Task wizard: taskWizardIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Record what you do, turn it into a guide, and follow guides step by step on the real app.'**
+  String get taskWizardIntro;
+
+  /// Task wizard: taskWizardMakeGuide
+  ///
+  /// In en, this message translates to:
+  /// **'Make a guide'**
+  String get taskWizardMakeGuide;
+
+  /// Task wizard: taskWizardNoGuides
+  ///
+  /// In en, this message translates to:
+  /// **'No guide of your own yet. Add one from a recording or a task file.'**
+  String get taskWizardNoGuides;
+
+  /// Task wizard: taskWizardOpenFileHint
+  ///
+  /// In en, this message translates to:
+  /// **'Read, edit and export a recording or task package, without an account.'**
+  String get taskWizardOpenFileHint;
+
+  /// Task wizard: taskWizardRecordings
+  ///
+  /// In en, this message translates to:
+  /// **'Recordings'**
+  String get taskWizardRecordings;
+
+  /// Task wizard: taskWizardSaveChanges
+  ///
+  /// In en, this message translates to:
+  /// **'Save the changes'**
+  String get taskWizardSaveChanges;
+
+  /// Task wizard: taskWizardTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Task wizard'**
+  String get taskWizardTitle;
+
+  /// Task wizard: taskWizardTools
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get taskWizardTools;
+
+  /// Task wizard: taskWizardUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'The task recorder is turned off in this workspace: guides can be read and edited here, but not followed.'**
+  String get taskWizardUnavailable;
+
   /// #1872 task workbench: taskWorkbenchAccepted
   ///
   /// In en, this message translates to:
