@@ -90,7 +90,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Hier ist jede Person Mitglied: buchen, einchecken, Nachrichten und das eigene Konto. Rollen ergänzen den Rest.",
+  "whatYouCanDoIntro": "Hier ist jede Person Mitglied; was Sie tun können — Nachrichten, Reservierungen und der Rest — kommt allein aus den Rollen, die Sie haben.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },

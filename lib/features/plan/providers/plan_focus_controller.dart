@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../workspace/providers/workspace_providers.dart';
-
 part 'plan_focus_controller.g.dart';
 
 /// One-shot "focus this on the Plan tab" request (#182): the calendar's
@@ -46,12 +44,7 @@ class PlanFocus {
 @Riverpod(keepAlive: true)
 class PlanFocusController extends _$PlanFocusController {
   @override
-  PlanFocus? build() {
-    // Bound to the workspace it was made in: a switch starts it over, so
-    // nothing chosen in one workspace is ever shown in another.
-    ref.watch(activeWorkspaceIdProvider);
-    return null;
-  }
+  PlanFocus? build() => null;
 
   void setFocus(PlanFocus focus) => state = focus;
 

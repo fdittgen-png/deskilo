@@ -3,8 +3,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/money_face.dart';
 
-import '../../workspace/providers/workspace_providers.dart';
-
 part 'money_face_controller.g.dart';
 
 /// Which face of the Finances tab is showing (#720). Kept alive so a
@@ -14,12 +12,7 @@ part 'money_face_controller.g.dart';
 @Riverpod(keepAlive: true)
 class MoneyFaceController extends _$MoneyFaceController {
   @override
-  MoneyFace build() {
-    // Bound to the workspace it was made in: a switch starts it over, so
-    // nothing chosen in one workspace is ever shown in another.
-    ref.watch(activeWorkspaceIdProvider);
-    return MoneyFace.statement;
-  }
+  MoneyFace build() => MoneyFace.statement;
 
   void show(MoneyFace face) => state = face;
 }

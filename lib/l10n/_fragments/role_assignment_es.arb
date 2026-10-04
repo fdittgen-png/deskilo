@@ -90,7 +90,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Aquí todas las personas son miembros: reservar, registrar la llegada, los mensajes y la propia cuenta. Los roles añaden el resto.",
+  "whatYouCanDoIntro": "Aquí todas las personas son miembros; lo que puede hacer — mensajes, reservas y el resto — viene solo de los roles que tiene.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },

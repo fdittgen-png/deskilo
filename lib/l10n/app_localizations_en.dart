@@ -11947,6 +11947,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permIssueInvoices => 'Issue invoices & match payments';
 
   @override
+  String get permMakeReservations => 'Book and use reservations';
+
+  @override
   String get permManageBilling => 'Manage tariffs and billing rules';
 
   @override
@@ -11986,10 +11989,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permPaymentTermsEdit => 'Request payment-condition changes';
 
   @override
+  String get permUseMessages => 'Use the messenger';
+
+  @override
   String get permViewAnalytics => 'Read the workspace figures';
 
   @override
+  String get permViewCalendar => 'See the calendar';
+
+  @override
+  String get permViewDirectory => 'See the member directory';
+
+  @override
+  String get permViewDocuments => 'See the shared documents';
+
+  @override
   String get permViewFinances => 'View workspace finances';
+
+  @override
+  String get permViewMyMoney => 'See their own account and invoices';
 
   @override
   String get permViewNegotiations => 'View commercial agreements';
@@ -14444,6 +14462,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportPresetFormalLetter => 'Formal letter';
+
+  @override
+  String get reportPresetProfessional => 'Professional';
 
   @override
   String get reportPresetSimple => 'Simple';
@@ -17769,7 +17790,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get whatYouCanDoIntro =>
-      'Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.';
+      'Everyone here is a member; what you can do — messages, reservations and the rest — comes only from the roles you hold.';
 
   @override
   String get whatYouCanDoNothingMore => 'Nothing more than a member.';

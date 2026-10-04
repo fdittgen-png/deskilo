@@ -13810,6 +13810,10 @@
   "@permIssueInvoices": {
     "description": "Permission label (#513)"
   },
+  "permMakeReservations": "Book and use reservations",
+  "@permMakeReservations": {
+    "description": "everyday permission"
+  },
   "permManageBilling": "Manage tariffs and billing rules",
   "@permManageBilling": {
     "description": "#982 permission catalog: permManageBilling"
@@ -13859,13 +13863,33 @@
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
   },
+  "permUseMessages": "Use the messenger",
+  "@permUseMessages": {
+    "description": "everyday permission"
+  },
   "permViewAnalytics": "Read the workspace figures",
   "@permViewAnalytics": {
     "description": "#1921 permission: read aggregated operational KPIs"
   },
+  "permViewCalendar": "See the calendar",
+  "@permViewCalendar": {
+    "description": "everyday permission"
+  },
+  "permViewDirectory": "See the member directory",
+  "@permViewDirectory": {
+    "description": "everyday permission"
+  },
+  "permViewDocuments": "See the shared documents",
+  "@permViewDocuments": {
+    "description": "everyday permission"
+  },
   "permViewFinances": "View workspace finances",
   "@permViewFinances": {
     "description": "Permission label (#513)"
+  },
+  "permViewMyMoney": "See their own account and invoices",
+  "@permViewMyMoney": {
+    "description": "everyday permission"
   },
   "permViewNegotiations": "View commercial agreements",
   "permViewPersonalData": "Read members' personal data",
@@ -16574,6 +16598,7 @@
   "@reportPresetFormalLetter": {
     "description": "Report UX: presets, quick preview, download (#474)"
   },
+  "reportPresetProfessional": "Professional",
   "reportPresetSimple": "Simple",
   "@reportPresetSimple": {
     "description": "Legal invoice mentions (#480)"
@@ -20491,7 +20516,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.",
+  "whatYouCanDoIntro": "Everyone here is a member; what you can do — messages, reservations and the rest — comes only from the roles you hold.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },

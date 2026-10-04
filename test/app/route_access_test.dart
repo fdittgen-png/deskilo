@@ -41,14 +41,18 @@ void main() {
     expect(mayOpen('/roles', secretary), isFalse);
   });
 
-  test('a member with no permission has only the screens that are theirs', () {
-    expect(mayOpen('/messages', const {}), isTrue);
-    expect(mayOpen('/reserve', const {}), isTrue);
+  test('a member holds nothing by default: the everyday screens are theirs '
+      'only through a role, and their own account always is', () {
+    for (final path in ['/messages', '/reserve', '/calendar', '/money',
+        '/directory', '/documents', '/members', '/editor/level/xyz']) {
+      expect(mayOpen(path, const {}), isFalse, reason: path);
+    }
     expect(mayOpen('/settings', const {}), isTrue);
-    expect(mayOpen('/money', const {}), isTrue);
     expect(mayOpen('/member/abc', const {}), isTrue);
-    expect(mayOpen('/members', const {}), isFalse);
-    expect(mayOpen('/editor/level/xyz', const {}), isFalse);
+    expect(mayOpen('/messages', {WorkspacePermission.useMessages}), isTrue);
+    expect(mayOpen('/reserve', {WorkspacePermission.makeReservations}), isTrue);
+    expect(landingFor(const {}), '/settings');
+    expect(landingFor({WorkspacePermission.viewCalendar}), '/calendar');
   });
 
   test('every listed route is a registered workspace route', () {

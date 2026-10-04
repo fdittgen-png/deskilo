@@ -61,4 +61,16 @@ String permissionLabel(AppLocalizations? l10n, WorkspacePermission permission) =
           l10n?.permAccessProd ?? 'Enter the production workspace',
         WorkspacePermission.viewAnalytics =>
           l10n?.permViewAnalytics ?? 'Read the workspace figures',
+        WorkspacePermission.useMessages =>
+          l10n?.permUseMessages ?? 'Use the messenger',
+        WorkspacePermission.makeReservations =>
+          l10n?.permMakeReservations ?? 'Book and use reservations',
+        WorkspacePermission.viewCalendar =>
+          l10n?.permViewCalendar ?? 'See the calendar',
+        WorkspacePermission.viewDirectory =>
+          l10n?.permViewDirectory ?? 'See the member directory',
+        WorkspacePermission.viewMyMoney =>
+          l10n?.permViewMyMoney ?? 'See their own account and invoices',
+        WorkspacePermission.viewDocuments =>
+          l10n?.permViewDocuments ?? 'See the shared documents',
       };

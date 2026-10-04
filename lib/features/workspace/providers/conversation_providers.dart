@@ -48,12 +48,7 @@ Future<List<Conversation>> archivedConversations(Ref ref) async {
 @Riverpod(keepAlive: true)
 class ConversationDrafts extends _$ConversationDrafts {
   @override
-  Map<String, String> build() {
-    // Bound to the workspace it was made in: a switch starts it over, so
-    // nothing chosen in one workspace is ever shown in another.
-    ref.watch(activeWorkspaceIdProvider);
-    return const {};
-  }
+  Map<String, String> build() => const {};
 
   String? of(String conversationId) => state[conversationId];
 

@@ -12,6 +12,7 @@ import 'dart:io';
 
 import 'package:deskilo/app/shell/shell_destinations.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -22,13 +23,29 @@ void main() {
     WorkspaceFeature.eventsTab,
   ];
 
+  test('a destination shows only for the permission that gives it', () {
+    final all = gating.toSet();
+    expect(visibleShellBranches(all, const {}), isEmpty);
+    expect(
+      visibleShellBranches(all, {WorkspacePermission.viewFinances}),
+      [ShellBranch.money],
+    );
+    expect(
+      visibleShellBranches(all, {
+        WorkspacePermission.useMessages,
+        WorkspacePermission.viewCalendar,
+      }),
+      [ShellBranch.messages, ShellBranch.calendar],
+    );
+  });
+
   test('every combination of the gating features yields a sound bar', () {
     for (var mask = 0; mask < 1 << gating.length; mask++) {
       final features = {
         for (var i = 0; i < gating.length; i++)
           if (mask & (1 << i) != 0) gating[i],
       };
-      final branches = visibleShellBranches(features);
+      final branches = visibleShellBranches(features, WorkspacePermission.values.toSet());
       final label = features.map((f) => f.name).join('+');
 
       expect(branches.first, ShellBranch.messages, reason: label);

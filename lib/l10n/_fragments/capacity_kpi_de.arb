@@ -140,5 +140,29 @@
   "permViewAnalytics": "Kennzahlen des Arbeitsbereichs lesen",
   "@permViewAnalytics": {
     "description": "#1921 permission: read aggregated operational KPIs"
+  },
+  "permUseMessages": "Den Messenger nutzen",
+  "@permUseMessages": {
+    "description": "everyday permission"
+  },
+  "permMakeReservations": "Buchen und Reservierungen nutzen",
+  "@permMakeReservations": {
+    "description": "everyday permission"
+  },
+  "permViewCalendar": "Den Kalender sehen",
+  "@permViewCalendar": {
+    "description": "everyday permission"
+  },
+  "permViewDirectory": "Das Mitgliederverzeichnis sehen",
+  "@permViewDirectory": {
+    "description": "everyday permission"
+  },
+  "permViewMyMoney": "Das eigene Konto und die eigenen Rechnungen sehen",
+  "@permViewMyMoney": {
+    "description": "everyday permission"
+  },
+  "permViewDocuments": "Die geteilten Dokumente sehen",
+  "@permViewDocuments": {
+    "description": "everyday permission"
   }
 }

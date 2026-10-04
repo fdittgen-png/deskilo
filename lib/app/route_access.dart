@@ -11,15 +11,32 @@
 // not the menu offered the way there. Deep links, stored shortcuts and
 // notification taps all arrive through the router, so this is the one
 // place that cannot be walked around. (The server asks the same
-// permissions again for everything these screens write.) A member's own
-// invoices (/invoices, /invoice-register) are theirs and are not listed:
-// those screens show a member only their own.
+// permissions again for everything these screens write.) Even the
+// everyday features — the messenger, the reservations, the calendar, the
+// directory, one's own account, the shared documents — are listed: a
+// member holds them only through a role, and never by default.
 import '../features/workspace/domain/workspace_permission.dart';
 
 typedef _P = WorkspacePermission;
 
 /// Route pattern → the permissions of which holding ANY opens it.
 const Map<String, Set<WorkspacePermission>> routePermissions = {
+  // The everyday features: held through a role like everything else.
+  '/messages': {_P.useMessages},
+  '/events': {_P.useMessages},
+  '/conversation/:conversationId': {_P.useMessages},
+  '/res/:id': {_P.useMessages, _P.makeReservations},
+  '/space/:kind/:id': {_P.useMessages, _P.makeReservations},
+  '/reserve': {_P.makeReservations},
+  '/plan': {_P.makeReservations},
+  '/calendar': {_P.viewCalendar},
+  '/directory': {_P.viewDirectory},
+  '/money': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices, _P.manageBilling},
+  '/money/status': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices, _P.manageBilling},
+  '/invoices': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices},
+  '/invoice-register': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices},
+  '/documents': {_P.viewDocuments, _P.manageDocuments},
+  '/library': {_P.viewDocuments, _P.manageDocuments},
   '/developer': {_P.manageConfiguration, _P.deployToDev, _P.deployToProd},
   '/deployment': {_P.manageConfiguration, _P.deployToDev, _P.deployToProd},
   '/workspace-code': {_P.manageConfiguration, _P.manageMembers},
@@ -82,4 +99,20 @@ Set<WorkspacePermission>? permissionsFor(String path) {
 bool mayOpen(String path, Set<WorkspacePermission> held) {
   final needed = permissionsFor(path);
   return needed == null || needed.any(held.contains);
+}
+
+/// Where someone lands when the screen they asked for is not theirs: the
+/// first everyday screen they hold, and their own account (which every
+/// member has) when they hold none.
+String landingFor(Set<WorkspacePermission> held) {
+  for (final entry in const [
+    ('/messages', _P.useMessages),
+    ('/reserve', _P.makeReservations),
+    ('/calendar', _P.viewCalendar),
+    ('/money', _P.viewMyMoney),
+    ('/directory', _P.viewDirectory),
+  ]) {
+    if (held.contains(entry.$2)) return entry.$1;
+  }
+  return '/settings';
 }

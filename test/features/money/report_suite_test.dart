@@ -69,12 +69,12 @@ Future<List<Map<String, Object?>>> agreementLines(
 }
 
 void main() {
-  group('the three new documents ship the four presets (#494)', () {
+  group('the three new documents ship professional and legacy presets (#494)', () {
     for (final doc in ['agreement', 'payments', 'workspace']) {
       test(doc, () {
         final presets = presetsForDoc(doc, null);
         expect(presets.map((p) => p.id),
-            ['classic', 'simple', 'verbose', 'formal']);
+            ['professional', 'classic', 'simple', 'verbose', 'formal']);
         expect(presets.first.bands.header,
             defaultBandsForDoc(doc, null).header);
         expect(defaultBandsForDoc(doc, null).hasBands, isTrue);

@@ -150,7 +150,7 @@
   "config.validation": "Règles de validation",
   "config.features": "Fonctionnalités",
   "admin.reports.overview": "Documents et rapports",
-  "admin.reports.kinds": "Les types, et les quatre modèles",
+  "admin.reports.kinds": "Types de rapports et modèles",
   "admin.reports.bands": "Les bandes : en-tête, suite, corps, pied",
   "admin.reports.layouts": "Les mises en page positionnées",
   "admin.reports.placeholders": "Le vocabulaire",
