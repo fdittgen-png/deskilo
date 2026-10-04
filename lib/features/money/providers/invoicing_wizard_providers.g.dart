@@ -158,7 +158,7 @@ final class InvoicingWizardControllerProvider
 }
 
 String _$invoicingWizardControllerHash() =>
-    r'287d51a3ceb8bfbce631d8ab3d9487e75e40160d';
+    r'f67e940ad164b23249c78b9945b59ca20c9caea4';
 
 /// #827 — the wizard's session: the run, the step, the tally. Kept
 /// alive so a sheet opened from a step (a match, a settlement) returns
