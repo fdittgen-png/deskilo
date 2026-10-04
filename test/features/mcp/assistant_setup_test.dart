@@ -208,12 +208,14 @@ void main() {
         'get_capabilities',
         'get_availability',
         'list_my_reservations',
+        'get_place',
         'get_my_statement',
         'list_my_invoices',
         'create_reservation',
         'update_reservation',
         'check_in',
         'check_out',
+        'cancel_reservation',
         'request_reservation_deletion',
       });
     });

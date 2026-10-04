@@ -23,7 +23,18 @@
   "mcpOpUpdateReservation": "Ihre Reservierungen ändern",
   "mcpOpCheckIn": "Sie einchecken",
   "mcpOpCheckOut": "Sie auschecken",
-  "mcpOpReservationDeletion": "Löschung einer Reservierung beantragen",
+  "mcpOpReservationDeletion": "Löschung einer bereits begonnenen Buchung beantragen",
   "mcpOpPendingValidations": "Offene Freigabeanfragen sehen",
-  "mcpOpGetValidation": "Eine Freigabeanfrage lesen"
+  "mcpOpGetValidation": "Eine Freigabeanfrage lesen",
+  "mcpOpCancelReservation": "Ihre noch nicht begonnenen Buchungen stornieren",
+  "@mcpOpCancelReservation": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpGetPlace": "Einen Ort beschreiben und auf Wunsch zeigen",
+  "@mcpOpGetPlace": {
+    "description": "#1615 mcp_consent"
+  },
+  "@mcpOpReservationDeletion": {
+    "description": "#1615 mcp_consent"
+  }
 }

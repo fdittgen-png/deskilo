@@ -16995,6 +16995,12 @@ abstract class AppLocalizations {
   /// #1615 mcp_consent
   ///
   /// In en, this message translates to:
+  /// **'Cancel your bookings that have not started'**
+  String get mcpOpCancelReservation;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
   /// **'See what it may do there'**
   String get mcpOpCapabilities;
 
@@ -17015,6 +17021,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Book a place for you'**
   String get mcpOpCreateReservation;
+
+  /// #1615 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Describe a place, and show it when you ask'**
+  String get mcpOpGetPlace;
 
   /// #1615 mcp_consent
   ///
@@ -17079,7 +17091,7 @@ abstract class AppLocalizations {
   /// #1615 mcp_consent
   ///
   /// In en, this message translates to:
-  /// **'Ask to delete a reservation'**
+  /// **'Ask to delete a booking that has started'**
   String get mcpOpReservationDeletion;
 
   /// #1619 mcp_confirmation

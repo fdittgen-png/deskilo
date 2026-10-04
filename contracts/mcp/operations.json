@@ -56,11 +56,27 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "afternoon": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "amenities": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "amount_cents": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "balance_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "bookable_as_whole": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "booking_periods": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -156,7 +172,31 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "from": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "full_day": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "granted_half_days": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "granularity": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "half_boundary": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "image_available": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "image_requested": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -208,6 +248,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "morning": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "name": {
    "class": "display",
    "disclosure": "optional",
@@ -242,6 +286,10 @@
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "open_days": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "open_weekdays": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -281,6 +329,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "render": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "requested_at": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -294,6 +346,10 @@
    "purpose": "the caller's own role and the workspace environment (#1644)"
   },
   "seat_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "seats": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -318,6 +374,10 @@
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "time_zone": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "to": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -350,6 +410,14 @@
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "window": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "work_end": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "work_start": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -395,7 +463,7 @@
    "handler": true,
    "dispatch": true,
    "title": "What can I do here?",
-   "description": "What this assistant may do in one workspace right now and until when access is approved, plus the workspace's time zone, currency and opening hours. Call it before booking to read \"tomorrow morning\" in the workspace's zone, and when a tool is missing or a call was refused, to explain what is allowed.",
+   "description": "What this assistant may do in one workspace right now and until when access is approved, plus the workspace's time zone, currency, opening hours and its named booking periods (morning, afternoon, full_day) with their exact local times. Call it before booking to read \"tomorrow morning\" in the workspace's zone, and when a tool is missing or a call was refused, to explain what is allowed.",
    "rpc": null,
    "authority": {
     "kind": "member"
@@ -423,7 +491,18 @@
     "eligible_until",
     "time_zone",
     "currency",
-    "opening_hours"
+    "opening_hours",
+    "booking_periods",
+    "open_weekdays",
+    "work_start",
+    "half_boundary",
+    "work_end",
+    "granularity",
+    "morning",
+    "afternoon",
+    "full_day",
+    "from",
+    "to"
    ]
   },
   {
@@ -580,6 +659,77 @@
    ]
   },
   {
+   "id": "get_place",
+   "handler": true,
+   "dispatch": true,
+   "title": "Describe a place",
+   "description": "Describe one place: a seat, a desk, an office or a level (by its id from deskilo_get_availability or deskilo_list_my_reservations), or one of the person's own reservations by reservation_id. Answers what it is, where it sits (level, office, desk), how many seats it has and what a seat offers. It never includes a picture by default: set include_image to true ONLY when the person explicitly asks to see an image, picture, plan or map; the answer then carries a floor-plan picture with that place highlighted.",
+   "rpc": null,
+   "authority": {
+    "kind": "member"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "own",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "reservation_id": {
+     "type": "uuid",
+     "description": "One of the person's own reservations (a reservation_id from deskilo_list_my_reservations): describes the place it is for."
+    },
+    "seat_id": {
+     "type": "uuid",
+     "description": "A seat_id from deskilo_get_availability."
+    },
+    "desk_id": {
+     "type": "uuid",
+     "description": "A desk_id."
+    },
+    "office_id": {
+     "type": "uuid",
+     "description": "An office_id."
+    },
+    "level_id": {
+     "type": "uuid",
+     "description": "A level_id."
+    },
+    "include_image": {
+     "type": "boolean",
+     "description": "False by default. True ONLY when the person explicitly asked for an image, picture, plan or map of the place: the answer then carries a floor-plan picture with the place highlighted. Never set it on your own initiative.",
+     "examples": [
+      false
+     ]
+    }
+   },
+   "output": [
+    "kind",
+    "level_id",
+    "office_id",
+    "desk_id",
+    "seat_id",
+    "reservation_id",
+    "label",
+    "name",
+    "seats",
+    "amenities",
+    "bookable_as_whole",
+    "image_requested",
+    "image_available",
+    "render"
+   ]
+  },
+  {
    "id": "get_my_statement",
    "handler": true,
    "dispatch": true,
@@ -708,7 +858,7 @@
    "handler": true,
    "dispatch": true,
    "title": "Book a place",
-   "description": "Book a place for the person: a seat (usually a seat_id from deskilo_get_availability), or a whole desk, office or level where the workspace allows it. The workspace's own rules apply exactly as in the app; a refusal says why in plain words. Generate a new request_id per booking; resending the same request_id never books twice.",
+   "description": "Book a place for the person: a seat (usually a seat_id from deskilo_get_availability), or a whole desk, office or level where the workspace allows it. The workspace's own rules apply exactly as in the app; a refusal says why in plain words. Generate a new request_id per booking; resending the same request_id never books twice. To book \"the full day\", \"the morning\" or \"the afternoon\" give date and period instead of times: the workspace's own booking periods (see deskilo_get_capabilities, booking_periods) are applied exactly.",
    "rpc": "create_reservation_once",
    "authority": {
     "kind": "self"
@@ -762,20 +912,37 @@
     },
     "starts_at": {
      "type": "datetime",
-     "required": true,
      "param": "p_starts_at",
-     "description": "Start, ISO 8601 with an explicit offset in the workspace's time zone, e.g. 2026-10-05T09:00:00+02:00.",
+     "description": "Start, ISO 8601 with an explicit offset in the workspace's time zone, e.g. 2026-10-05T09:00:00+02:00. Optional when date and period are given.",
      "examples": [
       "2026-10-05T09:00:00+02:00"
      ]
     },
     "ends_at": {
      "type": "datetime",
-     "required": true,
      "param": "p_ends_at",
-     "description": "End, ISO 8601 with an explicit offset, after starts_at.",
+     "description": "End, ISO 8601 with an explicit offset, after starts_at. Optional when date and period are given.",
      "examples": [
       "2026-10-05T13:00:00+02:00"
+     ]
+    },
+    "date": {
+     "type": "text",
+     "description": "The local day to book, YYYY-MM-DD in the workspace's time zone. Use with period instead of starts_at/ends_at.",
+     "examples": [
+      "2026-10-28"
+     ]
+    },
+    "period": {
+     "type": "enum",
+     "values": [
+      "morning",
+      "afternoon",
+      "full_day"
+     ],
+     "description": "A booking period of the workspace, named in get_capabilities (booking_periods) with its exact local times: morning, afternoon or the full working day. Use with date; the server turns it into the workspace's exact times, so never compute them yourself.",
+     "examples": [
+      "full_day"
      ]
     },
     "check_in": {
@@ -806,7 +973,7 @@
    "handler": true,
    "dispatch": true,
    "title": "Move my booking",
-   "description": "Change the start and end of one of the person's own bookings. The workspace's rules apply as in the app.",
+   "description": "Change the start and end of one of the person's own bookings. The workspace's rules apply as in the app. To book \"the full day\", \"the morning\" or \"the afternoon\" give date and period instead of times: the workspace's own booking periods (see deskilo_get_capabilities, booking_periods) are applied exactly.",
    "rpc": "update_reservation",
    "authority": {
     "kind": "self"
@@ -844,20 +1011,37 @@
     },
     "starts_at": {
      "type": "datetime",
-     "required": true,
      "param": "p_starts_at",
-     "description": "The new start, ISO 8601 with an explicit offset.",
+     "description": "The new start, ISO 8601 with an explicit offset. Optional when date and period are given.",
      "examples": [
       "2026-10-05T09:00:00+02:00"
      ]
     },
     "ends_at": {
      "type": "datetime",
-     "required": true,
      "param": "p_ends_at",
-     "description": "The new end, ISO 8601 with an explicit offset.",
+     "description": "The new end, ISO 8601 with an explicit offset. Optional when date and period are given.",
      "examples": [
       "2026-10-05T13:00:00+02:00"
+     ]
+    },
+    "date": {
+     "type": "text",
+     "description": "The local day to book, YYYY-MM-DD in the workspace's time zone. Use with period instead of starts_at/ends_at.",
+     "examples": [
+      "2026-10-28"
+     ]
+    },
+    "period": {
+     "type": "enum",
+     "values": [
+      "morning",
+      "afternoon",
+      "full_day"
+     ],
+     "description": "A booking period of the workspace, named in get_capabilities (booking_periods) with its exact local times: morning, afternoon or the full working day. Use with date; the server turns it into the workspace's exact times, so never compute them yourself.",
+     "examples": [
+      "full_day"
      ]
     },
     "expected_state": {
@@ -1003,11 +1187,72 @@
    ]
   },
   {
+   "id": "cancel_reservation",
+   "handler": true,
+   "dispatch": true,
+   "title": "Cancel a booking",
+   "description": "Cancel one of the person's own bookings that has NOT started yet, directly: it is cancelled at once and the place is free again (status completed). A booking that already started cannot be cancelled this way; for that use deskilo_request_reservation_deletion. Resending the same request_id never cancels twice.",
+   "rpc": "cancel_reservation",
+   "authority": {
+    "kind": "self"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "own",
+   "mutation": "write",
+   "destructive": true,
+   "idempotency": "request_id",
+   "confirmation": "none",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "reservation_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_reservation_id",
+     "description": "A reservation_id from deskilo_list_my_reservations."
+    },
+    "expected_state": {
+     "type": "text",
+     "maxLength": 64,
+     "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
+    }
+   },
+   "output": [
+    "reservation_id",
+    "status",
+    "starts_at",
+    "ends_at",
+    "seat_id",
+    "desk_id",
+    "office_id",
+    "level_id",
+    "checked_in_at",
+    "checked_out_at",
+    "state_digest"
+   ]
+  },
+  {
    "id": "request_reservation_deletion",
    "handler": true,
    "dispatch": true,
-   "title": "Cancel my booking",
-   "description": "Cancel one of the person's own bookings. Depending on the workspace's validation rules it is cancelled at once (status completed) or a validator must approve it first (status pending_validation: tell the person it is not cancelled yet).",
+   "title": "Ask to delete a started booking",
+   "description": "Ask to delete one of the person's own bookings that has ALREADY started. Depending on the workspace's validation rules it is deleted at once (status completed) or a validator must approve it first (status pending_validation: tell the person it is not deleted yet). A booking that has not started is cancelled directly with deskilo_cancel_reservation instead.",
    "rpc": "request_reservation_deletion",
    "authority": {
     "kind": "self"

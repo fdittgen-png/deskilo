@@ -2545,10 +2545,12 @@ Map<String, _Getter> _part6() => {
   'mcpNextSignInGoogle': (l) => l.mcpNextSignInGoogle,
   'mcpNextUnavailable': (l) => l.mcpNextUnavailable,
   'mcpOpAvailability': (l) => l.mcpOpAvailability,
+  'mcpOpCancelReservation': (l) => l.mcpOpCancelReservation,
   'mcpOpCapabilities': (l) => l.mcpOpCapabilities,
   'mcpOpCheckIn': (l) => l.mcpOpCheckIn,
   'mcpOpCheckOut': (l) => l.mcpOpCheckOut,
   'mcpOpCreateReservation': (l) => l.mcpOpCreateReservation,
+  'mcpOpGetPlace': (l) => l.mcpOpGetPlace,
   'mcpOpGetValidation': (l) => l.mcpOpGetValidation,
   'mcpOpInvoiceIssue': (l) => l.mcpOpInvoiceIssue,
   'mcpOpInvoiceVoid': (l) => l.mcpOpInvoiceVoid,
@@ -2841,11 +2843,11 @@ Map<String, _Getter> _part6() => {
   'negotiationItemsHint': (l) => l.negotiationItemsHint,
   'negotiationKeepCurrent': (l) => l.negotiationKeepCurrent,
   'negotiationMineColumn': (l) => l.negotiationMineColumn,
-  'negotiationNote': (l) => l.negotiationNote,
-  'negotiationOccupation': (l) => l.negotiationOccupation,
 };
 
 Map<String, _Getter> _part7() => {
+  'negotiationNote': (l) => l.negotiationNote,
+  'negotiationOccupation': (l) => l.negotiationOccupation,
   'negotiationOccupationHint': (l) => l.negotiationOccupationHint,
   'negotiationOnTariff': (l) => l.negotiationOnTariff,
   'negotiationOverage': (l) => l.negotiationOverage,
@@ -3244,11 +3246,11 @@ Map<String, _Getter> _part7() => {
   'portalThisServer': (l) => l.portalThisServer,
   'portalUseCode': (l) => l.portalUseCode,
   'portalUseWorkspaceInfo': (l) => l.portalUseWorkspaceInfo,
-  'portalVisibilityLink': (l) => l.portalVisibilityLink,
-  'portalVisibilityLinkBody': (l) => l.portalVisibilityLinkBody,
 };
 
 Map<String, _Getter> _part8() => {
+  'portalVisibilityLink': (l) => l.portalVisibilityLink,
+  'portalVisibilityLinkBody': (l) => l.portalVisibilityLinkBody,
   'portalWebsite': (l) => l.portalWebsite,
   'preferencesSaveFailed': (l) => l.preferencesSaveFailed,
   'preferencesScopeHint': (l) => l.preferencesScopeHint,
@@ -3647,11 +3649,11 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningPendingExpensesTotal': (l) => l.reportFieldMeaningPendingExpensesTotal,
   'reportFieldMeaningPendingPaymentsTotal': (l) => l.reportFieldMeaningPendingPaymentsTotal,
   'reportFieldMeaningPeriod': (l) => l.reportFieldMeaningPeriod,
-  'reportFieldMeaningPeriodMonth': (l) => l.reportFieldMeaningPeriodMonth,
-  'reportFieldMeaningPeriodYear': (l) => l.reportFieldMeaningPeriodYear,
 };
 
 Map<String, _Getter> _part9() => {
+  'reportFieldMeaningPeriodMonth': (l) => l.reportFieldMeaningPeriodMonth,
+  'reportFieldMeaningPeriodYear': (l) => l.reportFieldMeaningPeriodYear,
   'reportFieldMeaningProforma': (l) => l.reportFieldMeaningProforma,
   'reportFieldMeaningPurchaseOrder': (l) => l.reportFieldMeaningPurchaseOrder,
   'reportFieldMeaningRecoveryIndemnity': (l) => l.reportFieldMeaningRecoveryIndemnity,
@@ -4050,11 +4052,11 @@ Map<String, _Getter> _part9() => {
   'subprocessExpenses': (l) => l.subprocessExpenses,
   'subprocessExpensesDesc': (l) => l.subprocessExpensesDesc,
   'subprocessExperience': (l) => l.subprocessExperience,
-  'subprocessExperienceDesc': (l) => l.subprocessExperienceDesc,
-  'subprocessInvoicing': (l) => l.subprocessInvoicing,
 };
 
 Map<String, _Getter> _part10() => {
+  'subprocessExperienceDesc': (l) => l.subprocessExperienceDesc,
+  'subprocessInvoicing': (l) => l.subprocessInvoicing,
   'subprocessInvoicingDesc': (l) => l.subprocessInvoicingDesc,
   'subprocessPeople': (l) => l.subprocessPeople,
   'subprocessPeopleDesc': (l) => l.subprocessPeopleDesc,
@@ -4453,11 +4455,11 @@ Map<String, _Getter> _part10() => {
   'templateRegionUse': (l) => l.templateRegionUse,
   'templateRequirementRemove': (l) => l.templateRequirementRemove,
   'templateRequirementsReset': (l) => l.templateRequirementsReset,
-  'templateWhy': (l) => l.templateWhy,
-  'templateWhyHide': (l) => l.templateWhyHide,
 };
 
 Map<String, _Getter> _part11() => {
+  'templateWhy': (l) => l.templateWhy,
+  'templateWhyHide': (l) => l.templateWhyHide,
   'templateWidenConfirm': (l) => l.templateWidenConfirm,
   'templatesLoadFailed': (l) => l.templatesLoadFailed,
   'themeDark': (l) => l.themeDark,

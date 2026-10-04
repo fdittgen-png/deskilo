@@ -6132,10 +6132,18 @@
   "mcpNextSignInGoogle": "Los asistentes usan su inicio de sesión con Google. Inicie sesión con Google para continuar.",
   "mcpNextUnavailable": "El servidor no pudo responder. No se supone nada; inténtelo más tarde.",
   "mcpOpAvailability": "Ver plazas libres",
+  "mcpOpCancelReservation": "Cancelar sus reservas que aún no han empezado",
+  "@mcpOpCancelReservation": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpCapabilities": "Ver qué puede hacer allí",
   "mcpOpCheckIn": "Registrar su entrada",
   "mcpOpCheckOut": "Registrar su salida",
   "mcpOpCreateReservation": "Reservar una plaza por usted",
+  "mcpOpGetPlace": "Describir un lugar y mostrarlo si lo pide",
+  "@mcpOpGetPlace": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpGetValidation": "Leer una solicitud de validación",
   "mcpOpInvoiceIssue": "Emitir una factura",
   "mcpOpInvoiceVoid": "Anular una factura",
@@ -6146,7 +6154,10 @@
   "mcpOpMyStatement": "Ver su estado de cuenta",
   "mcpOpPendingValidations": "Ver solicitudes de validación pendientes",
   "mcpOpRefund": "Reembolsar una factura",
-  "mcpOpReservationDeletion": "Pedir que se elimine una reserva",
+  "mcpOpReservationDeletion": "Pedir la eliminación de una reserva ya iniciada",
+  "@mcpOpReservationDeletion": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpRespond": "Responder a una solicitud de validación",
   "mcpOpSubscription": "Cambiar la parte de suscripción de un miembro",
   "mcpOpUpdateReservation": "Cambiar sus reservas",

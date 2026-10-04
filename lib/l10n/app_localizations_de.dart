@@ -10019,6 +10019,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpOpAvailability => 'Freie Plätze sehen';
 
   @override
+  String get mcpOpCancelReservation =>
+      'Ihre noch nicht begonnenen Buchungen stornieren';
+
+  @override
   String get mcpOpCapabilities => 'Sehen, was er dort tun darf';
 
   @override
@@ -10029,6 +10033,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mcpOpCreateReservation => 'Einen Platz für Sie buchen';
+
+  @override
+  String get mcpOpGetPlace => 'Einen Ort beschreiben und auf Wunsch zeigen';
 
   @override
   String get mcpOpGetValidation => 'Eine Freigabeanfrage lesen';
@@ -10063,7 +10070,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mcpOpReservationDeletion =>
-      'Löschung einer Reservierung beantragen';
+      'Löschung einer bereits begonnenen Buchung beantragen';
 
   @override
   String get mcpOpRespond => 'Auf eine Freigabeanfrage antworten';

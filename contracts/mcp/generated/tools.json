@@ -67,7 +67,7 @@
     {
       "name": "deskilo_get_capabilities",
       "title": "What can I do here?",
-      "description": "What this assistant may do in one workspace right now and until when access is approved, plus the workspace's time zone, currency and opening hours. Call it before booking to read \"tomorrow morning\" in the workspace's zone, and when a tool is missing or a call was refused, to explain what is allowed.",
+      "description": "What this assistant may do in one workspace right now and until when access is approved, plus the workspace's time zone, currency, opening hours and its named booking periods (morning, afternoon, full_day) with their exact local times. Call it before booking to read \"tomorrow morning\" in the workspace's zone, and when a tool is missing or a call was refused, to explain what is allowed.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -389,6 +389,120 @@
       }
     },
     {
+      "name": "deskilo_get_place",
+      "title": "Describe a place",
+      "description": "Describe one place: a seat, a desk, an office or a level (by its id from deskilo_get_availability or deskilo_list_my_reservations), or one of the person's own reservations by reservation_id. Answers what it is, where it sits (level, office, desk), how many seats it has and what a seat offers. It never includes a picture by default: set include_image to true ONLY when the person explicitly asks to see an image, picture, plan or map; the answer then carries a floor-plan picture with that place highlighted.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "reservation_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "One of the person's own reservations (a reservation_id from deskilo_list_my_reservations): describes the place it is for."
+          },
+          "seat_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A seat_id from deskilo_get_availability."
+          },
+          "desk_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A desk_id."
+          },
+          "office_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "An office_id."
+          },
+          "level_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A level_id."
+          },
+          "include_image": {
+            "type": "boolean",
+            "description": "False by default. True ONLY when the person explicitly asked for an image, picture, plan or map of the place: the answer then carries a floor-plan picture with the place highlighted. Never set it on your own initiative.",
+            "examples": [
+              false
+            ]
+          }
+        },
+        "required": [
+          "workspace_id"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "get_place"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "annotations": {
+        "title": "Describe a place",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
       "name": "deskilo_get_my_statement",
       "title": "My monthly statement",
       "description": "The person's own statement for one month: subscription fee, included and used half-days, overage, supplements, credits, balance and VAT. Amounts are integer minor units (cents) of `currency`.",
@@ -578,7 +692,7 @@
     {
       "name": "deskilo_create_reservation",
       "title": "Book a place",
-      "description": "Book a place for the person: a seat (usually a seat_id from deskilo_get_availability), or a whole desk, office or level where the workspace allows it. The workspace's own rules apply exactly as in the app; a refusal says why in plain words. Generate a new request_id per booking; resending the same request_id never books twice.",
+      "description": "Book a place for the person: a seat (usually a seat_id from deskilo_get_availability), or a whole desk, office or level where the workspace allows it. The workspace's own rules apply exactly as in the app; a refusal says why in plain words. Generate a new request_id per booking; resending the same request_id never books twice. To book \"the full day\", \"the morning\" or \"the afternoon\" give date and period instead of times: the workspace's own booking periods (see deskilo_get_capabilities, booking_periods) are applied exactly.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -623,7 +737,7 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
-            "description": "Start, ISO 8601 with an explicit offset in the workspace's time zone, e.g. 2026-10-05T09:00:00+02:00.",
+            "description": "Start, ISO 8601 with an explicit offset in the workspace's time zone, e.g. 2026-10-05T09:00:00+02:00. Optional when date and period are given.",
             "examples": [
               "2026-10-05T09:00:00+02:00"
             ]
@@ -632,9 +746,29 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
-            "description": "End, ISO 8601 with an explicit offset, after starts_at.",
+            "description": "End, ISO 8601 with an explicit offset, after starts_at. Optional when date and period are given.",
             "examples": [
               "2026-10-05T13:00:00+02:00"
+            ]
+          },
+          "date": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "The local day to book, YYYY-MM-DD in the workspace's time zone. Use with period instead of starts_at/ends_at.",
+            "examples": [
+              "2026-10-28"
+            ]
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "morning",
+              "afternoon",
+              "full_day"
+            ],
+            "description": "A booking period of the workspace, named in get_capabilities (booking_periods) with its exact local times: morning, afternoon or the full working day. Use with date; the server turns it into the workspace's exact times, so never compute them yourself.",
+            "examples": [
+              "full_day"
             ]
           },
           "check_in": {
@@ -647,9 +781,7 @@
         },
         "required": [
           "request_id",
-          "workspace_id",
-          "starts_at",
-          "ends_at"
+          "workspace_id"
         ]
       },
       "outputSchema": {
@@ -718,7 +850,7 @@
     {
       "name": "deskilo_update_reservation",
       "title": "Move my booking",
-      "description": "Change the start and end of one of the person's own bookings. The workspace's rules apply as in the app.",
+      "description": "Change the start and end of one of the person's own bookings. The workspace's rules apply as in the app. To book \"the full day\", \"the morning\" or \"the afternoon\" give date and period instead of times: the workspace's own booking periods (see deskilo_get_capabilities, booking_periods) are applied exactly.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -748,7 +880,7 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
-            "description": "The new start, ISO 8601 with an explicit offset.",
+            "description": "The new start, ISO 8601 with an explicit offset. Optional when date and period are given.",
             "examples": [
               "2026-10-05T09:00:00+02:00"
             ]
@@ -757,9 +889,29 @@
             "type": "string",
             "format": "date-time",
             "pattern": "(Z|[+-]\\d{2}:\\d{2})$",
-            "description": "The new end, ISO 8601 with an explicit offset.",
+            "description": "The new end, ISO 8601 with an explicit offset. Optional when date and period are given.",
             "examples": [
               "2026-10-05T13:00:00+02:00"
+            ]
+          },
+          "date": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "The local day to book, YYYY-MM-DD in the workspace's time zone. Use with period instead of starts_at/ends_at.",
+            "examples": [
+              "2026-10-28"
+            ]
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "morning",
+              "afternoon",
+              "full_day"
+            ],
+            "description": "A booking period of the workspace, named in get_capabilities (booking_periods) with its exact local times: morning, afternoon or the full working day. Use with date; the server turns it into the workspace's exact times, so never compute them yourself.",
+            "examples": [
+              "full_day"
             ]
           },
           "expected_state": {
@@ -771,9 +923,7 @@
         "required": [
           "request_id",
           "workspace_id",
-          "reservation_id",
-          "starts_at",
-          "ends_at"
+          "reservation_id"
         ]
       },
       "outputSchema": {
@@ -1048,9 +1198,113 @@
       }
     },
     {
+      "name": "deskilo_cancel_reservation",
+      "title": "Cancel a booking",
+      "description": "Cancel one of the person's own bookings that has NOT started yet, directly: it is cancelled at once and the place is free again (status completed). A booking that already started cannot be cancelled this way; for that use deskilo_request_reservation_deletion. Resending the same request_id never cancels twice.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "reservation_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A reservation_id from deskilo_list_my_reservations."
+          },
+          "expected_state": {
+            "type": "string",
+            "maxLength": 64,
+            "description": "Optional: the state_digest you last read for this reservation. If it changed since, nothing happens and the answer is a conflict carrying the current state."
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "reservation_id"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "cancel_reservation"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "annotations": {
+        "title": "Cancel a booking",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
       "name": "deskilo_request_reservation_deletion",
-      "title": "Cancel my booking",
-      "description": "Cancel one of the person's own bookings. Depending on the workspace's validation rules it is cancelled at once (status completed) or a validator must approve it first (status pending_validation: tell the person it is not cancelled yet).",
+      "title": "Ask to delete a started booking",
+      "description": "Ask to delete one of the person's own bookings that has ALREADY started. Depending on the workspace's validation rules it is deleted at once (status completed) or a validator must approve it first (status pending_validation: tell the person it is not deleted yet). A booking that has not started is cancelled directly with deskilo_cancel_reservation instead.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -1149,7 +1403,7 @@
         }
       },
       "annotations": {
-        "title": "Cancel my booking",
+        "title": "Ask to delete a started booking",
         "readOnlyHint": false,
         "destructiveHint": true,
         "idempotentHint": true,

@@ -18,8 +18,12 @@ String mcpOperationLabel(AppLocalizations? l10n, String op) => switch (op) {
     l10n?.mcpOpUpdateReservation ?? 'Change your reservations',
   'check_in' => l10n?.mcpOpCheckIn ?? 'Check you in',
   'check_out' => l10n?.mcpOpCheckOut ?? 'Check you out',
+  'get_place' =>
+    l10n?.mcpOpGetPlace ?? 'Describe a place, and show it when you ask',
+  'cancel_reservation' =>
+    l10n?.mcpOpCancelReservation ?? 'Cancel your bookings that have not started',
   'request_reservation_deletion' =>
-    l10n?.mcpOpReservationDeletion ?? 'Ask to delete a reservation',
+    l10n?.mcpOpReservationDeletion ?? 'Ask to delete a booking that has started',
   'list_pending_validations' =>
     l10n?.mcpOpPendingValidations ?? 'See pending validation requests',
   'get_validation' => l10n?.mcpOpGetValidation ?? 'Read a validation request',
