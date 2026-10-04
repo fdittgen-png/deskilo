@@ -98,6 +98,8 @@ public.levels.levels_select
 public.levels.levels_write
 public.levels.levels_write_sites
 public.levels.mcp_delegated_deny
+public.licence_plans.licence_plans_read
+public.licence_plans.mcp_delegated_deny
 public.managed_identities.managed_identities_select
 public.managed_identities.mcp_delegated_deny
 public.mcp_action_confirmations.mcp_delegated_deny
@@ -187,6 +189,10 @@ public.reservation_requests.mcp_delegated_deny
 public.reservation_target_history.mcp_delegated_deny
 public.reservations.mcp_delegated_deny
 public.reservations.reservations_select
+public.resource_favorites.mcp_delegated_deny
+public.resource_favorites.resource_favorites_own
+public.resource_ratings.mcp_delegated_deny
+public.resource_ratings.resource_ratings_own
 public.retired_invite_codes.mcp_delegated_deny
 public.rights_requests.mcp_delegated_deny
 public.rights_requests.rights_requests_select
@@ -236,6 +242,7 @@ public.workspace_field_value_options.mcp_delegated_deny
 public.workspace_field_value_options.workspace_field_value_options_select
 public.workspace_field_values.mcp_delegated_deny
 public.workspace_field_values.workspace_field_values_select
+public.workspace_licences.mcp_delegated_deny
 public.workspace_mcp_policies.mcp_delegated_deny
 public.workspace_mcp_policy_revisions.mcp_delegated_deny
 public.workspace_public_pages.mcp_delegated_deny

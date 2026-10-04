@@ -298,4 +298,110 @@ void main() {
     expect(GuideEvents.sink, isNull);
     await tester.pumpWidget(const SizedBox());
   });
+
+  Color ringColor(WidgetTester tester) {
+    final box = tester.widget<DecoratedBox>(_key('guide-host-ring'));
+    return ((box.decoration as BoxDecoration).border! as Border).top.color;
+  }
+
+  Future<ProviderContainer> showControl(
+    WidgetTester tester, {
+    bool reducedMotion = false,
+  }) async {
+    final c = await _pump(tester, reducedMotion: reducedMotion);
+    expect(_session(c).start(_guide(const [_tapSave])), isTrue);
+    // The control is located a moment after the step appears.
+    await tester.pump(const Duration(milliseconds: 600));
+    await tester.pump();
+    return c;
+  }
+
+  testWidgets('the wizard points at the control: a flash, a pulsing ring that '
+      'alternates colour, an arrow — then it rests', (tester) async {
+    final c = await showControl(tester);
+    expect(_key('guide-host-pointer'), findsOneWidget);
+    expect(_key('guide-host-flash'), findsOneWidget,
+        reason: 'a new control is announced by a flash');
+    final seen = <Color>{};
+    for (var i = 0; i < 16; i++) {
+      seen.add(ringColor(tester));
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(seen.length, greaterThan(2),
+        reason: 'the ring moves between the two accent colours');
+    await tester.pumpAndSettle();
+    expect(_key('guide-host-flash'), findsNothing);
+    expect(_key('guide-host-ring'), findsOneWidget,
+        reason: 'after the pulse the ring stays, steady');
+    final resting = ringColor(tester);
+    await tester.pump(const Duration(seconds: 1));
+    expect(ringColor(tester), resting);
+    // Neither the ring nor the arrow takes a tap.
+    expect(
+      find.ancestor(
+        of: _key('guide-host-pointer'),
+        matching: find.byType(IgnorePointer),
+      ),
+      findsWidgets,
+    );
+    await _end(tester, c);
+  });
+
+  testWidgets('with motion off the ring and the arrow are still, with no '
+      'flash', (tester) async {
+    final c = await showControl(tester, reducedMotion: true);
+    expect(_key('guide-host-ring'), findsOneWidget);
+    expect(_key('guide-host-pointer'), findsOneWidget);
+    expect(_key('guide-host-flash'), findsNothing);
+    final first = ringColor(tester);
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(ringColor(tester), first);
+    await _end(tester, c);
+  });
+
+  testWidgets('the pane folds into a small circle that can be moved, and a '
+      'tap brings the pane back at the same step', (tester) async {
+    final c = await showControl(tester);
+    await tester.pumpAndSettle();
+    expect(_key('guide-host'), findsOneWidget);
+    await tester.tap(_key('guide-host-minimize'));
+    await tester.pumpAndSettle();
+    expect(_key('guide-host'), findsNothing);
+    expect(_key('guide-host-bubble'), findsOneWidget);
+    expect(find.text('1/1'), findsOneWidget);
+    expect(tester.getSize(_key('guide-host-bubble')).shortestSide,
+        greaterThanOrEqualTo(48));
+    expect(_key('guide-host-ring'), findsOneWidget,
+        reason: 'only the explanation is put aside; the pointer stays');
+    expect(_key('guide-host-pointer'), findsOneWidget);
+
+    final before = tester.getTopLeft(_key('guide-host-bubble'));
+    await tester.drag(_key('guide-host-bubble'), const Offset(-200, -300));
+    await tester.pumpAndSettle();
+    final moved = tester.getTopLeft(_key('guide-host-bubble'));
+    expect(moved.dx, lessThan(before.dx - 100));
+    expect(moved.dy, lessThan(before.dy - 150));
+    expect(_key('guide-host'), findsNothing, reason: 'a drag does not restore');
+
+    await tester.tap(_key('guide-host-bubble'));
+    await tester.pumpAndSettle();
+    expect(_key('guide-host-bubble'), findsNothing);
+    expect(_key('guide-host'), findsOneWidget);
+    expect(_key('guide-host-step-g1'), findsOneWidget);
+    await _end(tester, c);
+  });
+
+  testWidgets('a finished guide shows its pane even when it was minimised',
+      (tester) async {
+    final c = await showControl(tester);
+    await tester.pumpAndSettle();
+    await tester.tap(_key('guide-host-minimize'));
+    await tester.pumpAndSettle();
+    _session(c).stop();
+    await tester.pumpAndSettle();
+    expect(_key('guide-host-bubble'), findsNothing);
+    expect(_key('guide-host-close'), findsOneWidget,
+        reason: 'the result and Close are never left hidden');
+    await _end(tester, c);
+  });
 }

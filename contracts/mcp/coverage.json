@@ -2,7 +2,7 @@
  "contract": "deskilo.mcp.coverage",
  "version": 1,
  "_comment": "#1632 — every implemented MCP tool mapped to the executable tests that prove it; checked by tool/mcp_coverage.dart and test/tool/mcp_coverage_test.dart. A change to contracts/mcp/operations.json changes contract_sha256: review this map, then record the new fingerprint.",
- "contract_sha256": "c9a8d9ad1b699a796f7ed255ac3f0526d334d3fa3c9c404bd56db4436bebb9d4",
+ "contract_sha256": "e4d56ce3ef1819b899249f59b06fddb6c82f0180c620fc1690e295979b5d08af",
  "catalogue_tests": [
   "test/tool/mcp_contract_test.dart",
   "test/features/mcp/mcp_native_contract_parity_test.dart",
@@ -51,6 +51,22 @@
     "supabase/tests/database/97_mcp_conformance_journey.sql"
    ]
   },
+  "get_place": {
+   "positive": [
+    "supabase/tests/database/153_mcp_get_place.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/153_mcp_get_place.sql"
+   ]
+  },
+  "list_my_favorites": {
+   "positive": [
+    "supabase/tests/database/156_mcp_place_feedback.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/156_mcp_place_feedback.sql"
+   ]
+  },
   "get_my_statement": {
    "positive": [
     "supabase/tests/database/97_mcp_conformance_journey.sql"
@@ -70,7 +86,8 @@
   "create_reservation": {
    "positive": [
     "supabase/tests/database/75_mcp_reservation_tools.sql",
-    "supabase/tests/database/97_mcp_conformance_journey.sql"
+    "supabase/tests/database/97_mcp_conformance_journey.sql",
+    "supabase/tests/database/154_mcp_booking_periods.sql"
    ],
    "denial": [
     "supabase/tests/database/96_scoped_invalidation.sql",
@@ -84,7 +101,8 @@
   },
   "update_reservation": {
    "positive": [
-    "supabase/tests/database/75_mcp_reservation_tools.sql"
+    "supabase/tests/database/75_mcp_reservation_tools.sql",
+    "supabase/tests/database/154_mcp_booking_periods.sql"
    ],
    "denial": [
     "supabase/tests/database/75_mcp_reservation_tools.sql"
@@ -113,6 +131,39 @@
    ],
    "state": [
     "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ]
+  },
+  "cancel_reservation": {
+   "positive": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ],
+   "state": [
+    "supabase/tests/database/75_mcp_reservation_tools.sql"
+   ]
+  },
+  "set_favorite": {
+   "positive": [
+    "supabase/tests/database/156_mcp_place_feedback.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/156_mcp_place_feedback.sql"
+   ],
+   "state": [
+    "supabase/tests/database/156_mcp_place_feedback.sql"
+   ]
+  },
+  "rate_place": {
+   "positive": [
+    "supabase/tests/database/156_mcp_place_feedback.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/156_mcp_place_feedback.sql"
+   ],
+   "state": [
+    "supabase/tests/database/156_mcp_place_feedback.sql"
    ]
   },
   "request_reservation_deletion": {

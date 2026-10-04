@@ -84,12 +84,15 @@ const Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'resource_favorites': 'a member\'s own marks on places (#2185): personal data, returned by export_my_data to the member it belongs to; the places they point at are exported',
+  'resource_ratings': 'a member\'s own 0-5 star ratings of places (#2185): personal data, returned by export_my_data to the member it belongs to, not portable configuration',
   'analytics_history': 'when this installation began recording analytics history (#1920); a fact about this installation, not portable configuration — an imported space starts its own history',
   'seat_history': 'analytics evidence written by triggers on this installation (#1920); the seats it describes are exported, and an import records history from the rows it creates',
   'opening_hours_history': 'analytics evidence written by triggers on this installation (#1920); the booking rules it describes are exported',
   'reservation_origins': 'which assistant created a booking, audit evidence of this installation\'s MCP channel (#2145); the reservations it describes are exported',
   'reservation_target_history': 'analytics evidence written by triggers on this installation (#1920); the reservations it describes are exported',
   'retired_invite_codes': 'withdrawn invitation secrets of this installation, kept only to answer "revoked"; never portable configuration (#1652)',
+  'workspace_licences': 'the platform\'s licence record (non-profit verification, negotiated plan, billing reference) is not the space\'s data to export or import (0367)',
   'workspace_public_pages': 'publication consent is installation-specific; importing a workspace must not publish it (#1791)',
   'public_workspace_cards': 'derived public projection regenerated only by explicit publication on this installation (#1791)',
   'account_field_audience_spaces': 'a person\'s own choice of which of their spaces sees a field of their account (#1823); it belongs to the account, not to the space, and travels in that person\'s own export',

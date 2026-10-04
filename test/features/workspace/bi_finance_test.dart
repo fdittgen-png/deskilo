@@ -117,9 +117,16 @@ Future<_Finance> _pump(
   return finance;
 }
 
+/// These tests are about the TABLE and chart renderings of the rows; the
+/// dashboard is the default view now, so they ask for the table.
+String _tableView(String location) =>
+    location.contains('view=')
+        ? location
+        : '$location${location.contains('?') ? '&' : '?'}view=table';
+
 Future<void> _open(WidgetTester tester, String location) async {
   unawaited(
-    GoRouter.of(tester.element(find.byType(Scaffold).first)).push(location),
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).push(_tableView(location)),
   );
   await tester.pumpAndSettle();
 }
@@ -320,7 +327,7 @@ void main() {
     expect(find.byType(WorkspaceStatusScreen), findsOneWidget);
     GoRouter.of(tester.element(find.byType(Scaffold).first)).pop();
     await tester.pumpAndSettle();
-    expect(_query(tester), {'cmp': 'year', 'cards': 'finance.invoiced'});
+    expect(_query(tester), {'cmp': 'year', 'cards': 'finance.invoiced', 'view': 'table'});
   });
 
   testWidgets('without viewFinances the finance cards do not exist and '

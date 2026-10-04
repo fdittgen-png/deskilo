@@ -46,5 +46,21 @@
   "guideActionSelectPeriod": "choisissez la période",
   "guideActionSelectResource": "choisissez une place sur le plan ou dans la liste",
   "guideActionConfirmBooking": "confirmez la réservation et attendez la réponse",
-  "guideBookingRefusedRecovery": "La réservation a été refusée (place prise ou règle). Choisissez une autre place ou période, puis confirmez à nouveau."
+  "guideBookingRefusedRecovery": "La réservation a été refusée (place prise ou règle). Choisissez une autre place ou période, puis confirmez à nouveau.",
+  "guideHostMinimize": "Réduire le guide",
+  "@guideHostMinimize": {
+    "description": "Task wizard: guideHostMinimize"
+  },
+  "guideHostRestore": "Afficher le guide (étape {current} sur {total})",
+  "@guideHostRestore": {
+    "description": "Task wizard: guideHostRestore",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
 }

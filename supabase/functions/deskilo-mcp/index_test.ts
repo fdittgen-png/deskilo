@@ -494,3 +494,36 @@ Deno.test("#2145 the statement is always the caller's own: a member id is refuse
   assert(r.json.result.content[0].text.includes("unknown field member_id"));
   assertEquals(calls.filter((c) => c.path === "/rest/v1/rpc/mcp_execute_v1").length, before);
 });
+
+const PLACE_RENDER = JSON.stringify({
+  highlight: { kind: "seat", id: "s1" },
+  offices: [["o1", 0, 0, 40, 30, 0]],
+  desks: [["d1", "o1", 4, 4, 20, 10]],
+  seats: [["s1", "d1", 6, 6, "n"]],
+});
+
+async function placeCall(args: Record<string, unknown>) {
+  envelope = {
+    schema_version: 1, status: "completed",
+    data: { kind: "seat", label: "Level 1 · Seat A", seats: 1, image_requested: args.include_image === true, render: PLACE_RENDER },
+  };
+  operationsOf[ALICE] = [...operationsOf[ALICE], "get_place"];
+  return await call(nextId++, { workspace_id: WS_B, ...args }, "deskilo_get_place");
+}
+
+Deno.test("get_place: no picture unless include_image is true, and the geometry never leaks as text", async () => {
+  const r = await placeCall({ reservation_id: "6b1d3f0e-0000-4000-8000-000000000009" });
+  assert(!r.result.content.some((c: { type: string }) => c.type === "image"));
+  assert(!JSON.stringify(r.result).includes("offices"), "the plan geometry is not part of the text");
+  assertEquals(r.result.structuredContent.data.kind, "seat");
+});
+
+Deno.test("get_place: asked for, the answer carries a PNG image beside the description", async () => {
+  const r = await placeCall({ reservation_id: "6b1d3f0e-0000-4000-8000-000000000009", include_image: true });
+  const image = r.result.content.find((c: { type: string }) => c.type === "image");
+  assert(image, "an image content block");
+  assertEquals(image.mimeType, "image/png");
+  assert(atob(image.data).startsWith("\x89PNG"));
+  assert(r.result.content.some((c: { type: string }) => c.type === "text"), "the description is still there");
+  assert(!JSON.stringify(r.result.structuredContent).includes("offices"));
+});

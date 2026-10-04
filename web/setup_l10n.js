@@ -1046,6 +1046,10 @@ window.SETUP_L10N={
     "Get started card",
     "After joining or creating a workspace, a member sees one compact card on the Reserve hub: which workspace they are in, and one suggested next step — choose a time to book, view their membership, or open the help — only where the features and their permissions allow it. Not now hides it; Settings can show it again. It never books, pays or approves anything. For whoever configures the space, the settings also show how far it is from a first booking, section by section. Off hides the card and that checklist and changes nothing else."
    ],
+   "placeFeedback": [
+    "Favourites and ratings",
+    "Members mark seats, desks, offices and levels as favourites and rate them from 0 to 5 stars. A favourite is the member's own; a rating shows its average and how many gave one, never who. An assistant can list the favourites, book one, and record a rating. Off hides the hearts and stars and refuses the writes; nothing else follows it."
+   ],
    "publicListings": [
     "Public workspace listing",
     "Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts."
@@ -2339,6 +2343,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Carte Premiers pas",
     "Après avoir rejoint ou créé un espace, un membre voit une carte compacte sur le hub Réserver : l’espace dans lequel il se trouve et une prochaine étape suggérée — choisir un créneau à réserver, consulter son adhésion ou ouvrir l’aide — seulement là où les fonctionnalités et ses permissions le permettent. Pas maintenant la masque ; les Réglages peuvent la réafficher. Elle ne réserve, ne paie et n’approuve jamais rien. Pour qui configure l’espace, les réglages montrent aussi, section par section, ce qui le sépare d’une première réservation. Désactivée, elle masque la carte et cette liste et ne change rien d’autre."
+   ],
+   "placeFeedback": [
+    "Favoris et notes",
+    "Les membres marquent des places, bureaux, salles et étages en favoris et les notent de 0 à 5 étoiles. Un favori est personnel ; une note montre sa moyenne et le nombre de notes, jamais qui. Un assistant peut lister les favoris, en réserver un et enregistrer une note. Désactivé, les cœurs et les étoiles disparaissent et les écritures sont refusées ; rien d'autre n'en dépend."
    ],
    "publicListings": [
     "Présentation publique de l’espace",
@@ -3634,6 +3642,10 @@ window.SETUP_L10N={
     "Karte „Erste Schritte“",
     "Nach dem Beitritt oder dem Anlegen eines Workspace sieht ein Mitglied eine kompakte Karte im Reservieren-Hub: in welchem Workspace es ist und einen vorgeschlagenen nächsten Schritt — eine Zeit zum Buchen wählen, die eigene Mitgliedschaft ansehen oder die Hilfe öffnen — nur dort, wo Funktionen und Berechtigungen es erlauben. „Jetzt nicht“ blendet sie aus; die Einstellungen zeigen sie wieder an. Sie bucht, zahlt und genehmigt nie etwas. Wer den Workspace einrichtet, sieht in den Einstellungen außerdem Bereich für Bereich, was bis zu einer ersten Buchung fehlt. Aus blendet die Karte und diese Liste aus und ändert sonst nichts."
    ],
+   "placeFeedback": [
+    "Favoriten und Bewertungen",
+    "Mitglieder markieren Plätze, Tische, Büros und Etagen als Favoriten und bewerten sie mit 0 bis 5 Sternen. Ein Favorit gehört dem Mitglied; eine Bewertung zeigt den Durchschnitt und die Anzahl, nie wer. Ein Assistent kann die Favoriten auflisten, einen buchen und eine Bewertung eintragen. Aus blendet Herzen und Sterne aus und weist das Schreiben ab; sonst hängt nichts daran."
+   ],
    "publicListings": [
     "Öffentlicher Workspace-Eintrag",
     "Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten."
@@ -4928,6 +4940,10 @@ window.SETUP_L10N={
     "Tarjeta Primeros pasos",
     "Tras unirse a un espacio o crearlo, un miembro ve una tarjeta compacta en el hub Reservar: en qué espacio está y un siguiente paso sugerido — elegir un horario para reservar, ver su membresía o abrir la ayuda — solo donde las funciones y sus permisos lo permiten. Ahora no la oculta; los Ajustes pueden volver a mostrarla. Nunca reserva, paga ni aprueba nada. Para quien configura el espacio, los ajustes muestran además, sección por sección, lo que falta para una primera reserva. Desactivada, oculta la tarjeta y esa lista y no cambia nada más."
    ],
+   "placeFeedback": [
+    "Favoritos y valoraciones",
+    "Los miembros marcan puestos, mesas, oficinas y plantas como favoritos y los valoran de 0 a 5 estrellas. Un favorito es personal; una valoración muestra su media y cuántas hay, nunca quién. Un asistente puede listar los favoritos, reservar uno y registrar una valoración. Desactivado oculta corazones y estrellas y rechaza las escrituras; nada más depende de ello."
+   ],
    "publicListings": [
     "Anuncio público del espacio",
     "Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores."
@@ -6221,6 +6237,10 @@ window.SETUP_L10N={
    "memberGettingStarted": [
     "Scheda Primi passi",
     "Dopo essersi unito a uno spazio o averlo creato, un membro vede una scheda compatta nell’hub Prenota: in quale spazio si trova e un passo successivo suggerito — scegliere un orario da prenotare, vedere la propria iscrizione o aprire l’aiuto — solo dove le funzioni e i suoi permessi lo consentono. Non ora la nasconde; le Impostazioni possono mostrarla di nuovo. Non prenota, non paga e non approva mai nulla. Per chi configura lo spazio, le impostazioni mostrano anche, sezione per sezione, cosa manca a una prima prenotazione. Disattivata, nasconde la scheda e quell’elenco e non cambia altro."
+   ],
+   "placeFeedback": [
+    "Preferiti e valutazioni",
+    "I membri segnano postazioni, tavoli, uffici e piani come preferiti e li valutano da 0 a 5 stelle. Un preferito è personale; una valutazione mostra la media e quante ce ne sono, mai chi. Un assistente può elencare i preferiti, prenotarne uno e registrare una valutazione. Disattivato nasconde cuori e stelle e rifiuta le scritture; nient'altro ne dipende."
    ],
    "publicListings": [
     "Scheda pubblica dello spazio",

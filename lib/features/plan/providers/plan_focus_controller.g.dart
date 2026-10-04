@@ -54,7 +54,7 @@ final class PlanFocusControllerProvider
 }
 
 String _$planFocusControllerHash() =>
-    r'8b9ce33885a935e9d0a6650ef0fe24cf32630d86';
+    r'eb25c09d42883ba736e0f78cacd43ce8492d8f81';
 
 /// Cross-tab signal carrier for [PlanFocus] (#182). KeepAlive on purpose:
 /// `PlanScreen` lives in the shell's indexed stack, so the request must

@@ -1,0 +1,191 @@
+{
+  "@@locale": "es",
+  "biViewDashboard": "Panel",
+  "@biViewDashboard": {
+    "description": "Business analytics dashboard: biViewDashboard"
+  },
+  "biEvolutionTitle": "Evolución",
+  "@biEvolutionTitle": {
+    "description": "Business analytics dashboard: biEvolutionTitle"
+  },
+  "biProjectionLabel": "Estimación",
+  "@biProjectionLabel": {
+    "description": "Business analytics dashboard: biProjectionLabel"
+  },
+  "biRunningLabel": "en curso",
+  "@biRunningLabel": {
+    "description": "Business analytics dashboard: biRunningLabel"
+  },
+  "biNoDataLabel": "sin datos",
+  "@biNoDataLabel": {
+    "description": "Business analytics dashboard: biNoDataLabel"
+  },
+  "biCompareTitle": "Comparado con el pasado",
+  "@biCompareTitle": {
+    "description": "Business analytics dashboard: biCompareTitle"
+  },
+  "biKindCurrent": "Ahora",
+  "@biKindCurrent": {
+    "description": "Business analytics dashboard: biKindCurrent"
+  },
+  "biKindPrevious": "Periodo anterior",
+  "@biKindPrevious": {
+    "description": "Business analytics dashboard: biKindPrevious"
+  },
+  "biKindYearAgo": "Mismo periodo del año pasado",
+  "@biKindYearAgo": {
+    "description": "Business analytics dashboard: biKindYearAgo"
+  },
+  "biVsPrevious": "vs periodo anterior",
+  "@biVsPrevious": {
+    "description": "Business analytics dashboard: biVsPrevious"
+  },
+  "biVsYearAgo": "vs año pasado",
+  "@biVsYearAgo": {
+    "description": "Business analytics dashboard: biVsYearAgo"
+  },
+  "biCompositionTitle": "De qué se compone",
+  "@biCompositionTitle": {
+    "description": "Business analytics dashboard: biCompositionTitle"
+  },
+  "biSeatReserved": "Reservado",
+  "@biSeatReserved": {
+    "description": "Business analytics dashboard: biSeatReserved"
+  },
+  "biSeatFree": "Libre en horario de apertura",
+  "@biSeatFree": {
+    "description": "Business analytics dashboard: biSeatFree"
+  },
+  "biSeatClosed": "Fuera del horario de apertura",
+  "@biSeatClosed": {
+    "description": "Business analytics dashboard: biSeatClosed"
+  },
+  "biSeatCentre": "del tiempo total de puestos",
+  "@biSeatCentre": {
+    "description": "Business analytics dashboard: biSeatCentre"
+  },
+  "biCollectionCollected": "Cobrado",
+  "@biCollectionCollected": {
+    "description": "Business analytics dashboard: biCollectionCollected"
+  },
+  "biCollectionOutstanding": "Pendiente de cobro",
+  "@biCollectionOutstanding": {
+    "description": "Business analytics dashboard: biCollectionOutstanding"
+  },
+  "biCollectionCentre": "de lo facturado",
+  "@biCollectionCentre": {
+    "description": "Business analytics dashboard: biCollectionCentre"
+  },
+  "biCollectionNoComposition": "Los importes cobrados incluyen facturas anteriores, por lo que no son una parte del total facturado del periodo.",
+  "@biCollectionNoComposition": {
+    "description": "Business analytics dashboard: biCollectionNoComposition"
+  },
+  "biProjectionTitle": "Hacia dónde va",
+  "@biProjectionTitle": {
+    "description": "Business analytics dashboard: biProjectionTitle"
+  },
+  "biProjectionBasis": "Una recta trazada sobre los últimos {count} periodos completos, prolongada. La banda sombreada es el rango probable. Una estimación, no una promesa.",
+  "@biProjectionBasis": {
+    "description": "Business analytics dashboard: biProjectionBasis",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "biProjectionNotEnough": "Aún no hay historial suficiente para proyectar: {have} periodos completos hasta ahora, se necesitan {need}.",
+  "@biProjectionNotEnough": {
+    "description": "Business analytics dashboard: biProjectionNotEnough",
+    "placeholders": {
+      "have": {
+        "type": "int"
+      },
+      "need": {
+        "type": "int"
+      }
+    }
+  },
+  "biRunRate": "Al ritmo actual, este periodo terminaría en torno a {value}.",
+  "@biRunRate": {
+    "description": "Business analytics dashboard: biRunRate",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeUp": "Más alto que {label} ({change}).",
+  "@biNarrativeUp": {
+    "description": "Business analytics dashboard: biNarrativeUp",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeDown": "Más bajo que {label} ({change}).",
+  "@biNarrativeDown": {
+    "description": "Business analytics dashboard: biNarrativeDown",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeFlat": "Más o menos igual que {label}.",
+  "@biNarrativeFlat": {
+    "description": "Business analytics dashboard: biNarrativeFlat",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "biDeltaNone": "Aún sin comparación",
+  "@biDeltaNone": {
+    "description": "Business analytics dashboard: biDeltaNone"
+  },
+  "biExportPdf": "Exportar a PDF",
+  "@biExportPdf": {
+    "description": "Business analytics dashboard: biExportPdf"
+  },
+  "biPdfTitle": "Análisis de actividad",
+  "@biPdfTitle": {
+    "description": "Business analytics dashboard: biPdfTitle"
+  },
+  "biPdfProduced": "Elaborado el {date}",
+  "@biPdfProduced": {
+    "description": "Business analytics dashboard: biPdfProduced",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biPdfFailed": "No se pudo crear el PDF.",
+  "@biPdfFailed": {
+    "description": "Business analytics dashboard: biPdfFailed"
+  },
+  "biPdfEstimateNote": "Las líneas discontinuas y las bandas sombreadas son estimaciones de periodos pasados, no mediciones.",
+  "@biPdfEstimateNote": {
+    "description": "Business analytics dashboard: biPdfEstimateNote"
+  },
+  "biShareByLevel": "Tiempo reservado por planta",
+  "@biShareByLevel": {
+    "description": "Business analytics dashboard: biShareByLevel"
+  },
+  "biProvisionalNote": "Provisional: el periodo no ha terminado, este cambio es una estimación.",
+  "@biProvisionalNote": {
+    "description": "Business analytics dashboard: biProvisionalNote"
+  },
+  "biOnPace": "al ritmo actual",
+  "@biOnPace": {
+    "description": "Business analytics dashboard: biOnPace"
+  }
+}

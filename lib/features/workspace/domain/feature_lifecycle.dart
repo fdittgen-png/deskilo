@@ -369,6 +369,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.mcpAccess: _legacy,
   WorkspaceFeature.calendarFileExport: _legacy,
   WorkspaceFeature.memberGettingStarted: _legacy,
+  WorkspaceFeature.placeFeedback: _legacy,
   WorkspaceFeature.publicListings: _legacy,
   WorkspaceFeature.spaceInquiries: _legacy,
   WorkspaceFeature.messageForwarding: _legacy,

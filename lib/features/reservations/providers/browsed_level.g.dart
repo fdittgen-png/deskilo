@@ -119,7 +119,7 @@ final class BrowsedLevelProvider
   }
 }
 
-String _$browsedLevelHash() => r'd6551722f87166f253c95d0039efa3364132181e';
+String _$browsedLevelHash() => r'4a1eb9352ff01f48fb2a3f4fffddddd81ebee437';
 
 /// The level the member is BROWSING, shared by every view of the hub.
 ///

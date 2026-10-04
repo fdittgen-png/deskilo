@@ -1101,6 +1101,12 @@
       "capabilities": []
     },
     {
+      "key": "placeFeedback",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "planMemberPhotos",
       "maturity": "unreviewed",
       "lifecycle": "active",

@@ -140,5 +140,29 @@
   "permViewAnalytics": "Read the workspace figures",
   "@permViewAnalytics": {
     "description": "#1921 permission: read aggregated operational KPIs"
+  },
+  "permUseMessages": "Use the messenger",
+  "@permUseMessages": {
+    "description": "everyday permission"
+  },
+  "permMakeReservations": "Book and use reservations",
+  "@permMakeReservations": {
+    "description": "everyday permission"
+  },
+  "permViewCalendar": "See the calendar",
+  "@permViewCalendar": {
+    "description": "everyday permission"
+  },
+  "permViewDirectory": "See the member directory",
+  "@permViewDirectory": {
+    "description": "everyday permission"
+  },
+  "permViewMyMoney": "See their own account and invoices",
+  "@permViewMyMoney": {
+    "description": "everyday permission"
+  },
+  "permViewDocuments": "See the shared documents",
+  "@permViewDocuments": {
+    "description": "everyday permission"
   }
 }

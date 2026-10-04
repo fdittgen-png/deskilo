@@ -1,0 +1,10 @@
+{
+  "featurePlaceFeedbackTitle": "Preferiti e valutazioni",
+  "@featurePlaceFeedbackTitle": {
+    "description": "#2185 place feedback"
+  },
+  "featurePlaceFeedbackDesc": "I membri segnano postazioni, tavoli, uffici e piani come preferiti e li valutano da 0 a 5 stelle. Un preferito è personale; una valutazione mostra la media e quante ce ne sono, mai chi. Un assistente può elencare i preferiti, prenotarne uno e registrare una valutazione. Disattivato nasconde cuori e stelle e rifiuta le scritture; nient'altro ne dipende.",
+  "@featurePlaceFeedbackDesc": {
+    "description": "#2185 place feedback"
+  }
+}

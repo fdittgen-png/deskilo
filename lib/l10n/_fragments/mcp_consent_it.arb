@@ -23,7 +23,30 @@
   "mcpOpUpdateReservation": "Modificare le tue prenotazioni",
   "mcpOpCheckIn": "Registrare il tuo arrivo",
   "mcpOpCheckOut": "Registrare la tua uscita",
-  "mcpOpReservationDeletion": "Chiedere l'eliminazione di una prenotazione",
+  "mcpOpReservationDeletion": "Chiedere l'eliminazione di una prenotazione già iniziata",
   "mcpOpPendingValidations": "Vedere le richieste di convalida in sospeso",
-  "mcpOpGetValidation": "Leggere una richiesta di convalida"
+  "mcpOpGetValidation": "Leggere una richiesta di convalida",
+  "mcpOpCancelReservation": "Annullare le tue prenotazioni non ancora iniziate",
+  "@mcpOpCancelReservation": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpGetPlace": "Descrivere un luogo e mostrarlo su richiesta",
+  "@mcpOpGetPlace": {
+    "description": "#1615 mcp_consent"
+  },
+  "@mcpOpReservationDeletion": {
+    "description": "#1615 mcp_consent"
+  },
+  "mcpOpListMyFavorites": "I tuoi posti preferiti",
+  "@mcpOpListMyFavorites": {
+    "description": "#2185 mcp_consent"
+  },
+  "mcpOpSetFavorite": "Segnare posti come preferiti",
+  "@mcpOpSetFavorite": {
+    "description": "#2185 mcp_consent"
+  },
+  "mcpOpRatePlace": "Valutare i posti",
+  "@mcpOpRatePlace": {
+    "description": "#2185 mcp_consent"
+  }
 }

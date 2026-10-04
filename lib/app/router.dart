@@ -70,6 +70,8 @@ import '../core/instance/schema_compatibility.dart';
 import 'entry_intent.dart';
 import 'entry_intents.dart';
 import 'entry_resumption.dart';
+import '../features/workspace/providers/workspace_roles_providers.dart';
+import 'route_access.dart';
 import 'route_classes.dart';
 import 'route_policy.dart';
 import 'schema_gate.dart';
@@ -254,6 +256,20 @@ GoRouter router(Ref ref) {
       // happens on arrival (entry_resumption.dart), never here.
       if (decision.reason == RouteReason.signInRequired) {
         captureRequest(ref, state.uri, intent);
+      }
+      // Beyond what every member has, a screen opens only for someone who
+      // holds one of its permissions (route_access.dart). Skipped while
+      // the roles are still being read: a delegate's grants arrive with
+      // them, and a deep link must not bounce on the first frame.
+      if (decision.redirect == null &&
+          facts.membership == MembershipFact.active &&
+          !kioskAccount &&
+          !ref.read(workspaceRoleAssignmentsProvider).isLoading &&
+          // Permissions come from the workspace's matrix: until it is read,
+          // nobody holds anything yet and nobody is bounced for it.
+          ref.read(currentWorkspaceProvider).value != null &&
+          !mayOpen(state.uri.path, ref.read(myPermissionsProvider))) {
+        return landingFor(ref.read(myPermissionsProvider));
       }
       return decision.redirect;
     },

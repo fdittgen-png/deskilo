@@ -663,6 +663,22 @@
   "biCards": "Análisis mostrados",
   "biCardsUnavailable": "{count} análisis de esta vista no están disponibles para usted y se omiten.",
   "biChangePoints": "{value} p. p.",
+  "biCollectionCentre": "de lo facturado",
+  "@biCollectionCentre": {
+    "description": "Business analytics dashboard: biCollectionCentre"
+  },
+  "biCollectionCollected": "Cobrado",
+  "@biCollectionCollected": {
+    "description": "Business analytics dashboard: biCollectionCollected"
+  },
+  "biCollectionNoComposition": "Los importes cobrados incluyen facturas anteriores, por lo que no son una parte del total facturado del periodo.",
+  "@biCollectionNoComposition": {
+    "description": "Business analytics dashboard: biCollectionNoComposition"
+  },
+  "biCollectionOutstanding": "Pendiente de cobro",
+  "@biCollectionOutstanding": {
+    "description": "Business analytics dashboard: biCollectionOutstanding"
+  },
   "biColumnChange": "Variación",
   "biColumnValue": "Valor",
   "biCompare": "Comparar con",
@@ -670,10 +686,18 @@
   "biCompareNone": "Nada",
   "biComparePrevious": "El periodo anterior",
   "biComparePreviousYear": "El mismo periodo un año antes",
+  "biCompareTitle": "Comparado con el pasado",
+  "@biCompareTitle": {
+    "description": "Business analytics dashboard: biCompareTitle"
+  },
   "biComparedLine": "{period}: {value} ({change})",
   "biComparedNotRecorded": "{period} no se registró (el historial empieza el {since}); no hay comparación.",
   "biComparedPartial": "{period} solo está registrado en parte.",
   "biComparisonUnqualified": "Cambio no disponible: un periodo contiene datos parciales o desactualizados.",
+  "biCompositionTitle": "De qué se compone",
+  "@biCompositionTitle": {
+    "description": "Business analytics dashboard: biCompositionTitle"
+  },
   "biComputedWorkspaceTime": "Calculado el {date} · hora del espacio",
   "@biComputedWorkspaceTime": {
     "placeholders": {
@@ -688,7 +712,19 @@
   "biDataPartial": "Datos parciales",
   "biDataStale": "Datos desactualizados",
   "biDataUnavailable": "No disponible",
+  "biDeltaNone": "Aún sin comparación",
+  "@biDeltaNone": {
+    "description": "Business analytics dashboard: biDeltaNone"
+  },
   "biDimensionLevel": "Planta",
+  "biEvolutionTitle": "Evolución",
+  "@biEvolutionTitle": {
+    "description": "Business analytics dashboard: biEvolutionTitle"
+  },
+  "biExportPdf": "Exportar a PDF",
+  "@biExportPdf": {
+    "description": "Business analytics dashboard: biExportPdf"
+  },
   "biExposureDiffers": "Los dos periodos no ofrecen la misma base; la tasa lo tiene en cuenta, las cifras brutas no se comparan directamente.",
   "biFinanceCollected": "Cobrado",
   "biFinanceCollectedBasis": "De {count} pagos conciliados con facturas",
@@ -714,9 +750,116 @@
   "biGroupBy": "Agrupar por",
   "biGroupNone": "Sin agrupar",
   "biInvalidAddress": "Esta dirección pide un análisis que no existe; no se ha leído nada.",
+  "biKindCurrent": "Ahora",
+  "@biKindCurrent": {
+    "description": "Business analytics dashboard: biKindCurrent"
+  },
+  "biKindPrevious": "Periodo anterior",
+  "@biKindPrevious": {
+    "description": "Business analytics dashboard: biKindPrevious"
+  },
+  "biKindYearAgo": "Mismo periodo del año pasado",
+  "@biKindYearAgo": {
+    "description": "Business analytics dashboard: biKindYearAgo"
+  },
+  "biNarrativeDown": "Más bajo que {label} ({change}).",
+  "@biNarrativeDown": {
+    "description": "Business analytics dashboard: biNarrativeDown",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeFlat": "Más o menos igual que {label}.",
+  "@biNarrativeFlat": {
+    "description": "Business analytics dashboard: biNarrativeFlat",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeUp": "Más alto que {label} ({change}).",
+  "@biNarrativeUp": {
+    "description": "Business analytics dashboard: biNarrativeUp",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biNoDataLabel": "sin datos",
+  "@biNoDataLabel": {
+    "description": "Business analytics dashboard: biNoDataLabel"
+  },
   "biNotOffered": "no lo ofrecen los análisis mostrados",
+  "biOnPace": "al ritmo actual",
+  "@biOnPace": {
+    "description": "Business analytics dashboard: biOnPace"
+  },
   "biOpenSource": "Abrir la fuente",
   "biPastBasis": "Recalculado con los datos disponibles hoy, no con los conocidos entonces.",
+  "biPdfEstimateNote": "Las líneas discontinuas y las bandas sombreadas son estimaciones de periodos pasados, no mediciones.",
+  "@biPdfEstimateNote": {
+    "description": "Business analytics dashboard: biPdfEstimateNote"
+  },
+  "biPdfFailed": "No se pudo crear el PDF.",
+  "@biPdfFailed": {
+    "description": "Business analytics dashboard: biPdfFailed"
+  },
+  "biPdfProduced": "Elaborado el {date}",
+  "@biPdfProduced": {
+    "description": "Business analytics dashboard: biPdfProduced",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biPdfTitle": "Análisis de actividad",
+  "@biPdfTitle": {
+    "description": "Business analytics dashboard: biPdfTitle"
+  },
+  "biProjectionBasis": "Una recta trazada sobre los últimos {count} periodos completos, prolongada. La banda sombreada es el rango probable. Una estimación, no una promesa.",
+  "@biProjectionBasis": {
+    "description": "Business analytics dashboard: biProjectionBasis",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "biProjectionLabel": "Estimación",
+  "@biProjectionLabel": {
+    "description": "Business analytics dashboard: biProjectionLabel"
+  },
+  "biProjectionNotEnough": "Aún no hay historial suficiente para proyectar: {have} periodos completos hasta ahora, se necesitan {need}.",
+  "@biProjectionNotEnough": {
+    "description": "Business analytics dashboard: biProjectionNotEnough",
+    "placeholders": {
+      "have": {
+        "type": "int"
+      },
+      "need": {
+        "type": "int"
+      }
+    }
+  },
+  "biProjectionTitle": "Hacia dónde va",
+  "@biProjectionTitle": {
+    "description": "Business analytics dashboard: biProjectionTitle"
+  },
+  "biProvisionalNote": "Provisional: el periodo no ha terminado, este cambio es una estimación.",
+  "@biProvisionalNote": {
+    "description": "Business analytics dashboard: biProvisionalNote"
+  },
   "biQuarter": "T{quarter} {year}",
   "biRecordedFuture": "Periodo futuro · reservas registradas",
   "biRecordedPast": "Periodo pasado · datos actuales",
@@ -728,6 +871,31 @@
   "biRefusedGrouping": "Este análisis no se puede agrupar así.",
   "biRemainder": "Fuera de los grupos actuales",
   "biReset": "Mostrar la vista estándar",
+  "biRunRate": "Al ritmo actual, este periodo terminaría en torno a {value}.",
+  "@biRunRate": {
+    "description": "Business analytics dashboard: biRunRate",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "biRunningLabel": "en curso",
+  "@biRunningLabel": {
+    "description": "Business analytics dashboard: biRunningLabel"
+  },
+  "biSeatCentre": "del tiempo total de puestos",
+  "@biSeatCentre": {
+    "description": "Business analytics dashboard: biSeatCentre"
+  },
+  "biSeatClosed": "Fuera del horario de apertura",
+  "@biSeatClosed": {
+    "description": "Business analytics dashboard: biSeatClosed"
+  },
+  "biSeatFree": "Libre en horario de apertura",
+  "@biSeatFree": {
+    "description": "Business analytics dashboard: biSeatFree"
+  },
   "biSeatHoursBlocked": "{hours} horas-asiento bloqueadas",
   "@biSeatHoursBlocked": {
     "placeholders": {
@@ -743,6 +911,14 @@
         "type": "String"
       }
     }
+  },
+  "biSeatReserved": "Reservado",
+  "@biSeatReserved": {
+    "description": "Business analytics dashboard: biSeatReserved"
+  },
+  "biShareByLevel": "Tiempo reservado por planta",
+  "@biShareByLevel": {
+    "description": "Business analytics dashboard: biShareByLevel"
   },
   "biSort": "Orden",
   "biSortAscending": "Menor primero",
@@ -760,6 +936,10 @@
   "biViewClearMyDefault": "Dejar de abrir mi vista por defecto",
   "biViewClearTeamDefault": "Quitar la vista por defecto del equipo",
   "biViewCopyName": "{name} (copia)",
+  "biViewDashboard": "Panel",
+  "@biViewDashboard": {
+    "description": "Business analytics dashboard: biViewDashboard"
+  },
   "biViewDelete": "Eliminar",
   "biViewDeleteConfirm": "¿Eliminar la vista «{name}»?",
   "biViewDuplicate": "Duplicar como mi vista",
@@ -784,6 +964,14 @@
   "biViews": "Vistas",
   "biViewsMine": "Mis vistas",
   "biViewsTeam": "Vistas del equipo",
+  "biVsPrevious": "vs periodo anterior",
+  "@biVsPrevious": {
+    "description": "Business analytics dashboard: biVsPrevious"
+  },
+  "biVsYearAgo": "vs año pasado",
+  "@biVsYearAgo": {
+    "description": "Business analytics dashboard: biVsYearAgo"
+  },
   "billAccessorySupplements": "Suplementos de accesorios",
   "billBalance": "Saldo",
   "billCreditNoteCard": "Nota de crédito {number}",
@@ -3287,6 +3475,14 @@
   "@featurePersonalInfoDesc": {
     "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
   },
+  "featurePlaceFeedbackDesc": "Los miembros marcan puestos, mesas, oficinas y plantas como favoritos y los valoran de 0 a 5 estrellas. Un favorito es personal; una valoración muestra su media y cuántas hay, nunca quién. Un asistente puede listar los favoritos, reservar uno y registrar una valoración. Desactivado oculta corazones y estrellas y rechaza las escrituras; nada más depende de ello.",
+  "@featurePlaceFeedbackDesc": {
+    "description": "#2185 place feedback"
+  },
+  "featurePlaceFeedbackTitle": "Favoritos y valoraciones",
+  "@featurePlaceFeedbackTitle": {
+    "description": "#2185 place feedback"
+  },
   "featurePlanMemberPhotosDesc": "Los asientos ocupados en la pestaña Plano y en el centro Reservar muestran la foto de perfil del ocupante en lugar de la inicial.",
   "featurePlanMemberPhotosTitle": "Fotos de los miembros en el plano",
   "featurePlanObjectDeleteDesc": "Los propietarios pueden eliminar plantas, oficinas, mesas y asientos aunque reservas pasadas hagan referencia a ellos: las reservas conservan una instantánea de texto para auditorías e informes.",
@@ -3707,12 +3903,28 @@
   "guideHostInstruction": "Lea esto y márquelo como hecho.",
   "guideHostManual": "Haga este paso usted mismo y márquelo como hecho.",
   "guideHostManualProtected": "Esta parte ocurre en una pantalla protegida ({category}). Hágala usted mismo y márquela como hecha.",
+  "guideHostMinimize": "Minimizar la guía",
+  "@guideHostMinimize": {
+    "description": "Task wizard: guideHostMinimize"
+  },
   "guideHostNotOnScreen": "Este control no está en esta pantalla. Vaya a la pantalla del paso anterior o revise la guía.",
   "guideHostOpenLabel": "Abra «{label}».",
   "guideHostOpenScreen": "Abra la siguiente pantalla.",
   "guideHostPausedFeature": "En pausa: la grabadora de tareas está desactivada en este espacio.",
   "guideHostPausedScope": "En pausa: cambió la cuenta o el espacio. La guía solo continúa donde empezó.",
   "guideHostRecovery": "Se rechazó. Siga estos pasos y vuelva a intentarlo.",
+  "guideHostRestore": "Mostrar la guía (paso {current} de {total})",
+  "@guideHostRestore": {
+    "description": "Task wizard: guideHostRestore",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "guideHostResume": "Reanudar",
   "guideHostShowMe": "Muéstramelo",
   "guideHostSkip": "Omitir",
@@ -5928,22 +6140,45 @@
   "mcpNextSignInGoogle": "Los asistentes usan su inicio de sesión con Google. Inicie sesión con Google para continuar.",
   "mcpNextUnavailable": "El servidor no pudo responder. No se supone nada; inténtelo más tarde.",
   "mcpOpAvailability": "Ver plazas libres",
+  "mcpOpCancelReservation": "Cancelar sus reservas que aún no han empezado",
+  "@mcpOpCancelReservation": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpCapabilities": "Ver qué puede hacer allí",
   "mcpOpCheckIn": "Registrar su entrada",
   "mcpOpCheckOut": "Registrar su salida",
   "mcpOpCreateReservation": "Reservar una plaza por usted",
+  "mcpOpGetPlace": "Describir un lugar y mostrarlo si lo pide",
+  "@mcpOpGetPlace": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpGetValidation": "Leer una solicitud de validación",
   "mcpOpInvoiceIssue": "Emitir una factura",
   "mcpOpInvoiceVoid": "Anular una factura",
+  "mcpOpListMyFavorites": "Sus lugares favoritos",
+  "@mcpOpListMyFavorites": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpListWorkspaces": "Ver qué espacios puede usar",
   "mcpOpMemberStatus": "Cambiar el estado de un miembro",
   "mcpOpMyInvoices": "Ver sus facturas",
   "mcpOpMyReservations": "Ver sus reservas",
   "mcpOpMyStatement": "Ver su estado de cuenta",
   "mcpOpPendingValidations": "Ver solicitudes de validación pendientes",
+  "mcpOpRatePlace": "Valorar lugares",
+  "@mcpOpRatePlace": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpRefund": "Reembolsar una factura",
-  "mcpOpReservationDeletion": "Pedir que se elimine una reserva",
+  "mcpOpReservationDeletion": "Pedir la eliminación de una reserva ya iniciada",
+  "@mcpOpReservationDeletion": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpRespond": "Responder a una solicitud de validación",
+  "mcpOpSetFavorite": "Marcar lugares como favoritos",
+  "@mcpOpSetFavorite": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpSubscription": "Cambiar la parte de suscripción de un miembro",
   "mcpOpUpdateReservation": "Cambiar sus reservas",
   "mcpOverviewTitle": "Otras bases de datos conectadas",
@@ -6965,6 +7200,10 @@
   "@permIssueInvoices": {
     "description": "Permission label (#513)"
   },
+  "permMakeReservations": "Reservar y usar las reservas",
+  "@permMakeReservations": {
+    "description": "everyday permission"
+  },
   "permManageBilling": "Gestionar tarifas y reglas de facturación",
   "@permManageBilling": {
     "description": "#982 permission catalog: permManageBilling"
@@ -7014,13 +7253,33 @@
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
   },
+  "permUseMessages": "Usar la mensajería",
+  "@permUseMessages": {
+    "description": "everyday permission"
+  },
   "permViewAnalytics": "Consultar las cifras del espacio",
   "@permViewAnalytics": {
     "description": "#1921 permission: read aggregated operational KPIs"
   },
+  "permViewCalendar": "Ver el calendario",
+  "@permViewCalendar": {
+    "description": "everyday permission"
+  },
+  "permViewDirectory": "Ver el directorio de miembros",
+  "@permViewDirectory": {
+    "description": "everyday permission"
+  },
+  "permViewDocuments": "Ver los documentos compartidos",
+  "@permViewDocuments": {
+    "description": "everyday permission"
+  },
   "permViewFinances": "Ver las finanzas del espacio",
   "@permViewFinances": {
     "description": "Permission label (#513)"
+  },
+  "permViewMyMoney": "Ver su propia cuenta y sus facturas",
+  "@permViewMyMoney": {
+    "description": "everyday permission"
   },
   "permViewNegotiations": "Consultar los acuerdos comerciales",
   "permViewPersonalData": "Consultar los datos personales de los miembros",
@@ -8879,6 +9138,7 @@
   },
   "reportPresetClassic": "Clásico",
   "reportPresetFormalLetter": "Carta formal",
+  "reportPresetProfessional": "Profesional",
   "reportPresetSimple": "Sencillo",
   "@reportPresetSimple": {
     "description": "Legal invoice mentions (#480)"
@@ -10774,7 +11034,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Aquí todas las personas son miembros: reservar, registrar la llegada, los mensajes y la propia cuenta. Los roles añaden el resto.",
+  "whatYouCanDoIntro": "Aquí todas las personas son miembros; lo que puede hacer — mensajes, reservas y el resto — viene solo de los roles que tiene.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },

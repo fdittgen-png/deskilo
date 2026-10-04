@@ -90,7 +90,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Everyone here is a member: booking, checking in, messages and your own account. Roles add the rest.",
+  "whatYouCanDoIntro": "Everyone here is a member; what you can do — messages, reservations and the rest — comes only from the roles you hold.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },

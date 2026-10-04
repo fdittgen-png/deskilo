@@ -12,6 +12,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../plan/providers/floor_plan_providers.dart';
+import '../domain/bi_analysis.dart';
 import '../domain/bi_modules.dart';
 import '../domain/bi_query.dart';
 import '../data/supabase_bi_view_repository.dart';
@@ -66,6 +67,62 @@ Future<BiResult> biModuleResult(
     ),
     _ => throw KpiUnavailable('no reader for $moduleId'),
   };
+}
+
+/// How many periods the evolution looks back over, by grain: a year of
+/// months, two years of quarters, five years.
+int biSeriesLength(BiGrain grain) => switch (grain) {
+  BiGrain.month => 13,
+  BiGrain.quarter => 9,
+  BiGrain.year => 5,
+};
+
+/// The module's own figure for each of the [count] periods ending at
+/// [end], oldest first. Each is the same read the page makes for one
+/// period; a period the data does not know (before the history, or a read
+/// that failed) is a gap in the series, never a zero, and never fails the
+/// others.
+@riverpod
+Future<BiSeries> biModuleSeries(
+  Ref ref,
+  String workspaceId,
+  String moduleId,
+  BiGrain grain,
+  BiPeriod end,
+  int count,
+) async {
+  final module = biModules.firstWhere((m) => m.id == moduleId);
+  final now = ref.read(clockProvider).now();
+  final periods = [for (var i = count - 1; i >= 0; i--) end.shift(-i)];
+  // All watched before the first await (provider_watch_before_await).
+  final reads = [
+    for (final p in periods)
+      ref
+          .watch(
+            biModuleResultProvider(
+              workspaceId,
+              moduleId,
+              BiQueryContext(grain: grain, period: BiPeriodRef.fixed(p)),
+            ).future,
+          )
+          .then<BiResult?>((r) => r, onError: (Object _) => null),
+  ];
+  final results = await Future.wait(reads);
+  BiSeriesPoint point(BiPeriod p, BiResult? r) {
+    if (r == null) return BiSeriesPoint(period: p);
+    final measure = r.total.current;
+    final value = measure.value(module.aggregation);
+    final over = !biInterval(p).to.isAfter(now);
+    final partial =
+        !over ||
+        measure.quality.contains(KpiQuality.partial) ||
+        measure.quality.contains(KpiQuality.stale);
+    return BiSeriesPoint(period: p, value: value, partial: partial);
+  }
+
+  return BiSeries([
+    for (final (i, p) in periods.indexed) point(p, results[i]),
+  ]);
 }
 
 /// The whole months of [p], `YYYY-MM` first and last (#1924).

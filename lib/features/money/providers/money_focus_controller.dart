@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../workspace/providers/workspace_providers.dart';
+
 part 'money_focus_controller.g.dart';
 
 /// One-shot "open the Money tab on this period" request (#718): the
@@ -11,7 +13,11 @@ part 'money_focus_controller.g.dart';
 @Riverpod(keepAlive: true)
 class MoneyFocusController extends _$MoneyFocusController {
   @override
-  String? build() => null;
+  String? build() {
+    // Bound to the workspace it was made in: a switch starts it over.
+    resetOnWorkspaceSwitch(ref, () => state = null);
+    return null;
+  }
 
   /// `yyyy-MM`.
   void setPeriod(String period) => state = period;

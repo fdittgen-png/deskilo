@@ -663,6 +663,22 @@
   "biCards": "Angezeigte Analysen",
   "biCardsUnavailable": "{count} Analysen dieser Ansicht sind für Sie nicht verfügbar und werden ausgelassen.",
   "biChangePoints": "{value} Pp.",
+  "biCollectionCentre": "des Fakturierten",
+  "@biCollectionCentre": {
+    "description": "Business analytics dashboard: biCollectionCentre"
+  },
+  "biCollectionCollected": "Eingenommen",
+  "@biCollectionCollected": {
+    "description": "Business analytics dashboard: biCollectionCollected"
+  },
+  "biCollectionNoComposition": "Die hier eingenommenen Beträge enthalten frühere Rechnungen und sind daher kein Teil des in dieser Periode Fakturierten.",
+  "@biCollectionNoComposition": {
+    "description": "Business analytics dashboard: biCollectionNoComposition"
+  },
+  "biCollectionOutstanding": "Noch einzunehmen",
+  "@biCollectionOutstanding": {
+    "description": "Business analytics dashboard: biCollectionOutstanding"
+  },
   "biColumnChange": "Veränderung",
   "biColumnValue": "Wert",
   "biCompare": "Vergleichen mit",
@@ -670,10 +686,18 @@
   "biCompareNone": "Nichts",
   "biComparePrevious": "Dem Zeitraum davor",
   "biComparePreviousYear": "Demselben Zeitraum ein Jahr zuvor",
+  "biCompareTitle": "Im Vergleich zur Vergangenheit",
+  "@biCompareTitle": {
+    "description": "Business analytics dashboard: biCompareTitle"
+  },
   "biComparedLine": "{period}: {value} ({change})",
   "biComparedNotRecorded": "{period} wurde nicht aufgezeichnet (die Historie beginnt am {since}); es gibt keinen Vergleich.",
   "biComparedPartial": "{period} ist nur teilweise aufgezeichnet.",
   "biComparisonUnqualified": "Änderung nicht verfügbar: Ein Zeitraum enthält unvollständige oder veraltete Daten.",
+  "biCompositionTitle": "Woraus es besteht",
+  "@biCompositionTitle": {
+    "description": "Business analytics dashboard: biCompositionTitle"
+  },
   "biComputedWorkspaceTime": "Berechnet am {date} · Ortszeit des Workspace",
   "@biComputedWorkspaceTime": {
     "placeholders": {
@@ -688,7 +712,19 @@
   "biDataPartial": "Unvollständige Daten",
   "biDataStale": "Veraltete Daten",
   "biDataUnavailable": "Nicht verfügbar",
+  "biDeltaNone": "Noch kein Vergleich",
+  "@biDeltaNone": {
+    "description": "Business analytics dashboard: biDeltaNone"
+  },
   "biDimensionLevel": "Ebene",
+  "biEvolutionTitle": "Entwicklung",
+  "@biEvolutionTitle": {
+    "description": "Business analytics dashboard: biEvolutionTitle"
+  },
+  "biExportPdf": "Als PDF exportieren",
+  "@biExportPdf": {
+    "description": "Business analytics dashboard: biExportPdf"
+  },
   "biExposureDiffers": "Die beiden Zeiträume haben nicht dieselbe Basis; die Quote berücksichtigt das, die Rohwerte sind nicht direkt vergleichbar.",
   "biFinanceCollected": "Eingenommen",
   "biFinanceCollectedBasis": "Aus {count} Zahlungen, die Rechnungen zugeordnet sind",
@@ -714,9 +750,116 @@
   "biGroupBy": "Gruppieren nach",
   "biGroupNone": "Keine Gruppierung",
   "biInvalidAddress": "Diese Adresse verlangt eine Analyse, die es nicht gibt; es wurde nichts gelesen.",
+  "biKindCurrent": "Jetzt",
+  "@biKindCurrent": {
+    "description": "Business analytics dashboard: biKindCurrent"
+  },
+  "biKindPrevious": "Vorherige Periode",
+  "@biKindPrevious": {
+    "description": "Business analytics dashboard: biKindPrevious"
+  },
+  "biKindYearAgo": "Gleiche Periode im Vorjahr",
+  "@biKindYearAgo": {
+    "description": "Business analytics dashboard: biKindYearAgo"
+  },
+  "biNarrativeDown": "Niedriger als {label} ({change}).",
+  "@biNarrativeDown": {
+    "description": "Business analytics dashboard: biNarrativeDown",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeFlat": "Etwa wie {label}.",
+  "@biNarrativeFlat": {
+    "description": "Business analytics dashboard: biNarrativeFlat",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeUp": "Höher als {label} ({change}).",
+  "@biNarrativeUp": {
+    "description": "Business analytics dashboard: biNarrativeUp",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biNoDataLabel": "keine Daten",
+  "@biNoDataLabel": {
+    "description": "Business analytics dashboard: biNoDataLabel"
+  },
   "biNotOffered": "von den angezeigten Analysen nicht angeboten",
+  "biOnPace": "im aktuellen Tempo",
+  "@biOnPace": {
+    "description": "Business analytics dashboard: biOnPace"
+  },
   "biOpenSource": "Quelle öffnen",
   "biPastBasis": "Aus den heute verfügbaren Daten neu berechnet, kein damaliger Wissensstand.",
+  "biPdfEstimateNote": "Gestrichelte Linien und schattierte Bereiche sind Schätzungen aus vergangenen Perioden, keine Messungen.",
+  "@biPdfEstimateNote": {
+    "description": "Business analytics dashboard: biPdfEstimateNote"
+  },
+  "biPdfFailed": "Das PDF konnte nicht erstellt werden.",
+  "@biPdfFailed": {
+    "description": "Business analytics dashboard: biPdfFailed"
+  },
+  "biPdfProduced": "Erstellt am {date}",
+  "@biPdfProduced": {
+    "description": "Business analytics dashboard: biPdfProduced",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biPdfTitle": "Geschäftsanalyse",
+  "@biPdfTitle": {
+    "description": "Business analytics dashboard: biPdfTitle"
+  },
+  "biProjectionBasis": "Eine Gerade durch die letzten {count} vollständigen Perioden, fortgeführt. Der schattierte Bereich ist die wahrscheinliche Spanne. Eine Schätzung, kein Versprechen.",
+  "@biProjectionBasis": {
+    "description": "Business analytics dashboard: biProjectionBasis",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "biProjectionLabel": "Schätzung",
+  "@biProjectionLabel": {
+    "description": "Business analytics dashboard: biProjectionLabel"
+  },
+  "biProjectionNotEnough": "Noch nicht genug Verlauf für eine Prognose: bisher {have} vollständige Perioden, {need} nötig.",
+  "@biProjectionNotEnough": {
+    "description": "Business analytics dashboard: biProjectionNotEnough",
+    "placeholders": {
+      "have": {
+        "type": "int"
+      },
+      "need": {
+        "type": "int"
+      }
+    }
+  },
+  "biProjectionTitle": "Wohin es sich entwickelt",
+  "@biProjectionTitle": {
+    "description": "Business analytics dashboard: biProjectionTitle"
+  },
+  "biProvisionalNote": "Vorläufig: Die Periode ist noch nicht vorbei, diese Veränderung ist eine Schätzung.",
+  "@biProvisionalNote": {
+    "description": "Business analytics dashboard: biProvisionalNote"
+  },
   "biQuarter": "Q{quarter} {year}",
   "biRecordedFuture": "Zukünftiger Zeitraum · erfasste Buchungen",
   "biRecordedPast": "Vergangener Zeitraum · heutiger Datenstand",
@@ -728,6 +871,31 @@
   "biRefusedGrouping": "Diese Analyse lässt sich so nicht gruppieren.",
   "biRemainder": "In keiner aktuellen Gruppe",
   "biReset": "Standardansicht zeigen",
+  "biRunRate": "Im bisherigen Tempo würde diese Periode bei etwa {value} enden.",
+  "@biRunRate": {
+    "description": "Business analytics dashboard: biRunRate",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "biRunningLabel": "laufend",
+  "@biRunningLabel": {
+    "description": "Business analytics dashboard: biRunningLabel"
+  },
+  "biSeatCentre": "der gesamten Platzzeit",
+  "@biSeatCentre": {
+    "description": "Business analytics dashboard: biSeatCentre"
+  },
+  "biSeatClosed": "Außerhalb der Öffnungszeiten",
+  "@biSeatClosed": {
+    "description": "Business analytics dashboard: biSeatClosed"
+  },
+  "biSeatFree": "Frei während der Öffnungszeiten",
+  "@biSeatFree": {
+    "description": "Business analytics dashboard: biSeatFree"
+  },
   "biSeatHoursBlocked": "{hours} gesperrte Sitzstunden",
   "@biSeatHoursBlocked": {
     "placeholders": {
@@ -743,6 +911,14 @@
         "type": "String"
       }
     }
+  },
+  "biSeatReserved": "Reserviert",
+  "@biSeatReserved": {
+    "description": "Business analytics dashboard: biSeatReserved"
+  },
+  "biShareByLevel": "Reservierte Zeit je Ebene",
+  "@biShareByLevel": {
+    "description": "Business analytics dashboard: biShareByLevel"
   },
   "biSort": "Reihenfolge",
   "biSortAscending": "Niedrigster zuerst",
@@ -760,6 +936,10 @@
   "biViewClearMyDefault": "Meine Standardansicht nicht mehr öffnen",
   "biViewClearTeamDefault": "Standardansicht des Teams entfernen",
   "biViewCopyName": "{name} (Kopie)",
+  "biViewDashboard": "Dashboard",
+  "@biViewDashboard": {
+    "description": "Business analytics dashboard: biViewDashboard"
+  },
   "biViewDelete": "Löschen",
   "biViewDeleteConfirm": "Ansicht „{name}“ löschen?",
   "biViewDuplicate": "Als meine Ansicht duplizieren",
@@ -784,6 +964,14 @@
   "biViews": "Ansichten",
   "biViewsMine": "Meine Ansichten",
   "biViewsTeam": "Team-Ansichten",
+  "biVsPrevious": "gg. Vorperiode",
+  "@biVsPrevious": {
+    "description": "Business analytics dashboard: biVsPrevious"
+  },
+  "biVsYearAgo": "gg. Vorjahr",
+  "@biVsYearAgo": {
+    "description": "Business analytics dashboard: biVsYearAgo"
+  },
   "billAccessorySupplements": "Zubehör-Aufpreise",
   "billBalance": "Saldo",
   "billCreditNoteCard": "Gutschrift {number}",
@@ -3287,6 +3475,14 @@
   "@featurePersonalInfoDesc": {
     "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
   },
+  "featurePlaceFeedbackDesc": "Mitglieder markieren Plätze, Tische, Büros und Etagen als Favoriten und bewerten sie mit 0 bis 5 Sternen. Ein Favorit gehört dem Mitglied; eine Bewertung zeigt den Durchschnitt und die Anzahl, nie wer. Ein Assistent kann die Favoriten auflisten, einen buchen und eine Bewertung eintragen. Aus blendet Herzen und Sterne aus und weist das Schreiben ab; sonst hängt nichts daran.",
+  "@featurePlaceFeedbackDesc": {
+    "description": "#2185 place feedback"
+  },
+  "featurePlaceFeedbackTitle": "Favoriten und Bewertungen",
+  "@featurePlaceFeedbackTitle": {
+    "description": "#2185 place feedback"
+  },
   "featurePlanMemberPhotosDesc": "Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale.",
   "featurePlanMemberPhotosTitle": "Mitgliederfotos auf dem Plan",
   "featurePlanObjectDeleteDesc": "Inhaber können Ebenen, Büros, Tische und Sitzplätze auch dann löschen, wenn frühere Reservierungen darauf verweisen — die Buchungen behalten einen Text-Schnappschuss für Audits und Berichte.",
@@ -3707,12 +3903,28 @@
   "guideHostInstruction": "Lesen Sie dies und markieren Sie es als erledigt.",
   "guideHostManual": "Erledigen Sie diesen Schritt selbst und markieren Sie ihn als erledigt.",
   "guideHostManualProtected": "Dieser Teil findet auf einem geschützten Bildschirm statt ({category}). Erledigen Sie ihn selbst und markieren Sie ihn als erledigt.",
+  "guideHostMinimize": "Anleitung verkleinern",
+  "@guideHostMinimize": {
+    "description": "Task wizard: guideHostMinimize"
+  },
   "guideHostNotOnScreen": "Dieses Bedienelement ist nicht auf diesem Bildschirm. Gehen Sie zum Bildschirm des vorherigen Schritts oder prüfen Sie die Anleitung.",
   "guideHostOpenLabel": "Öffnen Sie „{label}“.",
   "guideHostOpenScreen": "Öffnen Sie den nächsten Bildschirm.",
   "guideHostPausedFeature": "Pausiert: Der Aufgabenrekorder ist in diesem Workspace ausgeschaltet.",
   "guideHostPausedScope": "Pausiert: Konto oder Workspace hat sich geändert. Die Anleitung geht nur dort weiter, wo sie begann.",
   "guideHostRecovery": "Das wurde abgelehnt. Folgen Sie diesen Schritten und versuchen Sie es dann erneut.",
+  "guideHostRestore": "Anleitung anzeigen (Schritt {current} von {total})",
+  "@guideHostRestore": {
+    "description": "Task wizard: guideHostRestore",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "guideHostResume": "Fortsetzen",
   "guideHostShowMe": "Zeigen",
   "guideHostSkip": "Überspringen",
@@ -5928,22 +6140,45 @@
   "mcpNextSignInGoogle": "Assistenten verwenden Ihre Google-Anmeldung. Melden Sie sich mit Google an, um fortzufahren.",
   "mcpNextUnavailable": "Der Server konnte nicht antworten. Es wird nichts angenommen; versuchen Sie es später erneut.",
   "mcpOpAvailability": "Freie Plätze sehen",
+  "mcpOpCancelReservation": "Ihre noch nicht begonnenen Buchungen stornieren",
+  "@mcpOpCancelReservation": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpCapabilities": "Sehen, was er dort tun darf",
   "mcpOpCheckIn": "Sie einchecken",
   "mcpOpCheckOut": "Sie auschecken",
   "mcpOpCreateReservation": "Einen Platz für Sie buchen",
+  "mcpOpGetPlace": "Einen Ort beschreiben und auf Wunsch zeigen",
+  "@mcpOpGetPlace": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpGetValidation": "Eine Freigabeanfrage lesen",
   "mcpOpInvoiceIssue": "Rechnung ausstellen",
   "mcpOpInvoiceVoid": "Rechnung stornieren",
+  "mcpOpListMyFavorites": "Ihre Lieblingsplätze",
+  "@mcpOpListMyFavorites": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpListWorkspaces": "Sehen, welche Arbeitsbereiche er nutzen darf",
   "mcpOpMemberStatus": "Status eines Mitglieds ändern",
   "mcpOpMyInvoices": "Ihre Rechnungen sehen",
   "mcpOpMyReservations": "Ihre Reservierungen sehen",
   "mcpOpMyStatement": "Ihren Kontoauszug sehen",
   "mcpOpPendingValidations": "Offene Freigabeanfragen sehen",
+  "mcpOpRatePlace": "Plätze bewerten",
+  "@mcpOpRatePlace": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpRefund": "Rechnung erstatten",
-  "mcpOpReservationDeletion": "Löschung einer Reservierung beantragen",
+  "mcpOpReservationDeletion": "Löschung einer bereits begonnenen Buchung beantragen",
+  "@mcpOpReservationDeletion": {
+    "description": "#1615 mcp_consent"
+  },
   "mcpOpRespond": "Auf eine Freigabeanfrage antworten",
+  "mcpOpSetFavorite": "Plätze als Favoriten markieren",
+  "@mcpOpSetFavorite": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpSubscription": "Abonnementanteil eines Mitglieds ändern",
   "mcpOpUpdateReservation": "Ihre Reservierungen ändern",
   "mcpOverviewTitle": "Weitere verbundene Datenbanken",
@@ -6965,6 +7200,10 @@
   "@permIssueInvoices": {
     "description": "Permission label (#513)"
   },
+  "permMakeReservations": "Buchen und Reservierungen nutzen",
+  "@permMakeReservations": {
+    "description": "everyday permission"
+  },
   "permManageBilling": "Tarife und Abrechnungsregeln verwalten",
   "@permManageBilling": {
     "description": "#982 permission catalog: permManageBilling"
@@ -7014,13 +7253,33 @@
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
   },
+  "permUseMessages": "Den Messenger nutzen",
+  "@permUseMessages": {
+    "description": "everyday permission"
+  },
   "permViewAnalytics": "Kennzahlen des Arbeitsbereichs lesen",
   "@permViewAnalytics": {
     "description": "#1921 permission: read aggregated operational KPIs"
   },
+  "permViewCalendar": "Den Kalender sehen",
+  "@permViewCalendar": {
+    "description": "everyday permission"
+  },
+  "permViewDirectory": "Das Mitgliederverzeichnis sehen",
+  "@permViewDirectory": {
+    "description": "everyday permission"
+  },
+  "permViewDocuments": "Die geteilten Dokumente sehen",
+  "@permViewDocuments": {
+    "description": "everyday permission"
+  },
   "permViewFinances": "Workspace-Finanzen einsehen",
   "@permViewFinances": {
     "description": "Permission label (#513)"
+  },
+  "permViewMyMoney": "Das eigene Konto und die eigenen Rechnungen sehen",
+  "@permViewMyMoney": {
+    "description": "everyday permission"
   },
   "permViewNegotiations": "Geschäftsvereinbarungen einsehen",
   "permViewPersonalData": "Persönliche Daten der Mitglieder lesen",
@@ -8879,6 +9138,7 @@
   },
   "reportPresetClassic": "Klassisch",
   "reportPresetFormalLetter": "Formeller Brief",
+  "reportPresetProfessional": "Professionell",
   "reportPresetSimple": "Einfach",
   "@reportPresetSimple": {
     "description": "Legal invoice mentions (#480)"
@@ -10774,7 +11034,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Hier ist jede Person Mitglied: buchen, einchecken, Nachrichten und das eigene Konto. Rollen ergänzen den Rest.",
+  "whatYouCanDoIntro": "Hier ist jede Person Mitglied; was Sie tun können — Nachrichten, Reservierungen und der Rest — kommt allein aus den Rollen, die Sie haben.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },

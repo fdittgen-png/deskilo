@@ -2638,12 +2638,11 @@ entrega son un vocabulario fijo de marcadores.
 
 *El editor de informes: los selectores de idioma y de documento arriba, los conmutadores Marcado / Visual y Diseño / Vista previa debajo, y las bandas de la factura — cabecera, cuerpo, pie — más abajo.*
 
-### Los tipos y las cuatro plantillas
+### Tipos de informes y plantillas
 
-Cada tipo (factura, nota de crédito, proforma, extracto, acuerdo, pagos,
-consumo, IVA, espacio) parte de una de las cuatro plantillas —
-*Sencillo*, *Clásico*, *Detallado*, *Carta formal* — que solo se
-diferencian en cuánto dicen, nunca en lo que la ley exige.
+Cada informe ofrece una plantilla **Profesional** junto con las opciones existentes (#1994). Conserva las secciones propias del informe: pagos confirmados y pendientes por separado y registros de consumo completos. Los informes de gestión no exigen recargos por demora. Los diseños personalizados se conservan hasta su sustitución explícita.
+
+La carta automática sigue el país del espacio (Francia: ventana derecha; Alemania: izquierda), salvo una posición elegida expresamente. El idioma es independiente del país. Las plantillas muestran los datos legales proporcionados; su apariencia y traducción no demuestran conformidad legal ni sustituyen la facturación electrónica.
 
 ### Las bandas: cabecera, continuación, cuerpo, pie
 

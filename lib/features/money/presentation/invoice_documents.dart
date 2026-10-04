@@ -363,13 +363,11 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
           '${invoice.number.isEmpty ? '${invoice.clientName} $periodLabel' : invoice.number}',
         )
       : safeFileSlug(invoice.number);
-  // #875 — a positioned layout, when this document has one, IS the
-  // document: it states its own geometry and the bands never run. A
+  // A positioned layout wins over bands. A
   // proforma without a layout of its own borrows the invoice's, as it
   // borrows its bands. Annexes stay banded — they are documentation
   // appended behind, and the layout engine renders one document.
-  // #874 — a kind without a design renders the letter standard's
-  // default layout when that flag is on.
+  // Undesigned documents use the enabled letter standard.
   final letterStandard = features.contains(WorkspaceFeature.letterStandard);
   final layoutXml =
       features.contains(WorkspaceFeature.reportLayouts) && annexInvoices.isEmpty
@@ -378,12 +376,14 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
                   resolveLayoutXmlFor(
                     template: template,
                     kindId: 'invoice',
+                    countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
                     letterStandard: letterStandard,
                     l10n: AppLocalizations.of(context),
                   ))
             : resolveLayoutXmlFor(
                 template: template,
                 kindId: 'invoice',
+                    countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
                 letterStandard: letterStandard,
                 l10n: AppLocalizations.of(context),
               ))

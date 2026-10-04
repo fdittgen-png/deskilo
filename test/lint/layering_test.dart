@@ -268,7 +268,7 @@ const Map<String, int> _pairBudget = {
   'money -> reservations': 13,
   // 2026-09-15 #1310 S0 112→113: the invoice register asks for the
   // exportData permission before offering the accounting export.
-  'money -> workspace': 123, // 2026-10-03 #1916 122→123: the legal identity screen names the capacities with the same customerCapacityName the member page uses; 2026-10-02 #1869 B 120→122: the chart sheet names its issuer site and reads the current workspace, as the book sheet does; 2026-10-02 #1869 117→120: a book profile belongs to an issuer, which IS a workspace site, and is read for the current workspace — the book sheet names the site, the providers the current workspace; // 2026-09-19 #1449 116→117: save_legal_identity.dart names WorkspaceRepository — the command writes both aggregates, which is the point of it; the SCREEN stopped importing it, so the coupling moved from presentation into application where it is one line // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
+  'money -> workspace': 125, // 2026-10-04 123→125: the session state of money (period, face, wizard) starts over when the active workspace changes, so it watches the active workspace id; 2026-10-03 #1916 122→123: the legal identity screen names the capacities with the same customerCapacityName the member page uses; 2026-10-02 #1869 B 120→122: the chart sheet names its issuer site and reads the current workspace, as the book sheet does; 2026-10-02 #1869 117→120: a book profile belongs to an issuer, which IS a workspace site, and is read for the current workspace — the book sheet names the site, the providers the current workspace; // 2026-09-19 #1449 116→117: save_legal_identity.dart names WorkspaceRepository — the command writes both aggregates, which is the point of it; the SCREEN stopped importing it, so the coupling moved from presentation into application where it is one line // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
   'plan -> events': 1,
   'plan -> members': 1,
   'plan -> money': 4,
@@ -276,7 +276,7 @@ const Map<String, int> _pairBudget = {
   'plan -> reservations': 9,
   // 2026-09-15 #1273 10→11: floor_plan_providers reads the
   // singleRoomLevelNames flag once for every map surface.
-  'plan -> workspace': 11,
+  'plan -> workspace': 12, // 2026-10-04 11→12: the plan focus starts over when the active workspace changes
   'profile -> auth': 6,
   'profile -> calendar': 2,
   'profile -> members': 1,
@@ -330,7 +330,7 @@ const Map<String, int> _pairBudget = {
   // BookingPolicies remain owned by workspace, not duplicated in the card.
   // 2026-09-27 #1636: +3 — the Get started card's owner guidance reads
   // the workspace readiness check (domain, provider, section labels).
-  'reservations -> workspace': 60, // #1825 +3: list_space_tap (member, feature, providers)
+  'reservations -> workspace': 61, // 2026-10-04 60→61: the browsed level starts over when the active workspace changes; earlier: #1825 +3: list_space_tap (member, feature, providers)
   'workspace -> auth': 10, // 2026-09-28 #1652 9→10: the invitation review offers Change account (sign-out) beside Join, and a wrong-account answer offers the same.  // 2026-09-28 #1791: account-scoped applications and replies work without membership.  // 2026-09-26 #1636 3→4 and #1654 4→5: a pending creation draft names the account that sent it, so a restart resumes it for that account only (application/creation_intent.dart); #1654: the onboarding handoff listens to the auth stream to discard completions after an account change
   // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
   // *does anything need me?* by ASSEMBLING signals that already exist:

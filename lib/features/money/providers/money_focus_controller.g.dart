@@ -57,7 +57,7 @@ final class MoneyFocusControllerProvider
 }
 
 String _$moneyFocusControllerHash() =>
-    r'17be3642af755bdeb75ca57ef832763e32acc97b';
+    r'94f68623908c6cdd15d9de2e739f9a335c5fd71b';
 
 /// One-shot "open the Money tab on this period" request (#718): the
 /// calendar hub sets it before switching branches; the Money screen

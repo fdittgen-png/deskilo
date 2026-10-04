@@ -46,5 +46,21 @@
   "guideActionSelectPeriod": "scegli la fascia",
   "guideActionSelectResource": "scegli un posto sulla piantina o nell'elenco",
   "guideActionConfirmBooking": "conferma la prenotazione e attendi la risposta",
-  "guideBookingRefusedRecovery": "La prenotazione è stata rifiutata (posto occupato o una regola lo vieta). Scegli un altro posto o fascia, poi conferma di nuovo."
+  "guideBookingRefusedRecovery": "La prenotazione è stata rifiutata (posto occupato o una regola lo vieta). Scegli un altro posto o fascia, poi conferma di nuovo.",
+  "guideHostMinimize": "Riduci la guida",
+  "@guideHostMinimize": {
+    "description": "Task wizard: guideHostMinimize"
+  },
+  "guideHostRestore": "Mostra la guida (passo {current} di {total})",
+  "@guideHostRestore": {
+    "description": "Task wizard: guideHostRestore",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -1247,6 +1247,19 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get biCollectionCentre => 'de lo facturado';
+
+  @override
+  String get biCollectionCollected => 'Cobrado';
+
+  @override
+  String get biCollectionNoComposition =>
+      'Los importes cobrados incluyen facturas anteriores, por lo que no son una parte del total facturado del periodo.';
+
+  @override
+  String get biCollectionOutstanding => 'Pendiente de cobro';
+
+  @override
   String get biColumnChange => 'Variación';
 
   @override
@@ -1268,6 +1281,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biComparePreviousYear => 'El mismo periodo un año antes';
 
   @override
+  String get biCompareTitle => 'Comparado con el pasado';
+
+  @override
   String biComparedLine(String period, String value, String change) {
     return '$period: $value ($change)';
   }
@@ -1285,6 +1301,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get biComparisonUnqualified =>
       'Cambio no disponible: un periodo contiene datos parciales o desactualizados.';
+
+  @override
+  String get biCompositionTitle => 'De qué se compone';
 
   @override
   String biComputedWorkspaceTime(String date) {
@@ -1311,7 +1330,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biDataUnavailable => 'No disponible';
 
   @override
+  String get biDeltaNone => 'Aún sin comparación';
+
+  @override
   String get biDimensionLevel => 'Planta';
+
+  @override
+  String get biEvolutionTitle => 'Evolución';
+
+  @override
+  String get biExportPdf => 'Exportar a PDF';
 
   @override
   String get biExposureDiffers =>
@@ -1407,7 +1435,37 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta dirección pide un análisis que no existe; no se ha leído nada.';
 
   @override
+  String get biKindCurrent => 'Ahora';
+
+  @override
+  String get biKindPrevious => 'Periodo anterior';
+
+  @override
+  String get biKindYearAgo => 'Mismo periodo del año pasado';
+
+  @override
+  String biNarrativeDown(String label, String change) {
+    return 'Más bajo que $label ($change).';
+  }
+
+  @override
+  String biNarrativeFlat(String label) {
+    return 'Más o menos igual que $label.';
+  }
+
+  @override
+  String biNarrativeUp(String label, String change) {
+    return 'Más alto que $label ($change).';
+  }
+
+  @override
+  String get biNoDataLabel => 'sin datos';
+
+  @override
   String get biNotOffered => 'no lo ofrecen los análisis mostrados';
+
+  @override
+  String get biOnPace => 'al ritmo actual';
 
   @override
   String get biOpenSource => 'Abrir la fuente';
@@ -1415,6 +1473,41 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get biPastBasis =>
       'Recalculado con los datos disponibles hoy, no con los conocidos entonces.';
+
+  @override
+  String get biPdfEstimateNote =>
+      'Las líneas discontinuas y las bandas sombreadas son estimaciones de periodos pasados, no mediciones.';
+
+  @override
+  String get biPdfFailed => 'No se pudo crear el PDF.';
+
+  @override
+  String biPdfProduced(String date) {
+    return 'Elaborado el $date';
+  }
+
+  @override
+  String get biPdfTitle => 'Análisis de actividad';
+
+  @override
+  String biProjectionBasis(int count) {
+    return 'Una recta trazada sobre los últimos $count periodos completos, prolongada. La banda sombreada es el rango probable. Una estimación, no una promesa.';
+  }
+
+  @override
+  String get biProjectionLabel => 'Estimación';
+
+  @override
+  String biProjectionNotEnough(int have, int need) {
+    return 'Aún no hay historial suficiente para proyectar: $have periodos completos hasta ahora, se necesitan $need.';
+  }
+
+  @override
+  String get biProjectionTitle => 'Hacia dónde va';
+
+  @override
+  String get biProvisionalNote =>
+      'Provisional: el periodo no ha terminado, este cambio es una estimación.';
 
   @override
   String biQuarter(String quarter, String year) {
@@ -1456,6 +1549,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biReset => 'Mostrar la vista estándar';
 
   @override
+  String biRunRate(String value) {
+    return 'Al ritmo actual, este periodo terminaría en torno a $value.';
+  }
+
+  @override
+  String get biRunningLabel => 'en curso';
+
+  @override
+  String get biSeatCentre => 'del tiempo total de puestos';
+
+  @override
+  String get biSeatClosed => 'Fuera del horario de apertura';
+
+  @override
+  String get biSeatFree => 'Libre en horario de apertura';
+
+  @override
   String biSeatHoursBlocked(String hours) {
     return '$hours horas-asiento bloqueadas';
   }
@@ -1464,6 +1574,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String biSeatHoursFree(String hours) {
     return '$hours horas-asiento sin reservar';
   }
+
+  @override
+  String get biSeatReserved => 'Reservado';
+
+  @override
+  String get biShareByLevel => 'Tiempo reservado por planta';
 
   @override
   String get biSort => 'Orden';
@@ -1506,6 +1622,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String biViewCopyName(String name) {
     return '$name (copia)';
   }
+
+  @override
+  String get biViewDashboard => 'Panel';
 
   @override
   String get biViewDelete => 'Eliminar';
@@ -1585,6 +1704,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biViewsTeam => 'Vistas del equipo';
+
+  @override
+  String get biVsPrevious => 'vs periodo anterior';
+
+  @override
+  String get biVsYearAgo => 'vs año pasado';
 
   @override
   String get billAccessorySupplements => 'Suplementos de accesorios';
@@ -5113,6 +5238,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los miembros introducen nombre, dirección postal, teléfono, e-mail e identificadores en Ajustes; facturas y cartas los imprimen en el bloque postal normalizado.';
 
   @override
+  String get featurePlaceFeedbackDesc =>
+      'Los miembros marcan puestos, mesas, oficinas y plantas como favoritos y los valoran de 0 a 5 estrellas. Un favorito es personal; una valoración muestra su media y cuántas hay, nunca quién. Un asistente puede listar los favoritos, reservar uno y registrar una valoración. Desactivado oculta corazones y estrellas y rechaza las escrituras; nada más depende de ello.';
+
+  @override
+  String get featurePlaceFeedbackTitle => 'Favoritos y valoraciones';
+
+  @override
   String get featurePlanMemberPhotosDesc =>
       'Los asientos ocupados en la pestaña Plano y en el centro Reservar muestran la foto de perfil del ocupante en lugar de la inicial.';
 
@@ -5859,6 +5991,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get guideHostMinimize => 'Minimizar la guía';
+
+  @override
   String get guideHostNotOnScreen =>
       'Este control no está en esta pantalla. Vaya a la pantalla del paso anterior o revise la guía.';
 
@@ -5881,6 +6016,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get guideHostRecovery =>
       'Se rechazó. Siga estos pasos y vuelva a intentarlo.';
+
+  @override
+  String guideHostRestore(int current, int total) {
+    return 'Mostrar la guía (paso $current de $total)';
+  }
 
   @override
   String get guideHostResume => 'Reanudar';
@@ -9865,6 +10005,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpAvailability => 'Ver plazas libres';
 
   @override
+  String get mcpOpCancelReservation =>
+      'Cancelar sus reservas que aún no han empezado';
+
+  @override
   String get mcpOpCapabilities => 'Ver qué puede hacer allí';
 
   @override
@@ -9877,6 +10021,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpCreateReservation => 'Reservar una plaza por usted';
 
   @override
+  String get mcpOpGetPlace => 'Describir un lugar y mostrarlo si lo pide';
+
+  @override
   String get mcpOpGetValidation => 'Leer una solicitud de validación';
 
   @override
@@ -9884,6 +10031,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mcpOpInvoiceVoid => 'Anular una factura';
+
+  @override
+  String get mcpOpListMyFavorites => 'Sus lugares favoritos';
 
   @override
   String get mcpOpListWorkspaces => 'Ver qué espacios puede usar';
@@ -9905,13 +10055,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ver solicitudes de validación pendientes';
 
   @override
+  String get mcpOpRatePlace => 'Valorar lugares';
+
+  @override
   String get mcpOpRefund => 'Reembolsar una factura';
 
   @override
-  String get mcpOpReservationDeletion => 'Pedir que se elimine una reserva';
+  String get mcpOpReservationDeletion =>
+      'Pedir la eliminación de una reserva ya iniciada';
 
   @override
   String get mcpOpRespond => 'Responder a una solicitud de validación';
+
+  @override
+  String get mcpOpSetFavorite => 'Marcar lugares como favoritos';
 
   @override
   String get mcpOpSubscription =>
@@ -11870,6 +12027,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get permIssueInvoices => 'Emitir facturas y conciliar pagos';
 
   @override
+  String get permMakeReservations => 'Reservar y usar las reservas';
+
+  @override
   String get permManageBilling => 'Gestionar tarifas y reglas de facturación';
 
   @override
@@ -11909,10 +12069,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get permPaymentTermsEdit => 'Solicitar cambios de condiciones de pago';
 
   @override
+  String get permUseMessages => 'Usar la mensajería';
+
+  @override
   String get permViewAnalytics => 'Consultar las cifras del espacio';
 
   @override
+  String get permViewCalendar => 'Ver el calendario';
+
+  @override
+  String get permViewDirectory => 'Ver el directorio de miembros';
+
+  @override
+  String get permViewDocuments => 'Ver los documentos compartidos';
+
+  @override
   String get permViewFinances => 'Ver las finanzas del espacio';
+
+  @override
+  String get permViewMyMoney => 'Ver su propia cuenta y sus facturas';
 
   @override
   String get permViewNegotiations => 'Consultar los acuerdos comerciales';
@@ -14398,6 +14573,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportPresetFormalLetter => 'Carta formal';
+
+  @override
+  String get reportPresetProfessional => 'Profesional';
 
   @override
   String get reportPresetSimple => 'Sencillo';
@@ -17828,7 +18006,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get whatYouCanDoIntro =>
-      'Aquí todas las personas son miembros: reservar, registrar la llegada, los mensajes y la propia cuenta. Los roles añaden el resto.';
+      'Aquí todas las personas son miembros; lo que puede hacer — mensajes, reservas y el resto — viene solo de los roles que tiene.';
 
   @override
   String get whatYouCanDoNothingMore => 'Nada más que un miembro.';

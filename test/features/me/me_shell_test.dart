@@ -80,6 +80,18 @@ void main() {
       expect(tester.getCenter(find.text('DEV')).dy,
           tester.getCenter(find.text('PROD')).dy);
       expect(tester.getSize(group).height, lessThan(120));
+      // Production is the wide green button on the left, development the
+      // narrow orange one at the right.
+      final prod = find.byKey(const ValueKey('me-space-ws-2'));
+      final dev = find.byKey(const ValueKey('me-space-ws-1'));
+      expect(tester.getSize(prod).width, greaterThan(tester.getSize(dev).width));
+      expect(tester.getTopLeft(dev).dx, greaterThan(tester.getTopLeft(prod).dx));
+      Color? fill(Finder f) => tester
+          .widget<FilledButton>(f)
+          .style
+          ?.backgroundColor
+          ?.resolve(const {});
+      expect(fill(prod), isNot(fill(dev)));
       for (final width in [320.0, 1200.0]) {
         tester.view.physicalSize = Size(width, 844);
         await tester.pumpAndSettle();

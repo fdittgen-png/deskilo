@@ -113,7 +113,9 @@ const templatePermissions = ['manageRoles', 'manageMembers', 'manageValidation',
   'approveExpenses', 'viewNegotiations', 'manageNegotiations', 'paymentTermsEdit',
   'manageSites', 'manageBilling', 'manageReservations', 'operateKiosk', 'exportData',
   'designDocuments', 'viewPersonalData', 'manageIntegrations', 'manageConfiguration',
-  'deployToProd', 'deployToDev', 'accessProd', 'viewAnalytics'];
+  'deployToProd', 'deployToDev', 'accessProd', 'viewAnalytics',
+  'useMessages', 'makeReservations', 'viewCalendar', 'viewDirectory',
+  'viewMyMoney', 'viewDocuments'];
 
 /// The overridable terms of `lexiconAllowList`, pinned by the same lint.
 const templateLexiconTerms = ['legendFree', 'legendReserved', 'legendOccupied', 'legendMine',
@@ -153,6 +155,9 @@ List<TemplateFieldSpec> _workspaceColumns() => [
         'created_by_user', 'modified_by_user'])
         _f('workspace.$c', 'workspace', _text, p: _never, reason: 'which row and which twin this is'),
       _f('workspace.dev_mode', 'workspace', _bool, p: _never, reason: "this space's own switch"),
+      for (final c in ['visibility', 'visibility_set_at'])
+        _f('workspace.$c', 'workspace', _text, p: _never,
+            reason: "the space's own listing choice; a template must not publish a space"),
       _f('workspace.accessory_supplements_since', 'workspace', TemplateFieldType.date,
           p: _never, reason: "a date in this space's history"),
       for (final c in ['address', 'street', 'postal_code', 'city', 'vat_id', 'legal_id',

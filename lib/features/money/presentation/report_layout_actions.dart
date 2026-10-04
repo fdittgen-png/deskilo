@@ -97,6 +97,7 @@ String? letterLayoutXml(
   return resolveLayoutXmlFor(
     template: invoicePdfTemplateFor(ref).forLocale(language),
     kindId: docId,
+    countryCode: ref.read(currentWorkspaceProvider).value?.countryCode ?? '',
     letterStandard: features.contains(WorkspaceFeature.letterStandard),
     l10n: l10n,
   );

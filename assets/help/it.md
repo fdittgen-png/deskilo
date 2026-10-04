@@ -2658,12 +2658,11 @@ un vocabolario fisso di segnaposto.
 
 *L'editor dei report: i selettori di lingua e documento in alto, gli interruttori Marcatura / Visivo e Progetto / Anteprima sotto, e le bande della fattura — intestazione, corpo, piè di pagina — più giù.*
 
-### I tipi e i quattro modelli
+### Tipi di report e modelli
 
-Ogni tipo (fattura, nota di credito, proforma, estratto conto, accordo,
-pagamenti, consumo, IVA, spazio) parte da uno dei quattro modelli —
-*Semplice*, *Classico*, *Dettagliato*, *Lettera formale* — che
-differiscono solo per quanto dicono, mai per ciò che la legge richiede.
+Ogni report offre un modello **Professionale** oltre alle opzioni esistenti (#1994). Mantiene le sezioni specifiche: pagamenti confermati e in attesa separati e registrazioni complete dei consumi. I report gestionali non richiedono penali per ritardo. I modelli personalizzati restano fino alla sostituzione esplicita.
+
+La lettera automatica segue il paese dello spazio (Francia: finestra destra; Germania: sinistra), salvo una posizione scelta esplicitamente. La lingua è indipendente dal paese. I modelli mostrano i dati legali forniti; aspetto e traduzione non dimostrano conformità normativa né sostituiscono la fatturazione elettronica.
 
 ### Le bande: intestazione, continuazione, corpo, piè di pagina
 

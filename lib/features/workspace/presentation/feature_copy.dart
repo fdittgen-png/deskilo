@@ -583,4 +583,9 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'the space, the settings also show how far it is from a '
                   'first booking, section by section. Off hides the card '
                   'and that checklist and changes nothing else.',
+        WorkspaceFeature.placeFeedback =>
+          l10n?.featurePlaceFeedbackDesc ??
+              'Members mark seats, desks, offices and levels as favourites '
+                  'and rate them from 0 to 5 stars. Off hides the hearts '
+                  'and stars and refuses the writes; nothing else follows it.',
       };
