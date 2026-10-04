@@ -1064,6 +1064,24 @@ abstract class AppLocalizations {
   /// **'Create your account or sign in first — you\'ll paste your invitation right after.'**
   String get authJoinHint;
 
+  /// Linked accounts: authLinkAlreadyUsed
+  ///
+  /// In en, this message translates to:
+  /// **'This {provider} identity is already linked to another account.'**
+  String authLinkAlreadyUsed(String provider);
+
+  /// Linked accounts: authLinkFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Linking {provider} did not work ({code}). Try again; if it keeps failing, tell the server\'s administrator this code.'**
+  String authLinkFailed(String provider, String code);
+
+  /// Linked accounts: authLinkManualDisabled
+  ///
+  /// In en, this message translates to:
+  /// **'Linking accounts is switched off on this server. Its administrator must turn on “Allow manual linking” in the authentication settings.'**
+  String get authLinkManualDisabled;
+
   /// Snackbar when the auth call fails before reaching the server (connectivity)
   ///
   /// In en, this message translates to:

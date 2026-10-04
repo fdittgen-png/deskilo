@@ -174,6 +174,7 @@ Map<String, _Getter> _part0() => {
   'authHidePassword': (l) => l.authHidePassword,
   'authJoinByInvitation': (l) => l.authJoinByInvitation,
   'authJoinHint': (l) => l.authJoinHint,
+  'authLinkManualDisabled': (l) => l.authLinkManualDisabled,
   'authNetworkError': (l) => l.authNetworkError,
   'authPasswordLabel': (l) => l.authPasswordLabel,
   'authPasswordTooShort': (l) => l.authPasswordTooShort,
@@ -424,10 +425,10 @@ Map<String, _Getter> _part0() => {
   'biViewPeriodMoves': (l) => l.biViewPeriodMoves,
   'biViewRename': (l) => l.biViewRename,
   'biViewSave': (l) => l.biViewSave,
-  'biViewSaveAs': (l) => l.biViewSaveAs,
 };
 
 Map<String, _Getter> _part1() => {
+  'biViewSaveAs': (l) => l.biViewSaveAs,
   'biViewScopePrivate': (l) => l.biViewScopePrivate,
   'biViewScopeTeam': (l) => l.biViewScopeTeam,
   'biViewStale': (l) => l.biViewStale,
@@ -827,10 +828,10 @@ Map<String, _Getter> _part1() => {
   'customerCapacityLabel': (l) => l.customerCapacityLabel,
   'customerCapacityNotStated': (l) => l.customerCapacityNotStated,
   'customerCapacitySaveError': (l) => l.customerCapacitySaveError,
-  'datevAccountsIntro': (l) => l.datevAccountsIntro,
 };
 
 Map<String, _Getter> _part2() => {
+  'datevAccountsIntro': (l) => l.datevAccountsIntro,
   'datevAccountsTitle': (l) => l.datevAccountsTitle,
   'datevClientNumber': (l) => l.datevClientNumber,
   'datevConsultantNumber': (l) => l.datevConsultantNumber,
@@ -1230,10 +1231,10 @@ Map<String, _Getter> _part2() => {
   'featureEnvironmentPairs': (l) => l.featureEnvironmentPairs,
   'featureEnvironmentPairsDesc': (l) => l.featureEnvironmentPairsDesc,
   'featureEventsTab': (l) => l.featureEventsTab,
-  'featureEventsTabDesc': (l) => l.featureEventsTabDesc,
 };
 
 Map<String, _Getter> _part3() => {
+  'featureEventsTabDesc': (l) => l.featureEventsTabDesc,
   'featureExpenseRepartitionDesc': (l) => l.featureExpenseRepartitionDesc,
   'featureExpenseRepartitionTitle': (l) => l.featureExpenseRepartitionTitle,
   'featureExpenseRepartitionWizard': (l) => l.featureExpenseRepartitionWizard,
@@ -1633,10 +1634,10 @@ Map<String, _Getter> _part3() => {
   'helpHintMoneyStatementTip2Topic': (l) => l.helpHintMoneyStatementTip2Topic,
   'helpHintMoneyStatementTip3': (l) => l.helpHintMoneyStatementTip3,
   'helpHintMoneyStatementTipNegotiation': (l) => l.helpHintMoneyStatementTipNegotiation,
-  'helpHintMoneyStatementTipNegotiationTopic': (l) => l.helpHintMoneyStatementTipNegotiationTopic,
 };
 
 Map<String, _Getter> _part4() => {
+  'helpHintMoneyStatementTipNegotiationTopic': (l) => l.helpHintMoneyStatementTipNegotiationTopic,
   'helpHintMoneyStatementTopic': (l) => l.helpHintMoneyStatementTopic,
   'helpHintMoneyTip2': (l) => l.helpHintMoneyTip2,
   'helpHintMoneyTip2Topic': (l) => l.helpHintMoneyTip2Topic,
@@ -2036,10 +2037,10 @@ Map<String, _Getter> _part4() => {
   'invoiceMaturityReview': (l) => l.invoiceMaturityReview,
   'invoiceMemberLabel': (l) => l.invoiceMemberLabel,
   'invoiceMissingBuyerAddress': (l) => l.invoiceMissingBuyerAddress,
-  'invoiceMissingBuyerName': (l) => l.invoiceMissingBuyerName,
 };
 
 Map<String, _Getter> _part5() => {
+  'invoiceMissingBuyerName': (l) => l.invoiceMissingBuyerName,
   'invoiceMissingBuyerVatId': (l) => l.invoiceMissingBuyerVatId,
   'invoiceMissingExemptionReason': (l) => l.invoiceMissingExemptionReason,
   'invoiceMissingSellerAddress': (l) => l.invoiceMissingSellerAddress,
@@ -2439,10 +2440,10 @@ Map<String, _Getter> _part5() => {
   'mcpConnectTodoYou': (l) => l.mcpConnectTodoYou,
   'mcpConnectUnavailable': (l) => l.mcpConnectUnavailable,
   'mcpConnectVscodeInstall': (l) => l.mcpConnectVscodeInstall,
-  'mcpConnectVscodeStep': (l) => l.mcpConnectVscodeStep,
 };
 
 Map<String, _Getter> _part6() => {
+  'mcpConnectVscodeStep': (l) => l.mcpConnectVscodeStep,
   'mcpConnectWaitingDatabaseAdmin': (l) => l.mcpConnectWaitingDatabaseAdmin,
   'mcpConnectWaitingOperatorUnknown': (l) => l.mcpConnectWaitingOperatorUnknown,
   'mcpConnectWaitingWorkspaceAdmin': (l) => l.mcpConnectWaitingWorkspaceAdmin,
@@ -2842,10 +2843,10 @@ Map<String, _Getter> _part6() => {
   'newMemberOverageBlocked': (l) => l.newMemberOverageBlocked,
   'newMemberOveragePackage': (l) => l.newMemberOveragePackage,
   'newMemberOveragePayg': (l) => l.newMemberOveragePayg,
-  'newMemberSubscription': (l) => l.newMemberSubscription,
 };
 
 Map<String, _Getter> _part7() => {
+  'newMemberSubscription': (l) => l.newMemberSubscription,
   'newMemberSubscriptionLess': (l) => l.newMemberSubscriptionLess,
   'newMemberSubscriptionMore': (l) => l.newMemberSubscriptionMore,
   'nfcConfigChecking': (l) => l.nfcConfigChecking,
@@ -3245,10 +3246,10 @@ Map<String, _Getter> _part7() => {
   'privacySpaceNotice': (l) => l.privacySpaceNotice,
   'privacySpaceNoticeAcknowledge': (l) => l.privacySpaceNoticeAcknowledge,
   'privacySpaceNoticeFailed': (l) => l.privacySpaceNoticeFailed,
-  'privacySpaceNoticeRead': (l) => l.privacySpaceNoticeRead,
 };
 
 Map<String, _Getter> _part8() => {
+  'privacySpaceNoticeRead': (l) => l.privacySpaceNoticeRead,
   'privacySpaceNoticeUnread': (l) => l.privacySpaceNoticeUnread,
   'privacyTitle': (l) => l.privacyTitle,
   'privacyWhoCanSee': (l) => l.privacyWhoCanSee,
@@ -3648,10 +3649,10 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningUsageOverage': (l) => l.reportFieldMeaningUsageOverage,
   'reportFieldMeaningUsagePaid': (l) => l.reportFieldMeaningUsagePaid,
   'reportFieldMeaningUsageRecords': (l) => l.reportFieldMeaningUsageRecords,
-  'reportFieldMeaningUsageRemainingHalfDays': (l) => l.reportFieldMeaningUsageRemainingHalfDays,
 };
 
 Map<String, _Getter> _part9() => {
+  'reportFieldMeaningUsageRemainingHalfDays': (l) => l.reportFieldMeaningUsageRemainingHalfDays,
   'reportFieldMeaningUsageSites': (l) => l.reportFieldMeaningUsageSites,
   'reportFieldMeaningUsageSupplements': (l) => l.reportFieldMeaningUsageSupplements,
   'reportFieldMeaningUsageUsedHalfDays': (l) => l.reportFieldMeaningUsageUsedHalfDays,
@@ -4051,10 +4052,10 @@ Map<String, _Getter> _part9() => {
   'supportHour': (l) => l.supportHour,
   'supportPrepare': (l) => l.supportPrepare,
   'supportPrivacy': (l) => l.supportPrivacy,
-  'supportSaved': (l) => l.supportSaved,
 };
 
 Map<String, _Getter> _part10() => {
+  'supportSaved': (l) => l.supportSaved,
   'supportTitle': (l) => l.supportTitle,
   'tabCalendar': (l) => l.tabCalendar,
   'tabEvents': (l) => l.tabEvents,
@@ -4454,10 +4455,10 @@ Map<String, _Getter> _part10() => {
   'usageReportPaid': (l) => l.usageReportPaid,
   'usageReportRecordsHeading': (l) => l.usageReportRecordsHeading,
   'usageReportRemaining': (l) => l.usageReportRemaining,
-  'usageReportSupplements': (l) => l.usageReportSupplements,
 };
 
 Map<String, _Getter> _part11() => {
+  'usageReportSupplements': (l) => l.usageReportSupplements,
   'usageReportUsed': (l) => l.usageReportUsed,
   'usageTitle': (l) => l.usageTitle,
   'validationAdminsMay': (l) => l.validationAdminsMay,

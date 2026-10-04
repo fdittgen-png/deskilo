@@ -6,5 +6,30 @@
   "linkedAccountsLink": "Verknüpfen",
   "linkedAccountsUnlink": "Trennen",
   "linkedAccountsLinked": "Verknüpft",
-  "linkedAccountsLinkStarted": "Fahre im Browser fort, um die Verknüpfung abzuschließen."
+  "linkedAccountsLinkStarted": "Fahre im Browser fort, um die Verknüpfung abzuschließen.",
+  "authLinkManualDisabled": "Das Verknüpfen von Konten ist auf diesem Server ausgeschaltet. Der Administrator muss „Manuelles Verknüpfen zulassen“ in den Authentifizierungs-Einstellungen aktivieren.",
+  "@authLinkManualDisabled": {
+    "description": "Linked accounts: authLinkManualDisabled"
+  },
+  "authLinkAlreadyUsed": "Diese {provider}-Identität ist bereits mit einem anderen Konto verknüpft.",
+  "@authLinkAlreadyUsed": {
+    "description": "Linked accounts: authLinkAlreadyUsed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkFailed": "Das Verknüpfen von {provider} hat nicht funktioniert ({code}). Versuchen Sie es erneut; falls es weiter scheitert, nennen Sie dem Server-Administrator diesen Code.",
+  "@authLinkFailed": {
+    "description": "Linked accounts: authLinkFailed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  }
 }

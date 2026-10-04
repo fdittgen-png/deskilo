@@ -559,6 +559,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Créez d\'abord votre compte ou connectez-vous — vous collerez votre invitation juste après.';
 
   @override
+  String authLinkAlreadyUsed(String provider) {
+    return 'Cette identité $provider est déjà liée à un autre compte.';
+  }
+
+  @override
+  String authLinkFailed(String provider, String code) {
+    return 'L\'association de $provider a échoué ($code). Réessayez ; si cela persiste, communiquez ce code à l\'administrateur du serveur.';
+  }
+
+  @override
+  String get authLinkManualDisabled =>
+      'L\'association de comptes est désactivée sur ce serveur. Son administrateur doit activer « Autoriser l\'association manuelle » dans les paramètres d\'authentification.';
+
+  @override
   String get authNetworkError =>
       'Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.';
 

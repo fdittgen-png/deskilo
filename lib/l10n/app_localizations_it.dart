@@ -556,6 +556,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Crea prima il tuo account o accedi: incollerai l\'invito subito dopo.';
 
   @override
+  String authLinkAlreadyUsed(String provider) {
+    return 'Questa identità $provider è già collegata a un altro account.';
+  }
+
+  @override
+  String authLinkFailed(String provider, String code) {
+    return 'Il collegamento di $provider non è riuscito ($code). Riprova; se continua a fallire, comunica questo codice all\'amministratore del server.';
+  }
+
+  @override
+  String get authLinkManualDisabled =>
+      'Il collegamento degli account è disattivato su questo server. Il suo amministratore deve attivare «Consenti collegamento manuale» nelle impostazioni di autenticazione.';
+
+  @override
   String get authNetworkError =>
       'Impossibile raggiungere il server. Controlla la connessione e riprova.';
 

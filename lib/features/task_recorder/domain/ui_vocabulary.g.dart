@@ -2722,6 +2722,7 @@ const Set<String> uiLabelKeys = {
   'authHidePassword',
   'authJoinByInvitation',
   'authJoinHint',
+  'authLinkManualDisabled',
   'authNetworkError',
   'authPasswordLabel',
   'authPasswordTooShort',
