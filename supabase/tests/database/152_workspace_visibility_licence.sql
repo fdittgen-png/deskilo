@@ -61,7 +61,7 @@ delete from public.workspace_public_pages where workspace_id='00000000-0000-4000
 select public.set_workspace_visibility('00000000-0000-4000-8000-0000001918b1', 'private');
 select is((select array(select k from jsonb_object_keys(document) k order by k)
              from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000001918b1'),
-  array['address','host_type','name','visibility'], 'a private workspace is listed by name and address only');
+  array['address','host_type','name'], 'a private workspace is listed by name and address only');
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001918a2","role":"authenticated"}',true);
 select throws_ok($$select public.workspace_licence_status('00000000-0000-4000-8000-0000001918b1')$$,

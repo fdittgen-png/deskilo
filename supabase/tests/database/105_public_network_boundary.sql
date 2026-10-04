@@ -17,6 +17,8 @@ update public.profiles set display_name=case right(id::text,2) when 'a1' then 'N
 insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment)
 values('00000000-0000-4000-8000-0000001847b1','Published office','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000001847a1','dev'),
 ('00000000-0000-4000-8000-0000001847b2','Draft office','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000001847a1','dev');
+-- #0367: the public address is always the workspace's own.
+update public.workspaces set address='1 Public Street' where id='00000000-0000-4000-8000-0000001847b1';
 update public.workspaces set invite_code='CANARY1847INVITE' where id='00000000-0000-4000-8000-0000001847b1';
 insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status)
 values('00000000-0000-4000-8000-0000001847c1','00000000-0000-4000-8000-0000001847b1','00000000-0000-4000-8000-0000001847a1',true,true,'active'),
