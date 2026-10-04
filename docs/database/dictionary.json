@@ -3,14 +3,14 @@
         "counts": {
             "enums": 0,
             "views": 0,
-            "tables": 122,
-            "columns": 1786,
+            "tables": 135,
+            "columns": 1967,
             "domains": 0,
             "partitions": 0,
-            "foreignKeys": 294
+            "foreignKeys": 316
         },
         "source": "PostgreSQL catalogues (pg_class, pg_attribute, pg_constraint, pg_index, pg_inherits, pg_type) of the migration replay",
-        "checksum": "0f10ec078d790d248bf2b50f574836fae6eec7e8075e561e24dc85da7f2870b6",
+        "checksum": "c5305917f7a73c03c0e2455ea26c2fdfbe757d168b829788d4fe1da6bd51f358",
         "excluded": [
             "pg_catalog",
             "information_schema",
@@ -19,7 +19,7 @@
             "managed platform schemas (auth, storage, realtime, ...): version-qualified, not application migrations",
             "row values, function bodies, view definitions"
         ],
-        "schemaMarker": 337,
+        "schemaMarker": 366,
         "postgresMajor": 17,
         "applicationSchema": "public"
     },
@@ -1377,6 +1377,132 @@
         },
         {
             "kind": "table",
+            "name": "analytics_history",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "since",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 5
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 6
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "analytics_history_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX analytics_history_pkey ON public.analytics_history USING btree (workspace_id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "analytics_history_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (workspace_id)"
+                },
+                {
+                    "name": "analytics_history_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
             "name": "badge_auth_attempts",
             "schema": "public",
             "columns": [
@@ -1484,6 +1610,799 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK ((modified_datetime >= created_datetime))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "bi_views",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "scope",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "name",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "definition",
+                    "type": "jsonb",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "is_default",
+                    "type": "boolean",
+                    "default": "false",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "bi_views_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX bi_views_pkey ON public.bi_views USING btree (id)"
+                },
+                {
+                    "name": "bi_views_private_default",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX bi_views_private_default ON public.bi_views USING btree (workspace_id, user_id) WHERE ((scope = 'private'::text) AND is_default)"
+                },
+                {
+                    "name": "bi_views_private_name",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX bi_views_private_name ON public.bi_views USING btree (workspace_id, user_id, lower(btrim(name))) WHERE (scope = 'private'::text)"
+                },
+                {
+                    "name": "bi_views_user_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX bi_views_user_idx ON public.bi_views USING btree (user_id)"
+                },
+                {
+                    "name": "bi_views_workspace_default",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX bi_views_workspace_default ON public.bi_views USING btree (workspace_id) WHERE ((scope = 'workspace'::text) AND is_default)"
+                },
+                {
+                    "name": "bi_views_workspace_name",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX bi_views_workspace_name ON public.bi_views USING btree (workspace_id, lower(btrim(name))) WHERE (scope = 'workspace'::text)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "bi_views_definition_check",
+                    "type": "check",
+                    "columns": [
+                        "definition"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (bi_definition_valid(definition))"
+                },
+                {
+                    "name": "bi_views_name_check",
+                    "type": "check",
+                    "columns": [
+                        "name"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((char_length(btrim(name)) >= 1) AND (char_length(btrim(name)) <= 80)))"
+                },
+                {
+                    "name": "bi_views_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "bi_views_revision_check",
+                    "type": "check",
+                    "columns": [
+                        "revision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((revision >= 1))"
+                },
+                {
+                    "name": "bi_views_scope_check",
+                    "type": "check",
+                    "columns": [
+                        "scope"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((scope = ANY (ARRAY['private'::text, 'workspace'::text])))"
+                },
+                {
+                    "name": "bi_views_user_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "user_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "users",
+                        "schema": "auth",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "bi_views_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "book_accounts",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "issuer_site_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "code",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "name",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "account_type",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "is_posting",
+                    "type": "boolean",
+                    "default": "true",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "origin",
+                    "type": "text",
+                    "default": "'manual'::text",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "book_accounts_issuer_code",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX book_accounts_issuer_code ON public.book_accounts USING btree (issuer_site_id, code)"
+                },
+                {
+                    "name": "book_accounts_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX book_accounts_pkey ON public.book_accounts USING btree (id)"
+                },
+                {
+                    "name": "book_accounts_workspace_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX book_accounts_workspace_idx ON public.book_accounts USING btree (workspace_id, issuer_site_id, code)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "book_accounts_account_type_check",
+                    "type": "check",
+                    "columns": [
+                        "account_type"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((account_type = ANY (ARRAY['asset'::text, 'liability'::text, 'equity'::text, 'income'::text, 'expense'::text])))"
+                },
+                {
+                    "name": "book_accounts_code_check",
+                    "type": "check",
+                    "columns": [
+                        "code"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((code ~ '^[0-9A-Za-z][0-9A-Za-z._-]{0,19}$'::text))"
+                },
+                {
+                    "name": "book_accounts_issuer_code",
+                    "type": "unique",
+                    "columns": [
+                        "issuer_site_id",
+                        "code"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (issuer_site_id, code)"
+                },
+                {
+                    "name": "book_accounts_issuer_site_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "issuer_site_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (issuer_site_id) REFERENCES sites(id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "sites",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "book_accounts_name_check",
+                    "type": "check",
+                    "columns": [
+                        "name"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((char_length(btrim(name)) >= 1) AND (char_length(btrim(name)) <= 120)))"
+                },
+                {
+                    "name": "book_accounts_origin_check",
+                    "type": "check",
+                    "columns": [
+                        "origin"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((origin = ANY (ARRAY['manual'::text, 'suggested'::text])))"
+                },
+                {
+                    "name": "book_accounts_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "book_accounts_revision_check",
+                    "type": "check",
+                    "columns": [
+                        "revision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((revision >= 1))"
+                },
+                {
+                    "name": "book_accounts_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "book_mappings",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "issuer_site_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "role",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "account_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "effective_from",
+                    "type": "date",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "book_mappings_account_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX book_mappings_account_idx ON public.book_mappings USING btree (account_id)"
+                },
+                {
+                    "name": "book_mappings_issuer_role_version",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX book_mappings_issuer_role_version ON public.book_mappings USING btree (issuer_site_id, role, effective_from)"
+                },
+                {
+                    "name": "book_mappings_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX book_mappings_pkey ON public.book_mappings USING btree (id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "book_mappings_account_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "account_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (account_id) REFERENCES book_accounts(id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "book_accounts",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "book_mappings_issuer_role_version",
+                    "type": "unique",
+                    "columns": [
+                        "issuer_site_id",
+                        "role",
+                        "effective_from"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (issuer_site_id, role, effective_from)"
+                },
+                {
+                    "name": "book_mappings_issuer_site_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "issuer_site_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (issuer_site_id) REFERENCES sites(id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "sites",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "book_mappings_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "book_mappings_revision_check",
+                    "type": "check",
+                    "columns": [
+                        "revision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((revision >= 1))"
+                },
+                {
+                    "name": "book_mappings_role_check",
+                    "type": "check",
+                    "columns": [
+                        "role"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((role = ANY (ARRAY['customers'::text, 'revenue'::text, 'bank'::text, 'vat_output'::text, 'expenses'::text])))"
+                },
+                {
+                    "name": "book_mappings_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
                 }
             ]
         },
@@ -6166,6 +7085,527 @@
         },
         {
             "kind": "table",
+            "name": "guest_participation_audit",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "bigint",
+                    "notNull": true,
+                    "identity": "a",
+                    "position": 1
+                },
+                {
+                    "name": "participation_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "action",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "actor_user_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 4
+                },
+                {
+                    "name": "detail",
+                    "type": "jsonb",
+                    "default": "'{}'::jsonb",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "guest_participation_audit_participation_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX guest_participation_audit_participation_idx ON public.guest_participation_audit USING btree (participation_id, id)"
+                },
+                {
+                    "name": "guest_participation_audit_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX guest_participation_audit_pkey ON public.guest_participation_audit USING btree (id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "guest_participation_audit_action_check",
+                    "type": "check",
+                    "columns": [
+                        "action"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((action = ANY (ARRAY['requested'::text, 'confirmed'::text, 'declined'::text, 'cancelled'::text])))"
+                },
+                {
+                    "name": "guest_participation_audit_participation_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "participation_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (participation_id) REFERENCES guest_participations(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "guest_participations",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "guest_participation_audit_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "guest_participations",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 3
+                },
+                {
+                    "name": "guest_user_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "client_request_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "status",
+                    "type": "text",
+                    "default": "'requested'::text",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "starts_at",
+                    "type": "timestamp with time zone",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "ends_at",
+                    "type": "timestamp with time zone",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "message",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "host_note",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "requested_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "decided_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "decided_by",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "cancelled_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 15
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 16
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 17
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 18
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 19
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 20
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "guest_participations_guest_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX guest_participations_guest_idx ON public.guest_participations USING btree (guest_user_id, starts_at DESC)"
+                },
+                {
+                    "name": "guest_participations_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX guest_participations_pkey ON public.guest_participations USING btree (id)"
+                },
+                {
+                    "name": "guest_participations_request",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX guest_participations_request ON public.guest_participations USING btree (workspace_id, guest_user_id, client_request_id)"
+                },
+                {
+                    "name": "guest_participations_workspace_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX guest_participations_workspace_idx ON public.guest_participations USING btree (workspace_id, status, starts_at)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "guest_participations_decided_by_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "decided_by"
+                    ],
+                    "onDelete": "SET NULL",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (decided_by) REFERENCES auth.users(id) ON DELETE SET NULL",
+                    "references": {
+                        "table": "users",
+                        "schema": "auth",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "guest_participations_guest_user_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "guest_user_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (guest_user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "users",
+                        "schema": "auth",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "guest_participations_host_note_check",
+                    "type": "check",
+                    "columns": [
+                        "host_note"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((length(host_note) <= 1000))"
+                },
+                {
+                    "name": "guest_participations_message_check",
+                    "type": "check",
+                    "columns": [
+                        "message"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((length(message) <= 1000))"
+                },
+                {
+                    "name": "guest_participations_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "guest_participations_request",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "guest_user_id",
+                        "client_request_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, guest_user_id, client_request_id)"
+                },
+                {
+                    "name": "guest_participations_revision_check",
+                    "type": "check",
+                    "columns": [
+                        "revision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((revision >= 1))"
+                },
+                {
+                    "name": "guest_participations_site_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "site_id"
+                    ],
+                    "onDelete": "SET NULL",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (site_id) REFERENCES sites(id) ON DELETE SET NULL",
+                    "references": {
+                        "table": "sites",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "guest_participations_status_check",
+                    "type": "check",
+                    "columns": [
+                        "status"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((status = ANY (ARRAY['requested'::text, 'confirmed'::text, 'declined'::text, 'cancelled'::text])))"
+                },
+                {
+                    "name": "guest_participations_window",
+                    "type": "check",
+                    "columns": [
+                        "ends_at",
+                        "starts_at"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((ends_at > starts_at))"
+                },
+                {
+                    "name": "guest_participations_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
             "name": "identity_authority",
             "schema": "public",
             "columns": [
@@ -6994,6 +8434,213 @@
         },
         {
             "kind": "table",
+            "name": "instance_notices",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "kind",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "subject",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "payload",
+                    "type": "jsonb",
+                    "default": "'{}'::jsonb",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "created_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "read_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "instance_notices_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX instance_notices_pkey ON public.instance_notices USING btree (id)"
+                },
+                {
+                    "name": "instance_notices_recipient",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX instance_notices_recipient ON public.instance_notices USING btree (user_id, created_at DESC)"
+                },
+                {
+                    "name": "instance_notices_user_id_kind_subject_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX instance_notices_user_id_kind_subject_key ON public.instance_notices USING btree (user_id, kind, subject)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "instance_notices_kind_check",
+                    "type": "check",
+                    "columns": [
+                        "kind"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((kind ~ '^[a-z][a-z_]{2,63}$'::text))"
+                },
+                {
+                    "name": "instance_notices_payload_check",
+                    "type": "check",
+                    "columns": [
+                        "payload"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((jsonb_typeof(payload) = 'object'::text))"
+                },
+                {
+                    "name": "instance_notices_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "instance_notices_subject_check",
+                    "type": "check",
+                    "columns": [
+                        "subject"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((length(subject) >= 1) AND (length(subject) <= 200)))"
+                },
+                {
+                    "name": "instance_notices_user_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "user_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "users",
+                        "schema": "auth",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "instance_notices_user_id_kind_subject_key",
+                    "type": "unique",
+                    "columns": [
+                        "user_id",
+                        "kind",
+                        "subject"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (user_id, kind, subject)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
             "name": "instance_owner_claims",
             "schema": "public",
             "columns": [
@@ -7224,6 +8871,19 @@
                     "default": "false",
                     "notNull": true,
                     "position": 19
+                },
+                {
+                    "name": "role_keys",
+                    "type": "text[]",
+                    "default": "'{}'::text[]",
+                    "notNull": true,
+                    "position": 20
+                },
+                {
+                    "name": "roles_applied_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 21
                 }
             ],
             "indexes": [
@@ -9490,6 +11150,13 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 34
+                },
+                {
+                    "name": "legal_snapshot",
+                    "type": "jsonb",
+                    "comment": "#1916 — the legal clauses and facts frozen at issue (schema 1); null on invoices issued before 0349 (legacy, evidence unknown).",
+                    "notNull": false,
+                    "position": 35
                 }
             ],
             "indexes": [
@@ -9925,7 +11592,7 @@
                 },
                 {
                     "name": "vat_percent",
-                    "type": "numeric(5,2)",
+                    "type": "numeric(9,6)",
                     "notNull": false,
                     "position": 12
                 },
@@ -12448,6 +14115,193 @@
         },
         {
             "kind": "table",
+            "name": "mcp_endpoint_probes",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "bigint",
+                    "notNull": true,
+                    "identity": "a",
+                    "position": 1
+                },
+                {
+                    "name": "requested_by",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 2
+                },
+                {
+                    "name": "endpoint_url",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "challenge_request",
+                    "type": "bigint",
+                    "notNull": false,
+                    "position": 4
+                },
+                {
+                    "name": "metadata_request",
+                    "type": "bigint",
+                    "notNull": false,
+                    "position": 5
+                },
+                {
+                    "name": "requested_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "verdict",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "reason",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "published_resource",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "settled_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 16
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "mcp_endpoint_probes_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX mcp_endpoint_probes_pkey ON public.mcp_endpoint_probes USING btree (id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "mcp_endpoint_probes_check",
+                    "type": "check",
+                    "columns": [
+                        "verdict",
+                        "settled_at"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((verdict IS NULL) = (settled_at IS NULL)))"
+                },
+                {
+                    "name": "mcp_endpoint_probes_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "mcp_endpoint_probes_requested_by_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "requested_by"
+                    ],
+                    "onDelete": "SET NULL",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (requested_by) REFERENCES auth.users(id) ON DELETE SET NULL",
+                    "references": {
+                        "table": "users",
+                        "schema": "auth",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "mcp_endpoint_probes_verdict_check",
+                    "type": "check",
+                    "columns": [
+                        "verdict"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((verdict = ANY (ARRAY['deployed'::text, 'endpoint_not_deployed'::text, 'resource_mismatch'::text, 'unavailable'::text])))"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
             "name": "mcp_idempotency",
             "schema": "public",
             "columns": [
@@ -12679,6 +14533,127 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "mcp_installation_settings",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "singleton",
+                    "type": "boolean",
+                    "default": "true",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "endpoint_url",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 2
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 5
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 6
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "allow_loopback_clients",
+                    "type": "boolean",
+                    "default": "false",
+                    "notNull": true,
+                    "position": 9
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "mcp_installation_settings_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX mcp_installation_settings_pkey ON public.mcp_installation_settings USING btree (singleton)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "mcp_installation_settings_endpoint_url_check",
+                    "type": "check",
+                    "columns": [
+                        "endpoint_url"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((endpoint_url ~ '^https://[^/?#@[:space:]]+(/[^?#[:space:]]*)?$'::text))"
+                },
+                {
+                    "name": "mcp_installation_settings_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "singleton"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (singleton)"
+                },
+                {
+                    "name": "mcp_installation_settings_singleton_check",
+                    "type": "check",
+                    "columns": [
+                        "singleton"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (singleton)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
                 }
             ]
         },
@@ -15026,6 +17001,13 @@
                     "type": "text",
                     "notNull": false,
                     "position": 34
+                },
+                {
+                    "name": "customer_capacity",
+                    "type": "text",
+                    "comment": "#1916 — whether this customer acts as a business or as a consumer; null = not stated (the workspace default applies).",
+                    "notNull": false,
+                    "position": 35
                 }
             ],
             "indexes": [
@@ -15090,6 +17072,17 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK ((co_owner = ANY (ARRAY['none'::text, 'active'::text, 'passive'::text])))"
+                },
+                {
+                    "name": "members_customer_capacity_check",
+                    "type": "check",
+                    "columns": [
+                        "customer_capacity"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((customer_capacity IS NULL) OR (customer_capacity = ANY (ARRAY['business'::text, 'consumer'::text]))))"
                 },
                 {
                     "name": "members_home_site_id_fkey",
@@ -16109,6 +18102,175 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK ((y >= 0))"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "opening_hours_history",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "open_weekdays",
+                    "type": "integer[]",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "work_start_minutes",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "work_end_minutes",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "valid",
+                    "type": "tstzrange",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "opening_hours_history_one_at_a_time",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX opening_hours_history_one_at_a_time ON public.opening_hours_history USING gist (workspace_id, valid)"
+                },
+                {
+                    "name": "opening_hours_history_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX opening_hours_history_pkey ON public.opening_hours_history USING btree (id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "opening_hours_history_one_at_a_time",
+                    "type": "exclusion",
+                    "columns": [
+                        "workspace_id",
+                        "valid"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "EXCLUDE USING gist (workspace_id WITH =, valid WITH &&)"
+                },
+                {
+                    "name": "opening_hours_history_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "opening_hours_history_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
                 },
                 {
                     "name": "system_columns_order",
@@ -20607,6 +22769,261 @@
         },
         {
             "kind": "table",
+            "name": "reservation_origins",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "reservation_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "member_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "channel",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "client_id",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "client_name",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "request_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "created_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "reservation_origins_member",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX reservation_origins_member ON public.reservation_origins USING btree (member_id, created_at DESC)"
+                },
+                {
+                    "name": "reservation_origins_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX reservation_origins_pkey ON public.reservation_origins USING btree (reservation_id)"
+                },
+                {
+                    "name": "reservation_origins_workspace",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX reservation_origins_workspace ON public.reservation_origins USING btree (workspace_id, created_at DESC)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "reservation_origins_channel_check",
+                    "type": "check",
+                    "columns": [
+                        "channel"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((channel = 'assistant'::text))"
+                },
+                {
+                    "name": "reservation_origins_client_id_check",
+                    "type": "check",
+                    "columns": [
+                        "client_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((char_length(client_id) >= 1) AND (char_length(client_id) <= 200)))"
+                },
+                {
+                    "name": "reservation_origins_client_name_check",
+                    "type": "check",
+                    "columns": [
+                        "client_name"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((char_length(client_name) >= 1) AND (char_length(client_name) <= 200)))"
+                },
+                {
+                    "name": "reservation_origins_member_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "member_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "members",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "reservation_origins_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "reservation_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (reservation_id)"
+                },
+                {
+                    "name": "reservation_origins_reservation_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "reservation_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (reservation_id) REFERENCES reservations(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "reservations",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "reservation_origins_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
             "name": "reservation_requests",
             "schema": "public",
             "columns": [
@@ -20678,6 +23095,13 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 11
+                },
+                {
+                    "name": "payload_digest",
+                    "type": "text",
+                    "comment": "#1855 -- md5 of the material payload the claim was made with (space ids, window, check-in); null for claims older than 0352",
+                    "notNull": false,
+                    "position": 12
                 }
             ],
             "comment": "#1241 — one row per booking a client asked for, keyed by the id the CLIENT generated. Lets an offline queue replay a booking without making a second one.",
@@ -20776,6 +23200,213 @@
                 },
                 {
                     "name": "reservation_requests_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "reservation_target_history",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "reservation_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "seat_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 4
+                },
+                {
+                    "name": "desk_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 5
+                },
+                {
+                    "name": "office_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 6
+                },
+                {
+                    "name": "level_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "recorded_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "reservation_target_history_latest",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX reservation_target_history_latest ON public.reservation_target_history USING btree (reservation_id, recorded_at DESC)"
+                },
+                {
+                    "name": "reservation_target_history_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX reservation_target_history_pkey ON public.reservation_target_history USING btree (id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "reservation_target_history_one_target",
+                    "type": "check",
+                    "columns": [
+                        "seat_id",
+                        "desk_id",
+                        "office_id",
+                        "level_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((num_nonnulls(seat_id, desk_id, office_id, level_id) = 1))"
+                },
+                {
+                    "name": "reservation_target_history_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "reservation_target_history_reservation_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "reservation_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (reservation_id) REFERENCES reservations(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "reservations",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "reservation_target_history_workspace_id_fkey",
                     "type": "foreign key",
                     "match": "SIMPLE",
                     "columns": [
@@ -22017,6 +24648,200 @@
                 },
                 {
                     "name": "seat_accessories_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "seat_history",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "seat_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "desk_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "office_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "level_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "blocked_from",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "blocked_to",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "valid",
+                    "type": "tstzrange",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "seat_history_by_workspace",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX seat_history_by_workspace ON public.seat_history USING gist (workspace_id, valid)"
+                },
+                {
+                    "name": "seat_history_one_at_a_time",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX seat_history_one_at_a_time ON public.seat_history USING gist (seat_id, valid)"
+                },
+                {
+                    "name": "seat_history_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX seat_history_pkey ON public.seat_history USING btree (id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "seat_history_one_at_a_time",
+                    "type": "exclusion",
+                    "columns": [
+                        "seat_id",
+                        "valid"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "EXCLUDE USING gist (seat_id WITH =, valid WITH &&)"
+                },
+                {
+                    "name": "seat_history_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "seat_history_workspace_id_fkey",
                     "type": "foreign key",
                     "match": "SIMPLE",
                     "columns": [
@@ -24213,7 +27038,7 @@
                 },
                 {
                     "name": "percent",
-                    "type": "numeric(5,2)",
+                    "type": "numeric(9,6)",
                     "notNull": true,
                     "position": 4
                 },
@@ -27880,6 +30705,13 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 14
+                },
+                {
+                    "name": "builtin",
+                    "type": "boolean",
+                    "default": "false",
+                    "notNull": true,
+                    "position": 15
                 }
             ],
             "indexes": [
@@ -27889,6 +30721,13 @@
                     "unique": true,
                     "primary": false,
                     "definition": "CREATE UNIQUE INDEX workspace_roles_key ON public.workspace_roles USING btree (workspace_id, key)"
+                },
+                {
+                    "name": "workspace_roles_one_builtin",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX workspace_roles_one_builtin ON public.workspace_roles USING btree (workspace_id) WHERE builtin"
                 },
                 {
                     "name": "workspace_roles_pkey",
