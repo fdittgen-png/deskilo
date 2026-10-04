@@ -27998,6 +27998,18 @@ abstract class AppLocalizations {
   /// **'Closed the booking without booking'**
   String get taskRecorderActionCancelReview;
 
+  /// #1884 recorder: taskRecorderActionCancelRoleEdit
+  ///
+  /// In en, this message translates to:
+  /// **'Closed the role without saving'**
+  String get taskRecorderActionCancelRoleEdit;
+
+  /// #1884 recorder: taskRecorderActionCancelValidationRule
+  ///
+  /// In en, this message translates to:
+  /// **'Closed the rule without saving'**
+  String get taskRecorderActionCancelValidationRule;
+
   /// #1865 task recorder: taskRecorderActionChangeField
   ///
   /// In en, this message translates to:
@@ -28040,11 +28052,53 @@ abstract class AppLocalizations {
   /// **'Did not switch on a test feature'**
   String get taskRecorderActionDeclineOptIn;
 
+  /// #1884 recorder: taskRecorderActionGiveRole
+  ///
+  /// In en, this message translates to:
+  /// **'Gave or took back a role'**
+  String get taskRecorderActionGiveRole;
+
   /// #1865 task recorder: taskRecorderActionOpenReserve
   ///
   /// In en, this message translates to:
   /// **'Opened Reserve'**
   String get taskRecorderActionOpenReserve;
+
+  /// #1884 recorder: taskRecorderActionOpenRoleMatrix
+  ///
+  /// In en, this message translates to:
+  /// **'Opened the role matrix'**
+  String get taskRecorderActionOpenRoleMatrix;
+
+  /// #1884 recorder: taskRecorderActionOpenSpaceRoles
+  ///
+  /// In en, this message translates to:
+  /// **'Opened the roles this space defines'**
+  String get taskRecorderActionOpenSpaceRoles;
+
+  /// #1884 recorder: taskRecorderActionOpenValidationRules
+  ///
+  /// In en, this message translates to:
+  /// **'Opened the validation rules'**
+  String get taskRecorderActionOpenValidationRules;
+
+  /// #1884 recorder: taskRecorderActionOpenWhatYouCanDo
+  ///
+  /// In en, this message translates to:
+  /// **'Opened what you can do'**
+  String get taskRecorderActionOpenWhatYouCanDo;
+
+  /// #1884 recorder: taskRecorderActionSaveRole
+  ///
+  /// In en, this message translates to:
+  /// **'Saved a role'**
+  String get taskRecorderActionSaveRole;
+
+  /// #1884 recorder: taskRecorderActionSaveValidationRule
+  ///
+  /// In en, this message translates to:
+  /// **'Saved a validation rule'**
+  String get taskRecorderActionSaveValidationRule;
 
   /// #1865 task recorder: taskRecorderActionSelectDate
   ///
@@ -28081,6 +28135,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switched the view'**
   String get taskRecorderActionSwitchView;
+
+  /// #1884 recorder: taskRecorderActionTogglePermission
+  ///
+  /// In en, this message translates to:
+  /// **'Switched a permission'**
+  String get taskRecorderActionTogglePermission;
 
   /// #2142 recorder: taskRecorderActionUiCloseWindow
   ///
@@ -28382,6 +28442,12 @@ abstract class AppLocalizations {
   /// **'Not saved'**
   String get taskRecorderOutcomeSettingNotSaved;
 
+  /// #1884 recorder: taskRecorderOutcomeSettingPending
+  ///
+  /// In en, this message translates to:
+  /// **'Sent for validation'**
+  String get taskRecorderOutcomeSettingPending;
+
   /// #1884 recorder: taskRecorderOutcomeSettingSaved
   ///
   /// In en, this message translates to:
@@ -28562,6 +28628,12 @@ abstract class AppLocalizations {
   /// **'every kind'**
   String get taskRecorderTargetAllKinds;
 
+  /// #1884 recorder: taskRecorderTargetDefaultRule
+  ///
+  /// In en, this message translates to:
+  /// **'the default rule'**
+  String get taskRecorderTargetDefaultRule;
+
   /// #2142 recorder: taskRecorderTargetUnkeyed
   ///
   /// In en, this message translates to:
@@ -28646,6 +28718,12 @@ abstract class AppLocalizations {
   /// **'a conversation'**
   String get taskRecorderValueConversation;
 
+  /// #1884 recorder: taskRecorderValueCreated
+  ///
+  /// In en, this message translates to:
+  /// **'created'**
+  String get taskRecorderValueCreated;
+
   /// #1865 task recorder: taskRecorderValueCustom
   ///
   /// In en, this message translates to:
@@ -28675,6 +28753,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'a desk'**
   String get taskRecorderValueDesk;
+
+  /// #1884 recorder: taskRecorderValueEdited
+  ///
+  /// In en, this message translates to:
+  /// **'edited'**
+  String get taskRecorderValueEdited;
 
   /// #1881 recorder: taskRecorderValueEveryone
   ///
@@ -28837,6 +28921,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'a date range'**
   String get taskRecorderValueRange;
+
+  /// #1884 recorder: taskRecorderValueRenamed
+  ///
+  /// In en, this message translates to:
+  /// **'renamed'**
+  String get taskRecorderValueRenamed;
+
+  /// #1884 recorder: taskRecorderValueRoleAdmin
+  ///
+  /// In en, this message translates to:
+  /// **'administrators'**
+  String get taskRecorderValueRoleAdmin;
+
+  /// #1884 recorder: taskRecorderValueRoleCoOwner
+  ///
+  /// In en, this message translates to:
+  /// **'a co-owner'**
+  String get taskRecorderValueRoleCoOwner;
+
+  /// #1884 recorder: taskRecorderValueRoleMember
+  ///
+  /// In en, this message translates to:
+  /// **'every member'**
+  String get taskRecorderValueRoleMember;
+
+  /// #1884 recorder: taskRecorderValueRoleOwner
+  ///
+  /// In en, this message translates to:
+  /// **'the owner'**
+  String get taskRecorderValueRoleOwner;
 
   /// #1865 task recorder: taskRecorderValueRoom
   ///

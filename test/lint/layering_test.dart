@@ -90,6 +90,9 @@ const Set<String> _knownPairs = {
   'calendar -> task_recorder',
   'events -> task_recorder',
   'task_recorder -> calendar',
+  // #1884 B — the recorder names an event type's validation rule the
+  // way the validation screen does.
+  'task_recorder -> events',
   // #1823 — the Me layer is the account's home: it shows the account
   // messenger and discovery (directory), my spaces and memberships
   // (workspace), my photo and account rows (profile), and signs out (auth).
@@ -209,15 +212,17 @@ const Map<String, int> _pairBudget = {
   'help -> task_recorder': 3,
   'reservations -> task_recorder': 8,
   'task_recorder -> reservations': 1,
-  'task_recorder -> workspace': 4,
-  'workspace -> task_recorder': 3, // 2026-10-03 #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation)
+  'task_recorder -> workspace': 6, // 2026-10-03 #1884 B +2: a permission and its label
+  'workspace -> task_recorder': 9, // 2026-10-03 #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation); B +6: the role matrix, the space's roles, their holders
   // 2026-10-03 #2142 — the labelled entry in Me → Account.
   'me -> task_recorder': 1,
   // 2026-10-03 #1881 B — the calendar's seams (hub and classic), the
   // decision seam, and the recorder's calendar-kind label.
   'calendar -> task_recorder': 8,
-  'events -> task_recorder': 2,
+  'events -> task_recorder': 4, // 2026-10-03 #1884 B +2: the validation rules
   'task_recorder -> calendar': 1,
+  // 2026-10-03 #1884 B — the event type and its label, for a rule.
+  'task_recorder -> events': 2,
   // 2026-09-16 #1306 S2 — the calendar carries the pending decisions when
   // the events bell is off: one import of the events feature's widget.
   'calendar -> events': 4,

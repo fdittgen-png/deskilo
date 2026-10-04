@@ -27,6 +27,7 @@ import 'workspace_feature_keys.dart';
 export 'ui_vocabulary.g.dart';
 export 'workspace_feature_keys.dart';
 
+part 'registry_admin.dart';
 part 'registry_calendar.dart';
 part 'registry_ui.dart';
 
@@ -290,6 +291,12 @@ abstract final class RecorderSurfaces {
 
   /// #1881 B — the decisions a member is asked for, on the calendar.
   static const eventDecisions = 'events.decisions';
+
+  /// #1884 B — the role matrix, the roles a space defines, their holders.
+  static const roles = 'workspace.roles';
+
+  /// #1884 B — the validation rules.
+  static const validationRules = 'events.validation_rules';
   static const recorderControls = 'recorder.controls';
 
   /// #2142 — any screen, through the generic layer.
@@ -338,6 +345,14 @@ abstract final class RecorderActions {
   // #1884 A — management forms.
   static const switchFeature = 'workspace.switch_feature';
   static const declineOptIn = 'workspace.decline_opt_in';
+
+  // #1884 B — roles and validation rules.
+  static const togglePermission = 'workspace.toggle_permission';
+  static const saveRole = 'workspace.save_role';
+  static const giveRole = 'workspace.give_role';
+  static const cancelRoleEdit = 'workspace.cancel_role_edit';
+  static const saveValidationRule = 'events.save_validation_rule';
+  static const cancelValidationRule = 'events.cancel_validation_rule';
 }
 
 /// Outcome identifiers.
@@ -371,6 +386,8 @@ abstract final class RecorderOutcomes {
 
   /// Sent, but no answer anybody can vouch for (a reload that failed).
   static const settingUnknown = 'setting.unknown';
+  // #1884 B — held for a decision, or no answer to vouch for.
+  static const settingPending = 'setting.pending';
 }
 
 const Set<String> _bookingOutcomes = {
@@ -392,6 +409,8 @@ const ActionRegistry recorderRegistry = ActionRegistry(
     RecorderSurface(RecorderSurfaces.workspaceFeatures),
     RecorderSurface(RecorderSurfaces.calendar),
     RecorderSurface(RecorderSurfaces.eventDecisions),
+    RecorderSurface(RecorderSurfaces.roles),
+    RecorderSurface(RecorderSurfaces.validationRules),
     RecorderSurface(RecorderSurfaces.recorderControls, recorderControl: true),
     RecorderSurface(RecorderSurfaces.anyScreen),
     RecorderSurface('navigation.any'),
@@ -513,6 +532,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
     ),
     ..._calendarActions,
     ..._uiActions,
+    ..._adminActions,
     ActionSpec(
       RecorderActions.recorderControl,
       surface: RecorderSurfaces.recorderControls,
@@ -570,6 +590,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
     ),
     ..._calendarOutcomes,
     ..._uiOutcomes,
+    ..._adminOutcomes,
   ],
   prerequisites: [
     PrerequisiteSpec('signed_in'),
@@ -583,6 +604,8 @@ const ActionRegistry recorderRegistry = ActionRegistry(
         RecorderSurfaces.myReservation,
         RecorderSurfaces.workspaceFeatures,
         RecorderSurfaces.calendar,
+        RecorderSurfaces.roles,
+        RecorderSurfaces.validationRules,
       },
     ),
     PrerequisiteSpec('bookable_place'),

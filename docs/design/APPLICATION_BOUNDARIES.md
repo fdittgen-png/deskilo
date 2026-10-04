@@ -95,6 +95,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `reservations -> task_recorder`
 - `reservations -> workspace`
 - `task_recorder -> calendar`
+- `task_recorder -> events`
 - `task_recorder -> reservations`
 - `task_recorder -> workspace`
 - `visits -> auth`
@@ -117,6 +118,7 @@ Reciprocal:
 - `events <-> money`
 - `events <-> plan`
 - `events <-> reservations`
+- `events <-> task_recorder`
 - `events <-> workspace`
 - `members <-> money`
 - `members <-> plan`
@@ -170,6 +172,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart`
 - `lib/features/reservations/presentation/widgets/space_scan.dart`
 - `lib/features/reservations/presentation/widgets/week_grid.dart`
+- `lib/features/task_recorder/domain/action_registry.dart`
 - `lib/features/workspace/data/supabase_workspace_repository.dart`
 - `lib/features/workspace/domain/workspace_feature.dart`
 - `lib/features/workspace/domain/workspace_repository.dart`
