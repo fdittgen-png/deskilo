@@ -3729,6 +3729,7 @@ Map<String, _Getter> _part9() => {
   'reportImageSizeSmall': (l) => l.reportImageSizeSmall,
   'reportImageUpload': (l) => l.reportImageUpload,
   'reportImagesEmpty': (l) => l.reportImagesEmpty,
+  'reportImagesLoadFailed': (l) => l.reportImagesLoadFailed,
   'reportImagesTitle': (l) => l.reportImagesTitle,
   'reportInsertImage': (l) => l.reportInsertImage,
   'reportLanguageAmbiguous': (l) => l.reportLanguageAmbiguous,

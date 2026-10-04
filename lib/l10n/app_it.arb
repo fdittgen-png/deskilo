@@ -9017,6 +9017,7 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportImagesLoadFailed": "Impossibile caricare le immagini dei report. Riprova.",
   "reportImagesTitle": "Immagini dei report",
   "@reportImagesTitle": {
     "description": "Report WYSIWYG editor + image library (#488)"

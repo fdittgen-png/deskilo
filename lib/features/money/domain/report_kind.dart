@@ -78,6 +78,7 @@ const List<ReportKind> fixedReportKinds = [
   ReportKind(id: 'status', slot: ReportDocSlot('status')),
   // #878 — the period's VAT positions, for the accountant.
   ReportKind(id: 'vat', slot: ReportDocSlot('vat')),
+  ReportKind(id: 'vat_declaration', slot: ReportDocSlot('vat_declaration')),
   // #822 — the three structural documents.
   ReportKind(id: 'coa', slot: ReportDocSlot('coa')),
   ReportKind(id: 'badges', slot: ReportDocSlot('badges')),

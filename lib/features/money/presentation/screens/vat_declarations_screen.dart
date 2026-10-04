@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:pdf/widgets.dart' as pw;
 
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -23,7 +22,9 @@ import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/vat_declaration.dart';
-import '../../domain/vat_declaration_pdf.dart';
+import '../../domain/vat_declaration_report.dart';
+import '../invoice_documents.dart';
+import '../report_layout_actions.dart';
 import '../../domain/vat_regime.dart';
 import '../../domain/accounting_view.dart';
 import '../../domain/invoice_legal.dart';
@@ -33,7 +34,6 @@ import '../../providers/vat_declaration_providers.dart';
 import '../report_actions.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../vat_report_actions.dart';
-import '../../../workspace/domain/workspace.dart';
 
 /// Periodic VAT declarations (#534/0107): the owner picks a filing
 /// period (month or quarter), the app aggregates the period's issued
@@ -122,52 +122,39 @@ class _VatDeclarationsScreenState
             'Basis: invoices (VAT on documents issued during the period).');
   }
 
-  Future<({Uint8List bytes, String fileName})> _buildPdf(
-      VatDeclaration declaration) async {
+  Map<String, Object?> _reportData(VatDeclaration declaration) {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
-    Future<pw.Font> font(String asset) async =>
-        pw.Font.ttf(await rootBundle.load(asset));
-    final dateFormat = DateFormat.yMMMd();
-    final bytes = await buildVatDeclarationPdf(
-      strings: VatDeclarationPdfStrings(
-        title: l10n?.vatDeclTitle ?? 'VAT declaration',
-        period: l10n?.vatDeclPeriod ?? 'Period',
-        seller: l10n?.vatDeclSeller ?? 'Seller',
-        vatIdLabel: l10n?.vatDeclVatId ?? 'VAT ID',
-        colRate: l10n?.vatDeclRate ?? 'Rate',
-        colNet: l10n?.vatDeclNet ?? 'Net base',
-        colVat: l10n?.vatDeclVat ?? 'VAT',
-        colInvoices: l10n?.vatDeclInvoices ?? 'Invoices',
-        totals: l10n?.vatDeclTotals ?? 'Totals',
-        boxesTitle: l10n?.vatDeclBoxes ?? 'Official form lines',
-        colBox: l10n?.vatDeclBox ?? 'Box',
-        statusLabel: l10n?.vatDeclStatus ?? 'Status',
-        // #896 — the disclaimer must say WHICH period this is, or it
-        // describes the wrong document half the time.
-        disclaimer: '${_basisNote(l10n)} '
-            '${l10n?.vatDeclDisclaimer ?? "Generated from the period's "
-                "issued invoices. Verify against your accounting before "
-                "filing — this is a filing aid, not tax advice."}',
-      ),
+    final dateFormat = DateFormat.yMMMd(l10n?.localeName);
+    return vatDeclarationReportData(
       declaration: declaration,
       workspaceName: workspace?.name ?? '',
       vatId: workspace?.vatId ?? '',
       countryCode: workspace?.countryCode ?? '',
-      money: (cents) =>
-          '${centsToMajor(cents)} ${declaration.currency}',
+      disclaimer: '${_basisNote(l10n)} '
+          '${l10n?.vatDeclDisclaimer ?? "Verify against your accounting before filing."}',
+      statusLabel: declaration.isSubmitted
+          ? (l10n?.vatDeclSubmitted ?? 'Submitted')
+          : (l10n?.vatDeclDraft ?? 'Draft'),
+      rate: (value) => '${NumberFormat.decimalPattern(l10n?.localeName).format(value)} %',
+      money: moneyFormat(declaration.currency, locale: l10n?.localeName).formatMinor,
       date: dateFormat.format,
-      baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
-      // #917 — the document that goes to the tax authority must be the
-      // least mistakable of all.
-      watermark: (workspace?.isDevelopment ?? false)
-          ? (l10n?.developmentWatermark ?? 'DEVELOPMENT')
-          : '',
     );
+  }
+
+  Future<({Uint8List bytes, String fileName})> _buildPdf(
+      VatDeclaration declaration) async {
+    final l10n = AppLocalizations.of(context);
+    final data = _reportData(declaration);
+    final report = renderLetterDoc(context, ref,
+        docId: 'vat_declaration', data: data);
+    final pdf = await letterDocPdf(context, ref,
+        title: l10n?.vatDeclTitle ?? 'VAT declaration',
+        report: report, data: data,
+        layoutXml: letterLayoutXml(ref, docId: 'vat_declaration', l10n: l10n));
     final start =
         declaration.periodStart.toIso8601String().substring(0, 10);
-    return (bytes: bytes, fileName: 'vat-declaration-$start.pdf');
+    return (bytes: pdf.bytes, fileName: 'vat-declaration-$start.pdf');
   }
 
   Future<void> _exportXml(VatDeclaration declaration) async {
@@ -472,16 +459,21 @@ class _VatDeclarationsScreenState
                                             size: 18),
                                         label: Text(
                                             l10n?.vatDeclPdf ?? 'PDF'),
-                                        onPressed: () =>
-                                            runReportActions(
+                                        onPressed: () async {
+                                          await warmLetterDocProviders(ref, 'vat_declaration');
+                                          if (!context.mounted) return;
+                                          await runReportActions(
                                           context,
                                           ref,
                                           keyPrefix: 'vat-decl',
+                                          render: () => renderLetterDoc(context, ref,
+                                              docId: 'vat_declaration', data: _reportData(declaration)),
                                           logMessage:
                                               'vat declaration pdf failed',
                                           buildPdf: () =>
                                               _buildPdf(declaration),
-                                        ),
+                                          );
+                                        },
                                       ),
                                       OutlinedButton.icon(
                                         key: ValueKey(

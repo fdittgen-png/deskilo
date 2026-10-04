@@ -63,6 +63,10 @@ cuando su valor existe, una fila por línea de factura, y el título que
 dice factura, nota de crédito o proforma. Lo que toque aterriza en el
 cursor de la banda que editó por última vez.
 
+La cabecera y el cuerpo se componen de arriba abajo. El pie conserva una posición fija en la parte inferior de cada página; las líneas adicionales crecen hacia arriba. Solo la primera página imprime el membrete completo y las direcciones. Las siguientes usan la banda de continuación y los números de página. El PDF de preparación de la declaración de IVA también utiliza estas plantillas editables y conserva los importes guardados y el estado de presentación.
+
+Use **Insertar una imagen** para cargar una sola vez un logotipo, una firma u otra imagen en la biblioteca del espacio y seleccionarla después en cualquier plantilla. Colóquela en cualquier banda con `![name]` o en un diseño posicionado con `<image name="name"/>`. Cargar el mismo nombre de archivo sustituye la imagen para futuras generaciones de todas las plantillas que la usan; los PDF ya guardados no cambian.
+
 <!-- anchor: admin.reports.layouts -->
 ### Los diseños posicionados
 

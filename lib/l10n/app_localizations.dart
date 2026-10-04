@@ -24800,6 +24800,12 @@ abstract class AppLocalizations {
   /// **'No image yet — upload your logo, a stamp or a signature and reference it with ![name].'**
   String get reportImagesEmpty;
 
+  /// No description provided for @reportImagesLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load report images. Try again.'**
+  String get reportImagesLoadFailed;
+
   /// Report WYSIWYG editor + image library (#488)
   ///
   /// In en, this message translates to:
