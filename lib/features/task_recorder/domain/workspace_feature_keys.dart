@@ -124,6 +124,7 @@ const Set<String> workspaceFeatureKeys = {
   'mcpAccess',
   'calendarFileExport',
   'memberGettingStarted',
+  'placeFeedback',
   'publicListings',
   'spaceInquiries',
   'messageForwarding',
