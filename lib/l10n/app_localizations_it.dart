@@ -16761,6 +16761,31 @@ class AppLocalizationsIt extends AppLocalizations {
       'Apra un file di attività salvato. Viene letto solo su questo dispositivo; nulla viene inviato e non serve accedere.';
 
   @override
+  String get taskWorkbenchOfflineFailed =>
+      'Il browser si è rifiutato di conservarlo.';
+
+  @override
+  String get taskWorkbenchOfflineForget => 'Smetti di conservarlo';
+
+  @override
+  String get taskWorkbenchOfflineKeep => 'Conservalo su questo dispositivo';
+
+  @override
+  String get taskWorkbenchOfflineOff =>
+      'Non conservato: senza connessione questa pagina non si aprirà.';
+
+  @override
+  String get taskWorkbenchOfflineReady =>
+      'Conservato in questo browser: le schermate già aperte funzionano senza connessione.';
+
+  @override
+  String get taskWorkbenchOfflineTitle => 'Usa il laboratorio offline';
+
+  @override
+  String get taskWorkbenchOfflineUnsupported =>
+      'Questo browser non può conservarlo (una finestra privata di solito non può).';
+
+  @override
   String get taskWorkbenchOpen => 'Apri un file di attività';
 
   @override

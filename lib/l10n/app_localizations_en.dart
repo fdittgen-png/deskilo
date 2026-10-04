@@ -16604,6 +16604,30 @@ class AppLocalizationsEn extends AppLocalizations {
       'Open a saved task file. It is read on this device only; nothing is uploaded and no sign-in is needed.';
 
   @override
+  String get taskWorkbenchOfflineFailed => 'The browser refused to keep it.';
+
+  @override
+  String get taskWorkbenchOfflineForget => 'Stop keeping it';
+
+  @override
+  String get taskWorkbenchOfflineKeep => 'Keep it on this device';
+
+  @override
+  String get taskWorkbenchOfflineOff =>
+      'Not kept: without a connection this page will not open.';
+
+  @override
+  String get taskWorkbenchOfflineReady =>
+      'Kept on this browser: the screens you have opened work without a connection.';
+
+  @override
+  String get taskWorkbenchOfflineTitle => 'Use the workbench offline';
+
+  @override
+  String get taskWorkbenchOfflineUnsupported =>
+      'This browser cannot keep it (a private window usually cannot).';
+
+  @override
   String get taskWorkbenchOpen => 'Open a task file';
 
   @override

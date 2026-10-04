@@ -31,5 +31,19 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Task workbench",
+      "short_name": "Workbench",
+      "description": "Open a saved task file on this device.",
+      "url": "./#/task-workbench",
+      "icons": [
+        {
+          "src": "icons/Icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }

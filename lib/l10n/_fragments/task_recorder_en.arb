@@ -719,6 +719,34 @@
   "@taskRecorderValueOff": {
     "description": "#1884 recorder: taskRecorderValueOff"
   },
+  "taskWorkbenchOfflineTitle": "Use the workbench offline",
+  "@taskWorkbenchOfflineTitle": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineTitle"
+  },
+  "taskWorkbenchOfflineKeep": "Keep it on this device",
+  "@taskWorkbenchOfflineKeep": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineKeep"
+  },
+  "taskWorkbenchOfflineForget": "Stop keeping it",
+  "@taskWorkbenchOfflineForget": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineForget"
+  },
+  "taskWorkbenchOfflineReady": "Kept on this browser: the screens you have opened work without a connection.",
+  "@taskWorkbenchOfflineReady": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineReady"
+  },
+  "taskWorkbenchOfflineOff": "Not kept: without a connection this page will not open.",
+  "@taskWorkbenchOfflineOff": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineOff"
+  },
+  "taskWorkbenchOfflineUnsupported": "This browser cannot keep it (a private window usually cannot).",
+  "@taskWorkbenchOfflineUnsupported": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineUnsupported"
+  },
+  "taskWorkbenchOfflineFailed": "The browser refused to keep it.",
+  "@taskWorkbenchOfflineFailed": {
+    "description": "#1886 offline tool: taskWorkbenchOfflineFailed"
+  },
   "taskRecorderActionUiOpenScreen": "Opened a screen",
   "@taskRecorderActionUiOpenScreen": {
     "description": "#2142 recorder: taskRecorderActionUiOpenScreen"

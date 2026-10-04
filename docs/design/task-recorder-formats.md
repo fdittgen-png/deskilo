@@ -115,9 +115,16 @@ jumps, loops, expressions or scripts. Limits (`GuideLimits`): 100 steps,
   refusal reason), register its surface, actions and outcomes in
   `domain/action_registry.dart`, call `recordTaskStep` /
   `recordTaskAttempt` (`presentation/recorder_seam.dart`) at the
-  callbacks that already exist, and add words for the new identifiers
-  in `presentation/recorder_labels.dart`; a seam wins over the generic
-  layer for the same tap or command.
+  callbacks that already exist, classify its route in
+  `domain/coverage_manifest.dart` (recorded, excluded with its
+  protected category, or planned with its owner), and add words for the
+  new identifiers in `presentation/recorder_labels.dart`; a seam wins
+  over the generic layer for the same tap or command.
+* Offline: in a browser, the workbench's *Keep it on this device* card
+  registers `web/task_tool_sw.js` (network first; only this app's own
+  GET requests and the static font/engine hosts; never a backend call
+  or a write). The installed web app also offers the workbench as a
+  shortcut. On a native build the app is already local.
 
 ## The generic layer (#2142)
 

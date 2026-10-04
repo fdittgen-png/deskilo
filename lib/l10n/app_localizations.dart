@@ -28760,6 +28760,48 @@ abstract class AppLocalizations {
   /// **'Open a saved task file. It is read on this device only; nothing is uploaded and no sign-in is needed.'**
   String get taskWorkbenchIntro;
 
+  /// #1886 offline tool: taskWorkbenchOfflineFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The browser refused to keep it.'**
+  String get taskWorkbenchOfflineFailed;
+
+  /// #1886 offline tool: taskWorkbenchOfflineForget
+  ///
+  /// In en, this message translates to:
+  /// **'Stop keeping it'**
+  String get taskWorkbenchOfflineForget;
+
+  /// #1886 offline tool: taskWorkbenchOfflineKeep
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it on this device'**
+  String get taskWorkbenchOfflineKeep;
+
+  /// #1886 offline tool: taskWorkbenchOfflineOff
+  ///
+  /// In en, this message translates to:
+  /// **'Not kept: without a connection this page will not open.'**
+  String get taskWorkbenchOfflineOff;
+
+  /// #1886 offline tool: taskWorkbenchOfflineReady
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on this browser: the screens you have opened work without a connection.'**
+  String get taskWorkbenchOfflineReady;
+
+  /// #1886 offline tool: taskWorkbenchOfflineTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Use the workbench offline'**
+  String get taskWorkbenchOfflineTitle;
+
+  /// #1886 offline tool: taskWorkbenchOfflineUnsupported
+  ///
+  /// In en, this message translates to:
+  /// **'This browser cannot keep it (a private window usually cannot).'**
+  String get taskWorkbenchOfflineUnsupported;
+
   /// #1872 task workbench: taskWorkbenchOpen
   ///
   /// In en, this message translates to:

@@ -16735,6 +16735,30 @@ class AppLocalizationsEs extends AppLocalizations {
       'Abra un archivo de tarea guardado. Se lee solo en este dispositivo; no se envía nada y no hace falta iniciar sesión.';
 
   @override
+  String get taskWorkbenchOfflineFailed => 'El navegador se negó a guardarlo.';
+
+  @override
+  String get taskWorkbenchOfflineForget => 'Dejar de guardarlo';
+
+  @override
+  String get taskWorkbenchOfflineKeep => 'Guardarlo en este dispositivo';
+
+  @override
+  String get taskWorkbenchOfflineOff =>
+      'No guardado: sin conexión esta página no se abrirá.';
+
+  @override
+  String get taskWorkbenchOfflineReady =>
+      'Guardado en este navegador: las pantallas ya abiertas funcionan sin conexión.';
+
+  @override
+  String get taskWorkbenchOfflineTitle => 'Usar el taller sin conexión';
+
+  @override
+  String get taskWorkbenchOfflineUnsupported =>
+      'Este navegador no puede guardarlo (una ventana privada normalmente no puede).';
+
+  @override
   String get taskWorkbenchOpen => 'Abrir un archivo de tarea';
 
   @override
