@@ -230,7 +230,8 @@ void main() {
     expect(find.textContaining('Alex Sample'), findsWidgets);
   });
 
-  testWidgets('the preset gallery fills the bands with a ready-made '
+  for (final presetId in ['simple', 'professional']) {
+  testWidgets('the $presetId gallery choice fills the bands with a ready-made '
       'report (#474)', (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
 
@@ -239,7 +240,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('invoice-template-presets')));
     await tester.pumpAndSettle();
     await tester
-        .tap(find.byKey(const ValueKey('invoice-template-preset-simple')));
+        .tap(find.byKey(ValueKey('invoice-template-preset-$presetId')));
     await tester.pumpAndSettle();
     // #822 — read the bands in Markup.
     await tester.tap(find.text('Markup'));
@@ -259,6 +260,7 @@ void main() {
         .text;
     expect(footer, contains('{{ late_penalty }}'));
   });
+  }
 
   testWidgets('the PDF menu DOWNLOADS to the device — not only share '
       '(#474)', (tester) async {

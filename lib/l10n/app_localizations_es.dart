@@ -14541,6 +14541,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportPresetFormalLetter => 'Carta formal';
 
   @override
+  String get reportPresetProfessional => 'Profesional';
+
+  @override
   String get reportPresetSimple => 'Sencillo';
 
   @override

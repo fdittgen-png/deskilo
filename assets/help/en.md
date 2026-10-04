@@ -2578,12 +2578,11 @@ placeholders.
 
 *The report editor: the language and document pickers on top, the Markup / Visual and Design / Preview switches under them, and the invoice's bands — header, body, footer — below.*
 
-### The kinds, and the four presets
+### Report types and templates
 
-Each kind (invoice, credit note, proforma, statement, agreement,
-payments, usage, VAT, workspace) starts from one of four presets —
-*Simple*, *Classic*, *Verbose*, *Formal* — which differ only in how much
-they say, never in what is legally required.
+Every report offers a **Professional** template alongside the existing choices (#1994). It keeps the complete report-specific sections; payment summaries keep confirmed and pending amounts separate, and consumption reports keep their usage records. Management reports do not request late-payment penalties. Existing custom designs stay in place until you explicitly replace them.
+
+The automatic letter layout follows the workspace country (France: right window; Germany: left window) unless you selected an address-window override. Document language is separate from country. Templates display the supplied legal facts; appearance and translation alone do not establish legal compliance or satisfy electronic-invoicing obligations.
 
 ### Bands: header, body, continuation, footer
 

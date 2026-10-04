@@ -24944,6 +24944,12 @@ abstract class AppLocalizations {
   /// **'Formal letter'**
   String get reportPresetFormalLetter;
 
+  /// No description provided for @reportPresetProfessional.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional'**
+  String get reportPresetProfessional;
+
   /// Legal invoice mentions (#480)
   ///
   /// In en, this message translates to:

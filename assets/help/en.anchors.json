@@ -150,7 +150,7 @@
   "config.validation": "Validation rules",
   "config.features": "Features",
   "admin.reports.overview": "Documents and reports",
-  "admin.reports.kinds": "The kinds, and the four presets",
+  "admin.reports.kinds": "Report types and templates",
   "admin.reports.bands": "Bands: header, body, continuation, footer",
   "admin.reports.layouts": "Positioned layouts",
   "admin.reports.placeholders": "The vocabulary",

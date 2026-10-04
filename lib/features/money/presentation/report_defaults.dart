@@ -1,21 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// The SHIPPED report templates (#470/#472/#480) — every document in the
-// template language, localized, and LEGALLY COMPLETE: the invoice
-// presets print the seller's statutory identity (legal form, register,
-// VAT number), the client's address, per-line quantity/unit price/VAT
-// rate, the per-rate VAT table with total HT/TVA/TTC, and the four
-// mandatory payment clauses (terms, escompte, late penalty, recovery
-// indemnity). Nobody starts from scratch: the editor's Reset inserts
-// these, and a document the owner never customized renders with them.
-// Every document ships the same four presets: Simple · Classic ·
-// Verbose · Formal (#480).
+// Shipped localized report templates. Legal facts come from the qualified
+// data projection; a layout alone is not evidence of country compliance.
 import '../../../l10n/app_localizations.dart';
 import '../domain/invoice_pdf_template.dart';
 // The three #671 documents (CoA preview, badge sheet, space codes) live
 // in their own file; they are re-exported so every caller keeps
 // resolving document defaults from one import.
 import 'report_defaults_batch.dart';
+import 'professional_report_bands.dart';
 import '../domain/report_kind.dart';
 export 'report_defaults_batch.dart';
 // The preview fixture is a different concern from the shipped templates
@@ -573,19 +566,9 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
         ReportDocSlot(key: 'agreement') => _simpleDocPresetBands(
             l10n, id, l10n?.reportDocAgreement ?? 'Financial agreement',
             subtitle: '{{ member }}'),
-        ReportDocSlot(key: 'payments') => _simpleDocPresetBands(
-            l10n, id, l10n?.reportDocPayments ?? 'Payments report',
-            subtitle: '{{ member }} — {{ period }}'),
-        ReportDocSlot(key: 'usage') => id == 'classic'
-            ? defaultUsageBands(l10n)
-            : _simpleDocPresetBands(
-                l10n, id, l10n?.reportDocUsage ?? 'Consumption report',
-                subtitle: '{{ member }} — {{ period }}'),
-        ReportDocSlot(key: 'workspace') => id == 'classic'
-            ? defaultWorkspaceBands(l10n)
-            : _simpleDocPresetBands(
-                l10n, id, l10n?.reportDocWorkspace ?? 'Workspace report',
-                subtitle: '{{ workspace_address }}'),
+        ReportDocSlot(key: 'payments') => defaultPaymentsBands(l10n),
+        ReportDocSlot(key: 'usage') => defaultUsageBands(l10n),
+        ReportDocSlot(key: 'workspace') => defaultWorkspaceBands(l10n),
         // One shipped layout each. These documents are structural — a
         // chart, a grid of cards, a table — so the presets that make
         // sense for an invoice (Classic / Formal letter) would only
@@ -597,6 +580,12 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
       };
 
   return [
+    if (kind != null)
+      ReportPreset(
+        id: 'professional',
+        name: l10n?.reportPresetProfessional ?? 'Professional',
+        bands: defaultBandsForDoc(docId, l10n),
+      ),
     for (final id in reportPresetIds)
       ReportPreset(id: id, name: _presetName(id, l10n), bands: bands(id)),
   ];
@@ -604,7 +593,14 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
 
 /// The default bands for a STRING document id (#476) — what Reset
 /// inserts and what an uncustomized document renders with.
-ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) =>
+ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) {
+  final kind = reportKindById(docId, reminderLevels: kMaxReminderLevels);
+  if (kind == null) return ReportBands.empty;
+  return professionalReportBands(
+    kind: kind, content: _completeBandsForDoc(docId, l10n), l10n: l10n);
+}
+
+ReportBands _completeBandsForDoc(String docId, AppLocalizations? l10n) =>
     switch (reportKindById(docId, reminderLevels: kMaxReminderLevels)?.slot) {
       ReportRootSlot() || ReportProformaSlot() =>
         defaultInvoiceTemplate(l10n).invoiceBands,
