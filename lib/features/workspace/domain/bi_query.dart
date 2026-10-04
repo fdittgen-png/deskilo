@@ -46,8 +46,10 @@ enum BiComparison {
 /// The order of the grouped rows.
 enum BiSort { natural, valueDescending, valueAscending }
 
-/// Chart or table: two renderings of the SAME rows.
-enum BiView { table, chart }
+/// How the answer is shown: the dashboard (figure, evolution, comparison
+/// with the past, projection, composition), or the table or the chart —
+/// the last two being plain renderings of the SAME rows.
+enum BiView { dashboard, table, chart }
 
 /// The dimensions a module may be grouped by. A name, never an id.
 const biDimensions = <String>{'level'};
@@ -171,7 +173,7 @@ class BiQueryContext {
     this.comparedWith,
     this.groupBy,
     this.sort = BiSort.natural,
-    this.view = BiView.table,
+    this.view = BiView.dashboard,
     this.cards = const [],
   });
 
@@ -254,7 +256,7 @@ class BiQueryContext {
       'cmp': ?_comparisonWire[comparison],
     'by': ?groupBy,
     if (sort != BiSort.natural) 'sort': _sortWire[sort]!,
-    if (view != BiView.table) 'view': view.name,
+    if (view != BiView.dashboard) 'view': view.name,
     if (cards.isNotEmpty) 'cards': cards.join(','),
   };
 
@@ -312,7 +314,7 @@ class BiQueryContext {
         sort = named.key;
       }
     }
-    var view = BiView.table;
+    var view = BiView.dashboard;
     if (query['view'] case final v?) {
       final named = BiView.values.where((x) => x.name == v).firstOrNull;
       if (named == null) {

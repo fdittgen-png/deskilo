@@ -1247,6 +1247,19 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get biCollectionCentre => 'de lo facturado';
+
+  @override
+  String get biCollectionCollected => 'Cobrado';
+
+  @override
+  String get biCollectionNoComposition =>
+      'Los importes cobrados incluyen facturas anteriores, por lo que no son una parte del total facturado del periodo.';
+
+  @override
+  String get biCollectionOutstanding => 'Pendiente de cobro';
+
+  @override
   String get biColumnChange => 'Variación';
 
   @override
@@ -1268,6 +1281,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biComparePreviousYear => 'El mismo periodo un año antes';
 
   @override
+  String get biCompareTitle => 'Comparado con el pasado';
+
+  @override
   String biComparedLine(String period, String value, String change) {
     return '$period: $value ($change)';
   }
@@ -1285,6 +1301,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get biComparisonUnqualified =>
       'Cambio no disponible: un periodo contiene datos parciales o desactualizados.';
+
+  @override
+  String get biCompositionTitle => 'De qué se compone';
 
   @override
   String biComputedWorkspaceTime(String date) {
@@ -1311,7 +1330,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biDataUnavailable => 'No disponible';
 
   @override
+  String get biDeltaNone => 'Aún sin comparación';
+
+  @override
   String get biDimensionLevel => 'Planta';
+
+  @override
+  String get biEvolutionTitle => 'Evolución';
+
+  @override
+  String get biExportPdf => 'Exportar a PDF';
 
   @override
   String get biExposureDiffers =>
@@ -1407,7 +1435,37 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta dirección pide un análisis que no existe; no se ha leído nada.';
 
   @override
+  String get biKindCurrent => 'Ahora';
+
+  @override
+  String get biKindPrevious => 'Periodo anterior';
+
+  @override
+  String get biKindYearAgo => 'Mismo periodo del año pasado';
+
+  @override
+  String biNarrativeDown(String label, String change) {
+    return 'Más bajo que $label ($change).';
+  }
+
+  @override
+  String biNarrativeFlat(String label) {
+    return 'Más o menos igual que $label.';
+  }
+
+  @override
+  String biNarrativeUp(String label, String change) {
+    return 'Más alto que $label ($change).';
+  }
+
+  @override
+  String get biNoDataLabel => 'sin datos';
+
+  @override
   String get biNotOffered => 'no lo ofrecen los análisis mostrados';
+
+  @override
+  String get biOnPace => 'al ritmo actual';
 
   @override
   String get biOpenSource => 'Abrir la fuente';
@@ -1415,6 +1473,41 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get biPastBasis =>
       'Recalculado con los datos disponibles hoy, no con los conocidos entonces.';
+
+  @override
+  String get biPdfEstimateNote =>
+      'Las líneas discontinuas y las bandas sombreadas son estimaciones de periodos pasados, no mediciones.';
+
+  @override
+  String get biPdfFailed => 'No se pudo crear el PDF.';
+
+  @override
+  String biPdfProduced(String date) {
+    return 'Elaborado el $date';
+  }
+
+  @override
+  String get biPdfTitle => 'Análisis de actividad';
+
+  @override
+  String biProjectionBasis(int count) {
+    return 'Una recta trazada sobre los últimos $count periodos completos, prolongada. La banda sombreada es el rango probable. Una estimación, no una promesa.';
+  }
+
+  @override
+  String get biProjectionLabel => 'Estimación';
+
+  @override
+  String biProjectionNotEnough(int have, int need) {
+    return 'Aún no hay historial suficiente para proyectar: $have periodos completos hasta ahora, se necesitan $need.';
+  }
+
+  @override
+  String get biProjectionTitle => 'Hacia dónde va';
+
+  @override
+  String get biProvisionalNote =>
+      'Provisional: el periodo no ha terminado, este cambio es una estimación.';
 
   @override
   String biQuarter(String quarter, String year) {
@@ -1456,6 +1549,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biReset => 'Mostrar la vista estándar';
 
   @override
+  String biRunRate(String value) {
+    return 'Al ritmo actual, este periodo terminaría en torno a $value.';
+  }
+
+  @override
+  String get biRunningLabel => 'en curso';
+
+  @override
+  String get biSeatCentre => 'del tiempo total de puestos';
+
+  @override
+  String get biSeatClosed => 'Fuera del horario de apertura';
+
+  @override
+  String get biSeatFree => 'Libre en horario de apertura';
+
+  @override
   String biSeatHoursBlocked(String hours) {
     return '$hours horas-asiento bloqueadas';
   }
@@ -1464,6 +1574,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String biSeatHoursFree(String hours) {
     return '$hours horas-asiento sin reservar';
   }
+
+  @override
+  String get biSeatReserved => 'Reservado';
+
+  @override
+  String get biShareByLevel => 'Tiempo reservado por planta';
 
   @override
   String get biSort => 'Orden';
@@ -1506,6 +1622,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String biViewCopyName(String name) {
     return '$name (copia)';
   }
+
+  @override
+  String get biViewDashboard => 'Panel';
 
   @override
   String get biViewDelete => 'Eliminar';
@@ -1585,6 +1704,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biViewsTeam => 'Vistas del equipo';
+
+  @override
+  String get biVsPrevious => 'vs periodo anterior';
+
+  @override
+  String get biVsYearAgo => 'vs año pasado';
 
   @override
   String get billAccessorySupplements => 'Suplementos de accesorios';
