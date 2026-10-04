@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
@@ -9,6 +10,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import 'connection_dialog.dart';
+import 'directory_carousel.dart';
 import 'directory_map.dart';
 import 'public_workspace_view.dart';
 
@@ -23,7 +25,7 @@ class DirectoryScreen extends ConsumerStatefulWidget {
 class _DirectoryState extends ConsumerState<DirectoryScreen> {
   final _search = TextEditingController();
   String _query = '';
-  bool _map = false;
+  bool _map = true;
   int _sources = 0, _page = 0;
   PublicWorkspace? _selected;
   @override
@@ -63,6 +65,129 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         },
       ),
     );
+    void open(PublicWorkspace w) {
+      select(w);
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (_) => PublicWorkspaceView(workspace: w)),
+      );
+    }
+
+    // The map first: it takes the whole screen, the search floats over it
+    // and the workspaces are cards to swipe through under it. The pin and
+    // the card in front are the same selection.
+    Widget mapView(DirectoryPage result) => Stack(children: [
+          Positioned.fill(
+            child: DirectoryMap(
+              key: ValueKey('$_query:$_sources:$_page'),
+              workspaces: result.workspaces,
+              selected: _selected == null
+                  ? null
+                  : '${_selected!.source}/${_selected!.id}',
+              onSelect: select,
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: SafeArea(
+              top: false,
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                if (result.unavailable.isNotEmpty || result.incompatible.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.md, vertical: AppSpacing.xs),
+                    child: Material(
+                      elevation: 2,
+                      borderRadius: AppRadius.mdAll,
+                      child: Padding(
+                        padding: AppSpacing.smAll,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (result.unavailable.isNotEmpty)
+                              Text(
+                                '${l?.portalDirectoryUnavailable ?? 'Some directories could not be reached. Results are incomplete.'}\n${result.unavailable.join('\n')}',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            if (result.incompatible.isNotEmpty)
+                              Text(
+                                key: const ValueKey('directory-incompatible'),
+                                '${l?.portalDirectoryIncompatible ?? 'Some workspaces need a newer version of the app and are not shown.'}\n${result.incompatible.join('\n')}',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                if (_page > 0 || result.moreWorkspaces)
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    IconButton.filledTonal(
+                      key: const ValueKey('directory-map-previous'),
+                      tooltip: MaterialLocalizations.of(context).previousPageTooltip,
+                      onPressed: _page == 0
+                          ? null
+                          : () => setState(() { _page--; _selected = null; }),
+                      icon: const Icon(Icons.chevron_left),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    IconButton.filledTonal(
+                      key: const ValueKey('directory-map-next'),
+                      tooltip: MaterialLocalizations.of(context).nextPageTooltip,
+                      onPressed: !result.moreWorkspaces
+                          ? null
+                          : () => setState(() { _page++; _selected = null; }),
+                      icon: const Icon(Icons.chevron_right),
+                    ),
+                  ]),
+                if (result.workspaces.isEmpty)
+                  Padding(
+                    padding: AppSpacing.mdAll,
+                    child: Material(
+                      elevation: 2,
+                      borderRadius: AppRadius.lgAll,
+                      child: Padding(
+                        padding: AppSpacing.mdAll,
+                        child: Text(l?.portalNoWorkspaces ?? 'No published workspaces found.'),
+                      ),
+                    ),
+                  )
+                else
+                  DirectoryCarousel(
+                    workspaces: result.workspaces,
+                    selected: _selected,
+                    onSelect: select,
+                    onOpen: open,
+                  ),
+              ]),
+            ),
+          ),
+        ]);
+    final searchField = Padding(
+            padding: AppSpacing.mdAll,
+            child: TextField(
+              controller: _search,
+              decoration: InputDecoration(
+                labelText: l?.portalSearch ?? 'Search workspaces',
+                suffixIcon: IconButton(
+                  tooltip: l?.portalSearch ?? 'Search workspaces',
+                  icon: const Icon(Icons.search),
+                  onPressed: () => setState(() {
+                    _query = _search.text;
+                    _page = 0;
+                    _selected = null;
+                  }),
+                ),
+              ),
+              onSubmitted: (value) => setState(() {
+                _query = value;
+                _page = 0;
+                _selected = null;
+              }),
+            ),
+          );
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: !widget.embedded,
@@ -88,47 +213,16 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
             ),
         ],
       ),
-      body: Column(
+      body: Stack(children: [
+        Column(
         children: [
-          Padding(
-            padding: AppSpacing.mdAll,
-            child: TextField(
-              controller: _search,
-              decoration: InputDecoration(
-                labelText: l?.portalSearch ?? 'Search workspaces',
-                suffixIcon: IconButton(
-                  tooltip: l?.portalSearch ?? 'Search workspaces',
-                  icon: const Icon(Icons.search),
-                  onPressed: () => setState(() {
-                    _query = _search.text;
-                    _page = 0;
-                    _selected = null;
-                  }),
-                ),
-              ),
-              onSubmitted: (value) => setState(() {
-                _query = value;
-                _page = 0;
-                _selected = null;
-              }),
-            ),
-          ),
+          if (!_map) searchField,
           Expanded(
             child: switch (rows) {
               AsyncData(value: final result) => LayoutBuilder(
-                builder: (context, constraints) => Column(children: [
-                  if (_map)
-                    SizedBox(
-                      height: (constraints.maxHeight / 2).clamp(0.0, 300.0),
-                      child: DirectoryMap(
-                        key: ValueKey('$_query:$_sources:$_page'),
-                        workspaces: result.workspaces,
-                        selected: _selected == null
-                            ? null
-                            : '${_selected!.source}/${_selected!.id}',
-                        onSelect: select,
-                      ),
-                    ),
+                builder: (context, constraints) => _map
+                    ? mapView(result)
+                    : Column(children: [
                   Expanded(child: ListView(
                 padding: AppSpacing.mdAll,
                 children: [
@@ -222,6 +316,24 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
           ),
         ],
       ),
+        if (_map)
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: AppSpacing.smAll,
+                child: Material(
+                  elevation: 4,
+                  borderRadius: AppRadius.lgAll,
+                  child: searchField,
+                ),
+              ),
+            ),
+          ),
+      ]),
     );
   }
 }
