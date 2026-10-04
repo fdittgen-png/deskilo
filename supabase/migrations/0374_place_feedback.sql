@@ -24,7 +24,7 @@ revoke all on public.resource_favorites from public, anon, authenticated;
 grant select on public.resource_favorites to authenticated;
 create policy resource_favorites_own on public.resource_favorites
   for select to authenticated
-  using (member_id in (select m.id from public.members m where m.user_id = auth.uid()));
+  using (member_id in (select m.id from public.members m where m.user_id = (select auth.uid())));
 create policy mcp_delegated_deny on public.resource_favorites as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 create index resource_favorites_workspace on public.resource_favorites (workspace_id, kind, resource_id);
@@ -43,7 +43,7 @@ revoke all on public.resource_ratings from public, anon, authenticated;
 grant select on public.resource_ratings to authenticated;
 create policy resource_ratings_own on public.resource_ratings
   for select to authenticated
-  using (member_id in (select m.id from public.members m where m.user_id = auth.uid()));
+  using (member_id in (select m.id from public.members m where m.user_id = (select auth.uid())));
 create policy mcp_delegated_deny on public.resource_ratings as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 create index resource_ratings_workspace on public.resource_ratings (workspace_id, kind, resource_id);
