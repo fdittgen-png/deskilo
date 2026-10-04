@@ -3475,6 +3475,14 @@
   "@featurePersonalInfoDesc": {
     "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
   },
+  "featurePlaceFeedbackDesc": "Mitglieder markieren Plätze, Tische, Büros und Etagen als Favoriten und bewerten sie mit 0 bis 5 Sternen. Ein Favorit gehört dem Mitglied; eine Bewertung zeigt den Durchschnitt und die Anzahl, nie wer. Ein Assistent kann die Favoriten auflisten, einen buchen und eine Bewertung eintragen. Aus blendet Herzen und Sterne aus und weist das Schreiben ab; sonst hängt nichts daran.",
+  "@featurePlaceFeedbackDesc": {
+    "description": "#2185 place feedback"
+  },
+  "featurePlaceFeedbackTitle": "Favoriten und Bewertungen",
+  "@featurePlaceFeedbackTitle": {
+    "description": "#2185 place feedback"
+  },
   "featurePlanMemberPhotosDesc": "Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale.",
   "featurePlanMemberPhotosTitle": "Mitgliederfotos auf dem Plan",
   "featurePlanObjectDeleteDesc": "Inhaber können Ebenen, Büros, Tische und Sitzplätze auch dann löschen, wenn frühere Reservierungen darauf verweisen — die Buchungen behalten einen Text-Schnappschuss für Audits und Berichte.",
@@ -6147,18 +6155,30 @@
   "mcpOpGetValidation": "Eine Freigabeanfrage lesen",
   "mcpOpInvoiceIssue": "Rechnung ausstellen",
   "mcpOpInvoiceVoid": "Rechnung stornieren",
+  "mcpOpListMyFavorites": "Ihre Lieblingsplätze",
+  "@mcpOpListMyFavorites": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpListWorkspaces": "Sehen, welche Arbeitsbereiche er nutzen darf",
   "mcpOpMemberStatus": "Status eines Mitglieds ändern",
   "mcpOpMyInvoices": "Ihre Rechnungen sehen",
   "mcpOpMyReservations": "Ihre Reservierungen sehen",
   "mcpOpMyStatement": "Ihren Kontoauszug sehen",
   "mcpOpPendingValidations": "Offene Freigabeanfragen sehen",
+  "mcpOpRatePlace": "Plätze bewerten",
+  "@mcpOpRatePlace": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpRefund": "Rechnung erstatten",
   "mcpOpReservationDeletion": "Löschung einer bereits begonnenen Buchung beantragen",
   "@mcpOpReservationDeletion": {
     "description": "#1615 mcp_consent"
   },
   "mcpOpRespond": "Auf eine Freigabeanfrage antworten",
+  "mcpOpSetFavorite": "Plätze als Favoriten markieren",
+  "@mcpOpSetFavorite": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpSubscription": "Abonnementanteil eines Mitglieds ändern",
   "mcpOpUpdateReservation": "Ihre Reservierungen ändern",
   "mcpOverviewTitle": "Weitere verbundene Datenbanken",

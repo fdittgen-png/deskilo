@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../workspace/providers/workspace_providers.dart';
+
 part 'browsed_level.g.dart';
 
 /// The level the member is BROWSING, shared by every view of the hub.
@@ -38,7 +40,12 @@ class BrowsedLevel extends _$BrowsedLevel {
   /// it considers its own default, which for the plan is the member's
   /// persisted level and for the grids is the first one.
   @override
-  String? build() => null;
+  String? build() {
+    // Bound to the workspace it was made in: a switch starts it over, so
+    // nothing chosen in one workspace is ever shown in another.
+    ref.watch(activeWorkspaceIdProvider);
+    return null;
+  }
 
   void select(String levelId) => state = levelId;
 

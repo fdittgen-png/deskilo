@@ -63,6 +63,7 @@
                           "deskilo_get_availability",
                           "deskilo_list_my_reservations",
                           "deskilo_get_place",
+                          "deskilo_list_my_favorites",
                           "deskilo_get_my_statement",
                           "deskilo_list_my_invoices",
                           "deskilo_create_reservation",
@@ -70,6 +71,8 @@
                           "deskilo_check_in",
                           "deskilo_check_out",
                           "deskilo_cancel_reservation",
+                          "deskilo_set_favorite",
+                          "deskilo_rate_place",
                           "deskilo_request_reservation_deletion",
                           "deskilo_request_invoice_issue",
                           "deskilo_request_invoice_void",
@@ -1180,6 +1183,7 @@
               "get_availability",
               "list_my_reservations",
               "get_place",
+              "list_my_favorites",
               "get_my_statement",
               "list_my_invoices",
               "create_reservation",
@@ -1187,6 +1191,8 @@
               "check_in",
               "check_out",
               "cancel_reservation",
+              "set_favorite",
+              "rate_place",
               "request_reservation_deletion",
               "request_invoice_issue",
               "request_invoice_void",
@@ -1443,6 +1449,26 @@
           "workspace_id"
         ],
         "x-operation": "get_place",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "ListMyFavoritesInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          }
+        },
+        "required": [
+          "workspace_id"
+        ],
+        "x-operation": "list_my_favorites",
         "x-rpc": null,
         "x-handler": true
       },
@@ -1799,6 +1825,133 @@
         ],
         "x-operation": "cancel_reservation",
         "x-rpc": "cancel_reservation",
+        "x-handler": true
+      },
+      "SetFavoriteInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "seat",
+              "desk",
+              "office",
+              "level"
+            ],
+            "description": "What kind of place: a seat, a desk, an office or a level.",
+            "examples": [
+              "seat"
+            ]
+          },
+          "resource_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The place's id, from deskilo_get_availability, deskilo_list_my_favorites or deskilo_get_place.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "favorite": {
+            "type": "boolean",
+            "description": "True (default) to mark it as a favourite, false to take it back.",
+            "examples": [
+              true
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "kind",
+          "resource_id"
+        ],
+        "x-operation": "set_favorite",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "RatePlaceInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "seat",
+              "desk",
+              "office",
+              "level"
+            ],
+            "description": "What kind of place: a seat, a desk, an office or a level.",
+            "examples": [
+              "seat"
+            ]
+          },
+          "resource_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The place's id, from deskilo_get_availability, deskilo_list_my_favorites or deskilo_get_place.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "stars": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5,
+            "description": "The rating, from 0 to 5 stars. Omit with clear true to take the rating back.",
+            "examples": [
+              4
+            ]
+          },
+          "clear": {
+            "type": "boolean",
+            "description": "True to take the person's rating back instead of giving stars.",
+            "examples": [
+              false
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "kind",
+          "resource_id"
+        ],
+        "x-operation": "rate_place",
+        "x-rpc": null,
         "x-handler": true
       },
       "RequestReservationDeletionInput": {

@@ -5235,6 +5235,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'I membri inseriscono nome, indirizzo postale, telefono, e-mail e identificativi nelle Impostazioni; fatture e lettere li stampano nel blocco indirizzo standard.';
 
   @override
+  String get featurePlaceFeedbackDesc =>
+      'I membri segnano postazioni, tavoli, uffici e piani come preferiti e li valutano da 0 a 5 stelle. Un preferito è personale; una valutazione mostra la media e quante ce ne sono, mai chi. Un assistente può elencare i preferiti, prenotarne uno e registrare una valutazione. Disattivato nasconde cuori e stelle e rifiuta le scritture; nient\'altro ne dipende.';
+
+  @override
+  String get featurePlaceFeedbackTitle => 'Preferiti e valutazioni';
+
+  @override
   String get featurePlanMemberPhotosDesc =>
       'I posti occupati nella scheda Piantina e nel hub Prenota mostrano la foto del profilo al posto dell’iniziale.';
 
@@ -10039,6 +10046,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpOpInvoiceVoid => 'Annullare una fattura';
 
   @override
+  String get mcpOpListMyFavorites => 'I tuoi posti preferiti';
+
+  @override
   String get mcpOpListWorkspaces => 'Vedere quali spazi può usare';
 
   @override
@@ -10058,6 +10068,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Vedere le richieste di convalida in sospeso';
 
   @override
+  String get mcpOpRatePlace => 'Valutare i posti';
+
+  @override
   String get mcpOpRefund => 'Rimborsare una fattura';
 
   @override
@@ -10066,6 +10079,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpOpRespond => 'Rispondere a una richiesta di validazione';
+
+  @override
+  String get mcpOpSetFavorite => 'Segnare posti come preferiti';
 
   @override
   String get mcpOpSubscription =>

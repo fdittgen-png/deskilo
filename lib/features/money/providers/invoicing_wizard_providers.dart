@@ -46,7 +46,12 @@ Future<Map<String, ({List<InvoiceLine> lines, int totalCents})>>
 @Riverpod(keepAlive: true)
 class InvoicingWizardController extends _$InvoicingWizardController {
   @override
-  WizardState build() => const WizardState();
+  WizardState build() {
+    // Bound to the workspace it was made in: a switch starts it over, so
+    // nothing chosen in one workspace is ever shown in another.
+    ref.watch(activeWorkspaceIdProvider);
+    return const WizardState();
+  }
 
   /// A fresh run: step one, an empty tally.
   void start(WizardRun run) => state = WizardState(run: run);

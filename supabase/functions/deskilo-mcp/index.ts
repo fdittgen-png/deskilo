@@ -174,6 +174,7 @@ export const INSTRUCTIONS = [
   "Start with deskilo_list_workspaces: every other tool needs one of its workspace_id values. If the person has several workspaces, ask which one unless the request makes it obvious.",
   "Times are ISO 8601 with an explicit offset (e.g. 2026-10-05T09:00:00+02:00); interpret 'tomorrow morning' in the workspace's time zone.",
   "To book a whole morning, afternoon or working day, call deskilo_get_capabilities once for booking_periods (morning, afternoon, full_day, each with its exact local from/to), then pass date (YYYY-MM-DD) and period to deskilo_create_reservation instead of computing times: the workspace applies its own hours exactly.",
+  "A person's favourite places: deskilo_list_my_favorites lists them with their ids; to book one, pass its id to deskilo_create_reservation (seat_id, desk_id, office_id or level_id by its kind) with date and period. Mark or unmark a favourite with deskilo_set_favorite and rate a place 0-5 stars with deskilo_rate_place only when the person asks.",
   "Only when the person explicitly asks to SEE a place (image, picture, plan, map), call deskilo_get_place with include_image true; otherwise describe it in words.",
   "Amounts are integer minor units (cents) with a separate currency; divide by 100 to show them.",
   "For every write, generate a new random UUID as request_id. Reuse the same request_id with the same arguments only to retry that same intent: it never acts twice.",

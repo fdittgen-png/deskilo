@@ -1,0 +1,10 @@
+{
+  "featurePlaceFeedbackTitle": "Favourites and ratings",
+  "@featurePlaceFeedbackTitle": {
+    "description": "#2185 place feedback"
+  },
+  "featurePlaceFeedbackDesc": "Members mark seats, desks, offices and levels as favourites and rate them from 0 to 5 stars. A favourite is the member's own; a rating shows its average and how many gave one, never who. An assistant can list the favourites, book one, and record a rating. Off hides the hearts and stars and refuses the writes; nothing else follows it.",
+  "@featurePlaceFeedbackDesc": {
+    "description": "#2185 place feedback"
+  }
+}
