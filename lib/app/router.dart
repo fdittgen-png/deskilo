@@ -264,6 +264,9 @@ GoRouter router(Ref ref) {
           facts.membership == MembershipFact.active &&
           !kioskAccount &&
           !ref.read(workspaceRoleAssignmentsProvider).isLoading &&
+          // Permissions come from the workspace's matrix: until it is read,
+          // nobody holds anything yet and nobody is bounced for it.
+          ref.read(currentWorkspaceProvider).value != null &&
           !mayOpen(state.uri.path, ref.read(myPermissionsProvider))) {
         return landingFor(ref.read(myPermissionsProvider));
       }

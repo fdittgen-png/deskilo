@@ -13,6 +13,7 @@ import 'package:deskilo/features/auth/domain/identity_binding.dart';
 import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -159,7 +160,12 @@ class MeteredWorkspace extends FakeWorkspaceRepository {
   void seedTwoSpaces() {
     workspaces
       ..clear()
-      ..addAll(const [kSpaceA, kSpaceB]);
+      ..addAll([
+        // The fixtures start from an explicit everyday matrix; a real
+        // workspace's owner grants these.
+        kSpaceA.copyWith(rolePermissions: everydayMatrix()),
+        kSpaceB.copyWith(rolePermissions: everydayMatrix()),
+      ]);
     myMember = kOwnerInA;
     extraMyMemberships
       ..clear()
