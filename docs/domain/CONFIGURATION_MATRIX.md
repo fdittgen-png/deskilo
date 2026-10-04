@@ -69,6 +69,7 @@ configuration.
 | subscription_vat_rate_id | `workspaces.subscription_vat_rate_id` | B | yes — by natural key | replace | — | — |
 | accessory_supplements_since | `workspaces.accessory_supplements_since` | A | no — a date in this space's history | replace | — | — |
 | dev_mode | `workspaces.dev_mode` | A | no | replace | #419 | `developer_screen_test` |
+| visibility, visibility_set_at | `workspaces.*` | A | **never** — the space's own listing choice; a template must not publish a space | — | 0367 | `152_workspace_visibility_licence` |
 | environment, pair_id | `workspaces.*` | C | **never** — which twin this is | — | #1160 | `environment_pairs_test` |
 | created_by, created_at, id | `workspaces.*` | E | never | — | — | — |
 | created_datetime, modified_datetime, company_id, site_id, created_by_user, modified_by_user | system columns | C | never | — | #992 | `system_columns_test` |
