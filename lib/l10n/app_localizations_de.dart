@@ -7559,6 +7559,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Access Point liefert sie an den Kunden — keine staatliche Plattform dazwischen.';
 
   @override
+  String get invoiceEssentialsRefused =>
+      'Die Rechnung wurde nicht ausgestellt: Pflichtangaben fehlen.';
+
+  @override
   String get invoiceExportAccountantCsv => 'Buchhaltungs-CSV';
 
   @override
@@ -7895,6 +7899,32 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceMemberLabel => 'Mitglied';
+
+  @override
+  String get invoiceMissingBuyerAddress =>
+      'Die Postanschrift des Mitglieds (bei Unternehmen erforderlich)';
+
+  @override
+  String get invoiceMissingBuyerName => 'Der Name oder die Firma des Mitglieds';
+
+  @override
+  String get invoiceMissingBuyerVatId =>
+      'Die USt-IdNr. des Mitglieds (für das Reverse-Charge-Verfahren erforderlich)';
+
+  @override
+  String get invoiceMissingExemptionReason =>
+      'Die Rechtsgrundlage der Umsatzsteuerbefreiung';
+
+  @override
+  String get invoiceMissingSellerAddress =>
+      'Die Postanschrift des Arbeitsbereichs (Straße oder Ort)';
+
+  @override
+  String get invoiceMissingSellerVatId =>
+      'Die Umsatzsteuer-Identifikationsnummer des Arbeitsbereichs';
+
+  @override
+  String get invoiceMissingTitle => 'Vor der Ausstellung bitte ergänzen';
 
   @override
   String get invoiceNoOpen => 'Keine offenen Rechnungen.';

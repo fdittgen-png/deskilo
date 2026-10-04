@@ -12894,6 +12894,12 @@ abstract class AppLocalizations {
   /// **'An access point delivers it to the customer — no government platform in between.'**
   String get invoiceEInvoiceTransportPeppol;
 
+  /// #1916 invoice essentials: invoiceEssentialsRefused
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice was not issued: required details are missing.'**
+  String get invoiceEssentialsRefused;
+
   /// #669 - accounting export formats
   ///
   /// In en, this message translates to:
@@ -13481,6 +13487,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Member'**
   String get invoiceMemberLabel;
+
+  /// #1916 invoice essentials: invoiceMissingBuyerAddress
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s postal address (a business customer needs one)'**
+  String get invoiceMissingBuyerAddress;
+
+  /// #1916 invoice essentials: invoiceMissingBuyerName
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s name or company'**
+  String get invoiceMissingBuyerName;
+
+  /// #1916 invoice essentials: invoiceMissingBuyerVatId
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s VAT number (needed for reverse charge)'**
+  String get invoiceMissingBuyerVatId;
+
+  /// #1916 invoice essentials: invoiceMissingExemptionReason
+  ///
+  /// In en, this message translates to:
+  /// **'The legal basis for the VAT exemption'**
+  String get invoiceMissingExemptionReason;
+
+  /// #1916 invoice essentials: invoiceMissingSellerAddress
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s postal address (street or city)'**
+  String get invoiceMissingSellerAddress;
+
+  /// #1916 invoice essentials: invoiceMissingSellerVatId
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s VAT identification number'**
+  String get invoiceMissingSellerVatId;
+
+  /// #1916 invoice essentials: invoiceMissingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Complete these details before issuing'**
+  String get invoiceMissingTitle;
 
   /// Open tab empty state
   ///

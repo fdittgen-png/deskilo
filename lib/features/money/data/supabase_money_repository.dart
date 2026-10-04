@@ -548,6 +548,24 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
+  Future<List<String>> invoiceIssueReadiness({
+    required String workspaceId,
+    required String memberId,
+    required String period,
+    InvoiceKind kind = InvoiceKind.full,
+    String? replacesId,
+  }) async {
+    final answer = await _client.rpc<dynamic>('invoice_issue_readiness', params: {
+      'p_replaces': replacesId,
+      'p_workspace_id': workspaceId,
+      'p_member_id': memberId,
+      'p_period': period,
+      'p_kind': kind.name,
+    });
+    return [for (final key in answer as List) key as String];
+  }
+
+  @override
   Future<({List<InvoiceLine> lines, int totalCents})> previewInvoice({
     required String workspaceId,
     required String memberId,

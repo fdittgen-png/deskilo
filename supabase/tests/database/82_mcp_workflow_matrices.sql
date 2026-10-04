@@ -74,7 +74,7 @@ select set_config('t.a', public.create_workspace('MCP W 298', 'FR', 'EUR', 'Euro
 select pg_temp.act_as('00000000-0000-4000-8000-0000000298e5');
 select public.finalize_identity_binding();
 reset role;
-update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb)
+update public.workspaces set street = '1 Fixture Street', city = 'Fixtureville', feature_flags = coalesce(feature_flags, '{}'::jsonb)
   || '{"mcpAccess": true, "invoicing": true, "moneyTab": true, "adminInvoicing": true, "customRoles": true}'
  where id = current_setting('t.a')::uuid;
 insert into public.members (workspace_id, user_id, status, is_admin, subscription_pct)

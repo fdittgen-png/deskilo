@@ -7544,6 +7544,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un punto de acceso la entrega al cliente — sin plataforma pública de por medio.';
 
   @override
+  String get invoiceEssentialsRefused =>
+      'La factura no se emitió: faltan datos obligatorios.';
+
+  @override
   String get invoiceExportAccountantCsv => 'CSV contable';
 
   @override
@@ -7881,6 +7885,32 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceMemberLabel => 'Miembro';
+
+  @override
+  String get invoiceMissingBuyerAddress =>
+      'La dirección postal del miembro (obligatoria para una empresa)';
+
+  @override
+  String get invoiceMissingBuyerName => 'El nombre o la empresa del miembro';
+
+  @override
+  String get invoiceMissingBuyerVatId =>
+      'El número de IVA del miembro (necesario para la inversión del sujeto pasivo)';
+
+  @override
+  String get invoiceMissingExemptionReason =>
+      'El fundamento legal de la exención de IVA';
+
+  @override
+  String get invoiceMissingSellerAddress =>
+      'La dirección postal del espacio (calle o ciudad)';
+
+  @override
+  String get invoiceMissingSellerVatId =>
+      'El número de identificación fiscal (IVA) del espacio';
+
+  @override
+  String get invoiceMissingTitle => 'Complete estos datos antes de emitir';
 
   @override
   String get invoiceNoOpen => 'No hay facturas abiertas.';
