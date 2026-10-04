@@ -137,7 +137,7 @@ void main() {
         onSelect: (_) {}, tileProvider: _BlankTiles())),
     );
     await show([first, second], 'https://host.example/one');
-    final controller = MapController.of(tester.element(find.byType(MarkerLayer)));
+    final controller = MapController.of(tester.element(find.byType(TileLayer)));
     expect(controller.camera.center.latitude, closeTo(48.86, .001));
     await show([first, second], 'https://host.example/two');
     expect(controller.camera.center.latitude, closeTo(43.46, .001));
@@ -163,12 +163,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('Approximate address location'), findsOneWidget);
     expect(find.text('Address office'), findsOneWidget);
-    final controller = MapController.of(tester.element(find.byType(MarkerLayer)));
+    final controller = MapController.of(tester.element(find.byType(TileLayer)));
     expect(controller.camera.center.latitude, closeTo(43.46, .001));
     controller.move(const LatLng(48, 2), 8);
     await tester.pump();
     await tester.tap(find.byKey(const ValueKey('directory-map-recenter')));
-    await tester.pump();
+    await tester.pumpAndSettle(); // the camera glides back
     expect(controller.camera.center.latitude, closeTo(43.46, .001));
     expect(tester.takeException(), isNull);
   });
@@ -204,7 +204,7 @@ void main() {
     expect(attempts, 2);
     oldAnswer.complete(const DirectoryLocation(48.86, 2.35, label: 'Old address'));
     await tester.pumpAndSettle();
-    final controller = MapController.of(tester.element(find.byType(MarkerLayer)));
+    final controller = MapController.of(tester.element(find.byType(TileLayer)));
     expect(controller.camera.center.latitude, closeTo(43.46, .001));
     expect(find.text('Next'), findsOneWidget);
     expect(find.text('Old'), findsNothing);
@@ -222,6 +222,9 @@ void main() {
         workspace,
       ]);
     await showPortal(tester, const DirectoryScreen(), directory: repository);
+    // The map is the first face; these walk the list.
+    await tester.tap(find.byTooltip('List'));
+    await tester.pumpAndSettle();
     final locate = find.byKey(const ValueKey('directory-locate-https://host.example/unlocated'));
     await tester.scrollUntilVisible(locate, 400, scrollable: find.descendant(
       of: find.byType(ListView), matching: find.byType(Scrollable)).first);
