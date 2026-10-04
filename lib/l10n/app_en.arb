@@ -663,6 +663,31 @@
   "@authJoinHint": {
     "description": "Sign-in screen: banner after tapping Join by invitation (#1650) — the invitation is pasted after sign-in, never stored"
   },
+  "authLinkAlreadyUsed": "This {provider} identity is already linked to another account.",
+  "@authLinkAlreadyUsed": {
+    "description": "Linked accounts: authLinkAlreadyUsed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkFailed": "Linking {provider} did not work ({code}). Try again; if it keeps failing, tell the server's administrator this code.",
+  "@authLinkFailed": {
+    "description": "Linked accounts: authLinkFailed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkManualDisabled": "Linking accounts is switched off on this server. Its administrator must turn on “Allow manual linking” in the authentication settings.",
+  "@authLinkManualDisabled": {
+    "description": "Linked accounts: authLinkManualDisabled"
+  },
   "authNetworkError": "Could not reach the server. Check your connection and try again.",
   "@authNetworkError": {
     "description": "Snackbar when the auth call fails before reaching the server (connectivity)"

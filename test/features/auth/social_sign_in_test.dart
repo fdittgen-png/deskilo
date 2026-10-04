@@ -110,6 +110,36 @@ void main() {
     expect(find.byKey(const ValueKey('link-google')), findsNothing);
   });
 
+  testWidgets('a failed link says WHY, by the server\'s own error code', (
+    tester,
+  ) async {
+    final auth = await pumpLinkedAccounts(tester);
+    Future<void> tryLink(AuthException error) async {
+      auth.socialError = error;
+      await tester.tap(find.byKey(const ValueKey('link-google')));
+      await tester.pumpAndSettle();
+    }
+
+    await tryLink(const AuthException('x', code: 'manual_linking_disabled'));
+    expect(find.textContaining('Allow manual linking'), findsOneWidget);
+    expect(find.textContaining('has not enabled it'), findsNothing,
+        reason: 'the provider is not what is wrong here');
+
+    await tester.pump(const Duration(seconds: 10));
+    await tryLink(const AuthException('x', code: 'provider_disabled'));
+    expect(find.textContaining('has not enabled it'), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 10));
+    await tryLink(const AuthException('x', code: 'identity_already_exists'));
+    expect(find.textContaining('already linked to another account'), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 10));
+    await tryLink(const AuthException('x', code: 'something_new'));
+    expect(find.textContaining('something_new'), findsOneWidget,
+        reason: 'an unknown failure shows its code so it can be reported');
+    expect(auth.socialLinks, isEmpty);
+  });
+
   testWidgets('enabled Apple and Microsoft link to the existing account', (tester) async {
     final auth = await pumpLinkedAccounts(tester, allProviders: true);
     final account = auth.currentUserId;

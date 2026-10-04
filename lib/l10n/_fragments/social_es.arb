@@ -6,5 +6,30 @@
   "linkedAccountsLink": "Vincular",
   "linkedAccountsUnlink": "Desvincular",
   "linkedAccountsLinked": "Vinculada",
-  "linkedAccountsLinkStarted": "Continúa en el navegador para terminar la vinculación."
+  "linkedAccountsLinkStarted": "Continúa en el navegador para terminar la vinculación.",
+  "authLinkManualDisabled": "La vinculación de cuentas está desactivada en este servidor. Su administrador debe activar «Permitir vinculación manual» en los ajustes de autenticación.",
+  "@authLinkManualDisabled": {
+    "description": "Linked accounts: authLinkManualDisabled"
+  },
+  "authLinkAlreadyUsed": "Esta identidad de {provider} ya está vinculada a otra cuenta.",
+  "@authLinkAlreadyUsed": {
+    "description": "Linked accounts: authLinkAlreadyUsed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkFailed": "No se pudo vincular {provider} ({code}). Inténtelo de nuevo; si sigue fallando, comunique este código al administrador del servidor.",
+  "@authLinkFailed": {
+    "description": "Linked accounts: authLinkFailed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -6,5 +6,30 @@
   "linkedAccountsLink": "Lier",
   "linkedAccountsUnlink": "Délier",
   "linkedAccountsLinked": "Lié",
-  "linkedAccountsLinkStarted": "Continuez dans le navigateur pour terminer la liaison."
+  "linkedAccountsLinkStarted": "Continuez dans le navigateur pour terminer la liaison.",
+  "authLinkManualDisabled": "L'association de comptes est désactivée sur ce serveur. Son administrateur doit activer « Autoriser l'association manuelle » dans les paramètres d'authentification.",
+  "@authLinkManualDisabled": {
+    "description": "Linked accounts: authLinkManualDisabled"
+  },
+  "authLinkAlreadyUsed": "Cette identité {provider} est déjà liée à un autre compte.",
+  "@authLinkAlreadyUsed": {
+    "description": "Linked accounts: authLinkAlreadyUsed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkFailed": "L'association de {provider} a échoué ({code}). Réessayez ; si cela persiste, communiquez ce code à l'administrateur du serveur.",
+  "@authLinkFailed": {
+    "description": "Linked accounts: authLinkFailed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  }
 }

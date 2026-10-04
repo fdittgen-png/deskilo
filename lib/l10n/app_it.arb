@@ -336,6 +336,31 @@
   "authHidePassword": "Nascondi password",
   "authJoinByInvitation": "Entra con un invito",
   "authJoinHint": "Crea prima il tuo account o accedi: incollerai l'invito subito dopo.",
+  "authLinkAlreadyUsed": "Questa identità {provider} è già collegata a un altro account.",
+  "@authLinkAlreadyUsed": {
+    "description": "Linked accounts: authLinkAlreadyUsed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkFailed": "Il collegamento di {provider} non è riuscito ({code}). Riprova; se continua a fallire, comunica questo codice all'amministratore del server.",
+  "@authLinkFailed": {
+    "description": "Linked accounts: authLinkFailed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkManualDisabled": "Il collegamento degli account è disattivato su questo server. Il suo amministratore deve attivare «Consenti collegamento manuale» nelle impostazioni di autenticazione.",
+  "@authLinkManualDisabled": {
+    "description": "Linked accounts: authLinkManualDisabled"
+  },
   "authNetworkError": "Impossibile raggiungere il server. Controlla la connessione e riprova.",
   "authPasswordLabel": "Password",
   "authPasswordTooShort": "Almeno 8 caratteri",
