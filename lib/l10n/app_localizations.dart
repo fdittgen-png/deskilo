@@ -20816,6 +20816,48 @@ abstract class AppLocalizations {
   /// **'VAT number (optional)'**
   String get personalInfoVatId;
 
+  /// #2185 place feedback
+  ///
+  /// In en, this message translates to:
+  /// **'{average} · {count, plural, =1{1 rating} other{{count} ratings}}'**
+  String placeFeedbackAverage(String average, int count);
+
+  /// #2185 place feedback
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save. Please try again.'**
+  String get placeFeedbackFailed;
+
+  /// #2185 place feedback
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favourites'**
+  String get placeFeedbackFavorite;
+
+  /// #2185 place feedback
+  ///
+  /// In en, this message translates to:
+  /// **'No rating yet'**
+  String get placeFeedbackNoRating;
+
+  /// #2185 place feedback
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 star} other{{n} stars}}'**
+  String placeFeedbackStars(int n);
+
+  /// #2185 place feedback
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favourites'**
+  String get placeFeedbackUnfavorite;
+
+  /// #2185 place feedback
+  ///
+  /// In en, this message translates to:
+  /// **'0 stars'**
+  String get placeFeedbackZero;
+
   /// Unit hint under the booking sheet's accessory chips when the accessorySupplements toggle shows (+price) suffixes (#169)
   ///
   /// In en, this message translates to:

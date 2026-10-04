@@ -12152,6 +12152,43 @@ class AppLocalizationsEs extends AppLocalizations {
   String get personalInfoVatId => 'NIF-IVA (opcional)';
 
   @override
+  String placeFeedbackAverage(String average, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count valoraciones',
+      one: '1 valoración',
+    );
+    return '$average · $_temp0';
+  }
+
+  @override
+  String get placeFeedbackFailed => 'No se pudo guardar. Inténtelo de nuevo.';
+
+  @override
+  String get placeFeedbackFavorite => 'Añadir a favoritos';
+
+  @override
+  String get placeFeedbackNoRating => 'Aún sin valoración';
+
+  @override
+  String placeFeedbackStars(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n estrellas',
+      one: '1 estrella',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get placeFeedbackUnfavorite => 'Quitar de favoritos';
+
+  @override
+  String get placeFeedbackZero => '0 estrellas';
+
+  @override
   String get planAccessorySupplementHint =>
       'Los suplementos se aplican por media jornada.';
 

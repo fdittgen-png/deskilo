@@ -13968,6 +13968,47 @@
   "@personalInfoVatId": {
     "description": "#886 personal-information form / feature: personalInfoVatId"
   },
+  "placeFeedbackAverage": "{average} · {count, plural, =1{1 rating} other{{count} ratings}}",
+  "@placeFeedbackAverage": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackFailed": "Could not save. Please try again.",
+  "@placeFeedbackFailed": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackFavorite": "Add to favourites",
+  "@placeFeedbackFavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackNoRating": "No rating yet",
+  "@placeFeedbackNoRating": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackStars": "{n, plural, =1{1 star} other{{n} stars}}",
+  "@placeFeedbackStars": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackUnfavorite": "Remove from favourites",
+  "@placeFeedbackUnfavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackZero": "0 stars",
+  "@placeFeedbackZero": {
+    "description": "#2185 place feedback"
+  },
   "planAccessorySupplementHint": "Supplements are per half-day.",
   "@planAccessorySupplementHint": {
     "description": "Unit hint under the booking sheet's accessory chips when the accessorySupplements toggle shows (+price) suffixes (#169)"
