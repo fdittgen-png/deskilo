@@ -153,7 +153,7 @@ final class ConversationDraftsProvider
 }
 
 String _$conversationDraftsHash() =>
-    r'970666571f4951206f262fefaeedd733cc29841b';
+    r'2b0cd01666061fe39cf1a5eac267486e8764299c';
 
 /// #821 — the composer's unsent text per conversation, kept for the
 /// session so a thread closed mid-sentence reopens on that sentence.
