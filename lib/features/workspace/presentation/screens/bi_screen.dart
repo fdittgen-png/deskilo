@@ -22,6 +22,7 @@ import '../../domain/bi_query.dart';
 import '../../domain/bi_saved_view.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/bi_export.dart';
 import '../widgets/bi_module_section.dart';
 import '../widgets/bi_toolbar.dart';
 import '../widgets/bi_views_bar.dart';
@@ -98,6 +99,23 @@ class BiScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.biTitle ?? 'Business analytics'),
+        actions: [
+          if (query != null && workspaceId != null && shown.isNotEmpty)
+            IconButton(
+              key: const ValueKey('bi-export-pdf'),
+              tooltip: l10n?.biExportPdf ?? 'Export as PDF',
+              icon: const Icon(Icons.picture_as_pdf_outlined),
+              onPressed: () => exportBiPdf(
+                context,
+                ref,
+                workspaceId: workspaceId,
+                workspaceName:
+                    ref.read(currentWorkspaceProvider).value?.name ?? 'DesKilo',
+                modules: shown,
+                query: query,
+              ),
+            ),
+        ],
         // Opened from an address (or after a toolbar change) there is no
         // page below: offer the way home instead of a dead end.
         leading: context.canPop()

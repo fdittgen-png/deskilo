@@ -263,6 +263,11 @@ class BiToolbar extends StatelessWidget {
             key: const ValueKey('bi-view'),
             segments: [
               ButtonSegment(
+                value: BiView.dashboard,
+                icon: const Icon(Icons.space_dashboard_outlined),
+                label: Text(l10n?.biViewDashboard ?? 'Dashboard'),
+              ),
+              ButtonSegment(
                 value: BiView.table,
                 icon: const Icon(Icons.table_rows_outlined),
                 label: Text(l10n?.biViewTable ?? 'Table'),

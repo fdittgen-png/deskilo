@@ -1304,6 +1304,22 @@
       }
     }
   },
+  "biCollectionCentre": "of what was invoiced",
+  "@biCollectionCentre": {
+    "description": "Business analytics dashboard: biCollectionCentre"
+  },
+  "biCollectionCollected": "Collected",
+  "@biCollectionCollected": {
+    "description": "Business analytics dashboard: biCollectionCollected"
+  },
+  "biCollectionNoComposition": "The amounts collected here include earlier invoices, so they are not a part of this period's invoiced total.",
+  "@biCollectionNoComposition": {
+    "description": "Business analytics dashboard: biCollectionNoComposition"
+  },
+  "biCollectionOutstanding": "Still to collect",
+  "@biCollectionOutstanding": {
+    "description": "Business analytics dashboard: biCollectionOutstanding"
+  },
   "biColumnChange": "Change",
   "@biColumnChange": {
     "description": "#1923 B Web-BI toolbar and module section"
@@ -1331,6 +1347,10 @@
   "biComparePreviousYear": "The same period a year before",
   "@biComparePreviousYear": {
     "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biCompareTitle": "Compared with the past",
+  "@biCompareTitle": {
+    "description": "Business analytics dashboard: biCompareTitle"
   },
   "biComparedLine": "{period}: {value} ({change})",
   "@biComparedLine": {
@@ -1369,6 +1389,10 @@
     }
   },
   "biComparisonUnqualified": "Change unavailable: one period has partial or out-of-date data.",
+  "biCompositionTitle": "What it is made of",
+  "@biCompositionTitle": {
+    "description": "Business analytics dashboard: biCompositionTitle"
+  },
   "biComputedWorkspaceTime": "Computed {date} · workspace time",
   "@biComputedWorkspaceTime": {
     "placeholders": {
@@ -1383,9 +1407,21 @@
   "biDataPartial": "Partial data",
   "biDataStale": "Out of date",
   "biDataUnavailable": "Unavailable",
+  "biDeltaNone": "No comparison yet",
+  "@biDeltaNone": {
+    "description": "Business analytics dashboard: biDeltaNone"
+  },
   "biDimensionLevel": "Level",
   "@biDimensionLevel": {
     "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biEvolutionTitle": "Evolution",
+  "@biEvolutionTitle": {
+    "description": "Business analytics dashboard: biEvolutionTitle"
+  },
+  "biExportPdf": "Export as PDF",
+  "@biExportPdf": {
+    "description": "Business analytics dashboard: biExportPdf"
   },
   "biExposureDiffers": "The two periods do not offer the same base; the ratio accounts for it, the raw figures do not compare directly.",
   "@biExposureDiffers": {
@@ -1507,15 +1543,122 @@
   "@biInvalidAddress": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
+  "biKindCurrent": "Now",
+  "@biKindCurrent": {
+    "description": "Business analytics dashboard: biKindCurrent"
+  },
+  "biKindPrevious": "Previous period",
+  "@biKindPrevious": {
+    "description": "Business analytics dashboard: biKindPrevious"
+  },
+  "biKindYearAgo": "Same period last year",
+  "@biKindYearAgo": {
+    "description": "Business analytics dashboard: biKindYearAgo"
+  },
+  "biNarrativeDown": "Lower than {label} ({change}).",
+  "@biNarrativeDown": {
+    "description": "Business analytics dashboard: biNarrativeDown",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeFlat": "About the same as {label}.",
+  "@biNarrativeFlat": {
+    "description": "Business analytics dashboard: biNarrativeFlat",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "biNarrativeUp": "Higher than {label} ({change}).",
+  "@biNarrativeUp": {
+    "description": "Business analytics dashboard: biNarrativeUp",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biNoDataLabel": "no data",
+  "@biNoDataLabel": {
+    "description": "Business analytics dashboard: biNoDataLabel"
+  },
   "biNotOffered": "not offered by the analyses shown",
   "@biNotOffered": {
     "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biOnPace": "on pace",
+  "@biOnPace": {
+    "description": "Business analytics dashboard: biOnPace"
   },
   "biOpenSource": "Open the source",
   "@biOpenSource": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
   "biPastBasis": "Recomputed from records available now, not a snapshot of what was known then.",
+  "biPdfEstimateNote": "Dashed lines and shaded bands are estimates from past periods, not measurements.",
+  "@biPdfEstimateNote": {
+    "description": "Business analytics dashboard: biPdfEstimateNote"
+  },
+  "biPdfFailed": "The PDF could not be made.",
+  "@biPdfFailed": {
+    "description": "Business analytics dashboard: biPdfFailed"
+  },
+  "biPdfProduced": "Produced on {date}",
+  "@biPdfProduced": {
+    "description": "Business analytics dashboard: biPdfProduced",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biPdfTitle": "Business analytics",
+  "@biPdfTitle": {
+    "description": "Business analytics dashboard: biPdfTitle"
+  },
+  "biProjectionBasis": "A straight line through the last {count} complete periods, carried forward. The shaded band is the likely range. An estimate, not a promise.",
+  "@biProjectionBasis": {
+    "description": "Business analytics dashboard: biProjectionBasis",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "biProjectionLabel": "Estimate",
+  "@biProjectionLabel": {
+    "description": "Business analytics dashboard: biProjectionLabel"
+  },
+  "biProjectionNotEnough": "Not enough history to project yet: {have} complete periods so far, {need} needed.",
+  "@biProjectionNotEnough": {
+    "description": "Business analytics dashboard: biProjectionNotEnough",
+    "placeholders": {
+      "have": {
+        "type": "int"
+      },
+      "need": {
+        "type": "int"
+      }
+    }
+  },
+  "biProjectionTitle": "Where it is heading",
+  "@biProjectionTitle": {
+    "description": "Business analytics dashboard: biProjectionTitle"
+  },
+  "biProvisionalNote": "Provisional: the period is not over, so this change is an estimate.",
+  "@biProvisionalNote": {
+    "description": "Business analytics dashboard: biProvisionalNote"
+  },
   "biQuarter": "Q{quarter} {year}",
   "@biQuarter": {
     "description": "#1923 B Web-BI toolbar and module section",
@@ -1561,6 +1704,31 @@
   "@biReset": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
+  "biRunRate": "At the pace so far, this period would end at about {value}.",
+  "@biRunRate": {
+    "description": "Business analytics dashboard: biRunRate",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "biRunningLabel": "running",
+  "@biRunningLabel": {
+    "description": "Business analytics dashboard: biRunningLabel"
+  },
+  "biSeatCentre": "of all seat time",
+  "@biSeatCentre": {
+    "description": "Business analytics dashboard: biSeatCentre"
+  },
+  "biSeatClosed": "Outside opening hours",
+  "@biSeatClosed": {
+    "description": "Business analytics dashboard: biSeatClosed"
+  },
+  "biSeatFree": "Free during opening hours",
+  "@biSeatFree": {
+    "description": "Business analytics dashboard: biSeatFree"
+  },
   "biSeatHoursBlocked": "{hours} blocked seat-hours",
   "@biSeatHoursBlocked": {
     "placeholders": {
@@ -1576,6 +1744,14 @@
         "type": "String"
       }
     }
+  },
+  "biSeatReserved": "Reserved",
+  "@biSeatReserved": {
+    "description": "Business analytics dashboard: biSeatReserved"
+  },
+  "biShareByLevel": "Reserved time by level",
+  "@biShareByLevel": {
+    "description": "Business analytics dashboard: biShareByLevel"
   },
   "biSort": "Order",
   "@biSort": {
@@ -1633,6 +1809,10 @@
         "type": "String"
       }
     }
+  },
+  "biViewDashboard": "Dashboard",
+  "@biViewDashboard": {
+    "description": "Business analytics dashboard: biViewDashboard"
   },
   "biViewDelete": "Delete",
   "@biViewDelete": {
@@ -1739,6 +1919,14 @@
   "biViewsTeam": "Team views",
   "@biViewsTeam": {
     "description": "#1923 C Web-BI saved views"
+  },
+  "biVsPrevious": "vs previous period",
+  "@biVsPrevious": {
+    "description": "Business analytics dashboard: biVsPrevious"
+  },
+  "biVsYearAgo": "vs last year",
+  "@biVsYearAgo": {
+    "description": "Business analytics dashboard: biVsYearAgo"
   },
   "billAccessorySupplements": "Accessory supplements",
   "@billAccessorySupplements": {
