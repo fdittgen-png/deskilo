@@ -43,7 +43,7 @@ set local role authenticated;
 select lives_ok($$select public.save_workspace_public_page('00000000-0000-4000-8000-0000002086b1','{"description":"Open desks","host_type":"person","address":"Desk 9, Public Row"}',true)$$,'the owner overrides the inherited fields');
 reset role;
 update public.workspaces set address='3 Later Street' where id='00000000-0000-4000-8000-0000002086b1';
-select is((select document->>'address' from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000002086b1'),'Desk 9, Public Row','an override survives a local edit');
+select is((select document->>'address' from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000002086b1'),'3 Later Street','0367: the address is always the workspace''s: an override is ignored, a local edit reaches the card');
 
 -- Reset one, then all; the page stays published.
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002086a1","role":"authenticated"}',true);
@@ -58,7 +58,7 @@ select is((public.reset_workspace_public_page('00000000-0000-4000-8000-000000208
 select throws_ok($$select public.reset_workspace_public_page('00000000-0000-4000-8000-0000002086b1',array['description'])$$,'P0001','not an inherited public field','a field without a workspace counterpart cannot be reset');
 -- A blank override hides the address; a reset of a draft never publishes it.
 select lives_ok($$select public.save_workspace_public_page('00000000-0000-4000-8000-0000002086b2','{"host_type":"person","address":""}',false)$$,'the owner keeps a draft with a blank address');
-select is(public.my_workspace_public_page('00000000-0000-4000-8000-0000002086b2')->'document'->>'address','','a blank override is kept');
+select is(public.my_workspace_public_page('00000000-0000-4000-8000-0000002086b2')->'document'->>'address','9 Private Lane','0367: a blank address override cannot hide the workspace''s own address');
 select is((public.reset_workspace_public_page('00000000-0000-4000-8000-0000002086b2',null)->>'published')::boolean,false,'a reset never publishes a draft');
 reset role;
 select is((select document->>'host_type' from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000002086b1'),'association','the card follows the workspace after reset all');
