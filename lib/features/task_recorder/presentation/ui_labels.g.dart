@@ -1528,6 +1528,7 @@ Map<String, _Getter> _part3() => {
   'guideHostFillField': (l) => l.guideHostFillField,
   'guideHostInstruction': (l) => l.guideHostInstruction,
   'guideHostManual': (l) => l.guideHostManual,
+  'guideHostMinimize': (l) => l.guideHostMinimize,
   'guideHostNotOnScreen': (l) => l.guideHostNotOnScreen,
   'guideHostOpenScreen': (l) => l.guideHostOpenScreen,
   'guideHostPausedFeature': (l) => l.guideHostPausedFeature,
@@ -1633,10 +1634,10 @@ Map<String, _Getter> _part3() => {
   'helpHintMoneyStatementTip3': (l) => l.helpHintMoneyStatementTip3,
   'helpHintMoneyStatementTipNegotiation': (l) => l.helpHintMoneyStatementTipNegotiation,
   'helpHintMoneyStatementTipNegotiationTopic': (l) => l.helpHintMoneyStatementTipNegotiationTopic,
-  'helpHintMoneyStatementTopic': (l) => l.helpHintMoneyStatementTopic,
 };
 
 Map<String, _Getter> _part4() => {
+  'helpHintMoneyStatementTopic': (l) => l.helpHintMoneyStatementTopic,
   'helpHintMoneyTip2': (l) => l.helpHintMoneyTip2,
   'helpHintMoneyTip2Topic': (l) => l.helpHintMoneyTip2Topic,
   'helpHintMoneyTip3': (l) => l.helpHintMoneyTip3,
@@ -2036,10 +2037,10 @@ Map<String, _Getter> _part4() => {
   'invoiceMemberLabel': (l) => l.invoiceMemberLabel,
   'invoiceMissingBuyerAddress': (l) => l.invoiceMissingBuyerAddress,
   'invoiceMissingBuyerName': (l) => l.invoiceMissingBuyerName,
-  'invoiceMissingBuyerVatId': (l) => l.invoiceMissingBuyerVatId,
 };
 
 Map<String, _Getter> _part5() => {
+  'invoiceMissingBuyerVatId': (l) => l.invoiceMissingBuyerVatId,
   'invoiceMissingExemptionReason': (l) => l.invoiceMissingExemptionReason,
   'invoiceMissingSellerAddress': (l) => l.invoiceMissingSellerAddress,
   'invoiceMissingSellerVatId': (l) => l.invoiceMissingSellerVatId,
@@ -2439,10 +2440,10 @@ Map<String, _Getter> _part5() => {
   'mcpConnectUnavailable': (l) => l.mcpConnectUnavailable,
   'mcpConnectVscodeInstall': (l) => l.mcpConnectVscodeInstall,
   'mcpConnectVscodeStep': (l) => l.mcpConnectVscodeStep,
-  'mcpConnectWaitingDatabaseAdmin': (l) => l.mcpConnectWaitingDatabaseAdmin,
 };
 
 Map<String, _Getter> _part6() => {
+  'mcpConnectWaitingDatabaseAdmin': (l) => l.mcpConnectWaitingDatabaseAdmin,
   'mcpConnectWaitingOperatorUnknown': (l) => l.mcpConnectWaitingOperatorUnknown,
   'mcpConnectWaitingWorkspaceAdmin': (l) => l.mcpConnectWaitingWorkspaceAdmin,
   'mcpConnectWhich': (l) => l.mcpConnectWhich,
@@ -2842,10 +2843,10 @@ Map<String, _Getter> _part6() => {
   'newMemberOveragePackage': (l) => l.newMemberOveragePackage,
   'newMemberOveragePayg': (l) => l.newMemberOveragePayg,
   'newMemberSubscription': (l) => l.newMemberSubscription,
-  'newMemberSubscriptionLess': (l) => l.newMemberSubscriptionLess,
 };
 
 Map<String, _Getter> _part7() => {
+  'newMemberSubscriptionLess': (l) => l.newMemberSubscriptionLess,
   'newMemberSubscriptionMore': (l) => l.newMemberSubscriptionMore,
   'nfcConfigChecking': (l) => l.nfcConfigChecking,
   'nfcConfigDeviceOff': (l) => l.nfcConfigDeviceOff,
@@ -3245,10 +3246,10 @@ Map<String, _Getter> _part7() => {
   'privacySpaceNoticeAcknowledge': (l) => l.privacySpaceNoticeAcknowledge,
   'privacySpaceNoticeFailed': (l) => l.privacySpaceNoticeFailed,
   'privacySpaceNoticeRead': (l) => l.privacySpaceNoticeRead,
-  'privacySpaceNoticeUnread': (l) => l.privacySpaceNoticeUnread,
 };
 
 Map<String, _Getter> _part8() => {
+  'privacySpaceNoticeUnread': (l) => l.privacySpaceNoticeUnread,
   'privacyTitle': (l) => l.privacyTitle,
   'privacyWhoCanSee': (l) => l.privacyWhoCanSee,
   'privacyWhoCanSeeHint': (l) => l.privacyWhoCanSeeHint,
@@ -3648,10 +3649,10 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningUsagePaid': (l) => l.reportFieldMeaningUsagePaid,
   'reportFieldMeaningUsageRecords': (l) => l.reportFieldMeaningUsageRecords,
   'reportFieldMeaningUsageRemainingHalfDays': (l) => l.reportFieldMeaningUsageRemainingHalfDays,
-  'reportFieldMeaningUsageSites': (l) => l.reportFieldMeaningUsageSites,
 };
 
 Map<String, _Getter> _part9() => {
+  'reportFieldMeaningUsageSites': (l) => l.reportFieldMeaningUsageSites,
   'reportFieldMeaningUsageSupplements': (l) => l.reportFieldMeaningUsageSupplements,
   'reportFieldMeaningUsageUsedHalfDays': (l) => l.reportFieldMeaningUsageUsedHalfDays,
   'reportFieldMeaningVat': (l) => l.reportFieldMeaningVat,
@@ -4051,10 +4052,10 @@ Map<String, _Getter> _part9() => {
   'supportPrepare': (l) => l.supportPrepare,
   'supportPrivacy': (l) => l.supportPrivacy,
   'supportSaved': (l) => l.supportSaved,
-  'supportTitle': (l) => l.supportTitle,
 };
 
 Map<String, _Getter> _part10() => {
+  'supportTitle': (l) => l.supportTitle,
   'tabCalendar': (l) => l.tabCalendar,
   'tabEvents': (l) => l.tabEvents,
   'tabMoney': (l) => l.tabMoney,
@@ -4454,10 +4455,10 @@ Map<String, _Getter> _part10() => {
   'validationOwnerOnly': (l) => l.validationOwnerOnly,
   'validationOwnerRequired': (l) => l.validationOwnerRequired,
   'validationOwnerSelf': (l) => l.validationOwnerSelf,
-  'validationOwnerSelfDesc': (l) => l.validationOwnerSelfDesc,
 };
 
 Map<String, _Getter> _part11() => {
+  'validationOwnerSelfDesc': (l) => l.validationOwnerSelfDesc,
   'validationOwnerSelfShort': (l) => l.validationOwnerSelfShort,
   'validationPickPersons': (l) => l.validationPickPersons,
   'validationRequiredCount': (l) => l.validationRequiredCount,

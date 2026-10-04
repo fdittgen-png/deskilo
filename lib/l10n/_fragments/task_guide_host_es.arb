@@ -46,5 +46,21 @@
   "guideActionSelectPeriod": "elija el periodo",
   "guideActionSelectResource": "elija un sitio en el plano o en la lista",
   "guideActionConfirmBooking": "confirme la reserva y espere la respuesta",
-  "guideBookingRefusedRecovery": "Se rechazó la reserva (sitio ocupado o una regla lo impide). Elija otro sitio o periodo y vuelva a confirmar."
+  "guideBookingRefusedRecovery": "Se rechazó la reserva (sitio ocupado o una regla lo impide). Elija otro sitio o periodo y vuelva a confirmar.",
+  "guideHostMinimize": "Minimizar la guía",
+  "@guideHostMinimize": {
+    "description": "Task wizard: guideHostMinimize"
+  },
+  "guideHostRestore": "Mostrar la guía (paso {current} de {total})",
+  "@guideHostRestore": {
+    "description": "Task wizard: guideHostRestore",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
 }

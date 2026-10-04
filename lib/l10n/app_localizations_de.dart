@@ -5866,6 +5866,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get guideHostMinimize => 'Anleitung verkleinern';
+
+  @override
   String get guideHostNotOnScreen =>
       'Dieses Bedienelement ist nicht auf diesem Bildschirm. Gehen Sie zum Bildschirm des vorherigen Schritts oder prüfen Sie die Anleitung.';
 
@@ -5888,6 +5891,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get guideHostRecovery =>
       'Das wurde abgelehnt. Folgen Sie diesen Schritten und versuchen Sie es dann erneut.';
+
+  @override
+  String guideHostRestore(int current, int total) {
+    return 'Anleitung anzeigen (Schritt $current von $total)';
+  }
 
   @override
   String get guideHostResume => 'Fortsetzen';

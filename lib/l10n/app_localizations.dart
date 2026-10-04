@@ -10104,6 +10104,12 @@ abstract class AppLocalizations {
   /// **'This part happens on a protected screen ({category}). Do it yourself, then mark it done.'**
   String guideHostManualProtected(String category);
 
+  /// Task wizard: guideHostMinimize
+  ///
+  /// In en, this message translates to:
+  /// **'Minimise the guide'**
+  String get guideHostMinimize;
+
   /// #1867 live guide host
   ///
   /// In en, this message translates to:
@@ -10139,6 +10145,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That was refused. Follow these steps, then try again.'**
   String get guideHostRecovery;
+
+  /// Task wizard: guideHostRestore
+  ///
+  /// In en, this message translates to:
+  /// **'Show the guide (step {current} of {total})'**
+  String guideHostRestore(int current, int total);
 
   /// #1867 live guide host
   ///

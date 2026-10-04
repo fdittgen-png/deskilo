@@ -46,5 +46,21 @@
   "guideActionSelectPeriod": "den Zeitraum wählen",
   "guideActionSelectResource": "einen Platz auf dem Plan oder in der Liste wählen",
   "guideActionConfirmBooking": "die Buchung bestätigen und auf die Antwort warten",
-  "guideBookingRefusedRecovery": "Die Buchung wurde abgelehnt (Platz belegt oder eine Regel verbietet es). Wählen Sie einen anderen Platz oder Zeitraum und bestätigen Sie erneut."
+  "guideBookingRefusedRecovery": "Die Buchung wurde abgelehnt (Platz belegt oder eine Regel verbietet es). Wählen Sie einen anderen Platz oder Zeitraum und bestätigen Sie erneut.",
+  "guideHostMinimize": "Anleitung verkleinern",
+  "@guideHostMinimize": {
+    "description": "Task wizard: guideHostMinimize"
+  },
+  "guideHostRestore": "Anleitung anzeigen (Schritt {current} von {total})",
+  "@guideHostRestore": {
+    "description": "Task wizard: guideHostRestore",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
 }
