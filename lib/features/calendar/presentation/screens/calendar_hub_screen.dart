@@ -31,6 +31,11 @@ import '../../../workspace/presentation/widgets/conversation_thread.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/calendar_providers.dart';
 import '../../../events/presentation/widgets/calendar_decisions.dart';
+import '../../../task_recorder/application/booking_observation.dart'
+    show dateRelation;
+import '../../../task_recorder/application/calendar_observation.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../calendar_view.dart';
 import '../widgets/calendar_feed.dart';
 import '../widgets/calendar_view_bar.dart';
@@ -135,7 +140,13 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       lastDate: DateTime(_from.year + 3),
     );
     if (picked != null) setState(() => _from = _to = picked);
+    if (picked != null) _recordDay(picked); // #1881 B
   }
+
+  // #1881 B — the task recorder: a day's distance from today, never it.
+  void _recordDay(DateTime day) => recordTaskStep(ref,
+      RecorderActions.calendarSelectDay,
+      payload: {'date_relation': dateRelation(day, _today)});
 
   Future<void> _pickRange() async {
     final picked = await showDateRangePicker(
@@ -149,10 +160,11 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         _from = picked.start;
         _to = picked.end;
       });
+      _recordDay(picked.start);
     }
   }
 
-  void _shift(int days) => setState(() {
+  void _shift(int days) => _move(calendarDirection(days), () {
         final span = _to.difference(_from).inDays + 1;
         _from = _from.add(Duration(days: days * span));
         _to = _to.add(Duration(days: days * span));
@@ -168,12 +180,24 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     );
     if (picked != null) {
       setState(() => _selection = _selection.withAnchor(picked));
+      _recordDay(picked);
     }
+  }
+
+  void _move(String direction, VoidCallback change) {
+    recordTaskStep(ref, RecorderActions.calendarMove,
+        payload: {'direction': direction}); // #1881 B
+    setState(change);
   }
 
   /// Every row leads somewhere (#718): the reservation sheet, the
   /// conversation, the alert, the invoice, the month on the Money tab.
   Future<void> _open(CalendarItem item) async {
+    final opened = calendarOpenedKind(item); // #1881 B
+    if (opened != null) {
+      recordTaskStep(ref, RecorderActions.calendarOpenItem,
+          payload: {'item_kind': opened});
+    }
     switch (item.link) {
       case ReservationLink(:final id):
         unawaited(context.push('/res/$id'));
@@ -237,7 +261,14 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         for (final kind in CalendarKind.values)
           if (kind != CalendarKind.validation || _validationsOn) kind,
       ],
-      onKinds: (next) => setState(() => _kinds = next),
+      onKinds: (next) {
+        final change = calendarKindChange(_kinds, next); // #1881 B
+        if (change != null) {
+          recordTaskStep(ref, RecorderActions.calendarFilterKind,
+              target: change.target, payload: {'switch_to': change.switchTo});
+        }
+        setState(() => _kinds = next);
+      },
       memberLabel: !mayPickMember
           ? null
           : _memberId == null
@@ -278,10 +309,13 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     final selector = Column(mainAxisSize: MainAxisSize.min, children: [
       CalendarViewBar(
         view: _selection.view,
-        onView: (CalendarView v) =>
-            setState(() => _selection = _selection.withView(v)),
+        onView: (CalendarView v) {
+          recordTaskStep(ref, RecorderActions.calendarSwitchView,
+              payload: {'view_mode': v.name}); // #1881 B
+          setState(() => _selection = _selection.withView(v));
+        },
         onToday: () =>
-            setState(() => _selection = _selection.withAnchor(_today)),
+            _move('today', () => _selection = _selection.withAnchor(_today)),
       ),
       _stepBar(l10n),
       if (_selection.view != CalendarView.agenda) ...[
@@ -376,10 +410,14 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
             ),
           ],
           selected: {_range},
-          onSelectionChanged: (s) => setState(() {
-            _range = s.first;
-            if (!_range) _to = _from;
-          }),
+          onSelectionChanged: (s) {
+            recordTaskStep(ref, RecorderActions.calendarSwitchView,
+                payload: {'view_mode': s.first ? 'range' : 'day'});
+            setState(() {
+              _range = s.first;
+              if (!_range) _to = _from;
+            });
+          },
         ),
       ]),
     );
@@ -407,7 +445,8 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         key: const ValueKey('calendar-prev'),
         tooltip: l10n?.calendarPrevious ?? 'Previous',
         icon: const Icon(Icons.chevron_left),
-        onPressed: () => setState(() => _selection = _selection.shifted(-1)),
+        onPressed: () =>
+            _move('previous', () => _selection = _selection.shifted(-1)),
       ),
       Expanded(
         child: TextButton(
@@ -420,7 +459,8 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         key: const ValueKey('calendar-next'),
         tooltip: l10n?.calendarNext ?? 'Next',
         icon: const Icon(Icons.chevron_right),
-        onPressed: () => setState(() => _selection = _selection.shifted(1)),
+        onPressed: () =>
+            _move('next', () => _selection = _selection.shifted(1)),
       ),
     ]);
   }
@@ -457,8 +497,10 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
           groupsByDay: groups,
           isDayOpen: _isDayOpen,
           locale: format.locale,
-          onSelect: (day) =>
-              setState(() => _selection = _selection.withAnchor(day)),
+          onSelect: (day) {
+            setState(() => _selection = _selection.withAnchor(day));
+            _recordDay(day);
+          },
         ),
       CalendarView.week => CalendarWeekStrip(
           weekStart: s.weekStart,
@@ -468,8 +510,10 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
           countsByDay: counts,
           isDayOpen: _isDayOpen,
           locale: format.locale,
-          onSelect: (day) =>
-              setState(() => _selection = _selection.withAnchor(day)),
+          onSelect: (day) {
+            setState(() => _selection = _selection.withAnchor(day));
+            _recordDay(day);
+          },
         ),
       CalendarView.agenda => const SizedBox.shrink(),
     };
@@ -561,6 +605,9 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       ),
     );
     if (picked == null) return;
+    recordTaskStep(ref, RecorderActions.calendarChooseWhose, payload: {
+      'calendar_of': picked == myId ? 'mine' : 'someone_else',
+    }); // #1881 B
     setState(() => _memberId = picked == myId ? null : picked);
   }
 }

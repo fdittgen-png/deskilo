@@ -6,7 +6,10 @@
 // German on another device, and nothing the person typed is ever shown
 // as if the recorder had observed it.
 
+import '../../../core/calendar/calendar_item.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../calendar/presentation/widgets/calendar_item_row.dart'
+    show calendarKindLabel;
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/presentation/feature_names.dart';
 import '../domain/action_registry.dart';
@@ -49,6 +52,25 @@ String? actionLabel(AppLocalizations? l10n, String? action) => switch (action) {
   RecorderActions.closeMyReservation =>
     l10n?.taskRecorderActionCloseMyReservation ??
         'Closed my reservation without changing it',
+  RecorderActions.calendarSwitchView =>
+    l10n?.taskRecorderActionCalendarView ?? 'Switched the calendar view',
+  RecorderActions.calendarMove =>
+    l10n?.taskRecorderActionCalendarMove ?? 'Moved through the dates',
+  RecorderActions.calendarSelectDay =>
+    l10n?.taskRecorderActionCalendarSelectDay ?? 'Chose a day in the calendar',
+  RecorderActions.calendarFilterKind =>
+    l10n?.taskRecorderActionCalendarFilterKind ??
+        'Changed what the calendar shows',
+  RecorderActions.calendarChooseWhose =>
+    l10n?.taskRecorderActionCalendarWhose ?? 'Chose whose calendar to see',
+  RecorderActions.calendarOpenItem =>
+    l10n?.taskRecorderActionCalendarOpenItem ??
+        'Opened an entry from the calendar',
+  RecorderActions.calendarCancelReservation =>
+    l10n?.taskRecorderActionCalendarCancel ??
+        'Cancelled a reservation from the calendar',
+  RecorderActions.decideEvent =>
+    l10n?.taskRecorderActionDecideEvent ?? 'Answered a request for a decision',
   RecorderActions.uiOpenScreen =>
     l10n?.taskRecorderActionUiOpenScreen ?? 'Opened a screen',
   RecorderActions.uiTap => l10n?.taskRecorderActionUiTap ?? 'Tapped',
@@ -92,6 +114,11 @@ String? outcomeLabel(AppLocalizations? l10n, String? outcome) =>
         l10n?.taskRecorderOutcomeRefused ?? 'Refused',
       RecorderOutcomes.reservationUnknown =>
         l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
+      RecorderOutcomes.eventDecided =>
+        l10n?.taskRecorderOutcomeEventDecided ?? 'Answer recorded',
+      RecorderOutcomes.eventNotConfirmed =>
+        l10n?.taskRecorderOutcomeEventNotConfirmed ??
+            'The answer was not confirmed',
       RecorderOutcomes.commandDone =>
         l10n?.taskRecorderOutcomeCommandDone ?? 'Done',
       RecorderOutcomes.commandPending =>
@@ -139,6 +166,21 @@ String valueLabel(AppLocalizations? l10n, String value) => switch (value) {
   'permission' => l10n?.taskRecorderValuePermission ?? 'a permission',
   'closed' => l10n?.taskRecorderValueClosed ?? 'closed',
   'offline' => l10n?.taskRecorderValueOffline ?? 'offline',
+  'agenda' => l10n?.taskRecorderValueAgenda ?? 'agenda',
+  'timeline' => l10n?.taskRecorderValueTimeline ?? 'timeline',
+  'range' => l10n?.taskRecorderValueRange ?? 'a date range',
+  'previous' => l10n?.taskRecorderValuePrevious ?? 'back',
+  'next' => l10n?.taskRecorderValueNext ?? 'forward',
+  'mine' => l10n?.taskRecorderValueMine ?? 'mine',
+  'someone_else' => l10n?.taskRecorderValueSomeoneElse ?? 'another member\'s',
+  'everyone' => l10n?.taskRecorderValueEveryone ?? 'everyone\'s',
+  'conversation' => l10n?.taskRecorderValueConversation ?? 'a conversation',
+  'alert' => l10n?.taskRecorderValueAlert ?? 'an alert',
+  'decision' => l10n?.taskRecorderValueDecision ?? 'a decision',
+  'payment' => l10n?.taskRecorderValuePayment ?? 'a payment',
+  'invoice' => l10n?.taskRecorderValueInvoice ?? 'an invoice',
+  'accept' => l10n?.taskRecorderValueAccept ?? 'accepted',
+  'decline' => l10n?.taskRecorderValueDecline ?? 'declined',
   'withheld' => l10n?.taskRecorderValueWithheld ?? 'not recorded',
   _ => l10n?.taskRecorderValueWithheld ?? 'not recorded',
 };
@@ -282,6 +324,11 @@ String recordingTranscript(AppLocalizations? l10n, TaskRecording recording) {
 String targetLabel(AppLocalizations? l10n, String target) {
   final feature = WorkspaceFeature.values.where((f) => f.name == target);
   if (feature.isNotEmpty) return featureName(l10n, feature.first);
+  if (target == calendarAllKinds) {
+    return l10n?.taskRecorderTargetAllKinds ?? 'every kind';
+  }
+  final kind = CalendarKind.values.where((k) => k.wire == target);
+  if (kind.isNotEmpty) return calendarKindLabel(l10n, kind.first);
   return fieldLabel(l10n, target);
 }
 

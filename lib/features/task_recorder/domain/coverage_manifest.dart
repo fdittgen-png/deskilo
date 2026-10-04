@@ -190,7 +190,7 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.messenger,
   ),
-  RouteCoverage('/calendar', CoverageStatus.planned, owner: '#1881 A'),
+  RouteCoverage('/calendar', CoverageStatus.recorded),
   RouteCoverage('/directory', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
     '/money',
@@ -205,7 +205,13 @@ const List<RouteCoverage> routeCoverage = [
     category: ProtectedSurface.secrets,
   ),
   RouteCoverage('/formats', CoverageStatus.planned, owner: '#1884'),
-  RouteCoverage('/events', CoverageStatus.planned, owner: '#1881 A'),
+  // Only a redirect to the inbox's alerts, whose feed mixes in private
+  // notes: classified as its destination is.
+  RouteCoverage(
+    '/events',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.messenger,
+  ),
   RouteCoverage('/plan', CoverageStatus.recorded),
   RouteCoverage(
     '/conversation/:conversationId',

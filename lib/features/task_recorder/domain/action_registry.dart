@@ -27,6 +27,7 @@ import 'workspace_feature_keys.dart';
 export 'ui_vocabulary.g.dart';
 export 'workspace_feature_keys.dart';
 
+part 'registry_calendar.dart';
 part 'registry_ui.dart';
 
 /// The version of the action/outcome contract below. Bumped when an
@@ -284,6 +285,11 @@ abstract final class RecorderSurfaces {
 
   /// #1884 A — the workspace's feature switches.
   static const workspaceFeatures = 'workspace.features';
+  /// #1881 B — the calendar (the hub, or the classic month calendar).
+  static const calendar = 'calendar.view';
+
+  /// #1881 B — the decisions a member is asked for, on the calendar.
+  static const eventDecisions = 'events.decisions';
   static const recorderControls = 'recorder.controls';
 
   /// #2142 — any screen, through the generic layer.
@@ -310,6 +316,16 @@ abstract final class RecorderActions {
   static const checkOut = 'reservations.check_out';
   static const cancelReservation = 'reservations.cancel_reservation';
   static const closeMyReservation = 'reservations.close_my_reservation';
+
+  // #1881 B — the calendar and the decisions on it.
+  static const calendarSwitchView = 'calendar.switch_view';
+  static const calendarMove = 'calendar.move';
+  static const calendarSelectDay = 'calendar.select_day';
+  static const calendarFilterKind = 'calendar.filter_kind';
+  static const calendarChooseWhose = 'calendar.choose_whose';
+  static const calendarOpenItem = 'calendar.open_item';
+  static const calendarCancelReservation = 'calendar.cancel_reservation';
+  static const decideEvent = 'events.decide';
 
   // #2142 — the generic layer, on any screen.
   static const uiOpenScreen = 'ui.open_screen';
@@ -338,6 +354,10 @@ abstract final class RecorderOutcomes {
   static const cancelled = 'reservation.cancelled';
   static const reservationRefused = 'reservation.refused';
   static const reservationUnknown = 'reservation.unknown';
+
+  // #1881 B — a decision asked of the member.
+  static const eventDecided = 'event.decided';
+  static const eventNotConfirmed = 'event.not_confirmed';
 
   // #2142 — a guarded command's real result.
   static const commandDone = 'command.done';
@@ -370,6 +390,8 @@ const ActionRegistry recorderRegistry = ActionRegistry(
     RecorderSurface(RecorderSurfaces.reservationDetail),
     RecorderSurface(RecorderSurfaces.myReservation),
     RecorderSurface(RecorderSurfaces.workspaceFeatures),
+    RecorderSurface(RecorderSurfaces.calendar),
+    RecorderSurface(RecorderSurfaces.eventDecisions),
     RecorderSurface(RecorderSurfaces.recorderControls, recorderControl: true),
     RecorderSurface(RecorderSurfaces.anyScreen),
     RecorderSurface('navigation.any'),
@@ -489,6 +511,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       surface: RecorderSurfaces.workspaceFeatures,
       kind: ActionKind.cancel,
     ),
+    ..._calendarActions,
     ..._uiActions,
     ActionSpec(
       RecorderActions.recorderControl,
@@ -545,6 +568,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       RecorderOutcomes.settingUnknown,
       state: ObservationState.outcomeUnknown,
     ),
+    ..._calendarOutcomes,
     ..._uiOutcomes,
   ],
   prerequisites: [
@@ -558,6 +582,7 @@ const ActionRegistry recorderRegistry = ActionRegistry(
         RecorderSurfaces.reservationDetail,
         RecorderSurfaces.myReservation,
         RecorderSurfaces.workspaceFeatures,
+        RecorderSurfaces.calendar,
       },
     ),
     PrerequisiteSpec('bookable_place'),

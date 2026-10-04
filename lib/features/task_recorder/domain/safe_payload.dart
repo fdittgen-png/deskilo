@@ -50,7 +50,16 @@ const Map<String, SafeField> safeFields = {
     'hours',
     'custom',
   }),
-  'view_mode': SafeField('view_mode', {'plan', 'list', 'day', 'week', 'month'}),
+  'view_mode': SafeField('view_mode', {
+    'plan',
+    'list',
+    'day',
+    'week',
+    'month',
+    'agenda',
+    'timeline',
+    'range',
+  }),
   'resource_kind': SafeField('resource_kind', {'desk', 'room', 'other'}),
   'for_whom': SafeField('for_whom', {'self', 'other_member'}),
   'repeat': SafeField('repeat', {'once', 'series'}),
@@ -63,6 +72,22 @@ const Map<String, SafeField> safeFields = {
   // #2142 — a control's or a screen's label: one of the app's own
   // messages (by key), never text somebody typed.
   'label': SafeField('label', uiLabelKeys, soft: true),
+  // #1881 B — the calendar: which way the dates moved, whose calendar,
+  // which kind of entry was opened; and a decision's answer.
+  'direction': SafeField('direction', {'previous', 'next', 'today'}),
+  'calendar_of': SafeField('calendar_of', {
+    'mine',
+    'someone_else',
+    'everyone',
+  }),
+  'item_kind': SafeField('item_kind', {
+    'conversation',
+    'alert',
+    'decision',
+    'payment',
+    'invoice',
+  }),
+  'decision': SafeField('decision', {'accept', 'decline'}),
   'refusal': SafeField('refusal', {
     'conflict',
     'policy',

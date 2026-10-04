@@ -26,7 +26,7 @@ class CalendarDecisions extends ConsumerWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        PendingDecisionsSection(pending: pending),
+        PendingDecisionsSection(pending: pending, recorded: true),
         const Divider(height: 1),
       ],
     );

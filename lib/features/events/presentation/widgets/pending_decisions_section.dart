@@ -16,6 +16,8 @@ import '../../domain/event_decision.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import '../../providers/event_providers.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../event_lines.dart';
 import 'validation_trail.dart';
 
@@ -27,15 +29,30 @@ import 'validation_trail.dart';
 /// decision signal must survive the bell, and one row layout means one
 /// wording and one decide path wherever the question is asked.
 class PendingDecisionsSection extends ConsumerWidget {
-  const PendingDecisionsSection({super.key, required this.pending});
+  const PendingDecisionsSection({
+    super.key,
+    required this.pending,
+    this.recorded = false,
+  });
 
   /// The events this member is asked to decide, in the caller's order.
   final List<WorkspaceEvent> pending;
 
+  /// #1881 B — whether a decision is a task-recorder step here: on the
+  /// calendar, yes; inside the inbox, whose feed is protected, never.
+  final bool recorded;
+
   Future<void> _decide(BuildContext context, WidgetRef ref,
       WorkspaceEvent event, bool accept) async {
     final l10n = AppLocalizations.of(context);
+    final attempt = recorded
+        ? recordTaskAttempt(ref, RecorderActions.decideEvent,
+            payload: {'decision': accept ? 'accept' : 'decline'})
+        : null;
     final reason = await decideEvent(ref, event.id, accept: accept);
+    attempt?.resolve(reason == null
+        ? RecorderOutcomes.eventDecided
+        : RecorderOutcomes.eventNotConfirmed);
     if (reason == null || !context.mounted) return;
     final base = l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.';
