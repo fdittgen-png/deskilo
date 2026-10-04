@@ -87,7 +87,9 @@ update public.mcp_connection_scopes set target_ceiling = 'workspace' where works
 select pg_temp.act_as('00000000-0000-4000-8000-0000000289a2', 'claude-test');
 select set_config('t.p6', pg_temp.call('get_place', jsonb_build_object('seat_id', current_setting('t.seat')))::text, true);
 select set_config('t.p7', pg_temp.call('get_place', jsonb_build_object('level_id',
-  (select level_id::text from public.reservations where id = current_setting('t.r')::uuid), 'include_image', true))::text, true);
+  (select o.level_id::text from public.seats se join public.desks d on d.id = se.desk_id
+     join public.offices o on o.id = d.office_id where se.id = current_setting('t.seat')::uuid),
+  'include_image', true))::text, true);
 reset role;
 
 select is(current_setting('t.p1')::jsonb->>'status', 'completed', 'get_place: one''s own reservation is described');

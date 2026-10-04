@@ -1386,7 +1386,7 @@ routine public.mcp_endpoint_configured() -> jsonb | function | definer | stable 
 routine public.mcp_endpoint_probe_settle() -> jsonb | function | definer | volatile | exec:service_role | body:7757ed779c6a
 routine public.mcp_endpoint_resolved() -> jsonb | function | definer | stable | exec:service_role | body:12aa66258d76
 routine public.mcp_envelope(p_request_id uuid, p_operation text, p_workspace_id uuid, p_status text, p_data jsonb, p_code text, p_fields jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:6ec6a7b31d23
-routine public.mcp_execute_v1(p_installation_id uuid, p_workspace_id uuid, p_operation text, p_arguments jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:77d44846994d
+routine public.mcp_execute_v1(p_installation_id uuid, p_workspace_id uuid, p_operation text, p_arguments jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:23d6392053ce
 routine public.mcp_facade_guard_status() -> jsonb | function | definer | stable | exec:service_role | body:748551105071
 routine public.mcp_finalize_connection(p_authorization_id text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1ca1288e8ec8
 routine public.mcp_get_action_confirmation(p_confirmation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:28d6a1c6fb1a
