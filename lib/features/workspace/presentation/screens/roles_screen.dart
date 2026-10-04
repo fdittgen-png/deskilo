@@ -17,6 +17,8 @@ import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
 import '../widgets/role_editor_sheet.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 
 /// #513 — the CENTRAL role management: one matrix, roles × permissions.
 ///
@@ -60,6 +62,11 @@ class RolesScreen extends ConsumerWidget {
     // permission somebody else granted or an owner removed while this
     // screen was open came back or vanished with the next tap here.
     final enabled = !current.contains(permission);
+    // #1884 B — the task recorder: which permission, for which built-in
+    // role, which way; the attempt first, the real result after.
+    final attempt = recordTaskAttempt(ref, RecorderActions.togglePermission,
+        target: permission.wireName,
+        payload: {'role_kind': role.wireName, 'switch_to': enabled ? 'on' : 'off'});
     await runGuarded(
       context,
       domain: 'workspace',
@@ -67,12 +74,14 @@ class RolesScreen extends ConsumerWidget {
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
-        await ref.read(workspaceRepositoryProvider).setRolePermission(
-              workspace.id,
-              role.wireName,
-              permission.wireName,
-              enabled: enabled,
-            );
+        await observeTaskSetting(
+            attempt,
+            () => ref.read(workspaceRepositoryProvider).setRolePermission(
+                  workspace.id,
+                  role.wireName,
+                  permission.wireName,
+                  enabled: enabled,
+                ));
         // The workspace CHAIN root — currentWorkspaceProvider derives
         // from it and would otherwise recompute from the stale list.
         ref.invalidate(myWorkspacesProvider);
@@ -102,15 +111,20 @@ class RolesScreen extends ConsumerWidget {
         onSave: (d) async => Navigator.of(sheetContext).pop(d),
       ),
     );
+    if (draft == null) recordTaskStep(ref, RecorderActions.cancelRoleEdit);
     if (draft == null || !context.mounted) return;
+    final attempt = recordTaskAttempt(ref, RecorderActions.saveRole,
+        payload: {'role_change': 'renamed'}); // #1884 B
     final ok = await runGuarded(
       context,
       domain: 'workspace',
       message: 'administrator rename failed',
       errorText: l10n?.roleEditorSaveFailed ?? 'The role was not saved.',
-      action: () => ref
-          .read(workspaceRolesRepositoryProvider)
-          .renameAdministrator(workspace.id, draft.names),
+      action: () => observeTaskSetting(
+          attempt,
+          () => ref
+              .read(workspaceRolesRepositoryProvider)
+              .renameAdministrator(workspace.id, draft.names)),
     );
     if (!ok) return;
     ref.invalidate(workspaceRolesProvider);

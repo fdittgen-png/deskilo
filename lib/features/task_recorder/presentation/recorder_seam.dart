@@ -22,8 +22,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/validation/pending_validation.dart';
+import '../application/booking_observation.dart' show errorObservation;
 import '../application/recorder_controller.dart';
 import '../guide/guide_session.dart';
+import '../domain/action_registry.dart';
 import '../providers/recorder_providers.dart';
 
 RecorderController? _live(WidgetRef ref) =>
@@ -124,3 +127,48 @@ TaskAttempt? recordTaskAttempt(
     return null;
   }
 }
+
+/// #1884 B — runs [command] for [attempt] and records its real result:
+/// [done] when it returns, [pending] when a policy holds it for a
+/// decision, [refused] or [unknown] as [errorObservation] reads the
+/// error. The value or the error goes back to the caller unchanged, so
+/// a guarded caller (runGuarded's snack, its bool) behaves as before;
+/// with no recording, [command] simply runs.
+Future<T> observeTaskCommand<T>(
+  TaskAttempt? attempt,
+  Future<T> Function() command, {
+  required String done,
+  required String pending,
+  required String refused,
+  required String unknown,
+}) async {
+  if (attempt == null) return command();
+  try {
+    final value = await command();
+    attempt.resolve(done);
+    return value;
+  } on PendingValidationException {
+    attempt.resolve(pending);
+    rethrow;
+    // ignore: catch_no_st — recorded, then rethrown for the caller.
+  } catch (e) {
+    attempt.resolveWith(
+      errorObservation(e, refused: refused, unknown: unknown),
+    );
+    // The caller traces it, exactly as before.
+    rethrow;
+  }
+}
+
+/// A management form's save, observed with the setting outcomes.
+Future<T> observeTaskSetting<T>(
+  TaskAttempt? attempt,
+  Future<T> Function() command,
+) => observeTaskCommand(
+  attempt,
+  command,
+  done: RecorderOutcomes.settingSaved,
+  pending: RecorderOutcomes.settingPending,
+  refused: RecorderOutcomes.settingNotSaved,
+  unknown: RecorderOutcomes.settingUnknown,
+);

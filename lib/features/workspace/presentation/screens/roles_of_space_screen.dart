@@ -25,6 +25,8 @@ import '../../domain/workspace_feature.dart';
 import '../widgets/role_editor_sheet.dart';
 import '../widgets/role_holders_section.dart';
 import 'roles_screen_labels.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 
 class RolesOfSpaceScreen extends ConsumerStatefulWidget {
   const RolesOfSpaceScreen({super.key});
@@ -45,6 +47,7 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
     if (workspace == null) return;
     final locale =
         workspace.defaultLocale.isEmpty ? 'en' : workspace.defaultLocale;
+    var saved = false; // #1884 B — a sheet closed unsaved is a step too
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -61,17 +64,23 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
             ? RoleHoldersSection(role: role, readOnly: role.builtin)
             : null,
         onSave: (draft) async {
+          saved = true;
           Navigator.of(sheetContext).pop();
-          await _save(workspace.id, draft);
+          await _save(workspace.id, draft, created: role == null);
         },
       ),
     );
+    if (!saved && mounted) recordTaskStep(ref, RecorderActions.cancelRoleEdit);
   }
 
-  Future<void> _save(String workspaceId, WorkspaceRole draft) async {
+  Future<void> _save(String workspaceId, WorkspaceRole draft,
+      {required bool created}) async {
     final l10n = AppLocalizations.of(context);
     setState(() => _saving = true);
     final repository = ref.read(workspaceRolesRepositoryProvider);
+    final attempt = recordTaskAttempt(ref, RecorderActions.saveRole, payload: {
+      'role_change': draft.builtin ? 'renamed' : (created ? 'created' : 'edited'),
+    }); // #1884 B
     final ok = await runGuarded(
       context,
       domain: 'workspace',
@@ -80,9 +89,11 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
       // unknown permission, and an owner needs to know THAT.
       errorText: l10n?.roleEditorSaveFailed ?? 'The role was not saved.',
       // #2085 — the Administrator is renamed, never redefined.
-      action: () => draft.builtin
-          ? repository.renameAdministrator(workspaceId, draft.names)
-          : repository.setRole(workspaceId, draft),
+      action: () => observeTaskSetting(
+          attempt,
+          () => draft.builtin
+              ? repository.renameAdministrator(workspaceId, draft.names)
+              : repository.setRole(workspaceId, draft)),
     );
     if (!mounted) return;
     setState(() => _saving = false);

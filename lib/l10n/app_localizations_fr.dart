@@ -16373,6 +16373,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'A fermé la réservation sans réserver';
 
   @override
+  String get taskRecorderActionCancelRoleEdit =>
+      'A fermé le rôle sans enregistrer';
+
+  @override
+  String get taskRecorderActionCancelValidationRule =>
+      'A fermé la règle sans enregistrer';
+
+  @override
   String get taskRecorderActionChangeField =>
       'A modifié un détail de la réservation';
 
@@ -16398,7 +16406,33 @@ class AppLocalizationsFr extends AppLocalizations {
       'N\'a pas activé une fonctionnalité en test';
 
   @override
+  String get taskRecorderActionGiveRole => 'A attribué ou retiré un rôle';
+
+  @override
   String get taskRecorderActionOpenReserve => 'A ouvert Réserver';
+
+  @override
+  String get taskRecorderActionOpenRoleMatrix =>
+      'A ouvert la matrice des rôles';
+
+  @override
+  String get taskRecorderActionOpenSpaceRoles =>
+      'A ouvert les rôles de cet espace';
+
+  @override
+  String get taskRecorderActionOpenValidationRules =>
+      'A ouvert les règles de validation';
+
+  @override
+  String get taskRecorderActionOpenWhatYouCanDo =>
+      'A ouvert ce que vous pouvez faire';
+
+  @override
+  String get taskRecorderActionSaveRole => 'A enregistré un rôle';
+
+  @override
+  String get taskRecorderActionSaveValidationRule =>
+      'A enregistré une règle de validation';
 
   @override
   String get taskRecorderActionSelectDate => 'A choisi le jour';
@@ -16417,6 +16451,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskRecorderActionSwitchView => 'A changé de vue';
+
+  @override
+  String get taskRecorderActionTogglePermission => 'A modifié une autorisation';
 
   @override
   String get taskRecorderActionUiCloseWindow => 'A fermé une fenêtre';
@@ -16584,6 +16621,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taskRecorderOutcomeSettingNotSaved => 'Non enregistré';
 
   @override
+  String get taskRecorderOutcomeSettingPending => 'Envoyé pour validation';
+
+  @override
   String get taskRecorderOutcomeSettingSaved => 'Enregistré';
 
   @override
@@ -16685,6 +16725,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taskRecorderTargetAllKinds => 'tous les types';
 
   @override
+  String get taskRecorderTargetDefaultRule => 'la règle par défaut';
+
+  @override
   String get taskRecorderTargetUnkeyed => 'une commande sans nom';
 
   @override
@@ -16729,6 +16772,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taskRecorderValueConversation => 'une conversation';
 
   @override
+  String get taskRecorderValueCreated => 'créé';
+
+  @override
   String get taskRecorderValueCustom => 'horaires choisis';
 
   @override
@@ -16742,6 +16788,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskRecorderValueDesk => 'un bureau';
+
+  @override
+  String get taskRecorderValueEdited => 'modifié';
 
   @override
   String get taskRecorderValueEveryone => 'celui de tous';
@@ -16823,6 +16872,21 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskRecorderValueRange => 'une période';
+
+  @override
+  String get taskRecorderValueRenamed => 'renommé';
+
+  @override
+  String get taskRecorderValueRoleAdmin => 'administrateurs';
+
+  @override
+  String get taskRecorderValueRoleCoOwner => 'un copropriétaire';
+
+  @override
+  String get taskRecorderValueRoleMember => 'chaque membre';
+
+  @override
+  String get taskRecorderValueRoleOwner => 'le propriétaire';
 
   @override
   String get taskRecorderValueRoom => 'une salle';

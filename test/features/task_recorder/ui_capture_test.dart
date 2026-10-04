@@ -259,8 +259,8 @@ void main() {
     c.dispose();
   });
 
-  testWidgets('across the app: a screen by its pattern and title, a '
-      'command on the role matrix with no seam of its own', (tester) async {
+  testWidgets('across the app: a screen by its pattern and title, and a '
+      'command on the role matrix through its own seam (#1884)', (tester) async {
     tester.view.physicalSize = const Size(800, 2800);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -311,11 +311,13 @@ void main() {
     expect(encodeRecordingText(r).contains('canary-77'), isFalse);
     expect(_generic(r), contains('ui.open_screen /roles "Roles"'));
     final attempt = r.steps.singleWhere((s) => s.isAttempt);
-    expect(attempt.action, RecorderActions.uiCommand);
-    expect(attempt.target, 'role permissions update failed');
+    // The matrix has a seam of its own since #1884: which permission, for
+    // which role, and the real result; the generic layer does not repeat it.
+    expect(attempt.action, RecorderActions.togglePermission);
+    expect(attempt.target, 'issueInvoices');
     expect(
       r.steps.singleWhere((s) => s.op == attempt.op && !s.isAttempt).outcome,
-      RecorderOutcomes.commandDone,
+      RecorderOutcomes.settingSaved,
     );
     expect(
       workspace.workspaces.single.rolePermissions['admin'] as List,

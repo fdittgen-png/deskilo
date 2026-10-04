@@ -88,6 +88,15 @@ const Map<String, SafeField> safeFields = {
     'invoice',
   }),
   'decision': SafeField('decision', {'accept', 'decline'}),
+  // #1884 B — the built-in role a permission was switched for, and what
+  // happened to a role the space defines.
+  'role_kind': SafeField('role_kind', {
+    'owner',
+    'co_owner',
+    'admin',
+    'member',
+  }),
+  'role_change': SafeField('role_change', {'created', 'edited', 'renamed'}),
   'refusal': SafeField('refusal', {
     'conflict',
     'policy',

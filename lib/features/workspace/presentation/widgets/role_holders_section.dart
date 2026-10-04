@@ -21,6 +21,8 @@ import '../../domain/role_assignment.dart';
 import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 
 class RoleHoldersSection extends ConsumerWidget {
   const RoleHoldersSection({
@@ -46,6 +48,8 @@ class RoleHoldersSection extends ConsumerWidget {
     required bool assign,
   }) async {
     final l10n = AppLocalizations.of(context);
+    final attempt = recordTaskAttempt(ref, RecorderActions.giveRole,
+        payload: {'switch_to': assign ? 'on' : 'off'}); // #1884 B
     final ok = await runGuarded(
       context,
       domain: 'workspace',
@@ -53,8 +57,10 @@ class RoleHoldersSection extends ConsumerWidget {
       errorText: assign
           ? (l10n?.roleGiveFailed ?? 'The role was not given.')
           : (l10n?.roleTakeBackFailed ?? 'The role was not taken back.'),
-      action: () =>
-          setMemberRole(ref, memberId: memberId, roleId: role.id, assign: assign),
+      action: () => observeTaskSetting(
+          attempt,
+          () => setMemberRole(ref,
+              memberId: memberId, roleId: role.id, assign: assign)),
     );
     if (!ok || !context.mounted) return;
     AppSnack.success(

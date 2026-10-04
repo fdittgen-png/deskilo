@@ -10,7 +10,12 @@ import '../../../core/calendar/calendar_item.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../calendar/presentation/widgets/calendar_item_row.dart'
     show calendarKindLabel;
+import '../../events/domain/workspace_event.dart';
+import '../../events/presentation/event_labels.dart' show eventTypeLabel;
 import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/domain/workspace_permission.dart';
+import '../../workspace/presentation/screens/roles_screen_labels.dart'
+    show permissionLabel;
 import '../../workspace/presentation/feature_names.dart';
 import '../domain/action_registry.dart';
 import '../domain/task_recording.dart';
@@ -82,6 +87,19 @@ String? actionLabel(AppLocalizations? l10n, String? action) => switch (action) {
     l10n?.taskRecorderActionUiOpenWindow ?? 'Opened a window',
   RecorderActions.uiCloseWindow =>
     l10n?.taskRecorderActionUiCloseWindow ?? 'Closed a window',
+  RecorderActions.togglePermission =>
+    l10n?.taskRecorderActionTogglePermission ?? 'Switched a permission',
+  RecorderActions.saveRole =>
+    l10n?.taskRecorderActionSaveRole ?? 'Saved a role',
+  RecorderActions.giveRole =>
+    l10n?.taskRecorderActionGiveRole ?? 'Gave or took back a role',
+  RecorderActions.cancelRoleEdit =>
+    l10n?.taskRecorderActionCancelRoleEdit ?? 'Closed the role without saving',
+  RecorderActions.saveValidationRule =>
+    l10n?.taskRecorderActionSaveValidationRule ?? 'Saved a validation rule',
+  RecorderActions.cancelValidationRule =>
+    l10n?.taskRecorderActionCancelValidationRule ??
+        'Closed the rule without saving',
   _ => null,
 };
 
@@ -114,6 +132,8 @@ String? outcomeLabel(AppLocalizations? l10n, String? outcome) =>
         l10n?.taskRecorderOutcomeRefused ?? 'Refused',
       RecorderOutcomes.reservationUnknown =>
         l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
+      RecorderOutcomes.settingPending =>
+        l10n?.taskRecorderOutcomeSettingPending ?? 'Sent for validation',
       RecorderOutcomes.eventDecided =>
         l10n?.taskRecorderOutcomeEventDecided ?? 'Answer recorded',
       RecorderOutcomes.eventNotConfirmed =>
@@ -181,6 +201,13 @@ String valueLabel(AppLocalizations? l10n, String value) => switch (value) {
   'invoice' => l10n?.taskRecorderValueInvoice ?? 'an invoice',
   'accept' => l10n?.taskRecorderValueAccept ?? 'accepted',
   'decline' => l10n?.taskRecorderValueDecline ?? 'declined',
+  'owner' => l10n?.taskRecorderValueRoleOwner ?? 'the owner',
+  'co_owner' => l10n?.taskRecorderValueRoleCoOwner ?? 'a co-owner',
+  'admin' => l10n?.taskRecorderValueRoleAdmin ?? 'administrators',
+  'member' => l10n?.taskRecorderValueRoleMember ?? 'every member',
+  'created' => l10n?.taskRecorderValueCreated ?? 'created',
+  'edited' => l10n?.taskRecorderValueEdited ?? 'edited',
+  'renamed' => l10n?.taskRecorderValueRenamed ?? 'renamed',
   'withheld' => l10n?.taskRecorderValueWithheld ?? 'not recorded',
   _ => l10n?.taskRecorderValueWithheld ?? 'not recorded',
 };
@@ -254,7 +281,7 @@ String endReasonLabel(AppLocalizations? l10n, RecordingEndReason? r) =>
       words
     else if (step.target != null)
       uiTargetText(l10n, step.action, step.target!) ??
-          targetLabel(l10n, step.target!),
+          targetLabel(l10n, step.target!, action: step.action),
     for (final e in step.payload.toJson().entries)
       if (e.key != 'label') valueLabel(l10n, e.value),
   ];
@@ -321,11 +348,37 @@ String recordingTranscript(AppLocalizations? l10n, TaskRecording recording) {
 
 /// The words for a step's target: a booking field, or a workspace
 /// feature by its own name (#1884).
-String targetLabel(AppLocalizations? l10n, String target) {
-  final feature = WorkspaceFeature.values.where((f) => f.name == target);
-  if (feature.isNotEmpty) return featureName(l10n, feature.first);
-  if (target == calendarAllKinds) {
-    return l10n?.taskRecorderTargetAllKinds ?? 'every kind';
+/// A step's target in words. The vocabulary depends on the action (a
+/// calendar kind and an event type can share a wire name), so the action
+/// picks it; a target outside it reads "not recorded".
+String targetLabel(AppLocalizations? l10n, String target, {String? action}) {
+  T? find<T>(List<T> values, bool Function(T) test) =>
+      values.where(test).firstOrNull;
+  switch (action) {
+    case RecorderActions.switchFeature:
+      final feature = find(WorkspaceFeature.values, (f) => f.name == target);
+      if (feature != null) return featureName(l10n, feature);
+    case RecorderActions.calendarFilterKind:
+      if (target == calendarAllKinds) {
+        return l10n?.taskRecorderTargetAllKinds ?? 'every kind';
+      }
+      final kind = find(CalendarKind.values, (k) => k.wire == target);
+      if (kind != null) return calendarKindLabel(l10n, kind);
+    case RecorderActions.togglePermission:
+      final permission = find(
+        WorkspacePermission.values,
+        (p) => p.wireName == target,
+      );
+      if (permission != null) return permissionLabel(l10n, permission);
+    case RecorderActions.saveValidationRule:
+      if (target == validationDefaultRule) {
+        return l10n?.taskRecorderTargetDefaultRule ?? 'the default rule';
+      }
+      final rule = find(
+        EventType.values,
+        (t) => t != EventType.unknown && t.dbName == target,
+      );
+      if (rule != null) return eventTypeLabel(l10n, rule);
   }
   final kind = CalendarKind.values.where((k) => k.wire == target);
   if (kind.isNotEmpty) return calendarKindLabel(l10n, kind.first);
