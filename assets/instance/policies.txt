@@ -189,6 +189,10 @@ public.reservation_requests.mcp_delegated_deny
 public.reservation_target_history.mcp_delegated_deny
 public.reservations.mcp_delegated_deny
 public.reservations.reservations_select
+public.resource_favorites.mcp_delegated_deny
+public.resource_favorites.resource_favorites_own
+public.resource_ratings.mcp_delegated_deny
+public.resource_ratings.resource_ratings_own
 public.retired_invite_codes.mcp_delegated_deny
 public.rights_requests.mcp_delegated_deny
 public.rights_requests.rights_requests_select

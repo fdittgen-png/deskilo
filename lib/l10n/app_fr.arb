@@ -3475,6 +3475,14 @@
   "@featurePersonalInfoDesc": {
     "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
   },
+  "featurePlaceFeedbackDesc": "Les membres marquent des places, bureaux, salles et étages en favoris et les notent de 0 à 5 étoiles. Un favori est personnel ; une note montre sa moyenne et le nombre de notes, jamais qui. Un assistant peut lister les favoris, en réserver un et enregistrer une note. Désactivé, les cœurs et les étoiles disparaissent et les écritures sont refusées ; rien d'autre n'en dépend.",
+  "@featurePlaceFeedbackDesc": {
+    "description": "#2185 place feedback"
+  },
+  "featurePlaceFeedbackTitle": "Favoris et notes",
+  "@featurePlaceFeedbackTitle": {
+    "description": "#2185 place feedback"
+  },
   "featurePlanMemberPhotosDesc": "Les places occupées de l'onglet Plan et du hub Réserver affichent la photo de profil de l'occupant au lieu de l'initiale.",
   "featurePlanMemberPhotosTitle": "Photos des membres sur le plan",
   "featurePlanObjectDeleteDesc": "Les propriétaires peuvent supprimer niveaux, bureaux, tables et places même si d'anciennes réservations y font référence — les réservations gardent un instantané texte pour les audits et rapports.",
@@ -6147,18 +6155,30 @@
   "mcpOpGetValidation": "Lire une demande de validation",
   "mcpOpInvoiceIssue": "Émettre une facture",
   "mcpOpInvoiceVoid": "Annuler une facture",
+  "mcpOpListMyFavorites": "Vos lieux favoris",
+  "@mcpOpListMyFavorites": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpListWorkspaces": "Voir les espaces qu'il peut utiliser",
   "mcpOpMemberStatus": "Modifier le statut d'un membre",
   "mcpOpMyInvoices": "Voir vos factures",
   "mcpOpMyReservations": "Voir vos réservations",
   "mcpOpMyStatement": "Voir votre relevé de compte",
   "mcpOpPendingValidations": "Voir les demandes de validation en attente",
+  "mcpOpRatePlace": "Noter des lieux",
+  "@mcpOpRatePlace": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpRefund": "Rembourser une facture",
   "mcpOpReservationDeletion": "Demander la suppression d'une réservation commencée",
   "@mcpOpReservationDeletion": {
     "description": "#1615 mcp_consent"
   },
   "mcpOpRespond": "Répondre à une demande de validation",
+  "mcpOpSetFavorite": "Marquer des lieux en favoris",
+  "@mcpOpSetFavorite": {
+    "description": "#2185 mcp_consent"
+  },
   "mcpOpSubscription": "Modifier la part d'abonnement d'un membre",
   "mcpOpUpdateReservation": "Modifier vos réservations",
   "mcpOverviewTitle": "Autres bases de données connectées",

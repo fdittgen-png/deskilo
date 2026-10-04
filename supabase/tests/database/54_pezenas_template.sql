@@ -195,6 +195,7 @@ begin
       "memberDataExport": true,
       "memberEnvironments": false,
       "memberGettingStarted": true,
+      "placeFeedback": true,
       "memberNotifications": true,
       "memberOrigin": false,
       "memberPage": false,

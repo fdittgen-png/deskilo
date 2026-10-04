@@ -20,6 +20,11 @@ String mcpOperationLabel(AppLocalizations? l10n, String op) => switch (op) {
   'check_out' => l10n?.mcpOpCheckOut ?? 'Check you out',
   'get_place' =>
     l10n?.mcpOpGetPlace ?? 'Describe a place, and show it when you ask',
+  'list_my_favorites' =>
+    l10n?.mcpOpListMyFavorites ?? 'Your favourite places',
+  'set_favorite' =>
+    l10n?.mcpOpSetFavorite ?? 'Mark places as favourites',
+  'rate_place' => l10n?.mcpOpRatePlace ?? 'Rate places',
   'cancel_reservation' =>
     l10n?.mcpOpCancelReservation ?? 'Cancel your bookings that have not started',
   'request_reservation_deletion' =>

@@ -9078,6 +9078,18 @@ abstract class AppLocalizations {
   /// **'Members enter their name, postal address, phone, e-mail and legal ids in Settings; invoices and letters print them in the standard postal block.'**
   String get featurePersonalInfoDesc;
 
+  /// #2185 place feedback
+  ///
+  /// In en, this message translates to:
+  /// **'Members mark seats, desks, offices and levels as favourites and rate them from 0 to 5 stars. A favourite is the member\'s own; a rating shows its average and how many gave one, never who. An assistant can list the favourites, book one, and record a rating. Off hides the hearts and stars and refuses the writes; nothing else follows it.'**
+  String get featurePlaceFeedbackDesc;
+
+  /// #2185 place feedback
+  ///
+  /// In en, this message translates to:
+  /// **'Favourites and ratings'**
+  String get featurePlaceFeedbackTitle;
+
   /// No description provided for @featurePlanMemberPhotosDesc.
   ///
   /// In en, this message translates to:
@@ -17046,6 +17058,12 @@ abstract class AppLocalizations {
   /// **'Void an invoice'**
   String get mcpOpInvoiceVoid;
 
+  /// #2185 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Your favourite places'**
+  String get mcpOpListMyFavorites;
+
   /// #1615 mcp_consent
   ///
   /// In en, this message translates to:
@@ -17082,6 +17100,12 @@ abstract class AppLocalizations {
   /// **'See pending validation requests'**
   String get mcpOpPendingValidations;
 
+  /// #2185 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Rate places'**
+  String get mcpOpRatePlace;
+
   /// #1619 mcp_confirmation
   ///
   /// In en, this message translates to:
@@ -17099,6 +17123,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Answer a validation request'**
   String get mcpOpRespond;
+
+  /// #2185 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'Mark places as favourites'**
+  String get mcpOpSetFavorite;
 
   /// #1619 mcp_confirmation
   ///
