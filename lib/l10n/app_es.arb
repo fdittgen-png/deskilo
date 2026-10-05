@@ -336,6 +336,31 @@
   "authHidePassword": "Ocultar contraseña",
   "authJoinByInvitation": "Unirse con invitación",
   "authJoinHint": "Crea tu cuenta o inicia sesión primero; pegarás tu invitación justo después.",
+  "authLinkAlreadyUsed": "Esta identidad de {provider} ya está vinculada a otra cuenta.",
+  "@authLinkAlreadyUsed": {
+    "description": "Linked accounts: authLinkAlreadyUsed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkFailed": "No se pudo vincular {provider} ({code}). Inténtelo de nuevo; si sigue fallando, comunique este código al administrador del servidor.",
+  "@authLinkFailed": {
+    "description": "Linked accounts: authLinkFailed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkManualDisabled": "La vinculación de cuentas está desactivada en este servidor. Su administrador debe activar «Permitir vinculación manual» en los ajustes de autenticación.",
+  "@authLinkManualDisabled": {
+    "description": "Linked accounts: authLinkManualDisabled"
+  },
   "authNetworkError": "No se pudo contactar con el servidor. Comprueba tu conexión e inténtalo de nuevo.",
   "authPasswordLabel": "Contraseña",
   "authPasswordTooShort": "Al menos 8 caracteres",
@@ -9033,6 +9058,7 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportImagesLoadFailed": "No se pudieron cargar las imágenes de los informes. Inténtelo de nuevo.",
   "reportImagesTitle": "Imágenes de informes",
   "@reportImagesTitle": {
     "description": "Report WYSIWYG editor + image library (#488)"

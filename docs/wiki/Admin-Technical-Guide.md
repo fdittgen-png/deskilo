@@ -62,6 +62,10 @@ its value exists, one row per invoice line, and the title that says
 invoice, credit note or proforma. Whatever you tap lands at the caret of
 the band you last edited.
 
+Headers and body flow from the top down. The footer keeps a fixed bottom position on every page; additional footer lines grow upward. Only page one prints the full letterhead and addresses. Later pages use the continuation band and page numbers. The VAT declaration preparation PDF also uses these editable templates, retaining the saved amounts and filing status.
+
+Use **Insert an image** to upload a logo, signature or other picture once to the workspace library, then select it in any report template. Images can be placed in any band with `![name]` or in a positioned layout with `<image name="name"/>`. Uploading the same file name replaces that library image for future renders of every template that references it; previously saved PDFs remain unchanged.
+
 <!-- anchor: admin.reports.layouts -->
 ### Positioned layouts
 

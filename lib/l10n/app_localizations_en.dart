@@ -553,6 +553,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Create your account or sign in first — you\'ll paste your invitation right after.';
 
   @override
+  String authLinkAlreadyUsed(String provider) {
+    return 'This $provider identity is already linked to another account.';
+  }
+
+  @override
+  String authLinkFailed(String provider, String code) {
+    return 'Linking $provider did not work ($code). Try again; if it keeps failing, tell the server\'s administrator this code.';
+  }
+
+  @override
+  String get authLinkManualDisabled =>
+      'Linking accounts is switched off on this server. Its administrator must turn on “Allow manual linking” in the authentication settings.';
+
+  @override
   String get authNetworkError =>
       'Could not reach the server. Check your connection and try again.';
 
@@ -14382,6 +14396,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get reportImagesEmpty =>
       'No image yet — upload your logo, a stamp or a signature and reference it with ![name].';
+
+  @override
+  String get reportImagesLoadFailed =>
+      'Could not load report images. Try again.';
 
   @override
   String get reportImagesTitle => 'Report images';

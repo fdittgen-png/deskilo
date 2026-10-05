@@ -166,7 +166,11 @@ jobs:
         if: env.WEB_REQUIRED == 'true'
         run: |
           flutter pub get
-          flutter build web --release --base-href "${{ steps.base.outputs.base_href }}"
+          # --pwa-strategy=none: the default offline-first service worker serves
+          # the PREVIOUS build on the first visit after a deploy, so a fix
+          # that is live is not what the person sees. The data layer keeps
+          # its own cache (CacheStore); only the app shell stops being held.
+          flutter build web --release --pwa-strategy=none --base-href "${{ steps.base.outputs.base_href }}"
 
       - name: SPA fallback for deep links
         # go_router uses real paths; a reload of /money must not 404 on a

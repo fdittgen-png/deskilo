@@ -2689,6 +2689,10 @@ druckt, wenn ihr Wert existiert, eine Zeile je Rechnungsposition, und der
 Titel, der Rechnung, Gutschrift oder Proforma sagt. Was Sie antippen,
 landet an der Einfügemarke des zuletzt bearbeiteten Bandes.
 
+Kopf und Inhalt werden von oben nach unten gesetzt. Die Fußzeile behält auf jeder Seite ihre feste untere Position; zusätzliche Zeilen wachsen nach oben. Nur die erste Seite druckt den vollständigen Briefkopf und die Anschriften. Folgeseiten verwenden das Fortsetzungsband und Seitenzahlen. Auch das Vorbereitungs-PDF zur Umsatzsteuervoranmeldung verwendet diese bearbeitbaren Vorlagen und behält gespeicherte Beträge und den Abgabestatus bei.
+
+Über **Bild einfügen** laden Sie ein Logo, eine Unterschrift oder ein anderes Bild einmal in die Bibliothek des Arbeitsbereichs und wählen es anschließend in jeder Berichtsvorlage aus. Bilder lassen sich mit `![name]` in jedem Band oder mit `<image name="name"/>` in einem positionierten Layout platzieren. Ein Upload mit demselben Dateinamen ersetzt das Bild für künftige Ausgaben aller darauf verweisenden Vorlagen; bereits gespeicherte PDFs bleiben unverändert.
+
 ### Positionierte Layouts
 
 Der exakte Weg. Ein XML-Layout setzt jedes Element auf den Millimeter,

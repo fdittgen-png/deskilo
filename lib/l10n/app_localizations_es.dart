@@ -558,6 +558,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'Crea tu cuenta o inicia sesión primero; pegarás tu invitación justo después.';
 
   @override
+  String authLinkAlreadyUsed(String provider) {
+    return 'Esta identidad de $provider ya está vinculada a otra cuenta.';
+  }
+
+  @override
+  String authLinkFailed(String provider, String code) {
+    return 'No se pudo vincular $provider ($code). Inténtelo de nuevo; si sigue fallando, comunique este código al administrador del servidor.';
+  }
+
+  @override
+  String get authLinkManualDisabled =>
+      'La vinculación de cuentas está desactivada en este servidor. Su administrador debe activar «Permitir vinculación manual» en los ajustes de autenticación.';
+
+  @override
   String get authNetworkError =>
       'No se pudo contactar con el servidor. Comprueba tu conexión e inténtalo de nuevo.';
 
@@ -14492,6 +14506,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get reportImagesEmpty =>
       'Aún no hay imágenes — sube tu logotipo, un sello o una firma y refénciala con ![nombre].';
+
+  @override
+  String get reportImagesLoadFailed =>
+      'No se pudieron cargar las imágenes de los informes. Inténtelo de nuevo.';
 
   @override
   String get reportImagesTitle => 'Imágenes de informes';

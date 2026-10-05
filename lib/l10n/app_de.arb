@@ -336,6 +336,31 @@
   "authHidePassword": "Passwort verbergen",
   "authJoinByInvitation": "Mit Einladung beitreten",
   "authJoinHint": "Erstellen Sie zuerst Ihr Konto oder melden Sie sich an — die Einladung fügen Sie gleich danach ein.",
+  "authLinkAlreadyUsed": "Diese {provider}-Identität ist bereits mit einem anderen Konto verknüpft.",
+  "@authLinkAlreadyUsed": {
+    "description": "Linked accounts: authLinkAlreadyUsed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkFailed": "Das Verknüpfen von {provider} hat nicht funktioniert ({code}). Versuchen Sie es erneut; falls es weiter scheitert, nennen Sie dem Server-Administrator diesen Code.",
+  "@authLinkFailed": {
+    "description": "Linked accounts: authLinkFailed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkManualDisabled": "Das Verknüpfen von Konten ist auf diesem Server ausgeschaltet. Der Administrator muss „Manuelles Verknüpfen zulassen“ in den Authentifizierungs-Einstellungen aktivieren.",
+  "@authLinkManualDisabled": {
+    "description": "Linked accounts: authLinkManualDisabled"
+  },
   "authNetworkError": "Server nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
   "authPasswordLabel": "Passwort",
   "authPasswordTooShort": "Mindestens 8 Zeichen",
@@ -9033,6 +9058,7 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportImagesLoadFailed": "Berichtsbilder konnten nicht geladen werden. Erneut versuchen.",
   "reportImagesTitle": "Berichtsbilder",
   "@reportImagesTitle": {
     "description": "Report WYSIWYG editor + image library (#488)"

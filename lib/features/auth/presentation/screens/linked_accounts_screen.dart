@@ -82,12 +82,31 @@ class _LinkedAccountsScreenState
       TraceLogger.instance
           .error('auth', 'link failed', error: e, stackTrace: st);
       if (!mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.authSocialUnavailable(provider.label) ??
-            '${provider.label} sign-in is not available yet — the server '
-                'has not enabled it.',
-      );
+      // The server's own error CODE decides what to say: a provider that
+      // is off, linking that is off, an identity that belongs elsewhere —
+      // or, for anything else, the code itself, so it can be reported.
+      final code = e.code;
+      final text = switch (code) {
+        'provider_disabled' || 'oauth_provider_not_supported' =>
+          l10n?.authSocialUnavailable(provider.label) ??
+              '${provider.label} sign-in is not available yet — the server '
+                  'has not enabled it.',
+        'manual_linking_disabled' =>
+          l10n?.authLinkManualDisabled ??
+              'Linking accounts is switched off on this server. Its '
+                  'administrator must turn on “Allow manual linking” in the '
+                  'authentication settings.',
+        'identity_already_exists' =>
+          l10n?.authLinkAlreadyUsed(provider.label) ??
+              'This ${provider.label} identity is already linked to another '
+                  'account.',
+        _ =>
+          l10n?.authLinkFailed(provider.label, code ?? e.statusCode ?? 'unknown') ??
+              'Linking ${provider.label} did not work '
+                  '(${code ?? e.statusCode ?? 'unknown'}). Try again; if it '
+                  "keeps failing, tell the server's administrator this code.",
+      };
+      AppSnack.error(context, text);
     }
   }
 

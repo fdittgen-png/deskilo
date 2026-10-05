@@ -9,6 +9,7 @@ import 'invoice.dart';
 import 'address_window.dart';
 import 'invoice_report.dart';
 import 'report_block_widgets.dart';
+import 'report_page_footer.dart';
 
 /// Localized strings the invoice PDF prints.
 class InvoicePdfStrings {
@@ -498,24 +499,8 @@ Future<Uint8List> buildInvoicePdf({
         // #872 — and the footer is pinned to EVERY page, so the terms,
         // the account to pay into and the page number are on whichever
         // sheet the reader is holding.
-        footer: (context) => pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-          mainAxisSize: pw.MainAxisSize.min,
-          children: [
-            ...footerWidgets,
-            // #902/#910 — "1/1" on a one-page letter is noise; the page
-            // number earns its place only once there is a second page.
-            if (context.pageNumber > 1)
-              pw.Container(
-                alignment: pw.Alignment.centerRight,
-                padding: const pw.EdgeInsets.only(top: 8),
-                child: pw.Text(
-                  '${strings.page} ${context.pageNumber}/${context.pagesCount}',
-                  style: const pw.TextStyle(fontSize: 8, color: _muted),
-                ),
-              ),
-          ],
-        ),
+        footer: (context) => reportPageFooter(context,
+            content: footerWidgets, pageLabel: strings.page),
         build: (context) => [
           // #873 — "Facture", its number and the dates, at 90 mm: the
           // first thing under the address field, as the spec requires.
@@ -974,24 +959,20 @@ Future<Uint8List> buildBandedLetterPdf({
         margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
         buildForeground: watermarkForeground(watermark),
       ),
-      footer: (context) => context.pageNumber > 1
-          ? pw.Container(
-              alignment: pw.Alignment.centerRight,
-              padding: const pw.EdgeInsets.only(top: 8),
-              child: pw.Text(
-                '$pageLabel ${context.pageNumber}/${context.pagesCount}',
-                style: const pw.TextStyle(fontSize: 8, color: _muted),
-              ),
-            )
-          : pw.SizedBox(),
-      build: (context) => [
-        ...reportBlockWidgets(report.header, images: reportImages),
-        ...reportBlockWidgets(report.body, images: reportImages),
-        if (report.footer.isNotEmpty) ...[
-          pw.SizedBox(height: 16),
-          ...reportBlockWidgets(report.footer, images: reportImages),
-        ],
-      ],
+      header: (context) => pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+        mainAxisSize: pw.MainAxisSize.min,
+        children: context.pageNumber == 1
+            ? reportBlockWidgets(report.header, images: reportImages)
+            : report.continuation.isNotEmpty
+                ? reportBlockWidgets(report.continuation, images: reportImages)
+                : [pw.Text(documentTitle, style: const pw.TextStyle(fontSize: 9)),
+                   pw.Divider()],
+      ),
+      footer: (context) => reportPageFooter(context,
+          content: reportBlockWidgets(report.footer, images: reportImages),
+          pageLabel: pageLabel),
+      build: (context) => reportBlockWidgets(report.body, images: reportImages),
     ),
   );
   return doc.save();
