@@ -15,7 +15,7 @@
 // (its recorded target — a string key, its pattern, a route pattern or a
 // command's message) and the app message it showed travel with the step,
 // so a reader is shown WHERE to act. An unnamed control ("unkeyed") is
-// not a target: that step matches its action anywhere and says so. A
+// not a target: that step requires manual acknowledgement. A
 // screen seam's own steps keep matching their action as before.
 
 import '../domain/action_registry.dart';
@@ -45,7 +45,9 @@ TaskGuide compileGuide(
     switch (step.kind) {
       case StepKind.action:
         final spec = registry.action(step.action);
-        if (spec == null) {
+        if (spec == null || (spec.softTargets &&
+            (step.target == null || step.target == uiUnkeyed ||
+             step.target!.contains('{}')))) {
           steps.add(GuideStep(id: nextId(), kind: GuideStepKind.manual));
           continue;
         }

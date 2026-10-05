@@ -66,7 +66,7 @@ void main() {
       expect(back.guide!.steps.single.target, isNull);
     });
 
-    test('an unknown soft target is dropped, the step matches anywhere', () {
+    test('an unknown soft target becomes a manual step', () {
       final back = decodeGuideText(
         _text({
           'id': 'g1',
@@ -76,7 +76,7 @@ void main() {
         }),
       );
       expect(back.accepted, isTrue);
-      expect(back.guide!.steps.single.target, isNull);
+      expect(back.guide!.steps.single.kind, GuideStepKind.manual);
     });
 
     test('a strict action refuses a target it does not list', () {
@@ -137,7 +137,7 @@ void main() {
       );
       final g = compileGuide(r);
       expect(g.steps[0].target, _key);
-      expect(g.steps[1].target, isNull);
+      expect(g.steps[1].kind, GuideStepKind.manual);
     });
   });
 
@@ -171,14 +171,14 @@ void main() {
           ),
         ]),
       );
-      run.onAction(RecorderActions.uiCommand);
+      var token = run.onAction(RecorderActions.uiCommand);
       expect(run.statusOf('g1'), GuideStepStatus.waiting);
       expect(run.state, GuideRunState.running);
-      run.onOutcome(RecorderOutcomes.commandUnknown);
+      run.onOutcome(RecorderOutcomes.commandUnknown, token: token);
       expect(run.uncertain, isTrue);
       expect(run.statusOf('g1'), GuideStepStatus.pending);
-      run.onAction(RecorderActions.uiCommand);
-      run.onOutcome(RecorderOutcomes.commandDone);
+      token = run.onAction(RecorderActions.uiCommand);
+      run.onOutcome(RecorderOutcomes.commandDone, token: token);
       expect(run.statusOf('g1'), GuideStepStatus.done);
     });
   });

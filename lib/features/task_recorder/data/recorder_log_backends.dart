@@ -43,6 +43,20 @@ class FileRecorderLogBackend implements RecorderLogBackend {
   }
 
   @override
+  Future<void> replace(String key, String text) async {
+    final file = await _file(key);
+    final staging = await file.parent.createTemp('.guide-');
+    try {
+      final staged = File('${staging.path}/value');
+      await staged.writeAsString(text, flush: true);
+      // Same-filesystem rename: readers see the old or new complete value.
+      await staged.rename(file.path);
+    } finally {
+      await staging.delete(recursive: true);
+    }
+  }
+
+  @override
   Future<String?> read(String key) async {
     final file = await _file(key);
     if (!file.existsSync()) return null;
@@ -87,6 +101,20 @@ class PrefsRecorderLogBackend implements RecorderLogBackend {
       '${prefs.getString('$_prefix$key') ?? ''}$text',
     );
     if (!ok) throw const FileSystemException('local storage refused a write');
+  }
+
+  @override
+  Future<void> replace(String key, String text) async {
+    final prefs = await _prefs;
+    try {
+      if (!await prefs.setString('$_prefix$key', text)) {
+        throw const FileSystemException('local storage refused a write');
+      }
+    } on Object {
+      // setString changes its memory cache before persistence completes.
+      await prefs.reload();
+      rethrow;
+    }
   }
 
   @override

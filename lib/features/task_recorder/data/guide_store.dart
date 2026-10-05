@@ -78,8 +78,7 @@ class GuideStore {
     }
     final key = _key(id);
     final existing = await _read(key);
-    await _backend.delete(key);
-    await _backend.append(
+    await _backend.replace(
       key,
       '${jsonEncode({'created': (existing?.createdAt ?? _now()).millisecondsSinceEpoch, 'guide': encodeGuide(guide)})}\n',
     );

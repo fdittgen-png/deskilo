@@ -138,6 +138,7 @@ class UiCapture implements GuardedCommandWatcher {
   /// screen. The live guide points at it; it never guesses another one.
   static Element? findControl(String target) {
     Element? found;
+    var matches = 0;
     var seen = 0;
     _walk(
       (e) {
@@ -147,14 +148,14 @@ class UiCapture implements GuardedCommandWatcher {
           final route = ModalRoute.of(e);
           if (route == null || route.isCurrent) {
             found = e;
-            return false;
+            matches++;
           }
         }
         return ++seen < 40000;
       },
       skip: (w) => w is TickerMode && !w.enabled,
     );
-    return found;
+    return matches == 1 ? found : null;
   }
 
   static bool _isRecorderControl(String? key) =>
@@ -448,7 +449,7 @@ class UiCapture implements GuardedCommandWatcher {
       final target = uiCommandMessages.contains(message) ? message : null;
       // #1867 — a guide hears the attempt and, later, its real result.
       final guide = protectedNow() ? null : _guide;
-      guide?.action(RecorderActions.uiCommand, target: target);
+      final guideToken = guide?.action(RecorderActions.uiCommand, target: target);
       final c = controller();
       final OperationToken? token =
           c.state != RecorderState.recording ||
@@ -457,7 +458,7 @@ class UiCapture implements GuardedCommandWatcher {
           ? null
           : c.attempt(RecorderActions.uiCommand, target: target);
       if (guide == null) return token;
-      return _GuidedCommand(guide, token);
+      return _GuidedCommand(guide, token, guideToken);
     } catch (err, st) {
       TraceLogger.instance.warn(
         'recorder',
@@ -473,8 +474,10 @@ class UiCapture implements GuardedCommandWatcher {
     try {
       final OperationToken? recorded;
       GuideEventSink? guide;
+      Object? guideToken;
       switch (token) {
-        case _GuidedCommand(guide: final g, token: final t):
+        case _GuidedCommand(guide: final g, token: final t, guideToken: final gt):
+          guideToken = gt;
           guide = g;
           recorded = t;
         case OperationToken():
@@ -496,7 +499,7 @@ class UiCapture implements GuardedCommandWatcher {
       }
       // Only the guide that saw the attempt, if it still runs.
       if (guide != null && identical(GuideEvents.sink, guide)) {
-        guide.outcome(o.outcome);
+        guide.outcome(o.outcome, token: guideToken);
       }
       if (recorded != null) {
         controller().outcome(recorded, o.outcome, payload: o.payload);
@@ -510,9 +513,10 @@ class UiCapture implements GuardedCommandWatcher {
 /// A guarded command a guide saw: the guide to tell its result, and the
 /// recording's own token when one was live.
 class _GuidedCommand {
-  const _GuidedCommand(this.guide, this.token);
+  const _GuidedCommand(this.guide, this.token, this.guideToken);
   final GuideEventSink guide;
   final OperationToken? token;
+  final Object? guideToken;
 }
 
 /// #2142 — reports windows pushed and popped on the navigator it watches

@@ -152,6 +152,7 @@ void main() {
 
   group('runner', () {
     late GuideRun run;
+    Object? token;
     setUp(() => run = GuideRun(planGuide));
 
     void doPlainSteps() {
@@ -170,10 +171,10 @@ void main() {
       doPlainSteps();
       final confirm = run.current!;
       expect(confirm.action, RecorderActions.confirmBooking);
-      run.onAction(RecorderActions.confirmBooking);
+      token = run.onAction(RecorderActions.confirmBooking);
       expect(run.statusOf(confirm.id), GuideStepStatus.waiting);
       expect(run.current, same(confirm));
-      run.onOutcome(RecorderOutcomes.bookingConfirmed);
+      run.onOutcome(RecorderOutcomes.bookingConfirmed, token: token);
       expect(run.statusOf(confirm.id), GuideStepStatus.done);
       run
         ..onAction(RecorderActions.viewDetails)
@@ -184,42 +185,39 @@ void main() {
     test('a refusal goes through recovery and back to the same step', () {
       doPlainSteps();
       final confirm = run.current!;
-      run
-        ..onAction(RecorderActions.confirmBooking)
-        ..onOutcome(RecorderOutcomes.bookingRefused);
+      token = run.onAction(RecorderActions.confirmBooking);
+      run.onOutcome(RecorderOutcomes.bookingRefused, token: token);
       expect(run.current!.id, '${confirm.id}r1');
       expect(run.statusOf(confirm.id), GuideStepStatus.pending);
       run.acknowledge();
       expect(run.current, same(confirm));
-      run
-        ..onAction(RecorderActions.confirmBooking)
-        ..onOutcome(RecorderOutcomes.bookingConfirmed);
+      token = run.onAction(RecorderActions.confirmBooking);
+      run.onOutcome(RecorderOutcomes.bookingConfirmed, token: token);
       expect(run.statusOf(confirm.id), GuideStepStatus.done);
     });
 
     test('a lost answer is uncertain; a pause does not assume success', () {
       doPlainSteps();
       final confirm = run.current!;
-      run
-        ..onAction(RecorderActions.confirmBooking)
-        ..onOutcome(RecorderOutcomes.bookingUnknown);
+      token = run.onAction(RecorderActions.confirmBooking);
+      run.onOutcome(RecorderOutcomes.bookingUnknown, token: token);
       expect(run.uncertain, isTrue);
       expect(run.statusOf(confirm.id), GuideStepStatus.pending);
+      token = run.onAction(RecorderActions.confirmBooking);
       run
-        ..onAction(RecorderActions.confirmBooking)
         ..pause()
-        ..onOutcome(RecorderOutcomes.bookingConfirmed) // arrives while paused
+        ..onOutcome(RecorderOutcomes.bookingConfirmed, token: token) // arrives while paused
         ..resume();
       expect(run.statusOf(confirm.id), GuideStepStatus.pending);
       expect(run.uncertain, isTrue);
     });
 
     test('skipped is never done; foreign and late events change nothing', () {
-      run.onAction(RecorderActions.confirmBooking); // not the current step
+      token = run.onAction(RecorderActions.confirmBooking); // not the current step
       expect(run.current!.action, RecorderActions.openReserve);
       run.skip();
       expect(run.statusOf('g1'), GuideStepStatus.skipped);
-      run.onOutcome(RecorderOutcomes.bookingConfirmed); // nothing waits
+      run.onOutcome(RecorderOutcomes.bookingConfirmed, token: token); // nothing waits
       expect(run.statusOf('g6'), GuideStepStatus.pending);
       run.stop();
       run.onAction(RecorderActions.selectDate);

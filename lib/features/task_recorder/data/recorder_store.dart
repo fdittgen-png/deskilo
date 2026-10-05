@@ -59,6 +59,9 @@ abstract interface class RecorderLogBackend {
   /// Appends [text] to [key], creating it. Throws on failure.
   Future<void> append(String key, String text);
 
+  /// Replaces a complete value atomically, preserving the old value on failure.
+  Future<void> replace(String key, String text);
+
   /// The whole log, or null when there is none.
   Future<String?> read(String key);
 
@@ -74,6 +77,10 @@ class MemoryRecorderLogBackend implements RecorderLogBackend {
   @override
   Future<void> append(String key, String text) async =>
       (logs[key] ??= StringBuffer()).write(text);
+
+  @override
+  Future<void> replace(String key, String text) async =>
+      logs[key] = StringBuffer(text);
 
   @override
   Future<String?> read(String key) async => logs[key]?.toString();
