@@ -136,6 +136,7 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'declaration_invoice_count': '2',
       'declaration_status': 'draft',
       'declaration_note': l10n?.vatDeclDisclaimer ?? 'Verify against your accounting before filing.',
+      'configuration_rows': [{'heading': true, 'label': 'Configuration'}, {'label': 'Country', 'value': 'FR', 'detail': ''}],
       'vat_form_boxes': <Map<String, Object?>>[],
       'vat_positions': [
         {'number': 'INV-2026-0007', 'date': '2026-09-03', 'customer': 'Anne DUPONT', 'rate': '20 %', 'category': 'S', 'net': '500,00 €', 'vat': '100,00 €', 'gross': '600,00 €', 'reverses': ''},

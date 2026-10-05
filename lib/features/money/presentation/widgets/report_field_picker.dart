@@ -116,6 +116,7 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'lines' ||
       'vat' ||
       'usage_records' ||
+      'configuration_rows' ||
       'vat_form_boxes' ||
       'vat_positions' ||
       'vat_rate_totals' ||
@@ -209,6 +210,7 @@ String reportFieldMeaning(String field, AppLocalizations? l10n) =>
       'declaration_status' => l10n?.vatDeclStatus ?? 'Status',
       'declaration_note' => l10n?.vatDeclDisclaimer ?? 'Verify against your accounting before filing.',
       'declaration_invoice_count' => l10n?.vatDeclInvoices ?? 'Invoices',
+      'configuration_rows' => l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration',
       'vat_form_boxes' => l10n?.vatDeclBoxes ?? 'Official form lines',
       'vat_positions' => l10n?.reportFieldMeaningVatPositions ?? 'Every invoice of the VAT period — a loop',
       'vat_rate_totals' => l10n?.reportFieldMeaningVatRateTotals ?? 'The VAT period totals by rate — a loop',
@@ -254,6 +256,8 @@ String reportFieldMarkup(String field) => switch (field) {
         '{% for v in vat %}{{ v.rate }} | {{ v.net }} | {{ v.amount }}{% endfor %}',
       'usage_records' =>
         '{% for r in usage_records %}{{ r.date }} | {{ r.space }} | {{ r.counted }}{% endfor %}',
+      'configuration_rows' =>
+        '{% for row in configuration_rows %}{{ row.label }} | {{ row.value }} | {{ row.detail }}{% endfor %}',
       'vat_form_boxes' =>
         '{% for box in vat_form_boxes %}{{ box.code }} | {{ box.label }} | {{ box.net }} | {{ box.vat }}{% endfor %}',
       'vat_positions' =>

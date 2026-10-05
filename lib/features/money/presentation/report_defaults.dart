@@ -10,6 +10,7 @@ import '../domain/invoice_pdf_template.dart';
 import 'report_defaults_batch.dart';
 import 'professional_report_bands.dart';
 import 'vat_declaration_report_defaults.dart';
+import '../domain/configuration_report_bands.dart';
 import '../domain/report_kind.dart';
 export 'report_defaults_batch.dart';
 // The preview fixture is a different concern from the shipped templates
@@ -611,6 +612,7 @@ ReportBands _completeBandsForDoc(String docId, AppLocalizations? l10n) =>
       ReportDocSlot(key: 'usage') => defaultUsageBands(l10n),
       ReportDocSlot(key: 'workspace') => defaultWorkspaceBands(l10n),
       ReportDocSlot(key: 'status') => defaultStatusBands(l10n),
+      ReportDocSlot(key: 'workspace_configuration') => configurationReportBands(l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration'),
       ReportDocSlot(key: 'vat_declaration') => vatDeclarationBandsOf(l10n),
       ReportDocSlot(key: 'vat') => defaultVatBands(l10n),
       ReportDocSlot(key: 'coa') => defaultCoaBands(l10n),
