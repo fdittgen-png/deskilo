@@ -37,6 +37,11 @@ class MeSpaceCard extends ConsumerWidget {
 
   bool get _pending => member?.status == MemberStatus.pending;
 
+  /// Active, or waiting for approval (the entry then shows the approval
+  /// page). Paused, exited or no row: no access to this side.
+  bool get _hasAccess =>
+      member?.status == MemberStatus.active || _pending;
+
   Future<void> _leave(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context);
     final confirmed = await showDialog<bool>(
@@ -132,7 +137,10 @@ class MeSpaceCard extends ConsumerWidget {
                         ? BorderSide.none
                         : BorderSide(color: fill.withValues(alpha: .4)),
                   ),
-                  onPressed: () {
+                  // 0379 — both sides hold the same people; a side whose
+                  // membership is not active for this person is shown
+                  // disabled and does nothing.
+                  onPressed: !_hasAccess ? null : () {
                     final box = buttonContext.findRenderObject() as RenderBox?;
                     final from = box == null
                         ? null
