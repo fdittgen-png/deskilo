@@ -2733,6 +2733,10 @@ sa valeur existe, une ligne par ligne de facture, et le titre qui dit
 facture, avoir ou proforma. Ce que vous touchez atterrit au curseur de la
 bande que vous avez modifiée en dernier.
 
+L’en-tête et le corps se composent de haut en bas. Le pied de page conserve une position fixe en bas de chaque page ; ses lignes supplémentaires se développent vers le haut. Seule la première page imprime l’en-tête complet et les adresses. Les pages suivantes utilisent la bande de continuation et la pagination. Le PDF de préparation de la déclaration de TVA utilise aussi ces modèles modifiables, en conservant les montants enregistrés et le statut de dépôt.
+
+Utilisez **Insérer une image** pour importer une fois un logo, une signature ou une autre image dans la bibliothèque de l’espace, puis la sélectionner dans tout modèle de rapport. Placez-la dans une bande avec `![name]` ou dans une mise en page positionnée avec `<image name="name"/>`. Un import sous le même nom remplace cette image pour les futurs rendus de tous les modèles qui la référencent ; les PDF déjà enregistrés restent inchangés.
+
 ### Les mises en page positionnées
 
 La façon exacte. Une mise en page XML place chaque élément au

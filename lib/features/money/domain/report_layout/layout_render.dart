@@ -21,6 +21,7 @@ import '../invoice_pdf_template.dart';
 import '../invoice_report.dart';
 import '../report_block_widgets.dart';
 import '../report_style.dart';
+import '../report_page_footer.dart';
 import 'layout_model.dart';
 import 'layout_units.dart';
 import 'layout_xml.dart';
@@ -185,25 +186,10 @@ Future<Uint8List> buildLayoutPdf({
             )
           : ctx.zone(document.continuation,
               height: document.continuation.height?.resolve(contentH)),
-      footer: (context) => pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-        mainAxisSize: pw.MainAxisSize.min,
-        children: [
-          ctx.zone(document.footer,
-              height: document.footer.height?.resolve(contentH)),
-          // #902 — a letter that fits one page says nothing about
-          // pages; the count appears from page 2, where it helps.
-          if (context.pageNumber > 1)
-            pw.Container(
-              alignment: pw.Alignment.centerRight,
-              padding: const pw.EdgeInsets.only(top: 8),
-              child: pw.Text(
-                '$pageLabel ${context.pageNumber}/${context.pagesCount}',
-                style: const pw.TextStyle(
-                    fontSize: reportSmallSize, color: reportMuted),
-              ),
-            ),
-        ],
+      footer: (context) => reportPageFooter(context,
+        pageLabel: pageLabel,
+        content: [ctx.zone(document.footer,
+            height: document.footer.height?.resolve(contentH), bottomAligned: true)],
       ),
       build: (context) => [
         ...ctx.children(document.body.children, height: contentH),
@@ -259,6 +245,7 @@ class _Box {
     LayoutZone zone, {
     double? height,
     bool clip = false,
+    bool bottomAligned = false,
     pw.Context? context,
   }) {
     if (zone.isEmpty) return pw.SizedBox(height: height ?? 0);
@@ -272,6 +259,7 @@ class _Box {
       widgets = _fitting(widgets, context, height);
     }
     final column = pw.Column(
+      mainAxisAlignment: bottomAligned ? pw.MainAxisAlignment.end : pw.MainAxisAlignment.start,
       crossAxisAlignment: pw.CrossAxisAlignment.stretch,
       mainAxisSize: pw.MainAxisSize.min,
       children: widgets,

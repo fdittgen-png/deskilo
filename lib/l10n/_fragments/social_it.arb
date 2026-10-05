@@ -6,5 +6,30 @@
   "linkedAccountsLink": "Collega",
   "linkedAccountsUnlink": "Scollega",
   "linkedAccountsLinked": "Collegato",
-  "linkedAccountsLinkStarted": "Continua nel browser per completare il collegamento."
+  "linkedAccountsLinkStarted": "Continua nel browser per completare il collegamento.",
+  "authLinkManualDisabled": "Il collegamento degli account è disattivato su questo server. Il suo amministratore deve attivare «Consenti collegamento manuale» nelle impostazioni di autenticazione.",
+  "@authLinkManualDisabled": {
+    "description": "Linked accounts: authLinkManualDisabled"
+  },
+  "authLinkAlreadyUsed": "Questa identità {provider} è già collegata a un altro account.",
+  "@authLinkAlreadyUsed": {
+    "description": "Linked accounts: authLinkAlreadyUsed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkFailed": "Il collegamento di {provider} non è riuscito ({code}). Riprova; se continua a fallire, comunica questo codice all'amministratore del server.",
+  "@authLinkFailed": {
+    "description": "Linked accounts: authLinkFailed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -147,6 +147,7 @@ void main() {
         'status_from', 'status_to', 'status_invoiced', 'status_credit_notes',
         'status_payments', 'status_reimbursed', 'status_repartitioned',
         'status_credits', 'status_net', 'status_members',
+        'declaration_status', 'declaration_note', 'declaration_invoice_count', 'vat_form_boxes',
         'vat_positions', 'vat_rate_totals',
         'payment_terms', 'payment_terms_source',
         'late_penalty', 'recovery_indemnity', 'escompte', 'insurance',

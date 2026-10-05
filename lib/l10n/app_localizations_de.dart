@@ -557,6 +557,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Erstellen Sie zuerst Ihr Konto oder melden Sie sich an — die Einladung fügen Sie gleich danach ein.';
 
   @override
+  String authLinkAlreadyUsed(String provider) {
+    return 'Diese $provider-Identität ist bereits mit einem anderen Konto verknüpft.';
+  }
+
+  @override
+  String authLinkFailed(String provider, String code) {
+    return 'Das Verknüpfen von $provider hat nicht funktioniert ($code). Versuchen Sie es erneut; falls es weiter scheitert, nennen Sie dem Server-Administrator diesen Code.';
+  }
+
+  @override
+  String get authLinkManualDisabled =>
+      'Das Verknüpfen von Konten ist auf diesem Server ausgeschaltet. Der Administrator muss „Manuelles Verknüpfen zulassen“ in den Authentifizierungs-Einstellungen aktivieren.';
+
+  @override
   String get authNetworkError =>
       'Server nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.';
 
@@ -14488,6 +14502,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get reportImagesEmpty =>
       'Noch kein Bild — laden Sie Ihr Logo, einen Stempel oder eine Unterschrift hoch und referenzieren Sie es mit ![name].';
+
+  @override
+  String get reportImagesLoadFailed =>
+      'Berichtsbilder konnten nicht geladen werden. Erneut versuchen.';
 
   @override
   String get reportImagesTitle => 'Berichtsbilder';

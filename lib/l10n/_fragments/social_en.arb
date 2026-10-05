@@ -13,5 +13,30 @@
   "linkedAccountsLink": "Link",
   "linkedAccountsUnlink": "Unlink",
   "linkedAccountsLinked": "Linked",
-  "linkedAccountsLinkStarted": "Continue in the browser to finish linking."
+  "linkedAccountsLinkStarted": "Continue in the browser to finish linking.",
+  "authLinkManualDisabled": "Linking accounts is switched off on this server. Its administrator must turn on “Allow manual linking” in the authentication settings.",
+  "@authLinkManualDisabled": {
+    "description": "Linked accounts: authLinkManualDisabled"
+  },
+  "authLinkAlreadyUsed": "This {provider} identity is already linked to another account.",
+  "@authLinkAlreadyUsed": {
+    "description": "Linked accounts: authLinkAlreadyUsed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "authLinkFailed": "Linking {provider} did not work ({code}). Try again; if it keeps failing, tell the server's administrator this code.",
+  "@authLinkFailed": {
+    "description": "Linked accounts: authLinkFailed",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  }
 }

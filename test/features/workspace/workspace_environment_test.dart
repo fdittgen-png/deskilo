@@ -162,15 +162,15 @@ void main() {
       final pdf = File('lib/features/money/domain/invoice_pdf.dart')
           .readAsStringSync();
       // The banded letter builder is the funnel for every non-invoice
-      // report; the declaration has its own builder.
+      // report, including declarations.
       expect(pdf, contains('Future<Uint8List> buildBandedLetterPdf('));
       expect(
         pdf.substring(pdf.indexOf('buildBandedLetterPdf(')),
         contains('buildForeground: watermarkForeground(watermark)'),
       );
-      final decl = File('lib/features/money/domain/vat_declaration_pdf.dart')
+      final decl = File('lib/features/money/presentation/screens/vat_declarations_screen.dart')
           .readAsStringSync();
-      expect(decl, contains('buildForeground: watermarkForeground(watermark)'));
+      expect(decl, contains('await letterDocPdf(context, ref,'));
       // #1061 — document generation left invoice_actions.dart for
       // invoice_documents.dart; the mark went with it.
       final documents =

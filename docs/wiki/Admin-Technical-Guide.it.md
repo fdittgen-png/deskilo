@@ -63,6 +63,10 @@ che stampa solo quando il suo valore esiste, una riga per ogni riga di
 fattura, e il titolo che dice fattura, nota di credito o proforma. Quello
 che toccate atterra al cursore della banda modificata per ultima.
 
+Intestazione e corpo si compongono dall’alto verso il basso. Il piè di pagina mantiene una posizione fissa in fondo a ogni pagina; le righe aggiuntive crescono verso l’alto. Solo la prima pagina stampa intestazione completa e indirizzi. Le successive usano la banda di continuazione e i numeri di pagina. Anche il PDF preparatorio della dichiarazione IVA usa questi modelli modificabili, mantenendo gli importi salvati e lo stato di presentazione.
+
+Con **Inserisci un’immagine** caricate una sola volta un logo, una firma o un’altra immagine nella libreria dello spazio, quindi selezionatela in qualsiasi modello. Inseritela in una banda con `![name]` o in un layout posizionato con `<image name="name"/>`. Un caricamento con lo stesso nome sostituisce l’immagine per le future generazioni di tutti i modelli che la usano; i PDF già salvati restano invariati.
+
 <!-- anchor: admin.reports.layouts -->
 ### I layout posizionati
 
