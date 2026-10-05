@@ -43,6 +43,8 @@ import 'package:deskilo/features/workspace/providers/workspace_application_provi
 import '../../features/workspace/application/creation_intent.dart';
 import '../../features/workspace/providers/local_setup_providers.dart';
 import '../../features/workspace/providers/template_search_providers.dart';
+import '../../features/reservations/providers/place_feedback_providers.dart';
+import 'data/place_feedback_repository.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/oauth_consent_repository.dart';
 import 'data/workbook_origin_repository.dart';
@@ -161,6 +163,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       workspaceRepositoryProvider.overrideWithValue(fixture.workspaces),
       floorPlanRepositoryProvider.overrideWithValue(fixture.floorPlan),
       reservationRepositoryProvider.overrideWithValue(fixture.reservations),
+      placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
       eventRepositoryProvider.overrideWithValue(fixture.events),
       calendarRepositoryProvider.overrideWithValue(fixture.calendar),
       moneyRepositoryProvider.overrideWithValue(fixture.money),
@@ -302,6 +305,7 @@ const Set<String> demoOverriddenProviders = {
   'workspaceRepositoryProvider',
   'floorPlanRepositoryProvider',
   'reservationRepositoryProvider',
+  'placeFeedbackRepositoryProvider', // #2185
   'eventRepositoryProvider',
   'calendarRepositoryProvider',
   'moneyRepositoryProvider',

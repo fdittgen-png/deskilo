@@ -12191,6 +12191,43 @@ class AppLocalizationsIt extends AppLocalizations {
   String get personalInfoVatId => 'Partita IVA (facoltativo)';
 
   @override
+  String placeFeedbackAverage(String average, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count valutazioni',
+      one: '1 valutazione',
+    );
+    return '$average · $_temp0';
+  }
+
+  @override
+  String get placeFeedbackFailed => 'Salvataggio non riuscito. Riprova.';
+
+  @override
+  String get placeFeedbackFavorite => 'Aggiungi ai preferiti';
+
+  @override
+  String get placeFeedbackNoRating => 'Ancora nessuna valutazione';
+
+  @override
+  String placeFeedbackStars(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n stelle',
+      one: '1 stella',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get placeFeedbackUnfavorite => 'Rimuovi dai preferiti';
+
+  @override
+  String get placeFeedbackZero => '0 stelle';
+
+  @override
   String get planAccessorySupplementHint =>
       'I supplementi si applicano per mezza giornata.';
 

@@ -12203,6 +12203,44 @@ class AppLocalizationsDe extends AppLocalizations {
   String get personalInfoVatId => 'USt-IdNr. (optional)';
 
   @override
+  String placeFeedbackAverage(String average, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Bewertungen',
+      one: '1 Bewertung',
+    );
+    return '$average · $_temp0';
+  }
+
+  @override
+  String get placeFeedbackFailed =>
+      'Speichern nicht möglich. Bitte erneut versuchen.';
+
+  @override
+  String get placeFeedbackFavorite => 'Zu Favoriten hinzufügen';
+
+  @override
+  String get placeFeedbackNoRating => 'Noch keine Bewertung';
+
+  @override
+  String placeFeedbackStars(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Sterne',
+      one: '1 Stern',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get placeFeedbackUnfavorite => 'Aus Favoriten entfernen';
+
+  @override
+  String get placeFeedbackZero => '0 Sterne';
+
+  @override
   String get planAccessorySupplementHint => 'Aufpreise gelten pro halbem Tag.';
 
   @override

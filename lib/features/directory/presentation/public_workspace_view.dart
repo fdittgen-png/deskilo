@@ -17,6 +17,7 @@ import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import 'connect_with_identity_sheet.dart';
 import 'space_offers.dart';
+import 'workspace_feedback.dart';
 import 'messenger/inquiry_sheet.dart';
 
 class PublicWorkspaceView extends ConsumerWidget {
@@ -150,6 +151,7 @@ class PublicWorkspaceView extends ConsumerWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           Text(workspace.source),
+          WorkspaceFeedback(workspace: workspace, full: true),
           if (withdrawn)
             Padding(
               padding: AppSpacing.smAll,

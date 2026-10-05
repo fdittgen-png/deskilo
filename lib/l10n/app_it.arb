@@ -7391,6 +7391,47 @@
   "@personalInfoVatId": {
     "description": "#886 personal-information form / feature: personalInfoVatId"
   },
+  "placeFeedbackAverage": "{average} · {count, plural, =1{1 valutazione} other{{count} valutazioni}}",
+  "@placeFeedbackAverage": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackFailed": "Salvataggio non riuscito. Riprova.",
+  "@placeFeedbackFailed": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackFavorite": "Aggiungi ai preferiti",
+  "@placeFeedbackFavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackNoRating": "Ancora nessuna valutazione",
+  "@placeFeedbackNoRating": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackStars": "{n, plural, =1{1 stella} other{{n} stelle}}",
+  "@placeFeedbackStars": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackUnfavorite": "Rimuovi dai preferiti",
+  "@placeFeedbackUnfavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackZero": "0 stelle",
+  "@placeFeedbackZero": {
+    "description": "#2185 place feedback"
+  },
   "planAccessorySupplementHint": "I supplementi si applicano per mezza giornata.",
   "planActiveLabel": "Attivo",
   "planAfternoonChip": "Pomeriggio",

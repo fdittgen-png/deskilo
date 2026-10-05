@@ -6,5 +6,46 @@
   "featurePlaceFeedbackDesc": "Les membres marquent des places, bureaux, salles et étages en favoris et les notent de 0 à 5 étoiles. Un favori est personnel ; une note montre sa moyenne et le nombre de notes, jamais qui. Un assistant peut lister les favoris, en réserver un et enregistrer une note. Désactivé, les cœurs et les étoiles disparaissent et les écritures sont refusées ; rien d'autre n'en dépend.",
   "@featurePlaceFeedbackDesc": {
     "description": "#2185 place feedback"
+  },
+  "placeFeedbackFavorite": "Ajouter aux favoris",
+  "@placeFeedbackFavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackUnfavorite": "Retirer des favoris",
+  "@placeFeedbackUnfavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackStars": "{n, plural, =1{1 étoile} other{{n} étoiles}}",
+  "@placeFeedbackStars": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackZero": "0 étoile",
+  "@placeFeedbackZero": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackAverage": "{average} · {count, plural, =1{1 note} other{{count} notes}}",
+  "@placeFeedbackAverage": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackNoRating": "Pas encore de note",
+  "@placeFeedbackNoRating": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackFailed": "Enregistrement impossible. Réessayez.",
+  "@placeFeedbackFailed": {
+    "description": "#2185 place feedback"
   }
 }

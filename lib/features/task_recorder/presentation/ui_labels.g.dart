@@ -22,6 +22,7 @@ final Map<String, _Getter> _getters = {
   ..._part9(),
   ..._part10(),
   ..._part11(),
+  ..._part12(),
 };
 
 Map<String, _Getter> _part0() => {
@@ -341,6 +342,8 @@ Map<String, _Getter> _part0() => {
   'badgeTapCardHint': (l) => l.badgeTapCardHint,
   'badgeTapCardTitle': (l) => l.badgeTapCardTitle,
   'badgeTokenOnce': (l) => l.badgeTokenOnce,
+  'baseRoleNote': (l) => l.baseRoleNote,
+  'baseRoleUser': (l) => l.baseRoleUser,
   'biAreaCapacity': (l) => l.biAreaCapacity,
   'biAreaFinance': (l) => l.biAreaFinance,
   'biAreaOperations': (l) => l.biAreaOperations,
@@ -423,11 +426,11 @@ Map<String, _Getter> _part0() => {
   'biReset': (l) => l.biReset,
   'biRunningLabel': (l) => l.biRunningLabel,
   'biSeatCentre': (l) => l.biSeatCentre,
-  'biSeatClosed': (l) => l.biSeatClosed,
-  'biSeatFree': (l) => l.biSeatFree,
 };
 
 Map<String, _Getter> _part1() => {
+  'biSeatClosed': (l) => l.biSeatClosed,
+  'biSeatFree': (l) => l.biSeatFree,
   'biSeatReserved': (l) => l.biSeatReserved,
   'biShareByLevel': (l) => l.biShareByLevel,
   'biSort': (l) => l.biSort,
@@ -826,11 +829,11 @@ Map<String, _Getter> _part1() => {
   'countryNameFR': (l) => l.countryNameFR,
   'countryNameGB': (l) => l.countryNameGB,
   'countryNameGR': (l) => l.countryNameGR,
-  'countryNameHR': (l) => l.countryNameHR,
-  'countryNameHU': (l) => l.countryNameHU,
 };
 
 Map<String, _Getter> _part2() => {
+  'countryNameHR': (l) => l.countryNameHR,
+  'countryNameHU': (l) => l.countryNameHU,
   'countryNameIE': (l) => l.countryNameIE,
   'countryNameIT': (l) => l.countryNameIT,
   'countryNameJP': (l) => l.countryNameJP,
@@ -1229,11 +1232,11 @@ Map<String, _Getter> _part2() => {
   'featureCustomFieldsDesc': (l) => l.featureCustomFieldsDesc,
   'featureCustomFieldsTitle': (l) => l.featureCustomFieldsTitle,
   'featureCustomRolesDesc': (l) => l.featureCustomRolesDesc,
-  'featureCustomRolesTitle': (l) => l.featureCustomRolesTitle,
-  'featureDataAccessLogDesc': (l) => l.featureDataAccessLogDesc,
 };
 
 Map<String, _Getter> _part3() => {
+  'featureCustomRolesTitle': (l) => l.featureCustomRolesTitle,
+  'featureDataAccessLogDesc': (l) => l.featureDataAccessLogDesc,
   'featureDataAccessLogTitle': (l) => l.featureDataAccessLogTitle,
   'featureDataExport': (l) => l.featureDataExport,
   'featureDataExportDesc': (l) => l.featureDataExportDesc,
@@ -1632,11 +1635,11 @@ Map<String, _Getter> _part3() => {
   'helpHintLearnMore': (l) => l.helpHintLearnMore,
   'helpHintMembers': (l) => l.helpHintMembers,
   'helpHintMembersTip2': (l) => l.helpHintMembersTip2,
-  'helpHintMembersTip3': (l) => l.helpHintMembersTip3,
-  'helpHintMembersTip3Topic': (l) => l.helpHintMembersTip3Topic,
 };
 
 Map<String, _Getter> _part4() => {
+  'helpHintMembersTip3': (l) => l.helpHintMembersTip3,
+  'helpHintMembersTip3Topic': (l) => l.helpHintMembersTip3Topic,
   'helpHintMembersTip4': (l) => l.helpHintMembersTip4,
   'helpHintMembersTip4Topic': (l) => l.helpHintMembersTip4Topic,
   'helpHintMembersTipNegotiation': (l) => l.helpHintMembersTipNegotiation,
@@ -2035,11 +2038,11 @@ Map<String, _Getter> _part4() => {
   'invoiceLegalCustomerCapacityHint': (l) => l.invoiceLegalCustomerCapacityHint,
   'invoiceLegalEscompteDefault': (l) => l.invoiceLegalEscompteDefault,
   'invoiceLegalEscompteField': (l) => l.invoiceLegalEscompteField,
-  'invoiceLegalFormField': (l) => l.invoiceLegalFormField,
-  'invoiceLegalFormHint': (l) => l.invoiceLegalFormHint,
 };
 
 Map<String, _Getter> _part5() => {
+  'invoiceLegalFormField': (l) => l.invoiceLegalFormField,
+  'invoiceLegalFormHint': (l) => l.invoiceLegalFormHint,
   'invoiceLegalFormHintAssociation': (l) => l.invoiceLegalFormHintAssociation,
   'invoiceLegalInsuranceField': (l) => l.invoiceLegalInsuranceField,
   'invoiceLegalIntro': (l) => l.invoiceLegalIntro,
@@ -2438,11 +2441,11 @@ Map<String, _Getter> _part5() => {
   'mcpConnectCursorStep': (l) => l.mcpConnectCursorStep,
   'mcpConnectDone': (l) => l.mcpConnectDone,
   'mcpConnectIntro': (l) => l.mcpConnectIntro,
-  'mcpConnectManageHint': (l) => l.mcpConnectManageHint,
-  'mcpConnectOpenFailed': (l) => l.mcpConnectOpenFailed,
 };
 
 Map<String, _Getter> _part6() => {
+  'mcpConnectManageHint': (l) => l.mcpConnectManageHint,
+  'mcpConnectOpenFailed': (l) => l.mcpConnectOpenFailed,
   'mcpConnectOpenGuide': (l) => l.mcpConnectOpenGuide,
   'mcpConnectOpenInstallation': (l) => l.mcpConnectOpenInstallation,
   'mcpConnectOpenSetup': (l) => l.mcpConnectOpenSetup,
@@ -2841,11 +2844,11 @@ Map<String, _Getter> _part6() => {
   'navigationDefault': (l) => l.navigationDefault,
   'navigationMenu': (l) => l.navigationMenu,
   'navigationTitle': (l) => l.navigationTitle,
-  'negotiationCardTitle': (l) => l.negotiationCardTitle,
-  'negotiationDefaultColumn': (l) => l.negotiationDefaultColumn,
 };
 
 Map<String, _Getter> _part7() => {
+  'negotiationCardTitle': (l) => l.negotiationCardTitle,
+  'negotiationDefaultColumn': (l) => l.negotiationDefaultColumn,
   'negotiationDiscount': (l) => l.negotiationDiscount,
   'negotiationFee': (l) => l.negotiationFee,
   'negotiationItems': (l) => l.negotiationItems,
@@ -3121,6 +3124,11 @@ Map<String, _Getter> _part7() => {
   'personalInfoSubtitle': (l) => l.personalInfoSubtitle,
   'personalInfoTitle': (l) => l.personalInfoTitle,
   'personalInfoVatId': (l) => l.personalInfoVatId,
+  'placeFeedbackFailed': (l) => l.placeFeedbackFailed,
+  'placeFeedbackFavorite': (l) => l.placeFeedbackFavorite,
+  'placeFeedbackNoRating': (l) => l.placeFeedbackNoRating,
+  'placeFeedbackUnfavorite': (l) => l.placeFeedbackUnfavorite,
+  'placeFeedbackZero': (l) => l.placeFeedbackZero,
   'planAccessorySupplementHint': (l) => l.planAccessorySupplementHint,
   'planActiveLabel': (l) => l.planActiveLabel,
   'planAfternoonChip': (l) => l.planAfternoonChip,
@@ -3239,6 +3247,9 @@ Map<String, _Getter> _part7() => {
   'portalOpenMe': (l) => l.portalOpenMe,
   'portalOwner': (l) => l.portalOwner,
   'portalPerson': (l) => l.portalPerson,
+};
+
+Map<String, _Getter> _part8() => {
   'portalPhone': (l) => l.portalPhone,
   'portalPlans': (l) => l.portalPlans,
   'portalPreview': (l) => l.portalPreview,
@@ -3246,9 +3257,6 @@ Map<String, _Getter> _part7() => {
   'portalPublication': (l) => l.portalPublication,
   'portalPublished': (l) => l.portalPublished,
   'portalRegisterDirectory': (l) => l.portalRegisterDirectory,
-};
-
-Map<String, _Getter> _part8() => {
   'portalRequestProfile': (l) => l.portalRequestProfile,
   'portalRequestSent': (l) => l.portalRequestSent,
   'portalResetAll': (l) => l.portalResetAll,
@@ -3642,6 +3650,9 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningCopy': (l) => l.reportFieldMeaningCopy,
   'reportFieldMeaningCreditNote': (l) => l.reportFieldMeaningCreditNote,
   'reportFieldMeaningDueDate': (l) => l.reportFieldMeaningDueDate,
+};
+
+Map<String, _Getter> _part9() => {
   'reportFieldMeaningEscompte': (l) => l.reportFieldMeaningEscompte,
   'reportFieldMeaningExemptionReason': (l) => l.reportFieldMeaningExemptionReason,
   'reportFieldMeaningHasVat': (l) => l.reportFieldMeaningHasVat,
@@ -3649,9 +3660,6 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningInsurance': (l) => l.reportFieldMeaningInsurance,
   'reportFieldMeaningIssued': (l) => l.reportFieldMeaningIssued,
   'reportFieldMeaningIssuedBy': (l) => l.reportFieldMeaningIssuedBy,
-};
-
-Map<String, _Getter> _part9() => {
   'reportFieldMeaningLatePenalty': (l) => l.reportFieldMeaningLatePenalty,
   'reportFieldMeaningLines': (l) => l.reportFieldMeaningLines,
   'reportFieldMeaningMember': (l) => l.reportFieldMeaningMember,
@@ -4045,6 +4053,9 @@ Map<String, _Getter> _part9() => {
   'statusSubtitle': (l) => l.statusSubtitle,
   'statusTitle': (l) => l.statusTitle,
   'statusTo': (l) => l.statusTo,
+};
+
+Map<String, _Getter> _part10() => {
   'subprocessAttendance': (l) => l.subprocessAttendance,
   'subprocessAttendanceDesc': (l) => l.subprocessAttendanceDesc,
   'subprocessAvailability': (l) => l.subprocessAvailability,
@@ -4053,9 +4064,6 @@ Map<String, _Getter> _part9() => {
   'subprocessCalendarDesc': (l) => l.subprocessCalendarDesc,
   'subprocessCollection': (l) => l.subprocessCollection,
   'subprocessCollectionDesc': (l) => l.subprocessCollectionDesc,
-};
-
-Map<String, _Getter> _part10() => {
   'subprocessCommunication': (l) => l.subprocessCommunication,
   'subprocessCommunicationDesc': (l) => l.subprocessCommunicationDesc,
   'subprocessConfiguration': (l) => l.subprocessConfiguration,
@@ -4448,6 +4456,9 @@ Map<String, _Getter> _part10() => {
   'taskWorkbenchRefusedDamaged': (l) => l.taskWorkbenchRefusedDamaged,
   'taskWorkbenchRefusedInvalid': (l) => l.taskWorkbenchRefusedInvalid,
   'taskWorkbenchRefusedNewer': (l) => l.taskWorkbenchRefusedNewer,
+};
+
+Map<String, _Getter> _part11() => {
   'taskWorkbenchRefusedTooLarge': (l) => l.taskWorkbenchRefusedTooLarge,
   'taskWorkbenchRefusedUnsafe': (l) => l.taskWorkbenchRefusedUnsafe,
   'taskWorkbenchRefusedUnsupported': (l) => l.taskWorkbenchRefusedUnsupported,
@@ -4456,9 +4467,6 @@ Map<String, _Getter> _part10() => {
   'taskWorkbenchTitle': (l) => l.taskWorkbenchTitle,
   'taskWorkbenchTranscriptOnly': (l) => l.taskWorkbenchTranscriptOnly,
   'taskWorkbenchUntrusted': (l) => l.taskWorkbenchUntrusted,
-};
-
-Map<String, _Getter> _part11() => {
   'templateApplyConflict': (l) => l.templateApplyConflict,
   'templateChangedSinceReview': (l) => l.templateChangedSinceReview,
   'templateClearFilters': (l) => l.templateClearFilters,
@@ -4851,6 +4859,9 @@ Map<String, _Getter> _part11() => {
   'workspaceXmlImport': (l) => l.workspaceXmlImport,
   'workspaceXmlImportConfigurationOnly': (l) => l.workspaceXmlImportConfigurationOnly,
   'workspaceXmlImportConfirm': (l) => l.workspaceXmlImportConfirm,
+};
+
+Map<String, _Getter> _part12() => {
   'workspaceXmlImportPartial': (l) => l.workspaceXmlImportPartial,
   'workspaceXmlImportPreviewTitle': (l) => l.workspaceXmlImportPreviewTitle,
   'workspaceXmlImportPreviewWarning': (l) => l.workspaceXmlImportPreviewWarning,

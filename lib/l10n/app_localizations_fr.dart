@@ -12212,6 +12212,43 @@ class AppLocalizationsFr extends AppLocalizations {
   String get personalInfoVatId => 'N° de TVA (facultatif)';
 
   @override
+  String placeFeedbackAverage(String average, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count notes',
+      one: '1 note',
+    );
+    return '$average · $_temp0';
+  }
+
+  @override
+  String get placeFeedbackFailed => 'Enregistrement impossible. Réessayez.';
+
+  @override
+  String get placeFeedbackFavorite => 'Ajouter aux favoris';
+
+  @override
+  String get placeFeedbackNoRating => 'Pas encore de note';
+
+  @override
+  String placeFeedbackStars(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n étoiles',
+      one: '1 étoile',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get placeFeedbackUnfavorite => 'Retirer des favoris';
+
+  @override
+  String get placeFeedbackZero => '0 étoile';
+
+  @override
   String get planAccessorySupplementHint =>
       'Les suppléments s\'appliquent par demi-journée.';
 
