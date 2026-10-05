@@ -572,6 +572,7 @@ constraint members.members_managed_by_fkey FOREIGN KEY (managed_by) REFERENCES a
 constraint members.members_max_active_reservations_check CHECK (((max_active_reservations >= 1) AND (max_active_reservations <= 100)))
 constraint members.members_max_simultaneous_reservations_check CHECK (((max_simultaneous_reservations >= 1) AND (max_simultaneous_reservations <= 20)))
 constraint members.members_no_subscription_payg CHECK ((NOT ((subscription_pct = 0) AND (overage_policy = 'payg'::text))))
+constraint members.members_one_base_role CHECK ((NOT (is_owner AND (co_owner = 'active'::text))))
 constraint members.members_origin_known CHECK ((origin = ANY (ARRAY['founder'::text, 'invited'::text, 'delegated'::text])))
 constraint members.members_overage_policy_check CHECK ((overage_policy = ANY (ARRAY['blocked'::text, 'payg'::text, 'package'::text])))
 constraint members.members_person_id_fkey FOREIGN KEY (person_id) REFERENCES directory_people(id)
@@ -1456,6 +1457,7 @@ routine public.mcp_usage_summary_workspace(p_workspace_id uuid) -> jsonb | funct
 routine public.mcp_uuid_arg(p_args jsonb, p_key text, p_required boolean) -> uuid | function | invoker | immutable | exec:service_role | body:8e8deb6fc5c3
 routine public.mcp_workspace_context(p_workspace_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:de063ca7a958
 routine public.member_account(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bf3adfa2b319
+routine public.member_base_role(p_member uuid) -> text | function | definer | stable | exec:authenticated,service_role | body:948be5c9a18d
 routine public.member_credit_balance(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:authenticated,service_role | body:68f020724478
 routine public.member_credit_balance_of(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:2d55cb53d683
 routine public.member_credit_uses_in_period(p_member_id uuid, p_from timestamp with time zone, p_to timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:0e54da7e9595
