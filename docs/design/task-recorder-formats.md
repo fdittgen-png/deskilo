@@ -9,7 +9,7 @@ a token, a request id or a value somebody typed.
 |---|---|---|---|
 | `*.json` (a recording) | `deskilo.task-recording` | `schema_version` 1 | `lib/features/task_recorder/domain/task_recording_codec.dart` (`decodeRecording`) |
 | `*.deskilo-task.zip` (a task package) | `deskilo.task-package` | `package_version` 1, or 2 with a storyboard | `lib/features/task_recorder/package/task_package.dart` (`readTaskPackage`) |
-| `deskilo-guide.json` (a guide draft) | `deskilo.task-guide` | `schema_version` 1 | `lib/features/task_recorder/guide/guide_codec.dart` (`decodeGuideText`) |
+| `deskilo-guide.json` (a guide draft) | `deskilo.task-guide` | `schema_version` 2 (reads 1) | `lib/features/task_recorder/guide/guide_codec.dart` (`decodeGuideText`) |
 
 ## The recording
 
@@ -104,8 +104,7 @@ jumps, loops, expressions or scripts. Limits (`GuideLimits`): 100 steps,
 * The local workbench, with no account: Help → *Open a task file*
   (`/task-workbench`). It opens a recording or a package, edits a
   private copy, saves it again, reviews the storyboard, makes the
-  registered outputs (Word today; video when its generator is
-  registered) and creates a guide draft.
+  registered outputs (Word, silent MP4 where supported, and WebVTT captions) and creates a guide draft.
 * Registering a new output: implement `TaskOutputGenerator`
   (`package/task_output.dart`) and add it to
   `export/output_registry.dart`.
@@ -121,9 +120,13 @@ jumps, loops, expressions or scripts. Limits (`GuideLimits`): 100 steps,
   new identifiers in `presentation/recorder_labels.dart`; a seam wins
   over the generic layer for the same tap or command.
 * Offline: in a browser, the workbench's *Keep it on this device* card
-  registers `web/task_tool_sw.js` (network first; only this app's own
-  GET requests and the static font/engine hosts; never a backend call
-  or a write). The installed web app also offers the workbench as a
+  registers `web/task_tool_sw.js` and verifies a complete, hashed build
+  snapshot before reporting readiness. Online requests remain network-first;
+  only manifest-listed assets can be served offline, never backend responses.
+  A failed update preserves the previous complete snapshot. Removal waits
+  for cache deletion. Browser storage eviction revokes readiness.
+  Build with `--no-web-resources-cdn`, then run
+  `dart run tool/task_tool_manifest.dart` (included in the web workflow). The installed web app also offers the workbench as a
   shortcut. On a native build the app is already local.
 
 ## The generic layer (#2142)
@@ -149,3 +152,20 @@ message KEYS and shown back in the reader's language. Reading a file,
 an older build drops a generic name it does not know rather than
 refusing the file. `test/lint/recorder_keys_test.dart` keeps the
 number of unkeyed controls falling.
+
+
+## Operational boundaries
+
+A guide completes a command only from that attempt's result token. Duplicate,
+unrelated, previous-run and pre-pause results cannot complete a new attempt.
+Guide edits use atomic replacement, preserving the saved version on failure.
+Unnamed, unknown and dynamic identity-pattern controls become manual steps;
+authors should explain them before sharing. Manual means acknowledged, not
+verified. Multiple matching controls produce no arbitrary pointer.
+
+Booking/calendar, roles/validation and generic safe capture remain available.
+Protected screens remain manual/excluded; planned semantic adapters and
+workspace/global publication are not supplied by generic capture/file sharing.
+Physical-device and stock-reader qualification remain separate release evidence.
+`node tool/web/task_offline_probe.mjs` tests the real worker in fresh Chromium:
+offline reopening, corrupt updates, eviction, backend exclusion and removal.

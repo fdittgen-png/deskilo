@@ -17298,7 +17298,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskWorkbenchOfflineReady =>
-      'Gardé dans ce navigateur : les écrans déjà ouverts fonctionnent sans connexion.';
+      'Gardé dans ce navigateur : l’atelier vérifié s’ouvre sans connexion. Les actions dans un espace nécessitent une connexion.';
 
   @override
   String get taskWorkbenchOfflineTitle => 'Utiliser l\'atelier hors ligne';

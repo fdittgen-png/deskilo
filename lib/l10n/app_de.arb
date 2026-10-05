@@ -10613,7 +10613,7 @@
   "taskWorkbenchOfflineForget": "Nicht mehr behalten",
   "taskWorkbenchOfflineKeep": "Auf diesem Gerät behalten",
   "taskWorkbenchOfflineOff": "Nicht behalten: ohne Verbindung öffnet sich diese Seite nicht.",
-  "taskWorkbenchOfflineReady": "In diesem Browser behalten: bereits geöffnete Bildschirme funktionieren ohne Verbindung.",
+  "taskWorkbenchOfflineReady": "In diesem Browser gespeichert: Die geprüfte Aufgabenwerkstatt lässt sich offline öffnen. Aktionen im Arbeitsbereich benötigen weiterhin eine Verbindung.",
   "taskWorkbenchOfflineTitle": "Werkbank offline nutzen",
   "taskWorkbenchOfflineUnsupported": "Dieser Browser kann es nicht behalten (ein privates Fenster meist nicht).",
   "taskWorkbenchOpen": "Aufgabendatei öffnen",

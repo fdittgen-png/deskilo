@@ -5,6 +5,7 @@
 // browser reports — kept, not kept, impossible here, refused — and keeps
 // or stops keeping the workbench on the person's request, never by
 // itself. The service worker never touches a write or another origin.
+import 'dart:async';
 import 'dart:io';
 
 import 'package:deskilo/features/task_recorder/offline/offline_card.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 class _FakeTool implements OfflineTool {
   _FakeTool(this._state);
   OfflineToolState _state;
+  Completer<void>? pendingKeep;
   int keeps = 0;
   int forgets = 0;
 
@@ -25,6 +27,7 @@ class _FakeTool implements OfflineTool {
   @override
   Future<OfflineToolState> keep() async {
     keeps++;
+    await pendingKeep?.future;
     return _state = OfflineToolState.ready;
   }
 
@@ -80,6 +83,19 @@ void main() {
     expect(find.textContaining('Not kept'), findsOneWidget);
   });
 
+  testWidgets('keeping the complete snapshot shows progress until verified', (tester) async {
+    final tool = _FakeTool(OfflineToolState.off)..pendingKeep = Completer<void>();
+    await _pump(tester, tool);
+    await tester.tap(find.byKey(const ValueKey('workbench-offline-keep')));
+    await tester.pump();
+    expect(find.byType(LinearProgressIndicator), findsOneWidget);
+    expect(find.textContaining('Kept on this browser'), findsNothing);
+    tool.pendingKeep!.complete();
+    await tester.pumpAndSettle();
+    expect(find.byType(LinearProgressIndicator), findsNothing);
+    expect(find.textContaining('Kept on this browser'), findsOneWidget);
+  });
+
   testWidgets('a browser that cannot keep it says so, with no button', (
     tester,
   ) async {
@@ -93,7 +109,7 @@ void main() {
     expect(sw, contains("if (request.method !== 'GET') return;"));
     expect(
       sw,
-      contains('if (!own && !STATIC_HOSTS.includes(url.host)) return;'),
+      contains('if (!url.href.startsWith(self.registration.scope)) return;'),
     );
     expect(sw, isNot(contains('supabase')));
     expect(

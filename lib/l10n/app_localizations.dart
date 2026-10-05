@@ -29633,7 +29633,7 @@ abstract class AppLocalizations {
   /// #1886 offline tool: taskWorkbenchOfflineReady
   ///
   /// In en, this message translates to:
-  /// **'Kept on this browser: the screens you have opened work without a connection.'**
+  /// **'Kept on this browser: the verified workbench opens without a connection. Workspace actions still need a connection.'**
   String get taskWorkbenchOfflineReady;
 
   /// #1886 offline tool: taskWorkbenchOfflineTitle

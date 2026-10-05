@@ -170,14 +170,23 @@ jobs:
           # the PREVIOUS build on the first visit after a deploy, so a fix
           # that is live is not what the person sees. The data layer keeps
           # its own cache (CacheStore); only the app shell stops being held.
-          flutter build web --release --pwa-strategy=none --base-href "${{ steps.base.outputs.base_href }}"
+          flutter build web --release --no-web-resources-cdn --pwa-strategy=none --base-href "${{ steps.base.outputs.base_href }}"
 
       - name: SPA fallback for deep links
         # go_router uses real paths; a reload of /money must not 404 on a
         # static host, and Pages serves 404.html for anything it cannot
         # find. Serving the app there makes the reload work.
         if: env.WEB_REQUIRED == 'true'
-        run: cp build/web/index.html build/web/404.html
+        run: |
+          cp build/web/index.html build/web/404.html
+          dart run tool/task_tool_manifest.dart
+
+      - name: Verify offline task storage in Chromium
+        if: env.WEB_REQUIRED == 'true'
+        run: |
+          npm ci --prefix tool/web --ignore-scripts
+          npx --prefix tool/web playwright install chromium --with-deps --only-shell
+          node tool/web/task_offline_probe.mjs
 
       - uses: actions/upload-artifact@v4
         if: env.WEB_REQUIRED == 'true'

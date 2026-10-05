@@ -10613,7 +10613,7 @@
   "taskWorkbenchOfflineForget": "Ne plus le garder",
   "taskWorkbenchOfflineKeep": "Le garder sur cet appareil",
   "taskWorkbenchOfflineOff": "Non gardé : sans connexion, cette page ne s'ouvrira pas.",
-  "taskWorkbenchOfflineReady": "Gardé dans ce navigateur : les écrans déjà ouverts fonctionnent sans connexion.",
+  "taskWorkbenchOfflineReady": "Gardé dans ce navigateur : l’atelier vérifié s’ouvre sans connexion. Les actions dans un espace nécessitent une connexion.",
   "taskWorkbenchOfflineTitle": "Utiliser l'atelier hors ligne",
   "taskWorkbenchOfflineUnsupported": "Ce navigateur ne peut pas le garder (une fenêtre privée ne le peut généralement pas).",
   "taskWorkbenchOpen": "Ouvrir un fichier de tâche",

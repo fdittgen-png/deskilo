@@ -17291,7 +17291,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskWorkbenchOfflineReady =>
-      'In diesem Browser behalten: bereits geöffnete Bildschirme funktionieren ohne Verbindung.';
+      'In diesem Browser gespeichert: Die geprüfte Aufgabenwerkstatt lässt sich offline öffnen. Aktionen im Arbeitsbereich benötigen weiterhin eine Verbindung.';
 
   @override
   String get taskWorkbenchOfflineTitle => 'Werkbank offline nutzen';
