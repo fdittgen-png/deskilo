@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart'
-    show AuthException, PostgrestException;
+    show AuthException, AuthRetryableFetchException, PostgrestException;
 
 /// #1233 — the ONE place that knows what a server error is made of.
 ///
@@ -43,3 +43,11 @@ bool isAuthError(Object error) => error is AuthException;
 /// the database.
 String? serverErrorCode(Object error) =>
     error is PostgrestException ? error.code : null;
+
+/// #1849 — an authentication failure that is only the network failing to
+/// answer (the SDK's own retryable-fetch class), not a refusal.
+bool isAuthTransportError(Object error) => error is AuthRetryableFetchException;
+
+/// #1849 — the HTTP status an authentication failure carried, if any.
+int? authStatusCode(Object error) =>
+    error is AuthException ? int.tryParse(error.statusCode ?? '') : null;

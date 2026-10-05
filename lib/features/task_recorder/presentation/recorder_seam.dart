@@ -57,7 +57,7 @@ void recordTaskStep(
 /// with what the command actually returned or threw; it needs no
 /// [WidgetRef] then, so a screen that closed meanwhile still answers.
 class TaskAttempt {
-  TaskAttempt._(this._controller, this._token, this._guide);
+  TaskAttempt._(this._controller, this._token, this._guide, this._guideToken);
 
   /// Null when only a guide listens (nothing is being recorded).
   final RecorderController? _controller;
@@ -65,6 +65,7 @@ class TaskAttempt {
 
   /// The guide that saw the attempt, told the outcome too (#1867).
   final GuideEventSink? _guide;
+  final Object? _guideToken;
 
   /// Attaches the outcome. Never throws; a late answer from an older
   /// recording is dropped by the controller.
@@ -73,7 +74,7 @@ class TaskAttempt {
       // The guide that saw the attempt, if it is still the running one.
       final guide = _guide;
       if (guide != null && identical(GuideEvents.sink, guide)) {
-        guide.outcome(outcomeId);
+        guide.outcome(outcomeId, token: _guideToken);
       }
     } catch (e, st) {
       TraceLogger.instance.warn('recorder', 'guide not told', stackTrace: st);
@@ -103,9 +104,10 @@ TaskAttempt? recordTaskAttempt(
   Map<String, Object?> payload = const {},
 }) {
   GuideEventSink? guide;
+  Object? guideToken;
   try {
     guide = GuideEvents.sink;
-    guide?.action(actionId, target: target);
+    guideToken = guide?.action(actionId, target: target);
   } catch (e, st) {
     TraceLogger.instance.warn('recorder', 'guide not told', stackTrace: st);
   }
@@ -117,7 +119,7 @@ TaskAttempt? recordTaskAttempt(
       payload: payload,
     );
     if (token == null && guide == null) return null;
-    return TaskAttempt._(token == null ? null : controller, token, guide);
+    return TaskAttempt._(token == null ? null : controller, token, guide, guideToken);
   } catch (e, st) {
     TraceLogger.instance.warn(
       'recorder',

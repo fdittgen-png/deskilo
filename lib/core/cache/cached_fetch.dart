@@ -3,6 +3,7 @@ import 'dart:async';
 
 import '../trace/trace_logger.dart';
 import 'cache_store.dart';
+import 'read_failure.dart';
 import 'stale_reads.dart';
 
 /// How a read treats the cache (the tankstellen two-tier semantics).
@@ -48,27 +49,65 @@ Future<T> cachedFetch<T>({
   final fenced = fenceRead(cache);
   if (mode == CacheReadMode.cacheFirst) {
     final hit = await fenced.get(key);
-    if (hit != null && !hit.isExpired) return parse(hit.payload);
-  }
-  try {
-    final raw = await fetchRaw();
-    // The write must never delay the answer.
-    if (cacheable == null || cacheable(raw)) {
-      unawaited(fenced.put(key, raw, ttl: ttl));
-    } else {
-      unawaited(fenced.invalidatePrefix(key));
+    if (hit != null && !hit.isExpired) {
+      try {
+        return parse(hit.payload);
+      } catch (e, st) {
+        // #1849 — an entry the current code cannot read is dropped, and the
+        // read goes to the network; it never stays to fail every time.
+        TraceLogger.instance.warn('cache', 'unreadable cache entry $key dropped',
+            error: e.runtimeType, stackTrace: st);
+        await fenced.invalidatePrefix(key);
+      }
     }
-    StaleReads.instance.fresh(key);
-    return parse(raw);
+  }
+  final Object? raw;
+  try {
+    raw = await fetchRaw();
   } catch (e, st) {
-    final stale = await fenced.get(key);
-    if (stale != null) {
-      TraceLogger.instance.warn('cache', 'stale served for $key',
-          error: e, stackTrace: st);
-      // #1305 S3 — a screen showing this can say it is not live.
-      StaleReads.instance.served(key, stale.storedAt);
-      return parse(stale.payload);
+    // #1849 — only a transient outage may be answered from the cache; a
+    // denial quarantines what this key held, and an unclassified failure is
+    // surfaced instead of quietly granting protected stale access.
+    switch (classifyReadFailure(e)) {
+      case ReadFailure.transient:
+        final stale = await fenced.get(key);
+        if (stale != null) {
+          try {
+            final value = parse(stale.payload);
+            TraceLogger.instance.warn('cache', 'stale served for $key',
+                error: e, stackTrace: st);
+            // #1305 S3 — a screen showing this can say it is not live.
+            StaleReads.instance.served(key, stale.storedAt);
+            return value;
+          } catch (parseError, parseSt) {
+            TraceLogger.instance.warn('cache', 'stale entry $key unreadable',
+                error: parseError.runtimeType, stackTrace: parseSt);
+            await fenced.invalidatePrefix(key);
+          }
+        }
+      case ReadFailure.denied:
+        await fenced.invalidatePrefix(key);
+      case ReadFailure.other:
+        break;
     }
     rethrow;
   }
+  // #1849 — parse BEFORE publishing: malformed data neither poisons a good
+  // cache nor marks the read fresh.
+  final T value;
+  try {
+    value = parse(raw);
+  } catch (e, st) {
+    TraceLogger.instance.warn('cache', 'invalid payload for $key',
+        error: e.runtimeType, stackTrace: st);
+    throw CachedReadInvalid(key, e);
+  }
+  // The write must never delay the answer.
+  if (cacheable == null || cacheable(raw)) {
+    unawaited(fenced.put(key, raw, ttl: ttl));
+  } else {
+    unawaited(fenced.invalidatePrefix(key));
+  }
+  StaleReads.instance.fresh(key);
+  return value;
 }

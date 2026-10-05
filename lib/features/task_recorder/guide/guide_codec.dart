@@ -16,8 +16,7 @@
 // or screen, as the recorder names it) and `label` (the app message it
 // shows). Schema 1 guides read unchanged. A target the action does not
 // list is refused for a strict action; for a soft one (the generic #2142
-// layer, whose vocabulary grows) it is dropped and the step matches its
-// action anywhere. A label that is not an app message key is dropped.
+// layer, whose vocabulary grows) the step becomes manual. A label that is not an app message key is dropped.
 
 import 'dart:convert';
 
@@ -289,7 +288,11 @@ class _GuideDecoder {
       if (!spec.softTargets) {
         throw _Refusal(GuideIssueCode.inconsistent, '$path.target');
       }
-      target = null; // a name this build does not know: match anywhere
+      target = null; // unknown controls can only be acknowledged manually
+    }
+    if (spec.softTargets &&
+        (target == null || target == uiUnkeyed || target.contains('{}'))) {
+      return GuideStep(id: id, kind: GuideStepKind.manual, text: text, optional: optional);
     }
     final label = labelRaw is String && uiLabelKeys.contains(labelRaw)
         ? labelRaw

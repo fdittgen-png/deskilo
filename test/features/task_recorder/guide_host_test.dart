@@ -163,16 +163,16 @@ void main() {
     final c = await _pump(tester);
     _session(c).start(_guide(const [_command]));
     await _settle(tester);
-    _session(c).action(RecorderActions.uiCommand);
+    var token = _session(c).action(RecorderActions.uiCommand);
     await _settle(tester);
     expect(_key('guide-host-waiting'), findsOneWidget);
     // While it waits, it cannot be skipped into "done".
     expect(_key('guide-host-skip'), findsNothing);
-    _session(c).outcome(RecorderOutcomes.commandUnknown);
+    _session(c).outcome(RecorderOutcomes.commandUnknown, token: token);
     await _settle(tester);
     expect(_key('guide-host-uncertain'), findsOneWidget);
-    _session(c).action(RecorderActions.uiCommand);
-    _session(c).outcome(RecorderOutcomes.commandDone);
+    token = _session(c).action(RecorderActions.uiCommand);
+    _session(c).outcome(RecorderOutcomes.commandDone, token: token);
     await _settle(tester);
     expect(_key('guide-host-completed'), findsOneWidget);
     await _end(tester, c);

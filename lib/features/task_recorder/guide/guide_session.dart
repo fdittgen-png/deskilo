@@ -28,8 +28,8 @@ part 'guide_session.g.dart';
 
 /// What the live capture tells a running guide.
 abstract interface class GuideEventSink {
-  void action(String actionId, {String? target});
-  void outcome(String outcomeId);
+  Object? action(String actionId, {String? target});
+  void outcome(String outcomeId, {required Object? token});
 }
 
 /// The running guide's event hook; null while no guide runs.
@@ -97,11 +97,15 @@ class GuideSession extends _$GuideSession implements GuideEventSink {
   // ── what really happened ──────────────────────────────────────────────
 
   @override
-  void action(String actionId, {String? target}) =>
-      _change((run) => run.onAction(actionId, target: target));
+  Object? action(String actionId, {String? target}) {
+    Object? token;
+    _change((run) => token = run.onAction(actionId, target: target));
+    return token;
+  }
 
   @override
-  void outcome(String outcomeId) => _change((run) => run.onOutcome(outcomeId));
+  void outcome(String outcomeId, {required Object? token}) =>
+      _change((run) => run.onOutcome(outcomeId, token: token));
 
   // ── what the person chose ─────────────────────────────────────────────
 
