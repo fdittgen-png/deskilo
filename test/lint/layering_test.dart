@@ -76,7 +76,6 @@ const Set<String> _knownPairs = {
   // sheet call the recorder's seam; the booking adapter reads the
   // booking command's outcome type; the recorder reads the workspace's
   // flag and active workspace for its scope.
-  'help -> task_recorder',
   'reservations -> task_recorder',
   'task_recorder -> reservations',
   'task_recorder -> workspace',
@@ -209,14 +208,12 @@ const Set<String> _knownPairs = {
 const Map<String, int> _pairBudget = {
   // 2026-10-02 #1865 — the task recorder's seam and adapter (see the
   // pairs above).
-  // #1867: the Help screen also offers Guided tasks (guided_tasks_sheet).
-  'help -> task_recorder': 3,
   'reservations -> task_recorder': 8,
   'task_recorder -> reservations': 1,
   'task_recorder -> workspace': 6, // 2026-10-03 #1884 B +2: a permission and its label
   'workspace -> task_recorder': 9, // 2026-10-03 #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation); B +6: the role matrix, the space's roles, their holders
   // 2026-10-03 #2142 — the labelled entry in Me → Account.
-  'me -> task_recorder': 1,
+  'me -> task_recorder': 2, // 2026-10-04 task wizard: the Me menu and the account tab both open /task-wizard (a route constant)
   // 2026-10-03 #1881 B — the calendar's seams (hub and classic), the
   // decision seam, and the recorder's calendar-kind label.
   'calendar -> task_recorder': 8,

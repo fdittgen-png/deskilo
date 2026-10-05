@@ -46,6 +46,9 @@ final class Unrecorded extends RouteTreatment {
 /// The recorder's own screen.
 const String taskRecorderRoute = '/task-recorder';
 
+/// The task wizard: guides, recordings and tools in one place.
+const String taskWizardRoute = '/task-wizard';
+
 /// #1872 — the local task workbench.
 const String taskWorkbenchRoute = '/task-workbench';
 

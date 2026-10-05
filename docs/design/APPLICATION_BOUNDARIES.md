@@ -45,7 +45,6 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `events -> task_recorder`
 - `events -> workspace`
 - `help -> auth`
-- `help -> task_recorder`
 - `help -> workspace`
 - `kiosk -> events`
 - `kiosk -> members`

@@ -17146,6 +17146,83 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderValueWithheld => 'nicht aufgezeichnet';
 
   @override
+  String get taskWizardAddGuide => 'Anleitung hinzufügen';
+
+  @override
+  String get taskWizardAddToGuides => 'Zu meinen Anleitungen hinzufügen';
+
+  @override
+  String get taskWizardBuiltIn => 'Anleitungen, die mit der App kommen';
+
+  @override
+  String get taskWizardDeleteGuide => 'Diese Anleitung löschen';
+
+  @override
+  String get taskWizardDeleteGuideBody =>
+      'Die Anleitung wird von diesem Gerät entfernt. Die Aufzeichnung, aus der sie stammt, bleibt unberührt.';
+
+  @override
+  String get taskWizardEdit => 'Bearbeiten';
+
+  @override
+  String get taskWizardFromFile => 'Aus einer Aufgabendatei oder einem Paket';
+
+  @override
+  String get taskWizardFromFileHint =>
+      'Eine Aufzeichnung, ein Aufgabenpaket oder eine Anleitungsdatei von jemand anderem.';
+
+  @override
+  String get taskWizardFromRecording => 'Aus einer meiner Aufzeichnungen';
+
+  @override
+  String get taskWizardFromRecordingHint =>
+      'Wählen Sie eine Aufzeichnung; sie wird sofort zur Anleitung.';
+
+  @override
+  String get taskWizardGuideAdded => 'Zu „Meine Anleitungen“ hinzugefügt.';
+
+  @override
+  String get taskWizardGuideName => 'Name der Anleitung';
+
+  @override
+  String get taskWizardGuideNotSaved =>
+      'Die Anleitung konnte nicht gespeichert werden.';
+
+  @override
+  String get taskWizardGuides => 'Anleitungen';
+
+  @override
+  String get taskWizardIntro =>
+      'Zeichnen Sie auf, was Sie tun, machen Sie daraus eine Anleitung und folgen Sie Anleitungen Schritt für Schritt in der echten App.';
+
+  @override
+  String get taskWizardMakeGuide => 'Anleitung erstellen';
+
+  @override
+  String get taskWizardNoGuides =>
+      'Noch keine eigene Anleitung. Fügen Sie eine aus einer Aufzeichnung oder Aufgabendatei hinzu.';
+
+  @override
+  String get taskWizardOpenFileHint =>
+      'Eine Aufzeichnung oder ein Aufgabenpaket ohne Konto lesen, bearbeiten und exportieren.';
+
+  @override
+  String get taskWizardRecordings => 'Aufzeichnungen';
+
+  @override
+  String get taskWizardSaveChanges => 'Änderungen speichern';
+
+  @override
+  String get taskWizardTitle => 'Aufgaben-Assistent';
+
+  @override
+  String get taskWizardTools => 'Werkzeuge';
+
+  @override
+  String get taskWizardUnavailable =>
+      'Der Aufgaben-Recorder ist in diesem Arbeitsbereich ausgeschaltet: Anleitungen können hier gelesen und bearbeitet, aber nicht befolgt werden.';
+
+  @override
   String taskWorkbenchAccepted(int megabytes) {
     return 'Akzeptiert: .json und .deskilo-task.zip, bis $megabytes MB.';
   }

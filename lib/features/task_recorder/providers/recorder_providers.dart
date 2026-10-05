@@ -21,6 +21,8 @@ import '../../../core/time/clock.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/recorder_controller.dart';
+import '../data/guide_store.dart';
+import '../domain/stored_guide.dart';
 import '../data/recorder_log_backends.dart';
 import '../data/recorder_store.dart';
 import '../domain/recording_sink.dart';
@@ -50,6 +52,30 @@ RecorderStore? recorderStore(Ref ref) {
     ),
     clock: ref.watch(clockProvider),
   );
+}
+
+/// The signed-in account's own guides on this device (the task wizard's
+/// library); null when signed out.
+@Riverpod(keepAlive: true)
+GuideStore? guideStore(Ref ref) {
+  final account = ref.watch(currentAccountIdProvider);
+  if (account == null || account.isEmpty) return null;
+  return GuideStore(
+    backend: ref.watch(recorderLogBackendProvider),
+    accountNamespace: RecorderScope.accountNamespace(
+      backendUrl: ref.watch(bootedBackendUrlProvider),
+      userId: account,
+    ),
+    now: ref.watch(clockProvider).now,
+  );
+}
+
+/// The guides of the library, newest first.
+@riverpod
+Future<List<StoredGuide>> myGuides(Ref ref) async {
+  final store = ref.watch(guideStoreProvider);
+  if (store == null) return const <StoredGuide>[];
+  return store.list();
 }
 
 /// The scope a new recording would belong to; null when signed out.

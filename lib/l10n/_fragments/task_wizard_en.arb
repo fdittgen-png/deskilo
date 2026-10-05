@@ -1,0 +1,95 @@
+{
+  "@@locale": "en",
+  "taskWizardTitle": "Task wizard",
+  "@taskWizardTitle": {
+    "description": "Task wizard: taskWizardTitle"
+  },
+  "taskWizardIntro": "Record what you do, turn it into a guide, and follow guides step by step on the real app.",
+  "@taskWizardIntro": {
+    "description": "Task wizard: taskWizardIntro"
+  },
+  "taskWizardGuides": "Guides",
+  "@taskWizardGuides": {
+    "description": "Task wizard: taskWizardGuides"
+  },
+  "taskWizardAddGuide": "Add a guide",
+  "@taskWizardAddGuide": {
+    "description": "Task wizard: taskWizardAddGuide"
+  },
+  "taskWizardBuiltIn": "Guides that come with the app",
+  "@taskWizardBuiltIn": {
+    "description": "Task wizard: taskWizardBuiltIn"
+  },
+  "taskWizardUnavailable": "The task recorder is turned off in this workspace: guides can be read and edited here, but not followed.",
+  "@taskWizardUnavailable": {
+    "description": "Task wizard: taskWizardUnavailable"
+  },
+  "taskWizardRecordings": "Recordings",
+  "@taskWizardRecordings": {
+    "description": "Task wizard: taskWizardRecordings"
+  },
+  "taskWizardTools": "Tools",
+  "@taskWizardTools": {
+    "description": "Task wizard: taskWizardTools"
+  },
+  "taskWizardOpenFileHint": "Read, edit and export a recording or task package, without an account.",
+  "@taskWizardOpenFileHint": {
+    "description": "Task wizard: taskWizardOpenFileHint"
+  },
+  "taskWizardFromRecording": "From one of my recordings",
+  "@taskWizardFromRecording": {
+    "description": "Task wizard: taskWizardFromRecording"
+  },
+  "taskWizardFromRecordingHint": "Pick a recording; it becomes a guide at once.",
+  "@taskWizardFromRecordingHint": {
+    "description": "Task wizard: taskWizardFromRecordingHint"
+  },
+  "taskWizardFromFile": "From a task file or package",
+  "@taskWizardFromFile": {
+    "description": "Task wizard: taskWizardFromFile"
+  },
+  "taskWizardFromFileHint": "A recording, a task package or a guide file from someone else.",
+  "@taskWizardFromFileHint": {
+    "description": "Task wizard: taskWizardFromFileHint"
+  },
+  "taskWizardGuideAdded": "Added to My guides.",
+  "@taskWizardGuideAdded": {
+    "description": "Task wizard: taskWizardGuideAdded"
+  },
+  "taskWizardGuideNotSaved": "The guide could not be kept.",
+  "@taskWizardGuideNotSaved": {
+    "description": "Task wizard: taskWizardGuideNotSaved"
+  },
+  "taskWizardEdit": "Edit",
+  "@taskWizardEdit": {
+    "description": "Task wizard: taskWizardEdit"
+  },
+  "taskWizardNoGuides": "No guide of your own yet. Add one from a recording or a task file.",
+  "@taskWizardNoGuides": {
+    "description": "Task wizard: taskWizardNoGuides"
+  },
+  "taskWizardDeleteGuide": "Delete this guide",
+  "@taskWizardDeleteGuide": {
+    "description": "Task wizard: taskWizardDeleteGuide"
+  },
+  "taskWizardDeleteGuideBody": "The guide is removed from this device. The recording it came from is not touched.",
+  "@taskWizardDeleteGuideBody": {
+    "description": "Task wizard: taskWizardDeleteGuideBody"
+  },
+  "taskWizardMakeGuide": "Make a guide",
+  "@taskWizardMakeGuide": {
+    "description": "Task wizard: taskWizardMakeGuide"
+  },
+  "taskWizardGuideName": "Name of the guide",
+  "@taskWizardGuideName": {
+    "description": "Task wizard: taskWizardGuideName"
+  },
+  "taskWizardAddToGuides": "Add to my guides",
+  "@taskWizardAddToGuides": {
+    "description": "Task wizard: taskWizardAddToGuides"
+  },
+  "taskWizardSaveChanges": "Save the changes",
+  "@taskWizardSaveChanges": {
+    "description": "Task wizard: taskWizardSaveChanges"
+  }
+}

@@ -109,8 +109,9 @@ import '../features/money/presentation/screens/workspace_status_screen.dart';
 import '../features/money/presentation/screens/repartition_wizard_screen.dart';
 import '../features/workspace/presentation/screens/sites_screen.dart';
 import '../features/task_recorder/presentation/route_classification.dart'
-    show taskRecorderRoute, taskWorkbenchRoute;
+    show taskRecorderRoute, taskWizardRoute, taskWorkbenchRoute;
 import '../features/task_recorder/presentation/screens/task_recorder_screen.dart';
+import '../features/task_recorder/presentation/screens/task_wizard_screen.dart';
 import '../features/task_recorder/presentation/screens/task_workbench_screen.dart';
 import '../features/task_recorder/presentation/ui_capture.dart'
     show RecorderWindowObserver;
@@ -905,6 +906,9 @@ GoRouter router(Ref ref) {
         builder: (context, state) => WhatYouCanDoScreen(
             memberId: state.uri.queryParameters['member']),
       ),
+      // The task wizard: guides, recordings and tools, one screen.
+      GoRoute(path: taskWizardRoute,
+          builder: (context, state) => const TaskWizardScreen()),
       // #1865 — this account's own recordings on this device. Account-
       // level: reading, exporting and deleting them never needs a flag;
       // Start is gated by taskRecorder inside the screen.

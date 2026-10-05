@@ -10479,6 +10479,98 @@
   "taskRecorderValueTomorrow": "morgen",
   "taskRecorderValueWeek": "Woche",
   "taskRecorderValueWithheld": "nicht aufgezeichnet",
+  "taskWizardAddGuide": "Anleitung hinzufügen",
+  "@taskWizardAddGuide": {
+    "description": "Task wizard: taskWizardAddGuide"
+  },
+  "taskWizardAddToGuides": "Zu meinen Anleitungen hinzufügen",
+  "@taskWizardAddToGuides": {
+    "description": "Task wizard: taskWizardAddToGuides"
+  },
+  "taskWizardBuiltIn": "Anleitungen, die mit der App kommen",
+  "@taskWizardBuiltIn": {
+    "description": "Task wizard: taskWizardBuiltIn"
+  },
+  "taskWizardDeleteGuide": "Diese Anleitung löschen",
+  "@taskWizardDeleteGuide": {
+    "description": "Task wizard: taskWizardDeleteGuide"
+  },
+  "taskWizardDeleteGuideBody": "Die Anleitung wird von diesem Gerät entfernt. Die Aufzeichnung, aus der sie stammt, bleibt unberührt.",
+  "@taskWizardDeleteGuideBody": {
+    "description": "Task wizard: taskWizardDeleteGuideBody"
+  },
+  "taskWizardEdit": "Bearbeiten",
+  "@taskWizardEdit": {
+    "description": "Task wizard: taskWizardEdit"
+  },
+  "taskWizardFromFile": "Aus einer Aufgabendatei oder einem Paket",
+  "@taskWizardFromFile": {
+    "description": "Task wizard: taskWizardFromFile"
+  },
+  "taskWizardFromFileHint": "Eine Aufzeichnung, ein Aufgabenpaket oder eine Anleitungsdatei von jemand anderem.",
+  "@taskWizardFromFileHint": {
+    "description": "Task wizard: taskWizardFromFileHint"
+  },
+  "taskWizardFromRecording": "Aus einer meiner Aufzeichnungen",
+  "@taskWizardFromRecording": {
+    "description": "Task wizard: taskWizardFromRecording"
+  },
+  "taskWizardFromRecordingHint": "Wählen Sie eine Aufzeichnung; sie wird sofort zur Anleitung.",
+  "@taskWizardFromRecordingHint": {
+    "description": "Task wizard: taskWizardFromRecordingHint"
+  },
+  "taskWizardGuideAdded": "Zu „Meine Anleitungen“ hinzugefügt.",
+  "@taskWizardGuideAdded": {
+    "description": "Task wizard: taskWizardGuideAdded"
+  },
+  "taskWizardGuideName": "Name der Anleitung",
+  "@taskWizardGuideName": {
+    "description": "Task wizard: taskWizardGuideName"
+  },
+  "taskWizardGuideNotSaved": "Die Anleitung konnte nicht gespeichert werden.",
+  "@taskWizardGuideNotSaved": {
+    "description": "Task wizard: taskWizardGuideNotSaved"
+  },
+  "taskWizardGuides": "Anleitungen",
+  "@taskWizardGuides": {
+    "description": "Task wizard: taskWizardGuides"
+  },
+  "taskWizardIntro": "Zeichnen Sie auf, was Sie tun, machen Sie daraus eine Anleitung und folgen Sie Anleitungen Schritt für Schritt in der echten App.",
+  "@taskWizardIntro": {
+    "description": "Task wizard: taskWizardIntro"
+  },
+  "taskWizardMakeGuide": "Anleitung erstellen",
+  "@taskWizardMakeGuide": {
+    "description": "Task wizard: taskWizardMakeGuide"
+  },
+  "taskWizardNoGuides": "Noch keine eigene Anleitung. Fügen Sie eine aus einer Aufzeichnung oder Aufgabendatei hinzu.",
+  "@taskWizardNoGuides": {
+    "description": "Task wizard: taskWizardNoGuides"
+  },
+  "taskWizardOpenFileHint": "Eine Aufzeichnung oder ein Aufgabenpaket ohne Konto lesen, bearbeiten und exportieren.",
+  "@taskWizardOpenFileHint": {
+    "description": "Task wizard: taskWizardOpenFileHint"
+  },
+  "taskWizardRecordings": "Aufzeichnungen",
+  "@taskWizardRecordings": {
+    "description": "Task wizard: taskWizardRecordings"
+  },
+  "taskWizardSaveChanges": "Änderungen speichern",
+  "@taskWizardSaveChanges": {
+    "description": "Task wizard: taskWizardSaveChanges"
+  },
+  "taskWizardTitle": "Aufgaben-Assistent",
+  "@taskWizardTitle": {
+    "description": "Task wizard: taskWizardTitle"
+  },
+  "taskWizardTools": "Werkzeuge",
+  "@taskWizardTools": {
+    "description": "Task wizard: taskWizardTools"
+  },
+  "taskWizardUnavailable": "Der Aufgaben-Recorder ist in diesem Arbeitsbereich ausgeschaltet: Anleitungen können hier gelesen und bearbeitet, aber nicht befolgt werden.",
+  "@taskWizardUnavailable": {
+    "description": "Task wizard: taskWizardUnavailable"
+  },
   "taskWorkbenchAccepted": "Akzeptiert: .json und .deskilo-task.zip, bis {megabytes} MB.",
   "taskWorkbenchChoose": "Aufgabendatei wählen",
   "taskWorkbenchClaim": "Die Datei gibt an {key}: {value}",

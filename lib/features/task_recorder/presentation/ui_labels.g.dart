@@ -4441,6 +4441,32 @@ Map<String, _Getter> _part10() => {
   'taskRecorderValueTomorrow': (l) => l.taskRecorderValueTomorrow,
   'taskRecorderValueWeek': (l) => l.taskRecorderValueWeek,
   'taskRecorderValueWithheld': (l) => l.taskRecorderValueWithheld,
+  'taskWizardAddGuide': (l) => l.taskWizardAddGuide,
+  'taskWizardAddToGuides': (l) => l.taskWizardAddToGuides,
+  'taskWizardBuiltIn': (l) => l.taskWizardBuiltIn,
+  'taskWizardDeleteGuide': (l) => l.taskWizardDeleteGuide,
+  'taskWizardDeleteGuideBody': (l) => l.taskWizardDeleteGuideBody,
+  'taskWizardEdit': (l) => l.taskWizardEdit,
+  'taskWizardFromFile': (l) => l.taskWizardFromFile,
+  'taskWizardFromFileHint': (l) => l.taskWizardFromFileHint,
+  'taskWizardFromRecording': (l) => l.taskWizardFromRecording,
+  'taskWizardFromRecordingHint': (l) => l.taskWizardFromRecordingHint,
+  'taskWizardGuideAdded': (l) => l.taskWizardGuideAdded,
+  'taskWizardGuideName': (l) => l.taskWizardGuideName,
+  'taskWizardGuideNotSaved': (l) => l.taskWizardGuideNotSaved,
+  'taskWizardGuides': (l) => l.taskWizardGuides,
+  'taskWizardIntro': (l) => l.taskWizardIntro,
+};
+
+Map<String, _Getter> _part11() => {
+  'taskWizardMakeGuide': (l) => l.taskWizardMakeGuide,
+  'taskWizardNoGuides': (l) => l.taskWizardNoGuides,
+  'taskWizardOpenFileHint': (l) => l.taskWizardOpenFileHint,
+  'taskWizardRecordings': (l) => l.taskWizardRecordings,
+  'taskWizardSaveChanges': (l) => l.taskWizardSaveChanges,
+  'taskWizardTitle': (l) => l.taskWizardTitle,
+  'taskWizardTools': (l) => l.taskWizardTools,
+  'taskWizardUnavailable': (l) => l.taskWizardUnavailable,
   'taskWorkbenchChoose': (l) => l.taskWorkbenchChoose,
   'taskWorkbenchEdited': (l) => l.taskWorkbenchEdited,
   'taskWorkbenchFileType': (l) => l.taskWorkbenchFileType,
@@ -4456,9 +4482,6 @@ Map<String, _Getter> _part10() => {
   'taskWorkbenchRefusedDamaged': (l) => l.taskWorkbenchRefusedDamaged,
   'taskWorkbenchRefusedInvalid': (l) => l.taskWorkbenchRefusedInvalid,
   'taskWorkbenchRefusedNewer': (l) => l.taskWorkbenchRefusedNewer,
-};
-
-Map<String, _Getter> _part11() => {
   'taskWorkbenchRefusedTooLarge': (l) => l.taskWorkbenchRefusedTooLarge,
   'taskWorkbenchRefusedUnsafe': (l) => l.taskWorkbenchRefusedUnsafe,
   'taskWorkbenchRefusedUnsupported': (l) => l.taskWorkbenchRefusedUnsupported,
@@ -4836,6 +4859,9 @@ Map<String, _Getter> _part11() => {
   'workspaceResetTitle': (l) => l.workspaceResetTitle,
   'workspaceResetWarning': (l) => l.workspaceResetWarning,
   'workspaceSettingsConflict': (l) => l.workspaceSettingsConflict,
+};
+
+Map<String, _Getter> _part12() => {
   'workspaceSettingsCurrencyHelper': (l) => l.workspaceSettingsCurrencyHelper,
   'workspaceSettingsSaved': (l) => l.workspaceSettingsSaved,
   'workspaceSettingsTitle': (l) => l.workspaceSettingsTitle,
@@ -4859,9 +4885,6 @@ Map<String, _Getter> _part11() => {
   'workspaceXmlImport': (l) => l.workspaceXmlImport,
   'workspaceXmlImportConfigurationOnly': (l) => l.workspaceXmlImportConfigurationOnly,
   'workspaceXmlImportConfirm': (l) => l.workspaceXmlImportConfirm,
-};
-
-Map<String, _Getter> _part12() => {
   'workspaceXmlImportPartial': (l) => l.workspaceXmlImportPartial,
   'workspaceXmlImportPreviewTitle': (l) => l.workspaceXmlImportPreviewTitle,
   'workspaceXmlImportPreviewWarning': (l) => l.workspaceXmlImportPreviewWarning,

@@ -21,6 +21,10 @@ import '../../profile/presentation/widgets/personal_avatar.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../directory/presentation/directory_screen.dart';
+import '../../task_recorder/presentation/route_classification.dart'
+    show taskWizardRoute;
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import 'me_account_tab.dart';
 import 'me_home_tab.dart';
 import 'me_messages_tab.dart';
@@ -155,7 +159,21 @@ class _MeShellState extends ConsumerState<MeShell> {
                       title: Text('${l10n?.appTitle ?? 'DesKilo'} · ${l10n?.meTabMe ?? 'Me'}'),
                     ),
                     const Divider(),
-                    for (final tab in MeTab.values)
+                    for (final tab in MeTab.values) ...[
+                      // The task wizard sits between Messages and the profile.
+                      if (tab == MeTab.me &&
+                          ref
+                              .watch(enabledFeaturesSyncProvider)
+                              .contains(WorkspaceFeature.taskRecorder))
+                        ListTile(
+                          key: const ValueKey('me-drawer-task-wizard'),
+                          leading: const Icon(Icons.assistant_navigation),
+                          title: Text(l10n?.taskWizardTitle ?? 'Task wizard'),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            context.push(taskWizardRoute);
+                          },
+                        ),
                       ListTile(
                         key: ValueKey('me-tab-${tab.wire}'),
                         leading: tab == MeTab.me
@@ -168,6 +186,7 @@ class _MeShellState extends ConsumerState<MeShell> {
                           _show(tab);
                         },
                       ),
+                    ],
                   ],
                 ),
               ),

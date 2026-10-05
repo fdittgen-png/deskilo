@@ -1,0 +1,95 @@
+{
+  "@@locale": "es",
+  "taskWizardTitle": "Asistente de tareas",
+  "@taskWizardTitle": {
+    "description": "Task wizard: taskWizardTitle"
+  },
+  "taskWizardIntro": "Grabe lo que hace, conviértalo en una guía y siga las guías paso a paso en la aplicación real.",
+  "@taskWizardIntro": {
+    "description": "Task wizard: taskWizardIntro"
+  },
+  "taskWizardGuides": "Guías",
+  "@taskWizardGuides": {
+    "description": "Task wizard: taskWizardGuides"
+  },
+  "taskWizardAddGuide": "Añadir una guía",
+  "@taskWizardAddGuide": {
+    "description": "Task wizard: taskWizardAddGuide"
+  },
+  "taskWizardBuiltIn": "Guías incluidas en la aplicación",
+  "@taskWizardBuiltIn": {
+    "description": "Task wizard: taskWizardBuiltIn"
+  },
+  "taskWizardUnavailable": "El grabador de tareas está desactivado en este espacio: las guías se pueden leer y editar aquí, pero no seguir.",
+  "@taskWizardUnavailable": {
+    "description": "Task wizard: taskWizardUnavailable"
+  },
+  "taskWizardRecordings": "Grabaciones",
+  "@taskWizardRecordings": {
+    "description": "Task wizard: taskWizardRecordings"
+  },
+  "taskWizardTools": "Herramientas",
+  "@taskWizardTools": {
+    "description": "Task wizard: taskWizardTools"
+  },
+  "taskWizardOpenFileHint": "Leer, editar y exportar una grabación o un paquete de tarea, sin cuenta.",
+  "@taskWizardOpenFileHint": {
+    "description": "Task wizard: taskWizardOpenFileHint"
+  },
+  "taskWizardFromRecording": "Desde una de mis grabaciones",
+  "@taskWizardFromRecording": {
+    "description": "Task wizard: taskWizardFromRecording"
+  },
+  "taskWizardFromRecordingHint": "Elija una grabación; se convierte en guía al instante.",
+  "@taskWizardFromRecordingHint": {
+    "description": "Task wizard: taskWizardFromRecordingHint"
+  },
+  "taskWizardFromFile": "Desde un archivo o paquete de tarea",
+  "@taskWizardFromFile": {
+    "description": "Task wizard: taskWizardFromFile"
+  },
+  "taskWizardFromFileHint": "Una grabación, un paquete de tarea o un archivo de guía de otra persona.",
+  "@taskWizardFromFileHint": {
+    "description": "Task wizard: taskWizardFromFileHint"
+  },
+  "taskWizardGuideAdded": "Añadida a Mis guías.",
+  "@taskWizardGuideAdded": {
+    "description": "Task wizard: taskWizardGuideAdded"
+  },
+  "taskWizardGuideNotSaved": "No se pudo guardar la guía.",
+  "@taskWizardGuideNotSaved": {
+    "description": "Task wizard: taskWizardGuideNotSaved"
+  },
+  "taskWizardEdit": "Editar",
+  "@taskWizardEdit": {
+    "description": "Task wizard: taskWizardEdit"
+  },
+  "taskWizardNoGuides": "Aún no tiene guías propias. Añada una desde una grabación o un archivo de tarea.",
+  "@taskWizardNoGuides": {
+    "description": "Task wizard: taskWizardNoGuides"
+  },
+  "taskWizardDeleteGuide": "Eliminar esta guía",
+  "@taskWizardDeleteGuide": {
+    "description": "Task wizard: taskWizardDeleteGuide"
+  },
+  "taskWizardDeleteGuideBody": "La guía se elimina de este dispositivo. La grabación de la que procede no se toca.",
+  "@taskWizardDeleteGuideBody": {
+    "description": "Task wizard: taskWizardDeleteGuideBody"
+  },
+  "taskWizardMakeGuide": "Crear una guía",
+  "@taskWizardMakeGuide": {
+    "description": "Task wizard: taskWizardMakeGuide"
+  },
+  "taskWizardGuideName": "Nombre de la guía",
+  "@taskWizardGuideName": {
+    "description": "Task wizard: taskWizardGuideName"
+  },
+  "taskWizardAddToGuides": "Añadir a mis guías",
+  "@taskWizardAddToGuides": {
+    "description": "Task wizard: taskWizardAddToGuides"
+  },
+  "taskWizardSaveChanges": "Guardar los cambios",
+  "@taskWizardSaveChanges": {
+    "description": "Task wizard: taskWizardSaveChanges"
+  }
+}

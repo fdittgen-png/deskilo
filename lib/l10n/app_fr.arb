@@ -10479,6 +10479,98 @@
   "taskRecorderValueTomorrow": "demain",
   "taskRecorderValueWeek": "semaine",
   "taskRecorderValueWithheld": "non enregistré",
+  "taskWizardAddGuide": "Ajouter un guide",
+  "@taskWizardAddGuide": {
+    "description": "Task wizard: taskWizardAddGuide"
+  },
+  "taskWizardAddToGuides": "Ajouter à mes guides",
+  "@taskWizardAddToGuides": {
+    "description": "Task wizard: taskWizardAddToGuides"
+  },
+  "taskWizardBuiltIn": "Guides fournis avec l'application",
+  "@taskWizardBuiltIn": {
+    "description": "Task wizard: taskWizardBuiltIn"
+  },
+  "taskWizardDeleteGuide": "Supprimer ce guide",
+  "@taskWizardDeleteGuide": {
+    "description": "Task wizard: taskWizardDeleteGuide"
+  },
+  "taskWizardDeleteGuideBody": "Le guide est supprimé de cet appareil. L'enregistrement dont il provient n'est pas touché.",
+  "@taskWizardDeleteGuideBody": {
+    "description": "Task wizard: taskWizardDeleteGuideBody"
+  },
+  "taskWizardEdit": "Modifier",
+  "@taskWizardEdit": {
+    "description": "Task wizard: taskWizardEdit"
+  },
+  "taskWizardFromFile": "À partir d'un fichier ou paquet de tâche",
+  "@taskWizardFromFile": {
+    "description": "Task wizard: taskWizardFromFile"
+  },
+  "taskWizardFromFileHint": "Un enregistrement, un paquet de tâche ou un fichier de guide venant de quelqu'un d'autre.",
+  "@taskWizardFromFileHint": {
+    "description": "Task wizard: taskWizardFromFileHint"
+  },
+  "taskWizardFromRecording": "À partir d'un de mes enregistrements",
+  "@taskWizardFromRecording": {
+    "description": "Task wizard: taskWizardFromRecording"
+  },
+  "taskWizardFromRecordingHint": "Choisissez un enregistrement : il devient aussitôt un guide.",
+  "@taskWizardFromRecordingHint": {
+    "description": "Task wizard: taskWizardFromRecordingHint"
+  },
+  "taskWizardGuideAdded": "Ajouté à Mes guides.",
+  "@taskWizardGuideAdded": {
+    "description": "Task wizard: taskWizardGuideAdded"
+  },
+  "taskWizardGuideName": "Nom du guide",
+  "@taskWizardGuideName": {
+    "description": "Task wizard: taskWizardGuideName"
+  },
+  "taskWizardGuideNotSaved": "Le guide n'a pas pu être conservé.",
+  "@taskWizardGuideNotSaved": {
+    "description": "Task wizard: taskWizardGuideNotSaved"
+  },
+  "taskWizardGuides": "Guides",
+  "@taskWizardGuides": {
+    "description": "Task wizard: taskWizardGuides"
+  },
+  "taskWizardIntro": "Enregistrez ce que vous faites, transformez-le en guide, et suivez les guides pas à pas dans la vraie application.",
+  "@taskWizardIntro": {
+    "description": "Task wizard: taskWizardIntro"
+  },
+  "taskWizardMakeGuide": "Créer un guide",
+  "@taskWizardMakeGuide": {
+    "description": "Task wizard: taskWizardMakeGuide"
+  },
+  "taskWizardNoGuides": "Pas encore de guide à vous. Ajoutez-en un à partir d'un enregistrement ou d'un fichier de tâche.",
+  "@taskWizardNoGuides": {
+    "description": "Task wizard: taskWizardNoGuides"
+  },
+  "taskWizardOpenFileHint": "Lire, modifier et exporter un enregistrement ou un paquet de tâche, sans compte.",
+  "@taskWizardOpenFileHint": {
+    "description": "Task wizard: taskWizardOpenFileHint"
+  },
+  "taskWizardRecordings": "Enregistrements",
+  "@taskWizardRecordings": {
+    "description": "Task wizard: taskWizardRecordings"
+  },
+  "taskWizardSaveChanges": "Enregistrer les modifications",
+  "@taskWizardSaveChanges": {
+    "description": "Task wizard: taskWizardSaveChanges"
+  },
+  "taskWizardTitle": "Assistant de tâches",
+  "@taskWizardTitle": {
+    "description": "Task wizard: taskWizardTitle"
+  },
+  "taskWizardTools": "Outils",
+  "@taskWizardTools": {
+    "description": "Task wizard: taskWizardTools"
+  },
+  "taskWizardUnavailable": "L'enregistreur de tâches est désactivé dans cet espace : les guides peuvent être lus et modifiés ici, mais pas suivis.",
+  "@taskWizardUnavailable": {
+    "description": "Task wizard: taskWizardUnavailable"
+  },
   "taskWorkbenchAccepted": "Acceptés : .json et .deskilo-task.zip, jusqu'à {megabytes} Mo.",
   "taskWorkbenchChoose": "Choisir un fichier de tâche",
   "taskWorkbenchClaim": "Le fichier indique {key} : {value}",

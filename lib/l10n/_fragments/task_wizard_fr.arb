@@ -1,0 +1,95 @@
+{
+  "@@locale": "fr",
+  "taskWizardTitle": "Assistant de tâches",
+  "@taskWizardTitle": {
+    "description": "Task wizard: taskWizardTitle"
+  },
+  "taskWizardIntro": "Enregistrez ce que vous faites, transformez-le en guide, et suivez les guides pas à pas dans la vraie application.",
+  "@taskWizardIntro": {
+    "description": "Task wizard: taskWizardIntro"
+  },
+  "taskWizardGuides": "Guides",
+  "@taskWizardGuides": {
+    "description": "Task wizard: taskWizardGuides"
+  },
+  "taskWizardAddGuide": "Ajouter un guide",
+  "@taskWizardAddGuide": {
+    "description": "Task wizard: taskWizardAddGuide"
+  },
+  "taskWizardBuiltIn": "Guides fournis avec l'application",
+  "@taskWizardBuiltIn": {
+    "description": "Task wizard: taskWizardBuiltIn"
+  },
+  "taskWizardUnavailable": "L'enregistreur de tâches est désactivé dans cet espace : les guides peuvent être lus et modifiés ici, mais pas suivis.",
+  "@taskWizardUnavailable": {
+    "description": "Task wizard: taskWizardUnavailable"
+  },
+  "taskWizardRecordings": "Enregistrements",
+  "@taskWizardRecordings": {
+    "description": "Task wizard: taskWizardRecordings"
+  },
+  "taskWizardTools": "Outils",
+  "@taskWizardTools": {
+    "description": "Task wizard: taskWizardTools"
+  },
+  "taskWizardOpenFileHint": "Lire, modifier et exporter un enregistrement ou un paquet de tâche, sans compte.",
+  "@taskWizardOpenFileHint": {
+    "description": "Task wizard: taskWizardOpenFileHint"
+  },
+  "taskWizardFromRecording": "À partir d'un de mes enregistrements",
+  "@taskWizardFromRecording": {
+    "description": "Task wizard: taskWizardFromRecording"
+  },
+  "taskWizardFromRecordingHint": "Choisissez un enregistrement : il devient aussitôt un guide.",
+  "@taskWizardFromRecordingHint": {
+    "description": "Task wizard: taskWizardFromRecordingHint"
+  },
+  "taskWizardFromFile": "À partir d'un fichier ou paquet de tâche",
+  "@taskWizardFromFile": {
+    "description": "Task wizard: taskWizardFromFile"
+  },
+  "taskWizardFromFileHint": "Un enregistrement, un paquet de tâche ou un fichier de guide venant de quelqu'un d'autre.",
+  "@taskWizardFromFileHint": {
+    "description": "Task wizard: taskWizardFromFileHint"
+  },
+  "taskWizardGuideAdded": "Ajouté à Mes guides.",
+  "@taskWizardGuideAdded": {
+    "description": "Task wizard: taskWizardGuideAdded"
+  },
+  "taskWizardGuideNotSaved": "Le guide n'a pas pu être conservé.",
+  "@taskWizardGuideNotSaved": {
+    "description": "Task wizard: taskWizardGuideNotSaved"
+  },
+  "taskWizardEdit": "Modifier",
+  "@taskWizardEdit": {
+    "description": "Task wizard: taskWizardEdit"
+  },
+  "taskWizardNoGuides": "Pas encore de guide à vous. Ajoutez-en un à partir d'un enregistrement ou d'un fichier de tâche.",
+  "@taskWizardNoGuides": {
+    "description": "Task wizard: taskWizardNoGuides"
+  },
+  "taskWizardDeleteGuide": "Supprimer ce guide",
+  "@taskWizardDeleteGuide": {
+    "description": "Task wizard: taskWizardDeleteGuide"
+  },
+  "taskWizardDeleteGuideBody": "Le guide est supprimé de cet appareil. L'enregistrement dont il provient n'est pas touché.",
+  "@taskWizardDeleteGuideBody": {
+    "description": "Task wizard: taskWizardDeleteGuideBody"
+  },
+  "taskWizardMakeGuide": "Créer un guide",
+  "@taskWizardMakeGuide": {
+    "description": "Task wizard: taskWizardMakeGuide"
+  },
+  "taskWizardGuideName": "Nom du guide",
+  "@taskWizardGuideName": {
+    "description": "Task wizard: taskWizardGuideName"
+  },
+  "taskWizardAddToGuides": "Ajouter à mes guides",
+  "@taskWizardAddToGuides": {
+    "description": "Task wizard: taskWizardAddToGuides"
+  },
+  "taskWizardSaveChanges": "Enregistrer les modifications",
+  "@taskWizardSaveChanges": {
+    "description": "Task wizard: taskWizardSaveChanges"
+  }
+}
