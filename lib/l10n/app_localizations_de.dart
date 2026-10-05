@@ -15916,6 +15916,31 @@ class AppLocalizationsDe extends AppLocalizations {
   String get supportTitle => 'Supportdetails';
 
   @override
+  String get symbolHint =>
+      'Ein rundes Zeichen aus einem oder zwei Buchstaben auf einer Farbe, einmalig für diesen Arbeitsbereich — oder stattdessen unten ein Foto verwenden.';
+
+  @override
+  String get symbolLetters => 'Buchstaben';
+
+  @override
+  String get symbolLettersRule =>
+      'Verwenden Sie ein oder zwei Buchstaben oder Ziffern für das Symbol.';
+
+  @override
+  String get symbolSaveFailed =>
+      'Das Symbol konnte nicht gespeichert werden. Nichts wurde geändert.';
+
+  @override
+  String get symbolSaved => 'Symbol gespeichert.';
+
+  @override
+  String get symbolTaken =>
+      'Ein anderer Arbeitsbereich nutzt diese Buchstaben bereits in dieser Farbe. Wählen Sie eine andere Farbe oder andere Buchstaben — oder verwenden Sie ein Foto.';
+
+  @override
+  String get symbolTitle => 'Symbol';
+
+  @override
   String get tabCalendar => 'Kalender';
 
   @override

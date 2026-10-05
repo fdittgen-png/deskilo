@@ -164,5 +164,33 @@
   "emblemTooHeavy": "Esa imagen es demasiado pesada para una marca que se muestra a 28 píxeles.",
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
+  },
+  "symbolTitle": "Símbolo",
+  "@symbolTitle": {
+    "description": "workspace symbol"
+  },
+  "symbolHint": "Una marca redonda de una o dos letras sobre un color, única de este espacio — o use una foto abajo.",
+  "@symbolHint": {
+    "description": "workspace symbol"
+  },
+  "symbolLetters": "Letras",
+  "@symbolLetters": {
+    "description": "workspace symbol"
+  },
+  "symbolLettersRule": "Use una o dos letras o dígitos para el símbolo.",
+  "@symbolLettersRule": {
+    "description": "workspace symbol"
+  },
+  "symbolSaveFailed": "No se pudo guardar el símbolo. No cambió nada.",
+  "@symbolSaveFailed": {
+    "description": "workspace symbol"
+  },
+  "symbolSaved": "Símbolo guardado.",
+  "@symbolSaved": {
+    "description": "workspace symbol"
+  },
+  "symbolTaken": "Otro espacio ya usa estas letras en este color. Elija otro color u otras letras — o use una foto.",
+  "@symbolTaken": {
+    "description": "workspace symbol"
   }
 }

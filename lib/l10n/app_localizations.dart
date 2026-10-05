@@ -27236,6 +27236,48 @@ abstract class AppLocalizations {
   /// **'Support details'**
   String get supportTitle;
 
+  /// workspace symbol
+  ///
+  /// In en, this message translates to:
+  /// **'A round mark of one or two letters on a colour, unique to this workspace — or use a photo below instead.'**
+  String get symbolHint;
+
+  /// workspace symbol
+  ///
+  /// In en, this message translates to:
+  /// **'Letters'**
+  String get symbolLetters;
+
+  /// workspace symbol
+  ///
+  /// In en, this message translates to:
+  /// **'Use one or two letters or digits for the symbol.'**
+  String get symbolLettersRule;
+
+  /// workspace symbol
+  ///
+  /// In en, this message translates to:
+  /// **'The symbol could not be saved. Nothing changed.'**
+  String get symbolSaveFailed;
+
+  /// workspace symbol
+  ///
+  /// In en, this message translates to:
+  /// **'Symbol saved.'**
+  String get symbolSaved;
+
+  /// workspace symbol
+  ///
+  /// In en, this message translates to:
+  /// **'Another workspace already uses these letters in this colour. Choose another colour or letters — or use a photo instead.'**
+  String get symbolTaken;
+
+  /// workspace symbol
+  ///
+  /// In en, this message translates to:
+  /// **'Symbol'**
+  String get symbolTitle;
+
   /// Bottom-navigation label for the reservations calendar tab
   ///
   /// In en, this message translates to:

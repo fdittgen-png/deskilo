@@ -13,6 +13,39 @@ abstract final class BrandingKeys {
   static const seedColor = 'seed_color';
   static const officePalette = 'office_palette';
   static const seatPalette = 'seat_palette';
+  static const symbolText = 'symbol_text';
+  static const symbolColor = 'symbol_color';
+}
+
+/// The curated colours a workspace symbol may wear (the server's list, 0378).
+const List<String> symbolColours = [
+  '#C2410C', '#B45309', '#4D7C0F', '#15803D', '#0F766E', '#0369A1',
+  '#1D4ED8', '#6D28D9', '#A21CAF', '#BE185D', '#B91C1C', '#475569',
+];
+
+/// One or two letters on a colour — a workspace's mark when it has no photo.
+/// The pair is unique across workspaces (0378).
+class WorkspaceSymbol {
+  const WorkspaceSymbol(this.text, this.colourHex);
+  final String text;
+  final String colourHex;
+
+  /// The stored symbol, or null when the workspace has none.
+  static WorkspaceSymbol? of(Map<String, dynamic> branding) {
+    final t = branding[BrandingKeys.symbolText];
+    final c = parseHexColor(branding[BrandingKeys.symbolColor]);
+    if (t is! String || t.isEmpty || c == null) return null;
+    return WorkspaceSymbol(t, branding[BrandingKeys.symbolColor] as String);
+  }
+
+  int get argb => parseHexColor(colourHex)!;
+}
+
+/// Another workspace already wears this letters-and-colour pair.
+class WorkspaceSymbolTaken implements Exception {
+  const WorkspaceSymbolTaken();
+  @override
+  String toString() => 'WorkspaceSymbolTaken';
 }
 
 /// `#RRGGBB` → opaque ARGB, or null for anything else. Case-insensitive,
@@ -64,3 +97,13 @@ class WorkspaceBranding {
   bool get isEmpty =>
       seedArgb == null && officePalette.isEmpty && seatPalette == null;
 }
+
+/// True when another of [others] (id → branding) already wears [mine].
+bool symbolClashes(
+  WorkspaceSymbol mine,
+  Iterable<Map<String, dynamic>> others,
+) =>
+    others.any((b) {
+      final o = WorkspaceSymbol.of(b);
+      return o?.text == mine.text && o?.colourHex == mine.colourHex;
+    });

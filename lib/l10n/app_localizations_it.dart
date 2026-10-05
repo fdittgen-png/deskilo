@@ -15896,6 +15896,31 @@ class AppLocalizationsIt extends AppLocalizations {
   String get supportTitle => 'Dettagli per l’assistenza';
 
   @override
+  String get symbolHint =>
+      'Un segno rotondo di una o due lettere su un colore, unico per questo spazio — oppure usa una foto qui sotto.';
+
+  @override
+  String get symbolLetters => 'Lettere';
+
+  @override
+  String get symbolLettersRule =>
+      'Usa una o due lettere o cifre per il simbolo.';
+
+  @override
+  String get symbolSaveFailed =>
+      'Impossibile salvare il simbolo. Nulla è cambiato.';
+
+  @override
+  String get symbolSaved => 'Simbolo salvato.';
+
+  @override
+  String get symbolTaken =>
+      'Un altro spazio usa già queste lettere con questo colore. Scegli un altro colore o altre lettere — oppure usa una foto.';
+
+  @override
+  String get symbolTitle => 'Simbolo';
+
+  @override
   String get tabCalendar => 'Calendario';
 
   @override

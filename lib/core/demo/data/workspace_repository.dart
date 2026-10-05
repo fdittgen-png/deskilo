@@ -6,6 +6,7 @@
 
 import 'dart:typed_data' show Uint8List;
 import 'dart:async';
+import 'package:deskilo/features/workspace/domain/workspace_branding.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
@@ -1124,6 +1125,14 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       } else {
         current[e.key] = e.value;
       }
+    }
+    final mine = WorkspaceSymbol.of(current);
+    if (mine != null &&
+        symbolClashes(mine, [
+          for (final w in workspaces)
+            if (w.id != workspaceId) brandings[w.id] ?? w.branding,
+        ])) {
+      throw const WorkspaceSymbolTaken();
     }
     brandings[workspaceId] = current;
     final i = workspaces.indexWhere((w) => w.id == workspaceId);

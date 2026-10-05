@@ -15927,6 +15927,31 @@ class AppLocalizationsFr extends AppLocalizations {
   String get supportTitle => 'Détails pour l’assistance';
 
   @override
+  String get symbolHint =>
+      'Une pastille ronde d’une ou deux lettres sur une couleur, unique à cet espace — ou utilisez plutôt une photo ci-dessous.';
+
+  @override
+  String get symbolLetters => 'Lettres';
+
+  @override
+  String get symbolLettersRule =>
+      'Utilisez une ou deux lettres ou chiffres pour le symbole.';
+
+  @override
+  String get symbolSaveFailed =>
+      'Le symbole n’a pas pu être enregistré. Rien n’a changé.';
+
+  @override
+  String get symbolSaved => 'Symbole enregistré.';
+
+  @override
+  String get symbolTaken =>
+      'Un autre espace utilise déjà ces lettres dans cette couleur. Choisissez une autre couleur ou d’autres lettres — ou utilisez une photo.';
+
+  @override
+  String get symbolTitle => 'Symbole';
+
+  @override
   String get tabCalendar => 'Calendrier';
 
   @override
