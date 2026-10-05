@@ -221,4 +221,46 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('people search'), findsOneWidget);
   });
+
+  testWidgets('search narrows the list by title, last words or space',
+      (tester) async {
+    await pumpInbox(tester, home: home, remote: remote);
+    await tester.tap(find.byKey(const ValueKey('unified-inbox-search')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('unified-inbox-search-field')),
+      'ana',
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsOneWidget);
+    expect(find.byKey(const ValueKey('inbox-entry-c-space')), findsNothing);
+    expect(find.byKey(const ValueKey('inbox-entry-c-inq')), findsNothing);
+  });
+
+  testWidgets('pin lifts a row to the top; archive moves it to Archived and '
+      'back', (tester) async {
+    await pumpInbox(tester, home: home, remote: remote);
+    await tester.longPress(find.byKey(const ValueKey('inbox-entry-c-ana')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('inbox-menu-pin')));
+    await tester.pumpAndSettle();
+    final first = tester
+        .widgetList<ListTile>(find.byWidgetPredicate(
+          (w) => w is ListTile && '${w.key}'.contains('inbox-entry-'),
+        ))
+        .first
+        .key;
+    expect('$first', contains('c-ana'));
+    expect(find.byKey(const ValueKey('inbox-pinned-c-ana')), findsOneWidget);
+
+    await tester.longPress(find.byKey(const ValueKey('inbox-entry-c-ana')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('inbox-menu-archive')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('unified-inbox-archived')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsOneWidget);
+    expect(find.byKey(const ValueKey('inbox-entry-c-space')), findsNothing);
+  });
 }
