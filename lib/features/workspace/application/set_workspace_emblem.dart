@@ -10,6 +10,7 @@
 import 'dart:typed_data';
 
 import '../../../core/images/emblem_refusal.dart';
+import '../domain/workspace_branding.dart';
 import '../domain/workspace_repository.dart';
 
 /// Redraws [bytes] into the PNG that may be stored, or throws the
@@ -58,6 +59,11 @@ class Emblems {
       };
     }
     await _workspaces.setWorkspaceEmblem(workspaceId, png);
+    // One mark at a time: a photo replaces the letters (0378).
+    await _workspaces.setWorkspaceBranding(workspaceId, {
+      BrandingKeys.symbolText: null,
+      BrandingKeys.symbolColor: null,
+    });
     return EmblemOutcome.stored;
   }
 

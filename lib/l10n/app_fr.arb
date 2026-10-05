@@ -10124,6 +10124,34 @@
     }
   },
   "supportTitle": "Détails pour l’assistance",
+  "symbolHint": "Une pastille ronde d’une ou deux lettres sur une couleur, unique à cet espace — ou utilisez plutôt une photo ci-dessous.",
+  "@symbolHint": {
+    "description": "workspace symbol"
+  },
+  "symbolLetters": "Lettres",
+  "@symbolLetters": {
+    "description": "workspace symbol"
+  },
+  "symbolLettersRule": "Utilisez une ou deux lettres ou chiffres pour le symbole.",
+  "@symbolLettersRule": {
+    "description": "workspace symbol"
+  },
+  "symbolSaveFailed": "Le symbole n’a pas pu être enregistré. Rien n’a changé.",
+  "@symbolSaveFailed": {
+    "description": "workspace symbol"
+  },
+  "symbolSaved": "Symbole enregistré.",
+  "@symbolSaved": {
+    "description": "workspace symbol"
+  },
+  "symbolTaken": "Un autre espace utilise déjà ces lettres dans cette couleur. Choisissez une autre couleur ou d’autres lettres — ou utilisez une photo.",
+  "@symbolTaken": {
+    "description": "workspace symbol"
+  },
+  "symbolTitle": "Symbole",
+  "@symbolTitle": {
+    "description": "workspace symbol"
+  },
   "tabCalendar": "Calendrier",
   "tabEvents": "Événements",
   "tabMoney": "Finances",

@@ -68,6 +68,7 @@ class _EmblemEditorState extends ConsumerState<EmblemEditor> {
             l10n?.emblemTooHeavy ??
                 'That image is too heavy for a mark shown at 28 pixels.');
       case EmblemOutcome.stored:
+        ref.invalidate(myWorkspacesProvider);
         _reload();
         AppSnack.success(context, l10n?.emblemSaved ?? 'Emblem saved.');
       case EmblemOutcome.removed || null:

@@ -15758,6 +15758,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportTitle => 'Support details';
 
   @override
+  String get symbolHint =>
+      'A round mark of one or two letters on a colour, unique to this workspace — or use a photo below instead.';
+
+  @override
+  String get symbolLetters => 'Letters';
+
+  @override
+  String get symbolLettersRule =>
+      'Use one or two letters or digits for the symbol.';
+
+  @override
+  String get symbolSaveFailed =>
+      'The symbol could not be saved. Nothing changed.';
+
+  @override
+  String get symbolSaved => 'Symbol saved.';
+
+  @override
+  String get symbolTaken =>
+      'Another workspace already uses these letters in this colour. Choose another colour or letters — or use a photo instead.';
+
+  @override
+  String get symbolTitle => 'Symbol';
+
+  @override
   String get tabCalendar => 'Calendar';
 
   @override

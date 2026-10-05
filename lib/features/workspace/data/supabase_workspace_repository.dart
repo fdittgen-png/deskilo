@@ -17,6 +17,7 @@ import '../domain/member_badge.dart';
 import '../domain/overage_policy.dart';
 import '../domain/payment_instructions.dart';
 import '../domain/workspace.dart';
+import '../domain/workspace_branding.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_repository.dart';
 import '../domain/feature_flags_write.dart';
@@ -1086,10 +1087,18 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     String workspaceId,
     Map<String, dynamic> delta,
   ) async {
-    final out = await _client.rpc<dynamic>('set_workspace_branding', params: {
-      'p_workspace_id': workspaceId,
-      'p_branding': delta,
-    });
+    final dynamic out;
+    try {
+      out = await _client.rpc<dynamic>('set_workspace_branding', params: {
+        'p_workspace_id': workspaceId,
+        'p_branding': delta,
+      });
+      // ignore: catch_no_st
+    } on PostgrestException catch (e) {
+      // 0378 — the letters-and-colour pair is unique across workspaces.
+      if (e.code == '23505') throw const WorkspaceSymbolTaken();
+      rethrow;
+    }
     return Map<String, dynamic>.from(out as Map? ?? const <String, dynamic>{});
   }
 

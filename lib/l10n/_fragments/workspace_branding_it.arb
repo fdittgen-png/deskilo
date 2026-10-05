@@ -164,5 +164,33 @@
   "emblemTooHeavy": "Quell’immagine è troppo pesante per un segno mostrato a 28 pixel.",
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
+  },
+  "symbolTitle": "Simbolo",
+  "@symbolTitle": {
+    "description": "workspace symbol"
+  },
+  "symbolHint": "Un segno rotondo di una o due lettere su un colore, unico per questo spazio — oppure usa una foto qui sotto.",
+  "@symbolHint": {
+    "description": "workspace symbol"
+  },
+  "symbolLetters": "Lettere",
+  "@symbolLetters": {
+    "description": "workspace symbol"
+  },
+  "symbolLettersRule": "Usa una o due lettere o cifre per il simbolo.",
+  "@symbolLettersRule": {
+    "description": "workspace symbol"
+  },
+  "symbolSaveFailed": "Impossibile salvare il simbolo. Nulla è cambiato.",
+  "@symbolSaveFailed": {
+    "description": "workspace symbol"
+  },
+  "symbolSaved": "Simbolo salvato.",
+  "@symbolSaved": {
+    "description": "workspace symbol"
+  },
+  "symbolTaken": "Un altro spazio usa già queste lettere con questo colore. Scegli un altro colore o altre lettere — oppure usa una foto.",
+  "@symbolTaken": {
+    "description": "workspace symbol"
   }
 }

@@ -17856,6 +17856,34 @@
     }
   },
   "supportTitle": "Support details",
+  "symbolHint": "A round mark of one or two letters on a colour, unique to this workspace — or use a photo below instead.",
+  "@symbolHint": {
+    "description": "workspace symbol"
+  },
+  "symbolLetters": "Letters",
+  "@symbolLetters": {
+    "description": "workspace symbol"
+  },
+  "symbolLettersRule": "Use one or two letters or digits for the symbol.",
+  "@symbolLettersRule": {
+    "description": "workspace symbol"
+  },
+  "symbolSaveFailed": "The symbol could not be saved. Nothing changed.",
+  "@symbolSaveFailed": {
+    "description": "workspace symbol"
+  },
+  "symbolSaved": "Symbol saved.",
+  "@symbolSaved": {
+    "description": "workspace symbol"
+  },
+  "symbolTaken": "Another workspace already uses these letters in this colour. Choose another colour or letters — or use a photo instead.",
+  "@symbolTaken": {
+    "description": "workspace symbol"
+  },
+  "symbolTitle": "Symbol",
+  "@symbolTitle": {
+    "description": "workspace symbol"
+  },
   "tabCalendar": "Calendar",
   "@tabCalendar": {
     "description": "Bottom-navigation label for the reservations calendar tab"

@@ -15882,6 +15882,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get supportTitle => 'Detalles de soporte';
 
   @override
+  String get symbolHint =>
+      'Una marca redonda de una o dos letras sobre un color, única de este espacio — o use una foto abajo.';
+
+  @override
+  String get symbolLetters => 'Letras';
+
+  @override
+  String get symbolLettersRule =>
+      'Use una o dos letras o dígitos para el símbolo.';
+
+  @override
+  String get symbolSaveFailed =>
+      'No se pudo guardar el símbolo. No cambió nada.';
+
+  @override
+  String get symbolSaved => 'Símbolo guardado.';
+
+  @override
+  String get symbolTaken =>
+      'Otro espacio ya usa estas letras en este color. Elija otro color u otras letras — o use una foto.';
+
+  @override
+  String get symbolTitle => 'Símbolo';
+
+  @override
   String get tabCalendar => 'Calendario';
 
   @override

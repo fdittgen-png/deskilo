@@ -10124,6 +10124,34 @@
     }
   },
   "supportTitle": "Dettagli per l’assistenza",
+  "symbolHint": "Un segno rotondo di una o due lettere su un colore, unico per questo spazio — oppure usa una foto qui sotto.",
+  "@symbolHint": {
+    "description": "workspace symbol"
+  },
+  "symbolLetters": "Lettere",
+  "@symbolLetters": {
+    "description": "workspace symbol"
+  },
+  "symbolLettersRule": "Usa una o due lettere o cifre per il simbolo.",
+  "@symbolLettersRule": {
+    "description": "workspace symbol"
+  },
+  "symbolSaveFailed": "Impossibile salvare il simbolo. Nulla è cambiato.",
+  "@symbolSaveFailed": {
+    "description": "workspace symbol"
+  },
+  "symbolSaved": "Simbolo salvato.",
+  "@symbolSaved": {
+    "description": "workspace symbol"
+  },
+  "symbolTaken": "Un altro spazio usa già queste lettere con questo colore. Scegli un altro colore o altre lettere — oppure usa una foto.",
+  "@symbolTaken": {
+    "description": "workspace symbol"
+  },
+  "symbolTitle": "Simbolo",
+  "@symbolTitle": {
+    "description": "workspace symbol"
+  },
   "tabCalendar": "Calendario",
   "tabEvents": "Eventi",
   "tabMoney": "Finanze",
