@@ -292,7 +292,7 @@ class InvoicePdfTemplate {
     'declaration_status',
     'declaration_note',
     'declaration_invoice_count',
-    'vat_form_boxes',
+    'vat_form_boxes', 'configuration_rows',
     'vat_positions',
     'vat_rate_totals',
     'payment_terms',
@@ -332,7 +332,7 @@ class InvoicePdfTemplate {
   ];
 
   static const List<String> _listPlaceholders = [
-    'lines', 'vat', 'usage_records', 'vat_form_boxes', 'vat_positions', 'vat_rate_totals',
+    'lines', 'vat', 'usage_records', 'vat_form_boxes', 'configuration_rows', 'vat_positions', 'vat_rate_totals',
   ];
 
   static Map<String, Object?> get placeholderDefaults => {
