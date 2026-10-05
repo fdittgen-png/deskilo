@@ -123,7 +123,7 @@ void main() {
 
       // #707 — the bell is a shortcut onto the inbox's alerts face: no
       // pushed route, nothing to come back FROM.
-      await tapAppBarIcon(tester, Icons.notifications_outlined);
+      await tapAppBarIcon(tester, Icons.inbox_outlined);
       _expectNoOverflow(tester, locale, 'Events');
 
       await tapAppBarIcon(tester, Icons.settings_outlined);
