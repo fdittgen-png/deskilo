@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+
+import '../../../../core/ui/app_frame.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_hint.dart';
@@ -202,7 +204,7 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              if (constraints.maxWidth > constraints.maxHeight) {
+              if (phoneLandscape(constraints)) {
                 return Row(
                   children: [
                     SizedBox(

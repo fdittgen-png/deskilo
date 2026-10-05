@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../core/ui/app_frame.dart';
 import '../core/ui/system_insets_guard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -107,7 +108,15 @@ class DeskiloApp extends ConsumerWidget {
             child: LayerChrome(
               router: router,
               animations: animations,
-              child: BootSplash(child: SystemInsetsGuard(child: child)),
+              child: BootSplash(child: SystemInsetsGuard(child: ListenableBuilder(
+                listenable: router.routeInformationProvider,
+                builder: (context, _) => AppFrame(
+                  maxWidth: frameWidthFor(
+                    router.routeInformationProvider.value.uri.path,
+                  ),
+                  child: child ?? const SizedBox.shrink(),
+                ),
+              ))),
             ),
           ),
           ),
