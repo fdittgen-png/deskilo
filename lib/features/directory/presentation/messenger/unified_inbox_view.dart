@@ -134,8 +134,13 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
         : inbox.entries;
     return RefreshIndicator(
       onRefresh: () async => ref.invalidate(unifiedInboxProvider),
-      child: ListView(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 760),
+          child: ListView(
         key: const ValueKey('unified-inbox-list'),
+        padding: AppSpacing.gutterAll,
         children: [
           if (inbox.unavailable.isNotEmpty)
             ListTile(
@@ -160,10 +165,21 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 textAlign: TextAlign.center,
               ),
             ),
-          for (final entry in shown)
+          if (shown.isNotEmpty)
+            Card(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+          for (final (i, entry) in shown.indexed) ...[
+            if (i > 0) const Divider(height: 1),
             ListTile(
               key: ValueKey('inbox-entry-${entry.contextId}'),
-              leading: Icon(contextIcon(entry.kind)),
+              leading: CircleAvatar(
+                backgroundColor:
+                    Theme.of(context).colorScheme.surfaceContainerHighest,
+                foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+                child: Icon(contextIcon(entry.kind)),
+              ),
               title: Text(
                 entry.title,
                 overflow: TextOverflow.ellipsis,
@@ -194,7 +210,13 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
               ),
               onTap: () => openInboxEntry(context, ref, entry),
             ),
+          ],
+                ],
+              ),
+            ),
         ],
+      ),
+        ),
       ),
     );
   }
