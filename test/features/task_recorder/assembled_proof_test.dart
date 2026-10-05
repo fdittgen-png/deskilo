@@ -146,12 +146,12 @@ void main() {
         run.acknowledge();
         continue;
       }
-      run.onAction(s.action!);
+      var token = run.onAction(s.action!);
       if (s.isCommand) {
-        run.onOutcome(RecorderOutcomes.bookingRefused);
+        run.onOutcome(RecorderOutcomes.bookingRefused, token: token);
         run.acknowledge(); // the recovery instruction
-        run.onAction(s.action!);
-        run.onOutcome(RecorderOutcomes.bookingConfirmed);
+        token = run.onAction(s.action!);
+        run.onOutcome(RecorderOutcomes.bookingConfirmed, token: token);
       }
     }
     expect(run.state, GuideRunState.completed);
