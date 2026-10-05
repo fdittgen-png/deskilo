@@ -67,8 +67,7 @@ void main() {
   testWidgets('the reminder rules dialog carries the automatic switch and '
       'saves it', (tester) async {
     final money = await pumpInvoices(tester, money: await seededMoney());
-    await tester.tap(find.byKey(const ValueKey('invoice-dunning-settings')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-dunning-settings');
     final toggle = find.byKey(const ValueKey('dunning-automatic'));
     expect(toggle, findsOneWidget);
     // #1913: automation is never on until the owner turns it on.

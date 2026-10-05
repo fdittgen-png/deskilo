@@ -5854,6 +5854,80 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get financesAutomatic => 'automatique';
+
+  @override
+  String get financesAwaitingValidation => 'Paiement en cours de validation';
+
+  @override
+  String financesDueOn(String date) {
+    return 'Échéance le $date';
+  }
+
+  @override
+  String get financesFullHistory =>
+      'Historique complet, consommation et autres serveurs';
+
+  @override
+  String get financesNoReminders => 'Aucun rappel reçu.';
+
+  @override
+  String get financesNothingOwed => 'Rien à payer — vous êtes à jour.';
+
+  @override
+  String get financesNothingPaid => 'Aucune facture réglée pour l’instant.';
+
+  @override
+  String get financesOutstanding => 'À payer';
+
+  @override
+  String financesOverdueCount(int count) {
+    return '$count en retard';
+  }
+
+  @override
+  String financesOverdueSince(String date) {
+    return 'En retard depuis le $date';
+  }
+
+  @override
+  String get financesPaid => 'Payées';
+
+  @override
+  String get financesPartlyPaid => 'Partiellement payée';
+
+  @override
+  String get financesPayments => 'Paiements';
+
+  @override
+  String financesRemindedTimes(int count) {
+    return 'Relancée ×$count';
+  }
+
+  @override
+  String financesReminderLevel(int level) {
+    return 'Rappel $level';
+  }
+
+  @override
+  String get financesReminders => 'Rappels';
+
+  @override
+  String get financesStateClosed => 'Clôturée';
+
+  @override
+  String get financesStatePaid => 'Payée';
+
+  @override
+  String get financesStateRefunded => 'Remboursée';
+
+  @override
+  String get financesTitle => 'Finances';
+
+  @override
+  String get financesToPay => 'À payer';
+
+  @override
   String get gettingStartedActionChooseDay => 'Choisir un autre jour';
 
   @override
@@ -8465,6 +8539,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicesTitle => 'Factures';
 
   @override
+  String get invoicingBanner =>
+      'Vous émettez et relancez les factures de tout l’espace. Vos propres factures et paiements sont dans Moi › Finances.';
+
+  @override
+  String get invoicingHubTitle => 'Facturation';
+
+  @override
+  String get invoicingMyFinances => 'Mes finances';
+
+  @override
+  String get invoicingTools => 'Outils de facturation';
+
+  @override
   String journeyClosedPaid(String date) {
     return 'Payée le $date — close';
   }
@@ -10538,6 +10625,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get memberInvoiceVoided => 'Annulée';
 
   @override
+  String get memberInvoicesBanner =>
+      'Toutes vos factures et paiements, de tous vos espaces, sont dans Moi › Finances.';
+
+  @override
   String get memberKioskLabel => 'Borne';
 
   @override
@@ -11230,6 +11321,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'Mon badge';
+
+  @override
+  String get myInvoicesTitle => 'Mes factures';
 
   @override
   String get myVisitsHelp =>

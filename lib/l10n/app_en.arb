@@ -6755,6 +6755,115 @@
       }
     }
   },
+  "financesAutomatic": "automatic",
+  "@financesAutomatic": {
+    "description": "Me › Finances"
+  },
+  "financesAwaitingValidation": "Payment being validated",
+  "@financesAwaitingValidation": {
+    "description": "Me › Finances"
+  },
+  "financesDueOn": "Due {date}",
+  "@financesDueOn": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesFullHistory": "Full history, usage and other servers",
+  "@financesFullHistory": {
+    "description": "Me › Finances"
+  },
+  "financesNoReminders": "No reminder received.",
+  "@financesNoReminders": {
+    "description": "Me › Finances"
+  },
+  "financesNothingOwed": "Nothing to pay — you are up to date.",
+  "@financesNothingOwed": {
+    "description": "Me › Finances"
+  },
+  "financesNothingPaid": "No settled invoice yet.",
+  "@financesNothingPaid": {
+    "description": "Me › Finances"
+  },
+  "financesOutstanding": "Outstanding",
+  "@financesOutstanding": {
+    "description": "Me › Finances"
+  },
+  "financesOverdueCount": "{count} overdue",
+  "@financesOverdueCount": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesOverdueSince": "Overdue since {date}",
+  "@financesOverdueSince": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPaid": "Paid",
+  "@financesPaid": {
+    "description": "Me › Finances"
+  },
+  "financesPartlyPaid": "Partly paid",
+  "@financesPartlyPaid": {
+    "description": "Me › Finances"
+  },
+  "financesPayments": "Payments",
+  "@financesPayments": {
+    "description": "Me › Finances"
+  },
+  "financesRemindedTimes": "Reminded ×{count}",
+  "@financesRemindedTimes": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesReminderLevel": "Reminder {level}",
+  "@financesReminderLevel": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "financesReminders": "Reminders",
+  "@financesReminders": {
+    "description": "Me › Finances"
+  },
+  "financesStateClosed": "Closed",
+  "@financesStateClosed": {
+    "description": "Me › Finances"
+  },
+  "financesStatePaid": "Paid",
+  "@financesStatePaid": {
+    "description": "Me › Finances"
+  },
+  "financesStateRefunded": "Refunded",
+  "@financesStateRefunded": {
+    "description": "Me › Finances"
+  },
+  "financesTitle": "Finances",
+  "@financesTitle": {
+    "description": "Me › Finances"
+  },
+  "financesToPay": "To pay",
+  "@financesToPay": {
+    "description": "Me › Finances"
+  },
   "gettingStartedActionChooseDay": "Choose another day",
   "@gettingStartedActionChooseDay": {
     "description": "#1654 getting started card: gettingStartedActionChooseDay"
@@ -9602,6 +9711,22 @@
   "@invoicesTitle": {
     "description": "The invoice archive screen title and its Money entry button (0060)"
   },
+  "invoicingBanner": "You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › Finances.",
+  "@invoicingBanner": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingHubTitle": "Invoicing",
+  "@invoicingHubTitle": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingMyFinances": "My finances",
+  "@invoicingMyFinances": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingTools": "Invoicing tools",
+  "@invoicingTools": {
+    "description": "invoicing hub vs my finances"
+  },
   "journeyClosedPaid": "Paid on {date} — closed",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -12003,6 +12128,10 @@
   "@memberInvoiceVoided": {
     "description": "#704 - the money section of a member profile"
   },
+  "memberInvoicesBanner": "All your invoices and payments, from every workspace, are in Me › Finances.",
+  "@memberInvoicesBanner": {
+    "description": "invoicing hub vs my finances"
+  },
   "memberKioskLabel": "Kiosk",
   "@memberKioskLabel": {
     "description": "Subtitle chip of a kiosk device account in the members list (0043)"
@@ -12918,6 +13047,10 @@
     }
   },
   "myBadgeTitle": "My badge",
+  "myInvoicesTitle": "My invoices",
+  "@myInvoicesTitle": {
+    "description": "invoicing hub vs my finances"
+  },
   "myVisitsHelp": "Visits you asked for or were admitted to, as a guest. A visit is not a membership.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"

@@ -5840,6 +5840,79 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get financesAutomatic => 'automatico';
+
+  @override
+  String get financesAwaitingValidation => 'Pagamento in convalida';
+
+  @override
+  String financesDueOn(String date) {
+    return 'Scade il $date';
+  }
+
+  @override
+  String get financesFullHistory => 'Storico completo, consumi e altri server';
+
+  @override
+  String get financesNoReminders => 'Nessun sollecito ricevuto.';
+
+  @override
+  String get financesNothingOwed => 'Niente da pagare — sei in regola.';
+
+  @override
+  String get financesNothingPaid => 'Nessuna fattura ancora saldata.';
+
+  @override
+  String get financesOutstanding => 'Da pagare';
+
+  @override
+  String financesOverdueCount(int count) {
+    return '$count scadute';
+  }
+
+  @override
+  String financesOverdueSince(String date) {
+    return 'Scaduta dal $date';
+  }
+
+  @override
+  String get financesPaid => 'Pagate';
+
+  @override
+  String get financesPartlyPaid => 'Pagata in parte';
+
+  @override
+  String get financesPayments => 'Pagamenti';
+
+  @override
+  String financesRemindedTimes(int count) {
+    return 'Sollecitata ×$count';
+  }
+
+  @override
+  String financesReminderLevel(int level) {
+    return 'Sollecito $level';
+  }
+
+  @override
+  String get financesReminders => 'Solleciti';
+
+  @override
+  String get financesStateClosed => 'Chiusa';
+
+  @override
+  String get financesStatePaid => 'Pagata';
+
+  @override
+  String get financesStateRefunded => 'Rimborsata';
+
+  @override
+  String get financesTitle => 'Finanze';
+
+  @override
+  String get financesToPay => 'Da pagare';
+
+  @override
   String get gettingStartedActionChooseDay => 'Scegli un altro giorno';
 
   @override
@@ -8450,6 +8523,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicesTitle => 'Fatture';
 
   @override
+  String get invoicingBanner =>
+      'Stai emettendo e sollecitando le fatture di tutto lo spazio. Le tue fatture e i tuoi pagamenti sono in Io › Finanze.';
+
+  @override
+  String get invoicingHubTitle => 'Fatturazione';
+
+  @override
+  String get invoicingMyFinances => 'Le mie finanze';
+
+  @override
+  String get invoicingTools => 'Strumenti di fatturazione';
+
+  @override
   String journeyClosedPaid(String date) {
     return 'Pagata il $date — chiusa';
   }
@@ -10522,6 +10608,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get memberInvoiceVoided => 'Annullata';
 
   @override
+  String get memberInvoicesBanner =>
+      'Tutte le tue fatture e i tuoi pagamenti, di tutti gli spazi, sono in Io › Finanze.';
+
+  @override
   String get memberKioskLabel => 'Chiosco';
 
   @override
@@ -11213,6 +11303,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'Il mio badge';
+
+  @override
+  String get myInvoicesTitle => 'Le mie fatture';
 
   @override
   String get myVisitsHelp =>

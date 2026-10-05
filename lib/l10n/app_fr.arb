@@ -3893,6 +3893,115 @@
       }
     }
   },
+  "financesAutomatic": "automatique",
+  "@financesAutomatic": {
+    "description": "Me › Finances"
+  },
+  "financesAwaitingValidation": "Paiement en cours de validation",
+  "@financesAwaitingValidation": {
+    "description": "Me › Finances"
+  },
+  "financesDueOn": "Échéance le {date}",
+  "@financesDueOn": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesFullHistory": "Historique complet, consommation et autres serveurs",
+  "@financesFullHistory": {
+    "description": "Me › Finances"
+  },
+  "financesNoReminders": "Aucun rappel reçu.",
+  "@financesNoReminders": {
+    "description": "Me › Finances"
+  },
+  "financesNothingOwed": "Rien à payer — vous êtes à jour.",
+  "@financesNothingOwed": {
+    "description": "Me › Finances"
+  },
+  "financesNothingPaid": "Aucune facture réglée pour l’instant.",
+  "@financesNothingPaid": {
+    "description": "Me › Finances"
+  },
+  "financesOutstanding": "À payer",
+  "@financesOutstanding": {
+    "description": "Me › Finances"
+  },
+  "financesOverdueCount": "{count} en retard",
+  "@financesOverdueCount": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesOverdueSince": "En retard depuis le {date}",
+  "@financesOverdueSince": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPaid": "Payées",
+  "@financesPaid": {
+    "description": "Me › Finances"
+  },
+  "financesPartlyPaid": "Partiellement payée",
+  "@financesPartlyPaid": {
+    "description": "Me › Finances"
+  },
+  "financesPayments": "Paiements",
+  "@financesPayments": {
+    "description": "Me › Finances"
+  },
+  "financesRemindedTimes": "Relancée ×{count}",
+  "@financesRemindedTimes": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesReminderLevel": "Rappel {level}",
+  "@financesReminderLevel": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "financesReminders": "Rappels",
+  "@financesReminders": {
+    "description": "Me › Finances"
+  },
+  "financesStateClosed": "Clôturée",
+  "@financesStateClosed": {
+    "description": "Me › Finances"
+  },
+  "financesStatePaid": "Payée",
+  "@financesStatePaid": {
+    "description": "Me › Finances"
+  },
+  "financesStateRefunded": "Remboursée",
+  "@financesStateRefunded": {
+    "description": "Me › Finances"
+  },
+  "financesTitle": "Finances",
+  "@financesTitle": {
+    "description": "Me › Finances"
+  },
+  "financesToPay": "À payer",
+  "@financesToPay": {
+    "description": "Me › Finances"
+  },
   "gettingStartedActionChooseDay": "Choisir un autre jour",
   "gettingStartedActionChooseTime": "Choisir un créneau",
   "gettingStartedActionFinishSetup": "Terminer la mise en place",
@@ -5352,6 +5461,22 @@
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
   },
   "invoicesTitle": "Factures",
+  "invoicingBanner": "Vous émettez et relancez les factures de tout l’espace. Vos propres factures et paiements sont dans Moi › Finances.",
+  "@invoicingBanner": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingHubTitle": "Facturation",
+  "@invoicingHubTitle": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingMyFinances": "Mes finances",
+  "@invoicingMyFinances": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingTools": "Outils de facturation",
+  "@invoicingTools": {
+    "description": "invoicing hub vs my finances"
+  },
   "journeyClosedPaid": "Payée le {date} — close",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -6365,6 +6490,10 @@
   "@memberInvoiceVoided": {
     "description": "#704 - the money section of a member profile"
   },
+  "memberInvoicesBanner": "Toutes vos factures et paiements, de tous vos espaces, sont dans Moi › Finances.",
+  "@memberInvoicesBanner": {
+    "description": "invoicing hub vs my finances"
+  },
   "memberKioskLabel": "Borne",
   "memberMakeAdmin": "Attribuer le rôle Administrateur·rice",
   "memberMakeKiosk": "Transformer en borne",
@@ -6710,6 +6839,10 @@
   "moneyUsageUnlimited": "{used} demi-journées utilisées",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mon badge",
+  "myInvoicesTitle": "Mes factures",
+  "@myInvoicesTitle": {
+    "description": "invoicing hub vs my finances"
+  },
   "myVisitsHelp": "Les visites que vous avez demandées ou auxquelles vous avez été admis, en tant qu'invité. Une visite n'est pas une adhésion.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"

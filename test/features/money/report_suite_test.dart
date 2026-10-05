@@ -17,6 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import 'package:deskilo/features/money/domain/report_data_letters.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
@@ -141,8 +142,7 @@ void main() {
       'their bands into extraDocs (#494)', (tester) async {
     final money = await pumpInvoices(tester, money: await seededMoney());
 
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     await tester.ensureVisible(
         find.byKey(const ValueKey('invoice-template-doc-agreement')));
     await tester

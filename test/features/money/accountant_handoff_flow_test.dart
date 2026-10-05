@@ -17,6 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 Future<
   ({FakeMoneyRepository money, List<({String name, Uint8List bytes})> saved})
@@ -61,8 +62,7 @@ _openPreflight(WidgetTester tester, {bool failSave = false}) async {
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('invoice-register-button')));
-  await tester.pumpAndSettle();
+  await tapInvoicingTool(tester, 'invoice-register-button');
   await tester.tap(find.byKey(const ValueKey('invoice-accounting-export')));
   await tester.pumpAndSettle();
   final option = find.byKey(const ValueKey('accounting-export-accountant_csv'));

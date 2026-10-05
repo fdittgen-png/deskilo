@@ -69,14 +69,6 @@ class InvoicesScreen extends ConsumerWidget {
       isEu: isEu,
     );
 
-    // The register reads the same archive as a dated ledger — one tap
-    // from either surface.
-    final registerAction = IconButton(
-      key: const ValueKey('invoice-register-button'),
-      tooltip: l10n?.invoiceRegisterTitle ?? 'Invoice register',
-      icon: const Icon(Icons.table_rows_outlined),
-      onPressed: () => context.push('/invoice-register'),
-    );
     // #454: the PDF template editor — owner only (workspaces_update RLS
     // would refuse anyone else anyway), behind its feature flag.
     // #2137 — set_invoice_pdf_template asks designDocuments.
@@ -135,18 +127,83 @@ class InvoicesScreen extends ConsumerWidget {
               )
             : null;
 
+    // One labelled menu instead of six unlabelled icons: every tool names
+    // itself, and each keeps its key.
+    final toolItems = <(String, IconData, String, VoidCallback)>[
+      if (repartitionAction != null)
+        (
+          'invoice-distribute-button',
+          Icons.call_split,
+          l10n?.repartitionAction ?? 'Distribute an expense',
+          () => showExpenseRepartitionSheet(context, ref),
+        ),
+      if (settlementAction != null)
+        (
+          'invoice-settlement',
+          Icons.merge_outlined,
+          l10n?.settlementAction ?? 'Regroup into one invoice',
+          () => showSettlementSheet(context, ref),
+        ),
+      (
+        'invoice-register-button',
+        Icons.table_rows_outlined,
+        l10n?.invoiceRegisterTitle ?? 'Invoice register',
+        () => context.push('/invoice-register'),
+      ),
+      if (dunningAction != null)
+        (
+          'invoice-dunning-settings',
+          Icons.rule_outlined,
+          l10n?.dunningSettingsTitle ?? 'Reminder rules',
+          () => showDunningRulesDialog(context, ref),
+        ),
+      if (templateAction != null)
+        (
+          'invoice-template-button',
+          Icons.edit_note_outlined,
+          l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
+          () => showInvoiceTemplateSheet(context, ref),
+        ),
+      if (processAction != null)
+        (
+          'invoice-process-help',
+          Icons.help_outline,
+          l10n?.journeyHowTitle ?? 'How invoicing works',
+          () => showInvoiceProcessSheet(context),
+        ),
+    ];
+    final tools = PopupMenuButton<int>(
+      key: const ValueKey('invoicing-tools'),
+      tooltip: l10n?.invoicingTools ?? 'Invoicing tools',
+      icon: const Icon(Icons.tune),
+      onSelected: (i) => toolItems[i].$4(),
+      itemBuilder: (_) => [
+        for (final (i, t) in toolItems.indexed)
+          PopupMenuItem<int>(
+            key: ValueKey(t.$1),
+            value: i,
+            child: Row(children: [
+              Icon(t.$2, size: 20),
+              const SizedBox(width: 12),
+              Flexible(child: Text(t.$3)),
+            ]),
+          ),
+      ],
+    );
+
     if (!canIssue) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n?.invoicesTitle ?? 'Invoices'),
-          actions: [
-            ?templateAction,
-            ?dunningAction,
-            registerAction,
-            ?processAction,
-          ],
+          title: Text(l10n?.myInvoicesTitle ?? 'My invoices'),
+          actions: [tools],
         ),
-        body: archive,
+        body: Column(children: [
+          _Banner(
+            text: l10n?.memberInvoicesBanner ??
+                'All your invoices and payments, from every workspace, are in Me › Finances.',
+          ),
+          Expanded(child: archive),
+        ]),
       );
     }
 
@@ -199,15 +256,8 @@ class InvoicesScreen extends ConsumerWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(l10n?.invoicesTitle ?? 'Invoices'),
-          actions: [
-            ?templateAction,
-            ?repartitionAction,
-            ?settlementAction,
-            ?dunningAction,
-            registerAction,
-            ?processAction,
-          ],
+          title: Text(l10n?.invoicingHubTitle ?? 'Invoicing'),
+          actions: [tools],
           bottom: TabBar(tabs: [
             Tab(
               key: const ValueKey('invoice-tab-todo'),
@@ -230,6 +280,11 @@ class InvoicesScreen extends ConsumerWidget {
           label: Text(l10n?.invoiceCreate ?? 'New invoice'),
         ),
         body: Column(children: [
+          _Banner(
+            text: l10n?.invoicingBanner ??
+                'You are issuing and chasing invoices for the whole workspace. '
+                    'Your own invoices and payments are in Me › Finances.',
+          ),
           if (journeyOn)
             Builder(
               builder: (context) => InvoiceStageStrip(
@@ -280,6 +335,40 @@ class InvoicesScreen extends ConsumerWidget {
             ]),
           ),
         ]),
+      ),
+    );
+  }
+}
+
+/// Says which of the two money jobs this screen is, and where the other
+/// one lives: an admin must never confuse invoicing with their own invoices.
+class _Banner extends StatelessWidget {
+  const _Banner({required this.text});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+      child: Card(
+        key: const ValueKey('invoicing-banner'),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 4, 8),
+          child: Row(children: [
+            Icon(Icons.info_outline, size: 20, color: scheme.onSurfaceVariant),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(text, style: Theme.of(context).textTheme.bodySmall),
+            ),
+            TextButton(
+              key: const ValueKey('invoicing-my-finances'),
+              onPressed: () => context.push('/account-activity'),
+              child: Text(l10n?.invoicingMyFinances ?? 'My finances'),
+            ),
+          ]),
+        ),
       ),
     );
   }

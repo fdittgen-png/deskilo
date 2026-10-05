@@ -10086,6 +10086,132 @@ abstract class AppLocalizations {
   /// **'At least {min}.'**
   String fieldProblemTooSmall(String min);
 
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'automatic'**
+  String get financesAutomatic;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Payment being validated'**
+  String get financesAwaitingValidation;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String financesDueOn(String date);
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Full history, usage and other servers'**
+  String get financesFullHistory;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'No reminder received.'**
+  String get financesNoReminders;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to pay — you are up to date.'**
+  String get financesNothingOwed;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'No settled invoice yet.'**
+  String get financesNothingPaid;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding'**
+  String get financesOutstanding;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'{count} overdue'**
+  String financesOverdueCount(int count);
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue since {date}'**
+  String financesOverdueSince(String date);
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get financesPaid;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Partly paid'**
+  String get financesPartlyPaid;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get financesPayments;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Reminded ×{count}'**
+  String financesRemindedTimes(int count);
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder {level}'**
+  String financesReminderLevel(int level);
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get financesReminders;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get financesStateClosed;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get financesStatePaid;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get financesStateRefunded;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'Finances'**
+  String get financesTitle;
+
+  /// Me › Finances
+  ///
+  /// In en, this message translates to:
+  /// **'To pay'**
+  String get financesToPay;
+
   /// #1654 getting started card: gettingStartedActionChooseDay
   ///
   /// In en, this message translates to:
@@ -14454,6 +14580,30 @@ abstract class AppLocalizations {
   /// **'Invoices'**
   String get invoicesTitle;
 
+  /// invoicing hub vs my finances
+  ///
+  /// In en, this message translates to:
+  /// **'You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › Finances.'**
+  String get invoicingBanner;
+
+  /// invoicing hub vs my finances
+  ///
+  /// In en, this message translates to:
+  /// **'Invoicing'**
+  String get invoicingHubTitle;
+
+  /// invoicing hub vs my finances
+  ///
+  /// In en, this message translates to:
+  /// **'My finances'**
+  String get invoicingMyFinances;
+
+  /// invoicing hub vs my finances
+  ///
+  /// In en, this message translates to:
+  /// **'Invoicing tools'**
+  String get invoicingTools;
+
   /// No description provided for @journeyClosedPaid.
   ///
   /// In en, this message translates to:
@@ -17904,6 +18054,12 @@ abstract class AppLocalizations {
   /// **'Voided'**
   String get memberInvoiceVoided;
 
+  /// invoicing hub vs my finances
+  ///
+  /// In en, this message translates to:
+  /// **'All your invoices and payments, from every workspace, are in Me › Finances.'**
+  String get memberInvoicesBanner;
+
   /// Subtitle chip of a kiosk device account in the members list (0043)
   ///
   /// In en, this message translates to:
@@ -19067,6 +19223,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My badge'**
   String get myBadgeTitle;
+
+  /// invoicing hub vs my finances
+  ///
+  /// In en, this message translates to:
+  /// **'My invoices'**
+  String get myInvoicesTitle;
 
   /// #1835 Me › Home: under the My visits heading
   ///

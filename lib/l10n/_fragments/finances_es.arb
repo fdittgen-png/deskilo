@@ -1,0 +1,111 @@
+{
+  "financesTitle": "Finanzas",
+  "@financesTitle": {
+    "description": "Me › Finances"
+  },
+  "financesOutstanding": "Pendiente",
+  "@financesOutstanding": {
+    "description": "Me › Finances"
+  },
+  "financesPaid": "Pagadas",
+  "@financesPaid": {
+    "description": "Me › Finances"
+  },
+  "financesPayments": "Pagos",
+  "@financesPayments": {
+    "description": "Me › Finances"
+  },
+  "financesReminders": "Recordatorios",
+  "@financesReminders": {
+    "description": "Me › Finances"
+  },
+  "financesToPay": "Por pagar",
+  "@financesToPay": {
+    "description": "Me › Finances"
+  },
+  "financesNothingOwed": "Nada que pagar — está al día.",
+  "@financesNothingOwed": {
+    "description": "Me › Finances"
+  },
+  "financesNothingPaid": "Aún no hay facturas saldadas.",
+  "@financesNothingPaid": {
+    "description": "Me › Finances"
+  },
+  "financesNoReminders": "Ningún recordatorio recibido.",
+  "@financesNoReminders": {
+    "description": "Me › Finances"
+  },
+  "financesAwaitingValidation": "Pago en validación",
+  "@financesAwaitingValidation": {
+    "description": "Me › Finances"
+  },
+  "financesPartlyPaid": "Pagada en parte",
+  "@financesPartlyPaid": {
+    "description": "Me › Finances"
+  },
+  "financesStatePaid": "Pagada",
+  "@financesStatePaid": {
+    "description": "Me › Finances"
+  },
+  "financesStateRefunded": "Reembolsada",
+  "@financesStateRefunded": {
+    "description": "Me › Finances"
+  },
+  "financesStateClosed": "Cerrada",
+  "@financesStateClosed": {
+    "description": "Me › Finances"
+  },
+  "financesAutomatic": "automático",
+  "@financesAutomatic": {
+    "description": "Me › Finances"
+  },
+  "financesFullHistory": "Historial completo, uso y otros servidores",
+  "@financesFullHistory": {
+    "description": "Me › Finances"
+  },
+  "financesDueOn": "Vence el {date}",
+  "@financesDueOn": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesOverdueSince": "Vencida desde el {date}",
+  "@financesOverdueSince": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesOverdueCount": "{count} vencidas",
+  "@financesOverdueCount": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesRemindedTimes": "Recordada ×{count}",
+  "@financesRemindedTimes": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesReminderLevel": "Recordatorio {level}",
+  "@financesReminderLevel": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  }
+}

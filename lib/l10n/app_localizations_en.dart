@@ -5802,6 +5802,79 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get financesAutomatic => 'automatic';
+
+  @override
+  String get financesAwaitingValidation => 'Payment being validated';
+
+  @override
+  String financesDueOn(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String get financesFullHistory => 'Full history, usage and other servers';
+
+  @override
+  String get financesNoReminders => 'No reminder received.';
+
+  @override
+  String get financesNothingOwed => 'Nothing to pay — you are up to date.';
+
+  @override
+  String get financesNothingPaid => 'No settled invoice yet.';
+
+  @override
+  String get financesOutstanding => 'Outstanding';
+
+  @override
+  String financesOverdueCount(int count) {
+    return '$count overdue';
+  }
+
+  @override
+  String financesOverdueSince(String date) {
+    return 'Overdue since $date';
+  }
+
+  @override
+  String get financesPaid => 'Paid';
+
+  @override
+  String get financesPartlyPaid => 'Partly paid';
+
+  @override
+  String get financesPayments => 'Payments';
+
+  @override
+  String financesRemindedTimes(int count) {
+    return 'Reminded ×$count';
+  }
+
+  @override
+  String financesReminderLevel(int level) {
+    return 'Reminder $level';
+  }
+
+  @override
+  String get financesReminders => 'Reminders';
+
+  @override
+  String get financesStateClosed => 'Closed';
+
+  @override
+  String get financesStatePaid => 'Paid';
+
+  @override
+  String get financesStateRefunded => 'Refunded';
+
+  @override
+  String get financesTitle => 'Finances';
+
+  @override
+  String get financesToPay => 'To pay';
+
+  @override
   String get gettingStartedActionChooseDay => 'Choose another day';
 
   @override
@@ -8390,6 +8463,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicesTitle => 'Invoices';
 
   @override
+  String get invoicingBanner =>
+      'You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › Finances.';
+
+  @override
+  String get invoicingHubTitle => 'Invoicing';
+
+  @override
+  String get invoicingMyFinances => 'My finances';
+
+  @override
+  String get invoicingTools => 'Invoicing tools';
+
+  @override
   String journeyClosedPaid(String date) {
     return 'Paid on $date — closed';
   }
@@ -10435,6 +10521,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberInvoiceVoided => 'Voided';
 
   @override
+  String get memberInvoicesBanner =>
+      'All your invoices and payments, from every workspace, are in Me › Finances.';
+
+  @override
   String get memberKioskLabel => 'Kiosk';
 
   @override
@@ -11120,6 +11210,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'My badge';
+
+  @override
+  String get myInvoicesTitle => 'My invoices';
 
   @override
   String get myVisitsHelp =>

@@ -73,3 +73,15 @@ Future<void> openAlertsTab(WidgetTester tester) async {
 /// after a brief life as the inbox's third face in #702.
 Future<void> openMembersTab(WidgetTester tester) =>
     tapNavIcon(tester, Icons.people_outline);
+
+/// Taps an invoicing tool by its key: the tools live in the hub's labelled
+/// menu, so the menu is opened first when the item is not on screen.
+Future<void> tapInvoicingTool(WidgetTester tester, String key) async {
+  final item = find.byKey(ValueKey(key));
+  if (item.evaluate().isEmpty) {
+    await tester.tap(find.byKey(const ValueKey('invoicing-tools')));
+    await tester.pumpAndSettle();
+  }
+  await tester.tap(item);
+  await tester.pumpAndSettle();
+}

@@ -3893,6 +3893,115 @@
       }
     }
   },
+  "financesAutomatic": "automatisch",
+  "@financesAutomatic": {
+    "description": "Me › Finances"
+  },
+  "financesAwaitingValidation": "Zahlung wird geprüft",
+  "@financesAwaitingValidation": {
+    "description": "Me › Finances"
+  },
+  "financesDueOn": "Fällig am {date}",
+  "@financesDueOn": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesFullHistory": "Vollständiger Verlauf, Nutzung und andere Server",
+  "@financesFullHistory": {
+    "description": "Me › Finances"
+  },
+  "financesNoReminders": "Keine Erinnerung erhalten.",
+  "@financesNoReminders": {
+    "description": "Me › Finances"
+  },
+  "financesNothingOwed": "Nichts zu zahlen — alles beglichen.",
+  "@financesNothingOwed": {
+    "description": "Me › Finances"
+  },
+  "financesNothingPaid": "Noch keine beglichene Rechnung.",
+  "@financesNothingPaid": {
+    "description": "Me › Finances"
+  },
+  "financesOutstanding": "Ausstehend",
+  "@financesOutstanding": {
+    "description": "Me › Finances"
+  },
+  "financesOverdueCount": "{count} überfällig",
+  "@financesOverdueCount": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesOverdueSince": "Überfällig seit {date}",
+  "@financesOverdueSince": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPaid": "Bezahlt",
+  "@financesPaid": {
+    "description": "Me › Finances"
+  },
+  "financesPartlyPaid": "Teilweise bezahlt",
+  "@financesPartlyPaid": {
+    "description": "Me › Finances"
+  },
+  "financesPayments": "Zahlungen",
+  "@financesPayments": {
+    "description": "Me › Finances"
+  },
+  "financesRemindedTimes": "Erinnert ×{count}",
+  "@financesRemindedTimes": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesReminderLevel": "Erinnerung {level}",
+  "@financesReminderLevel": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "financesReminders": "Erinnerungen",
+  "@financesReminders": {
+    "description": "Me › Finances"
+  },
+  "financesStateClosed": "Abgeschlossen",
+  "@financesStateClosed": {
+    "description": "Me › Finances"
+  },
+  "financesStatePaid": "Bezahlt",
+  "@financesStatePaid": {
+    "description": "Me › Finances"
+  },
+  "financesStateRefunded": "Erstattet",
+  "@financesStateRefunded": {
+    "description": "Me › Finances"
+  },
+  "financesTitle": "Finanzen",
+  "@financesTitle": {
+    "description": "Me › Finances"
+  },
+  "financesToPay": "Zu zahlen",
+  "@financesToPay": {
+    "description": "Me › Finances"
+  },
   "gettingStartedActionChooseDay": "Anderen Tag wählen",
   "gettingStartedActionChooseTime": "Zeit zum Buchen wählen",
   "gettingStartedActionFinishSetup": "Einrichtung abschließen",
@@ -5352,6 +5461,22 @@
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
   },
   "invoicesTitle": "Rechnungen",
+  "invoicingBanner": "Sie stellen Rechnungen für den gesamten Arbeitsbereich aus und mahnen sie an. Ihre eigenen Rechnungen und Zahlungen finden Sie unter Ich › Finanzen.",
+  "@invoicingBanner": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingHubTitle": "Rechnungsstellung",
+  "@invoicingHubTitle": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingMyFinances": "Meine Finanzen",
+  "@invoicingMyFinances": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingTools": "Werkzeuge der Rechnungsstellung",
+  "@invoicingTools": {
+    "description": "invoicing hub vs my finances"
+  },
   "journeyClosedPaid": "Bezahlt am {date} — abgeschlossen",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -6365,6 +6490,10 @@
   "@memberInvoiceVoided": {
     "description": "#704 - the money section of a member profile"
   },
+  "memberInvoicesBanner": "Alle Ihre Rechnungen und Zahlungen aus allen Arbeitsbereichen finden Sie unter Ich › Finanzen.",
+  "@memberInvoicesBanner": {
+    "description": "invoicing hub vs my finances"
+  },
   "memberKioskLabel": "Kiosk",
   "memberMakeAdmin": "Rolle Administrator:in geben",
   "memberMakeKiosk": "Zum Kiosk-Gerät machen",
@@ -6710,6 +6839,10 @@
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mein Badge",
+  "myInvoicesTitle": "Meine Rechnungen",
+  "@myInvoicesTitle": {
+    "description": "invoicing hub vs my finances"
+  },
   "myVisitsHelp": "Besuche, die Sie als Gast angefragt haben oder zu denen Sie zugelassen wurden. Ein Besuch ist keine Mitgliedschaft.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"

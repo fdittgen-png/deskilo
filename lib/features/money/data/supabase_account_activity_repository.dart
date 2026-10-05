@@ -2,10 +2,19 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/account_activity.dart';
+import '../domain/finance_overview.dart';
 
 class SupabaseAccountActivityRepository implements AccountActivityRepository {
   const SupabaseAccountActivityRepository(this.client);
   final SupabaseClient client;
+  @override
+  Future<FinanceOverview> overview() async {
+    final result = await client.rpc<dynamic>('my_finance_overview');
+    return FinanceOverview.fromJson(
+      Map<String, dynamic>.from(result as Map? ?? const <String, dynamic>{}),
+    );
+  }
+
   @override
   Future<List<AccountActivity>> list(
     AccountActivityKind kind, {

@@ -1497,6 +1497,7 @@ routine public.my_conversations(p_workspace_id uuid, p_include_archived boolean)
 routine public.my_database_capabilities() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4016e23f951e
 routine public.my_directory_person() -> uuid | function | definer | stable | exec:authenticated,service_role | body:48d6f565f410
 routine public.my_favorites(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:96d104d3b59e
+routine public.my_finance_overview() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d31216bd6ec6
 routine public.my_financial_activity(p_kind text, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:fe5c08620f64
 routine public.my_guest_participations() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:392d10602309
 routine public.my_identity_status() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5834f2bc6bd0
