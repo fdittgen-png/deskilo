@@ -218,7 +218,7 @@
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "Hier ist jede Person Mitglied. Eine Rolle ergänzt, was ihre Inhaber dürfen, und nimmt nie etwas weg. Die Inhaberin hält immer alle Berechtigungen; eine Mit-Inhaberin kann weniger halten.",
+  "rolesIntroEditor": "Jede Person hat genau eine Basisrolle — Benutzer, Administrator, Mit-Eigentümer oder Eigentümer. Jede weitere Rolle fügt hinzu, was ihre Inhaber dürfen, und nimmt nie etwas weg. Der Eigentümer hat immer alle Berechtigungen; ein Mit-Eigentümer kann weniger haben.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },

@@ -650,6 +650,14 @@
   "badgeTapCardHint": "Approchez la carte RFID/NFC de l'arrière de l'appareil.",
   "badgeTapCardTitle": "Enregistrer une carte",
   "badgeTokenOnce": "Enregistrez ce QR maintenant — il n'est affiché qu'une seule fois.",
+  "baseRoleNote": "Chacun a exactement un rôle de base : Utilisateur, Administrateur, Copropriétaire ou Propriétaire. Les autres rôles s'y ajoutent ; aucun ne retire quoi que ce soit.",
+  "@baseRoleNote": {
+    "description": "the mandatory base role"
+  },
+  "baseRoleUser": "Utilisateur",
+  "@baseRoleUser": {
+    "description": "the mandatory base role"
+  },
   "biAreaCapacity": "Espaces et capacité",
   "@biAreaCapacity": {
     "description": "#1923 Web-BI area"
@@ -9582,7 +9590,7 @@
   "@roleTakenBack": {
     "description": "#2085 giving roles: roleTakenBack"
   },
-  "rolesIntroEditor": "Ici, tout le monde est membre. Un rôle ajoute ce que ses titulaires peuvent faire et ne retire jamais rien. Le propriétaire détient toujours toutes les permissions ; un copropriétaire peut en avoir moins.",
+  "rolesIntroEditor": "Chacun a exactement un rôle de base — Utilisateur, Administrateur, Copropriétaire ou Propriétaire. Tout autre rôle ajoute ce que ses titulaires peuvent faire et ne retire jamais rien. Le propriétaire détient toujours toutes les permissions ; un copropriétaire peut en détenir moins.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },

@@ -218,7 +218,7 @@
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "Ici, tout le monde est membre. Un rôle ajoute ce que ses titulaires peuvent faire et ne retire jamais rien. Le propriétaire détient toujours toutes les permissions ; un copropriétaire peut en avoir moins.",
+  "rolesIntroEditor": "Chacun a exactement un rôle de base — Utilisateur, Administrateur, Copropriétaire ou Propriétaire. Tout autre rôle ajoute ce que ses titulaires peuvent faire et ne retire jamais rien. Le propriétaire détient toujours toutes les permissions ; un copropriétaire peut en détenir moins.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },

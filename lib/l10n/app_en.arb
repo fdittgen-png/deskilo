@@ -1266,6 +1266,14 @@
   "@badgeTokenOnce": {
     "description": "Warning under the freshly issued badge QR; the raw token is never recoverable later"
   },
+  "baseRoleNote": "Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it; none takes anything away.",
+  "@baseRoleNote": {
+    "description": "the mandatory base role"
+  },
+  "baseRoleUser": "User",
+  "@baseRoleUser": {
+    "description": "the mandatory base role"
+  },
   "biAreaCapacity": "Space and capacity",
   "@biAreaCapacity": {
     "description": "#1923 Web-BI area"
@@ -17116,7 +17124,7 @@
   "@roleTakenBack": {
     "description": "#2085 giving roles: roleTakenBack"
   },
-  "rolesIntroEditor": "Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.",
+  "rolesIntroEditor": "Everyone has exactly one base role — User, Administrator, Co-owner or Owner. Any other role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
