@@ -460,7 +460,7 @@
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.",
+  "rolesIntroEditor": "Everyone has exactly one base role — User, Administrator, Co-owner or Owner. Any other role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },

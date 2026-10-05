@@ -650,6 +650,14 @@
   "badgeTapCardHint": "Avvicina la tessera RFID/NFC al retro del dispositivo.",
   "badgeTapCardTitle": "Registra una tessera",
   "badgeTokenOnce": "Salva questo QR adesso — viene mostrato una sola volta.",
+  "baseRoleNote": "Ognuno ha esattamente un ruolo di base: Utente, Amministratore, Co-proprietario o Proprietario. Gli altri ruoli si aggiungono; nessuno toglie nulla.",
+  "@baseRoleNote": {
+    "description": "the mandatory base role"
+  },
+  "baseRoleUser": "Utente",
+  "@baseRoleUser": {
+    "description": "the mandatory base role"
+  },
   "biAreaCapacity": "Spazi e capacità",
   "@biAreaCapacity": {
     "description": "#1923 Web-BI area"
@@ -9623,7 +9631,7 @@
   "@roleTakenBack": {
     "description": "#2085 giving roles: roleTakenBack"
   },
-  "rolesIntroEditor": "Qui tutti sono membri. Un ruolo aggiunge ciò che i suoi titolari possono fare e non toglie mai nulla. Il proprietario detiene sempre tutti i permessi; un comproprietario può averne meno.",
+  "rolesIntroEditor": "Ognuno ha esattamente un ruolo di base — Utente, Amministratore, Co-proprietario o Proprietario. Ogni altro ruolo aggiunge ciò che i suoi titolari possono fare e non toglie mai nulla. Il proprietario ha sempre tutti i permessi; un co-proprietario può averne meno.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },

@@ -1,0 +1,10 @@
+{
+  "baseRoleUser": "Utilisateur",
+  "@baseRoleUser": {
+    "description": "the mandatory base role"
+  },
+  "baseRoleNote": "Chacun a exactement un rôle de base : Utilisateur, Administrateur, Copropriétaire ou Propriétaire. Les autres rôles s'y ajoutent ; aucun ne retire quoi que ce soit.",
+  "@baseRoleNote": {
+    "description": "the mandatory base role"
+  }
+}

@@ -2179,6 +2179,18 @@ abstract class AppLocalizations {
   /// **'Save this QR now — it is shown only once.'**
   String get badgeTokenOnce;
 
+  /// the mandatory base role
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it; none takes anything away.'**
+  String get baseRoleNote;
+
+  /// the mandatory base role
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get baseRoleUser;
+
   /// #1923 Web-BI area
   ///
   /// In en, this message translates to:
@@ -25787,7 +25799,7 @@ abstract class AppLocalizations {
   /// Roles screen intro for editors (#513)
   ///
   /// In en, this message translates to:
-  /// **'Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.'**
+  /// **'Everyone has exactly one base role — User, Administrator, Co-owner or Owner. Any other role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.'**
   String get rolesIntroEditor;
 
   /// Roles screen intro for non-editors (#513)

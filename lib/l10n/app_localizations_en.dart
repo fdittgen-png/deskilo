@@ -1203,6 +1203,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get badgeTokenOnce => 'Save this QR now — it is shown only once.';
 
   @override
+  String get baseRoleNote =>
+      'Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it; none takes anything away.';
+
+  @override
+  String get baseRoleUser => 'User';
+
+  @override
   String get biAreaCapacity => 'Space and capacity';
 
   @override
@@ -14911,7 +14918,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rolesIntroEditor =>
-      'Everyone here is a member. A role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.';
+      'Everyone has exactly one base role — User, Administrator, Co-owner or Owner. Any other role adds what its holders may do and never takes anything away. The owner always holds every permission; a co-owner may hold less.';
 
   @override
   String get rolesIntroReadOnly =>

@@ -32,6 +32,7 @@ import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
 import '../member_admin_actions.dart';
+import '../member_labels.dart';
 import '../screens/roles_screen_labels.dart';
 
 /// The sentence a person reads for [refusal].
@@ -65,6 +66,8 @@ class MemberRolesCard extends ConsumerWidget {
   static const Key cardKey = Key('member-roles-card');
   static const Key addKey = Key('member-roles-add');
   static const Key administratorKey = Key('member-roles-administrator');
+  static const Key baseRoleKey = Key('member-roles-base');
+  static const Key baseRoleNoteKey = Key('member-roles-base-note');
   static const Key whatKey = Key('member-roles-what');
   static Key chipKeyFor(String roleKey) => ValueKey('member-roles-$roleKey');
 
@@ -105,32 +108,43 @@ class MemberRolesCard extends ConsumerWidget {
     final isSelf = me?.id == member.id;
     final held = rolesHeldBy(member.id, roles, assignments);
 
-    final ownership = member.isOwner
-        ? (l10n?.memberRoleOwner ?? 'Owner')
-        : switch (member.coOwner) {
-            CoOwnerStatus.active => l10n?.memberCoOwnerChip ?? 'Co-owner',
-            CoOwnerStatus.passive =>
-              l10n?.memberCoOwnerPassiveChip ?? 'Successor',
-            CoOwnerStatus.none => null,
-          };
+    // The mandatory base role: exactly one of User, Administrator,
+    // Co-owner, Owner. Every other role adds to it and never takes from it.
+    final base = permissionRoleOf(member);
+    final baseName = baseRoleLabel(l10n, base, administratorName(
+        roles, locale, l10n?.roleAdmin ?? 'Administrator'));
+    final successor = member.coOwner == CoOwnerStatus.passive
+        ? (l10n?.memberCoOwnerPassiveChip ?? 'Successor')
+        : null;
     final adminRefusal = me == null
         ? RoleRefusal.notPermitted
         : administratorRefusal(caller: me, subject: member);
 
     final chips = <Widget>[
-      if (ownership != null)
-        Chip(
-          avatar: const Icon(Icons.workspace_premium_outlined, size: 18),
-          label: Text(ownership),
-        ),
-      if (holdsAdministrator(member))
+      if (base == PermissionRole.admin)
         InputChip(
           key: administratorKey,
-          label: Text(administratorName(
-              roles, locale, l10n?.roleAdmin ?? 'Administrator')),
+          avatar: const Icon(Icons.verified_user_outlined, size: 18),
+          label: Text(baseName),
           onDeleted: adminRefusal == null
               ? () => requestMemberRoleChange(context, ref, member)
               : null,
+        )
+      else
+        Chip(
+          key: baseRoleKey,
+          avatar: Icon(
+            base == PermissionRole.member
+                ? Icons.person_outline
+                : Icons.workspace_premium_outlined,
+            size: 18,
+          ),
+          label: Text(baseName),
+        ),
+      if (successor != null)
+        Chip(
+          avatar: const Icon(Icons.hourglass_empty, size: 18),
+          label: Text(successor),
         ),
       for (final role in held)
         InputChip(
@@ -168,18 +182,23 @@ class MemberRolesCard extends ConsumerWidget {
                   ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),
             const SizedBox(height: AppSpacing.sm),
-            if (chips.isEmpty)
-              Text(
-                l10n?.memberRolesNone ??
-                    'No role: everything a member can do.',
-                style: theme.textTheme.bodyMedium,
-              )
-            else
-              Wrap(
-                spacing: AppSpacing.sm,
-                runSpacing: AppSpacing.sm,
-                children: chips,
+            Wrap(
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
+              children: chips,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.xs),
+              child: Text(
+                key: baseRoleNoteKey,
+                l10n?.baseRoleNote ??
+                    'Everyone has exactly one base role: User, Administrator, '
+                        'Co-owner or Owner. Other roles add to it; none takes '
+                        'anything away.',
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
+            ),
             if (isSelf)
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.sm),

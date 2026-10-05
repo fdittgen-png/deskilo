@@ -44,7 +44,7 @@ class RolesScreen extends ConsumerWidget {
         PermissionRole.owner => l10n?.roleOwner ?? 'Owner',
         PermissionRole.coOwner => l10n?.memberCoOwnerChip ?? 'Co-owner',
         PermissionRole.admin => administrator,
-        PermissionRole.member => l10n?.roleMember ?? 'Every member',
+        PermissionRole.member => l10n?.baseRoleUser ?? 'User',
       };
 
   Future<void> _toggle(
@@ -164,7 +164,8 @@ class RolesScreen extends ConsumerWidget {
           Text(
             canEdit
                 ? (l10n?.rolesIntroEditor ??
-                    'Everyone here is a member. A role adds what its '
+                    'Everyone has exactly one base role — User, Administrator, '
+                        'Co-owner or Owner. Any other role adds what its '
                         'holders may do and never takes anything away. The '
                         'owner always holds every permission; a co-owner '
                         'may hold less.')

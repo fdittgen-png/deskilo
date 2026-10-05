@@ -342,6 +342,8 @@ Map<String, _Getter> _part0() => {
   'badgeTapCardHint': (l) => l.badgeTapCardHint,
   'badgeTapCardTitle': (l) => l.badgeTapCardTitle,
   'badgeTokenOnce': (l) => l.badgeTokenOnce,
+  'baseRoleNote': (l) => l.baseRoleNote,
+  'baseRoleUser': (l) => l.baseRoleUser,
   'biAreaCapacity': (l) => l.biAreaCapacity,
   'biAreaFinance': (l) => l.biAreaFinance,
   'biAreaOperations': (l) => l.biAreaOperations,
@@ -424,11 +426,11 @@ Map<String, _Getter> _part0() => {
   'biReset': (l) => l.biReset,
   'biRunningLabel': (l) => l.biRunningLabel,
   'biSeatCentre': (l) => l.biSeatCentre,
-  'biSeatClosed': (l) => l.biSeatClosed,
-  'biSeatFree': (l) => l.biSeatFree,
 };
 
 Map<String, _Getter> _part1() => {
+  'biSeatClosed': (l) => l.biSeatClosed,
+  'biSeatFree': (l) => l.biSeatFree,
   'biSeatReserved': (l) => l.biSeatReserved,
   'biShareByLevel': (l) => l.biShareByLevel,
   'biSort': (l) => l.biSort,
@@ -827,11 +829,11 @@ Map<String, _Getter> _part1() => {
   'countryNameFR': (l) => l.countryNameFR,
   'countryNameGB': (l) => l.countryNameGB,
   'countryNameGR': (l) => l.countryNameGR,
-  'countryNameHR': (l) => l.countryNameHR,
-  'countryNameHU': (l) => l.countryNameHU,
 };
 
 Map<String, _Getter> _part2() => {
+  'countryNameHR': (l) => l.countryNameHR,
+  'countryNameHU': (l) => l.countryNameHU,
   'countryNameIE': (l) => l.countryNameIE,
   'countryNameIT': (l) => l.countryNameIT,
   'countryNameJP': (l) => l.countryNameJP,
@@ -1230,11 +1232,11 @@ Map<String, _Getter> _part2() => {
   'featureCustomFieldsDesc': (l) => l.featureCustomFieldsDesc,
   'featureCustomFieldsTitle': (l) => l.featureCustomFieldsTitle,
   'featureCustomRolesDesc': (l) => l.featureCustomRolesDesc,
-  'featureCustomRolesTitle': (l) => l.featureCustomRolesTitle,
-  'featureDataAccessLogDesc': (l) => l.featureDataAccessLogDesc,
 };
 
 Map<String, _Getter> _part3() => {
+  'featureCustomRolesTitle': (l) => l.featureCustomRolesTitle,
+  'featureDataAccessLogDesc': (l) => l.featureDataAccessLogDesc,
   'featureDataAccessLogTitle': (l) => l.featureDataAccessLogTitle,
   'featureDataExport': (l) => l.featureDataExport,
   'featureDataExportDesc': (l) => l.featureDataExportDesc,
@@ -1633,11 +1635,11 @@ Map<String, _Getter> _part3() => {
   'helpHintLearnMore': (l) => l.helpHintLearnMore,
   'helpHintMembers': (l) => l.helpHintMembers,
   'helpHintMembersTip2': (l) => l.helpHintMembersTip2,
-  'helpHintMembersTip3': (l) => l.helpHintMembersTip3,
-  'helpHintMembersTip3Topic': (l) => l.helpHintMembersTip3Topic,
 };
 
 Map<String, _Getter> _part4() => {
+  'helpHintMembersTip3': (l) => l.helpHintMembersTip3,
+  'helpHintMembersTip3Topic': (l) => l.helpHintMembersTip3Topic,
   'helpHintMembersTip4': (l) => l.helpHintMembersTip4,
   'helpHintMembersTip4Topic': (l) => l.helpHintMembersTip4Topic,
   'helpHintMembersTipNegotiation': (l) => l.helpHintMembersTipNegotiation,
@@ -2036,11 +2038,11 @@ Map<String, _Getter> _part4() => {
   'invoiceLegalCustomerCapacityHint': (l) => l.invoiceLegalCustomerCapacityHint,
   'invoiceLegalEscompteDefault': (l) => l.invoiceLegalEscompteDefault,
   'invoiceLegalEscompteField': (l) => l.invoiceLegalEscompteField,
-  'invoiceLegalFormField': (l) => l.invoiceLegalFormField,
-  'invoiceLegalFormHint': (l) => l.invoiceLegalFormHint,
 };
 
 Map<String, _Getter> _part5() => {
+  'invoiceLegalFormField': (l) => l.invoiceLegalFormField,
+  'invoiceLegalFormHint': (l) => l.invoiceLegalFormHint,
   'invoiceLegalFormHintAssociation': (l) => l.invoiceLegalFormHintAssociation,
   'invoiceLegalInsuranceField': (l) => l.invoiceLegalInsuranceField,
   'invoiceLegalIntro': (l) => l.invoiceLegalIntro,
@@ -2439,11 +2441,11 @@ Map<String, _Getter> _part5() => {
   'mcpConnectCursorStep': (l) => l.mcpConnectCursorStep,
   'mcpConnectDone': (l) => l.mcpConnectDone,
   'mcpConnectIntro': (l) => l.mcpConnectIntro,
-  'mcpConnectManageHint': (l) => l.mcpConnectManageHint,
-  'mcpConnectOpenFailed': (l) => l.mcpConnectOpenFailed,
 };
 
 Map<String, _Getter> _part6() => {
+  'mcpConnectManageHint': (l) => l.mcpConnectManageHint,
+  'mcpConnectOpenFailed': (l) => l.mcpConnectOpenFailed,
   'mcpConnectOpenGuide': (l) => l.mcpConnectOpenGuide,
   'mcpConnectOpenInstallation': (l) => l.mcpConnectOpenInstallation,
   'mcpConnectOpenSetup': (l) => l.mcpConnectOpenSetup,
@@ -2842,11 +2844,11 @@ Map<String, _Getter> _part6() => {
   'navigationDefault': (l) => l.navigationDefault,
   'navigationMenu': (l) => l.navigationMenu,
   'navigationTitle': (l) => l.navigationTitle,
-  'negotiationCardTitle': (l) => l.negotiationCardTitle,
-  'negotiationDefaultColumn': (l) => l.negotiationDefaultColumn,
 };
 
 Map<String, _Getter> _part7() => {
+  'negotiationCardTitle': (l) => l.negotiationCardTitle,
+  'negotiationDefaultColumn': (l) => l.negotiationDefaultColumn,
   'negotiationDiscount': (l) => l.negotiationDiscount,
   'negotiationFee': (l) => l.negotiationFee,
   'negotiationItems': (l) => l.negotiationItems,
@@ -3245,11 +3247,11 @@ Map<String, _Getter> _part7() => {
   'portalOpenMe': (l) => l.portalOpenMe,
   'portalOwner': (l) => l.portalOwner,
   'portalPerson': (l) => l.portalPerson,
-  'portalPhone': (l) => l.portalPhone,
-  'portalPlans': (l) => l.portalPlans,
 };
 
 Map<String, _Getter> _part8() => {
+  'portalPhone': (l) => l.portalPhone,
+  'portalPlans': (l) => l.portalPlans,
   'portalPreview': (l) => l.portalPreview,
   'portalPublicPlan': (l) => l.portalPublicPlan,
   'portalPublication': (l) => l.portalPublication,
@@ -3648,11 +3650,11 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningCopy': (l) => l.reportFieldMeaningCopy,
   'reportFieldMeaningCreditNote': (l) => l.reportFieldMeaningCreditNote,
   'reportFieldMeaningDueDate': (l) => l.reportFieldMeaningDueDate,
-  'reportFieldMeaningEscompte': (l) => l.reportFieldMeaningEscompte,
-  'reportFieldMeaningExemptionReason': (l) => l.reportFieldMeaningExemptionReason,
 };
 
 Map<String, _Getter> _part9() => {
+  'reportFieldMeaningEscompte': (l) => l.reportFieldMeaningEscompte,
+  'reportFieldMeaningExemptionReason': (l) => l.reportFieldMeaningExemptionReason,
   'reportFieldMeaningHasVat': (l) => l.reportFieldMeaningHasVat,
   'reportFieldMeaningIban': (l) => l.reportFieldMeaningIban,
   'reportFieldMeaningInsurance': (l) => l.reportFieldMeaningInsurance,
@@ -4051,11 +4053,11 @@ Map<String, _Getter> _part9() => {
   'statusSubtitle': (l) => l.statusSubtitle,
   'statusTitle': (l) => l.statusTitle,
   'statusTo': (l) => l.statusTo,
-  'subprocessAttendance': (l) => l.subprocessAttendance,
-  'subprocessAttendanceDesc': (l) => l.subprocessAttendanceDesc,
 };
 
 Map<String, _Getter> _part10() => {
+  'subprocessAttendance': (l) => l.subprocessAttendance,
+  'subprocessAttendanceDesc': (l) => l.subprocessAttendanceDesc,
   'subprocessAvailability': (l) => l.subprocessAvailability,
   'subprocessAvailabilityDesc': (l) => l.subprocessAvailabilityDesc,
   'subprocessCalendar': (l) => l.subprocessCalendar,
@@ -4454,11 +4456,11 @@ Map<String, _Getter> _part10() => {
   'taskWizardGuideNotSaved': (l) => l.taskWizardGuideNotSaved,
   'taskWizardGuides': (l) => l.taskWizardGuides,
   'taskWizardIntro': (l) => l.taskWizardIntro,
-  'taskWizardMakeGuide': (l) => l.taskWizardMakeGuide,
-  'taskWizardNoGuides': (l) => l.taskWizardNoGuides,
 };
 
 Map<String, _Getter> _part11() => {
+  'taskWizardMakeGuide': (l) => l.taskWizardMakeGuide,
+  'taskWizardNoGuides': (l) => l.taskWizardNoGuides,
   'taskWizardOpenFileHint': (l) => l.taskWizardOpenFileHint,
   'taskWizardRecordings': (l) => l.taskWizardRecordings,
   'taskWizardSaveChanges': (l) => l.taskWizardSaveChanges,
@@ -4857,11 +4859,11 @@ Map<String, _Getter> _part11() => {
   'workspaceResetTitle': (l) => l.workspaceResetTitle,
   'workspaceResetWarning': (l) => l.workspaceResetWarning,
   'workspaceSettingsConflict': (l) => l.workspaceSettingsConflict,
-  'workspaceSettingsCurrencyHelper': (l) => l.workspaceSettingsCurrencyHelper,
-  'workspaceSettingsSaved': (l) => l.workspaceSettingsSaved,
 };
 
 Map<String, _Getter> _part12() => {
+  'workspaceSettingsCurrencyHelper': (l) => l.workspaceSettingsCurrencyHelper,
+  'workspaceSettingsSaved': (l) => l.workspaceSettingsSaved,
   'workspaceSettingsTitle': (l) => l.workspaceSettingsTitle,
   'workspaceTimezoneHint': (l) => l.workspaceTimezoneHint,
   'workspaceTimezoneLabel': (l) => l.workspaceTimezoneLabel,
