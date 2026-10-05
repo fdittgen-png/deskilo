@@ -93,6 +93,8 @@ Future<void> tapInvoicingTool(WidgetTester tester, String key) async {
     await tester.pumpAndSettle();
   }
   await tester.tap(item);
+  await tester.pumpAndSettle();
+}
 
 /// Opens the workspace's conversation list (the legacy workspace-scoped
 /// chat screen). Discussions live in the Me messenger now and the workspace
