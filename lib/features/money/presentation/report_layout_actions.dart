@@ -39,6 +39,7 @@ Future<Uint8List?> tryLayoutPdf({
   String watermark = '',
   String signatureLabel = '',
   String signature = '',
+  List<pw.Widget> additionalBody = const [],
 }) async {
   try {
     final document = renderLayoutDocument(layoutXml, data);
@@ -58,6 +59,7 @@ Future<Uint8List?> tryLayoutPdf({
       watermark: watermark,
       signatureLabel: signatureLabel,
       signature: signature,
+      additionalBody: additionalBody,
       baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
       boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
     );

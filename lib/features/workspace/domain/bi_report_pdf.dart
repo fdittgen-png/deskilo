@@ -14,6 +14,10 @@ import 'package:pdf/widgets.dart' as pw;
 
 import 'bi_analysis.dart';
 import 'bi_report_content.dart';
+import '../../money/domain/invoice_pdf.dart' show watermarkForeground;
+import '../../money/domain/invoice_report.dart';
+import '../../money/domain/report_block_widgets.dart';
+import '../../money/domain/report_flow_page.dart';
 
 /// The report: a header, one section per analysis, a closing note.
 Future<Uint8List> buildBiReportPdf({
@@ -25,35 +29,41 @@ Future<Uint8List> buildBiReportPdf({
   required List<BiDashboardContent> sections,
   required pw.Font baseFont,
   required pw.Font boldFont,
+  InvoiceReport? report,
+  Map<String, Uint8List> images = const {},
+  String pageLabel = 'Page',
+  String watermark = '',
 }) async {
-  final document = pw.Document(
-    title: title,
-    theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
-  );
-  document.addPage(
-    pw.MultiPage(
-      pageFormat: PdfPageFormat.a4,
-      margin: const pw.EdgeInsets.all(32),
-      build: (context) => [
-        pw.Text(title, style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
-        pw.SizedBox(height: 2),
-        pw.Text(workspaceName, style: const pw.TextStyle(fontSize: 12)),
-        pw.Text(
-          '$subtitle · $producedOn',
-          style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey700),
-        ),
-        pw.SizedBox(height: 14),
-        for (final s in sections) ..._section(s),
-        pw.SizedBox(height: 8),
-        pw.Text(
-          estimateNote,
-          style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
-        ),
-      ],
-    ),
-  );
+  final document = pw.Document(title: title);
+  final content = report ?? InvoiceReport(
+    header: [ReportHeading(title), ReportText(workspaceName),
+      ReportMuted('$subtitle · $producedOn')],
+    body: const [], footer: const []);
+  document.addPage(reportFlowPage(
+    pageTheme: pw.PageTheme(pageFormat: PdfPageFormat.a4,
+        theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
+        margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
+        buildForeground: watermarkForeground(watermark)),
+    documentTitle: title, pageLabel: pageLabel,
+    firstHeader: (context) => reportBlockWidgets(content.header, images: images),
+    continuation: content.continuation.isEmpty ? null :
+        (context) => reportBlockWidgets(content.continuation, images: images),
+    footer: (context) => reportBlockWidgets(content.footer, images: images),
+    body: (context) => [
+      ...reportBlockWidgets(content.body, images: images),
+      ...biReportBodyWidgets(sections, estimateNote),
+    ],
+  ));
   return document.save();
 }
+
+/// Authoritative dashboard figures and charts remain present even when
+/// the owner personalizes the report's surrounding text and images.
+List<pw.Widget> biReportBodyWidgets(List<BiDashboardContent> sections, String estimateNote) => [
+  for (final section in sections) ..._section(section),
+  pw.SizedBox(height: 8),
+  pw.Text(estimateNote, style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700)),
+];
 
 const _accent = PdfColors.deepOrange800;
 const _projection = PdfColors.teal700;

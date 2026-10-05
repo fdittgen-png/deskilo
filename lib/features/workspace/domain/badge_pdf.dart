@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import '../../money/domain/report_flow_page.dart';
 
 /// Credit-card badge dimensions (ISO/IEC 7810 ID-1: 85.60 × 53.98 mm).
 const double badgeCardWidth = 85.6 * PdfPageFormat.mm;
@@ -35,16 +36,23 @@ Future<Uint8List> buildBadgePdf({
   List<pw.Widget> coverHeader = const [],
   List<pw.Widget> coverBody = const [],
   List<pw.Widget> coverFooter = const [],
+  List<pw.Widget> coverContinuation = const [],
+  String pageLabel = 'Page',
 }) async {
   final document = pw.Document(
     theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
   );
-  final cover = _coverPage(
-    header: coverHeader,
-    body: coverBody,
-    footer: coverFooter,
-  );
-  if (cover != null) document.addPage(cover);
+  if (coverHeader.isNotEmpty || coverBody.isNotEmpty || coverFooter.isNotEmpty) {
+    document.addPage(reportFlowPage(
+      pageTheme: pw.PageTheme(pageFormat: PdfPageFormat.a4,
+          theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
+          margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44)),
+      documentTitle: workspaceName, pageLabel: pageLabel,
+      firstHeader: (context) => coverHeader,
+      continuation: coverContinuation.isEmpty ? null : (context) => coverContinuation,
+      body: (context) => coverBody, footer: (context) => coverFooter,
+    ));
+  }
 
   pw.Widget card() => pw.Container(
         width: badgeCardWidth,
@@ -139,38 +147,4 @@ Future<Uint8List> buildBadgePdf({
     ),
   );
   return document.save();
-}
-
-/// The editable cover page (#671): the workspace's own wording, rendered
-/// from the report editor's bands, on a page of its own BEFORE the
-/// cards.
-///
-/// A page of its own rather than a header above the grid, and that is
-/// the whole design decision here. These sheets are laid out to the
-/// millimetre — ISO/IEC 7810 cards that get cut out and stuck on things
-/// — so a header would have to come out of the card budget: two fewer
-/// badges per sheet, every sheet, forever. A cover page costs one sheet
-/// of paper once and takes nothing away from what the print is for.
-///
-/// Empty blocks produce NO page. An owner who cleared the text meant to
-/// print cards, not a blank leaf.
-pw.Page? _coverPage({
-  required List<pw.Widget> header,
-  required List<pw.Widget> body,
-  required List<pw.Widget> footer,
-}) {
-  if (header.isEmpty && body.isEmpty && footer.isEmpty) return null;
-  return pw.Page(
-    pageFormat: PdfPageFormat.a4,
-    build: (context) => pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        ...header,
-        if (header.isNotEmpty) pw.SizedBox(height: 12),
-        ...body,
-        pw.Spacer(),
-        ...footer,
-      ],
-    ),
-  );
 }

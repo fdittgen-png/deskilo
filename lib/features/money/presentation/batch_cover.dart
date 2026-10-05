@@ -5,28 +5,35 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../domain/report_block_widgets.dart';
 import 'invoice_documents.dart';
+import '../../workspace/providers/workspace_providers.dart';
 
 /// #671 — the cover page for a batch print, rendered from the report
 /// editor's bands for [docId] through the same pipeline every other
 /// document uses.
 ///
-/// Returning three lists rather than a widget keeps the PDF builders
-/// free of the money feature: they take pw widgets and never learn what
-/// a ReportBand is.
-({
+/// The shared workspace library supplies images to every cover band.
+/// A workspace switch or closed dialog cancels the pending cover.
+Future<({
   List<pw.Widget> header,
+  List<pw.Widget> continuation,
   List<pw.Widget> body,
   List<pw.Widget> footer,
-}) batchCover(
+})?> batchCover(
   BuildContext context,
   WidgetRef ref, {
   required String docId,
   required Map<String, Object?> data,
-}) {
+}) async {
+  final workspaceId = ref.read(currentWorkspaceProvider).value?.id;
+  await warmLetterDocProviders(ref, docId);
+  if (!context.mounted || ref.read(currentWorkspaceProvider).value?.id != workspaceId) return null;
   final report = renderLetterDoc(context, ref, docId: docId, data: data);
+  final images = await resolveReportImages(ref, report);
+  if (!context.mounted || ref.read(currentWorkspaceProvider).value?.id != workspaceId) return null;
   return (
-    header: reportBlockWidgets(report.header),
-    body: reportBlockWidgets(report.body),
-    footer: reportBlockWidgets(report.footer),
+    continuation: reportBlockWidgets(report.continuation, images: images),
+    header: reportBlockWidgets(report.header, images: images),
+    body: reportBlockWidgets(report.body, images: images),
+    footer: reportBlockWidgets(report.footer, images: images),
   );
 }

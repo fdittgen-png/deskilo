@@ -7,9 +7,12 @@
 // provisional; a period the data does not know is a gap and says so; with
 // too little history there is no projection and the page says why.
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/features/money/domain/invoice_report.dart';
+import 'package:deskilo/features/money/domain/report_layout/layout_render.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
@@ -31,6 +34,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pdf_geometry.dart';
 
 /// March 2026 (the running month at the fixed clock): 30 of 100 seat-hours
 /// reserved, 1000 physical. February: 20 of 80. Before February: not
@@ -258,7 +262,11 @@ void main() {
       evolutionTitle: 'Evolution',
       compareTitle: 'Compared with the past',
     );
+    final logo = base64Decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==');
     final bytes = await buildBiReportPdf(
+      report: const InvoiceReport(header: [ReportHeading('Custom analytics'), ReportImage('logo')],
+        body: [ReportText('Owner introduction')], footer: [ReportText('Workspace footer')]),
+      images: {'logo': logo},
       title: 'Business analytics',
       workspaceName: 'Workspace',
       subtitle: 'October 2026',
@@ -274,5 +282,21 @@ void main() {
     );
     expect(String.fromCharCodes(bytes.take(5)), '%PDF-');
     expect(bytes.length, greaterThan(4000));
+    expect(RegExp(r'/Subtype\s*/Image').hasMatch(latin1.decode(bytes)), isTrue);
+    final positioned = await buildLayoutPdf(
+      document: renderLayoutDocument('<report-layout><header><text>Custom analytics</text></header>'
+        '<body><text>Owner introduction</text></body><footer><text>Workspace footer</text></footer></report-layout>', const {}),
+      data: const {}, documentTitle: 'Business analytics', pageLabel: 'Page',
+      baseFont: pw.Font.ttf(ByteData.sublistView(File('assets/fonts/Roboto-Regular.ttf').readAsBytesSync())),
+      boldFont: pw.Font.ttf(ByteData.sublistView(File('assets/fonts/Roboto-Bold.ttf').readAsBytesSync())),
+      additionalBody: biReportBodyWidgets([content, content], 'Dashed lines are estimates.'),
+    );
+    final out = Directory('build/report-bi')..createSync(recursive: true);
+    for (final entry in {'banded': bytes, 'positioned': positioned}.entries) {
+      File('${out.path}/${entry.key}.pdf').writeAsBytesSync(entry.value);
+      final ink = textPositions(entry.value);
+      expect(ink.length, greaterThan(100), reason: 'Both native analyses survive the custom design');
+      expect(ink.map((i) => i.page).toSet().length, greaterThan(1));
+    }
   });
 }
