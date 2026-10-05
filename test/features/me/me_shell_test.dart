@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/features/profile/presentation/widgets/personal_avatar.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -48,6 +49,50 @@ void main() {
     expect(router.state.uri.path, '/me');
     expect(find.byType(NavigationBar), findsNothing);
   });
+
+  testWidgets(
+    'a side the person is not active in is disabled and does nothing',
+    (tester) async {
+      final repo = twoSpaces();
+      repo.workspaces[0] = repo.workspaces[0].copyWith(
+        pairId: 'pair-1',
+        environment: 'dev',
+      );
+      repo.workspaces[1] = repo.workspaces[1].copyWith(
+        pairId: 'pair-1',
+        environment: 'prod',
+      );
+      // present on both sides, active only in the dev
+      repo.extraMyMemberships
+        ..clear()
+        ..add(
+          const Member(
+            id: 'member-b',
+            workspaceId: 'ws-2',
+            userId: 'user-1',
+            isAdmin: false,
+            isOwner: false,
+            status: MemberStatus.paused,
+          ),
+        );
+      final router = await pumpMeApp(
+        tester,
+        workspace: repo,
+        size: const Size(390, 844),
+      );
+      await goTo(tester, router, '/me');
+      final prod = find.byKey(const ValueKey('me-space-ws-2'));
+      final dev = find.byKey(const ValueKey('me-space-ws-1'));
+      expect(tester.widget<FilledButton>(prod).onPressed, isNull);
+      expect(tester.widget<FilledButton>(dev).onPressed, isNotNull);
+      await tester.tap(prod, warnIfMissed: false);
+      await tester.pumpAndSettle();
+      final container = ProviderScope.containerOf(
+        tester.element(find.byType(Scaffold).first),
+      );
+      expect(container.read(currentWorkspaceProvider).value?.id, isNot('ws-2'));
+    },
+  );
 
   testWidgets(
     'paired environments share one card and enter the selected side',

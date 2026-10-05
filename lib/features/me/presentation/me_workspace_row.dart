@@ -49,7 +49,8 @@ class MeWorkspaceRow extends StatelessWidget {
                   children: [
                     Text(
                       name,
-                      maxLines: 2,
+                      maxLines: 1,
+                      softWrap: false,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
