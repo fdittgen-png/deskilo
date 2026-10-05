@@ -1210,6 +1210,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Salva questo QR adesso — viene mostrato una sola volta.';
 
   @override
+  String get baseRoleNote =>
+      'Ognuno ha esattamente un ruolo di base: Utente, Amministratore, Co-proprietario o Proprietario. Gli altri ruoli si aggiungono; nessuno toglie nulla.';
+
+  @override
+  String get baseRoleUser => 'Utente';
+
+  @override
   String get biAreaCapacity => 'Spazi e capacità';
 
   @override
@@ -15044,7 +15051,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get rolesIntroEditor =>
-      'Qui tutti sono membri. Un ruolo aggiunge ciò che i suoi titolari possono fare e non toglie mai nulla. Il proprietario detiene sempre tutti i permessi; un comproprietario può averne meno.';
+      'Ognuno ha esattamente un ruolo di base — Utente, Amministratore, Co-proprietario o Proprietario. Ogni altro ruolo aggiunge ciò che i suoi titolari possono fare e non toglie mai nulla. Il proprietario ha sempre tutti i permessi; un co-proprietario può averne meno.';
 
   @override
   String get rolesIntroReadOnly =>

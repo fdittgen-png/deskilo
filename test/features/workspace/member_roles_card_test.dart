@@ -118,7 +118,10 @@ void main() {
         workspace: s.workspace, roles: s.roles);
 
     expect(find.byKey(MemberRolesCard.cardKey), findsOneWidget);
-    expect(find.text('No role: everything a member can do.'), findsOneWidget);
+    // Everybody holds exactly one mandatory base role: Ben is a User.
+    expect(find.byKey(MemberRolesCard.baseRoleKey), findsOneWidget);
+    expect(find.descendant(of: find.byKey(MemberRolesCard.baseRoleKey), matching: find.text('User')), findsOneWidget);
+    expect(find.byKey(MemberRolesCard.baseRoleNoteKey), findsOneWidget);
     // The old single row is gone: the card is the one place.
     expect(find.byKey(const ValueKey('member-page-role')), findsNothing);
 
@@ -392,5 +395,19 @@ void main() {
         workspace: plain.workspace, roles: plain.roles);
     expect(find.byKey(const ValueKey('member-page-action-service')),
         findsNothing);
+  });
+
+  testWidgets('another role adds to the base role: both chips show, and the '
+      'base role cannot be taken away', (tester) async {
+    final s = _seed();
+    await _pump(tester, const MemberPage(memberId: 'ben'),
+        workspace: s.workspace, roles: s.roles);
+    await _openAddSheet(tester);
+    await tester.tap(find.byKey(const ValueKey('role-assign-tresorier')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(MemberRolesCard.baseRoleKey), findsOneWidget);
+    expect(find.byKey(MemberRolesCard.chipKeyFor('tresorier')), findsOneWidget);
+    // The base role is a plain chip: nothing to delete, it is mandatory.
+    expect(tester.widget<Chip>(find.byKey(MemberRolesCard.baseRoleKey)), isA<Chip>());
   });
 }

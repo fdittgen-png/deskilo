@@ -218,7 +218,7 @@
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesIntroEditor": "Aquí todas las personas son miembros. Un rol añade lo que pueden hacer quienes lo tienen y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.",
+  "rolesIntroEditor": "Cada persona tiene exactamente un rol base — Usuario, Administrador, Copropietario o Propietario. Cualquier otro rol añade lo que sus titulares pueden hacer y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },

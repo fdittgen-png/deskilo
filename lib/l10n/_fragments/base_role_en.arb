@@ -1,0 +1,10 @@
+{
+  "baseRoleUser": "User",
+  "@baseRoleUser": {
+    "description": "the mandatory base role"
+  },
+  "baseRoleNote": "Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it; none takes anything away.",
+  "@baseRoleNote": {
+    "description": "the mandatory base role"
+  }
+}
