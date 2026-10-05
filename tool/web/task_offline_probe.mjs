@@ -18,7 +18,9 @@ const manifest = () => {
   return {version: hash(JSON.stringify(files)), files};
 };
 let corrupt = false;
+let networkAvailable = true;
 const server = createServer((req, res) => {
+  if (!networkAvailable) { req.socket.destroy(); return; }
   const name = req.url.replace(/^\/nested\//, '');
   res.setHeader('Content-Type', name.endsWith('.js') ? 'text/javascript' :
     name.endsWith('.json') ? 'application/json' : 'text/html');
@@ -53,6 +55,7 @@ try {
   assert.equal(await command('state'), false, 'registration alone is not ready');
   assert.equal(await command('keep'), true);
   await page.evaluate(() => fetch('api/private'));
+  networkAvailable = false; // deny the worker network too, across browser versions
   await context.setOffline(true);
   await page.close();
   page = await context.newPage();
@@ -62,12 +65,14 @@ try {
   assert.equal(await page.evaluate(async () => {
     try { await fetch('api/private'); return false; } catch { return true; }
   }), true, 'private API response must never be an offline asset');
+  networkAvailable = true;
   await context.setOffline(false);
   assets.set('runtime.js', 'window.taskRuntimeReady = "new";');
   corrupt = true;
   assert.equal(await command('keep'), false, 'mixed build is refused');
   assert.equal(await command('state'), true, 'last complete version survives');
   assert.equal((await page.evaluate(() => caches.keys())).length, 2, 'failed installation leaves no partial cache');
+  networkAvailable = false; // deny the worker network too, across browser versions
   await context.setOffline(true);
   await page.reload();
   assert.equal(await page.evaluate(() => window.taskRuntimeReady), true);
