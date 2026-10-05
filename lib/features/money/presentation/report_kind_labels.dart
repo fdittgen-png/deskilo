@@ -20,6 +20,7 @@ String reportKindLabel(AppLocalizations? l10n, ReportKind kind) {
     'usage' => l10n?.reportDocUsage ?? 'Consumption report',
     'workspace' => l10n?.reportDocWorkspace ?? 'Workspace report',
     'status' => l10n?.reportDocStatus ?? 'Workspace status',
+    'bi_analytics' => l10n?.biPdfTitle ?? 'Business analytics',
     'workspace_configuration' => l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration',
     'vat_declaration' => l10n?.vatDeclTitle ?? 'VAT declaration',
     'vat' => l10n?.reportDocVat ?? 'VAT report',

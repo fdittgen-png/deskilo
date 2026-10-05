@@ -86,6 +86,7 @@ Future<Uint8List> buildLayoutPdf({
   String watermark = '',
   String signatureLabel = '',
   String signature = '',
+  List<pw.Widget> additionalBody = const [],
 }) async {
   final pageW = PdfPageFormat.a4.width;
   final pageH = PdfPageFormat.a4.height;
@@ -193,6 +194,7 @@ Future<Uint8List> buildLayoutPdf({
       ),
       build: (context) => [
         ...ctx.children(document.body.children, height: contentH),
+        ...additionalBody,
         if (signature.isNotEmpty) ...[
           pw.SizedBox(height: 24),
           pw.Container(

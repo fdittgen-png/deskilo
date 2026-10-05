@@ -4,6 +4,7 @@
 // analyses the page is showing, the same content the dashboards render,
 // and lays it out as a report. A section whose analysis cannot be read is
 // left out of the report and said — never printed with a made-up figure.
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +23,10 @@ import '../../domain/bi_query.dart';
 import '../../domain/bi_report_pdf.dart';
 import '../../domain/bi_result.dart';
 import '../../providers/bi_providers.dart';
+import '../../providers/workspace_providers.dart';
+import '../../../money/domain/invoice_pdf_template.dart';
+import '../../../money/presentation/invoice_documents.dart';
+import '../../../money/presentation/report_layout_actions.dart';
 import 'bi_dashboard_content.dart';
 import 'bi_module_section.dart' show biModuleViews;
 import 'bi_toolbar.dart' show biPeriodLabel;
@@ -120,20 +125,39 @@ Future<void> exportBiPdf(
     final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
     final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
     final period = query.current(today);
-    final bytes = await buildBiReportPdf(
-      title: l10n?.biPdfTitle ?? 'Business analytics',
-      workspaceName: workspaceName,
-      subtitle: biPeriodLabel(period, l10n, locale),
-      producedOn:
-          l10n?.biPdfProduced(DateFormat.yMMMMd(locale).format(now)) ??
-          'Produced on ${DateFormat.yMMMMd(locale).format(now)}',
-      estimateNote:
-          l10n?.biPdfEstimateNote ??
-          'Dashed lines and shaded bands are estimates from past periods, not measurements.',
-      sections: sections,
-      baseFont: pw.Font.ttf(regular),
-      boldFont: pw.Font.ttf(bold),
+    await warmLetterDocProviders(ref, 'bi_analytics');
+    if (!context.mounted || ref.read(currentWorkspaceProvider).value?.id != workspaceId) return;
+    final title = l10n?.biPdfTitle ?? 'Business analytics';
+    final subtitle = biPeriodLabel(period, l10n, locale);
+    final producedOn = l10n?.biPdfProduced(DateFormat.yMMMMd(locale).format(today)) ??
+        'Produced on ${DateFormat.yMMMMd(locale).format(today)}';
+    final estimateNote = l10n?.biPdfEstimateNote ??
+        'Dashed lines and shaded bands are estimates from past periods, not measurements.';
+    final data = withOwnerTexts(
+      <String, Object?>{'workspace': workspaceName, 'period': subtitle,
+        'issued': DateFormat.yMMMMd(locale).format(today)},
+      invoicePdfTemplateFor(ref).texts,
     );
+    final report = renderLetterDoc(context, ref, docId: 'bi_analytics', data: data);
+    final layout = letterLayoutXml(ref, docId: 'bi_analytics', l10n: l10n);
+    final mark = developmentMark(context, ref);
+    final pageLabel = l10n?.invoicePdfPage ?? 'Page';
+    Uint8List? bytes;
+    if (layout != null) {
+      bytes = await tryLayoutPdf(layoutXml: layout, data: data, what: title,
+          documentTitle: title, pageLabel: pageLabel, watermark: mark,
+          font: (asset) async => pw.Font.ttf(asset.contains('Bold') ? bold : regular),
+          image: (name) => layoutImage(ref, name),
+          additionalBody: biReportBodyWidgets(sections, estimateNote));
+    }
+    bytes ??= await buildBiReportPdf(
+      title: title, workspaceName: workspaceName, subtitle: subtitle,
+      producedOn: producedOn, estimateNote: estimateNote, sections: sections,
+      report: report, images: await resolveReportImages(ref, report),
+      pageLabel: pageLabel, watermark: mark,
+      baseFont: pw.Font.ttf(regular), boldFont: pw.Font.ttf(bold),
+    );
+    if (!context.mounted || ref.read(currentWorkspaceProvider).value?.id != workspaceId) return;
     final path = await ref.read(fileSaverProvider)(
       bytes: bytes,
       fileName: '${safeFileSlug(workspaceName)}-analytics-${period.wire}.pdf',

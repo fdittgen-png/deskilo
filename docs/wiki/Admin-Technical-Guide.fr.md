@@ -22,6 +22,10 @@ l'app lui remet sont un vocabulaire fixe d'espaces réservés.
 
 *L'éditeur de rapports : les sélecteurs de langue et de document en haut, les commutateurs Balisage / Visuel et Conception / Aperçu en dessous, et les bandes de la facture — en-tête, corps, pied — plus bas.*
 
+Les couvertures des badges et codes QR utilisent le même moteur de pages que les courriers. Elles chargent les images de l’espace, répètent la bande de continuation sur les pages suivantes et gardent le pied de page en bas. Les grilles de cartes conservent leurs dimensions et le contenu des codes QR.
+
+Les exports PDF des analyses utilisent le concepteur de rapports pour les en-têtes, introductions, pieds de page et images partagées. Les chiffres, graphiques et explications des estimations sont conservés dans les modèles à bandes et positionnés.
+
 <!-- anchor: admin.reports.kinds -->
 ### Types de rapports et modèles
 

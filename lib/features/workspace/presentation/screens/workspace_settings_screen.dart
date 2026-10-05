@@ -554,16 +554,13 @@ class _WorkspaceSettingsScreenState
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
-        // #671 — the surrounding wording comes from report management;
-        // the cards stay with the renderer. Read FIRST: it needs the
-        // context, and everything below this line is an async gap.
-        final cover = batchCover(context, ref, docId: 'space_codes', data: {
+        // #671 — cover wording and images come from report management.
+        final cover = await batchCover(context, ref, docId: 'space_codes', data: {
           'workspace': workspace.name,
           'issued': DateFormat.yMMMMd().format(ref.read(clockProvider).now()),
         });
-        // #1277 — the space nouns resolve HERE, above the gap, for the
-        // same reason `batchCover` does: everything below this line is
-        // async and a BuildContext must not cross it.
+        if (!mounted || cover == null) return;
+        // #1277 — capture localized space nouns before reading the entries.
         final kindLevel = lexiconText(context,
             key: 'spaceKindLevel', fallback: l10n?.spaceKindLevel ?? 'Level');
         final kindOffice = lexiconText(context,
@@ -589,6 +586,7 @@ class _WorkspaceSettingsScreenState
             seat: kindSeat,
           ),
         );
+        if (!mounted || ref.read(currentWorkspaceProvider).value?.id != workspace.id) return;
         if (entries.isEmpty) {
           if (!mounted) return;
           AppSnack.info(
@@ -607,6 +605,8 @@ class _WorkspaceSettingsScreenState
           boldFont: pw.Font.ttf(bold),
           size: options.size,
           qrSize: options.qrSize,
+          coverContinuation: cover.continuation,
+          pageLabel: l10n?.invoicePdfPage ?? 'Page',
           coverHeader: cover.header,
           coverBody: cover.body,
           coverFooter: cover.footer,

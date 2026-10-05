@@ -10,6 +10,7 @@ import 'address_window.dart';
 import 'invoice_report.dart';
 import 'report_block_widgets.dart';
 import 'report_page_footer.dart';
+import 'report_flow_page.dart';
 
 /// Localized strings the invoice PDF prints.
 class InvoicePdfStrings {
@@ -952,27 +953,20 @@ Future<Uint8List> buildBandedLetterPdf({
 }) {
   final doc = pw.Document(title: documentTitle, producer: _producer);
   doc.addPage(
-    pw.MultiPage(
+    reportFlowPage(
       pageTheme: pw.PageTheme(
         pageFormat: PdfPageFormat.a4,
         theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
         margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
         buildForeground: watermarkForeground(watermark),
       ),
-      header: (context) => pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-        mainAxisSize: pw.MainAxisSize.min,
-        children: context.pageNumber == 1
-            ? reportBlockWidgets(report.header, images: reportImages)
-            : report.continuation.isNotEmpty
-                ? reportBlockWidgets(report.continuation, images: reportImages)
-                : [pw.Text(documentTitle, style: const pw.TextStyle(fontSize: 9)),
-                   pw.Divider()],
-      ),
-      footer: (context) => reportPageFooter(context,
-          content: reportBlockWidgets(report.footer, images: reportImages),
-          pageLabel: pageLabel),
-      build: (context) => reportBlockWidgets(report.body, images: reportImages),
+      documentTitle: documentTitle,
+      pageLabel: pageLabel,
+      firstHeader: (context) => reportBlockWidgets(report.header, images: reportImages),
+      continuation: report.continuation.isEmpty ? null :
+          (context) => reportBlockWidgets(report.continuation, images: reportImages),
+      footer: (context) => reportBlockWidgets(report.footer, images: reportImages),
+      body: (context) => reportBlockWidgets(report.body, images: reportImages),
     ),
   );
   return doc.save();

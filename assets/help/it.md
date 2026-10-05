@@ -2658,6 +2658,10 @@ un vocabolario fisso di segnaposto.
 
 *L'editor dei report: i selettori di lingua e documento in alto, gli interruttori Marcatura / Visivo e Progetto / Anteprima sotto, e le bande della fattura — intestazione, corpo, piè di pagina — più giù.*
 
+Le copertine di badge e codici QR usano lo stesso motore di pagine delle lettere. Caricano le immagini dello spazio, usano la banda di continuazione nelle pagine successive e mantengono il piè di pagina in basso. Dimensioni delle carte e contenuto dei codici QR restano invariati.
+
+I PDF delle analisi usano il designer dei report per intestazioni, introduzioni, piè di pagina e immagini condivise. Dati, grafici e spiegazioni delle stime restano presenti nei modelli a bande e posizionati.
+
 ### Tipi di report e modelli
 
 Ogni report offre un modello **Professionale** oltre alle opzioni esistenti (#1994). Mantiene le sezioni specifiche: pagamenti confermati e in attesa separati e registrazioni complete dei consumi. I report gestionali non richiedono penali per ritardo. I modelli personalizzati restano fino alla sostituzione esplicita.

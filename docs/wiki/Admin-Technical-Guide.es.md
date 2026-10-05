@@ -22,6 +22,10 @@ entrega son un vocabulario fijo de marcadores.
 
 *El editor de informes: los selectores de idioma y de documento arriba, los conmutadores Marcado / Visual y Diseño / Vista previa debajo, y las bandas de la factura — cabecera, cuerpo, pie — más abajo.*
 
+Las portadas de credenciales y códigos QR usan el mismo motor de páginas que las cartas. Cargan imágenes del espacio, usan la banda de continuación en las páginas siguientes y mantienen el pie abajo. Se conservan las dimensiones de las tarjetas y el contenido de los códigos QR.
+
+Los PDF de análisis utilizan el diseñador de informes para encabezados, introducciones, pies e imágenes compartidas. Las cifras, gráficos y explicaciones de estimaciones se conservan en los diseños por bandas y posicionados.
+
 <!-- anchor: admin.reports.kinds -->
 ### Tipos de informes y plantillas
 

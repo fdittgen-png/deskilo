@@ -2649,6 +2649,10 @@ die App ihm übergibt, sind ein festes Vokabular von Platzhaltern.
 
 *Der Berichts-Editor: die Sprach- und Dokumentauswahl oben, die Schalter Markup / Visuell und Entwurf / Vorschau darunter, und die Bänder der Rechnung — Kopf, Rumpf, Fuß — weiter unten.*
 
+Deckblätter für Ausweise und Platz-QR-Codes nutzen dieselbe Seiten-Engine wie Briefe. Sie laden Bibliotheksbilder, verwenden auf Folgeseiten das Fortsetzungsband und halten die Fußzeile unten. Kartengrößen und QR-Inhalte bleiben erhalten.
+
+PDF-Exporte der Geschäftsanalysen nutzen den Berichtsdesigner für Kopfzeilen, Einleitung, Fußzeilen und gemeinsame Bilder. Kennzahlen, Diagramme und Erläuterungen zu Schätzungen bleiben in Band- und positionierten Vorlagen erhalten.
+
 ### Berichtsarten und Vorlagen
 
 Jeder Bericht bietet neben den bisherigen Varianten eine **Professionell** genannte Vorlage (#1994). Sie erhält die jeweiligen Detailabschnitte: bestätigte und ausstehende Zahlungen bleiben getrennt, Verbrauchsberichte behalten ihre Einzelnachweise. Verwaltungsberichte verlangen keine Verzugsgebühren. Eigene Entwürfe bleiben bis zum ausdrücklich gewählten Austausch erhalten.

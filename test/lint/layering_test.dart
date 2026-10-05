@@ -269,7 +269,7 @@ const Map<String, int> _pairBudget = {
   'money -> reservations': 13,
   // 2026-09-15 #1310 S0 112→113: the invoice register asks for the
   // exportData permission before offering the accounting export.
-  'money -> workspace': 124, // 2026-10-04 123→125: the session state of money (period, face, wizard) starts over when the active workspace changes, so it watches the active workspace id; 2026-10-03 #1916 122→123: the legal identity screen names the capacities with the same customerCapacityName the member page uses; 2026-10-02 #1869 B 120→122: the chart sheet names its issuer site and reads the current workspace, as the book sheet does; 2026-10-02 #1869 117→120: a book profile belongs to an issuer, which IS a workspace site, and is read for the current workspace — the book sheet names the site, the providers the current workspace; // 2026-09-19 #1449 116→117: save_legal_identity.dart names WorkspaceRepository — the command writes both aggregates, which is the point of it; the SCREEN stopped importing it, so the coupling moved from presentation into application where it is one line // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
+  'money -> workspace': 125, // #2003 cancel cover preparation when its workspace changes. // 2026-10-04 123→125: the session state of money (period, face, wizard) starts over when the active workspace changes, so it watches the active workspace id; 2026-10-03 #1916 122→123: the legal identity screen names the capacities with the same customerCapacityName the member page uses; 2026-10-02 #1869 B 120→122: the chart sheet names its issuer site and reads the current workspace, as the book sheet does; 2026-10-02 #1869 117→120: a book profile belongs to an issuer, which IS a workspace site, and is read for the current workspace — the book sheet names the site, the providers the current workspace; // 2026-09-19 #1449 116→117: save_legal_identity.dart names WorkspaceRepository — the command writes both aggregates, which is the point of it; the SCREEN stopped importing it, so the coupling moved from presentation into application where it is one line // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
   'plan -> events': 1,
   'plan -> members': 1,
   'plan -> money': 4,
@@ -343,7 +343,7 @@ const Map<String, int> _pairBudget = {
   // three imports in one provider file.
   'workspace -> events': 15, // 2026-09-27 #1657 13→15: widgets/local_setup_views.dart names a validation policy by its event-type label (the domain enum and its label), for the named-validators slot and the apply sheet's note
   'workspace -> members': 4,
-  'workspace -> money': 35,
+  'workspace -> money': 44, // #2003 badge/QR covers and BI exports reuse report pagination, designs and image resolution.
   'workspace -> plan': 26, // 2026-10-02 #1923 B 25→26: the Web-BI query groups capacity by the workspace's levels (levelsProvider), the one level seam.
   'workspace -> profile': 11, // 2026-09-28 #1652 10→11: the invitation review names who is joining (my profile's e-mail).
   'workspace -> reservations': 19, // 2026-10-02 #2085 17→19: the role's holders and "What they can do here" print member names through memberNamesProvider, the one name seam (recording privacy, #1514).

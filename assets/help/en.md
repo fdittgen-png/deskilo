@@ -2578,6 +2578,10 @@ placeholders.
 
 *The report editor: the language and document pickers on top, the Markup / Visual and Design / Preview switches under them, and the invoice's bands — header, body, footer — below.*
 
+Badge and space-QR covers use the same page engine as letters. They load images from the workspace library, repeat the continuation band when a cover spans several pages, and keep its footer at the bottom. The printable card grids keep their existing dimensions and QR payloads.
+
+Business analytics PDF exports use the report designer for headers, introductory text, footers and shared images. The dashboard figures, charts and estimate explanations are retained in both banded and positioned designs.
+
 ### Report types and templates
 
 Every report offers a **Professional** template alongside the existing choices (#1994). It keeps the complete report-specific sections; payment summaries keep confirmed and pending amounts separate, and consumption reports keep their usage records. Management reports do not request late-payment penalties. Existing custom designs stay in place until you explicitly replace them.

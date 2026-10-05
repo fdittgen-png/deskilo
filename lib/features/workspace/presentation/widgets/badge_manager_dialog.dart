@@ -168,13 +168,13 @@ class _BadgeManagerDialogState
       action: () async {
         // #671 — the sheet's wording is the workspace's own now, edited
         // in report management like every other printable.
-        final cover = batchCover(context, ref, docId: 'badges', data: {
+        final cover = await batchCover(context, ref, docId: 'badges', data: {
           'workspace': workspaceName,
           'member': widget.name,
           'issued': DateFormat.yMMMMd().format(ref.read(clockProvider).now()),
         });
-        // Built BEFORE the awaits: it reads the context, and the font
-        // loads below are async gaps.
+        if (!mounted || cover == null) return;
+        // The cover has resolved its template and shared images.
         // Embedded Roboto like the bill PDF: accented names must encode.
         final regular =
             await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
@@ -186,6 +186,8 @@ class _BadgeManagerDialogState
           hint: l10n?.kioskPresentBadge ?? 'Present your badge',
           baseFont: pw.Font.ttf(regular),
           boldFont: pw.Font.ttf(bold),
+          coverContinuation: cover.continuation,
+          pageLabel: l10n?.invoicePdfPage ?? 'Page',
           coverHeader: cover.header,
           coverBody: cover.body,
           coverFooter: cover.footer,
