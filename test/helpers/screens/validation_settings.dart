@@ -33,7 +33,7 @@ Future<FakeEventRepository> pumpValidationSettings(
   // #1339 — the responsive matrix asks for a narrow surface. Every
   // other caller keeps the tall one this file has always used, so
   // nothing existing changes.
-  Size size = const Size(1200, 3400),
+  Size size = const Size(1200, 4200),
 }) async {
   final events = FakeEventRepository()..policies.addAll(policies);
   // Policy cards (0097 added Booking deletion) outgrow the default

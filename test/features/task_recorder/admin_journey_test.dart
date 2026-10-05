@@ -215,7 +215,7 @@ void main() {
     );
     await tester.tap(find.text('Default policy'));
     await tester.pumpAndSettle();
-    await tester.tapAt(const Offset(10, 10));
+    await tester.tapAt(const Offset(600, 10));
     await tester.pumpAndSettle();
     final r = await _stop(tester, c);
     expect(
