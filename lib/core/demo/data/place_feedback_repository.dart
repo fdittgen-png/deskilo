@@ -27,6 +27,16 @@ class FakePlaceFeedbackRepository implements PlaceFeedbackRepository {
   Future<PlaceFeedback> fetch(String workspaceId, PlaceKind kind, String id) async =>
       _feedback(kind, id);
 
+  /// How many requests reached the repository: a list must cost one.
+  int manyCalls = 0;
+
+  @override
+  Future<Map<String, PlaceFeedback>> fetchMany(
+      String workspaceId, PlaceKind kind, List<String> ids) async {
+    manyCalls++;
+    return {for (final id in ids) id: _feedback(kind, id)};
+  }
+
   @override
   Future<PlaceFeedback> setFavorite(
       String workspaceId, PlaceKind kind, String id,

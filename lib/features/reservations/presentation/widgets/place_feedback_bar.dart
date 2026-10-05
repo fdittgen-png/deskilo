@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -26,7 +27,7 @@ class PlaceFeedbackBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (!ref.watch(placeFeedbackAvailableProvider)) return const SizedBox.shrink();
+    if (!placeFeedbackShown(ref, kind)) return const SizedBox.shrink();
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final feedback = ref.watch(placeFeedbackProvider(kind, id)).value ??
@@ -89,5 +90,89 @@ class PlaceFeedbackBar extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+/// Whether favourites and ratings show for [kind]: a workspace's are the
+/// person's own, wherever they are; any other resource follows the active
+/// workspace's flag and the permission to use reservations.
+bool placeFeedbackShown(WidgetRef ref, PlaceKind kind) =>
+    kind == PlaceKind.workspace || ref.watch(placeFeedbackAvailableProvider);
+
+/// The compact face for a list row or a card: a heart and the average with
+/// its count. Tapping the heart toggles the favourite; tapping the rating
+/// opens the full bar in a sheet, so rating is one tap from anywhere.
+class PlaceFeedbackChip extends ConsumerWidget {
+  const PlaceFeedbackChip({super.key, required this.kind, required this.id, this.title});
+
+  final PlaceKind kind;
+  final String id;
+  final String? title;
+
+  static Key heartKey(String id) => ValueKey('place-chip-heart-$id');
+  static Key rateKey(String id) => ValueKey('place-chip-rate-$id');
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (!placeFeedbackShown(ref, kind)) return const SizedBox.shrink();
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final feedback = ref.watch(placeFeedbackProvider(kind, id)).value ??
+        const PlaceFeedback();
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      IconButton(
+        key: heartKey(id),
+        visualDensity: VisualDensity.compact,
+        tooltip: feedback.favorite
+            ? (l10n?.placeFeedbackUnfavorite ?? 'Remove from favourites')
+            : (l10n?.placeFeedbackFavorite ?? 'Add to favourites'),
+        isSelected: feedback.favorite,
+        icon: const Icon(Icons.favorite_border),
+        selectedIcon: Icon(Icons.favorite, color: theme.colorScheme.error),
+        onPressed: () => runGuarded(
+          context,
+          domain: 'reservations',
+          message: 'place feedback failed',
+          errorText: l10n?.placeFeedbackFailed ?? 'Could not save. Please try again.',
+          action: () => setPlaceFavorite(ref,
+              kind: kind, id: id, on: !feedback.favorite),
+        ),
+      ),
+      InkWell(
+        key: rateKey(id),
+        borderRadius: AppRadius.lgAll,
+        onTap: () => showModalBottomSheet<void>(
+          context: context,
+          showDragHandle: true,
+          builder: (_) => SafeArea(
+            child: Padding(
+              padding: AppSpacing.lgAll,
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                if (title != null)
+                  Text(title!, style: theme.textTheme.titleMedium),
+                PlaceFeedbackBar(kind: kind, id: id),
+              ]),
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            Icon(
+              (feedback.mine ?? 0) > 0 ? Icons.star : Icons.star_border,
+              size: 18,
+              color: (feedback.mine ?? 0) > 0 ? theme.colorScheme.tertiary : null,
+            ),
+            const SizedBox(width: 2),
+            Text(
+              feedback.count == 0
+                  ? '–'
+                  : '${feedback.average!.toStringAsFixed(1)} (${feedback.count})',
+              style: theme.textTheme.labelMedium,
+            ),
+          ]),
+        ),
+      ),
+    ]);
   }
 }

@@ -3,12 +3,16 @@
 // #2185 — a member's favourite mark and 0-5 star rating of a bookable place
 // (a seat, a desk, an office or a level), and the place's average.
 
-/// What kind of place a mark or a rating is about.
+/// What a mark or a rating is about: any resource but a person — a seat, a
+/// desk, an office, a level, a service, an accessory, or a whole workspace.
 enum PlaceKind {
   seat,
   desk,
   office,
-  level;
+  level,
+  service,
+  accessory,
+  workspace;
 
   String get wireName => name;
 }
@@ -66,6 +70,10 @@ class FavoritePlace {
 
 abstract interface class PlaceFeedbackRepository {
   Future<PlaceFeedback> fetch(String workspaceId, PlaceKind kind, String id);
+
+  /// Several places of one kind at once (a list on screen): one request.
+  Future<Map<String, PlaceFeedback>> fetchMany(
+      String workspaceId, PlaceKind kind, List<String> ids);
 
   Future<PlaceFeedback> setFavorite(
       String workspaceId, PlaceKind kind, String id, {required bool on});

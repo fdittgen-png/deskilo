@@ -105,6 +105,7 @@ const Set<String> _knownPairs = {
   'visits -> auth',
   // #1791: account-bound portal, workspace publication/employment and profile entry.
   'workspace -> directory', 'directory -> auth', 'directory -> workspace',
+  'directory -> reservations', // 2026-10-04 #2185: a workspace card carries the feedback bar
   // #1824 — Me › Messages IS the unified inbox, which lives with the
   // account messenger it grew from ('me -> directory', above).
   'profile -> directory', 'money -> auth',

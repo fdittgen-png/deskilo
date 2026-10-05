@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/place_feedback.dart';
+import 'place_feedback_bar.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -385,6 +387,8 @@ class SeatListView extends ConsumerWidget {
                 .join('\n'),
           ),
           isThreeLine: seat.name.isNotEmpty && place.isNotEmpty,
+          trailing: PlaceFeedbackChip(
+              kind: PlaceKind.seat, id: seat.id, title: seat.name.isEmpty ? place : seat.name),
           onTap: () => onSeatTap(seat),
         );
   }

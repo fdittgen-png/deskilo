@@ -107,6 +107,110 @@ final class PlaceFeedbackAvailableProvider
 String _$placeFeedbackAvailableHash() =>
     r'ec39115f5e65a8c84ef056975b431025e384f687';
 
+/// Whether the directory can show a workspace's feedback: it lives on this
+/// installation (a workspace of another server has no feedback here).
+
+@ProviderFor(directorySourceIsLocal)
+final directorySourceIsLocalProvider = DirectorySourceIsLocalProvider._();
+
+/// Whether the directory can show a workspace's feedback: it lives on this
+/// installation (a workspace of another server has no feedback here).
+
+final class DirectorySourceIsLocalProvider
+    extends
+        $FunctionalProvider<
+          bool Function(String source),
+          bool Function(String source),
+          bool Function(String source)
+        >
+    with $Provider<bool Function(String source)> {
+  /// Whether the directory can show a workspace's feedback: it lives on this
+  /// installation (a workspace of another server has no feedback here).
+  DirectorySourceIsLocalProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'directorySourceIsLocalProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$directorySourceIsLocalHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool Function(String source)> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  bool Function(String source) create(Ref ref) {
+    return directorySourceIsLocal(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool Function(String source) value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool Function(String source)>(value),
+    );
+  }
+}
+
+String _$directorySourceIsLocalHash() =>
+    r'20cc4004480562ccd3bfbdbdd204969d11a1a624';
+
+@ProviderFor(placeFeedbackBatcher)
+final placeFeedbackBatcherProvider = PlaceFeedbackBatcherProvider._();
+
+final class PlaceFeedbackBatcherProvider
+    extends
+        $FunctionalProvider<
+          PlaceFeedbackBatcher,
+          PlaceFeedbackBatcher,
+          PlaceFeedbackBatcher
+        >
+    with $Provider<PlaceFeedbackBatcher> {
+  PlaceFeedbackBatcherProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'placeFeedbackBatcherProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$placeFeedbackBatcherHash();
+
+  @$internal
+  @override
+  $ProviderElement<PlaceFeedbackBatcher> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  PlaceFeedbackBatcher create(Ref ref) {
+    return placeFeedbackBatcher(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PlaceFeedbackBatcher value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PlaceFeedbackBatcher>(value),
+    );
+  }
+}
+
+String _$placeFeedbackBatcherHash() =>
+    r'704cffd2ec52e8be943aac089a64a7c13fbba43e';
+
 /// One place's feedback, in the active workspace.
 
 @ProviderFor(placeFeedback)
@@ -167,7 +271,7 @@ final class PlaceFeedbackProvider
   }
 }
 
-String _$placeFeedbackHash() => r'c4cb61bfdcdf67a0ccca1d4c76c4f283873bf15e';
+String _$placeFeedbackHash() => r'9a8894bd50029106805f7c20381dbc42761cedc1';
 
 /// One place's feedback, in the active workspace.
 

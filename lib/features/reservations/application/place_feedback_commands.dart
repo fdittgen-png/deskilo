@@ -9,17 +9,24 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/place_feedback.dart';
 import '../providers/place_feedback_providers.dart';
 
+/// The workspace a write is made in: the active one for a resource of it;
+/// a workspace is its own scope.
+Future<String?> _scopeOf(WidgetRef ref, PlaceKind kind, String id) async {
+  if (kind == PlaceKind.workspace) return id;
+  return (await ref.read(currentWorkspaceProvider.future))?.id;
+}
+
 Future<void> setPlaceFavorite(
   WidgetRef ref, {
   required PlaceKind kind,
   required String id,
   required bool on,
 }) async {
-  final workspace = await ref.read(currentWorkspaceProvider.future);
-  if (workspace == null) return;
+  final scope = await _scopeOf(ref, kind, id);
+  if (scope == null) return;
   await ref
       .read(placeFeedbackRepositoryProvider)
-      .setFavorite(workspace.id, kind, id, on: on);
+      .setFavorite(scope, kind, id, on: on);
   ref
     ..invalidate(placeFeedbackProvider(kind, id))
     ..invalidate(myFavoritePlacesProvider);
@@ -32,11 +39,11 @@ Future<void> setPlaceRating(
   required String id,
   required int? stars,
 }) async {
-  final workspace = await ref.read(currentWorkspaceProvider.future);
-  if (workspace == null) return;
+  final scope = await _scopeOf(ref, kind, id);
+  if (scope == null) return;
   await ref
       .read(placeFeedbackRepositoryProvider)
-      .setRating(workspace.id, kind, id, stars);
+      .setRating(scope, kind, id, stars);
   ref
     ..invalidate(placeFeedbackProvider(kind, id))
     ..invalidate(myFavoritePlacesProvider);

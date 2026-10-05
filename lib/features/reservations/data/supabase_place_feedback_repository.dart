@@ -17,6 +17,12 @@ class SupabasePlaceFeedbackRepository implements PlaceFeedbackRepository {
   @override
   Future<PlaceFeedback> fetch(
       String workspaceId, PlaceKind kind, String id) async {
+    if (kind == PlaceKind.workspace) {
+      final answer = await _client
+          .rpc<dynamic>('workspace_feedback_of', params: {'p_ids': [id]});
+      final mine = _map(answer)[id];
+      return mine == null ? const PlaceFeedback() : PlaceFeedback.fromJson(_map(mine));
+    }
     final answer = await _client.rpc<dynamic>('place_feedback_of', params: {
       'p_workspace': workspaceId,
       'p_kind': kind.wireName,
@@ -28,9 +34,31 @@ class SupabasePlaceFeedbackRepository implements PlaceFeedbackRepository {
   }
 
   @override
+  Future<Map<String, PlaceFeedback>> fetchMany(
+      String workspaceId, PlaceKind kind, List<String> ids) async {
+    final answer = kind == PlaceKind.workspace
+        ? await _client.rpc<dynamic>('workspace_feedback_of', params: {'p_ids': ids})
+        : await _client.rpc<dynamic>('place_feedback_of', params: {
+            'p_workspace': workspaceId,
+            'p_kind': kind.wireName,
+            'p_ids': ids,
+          });
+    final map = _map(answer);
+    return {
+      for (final id in ids)
+        id: map[id] == null ? const PlaceFeedback() : PlaceFeedback.fromJson(_map(map[id])),
+    };
+  }
+
+  @override
   Future<PlaceFeedback> setFavorite(
       String workspaceId, PlaceKind kind, String id,
       {required bool on}) async {
+    if (kind == PlaceKind.workspace) {
+      final answer = await _client.rpc<dynamic>('set_workspace_favorite',
+          params: {'p_workspace': id, 'p_on': on});
+      return PlaceFeedback.fromJson(_map(answer));
+    }
     final answer = await _client.rpc<dynamic>('set_favorite', params: {
       'p_workspace': workspaceId,
       'p_kind': kind.wireName,
@@ -43,6 +71,11 @@ class SupabasePlaceFeedbackRepository implements PlaceFeedbackRepository {
   @override
   Future<PlaceFeedback> setRating(
       String workspaceId, PlaceKind kind, String id, int? stars) async {
+    if (kind == PlaceKind.workspace) {
+      final answer = await _client.rpc<dynamic>('set_workspace_rating',
+          params: {'p_workspace': id, 'p_stars': stars});
+      return PlaceFeedback.fromJson(_map(answer));
+    }
     final answer = await _client.rpc<dynamic>('set_rating', params: {
       'p_workspace': workspaceId,
       'p_kind': kind.wireName,

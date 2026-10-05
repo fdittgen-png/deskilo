@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../domain/public_workspace.dart';
+import 'workspace_feedback.dart';
 
 /// The workspaces of the map as cards to swipe through, under the map.
 ///
@@ -118,6 +119,7 @@ class _DirectoryCarouselState extends State<DirectoryCarousel> {
                         ],
                       ),
                     ),
+                    WorkspaceFeedback(workspace: w),
                     Icon(Icons.chevron_right,
                         color: theme.colorScheme.onSurfaceVariant),
                   ]),
