@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/status_colors.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
@@ -94,6 +95,7 @@ class MeSpaceCard extends ConsumerWidget {
     final status = _pending
         ? (l10n?.meSpacePending ?? 'Waiting for approval')
         : role;
+    final scheme = Theme.of(context).colorScheme;
     final brightness = Theme.of(context).brightness;
     final isProd = space.environment == 'prod';
     // Green says the space is real, orange says it is one to try things in
@@ -104,56 +106,88 @@ class MeSpaceCard extends ConsumerWidget {
     return Expanded(
       flex: isProd ? prodFlex : devFlex,
       child: Row(
-      children: [
-        Expanded(child: Builder(builder: (buttonContext) => Tooltip(
-          message: [space.name, environment, ?status,
-            if (lastUsed) l10n?.meSpaceLastUsed ?? 'Last used'].join(' · '),
-          child: FilledButton(
-            key: ValueKey('me-space-${space.id}'),
-            style: FilledButton.styleFrom(
-              padding: AppSpacing.smH,
-              backgroundColor: fill,
-              foregroundColor: AppStatusColors.onSuccessOf(brightness),
-            ),
-            onPressed: () {
-              final box = buttonContext.findRenderObject() as RenderBox?;
-              final from = box == null
-                  ? null
-                  : box.localToGlobal(Offset.zero) & box.size;
-              enterSpace(context, ref, space, from: from);
-            },
-            child: Row(mainAxisSize: MainAxisSize.min, children: [
-              if (lastUsed) ...[
-                Icon(Icons.history, size: 16,
-                  key: ValueKey('me-space-last-${space.id}')),
-                const SizedBox(width: AppSpacing.xs),
-              ],
-              Flexible(
-                child: FittedBox(fit: BoxFit.scaleDown, child: Text(environment)),
+        children: [
+          Expanded(
+            child: Builder(
+              builder: (buttonContext) => Tooltip(
+                message: [
+                  space.name,
+                  environment,
+                  ?status,
+                  if (lastUsed) l10n?.meSpaceLastUsed ?? 'Last used',
+                ].join(' · '),
+                child: FilledButton(
+                  key: ValueKey('me-space-${space.id}'),
+                  style: FilledButton.styleFrom(
+                    padding: AppSpacing.smH,
+                    minimumSize: const Size(48, 48),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.lgAll,
+                    ),
+                    backgroundColor: isProd ? fill : scheme.surfaceContainerLow,
+                    foregroundColor: isProd
+                        ? AppStatusColors.onSuccessOf(brightness)
+                        : fill,
+                    side: isProd
+                        ? BorderSide.none
+                        : BorderSide(color: fill.withValues(alpha: .4)),
+                  ),
+                  onPressed: () {
+                    final box = buttonContext.findRenderObject() as RenderBox?;
+                    final from = box == null
+                        ? null
+                        : box.localToGlobal(Offset.zero) & box.size;
+                    enterSpace(context, ref, space, from: from);
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (lastUsed) ...[
+                        Icon(
+                          Icons.history,
+                          size: 16,
+                          key: ValueKey('me-space-last-${space.id}'),
+                        ),
+                        const SizedBox(width: AppSpacing.xs),
+                      ],
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(environment),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ]),
+            ),
           ),
-        ))),
-        PopupMenuButton<String>(
-          key: ValueKey('me-space-menu-${space.id}'),
-          tooltip: '$environment · ${MaterialLocalizations.of(context).showMenuTooltip}',
-          onSelected: (_) => _leave(context, ref),
-          itemBuilder: (_) => [
-            PopupMenuItem(
-              key: const ValueKey('me-space-leave'),
-              value: 'leave',
-              enabled: !owner,
-              child: Text(
-                owner
-                    ? (l10n?.meLeaveOwner ??
-                          'Owners hand the space over before leaving')
-                    : (l10n?.meLeaveAction ?? 'Leave this space'),
-              ),
+          PopupMenuButton<String>(
+            style: IconButton.styleFrom(
+              foregroundColor: scheme.onSurfaceVariant,
+              backgroundColor: Colors.transparent,
+              side: BorderSide.none,
             ),
-          ],
-        ),
-      ],
-    ),
+            key: ValueKey('me-space-menu-${space.id}'),
+            tooltip:
+                '$environment · ${MaterialLocalizations.of(context).showMenuTooltip}',
+            onSelected: (_) => _leave(context, ref),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                key: const ValueKey('me-space-leave'),
+                value: 'leave',
+                enabled: !owner,
+                child: Text(
+                  owner
+                      ? (l10n?.meLeaveOwner ??
+                            'Owners hand the space over before leaving')
+                      : (l10n?.meLeaveAction ?? 'Leave this space'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
