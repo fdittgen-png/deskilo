@@ -11,6 +11,7 @@ import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/messenger.dart';
+import '../../providers/inbox_marks.dart';
 import '../../providers/messenger_providers.dart';
 import 'context_labels.dart';
 import 'open_inbox_entry.dart';
@@ -30,6 +31,9 @@ class UnifiedInboxView extends ConsumerStatefulWidget {
 class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
   static const _poll = Duration(seconds: 30);
   bool _unreadOnly = false;
+  bool _archived = false;
+  bool _searching = false;
+  String _query = '';
   Timer? _refresh;
 
   @override
@@ -73,7 +77,10 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                   key: const ValueKey('unified-inbox-all'),
                   label: Text(l10n?.inboxFilterAll ?? 'All'),
                   selected: !_unreadOnly,
-                  onSelected: (_) => setState(() => _unreadOnly = false),
+                  onSelected: (_) => setState(() {
+                    _unreadOnly = false;
+                    _archived = false;
+                  }),
                 ),
                 FilterChip(
                   key: const ValueKey('unified-inbox-unread'),
@@ -83,19 +90,58 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                         : (l10n?.inboxFilterUnread ?? 'Unread'),
                   ),
                   selected: _unreadOnly,
-                  onSelected: (_) => setState(() => _unreadOnly = true),
+                  onSelected: (_) => setState(() {
+                    _unreadOnly = true;
+                    _archived = false;
+                  }),
                 ),
-                TextButton.icon(
+                FilterChip(
+                  key: const ValueKey('unified-inbox-archived'),
+                  label: Text(l10n?.inboxFilterArchived ?? 'Archived'),
+                  selected: _archived,
+                  onSelected: (_) => setState(() {
+                    _archived = true;
+                    _unreadOnly = false;
+                  }),
+                ),
+                IconButton(
+                  key: const ValueKey('unified-inbox-search'),
+                  tooltip: l10n?.messageSearchTitle ?? 'Search',
+                  icon: Icon(_searching ? Icons.search_off : Icons.search),
+                  onPressed: () => setState(() {
+                    _searching = !_searching;
+                    if (!_searching) _query = '';
+                  }),
+                ),
+                FilledButton.tonalIcon(
                   key: const ValueKey('unified-inbox-people'),
                   onPressed: () => context.push('/account-messages'),
-                  icon: const Icon(Icons.person_search_outlined),
+                  icon: const Icon(Icons.edit_outlined),
                   label: Text(
-                    l10n?.portalFindPeople ?? 'Find available people',
+                    l10n?.newConversationTitle ?? 'New conversation',
                   ),
                 ),
               ],
             ),
           ),
+          if (_searching)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md,
+                AppSpacing.sm,
+                AppSpacing.md,
+                0,
+              ),
+              child: TextField(
+                key: const ValueKey('unified-inbox-search-field'),
+                autofocus: true,
+                onChanged: (value) => setState(() => _query = value),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.search),
+                  hintText: l10n?.messageSearchTitle ?? 'Search',
+                ),
+              ),
+            ),
           Expanded(
             child: switch (inbox) {
               AsyncData(value: final value) => _list(
@@ -126,12 +172,25 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
     AppLocalizations? l10n,
   ) {
     final format = ref.watch(appFormatProvider);
-    final shown = _unreadOnly
-        ? [
-            for (final e in inbox.entries)
-              if (e.unread > 0) e,
-          ]
-        : inbox.entries;
+    final marks = ref.watch(inboxMarksProvider);
+    final needle = _query.trim().toLowerCase();
+    bool matches(InboxEntry e) =>
+        needle.isEmpty ||
+        e.title.toLowerCase().contains(needle) ||
+        e.lastBody.toLowerCase().contains(needle) ||
+        e.workspaceName.toLowerCase().contains(needle);
+    // Pinned first, then newest activity (the merge already sorts by it).
+    final shown = [
+      for (final e in inbox.entries)
+        if (marks.archived.contains(e.key) == _archived &&
+            (!_unreadOnly || e.unread > 0) &&
+            matches(e))
+          e,
+    ]..sort((a, b) {
+        final pa = marks.pinned.contains(a.key) ? 0 : 1;
+        final pb = marks.pinned.contains(b.key) ? 0 : 1;
+        return pa.compareTo(pb);
+      });
     return RefreshIndicator(
       onRefresh: () async => ref.invalidate(unifiedInboxProvider),
       child: Align(
@@ -160,7 +219,9 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 _unreadOnly
                     ? (l10n?.inboxNoUnread ??
                           'Nothing unread — you are up to date.')
-                    : (l10n?.messagesEmpty ?? 'No conversations yet.'),
+                    : _archived
+                        ? (l10n?.inboxNoArchived ?? 'No archived conversation.')
+                        : (l10n?.messagesEmpty ?? 'No conversations yet.'),
                 key: const ValueKey('unified-inbox-empty'),
                 textAlign: TextAlign.center,
               ),
@@ -197,6 +258,12 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  if (marks.pinned.contains(entry.key))
+                    Icon(
+                      Icons.push_pin_outlined,
+                      key: ValueKey('inbox-pinned-${entry.contextId}'),
+                      size: 14,
+                    ),
                   Text(
                     format.date(entry.lastAt),
                     style: Theme.of(context).textTheme.labelSmall,
@@ -209,6 +276,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 ],
               ),
               onTap: () => openInboxEntry(context, ref, entry),
+              onLongPress: () => _marksMenu(context, entry),
             ),
           ],
                 ],
@@ -219,5 +287,44 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
         ),
       ),
     );
+  }
+
+  /// Long-press: pin and archive (kept on this device).
+  Future<void> _marksMenu(BuildContext context, InboxEntry entry) async {
+    final l10n = AppLocalizations.of(context);
+    final marks = ref.read(inboxMarksProvider);
+    final pinned = marks.pinned.contains(entry.key);
+    final archived = marks.archived.contains(entry.key);
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheet) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              key: const ValueKey('inbox-menu-pin'),
+              leading: const Icon(Icons.push_pin_outlined),
+              title: Text(pinned
+                  ? (l10n?.conversationUnpin ?? 'Unpin')
+                  : (l10n?.conversationPin ?? 'Pin')),
+              onTap: () => Navigator.of(sheet).pop('pin'),
+            ),
+            ListTile(
+              key: const ValueKey('inbox-menu-archive'),
+              leading: const Icon(Icons.archive_outlined),
+              title: Text(archived
+                  ? (l10n?.conversationUnarchive ?? 'Unarchive')
+                  : (l10n?.conversationArchive ?? 'Archive')),
+              onTap: () => Navigator.of(sheet).pop('archive'),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (choice == 'pin') ref.read(inboxMarksProvider.notifier).togglePin(entry.key);
+    if (choice == 'archive') {
+      ref.read(inboxMarksProvider.notifier).toggleArchive(entry.key);
+    }
   }
 }
