@@ -67,6 +67,8 @@ L’en-tête et le corps se composent de haut en bas. Le pied de page conserve u
 
 Utilisez **Insérer une image** pour importer une fois un logo, une signature ou une autre image dans la bibliothèque de l’espace, puis la sélectionner dans tout modèle de rapport. Placez-la dans une bande avec `![name]` ou dans une mise en page positionnée avec `<image name="name"/>`. Un import sous le même nom remplace cette image pour les futurs rendus de tous les modèles qui la référencent ; les PDF déjà enregistrés restent inchangés.
 
+Les relevés mensuels utilisent le moteur de pages commun. L’aperçu conserve séparément services, forfaits, éléments en attente et crédits confirmés. Les relevés des espaces de développement portent le filigrane de développement.
+
 <!-- anchor: admin.reports.layouts -->
 ### Les mises en page positionnées
 

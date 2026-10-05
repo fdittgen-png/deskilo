@@ -104,6 +104,7 @@ const Set<String> _knownPairs = {
   'visits -> auth',
   // #1791: account-bound portal, workspace publication/employment and profile entry.
   'workspace -> directory', 'directory -> auth', 'directory -> workspace',
+  'directory -> reservations', // 2026-10-04 #2185: a workspace card carries the feedback bar
   // #1824 — Me › Messages IS the unified inbox, which lives with the
   // account messenger it grew from ('me -> directory', above).
   'profile -> directory', 'money -> auth',
@@ -330,7 +331,7 @@ const Map<String, int> _pairBudget = {
   // BookingPolicies remain owned by workspace, not duplicated in the card.
   // 2026-09-27 #1636: +3 — the Get started card's owner guidance reads
   // the workspace readiness check (domain, provider, section labels).
-  'reservations -> workspace': 61, // 2026-10-04 60→61: the browsed level starts over when the active workspace changes; earlier: #1825 +3: list_space_tap (member, feature, providers)
+  'reservations -> workspace': 65, // 2026-10-04 61→65: favourites and ratings (#2185) read the current workspace, its feature flag and the person's permission in their providers and commands; earlier: 2026-10-04 60→61: the browsed level starts over when the active workspace changes; earlier: #1825 +3: list_space_tap (member, feature, providers)
   'workspace -> auth': 10, // 2026-09-28 #1652 9→10: the invitation review offers Change account (sign-out) beside Join, and a wrong-account answer offers the same.  // 2026-09-28 #1791: account-scoped applications and replies work without membership.  // 2026-09-26 #1636 3→4 and #1654 4→5: a pending creation draft names the account that sent it, so a restart resumes it for that account only (application/creation_intent.dart); #1654: the onboarding handoff listens to the auth stream to discard completions after an account change
   // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
   // *does anything need me?* by ASSEMBLING signals that already exist:

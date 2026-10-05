@@ -66,6 +66,8 @@ Headers and body flow from the top down. The footer keeps a fixed bottom positio
 
 Use **Insert an image** to upload a logo, signature or other picture once to the workspace library, then select it in any report template. Images can be placed in any band with `![name]` or in a positioned layout with `<image name="name"/>`. Uploading the same file name replaces that library image for future renders of every template that references it; previously saved PDFs remain unchanged.
 
+Monthly bills use the shared page engine. Quick view retains services, packages, pending items and confirmed credits separately. Development-workspace bills carry the development watermark.
+
 <!-- anchor: admin.reports.layouts -->
 ### Positioned layouts
 

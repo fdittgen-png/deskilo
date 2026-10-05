@@ -7383,6 +7383,47 @@
   "@personalInfoVatId": {
     "description": "#886 personal-information form / feature: personalInfoVatId"
   },
+  "placeFeedbackAverage": "{average} · {count, plural, =1{1 note} other{{count} notes}}",
+  "@placeFeedbackAverage": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackFailed": "Enregistrement impossible. Réessayez.",
+  "@placeFeedbackFailed": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackFavorite": "Ajouter aux favoris",
+  "@placeFeedbackFavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackNoRating": "Pas encore de note",
+  "@placeFeedbackNoRating": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackStars": "{n, plural, =1{1 étoile} other{{n} étoiles}}",
+  "@placeFeedbackStars": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackUnfavorite": "Retirer des favoris",
+  "@placeFeedbackUnfavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackZero": "0 étoile",
+  "@placeFeedbackZero": {
+    "description": "#2185 place feedback"
+  },
   "planAccessorySupplementHint": "Les suppléments s'appliquent par demi-journée.",
   "planActiveLabel": "Active",
   "planAfternoonChip": "Après-midi",

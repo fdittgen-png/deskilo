@@ -3122,6 +3122,11 @@ Map<String, _Getter> _part7() => {
   'personalInfoSubtitle': (l) => l.personalInfoSubtitle,
   'personalInfoTitle': (l) => l.personalInfoTitle,
   'personalInfoVatId': (l) => l.personalInfoVatId,
+  'placeFeedbackFailed': (l) => l.placeFeedbackFailed,
+  'placeFeedbackFavorite': (l) => l.placeFeedbackFavorite,
+  'placeFeedbackNoRating': (l) => l.placeFeedbackNoRating,
+  'placeFeedbackUnfavorite': (l) => l.placeFeedbackUnfavorite,
+  'placeFeedbackZero': (l) => l.placeFeedbackZero,
   'planAccessorySupplementHint': (l) => l.planAccessorySupplementHint,
   'planActiveLabel': (l) => l.planActiveLabel,
   'planAfternoonChip': (l) => l.planAfternoonChip,
@@ -3242,14 +3247,14 @@ Map<String, _Getter> _part7() => {
   'portalPerson': (l) => l.portalPerson,
   'portalPhone': (l) => l.portalPhone,
   'portalPlans': (l) => l.portalPlans,
+};
+
+Map<String, _Getter> _part8() => {
   'portalPreview': (l) => l.portalPreview,
   'portalPublicPlan': (l) => l.portalPublicPlan,
   'portalPublication': (l) => l.portalPublication,
   'portalPublished': (l) => l.portalPublished,
   'portalRegisterDirectory': (l) => l.portalRegisterDirectory,
-};
-
-Map<String, _Getter> _part8() => {
   'portalRequestProfile': (l) => l.portalRequestProfile,
   'portalRequestSent': (l) => l.portalRequestSent,
   'portalResetAll': (l) => l.portalResetAll,
@@ -3645,14 +3650,14 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningDueDate': (l) => l.reportFieldMeaningDueDate,
   'reportFieldMeaningEscompte': (l) => l.reportFieldMeaningEscompte,
   'reportFieldMeaningExemptionReason': (l) => l.reportFieldMeaningExemptionReason,
+};
+
+Map<String, _Getter> _part9() => {
   'reportFieldMeaningHasVat': (l) => l.reportFieldMeaningHasVat,
   'reportFieldMeaningIban': (l) => l.reportFieldMeaningIban,
   'reportFieldMeaningInsurance': (l) => l.reportFieldMeaningInsurance,
   'reportFieldMeaningIssued': (l) => l.reportFieldMeaningIssued,
   'reportFieldMeaningIssuedBy': (l) => l.reportFieldMeaningIssuedBy,
-};
-
-Map<String, _Getter> _part9() => {
   'reportFieldMeaningLatePenalty': (l) => l.reportFieldMeaningLatePenalty,
   'reportFieldMeaningLines': (l) => l.reportFieldMeaningLines,
   'reportFieldMeaningMember': (l) => l.reportFieldMeaningMember,
@@ -4048,14 +4053,14 @@ Map<String, _Getter> _part9() => {
   'statusTo': (l) => l.statusTo,
   'subprocessAttendance': (l) => l.subprocessAttendance,
   'subprocessAttendanceDesc': (l) => l.subprocessAttendanceDesc,
+};
+
+Map<String, _Getter> _part10() => {
   'subprocessAvailability': (l) => l.subprocessAvailability,
   'subprocessAvailabilityDesc': (l) => l.subprocessAvailabilityDesc,
   'subprocessCalendar': (l) => l.subprocessCalendar,
   'subprocessCalendarDesc': (l) => l.subprocessCalendarDesc,
   'subprocessCollection': (l) => l.subprocessCollection,
-};
-
-Map<String, _Getter> _part10() => {
   'subprocessCollectionDesc': (l) => l.subprocessCollectionDesc,
   'subprocessCommunication': (l) => l.subprocessCommunication,
   'subprocessCommunicationDesc': (l) => l.subprocessCommunicationDesc,
@@ -4451,14 +4456,14 @@ Map<String, _Getter> _part10() => {
   'taskWizardIntro': (l) => l.taskWizardIntro,
   'taskWizardMakeGuide': (l) => l.taskWizardMakeGuide,
   'taskWizardNoGuides': (l) => l.taskWizardNoGuides,
+};
+
+Map<String, _Getter> _part11() => {
   'taskWizardOpenFileHint': (l) => l.taskWizardOpenFileHint,
   'taskWizardRecordings': (l) => l.taskWizardRecordings,
   'taskWizardSaveChanges': (l) => l.taskWizardSaveChanges,
   'taskWizardTitle': (l) => l.taskWizardTitle,
   'taskWizardTools': (l) => l.taskWizardTools,
-};
-
-Map<String, _Getter> _part11() => {
   'taskWizardUnavailable': (l) => l.taskWizardUnavailable,
   'taskWorkbenchChoose': (l) => l.taskWorkbenchChoose,
   'taskWorkbenchEdited': (l) => l.taskWorkbenchEdited,
@@ -4854,14 +4859,14 @@ Map<String, _Getter> _part11() => {
   'workspaceSettingsConflict': (l) => l.workspaceSettingsConflict,
   'workspaceSettingsCurrencyHelper': (l) => l.workspaceSettingsCurrencyHelper,
   'workspaceSettingsSaved': (l) => l.workspaceSettingsSaved,
+};
+
+Map<String, _Getter> _part12() => {
   'workspaceSettingsTitle': (l) => l.workspaceSettingsTitle,
   'workspaceTimezoneHint': (l) => l.workspaceTimezoneHint,
   'workspaceTimezoneLabel': (l) => l.workspaceTimezoneLabel,
   'workspaceTimezoneUnknown': (l) => l.workspaceTimezoneUnknown,
   'workspaceWhatsappGroupHelper': (l) => l.workspaceWhatsappGroupHelper,
-};
-
-Map<String, _Getter> _part12() => {
   'workspaceWhatsappGroupInvalid': (l) => l.workspaceWhatsappGroupInvalid,
   'workspaceWhatsappGroupLabel': (l) => l.workspaceWhatsappGroupLabel,
   'workspaceWhatsappGroupTitle': (l) => l.workspaceWhatsappGroupTitle,

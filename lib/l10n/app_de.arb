@@ -7383,6 +7383,47 @@
   "@personalInfoVatId": {
     "description": "#886 personal-information form / feature: personalInfoVatId"
   },
+  "placeFeedbackAverage": "{average} · {count, plural, =1{1 Bewertung} other{{count} Bewertungen}}",
+  "@placeFeedbackAverage": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackFailed": "Speichern nicht möglich. Bitte erneut versuchen.",
+  "@placeFeedbackFailed": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackFavorite": "Zu Favoriten hinzufügen",
+  "@placeFeedbackFavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackNoRating": "Noch keine Bewertung",
+  "@placeFeedbackNoRating": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackStars": "{n, plural, =1{1 Stern} other{{n} Sterne}}",
+  "@placeFeedbackStars": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackUnfavorite": "Aus Favoriten entfernen",
+  "@placeFeedbackUnfavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackZero": "0 Sterne",
+  "@placeFeedbackZero": {
+    "description": "#2185 place feedback"
+  },
   "planAccessorySupplementHint": "Aufpreise gelten pro halbem Tag.",
   "planActiveLabel": "Aktiv",
   "planAfternoonChip": "Nachmittag",

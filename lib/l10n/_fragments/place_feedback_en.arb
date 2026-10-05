@@ -6,5 +6,46 @@
   "featurePlaceFeedbackDesc": "Members mark seats, desks, offices and levels as favourites and rate them from 0 to 5 stars. A favourite is the member's own; a rating shows its average and how many gave one, never who. An assistant can list the favourites, book one, and record a rating. Off hides the hearts and stars and refuses the writes; nothing else follows it.",
   "@featurePlaceFeedbackDesc": {
     "description": "#2185 place feedback"
+  },
+  "placeFeedbackFavorite": "Add to favourites",
+  "@placeFeedbackFavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackUnfavorite": "Remove from favourites",
+  "@placeFeedbackUnfavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackStars": "{n, plural, =1{1 star} other{{n} stars}}",
+  "@placeFeedbackStars": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackZero": "0 stars",
+  "@placeFeedbackZero": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackAverage": "{average} · {count, plural, =1{1 rating} other{{count} ratings}}",
+  "@placeFeedbackAverage": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackNoRating": "No rating yet",
+  "@placeFeedbackNoRating": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackFailed": "Could not save. Please try again.",
+  "@placeFeedbackFailed": {
+    "description": "#2185 place feedback"
   }
 }

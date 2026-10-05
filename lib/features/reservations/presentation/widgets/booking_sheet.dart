@@ -13,6 +13,8 @@ import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/booking_gate.dart';
+import '../../domain/place_feedback.dart';
+import 'place_feedback_bar.dart';
 import '../../domain/picked_time.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
@@ -340,6 +342,8 @@ class _BookingSheetState extends State<BookingSheet> {
             ),
             if (widget.seatId != null)
               SeatAccessoryRow(seatId: widget.seatId!),
+            if (widget.seatId != null)
+              PlaceFeedbackBar(kind: PlaceKind.seat, id: widget.seatId!),
 
             // ── period (fits the workspace granularity) ──
             if (showHalfDayPicker) ...[

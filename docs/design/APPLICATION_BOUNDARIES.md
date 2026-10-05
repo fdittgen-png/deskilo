@@ -35,6 +35,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `calendar -> task_recorder`
 - `calendar -> workspace`
 - `directory -> auth`
+- `directory -> reservations`
 - `directory -> workspace`
 - `editor -> plan`
 - `editor -> workspace`

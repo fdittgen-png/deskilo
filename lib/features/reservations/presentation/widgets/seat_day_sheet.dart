@@ -14,7 +14,9 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/seat.dart';
+import '../../domain/place_feedback.dart';
 import '../../domain/seat_state_logic.dart';
+import 'place_feedback_bar.dart';
 import '../../../../core/i18n/format_controller.dart';
 
 /// What was picked in the day sheet: a free stretch, or one booking.
@@ -144,6 +146,7 @@ class _SeatDaySheet extends StatelessWidget {
                   'Who has this seat, and when. Tap a free stretch to take it.',
               style: theme.textTheme.bodySmall,
             ),
+            PlaceFeedbackBar(kind: PlaceKind.seat, id: seat.id),
             const SizedBox(height: AppSpacing.sm),
             for (final row in rows)
               if (row.booking case final booking?)
