@@ -67,6 +67,8 @@ Intestazione e corpo si compongono dall’alto verso il basso. Il piè di pagina
 
 Con **Inserisci un’immagine** caricate una sola volta un logo, una firma o un’altra immagine nella libreria dello spazio, quindi selezionatela in qualsiasi modello. Inseritela in una banda con `![name]` o in un layout posizionato con `<image name="name"/>`. Un caricamento con lo stesso nome sostituisce l’immagine per le future generazioni di tutti i modelli che la usano; i PDF già salvati restano invariati.
 
+I riepiloghi mensili usano il motore di pagine comune. L’anteprima separa servizi, pacchetti, elementi in attesa e crediti confermati. Gli spazi di sviluppo stampano la filigrana di sviluppo.
+
 <!-- anchor: admin.reports.layouts -->
 ### I layout posizionati
 

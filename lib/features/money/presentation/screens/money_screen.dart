@@ -34,14 +34,12 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/bill_pdf.dart';
-import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_report.dart';
 import '../invoice_documents.dart';
 import '../usage_report_data.dart';
 import '../report_layout_actions.dart';
 import '../report_actions.dart';
 import '../invoice_status.dart';
-import '../report_defaults.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/money_face.dart';
 import '../../domain/expense_schedule.dart';
@@ -265,6 +263,11 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       outstanding: l10n?.billOutstanding ?? 'Outstanding',
     );
 
+    final sections = buildBillSections(
+      period: statement.period, memberId: member.id, ledger: ledger,
+      pendingEvents: pendingEvents, nowPeriod: _nowPeriod,
+    );
+
     // #514 — the shared triad, for the bill too: the statement report
     // (owner template or default bands) is the quick view; download and
     // share build the same PDF the save-only path used to.
@@ -289,67 +292,27 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       return (statementBands != null
               ? renderReportBands(bands: statementBands, data: withOwnerTexts(data, statementTexts))
               : null) ??
-          renderReportBands(bands: defaultStatementBands(l10n), data: withOwnerTexts(data, statementTexts));
+          buildBillReport(statement: statement, sections: sections,
+              currencyCode: workspace.currencyCode, workspaceName: workspace.name,
+              memberName: memberName, periodLabel: monthLabel,
+              strings: strings, locale: locale);
     }
 
+    final report = renderStatement()!;
     await runReportActions(
       context,
       ref,
       keyPrefix: 'bill-export',
       logMessage: 'bill PDF export failed',
-      render: renderStatement,
+      render: () => report,
       buildPdf: () async {
-        final sections = buildBillSections(
-          period: statement.period,
-          memberId: member.id,
-          ledger: ledger,
-          pendingEvents: pendingEvents,
-          // Same nowPeriod as the on-screen BillView — this path used to
-          // fall back to the wall clock and section the PDF differently.
-          nowPeriod: _nowPeriod,
-        );
         // Embedded Roboto: base-14 PDF fonts cannot encode '€'/'−' (#133).
         final regular =
             await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
         final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
-        // #476: an owner-customized statement TEMPLATE replaces the
-        // built-in bill layout; empty bands keep it exactly as before.
-        final statementTemplate = ref
-                .read(enabledFeaturesSyncProvider)
-                .contains(WorkspaceFeature.invoicePdfTemplate)
-            ? ref.read(invoicePdfTemplateProvider).value
-            : null;
-        final statementBands = statementTemplate?.statementBands;
-        // #880 — the owner's texts beside the data.
-        final statementTexts = statementTemplate?.texts ?? const <String, String>{};
-        final Uint8List bytes;
-        if (statementBands != null && context.mounted) {
-          final data = statementReportData(
-            reportStringsFor(context),
-            statement: statement,
-            workspaceName: workspace.name,
-            memberName: memberName,
-            periodLabel: monthLabel,
-            currencyCode: workspace.currencyCode,
-            workspace: workspace,
-          );
-          final report =
-              renderReportBands(bands: statementBands, data: withOwnerTexts(data, statementTexts)) ??
-                  renderReportBands(bands: defaultStatementBands(l10n), data: withOwnerTexts(data, statementTexts))!;
-          bytes = await buildBandedLetterPdf(
+        final bytes = await buildBillPdf(
             report: report,
             reportImages: await resolveReportImages(ref, report),
-            pageLabel: l10n?.invoicePdfPage ?? 'Page',
-            documentTitle: strings.title,
-            baseFont: pw.Font.ttf(regular),
-            boldFont: pw.Font.ttf(bold),
-            // #917 — a statement from a rehearsal space says so.
-            watermark: workspace.isDevelopment
-                ? (l10n?.developmentWatermark ?? 'DEVELOPMENT')
-                : '',
-          );
-        } else {
-          bytes = await buildBillPdf(
             statement: statement,
             sections: sections,
             currencyCode: workspace.currencyCode,
@@ -360,8 +323,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             baseFont: pw.Font.ttf(regular),
             boldFont: pw.Font.ttf(bold),
             locale: locale,
+            pageLabel: l10n?.invoicePdfPage ?? 'Page',
+            watermark: workspace.isDevelopment
+                ? (l10n?.developmentWatermark ?? 'DEVELOPMENT') : '',
           );
-        }
         return (
           bytes: bytes,
           fileName: 'deskilo-bill-${statement.period}.pdf',

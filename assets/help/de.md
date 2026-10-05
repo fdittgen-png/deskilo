@@ -2693,6 +2693,8 @@ Kopf und Inhalt werden von oben nach unten gesetzt. Die Fußzeile behält auf je
 
 Über **Bild einfügen** laden Sie ein Logo, eine Unterschrift oder ein anderes Bild einmal in die Bibliothek des Arbeitsbereichs und wählen es anschließend in jeder Berichtsvorlage aus. Bilder lassen sich mit `![name]` in jedem Band oder mit `<image name="name"/>` in einem positionierten Layout platzieren. Ein Upload mit demselben Dateinamen ersetzt das Bild für künftige Ausgaben aller darauf verweisenden Vorlagen; bereits gespeicherte PDFs bleiben unverändert.
 
+Monatsabrechnungen verwenden die gemeinsame Seiten-Engine. Die Schnellansicht trennt Leistungen, Pakete, ausstehende Positionen und bestätigte Gutschriften. Entwicklungsbereiche drucken das Entwicklungswasserzeichen.
+
 ### Positionierte Layouts
 
 Der exakte Weg. Ein XML-Layout setzt jedes Element auf den Millimeter,

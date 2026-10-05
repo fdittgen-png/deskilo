@@ -7,6 +7,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/bill_pdf.dart';
+import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/bill_sections.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
@@ -130,6 +131,29 @@ Future<Uint8List> _build({
     );
 
 void main() {
+  test('the engine keeps all confirmed and pending sections distinct', () async {
+    await initializeDateFormatting('en');
+    final report = buildBillReport(statement: _statement, sections: _sections(),
+        currencyCode: 'EUR', workspaceName: 'Space', memberName: 'Member',
+        periodLabel: 'July', strings: _strings, locale: 'en');
+    final headings = report.body.whereType<ReportSubheading>().map((b) => b.text);
+    expect(headings, containsAll([_strings.services,
+        _strings.openPositions, _strings.paymentsCredits]));
+    expect(report.body.whereType<ReportMuted>().map((b) => b.text),
+        contains(_strings.pendingBadge));
+    final balance = report.body.whereType<ReportTableRow>().last;
+    expect(balance.cells.first, _strings.balance);
+    expect(balance.cells.last, contains('17.00'));
+    final rows = report.body.whereType<ReportTableRow>();
+    expect(rows.first.cells.last, contains('150.00'));
+    expect(rows.singleWhere((r) => r.cells.first.startsWith('Printing')).cells.last,
+        contains('0.80'));
+    expect(rows.singleWhere((r) => r.cells.first.startsWith('Bank transfer')).cells.last,
+        contains('150.00'));
+    expect(report.continuation.whereType<ReportText>().single.text,
+        contains('Member — July'));
+  });
+
   test('the embedded Roboto fonts cover € (U+20AC) and − (U+2212)', () {
     // The base-14 PDF fonts cannot encode these — the whole reason the
     // fonts are embedded (#133). Guard the asset against regressions.
@@ -150,6 +174,8 @@ void main() {
 
     expect(bytes, isNotEmpty);
     expect(String.fromCharCodes(bytes.sublist(0, 5)), '%PDF-');
+    Directory('build/report-bill').createSync(recursive: true);
+    File('build/report-bill/monthly.pdf').writeAsBytesSync(bytes);
   });
 
   test('more service entries grow the document', () async {
