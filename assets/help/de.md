@@ -2695,6 +2695,8 @@ Kopf und Inhalt werden von oben nach unten gesetzt. Die Fußzeile behält auf je
 
 Monatsabrechnungen verwenden die gemeinsame Seiten-Engine. Die Schnellansicht trennt Leistungen, Pakete, ausstehende Positionen und bestätigte Gutschriften. Entwicklungsbereiche drucken das Entwicklungswasserzeichen.
 
+Das PDF der Arbeitsbereichskonfiguration ist ebenfalls ein bearbeitbarer Berichtstyp. Die Vorlage behält Übersicht, Mitglieder und Rollen, aktivierte Funktionen, Verfügbarkeit, Einladungen und die Hierarchie von Ebenen, Büros, Tischen und Plätzen bei. Sie kann Bibliotheksbilder nutzen und druckt bei Entwicklungsbereichen das entsprechende Wasserzeichen.
+
 ### Positionierte Layouts
 
 Der exakte Weg. Ein XML-Layout setzt jedes Element auf den Millimeter,

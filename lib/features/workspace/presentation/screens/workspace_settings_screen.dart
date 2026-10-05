@@ -15,7 +15,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/i18n/workspace_locale_fields.dart';
-import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
@@ -46,7 +46,8 @@ import '../../domain/payment_instructions.dart';
 import '../../domain/invitation_message.dart';
 import '../../domain/space_codes_pdf.dart';
 import '../../domain/workspace.dart';
-import '../../domain/workspace_config_pdf.dart';
+import '../../domain/workspace_config_report.dart';
+import '../workspace_configuration_report_strings.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_import.dart';
@@ -480,49 +481,9 @@ class _WorkspaceSettingsScreenState
               ),
           ];
 
-          final strings = WorkspaceConfigPdfStrings(
-            title: l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration',
-            overview: l10n?.workspaceConfigOverview ?? 'Overview',
-            country: l10n?.workspaceCountryLabel ?? 'Country',
-            currency: l10n?.workspaceCurrencyLabel ?? 'Currency',
-            timezone: l10n?.workspaceTimezoneLabel ?? 'Time zone',
-            granularity: l10n?.workspaceConfigGranularity ?? 'Booking granularity',
-            members: l10n?.workspaceConfigMembersSection ?? 'Members',
-            colName: l10n?.workspaceConfigColName ?? 'Name',
-            colRole: l10n?.workspaceConfigColRole ?? 'Role',
-            colStatus: l10n?.workspaceConfigColStatus ?? 'Status',
-            features: l10n?.workspaceConfigFeatures ?? 'Enabled features',
-            none: l10n?.workspaceConfigNone ?? 'None',
-            availability: l10n?.workspaceConfigAvailability ?? 'Availability',
-            openDays: l10n?.workspaceConfigOpenDays ?? 'Open days',
-            closures: l10n?.workspaceConfigClosures ?? 'Closures',
-            floorPlan: l10n?.workspaceConfigFloorPlan ?? 'Floor plan',
-            bookableWhole:
-                l10n?.workspaceConfigBookableWhole ?? 'bookable as a whole',
-            seatsLabel: l10n?.workspaceConfigSeats ?? 'Seats',
-            emptyLevel: l10n?.workspaceConfigEmptyLevel ?? 'No rooms',
-            levelBookable: (price) => price.isEmpty
-                ? (l10n?.levelBookableToggle ?? 'Bookable as a whole')
-                : '${l10n?.levelBookableToggle ?? 'Bookable as a whole'}'
-                    ' — $price / '
-                    '${l10n?.levelPriceLabel ?? 'Price per half-day'}',
-            invitations:
-                l10n?.workspaceConfigInvitations ?? 'Invitations',
-            invitationCustomTemplate:
-                l10n?.workspaceConfigInvitationCustom ??
-                    'Custom invitation message configured',
-            invitationDefault: l10n?.workspaceConfigInvitationDefault ??
-                'Built-in invitation message (all languages)',
-            invitationSingleUse:
-                l10n?.workspaceConfigInvitationSingleUse ??
-                    'Personal invitation codes are single-use and '
-                        'expire after 14 days; new members need '
-                        'admin approval',
-          );
+          final strings = workspaceConfigurationStrings(l10n);
 
-          final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
-          final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
-          final bytes = await buildWorkspaceConfigPdf(
+          final data = workspaceConfigurationReportData(
             strings: strings,
             workspaceName: workspace.name,
             generatedOnLabel: l10n?.workspaceConfigPdfGeneratedOn(generatedOn) ??
@@ -545,17 +506,21 @@ class _WorkspaceSettingsScreenState
                 if (entry.level.bookableAsWhole)
                   entry.level.id: entry.level.priceCents == 0
                       ? ''
-                      : '${centsToMajor(entry.level.priceCents)} '
-                          '${workspace.currencyCode}',
+                      : moneyFormat(workspace.currencyCode, locale: locale).formatMinor(entry.level.priceCents),
             },
             hasCustomInvitationTemplate:
                 workspace.invitationTemplate.trim().isNotEmpty,
-            baseFont: pw.Font.ttf(regular),
-            boldFont: pw.Font.ttf(bold),
           );
-
+          await warmLetterDocProviders(ref, 'workspace_configuration');
+          if (!mounted || ref.read(currentWorkspaceProvider).value?.id != workspace.id) return;
+          final report = renderLetterDoc(context, ref,
+              docId: 'workspace_configuration', data: data);
+          final pdf = await letterDocPdf(context, ref,
+              report: report, title: strings.title, data: data,
+              layoutXml: letterLayoutXml(ref, docId: 'workspace_configuration', l10n: l10n));
+          if (!mounted) return;
           final path = await ref.read(fileSaverProvider)(
-            bytes: bytes,
+            bytes: pdf.bytes,
             // Slugged (security audit): a raw name may carry path
             // separators — the one export site that skipped the slug.
             fileName: '${safeFileSlug(workspace.name)}-configuration.pdf',

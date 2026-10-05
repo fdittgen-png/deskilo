@@ -11,8 +11,11 @@ import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/domain/office.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
-import 'package:deskilo/features/workspace/domain/workspace_config_pdf.dart';
+import 'package:deskilo/features/workspace/domain/workspace_config_report.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:deskilo/features/money/domain/invoice_pdf.dart';
+import 'package:deskilo/features/money/domain/invoice_report.dart';
+import 'package:deskilo/features/money/domain/configuration_report_bands.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 final _strings = WorkspaceConfigPdfStrings(
@@ -90,8 +93,8 @@ Future<Uint8List> _build({
   ],
   List<String> featureLabels = const ['Calendar tab', 'Money tab'],
   List<String> closureLabels = const ['Jul 14, 2026 — Bastille Day'],
-}) =>
-    buildWorkspaceConfigPdf(
+}) async {
+  final data = workspaceConfigurationReportData(
       strings: _strings,
       workspaceName: 'Test Space',
       generatedOnLabel: 'Generated on Jul 19, 2026',
@@ -116,15 +119,25 @@ Future<Uint8List> _build({
       ],
       levelPrices: const {},
     hasCustomInvitationTemplate: false,
-    baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
     );
+  final report = renderReportBands(bands: configurationReportBands(_strings.title), data: data)!;
+  final rows = report.body.whereType<ReportTableRow>().expand((row) => row.cells);
+  for (final name in members.map((m) => m.name)) {
+    expect(rows, contains(name));
+  }
+  expect(rows, contains('A1'));
+  return buildBandedLetterPdf(report: report, documentTitle: _strings.title, pageLabel: 'Page',
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'));
+}
 
 void main() {
-  test('buildWorkspaceConfigPdf renders a non-empty PDF', () async {
+  test('workspace configuration renders all members and seats through the engine', () async {
     final bytes = await _build();
     expect(bytes, isNotEmpty);
     expect(String.fromCharCodes(bytes.sublist(0, 5)), '%PDF-');
+    Directory('build/report-config').createSync(recursive: true);
+    File('build/report-config/configuration.pdf').writeAsBytesSync(bytes);
   });
 
   test('more members grow the document', () async {

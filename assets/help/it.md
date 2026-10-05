@@ -2703,6 +2703,8 @@ Con **Inserisci un’immagine** caricate una sola volta un logo, una firma o un�
 
 I riepiloghi mensili usano il motore di pagine comune. L’anteprima separa servizi, pacchetti, elementi in attesa e crediti confermati. Gli spazi di sviluppo stampano la filigrana di sviluppo.
 
+Il PDF di configurazione dello spazio è anche un tipo di report modificabile. Il modello conserva riepilogo, membri e ruoli, funzioni attive, disponibilità, inviti e gerarchia di piani, uffici, tavoli e posti. Può riutilizzare le immagini dello spazio e stampa la filigrana di sviluppo quando necessario.
+
 ### I layout posizionati
 
 Il modo esatto. Un layout XML colloca ogni elemento al millimetro, per un
