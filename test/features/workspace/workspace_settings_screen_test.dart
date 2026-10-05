@@ -3,6 +3,9 @@
 // Workspace settings seed from the workspace and save identity, languages,
 // invitation templates and currency (#486, #711).
 import 'dart:async';
+import 'dart:convert';
+import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
+import '../../helpers/fake_money_repository.dart';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
@@ -36,6 +39,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   FileSaver? saver,
   FakeFloorPlanRepository? floorPlan,
   FakeWorkspaceRepository? repository,
+  FakeMoneyRepository? money,
   bool settle = true,
 }) async {
   // The settings form grew past the default 800px test viewport (#155,
@@ -51,7 +55,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...standardTestOverrides(workspace: workspace, floorPlan: floorPlan),
+        ...standardTestOverrides(workspace: workspace, floorPlan: floorPlan, money: money),
         if (saver != null) fileSaverProvider.overrideWithValue(saver),
       ],
       child: const DeskiloApp(),
@@ -73,6 +77,27 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
 }
 
 void main() {
+  testWidgets('configuration export uses its saved template and workspace image',
+      (tester) async {
+    final money = FakeMoneyRepository()
+      ..pdfTemplate = InvoicePdfTemplate.empty.withDoc('workspace_configuration',
+          const ReportBands(header: '![company-logo]\n# Custom configuration',
+              body: '{{ workspace }}'));
+    money.reportImages['company-logo'] = base64Decode(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==');
+    var saved = false;
+    await pumpWorkspaceSettings(tester, money: money,
+        floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
+        saver: ({required bytes, required fileName}) async {
+          expect(latin1.decode(bytes), matches(RegExp(r'/Subtype\s*/Image')));
+          saved = true;
+          return '/local/$fileName';
+        });
+    await tester.tap(find.byKey(const Key('workspaceSettingsExportPdf')));
+    await tester.pumpAndSettle();
+    expect(saved, isTrue);
+  });
+
   testWidgets(
       'workspace settings seed from the current workspace and save the '
       'edited locale through the repository (#153)', (tester) async {

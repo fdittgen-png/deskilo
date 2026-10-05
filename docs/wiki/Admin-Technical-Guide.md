@@ -72,6 +72,8 @@ Use **Insert an image** to upload a logo, signature or other picture once to the
 
 Monthly bills use the shared page engine. Quick view retains services, packages, pending items and confirmed credits separately. Development-workspace bills carry the development watermark.
 
+The workspace configuration PDF is also an editable report type. Its default template retains the overview, members and their roles, enabled features, availability, invitation settings, and level/office/desk/seat hierarchy. It can reuse workspace-library images and prints the development watermark when applicable.
+
 <!-- anchor: admin.reports.layouts -->
 ### Positioned layouts
 

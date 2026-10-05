@@ -73,6 +73,8 @@ Use **Insertar una imagen** para cargar una sola vez un logotipo, una firma u ot
 
 Los resúmenes mensuales usan el motor de páginas común. La vista rápida separa servicios, paquetes, elementos pendientes y créditos confirmados. Los espacios de desarrollo imprimen la marca de agua de desarrollo.
 
+El PDF de configuración del espacio también es un tipo de informe editable. Su plantilla conserva el resumen, miembros y roles, funciones activadas, disponibilidad, invitaciones y jerarquía de plantas, oficinas, mesas y puestos. Puede reutilizar imágenes del espacio e imprime la marca de desarrollo cuando corresponde.
+
 <!-- anchor: admin.reports.layouts -->
 ### Los diseños posicionados
 

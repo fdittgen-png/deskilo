@@ -7962,6 +7962,12 @@ abstract class AppLocalizations {
   /// **'Invoices and payments only; no general ledger. The file says so in its header.'**
   String get exportClaimSubset;
 
+  /// #1868 - accounting capability: no complete posted books
+  ///
+  /// In en, this message translates to:
+  /// **'Rebuilt from invoices and payments — DesKilo keeps no double-entry ledger, so this is not your complete books. Your accountant completes it.'**
+  String get exportNoCompleteBooks;
+
   /// #669 - accounting export formats
   ///
   /// In en, this message translates to:

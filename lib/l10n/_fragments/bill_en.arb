@@ -283,6 +283,10 @@
   "@exportClaimSubset": {
     "description": "#669 - accounting export formats"
   },
+  "exportNoCompleteBooks": "Rebuilt from invoices and payments — DesKilo keeps no double-entry ledger, so this is not your complete books. Your accountant completes it.",
+  "@exportNoCompleteBooks": {
+    "description": "#1868 - accounting capability: no complete posted books"
+  },
   "exportUncertifiedSoftware": "Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"

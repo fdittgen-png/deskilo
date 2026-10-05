@@ -73,6 +73,8 @@ Utilisez **Insérer une image** pour importer une fois un logo, une signature ou
 
 Les relevés mensuels utilisent le moteur de pages commun. L’aperçu conserve séparément services, forfaits, éléments en attente et crédits confirmés. Les relevés des espaces de développement portent le filigrane de développement.
 
+Le PDF de configuration de l’espace est également un type de rapport modifiable. Son modèle conserve la vue générale, les membres et leurs rôles, les fonctions activées, les disponibilités, les invitations et la hiérarchie niveaux/bureaux/tables/places. Il peut réutiliser les images de l’espace et imprime le filigrane de développement si nécessaire.
+
 <!-- anchor: admin.reports.layouts -->
 ### Les mises en page positionnées
 

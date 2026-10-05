@@ -5,6 +5,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/accounting_capability.dart';
 import '../../domain/accounting_format.dart';
 
 /// Picks the accounting export (#669).
@@ -93,6 +94,23 @@ class _FormatTile extends StatelessWidget {
             // "This is Portugal's own format" and "this software is not
             // certified in Portugal" are both true, and an owner who
             // reads only the first has been misled by omission.
+            if (capabilityOf(format)
+                .obligations
+                .contains(Obligation.completePostedBooks))
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  l10n?.exportNoCompleteBooks ??
+                      'Rebuilt from invoices and payments — DesKilo keeps no '
+                          'double-entry ledger, so this is not your complete '
+                          'books. Your accountant completes it.',
+                  key: const ValueKey('accounting-export-incomplete-books'),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: scheme.error),
+                ),
+              ),
             if (format.uncertifiedSoftware)
               Padding(
                 padding: const EdgeInsets.only(top: 4),

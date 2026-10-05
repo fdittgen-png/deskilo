@@ -4542,6 +4542,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Invoices and payments only; no general ledger. The file says so in its header.';
 
   @override
+  String get exportNoCompleteBooks =>
+      'Rebuilt from invoices and payments — DesKilo keeps no double-entry ledger, so this is not your complete books. Your accountant completes it.';
+
+  @override
   String get exportUncertifiedSoftware =>
       'Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.';
 

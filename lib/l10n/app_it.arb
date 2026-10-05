@@ -3092,6 +3092,10 @@
   "@exportClaimSubset": {
     "description": "#669 - accounting export formats"
   },
+  "exportNoCompleteBooks": "Ricostruito da fatture e pagamenti — DesKilo non tiene una contabilità in partita doppia, quindi non sono i tuoi libri completi. Il tuo commercialista li completa.",
+  "@exportNoCompleteBooks": {
+    "description": "#1868 - accounting capability: no complete posted books"
+  },
   "exportUncertifiedSoftware": "Prodotto secondo la specifica pubblicata, ma DesKilo non è software certificato in questo paese — verifica con il tuo commercialista se ti è richiesto.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"

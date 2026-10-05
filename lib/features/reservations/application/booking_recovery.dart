@@ -223,7 +223,22 @@ class BookingRecovery {
   /// pending one older than [pendingGrace] is reported as unknown.
   Future<List<BookingIntent>> unresolved({String? workspaceId}) async {
     final now = _clock.now().toUtc();
-    final open = (await _ledger()).unresolvedFor(
+    final BookingIntentLedger ledger;
+    try {
+      ledger = await _ledger();
+    } catch (e, st) {
+      // An unreadable store at start-up is not a crash and not an answer:
+      // nothing is owed that this device can see, and a booking made now
+      // still refuses to send without saving its intent first.
+      TraceLogger.instance.warn(
+        'reservations',
+        'booking intent ledger unreadable; no open intent is shown',
+        error: e,
+        stackTrace: st,
+      );
+      return const [];
+    }
+    final open = ledger.unresolvedFor(
       _scope,
       workspaceId: workspaceId,
     );

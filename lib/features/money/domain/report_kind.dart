@@ -75,6 +75,7 @@ const List<ReportKind> fixedReportKinds = [
   ReportKind(id: 'usage', slot: ReportDocSlot('usage')),
   ReportKind(id: 'workspace', slot: ReportDocSlot('workspace')),
   ReportKind(id: 'bi_analytics', slot: ReportDocSlot('bi_analytics')),
+  ReportKind(id: 'workspace_configuration', slot: ReportDocSlot('workspace_configuration')),
   // #934 — the treasurer's view over a range of months.
   ReportKind(id: 'status', slot: ReportDocSlot('status')),
   // #878 — the period's VAT positions, for the accountant.

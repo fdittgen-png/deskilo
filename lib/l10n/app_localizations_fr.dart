@@ -4578,6 +4578,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Factures et paiements seulement, sans grand livre. Le fichier le dit dans son en-tête.';
 
   @override
+  String get exportNoCompleteBooks =>
+      'Reconstitué à partir des factures et des paiements — DesKilo ne tient pas de comptabilité en partie double, ce ne sont donc pas vos livres complets. Votre comptable le complète.';
+
+  @override
   String get exportUncertifiedSoftware =>
       'Conforme à la spécification publiée, mais DesKilo n’est pas un logiciel certifié dans ce pays — vérifiez avec votre comptable si cela vous est imposé.';
 

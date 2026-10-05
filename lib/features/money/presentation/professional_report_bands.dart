@@ -15,7 +15,8 @@ ReportBands professionalReportBands({
   // them rather than replacing them with a generic management header.
   if (kind.slot is ReportRootSlot ||
       kind.slot is ReportProformaSlot ||
-      kind.isReminder || kind.id == 'vat_declaration' || kind.id == 'bi_analytics') {
+      kind.isReminder || kind.id == 'vat_declaration' ||
+      kind.id == 'bi_analytics' || kind.id == 'workspace_configuration') {
     return content;
   }
   final title = reportKindLabel(l10n, kind);
