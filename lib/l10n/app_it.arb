@@ -10613,7 +10613,7 @@
   "taskWorkbenchOfflineForget": "Smetti di conservarlo",
   "taskWorkbenchOfflineKeep": "Conservalo su questo dispositivo",
   "taskWorkbenchOfflineOff": "Non conservato: senza connessione questa pagina non si aprirà.",
-  "taskWorkbenchOfflineReady": "Conservato in questo browser: le schermate già aperte funzionano senza connessione.",
+  "taskWorkbenchOfflineReady": "Conservato in questo browser: lo strumento verificato si apre senza connessione. Le azioni nello spazio richiedono comunque una connessione.",
   "taskWorkbenchOfflineTitle": "Usa il laboratorio offline",
   "taskWorkbenchOfflineUnsupported": "Questo browser non può conservarlo (una finestra privata di solito non può).",
   "taskWorkbenchOpen": "Apri un file di attività",

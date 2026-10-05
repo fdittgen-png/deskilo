@@ -17270,7 +17270,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskWorkbenchOfflineReady =>
-      'Conservato in questo browser: le schermate già aperte funzionano senza connessione.';
+      'Conservato in questo browser: lo strumento verificato si apre senza connessione. Le azioni nello spazio richiedono comunque una connessione.';
 
   @override
   String get taskWorkbenchOfflineTitle => 'Usa il laboratorio offline';

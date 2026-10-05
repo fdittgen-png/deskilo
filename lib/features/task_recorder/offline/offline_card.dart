@@ -52,8 +52,8 @@ class _OfflineToolCardState extends ConsumerState<OfflineToolCard> {
     final text = switch (state) {
       OfflineToolState.ready =>
         l10n?.taskWorkbenchOfflineReady ??
-            'Kept on this browser: the screens you have opened work without '
-                'a connection.',
+            'Kept on this browser: the verified workbench opens without a '
+                'connection. Workspace actions still need a connection.',
       OfflineToolState.off =>
         l10n?.taskWorkbenchOfflineOff ??
             'Not kept: without a connection this page will not open.',
@@ -78,6 +78,7 @@ class _OfflineToolCardState extends ConsumerState<OfflineToolCard> {
             const SizedBox(height: AppSpacing.sm),
             Text(text, key: const ValueKey('workbench-offline-state')),
             const SizedBox(height: AppSpacing.sm),
+            if (_busy) const LinearProgressIndicator(),
             if (state == OfflineToolState.ready)
               TextButton(
                 key: const ValueKey('workbench-offline-forget'),

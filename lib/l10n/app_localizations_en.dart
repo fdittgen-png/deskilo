@@ -17108,7 +17108,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskWorkbenchOfflineReady =>
-      'Kept on this browser: the screens you have opened work without a connection.';
+      'Kept on this browser: the verified workbench opens without a connection. Workspace actions still need a connection.';
 
   @override
   String get taskWorkbenchOfflineTitle => 'Use the workbench offline';

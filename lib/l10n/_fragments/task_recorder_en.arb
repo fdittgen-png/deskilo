@@ -731,7 +731,7 @@
   "@taskWorkbenchOfflineForget": {
     "description": "#1886 offline tool: taskWorkbenchOfflineForget"
   },
-  "taskWorkbenchOfflineReady": "Kept on this browser: the screens you have opened work without a connection.",
+  "taskWorkbenchOfflineReady": "Kept on this browser: the verified workbench opens without a connection. Workspace actions still need a connection.",
   "@taskWorkbenchOfflineReady": {
     "description": "#1886 offline tool: taskWorkbenchOfflineReady"
   },

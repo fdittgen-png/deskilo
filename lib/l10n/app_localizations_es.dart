@@ -17240,7 +17240,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskWorkbenchOfflineReady =>
-      'Guardado en este navegador: las pantallas ya abiertas funcionan sin conexión.';
+      'Guardado en este navegador: el taller verificado se abre sin conexión. Las acciones del espacio siguen necesitando conexión.';
 
   @override
   String get taskWorkbenchOfflineTitle => 'Usar el taller sin conexión';

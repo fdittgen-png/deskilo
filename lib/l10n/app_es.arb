@@ -10613,7 +10613,7 @@
   "taskWorkbenchOfflineForget": "Dejar de guardarlo",
   "taskWorkbenchOfflineKeep": "Guardarlo en este dispositivo",
   "taskWorkbenchOfflineOff": "No guardado: sin conexión esta página no se abrirá.",
-  "taskWorkbenchOfflineReady": "Guardado en este navegador: las pantallas ya abiertas funcionan sin conexión.",
+  "taskWorkbenchOfflineReady": "Guardado en este navegador: el taller verificado se abre sin conexión. Las acciones del espacio siguen necesitando conexión.",
   "taskWorkbenchOfflineTitle": "Usar el taller sin conexión",
   "taskWorkbenchOfflineUnsupported": "Este navegador no puede guardarlo (una ventana privada normalmente no puede).",
   "taskWorkbenchOpen": "Abrir un archivo de tarea",
