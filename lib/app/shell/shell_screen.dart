@@ -409,10 +409,10 @@ class ShellScreen extends ConsumerWidget {
             IconButton(
               key: const ValueKey('shell-events-bell'),
               icon: pendingEvents == 0
-                  ? const Icon(Icons.notifications_outlined)
+                  ? const Icon(Icons.inbox_outlined)
                   : Badge.count(
                       count: pendingEvents,
-                      child: const Icon(Icons.notifications_outlined),
+                      child: const Icon(Icons.inbox_outlined),
                     ),
               tooltip: lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events'),
               // The /events path already lands on the alerts face.

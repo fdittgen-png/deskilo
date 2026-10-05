@@ -78,8 +78,32 @@ ThemeData _finish(ThemeData base, {required bool animations}) {
     // least — the highest tint — so every lighter surface passes too.
     outline: Contrast.ensure(raw.outline, raw.surfaceContainerHighest, floor: 3.0),
   );
+  final dark = scheme.brightness == Brightness.dark;
+  // The GitHub-style chrome (design request 2026-10-05): a flat bar of the
+  // page's own colour closed by a hairline, rounded-square outlined icon
+  // buttons, a blue notification mark, calm Primer-like grey ink.
+  final page = dark ? const Color(0xFF0D1117) : const Color(0xFFFFFFFF);
+  final bar = dark ? const Color(0xFF010409) : const Color(0xFFF6F8FA);
+  final line = dark ? const Color(0xFF3D444D) : const Color(0xFFD1D9E0);
+  final ink = dark ? const Color(0xFF9198A1) : const Color(0xFF59636E);
+  final blue = dark ? const Color(0xFF4493F8) : const Color(0xFF0969DA);
   return base.copyWith(
     colorScheme: scheme,
+    scaffoldBackgroundColor: page,
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(
+        foregroundColor: ink,
+        minimumSize: const Size(48, 48),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadius.mdAll,
+          side: BorderSide(color: line),
+        ),
+      ),
+    ),
+    badgeTheme: BadgeThemeData(
+      backgroundColor: blue,
+      textColor: Colors.white,
+    ),
     pageTransitionsTheme: _pageTransitions(animations: animations),
     textTheme: base.textTheme.copyWith(
       // The app-bar title: confident, a touch tighter — personality
@@ -97,6 +121,13 @@ ThemeData _finish(ThemeData base, {required bool animations}) {
       ),
     ),
     appBarTheme: base.appBarTheme.copyWith(
+      backgroundColor: bar,
+      surfaceTintColor: Colors.transparent,
+      scrolledUnderElevation: 0,
+      elevation: 0,
+      iconTheme: IconThemeData(color: ink),
+      actionsIconTheme: IconThemeData(color: ink),
+      shape: Border(bottom: BorderSide(color: line)),
       centerTitle: false,
       titleSpacing: 20,
       // One toolbar height for the whole app (shell_metrics.dart).
