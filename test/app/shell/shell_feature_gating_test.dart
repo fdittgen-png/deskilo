@@ -55,19 +55,19 @@ void main() {
       const {'moneyTab': false, 'calendarTab': false},
     );
 
-    expect(tabLabels(tester), ['Messages', 'Members']);
+    expect(tabLabels(tester), ['Alerts', 'Members']);
   });
 
   testWidgets('all features on keeps the four tabs', (tester) async {
     await pumpWithFlags(tester, const {});
 
-    expect(tabLabels(tester), ['Messages', 'Calendar', 'Members', 'Money']);
+    expect(tabLabels(tester), ['Alerts', 'Calendar', 'Members', 'Money']);
   });
 
   testWidgets('membersDirectory OFF drops the Members tab', (tester) async {
     await pumpWithFlags(tester, const {'membersDirectory': false});
 
-    expect(tabLabels(tester), ['Messages', 'Calendar', 'Money']);
+    expect(tabLabels(tester), ['Alerts', 'Calendar', 'Money']);
   });
 
   testWidgets(
@@ -102,7 +102,7 @@ void main() {
     );
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
-    expect(tabLabels(tester), ['Messages', 'Members']);
+    expect(tabLabels(tester), ['Alerts', 'Members']);
     expect(find.byTooltip('Events'), findsNothing);
     // The app boots on the Reserve hub (its branch is never gated).
     final appBarTitle = find.descendant(

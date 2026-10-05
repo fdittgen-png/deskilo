@@ -4441,6 +4441,10 @@
   "inboxFilterAll": "Tous",
   "inboxFilterArchived": "Archivés",
   "inboxFilterUnread": "Non lus",
+  "inboxMessengerDoor": "Ouvrir ma messagerie",
+  "@inboxMessengerDoor": {
+    "description": "workspace inbox: door to the Me messenger"
+  },
   "inboxNoArchived": "Aucune conversation archivée.",
   "inboxNoUnread": "Rien de non lu — vous êtes à jour.",
   "inboxRetry": "Réessayer",

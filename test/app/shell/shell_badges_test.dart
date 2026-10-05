@@ -102,7 +102,7 @@ void main() {
         .invalidate(myWorkspacesProvider);
     await tester.pumpAndSettle();
 
-    expect(find.descendant(of: find.byType(AppBar), matching: find.text('Messages')),
+    expect(find.descendant(of: find.byType(AppBar), matching: find.text('Alerts')),
         findsOneWidget);
     expect(find.text('Calendar'), findsNothing,
         reason: 'the destination went with its feature');

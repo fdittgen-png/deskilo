@@ -11952,6 +11952,12 @@ abstract class AppLocalizations {
   /// **'Unread'**
   String get inboxFilterUnread;
 
+  /// workspace inbox: door to the Me messenger
+  ///
+  /// In en, this message translates to:
+  /// **'Open my messenger'**
+  String get inboxMessengerDoor;
+
   /// No description provided for @inboxNoArchived.
   ///
   /// In en, this message translates to:

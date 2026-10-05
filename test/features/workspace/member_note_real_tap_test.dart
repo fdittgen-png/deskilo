@@ -81,7 +81,7 @@ void main() {
       child: const DeskiloApp(),
     ));
     await tester.pumpAndSettle();
-    await tapNavIcon(tester, Icons.forum_outlined);
+    await openWorkspaceChats(tester);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
     await tester.pumpAndSettle();

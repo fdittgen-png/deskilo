@@ -48,57 +48,54 @@ Future<FakeWorkspaceRepository> pumpInbox(
 }
 
 void main() {
-  testWidgets('two faces, and the chats one is showing', (tester) async {
+  testWidgets('the workspace inbox is the alerts face with one door to the '
+      'messenger in Me', (tester) async {
     await pumpInbox(tester);
 
-    for (final tab in ['chats', 'alerts']) {
-      expect(find.byKey(ValueKey('inbox-tab-$tab')), findsOneWidget,
-          reason: 'the $tab face is missing');
-    }
-    // Chats first: it is the face that is always there, and the one the
-    // destination is named after.
-    expect(find.byKey(const ValueKey('new-conversation')), findsOneWidget);
+    expect(find.byKey(const ValueKey('inbox-tab-alerts')), findsOneWidget);
+    expect(find.byKey(const ValueKey('inbox-messenger-door')), findsOneWidget);
+    // Discussions are not here any more: no chat list, no compose button.
+    expect(find.byKey(const ValueKey('new-conversation')), findsNothing);
+    expect(find.byKey(const ValueKey('inbox-tab-chats')), findsNothing);
   });
 
-  testWidgets('each face keeps its place while you look at another',
-      (tester) async {
+  testWidgets('the door leads to the messenger of the Me space and carries '
+      'the unread count', (tester) async {
     await pumpInbox(tester, conversations: [
       Conversation(
         id: 'conv-ana',
         kind: ConversationKind.direct,
         otherMemberId: 'member-2',
         lastBody: 'See you at ten',
+        unread: 2,
         lastAt: DateTime.utc(2026, 8, 27),
       ),
     ]);
-
-    expect(find.byKey(const ValueKey('conversation-conv-ana')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('inbox-tab-alerts')));
+    expect(find.byKey(const ValueKey('conversation-conv-ana')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('inbox-messenger-door')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('inbox-tab-chats')));
-    await tester.pumpAndSettle();
-    // An IndexedStack, so the list was never torn down and rebuilt.
-    expect(find.byKey(const ValueKey('conversation-conv-ana')), findsOneWidget);
+    expect(
+      GoRouter.of(tester.element(find.byType(Scaffold).first))
+          .state
+          .uri
+          .toString(),
+      startsWith('/me'),
+    );
+    expect(find.byKey(const ValueKey('unified-inbox')), findsOneWidget);
   });
 
-  testWidgets('the faces stay INSIDE the shell — the bar never goes away',
-      (tester) async {
+  testWidgets('the alerts face stays INSIDE the shell — the bar never goes '
+      'away', (tester) async {
     await pumpInbox(tester);
-
-    for (final tab in ['alerts', 'chats']) {
-      await tester.tap(find.byKey(ValueKey('inbox-tab-$tab')));
-      await tester.pumpAndSettle();
-      expect(find.byType(ShellBottomBar), findsOneWidget,
-          reason: 'the $tab face covered the bottom bar');
-    }
+    expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
-  testWidgets('one face left is no tab bar at all', (tester) async {
+  testWidgets('alerts off: no alerts face, the door to the messenger stays',
+      (tester) async {
     await pumpInbox(tester, featureFlags: const {'eventsTab': false});
 
-    expect(find.byKey(const ValueKey('inbox-tabs')), findsNothing);
-    // The conversations are still there — it is the CHROME that goes.
-    expect(find.byKey(const ValueKey('new-conversation')), findsOneWidget);
+    expect(find.byKey(const ValueKey('inbox-tab-alerts')), findsNothing);
+    expect(find.byKey(const ValueKey('inbox-messenger-door')), findsOneWidget);
   });
 
   testWidgets('/events lands on the Alerts face, not on a second screen',

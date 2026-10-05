@@ -6964,6 +6964,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get inboxFilterUnread => 'Non letti';
 
   @override
+  String get inboxMessengerDoor => 'Apri i miei messaggi';
+
+  @override
   String get inboxNoArchived => 'Nessuna conversazione archiviata.';
 
   @override

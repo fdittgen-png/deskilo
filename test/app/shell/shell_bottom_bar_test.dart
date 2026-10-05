@@ -64,7 +64,7 @@ void main() {
     expect(find.byType(ShellBottomBar), findsOneWidget);
     final (left, right) = splitAroundButton(tester);
     // #707 — Members is back on the bar, left of Money.
-    expect(left, ['Messages', 'Calendar']);
+    expect(left, ['Alerts', 'Calendar']);
     expect(right, ['Members', 'Money']);
   });
 
@@ -72,7 +72,7 @@ void main() {
     await pumpApp(tester, featureFlags: const {'moneyTab': false});
 
     final (left, right) = splitAroundButton(tester);
-    expect(left, ['Messages', 'Calendar']);
+    expect(left, ['Alerts', 'Calendar']);
     expect(right, ['Members']);
   });
 
@@ -80,7 +80,7 @@ void main() {
       (tester) async {
     await pumpApp(tester, featureFlags: const {'calendarTab': false});
 
-    expect(tabLabels(tester), ['Messages', 'Members', 'Money']);
+    expect(tabLabels(tester), ['Alerts', 'Members', 'Money']);
   });
 
   testWidgets(
@@ -105,7 +105,7 @@ void main() {
     await tester.tap(
       find.descendant(
         of: find.byType(ShellBottomBar),
-        matching: find.text('Messages'),
+        matching: find.text('Alerts'),
       ),
     );
     await tester.pumpAndSettle();
@@ -115,7 +115,7 @@ void main() {
         .where((t) => t.selected)
         .toList();
     expect(selected, hasLength(1));
-    expect(selected.single.destination.label, 'Messages');
+    expect(selected.single.destination.label, 'Alerts');
     expect(find.byIcon(Icons.event_seat_outlined), findsOneWidget);
     expect(find.byIcon(Icons.event_seat), findsNothing);
 

@@ -7782,6 +7782,10 @@
   "inboxFilterAll": "All",
   "inboxFilterArchived": "Archived",
   "inboxFilterUnread": "Unread",
+  "inboxMessengerDoor": "Open my messenger",
+  "@inboxMessengerDoor": {
+    "description": "workspace inbox: door to the Me messenger"
+  },
   "inboxNoArchived": "No archived conversations.",
   "inboxNoUnread": "Nothing unread — you are up to date.",
   "inboxRetry": "Try again",
