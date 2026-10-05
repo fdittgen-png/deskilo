@@ -12,9 +12,10 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/seat_state_logic.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/seat_day_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/test_clock.dart';
+import '../../helpers/mock_providers.dart';
 import 'plan_screen_test.dart' show pumpPlan, seatCenter;
 
 // #908 — o'clock on the WORKSPACE clock, which is what a stored
@@ -214,7 +215,9 @@ void main() {
     Future<SeatDayPick?> open(WidgetTester tester,
         {required List<Reservation> reservations}) async {
       SeatDayPick? picked;
-      await tester.pumpWidget(MaterialApp(
+      await tester.pumpWidget(ProviderScope(
+          overrides: standardTestOverrides(),
+          child: MaterialApp(
         home: Builder(
           builder: (context) => Scaffold(
             body: Center(
@@ -234,7 +237,7 @@ void main() {
             ),
           ),
         ),
-      ));
+      )));
       await tester.tap(find.byKey(const ValueKey('open')));
       await tester.pumpAndSettle();
       return picked;
@@ -244,7 +247,9 @@ void main() {
     Future<SeatDayPick?> pickAfter(WidgetTester tester, Finder row,
         {required List<Reservation> reservations}) async {
       SeatDayPick? picked;
-      await tester.pumpWidget(MaterialApp(
+      await tester.pumpWidget(ProviderScope(
+          overrides: standardTestOverrides(),
+          child: MaterialApp(
         home: Builder(
           builder: (context) => Scaffold(
             body: Center(
@@ -264,7 +269,7 @@ void main() {
             ),
           ),
         ),
-      ));
+      )));
       await tester.tap(find.byKey(const ValueKey('open')));
       await tester.pumpAndSettle();
       await tester.tap(row);
