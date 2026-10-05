@@ -26,7 +26,7 @@ void main() {
     await pumpApp(tester);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
-    for (final label in ['Messages', 'Calendar', 'Members', 'Money']) {
+    for (final label in ['Alerts', 'Calendar', 'Members', 'Money']) {
       expect(find.text(label), findsWidgets, reason: 'missing tab "$label"');
     }
   });

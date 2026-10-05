@@ -11,6 +11,7 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
+import 'package:deskilo/features/workspace/presentation/screens/messages_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -121,7 +122,7 @@ MemberNote _noteFromAna(String body, {String id = 'note-in'}) => MemberNote(
 /// about the conversation — previews, references, receipts, delete — and
 /// only the route to it changed when messages left the events inbox.
 Future<void> _openEvents(WidgetTester tester) async {
-  await tapNavIcon(tester, Icons.forum_outlined);
+  await openWorkspaceChats(tester);
   await tester.pumpAndSettle();
   final row = find.byKey(const ValueKey('conversation-conv-ana'));
   if (row.evaluate().isNotEmpty) {
@@ -137,7 +138,7 @@ void main() {
     const long = 'The projector in the main room keeps dropping the '
         'signal every ten minutes, can someone have a look at the cable?';
     await _pump(tester, notes: [_noteFromAna(long)]);
-    await tapNavIcon(tester, Icons.forum_outlined);
+    await openWorkspaceChats(tester);
     await tester.pumpAndSettle();
 
     // #687 — the row truncates at the width AVAILABLE (maxLines +
@@ -182,7 +183,7 @@ void main() {
       _noteFromAna('Still need [res:res-link-1|A1 · tomorrow]? '
           'Else I take [space:seat:seat-4|A1] 😀'),
     ]);
-    await tapNavIcon(tester, Icons.forum_outlined);
+    await openWorkspaceChats(tester);
     await tester.pumpAndSettle();
 
     // #687 — the LIST preview reads labels, never raw tokens. Markup
@@ -222,6 +223,11 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('space-show-plan')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('conversation-thread')), findsNothing);
+    // The conversation list is a pushed page in this harness; leave it.
+    if (find.byType(MessagesScreen).evaluate().isNotEmpty) {
+      Navigator.of(tester.element(find.byType(MessagesScreen))).pop();
+      await tester.pumpAndSettle();
+    }
     expect(
         find.byKey(const ValueKey('reserve-plan-view')), findsOneWidget);
   });
@@ -366,7 +372,7 @@ void main() {
     // point when the intermediate surface was the events inbox, and it
     // survives the move — a list you glance at is not a message you
     // read.
-    await tapNavIcon(tester, Icons.forum_outlined);
+    await openWorkspaceChats(tester);
     await tester.pumpAndSettle();
     expect(
       workspace.memberNotes.singleWhere((n) => n.id == 'note-in').readAt,
@@ -423,11 +429,10 @@ void main() {
     expect(find.textContaining('Hello!'), findsNothing);
     expect(find.textContaining('Sent and delivered.'), findsNothing);
 
-    // And they are one TAB away — the same screen since #702, so there
-    // is nothing to back out of any more.
-    await tester.tap(find.byKey(const ValueKey('inbox-tab-chats')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('conversation-conv-ana')), findsOneWidget);
+    // The discussion itself lives in the Me messenger now; the workspace
+    // inbox keeps its alerts and one door there.
+    expect(find.byKey(const ValueKey('inbox-messenger-door')), findsOneWidget);
+    expect(find.byKey(const ValueKey('conversation-conv-ana')), findsNothing);
   });
 
   testWidgets(

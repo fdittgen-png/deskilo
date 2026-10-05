@@ -4332,6 +4332,10 @@
   "inboxFilterAll": "Alle",
   "inboxFilterArchived": "Archiviert",
   "inboxFilterUnread": "Ungelesen",
+  "inboxMessengerDoor": "Meine Nachrichten öffnen",
+  "@inboxMessengerDoor": {
+    "description": "workspace inbox: door to the Me messenger"
+  },
   "inboxNoArchived": "Keine archivierten Unterhaltungen.",
   "inboxNoUnread": "Nichts Ungelesenes — du bist auf dem Laufenden.",
   "inboxRetry": "Erneut versuchen",

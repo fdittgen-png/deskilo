@@ -13,9 +13,9 @@ import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 Conversation conv({
   required String id,
@@ -59,8 +59,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/messages');
-    await tester.pumpAndSettle();
+    await openWorkspaceChats(tester);
     return workspace;
   }
 

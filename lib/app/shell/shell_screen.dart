@@ -259,7 +259,9 @@ class ShellScreen extends ConsumerWidget {
     final tabTitles = [
       // #687 — the first destination is Messages now; the plan lives on
       // Réserver, which draws the same canvas.
-      lexiconText(context, key: 'messagesTitle', fallback: l10n?.messagesTitle ?? 'Messages'),
+      // Discussions moved to Me › Messages: this destination is the
+      // workspace's alerts.
+      l10n?.inboxAlertsTab ?? 'Alerts',
       lexiconText(context, key: 'tabCalendar', fallback: l10n?.tabCalendar ?? 'Calendar'),
       lexiconText(context, key: 'directoryTitle', fallback: l10n?.directoryTitle ?? 'Members'),
       lexiconText(context, key: 'tabMoney', fallback: l10n?.tabMoney ?? 'Money'),
