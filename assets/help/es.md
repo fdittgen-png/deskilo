@@ -2681,6 +2681,8 @@ La cabecera y el cuerpo se componen de arriba abajo. El pie conserva una posici�
 
 Use **Insertar una imagen** para cargar una sola vez un logotipo, una firma u otra imagen en la biblioteca del espacio y seleccionarla después en cualquier plantilla. Colóquela en cualquier banda con `![name]` o en un diseño posicionado con `<image name="name"/>`. Cargar el mismo nombre de archivo sustituye la imagen para futuras generaciones de todas las plantillas que la usan; los PDF ya guardados no cambian.
 
+Los resúmenes mensuales usan el motor de páginas común. La vista rápida separa servicios, paquetes, elementos pendientes y créditos confirmados. Los espacios de desarrollo imprimen la marca de agua de desarrollo.
+
 ### Los diseños posicionados
 
 La forma exacta. Un diseño XML coloca cada elemento al milímetro, para
