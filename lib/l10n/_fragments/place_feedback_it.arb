@@ -6,5 +6,46 @@
   "featurePlaceFeedbackDesc": "I membri segnano postazioni, tavoli, uffici e piani come preferiti e li valutano da 0 a 5 stelle. Un preferito è personale; una valutazione mostra la media e quante ce ne sono, mai chi. Un assistente può elencare i preferiti, prenotarne uno e registrare una valutazione. Disattivato nasconde cuori e stelle e rifiuta le scritture; nient'altro ne dipende.",
   "@featurePlaceFeedbackDesc": {
     "description": "#2185 place feedback"
+  },
+  "placeFeedbackFavorite": "Aggiungi ai preferiti",
+  "@placeFeedbackFavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackUnfavorite": "Rimuovi dai preferiti",
+  "@placeFeedbackUnfavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackStars": "{n, plural, =1{1 stella} other{{n} stelle}}",
+  "@placeFeedbackStars": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackZero": "0 stelle",
+  "@placeFeedbackZero": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackAverage": "{average} · {count, plural, =1{1 valutazione} other{{count} valutazioni}}",
+  "@placeFeedbackAverage": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackNoRating": "Ancora nessuna valutazione",
+  "@placeFeedbackNoRating": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackFailed": "Salvataggio non riuscito. Riprova.",
+  "@placeFeedbackFailed": {
+    "description": "#2185 place feedback"
   }
 }

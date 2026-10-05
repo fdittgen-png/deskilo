@@ -3,6 +3,9 @@ import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/providers/bi_providers.dart';
+import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
+import 'package:deskilo/core/demo/data/place_feedback_repository.dart';
+import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
@@ -190,6 +193,7 @@ List<Override> standardTestOverrides({
   BiViewRepository? biViews,
   FinanceKpiRepository? financeKpis,
   AccessoryRepository? accessories,
+  PlaceFeedbackRepository? placeFeedback,
   ReservationRepository? reservations,
   BookingIntentStore? bookingIntents,
   EventRepository? events,
@@ -327,6 +331,9 @@ List<Override> standardTestOverrides({
         .overrideWithValue(accessories ?? FakeAccessoryRepository()),
     reservationRepositoryProvider
         .overrideWithValue(reservations ?? FakeReservationRepository()),
+    // #2185 — favourites and ratings in memory.
+    placeFeedbackRepositoryProvider
+        .overrideWithValue(placeFeedback ?? FakePlaceFeedbackRepository()),
     // #1855 — the booking-intent ledger and its scope: one fixed account
     // on one fixed server, so a test's intents never meet the device's.
     bookingIntentStoreProvider

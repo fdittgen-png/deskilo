@@ -22,6 +22,7 @@ final Map<String, _Getter> _getters = {
   ..._part9(),
   ..._part10(),
   ..._part11(),
+  ..._part12(),
 };
 
 Map<String, _Getter> _part0() => {
@@ -3121,6 +3122,11 @@ Map<String, _Getter> _part7() => {
   'personalInfoSubtitle': (l) => l.personalInfoSubtitle,
   'personalInfoTitle': (l) => l.personalInfoTitle,
   'personalInfoVatId': (l) => l.personalInfoVatId,
+  'placeFeedbackFailed': (l) => l.placeFeedbackFailed,
+  'placeFeedbackFavorite': (l) => l.placeFeedbackFavorite,
+  'placeFeedbackNoRating': (l) => l.placeFeedbackNoRating,
+  'placeFeedbackUnfavorite': (l) => l.placeFeedbackUnfavorite,
+  'placeFeedbackZero': (l) => l.placeFeedbackZero,
   'planAccessorySupplementHint': (l) => l.planAccessorySupplementHint,
   'planActiveLabel': (l) => l.planActiveLabel,
   'planAfternoonChip': (l) => l.planAfternoonChip,
@@ -3241,14 +3247,14 @@ Map<String, _Getter> _part7() => {
   'portalPerson': (l) => l.portalPerson,
   'portalPhone': (l) => l.portalPhone,
   'portalPlans': (l) => l.portalPlans,
+};
+
+Map<String, _Getter> _part8() => {
   'portalPreview': (l) => l.portalPreview,
   'portalPublicPlan': (l) => l.portalPublicPlan,
   'portalPublication': (l) => l.portalPublication,
   'portalPublished': (l) => l.portalPublished,
   'portalRegisterDirectory': (l) => l.portalRegisterDirectory,
-};
-
-Map<String, _Getter> _part8() => {
   'portalRequestProfile': (l) => l.portalRequestProfile,
   'portalRequestSent': (l) => l.portalRequestSent,
   'portalResetAll': (l) => l.portalResetAll,
@@ -3644,14 +3650,14 @@ Map<String, _Getter> _part8() => {
   'reportFieldMeaningDueDate': (l) => l.reportFieldMeaningDueDate,
   'reportFieldMeaningEscompte': (l) => l.reportFieldMeaningEscompte,
   'reportFieldMeaningExemptionReason': (l) => l.reportFieldMeaningExemptionReason,
+};
+
+Map<String, _Getter> _part9() => {
   'reportFieldMeaningHasVat': (l) => l.reportFieldMeaningHasVat,
   'reportFieldMeaningIban': (l) => l.reportFieldMeaningIban,
   'reportFieldMeaningInsurance': (l) => l.reportFieldMeaningInsurance,
   'reportFieldMeaningIssued': (l) => l.reportFieldMeaningIssued,
   'reportFieldMeaningIssuedBy': (l) => l.reportFieldMeaningIssuedBy,
-};
-
-Map<String, _Getter> _part9() => {
   'reportFieldMeaningLatePenalty': (l) => l.reportFieldMeaningLatePenalty,
   'reportFieldMeaningLines': (l) => l.reportFieldMeaningLines,
   'reportFieldMeaningMember': (l) => l.reportFieldMeaningMember,
@@ -4047,15 +4053,15 @@ Map<String, _Getter> _part9() => {
   'statusTo': (l) => l.statusTo,
   'subprocessAttendance': (l) => l.subprocessAttendance,
   'subprocessAttendanceDesc': (l) => l.subprocessAttendanceDesc,
+};
+
+Map<String, _Getter> _part10() => {
   'subprocessAvailability': (l) => l.subprocessAvailability,
   'subprocessAvailabilityDesc': (l) => l.subprocessAvailabilityDesc,
   'subprocessCalendar': (l) => l.subprocessCalendar,
   'subprocessCalendarDesc': (l) => l.subprocessCalendarDesc,
   'subprocessCollection': (l) => l.subprocessCollection,
   'subprocessCollectionDesc': (l) => l.subprocessCollectionDesc,
-};
-
-Map<String, _Getter> _part10() => {
   'subprocessCommunication': (l) => l.subprocessCommunication,
   'subprocessCommunicationDesc': (l) => l.subprocessCommunicationDesc,
   'subprocessConfiguration': (l) => l.subprocessConfiguration,
@@ -4450,15 +4456,15 @@ Map<String, _Getter> _part10() => {
   'taskWorkbenchRefusedNewer': (l) => l.taskWorkbenchRefusedNewer,
   'taskWorkbenchRefusedTooLarge': (l) => l.taskWorkbenchRefusedTooLarge,
   'taskWorkbenchRefusedUnsafe': (l) => l.taskWorkbenchRefusedUnsafe,
+};
+
+Map<String, _Getter> _part11() => {
   'taskWorkbenchRefusedUnsupported': (l) => l.taskWorkbenchRefusedUnsupported,
   'taskWorkbenchReviewIllustrations': (l) => l.taskWorkbenchReviewIllustrations,
   'taskWorkbenchStoryboardRestored': (l) => l.taskWorkbenchStoryboardRestored,
   'taskWorkbenchTitle': (l) => l.taskWorkbenchTitle,
   'taskWorkbenchTranscriptOnly': (l) => l.taskWorkbenchTranscriptOnly,
   'taskWorkbenchUntrusted': (l) => l.taskWorkbenchUntrusted,
-};
-
-Map<String, _Getter> _part11() => {
   'templateApplyConflict': (l) => l.templateApplyConflict,
   'templateChangedSinceReview': (l) => l.templateChangedSinceReview,
   'templateClearFilters': (l) => l.templateClearFilters,
@@ -4853,6 +4859,9 @@ Map<String, _Getter> _part11() => {
   'workspaceXmlImportConfirm': (l) => l.workspaceXmlImportConfirm,
   'workspaceXmlImportPartial': (l) => l.workspaceXmlImportPartial,
   'workspaceXmlImportPreviewTitle': (l) => l.workspaceXmlImportPreviewTitle,
+};
+
+Map<String, _Getter> _part12() => {
   'workspaceXmlImportPreviewWarning': (l) => l.workspaceXmlImportPreviewWarning,
   'workspaceXmlImportReservationsError': (l) => l.workspaceXmlImportReservationsError,
   'workspaceXmlImportSubtitle': (l) => l.workspaceXmlImportSubtitle,

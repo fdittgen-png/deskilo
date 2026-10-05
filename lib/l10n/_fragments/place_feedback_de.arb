@@ -6,5 +6,46 @@
   "featurePlaceFeedbackDesc": "Mitglieder markieren Plätze, Tische, Büros und Etagen als Favoriten und bewerten sie mit 0 bis 5 Sternen. Ein Favorit gehört dem Mitglied; eine Bewertung zeigt den Durchschnitt und die Anzahl, nie wer. Ein Assistent kann die Favoriten auflisten, einen buchen und eine Bewertung eintragen. Aus blendet Herzen und Sterne aus und weist das Schreiben ab; sonst hängt nichts daran.",
   "@featurePlaceFeedbackDesc": {
     "description": "#2185 place feedback"
+  },
+  "placeFeedbackFavorite": "Zu Favoriten hinzufügen",
+  "@placeFeedbackFavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackUnfavorite": "Aus Favoriten entfernen",
+  "@placeFeedbackUnfavorite": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackStars": "{n, plural, =1{1 Stern} other{{n} Sterne}}",
+  "@placeFeedbackStars": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackZero": "0 Sterne",
+  "@placeFeedbackZero": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackAverage": "{average} · {count, plural, =1{1 Bewertung} other{{count} Bewertungen}}",
+  "@placeFeedbackAverage": {
+    "description": "#2185 place feedback",
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "placeFeedbackNoRating": "Noch keine Bewertung",
+  "@placeFeedbackNoRating": {
+    "description": "#2185 place feedback"
+  },
+  "placeFeedbackFailed": "Speichern nicht möglich. Bitte erneut versuchen.",
+  "@placeFeedbackFailed": {
+    "description": "#2185 place feedback"
   }
 }
