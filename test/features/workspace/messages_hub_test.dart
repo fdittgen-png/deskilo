@@ -130,10 +130,11 @@ void main() {
   testWidgets('the alerts face is named for what it holds, and the chips '
       'narrow the list to unread or archived', (tester) async {
     await _pump(tester);
-    await tapNavIcon(tester, Icons.forum_outlined);
-    await tester.pumpAndSettle();
-    expect(find.text('Alerts'), findsOneWidget);
+    await openAlertsTab(tester);
+    expect(find.text('Alerts'), findsWidgets);
     expect(find.text('Events'), findsNothing);
+    await openWorkspaceChats(tester);
+    await tester.pumpAndSettle();
     expect(_row('conv-ana'), findsOneWidget);
     expect(_row('conv-bob'), findsOneWidget);
 
@@ -156,7 +157,7 @@ void main() {
       'mark-unread and archive write through and the list follows',
       (tester) async {
     final workspace = await _pump(tester);
-    await tapNavIcon(tester, Icons.forum_outlined);
+    await openWorkspaceChats(tester);
     await tester.pumpAndSettle();
     // Newest first: Ana above Bob.
     expect(tester.getTopLeft(_row('conv-ana')).dy,
@@ -203,7 +204,7 @@ void main() {
   testWidgets('a conversation opens as a PAGE with day separators, and '
       'what was typed survives leaving and coming back', (tester) async {
     await _pump(tester);
-    await tapNavIcon(tester, Icons.forum_outlined);
+    await openWorkspaceChats(tester);
     await tester.pumpAndSettle();
     await tester.tap(_row('conv-ana'));
     await tester.pumpAndSettle();
@@ -257,7 +258,7 @@ void main() {
   testWidgets('the new-conversation sheet opens a person on a tap; the '
       'Group switch is the way to a named group', (tester) async {
     await _pump(tester);
-    await tapNavIcon(tester, Icons.forum_outlined);
+    await openWorkspaceChats(tester);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('new-conversation')));
     await tester.pumpAndSettle();
@@ -290,9 +291,10 @@ void main() {
   testWidgets('with the flag off the thread stays a sheet and the face '
       'keeps its old name', (tester) async {
     await _pump(tester, flags: const {'messagesHub': false});
-    await tapNavIcon(tester, Icons.forum_outlined);
+    await openAlertsTab(tester);
+    expect(find.text('Events'), findsWidgets);
+    await openWorkspaceChats(tester);
     await tester.pumpAndSettle();
-    expect(find.text('Events'), findsOneWidget);
     expect(find.byKey(const ValueKey('inbox-filter-unread')), findsNothing);
     await tester.tap(_row('conv-ana'));
     await tester.pumpAndSettle();

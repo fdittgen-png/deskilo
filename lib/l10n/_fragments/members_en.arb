@@ -369,5 +369,9 @@
   "memberOriginFounder": "Founded this space",
   "memberOriginInvited": "Joined by invitation",
   "memberOriginDelegated": "Profile created by an admin",
-  "memberOriginHeading": "How this membership began"
+  "memberOriginHeading": "How this membership began",
+  "inboxMessengerDoor": "Open my messenger",
+  "@inboxMessengerDoor": {
+    "description": "workspace inbox: door to the Me messenger"
+  }
 }

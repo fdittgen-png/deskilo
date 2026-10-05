@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/features/workspace/presentation/screens/messages_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -61,11 +62,20 @@ Future<void> tapAppBarIcon(WidgetTester tester, IconData icon) async {
 /// does. It works whether or not the inbox is already the showing
 /// destination.
 Future<void> openAlertsTab(WidgetTester tester) async {
-  const tab = ValueKey('inbox-tab-alerts');
-  if (find.byKey(tab).evaluate().isEmpty) {
+  // The face carries the messenger door and the requests row above the
+  // feed; the default 800x600 surface no longer holds a whole feed under
+  // them, so the helper asks for a taller one (restored after the test).
+  final size = tester.view.physicalSize / tester.view.devicePixelRatio;
+  if (size.height < 900) {
+    tester.view.physicalSize = Size(size.width, 1000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+  }
+  // The workspace inbox IS the alerts face now (discussions moved to the
+  // Me messenger): opening it is going to its destination.
+  if (find.byKey(const ValueKey('inbox-messenger-door')).evaluate().isEmpty) {
     await tapNavIcon(tester, Icons.forum_outlined);
   }
-  await tester.tap(find.byKey(tab));
   await tester.pumpAndSettle();
 }
 
@@ -73,3 +83,15 @@ Future<void> openAlertsTab(WidgetTester tester) async {
 /// after a brief life as the inbox's third face in #702.
 Future<void> openMembersTab(WidgetTester tester) =>
     tapNavIcon(tester, Icons.people_outline);
+
+/// Opens the workspace's conversation list (the legacy workspace-scoped
+/// chat screen). Discussions live in the Me messenger now and the workspace
+/// inbox only carries alerts, so tests of the conversation machinery reach
+/// the list directly.
+Future<void> openWorkspaceChats(WidgetTester tester) async {
+  final context = tester.element(find.byType(Scaffold).first);
+  Navigator.of(context).push(
+    MaterialPageRoute<void>(builder: (_) => const MessagesScreen()),
+  );
+  await tester.pumpAndSettle();
+}

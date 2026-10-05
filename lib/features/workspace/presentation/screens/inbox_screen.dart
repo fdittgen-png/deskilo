@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/motion/motion.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/presentation/screens/events_screen.dart';
-import '../../../events/providers/event_providers.dart';
 import '../../domain/workspace_feature.dart';
+import '../../../events/providers/event_providers.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
-import 'messages_screen.dart';
+import '../../../directory/presentation/messenger/space_inquiries_screen.dart';
+import '../widgets/application_requests_entry.dart';
 
 part 'inbox_screen.g.dart';
 
@@ -55,153 +55,97 @@ class InboxTabController extends _$InboxTabController {
 /// position, its filter chips and its search box while you look at
 /// another, and no second horizontal [Scrollable] lands over lists that
 /// tests and users already scroll vertically.
-class InboxScreen extends ConsumerStatefulWidget {
+class InboxScreen extends ConsumerWidget {
   const InboxScreen({super.key});
 
   @override
-  ConsumerState<InboxScreen> createState() => _InboxScreenState();
-}
-
-class _InboxScreenState extends ConsumerState<InboxScreen>
-    with SingleTickerProviderStateMixin {
-  TabController? _controller;
-
-  /// The tabs the current workspace actually shows, in display order.
-  List<InboxTab> _tabsFor(Set<WorkspaceFeature> features) => [
-        InboxTab.chats,
-        if (features.contains(WorkspaceFeature.eventsTab)) InboxTab.alerts,
-      ];
-
-  void _syncController(List<InboxTab> tabs, InboxTab selected) {
-    final index = tabs.indexOf(selected).clamp(0, tabs.length - 1);
-    if (_controller?.length != tabs.length) {
-      _controller?.dispose();
-      _controller = TabController(
-        length: tabs.length,
-        initialIndex: index,
-        vsync: this,
-      )..addListener(() {
-          final c = _controller!;
-          if (c.indexIsChanging) return;
-          final tab = tabs[c.index];
-          if (ref.read(inboxTabControllerProvider) != tab) {
-            ref.read(inboxTabControllerProvider.notifier).show(tab);
-          }
-        });
-    } else if (_controller!.index != index) {
-      // Off the build path (#709): setting the index notifies the
-      // TabBar, which marks itself dirty — during build that is a
-      // setState-in-build, tolerated today and an assertion tomorrow.
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted && _controller!.index != index) {
-          _controller!.index = index;
-        }
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+  Widget build(BuildContext context, WidgetRef ref) {
     final features = ref.watch(enabledFeaturesSyncProvider);
-    final tabs = _tabsFor(features);
-    // A tab the workspace no longer shows falls back to Chats, which is
-    // the one tab that is always there.
-    final requested = ref.watch(inboxTabControllerProvider);
-    final selected = tabs.contains(requested) ? requested : InboxTab.chats;
-    _syncController(tabs, selected);
-
-    final unread = ref.watch(unreadMessagesProvider);
-    final pending = ref.watch(myPendingEventCountProvider).value ?? 0;
-
+    final alerts = features.contains(WorkspaceFeature.eventsTab);
+    // Discussions live in the messenger of the Me space; this destination
+    // keeps what belongs to the workspace itself: its alerts, the requests
+    // addressed to it, and one door to the messenger.
     return Scaffold(
-      // No title: the shell's app bar above already names the
-      // destination. This slim bar carries the tabs and whatever the
-      // showing face needs — the actions belong to the tab, not to the
-      // screen, so they swap with it.
-      appBar: tabs.length < 2
-          ? null
-          : AppBar(
-              toolbarHeight: 0,
-              bottom: TabBar(
-                key: const ValueKey('inbox-tabs'),
-                controller: _controller,
-                tabs: [
-                  for (final tab in tabs)
-                    Tab(
-                      key: ValueKey('inbox-tab-${tab.name}'),
-                      child: _TabLabel(
-                        label: switch (tab) {
-                          InboxTab.chats =>
-                            l10n?.inboxChatsTab ?? 'Chats',
-                          // #821 — "Alerts": what the face holds, in
-                          // the word the guide and the bell use too.
-                          InboxTab.alerts => features
-                                  .contains(WorkspaceFeature.messagesHub)
-                              ? (l10n?.inboxAlertsTab ?? 'Alerts')
-                              : (lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events')),
-                        },
-                        // The count each face is responsible for, on the
-                        // face itself: an inbox that only badges its
-                        // total makes you open all three to find the one
-                        // with something in it.
-                        count: switch (tab) {
-                          InboxTab.chats => unread,
-                          InboxTab.alerts => pending,
-                        },
-                      ),
-                    ),
-                ],
-              ),
-            ),
-      // #611's shell idiom: the stack keeps every face alive, an
-      // opacity layer above it fades the swap.
-      body: FadeInOnChange(
-        changeKey: selected,
-        child: IndexedStack(
-        index: tabs.indexOf(selected),
+      body: Column(
         children: [
-          for (final tab in tabs)
-            switch (tab) {
-              InboxTab.chats => const MessagesScreen(),
-              InboxTab.alerts => const EventsScreen(),
-            },
+          _TopRow(alerts: alerts),
+          if (alerts) const Expanded(child: EventsScreen()) else const Spacer(),
         ],
-        ),
       ),
     );
   }
 }
 
-/// A tab label with the count its face is carrying, or none at all.
-///
-/// No count, NO BADGE WIDGET — the #687 rule: an always-present badge
-/// with `isLabelVisible: false` renders nothing and still answers
-/// `find.byType(Badge)`, which is a widget in the tree lying about an
-/// empty inbox.
-class _TabLabel extends StatelessWidget {
-  const _TabLabel({required this.label, required this.count});
-
-  final String label;
-  final int count;
+/// The face's title, with the count of what waits for a decision.
+class _AlertsHeader extends ConsumerWidget {
+  const _AlertsHeader();
 
   @override
-  Widget build(BuildContext context) {
-    // #902 — a tab label never wraps; it ends in an ellipsis instead.
-    final text = Text(label,
-        maxLines: 1, softWrap: false, overflow: TextOverflow.ellipsis);
-    if (count <= 0) return text;
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      Flexible(child: text),
-      const SizedBox(width: 6),
-      Badge.count(count: count),
-    ]);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final pending = ref.watch(myPendingEventCountProvider).value ?? 0;
+    final label = features.contains(WorkspaceFeature.messagesHub)
+        ? (l10n?.inboxAlertsTab ?? 'Alerts')
+        : (l10n?.tabEvents ?? 'Events');
+    return Padding(
+      key: const ValueKey('inbox-tab-alerts'),
+      padding: const EdgeInsets.fromLTRB(8, 0, 12, 0),
+      child: Row(
+        children: [
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              softWrap: false,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ),
+          if (pending > 0) ...[
+            const SizedBox(width: 8),
+            Badge.count(count: pending),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// One door from the workspace to the messenger (Me › Messages), with the
+/// unread count, plus the requests addressed to this workspace.
+class _TopRow extends ConsumerWidget {
+  const _TopRow({required this.alerts});
+
+  final bool alerts;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final unread = ref.watch(unreadMessagesProvider);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Wrap(
+        spacing: 4,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          if (alerts) const _AlertsHeader(),
+          TextButton.icon(
+            key: const ValueKey('inbox-messenger-door'),
+            onPressed: () => context.go('/me?tab=messages'),
+            icon: unread > 0
+                ? Badge.count(
+                    count: unread,
+                    child: const Icon(Icons.forum_outlined),
+                  )
+                : const Icon(Icons.forum_outlined),
+            label: Text(l10n?.inboxMessengerDoor ?? 'Open my messenger'),
+          ),
+          const ApplicationRequestsEntry(compact: false),
+          const SpaceInquiriesEntry(),
+        ],
+      ),
+    );
   }
 }
 

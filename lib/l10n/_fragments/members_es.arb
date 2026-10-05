@@ -289,5 +289,9 @@
   "memberOriginFounder": "Fundó este espacio",
   "memberOriginInvited": "Se unió por invitación",
   "memberOriginDelegated": "Perfil creado por un administrador",
-  "memberOriginHeading": "Cómo empezó esta afiliación"
+  "memberOriginHeading": "Cómo empezó esta afiliación",
+  "inboxMessengerDoor": "Abrir mi mensajería",
+  "@inboxMessengerDoor": {
+    "description": "workspace inbox: door to the Me messenger"
+  }
 }
