@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_radius.dart';
+import '../../../core/theme/app_typography.dart';
 
 /// One identity, with its environment actions kept together at every width.
 class MeWorkspaceRow extends StatelessWidget {
@@ -11,24 +13,35 @@ class MeWorkspaceRow extends StatelessWidget {
     required this.name,
     required this.detail,
     required this.actions,
+    this.lastUsed = false,
   });
+  final bool lastUsed;
   final Widget avatar;
   final String name, detail;
   final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) => Card.outlined(
+    color: Theme.of(context).colorScheme.surface,
+    shape: RoundedRectangleBorder(
+      borderRadius: AppRadius.xlAll,
+      side: BorderSide(
+        color: lastUsed
+            ? Theme.of(context).colorScheme.primary.withValues(alpha: .4)
+            : Theme.of(context).colorScheme.outlineVariant,
+      ),
+    ),
     margin: const EdgeInsets.only(bottom: AppSpacing.sm),
     child: Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
+        horizontal: AppSpacing.lg,
         vertical: AppSpacing.sm,
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
           final identity = Row(
             children: [
-              avatar,
+              Tooltip(message: name, child: avatar),
               const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Column(
@@ -38,12 +51,17 @@ class MeWorkspaceRow extends StatelessWidget {
                       name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context)
+                          .textTheme
+                          .primaryValue
+                          ?.emphasised,
                     ),
                     if (detail.isNotEmpty)
                       Text(
                         detail,
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
                   ],
                 ),
@@ -62,7 +80,7 @@ class MeWorkspaceRow extends StatelessWidget {
             return Row(
               children: [
                 Expanded(child: identity),
-                SizedBox(width: 420, child: environments),
+                SizedBox(width: 340, child: environments),
               ],
             );
           }

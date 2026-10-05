@@ -76,6 +76,7 @@ class MeHomeTab extends ConsumerWidget {
                   key: ValueKey('me-space-pair-${group.first.pairId.isEmpty ? group.first.id : group.first.pairId}'),
                   avatar: WorkspaceAvatar(workspace: group.first),
                   name: group.first.name,
+                  lastUsed: group.any((space) => space.id == last),
                   detail: {
                     for (final space in group)
                       if (memberships.where((m) => m.workspaceId == space.id).firstOrNull case final member?)
