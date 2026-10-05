@@ -2,6 +2,7 @@
 //
 // #1305 S3 — a read answered from the stale tier is remembered until the
 // network answers again, so a screen can tell live data from saved data.
+import 'dart:io';
 import 'package:deskilo/core/cache/cached_fetch.dart';
 import 'package:deskilo/core/cache/stale_reads.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -48,7 +49,7 @@ void main() {
       key: 'resv:ws:day',
       ttl: const Duration(minutes: 1),
       mode: CacheReadMode.networkFirst,
-      fetchRaw: () async => throw StateError('offline'),
+      fetchRaw: () async => throw const SocketException('offline'),
       parse: (p) => p! as int,
     );
     expect(offline, 7);
