@@ -153,8 +153,9 @@ class _MeHeader extends ConsumerWidget {
     return DecoratedBox(
       key: const ValueKey('me-header'),
       decoration: BoxDecoration(
-        color: scheme.primaryContainer,
+        color: scheme.surfaceContainerLow,
         borderRadius: AppRadius.lgAll,
+        border: Border.all(color: scheme.outlineVariant),
       ),
       child: Padding(
         padding: AppSpacing.gutterAll,
@@ -169,13 +170,13 @@ class _MeHeader extends ConsumerWidget {
                   Text(
                     name,
                     style: Theme.of(context).textTheme.titleMedium
-                        ?.copyWith(color: scheme.onPrimaryContainer),
+                        ?.copyWith(color: scheme.onSurface),
                   ),
                   Text(
                     l10n?.meHeaderOwned ??
                         'Your account · it belongs only to you',
                     style: Theme.of(context).textTheme.bodySmall
-                        ?.copyWith(color: scheme.onPrimaryContainer),
+                        ?.copyWith(color: scheme.onSurface),
                   ),
                 ],
               ),

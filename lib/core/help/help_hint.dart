@@ -113,7 +113,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
     }
     final tipStyle = Theme.of(
       context,
-    ).textTheme.bodySmall?.copyWith(color: scheme.onSecondaryContainer);
+    ).textTheme.bodySmall?.copyWith(color: scheme.onSurfaceVariant);
     final position = '${_page + 1}/${tips.length}';
     return Card(
       key: ValueKey('help-hint-${id.name}'),
@@ -121,7 +121,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
         horizontal: AppSpacing.md,
         vertical: AppSpacing.xs,
       ),
-      color: scheme.secondaryContainer,
+      color: scheme.surfaceContainerLow,
       child: Padding(
         padding: const EdgeInsets.only(left: AppSpacing.md),
         child: Row(
@@ -132,7 +132,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
               child: Icon(
                 Icons.lightbulb_outline,
                 size: 18,
-                color: scheme.onSecondaryContainer,
+                color: scheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
@@ -235,7 +235,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                               key: ValueKey('help-hint-prev-${id.name}'),
                               tooltip: l10n?.helpHintPrevTip ?? 'Previous tip',
                               icon: const Icon(Icons.navigate_before, size: 20),
-                              color: scheme.onSecondaryContainer,
+                              color: scheme.onSurfaceVariant,
                               onPressed: () => _goTo(_page - 1, tips.length),
                             ),
                             Text(
@@ -247,7 +247,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                               key: ValueKey('help-hint-next-${id.name}'),
                               tooltip: l10n?.helpHintNextTip ?? 'Next tip',
                               icon: const Icon(Icons.navigate_next, size: 20),
-                              color: scheme.onSecondaryContainer,
+                              color: scheme.onSurfaceVariant,
                               onPressed: () => _goTo(_page + 1, tips.length),
                             ),
                           ],
@@ -261,7 +261,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
               key: ValueKey('help-hint-dismiss-${id.name}'),
               tooltip: l10n?.helpHintDismiss ?? 'Dismiss hint',
               icon: const Icon(Icons.close, size: 18),
-              color: scheme.onSecondaryContainer,
+              color: scheme.onSurfaceVariant,
               onPressed: () => ref
                   .read(dismissedHelpHintsProvider.notifier)
                   .dismiss(id.name),

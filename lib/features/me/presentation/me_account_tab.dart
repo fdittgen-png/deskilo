@@ -32,7 +32,11 @@ class MeAccountTab extends ConsumerWidget {
           onTap: () => context.push(path),
         );
     return Scaffold(
-      body: ListView(
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 760),
+          child: ListView(
         key: const ValueKey('me-account-list'),
         children: [
           // #1846 — four groups: who others see, what is private to the
@@ -75,6 +79,8 @@ class MeAccountTab extends ConsumerWidget {
             onTap: () => signOutAndForget(ref),
           ),
         ],
+      ),
+        ),
       ),
     );
   }

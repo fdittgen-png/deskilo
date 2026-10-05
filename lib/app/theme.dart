@@ -100,6 +100,7 @@ ThemeData _finish(ThemeData base, {required bool animations}) {
         ),
       ),
     ),
+    listTileTheme: ListTileThemeData(iconColor: ink),
     badgeTheme: BadgeThemeData(
       backgroundColor: blue,
       textColor: Colors.white,
@@ -148,10 +149,22 @@ ThemeData _finish(ThemeData base, {required bool animations}) {
       labelPadding: const EdgeInsets.symmetric(horizontal: 6),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     ),
+    // One card everywhere: a flat surface, a hairline, one radius — never
+    // a beige slab. Lists, hints, forms and summaries all read as the same
+    // object.
     cardTheme: base.cardTheme.copyWith(
       elevation: 0,
       color: scheme.surfaceContainerLow,
+      surfaceTintColor: Colors.transparent,
       margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadius.lgAll,
+        side: BorderSide(color: line),
+      ),
+    ),
+    tabBarTheme: base.tabBarTheme.copyWith(
+      dividerColor: line,
+      indicatorSize: TabBarIndicatorSize.label,
     ),
     dividerTheme: base.dividerTheme.copyWith(
       color: scheme.outlineVariant.withValues(alpha: 0.6),

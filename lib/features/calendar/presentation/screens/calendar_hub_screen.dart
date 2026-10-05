@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/ui/app_frame.dart';
+
 import '../../../workspace/presentation/widgets/note_record_open.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -332,7 +334,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         // it needed — a `RenderFlex overflowed by 4.0 pixels` that
         // nothing on screen explained. In the side panel those rows
         // scroll on their own and the feed gets the whole height.
-        final landscape = constraints.maxWidth > constraints.maxHeight;
+        final landscape = phoneLandscape(constraints);
         if (landscape) {
           return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             SizedBox(
