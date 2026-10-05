@@ -4570,6 +4570,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Solo fatture e pagamenti, senza libro mastro. Il file lo dichiara nella propria intestazione.';
 
   @override
+  String get exportNoCompleteBooks =>
+      'Ricostruito da fatture e pagamenti — DesKilo non tiene una contabilità in partita doppia, quindi non sono i tuoi libri completi. Il tuo commercialista li completa.';
+
+  @override
   String get exportUncertifiedSoftware =>
       'Prodotto secondo la specifica pubblicata, ma DesKilo non è software certificato in questo paese — verifica con il tuo commercialista se ti è richiesto.';
 

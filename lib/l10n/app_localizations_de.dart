@@ -4580,6 +4580,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nur Rechnungen und Zahlungen, kein Hauptbuch. Die Datei sagt das in ihrem Kopf.';
 
   @override
+  String get exportNoCompleteBooks =>
+      'Aus Rechnungen und Zahlungen rekonstruiert — DesKilo führt keine doppelte Buchführung, dies sind also nicht Ihre vollständigen Bücher. Ihre Steuerberatung ergänzt sie.';
+
+  @override
   String get exportUncertifiedSoftware =>
       'Nach der veröffentlichten Spezifikation erstellt, aber DesKilo ist in diesem Land keine zertifizierte Software — klären Sie mit Ihrer Steuerberatung, ob das für Sie Pflicht ist.';
 

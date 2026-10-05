@@ -132,6 +132,10 @@
   "@exportClaimSubset": {
     "description": "#669 - accounting export formats"
   },
+  "exportNoCompleteBooks": "Aus Rechnungen und Zahlungen rekonstruiert — DesKilo führt keine doppelte Buchführung, dies sind also nicht Ihre vollständigen Bücher. Ihre Steuerberatung ergänzt sie.",
+  "@exportNoCompleteBooks": {
+    "description": "#1868 - accounting capability: no complete posted books"
+  },
   "exportUncertifiedSoftware": "Nach der veröffentlichten Spezifikation erstellt, aber DesKilo ist in diesem Land keine zertifizierte Software — klären Sie mit Ihrer Steuerberatung, ob das für Sie Pflicht ist.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
