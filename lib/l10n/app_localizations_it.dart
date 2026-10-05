@@ -17463,6 +17463,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get themeTitle => 'Tema';
 
   @override
+  String get threadRefsIn => 'Riferimenti in';
+
+  @override
   String get usageAsk => 'Fattura il tempo in cui c’ero';
 
   @override

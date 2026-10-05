@@ -29924,6 +29924,12 @@ abstract class AppLocalizations {
   /// **'Theme'**
   String get themeTitle;
 
+  /// Me thread: which workspace the references speak about
+  ///
+  /// In en, this message translates to:
+  /// **'References in'**
+  String get threadRefsIn;
+
   /// #833 - action asking for the actual time to bill
   ///
   /// In en, this message translates to:

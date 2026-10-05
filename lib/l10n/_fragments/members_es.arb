@@ -293,5 +293,9 @@
   "inboxMessengerDoor": "Abrir mi mensajería",
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
+  },
+  "threadRefsIn": "Referencias en",
+  "@threadRefsIn": {
+    "description": "Me thread: which workspace the references speak about"
   }
 }
