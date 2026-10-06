@@ -31,5 +31,7 @@
   "invoiceEssentialsRefused": "La fattura non è stata emessa: mancano dati obbligatori.",
   "@invoiceEssentialsRefused": {
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
-  }
+  },
+  "invoiceMissingSellerCountry": "Il paese dello spazio deve essere Francia o Germania per emettere qui — gli altri paesi si emettono fuori dall'app",
+  "invoiceMissingVatRate": "Un'aliquota IVA in vigore per l'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)"
 }

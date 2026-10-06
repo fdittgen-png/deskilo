@@ -8148,11 +8148,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace\'s postal address (street or city)';
 
   @override
+  String get invoiceMissingSellerCountry =>
+      'The workspace country must be France or Germany for issuing here — other countries are issued outside the app';
+
+  @override
   String get invoiceMissingSellerVatId =>
       'The workspace\'s VAT identification number';
 
   @override
   String get invoiceMissingTitle => 'Complete these details before issuing';
+
+  @override
+  String get invoiceMissingVatRate =>
+      'A VAT rate in force for the workspace\'s default rate (it would bill 0 %)';
 
   @override
   String get invoiceNoOpen => 'No open invoices.';

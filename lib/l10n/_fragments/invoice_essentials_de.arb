@@ -31,5 +31,7 @@
   "invoiceEssentialsRefused": "Die Rechnung wurde nicht ausgestellt: Pflichtangaben fehlen.",
   "@invoiceEssentialsRefused": {
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
-  }
+  },
+  "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss Frankreich oder Deutschland sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
+  "invoiceMissingVatRate": "Ein gültiger Steuersatz für den Standardsatz des Arbeitsbereichs (sonst würde 0 % berechnet)"
 }

@@ -8203,11 +8203,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'La dirección postal del espacio (calle o ciudad)';
 
   @override
+  String get invoiceMissingSellerCountry =>
+      'El país del espacio debe ser Francia o Alemania para emitir aquí — los demás países se emiten fuera de la aplicación';
+
+  @override
   String get invoiceMissingSellerVatId =>
       'El número de identificación fiscal (IVA) del espacio';
 
   @override
   String get invoiceMissingTitle => 'Complete estos datos antes de emitir';
+
+  @override
+  String get invoiceMissingVatRate =>
+      'Un tipo de IVA vigente para el tipo por defecto del espacio (si no, se facturaría 0 %)';
 
   @override
   String get invoiceNoOpen => 'No hay facturas abiertas.';

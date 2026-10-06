@@ -31,5 +31,7 @@
   "invoiceEssentialsRefused": "La facture n'a pas été émise : des informations obligatoires manquent.",
   "@invoiceEssentialsRefused": {
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
-  }
+  },
+  "invoiceMissingSellerCountry": "Le pays de l'espace doit être la France ou l'Allemagne pour émettre ici — les autres pays sont émis hors de l'application",
+  "invoiceMissingVatRate": "Un taux de TVA en vigueur pour le taux par défaut de l'espace (sinon 0 % serait facturé)"
 }
