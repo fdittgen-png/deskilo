@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/messenger.dart';
@@ -196,6 +197,12 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
   ) {
     final format = ref.watch(appFormatProvider);
     final marks = ref.watch(inboxMarksProvider);
+    // A workspace conversation's pin / archive are the server's (0386); every
+    // other kind keeps this device's marks.
+    bool pinnedOf(InboxEntry e) =>
+        e.flags?.pinned ?? marks.pinned.contains(e.key);
+    bool archivedOf(InboxEntry e) =>
+        e.flags?.archived ?? marks.archived.contains(e.key);
     final needle = _query.trim().toLowerCase();
     bool matches(InboxEntry e) =>
         needle.isEmpty ||
@@ -205,13 +212,13 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
     // Pinned first, then newest activity (the merge already sorts by it).
     final shown = [
       for (final e in inbox.entries)
-        if (marks.archived.contains(e.key) == _archived &&
+        if (archivedOf(e) == _archived &&
             (!_unreadOnly || e.unread > 0) &&
             matches(e))
           e,
     ]..sort((a, b) {
-        final pa = marks.pinned.contains(a.key) ? 0 : 1;
-        final pb = marks.pinned.contains(b.key) ? 0 : 1;
+        final pa = pinnedOf(a) ? 0 : 1;
+        final pb = pinnedOf(b) ? 0 : 1;
         return pa.compareTo(pb);
       });
     return RefreshIndicator(
@@ -281,7 +288,13 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  if (marks.pinned.contains(entry.key))
+                  if (entry.flags?.muted ?? false)
+                    Icon(
+                      Icons.notifications_off_outlined,
+                      key: ValueKey('inbox-muted-${entry.contextId}'),
+                      size: 14,
+                    ),
+                  if (pinnedOf(entry))
                     Icon(
                       Icons.push_pin_outlined,
                       key: ValueKey('inbox-pinned-${entry.contextId}'),
@@ -316,8 +329,9 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
   Future<void> _marksMenu(BuildContext context, InboxEntry entry) async {
     final l10n = AppLocalizations.of(context);
     final marks = ref.read(inboxMarksProvider);
-    final pinned = marks.pinned.contains(entry.key);
-    final archived = marks.archived.contains(entry.key);
+    final flags = entry.flags;
+    final pinned = flags?.pinned ?? marks.pinned.contains(entry.key);
+    final archived = flags?.archived ?? marks.archived.contains(entry.key);
     final choice = await showModalBottomSheet<String>(
       context: context,
       showDragHandle: true,
@@ -333,6 +347,25 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                   : (l10n?.conversationPin ?? 'Pin')),
               onTap: () => Navigator.of(sheet).pop('pin'),
             ),
+            if (flags != null) ...[
+              ListTile(
+                key: const ValueKey('inbox-menu-mute'),
+                leading: Icon(flags.muted
+                    ? Icons.notifications_active_outlined
+                    : Icons.notifications_off_outlined),
+                title: Text(flags.muted
+                    ? (l10n?.conversationUnmute ?? 'Unmute')
+                    : (l10n?.conversationMute ?? 'Mute notifications')),
+                onTap: () => Navigator.of(sheet).pop('mute'),
+              ),
+              if (entry.unread == 0)
+                ListTile(
+                  key: const ValueKey('inbox-menu-unread'),
+                  leading: const Icon(Icons.mark_chat_unread_outlined),
+                  title: Text(l10n?.conversationMarkUnread ?? 'Mark as unread'),
+                  onTap: () => Navigator.of(sheet).pop('unread'),
+                ),
+            ],
             ListTile(
               key: const ValueKey('inbox-menu-archive'),
               leading: const Icon(Icons.archive_outlined),
@@ -345,6 +378,28 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
         ),
       ),
     );
+    if (choice == null) return;
+    if (flags != null) {
+      // The server's preference: set it there, then read the inbox again.
+      final repo = ref.read(messengerRepositoryProvider(source: entry.source));
+      final id = entry.contextId;
+      if (!context.mounted) return;
+      await runGuarded(
+        context,
+        domain: 'messages',
+        message: 'conversation flags failed',
+        errorText: l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+        action: () => switch (choice) {
+          'pin' => repo.setConversationFlags(id, pinned: !pinned),
+          'mute' => repo.setConversationFlags(id, muted: !flags.muted),
+          'archive' => repo.setConversationFlags(id, archived: !archived),
+          _ => repo.markConversationUnread(id),
+        },
+      );
+      ref.invalidate(unifiedInboxProvider);
+      return;
+    }
     if (choice == 'pin') ref.read(inboxMarksProvider.notifier).togglePin(entry.key);
     if (choice == 'archive') {
       ref.read(inboxMarksProvider.notifier).toggleArchive(entry.key);

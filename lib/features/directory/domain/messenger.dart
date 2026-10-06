@@ -99,6 +99,7 @@ class InboxEntry {
     this.lastBody = '',
     this.unread = 0,
     this.peerId,
+    this.flags,
   });
 
   /// [source] is the server's origin; '' is this server.
@@ -119,6 +120,13 @@ class InboxEntry {
       lastAt: _at(row['last_at']),
       unread: (row['unread'] as num?)?.toInt() ?? 0,
       peerId: row['peer_id'] as String?,
+      flags: row.containsKey('pinned')
+          ? ServerFlags(
+              pinned: row['pinned'] == true,
+              muted: row['muted'] == true,
+              archived: row['archived'] == true,
+            )
+          : null,
     );
   }
 
@@ -135,10 +143,23 @@ class InboxEntry {
   /// The other person of an account conversation, when the server says.
   final String? peerId;
 
+  /// The server's own pin / mute / archive of this conversation (0386),
+  /// or null when the server does not keep them (a person-to-person
+  /// conversation, a group, an inquiry): those keep this device's marks.
+  final ServerFlags? flags;
+
   bool get isRemote => source.isNotEmpty;
 
   /// The same conversation, whichever list it was found in.
   String get key => '$source|${kind.wire}|$contextId';
+}
+
+/// A workspace conversation's preferences as the server keeps them.
+class ServerFlags {
+  const ServerFlags({this.pinned = false, this.muted = false, this.archived = false});
+  final bool pinned;
+  final bool muted;
+  final bool archived;
 }
 
 /// The merged inbox and the servers that did not answer.
@@ -147,7 +168,11 @@ class UnifiedInbox {
   final List<InboxEntry> entries;
   final List<String> unavailable;
 
-  int get unread => entries.fold(0, (sum, e) => sum + e.unread);
+  /// What the badge counts: a muted or server-archived thread is quiet.
+  int get unread => entries.fold(
+      0,
+      (sum, e) =>
+          sum + ((e.flags?.muted ?? false) || (e.flags?.archived ?? false) ? 0 : e.unread));
 }
 
 /// Several servers' inboxes as ONE list, newest activity first.
