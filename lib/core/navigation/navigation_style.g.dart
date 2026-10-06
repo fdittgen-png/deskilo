@@ -111,22 +111,22 @@ final class PlatformIsWebProvider extends $FunctionalProvider<bool, bool, bool>
 
 String _$platformIsWebHash() => r'bf1d5b48bcda84a482d4e54900fa3b94f9a9e377';
 
-/// The user's navigation override; null means "what this platform gets
-/// by default" (the bar on native, the menu on the web). Applied
-/// instantly — the shell watches it.
+/// The user's navigation choice. A device that never chose gets the menu
+/// (see [PrefsNavigationStyleStore]); the classic bar is one tap away in
+/// Settings. Applied instantly — the shell watches it.
 
 @ProviderFor(NavigationStyleController)
 final navigationStyleControllerProvider = NavigationStyleControllerProvider._();
 
-/// The user's navigation override; null means "what this platform gets
-/// by default" (the bar on native, the menu on the web). Applied
-/// instantly — the shell watches it.
+/// The user's navigation choice. A device that never chose gets the menu
+/// (see [PrefsNavigationStyleStore]); the classic bar is one tap away in
+/// Settings. Applied instantly — the shell watches it.
 final class NavigationStyleControllerProvider
     extends
         $AsyncNotifierProvider<NavigationStyleController, NavigationStyle?> {
-  /// The user's navigation override; null means "what this platform gets
-  /// by default" (the bar on native, the menu on the web). Applied
-  /// instantly — the shell watches it.
+  /// The user's navigation choice. A device that never chose gets the menu
+  /// (see [PrefsNavigationStyleStore]); the classic bar is one tap away in
+  /// Settings. Applied instantly — the shell watches it.
   NavigationStyleControllerProvider._()
     : super(
         from: null,
@@ -147,11 +147,11 @@ final class NavigationStyleControllerProvider
 }
 
 String _$navigationStyleControllerHash() =>
-    r'95b1d0791844a5e568d33140c83fc96c8a8c468d';
+    r'44be200d46c47a77570614bbe47e0aa10b85ff49';
 
-/// The user's navigation override; null means "what this platform gets
-/// by default" (the bar on native, the menu on the web). Applied
-/// instantly — the shell watches it.
+/// The user's navigation choice. A device that never chose gets the menu
+/// (see [PrefsNavigationStyleStore]); the classic bar is one tap away in
+/// Settings. Applied instantly — the shell watches it.
 
 abstract class _$NavigationStyleController
     extends $AsyncNotifier<NavigationStyle?> {
