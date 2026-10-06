@@ -4456,18 +4456,15 @@ Map<String, _Getter> _part10() => {
   'taskRecorderOutcomeUnknown': (l) => l.taskRecorderOutcomeUnknown,
   'taskRecorderPause': (l) => l.taskRecorderPause,
   'taskRecorderPaused': (l) => l.taskRecorderPaused,
+};
+
+Map<String, _Getter> _part11() => {
   'taskRecorderProtectedAuthentication': (l) => l.taskRecorderProtectedAuthentication,
   'taskRecorderProtectedIdentity': (l) => l.taskRecorderProtectedIdentity,
   'taskRecorderProtectedMessenger': (l) => l.taskRecorderProtectedMessenger,
   'taskRecorderProtectedOperator': (l) => l.taskRecorderProtectedOperator,
   'taskRecorderProtectedPayment': (l) => l.taskRecorderProtectedPayment,
-};
-
-Map<String, _Getter> _part11() => {
   'taskRecorderProtectedProvider': (l) => l.taskRecorderProtectedProvider,
-};
-
-Map<String, _Getter> _part11() => {
   'taskRecorderProtectedSecrets': (l) => l.taskRecorderProtectedSecrets,
   'taskRecorderPutBack': (l) => l.taskRecorderPutBack,
   'taskRecorderRecordATask': (l) => l.taskRecorderRecordATask,
@@ -4862,18 +4859,15 @@ Map<String, _Getter> _part11() => {
   'wizardStepSend': (l) => l.wizardStepSend,
   'wizardStepSkipped': (l) => l.wizardStepSkipped,
   'wizardStepSummary': (l) => l.wizardStepSummary,
+};
+
+Map<String, _Getter> _part12() => {
   'wizardStepUnavailable': (l) => l.wizardStepUnavailable,
   'wizardSubmitting': (l) => l.wizardSubmitting,
   'wizardSummaryHint': (l) => l.wizardSummaryHint,
   'wizardTallyDecided': (l) => l.wizardTallyDecided,
   'wizardTallyIssued': (l) => l.wizardTallyIssued,
-};
-
-Map<String, _Getter> _part12() => {
   'wizardTallyMatched': (l) => l.wizardTallyMatched,
-};
-
-Map<String, _Getter> _part12() => {
   'wizardTallyNothing': (l) => l.wizardTallyNothing,
   'wizardTallyRefunds': (l) => l.wizardTallyRefunds,
   'wizardTallyRegistered': (l) => l.wizardTallyRegistered,
