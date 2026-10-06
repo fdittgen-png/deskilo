@@ -181,6 +181,28 @@ List<Reservation> reservationsAcrossWindow(
   return byId.values.toList();
 }
 
+/// #1848 — whether a day read of the window failed with nothing to show: such
+/// a window is unavailable, never an empty one (drawing every seat free).
+bool reservationsUnavailableAcrossWindow(
+  WidgetRef ref,
+  DateTime start,
+  DateTime end,
+) {
+  var failed = false;
+  for (final key in dayKeysForWindow(start, end)) {
+    final read = ref.watch(reservationsForDayProvider(key));
+    failed |= read.hasError && !read.hasValue;
+  }
+  return failed;
+}
+
+/// Reads the window's day keys again (the retry of an unavailable window).
+void retryReservationsAcrossWindow(WidgetRef ref, DateTime start, DateTime end) {
+  for (final key in dayKeysForWindow(start, end)) {
+    ref.invalidate(reservationsForDayProvider(key));
+  }
+}
+
 /// #1643 — the calendar-file command, wired to the seams it needs so the
 /// button that asks for a file resolves no repository of its own.
 ///
