@@ -285,6 +285,7 @@ void main() {
     expect(find.byKey(const ValueKey('composer-attach-locked')), findsNothing);
   });
 
+
   testWidgets('references in a message read as links, not as raw tokens',
       (tester) async {
     home.threads[FakeMessengerRepository.threadKey(MessageContextKind.account, 'c-ana')] = [
@@ -391,4 +392,5 @@ void main() {
       await tester.pumpAndSettle();
     }
   });
+
 }
