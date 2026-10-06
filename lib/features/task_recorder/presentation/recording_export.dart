@@ -42,14 +42,50 @@ Uint8List? recordingExportBytes(
       : Uint8List.fromList(utf8.encode(text));
 }
 
+Future<bool> _confirmValues(BuildContext context) async {
+  final l10n = AppLocalizations.of(context);
+  final ok = await showDialog<bool>(
+    context: context,
+    builder: (dialog) => AlertDialog(
+      title: Text(
+        l10n?.taskRecorderExportValuesTitle ?? 'This recording contains values',
+      ),
+      content: Text(
+        l10n?.taskRecorderExportValuesBody ??
+            'It holds what was typed and chosen during the recording. Check '
+                'it before sharing, and share it only with people who should '
+                'see that.',
+      ),
+      actions: [
+        TextButton(
+          key: const ValueKey('export-values-cancel'),
+          onPressed: () => Navigator.of(dialog).pop(false),
+          child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel),
+        ),
+        FilledButton(
+          key: const ValueKey('export-values-confirm'),
+          onPressed: () => Navigator.of(dialog).pop(true),
+          child: Text(l10n?.taskRecorderExportValuesConfirm ?? 'Save anyway'),
+        ),
+      ],
+    ),
+  );
+  return ok == true;
+}
+
 /// Saves [bytes] as [fileName] and tells the person what happened.
 Future<void> saveAndTell(
   BuildContext context,
   WidgetRef ref, {
   required Uint8List? bytes,
   required String fileName,
+  bool containsValues = false,
 }) async {
   final l10n = AppLocalizations.of(context);
+  // A recording that captured values leaves the app only after the person
+  // has been told it holds them.
+  if (containsValues && bytes != null && !await _confirmValues(context)) return;
+  if (!context.mounted) return;
   final failed = l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.';
   if (bytes == null) {
     AppSnack.error(context, failed);

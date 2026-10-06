@@ -211,6 +211,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
       fileName: package
           ? 'deskilo-task$taskPackageExtension'
           : 'deskilo-task.json',
+      containsValues: copy.capturesValues,
     );
   }
 

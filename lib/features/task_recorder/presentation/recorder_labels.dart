@@ -18,6 +18,7 @@ import '../../workspace/presentation/screens/roles_screen_labels.dart'
     show permissionLabel;
 import '../../workspace/presentation/feature_names.dart';
 import '../domain/action_registry.dart';
+import '../domain/step_values.dart';
 import '../domain/task_recording.dart';
 import 'ui_labels.g.dart';
 
@@ -337,6 +338,17 @@ String recordingTranscript(AppLocalizations? l10n, TaskRecording recording) {
     out.write('${step.seq}. ${text.title}');
     if (text.detail != null) out.write(' — ${text.detail}');
     out.writeln();
+    // What was entered or chosen, when the recording captured it.
+    for (final e in step.values.entries.entries) {
+      final shown = valueText(
+        e.value,
+        redacted: (n) =>
+            l10n?.taskExportValueRedacted(n) ?? 'not kept ($n characters)',
+        on: l10n?.taskExportValueOn ?? 'on',
+        off: l10n?.taskExportValueOff ?? 'off',
+      );
+      out.writeln('   ${e.key}: $shown');
+    }
   }
   out.writeln();
   out.writeln(

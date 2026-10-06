@@ -28592,11 +28592,23 @@ abstract class AppLocalizations {
   /// **'no'**
   String get taskExportValueNo;
 
+  /// No description provided for @taskExportValueOff.
+  ///
+  /// In en, this message translates to:
+  /// **'off'**
+  String get taskExportValueOff;
+
   /// #1866 task export (Word document): ValueOffline
   ///
   /// In en, this message translates to:
   /// **'no connection'**
   String get taskExportValueOffline;
+
+  /// No description provided for @taskExportValueOn.
+  ///
+  /// In en, this message translates to:
+  /// **'on'**
+  String get taskExportValueOn;
 
   /// #1866 task export (Word document): ValueOnce
   ///
@@ -28657,6 +28669,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'a quota'**
   String get taskExportValueQuota;
+
+  /// No description provided for @taskExportValueRedacted.
+  ///
+  /// In en, this message translates to:
+  /// **'not kept ({length} characters)'**
+  String taskExportValueRedacted(int length);
 
   /// #1866 task export (Word document): ValueRoom
   ///
@@ -29084,6 +29102,18 @@ abstract class AppLocalizations {
   /// **'Add a note'**
   String get taskRecorderAddNote;
 
+  /// No description provided for @taskRecorderCaptureValues.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture values (for issue reports)'**
+  String get taskRecorderCaptureValues;
+
+  /// No description provided for @taskRecorderCaptureValuesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Also keeps what you type and choose — text, numbers, dates, switches — so a developer can reproduce the problem from the file. Passwords, payment details, e-mail addresses, phone numbers and other personal contact data are never kept. Share the file only with people who should see what you entered.'**
+  String get taskRecorderCaptureValuesHint;
+
   /// #1865 task recorder: taskRecorderCompletenessComplete
   ///
   /// In en, this message translates to:
@@ -29185,6 +29215,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What the file will contain'**
   String get taskRecorderExportPreview;
+
+  /// No description provided for @taskRecorderExportValuesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It holds what was typed and chosen during the recording. Check it before sharing, and share it only with people who should see that.'**
+  String get taskRecorderExportValuesBody;
+
+  /// No description provided for @taskRecorderExportValuesConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Save anyway'**
+  String get taskRecorderExportValuesConfirm;
+
+  /// No description provided for @taskRecorderExportValuesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This recording contains values'**
+  String get taskRecorderExportValuesTitle;
 
   /// #1865 task recorder: taskRecorderFieldAccessories
   ///
@@ -29899,6 +29947,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'not recorded'**
   String get taskRecorderValueWithheld;
+
+  /// No description provided for @taskRecorderValuesOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Values are being captured'**
+  String get taskRecorderValuesOn;
 
   /// Task wizard: taskWizardAddGuide
   ///

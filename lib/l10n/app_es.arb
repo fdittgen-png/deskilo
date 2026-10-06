@@ -10600,7 +10600,9 @@
   "taskExportValueList": "lista",
   "taskExportValueMorning": "mañana",
   "taskExportValueNo": "no",
+  "taskExportValueOff": "desactivado",
   "taskExportValueOffline": "sin conexión",
+  "taskExportValueOn": "activado",
   "taskExportValueOnce": "una vez",
   "taskExportValueOtherMember": "otro miembro",
   "taskExportValueOtherPlace": "otro tipo de puesto",
@@ -10611,6 +10613,14 @@
   "taskExportValuePlan": "plano",
   "taskExportValuePolicy": "una regla de reserva",
   "taskExportValueQuota": "una cuota",
+  "taskExportValueRedacted": "no guardado ({length} caracteres)",
+  "@taskExportValueRedacted": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
   "taskExportValueRoom": "una sala",
   "taskExportValueSelf": "yo",
   "taskExportValueSeries": "como serie",
@@ -10682,6 +10692,8 @@
   "taskRecorderActionUiTap": "Tocó",
   "taskRecorderActionViewDetails": "Abrió la reserva",
   "taskRecorderAddNote": "Añadir una nota",
+  "taskRecorderCaptureValues": "Capturar valores (para informes de problemas)",
+  "taskRecorderCaptureValuesHint": "También guarda lo que escribes y eliges — texto, números, fechas, interruptores — para que un desarrollador pueda reproducir el problema con el archivo. Nunca se guardan contraseñas, datos de pago, correos electrónicos, teléfonos ni otros datos de contacto personales. Comparte el archivo solo con quien deba ver lo que introdujiste.",
   "taskRecorderCompletenessComplete": "Completa",
   "taskRecorderCompletenessInterrupted": "Interrumpida",
   "taskRecorderCompletenessPartial": "Parcial",
@@ -10699,6 +10711,9 @@
   "taskRecorderExport": "Exportar un archivo",
   "taskRecorderExportPackage": "Exportar un paquete de tarea",
   "taskRecorderExportPreview": "Lo que contendrá el archivo",
+  "taskRecorderExportValuesBody": "Contiene lo que se escribió y eligió durante la grabación. Revísala antes de compartirla y compártela solo con quien deba verlo.",
+  "taskRecorderExportValuesConfirm": "Guardar de todos modos",
+  "taskRecorderExportValuesTitle": "Esta grabación contiene valores",
   "taskRecorderFieldAccessories": "accesorios",
   "taskRecorderFieldCheckIn": "registro de llegada",
   "taskRecorderFieldForWhom": "para quién",
@@ -10818,6 +10833,7 @@
   "taskRecorderValueTomorrow": "mañana",
   "taskRecorderValueWeek": "semana",
   "taskRecorderValueWithheld": "no grabado",
+  "taskRecorderValuesOn": "Se están capturando valores",
   "taskWizardAddGuide": "Añadir una guía",
   "@taskWizardAddGuide": {
     "description": "Task wizard: taskWizardAddGuide"

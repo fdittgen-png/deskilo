@@ -138,5 +138,15 @@
   "taskExportIllustrationNotApproved": "Illustration non incluse : elle n'a pas été approuvée.",
   "taskExportLimitRecreated": "Les illustrations sont recréées à partir des faits sûrs de l'enregistrement, avec des noms de places inventés ; ce ne sont pas des captures de l'écran.",
   "taskExportStale": "Le storyboard correspond à une autre version de cet enregistrement. Relisez-le avant d'exporter.",
-  "taskExportWordButton": "Exporter en document Word"
+  "taskExportWordButton": "Exporter en document Word",
+  "taskExportValueRedacted": "non conservé ({length} caractères)",
+  "@taskExportValueRedacted": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportValueOn": "activé",
+  "taskExportValueOff": "désactivé"
 }

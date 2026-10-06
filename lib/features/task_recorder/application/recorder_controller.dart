@@ -45,6 +45,7 @@ import '../../../core/trace/trace_logger.dart';
 import '../domain/action_registry.dart';
 import '../domain/recording_sink.dart';
 import '../domain/safe_payload.dart';
+import '../domain/step_values.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart' show encodeStep;
 
@@ -89,6 +90,7 @@ class RecorderController {
   int _bytes = 0;
   int _nextOp = 1;
   String? _title;
+  bool _captureValues = false;
   List<Prerequisite> _prerequisites = const [];
   final List<RecordedStep> _steps = [];
   final List<RecordingSegment> _segments = [];
@@ -104,6 +106,10 @@ class RecorderController {
     stepCount: _steps.length,
     endReason: _endReason,
   );
+
+  /// Whether the recording that is live keeps the typed values of what the
+  /// person enters or chooses — their choice at the start, never a default.
+  bool get capturesValues => _captureValues && _live;
 
   /// #2142 — whether the newest step is a command still waiting for its
   /// result: a screen's own seam asked first, so the generic layer keeps
@@ -124,6 +130,7 @@ class RecorderController {
           segments: _segments,
           steps: _steps,
           endReason: _endReason,
+          capturesValues: _captureValues,
         );
 
   /// Starts a new recording in [scope]. Only ever called from an
@@ -133,6 +140,7 @@ class RecorderController {
     required RecorderScope scope,
     String? title,
     List<Prerequisite> prerequisites = const [],
+    bool captureValues = false,
   }) async {
     if (_live) return false;
     final kept = _validPrerequisites(prerequisites);
@@ -147,6 +155,7 @@ class RecorderController {
           contractVersion: registry.contractVersion,
           title: cleanTitle,
           prerequisites: kept,
+          captureValues: captureValues,
         ),
       );
     } catch (e, st) {
@@ -172,6 +181,7 @@ class RecorderController {
     _bytes = 0;
     _nextOp = 1;
     _title = cleanTitle;
+    _captureValues = captureValues;
     _prerequisites = kept;
     _steps.clear();
     const first = RecordingSegment(index: 0, startMs: 0);
@@ -248,6 +258,7 @@ class RecorderController {
     String actionId, {
     String? target,
     Map<String, Object?> payload = const {},
+    StepValues values = StepValues.none,
   }) => _guard(() {
     if (_state != RecorderState.recording) return;
     final spec = registry.action(actionId);
@@ -260,6 +271,8 @@ class RecorderController {
         ? target
         : null;
     final safe = SafePayload.minimize(spec.payloadFields, payload);
+    // Values are kept only by a recording that was started to capture them.
+    final kept = _captureValues ? values : StepValues.none;
     final last = _steps.lastOrNull;
     final now = _elapsed();
     if (last != null &&
@@ -267,10 +280,14 @@ class RecorderController {
         last.action == spec.id &&
         last.target == safeTarget &&
         last.segment == _segments.last.index) {
-      // A field committed again is one field change; an identical
+      // A field committed again is one field change — unless it now holds
+      // another value, which is a change worth its own step; an identical
       // tap inside the window is one tap.
-      if (spec.kind == ActionKind.fieldCommit) return;
-      if (last.payload == safe && now - last.elapsedMs <= dedupeWindowMs) {
+      if (spec.kind == ActionKind.fieldCommit && last.values == kept) return;
+      if (spec.kind != ActionKind.fieldCommit &&
+          last.payload == safe &&
+          last.values == kept &&
+          now - last.elapsedMs <= dedupeWindowMs) {
         return;
       }
     }
@@ -285,6 +302,7 @@ class RecorderController {
         actionVersion: spec.version,
         target: safeTarget,
         payload: safe,
+        values: kept,
       ),
     );
   });
@@ -295,6 +313,7 @@ class RecorderController {
     String actionId, {
     String? target,
     Map<String, Object?> payload = const {},
+    StepValues values = StepValues.none,
   }) {
     OperationToken? token;
     _guard(() {
@@ -315,6 +334,7 @@ class RecorderController {
               ? target
               : null,
           payload: SafePayload.minimize(spec.payloadFields, payload),
+          values: _captureValues ? values : StepValues.none,
           op: op,
           state: ObservationState.attempted,
         ),

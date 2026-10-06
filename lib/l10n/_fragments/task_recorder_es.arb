@@ -230,5 +230,11 @@
   "taskRecorderValueCreated": "creado",
   "taskRecorderValueEdited": "editado",
   "taskRecorderValueRenamed": "renombrado",
-  "taskRecorderTargetDefaultRule": "la regla predeterminada"
+  "taskRecorderTargetDefaultRule": "la regla predeterminada",
+  "taskRecorderCaptureValues": "Capturar valores (para informes de problemas)",
+  "taskRecorderCaptureValuesHint": "También guarda lo que escribes y eliges — texto, números, fechas, interruptores — para que un desarrollador pueda reproducir el problema con el archivo. Nunca se guardan contraseñas, datos de pago, correos electrónicos, teléfonos ni otros datos de contacto personales. Comparte el archivo solo con quien deba ver lo que introdujiste.",
+  "taskRecorderValuesOn": "Se están capturando valores",
+  "taskRecorderExportValuesTitle": "Esta grabación contiene valores",
+  "taskRecorderExportValuesBody": "Contiene lo que se escribió y eligió durante la grabación. Revísala antes de compartirla y compártela solo con quien deba verlo.",
+  "taskRecorderExportValuesConfirm": "Guardar de todos modos"
 }
