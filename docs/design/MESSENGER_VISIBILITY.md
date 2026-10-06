@@ -78,3 +78,25 @@ Follow-ups (each its own issue): message requests and blocks; a public-profile
 tier for V5 with an explicit publish step; the external-workspace tier for
 connected installations; porting pin / mute / archive / search from the legacy
 workspace conversation list into the Me inbox, then deleting that list.
+
+## 6. Conversations: levels and what may be shared
+
+A conversation is classified by WHO is in it, and that decides what its messages
+may carry. The rule is enforced in the database on every insert (migration 0381),
+so sending, forwarding and any future path obey it.
+
+| Level | Who is in it | Text, emoji, quote, forward | References (reservation, space, invoice, payment, alert) |
+|---|---|---|---|
+| L1 — one workspace | everyone belongs to the same workspace (direct or group) | yes | yes, to THAT workspace |
+| L2 — shared workspace | two people (or more, later) with a workspace in common | yes | only to a workspace every participant belongs to |
+| L3 — no workspace in common | people with no common workspace | yes | **never** |
+| Inquiry | an outside person and a space's hosts | yes | **never** |
+| Workspace broadcast | the whole workspace | yes | only that workspace's own |
+
+What a person shares is what they choose to attach: a reference carries a label
+the sender sees and confirms in the picker; nothing is attached automatically, and
+opening a reference still goes through that workspace's own permissions.
+
+Group operations (create, rename, add and remove people, admins, leave) follow the
+level: a workspace group is managed by workspace rules; groups across workspaces
+(L2/L3) are text-only and need their own server model (tracked separately).
