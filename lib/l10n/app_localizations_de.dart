@@ -6163,6 +6163,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get guideHostGoToPage => 'Zur Seite';
+
+  @override
   String get guideHostInstruction =>
       'Lesen Sie dies und markieren Sie es als erledigt.';
 

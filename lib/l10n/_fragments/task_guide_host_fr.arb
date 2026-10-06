@@ -62,5 +62,6 @@
         "type": "int"
       }
     }
-  }
+  },
+  "guideHostGoToPage": "Aller à la page"
 }

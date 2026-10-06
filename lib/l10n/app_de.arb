@@ -4132,6 +4132,7 @@
   "guideHostDone": "Erledigt",
   "guideHostFillField": "Füllen Sie das hervorgehobene Feld aus und verlassen Sie es.",
   "guideHostFillLabel": "Füllen Sie „{label}“ aus und verlassen Sie dann das Feld.",
+  "guideHostGoToPage": "Zur Seite",
   "guideHostInstruction": "Lesen Sie dies und markieren Sie es als erledigt.",
   "guideHostManual": "Erledigen Sie diesen Schritt selbst und markieren Sie ihn als erledigt.",
   "guideHostManualProtected": "Dieser Teil findet auf einem geschützten Bildschirm statt ({category}). Erledigen Sie ihn selbst und markieren Sie ihn als erledigt.",

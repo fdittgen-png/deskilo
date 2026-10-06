@@ -4132,6 +4132,7 @@
   "guideHostDone": "Fait",
   "guideHostFillField": "Remplissez le champ mis en évidence, puis quittez-le.",
   "guideHostFillLabel": "Remplissez « {label} », puis quittez le champ.",
+  "guideHostGoToPage": "Aller à la page",
   "guideHostInstruction": "Lisez ceci, puis marquez-le comme fait.",
   "guideHostManual": "Faites cette étape vous-même, puis marquez-la comme faite.",
   "guideHostManualProtected": "Cette partie se passe sur un écran protégé ({category}). Faites-la vous-même, puis marquez-la comme faite.",
