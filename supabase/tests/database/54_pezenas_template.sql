@@ -560,6 +560,13 @@ $$;
 
 select pg_temp.fixture_plan();
 
+-- The rehearsal books on 2026-10-05…08, which the calendar has since left
+-- behind; a booking in the past is refused by default, and this test is
+-- about the whole-space rules, so that one rule is off for the fixture.
+update public.workspaces
+   set booking_rules = booking_rules || '{"allow_past_bookings": true}'::jsonb
+ where id = pg_temp.ws();
+
 select throws_ok(
   pg_temp.book('d2', date '2026-10-05'),
   'level booking is not enabled',
