@@ -47,7 +47,7 @@ select set_config('t.thread',(select id::text from public.account_conversations 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000302a2","role":"authenticated"}',true);
 set local role authenticated;
 select throws_ok(format('select public.my_account_messages(%L::uuid)',current_setting('t.thread')),'P0001','conversation unavailable','workspace admin cannot read other accounts private discussion');
-select is(jsonb_array_length(public.my_account_conversations()),1,'admin lists only their own held request, not other account threads');
+select is(jsonb_array_length(public.my_account_conversations()),0,'admin cannot list other account threads');
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000302a1","role":"authenticated"}',true);
 select is(jsonb_array_length(public.my_account_messages(current_setting('t.thread')::uuid)),1,'recipient sees the actual message');
 select lives_ok($$select public.set_contact_availability(false)$$,'recipient withdraws global availability');
