@@ -34,9 +34,14 @@ abstract class NavigationStyleStore {
   Future<void> write(String? style);
 }
 
+/// The hamburger menu is the default everywhere: a device that never chose
+/// reads [NavigationStyle.menu]; a stored choice (classic or menu) wins.
 class PrefsNavigationStyleStore extends PrefsStringStore
     implements NavigationStyleStore {
   const PrefsNavigationStyleStore() : super('navigation_style');
+
+  @override
+  Future<String?> read() async => await super.read() ?? NavigationStyle.menu.wire;
 }
 
 @Riverpod(keepAlive: true)
@@ -50,18 +55,21 @@ NavigationStyleStore navigationStyleStore(Ref ref) =>
 @Riverpod(keepAlive: true)
 bool platformIsWeb(Ref ref) => kIsWeb;
 
-/// The user's navigation override; null means "what this platform gets
-/// by default" (the bar on native, the menu on the web). Applied
-/// instantly — the shell watches it.
+/// The user's navigation choice. A device that never chose gets the menu
+/// (see [PrefsNavigationStyleStore]); the classic bar is one tap away in
+/// Settings. Applied instantly — the shell watches it.
 @Riverpod(keepAlive: true)
 class NavigationStyleController extends _$NavigationStyleController {
   @override
   Future<NavigationStyle?> build() async =>
       NavigationStyle.fromWire(await ref.watch(navigationStyleStoreProvider).read());
 
+  /// [style] null removes the stored choice: back to the default, the menu.
   Future<void> set(NavigationStyle? style) async {
-    state = AsyncData(style);
     await ref.read(navigationStyleStoreProvider).write(style?.wire);
+    state = AsyncData(
+      NavigationStyle.fromWire(await ref.read(navigationStyleStoreProvider).read()),
+    );
   }
 }
 
