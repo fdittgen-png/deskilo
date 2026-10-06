@@ -203,7 +203,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(MeMessagesTab), findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('me-tab-me')));
+    await tester.tap(find.byKey(const ValueKey('me-profile-settings')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('me-visibility-card')), findsOneWidget);
 

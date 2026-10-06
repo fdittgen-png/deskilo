@@ -28,8 +28,6 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     'image_url',
     'plan_url',
     'plans',
-    'latitude',
-    'longitude',
   ];
   final _controllers = {
     for (final field in _fields) field: TextEditingController(),
@@ -250,8 +248,6 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       'image_url': l?.portalImage ?? 'Identity image URL',
       'plan_url': l?.portalPublicPlan ?? 'Public floor plan',
       'plans': l?.portalPlans ?? 'Plans and prices',
-      'latitude': l?.portalLatitude ?? 'Latitude',
-      'longitude': l?.portalLongitude ?? 'Longitude',
     };
     return Scaffold(
       appBar: AppBar(

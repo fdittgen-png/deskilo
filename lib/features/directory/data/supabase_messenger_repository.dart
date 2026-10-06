@@ -37,6 +37,21 @@ class SupabaseMessengerRepository implements MessengerRepository {
       ];
 
   @override
+  Future<List<MessageRequest>> myMessageRequests() async => [
+        for (final row in await _rpcRows('my_message_requests'))
+          ?MessageRequest.fromRow(row),
+      ];
+
+  @override
+  Future<void> respondToMessageRequest(
+    String conversation, {
+    required bool accept,
+  }) => _rpc<dynamic>('respond_to_message_request', {
+    'p_conversation': conversation,
+    'p_accept': accept,
+  });
+
+  @override
   Future<List<BlockedAccount>> myBlocks() async => [
         for (final row in await _rpcRows('my_blocks'))
           ?BlockedAccount.fromRow(row),

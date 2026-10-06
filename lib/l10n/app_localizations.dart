@@ -18774,6 +18774,18 @@ abstract class AppLocalizations {
   /// **'Read by'**
   String get messageReadBy;
 
+  /// No description provided for @messageRequestsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'These people are outside the ones you chose to be reachable by. They are not told what you decide.'**
+  String get messageRequestsHint;
+
+  /// No description provided for @messageRequestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Message requests'**
+  String get messageRequestsTitle;
+
   /// #687 - messaging search
   ///
   /// In en, this message translates to:
@@ -19145,6 +19157,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Too many at once. Please wait a minute.'**
   String get messengerRefusedLimit;
+
+  /// No description provided for @messengerRefusedRequestPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first message is waiting for an answer.'**
+  String get messengerRefusedRequestPending;
 
   /// Refusal: the message is longer than the target conversation allows (#1824)
   ///
@@ -25843,6 +25861,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add line'**
   String get reportVisualAddLine;
+
+  /// No description provided for @requestAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get requestAccept;
+
+  /// No description provided for @requestBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get requestBlock;
+
+  /// No description provided for @requestIgnore.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignore'**
+  String get requestIgnore;
 
   /// #1643 calendar file: reservationCalendarFileButton
   ///

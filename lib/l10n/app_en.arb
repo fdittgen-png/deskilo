@@ -12593,6 +12593,8 @@
   "@messageReadBy": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "messageRequestsHint": "These people are outside the ones you chose to be reachable by. They are not told what you decide.",
+  "messageRequestsTitle": "Message requests",
   "messageSearchGroups": "Groups",
   "@messageSearchGroups": {
     "description": "#687 - messaging search"
@@ -12951,6 +12953,7 @@
   "@messengerRefusedLimit": {
     "description": "Refusal: too many forwards or messages in a short time (#1824)"
   },
+  "messengerRefusedRequestPending": "Your first message is waiting for an answer.",
   "messengerRefusedTooLong": "This message is too long for that conversation.",
   "@messengerRefusedTooLong": {
     "description": "Refusal: the message is longer than the target conversation allows (#1824)"
@@ -17109,6 +17112,9 @@
   "@reportVisualAddLine": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "requestAccept": "Accept",
+  "requestBlock": "Block",
+  "requestIgnore": "Ignore",
   "reservationCalendarFileButton": "Save calendar file",
   "@reservationCalendarFileButton": {
     "description": "#1643 calendar file: reservationCalendarFileButton"

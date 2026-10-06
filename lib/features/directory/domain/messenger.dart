@@ -446,7 +446,8 @@ enum MessengerRefusal {
   tooLong,
   closed,
   unavailable,
-  limit;
+  limit,
+  requestPending;
 
   static MessengerRefusal? of(String? serverMessage) =>
       switch (serverMessage?.trim()) {
@@ -459,8 +460,36 @@ enum MessengerRefusal {
         'workspace not published' ||
         'inquiry unavailable' => unavailable,
         'message limit reached' => limit,
+        'request pending' => requestPending,
         _ => null,
       };
+}
+
+/// A first message from someone outside my reachability, held until I answer
+/// (0388): accept, ignore or block.
+class MessageRequest {
+  const MessageRequest({
+    required this.conversationId,
+    required this.userId,
+    this.name = '',
+    this.body = '',
+  });
+  final String conversationId;
+  final String userId;
+  final String name;
+  final String body;
+
+  static MessageRequest? fromRow(Map<String, dynamic> row) {
+    final id = row['conversation_id'];
+    final user = row['user_id'];
+    if (id is! String || user is! String) return null;
+    return MessageRequest(
+      conversationId: id,
+      userId: user,
+      name: _text(row['name']),
+      body: _text(row['body']),
+    );
+  }
 }
 
 /// An account I blocked (0387): neither of us sees or reaches the other.

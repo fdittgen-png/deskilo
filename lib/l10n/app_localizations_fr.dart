@@ -11030,6 +11030,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get messageReadBy => 'Lu par';
 
   @override
+  String get messageRequestsHint =>
+      'Ces personnes sont hors de celles par lesquelles vous avez choisi d\'être joignable. Elles ne sont pas informées de votre décision.';
+
+  @override
+  String get messageRequestsTitle => 'Demandes de message';
+
+  @override
   String get messageSearchGroups => 'Groupes';
 
   @override
@@ -11264,6 +11271,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get messengerRefusedLimit =>
       'Trop d’un coup. Veuillez patienter une minute.';
+
+  @override
+  String get messengerRefusedRequestPending =>
+      'Votre premier message attend une réponse.';
 
   @override
   String get messengerRefusedTooLong =>
@@ -15090,6 +15101,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reportVisualAddLine => 'Ajouter une ligne';
+
+  @override
+  String get requestAccept => 'Accepter';
+
+  @override
+  String get requestBlock => 'Bloquer';
+
+  @override
+  String get requestIgnore => 'Ignorer';
 
   @override
   String get reservationCalendarFileButton =>

@@ -6798,6 +6798,8 @@
   "@messageReadBy": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "messageRequestsHint": "Ces personnes sont hors de celles par lesquelles vous avez choisi d'être joignable. Elles ne sont pas informées de votre décision.",
+  "messageRequestsTitle": "Demandes de message",
   "messageSearchGroups": "Groupes",
   "@messageSearchGroups": {
     "description": "#687 - messaging search"
@@ -6914,6 +6916,7 @@
   "messengerRefusedClosed": "Cette demande est close.",
   "messengerRefusedForwardingOff": "Cet espace n’autorise pas le transfert de ses messages.",
   "messengerRefusedLimit": "Trop d’un coup. Veuillez patienter une minute.",
+  "messengerRefusedRequestPending": "Votre premier message attend une réponse.",
   "messengerRefusedTooLong": "Ce message est trop long pour cette conversation.",
   "messengerRefusedUnavailable": "Cet espace n’accepte pas de demandes pour le moment.",
   "messengerStar": "Mettre en favori",
@@ -9628,6 +9631,9 @@
   "@reportVisualAddLine": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "requestAccept": "Accepter",
+  "requestBlock": "Bloquer",
+  "requestIgnore": "Ignorer",
   "reservationCalendarFileButton": "Enregistrer le fichier calendrier",
   "@reservationCalendarFileButton": {
     "description": "#1643 calendar file: reservationCalendarFileButton"
