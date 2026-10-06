@@ -69,9 +69,13 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
 
   bool get _isInquiry => widget.kind.isInquiry;
 
+  late final ActiveWorkspaceId _activeNotifier =
+      ref.read(activeWorkspaceIdProvider.notifier);
+
   @override
   void initState() {
     super.initState();
+    _activeNotifier;
     Future.microtask(_markRead);
     _refresh = Timer.periodic(_poll, (_) {
       if (mounted && _contextId.isNotEmpty && _earlier.isEmpty) {
@@ -87,7 +91,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     // The workspace chosen for references is only lent to this thread.
     final previous = _previousWorkspace;
     if (_switchedWorkspace && previous != null) {
-      final notifier = ref.read(activeWorkspaceIdProvider.notifier);
+      final notifier = _activeNotifier;
       Future.microtask(() => notifier.select(previous));
     }
     super.dispose();
