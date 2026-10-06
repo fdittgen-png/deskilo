@@ -230,5 +230,11 @@
   "taskRecorderValueCreated": "creato",
   "taskRecorderValueEdited": "modificato",
   "taskRecorderValueRenamed": "rinominato",
-  "taskRecorderTargetDefaultRule": "la regola predefinita"
+  "taskRecorderTargetDefaultRule": "la regola predefinita",
+  "taskRecorderCaptureValues": "Cattura i valori (per le segnalazioni)",
+  "taskRecorderCaptureValuesHint": "Conserva anche ciò che scrivi e scegli — testo, numeri, date, interruttori — così uno sviluppatore può riprodurre il problema dal file. Password, dati di pagamento, indirizzi e-mail, numeri di telefono e altri dati di contatto personali non vengono mai conservati. Condividi il file solo con chi può vedere ciò che hai inserito.",
+  "taskRecorderValuesOn": "I valori vengono catturati",
+  "taskRecorderExportValuesTitle": "Questa registrazione contiene valori",
+  "taskRecorderExportValuesBody": "Contiene ciò che è stato scritto e scelto durante la registrazione. Controllala prima di condividerla e condividila solo con chi può vederlo.",
+  "taskRecorderExportValuesConfirm": "Salva comunque"
 }

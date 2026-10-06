@@ -1,6 +1,6 @@
 {
   "format": "deskilo.task-recording",
-  "schema_version": 2,
+  "schema_version": 99,
   "action_contract_version": 1,
   "platform": "android",
   "kind": "source",

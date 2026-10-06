@@ -11,6 +11,7 @@
 import '../../../l10n/app_localizations.dart';
 import '../domain/action_registry.dart';
 import '../domain/safe_payload.dart';
+import '../domain/step_values.dart';
 import '../domain/task_recording.dart';
 
 /// Localized labels for one recording export.
@@ -82,6 +83,21 @@ class TaskExportLabels {
   List<String> details(SafePayload payload) => [
     for (final e in payload.toJson().entries)
       l.taskExportDetail(field(e.key), value(e.key, e.value)),
+  ];
+
+  /// The values a step carries as "name: value" lines (none when the
+  /// recording did not capture values).
+  List<String> valueLines(StepValues values) => [
+    for (final e in values.entries.entries)
+      l.taskExportDetail(
+        e.key,
+        valueText(
+          e.value,
+          redacted: l.taskExportValueRedacted,
+          on: l.taskExportValueOn,
+          off: l.taskExportValueOff,
+        ),
+      ),
   ];
 
   String action(RecordedStep s) => switch (s.action) {

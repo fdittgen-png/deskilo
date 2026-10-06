@@ -16699,7 +16699,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskExportValueNo => 'nein';
 
   @override
+  String get taskExportValueOff => 'aus';
+
+  @override
   String get taskExportValueOffline => 'keine Verbindung';
+
+  @override
+  String get taskExportValueOn => 'an';
 
   @override
   String get taskExportValueOnce => 'einmalig';
@@ -16730,6 +16736,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskExportValueQuota => 'ein Kontingent';
+
+  @override
+  String taskExportValueRedacted(int length) {
+    return 'nicht gespeichert ($length Zeichen)';
+  }
 
   @override
   String get taskExportValueRoom => 'ein Raum';
@@ -16974,6 +16985,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderAddNote => 'Notiz hinzufügen';
 
   @override
+  String get taskRecorderCaptureValues => 'Werte erfassen (für Fehlerberichte)';
+
+  @override
+  String get taskRecorderCaptureValuesHint =>
+      'Behält zusätzlich, was du eingibst und auswählst — Text, Zahlen, Daten, Schalter —, damit ein Entwickler das Problem anhand der Datei nachstellen kann. Passwörter, Zahlungsdaten, E-Mail-Adressen, Telefonnummern und andere persönliche Kontaktdaten werden nie gespeichert. Gib die Datei nur an Personen weiter, die sehen dürfen, was du eingegeben hast.';
+
+  @override
   String get taskRecorderCompletenessComplete => 'Vollständig';
 
   @override
@@ -17031,6 +17049,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskRecorderExportPreview => 'Was die Datei enthalten wird';
+
+  @override
+  String get taskRecorderExportValuesBody =>
+      'Sie enthält, was während der Aufnahme eingegeben und ausgewählt wurde. Prüfe sie vor dem Teilen und gib sie nur an Personen weiter, die das sehen dürfen.';
+
+  @override
+  String get taskRecorderExportValuesConfirm => 'Trotzdem speichern';
+
+  @override
+  String get taskRecorderExportValuesTitle => 'Diese Aufnahme enthält Werte';
 
   @override
   String get taskRecorderFieldAccessories => 'Zubehör';
@@ -17410,6 +17438,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskRecorderValueWithheld => 'nicht aufgezeichnet';
+
+  @override
+  String get taskRecorderValuesOn => 'Werte werden erfasst';
 
   @override
   String get taskWizardAddGuide => 'Anleitung hinzufügen';

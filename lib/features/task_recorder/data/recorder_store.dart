@@ -145,6 +145,7 @@ class RecorderStore implements RecordingSink {
       'contract': header.contractVersion,
       'platform': header.platform.wire,
       if (header.title != null) 'title': header.title,
+      if (header.captureValues) 'values': true,
       'prerequisites': [
         for (final p in header.prerequisites)
           {'id': p.id, if (p.value != null) 'value': p.value},
@@ -320,11 +321,12 @@ StoredRecording recoverRecordingLog(
   }
   final json = {
     'format': taskRecordingFormat,
-    'schema_version': taskRecordingSchemaVersion,
+    'schema_version': head['values'] == true ? 2 : 1,
     'action_contract_version': head['contract'],
     'platform': head['platform'],
     'kind': RecordingKind.source.wire,
     if (head['title'] != null) 'title': head['title'],
+    if (head['values'] == true) 'values_mode': 'captured',
     'prerequisites': head['prerequisites'],
     'segments': segments,
     'steps': steps,

@@ -55,7 +55,10 @@ List<StepNarrative> narrate(
 ) {
   switch (s.kind) {
     case StepKind.action:
-      return (labels.action(s), labels.details(s.payload));
+      return (
+        labels.action(s),
+        [...labels.details(s.payload), ...labels.valueLines(s.values)],
+      );
     case StepKind.observation:
       return (
         l.taskExportResult(labels.outcome(s.outcome)),

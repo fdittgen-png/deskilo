@@ -7,7 +7,7 @@ a token, a request id or a value somebody typed.
 
 | File | Format id | Version | Reader |
 |---|---|---|---|
-| `*.json` (a recording) | `deskilo.task-recording` | `schema_version` 1 | `lib/features/task_recorder/domain/task_recording_codec.dart` (`decodeRecording`) |
+| `*.json` (a recording) | `deskilo.task-recording` | `schema_version` 1, or 2 when it captures values | `lib/features/task_recorder/domain/task_recording_codec.dart` (`decodeRecording`) |
 | `*.deskilo-task.zip` (a task package) | `deskilo.task-package` | `package_version` 1, or 2 with a storyboard | `lib/features/task_recorder/package/task_package.dart` (`readTaskPackage`) |
 | `deskilo-guide.json` (a guide draft) | `deskilo.task-guide` | `schema_version` 2 (reads 1) | `lib/features/task_recorder/guide/guide_codec.dart` (`decodeGuideText`) |
 
@@ -31,6 +31,36 @@ never more.
 Unknown keys are refused anywhere. A step naming an action this build
 does not know is kept as an `unrecorded` step without payload, and the
 recording reads as a transcript only (not runnable).
+
+### Values (schema 2, opt-in)
+
+A recording keeps no value by default: a field change says which field,
+never what was typed. A person may start a recording with **Capture values
+(for issue reports)** — a switch on the start screen, off every time, never
+remembered. Such a recording is written as `schema_version` 2 with
+`"values_mode": "captured"`, and its action steps may carry `values`: a map
+of short names to **typed** values (`domain/step_values.dart`):
+
+| JSON | Kind |
+|---|---|
+| a string (≤ 240 characters, no control characters) | text |
+| a number | number (a numeric field's text, a quantity) |
+| `true` / `false` | the state a switch, checkbox or chip was left in |
+| `{"redacted": true, "length": n}` | something was entered and is **not kept** |
+
+What is read: a text field's text when it loses focus; a switch, checkbox or
+chip's state after its tap; the day, period, resource and window of the
+booking seams. What is **never** kept, with the switch on or off: a field that
+hides what is typed (`obscureText`), and a field whose autofill hint, key or
+label says it holds a credential, a payment identifier, a tax or national
+identifier, or personal contact data (e-mail, phone, address, a person's own
+name) — it is recorded as `redacted` with only its length. A file cannot
+carry more than the recorder would have kept: `values` without
+`values_mode`, `values_mode` in a schema-1 file, a value of another shape, or
+more than 16 entries per step is refused (`unsafePayload` / `inconsistent`).
+An older build refuses a schema-2 file by design. Saving or sharing a
+recording that holds values asks for a confirmation first; the readable
+transcript and the Word document list the values. See ADR 0037.
 
 Limits (`RecordingLimits`): 500 steps, 512 KiB, 30 minutes, 50
 segments, 8 prerequisites, title 120 and note 500 characters.
@@ -138,7 +168,7 @@ On every screen that is neither protected nor the recorder's own,
 |---|---|---|
 | `ui.open_screen` | the route PATTERN (`/member/:memberId`), and its bar's title when that is one of the app's messages | the path, an id, a query |
 | `ui.tap` | the control's string key — a literal of the source, or its pattern with the dynamic parts as `{}` (`perm-{}-{}`) — and the first app message it shows | coordinates, text that is not an app message |
-| `ui.commit_field` | the field's key and its decoration's label, when the field loses focus | the value (it is never read) |
+| `ui.commit_field` | the field's key and its decoration's label, when the field loses focus | the value — unless the recording captures values (schema 2), and then never a hidden or sensitive field's |
 | `ui.command` (+ result) | the literal `message:` of its `runGuarded` call; the result is done, pending (held for validation), refused (with its category) or unknown | the error text, the data sent |
 | `ui.open_window` / `ui.close_window` | — (a dialog, sheet or menu on the root navigator) | its contents |
 

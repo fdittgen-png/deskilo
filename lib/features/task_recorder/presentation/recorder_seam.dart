@@ -27,6 +27,7 @@ import '../application/booking_observation.dart' show errorObservation;
 import '../application/recorder_controller.dart';
 import '../guide/guide_session.dart';
 import '../domain/action_registry.dart';
+import '../domain/step_values.dart';
 import '../providers/recorder_providers.dart';
 
 RecorderController? _live(WidgetRef ref) =>
@@ -40,9 +41,15 @@ void recordTaskStep(
   String actionId, {
   String? target,
   Map<String, Object?> payload = const {},
+  StepValues values = StepValues.none,
 }) {
   try {
-    _live(ref)?.record(actionId, target: target, payload: payload);
+    _live(ref)?.record(
+      actionId,
+      target: target,
+      payload: payload,
+      values: values,
+    );
   } catch (e, st) {
     TraceLogger.instance.warn('recorder', 'step not recorded', stackTrace: st);
   }
@@ -102,6 +109,7 @@ TaskAttempt? recordTaskAttempt(
   String actionId, {
   String? target,
   Map<String, Object?> payload = const {},
+  StepValues values = StepValues.none,
 }) {
   GuideEventSink? guide;
   Object? guideToken;
@@ -117,6 +125,7 @@ TaskAttempt? recordTaskAttempt(
       actionId,
       target: target,
       payload: payload,
+      values: values,
     );
     if (token == null && guide == null) return null;
     return TaskAttempt._(token == null ? null : controller, token, guide, guideToken);

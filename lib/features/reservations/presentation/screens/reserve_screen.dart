@@ -63,7 +63,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../workspace/domain/next_open_day.dart';
 import '../../providers/browsed_level.dart';
 import '../../../task_recorder/application/booking_observation.dart'
-    show dateRelation, periodOf;
+    show dateRelation, dayValues, periodOf, periodValues, resourceValues;
 import '../../../task_recorder/domain/action_registry.dart'
     show RecorderActions;
 import '../../../task_recorder/presentation/recorder_seam.dart';
@@ -302,7 +302,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     final dayOnly = DateTime(day.year, day.month, day.day);
     if (DateUtils.isSameDay(dayOnly, _selectedDay)) return;
     recordTaskStep(ref, RecorderActions.selectDate, // #1865
-        payload: {'date_relation': dateRelation(dayOnly, _today)});
+        payload: {'date_relation': dateRelation(dayOnly, _today)},
+        values: dayValues(dayOnly));
     final granularity = _granularity;
     final window = _effectiveWindow(granularity);
     DateTime? from;
@@ -383,7 +384,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       _windowEnd = end;
     });
     recordTaskStep(ref, RecorderActions.selectPeriod, // #1865
-        payload: const {'period': 'custom'});
+        payload: const {'period': 'custom'}, values: periodValues(from, end));
   }
 
   Future<void> _pickTo() async {
@@ -784,7 +785,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                           'period': periodOf(
                               startHour: WorkspaceTime.wall(w.start).hour,
                               length: w.end.difference(w.start)),
-                        });
+                        },
+                        values: periodValues(w.start, w.end));
                   },
                   from: window.start,
                   to: window.end,
@@ -957,7 +959,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 dayOpen: dayOpen,
                   onSeatTap: (seat) {
                     recordTaskStep(ref, RecorderActions.selectResource, // #1865
-                        payload: const {'view_mode': 'list', 'resource_kind': 'desk'});
+                        payload: const {'view_mode': 'list', 'resource_kind': 'desk'},
+                        values: resourceValues(seat.name));
                     onSeatTap(plan, seat, reservations, window);
                   },
                   onSpaceTap: listSpaceTap(context, ref,
@@ -980,7 +983,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 ),
                 onSeatTap: (seat) {
                   recordTaskStep(ref, RecorderActions.selectResource, // #1865
-                      payload: const {'view_mode': 'plan', 'resource_kind': 'desk'});
+                      payload: const {'view_mode': 'plan', 'resource_kind': 'desk'},
+                      values: resourceValues(seat.name));
                   onSeatTap(plan, seat, reservations, window);
                 },
               ),

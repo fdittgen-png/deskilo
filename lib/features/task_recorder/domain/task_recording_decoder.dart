@@ -12,6 +12,7 @@ const _rootKeys = {
   'kind',
   'source_digest',
   'title',
+  'values_mode',
   'prerequisites',
   'segments',
   'steps',
@@ -29,6 +30,7 @@ const _stepKeys = {
   'action_version',
   'target',
   'payload',
+  'values',
   'op',
   'state',
   'outcome',
@@ -45,6 +47,7 @@ typedef _Build = RecordedStep Function({
   int? actionVersion,
   String? target,
   SafePayload payload,
+  StepValues values,
   String? op,
   ObservationState? state,
   String? outcome,
@@ -64,6 +67,9 @@ class _Decoder {
   final ActionRegistry registry;
   final RecordingLimits limits;
   final issues = <RecordingIssue>[];
+
+  // Whether the file says it captures values (its header decides, before any step).
+  bool _captures = false;
 
   bool get _failed => issues.any((i) => i.fatal);
 
@@ -157,6 +163,14 @@ class _Decoder {
       _fatal(RecordingIssueCode.badValue, 'completeness');
     }
 
+    // "Capture values" is the person's choice, written in the header: only
+    // a schema-2 file may carry it, and only such a file may carry values.
+    final mode = json['values_mode'];
+    if (mode != null && (mode != 'captured' || schema < 2)) {
+      _fatal(RecordingIssueCode.badValue, 'values_mode');
+    }
+    _captures = mode == 'captured';
+
     final prerequisites = _prerequisites(json['prerequisites']);
     final segments = _segments(json['segments']);
     if (_failed) return _refused();
@@ -174,6 +188,7 @@ class _Decoder {
       steps: steps!,
       endReason: endReason,
       completeness: completeness,
+      capturesValues: _captures,
     );
     // A recording may say less than it earned, never more.
     final earned = completenessOf(endReason, recording.steps);
@@ -340,6 +355,7 @@ class _Decoder {
       int? actionVersion,
       String? target,
       SafePayload payload = SafePayload.empty,
+      StepValues values = StepValues.none,
       String? op,
       ObservationState? state,
       String? outcome,
@@ -355,6 +371,7 @@ class _Decoder {
       actionVersion: actionVersion,
       target: target,
       payload: payload,
+      values: values,
       op: op,
       state: state,
       outcome: outcome,
@@ -434,6 +451,7 @@ class _Decoder {
       'action_version',
       'target',
       'payload',
+      'values',
       'op',
       'state',
     })) {
@@ -477,6 +495,17 @@ class _Decoder {
       _fatal(RecordingIssueCode.unsafePayload, '$path.payload');
       return null;
     }
+    // Values: only in a recording that captures them, and only what the
+    // recorder itself would have kept.
+    final values = StepValues.parse(raw['values']);
+    if (values == null) {
+      _fatal(RecordingIssueCode.unsafePayload, '$path.values');
+      return null;
+    }
+    if (!values.isEmpty && !_captures) {
+      _fatal(RecordingIssueCode.inconsistent, '$path.values');
+      return null;
+    }
     final op = raw['op'];
     final state = raw['state'];
     if (spec.isCommand) {
@@ -498,6 +527,7 @@ class _Decoder {
       actionVersion: spec.version,
       target: target as String?,
       payload: payload,
+      values: values,
       op: op as String?,
       state: spec.isCommand ? ObservationState.attempted : null,
     );

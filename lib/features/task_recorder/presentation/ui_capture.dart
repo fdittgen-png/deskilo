@@ -35,7 +35,9 @@ import '../../../l10n/app_localizations.dart';
 import '../application/booking_observation.dart' show errorObservation;
 import '../application/recorder_controller.dart';
 import '../domain/action_registry.dart';
+import '../domain/step_values.dart';
 import '../guide/guide_session.dart';
+import 'toggle_capture.dart';
 import 'ui_labels.g.dart';
 
 /// The live capture, while the recorder's indicator is mounted.
@@ -197,21 +199,52 @@ class UiCapture implements GuardedCommandWatcher {
       // itself wins, and nothing is noted twice.
       scheduleMicrotask(() {
         if (c.status.stepCount != before) return;
-        c.record(
-          RecorderActions.uiTap,
-          target: tap.target,
-          payload: {'label': ?tap.label},
-        );
+        final toggle = c.capturesValues ? tap.element : null;
+        if (toggle == null || toggleStateOf(toggle) == null) {
+          c.record(
+            RecorderActions.uiTap,
+            target: tap.target,
+            payload: {'label': ?tap.label},
+          );
+          return;
+        }
+        // A switch, a checkbox or a chip: its new state is known once the
+        // frame that applies the tap has been built.
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          try {
+            if (c.status.stepCount != before) return;
+            final on = toggle.mounted ? toggleStateOf(toggle) : null;
+            c.record(
+              RecorderActions.uiTap,
+              target: tap.target,
+              payload: {'label': ?tap.label},
+              values: on == null
+                  ? StepValues.none
+                  : StepValues.of({'checked': on}),
+            );
+          } catch (err, st) {
+            TraceLogger.instance.warn('recorder', 'tap not noted', stackTrace: st);
+          }
+        });
       });
     } catch (err, st) {
       TraceLogger.instance.warn('recorder', 'tap not noted', stackTrace: st);
     }
   }
 
-  ({String target, String? label})? _resolveTap(Offset position, int viewId) {
+  ({String target, String? label, Element? element})? _resolveTap(
+    Offset position,
+    int viewId,
+  ) {
     final result = HitTestResult();
     WidgetsBinding.instance.hitTestInView(result, position, viewId);
-    final element = _tappedElement(result);
+    // A switch, a checkbox or a chip has no tap detector of its own that
+    // this finds; while a recording captures values their tap is noted too,
+    // because their new state is exactly such a value.
+    final element = _tappedElement(result) ??
+        (_recording && controller().capturesValues
+            ? toggleElementAt(result)
+            : null);
     if (element == null) return null;
     final keyed = _keyedAncestor(element);
     final key = keyed?.key;
@@ -219,6 +252,7 @@ class UiCapture implements GuardedCommandWatcher {
     return (
       target: nameOfKey(key),
       label: _labelWithin(keyed?.element ?? element) ?? _labelAbove(element),
+      element: element,
     );
   }
 
@@ -375,10 +409,29 @@ class UiCapture implements GuardedCommandWatcher {
         target: nameOfKey(keyed?.key),
       );
       if (!_recording) return;
-      controller().record(
+      final c = controller();
+      // What was typed — only when the person started this recording to
+      // capture values, and never for a field that hides what is typed or
+      // that holds a secret, a payment or a personal contact (step_values).
+      var values = StepValues.none;
+      if (c.capturesValues) {
+        final key = keyed?.key;
+        values = StepValues.of({
+          'value': valueOfField(
+            field.controller.text,
+            obscure: field.obscureText,
+            hints: field.autofillHints ?? const [],
+            numeric: field.keyboardType.index == TextInputType.number.index,
+            key: key,
+            label: decoration?.labelText ?? decoration?.hintText,
+          ),
+        });
+      }
+      c.record(
         RecorderActions.uiCommitField,
         target: nameOfKey(keyed?.key),
         payload: {'label': ?label},
+        values: values,
       );
     } catch (err, st) {
       TraceLogger.instance.warn('recorder', 'field not noted', stackTrace: st);
