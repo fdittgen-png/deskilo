@@ -10301,6 +10301,8 @@
   "spaceChipTooltip": "Space wechseln",
   "spaceCodesDesc": "Eine druckbare QR-Karte je Platz, Tisch, Büro und Etage — Mitglieder scannen sie zum Reservieren oder Einchecken.",
   "spaceCodesTitle": "Raum-QR-Codes (PDF)",
+  "spaceFavoriteAdd": "Zu den Favoriten hinzufügen",
+  "spaceFavoriteRemove": "Aus den Favoriten entfernen",
   "spaceKindDesk": "Tisch",
   "spaceKindLevel": "Etage",
   "spaceKindOffice": "Büro",
@@ -10310,9 +10312,20 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Nachricht an {name}",
+  "spaceMoveDown": "Nach unten",
+  "spaceMoveUp": "Nach oben",
   "spaceNotBookable": "Dieser Raum ist nicht für Ganzraum-Reservierungen eingerichtet.",
   "spaceNotWholeBookable": "Dieser Bereich ist nicht für Ganzbuchung eingerichtet — die Inhaberin aktiviert dafür „Als Ganzes buchbar“ im Editor.",
+  "spaceOptions": "Optionen für {name}",
+  "@spaceOptions": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "spaceQrSizeLabel": "Größe des QR-Codes",
+  "spaceRatingClear": "Keine Bewertung",
   "spaceScanField": "Code",
   "spaceScanHint": "Kamera auf die Karte eines Platzes, Tischs, Büros oder einer Etage richten — oder den Code eintippen.",
   "spaceScanInvalid": "Kein Raumcode dieses Workspace.",

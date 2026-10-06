@@ -124,7 +124,8 @@ void main() {
       );
       expect(tester.getCenter(find.text('DEV')).dy,
           tester.getCenter(find.text('PROD')).dy);
-      expect(tester.getSize(group).height, lessThan(120));
+      // The row keeps one line of identity beside a 48dp options button.
+      expect(tester.getSize(group).height, lessThan(128));
       // Production is the wide green button on the left, development the
       // narrow orange one at the right.
       final prod = find.byKey(const ValueKey('me-space-ws-2'));

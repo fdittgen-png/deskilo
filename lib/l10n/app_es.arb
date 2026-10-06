@@ -10301,6 +10301,8 @@
   "spaceChipTooltip": "Cambiar de espacio",
   "spaceCodesDesc": "Una tarjeta QR imprimible por puesto, mesa, oficina y planta — los miembros la escanean para reservar o fichar.",
   "spaceCodesTitle": "Códigos QR de espacios (PDF)",
+  "spaceFavoriteAdd": "Añadir a favoritos",
+  "spaceFavoriteRemove": "Quitar de favoritos",
   "spaceKindDesk": "Mesa",
   "spaceKindLevel": "Planta",
   "spaceKindOffice": "Oficina",
@@ -10310,9 +10312,20 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Escribir a {name}",
+  "spaceMoveDown": "Bajar",
+  "spaceMoveUp": "Subir",
   "spaceNotBookable": "Este espacio no está configurado para reservas completas.",
   "spaceNotWholeBookable": "Este espacio no está configurado para reserva completa — el propietario activa \"Reservable como un todo\" en el editor.",
+  "spaceOptions": "Opciones de {name}",
+  "@spaceOptions": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "spaceQrSizeLabel": "Tamaño del código QR",
+  "spaceRatingClear": "Sin valoración",
   "spaceScanField": "Código",
   "spaceScanHint": "Apunta la cámara a la tarjeta de un puesto, mesa, oficina o planta — o escribe su código.",
   "spaceScanInvalid": "No es un código de espacio de este espacio de trabajo.",
