@@ -47,6 +47,10 @@ List<String> tabLabels(WidgetTester tester) => tester
   return (left, right);
 }
 
+/// The bar's own icon — the calendar's Bookings chip draws a seat too.
+Finder inBar(IconData icon) => find.descendant(
+    of: find.byType(ShellBottomBar), matching: find.byIcon(icon));
+
 void main() {
   test('bar metrics are pinned (spec of #207, Sparkilo geometry)', () {
     expect(ShellBarMetrics.barHeight, 64);
@@ -57,22 +61,22 @@ void main() {
     expect(ShellBarMetrics.notchRadius, 56 / 2 + 6);
   });
 
-  testWidgets('four tabs split 2+2 around the raised Reserve button',
+  testWidgets('three tabs split 2+1 around the raised Reserve button (the calendar holds the alerts)',
       (tester) async {
     await pumpApp(tester);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
     final (left, right) = splitAroundButton(tester);
     // #707 — Members is back on the bar, left of Money.
-    expect(left, ['Alerts', 'Calendar']);
-    expect(right, ['Members', 'Money']);
+    expect(left, ['Calendar', 'Members']);
+    expect(right, ['Money']);
   });
 
-  testWidgets('three visible tabs split 2+1 (index halving)', (tester) async {
+  testWidgets('two visible tabs split 1+1 (index halving)', (tester) async {
     await pumpApp(tester, featureFlags: const {'moneyTab': false});
 
     final (left, right) = splitAroundButton(tester);
-    expect(left, ['Alerts', 'Calendar']);
+    expect(left, ['Calendar']);
     expect(right, ['Members']);
   });
 
@@ -100,12 +104,11 @@ void main() {
     expect(find.byIcon(Icons.event_seat), findsOneWidget);
     expect(find.byIcon(Icons.event_seat_outlined), findsNothing);
 
-    // Switching to Messages highlights it and demotes the centre button
-    // (#687 — the first destination is the messaging centre now).
+    // Switching to the Calendar highlights it and demotes the centre button.
     await tester.tap(
       find.descendant(
         of: find.byType(ShellBottomBar),
-        matching: find.text('Alerts'),
+        matching: find.text('Calendar'),
       ),
     );
     await tester.pumpAndSettle();
@@ -115,9 +118,9 @@ void main() {
         .where((t) => t.selected)
         .toList();
     expect(selected, hasLength(1));
-    expect(selected.single.destination.label, 'Alerts');
-    expect(find.byIcon(Icons.event_seat_outlined), findsOneWidget);
-    expect(find.byIcon(Icons.event_seat), findsNothing);
+    expect(selected.single.destination.label, 'Calendar');
+    expect(inBar(Icons.event_seat_outlined), findsOneWidget);
+    expect(inBar(Icons.event_seat), findsNothing);
 
     // And back: the centre button reclaims the indication.
     await tester.tap(find.byTooltip('Reserve'));
@@ -128,7 +131,7 @@ void main() {
           .where((t) => t.selected),
       isEmpty,
     );
-    expect(find.byIcon(Icons.event_seat), findsOneWidget);
+    expect(inBar(Icons.event_seat), findsOneWidget);
   });
 
   testWidgets('tapping Reserve opens the hub with the bar still visible',

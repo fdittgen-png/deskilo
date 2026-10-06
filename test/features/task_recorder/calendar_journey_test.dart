@@ -212,8 +212,9 @@ void main() {
       ),
       hasLength(1),
     );
-    // The alert opens the inbox: a protected screen, one marker.
-    expect(r.steps.last.kind, StepKind.excluded);
+    // The alert opens the calendar's Alerts view in place: the recorded
+    // step is the open_item action itself, with no screen marker.
+    expect(r.steps.last.kind, StepKind.action);
     final text = encodeRecordingText(r);
     for (final secret in ['m-canary', 'e-canary', 'Private title', 'Flo']) {
       expect(text.contains(secret), isFalse, reason: secret);

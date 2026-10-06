@@ -27,11 +27,12 @@ import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
-import '../../../workspace/presentation/screens/inbox_screen.dart';
+import '../../../workspace/presentation/screens/inbox_screen.dart' show InboxFace;
 import '../../../workspace/presentation/widgets/conversation_avatar.dart';
 import '../../../workspace/presentation/widgets/conversation_thread.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/calendar_providers.dart';
+import '../../providers/calendar_view_request.dart';
 import '../../../events/presentation/widgets/calendar_decisions.dart';
 import '../../../task_recorder/application/booking_observation.dart'
     show dateRelation;
@@ -80,6 +81,10 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
 
   Set<CalendarKind>? _kinds;
   String? _memberId;
+
+  /// The calendar is also where alerts and events live: this view shows the
+  /// workspace's alert feed (what used to be the Alerts destination).
+  bool _alerts = false;
 
   DateTime get _today => WorkspaceTime.dateOf(ref.read(clockProvider).now());
 
@@ -186,6 +191,13 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     }
   }
 
+  /// Off the build frame: the request is a provider, the view a setState.
+  void _takeAlertsRequest() => Future.microtask(() {
+        if (!mounted) return;
+        ref.read(calendarAlertsRequestProvider.notifier).consume();
+        setState(() => _alerts = true);
+      });
+
   void _move(String direction, VoidCallback change) {
     recordTaskStep(ref, RecorderActions.calendarMove,
         payload: {'direction': direction}); // #1881 B
@@ -212,8 +224,8 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
           await showValidationTrailSheet(context, eventId: id);
           return;
         }
-        openInbox(ref, InboxTab.alerts);
-        context.go('/messages');
+        // Alerts live in this calendar now: show them here.
+        setState(() => _alerts = true);
       case LedgerLink(:final period):
         // #720 — a payment lands on the Payments face of that month.
         ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.payments);
@@ -253,6 +265,15 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         permissions.contains(WorkspacePermission.viewFinances) ||
             permissions.contains(WorkspacePermission.manageMembers);
     final viewsOn = _viewsOn;
+    // The bell, /events and a tapped alert ask for the Alerts view.
+    ref.listen(calendarAlertsRequestProvider, (_, asked) {
+      if (asked) _takeAlertsRequest();
+    });
+    // A request made before this hub was built (the redirect of /events).
+    if (ref.read(calendarAlertsRequestProvider)) _takeAlertsRequest();
+    final alertsOffered = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.eventsTab);
     final page = ref.watch(calendarItemsProvider(viewsOn ? _viewQuery : _plainQuery));
 
     final chips = CalendarKindChips(
@@ -308,23 +329,44 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       );
     }
 
-    final selector = Column(mainAxisSize: MainAxisSize.min, children: [
-      CalendarViewBar(
+    final viewBar = CalendarViewBar(
         view: _selection.view,
+        alertsAvailable: alertsOffered,
+        alertsSelected: _alerts && alertsOffered,
+        alertsCount: pendingAlertCount(ref),
+        onAlerts: () {
+          recordTaskStep(ref, RecorderActions.calendarSwitchView,
+              payload: {'view_mode': 'alerts'});
+          setState(() => _alerts = true);
+        },
         onView: (CalendarView v) {
           recordTaskStep(ref, RecorderActions.calendarSwitchView,
               payload: {'view_mode': v.name}); // #1881 B
-          setState(() => _selection = _selection.withView(v));
+          setState(() {
+            _alerts = false;
+            _selection = _selection.withView(v);
+          });
         },
         onToday: () =>
             _move('today', () => _selection = _selection.withAnchor(_today)),
-      ),
+      );
+    final selector = Column(mainAxisSize: MainAxisSize.min, children: [
+      viewBar,
       _stepBar(l10n),
       if (_selection.view != CalendarView.agenda) ...[
         _picker(page.value),
         const CalendarLegend(showClosed: true),
       ],
     ]);
+    if (_alerts && alertsOffered) {
+      // The Alerts view: the switcher stays, the alert feed fills the rest.
+      return Scaffold(
+        body: Column(children: [
+          viewBar,
+          const Expanded(child: InboxFace(key: ValueKey('calendar-alerts-view'))),
+        ]),
+      );
+    }
     return Scaffold(
       body: LayoutBuilder(builder: (context, constraints) {
         // #1183 — the split used to be for the views that carry a

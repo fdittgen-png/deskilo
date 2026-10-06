@@ -17,6 +17,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/auth/presentation/screens/auth_screen.dart';
 import '../features/auth/providers/auth_providers.dart';
+import '../features/calendar/providers/calendar_view_request.dart';
 import '../features/calendar/presentation/screens/calendar_branch.dart';
 import '../features/editor/presentation/screens/editor_screen.dart';
 import '../features/members/presentation/screens/directory_screen.dart';
@@ -305,6 +306,14 @@ GoRouter router(Ref ref) {
             routes: [
               GoRoute(
                 path: '/messages',
+                // The calendar hub holds the alerts and events: this path
+                // (a fallback target all over the router) opens it.
+                redirect: (context, state) =>
+                    featureEnabled(WorkspaceFeature.calendarTab) &&
+                            featureEnabled(WorkspaceFeature.calendarHub) &&
+                            featureEnabled(WorkspaceFeature.eventsTab)
+                        ? '/calendar'
+                        : null,
                 // #702 — the inbox: chats, alerts and members, one
                 // destination. `MessagesScreen` is now its first face.
                 builder: (context, state) => const InboxScreen(),
@@ -440,14 +449,19 @@ GoRouter router(Ref ref) {
         path: '/events',
         redirect: (context, state) {
           if (!featureEnabled(WorkspaceFeature.eventsTab)) return '/messages';
+          // The calendar hub holds the alerts: ask it for its Alerts view.
+          final inCalendar = featureEnabled(WorkspaceFeature.calendarTab) &&
+              featureEnabled(WorkspaceFeature.calendarHub);
           // Off the routing frame: setting a provider mid-redirect is
           // modifying state while the tree is building.
           Future.microtask(
-            () => ref
-                .read(inboxTabControllerProvider.notifier)
-                .show(InboxTab.alerts),
+            () => inCalendar
+                ? ref.read(calendarAlertsRequestProvider.notifier).request()
+                : ref
+                    .read(inboxTabControllerProvider.notifier)
+                    .show(InboxTab.alerts),
           );
-          return '/messages';
+          return inCalendar ? '/calendar' : '/messages';
         },
       ),
       // #687 — /plan outlived its tab. Kept as a REDIRECT rather than

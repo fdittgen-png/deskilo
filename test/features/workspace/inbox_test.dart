@@ -43,12 +43,12 @@ Future<FakeWorkspaceRepository> pumpInbox(
     ),
   );
   await tester.pumpAndSettle();
-  await tapNavIcon(tester, Icons.forum_outlined);
+  await openAlertsTab(tester);
   return workspace;
 }
 
 void main() {
-  testWidgets('the workspace inbox is the alerts face with one door to the '
+  testWidgets('the alerts (the calendar Alerts view) carry one door to the '
       'messenger in Me', (tester) async {
     await pumpInbox(tester);
 

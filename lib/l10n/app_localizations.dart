@@ -4381,6 +4381,12 @@ abstract class AppLocalizations {
   /// **'Agenda'**
   String get calendarViewAgenda;
 
+  /// No description provided for @calendarViewAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts'**
+  String get calendarViewAlerts;
+
   /// No description provided for @calendarViewMonth.
   ///
   /// In en, this message translates to:

@@ -1555,6 +1555,7 @@
   "calendarValidationRefused": "Rifiutato: {what}",
   "calendarValidationValidated": "Convalidato: {what}",
   "calendarViewAgenda": "Agenda",
+  "calendarViewAlerts": "Avvisi",
   "calendarViewMonth": "Mese",
   "calendarViewWeek": "Settimana",
   "calendarWeekEmpty": "Niente questa settimana.",
