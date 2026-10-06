@@ -4041,6 +4041,10 @@
   "@groupAnnounceOnlyHint": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "groupCreate": "Gruppe erstellen",
+  "@groupCreate": {
+    "description": "messenger: creating a group of people"
+  },
   "groupDescription": "Beschreibung",
   "@groupDescription": {
     "description": "workspace groups: rename, description, admins, info"
@@ -4056,6 +4060,30 @@
   "groupMakeAdmin": "Zum Admin machen",
   "@groupMakeAdmin": {
     "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupName": "Gruppenname",
+  "@groupName": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNeedsPeople": "Fügen Sie mindestens eine Person hinzu.",
+  "@groupNeedsPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNew": "Neue Gruppe",
+  "@groupNew": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNewTitle": "Neue Gruppe",
+  "@groupNewTitle": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPeople": "Personen der Gruppe",
+  "@groupPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPickPeople": "Personen hinzufügen",
+  "@groupPickPeople": {
+    "description": "messenger: creating a group of people"
   },
   "groupPostingClosed": "In dieser Gruppe dürfen nur Admins schreiben.",
   "@groupPostingClosed": {
@@ -6791,6 +6819,10 @@
     "description": "#687 - messaging centre"
   },
   "messengerContextAccount": "Von Person zu Person",
+  "messengerContextGroup": "Gruppe",
+  "@messengerContextGroup": {
+    "description": "messenger: a group of people"
+  },
   "messengerContextInquiryIn": "Anfrage an {space}",
   "messengerContextInquiryOut": "Ihre Anfrage an {space}",
   "messengerContextSpace": "In {space}",

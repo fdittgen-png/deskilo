@@ -10392,6 +10392,12 @@ abstract class AppLocalizations {
   /// **'Everyone reads; only admins write.'**
   String get groupAnnounceOnlyHint;
 
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'Create group'**
+  String get groupCreate;
+
   /// workspace groups: rename, description, admins, info
   ///
   /// In en, this message translates to:
@@ -10415,6 +10421,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Make admin'**
   String get groupMakeAdmin;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'Group name'**
+  String get groupName;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one person.'**
+  String get groupNeedsPeople;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'New group'**
+  String get groupNew;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'New group'**
+  String get groupNewTitle;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'People in the group'**
+  String get groupPeople;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'Add people'**
+  String get groupPickPeople;
 
   /// workspace groups: rename, description, admins, info
   ///
@@ -18737,6 +18779,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Person to person'**
   String get messengerContextAccount;
+
+  /// messenger: a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get messengerContextGroup;
 
   /// Context label of an inquiry an outside person wrote to a space the reader hosts (#1824)
   ///

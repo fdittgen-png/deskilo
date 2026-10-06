@@ -125,10 +125,12 @@ void main() {
       'member_note',
       'account_message',
       'inquiry_message',
+      'group_message',
     ]);
     expect(MessageContextKind.values.map((k) => k.targetWire), [
       'conversation',
       'account_conversation',
+      'account_group',
       'inquiry',
       'inquiry',
     ]);

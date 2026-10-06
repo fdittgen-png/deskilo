@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'account_group.dart';
 import 'group_details.dart';
 import 'message_marks.dart';
 import 'messenger.dart';
@@ -39,6 +40,31 @@ abstract interface class MessengerRepository {
   Future<bool> toggleStar(MessageKind kind, String messageId);
   Future<void> edit(MessageKind kind, String messageId, String body);
   Future<List<StarredMessage>> starred();
+
+  // ── groups of people (0384) ───────────────────────────────────────
+  Future<String> createGroup(String title, List<String> users);
+  Future<AccountGroupInfo> groupInfo(String group);
+  Future<List<GroupMember>> groupMembers(String group);
+  Future<void> addGroupMember(String group, String user);
+  Future<void> removeGroupMember(String group, String user);
+  Future<void> leaveGroup(String group);
+  Future<void> setGroupMeta(
+    String group, {
+    String? title,
+    String? description,
+    bool? announceOnly,
+  });
+  Future<void> setGroupAdmin(String group, String user, {required bool admin});
+  Future<List<ContextMessage>> groupMessages(
+    String group, {
+    DateTime? beforeAt,
+    String? beforeId,
+  });
+  Future<String> sendGroupMessage(String group, String body);
+  Future<void> markGroupRead(String group);
+  Future<void> deleteGroupMessage(String message);
+  Future<GroupReach> groupReach(String message);
+  Future<List<({String id, String name})>> groupSharedWorkspaces(String group);
 
   // ── running a group (0383) ────────────────────────────────────────
   Future<ConversationDetails> conversationDetails(String conversationId);

@@ -123,6 +123,8 @@ void main() {
       // 0380: my_finance_overview() projects my own invoices and reminders
       // without the stamp.
       'FinanceInvoice', 'FinanceReminder',
+      // 0384: account_group_details() projects a group without its stamp.
+      'AccountGroupInfo',
     };
     final missing = <String>{};
     for (final file in _dartFiles('lib')) {

@@ -226,6 +226,8 @@ const Map<String, int> _baseline = {
   // 720→779 (2026-09-06): #945 sites.
   'lib/features/workspace/presentation/widgets/conversation_thread.dart': 646, // 2026-10-06 messenger: reactions, stars, edits, group posting rules and @mentions are read and drawn here — the thread is the one place that knows the roster and the marks.
 
+  'lib/features/directory/presentation/messenger/context_thread_screen.dart': 620, // 2026-10-06 groups of people: the thread asks which workspaces every member shares, closes posting in an announcement-only group and opens the group sheet.
+
   'lib/features/workspace/presentation/member_admin_actions.dart': 780, // 2026-09-11 #1061 779→780: one import, the letter builders' new home
   // #828 (2026-09-02): the expense_repartition flag and repository methods.
   // 2026-09-04 #864: one more flag. This file is the feature

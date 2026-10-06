@@ -2,6 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/providers/auth_providers.dart';
+import '../domain/account_group.dart';
 import '../domain/group_details.dart';
 import '../domain/message_marks.dart';
 import 'messenger_providers.dart';
@@ -41,3 +42,19 @@ final conversationDetailsProvider = FutureProvider.autoDispose
 final messageReachProvider =
     FutureProvider.autoDispose.family<MessageReach, String>((ref, id) =>
         ref.watch(messengerActionsProvider()).messageReach(id));
+
+/// A group of people: its title, description, switches and my role (0384).
+final accountGroupInfoProvider =
+    FutureProvider.autoDispose.family<AccountGroupInfo, String>((ref, id) =>
+        ref.watch(messengerActionsProvider()).groupInfo(id));
+
+final accountGroupMembersProvider =
+    FutureProvider.autoDispose.family<List<GroupMember>, String>((ref, id) =>
+        ref.watch(messengerActionsProvider()).groupMembers(id));
+
+/// The workspaces every member of the group belongs to — where its
+/// references may point (empty: none can be shared).
+final groupSharedWorkspacesProvider = FutureProvider.autoDispose
+    .family<List<({String id, String name})>, String>((ref, id) => ref
+        .watch(messengerRepositoryProvider())
+        .groupSharedWorkspaces(id));

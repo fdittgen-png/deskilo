@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/server_error.dart';
+import '../domain/account_group.dart';
 import '../domain/group_details.dart';
 import '../domain/message_marks.dart';
 import '../domain/messenger.dart';
@@ -27,6 +28,34 @@ class MessengerActions {
     }
     return text;
   }
+
+  // ── groups of people (0384) ─────────────────────────────────────────
+  Future<String> createGroup(String title, List<String> users) {
+    final name = title.trim();
+    if (name.isEmpty || name.length > 60) throw ArgumentError('invalid group name');
+    if (users.isEmpty) throw ArgumentError('people required');
+    return repository.createGroup(name, users);
+  }
+
+  Future<AccountGroupInfo> groupInfo(String group) => repository.groupInfo(group);
+  Future<List<GroupMember>> groupMembers(String group) =>
+      repository.groupMembers(group);
+  Future<void> addGroupMember(String group, String user) =>
+      repository.addGroupMember(group, user);
+  Future<void> removeGroupMember(String group, String user) =>
+      repository.removeGroupMember(group, user);
+  Future<void> leaveGroup(String group) => repository.leaveGroup(group);
+  Future<void> setGroupMeta(String group,
+          {String? title, String? description, bool? announceOnly}) =>
+      repository.setGroupMeta(group,
+          title: title?.trim(),
+          description: description?.trim(),
+          announceOnly: announceOnly);
+  Future<void> setGroupAdmin(String group, String user, {required bool admin}) =>
+      repository.setGroupAdmin(group, user, admin: admin);
+  Future<void> deleteGroupMessage(String message) =>
+      repository.deleteGroupMessage(message);
+  Future<GroupReach> groupReach(String message) => repository.groupReach(message);
 
   // ── running a group (0383) ──────────────────────────────────────────
   Future<ConversationDetails> conversationDetails(String id) =>
@@ -83,6 +112,10 @@ class MessengerActions {
         if (contextId.isEmpty) throw ArgumentError('conversation required');
         await repository.sendSpaceMessage(contextId, text);
         return contextId;
+      case MessageContextKind.accountGroup:
+        if (contextId.isEmpty) throw ArgumentError('group required');
+        await repository.sendGroupMessage(contextId, text);
+        return contextId;
     }
   }
 
@@ -109,6 +142,11 @@ class MessengerActions {
       before == null
           ? repository.spaceMessages(contextId)
           : Future.value(const <ContextMessage>[]),
+    MessageContextKind.accountGroup => repository.groupMessages(
+      contextId,
+      beforeAt: before?.createdAt,
+      beforeId: before?.id,
+    ),
   };
 
   /// Opening a conversation reads it: the other side's receipt moves and
@@ -123,6 +161,7 @@ class MessengerActions {
         MessageContextKind.space => repository.markSpaceConversationRead(
           contextId,
         ),
+        MessageContextKind.accountGroup => repository.markGroupRead(contextId),
       };
 
   /// Forwards [message] into [target]. Refused here already when the

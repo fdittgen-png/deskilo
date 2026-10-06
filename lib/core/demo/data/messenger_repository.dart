@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../features/directory/domain/account_group.dart';
 import '../../../features/directory/domain/group_details.dart';
 import '../../../features/directory/domain/message_marks.dart';
 import '../../../features/directory/domain/messenger.dart';
@@ -22,6 +23,124 @@ class FakeMessengerRepository implements MessengerRepository {
 
   /// `my_inbox` rows.
   final inboxRows = <Map<String, dynamic>>[];
+
+  // ── groups of people (0384) ─────────────────────────────────────────
+  final groups = <String, AccountGroupInfo>{};
+  final groupRoster = <String, List<GroupMember>>{};
+  final groupLog = <String>[];
+  final groupSharedIn = <String, List<({String id, String name})>>{};
+  GroupReach? groupReachResult;
+
+  @override
+  Future<String> createGroup(String title, List<String> users) async {
+    _check();
+    final id = 'g-${groups.length + 1}';
+    groups[id] = AccountGroupInfo(
+        id: id, title: title, memberCount: users.length + 1, iAmAdmin: true);
+    groupRoster[id] = [
+      const GroupMember(userId: 'me', name: 'Me', isAdmin: true),
+      for (final u in users) GroupMember(userId: u, name: u),
+    ];
+    groupLog.add('create:$title');
+    return id;
+  }
+
+  @override
+  Future<AccountGroupInfo> groupInfo(String group) async {
+    _check();
+    return groups[group] ?? AccountGroupInfo(id: group, title: '');
+  }
+
+  @override
+  Future<List<GroupMember>> groupMembers(String group) async {
+    _check();
+    return groupRoster[group] ?? const [];
+  }
+
+  @override
+  Future<void> addGroupMember(String group, String user) async {
+    _check();
+    groupLog.add('add:$user');
+    groupRoster[group] = [...?groupRoster[group], GroupMember(userId: user, name: user)];
+  }
+
+  @override
+  Future<void> removeGroupMember(String group, String user) async {
+    _check();
+    groupLog.add('remove:$user');
+    groupRoster[group] = [for (final m in groupRoster[group] ?? <GroupMember>[]) if (m.userId != user) m];
+  }
+
+  @override
+  Future<void> leaveGroup(String group) async {
+    _check();
+    groupLog.add('leave');
+  }
+
+  @override
+  Future<void> setGroupMeta(String group,
+      {String? title, String? description, bool? announceOnly}) async {
+    _check();
+    final g = groups[group] ?? AccountGroupInfo(id: group, title: '');
+    groups[group] = AccountGroupInfo(
+      id: group,
+      title: title ?? g.title,
+      description: description ?? g.description,
+      announceOnly: announceOnly ?? g.announceOnly,
+      memberCount: g.memberCount,
+      iAmAdmin: g.iAmAdmin,
+    );
+    groupLog.add('meta');
+  }
+
+  @override
+  Future<void> setGroupAdmin(String group, String user, {required bool admin}) async {
+    _check();
+    groupLog.add('admin:$user:$admin');
+  }
+
+  @override
+  Future<List<ContextMessage>> groupMessages(String group,
+      {DateTime? beforeAt, String? beforeId}) async {
+    _check();
+    return threads[threadKey(MessageContextKind.accountGroup, group)] ?? const [];
+  }
+
+  @override
+  Future<String> sendGroupMessage(String group, String body) async {
+    _check();
+    final key = threadKey(MessageContextKind.accountGroup, group);
+    final id = 'gm-${++_ids}';
+    threads[key] = [
+      _message(body, kind: MessageKind.groupMessage),
+      ...?threads[key],
+    ];
+    return id;
+  }
+
+  @override
+  Future<void> markGroupRead(String group) async {
+    _check();
+    reads.add(group);
+  }
+
+  @override
+  Future<void> deleteGroupMessage(String message) async {
+    _check();
+    deleted.add(message);
+  }
+
+  @override
+  Future<GroupReach> groupReach(String message) async {
+    _check();
+    return groupReachResult ?? const GroupReach();
+  }
+
+  @override
+  Future<List<({String id, String name})>> groupSharedWorkspaces(String group) async {
+    _check();
+    return groupSharedIn[group] ?? const [];
+  }
 
   final details = <String, ConversationDetails>{};
   final adminChanges = <({String conversation, String member, bool admin})>[];

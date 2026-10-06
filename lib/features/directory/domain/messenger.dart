@@ -23,6 +23,9 @@ enum MessageContextKind {
   /// Person to person, across servers.
   account('account'),
 
+  /// A group of people (0384): members of one workspace, several or none.
+  accountGroup('account_group'),
+
   /// An inquiry I wrote to a space.
   inquiryOut('inquiry_out'),
 
@@ -40,6 +43,7 @@ enum MessageContextKind {
   MessageKind get messageKind => switch (this) {
     space => MessageKind.memberNote,
     account => MessageKind.accountMessage,
+    accountGroup => MessageKind.groupMessage,
     inquiryOut || inquiryIn => MessageKind.inquiryMessage,
   };
 
@@ -47,6 +51,7 @@ enum MessageContextKind {
   String get targetWire => switch (this) {
     space => 'conversation',
     account => 'account_conversation',
+    accountGroup => 'account_group',
     inquiryOut || inquiryIn => 'inquiry',
   };
 
@@ -57,7 +62,8 @@ enum MessageContextKind {
 enum MessageKind {
   memberNote('member_note'),
   accountMessage('account_message'),
-  inquiryMessage('inquiry_message');
+  inquiryMessage('inquiry_message'),
+  groupMessage('group_message');
 
   const MessageKind(this.wire);
   final String wire;

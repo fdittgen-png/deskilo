@@ -6027,6 +6027,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get groupAnnounceOnlyHint => 'Todos leen; solo los admins escriben.';
 
   @override
+  String get groupCreate => 'Crear grupo';
+
+  @override
   String get groupDescription => 'Descripción';
 
   @override
@@ -6037,6 +6040,24 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get groupMakeAdmin => 'Hacer admin';
+
+  @override
+  String get groupName => 'Nombre del grupo';
+
+  @override
+  String get groupNeedsPeople => 'Añada al menos una persona.';
+
+  @override
+  String get groupNew => 'Nuevo grupo';
+
+  @override
+  String get groupNewTitle => 'Nuevo grupo';
+
+  @override
+  String get groupPeople => 'Personas del grupo';
+
+  @override
+  String get groupPickPeople => 'Añadir personas';
 
   @override
   String get groupPostingClosed =>
@@ -10974,6 +10995,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get messengerContextAccount => 'De persona a persona';
+
+  @override
+  String get messengerContextGroup => 'Grupo';
 
   @override
   String messengerContextInquiryIn(String space) {

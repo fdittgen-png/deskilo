@@ -15,6 +15,7 @@ import '../../providers/inbox_marks.dart';
 import '../../providers/messenger_providers.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import 'context_labels.dart';
+import 'create_group_screen.dart';
 import 'open_inbox_entry.dart';
 import 'starred_messages_screen.dart';
 
@@ -124,6 +125,16 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                     _searching = !_searching;
                     if (!_searching) _query = '';
                   }),
+                ),
+                TextButton.icon(
+                  key: const ValueKey('unified-inbox-new-group'),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const CreateGroupScreen(),
+                    ),
+                  ),
+                  icon: const Icon(Icons.group_add_outlined, size: 18),
+                  label: Text(l10n?.groupNew ?? 'New group'),
                 ),
                 FilledButton.tonalIcon(
                   key: const ValueKey('unified-inbox-people'),

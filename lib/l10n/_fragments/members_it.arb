@@ -401,5 +401,37 @@
   "composerMention": "Menziona qualcuno",
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
+  },
+  "messengerContextGroup": "Gruppo",
+  "@messengerContextGroup": {
+    "description": "messenger: a group of people"
+  },
+  "groupNew": "Nuovo gruppo",
+  "@groupNew": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNewTitle": "Nuovo gruppo",
+  "@groupNewTitle": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupName": "Nome del gruppo",
+  "@groupName": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupCreate": "Crea gruppo",
+  "@groupCreate": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPeople": "Persone del gruppo",
+  "@groupPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPickPeople": "Aggiungi persone",
+  "@groupPickPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNeedsPeople": "Aggiungi almeno una persona.",
+  "@groupNeedsPeople": {
+    "description": "messenger: creating a group of people"
   }
 }

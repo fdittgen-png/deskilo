@@ -8,6 +8,8 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/message_marks.dart';
 import '../../providers/inbox_marks.dart';
 import '../../providers/message_marks_providers.dart';
+import 'account_group_reach_sheet.dart';
+import 'account_group_sheet.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/capture/capture_shield.dart';
@@ -72,6 +74,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   bool _autoChosen = false;
 
   bool get _isInquiry => widget.kind.isInquiry;
+  bool get _isGroup => widget.kind == MessageContextKind.accountGroup;
 
   late final ActiveWorkspaceId _activeNotifier =
       ref.read(activeWorkspaceIdProvider.notifier);
@@ -194,7 +197,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   }
 
   Future<void> _recordCapture() async {
-    if (_contextId.isEmpty) return;
+    if (_contextId.isEmpty || _isGroup) return;
     try {
       await ref
           .read(messengerActionsProvider(source: widget.source))
@@ -240,9 +243,13 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
       errorText:
           l10n?.portalActionFailed ??
           'Could not save this change. Please try again.',
-      action: () => ref
-          .read(messengerActionsProvider(source: widget.source))
-          .deleteAccountMessage(message),
+      action: () => _isGroup
+          ? ref
+              .read(messengerActionsProvider(source: widget.source))
+              .deleteGroupMessage(message.id)
+          : ref
+              .read(messengerActionsProvider(source: widget.source))
+              .deleteAccountMessage(message),
     );
     if (!ok || !mounted) return;
     setState(_earlier.clear);
@@ -302,8 +309,13 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
         starred: marks.starred.contains(message.id),
         myReaction: marks.myReaction(message.id),
       ),
-      onDelete: message.mine && message.kind == MessageKind.accountMessage
+      onDelete: message.mine &&
+              (message.kind == MessageKind.accountMessage ||
+                  message.kind == MessageKind.groupMessage)
           ? () => _delete(message)
+          : null,
+      onInfo: message.mine && _isGroup
+          ? () => showGroupReachSheet(context, ref, messageId: message.id)
           : null,
       onChanged: () {
         ref
@@ -363,6 +375,16 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           ],
         ),
         actions: [
+          if (_isGroup && _contextId.isNotEmpty)
+            IconButton(
+              key: const ValueKey('agroup-info'),
+              tooltip: l10n?.conversationGroupInfo ?? 'Group',
+              icon: const Icon(Icons.groups_outlined),
+              onPressed: () async {
+                final left = await showAccountGroupSheet(context, _contextId);
+                if (left == true && context.mounted) Navigator.of(context).pop();
+              },
+            ),
           if (_isInquiry && _contextId.isNotEmpty)
             IconButton(
               key: const ValueKey('inquiry-close'),
@@ -454,9 +476,31 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     final active = ref.watch(activeWorkspaceIdProvider).value;
     // References only point at a workspace both people belong to (0381).
     final peer = widget.peer;
-    final shared = peer == null || widget.kind.isInquiry
-        ? const <({String id, String name})>[]
-        : (ref.watch(sharedWorkspacesProvider(peer)).value ?? const []);
+    final shared = _isGroup
+        ? (ref.watch(groupSharedWorkspacesProvider(_contextId)).value ?? const [])
+        : peer == null || widget.kind.isInquiry
+            ? const <({String id, String name})>[]
+            : (ref.watch(sharedWorkspacesProvider(peer)).value ?? const []);
+    // An announcement-only group: only admins post.
+    final groupInfo = _isGroup && _contextId.isNotEmpty
+        ? ref.watch(accountGroupInfoProvider(_contextId)).value
+        : null;
+    final postingClosed =
+        groupInfo != null && groupInfo.announceOnly && !groupInfo.iAmAdmin;
+    if (postingClosed) {
+      return SafeArea(
+        top: false,
+        child: Padding(
+          padding: AppSpacing.mdAll,
+          child: Text(
+            l10n?.groupPostingClosed ?? 'Only admins can post in this group.',
+            key: const ValueKey('group-posting-closed'),
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
+      );
+    }
     final sharedIds = {for (final w in shared) w.id};
     final workspaces = [for (final w in mine) if (sharedIds.contains(w.id)) w];
     final canRef = workspaces.isNotEmpty;
