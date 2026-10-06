@@ -10872,6 +10872,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get messengerCopied => 'Copied.';
+
+  @override
+  String get messengerCopy => 'Copy text';
+
+  @override
   String get messengerDelete => 'Delete message';
 
   @override
@@ -10883,6 +10889,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get messengerDelivered => 'Delivered';
+
+  @override
+  String get messengerEdit => 'Edit';
+
+  @override
+  String get messengerEditFailed =>
+      'This message could not be edited — the 15 minutes may be over.';
+
+  @override
+  String get messengerEditTitle => 'Edit message';
+
+  @override
+  String get messengerEditWindow =>
+      'A message can be corrected for 15 minutes after it was sent.';
+
+  @override
+  String get messengerEdited => 'edited';
 
   @override
   String messengerEventCaptured(String actor) {
@@ -10998,6 +11021,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get messengerMessageActions => 'Message actions';
 
   @override
+  String get messengerNoStarred => 'No starred message yet.';
+
+  @override
   String messengerNoticeCaptured(String actor) {
     return '$actor took a screenshot of this conversation.';
   }
@@ -11039,7 +11065,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'This space does not take inquiries right now.';
 
   @override
+  String get messengerStar => 'Star';
+
+  @override
+  String get messengerStarred => 'Starred';
+
+  @override
   String get messengerUnlock => 'Allow forwarding';
+
+  @override
+  String get messengerUnstar => 'Remove star';
 
   @override
   String get messengerWriteToHosts => 'Write to the hosts';

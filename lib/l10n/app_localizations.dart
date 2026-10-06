@@ -18672,6 +18672,18 @@ abstract class AppLocalizations {
   /// **'In {space}'**
   String messengerContextSpace(String space);
 
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Copied.'**
+  String get messengerCopied;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Copy text'**
+  String get messengerCopy;
+
   /// Action: delete my own account message (#1824)
   ///
   /// In en, this message translates to:
@@ -18695,6 +18707,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delivered'**
   String get messengerDelivered;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get messengerEdit;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'This message could not be edited — the 15 minutes may be over.'**
+  String get messengerEditFailed;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Edit message'**
+  String get messengerEditTitle;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'A message can be corrected for 15 minutes after it was sent.'**
+  String get messengerEditWindow;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'edited'**
+  String get messengerEdited;
 
   /// History line: a screenshot was taken (#1824)
   ///
@@ -18864,6 +18906,12 @@ abstract class AppLocalizations {
   /// **'Message actions'**
   String get messengerMessageActions;
 
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'No starred message yet.'**
+  String get messengerNoStarred;
+
   /// System line in a conversation when someone took a screenshot of it (iOS) (#1824)
   ///
   /// In en, this message translates to:
@@ -18924,11 +18972,29 @@ abstract class AppLocalizations {
   /// **'This space does not take inquiries right now.'**
   String get messengerRefusedUnavailable;
 
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Star'**
+  String get messengerStar;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Starred'**
+  String get messengerStarred;
+
   /// Author action: allow forwarding this message again (#1824)
   ///
   /// In en, this message translates to:
   /// **'Allow forwarding'**
   String get messengerUnlock;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Remove star'**
+  String get messengerUnstar;
 
   /// Button on a published space page, and title of the inquiry sheet (#1824)
   ///

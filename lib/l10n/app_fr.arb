@@ -6738,10 +6738,38 @@
   "messengerContextInquiryIn": "Demande à {space}",
   "messengerContextInquiryOut": "Votre demande à {space}",
   "messengerContextSpace": "Dans {space}",
+  "messengerCopied": "Copié.",
+  "@messengerCopied": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopy": "Copier le texte",
+  "@messengerCopy": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerDelete": "Supprimer le message",
   "messengerDeleteConfirm": "Supprimer ce message pour tous les participants de la conversation ?",
   "messengerDeleted": "Message supprimé.",
   "messengerDelivered": "Distribué",
+  "messengerEdit": "Modifier",
+  "@messengerEdit": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditFailed": "Ce message n’a pas pu être modifié — les 15 minutes sont peut-être écoulées.",
+  "@messengerEditFailed": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditTitle": "Modifier le message",
+  "@messengerEditTitle": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditWindow": "Un message peut être corrigé pendant 15 minutes après son envoi.",
+  "@messengerEditWindow": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdited": "modifié",
+  "@messengerEdited": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerEventCaptured": "Capture d’écran par {actor}",
   "messengerEventDeleted": "Supprimé par {actor}",
   "messengerEventForwarded": "Transféré par {actor} vers {target}",
@@ -6770,6 +6798,10 @@
   "messengerInquirySend": "Envoyer la demande",
   "messengerLock": "Interdire le transfert",
   "messengerMessageActions": "Actions sur le message",
+  "messengerNoStarred": "Aucun message en favori.",
+  "@messengerNoStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerNoticeCaptured": "{actor} a pris une capture d’écran de cette conversation.",
   "messengerNoticeForwarded": "{actor} a transféré un message de cette conversation vers {target}.",
   "messengerNoticeForwardedPrivate": "{actor} a transféré un message de cette conversation vers une conversation personnelle.",
@@ -6780,7 +6812,19 @@
   "messengerRefusedLimit": "Trop d’un coup. Veuillez patienter une minute.",
   "messengerRefusedTooLong": "Ce message est trop long pour cette conversation.",
   "messengerRefusedUnavailable": "Cet espace n’accepte pas de demandes pour le moment.",
+  "messengerStar": "Mettre en favori",
+  "@messengerStar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerStarred": "Favoris",
+  "@messengerStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerUnlock": "Autoriser le transfert",
+  "messengerUnstar": "Retirer des favoris",
+  "@messengerUnstar": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerWriteToHosts": "Écrire aux hôtes",
   "mfaCode": "Code à six chiffres",
   "mfaEnroll": "Scannez ce code avec une application d'authentification, ou saisissez la clé, puis tapez les six chiffres affichés.",

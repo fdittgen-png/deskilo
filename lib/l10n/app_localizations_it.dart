@@ -10962,6 +10962,12 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get messengerCopied => 'Copiato.';
+
+  @override
+  String get messengerCopy => 'Copia testo';
+
+  @override
   String get messengerDelete => 'Elimina messaggio';
 
   @override
@@ -10973,6 +10979,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get messengerDelivered => 'Consegnato';
+
+  @override
+  String get messengerEdit => 'Modifica';
+
+  @override
+  String get messengerEditFailed =>
+      'Impossibile modificare il messaggio — forse i 15 minuti sono passati.';
+
+  @override
+  String get messengerEditTitle => 'Modifica messaggio';
+
+  @override
+  String get messengerEditWindow =>
+      'Un messaggio si può correggere per 15 minuti dopo l’invio.';
+
+  @override
+  String get messengerEdited => 'modificato';
 
   @override
   String messengerEventCaptured(String actor) {
@@ -11089,6 +11112,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get messengerMessageActions => 'Azioni sul messaggio';
 
   @override
+  String get messengerNoStarred => 'Nessun messaggio contrassegnato.';
+
+  @override
   String messengerNoticeCaptured(String actor) {
     return '$actor ha fatto uno screenshot di questa conversazione.';
   }
@@ -11130,7 +11156,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo spazio non accetta richieste al momento.';
 
   @override
+  String get messengerStar => 'Contrassegna';
+
+  @override
+  String get messengerStarred => 'Contrassegnati';
+
+  @override
   String get messengerUnlock => 'Consenti l’inoltro';
+
+  @override
+  String get messengerUnstar => 'Rimuovi contrassegno';
 
   @override
   String get messengerWriteToHosts => 'Scrivi ai gestori';

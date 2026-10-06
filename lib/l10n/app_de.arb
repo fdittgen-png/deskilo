@@ -6738,10 +6738,38 @@
   "messengerContextInquiryIn": "Anfrage an {space}",
   "messengerContextInquiryOut": "Ihre Anfrage an {space}",
   "messengerContextSpace": "In {space}",
+  "messengerCopied": "Kopiert.",
+  "@messengerCopied": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopy": "Text kopieren",
+  "@messengerCopy": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerDelete": "Nachricht löschen",
   "messengerDeleteConfirm": "Diese Nachricht für alle in der Unterhaltung löschen?",
   "messengerDeleted": "Nachricht gelöscht.",
   "messengerDelivered": "Zugestellt",
+  "messengerEdit": "Bearbeiten",
+  "@messengerEdit": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditFailed": "Die Nachricht konnte nicht bearbeitet werden — die 15 Minuten sind vielleicht vorbei.",
+  "@messengerEditFailed": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditTitle": "Nachricht bearbeiten",
+  "@messengerEditTitle": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditWindow": "Eine Nachricht kann 15 Minuten nach dem Senden korrigiert werden.",
+  "@messengerEditWindow": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdited": "bearbeitet",
+  "@messengerEdited": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerEventCaptured": "Bildschirmfoto von {actor}",
   "messengerEventDeleted": "Gelöscht von {actor}",
   "messengerEventForwarded": "Von {actor} an {target} weitergeleitet",
@@ -6770,6 +6798,10 @@
   "messengerInquirySend": "Anfrage senden",
   "messengerLock": "Weiterleiten sperren",
   "messengerMessageActions": "Nachrichtenaktionen",
+  "messengerNoStarred": "Noch keine markierte Nachricht.",
+  "@messengerNoStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerNoticeCaptured": "{actor} hat ein Bildschirmfoto dieser Unterhaltung aufgenommen.",
   "messengerNoticeForwarded": "{actor} hat eine Nachricht dieser Unterhaltung an {target} weitergeleitet.",
   "messengerNoticeForwardedPrivate": "{actor} hat eine Nachricht dieser Unterhaltung in eine persönliche Unterhaltung weitergeleitet.",
@@ -6780,7 +6812,19 @@
   "messengerRefusedLimit": "Zu viele auf einmal. Bitte eine Minute warten.",
   "messengerRefusedTooLong": "Diese Nachricht ist für diese Unterhaltung zu lang.",
   "messengerRefusedUnavailable": "Dieser Ort nimmt gerade keine Anfragen an.",
+  "messengerStar": "Markieren",
+  "@messengerStar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerStarred": "Markiert",
+  "@messengerStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerUnlock": "Weiterleiten erlauben",
+  "messengerUnstar": "Markierung entfernen",
+  "@messengerUnstar": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerWriteToHosts": "An die Gastgeber schreiben",
   "mfaCode": "Sechsstelliger Code",
   "mfaEnroll": "Scannen Sie diesen Code mit einer Authenticator-App oder geben Sie den Schlüssel ein, dann tippen Sie die sechs angezeigten Ziffern.",

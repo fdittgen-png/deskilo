@@ -6738,10 +6738,38 @@
   "messengerContextInquiryIn": "Richiesta a {space}",
   "messengerContextInquiryOut": "La tua richiesta a {space}",
   "messengerContextSpace": "In {space}",
+  "messengerCopied": "Copiato.",
+  "@messengerCopied": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopy": "Copia testo",
+  "@messengerCopy": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerDelete": "Elimina messaggio",
   "messengerDeleteConfirm": "Eliminare questo messaggio per tutti i partecipanti alla conversazione?",
   "messengerDeleted": "Messaggio eliminato.",
   "messengerDelivered": "Consegnato",
+  "messengerEdit": "Modifica",
+  "@messengerEdit": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditFailed": "Impossibile modificare il messaggio — forse i 15 minuti sono passati.",
+  "@messengerEditFailed": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditTitle": "Modifica messaggio",
+  "@messengerEditTitle": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditWindow": "Un messaggio si può correggere per 15 minuti dopo l’invio.",
+  "@messengerEditWindow": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdited": "modificato",
+  "@messengerEdited": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerEventCaptured": "Screenshot di {actor}",
   "messengerEventDeleted": "Eliminato da {actor}",
   "messengerEventForwarded": "Inoltrato da {actor} a {target}",
@@ -6770,6 +6798,10 @@
   "messengerInquirySend": "Invia richiesta",
   "messengerLock": "Blocca l’inoltro",
   "messengerMessageActions": "Azioni sul messaggio",
+  "messengerNoStarred": "Nessun messaggio contrassegnato.",
+  "@messengerNoStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerNoticeCaptured": "{actor} ha fatto uno screenshot di questa conversazione.",
   "messengerNoticeForwarded": "{actor} ha inoltrato un messaggio di questa conversazione a {target}.",
   "messengerNoticeForwardedPrivate": "{actor} ha inoltrato un messaggio di questa conversazione in una conversazione personale.",
@@ -6780,7 +6812,19 @@
   "messengerRefusedLimit": "Troppi in una volta. Attendi un minuto.",
   "messengerRefusedTooLong": "Questo messaggio è troppo lungo per quella conversazione.",
   "messengerRefusedUnavailable": "Questo spazio non accetta richieste al momento.",
+  "messengerStar": "Contrassegna",
+  "@messengerStar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerStarred": "Contrassegnati",
+  "@messengerStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerUnlock": "Consenti l’inoltro",
+  "messengerUnstar": "Rimuovi contrassegno",
+  "@messengerUnstar": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerWriteToHosts": "Scrivi ai gestori",
   "mfaCode": "Codice a sei cifre",
   "mfaEnroll": "Scansiona questo codice con un'app di autenticazione, o inserisci la chiave, poi digita le sei cifre mostrate.",

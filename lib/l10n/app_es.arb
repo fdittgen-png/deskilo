@@ -6738,10 +6738,38 @@
   "messengerContextInquiryIn": "Consulta a {space}",
   "messengerContextInquiryOut": "Tu consulta a {space}",
   "messengerContextSpace": "En {space}",
+  "messengerCopied": "Copiado.",
+  "@messengerCopied": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopy": "Copiar texto",
+  "@messengerCopy": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerDelete": "Eliminar mensaje",
   "messengerDeleteConfirm": "¿Eliminar este mensaje para todas las personas de la conversación?",
   "messengerDeleted": "Mensaje eliminado.",
   "messengerDelivered": "Entregado",
+  "messengerEdit": "Editar",
+  "@messengerEdit": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditFailed": "No se pudo editar el mensaje — quizá pasaron los 15 minutos.",
+  "@messengerEditFailed": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditTitle": "Editar mensaje",
+  "@messengerEditTitle": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditWindow": "Un mensaje se puede corregir durante 15 minutos tras enviarlo.",
+  "@messengerEditWindow": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdited": "editado",
+  "@messengerEdited": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerEventCaptured": "Captura de pantalla de {actor}",
   "messengerEventDeleted": "Eliminado por {actor}",
   "messengerEventForwarded": "Reenviado por {actor} a {target}",
@@ -6770,6 +6798,10 @@
   "messengerInquirySend": "Enviar consulta",
   "messengerLock": "Bloquear el reenvío",
   "messengerMessageActions": "Acciones del mensaje",
+  "messengerNoStarred": "Aún no hay mensajes destacados.",
+  "@messengerNoStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerNoticeCaptured": "{actor} hizo una captura de pantalla de esta conversación.",
   "messengerNoticeForwarded": "{actor} reenvió un mensaje de esta conversación a {target}.",
   "messengerNoticeForwardedPrivate": "{actor} reenvió un mensaje de esta conversación a una conversación personal.",
@@ -6780,7 +6812,19 @@
   "messengerRefusedLimit": "Demasiados a la vez. Espera un minuto.",
   "messengerRefusedTooLong": "Este mensaje es demasiado largo para esa conversación.",
   "messengerRefusedUnavailable": "Este espacio no acepta consultas ahora mismo.",
+  "messengerStar": "Destacar",
+  "@messengerStar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerStarred": "Destacados",
+  "@messengerStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerUnlock": "Permitir el reenvío",
+  "messengerUnstar": "Quitar destacado",
+  "@messengerUnstar": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerWriteToHosts": "Escribir a los anfitriones",
   "mfaCode": "Código de seis dígitos",
   "mfaEnroll": "Escanee este código con una aplicación de autenticación, o introduzca la clave, y escriba los seis dígitos que muestra.",

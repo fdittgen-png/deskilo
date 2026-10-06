@@ -301,5 +301,49 @@
   "threadRefsIn": "Referencias en",
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
+  },
+  "messengerStar": "Destacar",
+  "@messengerStar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerUnstar": "Quitar destacado",
+  "@messengerUnstar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopy": "Copiar texto",
+  "@messengerCopy": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopied": "Copiado.",
+  "@messengerCopied": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdit": "Editar",
+  "@messengerEdit": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdited": "editado",
+  "@messengerEdited": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditTitle": "Editar mensaje",
+  "@messengerEditTitle": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditWindow": "Un mensaje se puede corregir durante 15 minutos tras enviarlo.",
+  "@messengerEditWindow": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditFailed": "No se pudo editar el mensaje — quizá pasaron los 15 minutos.",
+  "@messengerEditFailed": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerStarred": "Destacados",
+  "@messengerStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerNoStarred": "Aún no hay mensajes destacados.",
+  "@messengerNoStarred": {
+    "description": "messenger: reactions, stars, edits"
   }
 }

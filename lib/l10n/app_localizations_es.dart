@@ -10948,6 +10948,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get messengerCopied => 'Copiado.';
+
+  @override
+  String get messengerCopy => 'Copiar texto';
+
+  @override
   String get messengerDelete => 'Eliminar mensaje';
 
   @override
@@ -10959,6 +10965,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get messengerDelivered => 'Entregado';
+
+  @override
+  String get messengerEdit => 'Editar';
+
+  @override
+  String get messengerEditFailed =>
+      'No se pudo editar el mensaje — quizá pasaron los 15 minutos.';
+
+  @override
+  String get messengerEditTitle => 'Editar mensaje';
+
+  @override
+  String get messengerEditWindow =>
+      'Un mensaje se puede corregir durante 15 minutos tras enviarlo.';
+
+  @override
+  String get messengerEdited => 'editado';
 
   @override
   String messengerEventCaptured(String actor) {
@@ -11075,6 +11098,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get messengerMessageActions => 'Acciones del mensaje';
 
   @override
+  String get messengerNoStarred => 'Aún no hay mensajes destacados.';
+
+  @override
   String messengerNoticeCaptured(String actor) {
     return '$actor hizo una captura de pantalla de esta conversación.';
   }
@@ -11116,7 +11142,16 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este espacio no acepta consultas ahora mismo.';
 
   @override
+  String get messengerStar => 'Destacar';
+
+  @override
+  String get messengerStarred => 'Destacados';
+
+  @override
   String get messengerUnlock => 'Permitir el reenvío';
+
+  @override
+  String get messengerUnstar => 'Quitar destacado';
 
   @override
   String get messengerWriteToHosts => 'Escribir a los anfitriones';

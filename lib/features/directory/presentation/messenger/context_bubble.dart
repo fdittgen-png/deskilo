@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../workspace/presentation/widgets/member_note_body.dart';
+import '../../domain/message_marks.dart';
+import 'reaction_strip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
@@ -17,7 +19,17 @@ import 'message_marks.dart';
 /// it is a forward, its receipt when it is mine, and the way into its
 /// actions. A system line renders as [MessageNoticeLine] instead.
 class ContextBubble extends ConsumerWidget {
-  const ContextBubble({super.key, required this.message, this.onActions});
+  const ContextBubble({
+    super.key,
+    required this.message,
+    this.onActions,
+    this.marks = MessageMarks.none,
+    this.onReact,
+  });
+
+  /// Reactions, stars and edits of the thread (0382).
+  final MessageMarks marks;
+  final ValueChanged<String>? onReact;
 
   final ContextMessage message;
   final VoidCallback? onActions;
@@ -95,6 +107,11 @@ class ContextBubble extends ConsumerWidget {
               style: theme.textTheme.bodyMedium?.copyWith(color: fg),
               linkColor: fg,
             ),
+            ReactionStrip(
+              messageId: message.id,
+              reactions: marks.reactions[message.id] ?? const [],
+              onReact: onReact,
+            ),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -106,6 +123,25 @@ class ContextBubble extends ConsumerWidget {
                       key: ValueKey('context-locked-${message.id}'),
                       size: 12,
                       color: muted,
+                    ),
+                  ),
+                if (marks.starred.contains(message.id))
+                  Padding(
+                    padding: const EdgeInsets.only(right: 4),
+                    child: Icon(
+                      Icons.star,
+                      key: ValueKey('context-starred-${message.id}'),
+                      size: 12,
+                      color: muted,
+                    ),
+                  ),
+                if (marks.edited.contains(message.id))
+                  Padding(
+                    padding: const EdgeInsets.only(right: 4),
+                    child: Text(
+                      l10n?.messengerEdited ?? 'edited',
+                      key: ValueKey('context-edited-${message.id}'),
+                      style: theme.textTheme.labelSmall?.copyWith(color: muted),
                     ),
                   ),
                 Text(

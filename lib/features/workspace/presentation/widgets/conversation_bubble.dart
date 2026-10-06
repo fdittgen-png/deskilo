@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import '../../../directory/domain/message_marks.dart';
+import '../../../directory/presentation/messenger/reaction_strip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -37,9 +39,15 @@ class ConversationBubble extends ConsumerWidget {
     this.timeOnly = false,
     this.onQuoteTap,
     this.onActions,
+    this.marks = MessageMarks.none,
+    this.onReact,
   });
 
   final MemberNote note;
+
+  /// Reactions, stars and edits of the thread (0382).
+  final MessageMarks marks;
+  final ValueChanged<String>? onReact;
 
   /// #1824 — forward, lock, "What happened": offered when the workspace
   /// has `messageForwarding` on. Null keeps the bubble as it was.
@@ -221,10 +229,33 @@ class ConversationBubble extends ConsumerWidget {
                     style: theme.textTheme.bodyMedium?.copyWith(color: fg),
                     linkColor: mine ? fg : null,
                   ),
+                  ReactionStrip(
+                    messageId: note.id,
+                    reactions: marks.reactions[note.id] ?? const [],
+                    onReact: onReact,
+                  ),
                   const SizedBox(height: 2),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      if (marks.starred.contains(note.id))
+                        Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: Icon(Icons.star,
+                              key: ValueKey('note-starred-${note.id}'),
+                              size: 12,
+                              color: fgMuted),
+                        ),
+                      if (marks.edited.contains(note.id))
+                        Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: Text(
+                            l10n?.messengerEdited ?? 'edited',
+                            key: ValueKey('note-edited-${note.id}'),
+                            style: theme.textTheme.labelSmall
+                                ?.copyWith(color: fgMuted),
+                          ),
+                        ),
                       if (note.noForward)
                         Padding(
                           padding: const EdgeInsets.only(right: 4),

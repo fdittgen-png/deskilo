@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'message_marks.dart';
 import 'messenger.dart';
 
 /// #1824 — the context-bound messenger on ONE server.
@@ -28,6 +29,15 @@ abstract interface class MessengerRepository {
   });
   Future<void> markInquiryRead(String inquiry);
   Future<void> closeInquiry(String inquiry);
+
+  // ── what a chat does besides words (0382) ─────────────────────────
+  /// Reactions, my stars and the edited messages of one context
+  /// ([contextWire]: `conversation | account_conversation | inquiry`).
+  Future<MessageMarks> marks(String contextWire, String contextId);
+  Future<void> react(MessageKind kind, String messageId, String? emoji);
+  Future<bool> toggleStar(MessageKind kind, String messageId);
+  Future<void> edit(MessageKind kind, String messageId, String body);
+  Future<List<StarredMessage>> starred();
 
   // ── forwarding and history ────────────────────────────────────────
   Future<String> forward({

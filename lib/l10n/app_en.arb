@@ -12560,6 +12560,14 @@
       }
     }
   },
+  "messengerCopied": "Copied.",
+  "@messengerCopied": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopy": "Copy text",
+  "@messengerCopy": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerDelete": "Delete message",
   "@messengerDelete": {
     "description": "Action: delete my own account message (#1824)"
@@ -12575,6 +12583,26 @@
   "messengerDelivered": "Delivered",
   "@messengerDelivered": {
     "description": "Screen-reader label of the delivered receipt on my message (#1824)"
+  },
+  "messengerEdit": "Edit",
+  "@messengerEdit": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditFailed": "This message could not be edited — the 15 minutes may be over.",
+  "@messengerEditFailed": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditTitle": "Edit message",
+  "@messengerEditTitle": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditWindow": "A message can be corrected for 15 minutes after it was sent.",
+  "@messengerEditWindow": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdited": "edited",
+  "@messengerEdited": {
+    "description": "messenger: reactions, stars, edits"
   },
   "messengerEventCaptured": "Screenshot taken by {actor}",
   "@messengerEventCaptured": {
@@ -12760,6 +12788,10 @@
   "@messengerMessageActions": {
     "description": "Tooltip of the button that opens a message's actions (#1824)"
   },
+  "messengerNoStarred": "No starred message yet.",
+  "@messengerNoStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerNoticeCaptured": "{actor} took a screenshot of this conversation.",
   "@messengerNoticeCaptured": {
     "description": "System line in a conversation when someone took a screenshot of it (iOS) (#1824)",
@@ -12823,9 +12855,21 @@
   "@messengerRefusedUnavailable": {
     "description": "Refusal: the space takes no inquiries (not published, or switched off) (#1824)"
   },
+  "messengerStar": "Star",
+  "@messengerStar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerStarred": "Starred",
+  "@messengerStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerUnlock": "Allow forwarding",
   "@messengerUnlock": {
     "description": "Author action: allow forwarding this message again (#1824)"
+  },
+  "messengerUnstar": "Remove star",
+  "@messengerUnstar": {
+    "description": "messenger: reactions, stars, edits"
   },
   "messengerWriteToHosts": "Write to the hosts",
   "@messengerWriteToHosts": {

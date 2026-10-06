@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../features/directory/domain/message_marks.dart';
 import '../../../features/directory/domain/messenger.dart';
 import '../../../features/directory/domain/messenger_repository.dart';
 
@@ -20,6 +21,42 @@ class FakeMessengerRepository implements MessengerRepository {
 
   /// `my_inbox` rows.
   final inboxRows = <Map<String, dynamic>>[];
+
+  /// Marks by `<context wire>|<context id>`; the fake also records writes.
+  final marksByContext = <String, MessageMarks>{};
+  final reactions = <({MessageKind kind, String id, String? emoji})>[];
+  final edits = <({MessageKind kind, String id, String body})>[];
+  final starredIds = <String>{};
+
+  @override
+  Future<MessageMarks> marks(String contextWire, String contextId) async {
+    _check();
+    return marksByContext['$contextWire|$contextId'] ?? MessageMarks.none;
+  }
+
+  @override
+  Future<void> react(MessageKind kind, String messageId, String? emoji) async {
+    _check();
+    reactions.add((kind: kind, id: messageId, emoji: emoji));
+  }
+
+  @override
+  Future<bool> toggleStar(MessageKind kind, String messageId) async {
+    _check();
+    return starredIds.add(messageId) || !starredIds.remove(messageId);
+  }
+
+  @override
+  Future<void> edit(MessageKind kind, String messageId, String body) async {
+    _check();
+    edits.add((kind: kind, id: messageId, body: body));
+  }
+
+  @override
+  Future<List<StarredMessage>> starred() async {
+    _check();
+    return const [];
+  }
 
   /// The workspaces shared with a person (0381), by user id.
   final shared = <String, List<({String id, String name})>>{};

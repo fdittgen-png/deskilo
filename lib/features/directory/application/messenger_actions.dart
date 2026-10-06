@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/server_error.dart';
+import '../domain/message_marks.dart';
 import '../domain/messenger.dart';
 import '../domain/messenger_repository.dart';
 
@@ -25,6 +26,16 @@ class MessengerActions {
     }
     return text;
   }
+
+  // ── reactions, stars and edits (0382) ───────────────────────────────
+  Future<MessageMarks> marks(String contextWire, String contextId) =>
+      repository.marks(contextWire, contextId);
+  Future<void> react(MessageKind kind, String messageId, String? emoji) =>
+      repository.react(kind, messageId, emoji);
+  Future<bool> toggleStar(MessageKind kind, String messageId) =>
+      repository.toggleStar(kind, messageId);
+  Future<void> edit(MessageKind kind, String messageId, String body) =>
+      repository.edit(kind, messageId, _body(body));
 
   Future<String> startInquiry(String workspace, String body) {
     if (workspace.isEmpty) throw ArgumentError('workspace required');

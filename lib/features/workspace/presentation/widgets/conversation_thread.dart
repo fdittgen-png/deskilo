@@ -24,6 +24,8 @@ import '../../../../core/capture/capture_shield.dart';
 import '../../../directory/domain/messenger.dart';
 import '../../../directory/presentation/messenger/message_actions_sheet.dart';
 import '../../../directory/presentation/messenger/message_marks.dart';
+import '../../../directory/domain/message_marks.dart';
+import '../../../directory/providers/message_marks_providers.dart';
 import '../../../directory/providers/messenger_providers.dart';
 
 /// A conversation, by id (#687) — the thread behind a row of the
@@ -138,21 +140,58 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
       .watch(enabledFeaturesSyncProvider)
       .contains(WorkspaceFeature.messageForwarding);
 
-  void _messageActions(MemberNote note, {required bool mine}) =>
-      showMessageActions(
-        context,
-        ref,
-        MessageRef(
-          kind: MessageKind.memberNote,
-          messageId: note.id,
-          contextKind: MessageContextKind.space,
-          contextId: widget.conversationId,
-          mine: mine,
-          noForward: note.noForward,
-        ),
-        onChanged: () => ref
-            .invalidate(conversationMessagesProvider(widget.conversationId)),
+  MarksKey get _marksKey => (
+        contextWire: 'conversation',
+        contextId: widget.conversationId,
+        source: '',
       );
+
+  void _messageActions(MemberNote note, {required bool mine}) {
+    final marks =
+        ref.read(messageMarksProvider(_marksKey)).value ?? MessageMarks.none;
+    showMessageActions(
+      context,
+      ref,
+      MessageRef(
+        kind: MessageKind.memberNote,
+        messageId: note.id,
+        contextKind: MessageContextKind.space,
+        contextId: widget.conversationId,
+        mine: mine,
+        noForward: note.noForward,
+        body: note.body,
+        sentAt: note.createdAt,
+        isNotice: note.notice != null,
+        starred: marks.starred.contains(note.id),
+        myReaction: marks.myReaction(note.id),
+      ),
+      forwarding: _forwarding,
+      onChanged: () {
+        ref
+          ..invalidate(conversationMessagesProvider(widget.conversationId))
+          ..invalidate(messageMarksProvider(_marksKey));
+      },
+    );
+  }
+
+  /// A tap on a reaction under a bubble toggles mine.
+  Future<void> _react(MemberNote note, String emoji) async {
+    final marks =
+        ref.read(messageMarksProvider(_marksKey)).value ?? MessageMarks.none;
+    await runGuarded(
+      context,
+      domain: 'messages',
+      message: 'react to message failed',
+      errorText: AppLocalizations.of(context)?.portalActionFailed ??
+          'Could not save this change. Please try again.',
+      action: () => ref.read(messengerActionsProvider()).react(
+            MessageKind.memberNote,
+            note.id,
+            marks.myReaction(note.id) == emoji ? null : emoji,
+          ),
+    );
+    ref.invalidate(messageMarksProvider(_marksKey));
+  }
 
   /// iOS cannot refuse a screenshot, so the conversation is told.
   Future<void> _recordCapture() async {
@@ -206,6 +245,10 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
 
   @override
   Widget build(BuildContext context) {
+    // A message arriving brings the reactions with it.
+    ref.listen(conversationMessagesProvider(widget.conversationId), (_, _) {
+      ref.invalidate(messageMarksProvider(_marksKey));
+    });
     final conversationId = widget.conversationId;
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
@@ -388,9 +431,12 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
                 mine: note.fromMemberId == me?.id,
                 timeOnly: hub,
                 onQuoteTap: hub ? _scrollToQuote : null,
-                onActions: _forwarding
+                onActions: _forwarding || hub
                     ? () => _messageActions(note, mine: note.fromMemberId == me?.id)
                     : null,
+                marks: ref.watch(messageMarksProvider(_marksKey)).value ??
+                    MessageMarks.none,
+                onReact: (emoji) => _react(note, emoji),
                 onQuote: (quoted) => setState(() {
                   _quoted = (
                     id: quoted.id,

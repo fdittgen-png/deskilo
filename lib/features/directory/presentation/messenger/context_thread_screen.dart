@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 import '../../../workspace/presentation/widgets/member_note_composer.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/message_marks.dart';
 import '../../providers/inbox_marks.dart';
+import '../../providers/message_marks_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/capture/capture_shield.dart';
@@ -81,7 +83,9 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     Future.microtask(_markRead);
     _refresh = Timer.periodic(_poll, (_) {
       if (mounted && _contextId.isNotEmpty && _earlier.isEmpty) {
-        ref.invalidate(_provider);
+        ref
+          ..invalidate(_provider)
+          ..invalidate(messageMarksProvider(_marksKey));
       }
     });
   }
@@ -272,23 +276,61 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     );
   }
 
-  void _actions(ContextMessage message) => showMessageActions(
-    context,
-    ref,
-    MessageRef(
-      kind: message.kind,
-      messageId: message.id,
-      contextKind: widget.kind,
-      contextId: _contextId,
-      mine: message.mine,
-      noForward: message.noForward,
-      source: widget.source,
-    ),
-    onDelete: message.mine && message.kind == MessageKind.accountMessage
-        ? () => _delete(message)
-        : null,
-    onChanged: () => ref.invalidate(_provider),
-  );
+  MarksKey get _marksKey => (
+        contextWire: widget.kind.targetWire,
+        contextId: _contextId,
+        source: widget.source,
+      );
+
+  void _actions(ContextMessage message) {
+    final marks =
+        ref.read(messageMarksProvider(_marksKey)).value ?? MessageMarks.none;
+    showMessageActions(
+      context,
+      ref,
+      MessageRef(
+        kind: message.kind,
+        messageId: message.id,
+        contextKind: widget.kind,
+        contextId: _contextId,
+        mine: message.mine,
+        noForward: message.noForward,
+        source: widget.source,
+        body: message.body,
+        sentAt: message.createdAt,
+        isNotice: message.isNotice,
+        starred: marks.starred.contains(message.id),
+        myReaction: marks.myReaction(message.id),
+      ),
+      onDelete: message.mine && message.kind == MessageKind.accountMessage
+          ? () => _delete(message)
+          : null,
+      onChanged: () {
+        ref
+          ..invalidate(_provider)
+          ..invalidate(messageMarksProvider(_marksKey));
+      },
+    );
+  }
+
+  Future<void> _react(ContextMessage message, String emoji) async {
+    final marks =
+        ref.read(messageMarksProvider(_marksKey)).value ?? MessageMarks.none;
+    await runMessenger(
+      context,
+      message: 'react to message failed',
+      errorText: AppLocalizations.of(context)?.portalActionFailed ??
+          'Could not save this change. Please try again.',
+      action: () => ref
+          .read(messengerActionsProvider(source: widget.source))
+          .react(
+            message.kind,
+            message.id,
+            marks.myReaction(message.id) == emoji ? null : emoji,
+          ),
+    );
+    ref.invalidate(messageMarksProvider(_marksKey));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -394,6 +436,9 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
         return ContextBubble(
           message: message,
           onActions: message.isNotice ? null : () => _actions(message),
+          marks:
+              ref.watch(messageMarksProvider(_marksKey)).value ?? MessageMarks.none,
+          onReact: message.isNotice ? null : (emoji) => _react(message, emoji),
         );
       },
     );

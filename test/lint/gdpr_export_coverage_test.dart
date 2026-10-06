@@ -116,6 +116,7 @@ const Set<String> _exported = {
   'members',
   'privacy_notice_acknowledgments', // #1914: which notice versions the person acknowledged.
   'rights_requests', // #1915: the person's own rights requests and their outcome.
+  'message_reactions', 'message_stars', // 0382: the person's own reactions and bookmarks (anchored patch).
   'workspace_favorites', 'workspace_ratings', // #2185: own marks on workspaces (0376).
   'resource_favorites', 'resource_ratings', // #2185: own marks on places (0374, anchored patch).
   'bi_views', // #1923 C: the Web-BI views the person saved (0350, anchored patch).

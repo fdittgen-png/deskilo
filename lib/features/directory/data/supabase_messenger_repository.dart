@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
+import '../domain/message_marks.dart';
 import '../domain/messenger.dart';
 import '../domain/messenger_repository.dart';
 
@@ -30,6 +31,46 @@ class SupabaseMessengerRepository implements MessengerRepository {
 
   @override
   Future<List<Map<String, dynamic>>> inbox() => _rows('my_inbox');
+
+  @override
+  Future<MessageMarks> marks(String contextWire, String contextId) async =>
+      MessageMarks.fromJson(Map<String, dynamic>.from(
+        (await _rpc<dynamic>('message_marks_in', {
+              'p_context_kind': contextWire,
+              'p_context_id': contextId,
+            })) as Map? ??
+            const <String, dynamic>{},
+      ));
+
+  @override
+  Future<void> react(MessageKind kind, String messageId, String? emoji) =>
+      _rpc<dynamic>('react_to_message', {
+        'p_kind': kind.wire,
+        'p_message_id': messageId,
+        'p_emoji': emoji,
+      });
+
+  @override
+  Future<bool> toggleStar(MessageKind kind, String messageId) async =>
+      (await _rpc<dynamic>('toggle_message_star', {
+            'p_kind': kind.wire,
+            'p_message_id': messageId,
+          })) ==
+          true;
+
+  @override
+  Future<void> edit(MessageKind kind, String messageId, String body) =>
+      _rpc<dynamic>('edit_message', {
+        'p_kind': kind.wire,
+        'p_message_id': messageId,
+        'p_body': body,
+      });
+
+  @override
+  Future<List<StarredMessage>> starred() async => [
+        for (final row in (await _rpc<List<dynamic>?>('my_starred_messages')) ?? const [])
+          StarredMessage.fromJson(Map<String, dynamic>.from(row as Map)),
+      ];
 
   @override
   Future<List<({String id, String name})>> sharedWorkspaces(String user) async => [
