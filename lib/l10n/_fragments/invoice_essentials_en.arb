@@ -31,5 +31,7 @@
   "invoiceEssentialsRefused": "The invoice was not issued: required details are missing.",
   "@invoiceEssentialsRefused": {
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
-  }
+  },
+  "invoiceMissingSellerCountry": "The workspace country must be France or Germany for issuing here — other countries are issued outside the app",
+  "invoiceMissingVatRate": "A VAT rate in force for the workspace's default rate (it would bill 0 %)"
 }

@@ -508,5 +508,11 @@ String invoiceMissingLabel(AppLocalizations? l10n, String key) => switch (key) {
           "The member's postal address (a business customer needs one)",
       'buyer_vat_id' => l10n?.invoiceMissingBuyerVatId ??
           "The member's VAT number (needed for reverse charge)",
+      'seller_country_unsupported' => l10n?.invoiceMissingSellerCountry ??
+          'The workspace country must be France or Germany for issuing '
+              'here — other countries are issued outside the app',
+      'vat_rate_unresolved' => l10n?.invoiceMissingVatRate ??
+          "A VAT rate in force for the workspace's default rate (it would "
+              'bill 0 %)',
       _ => key,
     };

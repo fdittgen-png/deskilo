@@ -5256,6 +5256,7 @@
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
+  "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss Frankreich oder Deutschland sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
   "invoiceMissingSellerVatId": "Die Umsatzsteuer-Identifikationsnummer des Arbeitsbereichs",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
@@ -5264,6 +5265,7 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
+  "invoiceMissingVatRate": "Ein gültiger Steuersatz für den Standardsatz des Arbeitsbereichs (sonst würde 0 % berechnet)",
   "invoiceNoOpen": "Keine offenen Rechnungen.",
   "invoiceNothingToInvoice": "Für diesen Monat wurde nichts erfasst — nichts zu berechnen.",
   "invoiceOpenAge": "{days} Tage",

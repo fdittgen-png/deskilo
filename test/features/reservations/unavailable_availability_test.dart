@@ -31,6 +31,42 @@ void main() {
     expect(find.byKey(banner), findsNothing);
   });
 
+  for (final view in ['week', 'month']) {
+    testWidgets('a failed $view read is unavailable, then retry restores it',
+        (tester) async {
+      final repo = FakeReservationRepository()..failWindowReads = true;
+      await pumpHub(tester, repo: repo);
+      await pickReserveView(tester, view);
+      await tester.pumpAndSettle();
+
+      const banner = ValueKey('reserve-availability-unavailable');
+      expect(find.byKey(banner), findsOneWidget);
+      expect(find.byKey(ValueKey('reserve-$view-grid')), findsNothing);
+
+      repo.failWindowReads = false;
+      await tester.tap(find.descendant(
+          of: find.byKey(banner), matching: find.text('Retry')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(banner), findsNothing);
+      expect(find.byKey(ValueKey('reserve-$view-grid')), findsOneWidget);
+    });
+  }
+
+  testWidgets('a failed read on the Plan is unavailable, never every seat free',
+      (tester) async {
+    final repo = FakeReservationRepository()..failWindowReads = true;
+    await pumpHub(tester, repo: repo);
+    const banner = ValueKey('reserve-availability-unavailable');
+    expect(find.byKey(banner), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsNothing);
+    repo.failWindowReads = false;
+    await tester.tap(find.descendant(
+        of: find.byKey(banner), matching: find.text('Retry')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(banner), findsNothing);
+    expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsOneWidget);
+  });
+
   testWidgets('a floor plan that cannot be read offers Retry and keeps the level',
       (tester) async {
     final plans = FakeFloorPlanRepository()..failPlanReads = true;

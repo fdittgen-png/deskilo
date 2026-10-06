@@ -20,6 +20,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
+import '../../../../core/ui/availability_unavailable_banner.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -165,10 +166,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final myMember = ref.watch(myMemberProvider).value;
-    final reservations = ref
-            .watch(reservationsForMonthProvider(monthKeyOf(_month)))
-            .value ??
-        const <Reservation>[];
+    final monthKey = monthKeyOf(_month);
+    final monthRead = ref.watch(reservationsForMonthProvider(monthKey));
+    final reservations = monthRead.value ?? const <Reservation>[];
     final visible = _visible(reservations, myMember?.id);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final targets = ref.watch(targetNamesProvider).value ?? const {};
@@ -367,11 +367,16 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 48),
-                          child: EmptyState(
-                            icon: Icons.event_available_outlined,
-                            title: l10n?.calendarNoReservations ??
-                                'No reservations on this day.',
-                          ),
+                          // #1848 — a failed read is not an empty day.
+                          child: monthRead.hasError && !monthRead.hasValue
+                              ? AvailabilityUnavailableBanner(
+                                  onRetry: () => ref.invalidate(
+                                      reservationsForMonthProvider(monthKey)))
+                              : EmptyState(
+                                  icon: Icons.event_available_outlined,
+                                  title: l10n?.calendarNoReservations ??
+                                      'No reservations on this day.',
+                                ),
                         ),
                       ],
                     ),

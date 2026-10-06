@@ -1,21 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../providers/reservation_providers.dart';
+import '../../l10n/app_localizations.dart';
+import 'inline_banner.dart';
 
 /// #1848 — a window read that failed with nothing to show is NOT an empty
 /// day: drawing every seat free would invite a booking on an occupied one.
-/// The selected day is kept; Retry refetches exactly that window.
-class AvailabilityUnavailableBanner extends ConsumerWidget {
-  const AvailabilityUnavailableBanner({super.key, required this.dayKey});
+/// The selection is kept; Retry refetches exactly the windows that failed.
+class AvailabilityUnavailableBanner extends StatelessWidget {
+  const AvailabilityUnavailableBanner({super.key, required this.onRetry});
 
-  final String dayKey;
+  final VoidCallback onRetry;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -27,7 +25,7 @@ class AvailabilityUnavailableBanner extends ConsumerWidget {
             'Availability could not be loaded completely, so no seat is '
                 'shown as free. Retry to see it.',
         actionLabel: l10n?.reserveStaleRetry ?? 'Retry',
-        onAction: () => ref.invalidate(reservationsForDayProvider(dayKey)),
+        onAction: onRetry,
       ),
     );
   }

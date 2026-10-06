@@ -45,7 +45,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
           // #1913 — the frozen due date travels with the invoice.
           .select('*, invoice_maturities(due_on, basis)')
           .eq('workspace_id', workspaceId)
-          .order('issued_at', ascending: false),
+          .order('issued_at', ascending: false)
+          .order('id', ascending: true),
     );
     return rows.map(Invoice.fromRow).toList();
   }
@@ -654,11 +655,18 @@ class SupabaseMoneyRepository implements MoneyRepository {
   Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(
     String workspaceId,
   ) async {
-    final rows = await _client
-        .from('invoice_matches')
-        .select('invoice_id, paid_cents, resolution, note, status, '
-            'payment_ledger_id, matched_at, by_name, writeoff_at, event_id')
-        .eq('workspace_id', workspaceId);
+    // #1885 — paged to the end, in a total order: the handoff's payments,
+    // totals and digest are built from this, and a read cut at the
+    // server's cap would shorten them without a word.
+    final rows = await fetchAllPages(
+      table: 'invoice_matches',
+      build: () => _client
+          .from('invoice_matches')
+          .select('invoice_id, paid_cents, resolution, note, status, '
+              'payment_ledger_id, matched_at, by_name, writeoff_at, event_id')
+          .eq('workspace_id', workspaceId)
+          .order('invoice_id', ascending: true),
+    );
     return {
       for (final row in rows)
         row['invoice_id'] as String: InvoiceMatch(
@@ -773,7 +781,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
           .from('ledger_entries')
           .select()
           .eq('workspace_id', workspaceId)
-          .order('created_at', ascending: false),
+          .order('created_at', ascending: false)
+          .order('id', ascending: true),
     );
     return rows.map(_ledgerFromRow).whereType<LedgerEntry>().toList();
   }
@@ -787,7 +796,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
           .from('payment_intents')
           .select()
           .eq('workspace_id', workspaceId)
-          .order('created_at', ascending: false),
+          .order('created_at', ascending: false)
+          .order('id', ascending: true),
     );
     return rows
         .map((row) => PaymentIntent.fromRow(Map<String, dynamic>.from(row)))
@@ -1047,7 +1057,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
         var query =
             _client.from('services').select().eq('workspace_id', workspaceId);
         if (!includeInactive) query = query.eq('active', true);
-        return query.order('name', ascending: true);
+        return query.order('name', ascending: true).order('id', ascending: true);
       },
     );
     return rows.map(_serviceFromRow).toList();
@@ -1315,7 +1325,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
           .from('invoice_transmissions')
           .select()
           .eq('workspace_id', workspaceId)
-          .order('sent_at', ascending: false),
+          .order('sent_at', ascending: false)
+          .order('id', ascending: true),
     );
     final latest = <String, InvoiceTransmission>{};
     for (final row in rows) {

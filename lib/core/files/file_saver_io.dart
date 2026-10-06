@@ -50,9 +50,33 @@ Future<String?> saveToDownloads({
   }
   dir ??= await getDownloadsDirectory();
   dir ??= await getApplicationDocumentsDirectory();
-  final file = File('${dir.path}/$fileName');
-  await file.writeAsBytes(bytes);
-  return file.path;
+  return writeFileAtomically(File('${dir.path}/$fileName'), bytes);
+}
+
+/// #1885 — a file appears whole or not at all: the bytes go to a sibling
+/// temporary file, are flushed and size-checked, and only then take the
+/// final name. A failure at any point removes the temporary file and leaves
+/// what was there before (a previous valid export) untouched.
+Future<String> writeFileAtomically(File target, List<int> bytes) async {
+  final part = File('${target.path}.part');
+  try {
+    await part.writeAsBytes(bytes, flush: true);
+    if (await part.length() != bytes.length) {
+      throw FileSystemException('short write', part.path);
+    }
+    await part.rename(target.path);
+    return target.path;
+  } catch (e, st) {
+    TraceLogger.instance
+        .error('files', 'atomic write failed', error: e, stackTrace: st);
+    try {
+      if (part.existsSync()) await part.delete();
+    } catch (e2, st2) {
+      TraceLogger.instance.warn('files', 'temporary file not removed',
+          error: e2, stackTrace: st2);
+    }
+    rethrow;
+  }
 }
 
 /// #1872 — the same save, answering with what it achieved: a file the
@@ -64,9 +88,7 @@ Future<SaveOutcome> saveToDownloadsTyped({
   required String fileName,
 }) async {
   Future<String> write(Directory dir) async {
-    final file = File('${dir.path}/$fileName');
-    await file.writeAsBytes(bytes, flush: true);
-    return file.path;
+    return writeFileAtomically(File('${dir.path}/$fileName'), bytes);
   }
 
   try {

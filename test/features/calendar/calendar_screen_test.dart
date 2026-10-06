@@ -38,9 +38,10 @@ Future<FakeReservationRepository> pumpCalendar(
   WidgetTester tester, {
   List<Reservation> seed = const [],
   Member? member,
+  FakeReservationRepository? repo,
 }) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
-  final reservations = FakeReservationRepository()
+  final reservations = (repo ?? FakeReservationRepository())
     ..reservations.addAll(seed);
   final workspace = FakeWorkspaceRepository.withWorkspace(
       // #718 — these test the CLASSIC calendar; the hub has its own file.
@@ -239,5 +240,21 @@ void main() {
     expect(find.text('April 2026'), findsOneWidget);
     // April's grid: 30 days, no 31st — the OLD month's grid is gone.
     expect(find.text('31'), findsNothing);
+  });
+
+  testWidgets(
+      'a failed month read is unavailable, not an empty day (#1848)',
+      (tester) async {
+    final repo = FakeReservationRepository()..failWindowReads = true;
+    await pumpCalendar(tester, repo: repo);
+    const banner = ValueKey('reserve-availability-unavailable');
+    expect(find.byKey(banner), findsOneWidget);
+    expect(find.text('No reservations on this day.'), findsNothing);
+    repo.failWindowReads = false;
+    await tester.tap(find.descendant(
+        of: find.byKey(banner), matching: find.text('Retry')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(banner), findsNothing);
+    expect(find.text('No reservations on this day.'), findsOneWidget);
   });
 }

@@ -5256,6 +5256,7 @@
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
+  "invoiceMissingSellerCountry": "Le pays de l'espace doit être la France ou l'Allemagne pour émettre ici — les autres pays sont émis hors de l'application",
   "invoiceMissingSellerVatId": "Le numéro d'identification TVA de l'espace",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
@@ -5264,6 +5265,7 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
+  "invoiceMissingVatRate": "Un taux de TVA en vigueur pour le taux par défaut de l'espace (sinon 0 % serait facturé)",
   "invoiceNoOpen": "Aucune facture en cours.",
   "invoiceNothingToInvoice": "Rien de suivi pour ce mois — rien à facturer.",
   "invoiceOpenAge": "{days} jours",

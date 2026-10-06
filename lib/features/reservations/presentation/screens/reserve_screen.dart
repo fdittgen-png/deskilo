@@ -17,7 +17,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../widgets/availability_unavailable_banner.dart';
+import '../../../../core/ui/availability_unavailable_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -914,6 +914,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     // starts before the device midnight west of the workspace); reading only
     // dayKeyOf(start) misses those bookings — the reservation-shows-on-Plan-
     // not-on-Reserve bug. Fetch every key the window touches and merge by id.
+    // #1848 — a window whose read failed is unavailable, never all free.
+    if (reservationsUnavailableAcrossWindow(ref, window.start, window.end)) {
+      return AvailabilityUnavailableBanner(
+          onRetry: () =>
+              retryReservationsAcrossWindow(ref, window.start, window.end));
+    }
     final reservations =
         reservationsAcrossWindow(ref, window.start, window.end);
     final names = ref.watch(memberNamesProvider).value ?? const {};
@@ -1077,7 +1083,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     final dayKey = dayKeyOf(_selectedDay);
     final dayRead = ref.watch(reservationsForDayProvider(dayKey));
     if (dayRead.hasError && !dayRead.hasValue) {
-      return AvailabilityUnavailableBanner(dayKey: dayKey);
+      return AvailabilityUnavailableBanner(
+          onRetry: () => ref.invalidate(reservationsForDayProvider(dayKey)));
     }
     final reservations = dayRead.value ?? const <Reservation>[];
     final active = [for (final r in reservations) if (r.isActive) r];
@@ -1133,12 +1140,20 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     // De-duplicated by id: a reservation crossing the month boundary is
     // returned by both month windows.
     final byId = <String, Reservation>{};
+    var unavailable = false;
     for (final key in monthKeys) {
-      final month = ref.watch(reservationsForMonthProvider(key)).value ??
-          const <Reservation>[];
-      for (final r in month) {
+      final read = ref.watch(reservationsForMonthProvider(key));
+      unavailable |= read.hasError && !read.hasValue;
+      for (final r in read.value ?? const <Reservation>[]) {
         byId[r.id] = r;
       }
+    }
+    if (unavailable) {
+      return AvailabilityUnavailableBanner(onRetry: () {
+        for (final key in monthKeys) {
+          ref.invalidate(reservationsForMonthProvider(key));
+        }
+      });
     }
     return WeekGrid(
       key: const ValueKey('reserve-week-grid'),
@@ -1172,10 +1187,13 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   /// calendar — free desks per day across ALL floors. Tapping a day
   /// selects it and drops into the Day view, where occupants are named.
   Widget _monthView() {
-    final month = ref.watch(reservationsForMonthProvider(
-          monthKeyOf(_selectedDay),
-        )).value ??
-        const <Reservation>[];
+    final monthKey = monthKeyOf(_selectedDay);
+    final read = ref.watch(reservationsForMonthProvider(monthKey));
+    if (read.hasError && !read.hasValue) {
+      return AvailabilityUnavailableBanner(
+          onRetry: () => ref.invalidate(reservationsForMonthProvider(monthKey)));
+    }
+    final month = read.value ?? const <Reservation>[];
     return MonthGrid(
       key: const ValueKey('reserve-month-grid'),
       selectedDay: _selectedDay,
