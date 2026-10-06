@@ -104,10 +104,19 @@ Future<T> cachedFetch<T>({
   }
   // The write must never delay the answer.
   if (cacheable == null || cacheable(raw)) {
-    unawaited(fenced.put(key, raw, ttl: ttl));
+    _observe(fenced.put(key, raw, ttl: ttl), 'write', key);
   } else {
-    unawaited(fenced.invalidatePrefix(key));
+    _observe(fenced.invalidatePrefix(key), 'invalidate', key);
   }
   StaleReads.instance.fresh(key);
   return value;
+}
+
+/// A background cache action's failure is logged, never unhandled and never
+/// allowed to fail the read it was accelerating.
+void _observe(Future<void> action, String what, String key) {
+  unawaited(action.catchError((Object e, StackTrace st) {
+    TraceLogger.instance
+        .warn('cache', 'background $what failed for $key', error: e, stackTrace: st);
+  }));
 }

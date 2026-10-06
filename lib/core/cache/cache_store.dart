@@ -68,9 +68,31 @@ abstract class CacheStore {
 class FileCacheStore implements CacheStore {
   /// [directory] pins the cache dir (tests); production resolves the
   /// app-support directory lazily.
-  FileCacheStore({Directory? directory}) : _dir = directory;
+  FileCacheStore({Directory? directory, this.beforePublish})
+      : _dir = directory;
 
   Directory? _dir;
+
+  /// Test seam (#1849): awaited between the temporary file being written
+  /// and it being published, so a test can order two writers, or run an
+  /// invalidation, at exactly that boundary. Production passes none.
+  @visibleForTesting
+  final Future<void> Function(String key)? beforePublish;
+
+  /// Which write of a key is the newest STARTED, and which was published
+  /// last: a slow older writer must not publish over a newer one.
+  final Map<String, int> _startedSeq = {};
+  final Map<String, int> _publishedSeq = {};
+  int _seq = 0;
+
+  /// Invalidations seen, newest last (bounded): a write that started
+  /// before one that covers its key must not publish after it.
+  final List<({String prefix, int at})> _invalidations = [];
+  int _tmpCounter = 0;
+
+  static const Duration _orphanTmpAge = Duration(minutes: 10);
+
+  bool _isTmp(File f) => f.path.endsWith('.tmp');
 
   /// Set after the first failed resolution (#614): path_provider has no
   /// web implementation and every fetch used to re-try and re-WARN with
@@ -150,8 +172,13 @@ class FileCacheStore implements CacheStore {
       {required Duration ttl}) async {
     final dir = await _cacheDir();
     if (dir == null) return;
+    final seq = ++_seq;
+    _startedSeq[key] = seq;
+    final startedAfterInvalidation = _invalidationCount;
+    // A unique temporary file per write: two writers of one key never
+    // share, truncate or rename each other's file.
+    final tmp = File('${dir.path}/${_fileName(key)}.${++_tmpCounter}.tmp');
     try {
-      final tmp = File('${dir.path}/${_fileName(key)}.tmp');
       await tmp.writeAsString(jsonEncode({
         'v': cacheSchemaVersion,
         'k': key,
@@ -159,11 +186,38 @@ class FileCacheStore implements CacheStore {
         'ttlMs': ttl.inMilliseconds,
         'payload': payload,
       }));
+      await beforePublish?.call(key);
+      // Publication boundary: still the newest write of this key, and
+      // nothing that covers this key was invalidated since it started.
+      final superseded = (_startedSeq[key] ?? 0) > seq ||
+          (_publishedSeq[key] ?? 0) > seq;
+      if (superseded || _invalidatedSince(startedAfterInvalidation, key)) {
+        await _deleteQuietly(tmp);
+        return;
+      }
       // Atomic swap: a killed app never leaves a half-written entry.
       await tmp.rename('${dir.path}/${_fileName(key)}');
+      _publishedSeq[key] = seq;
     } catch (e, st) {
       TraceLogger.instance
           .warn('cache', 'write failed for $key', error: e, stackTrace: st);
+      await _deleteQuietly(tmp);
+    }
+  }
+
+  int _invalidationCount = 0;
+
+  bool _invalidatedSince(int count, String key) {
+    final recent = _invalidations.where((i) => i.at > count);
+    return recent.any((i) => key.startsWith(i.prefix));
+  }
+
+  Future<void> _deleteQuietly(File file) async {
+    try {
+      if (file.existsSync()) await file.delete();
+    } catch (e, st) {
+      TraceLogger.instance.warn('cache', 'could not remove a temporary entry',
+          error: e, stackTrace: st);
     }
   }
 
@@ -173,8 +227,14 @@ class FileCacheStore implements CacheStore {
     if (dir == null) return;
     final filePrefix =
         prefix.toLowerCase().replaceAll(RegExp(r'[^a-z0-9._-]+'), '_');
+    // Writes already past their temporary file must not publish after this.
+    _invalidations.add((prefix: prefix, at: ++_invalidationCount));
+    if (_invalidations.length > 64) _invalidations.removeAt(0);
+    _publishedSeq.removeWhere((k, _) => k.startsWith(prefix));
     try {
       for (final file in dir.listSync().whereType<File>()) {
+        // An in-flight writer's temporary file is the writer's own.
+        if (_isTmp(file)) continue;
         final name = file.uri.pathSegments.last;
         if (name.startsWith(filePrefix)) await file.delete();
       }
@@ -191,6 +251,21 @@ class FileCacheStore implements CacheStore {
     var evicted = 0;
     try {
       for (final file in dir.listSync().whereType<File>()) {
+        if (_isTmp(file)) {
+          // An orphan (a killed writer) goes; a fresh one is somebody's
+          // write in progress and is left alone.
+          try {
+            if (DateTime.now().difference(file.statSync().modified) >
+                _orphanTmpAge) {
+              await file.delete();
+              evicted++;
+            }
+          } catch (e, st) {
+            TraceLogger.instance.warn('cache', 'orphan temporary entry',
+                error: e, stackTrace: st);
+          }
+          continue;
+        }
         try {
           final raw = jsonDecode(await file.readAsString());
           // #2008 — a legacy or foreign-format entry is dropped, never
@@ -269,6 +344,11 @@ class ScopedCacheStore implements CacheStore {
   @override
   Future<int> evictExpired() => _inner.evictExpired();
 
+  /// Removes [key] as filed under [scope] — for a fence that finds, after
+  /// its write landed, that its session had ended meanwhile.
+  Future<void> dropUnder(String scope, String key) =>
+      _inner.invalidatePrefix('$scope$key');
+
   /// The scope as it stands RIGHT NOW — what a fence compares itself
   /// against. Reading it is the same call as every other one makes.
   String? get currentScope => _scope();
@@ -317,14 +397,27 @@ class _FencedCacheStore implements CacheStore {
       _scope == _store.currentScope &&
       _generation == CacheSession.instance.generation;
 
+  /// Checked before AND after the disk read: a session that ended while
+  /// the read was suspended must not deliver the old context's entry to a
+  /// consumer that already belongs to the new one.
   @override
-  Future<CacheEntry?> get(String key) async =>
-      _stillCurrent ? _store.get(key) : null;
+  Future<CacheEntry?> get(String key) async {
+    if (!_stillCurrent) return null;
+    final entry = await _store.get(key);
+    return _stillCurrent ? entry : null;
+  }
 
+  /// A write that landed after its session ended is taken back out: the
+  /// sweep that ended the session may already have passed.
   @override
   Future<void> put(String key, Object? payload,
       {required Duration ttl}) async {
-    if (_stillCurrent) await _store.put(key, payload, ttl: ttl);
+    if (!_stillCurrent) return;
+    await _store.put(key, payload, ttl: ttl);
+    final scope = _scope;
+    if (!_stillCurrent && scope != null) {
+      await _store.dropUnder(scope, key);
+    }
   }
 
   @override
