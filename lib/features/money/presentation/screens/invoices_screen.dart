@@ -130,6 +130,12 @@ class InvoicesScreen extends ConsumerWidget {
     // One labelled menu instead of six unlabelled icons: every tool names
     // itself, and each keeps its key.
     final toolItems = <(String, IconData, String, VoidCallback)>[
+      (
+        'invoicing-my-finances-tool',
+        Icons.account_balance_wallet_outlined,
+        l10n?.invoicingMyFinances ?? 'My finances',
+        () => context.push('/account-activity'),
+      ),
       if (repartitionAction != null)
         (
           'invoice-distribute-button',
@@ -350,24 +356,45 @@ class _Banner extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
+    // At large accessibility text the banner would eat the list: the same
+    // link stays one tap away in the tools menu.
+    if (MediaQuery.textScalerOf(context).scale(1) > 1.3) {
+      return const SizedBox.shrink();
+    }
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
       child: Card(
         key: const ValueKey('invoicing-banner'),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 8, 4, 8),
-          child: Row(children: [
-            Icon(Icons.info_outline, size: 20, color: scheme.onSurfaceVariant),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(text, style: Theme.of(context).textTheme.bodySmall),
-            ),
-            TextButton(
-              key: const ValueKey('invoicing-my-finances'),
-              onPressed: () => context.push('/account-activity'),
-              child: Text(l10n?.invoicingMyFinances ?? 'My finances'),
-            ),
-          ]),
+          padding: const EdgeInsets.fromLTRB(12, 8, 4, 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Icon(Icons.info_outline,
+                        size: 20, color: scheme.onSurfaceVariant),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(text,
+                        style: Theme.of(context).textTheme.bodySmall),
+                  ),
+                ],
+              ),
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: TextButton(
+                  key: const ValueKey('invoicing-my-finances'),
+                  onPressed: () => context.push('/account-activity'),
+                  child: Text(l10n?.invoicingMyFinances ?? 'My finances'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
