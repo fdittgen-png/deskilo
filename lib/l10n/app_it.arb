@@ -9528,6 +9528,7 @@
   "reservationLimitError": "Limite di prenotazioni raggiunto — hai già il numero massimo di prenotazioni aperte.",
   "reservationRecurring": "Prenotazione ricorrente",
   "reservationUpdatedSnack": "Prenotazione aggiornata.",
+  "reserveAvailabilityUnavailable": "Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprova.",
   "reserveBackToNow": "Torna ad adesso",
   "reserveBookingFailed": "Prenotazione non riuscita — il posto potrebbe essere appena stato occupato.",
   "reserveClosedShort": "Chiuso",

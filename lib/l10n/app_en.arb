@@ -17030,6 +17030,7 @@
   "@reservationUpdatedSnack": {
     "description": "Snackbar after an own reservation's window was edited (0033)"
   },
+  "reserveAvailabilityUnavailable": "Availability could not be loaded completely, so no seat is shown as free. Retry to see it.",
   "reserveBackToNow": "Back to now",
   "@reserveBackToNow": {
     "description": "#2016 Reserve time choice: reserveBackToNow"

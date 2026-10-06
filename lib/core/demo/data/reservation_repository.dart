@@ -188,12 +188,17 @@ class FakeReservationRepository implements ReservationRepository {
       [...reservations.where((r) => r.workspaceId == workspaceId)]
         ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 
+  /// #1848 — a test that proves the unavailable state: every window read
+  /// fails until it is switched off.
+  bool failWindowReads = false;
+
   @override
   Future<List<Reservation>> fetchWindow(
     String workspaceId, {
     required DateTime from,
     required DateTime to,
   }) async {
+    if (failWindowReads) throw StateError('the window read failed');
     _sweepDayEnd(workspaceId);
     return reservations
         .where((r) =>

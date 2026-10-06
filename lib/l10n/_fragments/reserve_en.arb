@@ -212,5 +212,6 @@
     }
   },
   "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
-  "bookingGateBlocked": "Not bookable as chosen"
+  "bookingGateBlocked": "Not bookable as chosen",
+  "reserveAvailabilityUnavailable": "Availability could not be loaded completely, so no seat is shown as free. Retry to see it."
 }

@@ -93,6 +93,17 @@ class SupabaseReservationRepository implements ReservationRepository {
                 .gt('ends_at', from.toUtc().toIso8601String())
                 .order('starts_at', ascending: true)
                 .order('id', ascending: true),
+            // The closing count: a window that changed mid-read is read
+            // again or refused, never cached as complete.
+            count: () async => (await _client
+                    .from('reservations')
+                    .select('id')
+                    .eq('workspace_id', workspaceId)
+                    .lt('starts_at', to.toUtc().toIso8601String())
+                    .gt('ends_at', from.toUtc().toIso8601String())
+                    .range(0, 0)
+                    .count(CountOption.exact))
+                .count,
           );
         },
         parse: (payload) => [

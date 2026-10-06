@@ -17,6 +17,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../widgets/availability_unavailable_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -1065,10 +1066,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   /// see who else is booked; own blocks open the detail sheet.
   Widget _dayView() {
     final myMemberId = ref.watch(myMemberProvider).value?.id;
-    final reservations = ref
-            .watch(reservationsForDayProvider(dayKeyOf(_selectedDay)))
-            .value ??
-        const <Reservation>[];
+    final dayKey = dayKeyOf(_selectedDay);
+    final dayRead = ref.watch(reservationsForDayProvider(dayKey));
+    if (dayRead.hasError && !dayRead.hasValue) {
+      return AvailabilityUnavailableBanner(dayKey: dayKey);
+    }
+    final reservations = dayRead.value ?? const <Reservation>[];
     final active = [for (final r in reservations) if (r.isActive) r];
     return DayTimeline(
       day: _selectedDay,
