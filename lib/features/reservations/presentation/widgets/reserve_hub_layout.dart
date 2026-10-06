@@ -40,9 +40,15 @@ class ReserveHubLayout extends StatelessWidget {
           content,
         ]);
       }
+      // The header takes the height it needs, up to a share of the screen
+      // (it scrolls beyond that), and the plan or timeline gets ALL the rest.
+      // Two flexible children would split the free height in half and leave
+      // the unused half of the header's share blank.
       return Column(children: [
-        Flexible(child: SingleChildScrollView(
-          key: const ValueKey('reserve-header-scroll'), child: header)),
+        ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: constraints.maxHeight * 0.55),
+          child: SingleChildScrollView(
+            key: const ValueKey('reserve-header-scroll'), child: header)),
         content,
       ]);
     }));
