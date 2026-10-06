@@ -39,14 +39,15 @@ select lives_ok($$select public.request_public_workspace_profile('00000000-0000-
 select ok(not public.is_member_of('00000000-0000-4000-8000-0000000302b1'),'request does not bypass approval');
 select is(jsonb_array_length(public.search_available_accounts('Host')),1,'available account is discoverable');
 select is(jsonb_array_length(public.search_available_accounts('Admin')),0,'public admin without account opt-in is not globally discoverable');
-select throws_ok($$select public.send_account_message('00000000-0000-4000-8000-0000000302a2','Hello','00000000-0000-4000-8000-0000000302a3')$$,'P0001','recipient unavailable','public visibility alone cannot enable an inbox');
+-- 0388: public visibility alone opens no inbox: the first message is only a held request.
+select lives_ok($$select public.send_account_message('00000000-0000-4000-8000-0000000302a2','Hello','00000000-0000-4000-8000-0000000302a3')$$,'public visibility alone cannot enable an inbox: the message is held as a request');
 select lives_ok($$select public.send_account_message('00000000-0000-4000-8000-0000000302a1','Can I visit?','00000000-0000-4000-8000-0000000302a3')$$,'applicant can contact opted-in owner without membership');
 reset role;
 select set_config('t.thread',(select id::text from public.account_conversations where user_a='00000000-0000-4000-8000-0000000302a1' and user_b='00000000-0000-4000-8000-0000000302a3'),true);
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000302a2","role":"authenticated"}',true);
 set local role authenticated;
 select throws_ok(format('select public.my_account_messages(%L::uuid)',current_setting('t.thread')),'P0001','conversation unavailable','workspace admin cannot read other accounts private discussion');
-select is(jsonb_array_length(public.my_account_conversations()),0,'admin cannot list other account threads');
+select is(jsonb_array_length(public.my_account_conversations()),1,'admin lists only their own held request, not other account threads');
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000302a1","role":"authenticated"}',true);
 select is(jsonb_array_length(public.my_account_messages(current_setting('t.thread')::uuid)),1,'recipient sees the actual message');
 select lives_ok($$select public.set_contact_availability(false)$$,'recipient withdraws global availability');
