@@ -51,13 +51,19 @@ String buildInvoiceRegisterCsv(
   return '${rows.join('\r\n')}\r\n';
 }
 
+/// #1885 — every entry of an export archive carries this time, so the same
+/// frozen input is the same bytes whenever and wherever it is zipped. The
+/// encoder reads it as local wall-clock time, hence a local-constructed
+/// date: its DOS fields come out the same in every timezone.
+int get kZipEntryTime => DateTime(2000).millisecondsSinceEpoch ~/ 1000;
+
 /// The zip: paths as given, bytes as given. Deterministic order so two
 /// bundles of the same year are byte-identical.
 Uint8List zipBundle(Map<String, List<int>> files) {
   final archive = Archive();
   for (final path in files.keys.toList()..sort()) {
     final bytes = files[path]!;
-    archive.addFile(ArchiveFile(path, bytes.length, bytes));
+    archive.addFile(ArchiveFile(path, bytes.length, bytes)..lastModTime = kZipEntryTime);
   }
   return Uint8List.fromList(ZipEncoder().encode(archive));
 }
