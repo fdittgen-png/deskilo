@@ -60,18 +60,29 @@ class InboxScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    return const Scaffold(body: InboxFace());
+  }
+}
+
+/// What the workspace itself addresses to a person: its alerts, the
+/// requests sent to it and one door to the messenger. One widget, shown
+/// by the inbox destination AND as the calendar's Alerts view (the
+/// calendar is where alerts and events live now), so the two can never
+/// differ.
+class InboxFace extends ConsumerWidget {
+  const InboxFace({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final features = ref.watch(enabledFeaturesSyncProvider);
     final alerts = features.contains(WorkspaceFeature.eventsTab);
-    // Discussions live in the messenger of the Me space; this destination
-    // keeps what belongs to the workspace itself: its alerts, the requests
-    // addressed to it, and one door to the messenger.
-    return Scaffold(
-      body: Column(
-        children: [
-          _TopRow(alerts: alerts),
-          if (alerts) const Expanded(child: EventsScreen()) else const Spacer(),
-        ],
-      ),
+    // Discussions live in the messenger of the Me space; this keeps what
+    // belongs to the workspace itself.
+    return Column(
+      children: [
+        _TopRow(alerts: alerts),
+        if (alerts) const Expanded(child: EventsScreen()) else const Spacer(),
+      ],
     );
   }
 }

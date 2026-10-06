@@ -333,5 +333,6 @@
   "calendarEventActionRefused": "refused",
   "@calendarEventActionRefused": {
     "description": "#843 - verb of a refused decision"
-  }
+  },
+  "calendarViewAlerts": "Alerts"
 }

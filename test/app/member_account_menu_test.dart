@@ -183,7 +183,7 @@ void main() {
         (tester) async {
       await _pump(tester, _repo(flag: true));
 
-      expect(await _push(tester, '/workspace-settings'), '/messages',
+      expect(await _push(tester, '/workspace-settings'), '/calendar',
           reason: 'the route guard reads the permission matrix, not the '
               'menu — renaming the entry withdraws nothing and grants '
               'nothing');

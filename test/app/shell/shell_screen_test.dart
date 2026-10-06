@@ -22,11 +22,11 @@ Future<void> pumpApp(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('shell shows the four localized destinations', (tester) async {
+  testWidgets('shell shows the three localized destinations (the calendar holds the alerts)', (tester) async {
     await pumpApp(tester);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
-    for (final label in ['Alerts', 'Calendar', 'Members', 'Money']) {
+    for (final label in ['Calendar', 'Members', 'Money']) {
       expect(find.text(label), findsWidgets, reason: 'missing tab "$label"');
     }
   });

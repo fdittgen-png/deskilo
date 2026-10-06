@@ -30,12 +30,24 @@ abstract final class ShellBranch {
 /// they cannot drift apart, and no feature combination can produce a
 /// duplicate or an empty slot. The Reserve hub is the centre button, not a
 /// bar destination, and is never in the list.
+/// The calendar hub is where alerts and events live (they were the Messages
+/// destination): with it on, that destination leaves the bar and its path
+/// opens the calendar. [effective] is the workspace's effective feature set.
+bool calendarHoldsAlerts(Set<WorkspaceFeature> effective) =>
+    effective.contains(WorkspaceFeature.calendarTab) &&
+    effective.contains(WorkspaceFeature.calendarHub) &&
+    // Nothing to merge while the alerts are switched off: the Messages
+    // destination stays, as the door to the messenger.
+    effective.contains(WorkspaceFeature.eventsTab);
+
 List<int> visibleShellBranches(
   Set<WorkspaceFeature> features,
   Set<WorkspacePermission> permissions,
 ) =>
     [
-      if (permissions.contains(WorkspacePermission.useMessages))
+      if (permissions.contains(WorkspacePermission.useMessages) &&
+          !(calendarHoldsAlerts(features) &&
+              permissions.contains(WorkspacePermission.viewCalendar)))
         ShellBranch.messages,
       if (features.contains(WorkspaceFeature.calendarTab) &&
           permissions.contains(WorkspacePermission.viewCalendar))
@@ -80,6 +92,9 @@ IconData shellBranchIcon(int branch, {bool selected = false}) =>
 /// workspace's effective feature set, so a stored child under a switched-
 /// off parent does not claim the signal.
 bool decisionSignalOnCalendar(Set<WorkspaceFeature> effective) =>
-    !effective.contains(WorkspaceFeature.eventsTab) &&
-    effective.contains(WorkspaceFeature.calendarTab) &&
-    effective.contains(WorkspaceFeature.calendarValidations);
+    // The calendar holds the alerts now: it carries the pending count
+    // whether or not the bell shortcut is on.
+    calendarHoldsAlerts(effective) ||
+    (!effective.contains(WorkspaceFeature.eventsTab) &&
+        effective.contains(WorkspaceFeature.calendarTab) &&
+        effective.contains(WorkspaceFeature.calendarValidations));

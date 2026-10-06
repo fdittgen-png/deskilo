@@ -62,7 +62,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('shell-drawer')), findsOneWidget);
     for (final key in [
-      'drawer-reserve', 'drawer-tab-0', 'drawer-tab-1', 'drawer-tab-2',
+      'drawer-reserve', 'drawer-tab-1', 'drawer-tab-2',
       'drawer-tab-3', 'drawer-events', 'drawer-workspace-settings',
       'drawer-members', 'drawer-roles', 'drawer-invoices', 'drawer-billing',
       'drawer-features', 'drawer-settings', 'drawer-privacy',

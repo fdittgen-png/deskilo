@@ -70,19 +70,19 @@ void main() {
   testWidgets('an equal server boots normally', (tester) async {
     await _boot(tester, const FixedSchemaVersionSource(requiredSchemaVersion));
     expect(find.byKey(_update), findsNothing);
-    expect(find.text('Alerts'), findsWidgets);
+    expect(find.text('Calendar'), findsWidgets);
   });
 
   testWidgets('a newer server boots normally', (tester) async {
     await _boot(tester, const FixedSchemaVersionSource(requiredSchemaVersion + 1));
     expect(find.byKey(_update), findsNothing);
-    expect(find.text('Alerts'), findsWidgets);
+    expect(find.text('Calendar'), findsWidgets);
   });
 
   testWidgets('an unanswered check never blocks', (tester) async {
     await _boot(tester, const FixedSchemaVersionSource(null, unavailable: true));
     expect(find.byKey(_update), findsNothing);
-    expect(find.text('Alerts'), findsWidgets);
+    expect(find.text('Calendar'), findsWidgets);
   });
 
   testWidgets('the Server screen stays reachable from the update screen',

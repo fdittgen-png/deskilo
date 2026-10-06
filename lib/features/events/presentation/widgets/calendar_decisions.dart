@@ -32,3 +32,8 @@ class CalendarDecisions extends ConsumerWidget {
     );
   }
 }
+
+/// How many decisions wait on this member — the number the calendar's Alerts
+/// view and its destination badge show.
+int pendingAlertCount(WidgetRef ref) =>
+    ref.watch(myPendingEventCountProvider).value ?? 0;

@@ -58,16 +58,16 @@ void main() {
     expect(tabLabels(tester), ['Alerts', 'Members']);
   });
 
-  testWidgets('all features on keeps the four tabs', (tester) async {
+  testWidgets('all features on keeps the three tabs — the calendar holds the alerts', (tester) async {
     await pumpWithFlags(tester, const {});
 
-    expect(tabLabels(tester), ['Alerts', 'Calendar', 'Members', 'Money']);
+    expect(tabLabels(tester), ['Calendar', 'Members', 'Money']);
   });
 
   testWidgets('membersDirectory OFF drops the Members tab', (tester) async {
     await pumpWithFlags(tester, const {'membersDirectory': false});
 
-    expect(tabLabels(tester), ['Alerts', 'Calendar', 'Money']);
+    expect(tabLabels(tester), ['Calendar', 'Money']);
   });
 
   testWidgets(

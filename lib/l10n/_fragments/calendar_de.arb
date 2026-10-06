@@ -237,5 +237,6 @@
   "calendarValidationValidated": "Freigegeben: {what}",
   "calendarValidationRefused": "Abgelehnt: {what}",
   "calendarEventActionValidated": "freigegeben",
-  "calendarEventActionRefused": "abgelehnt"
+  "calendarEventActionRefused": "abgelehnt",
+  "calendarViewAlerts": "Hinweise"
 }

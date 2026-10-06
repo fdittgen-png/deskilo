@@ -2485,6 +2485,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarViewAgenda => 'Agenda';
 
   @override
+  String get calendarViewAlerts => 'Avvisi';
+
+  @override
   String get calendarViewMonth => 'Mese';
 
   @override

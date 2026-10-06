@@ -417,7 +417,8 @@ class ShellScreen extends ConsumerWidget {
                       child: const Icon(Icons.inbox_outlined),
                     ),
               tooltip: lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events'),
-              // The /events path already lands on the alerts face.
+              // The /events path lands on the alerts (the calendar's Alerts
+              // view when the hub holds them).
               onPressed: () => context.go('/events'),
             ),
           // #1598 — the SAME destination under two names. Hiding an

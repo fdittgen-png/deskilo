@@ -237,5 +237,6 @@
   "calendarValidationValidated": "Validé : {what}",
   "calendarValidationRefused": "Refusé : {what}",
   "calendarEventActionValidated": "validé",
-  "calendarEventActionRefused": "refusé"
+  "calendarEventActionRefused": "refusé",
+  "calendarViewAlerts": "Alertes"
 }

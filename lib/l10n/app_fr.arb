@@ -1542,6 +1542,7 @@
   "calendarValidationRefused": "Refusé : {what}",
   "calendarValidationValidated": "Validé : {what}",
   "calendarViewAgenda": "Agenda",
+  "calendarViewAlerts": "Alertes",
   "calendarViewMonth": "Mois",
   "calendarViewWeek": "Semaine",
   "calendarWeekEmpty": "Rien cette semaine.",

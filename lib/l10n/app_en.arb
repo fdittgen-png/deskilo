@@ -2923,6 +2923,7 @@
     }
   },
   "calendarViewAgenda": "Agenda",
+  "calendarViewAlerts": "Alerts",
   "calendarViewMonth": "Month",
   "calendarViewWeek": "Week",
   "calendarWeekEmpty": "Nothing this week.",
