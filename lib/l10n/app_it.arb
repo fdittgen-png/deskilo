@@ -5256,6 +5256,7 @@
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
+  "invoiceMissingSellerCountry": "Il paese dello spazio deve essere Francia o Germania per emettere qui — gli altri paesi si emettono fuori dall'app",
   "invoiceMissingSellerVatId": "Il numero di partita IVA dello spazio",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
@@ -5264,6 +5265,7 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
+  "invoiceMissingVatRate": "Un'aliquota IVA in vigore per l'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)",
   "invoiceNoOpen": "Nessuna fattura aperta.",
   "invoiceNothingToInvoice": "Nessun dato registrato per questo mese — niente da fatturare.",
   "invoiceOpenAge": "{days} giorni",
@@ -9660,6 +9662,7 @@
   "reservationLimitError": "Limite di prenotazioni raggiunto — hai già il numero massimo di prenotazioni aperte.",
   "reservationRecurring": "Prenotazione ricorrente",
   "reservationUpdatedSnack": "Prenotazione aggiornata.",
+  "reserveAvailabilityUnavailable": "Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprova.",
   "reserveBackToNow": "Torna ad adesso",
   "reserveBookingFailed": "Prenotazione non riuscita — il posto potrebbe essere appena stato occupato.",
   "reserveClosedShort": "Chiuso",

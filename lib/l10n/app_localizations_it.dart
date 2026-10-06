@@ -8206,12 +8206,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'indirizzo postale dello spazio (via o città)';
 
   @override
+  String get invoiceMissingSellerCountry =>
+      'Il paese dello spazio deve essere Francia o Germania per emettere qui — gli altri paesi si emettono fuori dall\'app';
+
+  @override
   String get invoiceMissingSellerVatId =>
       'Il numero di partita IVA dello spazio';
 
   @override
   String get invoiceMissingTitle =>
       'Completa questi dati prima dell\'emissione';
+
+  @override
+  String get invoiceMissingVatRate =>
+      'Un\'aliquota IVA in vigore per l\'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)';
 
   @override
   String get invoiceNoOpen => 'Nessuna fattura aperta.';
@@ -15040,6 +15048,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reservationUpdatedSnack => 'Prenotazione aggiornata.';
+
+  @override
+  String get reserveAvailabilityUnavailable =>
+      'Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprova.';
 
   @override
   String get reserveBackToNow => 'Torna ad adesso';

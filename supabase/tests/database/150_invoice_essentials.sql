@@ -5,7 +5,7 @@
 -- taken, so a refused invoice leaves no row and no gap. A consumer is not
 -- asked for a postal address; a stated business capacity is.
 begin;
-select plan(11);
+select plan(15);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000001917'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -26,7 +26,8 @@ $$;
 select is(pg_temp.missing('{"seller":{"street":"","city":""},"buyer":{"name":"B"}}'),
   array['seller_address'], 'no street and no city: the seller address is missing');
 select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"vat_registered","vat_id":""},"buyer":{"name":"B"}}'),
-  array['seller_vat_id'], 'a VAT-registered seller needs its identifier');
+  array['seller_vat_id','vat_rate_unresolved'],
+  'a VAT-registered seller needs its identifier — and, with no default rate, a rate (#1917)');
 select is(pg_temp.missing('{"seller":{"city":"c","vat_regime":"exempt","tax_exemption_reason":""},"buyer":{"name":"B"}}',
   '[{"category":"E"}]'), array['exemption_reason'], 'an exempt line needs its legal basis');
 select is(pg_temp.missing('{"seller":{"city":"c","vat_regime":"exempt","tax_exemption_reason":"art. 261"},"buyer":{"name":"B"}}',
@@ -44,6 +45,21 @@ select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"B","street":"
 update public.members set customer_capacity = 'consumer' where id = '00000000-0000-4000-8000-0000001917c2';
 select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"B","street":"","city":""}}'),
   array[]::text[], 'a consumer does not');
+
+-- #1917: a default rate in force resolves; an unsupported seller country refuses.
+insert into public.vat_rates(workspace_id,label,percent,is_default)
+  values ('00000000-0000-4000-8000-0000001917b1','Standard',20,true);
+select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"vat_registered","vat_id":"FR1"},"buyer":{"name":"B"}}'),
+  array[]::text[], 'a resolvable default rate is not missing');
+update public.vat_rates set active = false where workspace_id = '00000000-0000-4000-8000-0000001917b1';
+select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"vat_registered","vat_id":"FR1"},"buyer":{"name":"B"}}'),
+  array['vat_rate_unresolved'], 'an inactive default rate never falls back to 0 %');
+update public.workspaces set country_code = 'US' where id = '00000000-0000-4000-8000-0000001917b1';
+select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"B"}}'),
+  array['seller_country_unsupported'], 'a country the clauses were not reviewed for refuses issuing');
+select is(pg_temp.missing('{"seller":{"city":"c","country":"DE"},"buyer":{"name":"B"}}'),
+  array[]::text[], 'the seller country stated on the party (DE) is reviewed');
+update public.workspaces set country_code = 'FR' where id = '00000000-0000-4000-8000-0000001917b1';
 
 -- The gate itself: the workspace has no postal address. The owner issues.
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001917a1","role":"authenticated"}',true);

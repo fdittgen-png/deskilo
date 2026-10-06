@@ -105,5 +105,6 @@
   "planCheckOutFor": "{name} auschecken",
   "@planCheckOutFor": {"placeholders": {"name": {"type": "String"}}},
   "scanCameraWebUnavailable": "Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).",
-  "bookingGateBlocked": "So nicht buchbar"
+  "bookingGateBlocked": "So nicht buchbar",
+  "reserveAvailabilityUnavailable": "Die Verfügbarkeit konnte nicht vollständig geladen werden, deshalb wird kein Platz als frei angezeigt. Erneut versuchen."
 }

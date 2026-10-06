@@ -67,8 +67,10 @@ Future<List<Map<String, dynamic>>> fetchAllPages({
   required PostgrestTransformBuilder<PostgrestList> Function() build,
   int pageSize = kExportPageSize,
   int maxRows = kExportMaxRows,
+  Future<int> Function()? count,
 }) =>
     fetchPages(
+      count: count,
       table: table,
       page: (from, to) async => [
         for (final row in await build().range(from, to))
@@ -91,16 +93,39 @@ Future<List<Map<String, dynamic>>> fetchPages({
   required Future<List<Map<String, dynamic>>> Function(int from, int to) page,
   int pageSize = kExportPageSize,
   int maxRows = kExportMaxRows,
+  Future<int> Function()? count,
+  int attempts = 3,
 }) async {
-  final all = <Map<String, dynamic>>[];
-  while (true) {
-    final rows = await page(all.length, all.length + pageSize - 1);
-    if (rows.isEmpty) return all;
-    all.addAll(rows);
-    if (all.length >= maxRows) {
-      throw ExportTooLargeException(table, maxRows);
+  for (var attempt = 1;; attempt++) {
+    final all = <Map<String, dynamic>>[];
+    while (true) {
+      final rows = await page(all.length, all.length + pageSize - 1);
+      if (rows.isEmpty) break;
+      all.addAll(rows);
+      if (all.length >= maxRows) {
+        throw ExportTooLargeException(table, maxRows);
+      }
     }
+    if (count == null) return all;
+    // Offset traversal is not a snapshot (#1848): a row inserted, deleted
+    // or retimed between two pages repeats or skips rows. The read is
+    // complete only when no id repeats and the closing exact count agrees;
+    // otherwise it is read again, and after [attempts] it is refused.
+    final ids = {for (final r in all) r['id']};
+    if (ids.length == all.length && await count() == all.length) return all;
+    if (attempt >= attempts) throw IncompleteReadException(table);
   }
+}
+
+/// A paged read whose rows changed under it on every attempt: what it
+/// would return can be neither proven complete nor shown as free capacity.
+class IncompleteReadException implements Exception {
+  const IncompleteReadException(this.table);
+  final String table;
+
+  @override
+  String toString() => 'IncompleteReadException: $table changed while it '
+      'was being read — the window is incomplete.';
 }
 
 /// #2011 — ids per `in.(…)` request: bounded, so a large plan never builds

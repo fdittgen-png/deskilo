@@ -8223,12 +8223,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'adresse postale de l\'espace (rue ou ville)';
 
   @override
+  String get invoiceMissingSellerCountry =>
+      'Le pays de l\'espace doit être la France ou l\'Allemagne pour émettre ici — les autres pays sont émis hors de l\'application';
+
+  @override
   String get invoiceMissingSellerVatId =>
       'Le numéro d\'identification TVA de l\'espace';
 
   @override
   String get invoiceMissingTitle =>
       'Complétez ces informations avant d\'émettre';
+
+  @override
+  String get invoiceMissingVatRate =>
+      'Un taux de TVA en vigueur pour le taux par défaut de l\'espace (sinon 0 % serait facturé)';
 
   @override
   String get invoiceNoOpen => 'Aucune facture en cours.';
@@ -15069,6 +15077,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reservationUpdatedSnack => 'Réservation mise à jour.';
+
+  @override
+  String get reserveAvailabilityUnavailable =>
+      'La disponibilité n\'a pas pu être chargée en entier : aucune place n\'est affichée comme libre. Réessayez.';
 
   @override
   String get reserveBackToNow => 'Revenir à maintenant';

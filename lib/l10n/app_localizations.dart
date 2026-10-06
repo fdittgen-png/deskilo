@@ -14034,6 +14034,12 @@ abstract class AppLocalizations {
   /// **'The workspace\'s postal address (street or city)'**
   String get invoiceMissingSellerAddress;
 
+  /// No description provided for @invoiceMissingSellerCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace country must be France or Germany for issuing here — other countries are issued outside the app'**
+  String get invoiceMissingSellerCountry;
+
   /// #1916 invoice essentials: invoiceMissingSellerVatId
   ///
   /// In en, this message translates to:
@@ -14045,6 +14051,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Complete these details before issuing'**
   String get invoiceMissingTitle;
+
+  /// No description provided for @invoiceMissingVatRate.
+  ///
+  /// In en, this message translates to:
+  /// **'A VAT rate in force for the workspace\'s default rate (it would bill 0 %)'**
+  String get invoiceMissingVatRate;
 
   /// Open tab empty state
   ///
@@ -25801,6 +25813,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reservation updated.'**
   String get reservationUpdatedSnack;
+
+  /// No description provided for @reserveAvailabilityUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability could not be loaded completely, so no seat is shown as free. Retry to see it.'**
+  String get reserveAvailabilityUnavailable;
 
   /// #2016 Reserve time choice: reserveBackToNow
   ///
