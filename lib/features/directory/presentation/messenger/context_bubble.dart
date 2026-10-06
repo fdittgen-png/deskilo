@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+
+import '../../../workspace/presentation/widgets/member_note_body.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
@@ -86,9 +88,12 @@ class ContextBubble extends ConsumerWidget {
                 origin: message.forwardedFrom!,
                 color: muted,
               ),
-            Text(
-              message.body,
+            // References ([res:…] [space:…] [ref:…]) read as links that
+            // open what they name, exactly as in the workspace thread.
+            MemberNoteBody(
+              body: message.body,
               style: theme.textTheme.bodyMedium?.copyWith(color: fg),
+              linkColor: fg,
             ),
             Row(
               mainAxisSize: MainAxisSize.min,

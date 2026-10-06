@@ -169,10 +169,10 @@ void main() {
       expect(find.text('Is the meeting room free on Friday?'), findsOneWidget);
       expect(messenger.reads, ['inq-1']);
       await tester.enterText(
-        find.byKey(const ValueKey('context-composer')),
+        find.byKey(const ValueKey('member-note-body')),
         'Yes, from 9.',
       );
-      await tester.tap(find.byKey(const ValueKey('context-send')));
+      await tester.tap(find.byKey(const ValueKey('member-note-send')));
       await tester.pumpAndSettle();
       expect(find.text('Yes, from 9.'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('inquiry-close')));

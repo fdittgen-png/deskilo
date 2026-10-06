@@ -2,6 +2,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
+import '../../../workspace/presentation/widgets/member_note_composer.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/capture/capture_shield.dart';
@@ -61,12 +64,18 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   bool _busy = false;
   bool _loadingEarlier = false;
   Timer? _refresh;
+  String? _previousWorkspace;
+  bool _switchedWorkspace = false;
 
   bool get _isInquiry => widget.kind.isInquiry;
+
+  late final ActiveWorkspaceId _activeNotifier =
+      ref.read(activeWorkspaceIdProvider.notifier);
 
   @override
   void initState() {
     super.initState();
+    _activeNotifier;
     Future.microtask(_markRead);
     _refresh = Timer.periodic(_poll, (_) {
       if (mounted && _contextId.isNotEmpty && _earlier.isEmpty) {
@@ -79,7 +88,23 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   void dispose() {
     _refresh?.cancel();
     _body.dispose();
+    // The workspace chosen for references is only lent to this thread.
+    final previous = _previousWorkspace;
+    if (_switchedWorkspace && previous != null) {
+      final notifier = _activeNotifier;
+      Future.microtask(() => notifier.select(previous));
+    }
     super.dispose();
+  }
+
+  /// References (a reservation, a space, an invoice…) belong to a workspace:
+  /// when I belong to several, I choose which one the picker and the links
+  /// speak about.
+  Future<void> _chooseWorkspace(String id) async {
+    _previousWorkspace ??= await ref.read(activeWorkspaceIdProvider.future);
+    _switchedWorkspace = true;
+    await ref.read(activeWorkspaceIdProvider.notifier).select(id);
+    if (mounted) setState(() {});
   }
 
   ContextMessagesProvider get _provider =>
@@ -372,7 +397,71 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     );
   }
 
-  Widget _composer(AppLocalizations? l10n) => SafeArea(
+  /// Local conversations carry references: the shared composer (text, the
+  /// attach menu for reservations, spaces and documents, send) plus, for
+  /// someone in several workspaces, the choice of which workspace the
+  /// references speak about. A remote server's thread keeps the plain field.
+  Widget _composer(AppLocalizations? l10n) {
+    if (widget.source.isNotEmpty) return _plainComposer(l10n);
+    final workspaces = ref.watch(myWorkspacesProvider).value ?? const [];
+    final active = ref.watch(activeWorkspaceIdProvider).value;
+    return SafeArea(
+      top: false,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (workspaces.length > 1)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md, AppSpacing.xs, AppSpacing.md, 0),
+              child: Row(
+                children: [
+                  Icon(Icons.link, size: 16,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  const SizedBox(width: AppSpacing.xs),
+                  Text(
+                    l10n?.threadRefsIn ?? 'References in',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Flexible(
+                    child: DropdownButton<String>(
+                      key: const ValueKey('thread-ref-workspace'),
+                      value: workspaces.any((w) => w.id == active) ? active : null,
+                      isDense: true,
+                      isExpanded: true,
+                      underline: const SizedBox.shrink(),
+                      items: [
+                        for (final w in workspaces)
+                          DropdownMenuItem(
+                            value: w.id,
+                            child: Text(w.name, overflow: TextOverflow.ellipsis),
+                          ),
+                      ],
+                      onChanged: (id) {
+                        if (id != null) _chooseWorkspace(id);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          MemberNoteComposer(
+            key: const ValueKey('context-composer'),
+            compact: true,
+            autofocus: false,
+            onSend: (body) async {
+              _body.text = body;
+              await _send();
+              return _body.text.isEmpty;
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _plainComposer(AppLocalizations? l10n) => SafeArea(
     top: false,
     child: Padding(
       padding: AppSpacing.mdAll,

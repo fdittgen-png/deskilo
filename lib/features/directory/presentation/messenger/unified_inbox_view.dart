@@ -13,6 +13,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/messenger.dart';
 import '../../providers/inbox_marks.dart';
 import '../../providers/messenger_providers.dart';
+import '../../../workspace/domain/member_note_refs.dart';
 import 'context_labels.dart';
 import 'open_inbox_entry.dart';
 
@@ -249,7 +250,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                     : null,
               ),
               subtitle: Text(
-                '${contextSubtitle(l10n, entry, servers)}\n${entry.lastBody}',
+                '${contextSubtitle(l10n, entry, servers)}\n${notePreview(entry.lastBody, max: 120)}',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
