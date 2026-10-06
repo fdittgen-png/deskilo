@@ -226,19 +226,22 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
 
   @override
   Future<Map<String, String>> fetchTargetNames(String workspaceId) async {
-    final seatRows = await _client
-        .from('seats')
-        .select('id, name')
-        .eq('workspace_id', workspaceId);
-    final officeRows = await _client
-        .from('offices')
-        .select('id, name')
-        .eq('workspace_id', workspaceId);
+    // #2011 — every table paged to the end, ordered by id: an unranged
+    // select stops at the server's cap and a target past it would lose its
+    // name. A failed page fails the read (the provider shows it as
+    // unavailable), never a shorter map.
+    Future<List<Map<String, dynamic>>> names(String table) => fetchAllPages(
+          table: table,
+          build: () => _client
+              .from(table)
+              .select('id, name')
+              .eq('workspace_id', workspaceId)
+              .order('id', ascending: true),
+        );
+    final seatRows = await names('seats');
     // Desks joined (0059): whole-desk reservations name their table.
-    final deskRows = await _client
-        .from('desks')
-        .select('id, name')
-        .eq('workspace_id', workspaceId);
+    final deskRows = await names('desks');
+    final officeRows = await names('offices');
     return {
       for (final r in [...seatRows, ...deskRows, ...officeRows])
         r['id'] as String: r['name'] as String,
