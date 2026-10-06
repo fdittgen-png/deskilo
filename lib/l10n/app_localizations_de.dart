@@ -8217,11 +8217,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Postanschrift des Arbeitsbereichs (Straße oder Ort)';
 
   @override
+  String get invoiceMissingSellerCountry =>
+      'Das Land des Arbeitsbereichs muss Frankreich oder Deutschland sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt';
+
+  @override
   String get invoiceMissingSellerVatId =>
       'Die Umsatzsteuer-Identifikationsnummer des Arbeitsbereichs';
 
   @override
   String get invoiceMissingTitle => 'Vor der Ausstellung bitte ergänzen';
+
+  @override
+  String get invoiceMissingVatRate =>
+      'Ein gültiger Steuersatz für den Standardsatz des Arbeitsbereichs (sonst würde 0 % berechnet)';
 
   @override
   String get invoiceNoOpen => 'Keine offenen Rechnungen.';

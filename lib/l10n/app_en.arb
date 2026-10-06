@@ -9269,6 +9269,7 @@
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
+  "invoiceMissingSellerCountry": "The workspace country must be France or Germany for issuing here — other countries are issued outside the app",
   "invoiceMissingSellerVatId": "The workspace's VAT identification number",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
@@ -9277,6 +9278,7 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
+  "invoiceMissingVatRate": "A VAT rate in force for the workspace's default rate (it would bill 0 %)",
   "invoiceNoOpen": "No open invoices.",
   "@invoiceNoOpen": {
     "description": "Open tab empty state"
