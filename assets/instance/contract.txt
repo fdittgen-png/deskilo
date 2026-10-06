@@ -26,6 +26,11 @@ constraint account_badge_pins.account_badge_pins_pin_hash_check CHECK ((pin_hash
 constraint account_badge_pins.account_badge_pins_pkey PRIMARY KEY (user_id)
 constraint account_badge_pins.account_badge_pins_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 constraint account_badge_pins.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint account_blocks.account_blocks_blocked_fkey FOREIGN KEY (blocked) REFERENCES auth.users(id) ON DELETE CASCADE
+constraint account_blocks.account_blocks_blocker_fkey FOREIGN KEY (blocker) REFERENCES auth.users(id) ON DELETE CASCADE
+constraint account_blocks.account_blocks_check CHECK ((blocker <> blocked))
+constraint account_blocks.account_blocks_pkey PRIMARY KEY (blocker, blocked)
+constraint account_blocks.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint account_contact_settings.account_contact_settings_pkey PRIMARY KEY (user_id)
 constraint account_contact_settings.account_contact_settings_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 constraint account_contact_settings.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -1170,8 +1175,9 @@ constraint workspaces.workspaces_visibility_check CHECK ((visibility = ANY (ARRA
 constraint workspaces.workspaces_whatsapp_group_check CHECK (((whatsapp_group = ''::text) OR (whatsapp_group ~ '^https://chat\.whatsapp\.com/'::text)))
 routine public.accept_privacy_policy(p_version text) -> void | function | definer | volatile | exec:authenticated,service_role | body:f66d5b7a2f31
 routine public.account_audience_of(p_user uuid, p_field text) -> text | function | definer | stable | exec:service_role | body:f3ecc8c826e6
+routine public.account_blocked_between(p_a uuid, p_b uuid) -> boolean | function | definer | stable | exec:service_role | body:b531a1ec4c40
 routine public.account_display_name(p_user uuid) -> text | function | definer | stable | exec:service_role | body:23e2dc88d818
-routine public.account_field_visible_to(p_owner uuid, p_field text, p_viewer uuid) -> boolean | function | definer | stable | exec:service_role | body:bec66f5ef969
+routine public.account_field_visible_to(p_owner uuid, p_field text, p_viewer uuid) -> boolean | function | definer | stable | exec:service_role | body:608db13e5e4d
 routine public.account_group_admin(p_group uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f584f20fac29
 routine public.account_group_details(p_group uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:13a9ac4000cd
 routine public.account_group_member(p_group uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:7d60853ef1e6
@@ -1220,6 +1226,7 @@ routine public.bi_view_save(p_workspace_id uuid, p_id uuid, p_scope text, p_name
 routine public.bi_view_set_default(p_workspace_id uuid, p_scope text, p_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c9bf955f2bd2
 routine public.bi_views_gate(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:e6858809d33b
 routine public.bi_views_list(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e5197bc3183b
+routine public.block_account(p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:2c1298a0c4c0
 routine public.book_chart(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b41fc3441b69
 routine public.book_profiles(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f5fb693f89e2
 routine public.book_write_gate(p_workspace_id uuid, p_issuer_site_id uuid) -> void | function | definer | stable | exec:service_role | body:8f1d77f94f98
@@ -1304,7 +1311,7 @@ routine public.event_type_view_permissions(p_type text) -> text[] | function | i
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:9b491b3a3a5f
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:50db203e93fa
-routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:14ad06d954d6
+routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a4eb27c1be4f
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:68dd0f873a84
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:99a275c44fd9
@@ -1542,6 +1549,7 @@ routine public.my_account_messages(p_conversation uuid, p_before_at timestamp wi
 routine public.my_active_binding() -> uuid | function | definer | stable | exec:service_role | body:ba3c893c0846
 routine public.my_active_member(p_workspace_id uuid) -> members | function | definer | stable | exec:authenticated,service_role | body:67bfd226c319
 routine public.my_admin_visibility(p_workspace uuid, p_visible boolean) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:fad683dd1673
+routine public.my_blocks() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1c3692eef29f
 routine public.my_contact_availability() -> boolean | function | definer | stable | exec:authenticated,service_role | body:2fe523696cc8
 routine public.my_conversation_flags() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:12716e793587
 routine public.my_conversations(p_workspace_id uuid, p_include_archived boolean) -> TABLE(id uuid, kind text, title text, avatar_path text, other_member_id uuid, last_body text, last_at timestamp with time zone, last_from_member_id uuid, unread integer, participant_count integer, pinned_at timestamp with time zone, muted boolean, archived_at timestamp with time zone) | function | definer | stable | exec:authenticated,service_role | body:4299164a173c
@@ -1715,7 +1723,7 @@ routine public.seat_accessories_same_workspace() -> trigger | function | definer
 routine public.seed_default_plans() -> trigger | function | definer | volatile | exec:service_role | body:a5869cc6e468
 routine public.sell_credit(p_workspace_id uuid, p_member_id uuid, p_product_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:b52a7eecbc20
 routine public.send_account_group_message(p_group uuid, p_body text, p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:853f8440175b
-routine public.send_account_message(p_recipient uuid, p_body text, p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:c1bc0c66098f
+routine public.send_account_message(p_recipient uuid, p_body text, p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:613be2460a81
 routine public.send_conversation_message(p_conversation_id uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:47fa93ce998b
 routine public.send_inquiry_message(p_inquiry uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:f598896746e7
 routine public.send_member_note(p_workspace_id uuid, p_to_member_id uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:38f947267861
@@ -1822,6 +1830,7 @@ routine public.toggle_message_star(p_kind text, p_message_id uuid) -> boolean | 
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011
 routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:1ad738483c79
 routine public.unarchive_conversation_on_message() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1ef58a6f7319
+routine public.unblock_account(p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:913dd34e1777
 routine public.unset_my_kiosk(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f2b9fedee125
 routine public.update_managed_identity(p_member_id uuid, p_identity jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:42ab2e5f4c08
 routine public.update_reservation(p_reservation_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> void | function | definer | volatile | exec:authenticated,service_role | body:b1abab840eb1
@@ -1837,7 +1846,7 @@ routine public.vat_rate_id_by_label(p_workspace_id uuid, p_label text) -> uuid |
 routine public.vat_rate_percent_at(p_rate_id uuid, p_date date) -> numeric | function | definer | stable | exec:authenticated,service_role | body:89d0065cfc67
 routine public.vat_tax_point(p_period text) -> date | function | invoker | stable | exec:authenticated,service_role | body:55f2a0c0157c
 routine public.verify_invoice_signature(p_invoice_id uuid) -> text | function | definer | stable | exec:authenticated,service_role | body:65e617ac44a2
-routine public.visible_account(p_user_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b91589690f11
+routine public.visible_account(p_user_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:06d8ffb1c1f5
 routine public.void_invoice(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f65d910e8d0a
 routine public.who_can_access_me(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e87d0e2cdf5
 routine public.window_outside_working_hours(p_local_start timestamp without time zone, p_local_end timestamp without time zone, p_ws_start integer, p_ws_end integer) -> boolean | function | invoker | immutable | exec:service_role | body:1f792252b736
@@ -1874,6 +1883,7 @@ routine public.write_account_audience(p_user uuid, p_field text, p_audience text
 trigger accessories.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.accessories FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_about.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_about FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_badge_pins.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_badge_pins FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger account_blocks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_blocks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_contact_settings.refresh_public_contact CREATE TRIGGER refresh_public_contact AFTER INSERT OR DELETE OR UPDATE ON public.account_contact_settings FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
 trigger account_contact_settings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_contact_settings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_conversations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
