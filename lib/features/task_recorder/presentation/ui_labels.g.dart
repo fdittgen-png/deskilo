@@ -1602,6 +1602,7 @@ Map<String, _Getter> _part3() => {
   'guideHostCompleted': (l) => l.guideHostCompleted,
   'guideHostDone': (l) => l.guideHostDone,
   'guideHostFillField': (l) => l.guideHostFillField,
+  'guideHostGoToPage': (l) => l.guideHostGoToPage,
   'guideHostInstruction': (l) => l.guideHostInstruction,
   'guideHostManual': (l) => l.guideHostManual,
   'guideHostMinimize': (l) => l.guideHostMinimize,
@@ -1634,10 +1635,10 @@ Map<String, _Getter> _part3() => {
   'handoffSave': (l) => l.handoffSave,
   'handoffTitle': (l) => l.handoffTitle,
   'handoffVoided': (l) => l.handoffVoided,
-  'helpContents': (l) => l.helpContents,
 };
 
 Map<String, _Getter> _part4() => {
+  'helpContents': (l) => l.helpContents,
   'helpDotTooltip': (l) => l.helpDotTooltip,
   'helpGuidedTasks': (l) => l.helpGuidedTasks,
   'helpHintAvailability': (l) => l.helpHintAvailability,
@@ -2037,10 +2038,10 @@ Map<String, _Getter> _part4() => {
   'invoiceFilterAllMonths': (l) => l.invoiceFilterAllMonths,
   'invoiceFilterClear': (l) => l.invoiceFilterClear,
   'invoiceFilterMonthLabel': (l) => l.invoiceFilterMonthLabel,
-  'invoiceFilterNoMatch': (l) => l.invoiceFilterNoMatch,
 };
 
 Map<String, _Getter> _part5() => {
+  'invoiceFilterNoMatch': (l) => l.invoiceFilterNoMatch,
   'invoiceGapBuyerVatIdFormat': (l) => l.invoiceGapBuyerVatIdFormat,
   'invoiceGapCreditNoteWithPayments': (l) => l.invoiceGapCreditNoteWithPayments,
   'invoiceGapMissingBuyerCountry': (l) => l.invoiceGapMissingBuyerCountry,
@@ -2440,10 +2441,10 @@ Map<String, _Getter> _part5() => {
   'managedAccessSaved': (l) => l.managedAccessSaved,
   'managedAccessTitle': (l) => l.managedAccessTitle,
   'managedProfileAdd': (l) => l.managedProfileAdd,
-  'managedProfileChip': (l) => l.managedProfileChip,
 };
 
 Map<String, _Getter> _part6() => {
+  'managedProfileChip': (l) => l.managedProfileChip,
   'managedProfileCreated': (l) => l.managedProfileCreated,
   'managedProfileEdit': (l) => l.managedProfileEdit,
   'managedProfileHandOver': (l) => l.managedProfileHandOver,
@@ -2843,10 +2844,10 @@ Map<String, _Getter> _part6() => {
   'messengerForwardNoTargets': (l) => l.messengerForwardNoTargets,
   'messengerForwardTitle': (l) => l.messengerForwardTitle,
   'messengerHistory': (l) => l.messengerHistory,
-  'messengerHistoryEmpty': (l) => l.messengerHistoryEmpty,
 };
 
 Map<String, _Getter> _part7() => {
+  'messengerHistoryEmpty': (l) => l.messengerHistoryEmpty,
   'messengerHostsIntro': (l) => l.messengerHostsIntro,
   'messengerHostsNone': (l) => l.messengerHostsNone,
   'messengerInquiriesEmpty': (l) => l.messengerInquiriesEmpty,
@@ -3246,10 +3247,10 @@ Map<String, _Getter> _part7() => {
   'planUntilLabel': (l) => l.planUntilLabel,
   'planYourSeat': (l) => l.planYourSeat,
   'plansEditorEdit': (l) => l.plansEditorEdit,
-  'plansEditorInactive': (l) => l.plansEditorInactive,
 };
 
 Map<String, _Getter> _part8() => {
+  'plansEditorInactive': (l) => l.plansEditorInactive,
   'plansEditorNew': (l) => l.plansEditorNew,
   'plansEditorTitle': (l) => l.plansEditorTitle,
   'plansEditorUnlimited': (l) => l.plansEditorUnlimited,
@@ -3649,10 +3650,10 @@ Map<String, _Getter> _part8() => {
   'repartitionTitleField': (l) => l.repartitionTitleField,
   'repartitionTitleLabel': (l) => l.repartitionTitleLabel,
   'repartitionWeight': (l) => l.repartitionWeight,
-  'repartitionWizardSubtitle': (l) => l.repartitionWizardSubtitle,
 };
 
 Map<String, _Getter> _part9() => {
+  'repartitionWizardSubtitle': (l) => l.repartitionWizardSubtitle,
   'repartitionWizardTitle': (l) => l.repartitionWizardTitle,
   'repartitionWizardWeight': (l) => l.repartitionWizardWeight,
   'repeatDaily': (l) => l.repeatDaily,
@@ -4052,10 +4053,10 @@ Map<String, _Getter> _part9() => {
   'servicesEmpty': (l) => l.servicesEmpty,
   'servicesInactive': (l) => l.servicesInactive,
   'servicesName': (l) => l.servicesName,
-  'servicesNew': (l) => l.servicesNew,
 };
 
 Map<String, _Getter> _part10() => {
+  'servicesNew': (l) => l.servicesNew,
   'servicesPrice': (l) => l.servicesPrice,
   'servicesTitle': (l) => l.servicesTitle,
   'settingsBillingReports': (l) => l.settingsBillingReports,
@@ -4455,10 +4456,10 @@ Map<String, _Getter> _part10() => {
   'taskRecorderProtectedMessenger': (l) => l.taskRecorderProtectedMessenger,
   'taskRecorderProtectedOperator': (l) => l.taskRecorderProtectedOperator,
   'taskRecorderProtectedPayment': (l) => l.taskRecorderProtectedPayment,
-  'taskRecorderProtectedProvider': (l) => l.taskRecorderProtectedProvider,
 };
 
 Map<String, _Getter> _part11() => {
+  'taskRecorderProtectedProvider': (l) => l.taskRecorderProtectedProvider,
   'taskRecorderProtectedSecrets': (l) => l.taskRecorderProtectedSecrets,
   'taskRecorderPutBack': (l) => l.taskRecorderPutBack,
   'taskRecorderRecordATask': (l) => l.taskRecorderRecordATask,
@@ -4858,10 +4859,10 @@ Map<String, _Getter> _part11() => {
   'wizardSummaryHint': (l) => l.wizardSummaryHint,
   'wizardTallyDecided': (l) => l.wizardTallyDecided,
   'wizardTallyIssued': (l) => l.wizardTallyIssued,
-  'wizardTallyMatched': (l) => l.wizardTallyMatched,
 };
 
 Map<String, _Getter> _part12() => {
+  'wizardTallyMatched': (l) => l.wizardTallyMatched,
   'wizardTallyNothing': (l) => l.wizardTallyNothing,
   'wizardTallyRefunds': (l) => l.wizardTallyRefunds,
   'wizardTallyRegistered': (l) => l.wizardTallyRegistered,
