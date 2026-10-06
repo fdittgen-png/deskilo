@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1872 — the generator hook: how a rendered output (Word #1866, the
-// storyboard #1876, video #1879) plugs into the local workbench.
+// storyboard #1876) plugs into the local workbench.
 //
 // A generator is pure over the canonical, already validated recording:
 // no network, no provider, no workspace. Whether it can run here is
@@ -20,7 +20,7 @@ import '../domain/task_recording.dart';
 import '../storyboard/storyboard.dart';
 
 /// What an output is, so the workbench can name it in five languages.
-enum TaskOutputKind { document, storyboard, video, captions }
+enum TaskOutputKind { document, storyboard }
 
 /// Why an output is not available or was not made. A finite set the
 /// workbench words itself; never prose or a raw error from a generator.
@@ -31,7 +31,7 @@ enum TaskOutputReason {
   /// The storyboard given was reviewed for another revision.
   stale,
 
-  /// Nothing to show (no step a video can illustrate).
+  /// Nothing to show (no step an illustration can be made for).
   empty,
   tooLong,
 

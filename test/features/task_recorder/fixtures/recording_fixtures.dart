@@ -3,7 +3,7 @@
 // #1865 — the shared task-recording fixtures and private-data canaries.
 //
 // Every consumer of the recording schema (#1866 Word, #1867 guided
-// tasks, #1872 packages, #1876 storyboard, #1879 video) tests against
+// tasks, #1872 packages, #1876 storyboard) tests against
 // THESE recordings, never a copy: the JSON files beside this one are
 // produced by driving the real RecorderController through the booking
 // journeys below, and recording_fixtures_test.dart fails when the

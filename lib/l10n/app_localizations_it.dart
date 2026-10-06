@@ -16636,75 +16636,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get taskExportVideoBusy =>
-      'Un altro video è ancora in fase di creazione.';
-
-  @override
-  String get taskExportVideoCancel => 'Annulla il video';
-
-  @override
-  String get taskExportVideoCancelled =>
-      'Creazione del video annullata. Non è stato salvato nulla.';
-
-  @override
-  String get taskExportVideoEmpty =>
-      'Tutti i passaggi sono stati esclusi: non c\'è nulla da mostrare in un video.';
-
-  @override
-  String get taskExportVideoFailed =>
-      'Impossibile creare il video. Non è stato salvato nulla.';
-
-  @override
-  String get taskExportVideoGenerate => 'Crea il video';
-
-  @override
-  String taskExportVideoGenerating(int percent) {
-    return 'Creazione del video: $percent %';
-  }
-
-  @override
-  String get taskExportVideoIntro =>
-      'Un tutorial ricreato da un\'attività registrata. Mostra i passaggi, non la prova che l\'attività sia riuscita.';
-
-  @override
-  String get taskExportVideoLandscape => 'Orizzontale';
-
-  @override
-  String taskExportVideoLeftOut(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count passaggi sono stati esclusi durante la revisione.',
-      one: 'Un passaggio è stato escluso durante la revisione.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get taskExportVideoPortrait => 'Verticale';
-
-  @override
-  String taskExportVideoSaved(String file) {
-    return 'Video salvato con sottotitoli e trascrizione: $file';
-  }
-
-  @override
-  String taskExportVideoStepHeading(int number, String title) {
-    return 'Passaggio $number: $title';
-  }
-
-  @override
-  String get taskExportVideoSummary => 'Riepilogo';
-
-  @override
-  String get taskExportVideoTooLong =>
-      'Il video supererebbe la durata consentita. Accorcia le durate o escludi dei passaggi.';
-
-  @override
-  String get taskExportVideoUnsupported =>
-      'Questo dispositivo non può creare un video. Esporta il file di registrazione e aprilo su un dispositivo supportato: macOS, iOS, Android o un browser recente in grado di codificare video H.264.';
-
-  @override
   String get taskExportWordButton => 'Esporta come documento Word';
 
   @override
@@ -16750,9 +16681,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskOutputBusy => 'Questo risultato è già in creazione.';
 
   @override
-  String get taskOutputCaptions => 'Sottotitoli';
-
-  @override
   String get taskOutputDocument => 'Documento Word';
 
   @override
@@ -16763,7 +16691,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskOutputMissingMedia =>
-      'Questa attività non ha immagini o video da usare.';
+      'Questa attività non ha immagini da usare.';
 
   @override
   String get taskOutputStale =>
@@ -16779,9 +16707,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get taskOutputUnsupportedPlatform =>
       'Non disponibile su questo dispositivo.';
-
-  @override
-  String get taskOutputVideo => 'Video';
 
   @override
   String get taskRecorderActionBack => 'È tornato indietro';
