@@ -4112,14 +4112,19 @@ Map<String, _Getter> _part10() => {
   'spaceChipTooltip': (l) => l.spaceChipTooltip,
   'spaceCodesDesc': (l) => l.spaceCodesDesc,
   'spaceCodesTitle': (l) => l.spaceCodesTitle,
+  'spaceFavoriteAdd': (l) => l.spaceFavoriteAdd,
+  'spaceFavoriteRemove': (l) => l.spaceFavoriteRemove,
   'spaceKindDesk': (l) => l.spaceKindDesk,
   'spaceKindLevel': (l) => l.spaceKindLevel,
   'spaceKindOffice': (l) => l.spaceKindOffice,
   'spaceKindSeat': (l) => l.spaceKindSeat,
   'spaceManageMyBooking': (l) => l.spaceManageMyBooking,
+  'spaceMoveDown': (l) => l.spaceMoveDown,
+  'spaceMoveUp': (l) => l.spaceMoveUp,
   'spaceNotBookable': (l) => l.spaceNotBookable,
   'spaceNotWholeBookable': (l) => l.spaceNotWholeBookable,
   'spaceQrSizeLabel': (l) => l.spaceQrSizeLabel,
+  'spaceRatingClear': (l) => l.spaceRatingClear,
   'spaceScanField': (l) => l.spaceScanField,
   'spaceScanHint': (l) => l.spaceScanHint,
   'spaceScanInvalid': (l) => l.spaceScanInvalid,
@@ -4451,14 +4456,14 @@ Map<String, _Getter> _part10() => {
   'taskRecorderProtectedOperator': (l) => l.taskRecorderProtectedOperator,
   'taskRecorderProtectedPayment': (l) => l.taskRecorderProtectedPayment,
   'taskRecorderProtectedProvider': (l) => l.taskRecorderProtectedProvider,
+};
+
+Map<String, _Getter> _part11() => {
   'taskRecorderProtectedSecrets': (l) => l.taskRecorderProtectedSecrets,
   'taskRecorderPutBack': (l) => l.taskRecorderPutBack,
   'taskRecorderRecordATask': (l) => l.taskRecorderRecordATask,
   'taskRecorderRecordThisTask': (l) => l.taskRecorderRecordThisTask,
   'taskRecorderRecording': (l) => l.taskRecorderRecording,
-};
-
-Map<String, _Getter> _part11() => {
   'taskRecorderResume': (l) => l.taskRecorderResume,
   'taskRecorderSaveFailed': (l) => l.taskRecorderSaveFailed,
   'taskRecorderSaveNoPath': (l) => l.taskRecorderSaveNoPath,
@@ -4854,14 +4859,14 @@ Map<String, _Getter> _part11() => {
   'wizardTallyDecided': (l) => l.wizardTallyDecided,
   'wizardTallyIssued': (l) => l.wizardTallyIssued,
   'wizardTallyMatched': (l) => l.wizardTallyMatched,
+};
+
+Map<String, _Getter> _part12() => {
   'wizardTallyNothing': (l) => l.wizardTallyNothing,
   'wizardTallyRefunds': (l) => l.wizardTallyRefunds,
   'wizardTallyRegistered': (l) => l.wizardTallyRegistered,
   'wizardTallyReminded': (l) => l.wizardTallyReminded,
   'wizardTallySettled': (l) => l.wizardTallySettled,
-};
-
-Map<String, _Getter> _part12() => {
   'wizardTallyShared': (l) => l.wizardTallyShared,
   'wizardTallyWriteoffs': (l) => l.wizardTallyWriteoffs,
   'wizardTitle': (l) => l.wizardTitle,

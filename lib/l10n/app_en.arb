@@ -17987,6 +17987,8 @@
   "@spaceCodesTitle": {
     "description": "Workspace-settings tile printing the per-space QR sheet"
   },
+  "spaceFavoriteAdd": "Add to favorites",
+  "spaceFavoriteRemove": "Remove from favorites",
   "spaceKindDesk": "Desk",
   "@spaceKindDesk": {
     "description": "Kind label on a desk's printed QR card"
@@ -18016,6 +18018,8 @@
       }
     }
   },
+  "spaceMoveDown": "Move down",
+  "spaceMoveUp": "Move up",
   "spaceNotBookable": "This space is not set up for whole-space reservations.",
   "@spaceNotBookable": {
     "description": "Space sheet explainer when the office/level is not bookable or the feature is off"
@@ -18024,7 +18028,16 @@
   "@spaceNotWholeBookable": {
     "description": "Refusal when a desk/office/level lacks the bookable-as-a-whole toggle (#412)"
   },
+  "spaceOptions": "Options for {name}",
+  "@spaceOptions": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "spaceQrSizeLabel": "QR code size",
+  "spaceRatingClear": "No rating",
   "spaceScanField": "Code",
   "@spaceScanField": {
     "description": "Label of the typed space-code input"

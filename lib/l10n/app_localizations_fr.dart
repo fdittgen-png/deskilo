@@ -15938,6 +15938,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get spaceCodesTitle => 'Codes QR des espaces (PDF)';
 
   @override
+  String get spaceFavoriteAdd => 'Ajouter aux favoris';
+
+  @override
+  String get spaceFavoriteRemove => 'Retirer des favoris';
+
+  @override
   String get spaceKindDesk => 'Table';
 
   @override
@@ -15958,6 +15964,12 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get spaceMoveDown => 'Descendre';
+
+  @override
+  String get spaceMoveUp => 'Monter';
+
+  @override
   String get spaceNotBookable =>
       'Cet espace n\'est pas configuré pour les réservations entières.';
 
@@ -15966,7 +15978,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet espace n\'est pas configuré pour la réservation entière — le propriétaire active « Réservable en entier » dessus dans l\'éditeur.';
 
   @override
+  String spaceOptions(String name) {
+    return 'Options pour $name';
+  }
+
+  @override
   String get spaceQrSizeLabel => 'Taille du code QR';
+
+  @override
+  String get spaceRatingClear => 'Aucune note';
 
   @override
   String get spaceScanField => 'Code';

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/empty_state.dart';
@@ -19,6 +20,8 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../providers/me_providers.dart';
 import 'linked_spaces_section.dart';
 import 'me_space_card.dart';
+import 'space_row_controls.dart';
+import '../providers/space_prefs_provider.dart';
 import 'me_workspace_row.dart';
 import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/presentation/widgets/workspace_avatar.dart';
@@ -47,6 +50,8 @@ class MeHomeTab extends ConsumerWidget {
           : 'pair:${space.pairId}';
       groups.putIfAbsent(key, () => []).add(space);
     }
+    final prefs = ref.watch(spacePrefsProvider).value ?? SpacePrefs.empty;
+    final shown = prefs.arrange(groups.keys.toList());
     final nothing = spaces.isEmpty && linked.every((s) => s.spaces.isEmpty);
     return Scaffold(
       body: Align(
@@ -71,8 +76,29 @@ class MeHomeTab extends ConsumerWidget {
                   title: l10n?.meNoSpaceTitle ?? 'You are not in a space yet',
                   subtitle: l10n?.meNoSpaceBody ?? 'Find one near you, join with an invitation code, or create your own.',
                 ),
-              for (final group in groups.values)
+              for (final key in shown)
+                if (groups[key] case final group?)
                 MeWorkspaceRow(
+                  controls: SpaceRowControls(
+                    rowKey: key,
+                    name: group.first.name,
+                    favorite: prefs.favorites.contains(key),
+                    rating: prefs.ratings[key],
+                    onFavorite: () =>
+                        ref.read(spacePrefsProvider.notifier).toggleFavorite(key),
+                    onRate: (stars) =>
+                        ref.read(spacePrefsProvider.notifier).rate(key, stars),
+                    onUp: prefs.moved(shown, key, -1) == null
+                        ? null
+                        : () => ref
+                            .read(spacePrefsProvider.notifier)
+                            .move(shown, key, -1),
+                    onDown: prefs.moved(shown, key, 1) == null
+                        ? null
+                        : () => ref
+                            .read(spacePrefsProvider.notifier)
+                            .move(shown, key, 1),
+                  ),
                   key: ValueKey('me-space-pair-${group.first.pairId.isEmpty ? group.first.id : group.first.pairId}'),
                   avatar: WorkspaceAvatar(workspace: group.first),
                   name: group.first.name,

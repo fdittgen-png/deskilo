@@ -15925,6 +15925,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spaceCodesTitle => 'Raum-QR-Codes (PDF)';
 
   @override
+  String get spaceFavoriteAdd => 'Zu den Favoriten hinzufügen';
+
+  @override
+  String get spaceFavoriteRemove => 'Aus den Favoriten entfernen';
+
+  @override
   String get spaceKindDesk => 'Tisch';
 
   @override
@@ -15945,6 +15951,12 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get spaceMoveDown => 'Nach unten';
+
+  @override
+  String get spaceMoveUp => 'Nach oben';
+
+  @override
   String get spaceNotBookable =>
       'Dieser Raum ist nicht für Ganzraum-Reservierungen eingerichtet.';
 
@@ -15953,7 +15965,15 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Bereich ist nicht für Ganzbuchung eingerichtet — die Inhaberin aktiviert dafür „Als Ganzes buchbar“ im Editor.';
 
   @override
+  String spaceOptions(String name) {
+    return 'Optionen für $name';
+  }
+
+  @override
   String get spaceQrSizeLabel => 'Größe des QR-Codes';
+
+  @override
+  String get spaceRatingClear => 'Keine Bewertung';
 
   @override
   String get spaceScanField => 'Code';

@@ -14,11 +14,15 @@ class MeWorkspaceRow extends StatelessWidget {
     required this.detail,
     required this.actions,
     this.lastUsed = false,
+    this.controls,
   });
   final bool lastUsed;
   final Widget avatar;
   final String name, detail;
   final List<Widget> actions;
+
+  /// Favourite, stars and move arrows of this row.
+  final Widget? controls;
 
   @override
   Widget build(BuildContext context) => Card.outlined(
@@ -67,6 +71,7 @@ class MeWorkspaceRow extends StatelessWidget {
                   ],
                 ),
               ),
+              ?controls,
             ],
           );
           // Production and development share the row, production twice as

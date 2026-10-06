@@ -95,6 +95,7 @@ import '../realtime/realtime_providers.dart';
 import '../scan/front_camera.dart';
 import '../storage/active_workspace_store.dart';
 import '../storage/help_hint_store.dart';
+import '../storage/space_prefs_store.dart';
 import '../storage/note_seen_store.dart';
 import '../storage/entry_intent_store.dart';
 import '../storage/booking_intent_store.dart';
@@ -261,6 +262,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       notificationFilterStoreProvider
           .overrideWithValue(fixture.prefs.notificationFilters),
       helpHintStoreProvider.overrideWithValue(fixture.prefs.helpHints),
+      spacePrefsStoreProvider.overrideWithValue(fixture.prefs.spacePrefs),
       noteSeenStoreProvider.overrideWithValue(fixture.prefs.noteSeen),
       backendSettingsStoreProvider.overrideWithValue(fixture.prefs.backend),
       // #1650 — the resumable errand is device state too.
@@ -359,6 +361,7 @@ const Set<String> demoOverriddenProviders = {
   'bookingIntentStoreProvider',
   'notificationFilterStoreProvider',
   'helpHintStoreProvider',
+  'spacePrefsStoreProvider',
   'noteSeenStoreProvider',
   'backendSettingsStoreProvider',
   'cacheStoreProvider',

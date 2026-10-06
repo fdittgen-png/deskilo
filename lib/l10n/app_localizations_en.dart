@@ -15770,6 +15770,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spaceCodesTitle => 'Space QR codes (PDF)';
 
   @override
+  String get spaceFavoriteAdd => 'Add to favorites';
+
+  @override
+  String get spaceFavoriteRemove => 'Remove from favorites';
+
+  @override
   String get spaceKindDesk => 'Desk';
 
   @override
@@ -15790,6 +15796,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get spaceMoveDown => 'Move down';
+
+  @override
+  String get spaceMoveUp => 'Move up';
+
+  @override
   String get spaceNotBookable =>
       'This space is not set up for whole-space reservations.';
 
@@ -15798,7 +15810,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'This space is not set up for whole booking — the owner enables \"Bookable as a whole\" on it in the editor.';
 
   @override
+  String spaceOptions(String name) {
+    return 'Options for $name';
+  }
+
+  @override
   String get spaceQrSizeLabel => 'QR code size';
+
+  @override
+  String get spaceRatingClear => 'No rating';
 
   @override
   String get spaceScanField => 'Code';

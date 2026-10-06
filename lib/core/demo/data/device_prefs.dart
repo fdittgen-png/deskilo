@@ -30,6 +30,7 @@ import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/core/storage/booking_intent_store.dart';
 import 'package:deskilo/core/storage/entry_intent_store.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
+import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';
@@ -133,6 +134,7 @@ class DemoDevicePrefs {
   final InMemoryNotificationFilterStore notificationFilters =
       InMemoryNotificationFilterStore();
   final InMemoryHelpHintStore helpHints = InMemoryHelpHintStore();
+  final InMemorySpacePrefsStore spacePrefs = InMemorySpacePrefsStore();
   final InMemoryNoteSeenStore noteSeen = InMemoryNoteSeenStore();
 
   /// #780 — which Supabase instance the device talks to. The one a

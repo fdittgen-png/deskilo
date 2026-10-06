@@ -1,0 +1,15 @@
+{
+  "spaceFavoriteAdd": "Añadir a favoritos",
+  "spaceFavoriteRemove": "Quitar de favoritos",
+  "spaceRatingClear": "Sin valoración",
+  "spaceMoveUp": "Subir",
+  "spaceMoveDown": "Bajar",
+  "spaceOptions": "Opciones de {name}",
+  "@spaceOptions": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
+}
