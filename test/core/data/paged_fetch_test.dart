@@ -90,5 +90,40 @@ void main() {
     expect(chunks.expand((c) => c).toList(), ids);
     expect(chunked(const []), isEmpty);
   });
-}
 
+  group('a window that changes while it is read (#1848)', () {
+    test('a row repeated across pages is read again, then exact', () async {
+      var round = 0;
+      final stable = _reservations(3);
+      Future<List<Map<String, dynamic>>> page(int from, int to) async {
+        // First pass: a delete shifted the offsets, so r1 comes twice.
+        final source = round == 0
+            ? [stable[0], stable[1], stable[1]]
+            : stable;
+        return from >= source.length
+            ? const []
+            : source.sublist(from, (from + 2).clamp(0, source.length));
+      }
+
+      final rows = await fetchPages(
+        table: 'reservations',
+        page: (f, t) async {
+          final r = await page(f, t);
+          if (r.isEmpty) round = round == 0 ? 1 : round;
+          return r;
+        },
+        count: () async => 3,
+      );
+      expect([for (final r in rows) r['id']], ['r0', 'r1', 'r2']);
+    });
+
+    test('a count that never agrees is refused as incomplete', () async {
+      final server = _CappedServer(_reservations(3));
+      await expectLater(
+        fetchPages(
+            table: 'reservations', page: server.page, count: () async => 4),
+        throwsA(isA<IncompleteReadException>()),
+      );
+    });
+  });
+}

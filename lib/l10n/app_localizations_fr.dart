@@ -15071,6 +15071,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reservationUpdatedSnack => 'Réservation mise à jour.';
 
   @override
+  String get reserveAvailabilityUnavailable =>
+      'La disponibilité n\'a pas pu être chargée en entier : aucune place n\'est affichée comme libre. Réessayez.';
+
+  @override
   String get reserveBackToNow => 'Revenir à maintenant';
 
   @override

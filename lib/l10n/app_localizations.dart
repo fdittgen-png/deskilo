@@ -25802,6 +25802,12 @@ abstract class AppLocalizations {
   /// **'Reservation updated.'**
   String get reservationUpdatedSnack;
 
+  /// No description provided for @reserveAvailabilityUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability could not be loaded completely, so no seat is shown as free. Retry to see it.'**
+  String get reserveAvailabilityUnavailable;
+
   /// #2016 Reserve time choice: reserveBackToNow
   ///
   /// In en, this message translates to:

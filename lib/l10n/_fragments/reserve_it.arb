@@ -129,5 +129,6 @@
     }
   },
   "scanCameraWebUnavailable": "La scansione con fotocamera non è disponibile nel browser — digita il codice o avvicina un tag NFC al dispositivo (Chrome su Android).",
-  "bookingGateBlocked": "Non prenotabile così"
+  "bookingGateBlocked": "Non prenotabile così",
+  "reserveAvailabilityUnavailable": "Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprova."
 }

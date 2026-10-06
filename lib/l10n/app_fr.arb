@@ -9660,6 +9660,7 @@
   "reservationLimitError": "Limite de réservations atteinte — vous détenez déjà le maximum de réservations ouvertes.",
   "reservationRecurring": "Réservation récurrente",
   "reservationUpdatedSnack": "Réservation mise à jour.",
+  "reserveAvailabilityUnavailable": "La disponibilité n'a pas pu être chargée en entier : aucune place n'est affichée comme libre. Réessayez.",
   "reserveBackToNow": "Revenir à maintenant",
   "reserveBookingFailed": "Réservation impossible — la place vient peut-être d'être prise.",
   "reserveClosedShort": "Fermé",
