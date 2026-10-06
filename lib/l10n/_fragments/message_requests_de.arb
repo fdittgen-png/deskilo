@@ -1,0 +1,8 @@
+{
+  "messageRequestsTitle": "Nachrichtenanfragen",
+  "messageRequestsHint": "Diese Personen gehören nicht zu denen, von denen Sie erreichbar sein wollten. Sie erfahren Ihre Entscheidung nicht.",
+  "requestAccept": "Annehmen",
+  "requestIgnore": "Ignorieren",
+  "requestBlock": "Blockieren",
+  "messengerRefusedRequestPending": "Ihre erste Nachricht wartet auf eine Antwort."
+}

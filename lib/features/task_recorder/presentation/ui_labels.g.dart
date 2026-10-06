@@ -2814,6 +2814,8 @@ Map<String, _Getter> _part6() => {
   'messageInfo': (l) => l.messageInfo,
   'messageNotReadYet': (l) => l.messageNotReadYet,
   'messageReadBy': (l) => l.messageReadBy,
+  'messageRequestsHint': (l) => l.messageRequestsHint,
+  'messageRequestsTitle': (l) => l.messageRequestsTitle,
   'messageSearchGroups': (l) => l.messageSearchGroups,
   'messageSearchHint': (l) => l.messageSearchHint,
   'messageSearchMessages': (l) => l.messageSearchMessages,
@@ -2842,11 +2844,11 @@ Map<String, _Getter> _part6() => {
   'messengerForwardNoTargets': (l) => l.messengerForwardNoTargets,
   'messengerForwardTitle': (l) => l.messengerForwardTitle,
   'messengerHistory': (l) => l.messengerHistory,
-  'messengerHistoryEmpty': (l) => l.messengerHistoryEmpty,
-  'messengerHostsIntro': (l) => l.messengerHostsIntro,
 };
 
 Map<String, _Getter> _part7() => {
+  'messengerHistoryEmpty': (l) => l.messengerHistoryEmpty,
+  'messengerHostsIntro': (l) => l.messengerHostsIntro,
   'messengerHostsNone': (l) => l.messengerHostsNone,
   'messengerInquiriesEmpty': (l) => l.messengerInquiriesEmpty,
   'messengerInquiriesTitle': (l) => l.messengerInquiriesTitle,
@@ -2860,6 +2862,7 @@ Map<String, _Getter> _part7() => {
   'messengerRefusedClosed': (l) => l.messengerRefusedClosed,
   'messengerRefusedForwardingOff': (l) => l.messengerRefusedForwardingOff,
   'messengerRefusedLimit': (l) => l.messengerRefusedLimit,
+  'messengerRefusedRequestPending': (l) => l.messengerRefusedRequestPending,
   'messengerRefusedTooLong': (l) => l.messengerRefusedTooLong,
   'messengerRefusedUnavailable': (l) => l.messengerRefusedUnavailable,
   'messengerStar': (l) => l.messengerStar,
@@ -3244,12 +3247,12 @@ Map<String, _Getter> _part7() => {
   'planUntilLabel': (l) => l.planUntilLabel,
   'planYourSeat': (l) => l.planYourSeat,
   'plansEditorEdit': (l) => l.plansEditorEdit,
-  'plansEditorInactive': (l) => l.plansEditorInactive,
-  'plansEditorNew': (l) => l.plansEditorNew,
-  'plansEditorTitle': (l) => l.plansEditorTitle,
 };
 
 Map<String, _Getter> _part8() => {
+  'plansEditorInactive': (l) => l.plansEditorInactive,
+  'plansEditorNew': (l) => l.plansEditorNew,
+  'plansEditorTitle': (l) => l.plansEditorTitle,
   'plansEditorUnlimited': (l) => l.plansEditorUnlimited,
   'policyAdminCheckoutDesc': (l) => l.policyAdminCheckoutDesc,
   'policyAdminCheckoutTitle': (l) => l.policyAdminCheckoutTitle,
@@ -3647,12 +3650,12 @@ Map<String, _Getter> _part8() => {
   'repartitionTitleField': (l) => l.repartitionTitleField,
   'repartitionTitleLabel': (l) => l.repartitionTitleLabel,
   'repartitionWeight': (l) => l.repartitionWeight,
-  'repartitionWizardSubtitle': (l) => l.repartitionWizardSubtitle,
-  'repartitionWizardTitle': (l) => l.repartitionWizardTitle,
-  'repartitionWizardWeight': (l) => l.repartitionWizardWeight,
 };
 
 Map<String, _Getter> _part9() => {
+  'repartitionWizardSubtitle': (l) => l.repartitionWizardSubtitle,
+  'repartitionWizardTitle': (l) => l.repartitionWizardTitle,
+  'repartitionWizardWeight': (l) => l.repartitionWizardWeight,
   'repeatDaily': (l) => l.repeatDaily,
   'repeatNone': (l) => l.repeatNone,
   'repeatWeekdays': (l) => l.repeatWeekdays,
@@ -3895,6 +3898,9 @@ Map<String, _Getter> _part9() => {
   'reportTextsRemove': (l) => l.reportTextsRemove,
   'reportTextsTitle': (l) => l.reportTextsTitle,
   'reportVisualAddLine': (l) => l.reportVisualAddLine,
+  'requestAccept': (l) => l.requestAccept,
+  'requestBlock': (l) => l.requestBlock,
+  'requestIgnore': (l) => l.requestIgnore,
   'reservationCalendarFileButton': (l) => l.reservationCalendarFileButton,
   'reservationCalendarFileContents': (l) => l.reservationCalendarFileContents,
   'reservationCalendarFileEvent': (l) => l.reservationCalendarFileEvent,
@@ -4047,15 +4053,15 @@ Map<String, _Getter> _part9() => {
   'servicesEmpty': (l) => l.servicesEmpty,
   'servicesInactive': (l) => l.servicesInactive,
   'servicesName': (l) => l.servicesName,
+};
+
+Map<String, _Getter> _part10() => {
   'servicesNew': (l) => l.servicesNew,
   'servicesPrice': (l) => l.servicesPrice,
   'servicesTitle': (l) => l.servicesTitle,
   'settingsBillingReports': (l) => l.settingsBillingReports,
   'settingsFrontCamera': (l) => l.settingsFrontCamera,
   'settingsFrontCameraDesc': (l) => l.settingsFrontCameraDesc,
-};
-
-Map<String, _Getter> _part10() => {
   'settingsSectionAccount': (l) => l.settingsSectionAccount,
   'settingsSectionAdministration': (l) => l.settingsSectionAdministration,
   'settingsSectionAdvanced': (l) => l.settingsSectionAdvanced,
@@ -4455,6 +4461,9 @@ Map<String, _Getter> _part10() => {
   'taskRecorderProtectedMessenger': (l) => l.taskRecorderProtectedMessenger,
   'taskRecorderProtectedOperator': (l) => l.taskRecorderProtectedOperator,
   'taskRecorderProtectedPayment': (l) => l.taskRecorderProtectedPayment,
+};
+
+Map<String, _Getter> _part11() => {
   'taskRecorderProtectedProvider': (l) => l.taskRecorderProtectedProvider,
 };
 
@@ -4858,6 +4867,9 @@ Map<String, _Getter> _part11() => {
   'wizardSummaryHint': (l) => l.wizardSummaryHint,
   'wizardTallyDecided': (l) => l.wizardTallyDecided,
   'wizardTallyIssued': (l) => l.wizardTallyIssued,
+};
+
+Map<String, _Getter> _part12() => {
   'wizardTallyMatched': (l) => l.wizardTallyMatched,
 };
 

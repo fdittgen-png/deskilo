@@ -11,7 +11,6 @@ import '../../providers/message_marks_providers.dart';
 import 'account_group_reach_sheet.dart';
 import 'account_group_sheet.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../../core/capture/capture_shield.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -19,6 +18,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import 'environment_pill.dart';
 import '../../domain/messenger.dart';
 import '../../providers/messenger_providers.dart';
 import 'block_person.dart';
@@ -558,7 +558,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
                         for (final w in workspaces)
                           DropdownMenuItem(
                             value: w.id,
-                            child: Text(w.name, overflow: TextOverflow.ellipsis),
+                            child: EnvironmentLabel(w.name, w.environment == 'prod'),
                           ),
                       ],
                       onChanged: (id) {

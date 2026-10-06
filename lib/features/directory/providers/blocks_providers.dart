@@ -10,3 +10,9 @@ final myBlocksProvider = FutureProvider.autoDispose
   (ref, source) =>
       ref.watch(messengerActionsProvider(source: source)).myBlocks(),
 );
+
+/// The first messages from outside my reachability that wait for my answer
+/// on this server (0388).
+final messageRequestsProvider = FutureProvider.autoDispose<List<MessageRequest>>(
+  (ref) => ref.watch(messengerActionsProvider()).myMessageRequests(),
+);

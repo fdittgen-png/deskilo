@@ -39,7 +39,8 @@ select lives_ok($$select public.request_public_workspace_profile('00000000-0000-
 select ok(not public.is_member_of('00000000-0000-4000-8000-0000000302b1'),'request does not bypass approval');
 select is(jsonb_array_length(public.search_available_accounts('Host')),1,'available account is discoverable');
 select is(jsonb_array_length(public.search_available_accounts('Admin')),0,'public admin without account opt-in is not globally discoverable');
-select throws_ok($$select public.send_account_message('00000000-0000-4000-8000-0000000302a2','Hello','00000000-0000-4000-8000-0000000302a3')$$,'P0001','recipient unavailable','public visibility alone cannot enable an inbox');
+-- 0388: public visibility alone opens no inbox: the first message is only a held request.
+select lives_ok($$select public.send_account_message('00000000-0000-4000-8000-0000000302a2','Hello','00000000-0000-4000-8000-0000000302a3')$$,'public visibility alone cannot enable an inbox: the message is held as a request');
 select lives_ok($$select public.send_account_message('00000000-0000-4000-8000-0000000302a1','Can I visit?','00000000-0000-4000-8000-0000000302a3')$$,'applicant can contact opted-in owner without membership');
 reset role;
 select set_config('t.thread',(select id::text from public.account_conversations where user_a='00000000-0000-4000-8000-0000000302a1' and user_b='00000000-0000-4000-8000-0000000302a3'),true);

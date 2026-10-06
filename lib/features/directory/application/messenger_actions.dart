@@ -29,6 +29,14 @@ class MessengerActions {
     return text;
   }
 
+  // ── message requests (0388) ─────────────────────────────────────────
+  Future<List<MessageRequest>> myMessageRequests() =>
+      repository.myMessageRequests();
+  Future<void> respondToMessageRequest(
+    String conversation, {
+    required bool accept,
+  }) => repository.respondToMessageRequest(conversation, accept: accept);
+
   // ── blocks (0387) ───────────────────────────────────────────────────
   Future<List<BlockedAccount>> myBlocks() => repository.myBlocks();
   Future<void> blockAccount(String user) => repository.blockAccount(user);

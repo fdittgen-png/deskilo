@@ -1,0 +1,8 @@
+{
+  "messageRequestsTitle": "Solicitudes de mensaje",
+  "messageRequestsHint": "Estas personas no están entre quienes elegiste para poder contactarte. No se les avisa de tu decisión.",
+  "requestAccept": "Aceptar",
+  "requestIgnore": "Ignorar",
+  "requestBlock": "Bloquear",
+  "messengerRefusedRequestPending": "Tu primer mensaje espera una respuesta."
+}
