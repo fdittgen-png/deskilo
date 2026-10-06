@@ -20,6 +20,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 Invoice _invoice({
   String id = 'inv-1',
@@ -432,9 +433,10 @@ void main() {
       expect(find.byKey(const ValueKey('invoice-move-line')), findsOneWidget);
       expect(find.textContaining("Waiting for"), findsOneWidget);
       expect(find.textContaining('due'), findsWidgets);
-      // Nothing is expected from the issuer yet: icons only.
+      // Nothing is expected from the issuer yet: the one frequent verb is
+      // named, the rest are icons.
       expect(find.text('Send a reminder'), findsNothing);
-      expect(find.text('Mark as paid'), findsNothing);
+      expect(find.text('Mark as paid'), findsOneWidget);
       expect(find.byKey(ValueKey('invoice-match-$id')), findsOneWidget);
       expect(find.byKey(ValueKey('invoice-remind-$id')), findsOneWidget);
     });
@@ -499,8 +501,7 @@ void main() {
         (tester) async {
       final money = FakeMoneyRepository();
       await pump(tester, money: money);
-      await tester.tap(find.byKey(const ValueKey('invoice-process-help')));
-      await tester.pumpAndSettle();
+      await tapInvoicingTool(tester, 'invoice-process-help');
       expect(find.byKey(const ValueKey('invoice-process-sheet')), findsOneWidget);
       for (final step in InvoiceStep.values) {
         expect(

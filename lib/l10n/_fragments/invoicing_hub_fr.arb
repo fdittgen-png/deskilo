@@ -1,0 +1,26 @@
+{
+  "invoicingHubTitle": "Facturation",
+  "@invoicingHubTitle": {
+    "description": "invoicing hub vs my finances"
+  },
+  "myInvoicesTitle": "Mes factures",
+  "@myInvoicesTitle": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingTools": "Outils de facturation",
+  "@invoicingTools": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingBanner": "Vous émettez et relancez les factures de tout l’espace. Vos propres factures et paiements sont dans Moi › Finances.",
+  "@invoicingBanner": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingMyFinances": "Mes finances",
+  "@invoicingMyFinances": {
+    "description": "invoicing hub vs my finances"
+  },
+  "memberInvoicesBanner": "Toutes vos factures et paiements, de tous vos espaces, sont dans Moi › Finances.",
+  "@memberInvoicesBanner": {
+    "description": "invoicing hub vs my finances"
+  }
+}

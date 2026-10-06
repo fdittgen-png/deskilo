@@ -1,0 +1,111 @@
+{
+  "financesTitle": "Finanzen",
+  "@financesTitle": {
+    "description": "Me › Finances"
+  },
+  "financesOutstanding": "Ausstehend",
+  "@financesOutstanding": {
+    "description": "Me › Finances"
+  },
+  "financesPaid": "Bezahlt",
+  "@financesPaid": {
+    "description": "Me › Finances"
+  },
+  "financesPayments": "Zahlungen",
+  "@financesPayments": {
+    "description": "Me › Finances"
+  },
+  "financesReminders": "Erinnerungen",
+  "@financesReminders": {
+    "description": "Me › Finances"
+  },
+  "financesToPay": "Zu zahlen",
+  "@financesToPay": {
+    "description": "Me › Finances"
+  },
+  "financesNothingOwed": "Nichts zu zahlen — alles beglichen.",
+  "@financesNothingOwed": {
+    "description": "Me › Finances"
+  },
+  "financesNothingPaid": "Noch keine beglichene Rechnung.",
+  "@financesNothingPaid": {
+    "description": "Me › Finances"
+  },
+  "financesNoReminders": "Keine Erinnerung erhalten.",
+  "@financesNoReminders": {
+    "description": "Me › Finances"
+  },
+  "financesAwaitingValidation": "Zahlung wird geprüft",
+  "@financesAwaitingValidation": {
+    "description": "Me › Finances"
+  },
+  "financesPartlyPaid": "Teilweise bezahlt",
+  "@financesPartlyPaid": {
+    "description": "Me › Finances"
+  },
+  "financesStatePaid": "Bezahlt",
+  "@financesStatePaid": {
+    "description": "Me › Finances"
+  },
+  "financesStateRefunded": "Erstattet",
+  "@financesStateRefunded": {
+    "description": "Me › Finances"
+  },
+  "financesStateClosed": "Abgeschlossen",
+  "@financesStateClosed": {
+    "description": "Me › Finances"
+  },
+  "financesAutomatic": "automatisch",
+  "@financesAutomatic": {
+    "description": "Me › Finances"
+  },
+  "financesFullHistory": "Vollständiger Verlauf, Nutzung und andere Server",
+  "@financesFullHistory": {
+    "description": "Me › Finances"
+  },
+  "financesDueOn": "Fällig am {date}",
+  "@financesDueOn": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesOverdueSince": "Überfällig seit {date}",
+  "@financesOverdueSince": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesOverdueCount": "{count} überfällig",
+  "@financesOverdueCount": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesRemindedTimes": "Erinnert ×{count}",
+  "@financesRemindedTimes": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesReminderLevel": "Erinnerung {level}",
+  "@financesReminderLevel": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  }
+}

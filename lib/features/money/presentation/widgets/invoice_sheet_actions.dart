@@ -187,19 +187,29 @@ Widget _button(
     ),
   ]);
   void onPressed() => onAction(action);
-  return Padding(
-    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-    child: primary
-        ? FilledButton(
-            key: ValueKey(key),
-            onPressed: onPressed,
-            child: child,
-          )
-        : OutlinedButton(
-            key: ValueKey(key),
-            onPressed: onPressed,
-            child: child,
-          ),
+  if (primary) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: FilledButton(
+        key: ValueKey(key),
+        onPressed: onPressed,
+        child: child,
+      ),
+    );
+  }
+  // The other verbs are quiet rows (icon + words), not a stack of identical
+  // outlined buttons: the one expected move stands out, the rest read as a
+  // list, the destructive one in the error colour.
+  return ListTile(
+    key: ValueKey(key),
+    dense: true,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+    leading: Icon(icon, size: 20, color: danger ? colors.error : null),
+    title: Text(
+      label,
+      style: danger ? TextStyle(color: colors.error) : null,
+    ),
+    onTap: onPressed,
   );
 }
 }

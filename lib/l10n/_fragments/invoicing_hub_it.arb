@@ -1,0 +1,26 @@
+{
+  "invoicingHubTitle": "Fatturazione",
+  "@invoicingHubTitle": {
+    "description": "invoicing hub vs my finances"
+  },
+  "myInvoicesTitle": "Le mie fatture",
+  "@myInvoicesTitle": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingTools": "Strumenti di fatturazione",
+  "@invoicingTools": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingBanner": "Stai emettendo e sollecitando le fatture di tutto lo spazio. Le tue fatture e i tuoi pagamenti sono in Io › Finanze.",
+  "@invoicingBanner": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingMyFinances": "Le mie finanze",
+  "@invoicingMyFinances": {
+    "description": "invoicing hub vs my finances"
+  },
+  "memberInvoicesBanner": "Tutte le tue fatture e i tuoi pagamenti, di tutti gli spazi, sono in Io › Finanze.",
+  "@memberInvoicesBanner": {
+    "description": "invoicing hub vs my finances"
+  }
+}

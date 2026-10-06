@@ -12,6 +12,7 @@ import 'package:deskilo/features/money/presentation/widgets/report_visual_editor
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/navigation.dart' show tapInvoicingTool;
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 /// A valid 1×1 PNG — enough for the renderers to draw.
@@ -82,8 +83,7 @@ void main() {
       'same band and survive the switch back (#488)', (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
 
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
     await tester.pump();
     await tester.ensureVisible(
@@ -122,8 +122,7 @@ void main() {
       'at the cursor', (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
 
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
     await tester.pump();
     await tester.ensureVisible(
@@ -158,8 +157,7 @@ void main() {
     money.reportImages['logo.png'] = _png;
     await pumpInvoices(tester, money: money);
 
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     await tester
         .tap(find.byKey(const ValueKey('invoice-template-image')));
     await tester.pumpAndSettle();
@@ -187,8 +185,7 @@ void main() {
       'sizes, colors, font and right-aligned amount cells',
       (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
     await tester.pump();
     await tester.ensureVisible(
@@ -224,8 +221,7 @@ void main() {
       'with data through the real engine on the same page — tokens '
       'out, values in — and back', (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
     await tester.pump();
     await tester.ensureVisible(

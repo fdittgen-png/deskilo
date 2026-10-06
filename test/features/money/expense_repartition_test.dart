@@ -16,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 Future<FakeMoneyRepository> _pumpSheet(
@@ -211,10 +212,11 @@ void main() {
   testWidgets('the Invoices header offers the distribution behind its flag',
       (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
+    await tester.tap(find.byKey(const ValueKey('invoicing-tools')));
+    await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('invoice-distribute-button')),
         findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('invoice-distribute-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-distribute-button');
     expect(find.byKey(const ValueKey('repartition-title')), findsOneWidget);
   });
 

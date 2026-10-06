@@ -247,11 +247,12 @@ class OpenInvoiceCard extends StatelessWidget {
       bool tonal = false,
     }) =>
         tonal
-            ? IconButton.filledTonal(
+            // The expected move is named, not guessed from an icon.
+            ? FilledButton.tonalIcon(
                 key: ValueKey(key),
-                tooltip: tooltip,
-                icon: Icon(icon, color: color),
                 onPressed: onPressed,
+                icon: Icon(icon, color: color),
+                label: Text(tooltip),
               )
             : IconButton(
                 key: ValueKey(key),

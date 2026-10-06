@@ -120,6 +120,9 @@ void main() {
       'WorkspaceApplication', 'ApplicationMessage', 'AccountActivity',
       // #2145: my_instance_notices() projects a notice without its stamp.
       'InstanceNotice',
+      // 0380: my_finance_overview() projects my own invoices and reminders
+      // without the stamp.
+      'FinanceInvoice', 'FinanceReminder',
     };
     final missing = <String>{};
     for (final file in _dartFiles('lib')) {

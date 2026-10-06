@@ -84,6 +84,18 @@ Future<void> openAlertsTab(WidgetTester tester) async {
 Future<void> openMembersTab(WidgetTester tester) =>
     tapNavIcon(tester, Icons.people_outline);
 
+/// Taps an invoicing tool by its key: the tools live in the hub's labelled
+/// menu, so the menu is opened first when the item is not on screen.
+Future<void> tapInvoicingTool(WidgetTester tester, String key) async {
+  final item = find.byKey(ValueKey(key));
+  if (item.evaluate().isEmpty) {
+    await tester.tap(find.byKey(const ValueKey('invoicing-tools')));
+    await tester.pumpAndSettle();
+  }
+  await tester.tap(item);
+  await tester.pumpAndSettle();
+}
+
 /// Opens the workspace's conversation list (the legacy workspace-scoped
 /// chat screen). Discussions live in the Me messenger now and the workspace
 /// inbox only carries alerts, so tests of the conversation machinery reach

@@ -15,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 /// Three invoices across three months for two members, in a deliberately
 /// unsorted issue order.
@@ -60,8 +61,7 @@ Future<FakeMoneyRepository> _pumpRegister(
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('invoice-register-button')));
-  await tester.pumpAndSettle();
+  await tapInvoicingTool(tester, 'invoice-register-button');
   return money;
 }
 
@@ -134,8 +134,7 @@ void main() {
     await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
     await tester.tap(find.byKey(const ValueKey('invoices-button')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('invoice-register-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-register-button');
 
     // Narrow to 2026, then export.
     await tester.tap(find.byKey(const ValueKey('invoice-register-year')));
@@ -214,8 +213,7 @@ void main() {
     await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
     await tester.tap(find.byKey(const ValueKey('invoices-button')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('invoice-register-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-register-button');
     await tester.tap(find.byKey(const ValueKey('invoice-accounting-export')));
     await tester.pumpAndSettle();
 
