@@ -5,7 +5,6 @@
 // the page the guide last opened), a page that needs an id offers none, the
 // button opens the page without entering anything, and it is gone once the
 // person is there.
-import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_session.dart';
 import 'package:deskilo/features/task_recorder/guide/task_guide.dart';
