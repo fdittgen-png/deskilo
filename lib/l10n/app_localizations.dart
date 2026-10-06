@@ -5053,6 +5053,12 @@ abstract class AppLocalizations {
   /// **'Draft kept'**
   String get composerDraftKept;
 
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Mention someone'**
+  String get composerMention;
+
   /// No description provided for @connectionCancelled.
   ///
   /// In en, this message translates to:
@@ -10373,6 +10379,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get started in {workspace}'**
   String gettingStartedTitle(String workspace);
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Only admins can post'**
+  String get groupAnnounceOnly;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone reads; only admins write.'**
+  String get groupAnnounceOnlyHint;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get groupDescription;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Add a description'**
+  String get groupDescriptionAdd;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Group description'**
+  String get groupDescriptionTitle;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Make admin'**
+  String get groupMakeAdmin;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Only admins can post in this group.'**
+  String get groupPostingClosed;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Remove admin'**
+  String get groupRemoveAdmin;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Rename group'**
+  String get groupRename;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Group name'**
+  String get groupRenameTitle;
 
   /// #1867 live guide host
   ///
@@ -18593,6 +18659,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Members & plans'**
   String get membersTitle;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Message info'**
+  String get messageInfo;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Not read yet'**
+  String get messageNotReadYet;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Read by'**
+  String get messageReadBy;
 
   /// #687 - messaging search
   ///

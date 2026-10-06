@@ -345,5 +345,61 @@
   "messengerNoStarred": "Noch keine markierte Nachricht.",
   "@messengerNoStarred": {
     "description": "messenger: reactions, stars, edits"
+  },
+  "groupRename": "Gruppe umbenennen",
+  "@groupRename": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRenameTitle": "Gruppenname",
+  "@groupRenameTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescription": "Beschreibung",
+  "@groupDescription": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionAdd": "Beschreibung hinzufügen",
+  "@groupDescriptionAdd": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionTitle": "Gruppenbeschreibung",
+  "@groupDescriptionTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnly": "Nur Admins dürfen schreiben",
+  "@groupAnnounceOnly": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnlyHint": "Alle lesen; nur Admins schreiben.",
+  "@groupAnnounceOnlyHint": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupMakeAdmin": "Zum Admin machen",
+  "@groupMakeAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRemoveAdmin": "Admin entfernen",
+  "@groupRemoveAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupPostingClosed": "In dieser Gruppe dürfen nur Admins schreiben.",
+  "@groupPostingClosed": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageInfo": "Nachrichteninfo",
+  "@messageInfo": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageReadBy": "Gelesen von",
+  "@messageReadBy": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageNotReadYet": "Noch nicht gelesen",
+  "@messageNotReadYet": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "composerMention": "Jemanden erwähnen",
+  "@composerMention": {
+    "description": "workspace groups: rename, description, admins, info"
   }
 }

@@ -2,6 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/providers/auth_providers.dart';
+import '../domain/group_details.dart';
 import '../domain/message_marks.dart';
 import 'messenger_providers.dart';
 
@@ -26,3 +27,17 @@ final starredMessagesProvider =
   if (ref.watch(authStateProvider).value == null) return Future.value(const []);
   return ref.watch(messengerRepositoryProvider()).starred();
 });
+
+/// A group's description and announcement-only switch (0383).
+final conversationDetailsProvider = FutureProvider.autoDispose
+    .family<ConversationDetails, String>((ref, id) {
+  if (ref.watch(authStateProvider).value == null) {
+    return Future.value(ConversationDetails.none);
+  }
+  return ref.watch(messengerActionsProvider()).conversationDetails(id);
+});
+
+/// Who a message of mine reached (0383).
+final messageReachProvider =
+    FutureProvider.autoDispose.family<MessageReach, String>((ref, id) =>
+        ref.watch(messengerActionsProvider()).messageReach(id));

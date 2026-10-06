@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../features/directory/domain/group_details.dart';
 import '../../../features/directory/domain/message_marks.dart';
 import '../../../features/directory/domain/messenger.dart';
 import '../../../features/directory/domain/messenger_repository.dart';
@@ -21,6 +22,40 @@ class FakeMessengerRepository implements MessengerRepository {
 
   /// `my_inbox` rows.
   final inboxRows = <Map<String, dynamic>>[];
+
+  final details = <String, ConversationDetails>{};
+  final adminChanges = <({String conversation, String member, bool admin})>[];
+  MessageReach? reach;
+
+  @override
+  Future<ConversationDetails> conversationDetails(String id) async {
+    _check();
+    return details[id] ?? ConversationDetails.none;
+  }
+
+  @override
+  Future<void> setConversationDetails(
+    String id, {
+    required String description,
+    required bool announceOnly,
+  }) async {
+    _check();
+    details[id] = ConversationDetails(
+        description: description, announceOnly: announceOnly);
+  }
+
+  @override
+  Future<void> setParticipantAdmin(String id, String memberId,
+      {required bool admin}) async {
+    _check();
+    adminChanges.add((conversation: id, member: memberId, admin: admin));
+  }
+
+  @override
+  Future<MessageReach> messageReach(String messageId) async {
+    _check();
+    return reach ?? MessageReach(sentAt: now);
+  }
 
   /// Marks by `<context wire>|<context id>`; the fake also records writes.
   final marksByContext = <String, MessageMarks>{};

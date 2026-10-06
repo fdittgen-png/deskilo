@@ -1883,6 +1883,10 @@
     }
   },
   "composerDraftKept": "Brouillon conservé",
+  "composerMention": "Mentionner quelqu’un",
+  "@composerMention": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
   "connectionCancelled": "Le compte a changé entre-temps ; cette réponse a été ignorée.",
   "connectionChangedIdentity": "Ce serveur n’est plus celui que vous avez connecté. Ses actions sont suspendues jusqu’à une nouvelle vérification.",
   "connectionChecking": "Vérification…",
@@ -4029,6 +4033,46 @@
   "gettingStartedStateReleased": "libérée",
   "gettingStartedStateReserved": "réservée",
   "gettingStartedTitle": "Premiers pas dans {workspace}",
+  "groupAnnounceOnly": "Seuls les admins peuvent écrire",
+  "@groupAnnounceOnly": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnlyHint": "Tout le monde lit ; seuls les admins écrivent.",
+  "@groupAnnounceOnlyHint": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescription": "Description",
+  "@groupDescription": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionAdd": "Ajouter une description",
+  "@groupDescriptionAdd": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionTitle": "Description du groupe",
+  "@groupDescriptionTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupMakeAdmin": "Nommer admin",
+  "@groupMakeAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupPostingClosed": "Seuls les admins peuvent écrire dans ce groupe.",
+  "@groupPostingClosed": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRemoveAdmin": "Retirer admin",
+  "@groupRemoveAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRename": "Renommer le groupe",
+  "@groupRename": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRenameTitle": "Nom du groupe",
+  "@groupRenameTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
   "guideActionConfirmBooking": "confirmez la réservation et attendez la réponse",
   "guideActionOpenReserve": "ouvrez Réserver",
   "guideActionSelectDate": "choisissez le jour",
@@ -6698,6 +6742,18 @@
   "membersInvite": "Inviter un membre",
   "membersPlanNone": "Aucun forfait",
   "membersTitle": "Membres et forfaits",
+  "messageInfo": "Infos du message",
+  "@messageInfo": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageNotReadYet": "Pas encore lu",
+  "@messageNotReadYet": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageReadBy": "Lu par",
+  "@messageReadBy": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
   "messageSearchGroups": "Groupes",
   "@messageSearchGroups": {
     "description": "#687 - messaging search"

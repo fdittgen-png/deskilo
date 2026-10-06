@@ -41,7 +41,11 @@ class ConversationBubble extends ConsumerWidget {
     this.onActions,
     this.marks = MessageMarks.none,
     this.onReact,
+    this.mentions = const {},
   });
+
+  /// Names of a group's members, for `@Name` highlighting (0383).
+  final Set<String> mentions;
 
   final MemberNote note;
 
@@ -228,6 +232,7 @@ class ConversationBubble extends ConsumerWidget {
                     body: split.rest,
                     style: theme.textTheme.bodyMedium?.copyWith(color: fg),
                     linkColor: mine ? fg : null,
+                    mentions: mentions,
                   ),
                   ReactionStrip(
                     messageId: note.id,

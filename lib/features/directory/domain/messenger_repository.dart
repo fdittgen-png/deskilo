@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'group_details.dart';
 import 'message_marks.dart';
 import 'messenger.dart';
 
@@ -38,6 +39,20 @@ abstract interface class MessengerRepository {
   Future<bool> toggleStar(MessageKind kind, String messageId);
   Future<void> edit(MessageKind kind, String messageId, String body);
   Future<List<StarredMessage>> starred();
+
+  // ── running a group (0383) ────────────────────────────────────────
+  Future<ConversationDetails> conversationDetails(String conversationId);
+  Future<void> setConversationDetails(
+    String conversationId, {
+    required String description,
+    required bool announceOnly,
+  });
+  Future<void> setParticipantAdmin(
+    String conversationId,
+    String memberId, {
+    required bool admin,
+  });
+  Future<MessageReach> messageReach(String messageId);
 
   // ── forwarding and history ────────────────────────────────────────
   Future<String> forward({

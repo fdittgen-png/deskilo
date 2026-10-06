@@ -11,6 +11,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../domain/conversation.dart';
 import '../../domain/member_note.dart';
 import '../../domain/member_note_refs.dart';
 import '../../domain/workspace_feature.dart';
@@ -20,10 +21,12 @@ import '../../providers/workspace_providers.dart';
 import 'conversation_bubble.dart';
 import 'group_info_sheet.dart';
 import 'member_note_composer.dart';
+import 'message_reach_sheet.dart';
 import '../../../../core/capture/capture_shield.dart';
 import '../../../directory/domain/messenger.dart';
 import '../../../directory/presentation/messenger/message_actions_sheet.dart';
 import '../../../directory/presentation/messenger/message_marks.dart';
+import '../../../directory/domain/group_details.dart';
 import '../../../directory/domain/message_marks.dart';
 import '../../../directory/providers/message_marks_providers.dart';
 import '../../../directory/providers/messenger_providers.dart';
@@ -166,6 +169,15 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         myReaction: marks.myReaction(note.id),
       ),
       forwarding: _forwarding,
+      onInfo: mine && (ref.read(conversationsProvider).value ?? const [])
+                  .any((c) => c.id == widget.conversationId && c.isGroup)
+          ? () => showMessageReachSheet(
+              context,
+              ref,
+              messageId: note.id,
+              names: ref.read(memberNamesProvider).value ?? const {},
+            )
+          : null,
       onChanged: () {
         ref
           ..invalidate(conversationMessagesProvider(widget.conversationId))
@@ -434,6 +446,14 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
                 onActions: _forwarding || hub
                     ? () => _messageActions(note, mine: note.fromMemberId == me?.id)
                     : null,
+                mentions: {
+                  for (final p in ref
+                          .watch(conversationParticipantsProvider(
+                              widget.conversationId))
+                          .value ??
+                      const <ConversationParticipant>[])
+                    if ((names[p.memberId] ?? '').isNotEmpty) names[p.memberId]!,
+                },
                 marks: ref.watch(messageMarksProvider(_marksKey)).value ??
                     MessageMarks.none,
                 onReact: (emoji) => _react(note, emoji),
@@ -464,7 +484,40 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
             },
           );
 
-    final composer = Padding(
+    // A group: its roster (for @mentions and who may post) and whether only
+    // admins post (0383).
+    final isGroup = conversation?.isGroup ?? false;
+    final roster = isGroup
+        ? (ref.watch(conversationParticipantsProvider(widget.conversationId))
+                .value ??
+            const <ConversationParticipant>[])
+        : const <ConversationParticipant>[];
+    final groupDetails = isGroup
+        ? (ref.watch(conversationDetailsProvider(widget.conversationId))
+                .value ??
+            ConversationDetails.none)
+        : ConversationDetails.none;
+    final iAmGroupAdmin = roster
+        .any((p) => p.memberId == me?.id && p.isAdmin && p.isActive);
+    final postingClosed = isGroup && groupDetails.announceOnly && !iAmGroupAdmin;
+    final mentionNames = [
+      for (final p in roster)
+        if (p.isActive && p.memberId != me?.id && (names[p.memberId] ?? '').isNotEmpty)
+          names[p.memberId]!,
+    ];
+
+    final composer = postingClosed
+        ? Padding(
+            padding: AppSpacing.lgAll,
+            child: Text(
+              AppLocalizations.of(context)?.groupPostingClosed ??
+                  'Only admins can post in this group.',
+              key: const ValueKey('group-posting-closed'),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          )
+        : Padding(
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.lg,
         0,
@@ -483,6 +536,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
                 .set(conversationId, text)
             : null,
         compact: hub,
+        mentionCandidates: mentionNames,
         quoted: _quoted,
         onCancelQuote: () => setState(() => _quoted = null),
         onSend: (body) => _send(context, ref, body),

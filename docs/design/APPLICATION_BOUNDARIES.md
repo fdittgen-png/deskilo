@@ -181,5 +181,6 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/features/workspace/presentation/screens/availability_screen.dart`
 - `lib/features/workspace/presentation/screens/onboarding_screen.dart`
 - `lib/features/workspace/presentation/screens/workspace_settings_screen.dart`
+- `lib/features/workspace/presentation/widgets/conversation_thread.dart`
 - `lib/features/workspace/providers/workspace_providers.dart`
 

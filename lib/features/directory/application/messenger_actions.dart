@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/server_error.dart';
+import '../domain/group_details.dart';
 import '../domain/message_marks.dart';
 import '../domain/messenger.dart';
 import '../domain/messenger_repository.dart';
@@ -26,6 +27,19 @@ class MessengerActions {
     }
     return text;
   }
+
+  // ── running a group (0383) ──────────────────────────────────────────
+  Future<ConversationDetails> conversationDetails(String id) =>
+      repository.conversationDetails(id);
+  Future<void> setConversationDetails(String id,
+          {required String description, required bool announceOnly}) =>
+      repository.setConversationDetails(id,
+          description: description.trim(), announceOnly: announceOnly);
+  Future<void> setParticipantAdmin(String id, String memberId,
+          {required bool admin}) =>
+      repository.setParticipantAdmin(id, memberId, admin: admin);
+  Future<MessageReach> messageReach(String messageId) =>
+      repository.messageReach(messageId);
 
   // ── reactions, stars and edits (0382) ───────────────────────────────
   Future<MessageMarks> marks(String contextWire, String contextId) =>

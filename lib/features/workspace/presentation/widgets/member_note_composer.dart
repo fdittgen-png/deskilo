@@ -39,7 +39,11 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
     this.compact = false,
     this.referencesAllowed = true,
     this.referencesHint,
+    this.mentionCandidates = const [],
   });
+
+  /// People who can be `@mentioned` (a group's other members).
+  final List<String> mentionCandidates;
 
   /// #821 — every keystroke, for the draft store.
   final ValueChanged<String>? onChanged;
@@ -155,6 +159,27 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
         .add_Hm()
         .format(reservation.startsAt.toLocal());
     return [who, space, when].where((p) => p.isNotEmpty).join(' · ');
+  }
+
+  Future<void> _pickMention() async {
+    final name = await showModalBottomSheet<String>(
+      context: context,
+      builder: (sheet) => SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            for (final n in widget.mentionCandidates)
+              ListTile(
+                key: ValueKey('mention-$n'),
+                leading: const Icon(Icons.alternate_email),
+                title: Text(n),
+                onTap: () => Navigator.of(sheet).pop(n),
+              ),
+          ],
+        ),
+      ),
+    );
+    if (name != null) _insert('@$name');
   }
 
   Future<void> _pickReservation() async {
@@ -460,6 +485,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
               onSelected: (value) => switch (value) {
                 'reservation' => _pickReservation(),
                 'space' => _pickSpace(),
+                'mention' => _pickMention(),
                 // #842 — the four new kinds share one picker.
                 _ => _pickRecord(NoteRecordKind.values.byName(value)),
               },
@@ -491,6 +517,16 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(noteRecordIcon(kind)),
                       title: Text(_recordLabel(l10n, kind)),
+                    ),
+                  ),
+                if (widget.mentionCandidates.isNotEmpty)
+                  PopupMenuItem(
+                    key: const ValueKey('member-note-mention'),
+                    value: 'mention',
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.alternate_email),
+                      title: Text(l10n?.composerMention ?? 'Mention someone'),
                     ),
                   ),
               ],

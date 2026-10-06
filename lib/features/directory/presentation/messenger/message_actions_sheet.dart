@@ -57,7 +57,7 @@ class MessageRef {
       now.toUtc().difference(sentAt!.toUtc()) < kMessageEditWindow;
 }
 
-enum _Action { forward, lock, history, delete, star, edit, copy }
+enum _Action { forward, lock, history, delete, star, edit, copy, info }
 
 /// #1824 — what can be done with one message, in every thread: forward
 /// it (absent when the author locked it), lock or unlock it (its author
@@ -73,6 +73,7 @@ Future<void> showMessageActions(
   bool forwarding = true,
   Future<void> Function()? onDelete,
   VoidCallback? onChanged,
+  VoidCallback? onInfo,
 }) async {
   final l10n = AppLocalizations.of(context);
   final picked = await showModalBottomSheet<Object>(
@@ -118,6 +119,13 @@ Future<void> showMessageActions(
                   ? (l10n?.messengerUnstar ?? 'Remove star')
                   : (l10n?.messengerStar ?? 'Star')),
               onTap: () => Navigator.of(sheet).pop(_Action.star),
+            ),
+          if (onInfo != null)
+            ListTile(
+              key: const ValueKey('message-action-info'),
+              leading: const Icon(Icons.done_all),
+              title: Text(l10n?.messageInfo ?? 'Message info'),
+              onTap: () => Navigator.of(sheet).pop(_Action.info),
             ),
           if (message.body.isNotEmpty && !message.isNotice)
             ListTile(
@@ -265,6 +273,8 @@ Future<void> showMessageActions(
             actions.toggleStar(message.kind, message.messageId),
       );
       if (ok) onChanged?.call();
+    case _Action.info:
+      onInfo?.call();
     case _Action.copy:
       await Clipboard.setData(ClipboardData(text: notePlainText(message.body)));
       if (context.mounted) {

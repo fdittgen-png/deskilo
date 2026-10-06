@@ -3501,6 +3501,10 @@
     }
   },
   "composerDraftKept": "Draft kept",
+  "composerMention": "Mention someone",
+  "@composerMention": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
   "connectionCancelled": "The account changed meanwhile, so this answer was discarded.",
   "connectionChangedIdentity": "This server is no longer the one you connected. Its actions are paused until you verify it again.",
   "connectionChecking": "Checking…",
@@ -6994,6 +6998,46 @@
         "type": "String"
       }
     }
+  },
+  "groupAnnounceOnly": "Only admins can post",
+  "@groupAnnounceOnly": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnlyHint": "Everyone reads; only admins write.",
+  "@groupAnnounceOnlyHint": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescription": "Description",
+  "@groupDescription": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionAdd": "Add a description",
+  "@groupDescriptionAdd": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionTitle": "Group description",
+  "@groupDescriptionTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupMakeAdmin": "Make admin",
+  "@groupMakeAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupPostingClosed": "Only admins can post in this group.",
+  "@groupPostingClosed": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRemoveAdmin": "Remove admin",
+  "@groupRemoveAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRename": "Rename group",
+  "@groupRename": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRenameTitle": "Group name",
+  "@groupRenameTitle": {
+    "description": "workspace groups: rename, description, admins, info"
   },
   "guideActionConfirmBooking": "confirm the booking and wait for the answer",
   "@guideActionConfirmBooking": {
@@ -12492,6 +12536,18 @@
   "membersTitle": "Members & plans",
   "@membersTitle": {
     "description": "Title of the owner-only member management screen + its settings entry"
+  },
+  "messageInfo": "Message info",
+  "@messageInfo": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageNotReadYet": "Not read yet",
+  "@messageNotReadYet": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageReadBy": "Read by",
+  "@messageReadBy": {
+    "description": "workspace groups: rename, description, admins, info"
   },
   "messageSearchGroups": "Groups",
   "@messageSearchGroups": {

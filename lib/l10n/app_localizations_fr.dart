@@ -2916,6 +2916,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get composerDraftKept => 'Brouillon conservé';
 
   @override
+  String get composerMention => 'Mentionner quelqu’un';
+
+  @override
   String get connectionCancelled =>
       'Le compte a changé entre-temps ; cette réponse a été ignorée.';
 
@@ -6028,6 +6031,38 @@ class AppLocalizationsFr extends AppLocalizations {
   String gettingStartedTitle(String workspace) {
     return 'Premiers pas dans $workspace';
   }
+
+  @override
+  String get groupAnnounceOnly => 'Seuls les admins peuvent écrire';
+
+  @override
+  String get groupAnnounceOnlyHint =>
+      'Tout le monde lit ; seuls les admins écrivent.';
+
+  @override
+  String get groupDescription => 'Description';
+
+  @override
+  String get groupDescriptionAdd => 'Ajouter une description';
+
+  @override
+  String get groupDescriptionTitle => 'Description du groupe';
+
+  @override
+  String get groupMakeAdmin => 'Nommer admin';
+
+  @override
+  String get groupPostingClosed =>
+      'Seuls les admins peuvent écrire dans ce groupe.';
+
+  @override
+  String get groupRemoveAdmin => 'Retirer admin';
+
+  @override
+  String get groupRename => 'Renommer le groupe';
+
+  @override
+  String get groupRenameTitle => 'Nom du groupe';
 
   @override
   String get guideActionConfirmBooking =>
@@ -10931,6 +10966,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get membersTitle => 'Membres et forfaits';
+
+  @override
+  String get messageInfo => 'Infos du message';
+
+  @override
+  String get messageNotReadYet => 'Pas encore lu';
+
+  @override
+  String get messageReadBy => 'Lu par';
 
   @override
   String get messageSearchGroups => 'Groupes';

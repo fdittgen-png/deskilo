@@ -2893,6 +2893,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get composerDraftKept => 'Draft kept';
 
   @override
+  String get composerMention => 'Mention someone';
+
+  @override
   String get connectionCancelled =>
       'The account changed meanwhile, so this answer was discarded.';
 
@@ -5974,6 +5977,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String gettingStartedTitle(String workspace) {
     return 'Get started in $workspace';
   }
+
+  @override
+  String get groupAnnounceOnly => 'Only admins can post';
+
+  @override
+  String get groupAnnounceOnlyHint => 'Everyone reads; only admins write.';
+
+  @override
+  String get groupDescription => 'Description';
+
+  @override
+  String get groupDescriptionAdd => 'Add a description';
+
+  @override
+  String get groupDescriptionTitle => 'Group description';
+
+  @override
+  String get groupMakeAdmin => 'Make admin';
+
+  @override
+  String get groupPostingClosed => 'Only admins can post in this group.';
+
+  @override
+  String get groupRemoveAdmin => 'Remove admin';
+
+  @override
+  String get groupRename => 'Rename group';
+
+  @override
+  String get groupRenameTitle => 'Group name';
 
   @override
   String get guideActionConfirmBooking =>
@@ -10825,6 +10858,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get membersTitle => 'Members & plans';
+
+  @override
+  String get messageInfo => 'Message info';
+
+  @override
+  String get messageNotReadYet => 'Not read yet';
+
+  @override
+  String get messageReadBy => 'Read by';
 
   @override
   String get messageSearchGroups => 'Groups';

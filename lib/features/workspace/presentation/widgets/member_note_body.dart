@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../reservations/domain/space_code.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../../../reservations/presentation/widgets/reference_open.dart';
 import '../../domain/member_note_refs.dart';
 
@@ -21,7 +22,11 @@ class MemberNoteBody extends ConsumerWidget {
     required this.body,
     this.style,
     this.linkColor,
+    this.mentions = const {},
   });
+
+  /// Names mentioned as `@Name` in a group: shown in bold.
+  final Set<String> mentions;
 
   final String body;
   final TextStyle? style;
@@ -82,7 +87,7 @@ class MemberNoteBody extends ConsumerWidget {
       TextSpan(children: [
         for (final segment in parseNoteBody(body))
           switch (segment) {
-            NoteText(:final text) => TextSpan(text: text, style: base),
+            NoteText(:final text) => _mentioned(text, base),
             NoteReservationRef(:final id, :final label) => link(
                 icon: Icons.event_available_outlined,
                 label: label,
@@ -110,5 +115,29 @@ class MemberNoteBody extends ConsumerWidget {
           },
       ]),
     );
+  }
+
+  /// Plain text with `@Name` of a group member in bold (0383).
+  TextSpan _mentioned(String text, TextStyle? base) {
+    if (mentions.isEmpty || !text.contains('@')) {
+      return TextSpan(text: text, style: base);
+    }
+    final names = mentions.toList()..sort((a, b) => b.length.compareTo(a.length));
+    final pattern = RegExp(
+      '@(?:${names.map(RegExp.escape).join('|')})',
+      caseSensitive: false,
+    );
+    final spans = <InlineSpan>[];
+    var at = 0;
+    for (final m in pattern.allMatches(text)) {
+      if (m.start > at) spans.add(TextSpan(text: text.substring(at, m.start), style: base));
+      spans.add(TextSpan(
+        text: m.group(0),
+        style: base?.strong,
+      ));
+      at = m.end;
+    }
+    if (at < text.length) spans.add(TextSpan(text: text.substring(at), style: base));
+    return TextSpan(children: spans);
   }
 }

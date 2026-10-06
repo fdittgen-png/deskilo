@@ -425,5 +425,61 @@
   "messengerNoStarred": "No starred message yet.",
   "@messengerNoStarred": {
     "description": "messenger: reactions, stars, edits"
+  },
+  "groupRename": "Rename group",
+  "@groupRename": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRenameTitle": "Group name",
+  "@groupRenameTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescription": "Description",
+  "@groupDescription": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionAdd": "Add a description",
+  "@groupDescriptionAdd": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionTitle": "Group description",
+  "@groupDescriptionTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnly": "Only admins can post",
+  "@groupAnnounceOnly": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnlyHint": "Everyone reads; only admins write.",
+  "@groupAnnounceOnlyHint": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupMakeAdmin": "Make admin",
+  "@groupMakeAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRemoveAdmin": "Remove admin",
+  "@groupRemoveAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupPostingClosed": "Only admins can post in this group.",
+  "@groupPostingClosed": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageInfo": "Message info",
+  "@messageInfo": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageReadBy": "Read by",
+  "@messageReadBy": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageNotReadYet": "Not read yet",
+  "@messageNotReadYet": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "composerMention": "Mention someone",
+  "@composerMention": {
+    "description": "workspace groups: rename, description, admins, info"
   }
 }

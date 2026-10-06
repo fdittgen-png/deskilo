@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
+import '../domain/group_details.dart';
 import '../domain/message_marks.dart';
 import '../domain/messenger.dart';
 import '../domain/messenger_repository.dart';
@@ -31,6 +32,46 @@ class SupabaseMessengerRepository implements MessengerRepository {
 
   @override
   Future<List<Map<String, dynamic>>> inbox() => _rows('my_inbox');
+
+  @override
+  Future<ConversationDetails> conversationDetails(String conversationId) async =>
+      ConversationDetails.fromJson(Map<String, dynamic>.from(
+        (await _rpc<dynamic>('conversation_details', {
+              'p_conversation_id': conversationId,
+            })) as Map? ??
+            const <String, dynamic>{},
+      ));
+
+  @override
+  Future<void> setConversationDetails(
+    String conversationId, {
+    required String description,
+    required bool announceOnly,
+  }) =>
+      _rpc<dynamic>('set_conversation_details', {
+        'p_conversation_id': conversationId,
+        'p_description': description,
+        'p_announce_only': announceOnly,
+      });
+
+  @override
+  Future<void> setParticipantAdmin(
+    String conversationId,
+    String memberId, {
+    required bool admin,
+  }) =>
+      _rpc<dynamic>('set_participant_admin', {
+        'p_conversation_id': conversationId,
+        'p_member_id': memberId,
+        'p_admin': admin,
+      });
+
+  @override
+  Future<MessageReach> messageReach(String messageId) async =>
+      MessageReach.fromJson(Map<String, dynamic>.from(
+        (await _rpc<dynamic>('message_info', {'p_message_id': messageId}))
+            as Map,
+      ));
 
   @override
   Future<MessageMarks> marks(String contextWire, String contextId) async =>
