@@ -978,10 +978,18 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                   onSeatTap(plan, seat, reservations, window);
                 },
               ),
-            AsyncError() => Center(
-                child: Text(
-                  l10n?.workspaceGenericError ??
+            // #2011 — the floor plan could not be read: say so and offer
+            // Retry; the level selector stays, so the level is kept.
+            AsyncError() => Padding(
+                padding: const EdgeInsets.all(16),
+                child: InlineBanner(
+                  key: const ValueKey('reserve-plan-unavailable'),
+                  icon: Icons.cloud_off_outlined,
+                  severity: InlineBannerSeverity.error,
+                  text: l10n?.workspaceGenericError ??
                       'Something went wrong. Please try again.',
+                  actionLabel: l10n?.reserveStaleRetry ?? 'Retry',
+                  onAction: () => ref.invalidate(floorPlanProvider(level.id)),
                 ),
               ),
             _ => const LoadingView(),

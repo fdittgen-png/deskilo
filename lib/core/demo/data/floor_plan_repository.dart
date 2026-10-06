@@ -292,8 +292,13 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   Future<Uint8List?> fetchPlanImageBytes(String imageId) async =>
       imageBytes[imageId];
 
+  /// #2011 — a test that proves the unavailable state: every plan read
+  /// fails until it is switched off.
+  bool failPlanReads = false;
+
   @override
   Future<FloorPlan> fetchPlan(String levelId) async {
+    if (failPlanReads) throw StateError('the plan read failed');
     final levelOffices = offices.where((o) => o.levelId == levelId).toList();
     final officeIds = levelOffices.map((o) => o.id).toSet();
     final levelDesks =
