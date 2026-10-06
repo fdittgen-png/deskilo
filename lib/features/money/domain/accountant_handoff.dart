@@ -18,6 +18,7 @@ import 'package:crypto/crypto.dart';
 
 import 'accountant_csv.dart';
 import 'accounting_amount.dart';
+import 'archive_bundle.dart' show kZipEntryTime;
 import 'billing_rules.dart';
 import 'invoice.dart';
 
@@ -373,7 +374,8 @@ Uint8List accountantHandoffArchive({
 }) {
   final archive = Archive();
   void add(String path, List<int> bytes) =>
-      archive.addFile(ArchiveFile(path, bytes.length, bytes));
+      archive.addFile(
+          ArchiveFile(path, bytes.length, bytes)..lastModTime = kZipEntryTime);
   add(csvName, utf8.encode(csv));
   add('report.json', utf8.encode(report.toPrettyJson()));
   return Uint8List.fromList(ZipEncoder().encode(archive));
