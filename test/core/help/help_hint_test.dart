@@ -243,6 +243,11 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
+    // Built is not on screen: bring it fully into view before tapping.
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('settings-restore-hints')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('settings-restore-hints')));
     await tester.pumpAndSettle();
     expect(store.dismissed, isEmpty);
