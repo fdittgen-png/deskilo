@@ -7158,6 +7158,7 @@
       }
     }
   },
+  "guideHostGoToPage": "Go to page",
   "guideHostInstruction": "Read this, then mark it done.",
   "@guideHostInstruction": {
     "description": "#1867 live guide host"

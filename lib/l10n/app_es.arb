@@ -4131,6 +4131,7 @@
   "guideHostDone": "Hecho",
   "guideHostFillField": "Rellene el campo resaltado y salga de él.",
   "guideHostFillLabel": "Rellene «{label}» y salga del campo.",
+  "guideHostGoToPage": "Ir a la página",
   "guideHostInstruction": "Lea esto y márquelo como hecho.",
   "guideHostManual": "Haga este paso usted mismo y márquelo como hecho.",
   "guideHostManualProtected": "Esta parte ocurre en una pantalla protegida ({category}). Hágala usted mismo y márquela como hecha.",

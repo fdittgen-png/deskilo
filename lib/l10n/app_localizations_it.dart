@@ -6151,6 +6151,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get guideHostGoToPage => 'Vai alla pagina';
+
+  @override
   String get guideHostInstruction => 'Leggi questo, poi segnalo come fatto.';
 
   @override

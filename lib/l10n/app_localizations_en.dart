@@ -6112,6 +6112,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get guideHostGoToPage => 'Go to page';
+
+  @override
   String get guideHostInstruction => 'Read this, then mark it done.';
 
   @override

@@ -4131,6 +4131,7 @@
   "guideHostDone": "Fatto",
   "guideHostFillField": "Compila il campo evidenziato, poi esci.",
   "guideHostFillLabel": "Compila «{label}», poi esci dal campo.",
+  "guideHostGoToPage": "Vai alla pagina",
   "guideHostInstruction": "Leggi questo, poi segnalo come fatto.",
   "guideHostManual": "Esegui tu questo passo, poi segnalo come fatto.",
   "guideHostManualProtected": "Questa parte avviene in una schermata protetta ({category}). Eseguila tu, poi segnala come fatta.",
