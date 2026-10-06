@@ -22,8 +22,10 @@ import '../core/cache/cache_scope.dart';
 /// that choice has to be in force before the first request. No stored
 /// endpoint (the normal case, and every store build) = the compiled
 /// defaults.
-Future<void> initializeApp() async {
-  final stored = await const PrefsBackendSettingsStore().read();
+Future<void> initializeApp({
+  StartupStages stages = const StartupStages(),
+}) async {
+  final stored = await stages.readStored();
   // #1124 — the cache is named after the server the rows came from, and
   // that is this one for the rest of the process, whatever Settings is
   // holding by the time somebody reads a row.
@@ -33,28 +35,85 @@ Future<void> initializeApp() async {
   final callback = Uri.parse(kIsWeb
       ? '${Uri.base.origin}${Uri.base.path}' : 'deskilo://auth-callback');
   final guard = AuthCallbackGuard(secrets, origin, callback);
-  await guard.restore();
+  await stages.restoreGuard(guard);
   bootAuthCallbackGuard = guard;
   final dispatch = AuthCallbackDispatcher(guard,
       currentUser: () => Supabase.instance.client.auth.currentUser?.id);
   bootAuthCallbackDispatcher = dispatch;
-  await Supabase.initialize(
+  await stages.initializeSupabase(
     url: stored?.url ?? BackendConfig.supabaseUrl,
-    publishableKey: stored?.key ?? BackendConfig.supabaseKey,
-    authOptions: FlutterAuthClientOptions(
-      detectSessionInUriPredicate: dispatch.call,
-      pkceAsyncStorage: InstallationPkceStorage(secrets, origin),
-      localStorage: InstallationSessionStorage(secrets, origin,
-        legacy: SharedPreferencesLocalStorage(
-          persistSessionKey: 'sb-${origin.host.split('.').first}-auth-token',
-        )),
-    ),
+    key: stored?.key ?? BackendConfig.supabaseKey,
+    dispatch: dispatch,
+    secrets: secrets,
+    origin: origin,
   );
-  await dispatch.attach((uri) async {
-    try {
-      await NativeFederationFlow(Supabase.instance.client, guard, secrets).complete(uri);
-    } finally {
-      clearCallbackHistory();
-    }
-  });
+  await stages.attachCallback(dispatch, guard, secrets);
 }
+
+/// #2015 — the four asynchronous stages of the essential start-up, as seams.
+///
+/// The defaults are the real ones; a test hands in a stage that hangs or
+/// throws and drives the REAL [initializeApp] around it, so the recovery
+/// proof covers the code that runs in production, not a copy of it.
+class StartupStages {
+  const StartupStages({
+    this.readStored = _readStored,
+    this.restoreGuard = _restoreGuard,
+    this.initializeSupabase = _initializeSupabase,
+    this.attachCallback = _attachCallback,
+  });
+
+  final Future<BackendEndpoint?> Function() readStored;
+  final Future<void> Function(AuthCallbackGuard guard) restoreGuard;
+  final Future<void> Function({
+    required String url,
+    required String key,
+    required AuthCallbackDispatcher dispatch,
+    required PlatformAuthSecretStore secrets,
+    required Uri origin,
+  }) initializeSupabase;
+  final Future<void> Function(
+    AuthCallbackDispatcher dispatch,
+    AuthCallbackGuard guard,
+    PlatformAuthSecretStore secrets,
+  ) attachCallback;
+}
+
+Future<BackendEndpoint?> _readStored() =>
+    const PrefsBackendSettingsStore().read();
+
+Future<void> _restoreGuard(AuthCallbackGuard guard) => guard.restore();
+
+Future<void> _initializeSupabase({
+  required String url,
+  required String key,
+  required AuthCallbackDispatcher dispatch,
+  required PlatformAuthSecretStore secrets,
+  required Uri origin,
+}) =>
+    Supabase.initialize(
+      url: url,
+      publishableKey: key,
+      authOptions: FlutterAuthClientOptions(
+        detectSessionInUriPredicate: dispatch.call,
+        pkceAsyncStorage: InstallationPkceStorage(secrets, origin),
+        localStorage: InstallationSessionStorage(secrets, origin,
+          legacy: SharedPreferencesLocalStorage(
+            persistSessionKey: 'sb-${origin.host.split('.').first}-auth-token',
+          )),
+      ),
+    );
+
+Future<void> _attachCallback(
+  AuthCallbackDispatcher dispatch,
+  AuthCallbackGuard guard,
+  PlatformAuthSecretStore secrets,
+) =>
+    dispatch.attach((uri) async {
+      try {
+        await NativeFederationFlow(Supabase.instance.client, guard, secrets)
+            .complete(uri);
+      } finally {
+        clearCallbackHistory();
+      }
+    });
