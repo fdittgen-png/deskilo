@@ -1,0 +1,41 @@
+{
+  "refFilterMore": "Filter",
+  "refFilterAll": "Alle",
+  "refFilterClear": "Filter löschen",
+  "refFilterSort": "Sortieren",
+  "refSortNewest": "Neueste zuerst",
+  "refSortOldest": "Älteste zuerst",
+  "refSortAmountHigh": "Höchster Betrag",
+  "refSortAmountLow": "Niedrigster Betrag",
+  "refFilterReset": "Zurücksetzen",
+  "refFilterAmount": "Betrag",
+  "refFilterShow": "{count} Ergebnisse anzeigen",
+  "@refFilterShow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "refFilterFindIn": "In {facet} suchen",
+  "@refFilterFindIn": {
+    "placeholders": {
+      "facet": {
+        "type": "String"
+      }
+    }
+  },
+  "refFacetStatus": "Status",
+  "refFacetPerson": "Person",
+  "refFacetMonth": "Monat",
+  "refFacetType": "Art",
+  "refFacetWorkspace": "Arbeitsbereich",
+  "refStatusOpen": "Offen (unbezahlt)",
+  "refStatusPaid": "Bezahlt",
+  "refStatusCancelled": "Storniert",
+  "refStatusRefunded": "Erstattet",
+  "refTypeInvoice": "Rechnung",
+  "refTypeCreditNote": "Gutschrift",
+  "refStatusPending": "Ausstehend",
+  "refStatusDecided": "Entschieden"
+}

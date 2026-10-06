@@ -13739,6 +13739,85 @@ class AppLocalizationsEn extends AppLocalizations {
       'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.';
 
   @override
+  String get refFacetMonth => 'Month';
+
+  @override
+  String get refFacetPerson => 'Person';
+
+  @override
+  String get refFacetStatus => 'Status';
+
+  @override
+  String get refFacetType => 'Type';
+
+  @override
+  String get refFacetWorkspace => 'Workspace';
+
+  @override
+  String get refFilterAll => 'All';
+
+  @override
+  String get refFilterAmount => 'Amount';
+
+  @override
+  String get refFilterClear => 'Clear filters';
+
+  @override
+  String refFilterFindIn(String facet) {
+    return 'Find in $facet';
+  }
+
+  @override
+  String get refFilterMore => 'Filters';
+
+  @override
+  String get refFilterReset => 'Reset';
+
+  @override
+  String refFilterShow(int count) {
+    return 'Show $count results';
+  }
+
+  @override
+  String get refFilterSort => 'Sort';
+
+  @override
+  String get refSortAmountHigh => 'Highest amount';
+
+  @override
+  String get refSortAmountLow => 'Lowest amount';
+
+  @override
+  String get refSortNewest => 'Newest first';
+
+  @override
+  String get refSortOldest => 'Oldest first';
+
+  @override
+  String get refStatusCancelled => 'Cancelled';
+
+  @override
+  String get refStatusDecided => 'Decided';
+
+  @override
+  String get refStatusOpen => 'Open (unpaid)';
+
+  @override
+  String get refStatusPaid => 'Paid';
+
+  @override
+  String get refStatusPending => 'Pending';
+
+  @override
+  String get refStatusRefunded => 'Refunded';
+
+  @override
+  String get refTypeCreditNote => 'Credit note';
+
+  @override
+  String get refTypeInvoice => 'Invoice';
+
+  @override
   String get refusalAlreadyDecided =>
       'Someone has already decided this. The list shows the outcome.';
 

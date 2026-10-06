@@ -1,0 +1,41 @@
+{
+  "refFilterMore": "Filtros",
+  "refFilterAll": "Todo",
+  "refFilterClear": "Borrar filtros",
+  "refFilterSort": "Ordenar",
+  "refSortNewest": "Más recientes primero",
+  "refSortOldest": "Más antiguos primero",
+  "refSortAmountHigh": "Importe más alto",
+  "refSortAmountLow": "Importe más bajo",
+  "refFilterReset": "Restablecer",
+  "refFilterAmount": "Importe",
+  "refFilterShow": "Mostrar {count} resultados",
+  "@refFilterShow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "refFilterFindIn": "Buscar en {facet}",
+  "@refFilterFindIn": {
+    "placeholders": {
+      "facet": {
+        "type": "String"
+      }
+    }
+  },
+  "refFacetStatus": "Estado",
+  "refFacetPerson": "Persona",
+  "refFacetMonth": "Mes",
+  "refFacetType": "Tipo",
+  "refFacetWorkspace": "Espacio",
+  "refStatusOpen": "Abierta (sin pagar)",
+  "refStatusPaid": "Pagada",
+  "refStatusCancelled": "Anulada",
+  "refStatusRefunded": "Reembolsada",
+  "refTypeInvoice": "Factura",
+  "refTypeCreditNote": "Nota de crédito",
+  "refStatusPending": "Pendiente",
+  "refStatusDecided": "Decidida"
+}

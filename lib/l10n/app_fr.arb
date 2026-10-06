@@ -8532,6 +8532,45 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "refFacetMonth": "Mois",
+  "refFacetPerson": "Personne",
+  "refFacetStatus": "Statut",
+  "refFacetType": "Type",
+  "refFacetWorkspace": "Espace",
+  "refFilterAll": "Tout",
+  "refFilterAmount": "Montant",
+  "refFilterClear": "Effacer les filtres",
+  "refFilterFindIn": "Chercher dans {facet}",
+  "@refFilterFindIn": {
+    "placeholders": {
+      "facet": {
+        "type": "String"
+      }
+    }
+  },
+  "refFilterMore": "Filtres",
+  "refFilterReset": "Réinitialiser",
+  "refFilterShow": "Afficher {count} résultats",
+  "@refFilterShow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "refFilterSort": "Trier",
+  "refSortAmountHigh": "Montant le plus élevé",
+  "refSortAmountLow": "Montant le plus bas",
+  "refSortNewest": "Les plus récents d'abord",
+  "refSortOldest": "Les plus anciens d'abord",
+  "refStatusCancelled": "Annulée",
+  "refStatusDecided": "Décidée",
+  "refStatusOpen": "Ouverte (impayée)",
+  "refStatusPaid": "Payée",
+  "refStatusPending": "En attente",
+  "refStatusRefunded": "Remboursée",
+  "refTypeCreditNote": "Avoir",
+  "refTypeInvoice": "Facture",
   "refusalAlreadyDecided": "Quelqu'un a déjà décidé. La liste affiche le résultat.",
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
   "refusalPermission": "Vous n'avez pas l'autorisation pour cela. Un propriétaire de l'espace peut l'accorder dans Gestion des rôles.",
