@@ -5053,6 +5053,12 @@ abstract class AppLocalizations {
   /// **'Draft kept'**
   String get composerDraftKept;
 
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Mention someone'**
+  String get composerMention;
+
   /// No description provided for @connectionCancelled.
   ///
   /// In en, this message translates to:
@@ -10373,6 +10379,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get started in {workspace}'**
   String gettingStartedTitle(String workspace);
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Only admins can post'**
+  String get groupAnnounceOnly;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone reads; only admins write.'**
+  String get groupAnnounceOnlyHint;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'Create group'**
+  String get groupCreate;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get groupDescription;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Add a description'**
+  String get groupDescriptionAdd;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Group description'**
+  String get groupDescriptionTitle;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Make admin'**
+  String get groupMakeAdmin;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'Group name'**
+  String get groupName;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one person.'**
+  String get groupNeedsPeople;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'New group'**
+  String get groupNew;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'New group'**
+  String get groupNewTitle;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'People in the group'**
+  String get groupPeople;
+
+  /// messenger: creating a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'Add people'**
+  String get groupPickPeople;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Only admins can post in this group.'**
+  String get groupPostingClosed;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Remove admin'**
+  String get groupRemoveAdmin;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Rename group'**
+  String get groupRename;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Group name'**
+  String get groupRenameTitle;
 
   /// #1867 live guide host
   ///
@@ -18594,6 +18702,24 @@ abstract class AppLocalizations {
   /// **'Members & plans'**
   String get membersTitle;
 
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Message info'**
+  String get messageInfo;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Not read yet'**
+  String get messageNotReadYet;
+
+  /// workspace groups: rename, description, admins, info
+  ///
+  /// In en, this message translates to:
+  /// **'Read by'**
+  String get messageReadBy;
+
   /// #687 - messaging search
   ///
   /// In en, this message translates to:
@@ -18654,6 +18780,12 @@ abstract class AppLocalizations {
   /// **'Person to person'**
   String get messengerContextAccount;
 
+  /// messenger: a group of people
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get messengerContextGroup;
+
   /// Context label of an inquiry an outside person wrote to a space the reader hosts (#1824)
   ///
   /// In en, this message translates to:
@@ -18671,6 +18803,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'In {space}'**
   String messengerContextSpace(String space);
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Copied.'**
+  String get messengerCopied;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Copy text'**
+  String get messengerCopy;
 
   /// Action: delete my own account message (#1824)
   ///
@@ -18695,6 +18839,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delivered'**
   String get messengerDelivered;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get messengerEdit;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'This message could not be edited — the 15 minutes may be over.'**
+  String get messengerEditFailed;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Edit message'**
+  String get messengerEditTitle;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'A message can be corrected for 15 minutes after it was sent.'**
+  String get messengerEditWindow;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'edited'**
+  String get messengerEdited;
 
   /// History line: a screenshot was taken (#1824)
   ///
@@ -18864,6 +19038,12 @@ abstract class AppLocalizations {
   /// **'Message actions'**
   String get messengerMessageActions;
 
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'No starred message yet.'**
+  String get messengerNoStarred;
+
   /// System line in a conversation when someone took a screenshot of it (iOS) (#1824)
   ///
   /// In en, this message translates to:
@@ -18924,11 +19104,29 @@ abstract class AppLocalizations {
   /// **'This space does not take inquiries right now.'**
   String get messengerRefusedUnavailable;
 
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Star'**
+  String get messengerStar;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Starred'**
+  String get messengerStarred;
+
   /// Author action: allow forwarding this message again (#1824)
   ///
   /// In en, this message translates to:
   /// **'Allow forwarding'**
   String get messengerUnlock;
+
+  /// messenger: reactions, stars, edits
+  ///
+  /// In en, this message translates to:
+  /// **'Remove star'**
+  String get messengerUnstar;
 
   /// Button on a published space page, and title of the inquiry sheet (#1824)
   ///
@@ -30085,6 +30283,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Theme'**
   String get themeTitle;
+
+  /// Me thread: why attaching references is unavailable
+  ///
+  /// In en, this message translates to:
+  /// **'References are only shared with people of the same workspace.'**
+  String get threadNoRefs;
 
   /// Me thread: which workspace the references speak about
   ///

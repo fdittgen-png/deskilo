@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'account_group.dart';
+import 'group_details.dart';
+import 'message_marks.dart';
 import 'messenger.dart';
 
 /// #1824 — the context-bound messenger on ONE server.
@@ -10,6 +13,10 @@ import 'messenger.dart';
 abstract interface class MessengerRepository {
   /// `my_inbox`: every conversation I take part in on this server.
   Future<List<Map<String, dynamic>>> inbox();
+
+  /// The workspaces I share with [user] (both active members): where the
+  /// references of a conversation with them may point (0381).
+  Future<List<({String id, String name})>> sharedWorkspaces(String user);
 
   // ── inquiries ─────────────────────────────────────────────────────
   Future<List<HostRosterEntry>> hostRoster(String workspace);
@@ -24,6 +31,54 @@ abstract interface class MessengerRepository {
   });
   Future<void> markInquiryRead(String inquiry);
   Future<void> closeInquiry(String inquiry);
+
+  // ── what a chat does besides words (0382) ─────────────────────────
+  /// Reactions, my stars and the edited messages of one context
+  /// ([contextWire]: `conversation | account_conversation | inquiry`).
+  Future<MessageMarks> marks(String contextWire, String contextId);
+  Future<void> react(MessageKind kind, String messageId, String? emoji);
+  Future<bool> toggleStar(MessageKind kind, String messageId);
+  Future<void> edit(MessageKind kind, String messageId, String body);
+  Future<List<StarredMessage>> starred();
+
+  // ── groups of people (0384) ───────────────────────────────────────
+  Future<String> createGroup(String title, List<String> users);
+  Future<AccountGroupInfo> groupInfo(String group);
+  Future<List<GroupMember>> groupMembers(String group);
+  Future<void> addGroupMember(String group, String user);
+  Future<void> removeGroupMember(String group, String user);
+  Future<void> leaveGroup(String group);
+  Future<void> setGroupMeta(
+    String group, {
+    String? title,
+    String? description,
+    bool? announceOnly,
+  });
+  Future<void> setGroupAdmin(String group, String user, {required bool admin});
+  Future<List<ContextMessage>> groupMessages(
+    String group, {
+    DateTime? beforeAt,
+    String? beforeId,
+  });
+  Future<String> sendGroupMessage(String group, String body);
+  Future<void> markGroupRead(String group);
+  Future<void> deleteGroupMessage(String message);
+  Future<GroupReach> groupReach(String message);
+  Future<List<({String id, String name})>> groupSharedWorkspaces(String group);
+
+  // ── running a group (0383) ────────────────────────────────────────
+  Future<ConversationDetails> conversationDetails(String conversationId);
+  Future<void> setConversationDetails(
+    String conversationId, {
+    required String description,
+    required bool announceOnly,
+  });
+  Future<void> setParticipantAdmin(
+    String conversationId,
+    String memberId, {
+    required bool admin,
+  });
+  Future<MessageReach> messageReach(String messageId);
 
   // ── forwarding and history ────────────────────────────────────────
   Future<String> forward({

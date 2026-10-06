@@ -3501,6 +3501,10 @@
     }
   },
   "composerDraftKept": "Draft kept",
+  "composerMention": "Mention someone",
+  "@composerMention": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
   "connectionCancelled": "The account changed meanwhile, so this answer was discarded.",
   "connectionChangedIdentity": "This server is no longer the one you connected. Its actions are paused until you verify it again.",
   "connectionChecking": "Checking…",
@@ -6994,6 +6998,74 @@
         "type": "String"
       }
     }
+  },
+  "groupAnnounceOnly": "Only admins can post",
+  "@groupAnnounceOnly": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnlyHint": "Everyone reads; only admins write.",
+  "@groupAnnounceOnlyHint": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupCreate": "Create group",
+  "@groupCreate": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupDescription": "Description",
+  "@groupDescription": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionAdd": "Add a description",
+  "@groupDescriptionAdd": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionTitle": "Group description",
+  "@groupDescriptionTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupMakeAdmin": "Make admin",
+  "@groupMakeAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupName": "Group name",
+  "@groupName": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNeedsPeople": "Add at least one person.",
+  "@groupNeedsPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNew": "New group",
+  "@groupNew": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNewTitle": "New group",
+  "@groupNewTitle": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPeople": "People in the group",
+  "@groupPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPickPeople": "Add people",
+  "@groupPickPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPostingClosed": "Only admins can post in this group.",
+  "@groupPostingClosed": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRemoveAdmin": "Remove admin",
+  "@groupRemoveAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRename": "Rename group",
+  "@groupRename": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRenameTitle": "Group name",
+  "@groupRenameTitle": {
+    "description": "workspace groups: rename, description, admins, info"
   },
   "guideActionConfirmBooking": "confirm the booking and wait for the answer",
   "@guideActionConfirmBooking": {
@@ -12493,6 +12565,18 @@
   "@membersTitle": {
     "description": "Title of the owner-only member management screen + its settings entry"
   },
+  "messageInfo": "Message info",
+  "@messageInfo": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageNotReadYet": "Not read yet",
+  "@messageNotReadYet": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageReadBy": "Read by",
+  "@messageReadBy": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
   "messageSearchGroups": "Groups",
   "@messageSearchGroups": {
     "description": "#687 - messaging search"
@@ -12533,6 +12617,10 @@
   "@messengerContextAccount": {
     "description": "Context label of a person-to-person account conversation (#1824)"
   },
+  "messengerContextGroup": "Group",
+  "@messengerContextGroup": {
+    "description": "messenger: a group of people"
+  },
   "messengerContextInquiryIn": "Inquiry to {space}",
   "@messengerContextInquiryIn": {
     "description": "Context label of an inquiry an outside person wrote to a space the reader hosts (#1824)",
@@ -12560,6 +12648,14 @@
       }
     }
   },
+  "messengerCopied": "Copied.",
+  "@messengerCopied": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopy": "Copy text",
+  "@messengerCopy": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerDelete": "Delete message",
   "@messengerDelete": {
     "description": "Action: delete my own account message (#1824)"
@@ -12575,6 +12671,26 @@
   "messengerDelivered": "Delivered",
   "@messengerDelivered": {
     "description": "Screen-reader label of the delivered receipt on my message (#1824)"
+  },
+  "messengerEdit": "Edit",
+  "@messengerEdit": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditFailed": "This message could not be edited — the 15 minutes may be over.",
+  "@messengerEditFailed": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditTitle": "Edit message",
+  "@messengerEditTitle": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditWindow": "A message can be corrected for 15 minutes after it was sent.",
+  "@messengerEditWindow": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdited": "edited",
+  "@messengerEdited": {
+    "description": "messenger: reactions, stars, edits"
   },
   "messengerEventCaptured": "Screenshot taken by {actor}",
   "@messengerEventCaptured": {
@@ -12760,6 +12876,10 @@
   "@messengerMessageActions": {
     "description": "Tooltip of the button that opens a message's actions (#1824)"
   },
+  "messengerNoStarred": "No starred message yet.",
+  "@messengerNoStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerNoticeCaptured": "{actor} took a screenshot of this conversation.",
   "@messengerNoticeCaptured": {
     "description": "System line in a conversation when someone took a screenshot of it (iOS) (#1824)",
@@ -12823,9 +12943,21 @@
   "@messengerRefusedUnavailable": {
     "description": "Refusal: the space takes no inquiries (not published, or switched off) (#1824)"
   },
+  "messengerStar": "Star",
+  "@messengerStar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerStarred": "Starred",
+  "@messengerStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerUnlock": "Allow forwarding",
   "@messengerUnlock": {
     "description": "Author action: allow forwarding this message again (#1824)"
+  },
+  "messengerUnstar": "Remove star",
+  "@messengerUnstar": {
+    "description": "messenger: reactions, stars, edits"
   },
   "messengerWriteToHosts": "Write to the hosts",
   "@messengerWriteToHosts": {
@@ -20015,6 +20147,10 @@
   "themeTitle": "Theme",
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"
+  },
+  "threadNoRefs": "References are only shared with people of the same workspace.",
+  "@threadNoRefs": {
+    "description": "Me thread: why attaching references is unavailable"
   },
   "threadRefsIn": "References in",
   "@threadRefsIn": {

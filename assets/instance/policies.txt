@@ -19,6 +19,9 @@ public.account_contact_settings.mcp_delegated_deny
 public.account_conversations.mcp_delegated_deny
 public.account_field_audience.mcp_delegated_deny
 public.account_field_audience_spaces.mcp_delegated_deny
+public.account_group_members.mcp_delegated_deny
+public.account_group_messages.mcp_delegated_deny
+public.account_groups.mcp_delegated_deny
 public.account_messages.mcp_delegated_deny
 public.analytics_history.mcp_delegated_deny
 public.badge_auth_attempts.mcp_delegated_deny
@@ -134,6 +137,8 @@ public.members.members_select
 public.members.members_select_self
 public.members.members_update_owner
 public.message_events.mcp_delegated_deny
+public.message_reactions.mcp_delegated_deny
+public.message_stars.mcp_delegated_deny
 public.number_sequences.mcp_delegated_deny
 public.number_sequences.number_sequences_select
 public.offices.mcp_delegated_deny

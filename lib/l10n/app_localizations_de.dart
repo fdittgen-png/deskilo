@@ -2917,6 +2917,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get composerDraftKept => 'Entwurf behalten';
 
   @override
+  String get composerMention => 'Jemanden erwähnen';
+
+  @override
   String get connectionCancelled =>
       'Das Konto hat sich inzwischen geändert; diese Antwort wurde verworfen.';
 
@@ -6020,6 +6023,58 @@ class AppLocalizationsDe extends AppLocalizations {
   String gettingStartedTitle(String workspace) {
     return 'Erste Schritte in $workspace';
   }
+
+  @override
+  String get groupAnnounceOnly => 'Nur Admins dürfen schreiben';
+
+  @override
+  String get groupAnnounceOnlyHint => 'Alle lesen; nur Admins schreiben.';
+
+  @override
+  String get groupCreate => 'Gruppe erstellen';
+
+  @override
+  String get groupDescription => 'Beschreibung';
+
+  @override
+  String get groupDescriptionAdd => 'Beschreibung hinzufügen';
+
+  @override
+  String get groupDescriptionTitle => 'Gruppenbeschreibung';
+
+  @override
+  String get groupMakeAdmin => 'Zum Admin machen';
+
+  @override
+  String get groupName => 'Gruppenname';
+
+  @override
+  String get groupNeedsPeople => 'Fügen Sie mindestens eine Person hinzu.';
+
+  @override
+  String get groupNew => 'Neue Gruppe';
+
+  @override
+  String get groupNewTitle => 'Neue Gruppe';
+
+  @override
+  String get groupPeople => 'Personen der Gruppe';
+
+  @override
+  String get groupPickPeople => 'Personen hinzufügen';
+
+  @override
+  String get groupPostingClosed =>
+      'In dieser Gruppe dürfen nur Admins schreiben.';
+
+  @override
+  String get groupRemoveAdmin => 'Admin entfernen';
+
+  @override
+  String get groupRename => 'Gruppe umbenennen';
+
+  @override
+  String get groupRenameTitle => 'Gruppenname';
 
   @override
   String get guideActionConfirmBooking =>
@@ -10922,6 +10977,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get membersTitle => 'Mitglieder & Tarife';
 
   @override
+  String get messageInfo => 'Nachrichteninfo';
+
+  @override
+  String get messageNotReadYet => 'Noch nicht gelesen';
+
+  @override
+  String get messageReadBy => 'Gelesen von';
+
+  @override
   String get messageSearchGroups => 'Gruppen';
 
   @override
@@ -10953,6 +11017,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get messengerContextAccount => 'Von Person zu Person';
 
   @override
+  String get messengerContextGroup => 'Gruppe';
+
+  @override
   String messengerContextInquiryIn(String space) {
     return 'Anfrage an $space';
   }
@@ -10968,6 +11035,12 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get messengerCopied => 'Kopiert.';
+
+  @override
+  String get messengerCopy => 'Text kopieren';
+
+  @override
   String get messengerDelete => 'Nachricht löschen';
 
   @override
@@ -10979,6 +11052,23 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get messengerDelivered => 'Zugestellt';
+
+  @override
+  String get messengerEdit => 'Bearbeiten';
+
+  @override
+  String get messengerEditFailed =>
+      'Die Nachricht konnte nicht bearbeitet werden — die 15 Minuten sind vielleicht vorbei.';
+
+  @override
+  String get messengerEditTitle => 'Nachricht bearbeiten';
+
+  @override
+  String get messengerEditWindow =>
+      'Eine Nachricht kann 15 Minuten nach dem Senden korrigiert werden.';
+
+  @override
+  String get messengerEdited => 'bearbeitet';
 
   @override
   String messengerEventCaptured(String actor) {
@@ -11095,6 +11185,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get messengerMessageActions => 'Nachrichtenaktionen';
 
   @override
+  String get messengerNoStarred => 'Noch keine markierte Nachricht.';
+
+  @override
   String messengerNoticeCaptured(String actor) {
     return '$actor hat ein Bildschirmfoto dieser Unterhaltung aufgenommen.';
   }
@@ -11137,7 +11230,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Ort nimmt gerade keine Anfragen an.';
 
   @override
+  String get messengerStar => 'Markieren';
+
+  @override
+  String get messengerStarred => 'Markiert';
+
+  @override
   String get messengerUnlock => 'Weiterleiten erlauben';
+
+  @override
+  String get messengerUnstar => 'Markierung entfernen';
 
   @override
   String get messengerWriteToHosts => 'An die Gastgeber schreiben';
@@ -17577,6 +17679,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get themeTitle => 'Design';
+
+  @override
+  String get threadNoRefs =>
+      'Verweise werden nur mit Personen desselben Arbeitsbereichs geteilt.';
 
   @override
   String get threadRefsIn => 'Verweise in';

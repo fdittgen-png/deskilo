@@ -6,11 +6,14 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../directory/domain/group_details.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member.dart';
 import '../../../members/presentation/member_profile_link.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../../../directory/providers/message_marks_providers.dart';
+import '../../../directory/providers/messenger_providers.dart';
 import 'conversation_avatar.dart';
 
 /// A group's roster (#687): who is in it, who runs it, and the ways in
@@ -47,6 +50,7 @@ class _GroupInfoSheet extends ConsumerWidget {
             const <ConversationParticipant>[];
     final iAmAdmin = roster
         .any((p) => p.memberId == myMemberId && p.isAdmin && p.isActive);
+    final details = ref.watch(conversationDetailsProvider(conversation.id)).value;
     // Left participants are listed LAST and dimmed rather than dropped:
     // their messages are still in the thread above, and a name with no
     // row is a name nobody can place.
@@ -95,6 +99,13 @@ class _GroupInfoSheet extends ConsumerWidget {
                   ],
                 ),
               ),
+              if (iAmAdmin)
+                IconButton(
+                  key: const ValueKey('group-rename'),
+                  tooltip: l10n?.groupRename ?? 'Rename group',
+                  icon: const Icon(Icons.edit_outlined),
+                  onPressed: () => _rename(context, ref),
+                ),
               IconButton(
                 tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
                 icon: const Icon(Icons.close),
@@ -102,6 +113,36 @@ class _GroupInfoSheet extends ConsumerWidget {
               ),
             ]),
           ),
+          if ((details?.description.isNotEmpty ?? false) || iAmAdmin)
+            ListTile(
+              key: const ValueKey('group-description'),
+              leading: const Icon(Icons.notes_outlined),
+              title: Text(
+                (details?.description.isNotEmpty ?? false)
+                    ? details!.description
+                    : (l10n?.groupDescriptionAdd ?? 'Add a description'),
+                style: (details?.description.isNotEmpty ?? false)
+                    ? null
+                    : theme.textTheme.bodyMedium
+                        ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              ),
+              onTap: iAmAdmin ? () => _editDescription(context, ref, details) : null,
+            ),
+          if (iAmAdmin)
+            SwitchListTile(
+              key: const ValueKey('group-announce-only'),
+              secondary: const Icon(Icons.campaign_outlined),
+              title: Text(l10n?.groupAnnounceOnly ?? 'Only admins can post'),
+              subtitle: Text(l10n?.groupAnnounceOnlyHint ??
+                  'Everyone reads; only admins write.'),
+              value: details?.announceOnly ?? false,
+              onChanged: (value) => _setDetails(
+                context,
+                ref,
+                description: details?.description ?? '',
+                announceOnly: value,
+              ),
+            ),
           if (iAmAdmin)
             ListTile(
               key: const ValueKey('group-add-people'),
@@ -141,12 +182,26 @@ class _GroupInfoSheet extends ConsumerWidget {
                     trailing: iAmAdmin &&
                             p.isActive &&
                             p.memberId != myMemberId
-                        ? TextButton(
-                            key: ValueKey('group-remove-${p.memberId}'),
-                            onPressed: () => _remove(context, ref, p.memberId),
-                            child:
-                                Text(l10n?.conversationRemove ?? 'Remove'),
-                          )
+                        ? Row(mainAxisSize: MainAxisSize.min, children: [
+                            IconButton(
+                              key: ValueKey('group-admin-${p.memberId}'),
+                              tooltip: p.isAdmin
+                                  ? (l10n?.groupRemoveAdmin ?? 'Remove admin')
+                                  : (l10n?.groupMakeAdmin ?? 'Make admin'),
+                              icon: Icon(p.isAdmin
+                                  ? Icons.shield
+                                  : Icons.shield_outlined),
+                              onPressed: () => _setAdmin(
+                                  context, ref, p.memberId, !p.isAdmin),
+                            ),
+                            TextButton(
+                              key: ValueKey('group-remove-${p.memberId}'),
+                              onPressed: () =>
+                                  _remove(context, ref, p.memberId),
+                              child:
+                                  Text(l10n?.conversationRemove ?? 'Remove'),
+                            ),
+                          ])
                         : null,
                   ),
                 );
@@ -295,6 +350,130 @@ class _GroupInfoSheet extends ConsumerWidget {
     Navigator.of(context)
       ..pop()
       ..pop();
+  }
+
+  Future<String?> _ask(
+    BuildContext context, {
+    required String title,
+    required String initial,
+    required int maxLength,
+    int maxLines = 1,
+    required Key fieldKey,
+  }) {
+    final controller = TextEditingController(text: initial);
+    return showDialog<String>(
+      context: context,
+      builder: (dialog) => AlertDialog(
+        title: Text(title),
+        content: TextField(
+          key: fieldKey,
+          controller: controller,
+          autofocus: true,
+          maxLength: maxLength,
+          maxLines: maxLines,
+          minLines: 1,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialog).pop(),
+            child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel),
+          ),
+          FilledButton(
+            key: const ValueKey('group-text-save'),
+            onPressed: () => Navigator.of(dialog).pop(controller.text),
+            child: Text(MaterialLocalizations.of(dialog).okButtonLabel),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _rename(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final title = await _ask(
+      context,
+      title: l10n?.groupRenameTitle ?? 'Group name',
+      initial: conversation.title ?? '',
+      maxLength: 60,
+      fieldKey: const ValueKey('group-rename-field'),
+    );
+    if (title == null || title.trim().isEmpty || !context.mounted) return;
+    await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'rename group failed',
+      errorText: l10n?.portalActionFailed ??
+          'Could not save this change. Please try again.',
+      action: () => ref
+          .read(workspaceRepositoryProvider)
+          .setConversationMeta(conversation.id, title: title.trim()),
+    );
+    _refresh(ref);
+  }
+
+  Future<void> _editDescription(
+    BuildContext context,
+    WidgetRef ref,
+    ConversationDetails? details,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final text = await _ask(
+      context,
+      title: l10n?.groupDescriptionTitle ?? 'Group description',
+      initial: details?.description ?? '',
+      maxLength: 500,
+      maxLines: 5,
+      fieldKey: const ValueKey('group-description-field'),
+    );
+    if (text == null || !context.mounted) return;
+    await _setDetails(
+      context,
+      ref,
+      description: text,
+      announceOnly: details?.announceOnly ?? false,
+    );
+  }
+
+  Future<void> _setDetails(
+    BuildContext context,
+    WidgetRef ref, {
+    required String description,
+    required bool announceOnly,
+  }) async {
+    final l10n = AppLocalizations.of(context);
+    await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'group details failed',
+      errorText: l10n?.portalActionFailed ??
+          'Could not save this change. Please try again.',
+      action: () => ref.read(messengerActionsProvider()).setConversationDetails(
+            conversation.id,
+            description: description,
+            announceOnly: announceOnly,
+          ),
+    );
+    ref.invalidate(conversationDetailsProvider(conversation.id));
+  }
+
+  Future<void> _setAdmin(
+    BuildContext context,
+    WidgetRef ref,
+    String memberId,
+    bool admin,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'set participant admin failed',
+      errorText: l10n?.portalActionFailed ??
+          'Could not save this change. Please try again.',
+      action: () => ref
+          .read(messengerActionsProvider())
+          .setParticipantAdmin(conversation.id, memberId, admin: admin),
+    );
+    _refresh(ref);
   }
 
   void _refresh(WidgetRef ref) => ref

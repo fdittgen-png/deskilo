@@ -2908,6 +2908,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get composerDraftKept => 'Bozza conservata';
 
   @override
+  String get composerMention => 'Menziona qualcuno';
+
+  @override
   String get connectionCancelled =>
       'Nel frattempo l’account è cambiato, quindi questa risposta è stata scartata.';
 
@@ -6013,6 +6016,58 @@ class AppLocalizationsIt extends AppLocalizations {
   String gettingStartedTitle(String workspace) {
     return 'Primi passi in $workspace';
   }
+
+  @override
+  String get groupAnnounceOnly => 'Solo gli admin possono scrivere';
+
+  @override
+  String get groupAnnounceOnlyHint => 'Tutti leggono; solo gli admin scrivono.';
+
+  @override
+  String get groupCreate => 'Crea gruppo';
+
+  @override
+  String get groupDescription => 'Descrizione';
+
+  @override
+  String get groupDescriptionAdd => 'Aggiungi una descrizione';
+
+  @override
+  String get groupDescriptionTitle => 'Descrizione del gruppo';
+
+  @override
+  String get groupMakeAdmin => 'Nomina admin';
+
+  @override
+  String get groupName => 'Nome del gruppo';
+
+  @override
+  String get groupNeedsPeople => 'Aggiungi almeno una persona.';
+
+  @override
+  String get groupNew => 'Nuovo gruppo';
+
+  @override
+  String get groupNewTitle => 'Nuovo gruppo';
+
+  @override
+  String get groupPeople => 'Persone del gruppo';
+
+  @override
+  String get groupPickPeople => 'Aggiungi persone';
+
+  @override
+  String get groupPostingClosed =>
+      'In questo gruppo possono scrivere solo gli admin.';
+
+  @override
+  String get groupRemoveAdmin => 'Rimuovi admin';
+
+  @override
+  String get groupRename => 'Rinomina gruppo';
+
+  @override
+  String get groupRenameTitle => 'Nome del gruppo';
 
   @override
   String get guideActionConfirmBooking =>
@@ -10916,6 +10971,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get membersTitle => 'Membri e piani';
 
   @override
+  String get messageInfo => 'Info messaggio';
+
+  @override
+  String get messageNotReadYet => 'Non ancora letto';
+
+  @override
+  String get messageReadBy => 'Letto da';
+
+  @override
   String get messageSearchGroups => 'Gruppi';
 
   @override
@@ -10947,6 +11011,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get messengerContextAccount => 'Da persona a persona';
 
   @override
+  String get messengerContextGroup => 'Gruppo';
+
+  @override
   String messengerContextInquiryIn(String space) {
     return 'Richiesta a $space';
   }
@@ -10962,6 +11029,12 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get messengerCopied => 'Copiato.';
+
+  @override
+  String get messengerCopy => 'Copia testo';
+
+  @override
   String get messengerDelete => 'Elimina messaggio';
 
   @override
@@ -10973,6 +11046,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get messengerDelivered => 'Consegnato';
+
+  @override
+  String get messengerEdit => 'Modifica';
+
+  @override
+  String get messengerEditFailed =>
+      'Impossibile modificare il messaggio — forse i 15 minuti sono passati.';
+
+  @override
+  String get messengerEditTitle => 'Modifica messaggio';
+
+  @override
+  String get messengerEditWindow =>
+      'Un messaggio si può correggere per 15 minuti dopo l’invio.';
+
+  @override
+  String get messengerEdited => 'modificato';
 
   @override
   String messengerEventCaptured(String actor) {
@@ -11089,6 +11179,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get messengerMessageActions => 'Azioni sul messaggio';
 
   @override
+  String get messengerNoStarred => 'Nessun messaggio contrassegnato.';
+
+  @override
   String messengerNoticeCaptured(String actor) {
     return '$actor ha fatto uno screenshot di questa conversazione.';
   }
@@ -11130,7 +11223,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo spazio non accetta richieste al momento.';
 
   @override
+  String get messengerStar => 'Contrassegna';
+
+  @override
+  String get messengerStarred => 'Contrassegnati';
+
+  @override
   String get messengerUnlock => 'Consenti l’inoltro';
+
+  @override
+  String get messengerUnstar => 'Rimuovi contrassegno';
 
   @override
   String get messengerWriteToHosts => 'Scrivi ai gestori';
@@ -17554,6 +17656,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get themeTitle => 'Tema';
+
+  @override
+  String get threadNoRefs =>
+      'I riferimenti si condividono solo con persone dello stesso spazio.';
 
   @override
   String get threadRefsIn => 'Riferimenti in';

@@ -102,12 +102,15 @@ void main() {
     expect(find.text('Forwarded to Ana.'), findsOneWidget);
   });
 
-  testWidgets('with forwarding off, no bubble offers the actions', (
+  testWidgets('with forwarding off, the actions offer no forward', (
     tester,
   ) async {
     await pumpSpaceThread(tester, flags: const {'messageForwarding': false});
     expect(find.byKey(const ValueKey('bubble-n1')), findsOneWidget);
-    expect(find.byKey(const ValueKey('bubble-actions-n1')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('bubble-actions-n1')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('message-action-star')), findsOneWidget);
+    expect(find.byKey(const ValueKey('message-action-forward')), findsNothing);
   });
 
   testWidgets('a forwarded note names its origin; a notice is a line', (

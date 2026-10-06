@@ -15,7 +15,9 @@ import '../../providers/inbox_marks.dart';
 import '../../providers/messenger_providers.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import 'context_labels.dart';
+import 'create_group_screen.dart';
 import 'open_inbox_entry.dart';
+import 'starred_messages_screen.dart';
 
 /// #1824 — Me › Messages: every conversation I take part in, on every
 /// server I connected, in ONE list — each labelled with its context, the
@@ -105,6 +107,16 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                     _unreadOnly = false;
                   }),
                 ),
+                TextButton.icon(
+                  key: const ValueKey('unified-inbox-starred'),
+                  icon: const Icon(Icons.star_outline, size: 18),
+                  label: Text(l10n?.messengerStarred ?? 'Starred'),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const StarredMessagesScreen(),
+                    ),
+                  ),
+                ),
                 IconButton(
                   key: const ValueKey('unified-inbox-search'),
                   tooltip: l10n?.messageSearchTitle ?? 'Search',
@@ -113,6 +125,16 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                     _searching = !_searching;
                     if (!_searching) _query = '';
                   }),
+                ),
+                TextButton.icon(
+                  key: const ValueKey('unified-inbox-new-group'),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const CreateGroupScreen(),
+                    ),
+                  ),
+                  icon: const Icon(Icons.group_add_outlined, size: 18),
+                  label: Text(l10n?.groupNew ?? 'New group'),
                 ),
                 FilledButton.tonalIcon(
                   key: const ValueKey('unified-inbox-people'),

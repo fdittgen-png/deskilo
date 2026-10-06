@@ -2,6 +2,10 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../domain/account_group.dart';
+import '../domain/group_details.dart';
+import '../domain/message_marks.dart';
 import '../domain/messenger.dart';
 import '../domain/messenger_repository.dart';
 
@@ -29,7 +33,206 @@ class SupabaseMessengerRepository implements MessengerRepository {
   String? _at(DateTime? at) => at?.toUtc().toIso8601String();
 
   @override
-  Future<List<Map<String, dynamic>>> inbox() => _rows('my_inbox');
+  Future<List<Map<String, dynamic>>> inbox() async {
+    final rows = await _rows('my_inbox');
+    // My groups ride the same list; a server that predates them answers
+    // without them rather than failing the whole inbox.
+    try {
+      return [...rows, ...await _rows('my_group_inbox')];
+    } catch (e, st) {
+      TraceLogger.instance.warn('messages', 'group inbox unavailable',
+          error: e, stackTrace: st);
+      return rows;
+    }
+  }
+
+  @override
+  Future<String> createGroup(String title, List<String> users) => _use(
+        (client) async => (await client.rpc<dynamic>(
+          'create_account_group',
+          params: {
+            'p_title': title,
+            'p_users': users,
+            'p_expected_account': client.auth.currentUser?.id,
+          },
+        )).toString(),
+      );
+
+  @override
+  Future<AccountGroupInfo> groupInfo(String group) async =>
+      AccountGroupInfo.fromJson(Map<String, dynamic>.from(
+        (await _rpc<dynamic>('account_group_details', {'p_group': group})) as Map,
+      ));
+
+  @override
+  Future<List<GroupMember>> groupMembers(String group) async => [
+        for (final r in await _rows('account_group_members_of', {'p_group': group}))
+          GroupMember.fromJson(r),
+      ];
+
+  @override
+  Future<void> addGroupMember(String group, String user) =>
+      _rpc<dynamic>('add_account_group_member', {'p_group': group, 'p_user': user});
+
+  @override
+  Future<void> removeGroupMember(String group, String user) =>
+      _rpc<dynamic>('remove_account_group_member', {'p_group': group, 'p_user': user});
+
+  @override
+  Future<void> leaveGroup(String group) =>
+      _rpc<dynamic>('leave_account_group', {'p_group': group});
+
+  @override
+  Future<void> setGroupMeta(
+    String group, {
+    String? title,
+    String? description,
+    bool? announceOnly,
+  }) =>
+      _rpc<dynamic>('set_account_group_meta', {
+        'p_group': group,
+        'p_title': title,
+        'p_description': description,
+        'p_announce_only': announceOnly,
+      });
+
+  @override
+  Future<void> setGroupAdmin(String group, String user, {required bool admin}) =>
+      _rpc<dynamic>('set_account_group_admin',
+          {'p_group': group, 'p_user': user, 'p_admin': admin});
+
+  @override
+  Future<List<ContextMessage>> groupMessages(
+    String group, {
+    DateTime? beforeAt,
+    String? beforeId,
+  }) async => [
+        for (final row in await _rows('my_account_group_messages', {
+          'p_group': group,
+          'p_before_at': _at(beforeAt),
+          'p_before_id': beforeId,
+        }))
+          ContextMessage.fromRow(row, kind: MessageKind.groupMessage),
+      ];
+
+  @override
+  Future<String> sendGroupMessage(String group, String body) => _use(
+        (client) async => (await client.rpc<dynamic>(
+          'send_account_group_message',
+          params: {
+            'p_group': group,
+            'p_body': body,
+            'p_expected_account': client.auth.currentUser?.id,
+          },
+        )).toString(),
+      );
+
+  @override
+  Future<void> markGroupRead(String group) =>
+      _rpc<dynamic>('mark_account_group_read', {'p_group': group});
+
+  @override
+  Future<void> deleteGroupMessage(String message) =>
+      _rpc<dynamic>('delete_account_group_message', {'p_message': message});
+
+  @override
+  Future<GroupReach> groupReach(String message) async =>
+      GroupReach.fromJson(Map<String, dynamic>.from(
+        (await _rpc<dynamic>('account_group_message_reach', {'p_message': message}))
+            as Map,
+      ));
+
+  @override
+  Future<List<({String id, String name})>> groupSharedWorkspaces(String group) async => [
+        for (final row in await _rows('shared_workspaces_of_group', {'p_group': group}))
+          (id: row['id'] as String, name: row['name'] as String? ?? ''),
+      ];
+
+  @override
+  Future<ConversationDetails> conversationDetails(String conversationId) async =>
+      ConversationDetails.fromJson(Map<String, dynamic>.from(
+        (await _rpc<dynamic>('conversation_details', {
+              'p_conversation_id': conversationId,
+            })) as Map? ??
+            const <String, dynamic>{},
+      ));
+
+  @override
+  Future<void> setConversationDetails(
+    String conversationId, {
+    required String description,
+    required bool announceOnly,
+  }) =>
+      _rpc<dynamic>('set_conversation_details', {
+        'p_conversation_id': conversationId,
+        'p_description': description,
+        'p_announce_only': announceOnly,
+      });
+
+  @override
+  Future<void> setParticipantAdmin(
+    String conversationId,
+    String memberId, {
+    required bool admin,
+  }) =>
+      _rpc<dynamic>('set_participant_admin', {
+        'p_conversation_id': conversationId,
+        'p_member_id': memberId,
+        'p_admin': admin,
+      });
+
+  @override
+  Future<MessageReach> messageReach(String messageId) async =>
+      MessageReach.fromJson(Map<String, dynamic>.from(
+        (await _rpc<dynamic>('message_info', {'p_message_id': messageId}))
+            as Map,
+      ));
+
+  @override
+  Future<MessageMarks> marks(String contextWire, String contextId) async =>
+      MessageMarks.fromJson(Map<String, dynamic>.from(
+        (await _rpc<dynamic>('message_marks_in', {
+              'p_context_kind': contextWire,
+              'p_context_id': contextId,
+            })) as Map? ??
+            const <String, dynamic>{},
+      ));
+
+  @override
+  Future<void> react(MessageKind kind, String messageId, String? emoji) =>
+      _rpc<dynamic>('react_to_message', {
+        'p_kind': kind.wire,
+        'p_message_id': messageId,
+        'p_emoji': emoji,
+      });
+
+  @override
+  Future<bool> toggleStar(MessageKind kind, String messageId) async =>
+      (await _rpc<dynamic>('toggle_message_star', {
+            'p_kind': kind.wire,
+            'p_message_id': messageId,
+          })) ==
+          true;
+
+  @override
+  Future<void> edit(MessageKind kind, String messageId, String body) =>
+      _rpc<dynamic>('edit_message', {
+        'p_kind': kind.wire,
+        'p_message_id': messageId,
+        'p_body': body,
+      });
+
+  @override
+  Future<List<StarredMessage>> starred() async => [
+        for (final row in (await _rpc<List<dynamic>?>('my_starred_messages')) ?? const [])
+          StarredMessage.fromJson(Map<String, dynamic>.from(row as Map)),
+      ];
+
+  @override
+  Future<List<({String id, String name})>> sharedWorkspaces(String user) async => [
+    for (final row in await _rows('shared_workspaces_with', {'p_user': user}))
+      (id: row['id'] as String, name: row['name'] as String? ?? ''),
+  ];
 
   @override
   Future<List<HostRosterEntry>> hostRoster(String workspace) async => [

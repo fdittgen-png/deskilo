@@ -2893,6 +2893,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get composerDraftKept => 'Draft kept';
 
   @override
+  String get composerMention => 'Mention someone';
+
+  @override
   String get connectionCancelled =>
       'The account changed meanwhile, so this answer was discarded.';
 
@@ -5974,6 +5977,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String gettingStartedTitle(String workspace) {
     return 'Get started in $workspace';
   }
+
+  @override
+  String get groupAnnounceOnly => 'Only admins can post';
+
+  @override
+  String get groupAnnounceOnlyHint => 'Everyone reads; only admins write.';
+
+  @override
+  String get groupCreate => 'Create group';
+
+  @override
+  String get groupDescription => 'Description';
+
+  @override
+  String get groupDescriptionAdd => 'Add a description';
+
+  @override
+  String get groupDescriptionTitle => 'Group description';
+
+  @override
+  String get groupMakeAdmin => 'Make admin';
+
+  @override
+  String get groupName => 'Group name';
+
+  @override
+  String get groupNeedsPeople => 'Add at least one person.';
+
+  @override
+  String get groupNew => 'New group';
+
+  @override
+  String get groupNewTitle => 'New group';
+
+  @override
+  String get groupPeople => 'People in the group';
+
+  @override
+  String get groupPickPeople => 'Add people';
+
+  @override
+  String get groupPostingClosed => 'Only admins can post in this group.';
+
+  @override
+  String get groupRemoveAdmin => 'Remove admin';
+
+  @override
+  String get groupRename => 'Rename group';
+
+  @override
+  String get groupRenameTitle => 'Group name';
 
   @override
   String get guideActionConfirmBooking =>
@@ -10827,6 +10881,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get membersTitle => 'Members & plans';
 
   @override
+  String get messageInfo => 'Message info';
+
+  @override
+  String get messageNotReadYet => 'Not read yet';
+
+  @override
+  String get messageReadBy => 'Read by';
+
+  @override
   String get messageSearchGroups => 'Groups';
 
   @override
@@ -10857,6 +10920,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get messengerContextAccount => 'Person to person';
 
   @override
+  String get messengerContextGroup => 'Group';
+
+  @override
   String messengerContextInquiryIn(String space) {
     return 'Inquiry to $space';
   }
@@ -10872,6 +10938,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get messengerCopied => 'Copied.';
+
+  @override
+  String get messengerCopy => 'Copy text';
+
+  @override
   String get messengerDelete => 'Delete message';
 
   @override
@@ -10883,6 +10955,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get messengerDelivered => 'Delivered';
+
+  @override
+  String get messengerEdit => 'Edit';
+
+  @override
+  String get messengerEditFailed =>
+      'This message could not be edited — the 15 minutes may be over.';
+
+  @override
+  String get messengerEditTitle => 'Edit message';
+
+  @override
+  String get messengerEditWindow =>
+      'A message can be corrected for 15 minutes after it was sent.';
+
+  @override
+  String get messengerEdited => 'edited';
 
   @override
   String messengerEventCaptured(String actor) {
@@ -10998,6 +11087,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get messengerMessageActions => 'Message actions';
 
   @override
+  String get messengerNoStarred => 'No starred message yet.';
+
+  @override
   String messengerNoticeCaptured(String actor) {
     return '$actor took a screenshot of this conversation.';
   }
@@ -11039,7 +11131,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'This space does not take inquiries right now.';
 
   @override
+  String get messengerStar => 'Star';
+
+  @override
+  String get messengerStarred => 'Starred';
+
+  @override
   String get messengerUnlock => 'Allow forwarding';
+
+  @override
+  String get messengerUnstar => 'Remove star';
 
   @override
   String get messengerWriteToHosts => 'Write to the hosts';
@@ -17391,6 +17492,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get themeTitle => 'Theme';
+
+  @override
+  String get threadNoRefs =>
+      'References are only shared with people of the same workspace.';
 
   @override
   String get threadRefsIn => 'References in';

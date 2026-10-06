@@ -148,6 +148,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/features/calendar/presentation/screens/calendar_hub_screen.dart`
 - `lib/features/calendar/presentation/screens/calendar_screen.dart`
 - `lib/features/calendar/presentation/widgets/day_timeline.dart`
+- `lib/features/directory/presentation/messenger/context_thread_screen.dart`
 - `lib/features/editor/presentation/screens/level_canvas_screen.dart`
 - `lib/features/kiosk/presentation/screens/kiosk_screen.dart`
 - `lib/features/members/presentation/screens/directory_screen.dart`
@@ -181,5 +182,6 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/features/workspace/presentation/screens/availability_screen.dart`
 - `lib/features/workspace/presentation/screens/onboarding_screen.dart`
 - `lib/features/workspace/presentation/screens/workspace_settings_screen.dart`
+- `lib/features/workspace/presentation/widgets/conversation_thread.dart`
 - `lib/features/workspace/providers/workspace_providers.dart`
 

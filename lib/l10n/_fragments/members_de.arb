@@ -294,8 +294,144 @@
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
   },
+  "threadNoRefs": "Verweise werden nur mit Personen desselben Arbeitsbereichs geteilt.",
+  "@threadNoRefs": {
+    "description": "Me thread: why attaching references is unavailable"
+  },
   "threadRefsIn": "Verweise in",
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
+  },
+  "messengerStar": "Markieren",
+  "@messengerStar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerUnstar": "Markierung entfernen",
+  "@messengerUnstar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopy": "Text kopieren",
+  "@messengerCopy": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopied": "Kopiert.",
+  "@messengerCopied": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdit": "Bearbeiten",
+  "@messengerEdit": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdited": "bearbeitet",
+  "@messengerEdited": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditTitle": "Nachricht bearbeiten",
+  "@messengerEditTitle": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditWindow": "Eine Nachricht kann 15 Minuten nach dem Senden korrigiert werden.",
+  "@messengerEditWindow": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditFailed": "Die Nachricht konnte nicht bearbeitet werden — die 15 Minuten sind vielleicht vorbei.",
+  "@messengerEditFailed": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerStarred": "Markiert",
+  "@messengerStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerNoStarred": "Noch keine markierte Nachricht.",
+  "@messengerNoStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "groupRename": "Gruppe umbenennen",
+  "@groupRename": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRenameTitle": "Gruppenname",
+  "@groupRenameTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescription": "Beschreibung",
+  "@groupDescription": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionAdd": "Beschreibung hinzufügen",
+  "@groupDescriptionAdd": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionTitle": "Gruppenbeschreibung",
+  "@groupDescriptionTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnly": "Nur Admins dürfen schreiben",
+  "@groupAnnounceOnly": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnlyHint": "Alle lesen; nur Admins schreiben.",
+  "@groupAnnounceOnlyHint": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupMakeAdmin": "Zum Admin machen",
+  "@groupMakeAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRemoveAdmin": "Admin entfernen",
+  "@groupRemoveAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupPostingClosed": "In dieser Gruppe dürfen nur Admins schreiben.",
+  "@groupPostingClosed": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageInfo": "Nachrichteninfo",
+  "@messageInfo": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageReadBy": "Gelesen von",
+  "@messageReadBy": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageNotReadYet": "Noch nicht gelesen",
+  "@messageNotReadYet": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "composerMention": "Jemanden erwähnen",
+  "@composerMention": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messengerContextGroup": "Gruppe",
+  "@messengerContextGroup": {
+    "description": "messenger: a group of people"
+  },
+  "groupNew": "Neue Gruppe",
+  "@groupNew": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNewTitle": "Neue Gruppe",
+  "@groupNewTitle": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupName": "Gruppenname",
+  "@groupName": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupCreate": "Gruppe erstellen",
+  "@groupCreate": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPeople": "Personen der Gruppe",
+  "@groupPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPickPeople": "Personen hinzufügen",
+  "@groupPickPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNeedsPeople": "Fügen Sie mindestens eine Person hinzu.",
+  "@groupNeedsPeople": {
+    "description": "messenger: creating a group of people"
   }
 }

@@ -37,7 +37,13 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
     this.onCancelQuote,
     this.onChanged,
     this.compact = false,
+    this.referencesAllowed = true,
+    this.referencesHint,
+    this.mentionCandidates = const [],
   });
+
+  /// People who can be `@mentioned` (a group's other members).
+  final List<String> mentionCandidates;
 
   /// #821 — every keystroke, for the draft store.
   final ValueChanged<String>? onChanged;
@@ -45,6 +51,12 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
   /// #821 — the two reference chips folded into ONE attach menu beside
   /// the field, a counter as the limit nears, a spinner while sending.
   final bool compact;
+
+  /// Whether this conversation may carry references (0381): only when every
+  /// person in it belongs to the workspace the reference points at. When
+  /// false the attach controls are replaced by [referencesHint].
+  final bool referencesAllowed;
+  final String? referencesHint;
 
   /// Called with the trimmed body; returns true when it went out (the
   /// field then clears).
@@ -92,6 +104,23 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
     super.dispose();
   }
 
+  /// The send button, or a spinner while the message goes out.
+  Widget _sendControl(AppLocalizations? l10n) => _sending
+      ? const Padding(
+          padding: EdgeInsets.all(AppSpacing.sm),
+          child: SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        )
+      : IconButton.filled(
+          key: const ValueKey('member-note-send'),
+          icon: const Icon(Icons.send),
+          tooltip: l10n?.memberNoteSend ?? 'Send',
+          onPressed: _send,
+        );
+
   /// Inserts [token] at the caret (or the end), padded with spaces so
   /// the link never glues to a word.
   void _insert(String token) {
@@ -130,6 +159,27 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
         .add_Hm()
         .format(reservation.startsAt.toLocal());
     return [who, space, when].where((p) => p.isNotEmpty).join(' · ');
+  }
+
+  Future<void> _pickMention() async {
+    final name = await showModalBottomSheet<String>(
+      context: context,
+      builder: (sheet) => SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            for (final n in widget.mentionCandidates)
+              ListTile(
+                key: ValueKey('mention-$n'),
+                leading: const Icon(Icons.alternate_email),
+                title: Text(n),
+                onTap: () => Navigator.of(sheet).pop(n),
+              ),
+          ],
+        ),
+      ),
+    );
+    if (name != null) _insert('@$name');
   }
 
   Future<void> _pickReservation() async {
@@ -407,7 +457,26 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
           ),
           onSubmitted: (_) => _send(),
         ),
-        if (widget.compact)
+        if (!widget.referencesAllowed)
+          Row(children: [
+            Tooltip(
+              message: widget.referencesHint ?? '',
+              child: IconButton(
+                key: const ValueKey('composer-attach-locked'),
+                tooltip: widget.referencesHint,
+                onPressed: null,
+                icon: const Icon(Icons.link_off),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                widget.referencesHint ?? '',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+            _sendControl(l10n),
+          ])
+        else if (widget.compact)
           Row(children: [
             PopupMenuButton<String>(
               key: const ValueKey('composer-attach'),
@@ -416,6 +485,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
               onSelected: (value) => switch (value) {
                 'reservation' => _pickReservation(),
                 'space' => _pickSpace(),
+                'mention' => _pickMention(),
                 // #842 — the four new kinds share one picker.
                 _ => _pickRecord(NoteRecordKind.values.byName(value)),
               },
@@ -449,24 +519,20 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
                       title: Text(_recordLabel(l10n, kind)),
                     ),
                   ),
+                if (widget.mentionCandidates.isNotEmpty)
+                  PopupMenuItem(
+                    key: const ValueKey('member-note-mention'),
+                    value: 'mention',
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.alternate_email),
+                      title: Text(l10n?.composerMention ?? 'Mention someone'),
+                    ),
+                  ),
               ],
             ),
             const Spacer(),
-            _sending
-                ? const Padding(
-                    padding: EdgeInsets.all(AppSpacing.sm),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  )
-                : IconButton.filled(
-                    key: const ValueKey('member-note-send'),
-                    icon: const Icon(Icons.send),
-                    tooltip: l10n?.memberNoteSend ?? 'Send',
-                    onPressed: _send,
-                  ),
+            _sendControl(l10n),
           ])
         else
         // #523 — attach references: they read as links on the other

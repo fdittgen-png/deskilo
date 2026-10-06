@@ -8,6 +8,7 @@
 // named and the others still show; opening a conversation reads it.
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/features/directory/domain/message_marks.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/me/presentation/me_messages_tab.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -264,6 +265,27 @@ void main() {
     expect(find.byKey(const ValueKey('inbox-entry-c-space')), findsNothing);
   });
 
+  testWidgets('references need a workspace both people belong to: none in '
+      'common locks the attach menu, one in common opens it', (tester) async {
+    await pumpInbox(tester, home: home, remote: remote);
+    await tester.tap(find.byKey(const ValueKey('inbox-entry-c-ana')));
+    await tester.pumpAndSettle();
+    // no shared workspace with Ana: the attach control is locked
+    expect(find.byKey(const ValueKey('composer-attach-locked')), findsOneWidget);
+    expect(find.byKey(const ValueKey('composer-attach')), findsNothing);
+  });
+
+  testWidgets('with a shared workspace the attach menu is there',
+      (tester) async {
+    home.shared['ana'] = [(id: 'ws-1', name: 'Pézenas')];
+    await pumpInbox(tester, home: home, remote: remote);
+    await tester.tap(find.byKey(const ValueKey('inbox-entry-c-ana')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('composer-attach')), findsOneWidget);
+    expect(find.byKey(const ValueKey('composer-attach-locked')), findsNothing);
+  });
+
+
   testWidgets('references in a message read as links, not as raw tokens',
       (tester) async {
     home.threads[FakeMessengerRepository.threadKey(MessageContextKind.account, 'c-ana')] = [
@@ -284,4 +306,91 @@ void main() {
     expect(find.text('Ana · Desk 1 · 10 Aug'), findsOneWidget);
     expect(find.text('Place 1'), findsOneWidget);
   });
+
+  testWidgets('reactions show under the bubble; the action sheet reacts, '
+      'stars and edits', (tester) async {
+    final now = kTestNow.toUtc();
+    home.threads[FakeMessengerRepository.threadKey(MessageContextKind.account, 'c-ana')] = [
+      ContextMessage(
+        id: 'm-1',
+        kind: MessageKind.accountMessage,
+        authorName: 'Me',
+        body: 'Lunch at noon?',
+        createdAt: now.subtract(const Duration(minutes: 2)),
+        mine: true,
+      ),
+    ];
+    home.marksByContext['account_conversation|c-ana'] = const MessageMarks(
+      reactions: {'m-1': [ReactionCount('👍', 2, mine: true)]},
+      starred: {'m-1'},
+      edited: {'m-1'},
+    );
+    await pumpInbox(tester, home: home, remote: remote);
+    await tester.tap(find.byKey(const ValueKey('inbox-entry-c-ana')));
+    await tester.pumpAndSettle();
+    // drawn: the reaction with its count, the star, the edited mark
+    expect(find.byKey(const ValueKey('reaction-m-1-👍')), findsOneWidget);
+    expect(find.text('👍 2'), findsOneWidget);
+    expect(find.byKey(const ValueKey('context-starred-m-1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('context-edited-m-1')), findsOneWidget);
+
+    // react from the sheet
+    await tester.tap(find.byKey(const ValueKey('context-actions-m-1')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('message-react-❤️')));
+    await tester.pumpAndSettle();
+    expect(home.reactions.single.emoji, '❤️');
+
+    // star toggles
+    await tester.tap(find.byKey(const ValueKey('context-actions-m-1')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('message-action-star')));
+    await tester.pumpAndSettle();
+    expect(home.starredIds, contains('m-1'));
+
+    // my own recent message can be edited
+    await tester.tap(find.byKey(const ValueKey('context-actions-m-1')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('message-action-edit')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+        find.byKey(const ValueKey('message-edit-field')), 'Lunch at one?');
+    await tester.tap(find.byKey(const ValueKey('message-edit-save')));
+    await tester.pumpAndSettle();
+    expect(home.edits.single.body, 'Lunch at one?');
+  });
+
+  testWidgets('an old message offers no edit; a received one never does',
+      (tester) async {
+    home.threads[FakeMessengerRepository.threadKey(MessageContextKind.account, 'c-ana')] = [
+      ContextMessage(
+        id: 'm-old',
+        kind: MessageKind.accountMessage,
+        authorName: 'Me',
+        body: 'old words',
+        createdAt: kTestNow.toUtc().subtract(const Duration(hours: 2)),
+        mine: true,
+      ),
+      ContextMessage(
+        id: 'm-in',
+        kind: MessageKind.accountMessage,
+        authorName: 'Ana',
+        body: 'hello',
+        createdAt: kTestNow.toUtc().subtract(const Duration(minutes: 1)),
+        mine: false,
+      ),
+    ];
+    await pumpInbox(tester, home: home, remote: remote);
+    await tester.tap(find.byKey(const ValueKey('inbox-entry-c-ana')));
+    await tester.pumpAndSettle();
+    for (final id in ['m-old', 'm-in']) {
+      await tester.tap(find.byKey(ValueKey('context-actions-$id')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('message-action-edit')), findsNothing,
+          reason: id);
+      await tester.tapAt(const Offset(5, 5));
+      await tester.pumpAndSettle();
+    }
+  });
+
 }

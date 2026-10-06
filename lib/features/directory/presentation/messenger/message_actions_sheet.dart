@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/message_marks.dart';
 import '../../domain/messenger.dart';
 import '../../providers/messenger_providers.dart';
+import '../../../workspace/domain/member_note_refs.dart';
+import 'edit_message_dialog.dart';
 import 'forward_target_sheet.dart';
 import 'message_history_sheet.dart';
 import 'refusal_text.dart';
@@ -21,6 +26,11 @@ class MessageRef {
     required this.mine,
     this.noForward = false,
     this.source = '',
+    this.body = '',
+    this.sentAt,
+    this.isNotice = false,
+    this.starred = false,
+    this.myReaction,
   });
 
   final MessageKind kind;
@@ -30,9 +40,24 @@ class MessageRef {
   final bool mine;
   final bool noForward;
   final String source;
+
+  /// The words (for copy and edit), when it was sent (the edit window), and
+  /// my current marks on it (0382).
+  final String body;
+  final DateTime? sentAt;
+  final bool isNotice;
+  final bool starred;
+  final String? myReaction;
+
+  /// The author may correct a message for [kMessageEditWindow].
+  bool editableAt(DateTime now) =>
+      mine &&
+      !isNotice &&
+      sentAt != null &&
+      now.toUtc().difference(sentAt!.toUtc()) < kMessageEditWindow;
 }
 
-enum _Action { forward, lock, history, delete }
+enum _Action { forward, lock, history, delete, star, edit, copy, info }
 
 /// #1824 — what can be done with one message, in every thread: forward
 /// it (absent when the author locked it), lock or unlock it (its author
@@ -48,15 +73,74 @@ Future<void> showMessageActions(
   bool forwarding = true,
   Future<void> Function()? onDelete,
   VoidCallback? onChanged,
+  VoidCallback? onInfo,
 }) async {
   final l10n = AppLocalizations.of(context);
-  final action = await showModalBottomSheet<_Action>(
+  final picked = await showModalBottomSheet<Object>(
     context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
     builder: (sheet) => SafeArea(
       key: const ValueKey('message-actions-sheet'),
-      child: Column(
+      child: SingleChildScrollView(
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          if (!message.isNotice)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  for (final emoji in kQuickReactions)
+                    InkResponse(
+                      key: ValueKey('message-react-$emoji'),
+                      radius: 24,
+                      onTap: () => Navigator.of(sheet).pop((emoji: emoji)),
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: message.myReaction == emoji
+                              ? Theme.of(sheet).colorScheme.secondaryContainer
+                              : null,
+                        ),
+                        child: Text(emoji, style: Theme.of(sheet).textTheme.headlineSmall),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          if (!message.isNotice)
+            ListTile(
+              key: const ValueKey('message-action-star'),
+              leading: Icon(message.starred ? Icons.star : Icons.star_outline),
+              title: Text(message.starred
+                  ? (l10n?.messengerUnstar ?? 'Remove star')
+                  : (l10n?.messengerStar ?? 'Star')),
+              onTap: () => Navigator.of(sheet).pop(_Action.star),
+            ),
+          if (onInfo != null)
+            ListTile(
+              key: const ValueKey('message-action-info'),
+              leading: const Icon(Icons.done_all),
+              title: Text(l10n?.messageInfo ?? 'Message info'),
+              onTap: () => Navigator.of(sheet).pop(_Action.info),
+            ),
+          if (message.body.isNotEmpty && !message.isNotice)
+            ListTile(
+              key: const ValueKey('message-action-copy'),
+              leading: const Icon(Icons.copy_outlined),
+              title: Text(l10n?.messengerCopy ?? 'Copy text'),
+              onTap: () => Navigator.of(sheet).pop(_Action.copy),
+            ),
+          if (message.editableAt(ref.read(clockProvider).now()))
+            ListTile(
+              key: const ValueKey('message-action-edit'),
+              leading: const Icon(Icons.edit_outlined),
+              title: Text(l10n?.messengerEdit ?? 'Edit'),
+              onTap: () => Navigator.of(sheet).pop(_Action.edit),
+            ),
           if (forwarding && !message.noForward)
             ListTile(
               key: const ValueKey('message-action-forward'),
@@ -104,11 +188,28 @@ Future<void> showMessageActions(
               onTap: () => Navigator.of(sheet).pop(_Action.delete),
             ),
         ],
+        ),
       ),
     ),
   );
-  if (action == null || !context.mounted) return;
+  if (picked == null || !context.mounted) return;
   final actions = ref.read(messengerActionsProvider(source: message.source));
+  if (picked is ({String emoji})) {
+    final ok = await runMessenger(
+      context,
+      message: 'react to message failed',
+      errorText: l10n?.portalActionFailed ??
+          'Could not save this change. Please try again.',
+      action: () => actions.react(
+        message.kind,
+        message.messageId,
+        picked.emoji == message.myReaction ? null : picked.emoji,
+      ),
+    );
+    if (ok) onChanged?.call();
+    return;
+  }
+  final action = picked as _Action;
   final failed =
       l10n?.portalActionFailed ??
       'Could not save this change. Please try again.';
@@ -163,5 +264,37 @@ Future<void> showMessageActions(
       );
     case _Action.delete:
       await onDelete?.call();
+    case _Action.star:
+      final ok = await runMessenger(
+        context,
+        message: 'star message failed',
+        errorText: failed,
+        action: () =>
+            actions.toggleStar(message.kind, message.messageId),
+      );
+      if (ok) onChanged?.call();
+    case _Action.info:
+      onInfo?.call();
+    case _Action.copy:
+      await Clipboard.setData(ClipboardData(text: notePlainText(message.body)));
+      if (context.mounted) {
+        AppSnack.success(context, l10n?.messengerCopied ?? 'Copied.',
+            replace: true);
+      }
+    case _Action.edit:
+      final text = await showEditMessageDialog(context, message.body);
+      if (text == null || text.trim().isEmpty || text.trim() == message.body) {
+        return;
+      }
+      if (!context.mounted) return;
+      final ok = await runMessenger(
+        context,
+        message: 'edit message failed',
+        errorText: l10n?.messengerEditFailed ??
+            'This message could not be edited — the 15 minutes may be over.',
+        action: () =>
+            actions.edit(message.kind, message.messageId, text.trim()),
+      );
+      if (ok) onChanged?.call();
   }
 }

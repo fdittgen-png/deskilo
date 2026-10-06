@@ -374,8 +374,144 @@
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
   },
+  "threadNoRefs": "References are only shared with people of the same workspace.",
+  "@threadNoRefs": {
+    "description": "Me thread: why attaching references is unavailable"
+  },
   "threadRefsIn": "References in",
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
+  },
+  "messengerStar": "Star",
+  "@messengerStar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerUnstar": "Remove star",
+  "@messengerUnstar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopy": "Copy text",
+  "@messengerCopy": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopied": "Copied.",
+  "@messengerCopied": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdit": "Edit",
+  "@messengerEdit": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdited": "edited",
+  "@messengerEdited": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditTitle": "Edit message",
+  "@messengerEditTitle": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditWindow": "A message can be corrected for 15 minutes after it was sent.",
+  "@messengerEditWindow": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditFailed": "This message could not be edited — the 15 minutes may be over.",
+  "@messengerEditFailed": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerStarred": "Starred",
+  "@messengerStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerNoStarred": "No starred message yet.",
+  "@messengerNoStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "groupRename": "Rename group",
+  "@groupRename": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRenameTitle": "Group name",
+  "@groupRenameTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescription": "Description",
+  "@groupDescription": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionAdd": "Add a description",
+  "@groupDescriptionAdd": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionTitle": "Group description",
+  "@groupDescriptionTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnly": "Only admins can post",
+  "@groupAnnounceOnly": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnlyHint": "Everyone reads; only admins write.",
+  "@groupAnnounceOnlyHint": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupMakeAdmin": "Make admin",
+  "@groupMakeAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRemoveAdmin": "Remove admin",
+  "@groupRemoveAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupPostingClosed": "Only admins can post in this group.",
+  "@groupPostingClosed": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageInfo": "Message info",
+  "@messageInfo": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageReadBy": "Read by",
+  "@messageReadBy": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageNotReadYet": "Not read yet",
+  "@messageNotReadYet": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "composerMention": "Mention someone",
+  "@composerMention": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messengerContextGroup": "Group",
+  "@messengerContextGroup": {
+    "description": "messenger: a group of people"
+  },
+  "groupNew": "New group",
+  "@groupNew": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNewTitle": "New group",
+  "@groupNewTitle": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupName": "Group name",
+  "@groupName": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupCreate": "Create group",
+  "@groupCreate": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPeople": "People in the group",
+  "@groupPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPickPeople": "Add people",
+  "@groupPickPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNeedsPeople": "Add at least one person.",
+  "@groupNeedsPeople": {
+    "description": "messenger: creating a group of people"
   }
 }

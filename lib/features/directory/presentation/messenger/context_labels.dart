@@ -13,6 +13,8 @@ String contextLabel(AppLocalizations? l10n, InboxEntry entry) {
       l10n?.messengerContextSpace(space) ?? 'In $space',
     MessageContextKind.account =>
       l10n?.messengerContextAccount ?? 'Person to person',
+    MessageContextKind.accountGroup =>
+      l10n?.messengerContextGroup ?? 'Group',
     MessageContextKind.inquiryOut =>
       l10n?.messengerContextInquiryOut(space) ?? 'Your inquiry to $space',
     MessageContextKind.inquiryIn =>
@@ -37,6 +39,7 @@ String contextSubtitle(
 IconData contextIcon(MessageContextKind kind) => switch (kind) {
   MessageContextKind.space => Icons.meeting_room_outlined,
   MessageContextKind.account => Icons.person_outline,
+  MessageContextKind.accountGroup => Icons.groups_outlined,
   MessageContextKind.inquiryOut => Icons.contact_support_outlined,
   MessageContextKind.inquiryIn => Icons.support_agent_outlined,
 };

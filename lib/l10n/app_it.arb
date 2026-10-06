@@ -1883,6 +1883,10 @@
     }
   },
   "composerDraftKept": "Bozza conservata",
+  "composerMention": "Menziona qualcuno",
+  "@composerMention": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
   "connectionCancelled": "Nel frattempo l’account è cambiato, quindi questa risposta è stata scartata.",
   "connectionChangedIdentity": "Questo server non è più quello che hai connesso. Le sue azioni sono sospese finché non lo verifichi di nuovo.",
   "connectionChecking": "Verifica in corso…",
@@ -4029,6 +4033,74 @@
   "gettingStartedStateReleased": "rilasciata",
   "gettingStartedStateReserved": "prenotata",
   "gettingStartedTitle": "Primi passi in {workspace}",
+  "groupAnnounceOnly": "Solo gli admin possono scrivere",
+  "@groupAnnounceOnly": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupAnnounceOnlyHint": "Tutti leggono; solo gli admin scrivono.",
+  "@groupAnnounceOnlyHint": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupCreate": "Crea gruppo",
+  "@groupCreate": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupDescription": "Descrizione",
+  "@groupDescription": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionAdd": "Aggiungi una descrizione",
+  "@groupDescriptionAdd": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupDescriptionTitle": "Descrizione del gruppo",
+  "@groupDescriptionTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupMakeAdmin": "Nomina admin",
+  "@groupMakeAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupName": "Nome del gruppo",
+  "@groupName": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNeedsPeople": "Aggiungi almeno una persona.",
+  "@groupNeedsPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNew": "Nuovo gruppo",
+  "@groupNew": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupNewTitle": "Nuovo gruppo",
+  "@groupNewTitle": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPeople": "Persone del gruppo",
+  "@groupPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPickPeople": "Aggiungi persone",
+  "@groupPickPeople": {
+    "description": "messenger: creating a group of people"
+  },
+  "groupPostingClosed": "In questo gruppo possono scrivere solo gli admin.",
+  "@groupPostingClosed": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRemoveAdmin": "Rimuovi admin",
+  "@groupRemoveAdmin": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRename": "Rinomina gruppo",
+  "@groupRename": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "groupRenameTitle": "Nome del gruppo",
+  "@groupRenameTitle": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
   "guideActionConfirmBooking": "conferma la prenotazione e attendi la risposta",
   "guideActionOpenReserve": "apri Prenota",
   "guideActionSelectDate": "scegli il giorno",
@@ -6698,6 +6770,18 @@
   "membersInvite": "Invita un membro",
   "membersPlanNone": "Nessun piano",
   "membersTitle": "Membri e piani",
+  "messageInfo": "Info messaggio",
+  "@messageInfo": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageNotReadYet": "Non ancora letto",
+  "@messageNotReadYet": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
+  "messageReadBy": "Letto da",
+  "@messageReadBy": {
+    "description": "workspace groups: rename, description, admins, info"
+  },
   "messageSearchGroups": "Gruppi",
   "@messageSearchGroups": {
     "description": "#687 - messaging search"
@@ -6735,13 +6819,45 @@
     "description": "#687 - messaging centre"
   },
   "messengerContextAccount": "Da persona a persona",
+  "messengerContextGroup": "Gruppo",
+  "@messengerContextGroup": {
+    "description": "messenger: a group of people"
+  },
   "messengerContextInquiryIn": "Richiesta a {space}",
   "messengerContextInquiryOut": "La tua richiesta a {space}",
   "messengerContextSpace": "In {space}",
+  "messengerCopied": "Copiato.",
+  "@messengerCopied": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerCopy": "Copia testo",
+  "@messengerCopy": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerDelete": "Elimina messaggio",
   "messengerDeleteConfirm": "Eliminare questo messaggio per tutti i partecipanti alla conversazione?",
   "messengerDeleted": "Messaggio eliminato.",
   "messengerDelivered": "Consegnato",
+  "messengerEdit": "Modifica",
+  "@messengerEdit": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditFailed": "Impossibile modificare il messaggio — forse i 15 minuti sono passati.",
+  "@messengerEditFailed": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditTitle": "Modifica messaggio",
+  "@messengerEditTitle": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEditWindow": "Un messaggio si può correggere per 15 minuti dopo l’invio.",
+  "@messengerEditWindow": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerEdited": "modificato",
+  "@messengerEdited": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerEventCaptured": "Screenshot di {actor}",
   "messengerEventDeleted": "Eliminato da {actor}",
   "messengerEventForwarded": "Inoltrato da {actor} a {target}",
@@ -6770,6 +6886,10 @@
   "messengerInquirySend": "Invia richiesta",
   "messengerLock": "Blocca l’inoltro",
   "messengerMessageActions": "Azioni sul messaggio",
+  "messengerNoStarred": "Nessun messaggio contrassegnato.",
+  "@messengerNoStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerNoticeCaptured": "{actor} ha fatto uno screenshot di questa conversazione.",
   "messengerNoticeForwarded": "{actor} ha inoltrato un messaggio di questa conversazione a {target}.",
   "messengerNoticeForwardedPrivate": "{actor} ha inoltrato un messaggio di questa conversazione in una conversazione personale.",
@@ -6780,7 +6900,19 @@
   "messengerRefusedLimit": "Troppi in una volta. Attendi un minuto.",
   "messengerRefusedTooLong": "Questo messaggio è troppo lungo per quella conversazione.",
   "messengerRefusedUnavailable": "Questo spazio non accetta richieste al momento.",
+  "messengerStar": "Contrassegna",
+  "@messengerStar": {
+    "description": "messenger: reactions, stars, edits"
+  },
+  "messengerStarred": "Contrassegnati",
+  "@messengerStarred": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerUnlock": "Consenti l’inoltro",
+  "messengerUnstar": "Rimuovi contrassegno",
+  "@messengerUnstar": {
+    "description": "messenger: reactions, stars, edits"
+  },
   "messengerWriteToHosts": "Scrivi ai gestori",
   "mfaCode": "Codice a sei cifre",
   "mfaEnroll": "Scansiona questo codice con un'app di autenticazione, o inserisci la chiave, poi digita le sei cifre mostrate.",
@@ -10798,6 +10930,10 @@
   "themeLight": "Chiaro",
   "themeSystem": "Predefinito di sistema",
   "themeTitle": "Tema",
+  "threadNoRefs": "I riferimenti si condividono solo con persone dello stesso spazio.",
+  "@threadNoRefs": {
+    "description": "Me thread: why attaching references is unavailable"
+  },
   "threadRefsIn": "Riferimenti in",
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"

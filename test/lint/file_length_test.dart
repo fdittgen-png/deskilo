@@ -224,6 +224,10 @@ const Map<String, int> _baseline = {
   // 900→948 (2026-09-06): #945 sites.
   'lib/features/members/presentation/screens/member_page.dart': 970, // 2026-10-03 #2137 966→970: "Add a service" also for manageServices, as record_service_charge accepts it;  2026-10-03 #1916 955→966: the Customer capacity row (the dialog is workspace/presentation/member_customer_capacity.dart); 2026-10-02 #2085 947→955: hosts MemberRolesCard behind roleAssignment and hides the single Administrator row it replaces; the card itself is workspace/presentation/widgets/member_roles_card.dart;  2026-09-17 #1279 hosts MemberCarnetTile behind the carnets flag (the tile is its own file) 944→947; // 2026-09-05 #887 the managed-member tiles (edit identity, hand over, revoke) + chip
   // 720→779 (2026-09-06): #945 sites.
+  'lib/features/workspace/presentation/widgets/conversation_thread.dart': 646, // 2026-10-06 messenger: reactions, stars, edits, group posting rules and @mentions are read and drawn here — the thread is the one place that knows the roster and the marks.
+
+  'lib/features/directory/presentation/messenger/context_thread_screen.dart': 620, // 2026-10-06 groups of people: the thread asks which workspaces every member shares, closes posting in an announcement-only group and opens the group sheet.
+
   'lib/features/workspace/presentation/member_admin_actions.dart': 780, // 2026-09-11 #1061 779→780: one import, the letter builders' new home
   // #828 (2026-09-02): the expense_repartition flag and repository methods.
   // 2026-09-04 #864: one more flag. This file is the feature
