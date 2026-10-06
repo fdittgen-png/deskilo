@@ -23666,6 +23666,156 @@ abstract class AppLocalizations {
   /// **'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.'**
   String get recordingPrivacyWriteRefused;
 
+  /// No description provided for @refFacetMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get refFacetMonth;
+
+  /// No description provided for @refFacetPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get refFacetPerson;
+
+  /// No description provided for @refFacetStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get refFacetStatus;
+
+  /// No description provided for @refFacetType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get refFacetType;
+
+  /// No description provided for @refFacetWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get refFacetWorkspace;
+
+  /// No description provided for @refFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get refFilterAll;
+
+  /// No description provided for @refFilterAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get refFilterAmount;
+
+  /// No description provided for @refFilterClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get refFilterClear;
+
+  /// No description provided for @refFilterFindIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Find in {facet}'**
+  String refFilterFindIn(String facet);
+
+  /// No description provided for @refFilterMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get refFilterMore;
+
+  /// No description provided for @refFilterReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get refFilterReset;
+
+  /// No description provided for @refFilterShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show {count} results'**
+  String refFilterShow(int count);
+
+  /// No description provided for @refFilterSort.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get refFilterSort;
+
+  /// No description provided for @refSortAmountHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest amount'**
+  String get refSortAmountHigh;
+
+  /// No description provided for @refSortAmountLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest amount'**
+  String get refSortAmountLow;
+
+  /// No description provided for @refSortNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest first'**
+  String get refSortNewest;
+
+  /// No description provided for @refSortOldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest first'**
+  String get refSortOldest;
+
+  /// No description provided for @refStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get refStatusCancelled;
+
+  /// No description provided for @refStatusDecided.
+  ///
+  /// In en, this message translates to:
+  /// **'Decided'**
+  String get refStatusDecided;
+
+  /// No description provided for @refStatusOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open (unpaid)'**
+  String get refStatusOpen;
+
+  /// No description provided for @refStatusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get refStatusPaid;
+
+  /// No description provided for @refStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get refStatusPending;
+
+  /// No description provided for @refStatusRefunded.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get refStatusRefunded;
+
+  /// No description provided for @refTypeCreditNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit note'**
+  String get refTypeCreditNote;
+
+  /// No description provided for @refTypeInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get refTypeInvoice;
+
   /// #1305 Shown when a validation was already decided by someone else
   ///
   /// In en, this message translates to:

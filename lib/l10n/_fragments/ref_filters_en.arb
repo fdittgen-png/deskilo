@@ -1,0 +1,41 @@
+{
+  "refFilterMore": "Filters",
+  "refFilterAll": "All",
+  "refFilterClear": "Clear filters",
+  "refFilterSort": "Sort",
+  "refSortNewest": "Newest first",
+  "refSortOldest": "Oldest first",
+  "refSortAmountHigh": "Highest amount",
+  "refSortAmountLow": "Lowest amount",
+  "refFilterReset": "Reset",
+  "refFilterAmount": "Amount",
+  "refFilterShow": "Show {count} results",
+  "@refFilterShow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "refFilterFindIn": "Find in {facet}",
+  "@refFilterFindIn": {
+    "placeholders": {
+      "facet": {
+        "type": "String"
+      }
+    }
+  },
+  "refFacetStatus": "Status",
+  "refFacetPerson": "Person",
+  "refFacetMonth": "Month",
+  "refFacetType": "Type",
+  "refFacetWorkspace": "Workspace",
+  "refStatusOpen": "Open (unpaid)",
+  "refStatusPaid": "Paid",
+  "refStatusCancelled": "Cancelled",
+  "refStatusRefunded": "Refunded",
+  "refTypeInvoice": "Invoice",
+  "refTypeCreditNote": "Credit note",
+  "refStatusPending": "Pending",
+  "refStatusDecided": "Decided"
+}

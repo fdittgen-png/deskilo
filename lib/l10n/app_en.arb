@@ -15895,6 +15895,45 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "refFacetMonth": "Month",
+  "refFacetPerson": "Person",
+  "refFacetStatus": "Status",
+  "refFacetType": "Type",
+  "refFacetWorkspace": "Workspace",
+  "refFilterAll": "All",
+  "refFilterAmount": "Amount",
+  "refFilterClear": "Clear filters",
+  "refFilterFindIn": "Find in {facet}",
+  "@refFilterFindIn": {
+    "placeholders": {
+      "facet": {
+        "type": "String"
+      }
+    }
+  },
+  "refFilterMore": "Filters",
+  "refFilterReset": "Reset",
+  "refFilterShow": "Show {count} results",
+  "@refFilterShow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "refFilterSort": "Sort",
+  "refSortAmountHigh": "Highest amount",
+  "refSortAmountLow": "Lowest amount",
+  "refSortNewest": "Newest first",
+  "refSortOldest": "Oldest first",
+  "refStatusCancelled": "Cancelled",
+  "refStatusDecided": "Decided",
+  "refStatusOpen": "Open (unpaid)",
+  "refStatusPaid": "Paid",
+  "refStatusPending": "Pending",
+  "refStatusRefunded": "Refunded",
+  "refTypeCreditNote": "Credit note",
+  "refTypeInvoice": "Invoice",
   "refusalAlreadyDecided": "Someone has already decided this. The list shows the outcome.",
   "@refusalAlreadyDecided": {
     "description": "#1305 Shown when a validation was already decided by someone else"

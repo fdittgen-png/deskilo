@@ -8533,6 +8533,45 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "refFacetMonth": "Monat",
+  "refFacetPerson": "Person",
+  "refFacetStatus": "Status",
+  "refFacetType": "Art",
+  "refFacetWorkspace": "Arbeitsbereich",
+  "refFilterAll": "Alle",
+  "refFilterAmount": "Betrag",
+  "refFilterClear": "Filter löschen",
+  "refFilterFindIn": "In {facet} suchen",
+  "@refFilterFindIn": {
+    "placeholders": {
+      "facet": {
+        "type": "String"
+      }
+    }
+  },
+  "refFilterMore": "Filter",
+  "refFilterReset": "Zurücksetzen",
+  "refFilterShow": "{count} Ergebnisse anzeigen",
+  "@refFilterShow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "refFilterSort": "Sortieren",
+  "refSortAmountHigh": "Höchster Betrag",
+  "refSortAmountLow": "Niedrigster Betrag",
+  "refSortNewest": "Neueste zuerst",
+  "refSortOldest": "Älteste zuerst",
+  "refStatusCancelled": "Storniert",
+  "refStatusDecided": "Entschieden",
+  "refStatusOpen": "Offen (unbezahlt)",
+  "refStatusPaid": "Bezahlt",
+  "refStatusPending": "Ausstehend",
+  "refStatusRefunded": "Erstattet",
+  "refTypeCreditNote": "Gutschrift",
+  "refTypeInvoice": "Rechnung",
   "refusalAlreadyDecided": "Jemand hat bereits darüber entschieden. Die Liste zeigt das Ergebnis.",
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
   "refusalPermission": "Dafür haben Sie keine Berechtigung. Eine Inhaberin oder ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.",

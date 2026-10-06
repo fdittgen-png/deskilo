@@ -13878,6 +13878,85 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nicht, solange der Aufnahmemodus aktiv ist: Dieses Formular zeigt eine erfundene Person, und Speichern würde damit die echten Angaben einer Person überschreiben. Schalten Sie den Aufnahmemodus zuerst aus.';
 
   @override
+  String get refFacetMonth => 'Monat';
+
+  @override
+  String get refFacetPerson => 'Person';
+
+  @override
+  String get refFacetStatus => 'Status';
+
+  @override
+  String get refFacetType => 'Art';
+
+  @override
+  String get refFacetWorkspace => 'Arbeitsbereich';
+
+  @override
+  String get refFilterAll => 'Alle';
+
+  @override
+  String get refFilterAmount => 'Betrag';
+
+  @override
+  String get refFilterClear => 'Filter löschen';
+
+  @override
+  String refFilterFindIn(String facet) {
+    return 'In $facet suchen';
+  }
+
+  @override
+  String get refFilterMore => 'Filter';
+
+  @override
+  String get refFilterReset => 'Zurücksetzen';
+
+  @override
+  String refFilterShow(int count) {
+    return '$count Ergebnisse anzeigen';
+  }
+
+  @override
+  String get refFilterSort => 'Sortieren';
+
+  @override
+  String get refSortAmountHigh => 'Höchster Betrag';
+
+  @override
+  String get refSortAmountLow => 'Niedrigster Betrag';
+
+  @override
+  String get refSortNewest => 'Neueste zuerst';
+
+  @override
+  String get refSortOldest => 'Älteste zuerst';
+
+  @override
+  String get refStatusCancelled => 'Storniert';
+
+  @override
+  String get refStatusDecided => 'Entschieden';
+
+  @override
+  String get refStatusOpen => 'Offen (unbezahlt)';
+
+  @override
+  String get refStatusPaid => 'Bezahlt';
+
+  @override
+  String get refStatusPending => 'Ausstehend';
+
+  @override
+  String get refStatusRefunded => 'Erstattet';
+
+  @override
+  String get refTypeCreditNote => 'Gutschrift';
+
+  @override
+  String get refTypeInvoice => 'Rechnung';
+
+  @override
   String get refusalAlreadyDecided =>
       'Jemand hat bereits darüber entschieden. Die Liste zeigt das Ergebnis.';
 

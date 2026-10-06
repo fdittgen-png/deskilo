@@ -13885,6 +13885,85 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible tant que le mode tournage est actif : ce formulaire affiche une personne inventée, et l\'enregistrer écraserait les vraies coordonnées de quelqu\'un. Désactivez d\'abord le mode tournage.';
 
   @override
+  String get refFacetMonth => 'Mois';
+
+  @override
+  String get refFacetPerson => 'Personne';
+
+  @override
+  String get refFacetStatus => 'Statut';
+
+  @override
+  String get refFacetType => 'Type';
+
+  @override
+  String get refFacetWorkspace => 'Espace';
+
+  @override
+  String get refFilterAll => 'Tout';
+
+  @override
+  String get refFilterAmount => 'Montant';
+
+  @override
+  String get refFilterClear => 'Effacer les filtres';
+
+  @override
+  String refFilterFindIn(String facet) {
+    return 'Chercher dans $facet';
+  }
+
+  @override
+  String get refFilterMore => 'Filtres';
+
+  @override
+  String get refFilterReset => 'Réinitialiser';
+
+  @override
+  String refFilterShow(int count) {
+    return 'Afficher $count résultats';
+  }
+
+  @override
+  String get refFilterSort => 'Trier';
+
+  @override
+  String get refSortAmountHigh => 'Montant le plus élevé';
+
+  @override
+  String get refSortAmountLow => 'Montant le plus bas';
+
+  @override
+  String get refSortNewest => 'Les plus récents d\'abord';
+
+  @override
+  String get refSortOldest => 'Les plus anciens d\'abord';
+
+  @override
+  String get refStatusCancelled => 'Annulée';
+
+  @override
+  String get refStatusDecided => 'Décidée';
+
+  @override
+  String get refStatusOpen => 'Ouverte (impayée)';
+
+  @override
+  String get refStatusPaid => 'Payée';
+
+  @override
+  String get refStatusPending => 'En attente';
+
+  @override
+  String get refStatusRefunded => 'Remboursée';
+
+  @override
+  String get refTypeCreditNote => 'Avoir';
+
+  @override
+  String get refTypeInvoice => 'Facture';
+
+  @override
   String get refusalAlreadyDecided =>
       'Quelqu\'un a déjà décidé. La liste affiche le résultat.';
 

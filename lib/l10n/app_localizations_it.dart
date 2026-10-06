@@ -13860,6 +13860,85 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non mentre la modalità ripresa è attiva: questo modulo mostra una persona inventata, e salvarlo sovrascriverebbe i dati reali di qualcuno. Disattiva prima la modalità ripresa.';
 
   @override
+  String get refFacetMonth => 'Mese';
+
+  @override
+  String get refFacetPerson => 'Persona';
+
+  @override
+  String get refFacetStatus => 'Stato';
+
+  @override
+  String get refFacetType => 'Tipo';
+
+  @override
+  String get refFacetWorkspace => 'Spazio';
+
+  @override
+  String get refFilterAll => 'Tutto';
+
+  @override
+  String get refFilterAmount => 'Importo';
+
+  @override
+  String get refFilterClear => 'Cancella i filtri';
+
+  @override
+  String refFilterFindIn(String facet) {
+    return 'Cerca in $facet';
+  }
+
+  @override
+  String get refFilterMore => 'Filtri';
+
+  @override
+  String get refFilterReset => 'Reimposta';
+
+  @override
+  String refFilterShow(int count) {
+    return 'Mostra $count risultati';
+  }
+
+  @override
+  String get refFilterSort => 'Ordina';
+
+  @override
+  String get refSortAmountHigh => 'Importo più alto';
+
+  @override
+  String get refSortAmountLow => 'Importo più basso';
+
+  @override
+  String get refSortNewest => 'Prima i più recenti';
+
+  @override
+  String get refSortOldest => 'Prima i più vecchi';
+
+  @override
+  String get refStatusCancelled => 'Annullata';
+
+  @override
+  String get refStatusDecided => 'Deciso';
+
+  @override
+  String get refStatusOpen => 'Aperta (non pagata)';
+
+  @override
+  String get refStatusPaid => 'Pagata';
+
+  @override
+  String get refStatusPending => 'In attesa';
+
+  @override
+  String get refStatusRefunded => 'Rimborsata';
+
+  @override
+  String get refTypeCreditNote => 'Nota di credito';
+
+  @override
+  String get refTypeInvoice => 'Fattura';
+
+  @override
   String get refusalAlreadyDecided =>
       'Qualcuno ha già deciso. L\'elenco mostra l\'esito.';
 
