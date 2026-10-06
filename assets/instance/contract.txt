@@ -1543,6 +1543,7 @@ routine public.my_active_binding() -> uuid | function | definer | stable | exec:
 routine public.my_active_member(p_workspace_id uuid) -> members | function | definer | stable | exec:authenticated,service_role | body:67bfd226c319
 routine public.my_admin_visibility(p_workspace uuid, p_visible boolean) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:fad683dd1673
 routine public.my_contact_availability() -> boolean | function | definer | stable | exec:authenticated,service_role | body:2fe523696cc8
+routine public.my_conversation_flags() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:12716e793587
 routine public.my_conversations(p_workspace_id uuid, p_include_archived boolean) -> TABLE(id uuid, kind text, title text, avatar_path text, other_member_id uuid, last_body text, last_at timestamp with time zone, last_from_member_id uuid, unread integer, participant_count integer, pinned_at timestamp with time zone, muted boolean, archived_at timestamp with time zone) | function | definer | stable | exec:authenticated,service_role | body:4299164a173c
 routine public.my_database_capabilities() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4016e23f951e
 routine public.my_directory_person() -> uuid | function | definer | stable | exec:authenticated,service_role | body:48d6f565f410
