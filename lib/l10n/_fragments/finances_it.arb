@@ -1,0 +1,111 @@
+{
+  "financesTitle": "Finanze",
+  "@financesTitle": {
+    "description": "Me › Finances"
+  },
+  "financesOutstanding": "Da pagare",
+  "@financesOutstanding": {
+    "description": "Me › Finances"
+  },
+  "financesPaid": "Pagate",
+  "@financesPaid": {
+    "description": "Me › Finances"
+  },
+  "financesPayments": "Pagamenti",
+  "@financesPayments": {
+    "description": "Me › Finances"
+  },
+  "financesReminders": "Solleciti",
+  "@financesReminders": {
+    "description": "Me › Finances"
+  },
+  "financesToPay": "Da pagare",
+  "@financesToPay": {
+    "description": "Me › Finances"
+  },
+  "financesNothingOwed": "Niente da pagare — sei in regola.",
+  "@financesNothingOwed": {
+    "description": "Me › Finances"
+  },
+  "financesNothingPaid": "Nessuna fattura ancora saldata.",
+  "@financesNothingPaid": {
+    "description": "Me › Finances"
+  },
+  "financesNoReminders": "Nessun sollecito ricevuto.",
+  "@financesNoReminders": {
+    "description": "Me › Finances"
+  },
+  "financesAwaitingValidation": "Pagamento in convalida",
+  "@financesAwaitingValidation": {
+    "description": "Me › Finances"
+  },
+  "financesPartlyPaid": "Pagata in parte",
+  "@financesPartlyPaid": {
+    "description": "Me › Finances"
+  },
+  "financesStatePaid": "Pagata",
+  "@financesStatePaid": {
+    "description": "Me › Finances"
+  },
+  "financesStateRefunded": "Rimborsata",
+  "@financesStateRefunded": {
+    "description": "Me › Finances"
+  },
+  "financesStateClosed": "Chiusa",
+  "@financesStateClosed": {
+    "description": "Me › Finances"
+  },
+  "financesAutomatic": "automatico",
+  "@financesAutomatic": {
+    "description": "Me › Finances"
+  },
+  "financesFullHistory": "Storico completo, consumi e altri server",
+  "@financesFullHistory": {
+    "description": "Me › Finances"
+  },
+  "financesDueOn": "Scade il {date}",
+  "@financesDueOn": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesOverdueSince": "Scaduta dal {date}",
+  "@financesOverdueSince": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesOverdueCount": "{count} scadute",
+  "@financesOverdueCount": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesRemindedTimes": "Sollecitata ×{count}",
+  "@financesRemindedTimes": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesReminderLevel": "Sollecito {level}",
+  "@financesReminderLevel": {
+    "description": "Me › Finances",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  }
+}

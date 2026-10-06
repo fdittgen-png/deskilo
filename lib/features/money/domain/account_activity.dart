@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'finance_overview.dart';
+
 /// Account RPC projection. It contains neither operator stamps nor other
 /// members' data. Currency belongs to each record; pages are never summed.
 enum AccountActivityKind { invoices, payments, usage }
@@ -44,6 +46,10 @@ class AccountActivity {
 }
 
 abstract interface class AccountActivityRepository {
+  /// Me › Finances: my invoices (outstanding and paid) and reminders across
+  /// every workspace I belong to (0380).
+  Future<FinanceOverview> overview();
+
   Future<List<AccountActivity>> list(
     AccountActivityKind kind, {
     ActivityCursor? before,

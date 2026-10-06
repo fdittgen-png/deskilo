@@ -862,8 +862,9 @@ void main() {
     await tester.pumpAndSettle();
 
     // Field report: three localized labels side by side ran off the card.
+    // One named verb at most; the others stay icons.
     expect(find.text('Send a reminder'), findsNothing);
-    expect(find.text('Mark as paid'), findsNothing);
+    expect(find.text('Mark as paid'), findsOneWidget);
     for (final action in ['void-open', 'proforma', 'remind', 'match']) {
       expect(
         find.byKey(ValueKey('invoice-$action-${invoice.id}')),

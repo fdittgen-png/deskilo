@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
+import '../../helpers/navigation.dart' show tapInvoicingTool;
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 const _data = <String, Object?>{
@@ -182,8 +183,7 @@ void main() {
       (tester) async {
     final money = await pumpInvoices(tester, money: await seededMoney());
 
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
 
     // Reset hands a WORKING example…
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
@@ -214,8 +214,7 @@ void main() {
     // quick preview runs on simulated data instead.
     await pumpInvoices(tester, money: FakeMoneyRepository());
 
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
     await tester.pump();
     await tester.ensureVisible(
@@ -236,8 +235,7 @@ void main() {
       'report (#474)', (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
 
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     await tester.tap(find.byKey(const ValueKey('invoice-template-presets')));
     await tester.pumpAndSettle();
     await tester
@@ -275,8 +273,7 @@ void main() {
       },
     );
 
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
     await tester.pump();
     await tester.ensureVisible(
@@ -344,8 +341,7 @@ void main() {
       'and saves them independently (#476)', (tester) async {
     final money = await pumpInvoices(tester, money: await seededMoney());
 
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     expect(find.byKey(const ValueKey('invoice-template-doc-proforma')),
         findsOneWidget);
     expect(find.byKey(const ValueKey('invoice-template-doc-statement')),

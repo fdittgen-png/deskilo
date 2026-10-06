@@ -11,6 +11,7 @@ import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 void main() {
@@ -158,8 +159,7 @@ void main() {
       'stores it per level (#472)', (tester) async {
     final money = await pumpInvoices(tester, money: await seededMoney());
 
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     // #822 — the editor is a page; the document row scrolls sideways.
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('invoice-template-doc-r1')),

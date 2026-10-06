@@ -5847,6 +5847,80 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get financesAutomatic => 'automatisch';
+
+  @override
+  String get financesAwaitingValidation => 'Zahlung wird geprüft';
+
+  @override
+  String financesDueOn(String date) {
+    return 'Fällig am $date';
+  }
+
+  @override
+  String get financesFullHistory =>
+      'Vollständiger Verlauf, Nutzung und andere Server';
+
+  @override
+  String get financesNoReminders => 'Keine Erinnerung erhalten.';
+
+  @override
+  String get financesNothingOwed => 'Nichts zu zahlen — alles beglichen.';
+
+  @override
+  String get financesNothingPaid => 'Noch keine beglichene Rechnung.';
+
+  @override
+  String get financesOutstanding => 'Ausstehend';
+
+  @override
+  String financesOverdueCount(int count) {
+    return '$count überfällig';
+  }
+
+  @override
+  String financesOverdueSince(String date) {
+    return 'Überfällig seit $date';
+  }
+
+  @override
+  String get financesPaid => 'Bezahlt';
+
+  @override
+  String get financesPartlyPaid => 'Teilweise bezahlt';
+
+  @override
+  String get financesPayments => 'Zahlungen';
+
+  @override
+  String financesRemindedTimes(int count) {
+    return 'Erinnert ×$count';
+  }
+
+  @override
+  String financesReminderLevel(int level) {
+    return 'Erinnerung $level';
+  }
+
+  @override
+  String get financesReminders => 'Erinnerungen';
+
+  @override
+  String get financesStateClosed => 'Abgeschlossen';
+
+  @override
+  String get financesStatePaid => 'Bezahlt';
+
+  @override
+  String get financesStateRefunded => 'Erstattet';
+
+  @override
+  String get financesTitle => 'Finanzen';
+
+  @override
+  String get financesToPay => 'Zu zahlen';
+
+  @override
   String get gettingStartedActionChooseDay => 'Anderen Tag wählen';
 
   @override
@@ -8462,6 +8536,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicesTitle => 'Rechnungen';
 
   @override
+  String get invoicingBanner =>
+      'Sie stellen Rechnungen für den gesamten Arbeitsbereich aus und mahnen sie an. Ihre eigenen Rechnungen und Zahlungen finden Sie unter Ich › Finanzen.';
+
+  @override
+  String get invoicingHubTitle => 'Rechnungsstellung';
+
+  @override
+  String get invoicingMyFinances => 'Meine Finanzen';
+
+  @override
+  String get invoicingTools => 'Werkzeuge der Rechnungsstellung';
+
+  @override
   String journeyClosedPaid(String date) {
     return 'Bezahlt am $date — abgeschlossen';
   }
@@ -10531,6 +10618,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberInvoiceVoided => 'Storniert';
 
   @override
+  String get memberInvoicesBanner =>
+      'Alle Ihre Rechnungen und Zahlungen aus allen Arbeitsbereichen finden Sie unter Ich › Finanzen.';
+
+  @override
   String get memberKioskLabel => 'Kiosk';
 
   @override
@@ -11222,6 +11313,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'Mein Badge';
+
+  @override
+  String get myInvoicesTitle => 'Meine Rechnungen';
 
   @override
   String get myVisitsHelp =>

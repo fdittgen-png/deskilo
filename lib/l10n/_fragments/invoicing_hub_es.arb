@@ -1,0 +1,26 @@
+{
+  "invoicingHubTitle": "Facturación",
+  "@invoicingHubTitle": {
+    "description": "invoicing hub vs my finances"
+  },
+  "myInvoicesTitle": "Mis facturas",
+  "@myInvoicesTitle": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingTools": "Herramientas de facturación",
+  "@invoicingTools": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingBanner": "Emite y reclama las facturas de todo el espacio. Sus propias facturas y pagos están en Yo › Finanzas.",
+  "@invoicingBanner": {
+    "description": "invoicing hub vs my finances"
+  },
+  "invoicingMyFinances": "Mis finanzas",
+  "@invoicingMyFinances": {
+    "description": "invoicing hub vs my finances"
+  },
+  "memberInvoicesBanner": "Todas sus facturas y pagos, de todos los espacios, están en Yo › Finanzas.",
+  "@memberInvoicesBanner": {
+    "description": "invoicing hub vs my finances"
+  }
+}

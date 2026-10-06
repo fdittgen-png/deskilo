@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 final _png = base64Decode(
@@ -24,8 +25,7 @@ final _png = base64Decode(
 
 /// Opens the editor page from the Invoices header.
 Future<void> openEditor(WidgetTester tester) async {
-  await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-  await tester.pumpAndSettle();
+  await tapInvoicingTool(tester, 'invoice-template-button');
   expect(find.byKey(const ValueKey('report-editor-page')), findsOneWidget);
 }
 
@@ -397,8 +397,7 @@ void main() {
       workspace: FakeWorkspaceRepository.withWorkspace(
           featureFlags: const {'reportDesigner': false}),
     );
-    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
-    await tester.pumpAndSettle();
+    await tapInvoicingTool(tester, 'invoice-template-button');
     expect(find.byKey(const ValueKey('report-editor-page')), findsNothing);
     expect(find.byKey(const ValueKey('invoice-template-header')), findsOneWidget);
   });
