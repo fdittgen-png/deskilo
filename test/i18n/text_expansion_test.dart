@@ -82,8 +82,10 @@ void main() {
     const locale = Locale('de');
     await _pumpApp(tester, locale);
     _expectNoOverflow(tester, locale, 'boot → Reserve hub @1.3×');
-    await tapNavIcon(tester, Icons.forum_outlined);
-    _expectNoOverflow(tester, locale, 'Messages @1.3×');
+    await tapNavIcon(tester, Icons.calendar_month_outlined);
+    _expectNoOverflow(tester, locale, 'Calendar @1.3×');
+    await tapAppBarIcon(tester, Icons.inbox_outlined);
+    _expectNoOverflow(tester, locale, 'Alerts @1.3×');
     await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
     _expectNoOverflow(tester, locale, 'Money @1.3×');
     await tapAppBarIcon(tester, Icons.settings_outlined);
@@ -104,13 +106,10 @@ void main() {
           of: find.byType(ShellBottomBar),
           matching: find.byType(InkWell),
         ),
-        findsNWidgets(5),
+        findsNWidgets(4),
         reason: 'The shell bar gained or lost a destination — update the '
             'walk in this test so every surface keeps expansion coverage.',
       );
-
-      await tapNavIcon(tester, Icons.forum_outlined);
-      _expectNoOverflow(tester, locale, 'Messages');
 
       await tapNavIcon(tester, Icons.calendar_month_outlined);
       _expectNoOverflow(tester, locale, 'Calendar');
@@ -121,8 +120,9 @@ void main() {
       await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
       _expectNoOverflow(tester, locale, 'Money (bill)');
 
-      // #707 — the bell is a shortcut onto the inbox's alerts face: no
-      // pushed route, nothing to come back FROM.
+      // The bell is a shortcut onto the calendar's Alerts view (the
+      // calendar holds the alerts): no pushed route, nothing to come back
+      // FROM.
       await tapAppBarIcon(tester, Icons.inbox_outlined);
       _expectNoOverflow(tester, locale, 'Events');
 
