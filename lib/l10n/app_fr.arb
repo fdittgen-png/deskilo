@@ -1555,6 +1555,7 @@
   "calendarValidationRefused": "Refusé : {what}",
   "calendarValidationValidated": "Validé : {what}",
   "calendarViewAgenda": "Agenda",
+  "calendarViewAlerts": "Alertes",
   "calendarViewMonth": "Mois",
   "calendarViewWeek": "Semaine",
   "calendarWeekEmpty": "Rien cette semaine.",
@@ -10600,7 +10601,9 @@
   "taskExportValueList": "liste",
   "taskExportValueMorning": "matin",
   "taskExportValueNo": "non",
+  "taskExportValueOff": "désactivé",
   "taskExportValueOffline": "pas de connexion",
+  "taskExportValueOn": "activé",
   "taskExportValueOnce": "une fois",
   "taskExportValueOtherMember": "un autre membre",
   "taskExportValueOtherPlace": "un autre type de place",
@@ -10611,6 +10614,14 @@
   "taskExportValuePlan": "plan",
   "taskExportValuePolicy": "une règle de réservation",
   "taskExportValueQuota": "un quota",
+  "taskExportValueRedacted": "non conservé ({length} caractères)",
+  "@taskExportValueRedacted": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
   "taskExportValueRoom": "une salle",
   "taskExportValueSelf": "moi-même",
   "taskExportValueSeries": "en série",
@@ -10682,6 +10693,8 @@
   "taskRecorderActionUiTap": "A touché",
   "taskRecorderActionViewDetails": "A ouvert la réservation",
   "taskRecorderAddNote": "Ajouter une note",
+  "taskRecorderCaptureValues": "Enregistrer les valeurs (pour un rapport de problème)",
+  "taskRecorderCaptureValuesHint": "Conserve aussi ce que vous saisissez et choisissez — texte, nombres, dates, interrupteurs — pour qu'un développeur puisse reproduire le problème à partir du fichier. Les mots de passe, coordonnées de paiement, adresses e-mail, numéros de téléphone et autres données de contact personnelles ne sont jamais conservés. Ne partagez le fichier qu'avec des personnes qui peuvent voir ce que vous avez saisi.",
   "taskRecorderCompletenessComplete": "Complet",
   "taskRecorderCompletenessInterrupted": "Interrompu",
   "taskRecorderCompletenessPartial": "Partiel",
@@ -10699,6 +10712,9 @@
   "taskRecorderExport": "Exporter un fichier",
   "taskRecorderExportPackage": "Exporter un paquet de tâche",
   "taskRecorderExportPreview": "Ce que le fichier contiendra",
+  "taskRecorderExportValuesBody": "Il contient ce qui a été saisi et choisi pendant l'enregistrement. Vérifiez-le avant de le partager, et ne le partagez qu'avec des personnes qui peuvent le voir.",
+  "taskRecorderExportValuesConfirm": "Enregistrer quand même",
+  "taskRecorderExportValuesTitle": "Cet enregistrement contient des valeurs",
   "taskRecorderFieldAccessories": "accessoires",
   "taskRecorderFieldCheckIn": "arrivée",
   "taskRecorderFieldForWhom": "pour qui",
@@ -10818,6 +10834,7 @@
   "taskRecorderValueTomorrow": "demain",
   "taskRecorderValueWeek": "semaine",
   "taskRecorderValueWithheld": "non enregistré",
+  "taskRecorderValuesOn": "Les valeurs sont enregistrées",
   "taskWizardAddGuide": "Ajouter un guide",
   "@taskWizardAddGuide": {
     "description": "Task wizard: taskWizardAddGuide"

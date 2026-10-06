@@ -73,6 +73,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
         package: package,
       ),
       fileName: package ? '$stem$taskPackageExtension' : '$stem.json',
+      containsValues: export.capturesValues,
     );
   }
 

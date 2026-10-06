@@ -230,5 +230,11 @@
   "taskRecorderValueCreated": "angelegt",
   "taskRecorderValueEdited": "bearbeitet",
   "taskRecorderValueRenamed": "umbenannt",
-  "taskRecorderTargetDefaultRule": "die Standardregel"
+  "taskRecorderTargetDefaultRule": "die Standardregel",
+  "taskRecorderCaptureValues": "Werte erfassen (für Fehlerberichte)",
+  "taskRecorderCaptureValuesHint": "Behält zusätzlich, was du eingibst und auswählst — Text, Zahlen, Daten, Schalter —, damit ein Entwickler das Problem anhand der Datei nachstellen kann. Passwörter, Zahlungsdaten, E-Mail-Adressen, Telefonnummern und andere persönliche Kontaktdaten werden nie gespeichert. Gib die Datei nur an Personen weiter, die sehen dürfen, was du eingegeben hast.",
+  "taskRecorderValuesOn": "Werte werden erfasst",
+  "taskRecorderExportValuesTitle": "Diese Aufnahme enthält Werte",
+  "taskRecorderExportValuesBody": "Sie enthält, was während der Aufnahme eingegeben und ausgewählt wurde. Prüfe sie vor dem Teilen und gib sie nur an Personen weiter, die das sehen dürfen.",
+  "taskRecorderExportValuesConfirm": "Trotzdem speichern"
 }

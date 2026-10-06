@@ -210,7 +210,7 @@ Uint8List writeTaskPackage(
     'product': 'deskilo',
     'recording': {
       ...entry(_recordingPath, recordingBytes),
-      'schema_version': taskRecordingSchemaVersion,
+      'schema_version': schemaVersionOf(recording),
       'action_contract_version': recording.actionContractVersion,
       'kind': recording.kind.wire,
       'completeness': recording.completeness.wire,
@@ -517,7 +517,7 @@ TaskPackageReadResult _readManifest(
   }
   final recording = decoded.recording!;
   final summary = recordingEntry as Map;
-  if (summary['schema_version'] != taskRecordingSchemaVersion ||
+  if (summary['schema_version'] != schemaVersionOf(recording) ||
       summary['action_contract_version'] != recording.actionContractVersion ||
       summary['kind'] != recording.kind.wire ||
       summary['completeness'] != recording.completeness.wire) {

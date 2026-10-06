@@ -68,7 +68,13 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
     setState(() => _busy.remove(generator.id));
     switch (result) {
       case TaskOutputProduced(:final bytes, :final suggestedName):
-        await saveAndTell(context, ref, bytes: bytes, fileName: suggestedName);
+        await saveAndTell(
+          context,
+          ref,
+          bytes: bytes,
+          fileName: suggestedName,
+          containsValues: widget.recording().capturesValues,
+        );
       case TaskOutputNotProduced(:final reason):
       case TaskOutputFailed(:final reason):
         AppSnack.error(context, outputReasonText(l10n, reason));

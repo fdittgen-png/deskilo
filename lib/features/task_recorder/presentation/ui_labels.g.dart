@@ -648,6 +648,7 @@ Map<String, _Getter> _part1() => {
   'calendarToday': (l) => l.calendarToday,
   'calendarTomorrow': (l) => l.calendarTomorrow,
   'calendarViewAgenda': (l) => l.calendarViewAgenda,
+  'calendarViewAlerts': (l) => l.calendarViewAlerts,
   'calendarViewMonth': (l) => l.calendarViewMonth,
   'calendarViewWeek': (l) => l.calendarViewWeek,
   'calendarWeekEmpty': (l) => l.calendarWeekEmpty,
@@ -828,10 +829,10 @@ Map<String, _Getter> _part1() => {
   'countryNameCY': (l) => l.countryNameCY,
   'countryNameCZ': (l) => l.countryNameCZ,
   'countryNameDE': (l) => l.countryNameDE,
-  'countryNameDK': (l) => l.countryNameDK,
 };
 
 Map<String, _Getter> _part2() => {
+  'countryNameDK': (l) => l.countryNameDK,
   'countryNameEE': (l) => l.countryNameEE,
   'countryNameES': (l) => l.countryNameES,
   'countryNameFI': (l) => l.countryNameFI,
@@ -1231,10 +1232,10 @@ Map<String, _Getter> _part2() => {
   'featureCarnetsDesc': (l) => l.featureCarnetsDesc,
   'featureCarnetsTitle': (l) => l.featureCarnetsTitle,
   'featureChangeUnconfirmed': (l) => l.featureChangeUnconfirmed,
-  'featureChangedMeanwhile': (l) => l.featureChangedMeanwhile,
 };
 
 Map<String, _Getter> _part3() => {
+  'featureChangedMeanwhile': (l) => l.featureChangedMeanwhile,
   'featureCoOwner': (l) => l.featureCoOwner,
   'featureCoOwnerDesc': (l) => l.featureCoOwnerDesc,
   'featureConfigurationTransfer': (l) => l.featureConfigurationTransfer,
@@ -1634,10 +1635,10 @@ Map<String, _Getter> _part3() => {
   'handoffSave': (l) => l.handoffSave,
   'handoffTitle': (l) => l.handoffTitle,
   'handoffVoided': (l) => l.handoffVoided,
-  'helpContents': (l) => l.helpContents,
 };
 
 Map<String, _Getter> _part4() => {
+  'helpContents': (l) => l.helpContents,
   'helpDotTooltip': (l) => l.helpDotTooltip,
   'helpGuidedTasks': (l) => l.helpGuidedTasks,
   'helpHintAvailability': (l) => l.helpHintAvailability,
@@ -2037,10 +2038,10 @@ Map<String, _Getter> _part4() => {
   'invoiceFilterAllMonths': (l) => l.invoiceFilterAllMonths,
   'invoiceFilterClear': (l) => l.invoiceFilterClear,
   'invoiceFilterMonthLabel': (l) => l.invoiceFilterMonthLabel,
-  'invoiceFilterNoMatch': (l) => l.invoiceFilterNoMatch,
 };
 
 Map<String, _Getter> _part5() => {
+  'invoiceFilterNoMatch': (l) => l.invoiceFilterNoMatch,
   'invoiceGapBuyerVatIdFormat': (l) => l.invoiceGapBuyerVatIdFormat,
   'invoiceGapCreditNoteWithPayments': (l) => l.invoiceGapCreditNoteWithPayments,
   'invoiceGapMissingBuyerCountry': (l) => l.invoiceGapMissingBuyerCountry,
@@ -2440,10 +2441,10 @@ Map<String, _Getter> _part5() => {
   'managedAccessSaved': (l) => l.managedAccessSaved,
   'managedAccessTitle': (l) => l.managedAccessTitle,
   'managedProfileAdd': (l) => l.managedProfileAdd,
-  'managedProfileChip': (l) => l.managedProfileChip,
 };
 
 Map<String, _Getter> _part6() => {
+  'managedProfileChip': (l) => l.managedProfileChip,
   'managedProfileCreated': (l) => l.managedProfileCreated,
   'managedProfileEdit': (l) => l.managedProfileEdit,
   'managedProfileHandOver': (l) => l.managedProfileHandOver,
@@ -2843,10 +2844,10 @@ Map<String, _Getter> _part6() => {
   'messengerHistory': (l) => l.messengerHistory,
   'messengerHistoryEmpty': (l) => l.messengerHistoryEmpty,
   'messengerHostsIntro': (l) => l.messengerHostsIntro,
-  'messengerHostsNone': (l) => l.messengerHostsNone,
 };
 
 Map<String, _Getter> _part7() => {
+  'messengerHostsNone': (l) => l.messengerHostsNone,
   'messengerInquiriesEmpty': (l) => l.messengerInquiriesEmpty,
   'messengerInquiriesTitle': (l) => l.messengerInquiriesTitle,
   'messengerInquiryClose': (l) => l.messengerInquiryClose,
@@ -3246,10 +3247,10 @@ Map<String, _Getter> _part7() => {
   'plansEditorInactive': (l) => l.plansEditorInactive,
   'plansEditorNew': (l) => l.plansEditorNew,
   'plansEditorTitle': (l) => l.plansEditorTitle,
-  'plansEditorUnlimited': (l) => l.plansEditorUnlimited,
 };
 
 Map<String, _Getter> _part8() => {
+  'plansEditorUnlimited': (l) => l.plansEditorUnlimited,
   'policyAdminCheckoutDesc': (l) => l.policyAdminCheckoutDesc,
   'policyAdminCheckoutTitle': (l) => l.policyAdminCheckoutTitle,
   'policyAllowPastDesc': (l) => l.policyAllowPastDesc,
@@ -3649,10 +3650,10 @@ Map<String, _Getter> _part8() => {
   'repartitionWizardSubtitle': (l) => l.repartitionWizardSubtitle,
   'repartitionWizardTitle': (l) => l.repartitionWizardTitle,
   'repartitionWizardWeight': (l) => l.repartitionWizardWeight,
-  'repeatDaily': (l) => l.repeatDaily,
 };
 
 Map<String, _Getter> _part9() => {
+  'repeatDaily': (l) => l.repeatDaily,
   'repeatNone': (l) => l.repeatNone,
   'repeatWeekdays': (l) => l.repeatWeekdays,
   'repeatWeekly': (l) => l.repeatWeekly,
@@ -4052,10 +4053,10 @@ Map<String, _Getter> _part9() => {
   'settingsBillingReports': (l) => l.settingsBillingReports,
   'settingsFrontCamera': (l) => l.settingsFrontCamera,
   'settingsFrontCameraDesc': (l) => l.settingsFrontCameraDesc,
-  'settingsSectionAccount': (l) => l.settingsSectionAccount,
 };
 
 Map<String, _Getter> _part10() => {
+  'settingsSectionAccount': (l) => l.settingsSectionAccount,
   'settingsSectionAdministration': (l) => l.settingsSectionAdministration,
   'settingsSectionAdvanced': (l) => l.settingsSectionAdvanced,
   'settingsSectionGovernance': (l) => l.settingsSectionGovernance,
@@ -4314,7 +4315,9 @@ Map<String, _Getter> _part10() => {
   'taskExportValueList': (l) => l.taskExportValueList,
   'taskExportValueMorning': (l) => l.taskExportValueMorning,
   'taskExportValueNo': (l) => l.taskExportValueNo,
+  'taskExportValueOff': (l) => l.taskExportValueOff,
   'taskExportValueOffline': (l) => l.taskExportValueOffline,
+  'taskExportValueOn': (l) => l.taskExportValueOn,
   'taskExportValueOnce': (l) => l.taskExportValueOnce,
   'taskExportValueOtherMember': (l) => l.taskExportValueOtherMember,
   'taskExportValueOtherPlace': (l) => l.taskExportValueOtherPlace,
@@ -4393,6 +4396,8 @@ Map<String, _Getter> _part10() => {
   'taskRecorderActionUiTap': (l) => l.taskRecorderActionUiTap,
   'taskRecorderActionViewDetails': (l) => l.taskRecorderActionViewDetails,
   'taskRecorderAddNote': (l) => l.taskRecorderAddNote,
+  'taskRecorderCaptureValues': (l) => l.taskRecorderCaptureValues,
+  'taskRecorderCaptureValuesHint': (l) => l.taskRecorderCaptureValuesHint,
   'taskRecorderCompletenessComplete': (l) => l.taskRecorderCompletenessComplete,
   'taskRecorderCompletenessInterrupted': (l) => l.taskRecorderCompletenessInterrupted,
   'taskRecorderCompletenessPartial': (l) => l.taskRecorderCompletenessPartial,
@@ -4409,6 +4414,9 @@ Map<String, _Getter> _part10() => {
   'taskRecorderExport': (l) => l.taskRecorderExport,
   'taskRecorderExportPackage': (l) => l.taskRecorderExportPackage,
   'taskRecorderExportPreview': (l) => l.taskRecorderExportPreview,
+  'taskRecorderExportValuesBody': (l) => l.taskRecorderExportValuesBody,
+  'taskRecorderExportValuesConfirm': (l) => l.taskRecorderExportValuesConfirm,
+  'taskRecorderExportValuesTitle': (l) => l.taskRecorderExportValuesTitle,
   'taskRecorderFieldAccessories': (l) => l.taskRecorderFieldAccessories,
   'taskRecorderFieldCheckIn': (l) => l.taskRecorderFieldCheckIn,
   'taskRecorderFieldForWhom': (l) => l.taskRecorderFieldForWhom,
@@ -4448,6 +4456,9 @@ Map<String, _Getter> _part10() => {
   'taskRecorderRecordATask': (l) => l.taskRecorderRecordATask,
   'taskRecorderRecordThisTask': (l) => l.taskRecorderRecordThisTask,
   'taskRecorderRecording': (l) => l.taskRecorderRecording,
+};
+
+Map<String, _Getter> _part11() => {
   'taskRecorderResume': (l) => l.taskRecorderResume,
   'taskRecorderSaveFailed': (l) => l.taskRecorderSaveFailed,
   'taskRecorderSaveNoPath': (l) => l.taskRecorderSaveNoPath,
@@ -4456,9 +4467,6 @@ Map<String, _Getter> _part10() => {
   'taskRecorderStart': (l) => l.taskRecorderStart,
   'taskRecorderStartFailed': (l) => l.taskRecorderStartFailed,
   'taskRecorderStepExcluded': (l) => l.taskRecorderStepExcluded,
-};
-
-Map<String, _Getter> _part11() => {
   'taskRecorderStepNote': (l) => l.taskRecorderStepNote,
   'taskRecorderStepUnrecorded': (l) => l.taskRecorderStepUnrecorded,
   'taskRecorderStop': (l) => l.taskRecorderStop,
@@ -4526,6 +4534,7 @@ Map<String, _Getter> _part11() => {
   'taskRecorderValueTomorrow': (l) => l.taskRecorderValueTomorrow,
   'taskRecorderValueWeek': (l) => l.taskRecorderValueWeek,
   'taskRecorderValueWithheld': (l) => l.taskRecorderValueWithheld,
+  'taskRecorderValuesOn': (l) => l.taskRecorderValuesOn,
   'taskWizardAddGuide': (l) => l.taskWizardAddGuide,
   'taskWizardAddToGuides': (l) => l.taskWizardAddToGuides,
   'taskWizardBuiltIn': (l) => l.taskWizardBuiltIn,
@@ -4850,6 +4859,9 @@ Map<String, _Getter> _part11() => {
   'wizardTallyRegistered': (l) => l.wizardTallyRegistered,
   'wizardTallyReminded': (l) => l.wizardTallyReminded,
   'wizardTallySettled': (l) => l.wizardTallySettled,
+};
+
+Map<String, _Getter> _part12() => {
   'wizardTallyShared': (l) => l.wizardTallyShared,
   'wizardTallyWriteoffs': (l) => l.wizardTallyWriteoffs,
   'wizardTitle': (l) => l.wizardTitle,
@@ -4859,9 +4871,6 @@ Map<String, _Getter> _part11() => {
   'wizardWhoYou': (l) => l.wizardWhoYou,
   'wizardWriteoff': (l) => l.wizardWriteoff,
   'wordingChangedOnly': (l) => l.wordingChangedOnly,
-};
-
-Map<String, _Getter> _part12() => {
   'wordingDefaultLabel': (l) => l.wordingDefaultLabel,
   'wordingIntro': (l) => l.wordingIntro,
   'wordingLocale': (l) => l.wordingLocale,

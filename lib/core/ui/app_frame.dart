@@ -10,15 +10,23 @@ const double kAppFrameMaxWidth = 1200;
 /// spans 1200 px cannot be scanned. Canvas screens keep the wide frame.
 const double kReadingColumnMaxWidth = 960;
 
-/// Routes drawn on a canvas (plan, map, editors): they want the width.
+/// Routes drawn on a canvas (map, editors): they want the width. The Reserve
+/// hub is NOT one of them: it sits in the same column as the Calendar and
+/// the Alerts, so moving between the destinations never changes the width.
 const List<String> kWideRoutePrefixes = [
-  '/reserve', '/discover', '/kiosk', '/report-editor', '/editor',
-  '/settings/sites', '/me', '/plan', '/invoicing/wizard',
+  '/discover', '/kiosk', '/report-editor', '/editor',
+  '/settings/sites', '/me', '/invoicing/wizard',
 ];
 
-double frameWidthFor(String path) => kWideRoutePrefixes.any(path.startsWith)
-    ? kAppFrameMaxWidth
-    : kReadingColumnMaxWidth;
+/// A prefix names a path or its children — never a longer word that merely
+/// starts with it (`/me` is Me, not `/messages` or `/members`).
+bool _under(String path, String prefix) =>
+    path == prefix || path.startsWith('$prefix/');
+
+double frameWidthFor(String path) =>
+    kWideRoutePrefixes.any((prefix) => _under(path, prefix))
+        ? kAppFrameMaxWidth
+        : kReadingColumnMaxWidth;
 
 /// Whether a screen puts its controls in a side panel: only a PHONE held
 /// sideways, where the height is what is scarce. A wide, tall window (a

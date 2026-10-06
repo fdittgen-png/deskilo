@@ -2493,6 +2493,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarViewAgenda => 'Agenda';
 
   @override
+  String get calendarViewAlerts => 'Alerts';
+
+  @override
   String get calendarViewMonth => 'Month';
 
   @override
@@ -16534,7 +16537,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskExportValueNo => 'no';
 
   @override
+  String get taskExportValueOff => 'off';
+
+  @override
   String get taskExportValueOffline => 'no connection';
+
+  @override
+  String get taskExportValueOn => 'on';
 
   @override
   String get taskExportValueOnce => 'once';
@@ -16565,6 +16574,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskExportValueQuota => 'a quota';
+
+  @override
+  String taskExportValueRedacted(int length) {
+    return 'not kept ($length characters)';
+  }
 
   @override
   String get taskExportValueRoom => 'a room';
@@ -16801,6 +16815,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderAddNote => 'Add a note';
 
   @override
+  String get taskRecorderCaptureValues => 'Capture values (for issue reports)';
+
+  @override
+  String get taskRecorderCaptureValuesHint =>
+      'Also keeps what you type and choose — text, numbers, dates, switches — so a developer can reproduce the problem from the file. Passwords, payment details, e-mail addresses, phone numbers and other personal contact data are never kept. Share the file only with people who should see what you entered.';
+
+  @override
   String get taskRecorderCompletenessComplete => 'Complete';
 
   @override
@@ -16857,6 +16878,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskRecorderExportPreview => 'What the file will contain';
+
+  @override
+  String get taskRecorderExportValuesBody =>
+      'It holds what was typed and chosen during the recording. Check it before sharing, and share it only with people who should see that.';
+
+  @override
+  String get taskRecorderExportValuesConfirm => 'Save anyway';
+
+  @override
+  String get taskRecorderExportValuesTitle => 'This recording contains values';
 
   @override
   String get taskRecorderFieldAccessories => 'accessories';
@@ -17230,6 +17261,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskRecorderValueWithheld => 'not recorded';
+
+  @override
+  String get taskRecorderValuesOn => 'Values are being captured';
 
   @override
   String get taskWizardAddGuide => 'Add a guide';

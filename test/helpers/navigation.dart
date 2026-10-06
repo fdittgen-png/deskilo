@@ -71,10 +71,24 @@ Future<void> openAlertsTab(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
   }
-  // The workspace inbox IS the alerts face now (discussions moved to the
-  // Me messenger): opening it is going to its destination.
+  // The alerts live in the calendar's Alerts view (the Messages destination
+  // is gone with the calendar hub on); a workspace without the hub still has
+  // the inbox destination.
   if (find.byKey(const ValueKey('inbox-messenger-door')).evaluate().isEmpty) {
-    await tapNavIcon(tester, Icons.forum_outlined);
+    final inbox = find.descendant(
+      of: find.byType(ShellBottomBar),
+      matching: find.byIcon(Icons.forum_outlined),
+    );
+    if (inbox.evaluate().isNotEmpty) {
+      await tester.tap(inbox);
+    } else {
+      await tapNavIcon(tester, Icons.calendar_month_outlined);
+      final alerts = find.descendant(
+        of: find.byKey(const ValueKey('calendar-view-switch')),
+        matching: find.byIcon(Icons.notifications_outlined),
+      );
+      await tester.tap(alerts.first);
+    }
   }
   await tester.pumpAndSettle();
 }

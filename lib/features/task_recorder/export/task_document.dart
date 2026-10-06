@@ -208,7 +208,7 @@ List<String> _about(
     if (platform != null) l.taskExportPlatform(platform),
     l.taskExportDuration(seconds ~/ 60, seconds % 60),
     l.taskExportPauses(r.segments.isEmpty ? 0 : r.segments.length - 1),
-    l.taskExportVersion(taskRecordingSchemaVersion, r.actionContractVersion),
+    l.taskExportVersion(schemaVersionOf(r), r.actionContractVersion),
     l.taskExportRevision(recordingRevision(r)),
   ];
 }

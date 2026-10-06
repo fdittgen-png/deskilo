@@ -64,12 +64,13 @@ void main() {
       ),
       findsOneWidget,
     );
+    // The calendar holds the alerts now, so it carries the same count.
     expect(
       find.descendant(
         of: find.byType(ShellBottomBar),
         matching: find.text('2'),
       ),
-      findsNothing,
+      findsOneWidget,
     );
     // And on the face responsible for it, so the inbox does not make you
     // open all three to find the one with something in it.

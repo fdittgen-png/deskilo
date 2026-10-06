@@ -14,6 +14,7 @@ import 'dart:async';
 import '../../../core/trace/trace_logger.dart' show isTransientNetworkFailure;
 import '../../reservations/application/book_seat.dart';
 import '../domain/action_registry.dart';
+import '../domain/step_values.dart';
 
 /// One observation to hand to the recorder.
 typedef Observation = ({String outcome, Map<String, Object?> payload});
@@ -28,6 +29,40 @@ Map<String, Object?> bookingAttemptPayload({
   'repeat': series ? 'series' : 'once',
   'check_in': checkIn ? 'yes' : 'no',
 };
+
+/// What was asked for, as the values a recording that captures values keeps:
+/// the window (UTC, exact), the resource by its name, the end of a series.
+/// Never whom it is for — that stays a category in the payload.
+StepValues bookingAttemptValues({
+  required DateTime start,
+  required DateTime end,
+  String? resource,
+  DateTime? until,
+}) => StepValues.of({
+  'start': TextValue(start.toUtc().toIso8601String()),
+  'end': TextValue(end.toUtc().toIso8601String()),
+  if (resource != null && resource.isNotEmpty) 'resource': TextValue(resource),
+  if (until != null) 'repeat_until': TextValue(until.toUtc().toIso8601String()),
+});
+
+/// A day chosen, as a date.
+StepValues dayValues(DateTime day) => StepValues.of({
+  'date': TextValue(
+    '${day.year.toString().padLeft(4, '0')}-'
+    '${day.month.toString().padLeft(2, '0')}-'
+    '${day.day.toString().padLeft(2, '0')}',
+  ),
+});
+
+/// A period chosen, as its two instants (UTC, exact).
+StepValues periodValues(DateTime start, DateTime end) => StepValues.of({
+  'start': TextValue(start.toUtc().toIso8601String()),
+  'end': TextValue(end.toUtc().toIso8601String()),
+});
+
+/// A resource chosen, by its name.
+StepValues resourceValues(String name) =>
+    name.isEmpty ? StepValues.none : StepValues.of({'resource': TextValue(name)});
 
 /// What a returned [BookingOutcome] says.
 Observation bookingOutcomeObservation(BookingOutcome outcome) =>

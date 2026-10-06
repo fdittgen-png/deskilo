@@ -2512,6 +2512,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get calendarViewAgenda => 'Agenda';
 
   @override
+  String get calendarViewAlerts => 'Alertes';
+
+  @override
   String get calendarViewMonth => 'Mois';
 
   @override
@@ -16715,7 +16718,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taskExportValueNo => 'non';
 
   @override
+  String get taskExportValueOff => 'désactivé';
+
+  @override
   String get taskExportValueOffline => 'pas de connexion';
+
+  @override
+  String get taskExportValueOn => 'activé';
 
   @override
   String get taskExportValueOnce => 'une fois';
@@ -16746,6 +16755,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskExportValueQuota => 'un quota';
+
+  @override
+  String taskExportValueRedacted(int length) {
+    return 'non conservé ($length caractères)';
+  }
 
   @override
   String get taskExportValueRoom => 'une salle';
@@ -16988,6 +17002,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taskRecorderAddNote => 'Ajouter une note';
 
   @override
+  String get taskRecorderCaptureValues =>
+      'Enregistrer les valeurs (pour un rapport de problème)';
+
+  @override
+  String get taskRecorderCaptureValuesHint =>
+      'Conserve aussi ce que vous saisissez et choisissez — texte, nombres, dates, interrupteurs — pour qu\'un développeur puisse reproduire le problème à partir du fichier. Les mots de passe, coordonnées de paiement, adresses e-mail, numéros de téléphone et autres données de contact personnelles ne sont jamais conservés. Ne partagez le fichier qu\'avec des personnes qui peuvent voir ce que vous avez saisi.';
+
+  @override
   String get taskRecorderCompletenessComplete => 'Complet';
 
   @override
@@ -17045,6 +17067,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskRecorderExportPreview => 'Ce que le fichier contiendra';
+
+  @override
+  String get taskRecorderExportValuesBody =>
+      'Il contient ce qui a été saisi et choisi pendant l\'enregistrement. Vérifiez-le avant de le partager, et ne le partagez qu\'avec des personnes qui peuvent le voir.';
+
+  @override
+  String get taskRecorderExportValuesConfirm => 'Enregistrer quand même';
+
+  @override
+  String get taskRecorderExportValuesTitle =>
+      'Cet enregistrement contient des valeurs';
 
   @override
   String get taskRecorderFieldAccessories => 'accessoires';
@@ -17422,6 +17455,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taskRecorderValueWithheld => 'non enregistré';
+
+  @override
+  String get taskRecorderValuesOn => 'Les valeurs sont enregistrées';
 
   @override
   String get taskWizardAddGuide => 'Ajouter un guide';

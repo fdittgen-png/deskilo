@@ -2936,6 +2936,7 @@
     }
   },
   "calendarViewAgenda": "Agenda",
+  "calendarViewAlerts": "Alerts",
   "calendarViewMonth": "Month",
   "calendarViewWeek": "Week",
   "calendarWeekEmpty": "Nothing this week.",
@@ -18783,10 +18784,12 @@
   "@taskExportValueNo": {
     "description": "#1866 task export (Word document): ValueNo"
   },
+  "taskExportValueOff": "off",
   "taskExportValueOffline": "no connection",
   "@taskExportValueOffline": {
     "description": "#1866 task export (Word document): ValueOffline"
   },
+  "taskExportValueOn": "on",
   "taskExportValueOnce": "once",
   "@taskExportValueOnce": {
     "description": "#1866 task export (Word document): ValueOnce"
@@ -18826,6 +18829,14 @@
   "taskExportValueQuota": "a quota",
   "@taskExportValueQuota": {
     "description": "#1866 task export (Word document): ValueQuota"
+  },
+  "taskExportValueRedacted": "not kept ({length} characters)",
+  "@taskExportValueRedacted": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
   },
   "taskExportValueRoom": "a room",
   "@taskExportValueRoom": {
@@ -19129,6 +19140,8 @@
   "@taskRecorderAddNote": {
     "description": "#1865 task recorder: taskRecorderAddNote"
   },
+  "taskRecorderCaptureValues": "Capture values (for issue reports)",
+  "taskRecorderCaptureValuesHint": "Also keeps what you type and choose — text, numbers, dates, switches — so a developer can reproduce the problem from the file. Passwords, payment details, e-mail addresses, phone numbers and other personal contact data are never kept. Share the file only with people who should see what you entered.",
   "taskRecorderCompletenessComplete": "Complete",
   "@taskRecorderCompletenessComplete": {
     "description": "#1865 task recorder: taskRecorderCompletenessComplete"
@@ -19202,6 +19215,9 @@
   "@taskRecorderExportPreview": {
     "description": "#1865 task recorder: taskRecorderExportPreview"
   },
+  "taskRecorderExportValuesBody": "It holds what was typed and chosen during the recording. Check it before sharing, and share it only with people who should see that.",
+  "taskRecorderExportValuesConfirm": "Save anyway",
+  "taskRecorderExportValuesTitle": "This recording contains values",
   "taskRecorderFieldAccessories": "accessories",
   "@taskRecorderFieldAccessories": {
     "description": "#1865 task recorder: taskRecorderFieldAccessories"
@@ -19709,6 +19725,7 @@
   "@taskRecorderValueWithheld": {
     "description": "#1865 task recorder: taskRecorderValueWithheld"
   },
+  "taskRecorderValuesOn": "Values are being captured",
   "taskWizardAddGuide": "Add a guide",
   "@taskWizardAddGuide": {
     "description": "Task wizard: taskWizardAddGuide"
