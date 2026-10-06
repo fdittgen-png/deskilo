@@ -166,7 +166,7 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
       child: Stack(
         children: [
           widget.child,
-          const Positioned.fill(child: GuideHostLayer()),
+          Positioned.fill(child: GuideHostLayer(router: widget.router)),
           if (live)
             PositionedDirectional(
               top: MediaQuery.paddingOf(context).top + AppSpacing.xs,

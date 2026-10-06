@@ -10626,6 +10626,12 @@ abstract class AppLocalizations {
   /// **'Fill in “{label}”, then leave the field.'**
   String guideHostFillLabel(String label);
 
+  /// No description provided for @guideHostGoToPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to page'**
+  String get guideHostGoToPage;
+
   /// #1867 live guide host
   ///
   /// In en, this message translates to:

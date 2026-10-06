@@ -98,3 +98,42 @@ String? guideStepAnchor(GuideStep step) {
     _ => null,
   };
 }
+
+/// The page a step happens on, when it can be opened straight away — the
+/// "Go to page" button. A screen the recorder has a seam for names its page;
+/// any other step happens on the page the guide last opened (the nearest
+/// earlier `ui.open_screen` step), and only a page without parameters counts:
+/// a route like `/member/:id` has no address without an id, so no button is
+/// offered for it rather than a guess.
+String? guideStepRoute(List<GuideStep> steps, GuideStep step) {
+  final bySurface = _surfaceRoutes[recorderRegistry.action(step.action)?.surface];
+  if (bySurface != null) return bySurface;
+  // The step may be a recovery step: find the main step that holds it.
+  final holder = steps.indexWhere(
+    (s) => s.id == step.id || s.recovery.any((r) => r.id == step.id),
+  );
+  if (holder < 0) return null;
+  for (var i = holder; i >= 0; i--) {
+    final s = steps[i];
+    if (s.action == RecorderActions.uiOpenScreen) {
+      final route = s.target;
+      return route != null && !route.contains(':') && uiRoutes.contains(route)
+          ? route
+          : null;
+    }
+    final named = _surfaceRoutes[recorderRegistry.action(s.action)?.surface];
+    if (named != null) return named;
+  }
+  return null;
+}
+
+/// The page each screen seam's surface lives on.
+const Map<String, String> _surfaceRoutes = {
+  RecorderSurfaces.reserve: '/reserve',
+  RecorderSurfaces.bookingSheet: '/reserve',
+  RecorderSurfaces.calendar: '/calendar',
+  RecorderSurfaces.eventDecisions: '/calendar',
+  RecorderSurfaces.workspaceFeatures: '/features',
+  RecorderSurfaces.roles: '/roles',
+  RecorderSurfaces.validationRules: '/validation',
+};

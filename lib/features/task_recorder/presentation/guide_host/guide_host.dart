@@ -21,6 +21,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_arbiter.dart';
 import '../../../../core/motion/motion.dart';
@@ -36,7 +37,11 @@ import 'guide_bubble.dart';
 import 'guide_step_text.dart';
 
 class GuideHostLayer extends ConsumerStatefulWidget {
-  const GuideHostLayer({super.key});
+  const GuideHostLayer({super.key, this.router});
+
+  /// The app's router: what the "Go to page" button opens a step's page
+  /// through. Null where there is none (the button is then not offered).
+  final GoRouter? router;
 
   @override
   ConsumerState<GuideHostLayer> createState() => _GuideHostLayerState();
@@ -107,6 +112,29 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _locate());
   }
 
+  /// Builds the pane with the step's page and a way to open it — null when
+  /// the step has no page that can be opened, or the person is already on
+  /// it. Rebuilt whenever the route changes, so the button leaves once the
+  /// page is open.
+  Widget _withPage(
+    GuideStep? step,
+    Widget Function(String? route, VoidCallback? go) build,
+  ) {
+    final router = widget.router;
+    final run = ref.read(guideSessionProvider).run;
+    final route = router == null || step == null || run == null
+        ? null
+        : guideStepRoute(run.guide.steps, step);
+    if (router == null || route == null) return build(null, null);
+    return ListenableBuilder(
+      listenable: router.routerDelegate,
+      builder: (context, _) {
+        final here = router.routerDelegate.currentConfiguration.uri.path;
+        return build(route, here == route ? null : () => router.go(route));
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final session = ref.watch(guideSessionProvider);
@@ -155,17 +183,21 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
                 // The layer sits above the navigator: its own Overlay lets
                 // the pane's tooltips show.
                 child: Overlay.wrap(
-                  child: _Pane(
-                    session: session,
-                    run: run,
-                    blocked: blocked,
-                    targetMissing:
-                        _anchor != null && _targetSearched && target == null,
-                    showSteps: _showSteps,
-                    onToggleSteps: () =>
-                        setState(() => _showSteps = !_showSteps),
-                    onShowMe: target == null ? null : _showMe,
-                    onMinimize: () => setState(() => _minimized = true),
+                  child: _withPage(
+                    step,
+                    (route, go) => _Pane(
+                      session: session,
+                      run: run,
+                      blocked: blocked,
+                      targetMissing:
+                          _anchor != null && _targetSearched && target == null,
+                      showSteps: _showSteps,
+                      onToggleSteps: () =>
+                          setState(() => _showSteps = !_showSteps),
+                      onShowMe: target == null ? null : _showMe,
+                      onGoToPage: go,
+                      onMinimize: () => setState(() => _minimized = true),
+                    ),
                   ),
                 ),
               ),
@@ -223,6 +255,7 @@ class _Pane extends ConsumerWidget {
     required this.showSteps,
     required this.onToggleSteps,
     required this.onShowMe,
+    required this.onGoToPage,
     required this.onMinimize,
   });
 
@@ -233,6 +266,7 @@ class _Pane extends ConsumerWidget {
   final bool showSteps;
   final VoidCallback onToggleSteps;
   final VoidCallback? onShowMe;
+  final VoidCallback? onGoToPage;
   final VoidCallback onMinimize;
 
   @override
@@ -414,6 +448,12 @@ class _Pane extends ConsumerWidget {
                         key: const ValueKey('guide-host-skip'),
                         onPressed: notifier.skip,
                         child: Text(l10n?.guideHostSkip ?? 'Skip'),
+                      ),
+                    if (onGoToPage != null && !blocked)
+                      OutlinedButton(
+                        key: const ValueKey('guide-host-go-to-page'),
+                        onPressed: onGoToPage,
+                        child: Text(l10n?.guideHostGoToPage ?? 'Go to page'),
                       ),
                     if (onShowMe != null && !blocked)
                       OutlinedButton(
