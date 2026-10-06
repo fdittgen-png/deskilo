@@ -377,5 +377,9 @@
   "threadNoRefs": "References are only shared with people of the same workspace.",
   "@threadNoRefs": {
     "description": "Me thread: why attaching references is unavailable"
+  },
+  "threadRefsIn": "References in",
+  "@threadRefsIn": {
+    "description": "Me thread: which workspace the references speak about"
   }
 }

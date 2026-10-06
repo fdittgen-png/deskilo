@@ -10669,6 +10669,10 @@
   "@threadNoRefs": {
     "description": "Me thread: why attaching references is unavailable"
   },
+  "threadRefsIn": "Riferimenti in",
+  "@threadRefsIn": {
+    "description": "Me thread: which workspace the references speak about"
+  },
   "usageAsk": "Fattura il tempo in cui c’ero",
   "usageAskExplain": "Hai prenotato {booked} e sei stato {present}. Chiedi che le {saved} non usate non siano fatturate. Decide qualcun altro, mai tu.",
   "usageAskSubmit": "Chiedi",

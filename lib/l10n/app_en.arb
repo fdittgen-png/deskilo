@@ -19887,6 +19887,10 @@
   "@threadNoRefs": {
     "description": "Me thread: why attaching references is unavailable"
   },
+  "threadRefsIn": "References in",
+  "@threadRefsIn": {
+    "description": "Me thread: which workspace the references speak about"
+  },
   "usageAsk": "Bill the time I was here",
   "@usageAsk": {
     "description": "#833 - action asking for the actual time to bill"

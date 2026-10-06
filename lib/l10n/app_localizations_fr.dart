@@ -17495,6 +17495,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les références ne se partagent qu’avec des personnes du même espace.';
 
   @override
+  String get threadRefsIn => 'Références dans';
+
+  @override
   String get usageAsk => 'Facturer le temps où j\'étais là';
 
   @override

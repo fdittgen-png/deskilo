@@ -195,10 +195,10 @@ void main() {
     expect(find.text('Are you in tomorrow?'), findsOneWidget);
     expect(home.reads, contains('c-ana'));
     await tester.enterText(
-      find.byKey(const ValueKey('context-composer')),
+      find.byKey(const ValueKey('member-note-body')),
       'Yes, at nine',
     );
-    await tester.tap(find.byKey(const ValueKey('context-send')));
+    await tester.tap(find.byKey(const ValueKey('member-note-send')));
     await tester.pumpAndSettle();
     expect(find.text('Yes, at nine'), findsOneWidget);
     expect(
@@ -282,5 +282,26 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('composer-attach')), findsOneWidget);
     expect(find.byKey(const ValueKey('composer-attach-locked')), findsNothing);
+  });
+
+  testWidgets('references in a message read as links, not as raw tokens',
+      (tester) async {
+    home.threads[FakeMessengerRepository.threadKey(MessageContextKind.account, 'c-ana')] = [
+      ContextMessage(
+        id: 'm-ref',
+        kind: MessageKind.accountMessage,
+        authorName: 'Ana',
+        body: 'See [res:12bb132e-ff0b-4afc-8f59-8364e0caac9b|Ana · Desk 1 · 10 Aug] and [space:seat:ea9cad40-47a9-4ff5-830c-43eb9e556b13|Place 1]',
+        createdAt: DateTime.utc(2026, 8, 10, 8),
+        mine: false,
+      ),
+    ];
+    await pumpInbox(tester, home: home, remote: remote);
+    await tester.tap(find.byKey(const ValueKey('inbox-entry-c-ana')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('[res:'), findsNothing);
+    expect(find.textContaining('[space:'), findsNothing);
+    expect(find.text('Ana · Desk 1 · 10 Aug'), findsOneWidget);
+    expect(find.text('Place 1'), findsOneWidget);
   });
 }

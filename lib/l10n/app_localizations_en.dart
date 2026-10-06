@@ -17304,6 +17304,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'References are only shared with people of the same workspace.';
 
   @override
+  String get threadRefsIn => 'References in';
+
+  @override
   String get usageAsk => 'Bill the time I was here';
 
   @override

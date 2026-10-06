@@ -17437,6 +17437,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las referencias solo se comparten con personas del mismo espacio.';
 
   @override
+  String get threadRefsIn => 'Referencias en';
+
+  @override
   String get usageAsk => 'Facturar el tiempo que estuve';
 
   @override

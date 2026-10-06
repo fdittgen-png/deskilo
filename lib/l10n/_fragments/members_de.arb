@@ -297,5 +297,9 @@
   "threadNoRefs": "Verweise werden nur mit Personen desselben Arbeitsbereichs geteilt.",
   "@threadNoRefs": {
     "description": "Me thread: why attaching references is unavailable"
+  },
+  "threadRefsIn": "Verweise in",
+  "@threadRefsIn": {
+    "description": "Me thread: which workspace the references speak about"
   }
 }
