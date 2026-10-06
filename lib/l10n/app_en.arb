@@ -2256,6 +2256,19 @@
   "billingUsageSection": "The month just finished",
   "billingUsageWhenZero": "Also when there is nothing to pay",
   "billingUsageWhenZeroHint": "Sends a document reading zero, as confirmation that the subscription covered the whole month.",
+  "blockPersonAction": "Block this person",
+  "blockPersonConfirm": "Block {name}? Neither of you will see or reach the other. You can undo this in Me.",
+  "@blockPersonConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "blockPersonDone": "Blocked.",
+  "blockedPeopleEmpty": "You have not blocked anyone.",
+  "blockedPeopleHint": "A blocked person cannot see you or write to you, and you cannot see or reach them.",
+  "blockedPeopleTitle": "Blocked people",
   "bookAccountCode": "Account code",
   "@bookAccountCode": {
     "description": "#1869 B chart of accounts"
@@ -20103,6 +20116,8 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
+  "unblockAction": "Unblock",
+  "unblockDone": "Unblocked.",
   "usageAsk": "Bill the time I was here",
   "@usageAsk": {
     "description": "#833 - action asking for the actual time to bill"

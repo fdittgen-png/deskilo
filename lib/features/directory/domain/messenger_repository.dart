@@ -14,6 +14,12 @@ abstract interface class MessengerRepository {
   /// `my_inbox`: every conversation I take part in on this server.
   Future<List<Map<String, dynamic>>> inbox();
 
+  // ── blocks (0387) ───────────────────────────────────────────────────
+  /// The accounts I blocked on this server.
+  Future<List<BlockedAccount>> myBlocks();
+  Future<void> blockAccount(String user);
+  Future<void> unblockAccount(String user);
+
   /// Pin / mute / archive of a workspace conversation, kept by the server
   /// (`set_conversation_prefs`); null leaves a flag as it is.
   Future<void> setConversationFlags(

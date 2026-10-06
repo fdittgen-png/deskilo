@@ -1,0 +1,17 @@
+{
+  "blockedPeopleTitle": "Blocked people",
+  "blockedPeopleEmpty": "You have not blocked anyone.",
+  "blockedPeopleHint": "A blocked person cannot see you or write to you, and you cannot see or reach them.",
+  "unblockAction": "Unblock",
+  "blockPersonAction": "Block this person",
+  "blockPersonConfirm": "Block {name}? Neither of you will see or reach the other. You can undo this in Me.",
+  "@blockPersonConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "blockPersonDone": "Blocked.",
+  "unblockDone": "Unblocked."
+}

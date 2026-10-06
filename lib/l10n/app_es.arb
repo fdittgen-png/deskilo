@@ -1157,6 +1157,19 @@
   "billingUsageSection": "El mes recién terminado",
   "billingUsageWhenZero": "También cuando no hay nada que pagar",
   "billingUsageWhenZeroHint": "Envía un documento a cero, como confirmación de que la suscripción cubrió todo el mes.",
+  "blockPersonAction": "Bloquear a esta persona",
+  "blockPersonConfirm": "¿Bloquear a {name}? Ninguno de los dos verá ni podrá contactar al otro. Puedes deshacerlo en Yo.",
+  "@blockPersonConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "blockPersonDone": "Bloqueada.",
+  "blockedPeopleEmpty": "No has bloqueado a nadie.",
+  "blockedPeopleHint": "Una persona bloqueada no puede verte ni escribirte, y tú no puedes verla ni contactarla.",
+  "blockedPeopleTitle": "Personas bloqueadas",
   "bookAccountCode": "Código de cuenta",
   "bookAccountName": "Nombre de la cuenta",
   "bookAccountPosting": "Admite asientos",
@@ -10962,6 +10975,8 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
+  "unblockAction": "Desbloquear",
+  "unblockDone": "Desbloqueada.",
   "usageAsk": "Facturar el tiempo que estuve",
   "usageAskExplain": "Reservaste {booked} y estuviste {present}. Pide que las {saved} no usadas dejen de facturarse. Lo decide otra persona, nunca tú.",
   "usageAskSubmit": "Pedir",

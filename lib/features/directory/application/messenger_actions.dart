@@ -29,6 +29,11 @@ class MessengerActions {
     return text;
   }
 
+  // ── blocks (0387) ───────────────────────────────────────────────────
+  Future<List<BlockedAccount>> myBlocks() => repository.myBlocks();
+  Future<void> blockAccount(String user) => repository.blockAccount(user);
+  Future<void> unblockAccount(String user) => repository.unblockAccount(user);
+
   // ── a workspace conversation's own preferences (0386) ──────────────
   Future<void> setConversationFlags(
     String conversation, {

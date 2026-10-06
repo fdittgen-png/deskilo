@@ -14,6 +14,7 @@ import '../../task_recorder/presentation/route_classification.dart'
     show taskWizardRoute;
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import 'blocked_people_card.dart';
 import 'visibility_card.dart';
 
 class MeAccountTab extends ConsumerWidget {
@@ -44,6 +45,7 @@ class MeAccountTab extends ConsumerWidget {
           SettingsSectionHeader(l10n?.meGroupProfile ?? 'My profile'),
           ...accountSettingsTiles(context, ref, only: AccountTileGroup.profile),
           const VisibilityCard(),
+          const BlockedPeopleCard(),
           SettingsSectionHeader(l10n?.settingsSectionAccount ?? 'My account'),
           ...accountSettingsTiles(context, ref, only: AccountTileGroup.account),
           door('me-activity', Icons.account_balance_wallet_outlined,

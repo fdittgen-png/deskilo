@@ -1940,6 +1940,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Sends a document reading zero, as confirmation that the subscription covered the whole month.';
 
   @override
+  String get blockPersonAction => 'Block this person';
+
+  @override
+  String blockPersonConfirm(String name) {
+    return 'Block $name? Neither of you will see or reach the other. You can undo this in Me.';
+  }
+
+  @override
+  String get blockPersonDone => 'Blocked.';
+
+  @override
+  String get blockedPeopleEmpty => 'You have not blocked anyone.';
+
+  @override
+  String get blockedPeopleHint =>
+      'A blocked person cannot see you or write to you, and you cannot see or reach them.';
+
+  @override
+  String get blockedPeopleTitle => 'Blocked people';
+
+  @override
   String get bookAccountCode => 'Account code';
 
   @override
@@ -17515,6 +17536,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get threadRefsIn => 'References in';
+
+  @override
+  String get unblockAction => 'Unblock';
+
+  @override
+  String get unblockDone => 'Unblocked.';
 
   @override
   String get usageAsk => 'Bill the time I was here';

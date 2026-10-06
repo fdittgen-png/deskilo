@@ -21,6 +21,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/messenger.dart';
 import '../../providers/messenger_providers.dart';
+import 'block_person.dart';
 import 'context_bubble.dart';
 import 'refusal_text.dart';
 import 'message_actions_sheet.dart';
@@ -213,6 +214,14 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     }
   }
 
+  Future<void> _block() async {
+    final peer = widget.peer;
+    if (peer == null) return;
+    final done = await confirmAndBlock(context, ref,
+        source: widget.source, peer: peer, name: widget.title);
+    if (done && mounted) Navigator.of(context).pop();
+  }
+
   Future<void> _delete(ContextMessage message) async {
     final l10n = AppLocalizations.of(context);
     final confirmed = await showDialog<bool>(
@@ -384,6 +393,13 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
                 final left = await showAccountGroupSheet(context, _contextId);
                 if (left == true && context.mounted) Navigator.of(context).pop();
               },
+            ),
+          if (widget.kind == MessageContextKind.account && widget.peer != null)
+            IconButton(
+              key: const ValueKey('account-block'),
+              tooltip: l10n?.blockPersonAction ?? 'Block this person',
+              icon: const Icon(Icons.block_outlined),
+              onPressed: _block,
             ),
           if (_isInquiry && _contextId.isNotEmpty)
             IconButton(
