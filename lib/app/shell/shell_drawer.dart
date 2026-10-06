@@ -127,9 +127,8 @@ class ShellDrawer extends ConsumerWidget {
         _Entry('drawer-availability', Icons.event_busy_outlined,
             l10n?.availabilityTitle ?? 'Availability',
             () => go('/availability')),
-      // #1923 — the BI area: the web build only, never a native menu.
+      // #1923 — the BI area, on every platform.
       if (biAvailable(
-          platformIsWeb: ref.watch(platformIsWebProvider),
           features: features,
           permissions: ref.watch(myPermissionsProvider)))
         _Entry('drawer-bi', Icons.insights_outlined,

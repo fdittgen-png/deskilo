@@ -107,11 +107,10 @@ void main() {
     expect(visibleBiModules(all, const {}), isEmpty);
     expect(
       biAvailable(
-        platformIsWeb: false,
         features: all,
         permissions: {WorkspacePermission.viewAnalytics},
       ),
-      isFalse,
+      isTrue,
     );
   });
 
@@ -136,15 +135,15 @@ void main() {
     expect(kpis.calls, greaterThan(0));
   });
 
-  testWidgets('native with the menu chosen: no entry, and a direct link is '
-      'turned away without a fetch', (tester) async {
+  testWidgets('native with the menu chosen: the entry is there and opens BI', (
+    tester,
+  ) async {
     final kpis = await _pump(tester, web: false);
-    expect(await _drawerHas(tester, 'drawer-bi'), isFalse);
-    await tester.tapAt(const Offset(1150, 800)); // close the drawer
+    expect(await _drawerHas(tester, 'drawer-bi'), isTrue);
+    await tester.tap(find.byKey(const ValueKey('drawer-bi')));
     await tester.pumpAndSettle();
-    await _go(tester, '/bi');
-    expect(find.byKey(const ValueKey('bi-page')), findsNothing);
-    expect(kpis.calls, 0);
+    expect(find.byKey(const ValueKey('bi-page')), findsOneWidget);
+    expect(kpis.calls, greaterThan(0));
   });
 
   testWidgets('web with no module (feature off): no entry, no page', (
