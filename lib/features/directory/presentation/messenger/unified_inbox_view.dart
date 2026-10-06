@@ -381,20 +381,18 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
     if (choice == null) return;
     if (flags != null) {
       // The server's preference: set it there, then read the inbox again.
-      final repo = ref.read(messengerRepositoryProvider(source: entry.source));
+      final actions = ref.read(messengerActionsProvider(source: entry.source));
       final id = entry.contextId;
       if (!context.mounted) return;
       await runGuarded(
         context,
         domain: 'messages',
         message: 'conversation flags failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
         action: () => switch (choice) {
-          'pin' => repo.setConversationFlags(id, pinned: !pinned),
-          'mute' => repo.setConversationFlags(id, muted: !flags.muted),
-          'archive' => repo.setConversationFlags(id, archived: !archived),
-          _ => repo.markConversationUnread(id),
+          'pin' => actions.setConversationFlags(id, pinned: !pinned),
+          'mute' => actions.setConversationFlags(id, muted: !flags.muted),
+          'archive' => actions.setConversationFlags(id, archived: !archived),
+          _ => actions.markConversationUnread(id),
         },
       );
       ref.invalidate(unifiedInboxProvider);
