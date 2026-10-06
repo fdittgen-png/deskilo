@@ -103,7 +103,9 @@ class ShellDrawer extends ConsumerWidget {
           Navigator.of(context).pop();
           onBranch(branch);
         }, selected: currentIndex == branch),
+      // Events live in the calendar when it holds the alerts: no entry then.
       if (features.contains(WorkspaceFeature.eventsTab) &&
+          !calendarHoldsAlerts(features) &&
           may(WorkspacePermission.useMessages))
         _Entry('drawer-events', Icons.notifications_outlined,
             lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events'), () => go('/events', push: false)),

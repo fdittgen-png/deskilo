@@ -63,13 +63,15 @@ void main() {
     expect(find.byKey(const ValueKey('shell-drawer')), findsOneWidget);
     for (final key in [
       'drawer-reserve', 'drawer-tab-1', 'drawer-tab-2',
-      'drawer-tab-3', 'drawer-events', 'drawer-workspace-settings',
+      'drawer-tab-3', 'drawer-workspace-settings',
       'drawer-members', 'drawer-roles', 'drawer-invoices', 'drawer-billing',
       'drawer-features', 'drawer-settings', 'drawer-privacy',
     ]) {
       await _reveal(tester, key);
       expect(find.byKey(ValueKey(key)), findsOneWidget, reason: key);
     }
+    // The calendar holds the alerts and events: the drawer has no Events entry.
+    expect(find.byKey(const ValueKey('drawer-events')), findsNothing);
     await _reveal(tester, 'drawer-tab-1');
     await tester.tap(find.byKey(const ValueKey('drawer-tab-1')));
     await tester.pumpAndSettle();
