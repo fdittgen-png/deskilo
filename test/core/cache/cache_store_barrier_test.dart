@@ -26,14 +26,18 @@ void main() {
     'an older writer finishing last never overwrites the newer value',
     () async {
       final gates = <Completer<void>>[Completer(), Completer()];
-      var call = 0;
+      var reached = 0;
+      // Gate by the ORDER the writers arrive at the publish boundary, and
+      // start the second writer only once the first is parked there: which
+      // writer reaches it first is then no race.
       final store = FileCacheStore(
         directory: dir,
-        beforePublish: (_) => gates[call++].future,
+        beforePublish: (_) => gates[reached++].future,
       );
       final a = store.put('k', 'A', ttl: ttl);
+      await untilReal(() => reached == 1, what: 'the first writer parked');
       final b = store.put('k', 'B', ttl: ttl);
-      await untilReal(() => _tmpCount(dir) == 2, what: 'both temp writes');
+      await untilReal(() => reached == 2, what: 'the second writer parked');
       gates[1].complete(); // B publishes first
       await b;
       gates[0].complete(); // A tries to publish afterwards
