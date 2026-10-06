@@ -16,6 +16,7 @@ import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
+import 'package:deskilo/features/task_recorder/domain/step_values.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
 import 'package:deskilo/features/task_recorder/package/task_package.dart';
@@ -36,8 +37,10 @@ class _Saver {
   SaveOutcome answer = const SavedFile('/Downloads/deskilo-task.json');
   bool fail = false;
 
-  Future<SaveOutcome> call(
-      {required Uint8List bytes, required String fileName}) async {
+  Future<SaveOutcome> call({
+    required Uint8List bytes,
+    required String fileName,
+  }) async {
     if (fail) throw StateError('disk full');
     this.bytes = bytes;
     name = fileName;
@@ -47,34 +50,41 @@ class _Saver {
 
 class _Harness {
   _Harness({bool available = true}) {
-    container = ProviderContainer(overrides: [
-      recorderStoreProvider.overrideWithValue(store),
-      recorderScopeProvider.overrideWithValue(canaryScope),
-      taskRecorderAvailableProvider.overrideWithValue(available),
-      typedFileSaverProvider.overrideWithValue(saver.call),
-    ]);
+    container = ProviderContainer(
+      overrides: [
+        recorderStoreProvider.overrideWithValue(store),
+        recorderScopeProvider.overrideWithValue(canaryScope),
+        taskRecorderAvailableProvider.overrideWithValue(available),
+        typedFileSaverProvider.overrideWithValue(saver.call),
+      ],
+    );
   }
 
-  final store =
-      RecorderStore(backend: MemoryRecorderLogBackend(), namespace: canaryNamespace);
+  final store = RecorderStore(
+    backend: MemoryRecorderLogBackend(),
+    namespace: canaryNamespace,
+  );
   final saver = _Saver();
   late final ProviderContainer container;
 
-  RecorderController get controller => container.read(recorderControllerProvider);
+  RecorderController get controller =>
+      container.read(recorderControllerProvider);
 
   Future<void> pump(WidgetTester tester) async {
     tester.view.physicalSize = const Size(800, 1600);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(UncontrolledProviderScope(
-      container: container,
-      child: const MaterialApp(
-        locale: Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: TaskRecorderScreen(),
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: const MaterialApp(
+          locale: Locale('en'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: TaskRecorderScreen(),
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
   }
 
@@ -85,24 +95,31 @@ class _Harness {
 }
 
 void main() {
-  testWidgets('Start waits for the workspace; the disclosure is always there',
-      (tester) async {
+  testWidgets('Start waits for the workspace; the disclosure is always there', (
+    tester,
+  ) async {
     final h = _Harness(available: false);
     await h.pump(tester);
     expect(find.text('Before you record'), findsOneWidget);
     expect(find.textContaining('Nothing is uploaded'), findsOneWidget);
-    expect(find.text('Recording is not switched on in this workspace.'),
-        findsOneWidget);
+    expect(
+      find.text('Recording is not switched on in this workspace.'),
+      findsOneWidget,
+    );
     final start = tester.widget<ButtonStyleButton>(
-        find.byKey(const ValueKey('task-recorder-start')));
+      find.byKey(const ValueKey('task-recorder-start')),
+    );
     expect(start.onPressed, isNull);
-    expect(h.container.read(recorderControllerProvider).state,
-        RecorderState.idle);
+    expect(
+      h.container.read(recorderControllerProvider).state,
+      RecorderState.idle,
+    );
     await h.done(tester);
   });
 
-  testWidgets('start, a labelled note, stop: the recording is listed',
-      (tester) async {
+  testWidgets('start, a labelled note, stop: the recording is listed', (
+    tester,
+  ) async {
     final h = _Harness();
     await h.pump(tester);
     await tester.tap(find.byKey(const ValueKey('task-recorder-start')));
@@ -113,7 +130,9 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('task-recorder-note')));
     await tester.pumpAndSettle();
     await tester.enterText(
-        find.byKey(const ValueKey('task-recorder-note-field')), 'Ask first');
+      find.byKey(const ValueKey('task-recorder-note-field')),
+      'Ask first',
+    );
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
     expect(h.controller.snapshot!.steps.single.kind, StepKind.annotation);
@@ -126,10 +145,15 @@ void main() {
     await h.done(tester);
   });
 
-  testWidgets('review: leave out, preview, export the edited copy',
-      (tester) async {
+  testWidgets('review: leave out, preview, export the edited copy', (
+    tester,
+  ) async {
     final h = _Harness();
-    await recordJourney(h.controller, StepClock(), BookingJourney.planConfirmed);
+    await recordJourney(
+      h.controller,
+      StepClock(),
+      BookingJourney.planConfirmed,
+    );
     await h.pump(tester);
     await tester.tap(find.text('Book a desk'));
     await tester.pumpAndSettle();
@@ -141,20 +165,25 @@ void main() {
         .seq;
     await tester.tap(find.byKey(ValueKey('task-step-toggle-$attempt')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('task-recording-edited-note')),
-        findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('task-recording-edited-note')),
+      findsOneWidget,
+    );
 
     await tester.tap(find.byKey(const ValueKey('task-recording-preview')));
     await tester.pumpAndSettle();
     final preview = tester
         .widget<SelectableText>(
-            find.byKey(const ValueKey('task-recording-preview-text')))
+          find.byKey(const ValueKey('task-recording-preview-text')),
+        )
         .data!;
     expect(preview, contains('"kind": "edited"'));
 
     await tester.scrollUntilVisible(
-        find.byKey(const ValueKey('task-recording-export')), 300,
-        scrollable: find.byType(Scrollable).first);
+      find.byKey(const ValueKey('task-recording-export')),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('task-recording-export')));
     await tester.pumpAndSettle();
@@ -171,21 +200,24 @@ void main() {
     // The private source is untouched.
     final stored = (await h.store.list()).single;
     expect(stored.recording!.kind, RecordingKind.source);
-    expect(stored.recording!.steps.length,
-        h.controller.snapshot!.steps.length);
+    expect(stored.recording!.steps.length, h.controller.snapshot!.steps.length);
     await h.done(tester);
   });
 
-  testWidgets('a saver without a path, or failing, is said truthfully',
-      (tester) async {
+  testWidgets('a saver without a path, or failing, is said truthfully', (
+    tester,
+  ) async {
     final h = _Harness()..saver.answer = const DownloadRequested('x.json');
     await recordJourney(h.controller, StepClock(), BookingJourney.listRefused);
     await h.pump(tester);
     await tester.tap(find.text('Book a desk'));
     await tester.pumpAndSettle();
     final export = find.byKey(const ValueKey('task-recording-export'));
-    await tester.scrollUntilVisible(export, 300,
-        scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      export,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(export);
     await tester.pumpAndSettle();
@@ -196,8 +228,10 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(export);
     await tester.pumpAndSettle();
-    expect(find.text('Kept only inside the app: /data/private/x.json'),
-        findsOneWidget);
+    expect(
+      find.text('Kept only inside the app: /data/private/x.json'),
+      findsOneWidget,
+    );
 
     h.saver.fail = true;
     ScaffoldMessenger.of(tester.element(export)).clearSnackBars();
@@ -208,24 +242,30 @@ void main() {
     await h.done(tester);
   });
 
-  testWidgets('the task package export is the same recording, readable back',
-      (tester) async {
+  testWidgets('the task package export is the same recording, readable back', (
+    tester,
+  ) async {
     final h = _Harness();
     await recordJourney(h.controller, StepClock(), BookingJourney.listRefused);
     await h.pump(tester);
     await tester.tap(find.text('Book a desk'));
     await tester.pumpAndSettle();
     final button = find.byKey(const ValueKey('task-recording-export-package'));
-    await tester.scrollUntilVisible(button, 300,
-        scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      button,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(button);
     await tester.pumpAndSettle();
     expect(h.saver.name, endsWith('.deskilo-task.zip'));
     final read = readTaskPackage(h.saver.bytes!);
     expect(read.accepted, isTrue, reason: '${read.issues}');
-    expect(encodeRecordingText(read.package!.recording),
-        encodeRecordingText(h.controller.snapshot!));
+    expect(
+      encodeRecordingText(read.package!.recording),
+      encodeRecordingText(h.controller.snapshot!),
+    );
     expect(read.package!.transcript, contains('Chose a place'));
     for (final c in [...privateCanaries, ...canaryFragments]) {
       expect(read.package!.transcript!.contains(c), isFalse, reason: c);
@@ -235,42 +275,56 @@ void main() {
 
   testWidgets('delete removes the private recording only', (tester) async {
     final h = _Harness();
-    await recordJourney(h.controller, StepClock(), BookingJourney.cancelledReview);
+    await recordJourney(
+      h.controller,
+      StepClock(),
+      BookingJourney.cancelledReview,
+    );
     await h.pump(tester);
     await tester.tap(find.text('Book a desk'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('task-recording-delete')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('task-recording-delete-confirm')));
+    await tester.tap(
+      find.byKey(const ValueKey('task-recording-delete-confirm')),
+    );
     await tester.pumpAndSettle();
     expect(await h.store.list(), isEmpty);
     expect(find.text('No recordings on this device.'), findsOneWidget);
     await h.done(tester);
   });
 
-  testWidgets('the indicator: nothing until opened, then marks routes',
-      (tester) async {
+  testWidgets('the indicator: nothing until opened, then marks routes', (
+    tester,
+  ) async {
     final h = _Harness();
-    final router = GoRouter(routes: [
-      GoRoute(path: '/', builder: (_, _) => const Text('home')),
-      GoRoute(path: '/auth', builder: (_, _) => const Text('sign in')),
-      GoRoute(path: '/nowhere', builder: (_, _) => const Text('nowhere')),
-    ]);
+    final router = GoRouter(
+      routes: [
+        GoRoute(path: '/', builder: (_, _) => const Text('home')),
+        GoRoute(path: '/auth', builder: (_, _) => const Text('sign in')),
+        GoRoute(path: '/nowhere', builder: (_, _) => const Text('nowhere')),
+      ],
+    );
     addTearDown(router.dispose);
-    await tester.pumpWidget(UncontrolledProviderScope(
-      container: h.container,
-      child: MaterialApp.router(
-        locale: const Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        routerConfig: router,
-        builder: (context, child) =>
-            RecordingIndicator(router: router, child: child!),
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: h.container,
+        child: MaterialApp.router(
+          locale: const Locale('en'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          routerConfig: router,
+          builder: (context, child) =>
+              RecordingIndicator(router: router, child: child!),
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
-    expect(h.container.exists(recorderControllerProvider), isFalse,
-        reason: 'the start-up path never creates the recorder');
+    expect(
+      h.container.exists(recorderControllerProvider),
+      isFalse,
+      reason: 'the start-up path never creates the recorder',
+    );
     expect(find.byKey(const ValueKey('recording-indicator')), findsNothing);
 
     h.container.read(recorderOpenedProvider.notifier).open();
@@ -286,10 +340,15 @@ void main() {
     // decides, not the one the push was made from.
     unawaited(router.push('/auth'));
     await tester.pumpAndSettle();
-    expect(h.controller.snapshot!.steps.map((s) => s.kind),
-        [StepKind.excluded, StepKind.unrecorded, StepKind.excluded]);
-    expect(h.controller.snapshot!.steps.first.protectedCategory,
-        ProtectedSurface.authentication);
+    expect(h.controller.snapshot!.steps.map((s) => s.kind), [
+      StepKind.excluded,
+      StepKind.unrecorded,
+      StepKind.excluded,
+    ]);
+    expect(
+      h.controller.snapshot!.steps.first.protectedCategory,
+      ProtectedSurface.authentication,
+    );
 
     await tester.tap(find.byKey(const ValueKey('recording-indicator-pause')));
     await tester.pumpAndSettle();
@@ -298,6 +357,77 @@ void main() {
     await tester.pumpAndSettle();
     expect(h.controller.state, RecorderState.ended);
     expect(find.byKey(const ValueKey('recording-indicator')), findsNothing);
+    await h.done(tester);
+  });
+
+  testWidgets('capture values is off by default, per recording, and says so '
+      'while it runs', (tester) async {
+    final h = _Harness();
+    await h.pump(tester);
+    final toggle = find.byKey(const ValueKey('task-recorder-capture-values'));
+    expect(tester.widget<SwitchListTile>(toggle).value, isFalse);
+    // Started as it is: no values.
+    await tester.tap(find.byKey(const ValueKey('task-recorder-start')));
+    await tester.pumpAndSettle();
+    expect(h.controller.capturesValues, isFalse);
+    expect(find.byKey(const ValueKey('task-recorder-values-on')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('task-recorder-stop')));
+    await tester.pumpAndSettle();
+
+    // Switched on for the next one only.
+    await tester.tap(toggle);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('task-recorder-start')));
+    await tester.pumpAndSettle();
+    expect(h.controller.capturesValues, isTrue);
+    expect(
+      find.byKey(const ValueKey('task-recorder-values-on')),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey('task-recorder-stop')));
+    await tester.pumpAndSettle();
+    // The choice is not remembered: back to off.
+    expect(tester.widget<SwitchListTile>(toggle).value, isFalse);
+    await h.done(tester);
+  });
+
+  testWidgets('saving a recording that holds values asks first; cancelling '
+      'saves nothing', (tester) async {
+    final h = _Harness();
+    await h.controller.start(
+      scope: canaryScope,
+      title: 'Book a desk',
+      captureValues: true,
+    );
+    h.controller.record(
+      RecorderActions.selectDate,
+      payload: {'date_relation': 'today'},
+      values: StepValues.of({'date': TextValue('2026-10-06')}),
+    );
+    await h.controller.stop();
+    await h.pump(tester);
+    await tester.tap(find.text('Book a desk'));
+    await tester.pumpAndSettle();
+    final export = find.byKey(const ValueKey('task-recording-export'));
+    await tester.scrollUntilVisible(
+      export,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(export);
+    await tester.pumpAndSettle();
+    expect(find.text('This recording contains values'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('export-values-cancel')));
+    await tester.pumpAndSettle();
+    expect(h.saver.bytes, isNull);
+
+    await tester.tap(export);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('export-values-confirm')));
+    await tester.pumpAndSettle();
+    expect(utf8.decode(h.saver.bytes!), contains('2026-10-06'));
     await h.done(tester);
   });
 }

@@ -138,5 +138,15 @@
   "taskExportIllustrationNotApproved": "Abbildung nicht eingefügt: Sie wurde nicht freigegeben.",
   "taskExportLimitRecreated": "Die Abbildungen sind aus den sicheren Fakten der Aufzeichnung mit erfundenen Platznamen nachgebildet; sie sind keine Bildschirmfotos.",
   "taskExportStale": "Das Storyboard gehört zu einer anderen Version dieser Aufzeichnung. Prüfen Sie es vor dem Export erneut.",
-  "taskExportWordButton": "Als Word-Dokument exportieren"
+  "taskExportWordButton": "Als Word-Dokument exportieren",
+  "taskExportValueRedacted": "nicht gespeichert ({length} Zeichen)",
+  "@taskExportValueRedacted": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportValueOn": "an",
+  "taskExportValueOff": "aus"
 }

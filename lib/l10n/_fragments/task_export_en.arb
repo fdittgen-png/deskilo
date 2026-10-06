@@ -645,5 +645,15 @@
   "taskExportWordButton": "Export as Word document",
   "@taskExportWordButton": {
     "description": "#1866 task export (Word document): the review screen button"
-  }
+  },
+  "taskExportValueRedacted": "not kept ({length} characters)",
+  "@taskExportValueRedacted": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportValueOn": "on",
+  "taskExportValueOff": "off"
 }

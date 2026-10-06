@@ -19,12 +19,19 @@
 
 import 'action_registry.dart';
 import 'safe_payload.dart';
+import 'step_values.dart';
 
 /// The format marker every encoded recording starts with.
 const String taskRecordingFormat = 'deskilo.task-recording';
 
-/// The schema version this build writes and the newest it reads.
-const int taskRecordingSchemaVersion = 1;
+/// The newest schema version this build reads. 2 adds the typed `values` of
+/// a step (step_values.dart), written only by a recording the person started
+/// with "capture values"; every other recording is still written as 1, so an
+/// older build reads everything that carries no value.
+const int taskRecordingSchemaVersion = 2;
+
+/// The schema [r] is written with: 2 only when it captures values.
+int schemaVersionOf(TaskRecording r) => r.capturesValues ? 2 : 1;
 
 /// Why a recording ended.
 enum RecordingEndReason {
@@ -201,6 +208,7 @@ class RecordedStep {
     this.actionVersion,
     this.target,
     this.payload = SafePayload.empty,
+    this.values = StepValues.none,
     this.op,
     this.state,
     this.outcome,
@@ -222,6 +230,9 @@ class RecordedStep {
   final int? actionVersion;
   final String? target;
   final SafePayload payload;
+
+  /// What was entered or chosen, when the recording captures values.
+  final StepValues values;
 
   /// The recording-local alias linking a command attempt to its outcome.
   final String? op;
@@ -254,6 +265,7 @@ class RecordedStep {
     actionVersion: actionVersion,
     target: target,
     payload: payload,
+    values: values,
     op: op,
     state: state,
     outcome: outcome,
@@ -275,6 +287,7 @@ class RecordedStep {
       other.actionVersion == actionVersion &&
       other.target == target &&
       other.payload == payload &&
+      other.values == values &&
       other.op == op &&
       other.state == state &&
       other.outcome == outcome &&
@@ -293,6 +306,7 @@ class RecordedStep {
     action,
     target,
     payload,
+    values,
     op,
     state,
     outcome,
@@ -316,6 +330,7 @@ class TaskRecording {
     List<Prerequisite> prerequisites = const [],
     this.endReason,
     Completeness? completeness,
+    this.capturesValues = false,
   }) : steps = List.unmodifiable(steps),
        segments = List.unmodifiable(segments),
        prerequisites = List.unmodifiable(prerequisites),
@@ -329,6 +344,11 @@ class TaskRecording {
   /// from (task_recording_codec.dart `recordingDigest`).
   final String? sourceDigest;
   final String? title;
+
+  /// Whether the person started this recording with "capture values": its
+  /// steps may carry the typed values of what was entered or chosen, and an
+  /// export says so.
+  final bool capturesValues;
   final List<Prerequisite> prerequisites;
   final List<RecordingSegment> segments;
   final List<RecordedStep> steps;

@@ -31,6 +31,9 @@ class TaskRecorderScreen extends ConsumerStatefulWidget {
 }
 
 class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
+  // The person's choice for THIS recording; off every time, never remembered.
+  bool _captureValues = false;
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +53,10 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
             .start(
               scope: scope,
               prerequisites: const [Prerequisite('signed_in')],
+              captureValues: _captureValues,
             );
+    // The choice belonged to THAT recording: the next one starts off again.
+    if (mounted && started) setState(() => _captureValues = false);
     if (!mounted || started) return;
     AppSnack.error(
       context,
@@ -96,6 +102,7 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
             _LiveControls(
               paused: state == RecorderState.paused,
               steps: controller.status.stepCount,
+              capturesValues: controller.capturesValues,
               onPause: controller.pause,
               onResume: controller.resume,
               onStop: _stop,
@@ -111,6 +118,8 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
                   ? (l10n?.taskRecorderUnavailable ??
                         'Recording is not switched on in this workspace.')
                   : null,
+              captureValues: _captureValues,
+              onCaptureValues: (v) => setState(() => _captureValues = v),
               onStart: _start,
             ),
           const SizedBox(height: AppSpacing.xl),
@@ -129,11 +138,15 @@ class _Disclosure extends StatelessWidget {
   const _Disclosure({
     required this.canStart,
     required this.reason,
+    required this.captureValues,
+    required this.onCaptureValues,
     required this.onStart,
   });
 
   final bool canStart;
   final String? reason;
+  final bool captureValues;
+  final ValueChanged<bool> onCaptureValues;
   final VoidCallback onStart;
 
   @override
@@ -170,6 +183,26 @@ class _Disclosure extends StatelessWidget {
               Text(why),
               const SizedBox(height: AppSpacing.sm),
             ],
+            // Off by default: a recording keeps no value unless the person
+            // asks for it, for this recording only.
+            SwitchListTile(
+              key: const ValueKey('task-recorder-capture-values'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(
+                l10n?.taskRecorderCaptureValues ??
+                    'Capture values (for issue reports)',
+              ),
+              subtitle: Text(
+                l10n?.taskRecorderCaptureValuesHint ??
+                    'Also keeps what you type and choose so a developer can '
+                        'reproduce the problem from the file. Passwords, '
+                        'payment details, e-mail addresses, phone numbers and '
+                        'other personal contact data are never kept.',
+              ),
+              value: captureValues,
+              onChanged: canStart ? onCaptureValues : null,
+            ),
+            const SizedBox(height: AppSpacing.sm),
             FilledButton.icon(
               key: const ValueKey('task-recorder-start'),
               onPressed: canStart ? onStart : null,
@@ -187,6 +220,7 @@ class _LiveControls extends StatelessWidget {
   const _LiveControls({
     required this.paused,
     required this.steps,
+    required this.capturesValues,
     required this.onPause,
     required this.onResume,
     required this.onStop,
@@ -196,6 +230,7 @@ class _LiveControls extends StatelessWidget {
 
   final bool paused;
   final int steps;
+  final bool capturesValues;
   final VoidCallback onPause;
   final VoidCallback onResume;
   final VoidCallback onStop;
@@ -217,6 +252,18 @@ class _LiveControls extends StatelessWidget {
           children: [
             Text(heading, style: Theme.of(context).textTheme.titleMedium),
             Text(count),
+            if (capturesValues)
+              Padding(
+                padding: const EdgeInsets.only(top: AppSpacing.xs),
+                child: Row(
+                  key: const ValueKey('task-recorder-values-on'),
+                  children: [
+                    const Icon(Icons.data_object, size: 18),
+                    const SizedBox(width: AppSpacing.xs),
+                    Text(l10n?.taskRecorderValuesOn ?? 'Values are being captured'),
+                  ],
+                ),
+              ),
             const SizedBox(height: AppSpacing.md),
             Wrap(
               spacing: AppSpacing.sm,

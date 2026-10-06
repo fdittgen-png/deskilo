@@ -958,5 +958,11 @@
   "taskRecorderTargetDefaultRule": "the default rule",
   "@taskRecorderTargetDefaultRule": {
     "description": "#1884 recorder: taskRecorderTargetDefaultRule"
-  }
+  },
+  "taskRecorderCaptureValues": "Capture values (for issue reports)",
+  "taskRecorderCaptureValuesHint": "Also keeps what you type and choose — text, numbers, dates, switches — so a developer can reproduce the problem from the file. Passwords, payment details, e-mail addresses, phone numbers and other personal contact data are never kept. Share the file only with people who should see what you entered.",
+  "taskRecorderValuesOn": "Values are being captured",
+  "taskRecorderExportValuesTitle": "This recording contains values",
+  "taskRecorderExportValuesBody": "It holds what was typed and chosen during the recording. Check it before sharing, and share it only with people who should see that.",
+  "taskRecorderExportValuesConfirm": "Save anyway"
 }

@@ -636,6 +636,12 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
               choice.forMemberId != null && choice.forMemberId != myMemberId,
           series: choice.pattern != null,
           checkIn: choice.walkUp || choice.checkInNow,
+        ),
+        values: bookingAttemptValues(
+          start: choice.start,
+          end: choice.end,
+          resource: seat.name,
+          until: choice.until,
         ));
     try {
       // #1234 — the decision of WHICH write a booking is now lives in
