@@ -323,7 +323,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   /// sheet, because every one of them is long in a real workspace.
   Future<void> _pickRecord(NoteRecordKind kind) async {
     final l10n = AppLocalizations.of(context);
-    final (:candidates, :baked) =
+    final (:candidates, :baked, :facets, :formatAmount) =
         await noteRecordChoices(ref, context, kind);
 
     if (!mounted) return;
@@ -344,6 +344,8 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
       },
       keyPrefix: 'note-ref-${kind.name}',
       candidates: candidates,
+      facets: facets,
+      formatAmount: formatAmount,
     );
     if (picked == null || !mounted) return;
     _insert(recordToken(kind, picked, baked[picked] ?? picked));

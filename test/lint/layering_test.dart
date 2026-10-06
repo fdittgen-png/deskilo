@@ -343,7 +343,7 @@ const Map<String, int> _pairBudget = {
   // three imports in one provider file.
   'workspace -> events': 15, // 2026-09-27 #1657 13→15: widgets/local_setup_views.dart names a validation policy by its event-type label (the domain enum and its label), for the named-validators slot and the apply sheet's note
   'workspace -> members': 4,
-  'workspace -> money': 44, // #2003 badge/QR covers and BI exports reuse report pagination, designs and image resolution.
+  'workspace -> money': 45, // 2026-10-06 the reference picker derives an invoice's standing (open / paid / cancelled) from the one lifecycle the archive and the open cards use; #2003 badge/QR covers and BI exports reuse report pagination, designs and image resolution.
   'workspace -> plan': 26, // 2026-10-02 #1923 B 25→26: the Web-BI query groups capacity by the workspace's levels (levelsProvider), the one level seam.
   'workspace -> profile': 11, // 2026-09-28 #1652 10→11: the invitation review names who is joining (my profile's e-mail).
   'workspace -> reservations': 19, // 2026-10-02 #2085 17→19: the role's holders and "What they can do here" print member names through memberNamesProvider, the one name seam (recording privacy, #1514).
