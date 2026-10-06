@@ -4,6 +4,7 @@
 // drawn as an empty day. The Day view says availability could not be loaded,
 // shows no seat as free, and Retry reads the SAME window again — the
 // selection is kept.
+import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -59,6 +60,20 @@ void main() {
     expect(find.byKey(banner), findsOneWidget);
     expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsNothing);
     repo.failWindowReads = false;
+    await tester.tap(find.descendant(
+        of: find.byKey(banner), matching: find.text('Retry')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(banner), findsNothing);
+    expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsOneWidget);
+  });
+
+  testWidgets('a floor plan that cannot be read offers Retry and keeps the level',
+      (tester) async {
+    final plans = FakeFloorPlanRepository()..failPlanReads = true;
+    await pumpHub(tester, floorPlans: plans);
+    const banner = ValueKey('reserve-plan-unavailable');
+    expect(find.byKey(banner), findsOneWidget);
+    plans.failPlanReads = false;
     await tester.tap(find.descendant(
         of: find.byKey(banner), matching: find.text('Retry')));
     await tester.pumpAndSettle();

@@ -55,6 +55,7 @@ Future<FakeReservationRepository> pumpHub(
   List<int> openWeekdays = const [1, 2, 3, 4, 5, 6, 7],
   bool twoLevels = false,
   FakeReservationRepository? repo,
+  FakeFloorPlanRepository? floorPlans,
   Clock? clock,
   // #1183 — a test that is ABOUT the sideways layout starts there.
   Size size = const Size(800, 1400),
@@ -67,7 +68,7 @@ Future<FakeReservationRepository> pumpHub(
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = pixelRatio;
   addTearDown(tester.view.reset);
-  final plans = FakeFloorPlanRepository()..seedSmallPlan();
+  final plans = (floorPlans ?? FakeFloorPlanRepository())..seedSmallPlan();
   if (twoLevels) addSecondLevel(plans);
   final reservations = (repo ?? FakeReservationRepository())
     ..reservations.addAll(seed);
