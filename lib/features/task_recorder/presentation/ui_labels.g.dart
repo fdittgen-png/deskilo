@@ -833,9 +833,6 @@ Map<String, _Getter> _part1() => {
 
 Map<String, _Getter> _part2() => {
   'countryNameDK': (l) => l.countryNameDK,
-};
-
-Map<String, _Getter> _part2() => {
   'countryNameEE': (l) => l.countryNameEE,
   'countryNameES': (l) => l.countryNameES,
   'countryNameFI': (l) => l.countryNameFI,
@@ -1239,9 +1236,6 @@ Map<String, _Getter> _part2() => {
 
 Map<String, _Getter> _part3() => {
   'featureChangedMeanwhile': (l) => l.featureChangedMeanwhile,
-};
-
-Map<String, _Getter> _part3() => {
   'featureCoOwner': (l) => l.featureCoOwner,
   'featureCoOwnerDesc': (l) => l.featureCoOwnerDesc,
   'featureConfigurationTransfer': (l) => l.featureConfigurationTransfer,
@@ -1645,9 +1639,6 @@ Map<String, _Getter> _part3() => {
 
 Map<String, _Getter> _part4() => {
   'helpDotTooltip': (l) => l.helpDotTooltip,
-};
-
-Map<String, _Getter> _part4() => {
   'helpGuidedTasks': (l) => l.helpGuidedTasks,
   'helpHintAvailability': (l) => l.helpHintAvailability,
   'helpHintAvailabilityTip2': (l) => l.helpHintAvailabilityTip2,
@@ -2051,9 +2042,6 @@ Map<String, _Getter> _part4() => {
 
 Map<String, _Getter> _part5() => {
   'invoiceGapBuyerVatIdFormat': (l) => l.invoiceGapBuyerVatIdFormat,
-};
-
-Map<String, _Getter> _part5() => {
   'invoiceGapCreditNoteWithPayments': (l) => l.invoiceGapCreditNoteWithPayments,
   'invoiceGapMissingBuyerCountry': (l) => l.invoiceGapMissingBuyerCountry,
   'invoiceGapMissingBuyerVatId': (l) => l.invoiceGapMissingBuyerVatId,
@@ -2457,9 +2445,6 @@ Map<String, _Getter> _part5() => {
 
 Map<String, _Getter> _part6() => {
   'managedProfileCreated': (l) => l.managedProfileCreated,
-};
-
-Map<String, _Getter> _part6() => {
   'managedProfileEdit': (l) => l.managedProfileEdit,
   'managedProfileHandOver': (l) => l.managedProfileHandOver,
   'managedProfileHandOverHint': (l) => l.managedProfileHandOverHint,
@@ -2865,9 +2850,6 @@ Map<String, _Getter> _part7() => {
   'messengerHostsIntro': (l) => l.messengerHostsIntro,
   'messengerHostsNone': (l) => l.messengerHostsNone,
   'messengerInquiriesEmpty': (l) => l.messengerInquiriesEmpty,
-};
-
-Map<String, _Getter> _part7() => {
   'messengerInquiriesTitle': (l) => l.messengerInquiriesTitle,
   'messengerInquiryClose': (l) => l.messengerInquiryClose,
   'messengerInquiryClosed': (l) => l.messengerInquiryClosed,
@@ -3272,9 +3254,6 @@ Map<String, _Getter> _part8() => {
   'plansEditorTitle': (l) => l.plansEditorTitle,
   'plansEditorUnlimited': (l) => l.plansEditorUnlimited,
   'policyAdminCheckoutDesc': (l) => l.policyAdminCheckoutDesc,
-};
-
-Map<String, _Getter> _part8() => {
   'policyAdminCheckoutTitle': (l) => l.policyAdminCheckoutTitle,
   'policyAllowPastDesc': (l) => l.policyAllowPastDesc,
   'policyAllowPastTitle': (l) => l.policyAllowPastTitle,
@@ -3678,9 +3657,6 @@ Map<String, _Getter> _part9() => {
   'repartitionWizardWeight': (l) => l.repartitionWizardWeight,
   'repeatDaily': (l) => l.repeatDaily,
   'repeatNone': (l) => l.repeatNone,
-};
-
-Map<String, _Getter> _part9() => {
   'repeatWeekdays': (l) => l.repeatWeekdays,
   'repeatWeekly': (l) => l.repeatWeekly,
   'reportBadgesFooter': (l) => l.reportBadgesFooter,
@@ -4087,9 +4063,6 @@ Map<String, _Getter> _part10() => {
   'settingsFrontCameraDesc': (l) => l.settingsFrontCameraDesc,
   'settingsSectionAccount': (l) => l.settingsSectionAccount,
   'settingsSectionAdministration': (l) => l.settingsSectionAdministration,
-};
-
-Map<String, _Getter> _part10() => {
   'settingsSectionAdvanced': (l) => l.settingsSectionAdvanced,
   'settingsSectionGovernance': (l) => l.settingsSectionGovernance,
   'settingsSectionHelpAbout': (l) => l.settingsSectionHelpAbout,
@@ -4483,6 +4456,9 @@ Map<String, _Getter> _part10() => {
   'taskRecorderProtectedOperator': (l) => l.taskRecorderProtectedOperator,
   'taskRecorderProtectedPayment': (l) => l.taskRecorderProtectedPayment,
   'taskRecorderProtectedProvider': (l) => l.taskRecorderProtectedProvider,
+};
+
+Map<String, _Getter> _part11() => {
   'taskRecorderProtectedSecrets': (l) => l.taskRecorderProtectedSecrets,
   'taskRecorderPutBack': (l) => l.taskRecorderPutBack,
   'taskRecorderRecordATask': (l) => l.taskRecorderRecordATask,
@@ -4490,9 +4466,6 @@ Map<String, _Getter> _part10() => {
   'taskRecorderRecording': (l) => l.taskRecorderRecording,
   'taskRecorderResume': (l) => l.taskRecorderResume,
   'taskRecorderSaveFailed': (l) => l.taskRecorderSaveFailed,
-};
-
-Map<String, _Getter> _part11() => {
   'taskRecorderSaveNoPath': (l) => l.taskRecorderSaveNoPath,
   'taskRecorderSegmentGap': (l) => l.taskRecorderSegmentGap,
   'taskRecorderSignedOut': (l) => l.taskRecorderSignedOut,
@@ -4886,6 +4859,9 @@ Map<String, _Getter> _part11() => {
   'wizardTallyDecided': (l) => l.wizardTallyDecided,
   'wizardTallyIssued': (l) => l.wizardTallyIssued,
   'wizardTallyMatched': (l) => l.wizardTallyMatched,
+};
+
+Map<String, _Getter> _part12() => {
   'wizardTallyNothing': (l) => l.wizardTallyNothing,
   'wizardTallyRefunds': (l) => l.wizardTallyRefunds,
   'wizardTallyRegistered': (l) => l.wizardTallyRegistered,
@@ -4893,9 +4869,6 @@ Map<String, _Getter> _part11() => {
   'wizardTallySettled': (l) => l.wizardTallySettled,
   'wizardTallyShared': (l) => l.wizardTallyShared,
   'wizardTallyWriteoffs': (l) => l.wizardTallyWriteoffs,
-};
-
-Map<String, _Getter> _part12() => {
   'wizardTitle': (l) => l.wizardTitle,
   'wizardTodoHeading': (l) => l.wizardTodoHeading,
   'wizardTodoNone': (l) => l.wizardTodoNone,

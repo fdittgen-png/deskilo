@@ -528,6 +528,8 @@ const Set<String> uiKeys = {
   'emblem-preview',
   'emblem-remove',
   'entitlement-card',
+  'env-pill-dev',
+  'env-pill-prod',
   'erasure-preview',
   'eu-central-1',
   'eu-central-2',
