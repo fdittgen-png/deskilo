@@ -17579,6 +17579,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get themeTitle => 'Design';
 
   @override
+  String get threadRefsIn => 'Verweise in';
+
+  @override
   String get usageAsk => 'Die Zeit berechnen, in der ich da war';
 
   @override

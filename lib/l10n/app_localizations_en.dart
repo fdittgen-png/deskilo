@@ -17393,6 +17393,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeTitle => 'Theme';
 
   @override
+  String get threadRefsIn => 'References in';
+
+  @override
   String get usageAsk => 'Bill the time I was here';
 
   @override

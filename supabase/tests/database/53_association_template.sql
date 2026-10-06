@@ -145,6 +145,14 @@ select is(
   'carries a lexicon while the vocabulary is off, or role definitions '
   'while custom roles are off, carries what nobody can see');
 
+-- The dates below are the association's own first Monday (2026-10-05); the
+-- calendar has since moved past them, and a booking in the past is refused
+-- by default. The test is about WHICH rule answers, so the one about the
+-- past is switched off for this fixture.
+update public.workspaces
+   set booking_rules = booking_rules || '{"allow_past_bookings": true}'::jsonb
+ where id = pg_temp.ws();
+
 select lives_ok(
   format($$ select public.enforce_booking_rules(%L,
     '2026-10-05 07:00:00+02'::timestamptz, '2026-10-05 13:00:00+02'::timestamptz, false) $$,
@@ -254,6 +262,10 @@ select is(
 -- rather than being counted as a refused eleventh: the old version
 -- swallowed every exception, so ten bookings failing for some unrelated
 -- reason would have read as the carnet working.
+update public.workspaces
+   set booking_rules = booking_rules || '{"allow_past_bookings": true}'::jsonb
+ where id = pg_temp.ws();
+
 create or replace function pg_temp.book_ten_then_one_more()
 returns table (made int, refusal text)
 language plpgsql as $book$

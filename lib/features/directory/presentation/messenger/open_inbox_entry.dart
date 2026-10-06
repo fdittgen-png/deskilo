@@ -24,9 +24,22 @@ Future<void> openInboxEntry(
   final current = ref.read(currentWorkspaceProvider).value?.id;
   if (entry.kind == MessageContextKind.space &&
       !entry.isRemote &&
-      entry.workspaceId != null &&
-      entry.workspaceId == current) {
+      entry.workspaceId != null) {
+    // A conversation of one of my workspaces opens in that workspace's own
+    // thread — names, quotes, references to reservations, spaces and
+    // documents — so it works from the Me messenger exactly as it did in
+    // the workspace. The workspace is selected for the time the thread is
+    // open and the previous one restored after.
+    final previous = await ref.read(activeWorkspaceIdProvider.future);
+    if (entry.workspaceId != current) {
+      await ref.read(activeWorkspaceIdProvider.notifier).select(entry.workspaceId!);
+      await ref.read(currentWorkspaceProvider.future);
+    }
+    if (!context.mounted) return;
     await showConversationThread(context, ref, conversationId: entry.contextId);
+    if (previous != null && previous != entry.workspaceId) {
+      await ref.read(activeWorkspaceIdProvider.notifier).select(previous);
+    }
   } else {
     final l10n = AppLocalizations.of(context);
     final servers = ref.read(serverLabelsProvider).value ?? const {};

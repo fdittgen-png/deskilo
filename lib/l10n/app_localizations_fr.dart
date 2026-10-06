@@ -17585,6 +17585,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get themeTitle => 'Thème';
 
   @override
+  String get threadRefsIn => 'Références dans';
+
+  @override
   String get usageAsk => 'Facturer le temps où j\'étais là';
 
   @override
