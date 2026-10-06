@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../workspace/presentation/widgets/member_note_composer.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../providers/inbox_marks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/capture/capture_shield.dart';
@@ -66,6 +67,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   Timer? _refresh;
   String? _previousWorkspace;
   bool _switchedWorkspace = false;
+  bool _autoChosen = false;
 
   bool get _isInquiry => widget.kind.isInquiry;
 
@@ -399,8 +401,24 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   /// references speak about. A remote server's thread keeps the plain field.
   Widget _composer(AppLocalizations? l10n) {
     if (widget.source.isNotEmpty) return _plainComposer(l10n);
-    final workspaces = ref.watch(myWorkspacesProvider).value ?? const [];
+    final mine = ref.watch(myWorkspacesProvider).value ?? const [];
     final active = ref.watch(activeWorkspaceIdProvider).value;
+    // References only point at a workspace both people belong to (0381).
+    final peer = widget.peer;
+    final shared = peer == null || widget.kind.isInquiry
+        ? const <({String id, String name})>[]
+        : (ref.watch(sharedWorkspacesProvider(peer)).value ?? const []);
+    final sharedIds = {for (final w in shared) w.id};
+    final workspaces = [for (final w in mine) if (sharedIds.contains(w.id)) w];
+    final canRef = workspaces.isNotEmpty;
+    // The references speak about a workspace both belong to: when the
+    // selected one is not among them, take the first.
+    if (canRef && !workspaces.any((w) => w.id == active) && !_autoChosen) {
+      _autoChosen = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _chooseWorkspace(workspaces.first.id);
+      });
+    }
     return SafeArea(
       top: false,
       child: Column(
@@ -446,6 +464,9 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
             key: const ValueKey('context-composer'),
             compact: true,
             autofocus: false,
+            referencesAllowed: canRef,
+            referencesHint: l10n?.threadNoRefs ??
+                'References are only shared with people of the same workspace.',
             onSend: (body) async {
               _body.text = body;
               await _send();

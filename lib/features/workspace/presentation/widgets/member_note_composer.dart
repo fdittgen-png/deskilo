@@ -100,6 +100,23 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
     super.dispose();
   }
 
+  /// The send button, or a spinner while the message goes out.
+  Widget _sendControl(AppLocalizations? l10n) => _sending
+      ? const Padding(
+          padding: EdgeInsets.all(AppSpacing.sm),
+          child: SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        )
+      : IconButton.filled(
+          key: const ValueKey('member-note-send'),
+          icon: const Icon(Icons.send),
+          tooltip: l10n?.memberNoteSend ?? 'Send',
+          onPressed: _send,
+        );
+
   /// Inserts [token] at the caret (or the end), padded with spaces so
   /// the link never glues to a word.
   void _insert(String token) {
@@ -419,10 +436,11 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
           Row(children: [
             Tooltip(
               message: widget.referencesHint ?? '',
-              child: const IconButton(
-                key: ValueKey('composer-attach-locked'),
+              child: IconButton(
+                key: const ValueKey('composer-attach-locked'),
+                tooltip: widget.referencesHint,
                 onPressed: null,
-                icon: Icon(Icons.link_off),
+                icon: const Icon(Icons.link_off),
               ),
             ),
             Expanded(
@@ -431,21 +449,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
-            _sending
-                ? const Padding(
-                    padding: EdgeInsets.all(AppSpacing.sm),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  )
-                : IconButton.filled(
-                    key: const ValueKey('member-note-send'),
-                    icon: const Icon(Icons.send),
-                    tooltip: l10n?.memberNoteSend ?? 'Send',
-                    onPressed: _send,
-                  ),
+            _sendControl(l10n),
           ])
         else if (widget.compact)
           Row(children: [
@@ -492,21 +496,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
               ],
             ),
             const Spacer(),
-            _sending
-                ? const Padding(
-                    padding: EdgeInsets.all(AppSpacing.sm),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  )
-                : IconButton.filled(
-                    key: const ValueKey('member-note-send'),
-                    icon: const Icon(Icons.send),
-                    tooltip: l10n?.memberNoteSend ?? 'Send',
-                    onPressed: _send,
-                  ),
+            _sendControl(l10n),
           ])
         else
         // #523 — attach references: they read as links on the other
