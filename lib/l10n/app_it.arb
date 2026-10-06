@@ -10665,6 +10665,10 @@
   "themeLight": "Chiaro",
   "themeSystem": "Predefinito di sistema",
   "themeTitle": "Tema",
+  "threadNoRefs": "I riferimenti si condividono solo con persone dello stesso spazio.",
+  "@threadNoRefs": {
+    "description": "Me thread: why attaching references is unavailable"
+  },
   "usageAsk": "Fattura il tempo in cui c’ero",
   "usageAskExplain": "Hai prenotato {booked} e sei stato {present}. Chiedi che le {saved} non usate non siano fatturate. Decide qualcun altro, mai tu.",
   "usageAskSubmit": "Chiedi",

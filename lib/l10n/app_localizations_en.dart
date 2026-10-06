@@ -17300,6 +17300,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeTitle => 'Theme';
 
   @override
+  String get threadNoRefs =>
+      'References are only shared with people of the same workspace.';
+
+  @override
   String get usageAsk => 'Bill the time I was here';
 
   @override

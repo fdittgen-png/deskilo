@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/trace/trace_logger.dart';
+import 'messenger_providers.dart';
 
 class InboxMarksState {
   const InboxMarksState({this.pinned = const {}, this.archived = const {}});
@@ -73,3 +74,10 @@ class InboxMarks extends Notifier<InboxMarksState> {
 
 final inboxMarksProvider =
     NotifierProvider<InboxMarks, InboxMarksState>(InboxMarks.new);
+
+/// The workspaces I share with a person — where a conversation with them may
+/// carry references. Empty means no reference can be shared.
+final sharedWorkspacesProvider = FutureProvider.autoDispose
+    .family<List<({String id, String name})>, String>((ref, user) {
+  return ref.watch(messengerRepositoryProvider()).sharedWorkspaces(user);
+});

@@ -10665,6 +10665,10 @@
   "themeLight": "Clair",
   "themeSystem": "Par défaut du système",
   "themeTitle": "Thème",
+  "threadNoRefs": "Les références ne se partagent qu’avec des personnes du même espace.",
+  "@threadNoRefs": {
+    "description": "Me thread: why attaching references is unavailable"
+  },
   "usageAsk": "Facturer le temps où j'étais là",
   "usageAskExplain": "Vous avez réservé {booked} et vous êtes resté {present}. Demandez que les {saved} non utilisées cessent d'être facturées. Quelqu'un d'autre décide — jamais vous.",
   "usageAskSubmit": "Demander",

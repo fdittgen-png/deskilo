@@ -293,5 +293,9 @@
   "inboxMessengerDoor": "Meine Nachrichten öffnen",
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
+  },
+  "threadNoRefs": "Verweise werden nur mit Personen desselben Arbeitsbereichs geteilt.",
+  "@threadNoRefs": {
+    "description": "Me thread: why attaching references is unavailable"
   }
 }

@@ -37,6 +37,8 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
     this.onCancelQuote,
     this.onChanged,
     this.compact = false,
+    this.referencesAllowed = true,
+    this.referencesHint,
   });
 
   /// #821 — every keystroke, for the draft store.
@@ -45,6 +47,12 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
   /// #821 — the two reference chips folded into ONE attach menu beside
   /// the field, a counter as the limit nears, a spinner while sending.
   final bool compact;
+
+  /// Whether this conversation may carry references (0381): only when every
+  /// person in it belongs to the workspace the reference points at. When
+  /// false the attach controls are replaced by [referencesHint].
+  final bool referencesAllowed;
+  final String? referencesHint;
 
   /// Called with the trimmed body; returns true when it went out (the
   /// field then clears).
@@ -407,7 +415,39 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
           ),
           onSubmitted: (_) => _send(),
         ),
-        if (widget.compact)
+        if (!widget.referencesAllowed)
+          Row(children: [
+            Tooltip(
+              message: widget.referencesHint ?? '',
+              child: const IconButton(
+                key: ValueKey('composer-attach-locked'),
+                onPressed: null,
+                icon: Icon(Icons.link_off),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                widget.referencesHint ?? '',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+            _sending
+                ? const Padding(
+                    padding: EdgeInsets.all(AppSpacing.sm),
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  )
+                : IconButton.filled(
+                    key: const ValueKey('member-note-send'),
+                    icon: const Icon(Icons.send),
+                    tooltip: l10n?.memberNoteSend ?? 'Send',
+                    onPressed: _send,
+                  ),
+          ])
+        else if (widget.compact)
           Row(children: [
             PopupMenuButton<String>(
               key: const ValueKey('composer-attach'),

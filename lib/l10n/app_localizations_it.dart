@@ -17463,6 +17463,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get themeTitle => 'Tema';
 
   @override
+  String get threadNoRefs =>
+      'I riferimenti si condividono solo con persone dello stesso spazio.';
+
+  @override
   String get usageAsk => 'Fattura il tempo in cui c’ero';
 
   @override

@@ -263,4 +263,24 @@ void main() {
     expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsOneWidget);
     expect(find.byKey(const ValueKey('inbox-entry-c-space')), findsNothing);
   });
+
+  testWidgets('references need a workspace both people belong to: none in '
+      'common locks the attach menu, one in common opens it', (tester) async {
+    await pumpInbox(tester, home: home, remote: remote);
+    await tester.tap(find.byKey(const ValueKey('inbox-entry-c-ana')));
+    await tester.pumpAndSettle();
+    // no shared workspace with Ana: the attach control is locked
+    expect(find.byKey(const ValueKey('composer-attach-locked')), findsOneWidget);
+    expect(find.byKey(const ValueKey('composer-attach')), findsNothing);
+  });
+
+  testWidgets('with a shared workspace the attach menu is there',
+      (tester) async {
+    home.shared['ana'] = [(id: 'ws-1', name: 'Pézenas')];
+    await pumpInbox(tester, home: home, remote: remote);
+    await tester.tap(find.byKey(const ValueKey('inbox-entry-c-ana')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('composer-attach')), findsOneWidget);
+    expect(find.byKey(const ValueKey('composer-attach-locked')), findsNothing);
+  });
 }

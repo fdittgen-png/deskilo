@@ -11,6 +11,10 @@ abstract interface class MessengerRepository {
   /// `my_inbox`: every conversation I take part in on this server.
   Future<List<Map<String, dynamic>>> inbox();
 
+  /// The workspaces I share with [user] (both active members): where the
+  /// references of a conversation with them may point (0381).
+  Future<List<({String id, String name})>> sharedWorkspaces(String user);
+
   // ── inquiries ─────────────────────────────────────────────────────
   Future<List<HostRosterEntry>> hostRoster(String workspace);
   Future<String> startInquiry(String workspace, String body);

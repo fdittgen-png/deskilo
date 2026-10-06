@@ -17485,6 +17485,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get themeTitle => 'Design';
 
   @override
+  String get threadNoRefs =>
+      'Verweise werden nur mit Personen desselben Arbeitsbereichs geteilt.';
+
+  @override
   String get usageAsk => 'Die Zeit berechnen, in der ich da war';
 
   @override

@@ -19883,6 +19883,10 @@
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"
   },
+  "threadNoRefs": "References are only shared with people of the same workspace.",
+  "@threadNoRefs": {
+    "description": "Me thread: why attaching references is unavailable"
+  },
   "usageAsk": "Bill the time I was here",
   "@usageAsk": {
     "description": "#833 - action asking for the actual time to bill"

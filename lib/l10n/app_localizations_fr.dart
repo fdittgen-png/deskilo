@@ -17491,6 +17491,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get themeTitle => 'Thème';
 
   @override
+  String get threadNoRefs =>
+      'Les références ne se partagent qu’avec des personnes du même espace.';
+
+  @override
   String get usageAsk => 'Facturer le temps où j\'étais là';
 
   @override

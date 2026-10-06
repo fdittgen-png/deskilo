@@ -29924,6 +29924,12 @@ abstract class AppLocalizations {
   /// **'Theme'**
   String get themeTitle;
 
+  /// Me thread: why attaching references is unavailable
+  ///
+  /// In en, this message translates to:
+  /// **'References are only shared with people of the same workspace.'**
+  String get threadNoRefs;
+
   /// #833 - action asking for the actual time to bill
   ///
   /// In en, this message translates to:

@@ -21,6 +21,15 @@ class FakeMessengerRepository implements MessengerRepository {
   /// `my_inbox` rows.
   final inboxRows = <Map<String, dynamic>>[];
 
+  /// The workspaces shared with a person (0381), by user id.
+  final shared = <String, List<({String id, String name})>>{};
+
+  @override
+  Future<List<({String id, String name})>> sharedWorkspaces(String user) async {
+    _check();
+    return shared[user] ?? const [];
+  }
+
   /// Messages per `<context kind>|<context id>`, newest first.
   final threads = <String, List<ContextMessage>>{};
   final roster = <String, List<HostRosterEntry>>{};

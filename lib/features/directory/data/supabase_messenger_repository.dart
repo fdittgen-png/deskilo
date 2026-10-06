@@ -32,6 +32,12 @@ class SupabaseMessengerRepository implements MessengerRepository {
   Future<List<Map<String, dynamic>>> inbox() => _rows('my_inbox');
 
   @override
+  Future<List<({String id, String name})>> sharedWorkspaces(String user) async => [
+    for (final row in await _rows('shared_workspaces_with', {'p_user': user}))
+      (id: row['id'] as String, name: row['name'] as String? ?? ''),
+  ];
+
+  @override
   Future<List<HostRosterEntry>> hostRoster(String workspace) async => [
     for (final row in await _rows('space_host_roster', {
       'p_workspace': workspace,
