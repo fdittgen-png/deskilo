@@ -44,7 +44,7 @@ void main() {
     // Signing out the way the person does: Me › Me › Sign out.
     await tester.tap(find.byKey(const ValueKey('shell-back-to-me')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('me-tab-me')));
+    await tester.tap(find.byKey(const ValueKey('me-profile-settings')));
     await tester.pumpAndSettle();
     await tapIn(tester, 'me-account-list', find.byKey(const ValueKey('me-sign-out')));
     expect(router.state.uri.path, '/auth');

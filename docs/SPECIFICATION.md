@@ -21,11 +21,12 @@ This specification is deliberately free of implementation detail. The framework,
 
 ## 1. Vision & leitmotiv
 
-A free, privacy-first, open-source app for **small self-organized coworking communities** that today juggle spreadsheets, group chats, and trust. Every feature must serve at least one of three goals (the feature filter, tankstellen-style):
+A free, privacy-first, open-source app for **small self-organized coworking communities** that today juggle spreadsheets, group chats, and trust — and for the people who move between such spaces. Every feature must serve at least one of four goals (the feature filter, tankstellen-style):
 
 1. **Know where you can sit** — live floor plan, check-in/out, reservations.
 2. **Know what you owe / are owed** — subscription, extra usage, community expenses, one transparent ledger per member.
-3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data.
+3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, a backend a community hosts itself or shares on the reference deployment operated by Florian DITTGEN.
+4. **Belong to a network, not a silo** — one personal account across spaces, a shared directory to find them, private conversations, and visibility each person chooses.
 
 A proposal that serves none of these is pushed back on before any code is written.
 

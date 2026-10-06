@@ -28,3 +28,4 @@ body:
         - label: Know where you can sit (floor plan, check-in, reservations)
         - label: Know what you owe / are owed (ledger, billing, expenses)
         - label: Run the space without a landlord platform (roles, self-hosting, libre)
+        - label: Belong to a network, not a silo (one account across spaces, directory, private messages, chosen visibility)

@@ -14,6 +14,11 @@ abstract interface class MessengerRepository {
   /// `my_inbox`: every conversation I take part in on this server.
   Future<List<Map<String, dynamic>>> inbox();
 
+  // ── message requests (0388) ─────────────────────────────────────────
+  /// The first messages waiting for my answer.
+  Future<List<MessageRequest>> myMessageRequests();
+  Future<void> respondToMessageRequest(String conversation, {required bool accept});
+
   // ── blocks (0387) ───────────────────────────────────────────────────
   /// The accounts I blocked on this server.
   Future<List<BlockedAccount>> myBlocks();

@@ -271,6 +271,26 @@ class FakeMessengerRepository implements MessengerRepository {
   void _post(String key, ContextMessage message) =>
       (threads[key] ??= []).insert(0, message);
 
+  /// The requests waiting for an answer and the answers given (0388).
+  final requests = <MessageRequest>[];
+  final requestLog = <String>[];
+
+  @override
+  Future<List<MessageRequest>> myMessageRequests() async {
+    _check();
+    return List.of(requests);
+  }
+
+  @override
+  Future<void> respondToMessageRequest(
+    String conversation, {
+    required bool accept,
+  }) async {
+    _check();
+    requests.removeWhere((r) => r.conversationId == conversation);
+    requestLog.add('$conversation:${accept ? 'accept' : 'ignore'}');
+  }
+
   /// The accounts the person blocked (0387).
   final blocked = <String, String>{};
 

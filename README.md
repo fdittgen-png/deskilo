@@ -1,10 +1,21 @@
 # DesKilo
 
-**Bookings, memberships and shared finances for community-run coworking spaces.**
+**Bookings, memberships and shared finances for community-run coworking spaces — and a private-by-default social network around them.**
 
 DesKilo helps small coworking communities answer three everyday questions: **Where can I work? What do I owe? Who needs to approve this?** It connects a visual floor plan with membership allowances, member balances, shared expenses and approval workflows, so the people running the space can keep daily activity and its financial consequences together.
 
-Built for independent spaces, associations and member-run collectives that want control over their rules and data. Free software under the **AGPL-3.0-or-later**, with a Flutter app and a backend you can run on your own Supabase instance. Free for associations, collectives and individuals; a for-profit company that modifies it either publishes its changes or buys a [commercial licence](COMMERCIAL-LICENCE.md). Currently in **beta and active dogfooding**.
+Around the spaces there is a **person-centred layer**: one personal account (*Me*) that follows you across every space you belong to, a **shared directory** where spaces choose to publish a public page and people find them, and a **messenger** for private conversations with the people you share a space with — or reach through a request. You decide what others see of you, and nothing is public by default.
+
+Built for independent spaces, associations and member-run collectives that want control over their rules and data. Free software under the **AGPL-3.0-or-later**, with a Flutter app and a backend you can **run yourself** on your own Supabase instance, or **use as hosted** on the reference deployment operated by Florian DITTGEN, which also hosts the shared directory. Free for associations, collectives and individuals; a for-profit company that modifies it either publishes its changes or buys a [commercial licence](COMMERCIAL-LICENCE.md). Currently in **beta and active dogfooding**.
+
+## The leitmotiv
+
+Every feature serves at least one of four goals; a proposal that serves none is pushed back on before any code is written.
+
+1. **Know where you can sit** — live floor plan, check-in/out, reservations.
+2. **Know what you owe / are owed** — subscription, extra usage, community expenses, one transparent ledger per member.
+3. **Run the space without a landlord platform** — self-organized roles, libre software, a backend you can host yourself or share on the reference deployment, and data that stays portable.
+4. **Belong to a network, not a silo** — one personal account across spaces, a shared directory to find them, private conversations between people, and visibility that each person chooses and can withdraw.
 
 [![Quality checks](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml/badge.svg?branch=master)](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
@@ -35,10 +46,12 @@ Built for independent spaces, associations and member-run collectives that want 
 | **Share responsibility** | Roles, invitations, member confirmations and configurable approval quorums, with an event history of decisions. |
 | **Prepare documents** | Invoices and corrections, VAT configuration, PDF statements and reports, and customizable document layouts. |
 | **Run the space your way** | A floor-plan editor, workspace modules with declared dependencies, configuration import/export and multiple workspace profiles. |
+| **Be found, and find others** | A shared directory and map (Discover) where a space publishes a public page on purpose; one personal account (*Me*) across all your spaces, on this server and on servers you connect. |
+| **Talk to people, privately** | A messenger in *Me*: direct conversations, groups, references to bookings, spaces and invoices where both people belong, message requests from people outside your reach, a block list, and a visibility matrix that decides who sees your name, bio, contact details and presence. |
 
 For example, a member can reserve a desk, consume their allowance and see the resulting charges in their statement. When that member buys supplies for the space, an approved expense can credit their account. Administrators and members follow the same records and confirmation workflow.
 
-Additional modules include a members directory, messaging, QR/NFC check-in and kiosk workflows, local reminders and push notifications. Availability depends on the workspace's configuration, device capabilities and connected services.
+Additional modules include a members directory, QR/NFC check-in and kiosk workflows, business analytics, local reminders and push notifications. Availability depends on the workspace's configuration, device capabilities and connected services.
 
 **Languages:** English · Français · Deutsch · Español · Italiano. UI translations and bundled in-app help are maintained in these five languages.
 
@@ -65,15 +78,20 @@ Some capabilities need particular care when planning a pilot:
 
 Follow the [open issues](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen) and [latest quality-check runs](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml) for the current state of work and validation.
 
-## Your data and your instance
+## Your data, your instance — or the shared one
 
-DesKilo's schema, access policies, server functions and client code are in this repository. A community can use its own hosted Supabase project or operate Supabase itself, and point the app at that backend through **Settings → Advanced → Server**.
+DesKilo's schema, access policies, server functions and client code are in this repository. There are two ways to run it, and they can be combined:
+
+- **Self-hosted.** A community uses its own hosted Supabase project or operates Supabase itself, and points the app at that backend through **Settings → Advanced → Server**. Its workspaces, members and conversations live on that instance only.
+- **The reference deployment.** The app's default backend is operated by Florian DITTGEN. Spaces created there can optionally publish a page in the **shared directory** hosted on it, so that people looking for a space can find yours; publishing is an explicit owner action and can be withdrawn. A person who belongs to spaces on several servers can connect them and see them in one *Me*.
+
+On either, a person's profile fields (identity, about, contact channels, presence, reachability) are private by default and are shown only to the audience the person picks. A conversation's content is visible to its participants only — never to a space operator.
 
 The code includes workspace-scoped server permissions, personal-data export and deletion flows, and access-log features. Hosting location, access management, retention and backups depend on the operator's setup. These controls support privacy-conscious operation; compliance depends on how the instance is configured and used.
 
 Store builds use Firebase Cloud Messaging for push notifications. A separate [FOSS build path](docs/guides/fdroid.md) excludes Google services. See the [privacy policy](https://fdittgen-png.github.io/deskilo/privacy.html) for the project's published data-handling information.
 
-There is no software license fee. Hosting, payment processing and other external services may have their own costs.
+There is no software license fee. Hosting, payment processing and other external services may have their own costs. The shared directory on the reference deployment is run by one person on a best-effort basis: if you need guarantees about availability or data location, run your own instance.
 
 ## Run or develop your own deployment
 

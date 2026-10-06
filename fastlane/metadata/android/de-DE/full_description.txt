@@ -1,13 +1,19 @@
-DesKilo ist eine freie, datenschutzfreundliche App für kleine selbstorganisierte Coworking-Communities.
+DesKilo ist eine freie, kostenlose App für Coworking-Communities und die Menschen, die zwischen ihnen wechseln: Arbeitsplatzbuchung, ein transparentes Geldkonto — und ein standardmäßig privates soziales Netzwerk der Spaces.
 
-• Workspace auf einem Raster zeichnen: Etagen, Büros, Tische und buchbare Plätze
-• Auf dem Live-Plan einen Platz antippen und einchecken — konfliktsicher
-• Im Voraus reservieren, einmalig oder als Serie, mit Zeitregler für jeden Moment
-• Kalender der eigenen Buchungen; Admins sehen alle
-• Faire Finanzen: Tarife mit Halbtags-Kontingenten, ein transparentes Kontobuch pro Mitglied
-• Gemeinschaftsausgaben: Kaffee für den Space kaufen, Gutschrift auf der nächsten Abrechnung
-• Alles, was ein Admin für dich tut, braucht deine Bestätigung
+SPACES
+• Zeichnen Sie Ihren Space auf einem Raster: Etagen, Büros, Tische und buchbare Plätze
+• Tippen Sie auf dem Live-Plan einen Platz an, um einzuchecken; im Voraus buchen, einmalig oder als Serie
+• Kalender Ihrer Buchungen und Hinweise; Admins sehen alle
+• Mitgliedschaften, Kontingente, ein transparentes Konto pro Mitglied, Gemeinschaftsausgaben, Rechnungen
+• Alles, was ein Admin für Sie tut, braucht Ihre Bestätigung
 
-Keine Google-Dienste, kein Tracking, keine Werbung. Selbst hostbares Backend. AGPL-3.0-lizenziert (permissiv).
+SIE, ÜBER SPACES HINWEG
+• Ein persönliches Konto (Ich) für alle Ihre Spaces
+• Entdecken: ein gemeinsames Verzeichnis mit Karte, in dem Spaces bewusst eine öffentliche Seite veröffentlichen
+• Nachrichten: private Unterhaltungen und Gruppen, mit Verweisen auf Buchungen und Rechnungen, wenn Sie beide zum Space gehören
+• Anfragen von Personen außerhalb Ihres Kreises, eine Sperrliste und eine Sichtbarkeitsmatrix: Sie bestimmen, wer Ihren Namen, Ihr Profil, Ihre Kontaktdaten und Ihre Anwesenheit sieht
 
-DSGVO: Daten in der EU, kein Tracking, keine Analytik, Zugriff nach Rolle und serverseitig durchgesetzt. Deine Rechte sind Knöpfe unter Einstellungen → Datenschutz & Daten: wer deine Daten sehen kann, wer zugegriffen hat, Export, Löschung.
+IHRE DATEN, IHRE WAHL
+Betreiben Sie das Backend selbst auf Ihrer eigenen Supabase-Instanz oder nutzen Sie die Referenzinstallation von Florian DITTGEN, die auch das gemeinsame Verzeichnis hostet. Freie Software unter AGPL-3.0.
+
+DSGVO: Daten auf der Referenzinstallation in der EU, kein Tracking, keine Werbung, Zugriff nach Rolle und serverseitig durchgesetzt. Ihre Rechte sind Schaltflächen unter Einstellungen → Datenschutz & Daten: wer Ihre Daten sieht, wer zugegriffen hat, Export, Löschung. Push-Benachrichtigungen nutzen Firebase Cloud Messaging.
