@@ -6799,6 +6799,8 @@
   "@messageReadBy": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "messageRequestsHint": "Estas personas no están entre quienes elegiste para poder contactarte. No se les avisa de tu decisión.",
+  "messageRequestsTitle": "Solicitudes de mensaje",
   "messageSearchGroups": "Grupos",
   "@messageSearchGroups": {
     "description": "#687 - messaging search"
@@ -6915,6 +6917,7 @@
   "messengerRefusedClosed": "Esta consulta está cerrada.",
   "messengerRefusedForwardingOff": "Este espacio no permite reenviar sus mensajes.",
   "messengerRefusedLimit": "Demasiados a la vez. Espera un minuto.",
+  "messengerRefusedRequestPending": "Tu primer mensaje espera una respuesta.",
   "messengerRefusedTooLong": "Este mensaje es demasiado largo para esa conversación.",
   "messengerRefusedUnavailable": "Este espacio no acepta consultas ahora mismo.",
   "messengerStar": "Destacar",
@@ -9629,6 +9632,9 @@
   "@reportVisualAddLine": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "requestAccept": "Aceptar",
+  "requestBlock": "Bloquear",
+  "requestIgnore": "Ignorar",
   "reservationCalendarFileButton": "Guardar archivo de calendario",
   "@reservationCalendarFileButton": {
     "description": "#1643 calendar file: reservationCalendarFileButton"
@@ -10302,6 +10308,8 @@
   "spaceChipTooltip": "Cambiar de espacio",
   "spaceCodesDesc": "Una tarjeta QR imprimible por puesto, mesa, oficina y planta — los miembros la escanean para reservar o fichar.",
   "spaceCodesTitle": "Códigos QR de espacios (PDF)",
+  "spaceFavoriteAdd": "Añadir a favoritos",
+  "spaceFavoriteRemove": "Quitar de favoritos",
   "spaceKindDesk": "Mesa",
   "spaceKindLevel": "Planta",
   "spaceKindOffice": "Oficina",
@@ -10311,9 +10319,20 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Escribir a {name}",
+  "spaceMoveDown": "Bajar",
+  "spaceMoveUp": "Subir",
   "spaceNotBookable": "Este espacio no está configurado para reservas completas.",
   "spaceNotWholeBookable": "Este espacio no está configurado para reserva completa — el propietario activa \"Reservable como un todo\" en el editor.",
+  "spaceOptions": "Opciones de {name}",
+  "@spaceOptions": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "spaceQrSizeLabel": "Tamaño del código QR",
+  "spaceRatingClear": "Sin valoración",
   "spaceScanField": "Código",
   "spaceScanHint": "Apunta la cámara a la tarjeta de un puesto, mesa, oficina o planta — o escribe su código.",
   "spaceScanInvalid": "No es un código de espacio de este espacio de trabajo.",

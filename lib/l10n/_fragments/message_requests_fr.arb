@@ -1,0 +1,8 @@
+{
+  "messageRequestsTitle": "Demandes de message",
+  "messageRequestsHint": "Ces personnes sont hors de celles par lesquelles vous avez choisi d'être joignable. Elles ne sont pas informées de votre décision.",
+  "requestAccept": "Accepter",
+  "requestIgnore": "Ignorer",
+  "requestBlock": "Bloquer",
+  "messengerRefusedRequestPending": "Votre premier message attend une réponse."
+}

@@ -11015,6 +11015,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get messageReadBy => 'Letto da';
 
   @override
+  String get messageRequestsHint =>
+      'Queste persone non rientrano tra quelle da cui hai scelto di essere raggiungibile. Non vengono informate della tua decisione.';
+
+  @override
+  String get messageRequestsTitle => 'Richieste di messaggio';
+
+  @override
   String get messageSearchGroups => 'Gruppi';
 
   @override
@@ -11248,6 +11255,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get messengerRefusedLimit => 'Troppi in una volta. Attendi un minuto.';
+
+  @override
+  String get messengerRefusedRequestPending =>
+      'Il tuo primo messaggio attende una risposta.';
 
   @override
   String get messengerRefusedTooLong =>
@@ -15067,6 +15078,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportVisualAddLine => 'Aggiungi riga';
 
   @override
+  String get requestAccept => 'Accetta';
+
+  @override
+  String get requestBlock => 'Blocca';
+
+  @override
+  String get requestIgnore => 'Ignora';
+
+  @override
   String get reservationCalendarFileButton => 'Salva file calendario';
 
   @override
@@ -15905,6 +15925,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get spaceCodesTitle => 'Codici QR degli spazi (PDF)';
 
   @override
+  String get spaceFavoriteAdd => 'Aggiungi ai preferiti';
+
+  @override
+  String get spaceFavoriteRemove => 'Rimuovi dai preferiti';
+
+  @override
   String get spaceKindDesk => 'Tavolo';
 
   @override
@@ -15925,6 +15951,12 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get spaceMoveDown => 'Sposta giù';
+
+  @override
+  String get spaceMoveUp => 'Sposta su';
+
+  @override
   String get spaceNotBookable =>
       'Questo spazio non è configurato per le prenotazioni intere.';
 
@@ -15933,7 +15965,15 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo spazio non è configurato per la prenotazione intera — il proprietario attiva \"Prenotabile per intero\" nell\'editor.';
 
   @override
+  String spaceOptions(String name) {
+    return 'Opzioni di $name';
+  }
+
+  @override
   String get spaceQrSizeLabel => 'Dimensione del codice QR';
+
+  @override
+  String get spaceRatingClear => 'Nessuna valutazione';
 
   @override
   String get spaceScanField => 'Codice';

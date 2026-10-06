@@ -7,7 +7,7 @@
 -- preview answer to the same audiences; the legacy availability switch
 -- still reads and writes reachability; nothing is readable directly.
 begin;
-select plan(35);
+select plan(36);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000001823'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -60,7 +60,9 @@ select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-00000018
 select ok(not (public.visible_account('00000000-0000-4000-8000-0000001823a1') ? 'identity'),'a stranger does not see a name kept for my spaces');
 select ok(not (public.visible_account('00000000-0000-4000-8000-0000001823a1')->>'can_message')::boolean,'a stranger may not start a conversation');
 select is(jsonb_array_length(public.search_available_accounts('Visa1')),0,'a stranger does not find the account');
-select throws_ok($$select public.send_account_message('00000000-0000-4000-8000-0000001823a1','Hi','00000000-0000-4000-8000-0000001823a3')$$,'P0001','recipient unavailable','a stranger cannot write first');
+-- 0388: outside the reachability the first message is held as a request, one only.
+select lives_ok($$select public.send_account_message('00000000-0000-4000-8000-0000001823a1','Hi','00000000-0000-4000-8000-0000001823a3')$$,'a stranger first message is held as a request');
+select throws_ok($$select public.send_account_message('00000000-0000-4000-8000-0000001823a1','Hi again','00000000-0000-4000-8000-0000001823a3')$$,'P0001','request pending','a second message waits for the answer');
 select is(jsonb_array_length(public.search_available_accounts('Visa5')),1,'the legacy available switch still means anyone signed in');
 
 -- a1 widens some fields and narrows another.

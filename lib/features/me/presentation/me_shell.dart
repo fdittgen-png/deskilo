@@ -156,7 +156,9 @@ class _MeShellState extends ConsumerState<MeShell> {
                   children: [
                     ListTile(
                       leading: const PersonalAvatar(radius: 20),
-                      title: Text('${l10n?.appTitle ?? 'DesKilo'} · ${l10n?.meTabMe ?? 'Me'}'),
+                      title: Text(
+                        '${l10n?.appTitle ?? 'DesKilo'} · ${l10n?.meTabMe ?? 'Me'}',
+                      ),
                     ),
                     const Divider(),
                     for (final tab in MeTab.values) ...[
@@ -174,18 +176,18 @@ class _MeShellState extends ConsumerState<MeShell> {
                             context.push(taskWizardRoute);
                           },
                         ),
-                      ListTile(
-                        key: ValueKey('me-tab-${tab.wire}'),
-                        leading: tab == MeTab.me
-                            ? const PersonalAvatar()
-                            : Icon(icons[tab.index]),
-                        title: Text(labels[tab.index]),
-                        selected: _tab == tab,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          _show(tab);
-                        },
-                      ),
+                      // Me is the profile button at the top right already.
+                      if (tab != MeTab.me)
+                        ListTile(
+                          key: ValueKey('me-tab-${tab.wire}'),
+                          leading: Icon(icons[tab.index]),
+                          title: Text(labels[tab.index]),
+                          selected: _tab == tab,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            _show(tab);
+                          },
+                        ),
                     ],
                   ],
                 ),

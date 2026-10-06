@@ -18780,6 +18780,18 @@ abstract class AppLocalizations {
   /// **'Read by'**
   String get messageReadBy;
 
+  /// No description provided for @messageRequestsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'These people are outside the ones you chose to be reachable by. They are not told what you decide.'**
+  String get messageRequestsHint;
+
+  /// No description provided for @messageRequestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Message requests'**
+  String get messageRequestsTitle;
+
   /// #687 - messaging search
   ///
   /// In en, this message translates to:
@@ -19151,6 +19163,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Too many at once. Please wait a minute.'**
   String get messengerRefusedLimit;
+
+  /// No description provided for @messengerRefusedRequestPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first message is waiting for an answer.'**
+  String get messengerRefusedRequestPending;
 
   /// Refusal: the message is longer than the target conversation allows (#1824)
   ///
@@ -25850,6 +25868,24 @@ abstract class AppLocalizations {
   /// **'Add line'**
   String get reportVisualAddLine;
 
+  /// No description provided for @requestAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get requestAccept;
+
+  /// No description provided for @requestBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get requestBlock;
+
+  /// No description provided for @requestIgnore.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignore'**
+  String get requestIgnore;
+
   /// #1643 calendar file: reservationCalendarFileButton
   ///
   /// In en, this message translates to:
@@ -27284,6 +27320,18 @@ abstract class AppLocalizations {
   /// **'Space QR codes (PDF)'**
   String get spaceCodesTitle;
 
+  /// No description provided for @spaceFavoriteAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get spaceFavoriteAdd;
+
+  /// No description provided for @spaceFavoriteRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get spaceFavoriteRemove;
+
   /// Kind label on a desk's printed QR card
   ///
   /// In en, this message translates to:
@@ -27320,6 +27368,18 @@ abstract class AppLocalizations {
   /// **'Message {name}'**
   String spaceMessageReserver(String name);
 
+  /// No description provided for @spaceMoveDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get spaceMoveDown;
+
+  /// No description provided for @spaceMoveUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get spaceMoveUp;
+
   /// Space sheet explainer when the office/level is not bookable or the feature is off
   ///
   /// In en, this message translates to:
@@ -27332,11 +27392,23 @@ abstract class AppLocalizations {
   /// **'This space is not set up for whole booking — the owner enables \"Bookable as a whole\" on it in the editor.'**
   String get spaceNotWholeBookable;
 
+  /// No description provided for @spaceOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Options for {name}'**
+  String spaceOptions(String name);
+
   /// No description provided for @spaceQrSizeLabel.
   ///
   /// In en, this message translates to:
   /// **'QR code size'**
   String get spaceQrSizeLabel;
+
+  /// No description provided for @spaceRatingClear.
+  ///
+  /// In en, this message translates to:
+  /// **'No rating'**
+  String get spaceRatingClear;
 
   /// Label of the typed space-code input
   ///

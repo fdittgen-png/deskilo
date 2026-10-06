@@ -11021,6 +11021,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get messageReadBy => 'Gelesen von';
 
   @override
+  String get messageRequestsHint =>
+      'Diese Personen gehören nicht zu denen, von denen Sie erreichbar sein wollten. Sie erfahren Ihre Entscheidung nicht.';
+
+  @override
+  String get messageRequestsTitle => 'Nachrichtenanfragen';
+
+  @override
   String get messageSearchGroups => 'Gruppen';
 
   @override
@@ -11255,6 +11262,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get messengerRefusedLimit =>
       'Zu viele auf einmal. Bitte eine Minute warten.';
+
+  @override
+  String get messengerRefusedRequestPending =>
+      'Ihre erste Nachricht wartet auf eine Antwort.';
 
   @override
   String get messengerRefusedTooLong =>
@@ -15084,6 +15095,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportVisualAddLine => 'Zeile hinzufügen';
 
   @override
+  String get requestAccept => 'Annehmen';
+
+  @override
+  String get requestBlock => 'Blockieren';
+
+  @override
+  String get requestIgnore => 'Ignorieren';
+
+  @override
   String get reservationCalendarFileButton => 'Kalenderdatei speichern';
 
   @override
@@ -15925,6 +15945,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spaceCodesTitle => 'Raum-QR-Codes (PDF)';
 
   @override
+  String get spaceFavoriteAdd => 'Zu den Favoriten hinzufügen';
+
+  @override
+  String get spaceFavoriteRemove => 'Aus den Favoriten entfernen';
+
+  @override
   String get spaceKindDesk => 'Tisch';
 
   @override
@@ -15945,6 +15971,12 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get spaceMoveDown => 'Nach unten';
+
+  @override
+  String get spaceMoveUp => 'Nach oben';
+
+  @override
   String get spaceNotBookable =>
       'Dieser Raum ist nicht für Ganzraum-Reservierungen eingerichtet.';
 
@@ -15953,7 +15985,15 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Bereich ist nicht für Ganzbuchung eingerichtet — die Inhaberin aktiviert dafür „Als Ganzes buchbar“ im Editor.';
 
   @override
+  String spaceOptions(String name) {
+    return 'Optionen für $name';
+  }
+
+  @override
   String get spaceQrSizeLabel => 'Größe des QR-Codes';
+
+  @override
+  String get spaceRatingClear => 'Keine Bewertung';
 
   @override
   String get spaceScanField => 'Code';

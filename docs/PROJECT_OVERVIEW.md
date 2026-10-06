@@ -32,7 +32,7 @@ This is a *derived* document: it consolidates what is spread across `README.md`,
 
 ## 1. What DesKilo is
 
-A free, privacy-first coworking community app: **visual desk booking plus the community money layer**, mobile-first and libre. It is the sibling of [Sparkilo/tankstellen](https://github.com/fdittgen-png/tankstellen) and inherits that project's stack, conventions, and CI toolchain nearly 1:1.
+A free, privacy-first coworking community app: **visual desk booking, the community money layer and a private-by-default social network of spaces**, mobile-first and libre — self-hostable, or used on the reference deployment (and its shared directory) operated by Florian DITTGEN. It is the sibling of [Sparkilo/tankstellen](https://github.com/fdittgen-png/tankstellen) and inherits that project's stack, conventions, and CI toolchain nearly 1:1.
 
 **Repository:** `github.com/fdittgen-png/deskilo` (public, created 2026-07-07)
 **Application ID / bundle ID:** `de.deskilo.app`
@@ -41,11 +41,12 @@ A free, privacy-first coworking community app: **visual desk booking plus the co
 
 ### The leitmotiv
 
-Every feature must serve at least one of three goals. A proposal serving none is pushed back on before any code is written — the feature-request issue template makes this a required checkbox.
+Every feature must serve at least one of four goals. A proposal serving none is pushed back on before any code is written — the feature-request issue template makes this a required checkbox.
 
 1. **Know where you can sit** — live floor plan, check-in/out, reservations.
 2. **Know what you owe / are owed** — subscription, extra usage, community expenses, one transparent ledger per member.
-3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data.
+3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, a backend a community hosts itself or shares on the reference deployment operated by Florian DITTGEN.
+4. **Belong to a network, not a silo** — one personal account across spaces, a shared directory to find them, private conversations, and visibility each person chooses (ADR 0034, `docs/design/MESSENGER_VISIBILITY.md`).
 
 ### Market position
 

@@ -6799,6 +6799,8 @@
   "@messageReadBy": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "messageRequestsHint": "Ces personnes sont hors de celles par lesquelles vous avez choisi d'être joignable. Elles ne sont pas informées de votre décision.",
+  "messageRequestsTitle": "Demandes de message",
   "messageSearchGroups": "Groupes",
   "@messageSearchGroups": {
     "description": "#687 - messaging search"
@@ -6915,6 +6917,7 @@
   "messengerRefusedClosed": "Cette demande est close.",
   "messengerRefusedForwardingOff": "Cet espace n’autorise pas le transfert de ses messages.",
   "messengerRefusedLimit": "Trop d’un coup. Veuillez patienter une minute.",
+  "messengerRefusedRequestPending": "Votre premier message attend une réponse.",
   "messengerRefusedTooLong": "Ce message est trop long pour cette conversation.",
   "messengerRefusedUnavailable": "Cet espace n’accepte pas de demandes pour le moment.",
   "messengerStar": "Mettre en favori",
@@ -9629,6 +9632,9 @@
   "@reportVisualAddLine": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "requestAccept": "Accepter",
+  "requestBlock": "Bloquer",
+  "requestIgnore": "Ignorer",
   "reservationCalendarFileButton": "Enregistrer le fichier calendrier",
   "@reservationCalendarFileButton": {
     "description": "#1643 calendar file: reservationCalendarFileButton"
@@ -10302,6 +10308,8 @@
   "spaceChipTooltip": "Changer d'espace",
   "spaceCodesDesc": "Une carte QR imprimable par poste, table, bureau et niveau — les membres la scannent pour réserver ou pointer.",
   "spaceCodesTitle": "Codes QR des espaces (PDF)",
+  "spaceFavoriteAdd": "Ajouter aux favoris",
+  "spaceFavoriteRemove": "Retirer des favoris",
   "spaceKindDesk": "Table",
   "spaceKindLevel": "Niveau",
   "spaceKindOffice": "Bureau",
@@ -10311,9 +10319,20 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Écrire à {name}",
+  "spaceMoveDown": "Descendre",
+  "spaceMoveUp": "Monter",
   "spaceNotBookable": "Cet espace n'est pas configuré pour les réservations entières.",
   "spaceNotWholeBookable": "Cet espace n'est pas configuré pour la réservation entière — le propriétaire active « Réservable en entier » dessus dans l'éditeur.",
+  "spaceOptions": "Options pour {name}",
+  "@spaceOptions": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "spaceQrSizeLabel": "Taille du code QR",
+  "spaceRatingClear": "Aucune note",
   "spaceScanField": "Code",
   "spaceScanHint": "Visez la carte d'un poste, d'une table, d'un bureau ou d'un niveau — ou saisissez son code.",
   "spaceScanInvalid": "Ce n'est pas un code d'espace de cet espace de travail.",

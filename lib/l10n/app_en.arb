@@ -12594,6 +12594,8 @@
   "@messageReadBy": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "messageRequestsHint": "These people are outside the ones you chose to be reachable by. They are not told what you decide.",
+  "messageRequestsTitle": "Message requests",
   "messageSearchGroups": "Groups",
   "@messageSearchGroups": {
     "description": "#687 - messaging search"
@@ -12952,6 +12954,7 @@
   "@messengerRefusedLimit": {
     "description": "Refusal: too many forwards or messages in a short time (#1824)"
   },
+  "messengerRefusedRequestPending": "Your first message is waiting for an answer.",
   "messengerRefusedTooLong": "This message is too long for that conversation.",
   "@messengerRefusedTooLong": {
     "description": "Refusal: the message is longer than the target conversation allows (#1824)"
@@ -17110,6 +17113,9 @@
   "@reportVisualAddLine": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "requestAccept": "Accept",
+  "requestBlock": "Block",
+  "requestIgnore": "Ignore",
   "reservationCalendarFileButton": "Save calendar file",
   "@reservationCalendarFileButton": {
     "description": "#1643 calendar file: reservationCalendarFileButton"
@@ -17987,6 +17993,8 @@
   "@spaceCodesTitle": {
     "description": "Workspace-settings tile printing the per-space QR sheet"
   },
+  "spaceFavoriteAdd": "Add to favorites",
+  "spaceFavoriteRemove": "Remove from favorites",
   "spaceKindDesk": "Desk",
   "@spaceKindDesk": {
     "description": "Kind label on a desk's printed QR card"
@@ -18016,6 +18024,8 @@
       }
     }
   },
+  "spaceMoveDown": "Move down",
+  "spaceMoveUp": "Move up",
   "spaceNotBookable": "This space is not set up for whole-space reservations.",
   "@spaceNotBookable": {
     "description": "Space sheet explainer when the office/level is not bookable or the feature is off"
@@ -18024,7 +18034,16 @@
   "@spaceNotWholeBookable": {
     "description": "Refusal when a desk/office/level lacks the bookable-as-a-whole toggle (#412)"
   },
+  "spaceOptions": "Options for {name}",
+  "@spaceOptions": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "spaceQrSizeLabel": "QR code size",
+  "spaceRatingClear": "No rating",
   "spaceScanField": "Code",
   "@spaceScanField": {
     "description": "Label of the typed space-code input"

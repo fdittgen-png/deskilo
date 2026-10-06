@@ -124,7 +124,8 @@ void main() {
       );
       expect(tester.getCenter(find.text('DEV')).dy,
           tester.getCenter(find.text('PROD')).dy);
-      expect(tester.getSize(group).height, lessThan(120));
+      // The row keeps one line of identity beside a 48dp options button.
+      expect(tester.getSize(group).height, lessThan(128));
       // Production is the wide green button on the left, development the
       // narrow orange one at the right.
       final prod = find.byKey(const ValueKey('me-space-ws-2'));
@@ -203,7 +204,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(MeMessagesTab), findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('me-tab-me')));
+    await tester.tap(find.byKey(const ValueKey('me-profile-settings')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('me-visibility-card')), findsOneWidget);
 

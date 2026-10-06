@@ -25,6 +25,9 @@ String refusalText(AppLocalizations? l10n, MessengerRefusal refusal) =>
       MessengerRefusal.unavailable =>
         l10n?.messengerRefusedUnavailable ??
             'This space does not take inquiries right now.',
+      MessengerRefusal.requestPending =>
+        l10n?.messengerRefusedRequestPending ??
+            'Your first message is waiting for an answer.',
       MessengerRefusal.limit =>
         l10n?.messengerRefusedLimit ??
             'Too many at once. Please wait a minute.',
