@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/time/clock.dart';
@@ -45,12 +44,10 @@ class BiScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final modules = ref.watch(platformIsWebProvider)
-        ? visibleBiModules(
-            ref.watch(enabledFeaturesSyncProvider),
-            ref.watch(myPermissionsProvider),
-          )
-        : const <BiModule>[];
+    final modules = visibleBiModules(
+      ref.watch(enabledFeaturesSyncProvider),
+      ref.watch(myPermissionsProvider),
+    );
     final params = GoRouterState.of(context).uri.queryParameters;
     // #1923 C — `saved` names the open view (or `standard`); the rest is
     // the analysis itself.

@@ -148,11 +148,10 @@ List<BiModule> visibleBiModules(
       m,
 ];
 
-/// Whether the BI area exists for this reader on this platform: the web
-/// build only (a native app with the menu chosen is not the web), and at
-/// least one module.
+/// Whether the BI area exists for this reader: at least one module they may
+/// see. It is on every platform — the Android app had it, and it must stay
+/// reachable there (the web-only rule of #1923 is lifted).
 bool biAvailable({
-  required bool platformIsWeb,
   required Set<WorkspaceFeature> features,
   required Set<WorkspacePermission> permissions,
-}) => platformIsWeb && visibleBiModules(features, permissions).isNotEmpty;
+}) => visibleBiModules(features, permissions).isNotEmpty;
