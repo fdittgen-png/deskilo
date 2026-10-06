@@ -16684,7 +16684,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskExportValueNo => 'no';
 
   @override
+  String get taskExportValueOff => 'desactivado';
+
+  @override
   String get taskExportValueOffline => 'sin conexión';
+
+  @override
+  String get taskExportValueOn => 'activado';
 
   @override
   String get taskExportValueOnce => 'una vez';
@@ -16715,6 +16721,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskExportValueQuota => 'una cuota';
+
+  @override
+  String taskExportValueRedacted(int length) {
+    return 'no guardado ($length caracteres)';
+  }
 
   @override
   String get taskExportValueRoom => 'una sala';
@@ -16953,6 +16964,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskRecorderAddNote => 'Añadir una nota';
 
   @override
+  String get taskRecorderCaptureValues =>
+      'Capturar valores (para informes de problemas)';
+
+  @override
+  String get taskRecorderCaptureValuesHint =>
+      'También guarda lo que escribes y eliges — texto, números, fechas, interruptores — para que un desarrollador pueda reproducir el problema con el archivo. Nunca se guardan contraseñas, datos de pago, correos electrónicos, teléfonos ni otros datos de contacto personales. Comparte el archivo solo con quien deba ver lo que introdujiste.';
+
+  @override
   String get taskRecorderCompletenessComplete => 'Completa';
 
   @override
@@ -17009,6 +17028,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskRecorderExportPreview => 'Lo que contendrá el archivo';
+
+  @override
+  String get taskRecorderExportValuesBody =>
+      'Contiene lo que se escribió y eligió durante la grabación. Revísala antes de compartirla y compártela solo con quien deba verlo.';
+
+  @override
+  String get taskRecorderExportValuesConfirm => 'Guardar de todos modos';
+
+  @override
+  String get taskRecorderExportValuesTitle => 'Esta grabación contiene valores';
 
   @override
   String get taskRecorderFieldAccessories => 'accesorios';
@@ -17384,6 +17413,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taskRecorderValueWithheld => 'no grabado';
+
+  @override
+  String get taskRecorderValuesOn => 'Se están capturando valores';
 
   @override
   String get taskWizardAddGuide => 'Añadir una guía';

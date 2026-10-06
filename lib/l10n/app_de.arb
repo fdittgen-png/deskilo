@@ -10613,7 +10613,9 @@
   "taskExportValueList": "Liste",
   "taskExportValueMorning": "Vormittag",
   "taskExportValueNo": "nein",
+  "taskExportValueOff": "aus",
   "taskExportValueOffline": "keine Verbindung",
+  "taskExportValueOn": "an",
   "taskExportValueOnce": "einmalig",
   "taskExportValueOtherMember": "ein anderes Mitglied",
   "taskExportValueOtherPlace": "eine andere Art von Platz",
@@ -10624,6 +10626,14 @@
   "taskExportValuePlan": "Raumplan",
   "taskExportValuePolicy": "eine Buchungsregel",
   "taskExportValueQuota": "ein Kontingent",
+  "taskExportValueRedacted": "nicht gespeichert ({length} Zeichen)",
+  "@taskExportValueRedacted": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
   "taskExportValueRoom": "ein Raum",
   "taskExportValueSelf": "ich selbst",
   "taskExportValueSeries": "als Serie",
@@ -10695,6 +10705,8 @@
   "taskRecorderActionUiTap": "Getippt",
   "taskRecorderActionViewDetails": "Die Reservierung geöffnet",
   "taskRecorderAddNote": "Notiz hinzufügen",
+  "taskRecorderCaptureValues": "Werte erfassen (für Fehlerberichte)",
+  "taskRecorderCaptureValuesHint": "Behält zusätzlich, was du eingibst und auswählst — Text, Zahlen, Daten, Schalter —, damit ein Entwickler das Problem anhand der Datei nachstellen kann. Passwörter, Zahlungsdaten, E-Mail-Adressen, Telefonnummern und andere persönliche Kontaktdaten werden nie gespeichert. Gib die Datei nur an Personen weiter, die sehen dürfen, was du eingegeben hast.",
   "taskRecorderCompletenessComplete": "Vollständig",
   "taskRecorderCompletenessInterrupted": "Unterbrochen",
   "taskRecorderCompletenessPartial": "Unvollständig",
@@ -10712,6 +10724,9 @@
   "taskRecorderExport": "Datei exportieren",
   "taskRecorderExportPackage": "Aufgabenpaket exportieren",
   "taskRecorderExportPreview": "Was die Datei enthalten wird",
+  "taskRecorderExportValuesBody": "Sie enthält, was während der Aufnahme eingegeben und ausgewählt wurde. Prüfe sie vor dem Teilen und gib sie nur an Personen weiter, die das sehen dürfen.",
+  "taskRecorderExportValuesConfirm": "Trotzdem speichern",
+  "taskRecorderExportValuesTitle": "Diese Aufnahme enthält Werte",
   "taskRecorderFieldAccessories": "Zubehör",
   "taskRecorderFieldCheckIn": "Check-in",
   "taskRecorderFieldForWhom": "für wen",
@@ -10831,6 +10846,7 @@
   "taskRecorderValueTomorrow": "morgen",
   "taskRecorderValueWeek": "Woche",
   "taskRecorderValueWithheld": "nicht aufgezeichnet",
+  "taskRecorderValuesOn": "Werte werden erfasst",
   "taskWizardAddGuide": "Anleitung hinzufügen",
   "@taskWizardAddGuide": {
     "description": "Task wizard: taskWizardAddGuide"

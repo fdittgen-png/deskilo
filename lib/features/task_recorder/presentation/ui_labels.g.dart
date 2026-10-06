@@ -4319,7 +4319,9 @@ Map<String, _Getter> _part10() => {
   'taskExportValueList': (l) => l.taskExportValueList,
   'taskExportValueMorning': (l) => l.taskExportValueMorning,
   'taskExportValueNo': (l) => l.taskExportValueNo,
+  'taskExportValueOff': (l) => l.taskExportValueOff,
   'taskExportValueOffline': (l) => l.taskExportValueOffline,
+  'taskExportValueOn': (l) => l.taskExportValueOn,
   'taskExportValueOnce': (l) => l.taskExportValueOnce,
   'taskExportValueOtherMember': (l) => l.taskExportValueOtherMember,
   'taskExportValueOtherPlace': (l) => l.taskExportValueOtherPlace,
@@ -4398,6 +4400,8 @@ Map<String, _Getter> _part10() => {
   'taskRecorderActionUiTap': (l) => l.taskRecorderActionUiTap,
   'taskRecorderActionViewDetails': (l) => l.taskRecorderActionViewDetails,
   'taskRecorderAddNote': (l) => l.taskRecorderAddNote,
+  'taskRecorderCaptureValues': (l) => l.taskRecorderCaptureValues,
+  'taskRecorderCaptureValuesHint': (l) => l.taskRecorderCaptureValuesHint,
   'taskRecorderCompletenessComplete': (l) => l.taskRecorderCompletenessComplete,
   'taskRecorderCompletenessInterrupted': (l) => l.taskRecorderCompletenessInterrupted,
   'taskRecorderCompletenessPartial': (l) => l.taskRecorderCompletenessPartial,
@@ -4414,6 +4418,9 @@ Map<String, _Getter> _part10() => {
   'taskRecorderExport': (l) => l.taskRecorderExport,
   'taskRecorderExportPackage': (l) => l.taskRecorderExportPackage,
   'taskRecorderExportPreview': (l) => l.taskRecorderExportPreview,
+  'taskRecorderExportValuesBody': (l) => l.taskRecorderExportValuesBody,
+  'taskRecorderExportValuesConfirm': (l) => l.taskRecorderExportValuesConfirm,
+  'taskRecorderExportValuesTitle': (l) => l.taskRecorderExportValuesTitle,
   'taskRecorderFieldAccessories': (l) => l.taskRecorderFieldAccessories,
   'taskRecorderFieldCheckIn': (l) => l.taskRecorderFieldCheckIn,
   'taskRecorderFieldForWhom': (l) => l.taskRecorderFieldForWhom,
@@ -4449,6 +4456,9 @@ Map<String, _Getter> _part10() => {
   'taskRecorderProtectedPayment': (l) => l.taskRecorderProtectedPayment,
   'taskRecorderProtectedProvider': (l) => l.taskRecorderProtectedProvider,
   'taskRecorderProtectedSecrets': (l) => l.taskRecorderProtectedSecrets,
+};
+
+Map<String, _Getter> _part11() => {
   'taskRecorderPutBack': (l) => l.taskRecorderPutBack,
   'taskRecorderRecordATask': (l) => l.taskRecorderRecordATask,
   'taskRecorderRecordThisTask': (l) => l.taskRecorderRecordThisTask,
@@ -4456,9 +4466,6 @@ Map<String, _Getter> _part10() => {
   'taskRecorderResume': (l) => l.taskRecorderResume,
   'taskRecorderSaveFailed': (l) => l.taskRecorderSaveFailed,
   'taskRecorderSaveNoPath': (l) => l.taskRecorderSaveNoPath,
-};
-
-Map<String, _Getter> _part11() => {
   'taskRecorderSegmentGap': (l) => l.taskRecorderSegmentGap,
   'taskRecorderSignedOut': (l) => l.taskRecorderSignedOut,
   'taskRecorderStart': (l) => l.taskRecorderStart,
@@ -4531,6 +4538,7 @@ Map<String, _Getter> _part11() => {
   'taskRecorderValueTomorrow': (l) => l.taskRecorderValueTomorrow,
   'taskRecorderValueWeek': (l) => l.taskRecorderValueWeek,
   'taskRecorderValueWithheld': (l) => l.taskRecorderValueWithheld,
+  'taskRecorderValuesOn': (l) => l.taskRecorderValuesOn,
   'taskWizardAddGuide': (l) => l.taskWizardAddGuide,
   'taskWizardAddToGuides': (l) => l.taskWizardAddToGuides,
   'taskWizardBuiltIn': (l) => l.taskWizardBuiltIn,
@@ -4851,6 +4859,9 @@ Map<String, _Getter> _part11() => {
   'wizardTallyIssued': (l) => l.wizardTallyIssued,
   'wizardTallyMatched': (l) => l.wizardTallyMatched,
   'wizardTallyNothing': (l) => l.wizardTallyNothing,
+};
+
+Map<String, _Getter> _part12() => {
   'wizardTallyRefunds': (l) => l.wizardTallyRefunds,
   'wizardTallyRegistered': (l) => l.wizardTallyRegistered,
   'wizardTallyReminded': (l) => l.wizardTallyReminded,
@@ -4859,9 +4870,6 @@ Map<String, _Getter> _part11() => {
   'wizardTallyWriteoffs': (l) => l.wizardTallyWriteoffs,
   'wizardTitle': (l) => l.wizardTitle,
   'wizardTodoHeading': (l) => l.wizardTodoHeading,
-};
-
-Map<String, _Getter> _part12() => {
   'wizardTodoNone': (l) => l.wizardTodoNone,
   'wizardWhoValidators': (l) => l.wizardWhoValidators,
   'wizardWhoYou': (l) => l.wizardWhoYou,

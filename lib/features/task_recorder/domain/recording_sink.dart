@@ -21,6 +21,7 @@ class RecordingHeader {
     this.contractVersion = actionContractVersion,
     this.title,
     this.prerequisites = const [],
+    this.captureValues = false,
   });
 
   /// A random local identifier, used for the file name only.
@@ -30,6 +31,9 @@ class RecordingHeader {
   final int contractVersion;
   final String? title;
   final List<Prerequisite> prerequisites;
+
+  /// The person started this recording with "capture values".
+  final bool captureValues;
 }
 
 /// Appends to one recording. Every call may throw (a full disk); the

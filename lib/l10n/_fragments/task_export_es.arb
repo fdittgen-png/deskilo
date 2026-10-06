@@ -138,5 +138,15 @@
   "taskExportIllustrationNotApproved": "Ilustración no incluida: no se aprobó.",
   "taskExportLimitRecreated": "Las ilustraciones se recrean a partir de los datos seguros de la grabación, con nombres de puestos inventados; no son capturas de la pantalla.",
   "taskExportStale": "El guion gráfico corresponde a otra versión de esta grabación. Revíselo antes de exportar.",
-  "taskExportWordButton": "Exportar como documento de Word"
+  "taskExportWordButton": "Exportar como documento de Word",
+  "taskExportValueRedacted": "no guardado ({length} caracteres)",
+  "@taskExportValueRedacted": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "taskExportValueOn": "activado",
+  "taskExportValueOff": "desactivado"
 }

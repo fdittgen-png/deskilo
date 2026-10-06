@@ -230,5 +230,11 @@
   "taskRecorderValueCreated": "créé",
   "taskRecorderValueEdited": "modifié",
   "taskRecorderValueRenamed": "renommé",
-  "taskRecorderTargetDefaultRule": "la règle par défaut"
+  "taskRecorderTargetDefaultRule": "la règle par défaut",
+  "taskRecorderCaptureValues": "Enregistrer les valeurs (pour un rapport de problème)",
+  "taskRecorderCaptureValuesHint": "Conserve aussi ce que vous saisissez et choisissez — texte, nombres, dates, interrupteurs — pour qu'un développeur puisse reproduire le problème à partir du fichier. Les mots de passe, coordonnées de paiement, adresses e-mail, numéros de téléphone et autres données de contact personnelles ne sont jamais conservés. Ne partagez le fichier qu'avec des personnes qui peuvent voir ce que vous avez saisi.",
+  "taskRecorderValuesOn": "Les valeurs sont enregistrées",
+  "taskRecorderExportValuesTitle": "Cet enregistrement contient des valeurs",
+  "taskRecorderExportValuesBody": "Il contient ce qui a été saisi et choisi pendant l'enregistrement. Vérifiez-le avant de le partager, et ne le partagez qu'avec des personnes qui peuvent le voir.",
+  "taskRecorderExportValuesConfirm": "Enregistrer quand même"
 }

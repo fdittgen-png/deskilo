@@ -23,6 +23,7 @@ import 'package:crypto/crypto.dart';
 
 import 'action_registry.dart';
 import 'safe_payload.dart';
+import 'step_values.dart';
 import 'task_recording.dart';
 
 part 'task_recording_decoder.dart';
@@ -80,12 +81,13 @@ class RecordingDecodeResult {
 /// Encodes [r] in canonical key order. The result is the export.
 Map<String, Object?> encodeRecording(TaskRecording r) => {
   'format': taskRecordingFormat,
-  'schema_version': taskRecordingSchemaVersion,
+  'schema_version': schemaVersionOf(r),
   'action_contract_version': r.actionContractVersion,
   'platform': r.platform.wire,
   'kind': r.kind.wire,
   if (r.sourceDigest != null) 'source_digest': r.sourceDigest,
   if (r.title != null) 'title': r.title,
+  if (r.capturesValues) 'values_mode': 'captured',
   'prerequisites': [
     for (final p in r.prerequisites)
       {'id': p.id, if (p.value != null) 'value': p.value},
@@ -112,6 +114,7 @@ Map<String, Object?> encodeStep(RecordedStep s) => {
   if (s.actionVersion != null) 'action_version': s.actionVersion,
   if (s.target != null) 'target': s.target,
   if (!s.payload.isEmpty) 'payload': s.payload.toJson(),
+  if (!s.values.isEmpty) 'values': s.values.toJson(),
   if (s.op != null) 'op': s.op,
   if (s.state != null) 'state': s.state!.wire,
   if (s.outcome != null) 'outcome': s.outcome,

@@ -16700,7 +16700,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskExportValueNo => 'no';
 
   @override
+  String get taskExportValueOff => 'disattivato';
+
+  @override
   String get taskExportValueOffline => 'nessuna connessione';
+
+  @override
+  String get taskExportValueOn => 'attivo';
 
   @override
   String get taskExportValueOnce => 'una volta';
@@ -16731,6 +16737,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskExportValueQuota => 'una quota';
+
+  @override
+  String taskExportValueRedacted(int length) {
+    return 'non conservato ($length caratteri)';
+  }
 
   @override
   String get taskExportValueRoom => 'una sala';
@@ -16977,6 +16988,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderAddNote => 'Aggiungi una nota';
 
   @override
+  String get taskRecorderCaptureValues =>
+      'Cattura i valori (per le segnalazioni)';
+
+  @override
+  String get taskRecorderCaptureValuesHint =>
+      'Conserva anche ciò che scrivi e scegli — testo, numeri, date, interruttori — così uno sviluppatore può riprodurre il problema dal file. Password, dati di pagamento, indirizzi e-mail, numeri di telefono e altri dati di contatto personali non vengono mai conservati. Condividi il file solo con chi può vedere ciò che hai inserito.';
+
+  @override
   String get taskRecorderCompletenessComplete => 'Completa';
 
   @override
@@ -17034,6 +17053,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderExportPreview => 'Cosa conterrà il file';
+
+  @override
+  String get taskRecorderExportValuesBody =>
+      'Contiene ciò che è stato scritto e scelto durante la registrazione. Controllala prima di condividerla e condividila solo con chi può vederlo.';
+
+  @override
+  String get taskRecorderExportValuesConfirm => 'Salva comunque';
+
+  @override
+  String get taskRecorderExportValuesTitle =>
+      'Questa registrazione contiene valori';
 
   @override
   String get taskRecorderFieldAccessories => 'accessori';
@@ -17410,6 +17440,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderValueWithheld => 'non registrato';
+
+  @override
+  String get taskRecorderValuesOn => 'I valori vengono catturati';
 
   @override
   String get taskWizardAddGuide => 'Aggiungi una guida';
