@@ -14,6 +14,18 @@ abstract interface class MessengerRepository {
   /// `my_inbox`: every conversation I take part in on this server.
   Future<List<Map<String, dynamic>>> inbox();
 
+  /// Pin / mute / archive of a workspace conversation, kept by the server
+  /// (`set_conversation_prefs`); null leaves a flag as it is.
+  Future<void> setConversationFlags(
+    String conversation, {
+    bool? pinned,
+    bool? muted,
+    bool? archived,
+  });
+
+  /// Marks a workspace conversation unread again (`mark_conversation_unread`).
+  Future<void> markConversationUnread(String conversation);
+
   /// The workspaces I share with [user] (both active members): where the
   /// references of a conversation with them may point (0381).
   Future<List<({String id, String name})>> sharedWorkspaces(String user);

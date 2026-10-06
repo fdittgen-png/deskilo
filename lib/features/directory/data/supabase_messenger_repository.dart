@@ -30,11 +30,61 @@ class SupabaseMessengerRepository implements MessengerRepository {
       Map<String, dynamic>.from(row as Map),
   ];
 
+  Future<List<Map<String, dynamic>>> _flagRows() async => [
+        for (final r in (await _rpc<List<dynamic>?>('my_conversation_flags')) ??
+            const [])
+          Map<String, dynamic>.from(r as Map),
+      ];
+
+  @override
+  Future<void> setConversationFlags(
+    String conversation, {
+    bool? pinned,
+    bool? muted,
+    bool? archived,
+  }) =>
+      _rpc<dynamic>('set_conversation_prefs', {
+        'p_conversation_id': conversation,
+        'p_pinned': pinned,
+        'p_muted': muted,
+        'p_archived': archived,
+      });
+
+  @override
+  Future<void> markConversationUnread(String conversation) =>
+      _rpc<dynamic>('mark_conversation_unread', {'p_conversation_id': conversation});
+
   String? _at(DateTime? at) => at?.toUtc().toIso8601String();
 
   @override
   Future<List<Map<String, dynamic>>> inbox() async {
-    final rows = await _rows('my_inbox');
+    final base = await _rows('my_inbox');
+    // The server's pin / mute / archive of my workspace conversations
+    // (0386), and the archived ones my_inbox leaves out. A server that
+    // predates them answers without flags rather than failing the inbox.
+    var rows = base;
+    try {
+      final flagged = {
+        for (final f in await _flagRows()) f['context_id'] as String: f,
+      };
+      rows = [
+        for (final r in base)
+          if (r['context_kind'] == 'space')
+            {
+              ...r,
+              'pinned': flagged[r['context_id']]?['pinned'] ?? false,
+              'muted': flagged[r['context_id']]?['muted'] ?? false,
+              'archived': false,
+            }
+          else
+            r,
+        for (final f in flagged.values)
+          if (f['archived'] == true) f,
+      ];
+    } catch (e, st) {
+      TraceLogger.instance.warn('messages', 'conversation flags unavailable',
+          error: e, stackTrace: st);
+    }
     // My groups ride the same list; a server that predates them answers
     // without them rather than failing the whole inbox.
     try {

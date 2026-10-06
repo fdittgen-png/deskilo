@@ -393,4 +393,63 @@ void main() {
     }
   });
 
+
+  group('a workspace conversation keeps its flags on the server (0386)', () {
+    setUp(() {
+      home.inboxRows.add({
+        ...inboxRow(MessageContextKind.space, 'c-flag', 'Salle', at: '2026-07-15T06:00:00Z'),
+        'pinned': false,
+        'muted': false,
+        'archived': false,
+      });
+    });
+
+    Future<void> choose(WidgetTester tester, String entry, String item) async {
+      await tester.longPress(find.byKey(ValueKey('inbox-entry-$entry')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(ValueKey('inbox-menu-$item')));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('mute is the server\'s, shows on the row, and quiets the badge',
+        (tester) async {
+      await pumpInbox(tester, home: home, remote: remote);
+      expect(find.byKey(const ValueKey('inbox-menu-mute')), findsNothing);
+      await choose(tester, 'c-flag', 'mute');
+      expect(home.flagLog, ['flags:c-flag']);
+      expect(find.byKey(const ValueKey('inbox-muted-c-flag')), findsOneWidget);
+    });
+
+    testWidgets('mark unread is offered for a read thread and sets the server',
+        (tester) async {
+      await pumpInbox(tester, home: home, remote: remote);
+      await choose(tester, 'c-flag', 'unread');
+      expect(home.flagLog, ['unread:c-flag']);
+      expect(find.byKey(const ValueKey('inbox-unread-c-flag')), findsOneWidget);
+    });
+
+    testWidgets('archive and pin go to the server; archived lists under Archived',
+        (tester) async {
+      await pumpInbox(tester, home: home, remote: remote);
+      await choose(tester, 'c-flag', 'pin');
+      expect(find.byKey(const ValueKey('inbox-pinned-c-flag')), findsOneWidget);
+      await choose(tester, 'c-flag', 'archive');
+      expect(home.flagLog, ['flags:c-flag', 'flags:c-flag']);
+      expect(find.byKey(const ValueKey('inbox-entry-c-flag')), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('unified-inbox-archived')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('inbox-entry-c-flag')), findsOneWidget);
+      // A person-to-person conversation keeps this device's marks.
+      expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsNothing);
+    });
+
+    testWidgets('a person-to-person thread offers no server mute',
+        (tester) async {
+      await pumpInbox(tester, home: home, remote: remote);
+      await tester.longPress(find.byKey(const ValueKey('inbox-entry-c-ana')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('inbox-menu-mute')), findsNothing);
+      expect(find.byKey(const ValueKey('inbox-menu-pin')), findsOneWidget);
+    });
+  });
 }

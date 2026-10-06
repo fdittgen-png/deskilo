@@ -29,6 +29,19 @@ class MessengerActions {
     return text;
   }
 
+  // ── a workspace conversation's own preferences (0386) ──────────────
+  Future<void> setConversationFlags(
+    String conversation, {
+    bool? pinned,
+    bool? muted,
+    bool? archived,
+  }) =>
+      repository.setConversationFlags(conversation,
+          pinned: pinned, muted: muted, archived: archived);
+
+  Future<void> markConversationUnread(String conversation) =>
+      repository.markConversationUnread(conversation);
+
   // ── groups of people (0384) ─────────────────────────────────────────
   Future<String> createGroup(String title, List<String> users) {
     final name = title.trim();

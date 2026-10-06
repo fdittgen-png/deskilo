@@ -271,6 +271,37 @@ class FakeMessengerRepository implements MessengerRepository {
   void _post(String key, ContextMessage message) =>
       (threads[key] ??= []).insert(0, message);
 
+  /// The flags the fake keeps per workspace conversation, and the calls made.
+  final flagLog = <String>[];
+
+  @override
+  Future<void> setConversationFlags(
+    String conversation, {
+    bool? pinned,
+    bool? muted,
+    bool? archived,
+  }) async {
+    _check();
+    for (final row in inboxRows) {
+      if (row['context_id'] != conversation) continue;
+      if (pinned != null) row['pinned'] = pinned;
+      if (muted != null) row['muted'] = muted;
+      if (archived != null) row['archived'] = archived;
+    }
+    flagLog.add('flags:$conversation');
+  }
+
+  @override
+  Future<void> markConversationUnread(String conversation) async {
+    _check();
+    for (final row in inboxRows) {
+      if (row['context_id'] == conversation && (row['unread'] ?? 0) == 0) {
+        row['unread'] = 1;
+      }
+    }
+    flagLog.add('unread:$conversation');
+  }
+
   @override
   Future<List<Map<String, dynamic>>> inbox() async {
     _check();
