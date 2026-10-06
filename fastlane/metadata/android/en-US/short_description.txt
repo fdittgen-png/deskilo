@@ -1,1 +1,1 @@
-Coworking community app: desk booking + shared money, libre.
+Coworking communities: booking, shared money and a social network.

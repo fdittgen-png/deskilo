@@ -1,13 +1,19 @@
-DesKilo es una aplicación libre y respetuosa con la privacidad para pequeñas comunidades de coworking autogestionadas.
+DesKilo es una aplicación libre y gratuita para comunidades de coworking y para las personas que se mueven entre ellas: reserva de puestos, un libro de cuentas transparente — y una red social de espacios, privada por defecto.
 
+LOS ESPACIOS
 • Dibuja tu espacio en una cuadrícula: plantas, oficinas, mesas y asientos reservables
-• Toca un asiento en el plano en vivo para registrarte — sin conflictos
-• Reserva con antelación, puntual o en serie, con un control deslizante temporal
-• Calendario de tus reservas; los admins ven todas
-• Finanzas justas: planes con cuotas de medias jornadas, un libro de cuentas transparente por miembro
-• Gastos comunes: compra café para el espacio y recibe el crédito en tu próxima factura
-• Todo lo que un admin hace por ti requiere tu confirmación
+• Toca un asiento en el plano en vivo para registrarte; reserva con antelación, una vez o en serie
+• Calendario de tus reservas y alertas; los administradores ven las de todos
+• Planes de membresía, cuotas, un libro transparente por miembro, gastos comunes, facturas
+• Todo lo que un administrador hace por ti necesita tu confirmación
 
-Sin servicios de Google, sin rastreo, sin publicidad. Backend autoalojable. Licencia AGPL-3.0 (permisiva).
+TÚ, ENTRE ESPACIOS
+• Una cuenta personal (Yo) para todos tus espacios
+• Descubrir: un directorio compartido y un mapa donde los espacios publican una página pública por decisión propia
+• Mensajería: conversaciones privadas y grupos, con referencias a reservas y facturas cuando ambos pertenecéis al espacio
+• Solicitudes de personas fuera de tu círculo, lista de bloqueo y matriz de visibilidad: tú decides quién ve tu nombre, tu perfil, tus datos de contacto y tu presencia
 
-RGPD: datos alojados en la UE, sin rastreo ni analítica, acceso limitado por rol y aplicado en el servidor. Sus derechos son botones en Ajustes → Privacidad y datos: quién puede ver sus datos, quién accedió, exportación, borrado.
+TUS DATOS, TU DECISIÓN
+Aloja tú mismo el servidor en tu propia instancia de Supabase, o usa el despliegue de referencia operado por Florian DITTGEN, que también aloja el directorio compartido. Software libre con licencia AGPL-3.0.
+
+RGPD: datos alojados en la UE en el despliegue de referencia, sin seguimiento ni publicidad, acceso limitado por rol y aplicado en el servidor. Tus derechos son botones en Ajustes → Privacidad y datos: quién ve tus datos, quién accedió, exportación, borrado. Las notificaciones push usan Firebase Cloud Messaging.

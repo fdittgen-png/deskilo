@@ -1,13 +1,19 @@
-DesKilo è un'app libera e rispettosa della privacy per piccole community di coworking autogestite.
+DesKilo è un'app libera e gratuita per le community di coworking e per le persone che si spostano tra di loro: prenotazione di postazioni, un registro economico trasparente — e un social network di spazi, privato per impostazione predefinita.
 
+GLI SPAZI
 • Disegna il tuo spazio su una griglia: piani, uffici, scrivanie e posti prenotabili
-• Tocca un posto sulla piantina live per fare il check-in — senza conflitti
-• Prenota in anticipo, una volta o in serie, con un cursore temporale
-• Calendario delle tue prenotazioni; gli admin vedono tutto
-• Finanze eque: piani con quote a mezze giornate, un registro trasparente per membro
-• Spese comuni: compra il caffè per lo spazio, accreditato sul prossimo estratto conto
-• Tutto ciò che un admin fa per te richiede la tua conferma
+• Tocca un posto sulla pianta in tempo reale per fare il check-in; prenota in anticipo, una volta o in serie
+• Calendario delle tue prenotazioni e dei tuoi avvisi; gli amministratori vedono quelli di tutti
+• Piani di abbonamento, quote, un registro trasparente per socio, spese comuni, fatture
+• Tutto ciò che un amministratore fa per te richiede la tua conferma
 
-Nessun servizio Google, nessun tracciamento, nessuna pubblicità. Backend self-hostable. Licenza AGPL-3.0 (permissiva).
+TU, TRA GLI SPAZI
+• Un account personale (Io) per tutti i tuoi spazi
+• Scopri: una rubrica condivisa e una mappa in cui gli spazi pubblicano una pagina pubblica per scelta
+• Messaggi: conversazioni private e gruppi, con riferimenti a prenotazioni e fatture quando appartenete entrambi allo spazio
+• Richieste da persone fuori dalla tua cerchia, elenco dei bloccati e matrice di visibilità: scegli tu chi vede il tuo nome, il tuo profilo, i tuoi contatti e la tua presenza
 
-GDPR: dati ospitati nell'UE, nessun tracciamento né analitica, accesso limitato per ruolo e applicato dal server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi può vedere i tuoi dati, chi ha avuto accesso, esportazione, cancellazione.
+I TUOI DATI, LA TUA SCELTA
+Ospita il backend sulla tua istanza Supabase, oppure usa l'installazione di riferimento gestita da Florian DITTGEN, che ospita anche la rubrica condivisa. Software libero con licenza AGPL-3.0.
+
+GDPR: dati ospitati nell'UE sull'installazione di riferimento, nessun tracciamento né pubblicità, accesso limitato per ruolo e applicato dal server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi vede i tuoi dati, chi vi ha acceduto, esportazione, cancellazione. Le notifiche push usano Firebase Cloud Messaging.

@@ -1,13 +1,19 @@
-DesKilo est une application libre et respectueuse de la vie privée pour les petites communautés de coworking auto-organisées.
+DesKilo est une application libre et gratuite pour les communautés de coworking et pour les personnes qui circulent entre elles : réservation de postes, un registre financier transparent — et un réseau social d'espaces, privé par défaut.
 
-• Dessinez votre espace sur une grille : étages, bureaux, tables et places réservables
-• Touchez une place sur le plan en direct pour vous installer — sans conflit
-• Réservez à l'avance, ponctuellement ou en série, avec un curseur temporel
-• Calendrier de vos réservations ; les admins voient tout
-• Finances équitables : forfaits avec quotas en demi-journées, un grand livre transparent par membre
-• Dépenses communes : achetez du café pour l'espace, crédité sur votre prochaine facture
-• Tout ce qu'un admin fait pour vous demande votre confirmation
+LES ESPACES
+• Dessinez votre espace sur une grille : étages, bureaux, postes et places réservables
+• Touchez une place sur le plan en direct pour vous enregistrer ; réservez à l'avance, une fois ou en série
+• Calendrier de vos réservations et de vos alertes ; les administrateurs voient celles de tous
+• Formules d'adhésion, quotas, un registre transparent par membre, dépenses communes, factures
+• Tout ce qu'un administrateur fait pour vous demande votre confirmation
 
-Pas de services Google, pas de pistage, pas de pub. Backend auto-hébergeable. Licence AGPL-3.0 (permissive).
+VOUS, D'UN ESPACE À L'AUTRE
+• Un compte personnel (Moi) pour tous vos espaces
+• Découvrir : un annuaire partagé et une carte où les espaces publient une page publique, volontairement
+• Messagerie : conversations privées et groupes, avec des références à des réservations et des factures lorsque vous appartenez tous deux à l'espace
+• Demandes de personnes hors de votre cercle, liste de blocage et matrice de visibilité : vous choisissez qui voit votre nom, votre présentation, vos coordonnées et votre présence
 
-RGPD : données hébergées dans l'UE, ni traçage ni analytique, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui peut voir vos données, qui les a consultées, export, effacement.
+VOS DONNÉES, VOTRE CHOIX
+Hébergez vous-même le serveur sur votre propre instance Supabase, ou utilisez le déploiement de référence exploité par Florian DITTGEN, qui héberge aussi l'annuaire partagé. Logiciel libre sous licence AGPL-3.0.
+
+RGPD : données hébergées dans l'UE sur le déploiement de référence, ni suivi ni publicité, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui voit vos données, qui y a accédé, export, effacement. Les notifications push utilisent Firebase Cloud Messaging.

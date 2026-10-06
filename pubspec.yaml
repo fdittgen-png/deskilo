@@ -1,5 +1,5 @@
 name: deskilo
-description: "Free, privacy-first coworking community app — visual desk booking plus the community money layer."
+description: "Free, libre coworking community app — desk booking, the community money layer and a private-by-default social network of spaces; self-host it or use the shared directory."
 publish_to: 'none'
 version: 1.0.2+3
 
