@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1872 — the generator hook: the workbench reads the registered outputs
-// through one provider (the registry #1866 and #1879 fill),
+// through one provider (the registry #1866 fills),
 // a generator answers availability by capability, and cancellation is
 // cooperative and observable.
 import 'dart:typed_data';
@@ -18,7 +18,7 @@ class _Echo implements TaskOutputGenerator {
   @override
   String get id => 'echo';
   @override
-  TaskOutputKind get kind => TaskOutputKind.captions;
+  TaskOutputKind get kind => TaskOutputKind.storyboard;
   @override
   String get fileExtension => 'txt';
   @override

@@ -5,7 +5,7 @@
 // fields, targets, surfaces, unknown actions, errors thrown by the
 // store) are absent from the live snapshot, the bytes on disk, the
 // recovered recording, the plain-JSON export and the trace log. The
-// package (#1872), the document (#1866), the video (#1879) and the
+// package (#1872), the document (#1866) and the
 // support bundle extend this chain from the same canaries.
 import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';

@@ -3,7 +3,7 @@
 // #1865 — the committed JSON fixtures ARE what the real controller
 // records for the four booking journeys, byte for byte, and each reads
 // back through the canonical validator to the same recording. Stream
-// consumers (#1866, #1867, #1872, #1876, #1879) test against these
+// consumers (#1866, #1867, #1872, #1876) test against these
 // files; when the producer changes, this fails until they are
 // regenerated with UPDATE_RECORDER_FIXTURES=1.
 import 'dart:io';

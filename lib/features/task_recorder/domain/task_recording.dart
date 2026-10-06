@@ -4,7 +4,7 @@
 //
 // This is the canonical semantic schema every consumer reads: the review
 // and plain-JSON export (#1865), the task package (#1872), the Word
-// document (#1866), the storyboard and video (#1876/#1879) and the
+// document (#1866), the storyboard (#1876) and the
 // guided task compiler (#1867). None of them defines a second format;
 // the codec beside this file is the only parser.
 //

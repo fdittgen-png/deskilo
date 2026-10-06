@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1872 — the outputs a recording can be made into (Word, storyboard,
-// video, captions), from the generator registry. Each is offered only
+// storyboard), from the generator registry. Each is offered only
 // where its generator says the platform can make it — never by a
 // workspace feature — and its result is saved through the typed saver.
 
@@ -120,8 +120,6 @@ String outputKindLabel(AppLocalizations? l10n, TaskOutputKind kind) =>
     switch (kind) {
       TaskOutputKind.document => l10n?.taskOutputDocument ?? 'Word document',
       TaskOutputKind.storyboard => l10n?.taskOutputStoryboard ?? 'Storyboard',
-      TaskOutputKind.video => l10n?.taskOutputVideo ?? 'Video',
-      TaskOutputKind.captions => l10n?.taskOutputCaptions ?? 'Captions',
     };
 
 /// The words for why an output was not made.
@@ -135,7 +133,7 @@ String outputReasonText(AppLocalizations? l10n, TaskOutputReason reason) =>
             'The illustrations were reviewed for an earlier version.',
       TaskOutputReason.empty =>
         l10n?.taskOutputMissingMedia ??
-            'This task has no images or video to use.',
+            'This task has no images to use.',
       TaskOutputReason.tooLong =>
         l10n?.taskOutputTooLong ?? 'This task is too long for this output.',
       TaskOutputReason.busy =>

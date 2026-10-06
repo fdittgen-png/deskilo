@@ -14,11 +14,7 @@
 //      and followed on real outcome events to completion;
 //   6. one mutation (a step's action, a package byte) refused by the real
 //      parser, not a test double.
-// Canaries are checked in every artefact. The caption track comes from
-// the registered generator and is read back as plain WebVTT; the MP4 runs
-// only where the platform encoder answers its probe and is reported NOT
-// RUN otherwise: this proof never fakes an encoder (the device run is
-// integration_test/task_video_encoder_test.dart).
+// Canaries are checked in every artefact.
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -163,38 +159,5 @@ void main() {
     expect(decodeRecording(tampered).runnable, isFalse);
     final flipped = Uint8List.fromList(package)..[package.length ~/ 2] ^= 0xff;
     expect(openTaskFile(flipped), isA<WorkbenchRefused>());
-
-    // Captions, from the registered generator, read back as WebVTT.
-    final captions = taskOutputGeneratorList().firstWhere(
-      (g) => g.kind == TaskOutputKind.captions,
-    );
-    final vttMade = await tester.runAsync(
-      () => captions.generate(
-        TaskOutputRequest(recording: copy, languageCode: 'fr'),
-      ),
-    );
-    final vtt = utf8.decode((vttMade! as TaskOutputProduced).bytes);
-    expect(vtt.startsWith('WEBVTT'), isTrue);
-    expect('-->'.allMatches(vtt).length, greaterThan(1));
-    _clean('the caption track', vtt);
-
-    // Video: the registered generator, only where its encoder answers.
-    final video = taskOutputGeneratorList().firstWhere(
-      (g) => g.kind == TaskOutputKind.video,
-    );
-    final availability = await tester.runAsync(video.availability);
-    if (availability is TaskOutputAvailable) {
-      final mp4Made = await tester.runAsync(
-        () => video.generate(
-          TaskOutputRequest(recording: copy, languageCode: 'fr'),
-        ),
-      );
-      final mp4 = (mp4Made! as TaskOutputProduced).bytes;
-      expect(ascii.decode(mp4.sublist(4, 8)), 'ftyp');
-    } else {
-      debugPrint(
-        'assembled proof: MP4 NOT RUN (no platform encoder on this host)',
-      );
-    }
   });
 }

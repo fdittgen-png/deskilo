@@ -557,19 +557,11 @@
   "@taskOutputStoryboard": {
     "description": "#1872 task workbench: taskOutputStoryboard"
   },
-  "taskOutputVideo": "Video",
-  "@taskOutputVideo": {
-    "description": "#1872 task workbench: taskOutputVideo"
-  },
-  "taskOutputCaptions": "Captions",
-  "@taskOutputCaptions": {
-    "description": "#1872 task workbench: taskOutputCaptions"
-  },
   "taskOutputUnsupportedPlatform": "Not available on this device.",
   "@taskOutputUnsupportedPlatform": {
     "description": "#1872 task workbench: taskOutputUnsupportedPlatform"
   },
-  "taskOutputMissingMedia": "This task has no images or video to use.",
+  "taskOutputMissingMedia": "This task has no images to use.",
   "@taskOutputMissingMedia": {
     "description": "#1872 task workbench: taskOutputMissingMedia"
   },

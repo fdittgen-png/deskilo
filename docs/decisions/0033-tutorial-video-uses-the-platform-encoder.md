@@ -1,6 +1,6 @@
 # ADR 0033 — A tutorial video is encoded by the platform's own H.264 encoder
 
-**Status:** accepted · **Date:** 2026-10-02 · **Issues:** #1879 (this), #1876 (the storyboard it renders), #1981 (the recorder epic)
+**Status:** superseded by [ADR 0036](0036-the-task-recorder-makes-no-video.md) · **Date:** 2026-10-02 · **Issues:** #1879 (this), #1876 (the storyboard it renders), #1981 (the recorder epic)
 
 ## Context
 

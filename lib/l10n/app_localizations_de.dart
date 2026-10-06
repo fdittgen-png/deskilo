@@ -16737,74 +16737,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get taskExportVideoBusy => 'Ein anderes Video wird noch erstellt.';
-
-  @override
-  String get taskExportVideoCancel => 'Video abbrechen';
-
-  @override
-  String get taskExportVideoCancelled =>
-      'Videoerstellung abgebrochen. Nichts wurde gespeichert.';
-
-  @override
-  String get taskExportVideoEmpty =>
-      'Alle Schritte wurden weggelassen: Es gibt nichts für ein Video.';
-
-  @override
-  String get taskExportVideoFailed =>
-      'Das Video konnte nicht erstellt werden. Nichts wurde gespeichert.';
-
-  @override
-  String get taskExportVideoGenerate => 'Video erstellen';
-
-  @override
-  String taskExportVideoGenerating(int percent) {
-    return 'Video wird erstellt: $percent %';
-  }
-
-  @override
-  String get taskExportVideoIntro =>
-      'Ein aus einer aufgezeichneten Aufgabe nachgebildetes Tutorial. Es zeigt die Schritte, nicht den Beweis, dass die Aufgabe gelungen ist.';
-
-  @override
-  String get taskExportVideoLandscape => 'Querformat';
-
-  @override
-  String taskExportVideoLeftOut(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count Schritte wurden bei der Prüfung weggelassen.',
-      one: 'Ein Schritt wurde bei der Prüfung weggelassen.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get taskExportVideoPortrait => 'Hochformat';
-
-  @override
-  String taskExportVideoSaved(String file) {
-    return 'Video mit Untertiteln und Transkript gespeichert: $file';
-  }
-
-  @override
-  String taskExportVideoStepHeading(int number, String title) {
-    return 'Schritt $number: $title';
-  }
-
-  @override
-  String get taskExportVideoSummary => 'Zusammenfassung';
-
-  @override
-  String get taskExportVideoTooLong =>
-      'Das Video wäre länger als erlaubt. Kürzen Sie die Dauer oder lassen Sie Schritte weg.';
-
-  @override
-  String get taskExportVideoUnsupported =>
-      'Dieses Gerät kann kein Video erstellen. Exportieren Sie die Aufzeichnungsdatei und öffnen Sie sie auf einem unterstützten Gerät: macOS, iOS, Android oder ein aktueller Browser, der H.264-Video kodieren kann.';
-
-  @override
   String get taskExportWordButton => 'Als Word-Dokument exportieren';
 
   @override
@@ -16850,9 +16782,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskOutputBusy => 'Diese Ausgabe wird bereits erstellt.';
 
   @override
-  String get taskOutputCaptions => 'Untertitel';
-
-  @override
   String get taskOutputDocument => 'Word-Dokument';
 
   @override
@@ -16863,7 +16792,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taskOutputMissingMedia =>
-      'Diese Aufgabe hat keine Bilder oder Videos.';
+      'Diese Aufgabe hat keine Bilder, die genutzt werden können.';
 
   @override
   String get taskOutputStale =>
@@ -16879,9 +16808,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taskOutputUnsupportedPlatform =>
       'Auf diesem Gerät nicht verfügbar.';
-
-  @override
-  String get taskOutputVideo => 'Video';
 
   @override
   String get taskRecorderActionBack => 'Zurückgegangen';
