@@ -271,6 +271,29 @@ class FakeMessengerRepository implements MessengerRepository {
   void _post(String key, ContextMessage message) =>
       (threads[key] ??= []).insert(0, message);
 
+  /// The accounts the person blocked (0387).
+  final blocked = <String, String>{};
+
+  @override
+  Future<List<BlockedAccount>> myBlocks() async {
+    _check();
+    return [
+      for (final e in blocked.entries) BlockedAccount(userId: e.key, name: e.value),
+    ];
+  }
+
+  @override
+  Future<void> blockAccount(String user) async {
+    _check();
+    blocked.putIfAbsent(user, () => user);
+  }
+
+  @override
+  Future<void> unblockAccount(String user) async {
+    _check();
+    blocked.remove(user);
+  }
+
   /// The flags the fake keeps per workspace conversation, and the calls made.
   final flagLog = <String>[];
 

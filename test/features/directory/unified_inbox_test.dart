@@ -452,4 +452,33 @@ void main() {
       expect(find.byKey(const ValueKey('inbox-menu-pin')), findsOneWidget);
     });
   });
+
+  group('blocking a person (0387)', () {
+    testWidgets('block from the thread asks first, blocks, and leaves the thread',
+        (tester) async {
+      await pumpInbox(tester, home: home, remote: remote);
+      await tester.tap(find.byKey(const ValueKey('inbox-entry-c-ana')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('account-block')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Block Ana?'), findsOneWidget);
+      // Cancelling blocks nobody.
+      await tester.tap(find.byKey(const ValueKey('account-block-cancel')));
+      await tester.pumpAndSettle();
+      expect(home.blocked, isEmpty);
+      await tester.tap(find.byKey(const ValueKey('account-block')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('account-block-confirm')));
+      await tester.pumpAndSettle();
+      expect(home.blocked.keys, ['ana']);
+      expect(find.byKey(const ValueKey('context-thread')), findsNothing);
+    });
+
+    testWidgets('a workspace conversation offers no person block', (tester) async {
+      await pumpInbox(tester, home: home, remote: remote);
+      await tester.tap(find.byKey(const ValueKey('inbox-entry-c-space')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('account-block')), findsNothing);
+    });
+  });
 }

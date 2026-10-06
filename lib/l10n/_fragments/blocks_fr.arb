@@ -1,0 +1,17 @@
+{
+  "blockedPeopleTitle": "Personnes bloquées",
+  "blockedPeopleEmpty": "Vous n'avez bloqué personne.",
+  "blockedPeopleHint": "Une personne bloquée ne peut ni vous voir ni vous écrire, et vous ne pouvez ni la voir ni la joindre.",
+  "unblockAction": "Débloquer",
+  "blockPersonAction": "Bloquer cette personne",
+  "blockPersonConfirm": "Bloquer {name} ? Vous ne vous verrez plus et ne pourrez plus vous joindre. Vous pouvez annuler dans Moi.",
+  "@blockPersonConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "blockPersonDone": "Bloqué.",
+  "unblockDone": "Débloqué."
+}

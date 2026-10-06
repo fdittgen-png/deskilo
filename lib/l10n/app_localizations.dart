@@ -3445,6 +3445,42 @@ abstract class AppLocalizations {
   /// **'Sends a document reading zero, as confirmation that the subscription covered the whole month.'**
   String get billingUsageWhenZeroHint;
 
+  /// No description provided for @blockPersonAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Block this person'**
+  String get blockPersonAction;
+
+  /// No description provided for @blockPersonConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Block {name}? Neither of you will see or reach the other. You can undo this in Me.'**
+  String blockPersonConfirm(String name);
+
+  /// No description provided for @blockPersonDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked.'**
+  String get blockPersonDone;
+
+  /// No description provided for @blockedPeopleEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'You have not blocked anyone.'**
+  String get blockedPeopleEmpty;
+
+  /// No description provided for @blockedPeopleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A blocked person cannot see you or write to you, and you cannot see or reach them.'**
+  String get blockedPeopleHint;
+
+  /// No description provided for @blockedPeopleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked people'**
+  String get blockedPeopleTitle;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:
@@ -30313,6 +30349,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'References in'**
   String get threadRefsIn;
+
+  /// No description provided for @unblockAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Unblock'**
+  String get unblockAction;
+
+  /// No description provided for @unblockDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Unblocked.'**
+  String get unblockDone;
 
   /// #833 - action asking for the actual time to bill
   ///

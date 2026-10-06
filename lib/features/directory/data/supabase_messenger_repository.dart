@@ -37,6 +37,25 @@ class SupabaseMessengerRepository implements MessengerRepository {
       ];
 
   @override
+  Future<List<BlockedAccount>> myBlocks() async => [
+        for (final row in await _rpcRows('my_blocks'))
+          ?BlockedAccount.fromRow(row),
+      ];
+
+  Future<List<Map<String, dynamic>>> _rpcRows(String name) async => [
+        for (final r in (await _rpc<List<dynamic>?>(name)) ?? const [])
+          Map<String, dynamic>.from(r as Map),
+      ];
+
+  @override
+  Future<void> blockAccount(String user) =>
+      _rpc<dynamic>('block_account', {'p_user': user});
+
+  @override
+  Future<void> unblockAccount(String user) =>
+      _rpc<dynamic>('unblock_account', {'p_user': user});
+
+  @override
   Future<void> setConversationFlags(
     String conversation, {
     bool? pinned,

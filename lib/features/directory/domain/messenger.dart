@@ -462,3 +462,16 @@ enum MessengerRefusal {
         _ => null,
       };
 }
+
+/// An account I blocked (0387): neither of us sees or reaches the other.
+class BlockedAccount {
+  const BlockedAccount({required this.userId, this.name = ''});
+  final String userId;
+  final String name;
+
+  static BlockedAccount? fromRow(Map<String, dynamic> row) {
+    final id = row['user_id'];
+    if (id is! String) return null;
+    return BlockedAccount(userId: id, name: _text(row['name']));
+  }
+}

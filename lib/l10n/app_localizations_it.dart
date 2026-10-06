@@ -1951,6 +1951,27 @@ class AppLocalizationsIt extends AppLocalizations {
       'Invia un documento a zero, come conferma che l’abbonamento ha coperto tutto il mese.';
 
   @override
+  String get blockPersonAction => 'Blocca questa persona';
+
+  @override
+  String blockPersonConfirm(String name) {
+    return 'Bloccare $name? Nessuno dei due vedrà o raggiungerà l\'altro. Puoi annullare in Io.';
+  }
+
+  @override
+  String get blockPersonDone => 'Bloccata.';
+
+  @override
+  String get blockedPeopleEmpty => 'Non hai bloccato nessuno.';
+
+  @override
+  String get blockedPeopleHint =>
+      'Una persona bloccata non può vederti né scriverti, e tu non puoi vederla né raggiungerla.';
+
+  @override
+  String get blockedPeopleTitle => 'Persone bloccate';
+
+  @override
   String get bookAccountCode => 'Codice conto';
 
   @override
@@ -17675,6 +17696,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get threadRefsIn => 'Riferimenti in';
+
+  @override
+  String get unblockAction => 'Sblocca';
+
+  @override
+  String get unblockDone => 'Sbloccata.';
 
   @override
   String get usageAsk => 'Fattura il tempo in cui c’ero';
