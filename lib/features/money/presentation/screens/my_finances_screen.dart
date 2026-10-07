@@ -13,6 +13,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -24,15 +25,27 @@ import '../../providers/finance_overview_provider.dart';
 import '../widgets/personal_payment_provider.dart';
 import 'account_activity_screen.dart';
 
-class MyFinancesScreen extends ConsumerWidget {
-  const MyFinancesScreen({super.key});
+class MyFinancesScreen extends ConsumerStatefulWidget {
+  /// [workspaceId] narrows every list to one workspace — what a workspace's
+  /// own screens link to ("my documents from this space").
+  const MyFinancesScreen({super.key, this.workspaceId});
+  final String? workspaceId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MyFinancesScreen> createState() => _MyFinancesState();
+}
+
+class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
+  late String? _workspace = widget.workspaceId;
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final overview = ref.watch(financeOverviewProvider);
-    final data = overview.value ?? const FinanceOverview();
+    final all = overview.value ?? const FinanceOverview();
+    final data = all.inWorkspace(_workspace);
     final owed = data.outstanding.length;
+    final options = all.workspaces;
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -45,7 +58,7 @@ class MyFinancesScreen extends ConsumerWidget {
             tabs: [
               Tab(
                 key: const ValueKey('finances-tab-outstanding'),
-                child: _label(l10n?.financesOutstanding ?? 'Outstanding', owed),
+                child: _FinancesLabel.label(l10n?.financesOutstanding ?? 'Outstanding', owed),
               ),
               Tab(
                 key: const ValueKey('finances-tab-paid'),
@@ -57,7 +70,7 @@ class MyFinancesScreen extends ConsumerWidget {
               ),
               Tab(
                 key: const ValueKey('finances-tab-reminders'),
-                child: _label(
+                child: _FinancesLabel.label(
                   l10n?.financesReminders ?? 'Reminders',
                   data.invoices.where((i) => i.state.owed && i.reminderCount > 0).length,
                 ),
@@ -74,12 +87,24 @@ class MyFinancesScreen extends ConsumerWidget {
                     'Could not load your financial history. Tap to retry.'),
               ),
             ),
-          AsyncData() => TabBarView(
+          AsyncData() => Column(
               children: [
-                _Outstanding(data: data),
-                _Paid(data: data),
-                const _Payments(),
-                _Reminders(data: data),
+                if (options.length > 1 || _workspace != null)
+                  _WorkspaceFilter(
+                    options: options,
+                    selected: _workspace,
+                    onSelected: (id) => setState(() => _workspace = id),
+                  ),
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      _Outstanding(data: data),
+                      _Paid(data: data),
+                      _Payments(workspaceId: _workspace),
+                      _Reminders(data: data),
+                    ],
+                  ),
+                ),
               ],
             ),
           _ => const LoadingView(),
@@ -87,8 +112,54 @@ class MyFinancesScreen extends ConsumerWidget {
       ),
     );
   }
+}
 
-  static Widget _label(String text, int count) => Row(
+/// "All spaces" or one of them: the documents of several workspaces arrive
+/// here together, and this narrows them to the space being looked at.
+class _WorkspaceFilter extends StatelessWidget {
+  const _WorkspaceFilter({
+    required this.options,
+    required this.selected,
+    required this.onSelected,
+  });
+  final List<(String, String)> options;
+  final String? selected;
+  final ValueChanged<String?> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      child: EdgeFadeScroll(
+        key: const ValueKey('finances-filter'),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+        child: Row(
+          children: [
+            ChoiceChip(
+              key: const ValueKey('finances-filter-all'),
+              label: Text(l10n?.financesAllSpaces ?? 'All spaces'),
+              selected: selected == null,
+              onSelected: (_) => onSelected(null),
+            ),
+            for (final (id, name) in options) ...[
+              const SizedBox(width: AppSpacing.sm),
+              ChoiceChip(
+                key: ValueKey('finances-filter-$id'),
+                label: Text(name),
+                selected: selected == id,
+                onSelected: (_) => onSelected(id),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FinancesLabel {
+  static Widget label(String text, int count) => Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(text, maxLines: 1, softWrap: false, overflow: TextOverflow.ellipsis),
@@ -385,7 +456,10 @@ class _Reminders extends ConsumerWidget {
 }
 
 class _Payments extends ConsumerWidget {
-  const _Payments();
+  const _Payments({this.workspaceId});
+
+  /// Only this workspace's payments; all of them when null.
+  final String? workspaceId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -399,14 +473,18 @@ class _Payments extends ConsumerWidget {
       children: [
         const PersonalPaymentProvider(),
         switch (rows) {
-          AsyncData(value: final entries) when entries.isEmpty => EmptyState(
+          AsyncData(value: final all) when all
+              .where((e) => workspaceId == null || e.workspaceId == workspaceId)
+              .isEmpty => EmptyState(
               key: const ValueKey('finances-payments-empty'),
               icon: Icons.payments_outlined,
               title: l10n?.accountActivityEmpty ?? 'No records to display.',
             ),
-          AsyncData(value: final entries) => Column(
+          AsyncData(value: final all) => Column(
               children: [
-                for (final e in entries)
+                for (final e in all.where(
+                  (e) => workspaceId == null || e.workspaceId == workspaceId,
+                ))
                   Card(
                     key: ValueKey('finances-payment-${e.id}'),
                     margin: const EdgeInsets.only(bottom: AppSpacing.sm),

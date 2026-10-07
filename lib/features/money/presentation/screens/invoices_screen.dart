@@ -9,6 +9,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../my_finances_route.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
@@ -134,7 +135,8 @@ class InvoicesScreen extends ConsumerWidget {
         'invoicing-my-finances-tool',
         Icons.account_balance_wallet_outlined,
         l10n?.invoicingMyFinances ?? 'My finances',
-        () => context.push('/account-activity'),
+        () => context.push(myFinancesRoute(
+          workspaceId: ref.read(activeWorkspaceIdProvider).value)),
       ),
       if (repartitionAction != null)
         (
@@ -389,7 +391,10 @@ class _Banner extends StatelessWidget {
                 alignment: AlignmentDirectional.centerEnd,
                 child: TextButton(
                   key: const ValueKey('invoicing-my-finances'),
-                  onPressed: () => context.push('/account-activity'),
+                  onPressed: () => context.push(myFinancesRoute(
+          workspaceId: ProviderScope.containerOf(context)
+                          .read(activeWorkspaceIdProvider)
+                          .value)),
                   child: Text(l10n?.invoicingMyFinances ?? 'My finances'),
                 ),
               ),

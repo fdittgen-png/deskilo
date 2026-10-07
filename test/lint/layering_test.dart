@@ -99,6 +99,9 @@ const Set<String> _knownPairs = {
   // #1835 — Me › Home lists the account's guest visits: a relationship of
   // the account, read beside its memberships and never confused with one.
   'me -> visits',
+  // ADR 0035 — Me › Home shows what I owe across my spaces and opens Me ›
+  // Finances, which is the money feature's own screen.
+  'me -> money',
   // #1835 — a visit is read for the signed-in account only, so the visits
   // providers ask who that is (auth), as every account read does.
   'visits -> auth',
@@ -213,6 +216,7 @@ const Map<String, int> _pairBudget = {
   'task_recorder -> workspace': 6, // 2026-10-03 #1884 B +2: a permission and its label
   'workspace -> task_recorder': 9, // 2026-10-03 #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation); B +6: the role matrix, the space's roles, their holders
   // 2026-10-03 #2142 — the labelled entry in Me → Account.
+  'me -> money': 2, // 2026-10-06 ADR 0035: the home's finance summary reads the overview and opens the finances route
   'me -> task_recorder': 2, // 2026-10-04 task wizard: the Me menu and the account tab both open /task-wizard (a route constant)
   // 2026-10-03 #1881 B — the calendar's seams (hub and classic), the
   // decision seam, and the recorder's calendar-kind label.

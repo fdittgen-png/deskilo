@@ -5874,6 +5874,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get financesAllSpaces => 'Alle Spaces';
+
+  @override
   String get financesAutomatic => 'automatisch';
 
   @override
@@ -5887,6 +5890,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get financesFullHistory =>
       'Vollständiger Verlauf, Nutzung und andere Server';
+
+  @override
+  String financesLinkAction(String space) {
+    return 'Für $space öffnen';
+  }
+
+  @override
+  String get financesLinkBody =>
+      'Ihre Rechnungen, Mahnungen und Zahlungen aus allen Spaces sind gesammelt unter Ich › Finanzen.';
+
+  @override
+  String get financesLinkTitle => 'Ihre Dokumente liegen in Ich';
 
   @override
   String get financesNoReminders => 'Keine Erinnerung erhalten.';
@@ -10554,6 +10569,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meCreateSpace => 'Space gründen';
+
+  @override
+  String meFinanceGlanceOwed(String amount) {
+    return 'Zu zahlen: $amount';
+  }
 
   @override
   String get meFindSpace => 'Space finden';

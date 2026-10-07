@@ -1,0 +1,21 @@
+{
+  "financesAllSpaces": "Tous les espaces",
+  "financesLinkTitle": "Vos documents sont dans Moi",
+  "financesLinkBody": "Vos factures, rappels et paiements de tous vos espaces sont réunis dans Moi › Finances.",
+  "financesLinkAction": "Ouvrir pour {space}",
+  "@financesLinkAction": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "meFinanceGlanceOwed": "À payer : {amount}",
+  "@meFinanceGlanceOwed": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
+}

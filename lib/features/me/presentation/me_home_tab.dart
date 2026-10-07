@@ -18,6 +18,10 @@ import '../../visits/presentation/my_visits_section.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../../../core/i18n/money_format.dart';
+import '../../../core/time/clock.dart';
+import '../../money/presentation/my_finances_route.dart';
+import '../../money/providers/finance_overview_provider.dart';
 import '../providers/me_providers.dart';
 import 'linked_spaces_section.dart';
 import 'me_space_card.dart';
@@ -64,6 +68,7 @@ class MeHomeTab extends ConsumerWidget {
             padding: AppSpacing.gutterAll,
             children: [
               const _MeHeader(),
+              const _FinanceGlance(),
               const SizedBox(height: AppSpacing.xl),
               Padding(
                 padding: const EdgeInsets.only(left: AppSpacing.xs),
@@ -248,6 +253,71 @@ class MeHomeTab extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.xl),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// What I owe, across every space, and a way into Me › Finances. Nothing at
+/// all while there is nothing to pay (or the read fails): the home is not a
+/// dashboard of empty states.
+class _FinanceGlance extends ConsumerWidget {
+  const _FinanceGlance();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final data = ref.watch(financeOverviewProvider).value;
+    if (data == null || data.outstanding.isEmpty) return const SizedBox.shrink();
+    final now = ref.watch(clockProvider).now();
+    final overdue = data.outstanding.where((i) => i.overdueAt(now)).length;
+    final scheme = Theme.of(context).colorScheme;
+    final amount = [
+      for (final e in data.owedByCurrency.entries)
+        moneyFormat(e.key).formatMinor(e.value),
+    ].join(' · ');
+    final tone = overdue > 0 ? scheme.error : scheme.primary;
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.md),
+      child: Material(
+        key: const ValueKey('me-home-finance-glance'),
+        color: tone.withValues(alpha: .10),
+        borderRadius: AppRadius.xlAll,
+        child: InkWell(
+          borderRadius: AppRadius.xlAll,
+          onTap: () => context.push(myFinancesRoute()),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.lg,
+              vertical: AppSpacing.md,
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.account_balance_wallet_outlined, color: tone),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n?.meFinanceGlanceOwed(amount) ?? 'To pay: $amount',
+                        style: Theme.of(context).textTheme.titleSmall?.strong,
+                      ),
+                      if (overdue > 0)
+                        Text(
+                          l10n?.financesOverdueCount(overdue) ??
+                              '$overdue overdue',
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: scheme.error),
+                        ),
+                    ],
+                  ),
+                ),
+                Icon(Icons.chevron_right, color: scheme.onSurfaceVariant),
+              ],
+            ),
           ),
         ),
       ),
