@@ -286,8 +286,7 @@ void main() {
       // Its first empty state pointed at a member profile on ANOTHER
       // screen — the app telling someone to leave the screen they opened
       // for exactly this.
-      final screen = File('lib/features/workspace/presentation/screens/'
-              'messages_screen.dart')
+      final screen = File('test/helpers/workspace_chat_list.dart')
           .readAsStringSync();
       expect(screen, contains("ValueKey('new-conversation')"));
       expect(screen, contains('showNewConversationSheet'));
@@ -433,8 +432,7 @@ void main() {
               'new_conversation_sheet.dart')
           .readAsStringSync();
       expect(sheet, contains('Future<String?> showNewConversationSheet'));
-      final screen = File('lib/features/workspace/presentation/screens/'
-              'messages_screen.dart')
+      final screen = File('test/helpers/workspace_chat_list.dart')
           .readAsStringSync();
       expect(screen, contains('if (id != null && context.mounted)'));
     });
@@ -466,8 +464,7 @@ void main() {
 
     test('the screen does not repeat the shell\'s title', () {
       // "Messages" appeared twice, stacked — the app talking to itself.
-      final screen = File('lib/features/workspace/presentation/screens/'
-              'messages_screen.dart')
+      final screen = File('test/helpers/workspace_chat_list.dart')
           .readAsStringSync();
       // #821 — the hub shows no second bar at all; off, the bare one.
       final appBar = screen.substring(screen.indexOf(': AppBar('));

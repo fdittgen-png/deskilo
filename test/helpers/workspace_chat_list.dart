@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/help/help_hint.dart';
-import '../../../../core/trace/guarded.dart';
-import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../reservations/providers/reservation_providers.dart';
-import '../../domain/conversation.dart';
-import '../../domain/workspace_feature.dart';
-import '../../providers/conversation_providers.dart';
-import '../../providers/workspace_providers.dart';
-import '../widgets/conversation_row.dart';
-import 'message_search_screen.dart';
-import '../widgets/conversation_thread.dart';
-import '../widgets/new_conversation_sheet.dart';
-import '../../../../core/theme/shell_metrics.dart';
-import '../../../../core/ui/edge_fade_scroll.dart';
-import '../widgets/application_requests_entry.dart';
-import '../../../directory/presentation/messenger/space_inquiries_screen.dart';
+import 'package:deskilo/core/theme/app_spacing.dart';
+import 'package:deskilo/core/help/help_hint.dart';
+import 'package:deskilo/core/trace/guarded.dart';
+import 'package:deskilo/core/ui/app_snack.dart';
+import 'package:deskilo/core/ui/loading_view.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
+import 'package:deskilo/features/workspace/domain/conversation.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/providers/conversation_providers.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/conversation_row.dart';
+import 'package:deskilo/features/workspace/presentation/screens/message_search_screen.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/conversation_thread.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/new_conversation_sheet.dart';
+import 'package:deskilo/core/theme/shell_metrics.dart';
+import 'package:deskilo/core/ui/edge_fade_scroll.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/application_requests_entry.dart';
+import 'package:deskilo/features/directory/presentation/messenger/space_inquiries_screen.dart';
 
 /// #821 — what the chat list shows.
 enum InboxFilter { all, unread, archived }
@@ -38,14 +38,14 @@ enum InboxFilter { all, unread, archived }
 /// the search icon) instead of a second app bar, a long press on a row
 /// for pin / mute / mark unread / archive, an empty state per filter and
 /// a retry on the error state.
-class MessagesScreen extends ConsumerStatefulWidget {
-  const MessagesScreen({super.key});
+class WorkspaceChatList extends ConsumerStatefulWidget {
+  const WorkspaceChatList({super.key});
 
   @override
-  ConsumerState<MessagesScreen> createState() => _MessagesScreenState();
+  ConsumerState<WorkspaceChatList> createState() => _WorkspaceChatListState();
 }
 
-class _MessagesScreenState extends ConsumerState<MessagesScreen> {
+class _WorkspaceChatListState extends ConsumerState<WorkspaceChatList> {
   InboxFilter _filter = InboxFilter.all;
 
   @override

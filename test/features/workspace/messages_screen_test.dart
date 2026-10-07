@@ -137,8 +137,7 @@ void main() {
       // `my_conversations` already returns them by last_message_at desc.
       // A second opinion here is how a list ends up disagreeing with the
       // unread badge computed from the same query.
-      final source = File('lib/features/workspace/presentation/screens/'
-              'messages_screen.dart')
+      final source = File('test/helpers/workspace_chat_list.dart')
           .readAsStringSync();
       expect(source, isNot(contains('..sort(')));
       expect(source, isNot(contains('.sort(')));

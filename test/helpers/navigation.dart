@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
-import 'package:deskilo/features/workspace/presentation/screens/messages_screen.dart';
+import 'workspace_chat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -110,14 +110,14 @@ Future<void> tapInvoicingTool(WidgetTester tester, String key) async {
   await tester.pumpAndSettle();
 }
 
-/// Opens the workspace's conversation list (the legacy workspace-scoped
-/// chat screen). Discussions live in the Me messenger now and the workspace
+/// Opens the workspace's conversation list (a test-only harness; the app
+/// has no such screen — #2210). Discussions live in the Me messenger now and the workspace
 /// inbox only carries alerts, so tests of the conversation machinery reach
 /// the list directly.
 Future<void> openWorkspaceChats(WidgetTester tester) async {
   final context = tester.element(find.byType(Scaffold).first);
   Navigator.of(context).push(
-    MaterialPageRoute<void>(builder: (_) => const MessagesScreen()),
+    MaterialPageRoute<void>(builder: (_) => const WorkspaceChatList()),
   );
   await tester.pumpAndSettle();
 }

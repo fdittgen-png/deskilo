@@ -313,8 +313,8 @@ GoRouter router(Ref ref) {
                             featureEnabled(WorkspaceFeature.eventsTab)
                         ? '/calendar'
                         : null,
-                // #702 — the inbox: chats, alerts and members, one
-                // destination. `MessagesScreen` is now its first face.
+                // The workspace's alerts and requests, plus one door to the
+                // messenger in Me (#2210: the old conversation list is gone).
                 builder: (context, state) => const InboxScreen(),
               ),
             ],

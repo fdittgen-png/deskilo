@@ -34,8 +34,7 @@ const Map<String, int> _inventory = {
   'lib/features/reservations/presentation/widgets/getting_started_card.dart': 2,
   'lib/features/workspace/presentation/screens/availability_screen.dart': 1,
   'lib/features/workspace/presentation/screens/members_screen.dart': 1,
-  'lib/features/workspace/presentation/screens/messages_screen.dart': 1,
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart':
+    'lib/features/workspace/presentation/screens/workspace_settings_screen.dart':
       1,
   'lib/features/workspace/presentation/widgets/badge_manager_dialog.dart': 1,
   'lib/features/workspace/presentation/widgets/feature_capability_list.dart': 1,

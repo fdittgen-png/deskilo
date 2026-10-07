@@ -14,7 +14,7 @@ import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/directory/presentation/public_workspace_view.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
-import 'package:deskilo/features/workspace/presentation/screens/messages_screen.dart';
+import 'package:deskilo/features/workspace/presentation/screens/inbox_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -157,7 +157,7 @@ void main() {
       final messenger = hosted();
       await pump(
         tester,
-        const MessagesScreen(),
+        const InboxScreen(),
         messenger: messenger,
         workspace: FakeWorkspaceRepository.withWorkspace(featureFlags: on),
       );
@@ -185,7 +185,7 @@ void main() {
     ) async {
       await pump(
         tester,
-        const MessagesScreen(),
+        const InboxScreen(),
         messenger: hosted(),
         workspace: FakeWorkspaceRepository.withWorkspace(
           featureFlags: const {'publicListings': true, 'spaceInquiries': false},
@@ -205,7 +205,7 @@ void main() {
       await tester.pumpWidget(const SizedBox.shrink());
       await pump(
         tester,
-        const MessagesScreen(),
+        const InboxScreen(),
         messenger: hosted(),
         workspace: member,
       );

@@ -11,7 +11,7 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
-import 'package:deskilo/features/workspace/presentation/screens/messages_screen.dart';
+import '../../helpers/workspace_chat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -224,8 +224,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('conversation-thread')), findsNothing);
     // The conversation list is a pushed page in this harness; leave it.
-    if (find.byType(MessagesScreen).evaluate().isNotEmpty) {
-      Navigator.of(tester.element(find.byType(MessagesScreen))).pop();
+    if (find.byType(WorkspaceChatList).evaluate().isNotEmpty) {
+      Navigator.of(tester.element(find.byType(WorkspaceChatList))).pop();
       await tester.pumpAndSettle();
     }
     expect(
