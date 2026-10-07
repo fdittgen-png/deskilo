@@ -23282,6 +23282,60 @@ abstract class AppLocalizations {
   /// **'Year'**
   String get publicHolidaysYear;
 
+  /// No description provided for @publicPersonUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This profile is not public.'**
+  String get publicPersonUnavailable;
+
+  /// No description provided for @publicProfileCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Link copied.'**
+  String get publicProfileCopied;
+
+  /// No description provided for @publicProfileCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the link'**
+  String get publicProfileCopy;
+
+  /// No description provided for @publicProfileOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off: people who are not signed in see nothing of you.'**
+  String get publicProfileOff;
+
+  /// No description provided for @publicProfileOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone with the link reads your name, profession and bio.'**
+  String get publicProfileOn;
+
+  /// No description provided for @publicProfilePublishAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish'**
+  String get publicProfilePublishAction;
+
+  /// No description provided for @publicProfilePublishBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.'**
+  String get publicProfilePublishBody;
+
+  /// No description provided for @publicProfilePublishTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish a public profile?'**
+  String get publicProfilePublishTitle;
+
+  /// No description provided for @publicProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Public profile'**
+  String get publicProfileTitle;
+
   /// Push body for the removed-reservation ping — generic, no personal data (#424)
   ///
   /// In en, this message translates to:

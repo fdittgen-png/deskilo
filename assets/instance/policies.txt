@@ -24,6 +24,7 @@ public.account_group_members.mcp_delegated_deny
 public.account_group_messages.mcp_delegated_deny
 public.account_groups.mcp_delegated_deny
 public.account_messages.mcp_delegated_deny
+public.account_public_profiles.mcp_delegated_deny
 public.analytics_history.mcp_delegated_deny
 public.badge_auth_attempts.mcp_delegated_deny
 public.bi_views.mcp_delegated_deny
@@ -176,6 +177,8 @@ public.profiles.profiles_select
 public.profiles.profiles_update
 public.public_directory_sources.mcp_delegated_deny
 public.public_directory_sources.public_directory_read
+public.public_person_cards.mcp_delegated_deny
+public.public_person_cards.published_people
 public.public_workspace_cards.mcp_delegated_deny
 public.public_workspace_cards.published_cards
 public.push_config.mcp_delegated_deny

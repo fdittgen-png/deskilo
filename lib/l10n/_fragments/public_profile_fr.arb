@@ -1,0 +1,11 @@
+{
+  "publicProfileTitle": "Profil public",
+  "publicProfileOn": "Toute personne ayant le lien lit votre nom, votre métier et votre présentation.",
+  "publicProfileOff": "Désactivé : les personnes non connectées ne voient rien de vous.",
+  "publicProfilePublishTitle": "Publier un profil public ?",
+  "publicProfilePublishBody": "N'importe qui sur Internet, connecté ou non, pourra lire votre nom, votre métier et votre présentation via votre lien. Vos coordonnées, votre présence et vos espaces restent privés.",
+  "publicProfilePublishAction": "Publier",
+  "publicProfileCopy": "Copier le lien",
+  "publicProfileCopied": "Lien copié.",
+  "publicPersonUnavailable": "Ce profil n'est pas public."
+}

@@ -66,6 +66,7 @@ class RouteCoverage {
 const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/me', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage('/discover', CoverageStatus.planned, owner: '#1881 B'),
+  RouteCoverage('/p/:id', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
     '/connections',
     CoverageStatus.excluded,

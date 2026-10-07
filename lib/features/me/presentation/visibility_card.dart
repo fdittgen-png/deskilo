@@ -14,6 +14,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/visibility.dart';
 import '../providers/me_providers.dart';
 import 'about_dialog.dart';
+import 'public_profile_tile.dart';
 import 'visibility_labels.dart';
 import 'visibility_preview.dart';
 
@@ -157,6 +158,10 @@ class VisibilityCard extends ConsumerWidget {
           for (final field in VisibilityField.seen) row(field),
           const Divider(),
           row(VisibilityField.reachability),
+          const Divider(),
+          // #2211 — the one switch that shows anything to people who are
+          // not signed in.
+          const PublicProfileTile(),
           const Divider(),
           const VisibilityPreview(),
         ],

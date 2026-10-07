@@ -9,6 +9,7 @@
 // always, "nobody" never.
 import 'package:deskilo/features/me/domain/me_repository.dart';
 import 'package:deskilo/features/me/domain/my_spaces.dart';
+import 'package:deskilo/features/me/domain/public_person.dart';
 import 'package:deskilo/features/me/domain/visibility.dart';
 
 /// One account's public facts, before any audience is applied.
@@ -141,6 +142,29 @@ class FakeMeRepository implements MeRepository {
     final target = accounts[userId];
     if (target == null) return const AccountView();
     return _view(target, _me.spaces, signedIn: true);
+  }
+
+  /// The accounts that published a public profile (0389).
+  final Set<String> published = {};
+
+  @override
+  Future<bool> myPublicProfile() async => published.contains(_currentUser());
+
+  @override
+  Future<void> setPublicProfile(bool publish) async {
+    if (failure != null) throw failure!;
+    publish ? published.add(_currentUser()) : published.remove(_currentUser());
+  }
+
+  @override
+  Future<PublicPerson?> publicPerson(String userId) async {
+    final account = accounts[userId];
+    if (account == null || !published.contains(userId)) return null;
+    return PublicPerson(
+      name: account.name,
+      profession: account.profession,
+      bio: account.bio,
+    );
   }
 
   @override

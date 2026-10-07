@@ -5,6 +5,7 @@ import '../../../core/backend/connected_installations.dart';
 import '../../../core/data/system_columns.dart';
 import '../domain/me_repository.dart';
 import '../domain/my_spaces.dart';
+import '../domain/public_person.dart';
 import '../domain/visibility.dart';
 
 /// #1823 — [MeRepository] over this server's client, and over the linked
@@ -51,6 +52,28 @@ class SupabaseMeRepository implements MeRepository {
   Future<AccountView> previewMyAccount(PreviewAudience audience) async =>
       AccountView.fromJson(_object(await _client
           .rpc<dynamic>('preview_my_account', params: {'p_as': audience.wire})));
+
+  @override
+  Future<bool> myPublicProfile() async =>
+      _object(await _client.rpc<dynamic>('my_public_profile'))['published'] ==
+      true;
+
+  @override
+  Future<void> setPublicProfile(bool publish) => _client.rpc<void>(
+        'set_public_profile',
+        params: {'p_publish': publish},
+      );
+
+  @override
+  Future<PublicPerson?> publicPerson(String userId) async {
+    // 0390 — the public card, readable signed in or not; no row = not public.
+    final row = await _client
+        .from('public_person_cards')
+        .select('name, profession, bio')
+        .eq('user_id', userId)
+        .maybeSingle();
+    return row == null ? null : PublicPerson.fromJson(row);
+  }
 
   @override
   Future<AccountView> visibleAccount(String userId) async =>

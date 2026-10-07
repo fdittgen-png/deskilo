@@ -13669,6 +13669,36 @@ class AppLocalizationsFr extends AppLocalizations {
   String get publicHolidaysYear => 'Année';
 
   @override
+  String get publicPersonUnavailable => 'Ce profil n\'est pas public.';
+
+  @override
+  String get publicProfileCopied => 'Lien copié.';
+
+  @override
+  String get publicProfileCopy => 'Copier le lien';
+
+  @override
+  String get publicProfileOff =>
+      'Désactivé : les personnes non connectées ne voient rien de vous.';
+
+  @override
+  String get publicProfileOn =>
+      'Toute personne ayant le lien lit votre nom, votre métier et votre présentation.';
+
+  @override
+  String get publicProfilePublishAction => 'Publier';
+
+  @override
+  String get publicProfilePublishBody =>
+      'N\'importe qui sur Internet, connecté ou non, pourra lire votre nom, votre métier et votre présentation via votre lien. Vos coordonnées, votre présence et vos espaces restent privés.';
+
+  @override
+  String get publicProfilePublishTitle => 'Publier un profil public ?';
+
+  @override
+  String get publicProfileTitle => 'Profil public';
+
+  @override
   String get pushCancelledBody => 'Une réservation a été retirée par un admin.';
 
   @override

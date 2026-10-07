@@ -8366,6 +8366,15 @@
   "@publicHolidaysYear": {
     "description": "#1274 the year field label"
   },
+  "publicPersonUnavailable": "Dieses Profil ist nicht öffentlich.",
+  "publicProfileCopied": "Link kopiert.",
+  "publicProfileCopy": "Link kopieren",
+  "publicProfileOff": "Aus: Nicht angemeldete Personen sehen nichts von Ihnen.",
+  "publicProfileOn": "Wer den Link hat, liest Ihren Namen, Ihren Beruf und Ihre Vorstellung.",
+  "publicProfilePublishAction": "Veröffentlichen",
+  "publicProfilePublishBody": "Jede Person im Internet, angemeldet oder nicht, kann über Ihren Link Ihren Namen, Ihren Beruf und Ihre Vorstellung lesen. Kontaktdaten, Anwesenheit und Spaces bleiben privat.",
+  "publicProfilePublishTitle": "Öffentliches Profil veröffentlichen?",
+  "publicProfileTitle": "Öffentliches Profil",
   "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt.",
   "pushCancelledTitle": "Reservierung entfernt",
   "pushPendingBody": "Jemand wartet auf deine Bestätigung.",

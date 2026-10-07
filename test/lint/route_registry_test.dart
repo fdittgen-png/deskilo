@@ -60,6 +60,9 @@ const Set<String> _openWithEveryFeatureOff = {
   '/editor/level/:levelId',
   '/account-activity',
   '/discover',
+  // #2211 — a published public profile: readable by anyone, signed in or
+  // not, whatever the workspace's flags (it is not a workspace screen).
+  '/p/:id',
   '/connections',
   '/account-messages',
   '/settings/public-page',
