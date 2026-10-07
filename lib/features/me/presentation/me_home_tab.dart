@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_typography.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
@@ -63,12 +64,29 @@ class MeHomeTab extends ConsumerWidget {
             padding: AppSpacing.gutterAll,
             children: [
               const _MeHeader(),
-              const SizedBox(height: AppSpacing.lg),
-              Text(
-                l10n?.meMySpaces ?? 'My spaces',
-                style: Theme.of(context).textTheme.titleMedium,
+              const SizedBox(height: AppSpacing.xl),
+              Padding(
+                padding: const EdgeInsets.only(left: AppSpacing.xs),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l10n?.meMySpaces ?? 'My spaces',
+                        style: Theme.of(context).textTheme.titleLarge?.strong,
+                      ),
+                    ),
+                    if (groups.isNotEmpty)
+                      Text(
+                        '${groups.length}',
+                        key: const ValueKey('me-home-count'),
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                  ],
+                ),
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: AppSpacing.md),
               if (nothing)
                 EmptyState(
                   key: const ValueKey('me-home-empty'),
@@ -88,6 +106,42 @@ class MeHomeTab extends ConsumerWidget {
                         ref.read(spacePrefsProvider.notifier).toggleFavorite(key),
                     onRate: (stars) =>
                         ref.read(spacePrefsProvider.notifier).rate(key, stars),
+                    leave: [
+                      for (final space in [...group]..sort(
+                        (a, b) => b.environment.compareTo(a.environment),
+                      ))
+                        SpaceLeaveItem(
+                          id: space.id,
+                          label: (memberships
+                                      .where((m) => m.workspaceId == space.id)
+                                      .firstOrNull
+                                      ?.isOwner ??
+                                  false)
+                              ? (l10n?.meLeaveOwner ??
+                                  'Owners hand the space over before leaving')
+                              : group.length == 1
+                              ? (l10n?.meLeaveAction ?? 'Leave this space')
+                              : (l10n?.meLeaveSide(
+                                      space.environment == 'prod'
+                                          ? (l10n.profilesPairProd)
+                                          : (l10n.profilesPairDev),
+                                    ) ??
+                                  'Leave ${space.environment}'),
+                          enabled: !(memberships
+                                  .where((m) => m.workspaceId == space.id)
+                                  .firstOrNull
+                                  ?.isOwner ??
+                              false),
+                          onLeave: () => confirmLeaveSpace(
+                            context,
+                            ref,
+                            space,
+                            memberships
+                                .where((m) => m.workspaceId == space.id)
+                                .firstOrNull,
+                          ),
+                        ),
+                    ],
                     onUp: prefs.moved(shown, key, -1) == null
                         ? null
                         : () => ref
@@ -129,27 +183,60 @@ class MeHomeTab extends ConsumerWidget {
               // #1835 — my guest visits: beside my spaces, never among them.
               const MyVisitsSection(),
               const SizedBox(height: AppSpacing.md),
-              Wrap(
-                spacing: AppSpacing.sm,
-                runSpacing: AppSpacing.sm,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  FilledButton.tonalIcon(
+                  FilledButton.icon(
                     key: const ValueKey('me-home-discover'),
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(52),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadius.lgAll,
+                      ),
+                    ),
                     icon: const Icon(Icons.travel_explore_outlined),
                     label: Text(l10n?.meFindSpace ?? 'Find a space'),
                     onPressed: onDiscover,
                   ),
-                  OutlinedButton.icon(
-                    key: const ValueKey('me-home-join'),
-                    icon: const Icon(Icons.qr_code_2_outlined),
-                    label: Text(l10n?.meJoinSpace ?? 'Join with a code'),
-                    onPressed: () => context.push('/onboarding?join=1'),
-                  ),
-                  OutlinedButton.icon(
-                    key: const ValueKey('me-home-create'),
-                    icon: const Icon(Icons.add_business_outlined),
-                    label: Text(l10n?.meCreateSpace ?? 'Create a space'),
-                    onPressed: () => context.push('/onboarding'),
+                  const SizedBox(height: AppSpacing.sm),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          key: const ValueKey('me-home-join'),
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(48),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: AppRadius.lgAll,
+                            ),
+                          ),
+                          icon: const Icon(Icons.qr_code_2_outlined),
+                          label: Text(
+                            l10n?.meJoinSpace ?? 'Join with a code',
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          onPressed: () => context.push('/onboarding?join=1'),
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          key: const ValueKey('me-home-create'),
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(48),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: AppRadius.lgAll,
+                            ),
+                          ),
+                          icon: const Icon(Icons.add_business_outlined),
+                          label: Text(
+                            l10n?.meCreateSpace ?? 'Create a space',
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          onPressed: () => context.push('/onboarding'),
+                        ),
+                      ),
+                    ],
                   ),
                   if (spaces.isNotEmpty)
                     TextButton(
@@ -159,6 +246,7 @@ class MeHomeTab extends ConsumerWidget {
                     ),
                 ],
               ),
+              const SizedBox(height: AppSpacing.xl),
             ],
           ),
         ),
@@ -177,39 +265,47 @@ class _MeHeader extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final profile = ref.watch(myProfileProvider).value;
     final name = profile?.displayName ?? '';
-    return DecoratedBox(
+    return Padding(
       key: const ValueKey('me-header'),
-      decoration: BoxDecoration(
-        color: scheme.surfaceContainerLow,
-        borderRadius: AppRadius.lgAll,
-        border: Border.all(color: scheme.outlineVariant),
-      ),
-      child: Padding(
-        padding: AppSpacing.gutterAll,
-        child: Row(
-          children: [
-            const PersonalAvatar(radius: 24),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: Theme.of(context).textTheme.titleMedium
-                        ?.copyWith(color: scheme.onSurface),
-                  ),
-                  Text(
-                    l10n?.meHeaderOwned ??
-                        'Your account · it belongs only to you',
-                    style: Theme.of(context).textTheme.bodySmall
-                        ?.copyWith(color: scheme.onSurface),
-                  ),
-                ],
-              ),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      child: Row(
+        children: [
+          const PersonalAvatar(radius: 30),
+          const SizedBox(width: AppSpacing.lg),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headlineSmall?.strong
+                      .copyWith(color: scheme.onSurface),
+                ),
+                const SizedBox(height: 2),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.lock_outline,
+                      size: 14,
+                      color: scheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: AppSpacing.xs),
+                    Flexible(
+                      child: Text(
+                        l10n?.meHeaderOwned ??
+                            'Your account · it belongs only to you',
+                        style: Theme.of(context).textTheme.bodySmall
+                            ?.copyWith(color: scheme.onSurfaceVariant),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

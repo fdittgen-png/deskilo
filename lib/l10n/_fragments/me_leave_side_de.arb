@@ -1,0 +1,10 @@
+{
+  "meLeaveSide": "{side} verlassen",
+  "@meLeaveSide": {
+    "placeholders": {
+      "side": {
+        "type": "String"
+      }
+    }
+  }
+}
