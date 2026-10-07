@@ -1,0 +1,18 @@
+{
+  "meGroupFavorites": "Favorites",
+  "meGroupOther": "Other",
+  "meGroupName": "Group name",
+  "meGroupAdd": "New group",
+  "meGroupRename": "Rename",
+  "meGroupDelete": "Delete group",
+  "meGroupMove": "Move to group…",
+  "meGroupEmptyFavorites": "Give a space a heart and it waits for you here.",
+  "meGroupEmptyOwn": "Move spaces here from their menu.",
+  "meSortHand": "My order",
+  "meSortRecent": "Recently used",
+  "meSortRating": "Best rated",
+  "meSortAlphabet": "A–Z",
+  "meSortTooltip": "Sort",
+  "meSpacesSearch": "Search my spaces",
+  "meSpacesNoMatch": "No space matches."
+}

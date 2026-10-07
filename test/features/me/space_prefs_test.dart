@@ -12,22 +12,18 @@ import 'me_app.dart';
 
 void main() {
   group('SpacePrefs', () {
-    test('arrange: favourites first, then the chosen order, unplaced last', () {
-      const prefs = SpacePrefs(order: ['b', 'a'], favorites: {'c'});
-      expect(prefs.arrange(['a', 'b', 'c', 'd']), ['c', 'b', 'a', 'd']);
+    test('arrange: the chosen order, then the order they came in', () {
+      const prefs = SpacePrefs(order: ['b', 'a']);
+      expect(prefs.arrange(['a', 'b', 'c', 'd']), ['b', 'a', 'c', 'd']);
     });
 
-    test(
-      'moved: swaps neighbours, refuses an end and a favourite boundary',
-      () {
-        const prefs = SpacePrefs(favorites: {'a'});
-        final shown = ['a', 'b', 'c'];
-        expect(prefs.moved(shown, 'c', -1), ['a', 'c', 'b']);
-        expect(prefs.moved(shown, 'a', -1), isNull);
-        expect(prefs.moved(shown, 'c', 1), isNull);
-        expect(prefs.moved(shown, 'b', -1), isNull, reason: 'a is a favourite');
-      },
-    );
+    test('moved: swaps neighbours and refuses an end', () {
+      const prefs = SpacePrefs();
+      final shown = ['a', 'b', 'c'];
+      expect(prefs.moved(shown, 'c', -1), ['a', 'c', 'b']);
+      expect(prefs.moved(shown, 'a', -1), isNull);
+      expect(prefs.moved(shown, 'c', 1), isNull);
+    });
 
     test('a malformed store reads as empty and bad stars are dropped', () {
       expect(SpacePrefs.fromJson('nope').order, isEmpty);

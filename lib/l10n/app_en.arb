@@ -12034,14 +12034,23 @@
   "@meFindSpace": {
     "description": "Button on the Me home: open Discover."
   },
+  "meGroupAdd": "New group",
+  "meGroupDelete": "Delete group",
+  "meGroupEmptyFavorites": "Give a space a heart and it waits for you here.",
+  "meGroupEmptyOwn": "Move spaces here from their menu.",
+  "meGroupFavorites": "Favorites",
   "meGroupInstallations": "Connected installations",
   "@meGroupInstallations": {
     "description": "#1846 Me groups: meGroupInstallations"
   },
+  "meGroupMove": "Move to group…",
+  "meGroupName": "Group name",
+  "meGroupOther": "Other",
   "meGroupProfile": "My profile",
   "@meGroupProfile": {
     "description": "#1846 Me groups: meGroupProfile"
   },
+  "meGroupRename": "Rename",
   "meGroupWorkspaces": "My workspaces",
   "@meGroupWorkspaces": {
     "description": "#1846 Me groups: meGroupWorkspaces"
@@ -12156,6 +12165,11 @@
   "@meSectionMine": {
     "description": "Section heading in Me: the person's own history and data."
   },
+  "meSortAlphabet": "A–Z",
+  "meSortHand": "My order",
+  "meSortRating": "Best rated",
+  "meSortRecent": "Recently used",
+  "meSortTooltip": "Sort",
   "meSpaceException": "In this space",
   "@meSpaceException": {
     "description": "Title of the row listing this space's own overrides of the person's preferences."
@@ -12169,6 +12183,8 @@
   "@meSpacePending": {
     "description": "Subtitle of a space card whose membership awaits approval."
   },
+  "meSpacesNoMatch": "No space matches.",
+  "meSpacesSearch": "Search my spaces",
   "meTabDiscover": "Discover",
   "@meTabDiscover": {
     "description": "Me layer bottom tab: find published spaces."

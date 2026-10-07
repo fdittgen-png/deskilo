@@ -101,7 +101,7 @@ class _MeShellState extends ConsumerState<MeShell> {
   });
 
   Widget _page(MeTab tab) => switch (tab) {
-    MeTab.home => MeHomeTab(onDiscover: () => _show(MeTab.discover)),
+    MeTab.home => const MeHomeTab(),
     MeTab.discover => const DirectoryScreen(embedded: true),
     MeTab.messages => const MeMessagesTab(),
     MeTab.me => const MeAccountTab(),

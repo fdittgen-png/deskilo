@@ -10486,10 +10486,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meFindSpace => 'Find a space';
 
   @override
+  String get meGroupAdd => 'New group';
+
+  @override
+  String get meGroupDelete => 'Delete group';
+
+  @override
+  String get meGroupEmptyFavorites =>
+      'Give a space a heart and it waits for you here.';
+
+  @override
+  String get meGroupEmptyOwn => 'Move spaces here from their menu.';
+
+  @override
+  String get meGroupFavorites => 'Favorites';
+
+  @override
   String get meGroupInstallations => 'Connected installations';
 
   @override
+  String get meGroupMove => 'Move to group…';
+
+  @override
+  String get meGroupName => 'Group name';
+
+  @override
+  String get meGroupOther => 'Other';
+
+  @override
   String get meGroupProfile => 'My profile';
+
+  @override
+  String get meGroupRename => 'Rename';
 
   @override
   String get meGroupWorkspaces => 'My workspaces';
@@ -10568,6 +10596,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meSectionMine => 'My history and data';
 
   @override
+  String get meSortAlphabet => 'A–Z';
+
+  @override
+  String get meSortHand => 'My order';
+
+  @override
+  String get meSortRating => 'Best rated';
+
+  @override
+  String get meSortRecent => 'Recently used';
+
+  @override
+  String get meSortTooltip => 'Sort';
+
+  @override
   String get meSpaceException => 'In this space';
 
   @override
@@ -10578,6 +10621,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meSpacePending => 'Waiting for approval';
+
+  @override
+  String get meSpacesNoMatch => 'No space matches.';
+
+  @override
+  String get meSpacesSearch => 'Search my spaces';
 
   @override
   String get meTabDiscover => 'Discover';

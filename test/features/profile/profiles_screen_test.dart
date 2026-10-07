@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../me/me_app.dart' show tapIn;
 
 Future<(FakeWorkspaceRepository, InMemoryActiveWorkspaceStore)> pumpProfiles(
   WidgetTester tester,
@@ -50,17 +51,8 @@ Future<(FakeWorkspaceRepository, InMemoryActiveWorkspaceStore)> pumpProfiles(
   await tester.pumpAndSettle();
   await tester.tap(find.text('Back to Me'));
   await tester.pumpAndSettle();
-  // The list is lazy and the cards are taller: bring the link into view.
-  await tester.scrollUntilVisible(
-    find.byKey(const ValueKey('me-home-manage')),
-    200,
-    scrollable: find.descendant(
-      of: find.byKey(const ValueKey('me-home-list')),
-      matching: find.byType(Scrollable),
-    ),
-  );
-  await tester.tap(find.byKey(const ValueKey('me-home-manage')));
-  await tester.pumpAndSettle();
+  // The list is longer and lazy: scroll to the link, then tap it.
+  await tapIn(tester, 'me-home-list', find.byKey(const ValueKey('me-home-manage')));
   return (workspace, store);
 }
 

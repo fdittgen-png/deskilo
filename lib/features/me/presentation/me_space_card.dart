@@ -18,6 +18,8 @@ import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../providers/me_providers.dart';
+import '../providers/space_prefs_provider.dart';
+import '../../../core/time/clock.dart';
 import '../../../app/shell/space_entry.dart';
 
 class MeSpaceCard extends ConsumerWidget {
@@ -91,6 +93,10 @@ class MeSpaceCard extends ConsumerWidget {
               // membership is not active for this person is shown
               // disabled and does nothing.
               onPressed: !_hasAccess ? null : () {
+                // The "recently used" sort remembers when I went in.
+                ref
+                    .read(spacePrefsProvider.notifier)
+                    .touch(spaceRowKeyOf(space), ref.read(clockProvider).now());
                 final box = buttonContext.findRenderObject() as RenderBox?;
                 final from = box == null
                     ? null
