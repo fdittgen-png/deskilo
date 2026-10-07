@@ -1037,6 +1037,7 @@ const Set<String> uiKeys = {
   'me-home-create',
   'me-home-discover',
   'me-home-empty',
+  'me-home-finance-glance',
   'me-home-join',
   'me-home-list',
   'me-home-manage',
