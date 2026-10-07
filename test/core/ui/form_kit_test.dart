@@ -4,7 +4,9 @@
 // demand and disposed once; a field shows its error under itself; a form
 // sheet stays open with the reason when the submit is refused, cannot be
 // submitted twice while saving, closes with true on success, and disposes
-// what it was given when it goes away.
+// what it was given when it goes away; a per-field check shows each
+// problem under its own field, submits nothing until there are none, and
+// clears a field's problem as soon as that field is edited.
 import 'dart:async';
 
 import 'package:deskilo/core/ui/form_kit.dart';
@@ -15,6 +17,7 @@ Future<bool?> _openSheet(
   WidgetTester tester,
   Future<String?> Function() onSubmit, {
   VoidCallback? onDispose,
+  FieldErrors Function()? validate,
 }) async {
   bool? result;
   await tester.pumpWidget(
@@ -31,10 +34,18 @@ Future<bool?> _openSheet(
                   submitKey: const ValueKey('save'),
                   onSubmit: onSubmit,
                   onDispose: onDispose,
+                  validate: validate,
                   builder: (context, refresh) => [
                     AppTextField(
+                      key: const ValueKey('name'),
                       controller: TextEditingController(),
                       label: 'Name',
+                      fieldKey: 'name',
+                    ),
+                    AppTextField(
+                      controller: TextEditingController(),
+                      label: 'City',
+                      fieldKey: 'city',
                     ),
                   ],
                 ),
@@ -117,5 +128,40 @@ void main() {
     gate.complete(null);
     await tester.pumpAndSettle();
     expect(disposed, 1);
+  });
+
+  testWidgets('field problems sit under their fields, block the submit, and '
+      'clear when the field is edited', (tester) async {
+    var submits = 0;
+    var errors = <String, String>{'name': 'Name the thing.'};
+    await _openSheet(tester, () async {
+      submits++;
+      return null;
+    }, validate: () => errors);
+    await tester.tap(find.byKey(const ValueKey('save')));
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('name')),
+        matching: find.text('Name the thing.'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('form-sheet-error')), findsNothing);
+    expect(submits, 0, reason: 'nothing is submitted while a field is wrong');
+
+    await tester.enterText(find.byKey(const ValueKey('name')), 'Desk');
+    await tester.pump();
+    expect(
+      find.text('Name the thing.'),
+      findsNothing,
+      reason: 'editing the field clears its problem',
+    );
+
+    errors = {};
+    await tester.tap(find.byKey(const ValueKey('save')));
+    await tester.pumpAndSettle();
+    expect(submits, 1);
+    expect(find.text('New thing'), findsNothing, reason: 'closed on success');
   });
 }

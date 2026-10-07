@@ -55,11 +55,31 @@ await showAppFormSheet(context, AppFormSheet(
 
 ## 3. Validation is domain-first
 
-The rules are a pure function in `domain/` (or `application/`): draft in,
-`FieldErrors` (field key → error key) or an outcome enum out —
-`submit_expense.dart` / `ExpenseOutcome` is the model. The widget maps keys to
-localized words. Test the rules without widgets; test the form only for wiring.
-A numeric field always has a parse-and-validate path (`parseCentsInput`, …).
+The rules are a pure function in `domain/` (or `application/`): draft in, an
+outcome enum (or a set of problems) out — `submit_expense.dart` /
+`ExpenseOutcome` is the model. Test the rules without widgets; test the form
+only for wiring. A numeric field always has a parse-and-validate path
+(`parseCentsInput`, …).
+
+The form maps the outcome to `FieldErrors` (field key → localized sentence) in
+`AppFormSheet.validate`; each `AppTextField` with that `fieldKey` shows its own
+problem under itself, the first one is announced, nothing is submitted while
+any remains, and editing a field clears its problem:
+
+```dart
+validate: () {
+  final outcome = expenseOutcome(draft());
+  final field = fieldOf(outcome);          // outcome → 'amount', 'supplyName'…
+  return field == null ? const {} : {field: reason(outcome)!};
+},
+onSubmit: () async { … return null or the server's reason … },
+…
+AppTextField(controller: fields['amount'], fieldKey: 'amount', label: …),
+```
+
+`onSubmit`'s returned sentence is for what no single field explains — the
+server refused, the connection dropped — and shows above the buttons. A field
+problem never goes to that banner.
 
 ## 4. The checklist a form passes before push
 
