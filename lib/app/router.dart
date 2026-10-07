@@ -904,8 +904,7 @@ GoRouter router(Ref ref) {
           builder: (context, state) => MyFinancesScreen(
               workspaceId: state.uri.queryParameters['workspace'])),
       GoRoute(path: '/discover',builder:(context,state)=>const discovery.DirectoryScreen()),
-      GoRoute(path: '/p/:id', builder: (context, state) => PublicPersonScreen( // #2211, 0389
-          userId: state.pathParameters['id'] ?? '')),
+      GoRoute(path: '/p/:id', builder: (context, state) => PublicPersonScreen(userId: state.pathParameters['id'] ?? '')), // #2211
       GoRoute(path: '/connections',builder:(context,state)=>const ConnectionsScreen()),
       GoRoute(path: '/account-messages',builder:(context,state)=>AccountMessengerScreen(
         source:state.uri.queryParameters['source']??'',recipient:state.uri.queryParameters['recipient'],name:state.uri.queryParameters['name']??'')),
