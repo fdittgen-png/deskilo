@@ -6,6 +6,8 @@
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:flutter/material.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../money/my_finances_screen_test.dart' show invoice;
@@ -49,5 +51,46 @@ void main() {
     );
     await goTo(tester, router, '/me');
     expect(find.byKey(const ValueKey('me-home-finance-glance')), findsNothing);
+  });
+
+  testWidgets('the home total ignores a development space; its invoice opens '
+      'in that development space', (tester) async {
+    final spaces = twoSpaces();
+    spaces.workspaces[1] = spaces.workspaces[1].copyWith(environment: 'dev');
+    spaces.workspaces[0] = spaces.workspaces[0].copyWith(environment: 'prod');
+    final repo = FakeAccountActivityRepository()
+      ..financeOverview = FinanceOverview(
+        invoices: [
+          FinanceInvoice(
+            id: 'dev-inv',
+            workspaceId: 'ws-2',
+            workspaceName: 'Second Space',
+            number: 'D-1',
+            issuedAt: DateTime.utc(2026, 9, 1),
+            totalCents: 50000,
+            paidCents: 0,
+            currency: 'EUR',
+            state: FinanceState.open,
+          ),
+        ],
+      );
+    final router = await pumpMeApp(
+      tester,
+      workspace: spaces,
+      accountActivity: repo,
+    );
+    await goTo(tester, router, '/me');
+    expect(find.byKey(const ValueKey('me-home-finance-glance')), findsNothing,
+        reason: 'only test data is owed: nothing to pay in Me');
+
+    await goTo(tester, router, '/account-activity');
+    await tester.tap(find.byKey(const ValueKey('finances-open-dev-inv')));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/money');
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(Scaffold).first),
+    );
+    expect(container.read(activeWorkspaceIdProvider).value, 'ws-2',
+        reason: 'the invoice opens in its own (development) space');
   });
 }

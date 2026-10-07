@@ -1753,6 +1753,7 @@ Map<String, _Getter> _part8() => {
   'featureServicesDesc': (l) => l.featureServicesDesc,
   'featureSiteDocuments': (l) => l.featureSiteDocuments,
   'federationClose': (l) => l.federationClose,
+  'financesDevSection': (l) => l.financesDevSection,
   'financesPaid': (l) => l.financesPaid,
   'groupCreate': (l) => l.groupCreate,
   'groupDescriptionTitle': (l) => l.groupDescriptionTitle,

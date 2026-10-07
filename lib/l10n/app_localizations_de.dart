@@ -5883,6 +5883,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesAwaitingValidation => 'Zahlung wird geprüft';
 
   @override
+  String get financesDevSection =>
+      'Entwicklungs-Spaces — Testdaten, oben nicht mitgezählt';
+
+  @override
   String financesDueOn(String date) {
     return 'Fällig am $date';
   }

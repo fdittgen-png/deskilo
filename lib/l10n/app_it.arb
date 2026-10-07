@@ -3920,6 +3920,7 @@
   "@financesAwaitingValidation": {
     "description": "Me › Finances"
   },
+  "financesDevSection": "Spazi di sviluppo — dati di prova, non conteggiati sopra",
   "financesDueOn": "Scade il {date}",
   "@financesDueOn": {
     "description": "Me › Finances",

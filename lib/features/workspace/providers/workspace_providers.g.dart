@@ -2317,3 +2317,50 @@ final class WorkspaceTemplatesProvider
 
 String _$workspaceTemplatesHash() =>
     r'a11de99e16f7949050568c1162d1f463a0e42836';
+
+/// My development spaces: test data that Me shows apart and never counts.
+
+@ProviderFor(myDevelopmentWorkspaceIds)
+final myDevelopmentWorkspaceIdsProvider = MyDevelopmentWorkspaceIdsProvider._();
+
+/// My development spaces: test data that Me shows apart and never counts.
+
+final class MyDevelopmentWorkspaceIdsProvider
+    extends $FunctionalProvider<Set<String>, Set<String>, Set<String>>
+    with $Provider<Set<String>> {
+  /// My development spaces: test data that Me shows apart and never counts.
+  MyDevelopmentWorkspaceIdsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myDevelopmentWorkspaceIdsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myDevelopmentWorkspaceIdsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Set<String>> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Set<String> create(Ref ref) {
+    return myDevelopmentWorkspaceIds(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Set<String> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Set<String>>(value),
+    );
+  }
+}
+
+String _$myDevelopmentWorkspaceIdsHash() =>
+    r'dda3821c5ee11c12ffffe66058337dd306bd8e61';

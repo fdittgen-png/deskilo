@@ -5878,6 +5878,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesAwaitingValidation => 'Pago en validación';
 
   @override
+  String get financesDevSection =>
+      'Espacios de desarrollo — datos de prueba, no contados arriba';
+
+  @override
   String financesDueOn(String date) {
     return 'Vence el $date';
   }
