@@ -3911,6 +3911,7 @@
       }
     }
   },
+  "financesAllSpaces": "Alle Spaces",
   "financesAutomatic": "automatisch",
   "@financesAutomatic": {
     "description": "Me › Finances"
@@ -3932,6 +3933,16 @@
   "@financesFullHistory": {
     "description": "Me › Finances"
   },
+  "financesLinkAction": "Für {space} öffnen",
+  "@financesLinkAction": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "financesLinkBody": "Ihre Rechnungen, Mahnungen und Zahlungen aus allen Spaces sind gesammelt unter Ich › Finanzen.",
+  "financesLinkTitle": "Ihre Dokumente liegen in Ich",
   "financesNoReminders": "Keine Erinnerung erhalten.",
   "@financesNoReminders": {
     "description": "Me › Finances"
@@ -6513,6 +6524,14 @@
   "meAccountInMeBody": "Foto, Sprache, Design und Anmeldungen gehören dir – in jedem Space.",
   "meAddressSaveFailed": "Deine Adresse konnte nicht gespeichert werden. Bitte versuche es erneut.",
   "meCreateSpace": "Space gründen",
+  "meFinanceGlanceOwed": "Zu zahlen: {amount}",
+  "@meFinanceGlanceOwed": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "meFindSpace": "Space finden",
   "meGroupInstallations": "Verbundene Installationen",
   "meGroupProfile": "Mein Profil",

@@ -6773,6 +6773,7 @@
       }
     }
   },
+  "financesAllSpaces": "All spaces",
   "financesAutomatic": "automatic",
   "@financesAutomatic": {
     "description": "Me › Finances"
@@ -6794,6 +6795,16 @@
   "@financesFullHistory": {
     "description": "Me › Finances"
   },
+  "financesLinkAction": "Open for {space}",
+  "@financesLinkAction": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "financesLinkBody": "Your invoices, reminders and payments from every space are together in Me › Finances.",
+  "financesLinkTitle": "Your documents live in Me",
   "financesNoReminders": "No reminder received.",
   "@financesNoReminders": {
     "description": "Me › Finances"
@@ -12010,6 +12021,14 @@
   "meCreateSpace": "Create a space",
   "@meCreateSpace": {
     "description": "Button on the Me home: create a new space."
+  },
+  "meFinanceGlanceOwed": "To pay: {amount}",
+  "@meFinanceGlanceOwed": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "meFindSpace": "Find a space",
   "@meFindSpace": {

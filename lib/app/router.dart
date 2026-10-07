@@ -900,7 +900,8 @@ GoRouter router(Ref ref) {
           builder: (context, state) => const SchemaUpdateScreen()),
       // Account history and applicant chat survive a refused membership.
       GoRoute(path: '/account-activity',
-          builder: (context, state) => const MyFinancesScreen()),
+          builder: (context, state) => MyFinancesScreen(
+              workspaceId: state.uri.queryParameters['workspace'])),
       GoRoute(path: '/discover',builder:(context,state)=>const discovery.DirectoryScreen()),
       GoRoute(path: '/connections',builder:(context,state)=>const ConnectionsScreen()),
       GoRoute(path: '/account-messages',builder:(context,state)=>AccountMessengerScreen(

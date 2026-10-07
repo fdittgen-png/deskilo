@@ -10134,6 +10134,12 @@ abstract class AppLocalizations {
   /// **'At least {min}.'**
   String fieldProblemTooSmall(String min);
 
+  /// No description provided for @financesAllSpaces.
+  ///
+  /// In en, this message translates to:
+  /// **'All spaces'**
+  String get financesAllSpaces;
+
   /// Me › Finances
   ///
   /// In en, this message translates to:
@@ -10157,6 +10163,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Full history, usage and other servers'**
   String get financesFullHistory;
+
+  /// No description provided for @financesLinkAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Open for {space}'**
+  String financesLinkAction(String space);
+
+  /// No description provided for @financesLinkBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your invoices, reminders and payments from every space are together in Me › Finances.'**
+  String get financesLinkBody;
+
+  /// No description provided for @financesLinkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your documents live in Me'**
+  String get financesLinkTitle;
 
   /// Me › Finances
   ///
@@ -17963,6 +17987,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create a space'**
   String get meCreateSpace;
+
+  /// No description provided for @meFinanceGlanceOwed.
+  ///
+  /// In en, this message translates to:
+  /// **'To pay: {amount}'**
+  String meFinanceGlanceOwed(String amount);
 
   /// Button on the Me home: open Discover.
   ///

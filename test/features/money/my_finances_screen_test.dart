@@ -37,7 +37,11 @@ FinanceInvoice invoice(
       reminderCount: reminders,
     );
 
-Future<void> show(WidgetTester tester, FinanceOverview overview) async {
+Future<void> show(
+  WidgetTester tester,
+  FinanceOverview overview, {
+  String? workspaceId,
+}) async {
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
@@ -48,10 +52,10 @@ Future<void> show(WidgetTester tester, FinanceOverview overview) async {
         auth: FakeAuthRepository.signedIn(),
         accountActivity: repo,
       ),
-      child: const MaterialApp(
+      child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: MyFinancesScreen(),
+        home: MyFinancesScreen(workspaceId: workspaceId),
       ),
     ),
   );

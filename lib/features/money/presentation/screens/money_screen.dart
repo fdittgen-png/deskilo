@@ -58,6 +58,7 @@ import '../../providers/usage_providers.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../payment_method_labels.dart';
 import '../widgets/account_card.dart';
+import '../widgets/my_finances_link_card.dart';
 import '../widgets/online_payment_status_card.dart';
 import '../widgets/bill_view.dart';
 import '../widgets/usage_face.dart';
@@ -1133,12 +1134,20 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         if (visibleStatement != null) bill(MoneyFace.statement),
       ],
       MoneyFace.payments: [
+        MyFinancesLinkCard(
+          workspaceId: workspaceForSweep?.id,
+          workspaceName: workspaceForSweep?.name,
+        ),
         if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: 8)],
         ...attemptsCard,
         ...occurrenceCards,
         if (visibleStatement != null) bill(MoneyFace.payments),
       ],
       MoneyFace.invoices: [
+        MyFinancesLinkCard(
+          workspaceId: workspaceForSweep?.id,
+          workspaceName: workspaceForSweep?.name,
+        ),
         if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: 8)],
         if (exposure != null) ...[
           InvoiceSummaryCard(exposure: exposure),

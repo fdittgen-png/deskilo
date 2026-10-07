@@ -1,0 +1,21 @@
+{
+  "financesAllSpaces": "All spaces",
+  "financesLinkTitle": "Your documents live in Me",
+  "financesLinkBody": "Your invoices, reminders and payments from every space are together in Me › Finances.",
+  "financesLinkAction": "Open for {space}",
+  "@financesLinkAction": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "meFinanceGlanceOwed": "To pay: {amount}",
+  "@meFinanceGlanceOwed": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
+}
