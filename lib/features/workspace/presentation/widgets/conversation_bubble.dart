@@ -42,7 +42,11 @@ class ConversationBubble extends ConsumerWidget {
     this.marks = MessageMarks.none,
     this.onReact,
     this.mentions = const {},
+    this.selfIds = const {},
   });
+
+  /// #2216 — my member id, so a mention of me stands out.
+  final Set<String> selfIds;
 
   /// Names of a group's members, for `@Name` highlighting (0383).
   final Set<String> mentions;
@@ -233,6 +237,7 @@ class ConversationBubble extends ConsumerWidget {
                     style: theme.textTheme.bodyMedium?.copyWith(color: fg),
                     linkColor: mine ? fg : null,
                     mentions: mentions,
+                    selfIds: selfIds,
                   ),
                   ReactionStrip(
                     messageId: note.id,

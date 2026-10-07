@@ -23,10 +23,14 @@ class MemberNoteBody extends ConsumerWidget {
     this.style,
     this.linkColor,
     this.mentions = const {},
+    this.selfIds = const {},
   });
 
   /// Names mentioned as `@Name` in a group: shown in bold.
   final Set<String> mentions;
+
+  /// #2216 — my own ids (member and account): a mention of me stands out.
+  final Set<String> selfIds;
 
   final String body;
   final TextStyle? style;
@@ -112,6 +116,17 @@ class MemberNoteBody extends ConsumerWidget {
             // still has to read as something: the words it quotes.
             NoteQuoteRef(:final preview) =>
               TextSpan(text: '«$preview»', style: base),
+            // #2216 — a mention reads as the name; a mention of me is
+            // tinted like a highlighter, so I find it in a long thread.
+            NoteMention(:final id, :final name) => TextSpan(
+                text: '@$name',
+                style: selfIds.contains(id)
+                    ? base?.strong.copyWith(
+                        backgroundColor: theme.colorScheme.tertiaryContainer,
+                        color: theme.colorScheme.onTertiaryContainer,
+                      )
+                    : base?.strong,
+              ),
           },
       ]),
     );

@@ -1192,6 +1192,7 @@ routine public.account_group_member(p_group uuid) -> boolean | function | define
 routine public.account_group_members_of(p_group uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b3b8f3f4013e
 routine public.account_group_message_reach(p_message uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9ae8f4a432d2
 routine public.account_group_messages_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:9877eded3649
+routine public.account_group_messages_mentions_guard() -> trigger | function | definer | volatile | exec:service_role | body:49460b231470
 routine public.account_message_request_guard() -> trigger | function | definer | volatile | exec:service_role | body:5c081a1b1fb0
 routine public.account_messages_refs_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:9aeca399cd10
 routine public.account_projection(p_user uuid, p_fields text[]) -> jsonb | function | definer | stable | exec:service_role | body:78eb18577763
@@ -1327,7 +1328,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f195c36ad44b
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:7e8772ed827e
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:528a39bf0e83
 routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:authenticated,service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
@@ -1527,6 +1528,7 @@ routine public.member_field_readable(p_member_id uuid, p_definition_id uuid) -> 
 routine public.member_has_permission(p_member_id uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:72a50d0622b7
 routine public.member_may_give_role(p_giver uuid, p_role workspace_roles) -> boolean | function | definer | stable | exec:service_role | body:cdf8bdeace64
 routine public.member_notes_announce_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:7358450eb8ce
+routine public.member_notes_mentions_guard() -> trigger | function | definer | volatile | exec:service_role | body:890b2c3ae02a
 routine public.member_notes_refs_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:7c2de38ad227
 routine public.member_price_negotiation(p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:748e36d6fe4e
 routine public.member_profile_projection(p_subject uuid, p_purposes text[]) -> jsonb | function | definer | stable | exec:service_role | body:b20f92de3d17
@@ -1548,6 +1550,8 @@ routine public.message_body_workspaces(p_body text) -> uuid[] | function | defin
 routine public.message_history(p_kind text, p_message_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c152cb52fbea
 routine public.message_info(p_message_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a6a50c7f9c71
 routine public.message_marks_in(p_context_kind text, p_context_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e83b61f81f19
+routine public.message_mention_ids(p_body text) -> uuid[] | function | invoker | immutable | exec:authenticated,service_role | body:c20a91d937d6
+routine public.message_mentions_within(p_body text, p_allowed uuid[]) -> text | function | invoker | immutable | exec:authenticated,service_role | body:2456559e2518
 routine public.message_ref_workspace(p_kind text, p_id uuid) -> uuid | function | definer | stable | exec:authenticated,service_role | body:6778dc5294c4
 routine public.message_refs_allowed(p_body text, p_users uuid[]) -> boolean | function | definer | stable | exec:authenticated,service_role | body:6143fc08b8db
 routine public.message_source(p_kind text, p_message_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:bf18325b19fb
@@ -1584,6 +1588,7 @@ routine public.my_workspace_applications(p_before_at timestamp with time zone, p
 routine public.my_workspace_public_page(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c02f6d89a75f
 routine public.negotiated_item_price(p_member_id uuid, p_kind text, p_item_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:ec49e4e0e2a2
 routine public.next_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | volatile | exec:service_role | body:fd6010808751
+routine public.note_push_mentions(p_note uuid) -> uuid[] | function | definer | stable | exec:service_role | body:323630271acb
 routine public.notify_member_note() -> trigger | function | definer | volatile | exec:service_role | body:a34e1a067108
 routine public.notify_pending_event() -> trigger | function | definer | volatile | exec:service_role | body:d58062fcd4fe
 routine public.number_sequence_date_rank(p_date_part text) -> integer | function | invoker | immutable | exec:authenticated,service_role | body:4bd74f2dbf51
@@ -1825,7 +1830,7 @@ routine public.system_columns_stamp() -> trigger | function | invoker | volatile
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:bac7a0663534
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:a95583ddf1f9
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9e1945110fb4
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -1907,6 +1912,7 @@ trigger account_field_audience.zz_system_columns_stamp CREATE TRIGGER zz_system_
 trigger account_field_audience_spaces.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_field_audience_spaces FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_group_members.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_group_members FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_group_messages.account_group_messages_guard CREATE TRIGGER account_group_messages_guard BEFORE INSERT OR UPDATE OF body ON public.account_group_messages FOR EACH ROW EXECUTE FUNCTION account_group_messages_guard()
+trigger account_group_messages.account_group_messages_mentions_guard CREATE TRIGGER account_group_messages_mentions_guard BEFORE INSERT OR UPDATE OF body ON public.account_group_messages FOR EACH ROW EXECUTE FUNCTION account_group_messages_mentions_guard()
 trigger account_group_messages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_group_messages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_groups.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_groups FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_messages.account_messages_refs_guard CREATE TRIGGER account_messages_refs_guard BEFORE INSERT OR UPDATE OF body ON public.account_messages FOR EACH ROW EXECUTE FUNCTION account_messages_refs_guard()
@@ -2007,6 +2013,7 @@ trigger member_credit_uses.zz_system_columns_stamp CREATE TRIGGER zz_system_colu
 trigger member_credits.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.member_credits FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger member_employment.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.member_employment FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger member_notes.member_notes_announce_guard CREATE TRIGGER member_notes_announce_guard BEFORE INSERT ON public.member_notes FOR EACH ROW EXECUTE FUNCTION member_notes_announce_guard()
+trigger member_notes.member_notes_mentions_guard CREATE TRIGGER member_notes_mentions_guard BEFORE INSERT OR UPDATE OF body ON public.member_notes FOR EACH ROW EXECUTE FUNCTION member_notes_mentions_guard()
 trigger member_notes.member_notes_push CREATE TRIGGER member_notes_push AFTER INSERT ON public.member_notes FOR EACH ROW EXECUTE FUNCTION notify_member_note()
 trigger member_notes.member_notes_refs_guard CREATE TRIGGER member_notes_refs_guard BEFORE INSERT OR UPDATE OF body ON public.member_notes FOR EACH ROW EXECUTE FUNCTION member_notes_refs_guard()
 trigger member_notes.member_notes_touch_conversation CREATE TRIGGER member_notes_touch_conversation AFTER INSERT ON public.member_notes FOR EACH ROW EXECUTE FUNCTION touch_conversation()

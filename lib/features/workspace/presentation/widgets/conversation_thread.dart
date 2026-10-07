@@ -446,6 +446,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
                 onActions: _forwarding || hub
                     ? () => _messageActions(note, mine: note.fromMemberId == me?.id)
                     : null,
+                selfIds: {?me?.id},
                 mentions: {
                   for (final p in ref
                           .watch(conversationParticipantsProvider(
@@ -503,7 +504,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
     final mentionNames = [
       for (final p in roster)
         if (p.isActive && p.memberId != me?.id && (names[p.memberId] ?? '').isNotEmpty)
-          names[p.memberId]!,
+          (id: p.memberId, name: names[p.memberId]!),
     ];
 
     final composer = postingClosed
@@ -537,6 +538,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
             : null,
         compact: hub,
         mentionCandidates: mentionNames,
+        mentionTokens: ref.watch(messageMentionsOnProvider),
         quoted: _quoted,
         onCancelQuote: () => setState(() => _quoted = null),
         onSend: (body) => _send(context, ref, body),

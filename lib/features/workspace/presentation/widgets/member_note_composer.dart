@@ -13,6 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/space_code.dart';
@@ -40,10 +41,15 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
     this.referencesAllowed = true,
     this.referencesHint,
     this.mentionCandidates = const [],
+    this.mentionTokens = false,
   });
 
-  /// People who can be `@mentioned` (a group's other members).
-  final List<String> mentionCandidates;
+  /// People who can be `@mentioned`: a member id in a workspace group,
+  /// an account id in a cross-workspace group.
+  final List<({String id, String name})> mentionCandidates;
+
+  /// #2216 — a pick writes `[at:id|name]`, checked and notified; else `@name`.
+  final bool mentionTokens;
 
   /// #821 — every keystroke, for the draft store.
   final ValueChanged<String>? onChanged;
@@ -162,24 +168,27 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   }
 
   Future<void> _pickMention() async {
-    final name = await showModalBottomSheet<String>(
+    final picked = await showModalBottomSheet<({String id, String name})>(
       context: context,
       builder: (sheet) => SafeArea(
         child: ListView(
           shrinkWrap: true,
           children: [
-            for (final n in widget.mentionCandidates)
+            for (final c in widget.mentionCandidates)
               ListTile(
-                key: ValueKey('mention-$n'),
+                key: ValueKey('mention-${c.name}'),
                 leading: const Icon(Icons.alternate_email),
-                title: Text(n),
-                onTap: () => Navigator.of(sheet).pop(n),
+                title: Text(c.name),
+                onTap: () => Navigator.of(sheet).pop(c),
               ),
           ],
         ),
       ),
     );
-    if (name != null) _insert('@$name');
+    if (picked == null) return;
+    _insert(widget.mentionTokens
+        ? mentionToken(picked.id, picked.name)
+        : '@${picked.name}');
   }
 
   Future<void> _pickReservation() async {
@@ -461,6 +470,14 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
         ),
         if (!widget.referencesAllowed)
           Row(children: [
+            if (widget.mentionCandidates.isNotEmpty)
+              IconButton(
+                key: const ValueKey('member-note-mention'),
+                tooltip: l10n?.composerMention ??
+                    AppLocalizationsEn().composerMention,
+                onPressed: _pickMention,
+                icon: const Icon(Icons.alternate_email),
+              ),
             Tooltip(
               message: widget.referencesHint ?? '',
               child: IconButton(

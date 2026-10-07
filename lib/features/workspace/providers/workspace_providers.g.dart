@@ -2364,3 +2364,52 @@ final class MyDevelopmentWorkspaceIdsProvider
 
 String _$myDevelopmentWorkspaceIdsHash() =>
     r'dda3821c5ee11c12ffffe66058337dd306bd8e61';
+
+/// #2216 — whether a mention picked in a message names the person for the
+/// server (`[at:id|name]`, notified) or stays the plain `@name`.
+
+@ProviderFor(messageMentionsOn)
+final messageMentionsOnProvider = MessageMentionsOnProvider._();
+
+/// #2216 — whether a mention picked in a message names the person for the
+/// server (`[at:id|name]`, notified) or stays the plain `@name`.
+
+final class MessageMentionsOnProvider
+    extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  /// #2216 — whether a mention picked in a message names the person for the
+  /// server (`[at:id|name]`, notified) or stays the plain `@name`.
+  MessageMentionsOnProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'messageMentionsOnProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$messageMentionsOnHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return messageMentionsOn(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$messageMentionsOnHash() => r'd3d14c2d9cba7f5f7000f837892b8428380209ed';

@@ -25,7 +25,11 @@ class ContextBubble extends ConsumerWidget {
     this.onActions,
     this.marks = MessageMarks.none,
     this.onReact,
+    this.selfId,
   });
+
+  /// #2216 — my account, so a mention of me stands out.
+  final String? selfId;
 
   /// Reactions, stars and edits of the thread (0382).
   final MessageMarks marks;
@@ -106,6 +110,7 @@ class ContextBubble extends ConsumerWidget {
               body: message.body,
               style: theme.textTheme.bodyMedium?.copyWith(color: fg),
               linkColor: fg,
+              selfIds: {?selfId},
             ),
             ReactionStrip(
               messageId: message.id,

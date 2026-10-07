@@ -134,4 +134,5 @@ const Set<String> workspaceFeatureKeys = {
   'accountingBook',
   'roleAssignment',
   'taskRecorder',
+  'messageMentions',
 };

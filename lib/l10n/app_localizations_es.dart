@@ -5177,6 +5177,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureMessageGesturesTitle => 'Deslizar para citar o retirar';
 
   @override
+  String get featureMessageMentionsDesc =>
+      'En un grupo se puede mencionar a una persona por su nombre. Solo se puede mencionar a personas de la conversación, y la persona mencionada recibe un aviso aunque haya silenciado la conversación. Desactivado, un nombre escrito tras @ es texto normal y no avisa a nadie.';
+
+  @override
+  String get featureMessageMentionsTitle => 'Menciones en grupos';
+
+  @override
   String get featureMessagesHubDesc =>
       'Una sola barra de bandeja (Todos / No leídos / Archivados y búsqueda), fijar, silenciar, archivar y marcar como no leído en un hilo, la conversación como página completa con separadores de fecha, un menú adjuntar y un borrador guardado en el compositor, una persona abierta con un toque. Desactivado: la bandeja de dos barras y el hilo en hoja.';
 

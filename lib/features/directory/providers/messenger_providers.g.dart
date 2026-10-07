@@ -649,3 +649,49 @@ final class WorkspaceInquiriesFamily extends $Family
   @override
   String toString() => r'workspaceInquiriesProvider';
 }
+
+/// #2216 — the signed-in account, which a group mention names.
+
+@ProviderFor(myAccountId)
+final myAccountIdProvider = MyAccountIdProvider._();
+
+/// #2216 — the signed-in account, which a group mention names.
+
+final class MyAccountIdProvider
+    extends $FunctionalProvider<String?, String?, String?>
+    with $Provider<String?> {
+  /// #2216 — the signed-in account, which a group mention names.
+  MyAccountIdProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myAccountIdProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myAccountIdHash();
+
+  @$internal
+  @override
+  $ProviderElement<String?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  String? create(Ref ref) {
+    return myAccountId(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(String? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<String?>(value),
+    );
+  }
+}
+
+String _$myAccountIdHash() => r'c3770fae127cab8bf02e6381cb8a6388484b71cb';

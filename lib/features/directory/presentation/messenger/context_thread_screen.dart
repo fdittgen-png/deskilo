@@ -477,6 +477,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           marks:
               ref.watch(messageMarksProvider(_marksKey)).value ?? MessageMarks.none,
           onReact: message.isNotice ? null : (emoji) => _react(message, emoji),
+          selfId: ref.watch(myAccountIdProvider),
         );
       },
     );
@@ -574,6 +575,14 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
             compact: true,
             autofocus: false,
             referencesAllowed: canRef,
+            // #2216 — a group's other members can be mentioned.
+            mentionCandidates: [
+              if (_isGroup && _contextId.isNotEmpty)
+                for (final m in ref.watch(accountGroupMembersProvider(_contextId)).value ?? const <Never>[])
+                  if (m.userId != ref.watch(myAccountIdProvider) && m.name.isNotEmpty)
+                    (id: m.userId, name: m.name),
+            ],
+            mentionTokens: ref.watch(messageMentionsOnProvider),
             referencesHint: l10n?.threadNoRefs ??
                 'References are only shared with people of the same workspace.',
             onSend: (body) async {

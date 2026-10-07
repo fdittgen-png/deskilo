@@ -204,6 +204,7 @@ begin
       "membersDirectory": false,
       "messageForwarding": true,
       "messageGestures": true,
+      "messageMentions": true,
       "messagesHub": true,
       "moneyTab": true,
       "multiSite": false,

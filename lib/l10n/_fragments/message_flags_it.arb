@@ -23,5 +23,13 @@
   "featureCaptureProtectionDesc": "Le schermate dei messaggi rifiutano screenshot e registrazioni dello schermo quando il dispositivo lo consente, nascondono il contenuto durante una registrazione e annunciano uno screenshot nella conversazione quando può solo essere rilevato. Un browser non può bloccare gli screenshot; lì la conversazione viene sfocata quando la scheda perde il focus.",
   "@featureCaptureProtectionDesc": {
     "description": "#1824 messenger flags: featureCaptureProtectionDesc"
+  },
+  "featureMessageMentionsTitle": "Menzioni nei gruppi",
+  "@featureMessageMentionsTitle": {
+    "description": "#2216 messenger flags: featureMessageMentionsTitle"
+  },
+  "featureMessageMentionsDesc": "In un gruppo si può menzionare una persona per nome. Si possono menzionare solo le persone della conversazione, e la persona menzionata riceve una notifica anche se ha silenziato la conversazione. Disattivato, un nome scritto dopo @ è testo semplice e non avvisa nessuno.",
+  "@featureMessageMentionsDesc": {
+    "description": "#2216 messenger flags: featureMessageMentionsDesc"
   }
 }

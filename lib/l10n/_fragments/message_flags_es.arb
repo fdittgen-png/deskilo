@@ -23,5 +23,13 @@
   "featureCaptureProtectionDesc": "Las pantallas de mensajes rechazan capturas y grabaciones de pantalla cuando el dispositivo lo permite, ocultan su contenido mientras se graba la pantalla y anuncian una captura en la conversación cuando solo puede detectarse. Un navegador no puede bloquear capturas; allí la conversación se difumina cuando la pestaña pierde el foco.",
   "@featureCaptureProtectionDesc": {
     "description": "#1824 messenger flags: featureCaptureProtectionDesc"
+  },
+  "featureMessageMentionsTitle": "Menciones en grupos",
+  "@featureMessageMentionsTitle": {
+    "description": "#2216 messenger flags: featureMessageMentionsTitle"
+  },
+  "featureMessageMentionsDesc": "En un grupo se puede mencionar a una persona por su nombre. Solo se puede mencionar a personas de la conversación, y la persona mencionada recibe un aviso aunque haya silenciado la conversación. Desactivado, un nombre escrito tras @ es texto normal y no avisa a nadie.",
+  "@featureMessageMentionsDesc": {
+    "description": "#2216 messenger flags: featureMessageMentionsDesc"
   }
 }

@@ -380,6 +380,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.roleAssignment: _legacy,
   WorkspaceFeature.taskRecorder: _legacy,
   WorkspaceFeature.guestParticipation: _legacy,
+  WorkspaceFeature.messageMentions: _legacy,
 };
 
 /// Keys that were registered once and are gone. They stay here so a

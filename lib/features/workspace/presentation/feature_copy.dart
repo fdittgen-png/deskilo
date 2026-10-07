@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_en.dart';
 import '../domain/workspace_feature.dart';
 
 /// What each switch on the Features screen actually does, in the
@@ -463,6 +464,9 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'the hosts: the owners, and the administrators who chose '
                   'to be public contacts. Only that person and the hosts '
                   'read the conversation.',
+        WorkspaceFeature.messageMentions =>
+          l10n?.featureMessageMentionsDesc ??
+              AppLocalizationsEn().featureMessageMentionsDesc,
         WorkspaceFeature.messageForwarding =>
           l10n?.featureMessageForwardingDesc ??
               'A message can be forwarded into another conversation the '

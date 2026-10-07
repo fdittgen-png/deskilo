@@ -5140,6 +5140,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureMessageGesturesTitle => 'Swipe to quote or take back';
 
   @override
+  String get featureMessageMentionsDesc =>
+      'In a group, a person can be mentioned by name. Only people in the conversation can be mentioned, and the person mentioned is notified even when they have muted it. Off, a name typed after @ is plain text and notifies nobody.';
+
+  @override
+  String get featureMessageMentionsTitle => 'Mentions in groups';
+
+  @override
   String get featureMessagesHubDesc =>
       'One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.';
 

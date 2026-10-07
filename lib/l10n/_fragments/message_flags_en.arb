@@ -23,5 +23,13 @@
   "featureCaptureProtectionDesc": "Message screens refuse screenshots and screen recording where the device allows it, hide their content while the screen is recorded, and announce a screenshot in the conversation where it can only be detected. A browser cannot block screenshots; there the thread is blurred when the tab loses focus.",
   "@featureCaptureProtectionDesc": {
     "description": "#1824 messenger flags: featureCaptureProtectionDesc"
+  },
+  "featureMessageMentionsTitle": "Mentions in groups",
+  "@featureMessageMentionsTitle": {
+    "description": "#2216 messenger flags: featureMessageMentionsTitle"
+  },
+  "featureMessageMentionsDesc": "In a group, a person can be mentioned by name. Only people in the conversation can be mentioned, and the person mentioned is notified even when they have muted it. Off, a name typed after @ is plain text and notifies nobody.",
+  "@featureMessageMentionsDesc": {
+    "description": "#2216 messenger flags: featureMessageMentionsDesc"
   }
 }

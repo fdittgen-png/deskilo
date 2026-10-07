@@ -3470,6 +3470,14 @@
   },
   "featureMessageGesturesDesc": "Balayez un message vers la droite pour le citer dans votre réponse ; vers la gauche pour reprendre votre propre message tant que personne ne l'a lu, après confirmation. Désactivé : les messages se suppriment par appui long.",
   "featureMessageGesturesTitle": "Balayer pour citer ou reprendre",
+  "featureMessageMentionsDesc": "Dans un groupe, on peut mentionner une personne par son nom. Seules les personnes de la conversation peuvent être mentionnées, et la personne mentionnée est notifiée même si elle a mis la conversation en sourdine. Désactivé, un nom écrit après @ reste du texte et ne notifie personne.",
+  "@featureMessageMentionsDesc": {
+    "description": "#2216 messenger flags: featureMessageMentionsDesc"
+  },
+  "featureMessageMentionsTitle": "Mentions dans les groupes",
+  "@featureMessageMentionsTitle": {
+    "description": "#2216 messenger flags: featureMessageMentionsTitle"
+  },
   "featureMessagesHubDesc": "Une seule barre de boîte de réception (Tous / Non lus / Archivés et recherche), épingler, couper le son, archiver et marquer non lu sur un fil, la conversation en page entière avec séparateurs de date, un menu joindre et un brouillon conservé dans le composeur, une personne ouverte d'un seul geste. Désactivé : la boîte à deux barres et le fil en feuille.",
   "featureMessagesHubTitle": "Messages repensés",
   "featureMoneyTab": "Onglet Finances",

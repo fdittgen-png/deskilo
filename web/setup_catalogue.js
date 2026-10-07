@@ -126,7 +126,8 @@ window.SETUP_PROCESSES=[
      "messagesHub",
      "spaceInquiries",
      "messageForwarding",
-     "captureProtection"
+     "captureProtection",
+     "messageMentions"
     ]
    }
   ]

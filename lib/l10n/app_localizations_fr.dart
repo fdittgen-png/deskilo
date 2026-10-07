@@ -5184,6 +5184,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureMessageGesturesTitle => 'Balayer pour citer ou reprendre';
 
   @override
+  String get featureMessageMentionsDesc =>
+      'Dans un groupe, on peut mentionner une personne par son nom. Seules les personnes de la conversation peuvent être mentionnées, et la personne mentionnée est notifiée même si elle a mis la conversation en sourdine. Désactivé, un nom écrit après @ reste du texte et ne notifie personne.';
+
+  @override
+  String get featureMessageMentionsTitle => 'Mentions dans les groupes';
+
+  @override
   String get featureMessagesHubDesc =>
       'Une seule barre de boîte de réception (Tous / Non lus / Archivés et recherche), épingler, couper le son, archiver et marquer non lu sur un fil, la conversation en page entière avec séparateurs de date, un menu joindre et un brouillon conservé dans le composeur, une personne ouverte d\'un seul geste. Désactivé : la boîte à deux barres et le fil en feuille.';
 
