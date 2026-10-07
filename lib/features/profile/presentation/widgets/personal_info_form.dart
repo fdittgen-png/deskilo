@@ -143,6 +143,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     TextInputType? type,
     TextCapitalization capitalization = TextCapitalization.words,
     bool autocorrect = true,
+    List<String>? autofill,
   }) => Padding(
     padding: const EdgeInsets.only(bottom: AppSpacing.md),
     child: TextField(
@@ -150,6 +151,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       controller: controller,
       enabled: !widget.saving,
       keyboardType: type,
+      autofillHints: autofill,
       textCapitalization: capitalization,
       autocorrect: autocorrect,
       decoration: InputDecoration(
@@ -219,23 +221,27 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           'first-name',
           l10n?.personalInfoFirstName ?? 'First name',
           type: TextInputType.name,
+          autofill: const [AutofillHints.givenName],
         ),
         _field(
           _last,
           'last-name',
           l10n?.personalInfoLastName ?? 'Family name',
           type: TextInputType.name,
+          autofill: const [AutofillHints.familyName],
         ),
         _field(
           _company,
           'company',
           l10n?.personalInfoCompany ?? 'Company (optional)',
+          autofill: const [AutofillHints.organizationName],
         ),
         _field(
           _street,
           'street',
           l10n?.personalInfoStreet ?? 'Street and number',
           type: TextInputType.streetAddress,
+          autofill: const [AutofillHints.streetAddressLine1],
         ),
         Row(
           children: [
@@ -247,11 +253,17 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                 l10n?.personalInfoPostalCode ?? 'Postal code',
                 capitalization: TextCapitalization.characters,
                 autocorrect: false,
+                autofill: const [AutofillHints.postalCode],
               ),
             ),
             const SizedBox(width: AppSpacing.md),
             Expanded(
-              child: _field(_city, 'city', l10n?.personalInfoCity ?? 'City'),
+              child: _field(
+                _city,
+                'city',
+                l10n?.personalInfoCity ?? 'City',
+                autofill: const [AutofillHints.addressCity],
+              ),
             ),
           ],
         ),
@@ -283,6 +295,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           type: TextInputType.phone,
           capitalization: TextCapitalization.none,
           autocorrect: false,
+          autofill: const [AutofillHints.telephoneNumber],
         ),
         _field(
           _email,
@@ -291,6 +304,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           type: TextInputType.emailAddress,
           capitalization: TextCapitalization.none,
           autocorrect: false,
+          autofill: const [AutofillHints.email],
         ),
         _field(
           _vat,

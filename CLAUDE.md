@@ -13,6 +13,7 @@ identity form, one-branch-at-a-time). This file only indexes the skills.
 | `deskilo-widget-test-gotchas` | a widget test fails for a reason that is not the code |
 | `deskilo-reports` | anything printed: kinds, placeholders, layouts, the CLI, the letter standard |
 | `deskilo-ci-release` | after the push: required checks, watchers, auto-merge, the release train, the web publish |
+| `deskilo-forms` | any form: the scaffold (sheet, dialog, wizard, screen), the form kit, domain-first validation, the form checklist and ratchets |
 | `deskilo-documentation` | the guides, the help anchors, the screenshot pipeline: anything under `docs/wiki`, `assets/help` or a help symbol |
 | `project-evolution-playbook` | the project-agnostic method, for OTHER repos only |
 
