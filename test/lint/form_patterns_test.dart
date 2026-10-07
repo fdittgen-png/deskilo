@@ -29,7 +29,8 @@ import 'lint_sources.dart';
 /// the kit and the e-mail autofill fixes. Lower them as forms move.
 const int _rawFieldCeiling = 207;
 const int _literalGapCeiling = 264;
-const int _fallbackCeiling = 4607;
+const int _fallbackCeiling =
+    6481; // per fallback since 2026-10-07 (was 4607 per line)
 const int _emailWithoutAutofillCeiling = 0;
 
 Iterable<File> _lib() => handWrittenDartFiles('lib');
@@ -41,7 +42,24 @@ bool _isPresentation(String path) =>
 
 final _rawField = RegExp(r'\b(TextField|TextFormField)\(');
 final _literalGap = RegExp(r'SizedBox\(\s*height:\s*\d');
-final _fallback = RegExp(r"l10n\??\.\w+[^;]*?\?\?\s*'");
+
+/// One `l10n?.key ?? '…'` (or `l10n?.key(arg) ?? '…'`), wherever the
+/// formatter breaks the line: counted per fallback, not per line, so
+/// reformatting moved code cannot move the number either way.
+final _fallback = RegExp(r"l10n\??\.\w+(?:\([^()]*\))?\s*\?\?\s*'");
+
+/// Every match of [pattern] in [files], comment lines left out.
+int _matches(Iterable<File> files, RegExp pattern) {
+  var n = 0;
+  for (final f in files) {
+    final code = f
+        .readAsLinesSync()
+        .where((line) => !line.trimLeft().startsWith('//'))
+        .join('\n');
+    n += pattern.allMatches(code).length;
+  }
+  return n;
+}
 
 int _count(Iterable<File> files, RegExp pattern) =>
     scanLines(files, pattern.hasMatch).length;
@@ -108,7 +126,7 @@ void main() {
   test('inline English fallbacks only ever decrease', () {
     _ratchet(
       "l10n?.key ?? '<English>'",
-      _count(outsideKit, _fallback),
+      _matches(outsideKit, _fallback),
       _fallbackCeiling,
     );
   });
